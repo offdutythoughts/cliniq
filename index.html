@@ -85,6 +85,11 @@ body{font-family:var(--font);color:var(--white);display:flex;flex-direction:colu
 /* ── MAIN CONTENT ── */
 .screen{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;}
 .screen-inner{padding:16px;max-width:600px;margin:0 auto;}
+.slide-in-right{animation:slideInRight .28s cubic-bezier(.22,.61,.36,1) both;}
+.slide-in-left{animation:slideInLeft .28s cubic-bezier(.22,.61,.36,1) both;}
+@keyframes slideInRight{from{opacity:0;transform:translateX(24px);}to{opacity:1;transform:translateX(0);}}
+@keyframes slideInLeft{from{opacity:0;transform:translateX(-24px);}to{opacity:1;transform:translateX(0);}}
+@media (prefers-reduced-motion: reduce){.slide-in-right,.slide-in-left{animation:none;}}
 
 /* ── CARDS ── */
 .card{
@@ -343,6 +348,15 @@ body{font-family:var(--font);color:var(--white);display:flex;flex-direction:colu
 .dx-result:hover{filter:brightness(1.15);}
 .dx-alert{background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.3);border-radius:8px;padding:7px 10px;font-size:10px;color:#FCA5A5;line-height:1.4;}
 .dx-note{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:7px 10px;font-size:10px;color:var(--gray);line-height:1.5;text-align:left;}
+/* ── NOTES ── */
+.notes-box{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-top:14px;}
+.notes-box .notes-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.notes-box .notes-label{font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;}
+.notes-box .notes-saved{font-size:9px;color:var(--gray2);opacity:0;transition:opacity .3s;}
+.notes-box .notes-saved.show{opacity:1;}
+.notes-box textarea{width:100%;min-height:80px;background:var(--navy);border:1px solid var(--border);border-radius:8px;padding:10px;font-size:12px;color:var(--white);font-family:var(--font);resize:vertical;outline:none;line-height:1.5;}
+.notes-box textarea:focus{border-color:var(--teal);}
+.notes-box textarea::placeholder{color:var(--gray2);}
 /* ── DIAGNOSTIC FLOWCHART ── */
 .dx-wrap{display:flex;flex-direction:column;align-items:center;gap:0;padding:8px 0 20px;}
 .dx-arrow{text-align:center;margin:2px auto;line-height:1;width:2px;height:16px;background:var(--gray2);position:relative;color:transparent;font-size:0;}
@@ -362,6 +376,31 @@ body{font-family:var(--font);color:var(--white);display:flex;flex-direction:colu
 .dx-row.c3{grid-template-columns:1fr 1fr 1fr;}
 .dx-connector{display:flex;width:100%;align-items:flex-start;}
 .dx-connector .dx-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 3px;}
+/* ── NOTES SIDEBAR ── */
+.notes-toggle{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:90;background:var(--teal);color:#fff;border:none;border-radius:8px 0 0 8px;padding:10px 6px;font-size:13px;cursor:pointer;writing-mode:vertical-rl;letter-spacing:.05em;font-weight:600;box-shadow:-2px 0 12px rgba(0,0,0,.3);transition:opacity .2s;}
+.notes-toggle:hover{filter:brightness(1.15);}
+.notes-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:98;opacity:0;pointer-events:none;transition:opacity .25s;}
+.notes-overlay.open{opacity:1;pointer-events:auto;}
+.notes-panel{position:fixed;top:0;right:0;bottom:0;width:85%;max-width:360px;background:var(--navy2);z-index:99;transform:translateX(100%);transition:transform .3s cubic-bezier(.22,.61,.36,1);display:flex;flex-direction:column;box-shadow:-4px 0 24px rgba(0,0,0,.5);}
+.notes-panel.open{transform:translateX(0);}
+.notes-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.notes-header h3{font-size:15px;font-weight:600;color:var(--white);margin:0;}
+.notes-close{background:none;border:none;color:var(--gray);font-size:22px;cursor:pointer;padding:0 4px;}
+.notes-toolbar{display:flex;flex-wrap:wrap;gap:4px;padding:8px 12px;border-bottom:1px solid var(--border);flex-shrink:0;align-items:center;}
+.notes-toolbar button,.notes-toolbar select,.notes-toolbar input{background:var(--card);border:1px solid var(--border);color:var(--white);border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer;transition:all .15s;}
+.notes-toolbar button:hover{background:var(--card2);}
+.notes-toolbar button.active{background:var(--teal);border-color:var(--teal);}
+.notes-toolbar select{padding:3px 4px;font-size:10px;max-width:70px;}
+.notes-toolbar input[type="color"]{width:28px;height:26px;padding:1px;border-radius:6px;cursor:pointer;-webkit-appearance:none;appearance:none;}
+.notes-toolbar input[type="color"]::-webkit-color-swatch-wrapper{padding:0;}
+.notes-toolbar input[type="color"]::-webkit-color-swatch{border:none;border-radius:4px;}
+.notes-body{flex:1;overflow-y:auto;padding:12px 14px;-webkit-overflow-scrolling:touch;}
+.notes-editor{min-height:200px;outline:none;color:var(--gray);font-size:13px;line-height:1.7;font-family:var(--font);}
+.notes-editor:empty::before{content:'Tap here to start writing notes...';color:var(--gray2);font-style:italic;}
+.notes-footer{padding:8px 12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-shrink:0;}
+.notes-footer button{background:none;border:1px solid var(--border);color:var(--gray);border-radius:6px;padding:5px 12px;font-size:10px;cursor:pointer;}
+.notes-footer button:hover{background:var(--card);}
+.notes-footer .notes-status{font-size:9px;color:var(--gray2);}
 </style>
 </head>
 <body>
@@ -378,6 +417,60 @@ body{font-family:var(--font);color:var(--white);display:flex;flex-direction:colu
 <!-- SCREEN -->
 <div class="screen" id="screen">
   <div class="screen-inner" id="screen-inner"></div>
+</div>
+
+<!-- NOTES TOGGLE -->
+<button class="notes-toggle" id="notes-toggle" onclick="toggleNotes()">📝 Notes</button>
+
+<!-- NOTES OVERLAY -->
+<div class="notes-overlay" id="notes-overlay" onclick="toggleNotes()"></div>
+
+<!-- NOTES PANEL -->
+<div class="notes-panel" id="notes-panel">
+  <div class="notes-header">
+    <div><h3>📝 Notes</h3><div id="notes-context" style="font-size:10px;color:var(--gray);margin-top:2px;max-width:240px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></div></div>
+    <button class="notes-close" onclick="toggleNotes()">&times;</button>
+  </div>
+  <div class="notes-toolbar" id="notes-toolbar">
+    <button onclick="noteCmd('bold')" title="Bold"><strong>B</strong></button>
+    <button onclick="noteCmd('italic')" title="Italic"><em>I</em></button>
+    <button onclick="noteCmd('underline')" title="Underline"><u>U</u></button>
+    <button onclick="noteCmd('strikeThrough')" title="Strikethrough"><s>S</s></button>
+    <span style="width:1px;height:18px;background:var(--border);margin:0 2px;"></span>
+    <select onchange="noteCmd('fontSize',this.value);this.selectedIndex=0;" title="Font size">
+      <option value="" disabled selected>Size</option>
+      <option value="1">Small</option>
+      <option value="3">Normal</option>
+      <option value="4">Medium</option>
+      <option value="5">Large</option>
+      <option value="6">XL</option>
+    </select>
+    <select onchange="noteCmd('fontName',this.value);this.selectedIndex=0;" title="Font">
+      <option value="" disabled selected>Font</option>
+      <option value="DM Sans">DM Sans</option>
+      <option value="DM Mono">DM Mono</option>
+      <option value="Arial">Arial</option>
+      <option value="Georgia">Georgia</option>
+      <option value="Courier New">Courier</option>
+    </select>
+    <span style="width:1px;height:18px;background:var(--border);margin:0 2px;"></span>
+    <input type="color" value="#F8FAFC" onchange="noteCmd('foreColor',this.value)" title="Text colour">
+    <input type="color" value="#0A1628" onchange="noteCmd('hiliteColor',this.value)" title="Highlight">
+    <span style="width:1px;height:18px;background:var(--border);margin:0 2px;"></span>
+    <button onclick="noteCmd('insertUnorderedList')" title="Bullet list">•</button>
+    <button onclick="noteCmd('insertOrderedList')" title="Numbered list">1.</button>
+    <button onclick="noteCmd('removeFormat')" title="Clear formatting">✕</button>
+  </div>
+  <div class="notes-body">
+    <div class="notes-editor" id="notes-editor" contenteditable="true"></div>
+  </div>
+  <div class="notes-footer">
+    <span class="notes-status" id="notes-status">Saved locally</span>
+    <div style="display:flex;gap:6px;">
+      <button onclick="exportNotes()" title="Copy notes as text">📋 Copy</button>
+      <button onclick="clearNotes()" title="Clear all notes">🗑️ Clear</button>
+    </div>
+  </div>
 </div>
 
 <!-- BOTTOM NAV -->
@@ -403,17 +496,19 @@ body{font-family:var(--font);color:var(--white);display:flex;flex-direction:colu
 // ── ALL DATA FROM GOOGLE SHEET ──────────────────────────────────────────────
 const DB = {
   lesion_type: [
-    {id:'LES-PL-FL',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Transudate',urg:'Moderate',signs:'Bilateral muffled sounds, tachypnoea, weight loss',proto:'PROT-RESP',filter:'DIFF-PL-TRANS',note:'Low protein, low cells. Think: hypoalbuminaemia, right-sided CHF, hepatic disease.'},
-    {id:'LES-PL-FL2',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Exudate',urg:'High',signs:'Fever, toxic, unilateral dullness, pain',proto:'PROT-RESP',filter:'DIFF-PL-EXU',note:'High protein, high cells. Think: pyothorax, FIP, neoplasia.'},
-    {id:'LES-PL-FL3',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Chylothorax',urg:'Moderate',signs:'Bilateral muffled, white/milky fluid on tap, weight loss',proto:'PROT-RESP',filter:'DIFF-PL-CHYL',note:'Milky white fluid, high triglycerides. Chronic — often presents insidiously.'},
+    {id:'LES-PL-FL',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Pure transudate (low protein)',urg:'Moderate',signs:'Fluid: clear/colourless, TP <2.5g/dL, TNCC <1,500/µL. Mostly macrophages with low numbers of neutrophils, lymphocytes, mesothelial cells.',proto:'PROT-RESP',filter:'DIFF-PL-TRANS',note:'Causes: severe hypoalbuminaemia (<15g/L), venous/lymphatic hypertension (non-exfoliating neoplasia, lung lobe torsion), portal hypertension (liver disease).'},
+    {id:'LES-PL-FL5',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Modified transudate (high protein)',urg:'Moderate',signs:'Fluid: light yellow, may be blood-tinged, TP >2.5g/dL, TNCC <5,000/µL. Macrophages + neutrophils. Variable RBC. Plasma cells may be seen.',proto:'PROT-RESP',filter:'DIFF-PL-MODTRANS',note:'Causes: cardiac disease (dog: biventricular/L-sided failure; cat: L or R heart failure), sinusoidal/post-sinusoidal hypertension, non-exfoliating neoplasia, inflammation affecting pleural vasculature.'},
+    {id:'LES-PL-FL2',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Exudate',urg:'High',signs:'Fluid: cloudy/turbid, TP >2.5 (often >4.0)g/dL, TNCC >5,000/µL. Neutrophils predominate. Cause may be identified on cytology (bacteria, fungi). Clear supernatant after centrifugation.',proto:'PROT-RESP',filter:'DIFF-PL-EXU',note:'Causes: pyothorax (bacterial/fungal), FIP (cats — high protein but low TNCC variant), pancreatitis, ruptured viscus, parasites, underlying neoplasia.'},
+    {id:'LES-PL-FL3',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Chylous effusion',urg:'Moderate',signs:'Fluid: white to pink, opaque. TP usually >2.5g/dL (lipid artefact on refractometer). Triglycerides >100mg/dL and usually >2× serum. Small lymphocytes predominate. Cream layer forms on standing.',proto:'PROT-RESP',filter:'DIFF-PL-CHYL',note:'Causes: cardiac disease (cats most common), idiopathic (dogs + cats), neoplasia (thymoma, lymphoma), thoracic duct rupture/trauma. Cream layer forms on standing.'},
     {id:'LES-PL-FL4',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Cat',cat:'Fluid',sub:'Modified transudate — cardiogenic',urg:'EMERGENCY',signs:'⚠️ Bradycardia, hypothermia, gallop rhythm, tachypnoea, open-mouth breathing',proto:'PROT-RESP',filter:'DIFF-PL-CARD',note:'Cat CHF. Bradycardia + hypothermia = severe decompensation. DO NOT STRESS. Tap first.'},
+    {id:'LES-PL-HAEM',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Haemorrhagic effusion',urg:'EMERGENCY',signs:'⚠️ Red/serosanguineous fluid. PCV measurable (usually >1%). Does NOT clot in red-top tube. If >24h: erythrophages, hemosiderin, hematoidin crystals.',proto:'PROT-RESP',filter:'DIFF-PL-HAEM',note:'Causes: trauma, ruptured splenic/hepatic mass (haemangiosarcoma), coagulopathy (anticoagulant rodenticide), pericarditis, neoplasia.'},
     {id:'LES-PL-GS',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Gas',sub:'Pneumothorax',urg:'EMERGENCY',signs:'⚠️ Hyper-resonant percussion, reduced sounds, tachypnoea, possible history of trauma',proto:'PROT-RESP',filter:'DIFF-PL-PNEUMO',note:'Spontaneous or traumatic. Bilateral = severe. Needle decompress immediately if tension.'},
     {id:'LES-PL-MS',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Mass',sub:'Pleural/mediastinal mass',urg:'High',signs:'Progressive dyspnoea, non-compressible cranial mediastinum (cat), weight loss',proto:'PROT-RESP',filter:'DIFF-PL-MASS',note:'Cranial mediastinal mass in young cat = lymphoma until proven otherwise. Check compressibility.'},
     {id:'LES-PL-INF',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Pyothorax (septic exudate)',urg:'EMERGENCY',signs:'⚠️ Fever, toxic, septic shock signs, unilateral dullness, pain on thoracic palpation',proto:'PROT-RESP',filter:'DIFF-PL-PYO',note:'Foul-smelling fluid on tap. Broad-spectrum antibiotics + drain. Surgical if not responding.'},
     {id:'LES-PA-OE',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog + Cat',cat:'Fluid/Oedema',sub:'Cardiogenic oedema',urg:'EMERGENCY',signs:'⚠️ Crackles, murmur/gallop, bilateral perihilar CXR pattern, tachypnoea',proto:'PROT-RESP',filter:'DIFF-PA-CARDOEDE',note:'Perihilar distribution in dog; diffuse or patchy in cat. Furosemide urgently.'},
     {id:'LES-PA-OE2',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog + Cat',cat:'Fluid/Oedema',sub:'Non-cardiogenic oedema',urg:'EMERGENCY',signs:'⚠️ Acute onset, history of electric shock / seizure / near-drowning, no cardiac signs',proto:'PROT-RESP',filter:'DIFF-PA-NCOEDE',note:'Exclude cardiac cause — echo or NT-proBNP. Treat supportively.'},
     {id:'LES-PA-INF',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog + Cat',cat:'Infection',sub:'Aspiration pneumonia',urg:'High',signs:'History of vomiting/regurgitation/GA, ventral distribution on CXR, pyrexia',proto:'PROT-RESP',filter:'DIFF-PA-ASP',note:'Right middle lung lobe most common. Always check for underlying megaoesophagus or laryngeal disease.'},
-    {id:'LES-PA-INF2',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog + Cat',cat:'Infection',sub:'Bacterial pneumonia',urg:'High',signs:'Pyrexia, productive cough, crackles, leucocytosis',proto:'PROT-RESP',filter:'DIFF-PA-BACT',note:'Culture + sensitivity essential before committing to antibiotic. BAL preferred.'},
+    {id:'LES-PA-INF2',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog + Cat',cat:'Infection',sub:'Bacterial pneumonia',urg:'High',signs:'Pyrexia, productive cough, crackles, leucocytosis. Common pathogens: Bordetella, Pasteurella, Streptococcus, E. coli, Mycoplasma.',proto:'PROT-RESP',filter:'DIFF-PA-BACT',note:'Mycoplasma: consider in cats with chronic lower airway disease. Culture + sensitivity essential — BAL preferred over TTW.'},
     {id:'LES-PA-MS',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog + Cat',cat:'Mass/Neoplasia',sub:'Primary lung tumour / metastatic',urg:'Moderate',signs:'Often subclinical early. Cough, weight loss, haemoptysis if advanced.',proto:'',filter:'DIFF-PA-NEO',note:'CXR first. CT for surgical planning. Often found incidentally.'},
     {id:'LES-NA-POLYP',loc:'LOC-NASAL',loc_name:'Nasal cavity / Nasopharynx',sp:'Cat',cat:'Mass',sub:'Nasopharyngeal polyp',urg:'Moderate',signs:'Young cat. Chronic stertor, nasal discharge, ± Horner syndrome, ± otitis media.',proto:'',filter:'DIFF-NA-POLYP',note:'Check bullae — middle ear involvement changes surgical approach. Traction avulsion or ventral bulla osteotomy.'},
     {id:'LES-NA-EOPOLY',loc:'LOC-NASAL',loc_name:'Nasal cavity / Nasopharynx',sp:'Cat',cat:'Mass',sub:'Eosinophilic polyp',urg:'Low',signs:'Young to middle-aged cat. Stertor, nasal discharge. Eosinophilic infiltrate on histopathology.',proto:'',filter:'DIFF-NA-POLYP',note:'Histologically distinct from inflammatory polyp. May respond to corticosteroids.'},
@@ -541,7 +636,7 @@ const DB = {
     {id:'LES-CO-DRY-KENNEL',loc:'LOC-CO-DRY',loc_name:'Dry / Unproductive cough',sp:'Dog',cat:'Infectious',sub:'Kennel cough (CIRD)',urg:'Low',signs:'Recent boarding/shelter. Paroxysmal honking cough. Tracheal pinch positive. Otherwise well.',proto:'',filter:'DIFF-CO-DRY',note:'Bordetella, parainfluenza, adenovirus-2. Usually self-limiting.'},
     {id:'LES-CO-DRY-BRON',loc:'LOC-CO-DRY',loc_name:'Dry / Unproductive cough',sp:'Dog',cat:'Inflammatory',sub:'Chronic bronchitis',urg:'Moderate',signs:'Daily cough >2 months. No other cause. Older small breed.',proto:'',filter:'DIFF-CO-DRY',note:'Diagnosis of exclusion. BAL: non-septic inflammation.'},
     {id:'LES-CO-DRY-ASTHMA',loc:'LOC-CO-DRY',loc_name:'Dry / Unproductive cough',sp:'Cat',cat:'Inflammatory',sub:'Feline asthma / bronchial disease',urg:'High',signs:'Young to middle-aged cat. Expiratory effort, wheeze. Episodic. May have acute crisis.',proto:'',filter:'DIFF-CO-DRY',note:'CXR: bronchial pattern, hyperinflation. Can be EMERGENCY if severe bronchospasm.'},
-    {id:'LES-CO-WET-PNEUM',loc:'LOC-CO-WET',loc_name:'Wet / Productive cough',sp:'Dog + Cat',cat:'Infectious',sub:'Bacterial / aspiration pneumonia',urg:'High',signs:'Pyrexia, productive cough, crackles. Ventral CXR distribution if aspiration.',proto:'',filter:'DIFF-CO-WET',note:'Check underlying cause: megaoesophagus, laryngeal paralysis, recent GA.'},
+    {id:'LES-CO-WET-PNEUM',loc:'LOC-CO-WET',loc_name:'Wet / Productive cough',sp:'Dog + Cat',cat:'Infectious',sub:'Bacterial / aspiration pneumonia',urg:'High',signs:'Pyrexia, productive cough, crackles. Ventral CXR distribution if aspiration. Common: Bordetella, Pasteurella, Streptococcus, E. coli, Mycoplasma.',proto:'',filter:'DIFF-CO-WET',note:'Mycoplasma: important in cats. Always check underlying aspiration cause (megaoesophagus, laryngeal paralysis, recent GA).'},
     {id:'LES-CO-WET-BRON',loc:'LOC-CO-WET',loc_name:'Wet / Productive cough',sp:'Dog',cat:'Structural',sub:'Bronchiectasis',urg:'Moderate',signs:'Chronic productive cough. Recurrent pneumonia. Irreversible airway dilation.',proto:'',filter:'DIFF-CO-WET',note:'End-stage chronic bronchial disease or ciliary dyskinesia.'},
     {id:'LES-CO-WET-PARA',loc:'LOC-CO-WET',loc_name:'Wet / Productive cough',sp:'Dog + Cat',cat:'Parasitic',sub:'Lungworm (Angiostrongylus / Aelurostrongylus)',urg:'Moderate',signs:'Young dog with outdoor access. Coagulopathy possible (Angiostrongylus).',proto:'',filter:'DIFF-CO-WET',note:'Life-threatening coagulopathy possible. Baermann faecal test.'},
     {id:'LES-CO-WET-OEDE',loc:'LOC-CO-WET',loc_name:'Wet / Productive cough',sp:'Dog',cat:'Cardiac',sub:'Cardiogenic pulmonary oedema',urg:'EMERGENCY',signs:'Crackles, murmur, tachypnoea, pink frothy fluid. Perihilar pattern on CXR.',proto:'PROT-RESP',filter:'DIFF-CO-WET',note:'Dogs cough with pulmonary oedema. Cats do NOT.'},
@@ -727,7 +822,7 @@ const DB = {
     {id:'D-CO-D3',filter:'DIFF-CO-DRY',loc:'Airway',sp:'Dog',order:3,name:'Kennel cough (CIRD)',feat:'Recent boarding/shelter, paroxysmal cough, tracheal pinch positive',minDx:'Clinical presentation',addDx:'Respiratory PCR panel',dis:''},
     {id:'D-CO-D4',filter:'DIFF-CO-DRY',loc:'Airway',sp:'Dog',order:4,name:'Chronic bronchitis',feat:'Daily cough >2 months, older small breed, diagnosis of exclusion',minDx:'CXR, BAL + cytology',addDx:'CT, bronchoscopy',dis:''},
     {id:'D-CO-D5',filter:'DIFF-CO-DRY',loc:'Airway',sp:'Cat',order:5,name:'Feline asthma',feat:'Young-middle aged cat, expiratory effort, wheeze, episodic',minDx:'CXR (bronchial pattern, hyperinflation)',addDx:'BAL',dis:''},
-    {id:'D-CO-W1',filter:'DIFF-CO-WET',loc:'Lung',sp:'Dog + Cat',order:1,name:'Bacterial / aspiration pneumonia',feat:'Pyrexia, productive cough, crackles, ventral CXR distribution',minDx:'CXR, haematology, BAL + culture',addDx:'Check aspiration cause',dis:''},
+    {id:'D-CO-W1',filter:'DIFF-CO-WET',loc:'Lung',sp:'Dog + Cat',order:1,name:'Bacterial / aspiration pneumonia',feat:'Pyrexia, productive cough, crackles, ventral CXR distribution. Common: Bordetella, Pasteurella, Streptococcus, E. coli, Mycoplasma (esp. cats).',minDx:'CXR, haematology, BAL + culture',addDx:'Check aspiration cause (megaoesophagus, LP, recent GA)',dis:''},
     {id:'D-CO-W2',filter:'DIFF-CO-WET',loc:'Lung',sp:'Dog',order:2,name:'Lungworm (Angiostrongylus vasorum)',feat:'Young dog, outdoor access, coagulopathy possible',minDx:'Baermann faecal, Angio Detect SNAP',addDx:'CXR, coagulation panel',dis:''},
     {id:'D-CO-W3',filter:'DIFF-CO-WET',loc:'Lung',sp:'Dog',order:3,name:'Cardiogenic pulmonary oedema',feat:'Murmur, crackles, perihilar CXR pattern, pink frothy fluid',minDx:'CXR, auscultation, NT-proBNP',addDx:'Echocardiography',dis:''},
     {id:'D-CO-W4',filter:'DIFF-CO-WET',loc:'Lung',sp:'Dog + Cat',order:4,name:'Pulmonary neoplasia',feat:'Chronic cough, weight loss, haemoptysis',minDx:'CXR (3 views), CT',addDx:'FNA, histopathology',dis:''},
@@ -764,7 +859,29 @@ const DB = {
     {id:'D-AT-CB3',filter:'DIFF-AT-CEREB',loc:'Cerebellum',sp:'Dog + Cat',order:3,name:'Cerebellar neoplasia',feat:'Progressive. Older. Medulloblastoma (young), meningioma.',minDx:'MRI',addDx:'CT staging',dis:''},
     {id:'D-AT-CB4',filter:'DIFF-AT-CEREB',loc:'Cerebellum',sp:'Dog',order:4,name:'Cerebellar abiotrophy',feat:'Breed-specific. Young. Progressive.',minDx:'MRI (cerebellar atrophy), breed + age',addDx:'Genetic testing if available',dis:''},
     {id:'D-AT-CB5',filter:'DIFF-AT-CEREB',loc:'Cerebellum',sp:'Dog + Cat',order:5,name:'Metronidazole / drug toxicity',feat:'History of drug. Dose-dependent. Reversible.',minDx:'Drug history, clinical response to withdrawal',addDx:'MRI (bilateral symmetric lesions)',dis:''},
-    {id:'D-AT-CB6',filter:'DIFF-AT-CEREB',loc:'Cerebellum',sp:'Dog + Cat',order:6,name:'Cerebellar infarct',feat:'Peracute. Non-progressive. Rostral cerebellar artery.',minDx:'MRI',addDx:'Screen for underlying disease (HAC, CKD)',dis:''}
+    {id:'D-AT-CB6',filter:'DIFF-AT-CEREB',loc:'Cerebellum',sp:'Dog + Cat',order:6,name:'Cerebellar infarct',feat:'Peracute. Non-progressive. Rostral cerebellar artery.',minDx:'MRI',addDx:'Screen for underlying disease (HAC, CKD)',dis:''},
+    {id:'D-PA-BC1',filter:'DIFF-PA-BACT',loc:'Lung',sp:'Dog + Cat',order:1,name:'Community-acquired bacterial pneumonia',feat:'Bordetella, Pasteurella, Streptococcus, E. coli, Mycoplasma. Pyrexia, productive cough, crackles, leucocytosis.',minDx:'CXR, haematology, BAL + culture + sensitivity',addDx:'Mycoplasma PCR if cat with chronic lower airway signs',dis:''},
+    {id:'D-PL-TR1',filter:'DIFF-PL-TRANS',loc:'Pleural',sp:'Dog + Cat',order:1,name:'Severe hypoalbuminaemia',feat:'Albumin <15g/L. PLE, PLN, liver failure. Often combined with portal hypertension.',minDx:'Serum albumin, urinalysis (UPC)',addDx:'Abdominal US, GI biopsy if PLE suspected',dis:''},
+    {id:'D-PL-TR2',filter:'DIFF-PL-TRANS',loc:'Pleural',sp:'Dog + Cat',order:2,name:'Venous/lymphatic hypertension (non-exfoliating neoplasia)',feat:'Mass compressing venous return or lymphatics without exfoliating cells into fluid.',minDx:'CT thorax, thoracic US',addDx:'FNA if mass accessible',dis:''},
+    {id:'D-PL-TR3',filter:'DIFF-PL-TRANS',loc:'Pleural',sp:'Dog + Cat',order:3,name:'Lung lobe torsion',feat:'Acute dyspnoea, consolidated opaque lung lobe on CXR. Whippet, Afghan, deep-chested breeds.',minDx:'CXR (consolidated lobe, positional shift), CT',addDx:'Surgery (lobectomy)',dis:''},
+    {id:'D-PL-MT1',filter:'DIFF-PL-MODTRANS',loc:'Pleural',sp:'Dog',order:1,name:'Biventricular / right-sided heart failure',feat:'Jugular distension, hepatomegaly, ascites. Effusion often less severe than ascites.',minDx:'Echocardiography, NT-proBNP, CXR',addDx:'',dis:''},
+    {id:'D-PL-MT2',filter:'DIFF-PL-MODTRANS',loc:'Pleural',sp:'Cat',order:2,name:'Left or right heart failure (any cardiomyopathy)',feat:'Cat effusions associated with worse left atrial function. HCM, DCM, RCM.',minDx:'FAST echo, NT-proBNP',addDx:'Full echocardiography',dis:''},
+    {id:'D-PL-MT3',filter:'DIFF-PL-MODTRANS',loc:'Pleural',sp:'Dog + Cat',order:3,name:'Non-exfoliating neoplasia',feat:'Mass causing venous or lymphatic obstruction without shedding cells into fluid.',minDx:'CT thorax',addDx:'FNA/biopsy',dis:''},
+    {id:'D-PL-MT4',filter:'DIFF-PL-MODTRANS',loc:'Pleural',sp:'Dog + Cat',order:4,name:'Pleural inflammation (non-septic)',feat:'Inflammation affecting pleural vasculature increases permeability.',minDx:'Fluid cytology, CT',addDx:'Culture to rule out sepsis',dis:''},
+    {id:'D-PL-EX1',filter:'DIFF-PL-EXU',loc:'Pleural',sp:'Dog + Cat',order:1,name:'Pyothorax (septic exudate)',feat:'Foul-smelling fluid, degenerate neutrophils + bacteria on cytology. Febrile, toxic.',minDx:'Thoracocentesis + cytology + culture (aerobic + anaerobic)',addDx:'CT thorax',dis:''},
+    {id:'D-PL-EX2',filter:'DIFF-PL-EXU',loc:'Pleural',sp:'Cat',order:2,name:'FIP — effusive form',feat:'Yellow viscous high-protein fluid but low TNCC (<5,000). Hyperglobulinaemia, Rivalta positive.',minDx:'Fluid analysis (A:G ratio, Rivalta), serology',addDx:'PCR on fluid, alpha-1 AGP',dis:''},
+    {id:'D-PL-EX3',filter:'DIFF-PL-EXU',loc:'Pleural',sp:'Dog + Cat',order:3,name:'Neoplastic effusion (exudative)',feat:'Neoplastic cells on cytology. Concurrent inflammation from tumour necrosis.',minDx:'Fluid cytology',addDx:'CT staging, histopathology',dis:''},
+    {id:'D-PL-EX4',filter:'DIFF-PL-EXU',loc:'Pleural',sp:'Dog + Cat',order:4,name:'Ruptured viscus / GI perforation',feat:'Septic peritonitis extending to pleural space, or diaphragmatic hernia with GI compromise.',minDx:'Fluid cytology (bacteria, food material, degenerate neutrophils)',addDx:'CT, surgery',dis:''},
+    {id:'D-PL-CH1',filter:'DIFF-PL-CHYL',loc:'Pleural',sp:'Cat',order:1,name:'Cardiac disease (most common cause in cats)',feat:'HCM, DCM, RCM. Elevated venous pressure impedes thoracic duct drainage.',minDx:'Echocardiography',addDx:'Fluid triglycerides vs serum triglycerides',dis:''},
+    {id:'D-PL-CH2',filter:'DIFF-PL-CHYL',loc:'Pleural',sp:'Dog + Cat',order:2,name:'Idiopathic chylothorax',feat:'No underlying cause found. Afghan Hound, Shiba Inu predisposed (dogs).',minDx:'Fluid triglycerides >2× serum, rule out cardiac/neoplastic cause',addDx:'CT angiography',dis:''},
+    {id:'D-PL-CH3',filter:'DIFF-PL-CHYL',loc:'Pleural',sp:'Dog + Cat',order:3,name:'Mediastinal mass (thymoma, lymphoma)',feat:'Cranial mediastinal mass compressing or invading thoracic duct.',minDx:'CXR, thoracic US, FNA',addDx:'CT staging',dis:''},
+    {id:'D-PL-CH4',filter:'DIFF-PL-CHYL',loc:'Pleural',sp:'Dog + Cat',order:4,name:'Thoracic duct rupture / trauma',feat:'History of trauma or thoracic surgery.',minDx:'CT angiography, history',addDx:'',dis:''},
+    {id:'D-PL-HM1',filter:'DIFF-PL-HAEM',loc:'Pleural',sp:'Dog + Cat',order:1,name:'Trauma',feat:'History of RTA, fall, penetrating wound. Rib fractures on CXR.',minDx:'CXR, FAST, PCV of fluid',addDx:'CT',dis:''},
+    {id:'D-PL-HM2',filter:'DIFF-PL-HAEM',loc:'Pleural',sp:'Dog',order:2,name:'Haemangiosarcoma (ruptured)',feat:'Older dog, GSD, Golden. Concurrent splenic/hepatic mass. Serosanguineous fluid.',minDx:'Abdominal + thoracic US, fluid cytology',addDx:'CT staging',dis:''},
+    {id:'D-PL-HM3',filter:'DIFF-PL-HAEM',loc:'Pleural',sp:'Dog + Cat',order:3,name:'Coagulopathy (anticoagulant rodenticide)',feat:'History of bait access. Prolonged PT/aPTT. Petechiae, ecchymoses.',minDx:'PT/aPTT, coagulation panel',addDx:'PIVKA (proteins invoked by vitamin K absence/antagonism)',dis:''},
+    {id:'D-PL-HM4',filter:'DIFF-PL-HAEM',loc:'Pleural',sp:'Dog + Cat',order:4,name:'Pericardial disease with haemorrhage',feat:'Idiopathic pericarditis or cardiac mass (haemangiosarcoma, chemodectoma).',minDx:'FAST echo, pericardiocentesis',addDx:'Echocardiography, fluid cytology',dis:''},
+    {id:'D-PL-MS1',filter:'DIFF-PL-MASS',loc:'Pleural',sp:'Cat',order:1,name:'Mediastinal lymphoma',feat:'Young cat, non-compressible cranial thorax, FeLV association, hypercalcaemia possible.',minDx:'FNA, FeLV/FIV, ionised calcium',addDx:'Flow cytometry, PARR',dis:''},
+    {id:'D-PL-MS2',filter:'DIFF-PL-MASS',loc:'Pleural',sp:'Dog + Cat',order:2,name:'Thymoma',feat:'Older animal, may cause paraneoplastic MG, exfoliative dermatitis (cat).',minDx:'CXR, FNA, AChR titre if weakness',addDx:'CT staging',dis:''}
   ],
 
   disease_page: [
@@ -815,7 +932,19 @@ let currentNav = 0;
 function $(id){return document.getElementById(id);}
 function SI(){return $('screen-inner');}
 
-function render(html){SI().innerHTML=html;$('screen').scrollTop=0;}
+var slideDir='right';
+var currentNoteKey='general';
+var currentNoteTitle='General Notes';
+function render(html){
+  var si=SI();
+  si.classList.remove('slide-in-right','slide-in-left');
+  si.innerHTML=html;
+  $('screen').scrollTop=0;
+  // Force reflow so the animation restarts
+  void si.offsetWidth;
+  si.classList.add(slideDir==='left'?'slide-in-left':'slide-in-right');
+  slideDir='right'; // reset to default forward direction
+}
 
 function setTopbar(title, showBack){
   $('back-btn').classList.toggle('show', showBack && history.length>0);
@@ -829,6 +958,7 @@ function goBack(){
   if(!history.length)return;
   history.pop();
   const prev = history[history.length-1];
+  slideDir='left'; // back = slide from left
   if(prev){prev.fn(); setTopbar(prev.title, history.length>0);}
   else{navTo(currentNav,true);}
 }
@@ -836,6 +966,8 @@ function goBack(){
 function navTo(n, noHistory){
   currentNav=n;
   if(!noHistory) history.length=0;
+  var tabNames=['Localise','Lesion','Differentials','Disease','Protocols'];
+  currentNoteKey='tab-'+n; currentNoteTitle=tabNames[n]+' — General';
   for(let i=0;i<5;i++) $('nav-'+i).classList.toggle('active',i===n);
   setTopbar('',false);
   if(n===0) renderLocalise();
@@ -868,6 +1000,26 @@ function urgClass(u){
   return'';
 }
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ── NOTES ──
+function notesBox(key){
+  const saved = localStorage.getItem('cliniq-note-'+key)||'';
+  return `
+  <div class="notes-box">
+    <div class="notes-header">
+      <div class="notes-label">📝 My Notes</div>
+      <div class="notes-saved" id="notes-saved-${key}">✓ Saved</div>
+    </div>
+    <textarea id="notes-${key}" placeholder="Add your personal notes for this page..." oninput="saveNote('${key}')">${esc(saved)}</textarea>
+  </div>`;
+}
+function saveNote(key){
+  var el=document.getElementById('notes-'+key);
+  if(!el)return;
+  localStorage.setItem('cliniq-note-'+key, el.value);
+  var badge=document.getElementById('notes-saved-'+key);
+  if(badge){badge.classList.add('show');setTimeout(function(){badge.classList.remove('show');},1500);}
+}
 
 // ── HOME / LOCALISE ───────────────────────────────────────────────────────────
 function renderLocalise(){
@@ -942,7 +1094,7 @@ function renderDyspFlow(){
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;">
       <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="renderInsp()">🔵 Inspiratory<br><span style="font-size:9px;opacity:.7">tap ↓</span></div>
       <div class="flow-node exp" style="cursor:pointer;font-size:11px;" onclick="renderExpFlow()">🟢 Expiratory<br><span style="font-size:9px;opacity:.7">± wheeze ± cough</span></div>
-      <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="renderRestFlow()">🟡 Restrictive<br><span style="font-size:9px;opacity:.7">rapid, shallow</span></div>
+      <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="renderRestFlow()">🟡 Restrictive<br><span style="font-size:9px;opacity:.7">rapid, shallow · muffled sounds</span></div>
       <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="renderMixedFlow()">🔴 Mixed<br><span style="font-size:9px;opacity:.7">both phases</span></div>
     </div>
 
@@ -1055,11 +1207,11 @@ function renderRest(){
   render(`
   <div class="fn fn-rest">🟡 RESTRICTIVE PATTERN — rapid, shallow</div>
   <div class="fn-arrow">↓</div>
-  <div class="fn fn-step">AUSCULTATION</div>
+  <div class="fn fn-step">AUSCULTATION + PERCUSSION</div>
   <div class="fn-arrow">↓</div>
   <div class="fn-row">
     <div class="fn-ep fn-ep-pleural" onclick="goLocEp('LOC-PLEURAL','Pleural cavity','Pleural space','fn-ep-pleural')">
-      <div class="ep-sys">Reduced lung sounds</div>
+      <div class="ep-sys">Muffled / absent lung sounds</div>
       <div class="ep-loc">Pleural cavity</div>
       <div class="ep-badge">⚠️ EMERGENCY</div>
     </div>
@@ -1868,28 +2020,49 @@ function renderSubTypeDetail(id){
   const l = DB.lesion_type.find(x=>x.id===id);
   if(!l)return;
   document.getElementById('topbar-title').textContent = l.sub.slice(0,30)+(l.sub.length>30?'…':'');
+  currentNoteKey=id; currentNoteTitle=l.sub;
 
   const diffs = DB.differentials.filter(d=>d.filter===l.filter).sort((a,b)=>a.order-b.order);
   const isEM = l.urg === 'EMERGENCY';
 
+  // Collect unique diagnostic tests from differentials
+  const dxTests = new Set();
+  diffs.forEach(d=>{
+    if(d.minDx) d.minDx.split(',').forEach(t=>dxTests.add(t.trim()));
+    if(d.addDx) d.addDx.split(',').forEach(t=>{if(t.trim())dxTests.add(t.trim());});
+  });
+
   render(`
   ${isEM ? '<div class="em-alert">⚠️ EMERGENCY — initiate stabilisation before full diagnostic workup</div>' : ''}
   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">${urgTag(l.urg)}${spTag(l.sp)}<span class="tag tag-sp-all">${esc(l.cat)}</span></div>
-  <div class="detail-label">Key clinical signs</div>
-  <div class="detail-val highlight">${esc(l.signs)}</div>
-  ${l.note?'<div class="detail-label">Clinical note</div><div class="detail-val">'+esc(l.note)+'</div>':''}
 
   ${l.proto?`
-  <hr class="sep">
-  <div class="card" onclick="renderProtoDetail('${l.proto}')">
+  <div class="card" style="margin-bottom:14px;" onclick="renderProtoDetail('${l.proto}')">
     <div class="card-row"><div><div class="card-title">⚡ Protocol: ${esc(l.proto)}</div><div class="card-sub">Tap to open step-by-step protocol</div></div><div class="card-arrow">›</div></div>
+  </div>`:''}
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Etiology</div>
+    <div style="font-size:12px;color:var(--white);line-height:1.6;">${esc(l.sub)}</div>
+    <div style="font-size:11px;color:var(--gray);line-height:1.5;margin-top:4px;">${esc(l.cat)} — ${esc(l.sp)}</div>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Pathophysiology</div>
+    <div style="font-size:12px;color:var(--gray);line-height:1.6;">${esc(l.signs)}</div>
+    ${l.note?'<div style="font-size:11px;color:var(--gray);line-height:1.5;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">'+esc(l.note)+'</div>':''}
+  </div>
+
+  ${dxTests.size?`
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Diagnostic Investigation</div>
+    <div style="font-size:11px;color:var(--gray);line-height:1.7;">${[...dxTests].map(t=>'<span style="display:inline-block;background:rgba(20,184,166,0.08);border:1px solid rgba(20,184,166,0.2);border-radius:6px;padding:3px 8px;margin:2px 3px 2px 0;font-size:10px;">'+esc(t)+'</span>').join('')}</div>
   </div>`:''}
 
   <hr class="sep">
   <div class="stitle">${diffs.length} differential${diffs.length!==1?'s':''} — tap each for diagnostics + disease page</div>
 
-  ${diffs.length ? renderDiffFlowchart(diffs, l.sub) : '<div class="empty"><p>No differentials listed yet for this sub-type.</p></div>'}
-  `);
+  ${diffs.length ? renderDiffFlowchart(diffs, l.sub) : '<div class="empty"><p>No differentials listed yet for this sub-type.</p></div>'}  `);
 }
 
 function renderDiffFlowchart(diffs, subName){
@@ -1953,6 +2126,7 @@ function renderDiffDetail(id){
   const d = DB.differentials.find(x=>x.id===id);
   if(!d)return;
   push(()=>renderDiffDetail(id), d.name.slice(0,30)+(d.name.length>30?'…':''));
+  currentNoteKey=id; currentNoteTitle=d.name;
   const dis = d.dis ? DB.disease_page.find(x=>x.id===d.dis) : null;
   render(`
   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">${spTag(d.sp)}</div>
@@ -1965,8 +2139,7 @@ function renderDiffDetail(id){
   <hr class="sep">
   <div class="card" onclick="renderDiseasePage('${dis.id}')">
     <div class="card-row"><div><div class="card-title">📋 ${esc(dis.name)}</div><div class="card-sub">Open full disease page</div></div><div class="card-arrow">›</div></div>
-  </div>`:''}
-  `);
+  </div>`:''}  `);
 }
 
 // ── DISEASE HOME ──────────────────────────────────────────────────────────────
@@ -2034,8 +2207,7 @@ function renderDiseasePage(id){
   <div class="detail-val">${esc(d.monitor)}</div>
   <div class="detail-label">Prognosis</div>
   <div class="detail-val">${esc(d.prog)}</div>
-  <div class="pearl">💡 Clinical pearls: ${esc(d.pearl)}</div>
-  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  <div class="pearl">💡 Clinical pearls: ${esc(d.pearl)}</div>  <div class="disclaimer">For qualified veterinary professionals only.</div>
   `);
 }
 
@@ -2076,8 +2248,7 @@ function renderProtoDetail(id){
       ${s.branch?`<div class="step-branch">↳ ${esc(s.branch)}</div>`:''}
       ${s.flag?`<div class="step-flag">${esc(s.flag)}</div>`:''}
     </div>
-  </div>`).join('')}
-  <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
+  </div>`).join('')}  <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
   `);
 }
 
@@ -2176,8 +2347,8 @@ function goLesionTab(locId, locName){
         html += `<div onclick="renderSubTypeDetail('${l.id}')" style="border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;border:1.5px solid ${cBd(cat)};background:${cBg(cat)};color:${cTx(cat)};cursor:pointer;transition:all .2s;line-height:1.3;word-break:break-word;" onmouseover="this.style.filter='brightness(1.2)'" onmouseout="this.style.filter=''">
           ${esc(l.sub)}${em}
           ${l.note?'<div style="margin-top:3px;font-weight:400;font-size:9px;opacity:.7;">'+esc(l.note.slice(0,50))+(l.note.length>50?'\u2026':'')+'</div>':''}
-          ${dc?'<div style="margin-top:4px;font-size:9px;font-weight:500;color:var(--teal-light);opacity:.9;">'+dc+' Differential'+(dc!==1?'s':'')+' \u203a</div>':''}
         </div>`;
+        if(dc){html += `<div onclick="renderSubTypeDetail('${l.id}')" style="text-align:center;font-size:9px;font-weight:500;color:var(--teal-light);cursor:pointer;padding:2px 0;opacity:.8;">${dc} Differential${dc!==1?'s':''} \u203a</div>`;}
       });
       html += '</div>';
     });
@@ -3429,6 +3600,70 @@ function renderDxAtaxia(){
   <div class="disclaimer">For qualified veterinary professionals only.</div>
   `);
 }
+
+// ── NOTES SIDEBAR ────────────────────────────────────────────────────────────
+function toggleNotes(){
+  var p=$('notes-panel'),o=$('notes-overlay');
+  var open=p.classList.toggle('open');
+  o.classList.toggle('open',open);
+  if(open) loadNotes();
+}
+function noteCmd(cmd,val){
+  document.execCommand(cmd,false,val||null);
+  $('notes-editor').focus();
+  saveNotes();
+}
+function saveNotes(){
+  try{
+    var html=$('notes-editor').innerHTML;
+    localStorage.setItem('cliniq-note-'+currentNoteKey,html);
+    $('notes-status').textContent='Saved';
+    setTimeout(function(){$('notes-status').textContent='Saved locally';},1000);
+  }catch(e){}
+}
+function loadNotes(){
+  try{
+    var ctx=$('notes-context');
+    if(ctx) ctx.textContent=currentNoteTitle;
+    var html=localStorage.getItem('cliniq-note-'+currentNoteKey);
+    $('notes-editor').innerHTML=html||'';
+  }catch(e){}
+}
+function clearNotes(){
+  if(confirm('Clear notes for this page?')){
+    $('notes-editor').innerHTML='';
+    try{localStorage.removeItem('cliniq-note-'+currentNoteKey);}catch(e){}
+    $('notes-status').textContent='Cleared';
+  }
+}
+function exportNotes(){
+  var text=$('notes-editor').innerText;
+  if(!text.trim()){$('notes-status').textContent='Nothing to copy';return;}
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(text).then(function(){
+      $('notes-status').textContent='Copied!';
+    }).catch(function(){fallbackCopy(text);});
+  }else{fallbackCopy(text);}
+}
+function fallbackCopy(text){
+  var ta=document.createElement('textarea');
+  ta.value=text;ta.style.position='fixed';ta.style.left='-9999px';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');$('notes-status').textContent='Copied!';}
+  catch(e){$('notes-status').textContent='Copy failed';}
+  document.body.removeChild(ta);
+}
+// Auto-save on input
+document.addEventListener('DOMContentLoaded',function(){
+  var ed=$('notes-editor');
+  if(ed){
+    ed.addEventListener('input',function(){
+      clearTimeout(ed._saveTimer);
+      ed._saveTimer=setTimeout(saveNotes,500);
+    });
+    loadNotes();
+  }
+});
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 window.onerror=function(m,u,l){var e=document.getElementById('screen-inner');if(e)e.innerHTML='<div style="padding:20px;color:#F87171;"><b>Error:</b><br>'+m+'<br>Line: '+l+'</div>';};
