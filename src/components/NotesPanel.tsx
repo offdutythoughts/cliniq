@@ -6,15 +6,16 @@ interface Props {
   onClose: () => void
   noteTitle: string
   status: string
+  isReady: boolean
   editorRef: RefObject<HTMLDivElement | null>
-  onSave: () => void
+  onInput: () => void
   onCmd: (cmd: string, val?: string) => void
   onClear: () => void
   onExport: () => void
 }
 
 export default function NotesPanel({
-  isOpen, onClose, noteTitle, status, editorRef, onSave, onCmd, onClear, onExport
+  isOpen, onClose, noteTitle, status, isReady, editorRef, onInput, onCmd, onClear, onExport
 }: Props) {
   return (
     <>
@@ -70,12 +71,16 @@ export default function NotesPanel({
         </div>
 
         <div className="notes-body">
+          {!isReady && (
+            <div style={{padding:'16px',fontSize:'12px',color:'var(--gray)'}}>Loading…</div>
+          )}
           <div
             className="notes-editor"
             ref={editorRef}
             contentEditable
             suppressContentEditableWarning
-            onInput={onSave}
+            onInput={onInput}
+            style={isReady ? undefined : { display: 'none' }}
           />
         </div>
 

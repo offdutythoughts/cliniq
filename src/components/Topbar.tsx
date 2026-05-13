@@ -1,5 +1,6 @@
 'use client'
 
+import { Authenticated } from 'convex/react'
 import AccountMenu from './AccountMenu'
 
 interface Props {
@@ -22,7 +23,9 @@ export default function Topbar({ title, showBack, onBack, onToggleNotes }: Props
         Vet use only
       </div>
       <div className={`topbar-title${title ? ' show' : ''}`}>{title}</div>
-      <button className="notes-topbar-btn" onClick={onToggleNotes}>📝 Notes</button>
+      <Authenticated>
+        <button className="notes-topbar-btn" onClick={onToggleNotes}>📝 Notes</button>
+      </Authenticated>
       <AccountMenu />
     </div>
   )

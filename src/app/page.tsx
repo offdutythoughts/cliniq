@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import Topbar from '../components/Topbar'
 import BottomNav from '../components/BottomNav'
 import NotesPanel from '../components/NotesPanel'
+import { useNotes } from '../hooks/useNotes'
 import { initCliniqApp, mountGlobals, navTo, renderLocalise } from '../lib/cliniqApp'
 import type { Tab } from '../types'
 
@@ -13,13 +14,13 @@ export default function Page() {
   const [showBack, setShowBack] = useState(false)
   const [activeTab, setActiveTab] = useState<Tab>(0)
   const [notesOpen, setNotesOpen] = useState(false)
-  const [notesStatus, setNotesStatus] = useState('Saved locally')
-  const [noteKey, setNoteKey] = useState('tab-0')
-  const [noteTitle, setNoteTitle] = useState('Clinical — General')
-  const editorRef = useRef<HTMLDivElement>(null)
+  const [pageKey, setPageKey] = useState('tab-0')
+  const [pageTitle, setPageTitle] = useState('Clinical — General')
   const screenRef = useRef<HTMLDivElement>(null)
   const innerRef = useRef<HTMLDivElement>(null)
   const animTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const notes = useNotes(pageKey, pageTitle, notesOpen)
 
   useEffect(() => {
     // Apply theme before render to avoid flash
@@ -38,10 +39,11 @@ export default function Page() {
       },
       (tab) => {
         setActiveTab(tab as Tab)
-        const tabNames = ['Clinical', 'Diagnostic', 'Disease', 'Protocols', 'Settings']
-        setNoteKey('tab-' + tab)
-        setNoteTitle(tabNames[tab] + ' — General')
-      }
+      },
+      (key, title) => {
+        setPageKey(key)
+        setPageTitle(title)
+      },
     )
     mountGlobals()
     renderLocalise()
@@ -60,60 +62,9 @@ export default function Page() {
     navTo(tab, false)
   }, [])
 
-  // Notes
-  const loadNotes = useCallback(() => {
-    if (!editorRef.current) return
-    const saved = localStorage.getItem('cliniq-note-' + noteKey)
-    editorRef.current.innerHTML = saved || ''
-  }, [noteKey])
-
-  const saveNotes = useCallback(() => {
-    if (!editorRef.current) return
-    try {
-      localStorage.setItem('cliniq-note-' + noteKey, editorRef.current.innerHTML)
-      setNotesStatus('Saved')
-      setTimeout(() => setNotesStatus('Saved locally'), 1000)
-    } catch {}
-  }, [noteKey])
-
   const handleToggleNotes = useCallback(() => {
-    setNotesOpen(v => {
-      const next = !v
-      if (next) setTimeout(loadNotes, 0)
-      return next
-    })
-  }, [loadNotes])
-
-  const noteCmd = useCallback((cmd: string, val?: string) => {
-    document.execCommand(cmd, false, val ?? undefined)
-    editorRef.current?.focus()
-    saveNotes()
-  }, [saveNotes])
-
-  const clearNotes = useCallback(() => {
-    if (!confirm('Clear notes for this page?')) return
-    if (editorRef.current) editorRef.current.innerHTML = ''
-    try { localStorage.removeItem('cliniq-note-' + noteKey) } catch {}
-    setNotesStatus('Cleared')
-  }, [noteKey])
-
-  const exportNotes = useCallback(() => {
-    const text = editorRef.current?.innerText ?? ''
-    if (!text.trim()) { setNotesStatus('Nothing to copy'); return }
-    if (navigator.clipboard?.writeText) {
-      navigator.clipboard.writeText(text).then(() => setNotesStatus('Copied!')).catch(() => fallbackCopy(text))
-    } else {
-      fallbackCopy(text)
-    }
+    setNotesOpen((v) => !v)
   }, [])
-
-  function fallbackCopy(text: string) {
-    const ta = document.createElement('textarea')
-    ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px'
-    document.body.appendChild(ta); ta.select()
-    try { document.execCommand('copy'); setNotesStatus('Copied!') } catch { setNotesStatus('Copy failed') }
-    document.body.removeChild(ta)
-  }
 
   return (
     <div style={{display:'flex',flexDirection:'column',height:'100%'}}>
@@ -140,13 +91,14 @@ export default function Page() {
       <NotesPanel
         isOpen={notesOpen}
         onClose={handleToggleNotes}
-        noteTitle={noteTitle}
-        status={notesStatus}
-        editorRef={editorRef}
-        onSave={saveNotes}
-        onCmd={noteCmd}
-        onClear={clearNotes}
-        onExport={exportNotes}
+        noteTitle={pageTitle}
+        status={notes.status}
+        isReady={notes.isReady}
+        editorRef={notes.editorRef}
+        onInput={notes.onInput}
+        onCmd={notes.onCmd}
+        onClear={notes.onClear}
+        onExport={notes.onExport}
       />
     </div>
   )

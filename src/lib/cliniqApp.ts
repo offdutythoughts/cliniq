@@ -51,10 +51,12 @@ import {
 type SetContent = (html: string, dir: 'left' | 'right') => void
 type SetTopbar = (title: string, showBack: boolean) => void
 type SetTab = (tab: number) => void
+type SetPage = (pageKey: string, pageTitle: string) => void
 
 let _setContent: SetContent = () => {}
 let _setTopbar: SetTopbar = () => {}
 let _setTab: SetTab = () => {}
+let _setPage: SetPage = () => {}
 
 // HMR resilience: restore callbacks from window if the module is hot-reloaded
 // (Turbopack re-evaluates the module on file save, resetting module-level vars)
@@ -63,15 +65,17 @@ if (typeof window !== 'undefined' && (window as any).__cliniqCbs) {
   _setContent = cb.c
   _setTopbar = cb.t
   _setTab = cb.s
+  if (cb.p) _setPage = cb.p
 }
 
-export function initCliniqApp(setContent: SetContent, setTopbarCb: SetTopbar, setTabCb: SetTab) {
+export function initCliniqApp(setContent: SetContent, setTopbarCb: SetTopbar, setTabCb: SetTab, setPageCb: SetPage) {
   _setContent = setContent
   _setTopbar = setTopbarCb
   _setTab = setTabCb
+  _setPage = setPageCb
   // Persist across HMR re-evaluations
   if (typeof window !== 'undefined') {
-    ;(window as any).__cliniqCbs = { c: setContent, t: setTopbarCb, s: setTabCb }
+    ;(window as any).__cliniqCbs = { c: setContent, t: setTopbarCb, s: setTabCb, p: setPageCb }
   }
 }
 
@@ -866,8 +870,8 @@ function $(id){ return document.getElementById(id); }
 
 // ── REACT-AWARE NAVIGATION ───────────────────────────────────────────────────
 var slideDir = 'right';
-var currentNoteKey = 'general';
-var currentNoteTitle = 'General Notes';
+var currentNoteKey = 'tab-0';
+var currentNoteTitle = 'Clinical — General';
 var currentNav = 0;
 var history = [];
 var openSystems = new Set();
@@ -877,10 +881,16 @@ if (typeof window !== 'undefined' && (window as any).__cliniqState) {
   currentNav = (window as any).__cliniqState.nav ?? 0;
 }
 
-function _cb() { return (typeof window !== 'undefined' && (window as any).__cliniqCbs) || { c: _setContent, t: _setTopbar, s: _setTab } }
+function _cb() { return (typeof window !== 'undefined' && (window as any).__cliniqCbs) || { c: _setContent, t: _setTopbar, s: _setTab, p: _setPage } }
+
+function _pageSlug(fnName) {
+  // 'renderRedEyeFlow' → 'redEyeFlow'
+  return fnName.replace(/^render/, '').replace(/^[A-Z]/, function(c){ return c.toLowerCase(); });
+}
 
 function render(html) {
   _cb().c(html, slideDir);
+  _cb().p(currentNoteKey, currentNoteTitle);
   slideDir = 'right';
 }
 
@@ -889,15 +899,29 @@ function setTopbar(title, showBack) {
 }
 
 var _goingBack = false;
-function push(fn, title) {
+function push(fn, title, key) {
   if (!_goingBack) history.push({ fn, title, nav: currentNav });
+  if (key !== undefined) {
+    currentNoteKey = key;
+    if (title) currentNoteTitle = title;
+  } else if (fn && fn.name) {
+    currentNoteKey = 'page:' + _pageSlug(fn.name);
+    currentNoteTitle = title || fn.name;
+  }
   setTopbar(title, history.length > 0);
 }
-function replace(fn, title) {
+function replace(fn, title, key) {
   if (history.length > 0) {
     history[history.length - 1] = { fn, title, nav: currentNav };
   } else {
     history.push({ fn, title, nav: currentNav });
+  }
+  if (key !== undefined) {
+    currentNoteKey = key;
+    if (title) currentNoteTitle = title;
+  } else if (fn && fn.name) {
+    currentNoteKey = 'page:' + _pageSlug(fn.name);
+    currentNoteTitle = title || fn.name;
   }
   setTopbar(title, history.length > 0);
 }
@@ -1000,26 +1024,6 @@ function urgClass(u){
   return'';
 }
 function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-
-// ── NOTES ──
-function notesBox(key){
-  const saved = localStorage.getItem('cliniq-note-'+key)||'';
-  return `
-  <div class="notes-box">
-    <div class="notes-header">
-      <div class="notes-label">📝 My Notes</div>
-      <div class="notes-saved" id="notes-saved-${key}">✓ Saved</div>
-    </div>
-    <textarea id="notes-${key}" placeholder="Add your personal notes for this page..." oninput="saveNote('${key}')">${esc(saved)}</textarea>
-  </div>`;
-}
-function saveNote(key){
-  var el=document.getElementById('notes-'+key);
-  if(!el)return;
-  localStorage.setItem('cliniq-note-'+key, el.value);
-  var badge=document.getElementById('notes-saved-'+key);
-  if(badge){badge.classList.add('show');setTimeout(function(){badge.classList.remove('show');},1500);}
-}
 
 // ── HOME / LOCALISE ───────────────────────────────────────────────────────────
 function renderLocalise(){
@@ -1263,7 +1267,8 @@ function renderRest(){
 }
 
 function goLocEp(locId, locName, system, cls){
-  push(()=>goLocEp(locId,locName,system,cls), locName);
+  push(()=>goLocEp(locId,locName,system,cls), locName, 'loc:'+locId);
+  currentNoteTitle = locName;
   const lesions = DB.lesion_type.filter(l=>l.loc===locId);
   render(`
   <div class="fn-ep ${cls}" style="cursor:default;margin-bottom:14px;">
@@ -1801,7 +1806,7 @@ function renderTrueVom(){
 function renderLesionDetail(id){
   const l = DB.lesion_type.find(x=>x.id===id);
   if(!l)return;
-  push(()=>renderLesionDetail(id), l.sub);
+  push(()=>renderLesionDetail(id), l.sub, 'lesion:'+id);
   const diffs = DB.differentials.filter(d=>d.filter===l.filter).sort((a,b)=>a.order-b.order);
   render(`
   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">${urgTag(l.urg)}${spTag(l.sp)}<span class="tag tag-sp-all">${esc(l.cat)}</span></div>
@@ -1858,7 +1863,8 @@ function renderLesionHome(){
 }
 
 function renderLesionFlow(locId, locName){
-  push(()=>renderLesionFlow(locId,locName), locName);
+  push(()=>renderLesionFlow(locId,locName), locName, 'loc:'+locId);
+  currentNoteTitle = locName;
   const allLesions = DB.lesion_type.filter(l=>l.loc===locId);
   const cats = [...new Set(allLesions.map(l=>l.cat))];
 
@@ -1911,7 +1917,8 @@ function renderLesionFlow(locId, locName){
 }
 
 function renderSubTypeFlow(locId, locName, cat){
-  push(()=>renderSubTypeFlow(locId,locName,cat), cat);
+  push(()=>renderSubTypeFlow(locId,locName,cat), cat, 'loc:'+locId+':'+cat);
+  currentNoteTitle = locName + ' — ' + cat;
   const items = DB.lesion_type.filter(l=>l.loc===locId && l.cat===cat);
 
   const URG_STYLE = {
@@ -1962,8 +1969,8 @@ function renderSubTypeDetail(id){
   if(!l)return;
   if(l.directDis && l.dis){ currentNav=2; _setTab(2); renderDiseasePage(l.dis); return; }
   const title = l.sub.slice(0,30)+(l.sub.length>30?'…':'');
-  push(()=>renderSubTypeDetail(id), title);
-  currentNoteKey=id; currentNoteTitle=l.sub;
+  push(()=>renderSubTypeDetail(id), title, 'lesion:'+id);
+  currentNoteTitle = l.sub;
 
   const diffs = DB.differentials.filter(d=>d.filter===l.filter).sort((a,b)=>a.order-b.order);
   const isEM = l.urg === 'EMERGENCY';
@@ -2090,8 +2097,8 @@ function filterDiffs(q){
 function renderDiffDetail(id){
   const d = DB.differentials.find(x=>x.id===id);
   if(!d)return;
-  push(()=>renderDiffDetail(id), d.name.slice(0,30)+(d.name.length>30?'…':''));
-  currentNoteKey=id; currentNoteTitle=d.name;
+  push(()=>renderDiffDetail(id), d.name.slice(0,30)+(d.name.length>30?'…':''), 'diff:'+id);
+  currentNoteTitle = d.name;
   const dis = d.dis ? DB.disease_page.find(x=>x.id===d.dis) : null;
   render(`
   <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">${spTag(d.sp)}</div>
@@ -2143,7 +2150,8 @@ function filterDiseases(q){
 function renderDiseasePage(id){
   const d = DB.disease_page.find(x=>x.id===id);
   if(!d){render('<div class="empty"><h3>Not found</h3><p>Disease page coming soon — add content in your Google Sheet.</p></div>');return;}
-  push(()=>renderDiseasePage(id), '');
+  push(()=>renderDiseasePage(id), '', 'disease:'+id);
+  currentNoteTitle = d.name;
   const C = (title,body)=>`<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;"><div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">${title}</div>${body}</div>`;
   const bul = (str)=>str.split('|').map(s=>{const t=s.trim();if(t.startsWith('#'))return '<div style="font-size:10px;font-weight:700;color:var(--teal-light);margin-top:8px;margin-bottom:2px;">▸ '+esc(t.slice(1).trim())+'</div>';if(t.startsWith('-'))return '<div style="display:flex;align-items:baseline;gap:4px;font-size:11px;color:var(--gray);line-height:1.5;padding-left:14px;margin-bottom:1px;"><span style="flex-shrink:0;opacity:.5;">–</span>'+esc(t.slice(1).trim())+'</div>';return '<div style="display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;margin-bottom:2px;"><span style="color:var(--teal-light);flex-shrink:0;">•</span>'+esc(t)+'</div>';}).join('');
   const txt = (str)=>`<div style="font-size:12px;color:var(--gray);line-height:1.6;">${esc(str)}</div>`;
@@ -2200,7 +2208,8 @@ function renderProtoList(){
 function renderProtoDetail(id){
   const p = DB.protocols.find(x=>x.id===id);
   if(!p)return;
-  push(()=>renderProtoDetail(id), p.name.slice(0,28));
+  push(()=>renderProtoDetail(id), p.name.slice(0,28), 'proto:'+id);
+  currentNoteTitle = p.name;
   render(`
   <div class="em-alert">${p.priority==='IMMEDIATE'?'🚨':'⚡'} ${p.priority} — ${esc(p.trigger)}</div>
   <div class="stitle">Step-by-step</div>
@@ -2220,7 +2229,8 @@ function renderProtoDetail(id){
 
 // Navigate to lesion details, staying within the current tab
 function goLesionTab(locId, locName){
-  push(()=>goLesionTab(locId,locName), locName);
+  push(()=>goLesionTab(locId,locName), locName, 'loc:'+locId);
+  currentNoteTitle = locName;
   const lesions = DB.lesion_type.filter(l=>l.loc===locId);
   if(!lesions.length){render('<div class="empty"><p>No lesion types for this location yet.</p></div>');return;}
 
@@ -5012,7 +5022,6 @@ export function mountGlobals() {
   w.renderDxBleedingHistory = renderDxBleedingHistory;
   w.renderDxBleedingExam = renderDxBleedingExam;
   w.renderDxBleedingDx = renderDxBleedingDx;
-  w.saveNote = saveNote;
 }
 
 // HMR auto-re-render: if callbacks exist (app already mounted), re-render the
