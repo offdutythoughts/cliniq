@@ -43,3 +43,33 @@ short rationale with source.
   - **Before:** "Feline diffuse iris melanoma: ~50–60% metastasise"
   - **After:** "reported metastasis rates 19–63% (worse with ciliary body / scleral invasion)"
   - **Why:** Published literature reports a range of 19–63% (some studies up to 70%) with prognosis heavily dependent on extent of local invasion. The previous narrow "50–60%" overstated lower-extent disease.
+
+---
+
+## 2. Anisocoria / Abnormal Pupil (commit e65bc43)
+
+### `src/lib/signs/abnormalPupil.ts`
+
+- **Two-step phenylephrine protocol for Horner's localisation**
+  - **Before:** A single 1%-phenylephrine timing table (3rd order ≤20 min, 2nd order 20–40 min, 1st order >40 min).
+  - **After:** Explicit two-step protocol — apply 1% first (rapid dilation <20 min ⇒ 3rd order / postganglionic). If 1% fails to dilate, switch to **10% phenylephrine**: 20–40 min ⇒ 2nd order (preganglionic); >40 min ⇒ 1st order (central). Added note that >3 weeks of Horner's allows postganglionic axonal degeneration which can blur the test in 2nd-order lesions.
+  - **Why:** 1% phenylephrine is only reliable for identifying postganglionic lesions (denervation hypersensitivity). Differentiation of preganglionic vs central lesions in practice requires 10% phenylephrine, per the small-animal Horner's review (Simpson 2015 and standard veterinary neurology references).
+
+- **Idiopathic Horner's resolution time (Golden Retriever)**
+  - **Before:** "6–10 weeks" (in both the Exam tab and Therapy pearls).
+  - **After:** "Weeks to months — median ~15 weeks, range 11–20 weeks, up to 6 months." Lesion-DB entry similarly updated.
+  - **Why:** Published Golden Retriever cohort data show median resolution ~15 weeks; some cases take up to 6 months. The "6–10 weeks" wording was tighter than the evidence supports.
+
+- **Lily toxicity (drug/toxin history)**
+  - **Before:** "lily ingestion (cat — AKI then anisocoria possible)"
+  - **After:** "Lily ingestion in cats causes AKI rather than direct pupillary signs."
+  - **Why:** No published literature links lily toxicity in cats to anisocoria/mydriasis. Documented signs are GI then renal failure. Including anisocoria as a potential lily sign is misleading.
+
+- **Burmese breed entry (signalment table)**
+  - **Before:** "Burmese → key gene cardiomyopathy; corneal sequestrum"
+  - **After:** "Burmese → corneal sequestrum (chronic corneal pain → reflex uveitis → miosis)"
+  - **Why:** "Key gene cardiomyopathy" appears to be a typo / autocomplete artefact; HCM is unrelated to the anisocoria differential. Sequestrum is the relevant predisposition because it causes reflex uveitic miosis.
+
+### `src/data/lesions.ts`
+
+- **Horner's lesion entry (LES-AP-MI-HORN)** — updated phenylephrine test description to the two-step protocol and revised the idiopathic-Horner's resolution wording to match the literature (median ~15 weeks instead of "~75% resolve 6–10 wks").

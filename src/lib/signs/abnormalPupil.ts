@@ -185,7 +185,7 @@ ${dxTabs('history')}
     • Opioids in dogs (morphine, fentanyl)<br>
     • Topical pilocarpine, demecarium, latanoprost (also lowers IOP)<br>
     • Organophosphate toxicity (SLUDGE signs)<br><br>
-    <strong>Toxin exposure:</strong> jimson weed (atropine — mydriasis), organophosphates / carbamates (miosis), strychnine, lily ingestion (cat — AKI then anisocoria possible).<br><br>
+    <strong>Toxin exposure:</strong> jimson weed (atropine — mydriasis), organophosphates / carbamates (miosis), strychnine. Lily ingestion in cats causes AKI rather than direct pupillary signs.<br><br>
     <strong>Trauma history:</strong> Head trauma → ipsilateral mydriasis (CN III compression, intracranial bleed) — neurosurgical emergency.
   </div>
   <div class="dx-arrow">↓</div>
@@ -222,7 +222,7 @@ ${dxTabs('history')}
         <strong style="color:#FB923C;font-size:10px;">🐱 CAT</strong><br><br>
         <strong style="color:#C4B5FD;">Older cat</strong> → systemic hypertension → bilateral mydriasis + retinal detachment + intraocular bleed<br><br>
         <strong style="color:#FCD34D;">FIV/FeLV positive</strong> → chronic uveitis → dyscoria · iris melanoma (diffuse, age-related)<br><br>
-        <strong style="color:#6EE7B7;">Burmese</strong> → key gene cardiomyopathy; corneal sequestrum<br><br>
+        <strong style="color:#6EE7B7;">Burmese</strong> → corneal sequestrum (chronic corneal pain → reflex uveitis → miosis)<br><br>
         <strong style="color:#FCA5A5;">Outdoor cat</strong> → trauma → 2nd / 3rd order Horner's · toxoplasma uveitis · proptosis<br><br>
         <strong style="color:#93C5FD;">Cat with otitis</strong> → 3rd-order Horner's (postganglionic — middle ear)<br><br>
         <strong style="color:#FCD34D;">Cat: spastic pupil syndrome</strong> → FeLV-associated tonic anisocoria<br><br>
@@ -320,15 +320,17 @@ ${dxTabs('exam')}
   <div class="dx-check">
     <strong>1st order (central / brainstem / cervical cord T1):</strong> Rare. Concurrent neurological deficits — ataxia, paresis, hemineglect, vestibular signs. Lesions: cervical IVDD, fibrocartilaginous embolism, cerebrovascular accident, neoplasia. <strong>MRI</strong> + CSF.<br>
     <strong>2nd order (preganglionic, T1–T3 → cervical sympathetic chain):</strong> Look in the chest and neck — thoracic radiographs (mediastinal mass, thymoma, lymphoma), trauma (brachial plexus avulsion), cervical neoplasia, head/neck surgery history.<br>
-    <strong>3rd order (postganglionic, after cranial cervical ganglion):</strong> Middle / inner ear disease, retrobulbar mass, idiopathic (most common — particularly <strong>Golden Retriever idiopathic Horner's</strong>, often resolves spontaneously over 6–10 weeks). Otoscopy + CT/MRI bullae and orbit.<br><br>
-    <strong>Pharmacological localisation (phenylephrine 1% topical):</strong>
+    <strong>3rd order (postganglionic, after cranial cervical ganglion):</strong> Middle / inner ear disease, retrobulbar mass, idiopathic (most common — particularly <strong>Golden Retriever idiopathic Horner's</strong>, typically resolves spontaneously over weeks to months; published median ~15 weeks, range 11–20 weeks, up to 6 months). Otoscopy + CT/MRI bullae and orbit.<br><br>
+    <strong>Pharmacological localisation — two-step phenylephrine protocol:</strong>
     <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:3px 6px;font-size:9.5px;margin:4px 0;">
-      <div style="font-weight:600;">Order</div><div style="font-weight:600;">Time to dilation after 1% phenylephrine</div>
-      <div>3rd order (postganglionic — denervation hypersensitivity)</div><div style="color:#6EE7B7;">≤ 20 minutes (rapid)</div>
-      <div>2nd order (preganglionic)</div><div style="color:#FCD34D;">20–40 minutes</div>
-      <div>1st order (central)</div><div style="color:#FCA5A5;">&gt; 40 minutes (slow / minimal)</div>
+      <div style="font-weight:600;">Step / Order</div><div style="font-weight:600;">Expected response</div>
+      <div>Step 1 — 1% phenylephrine, both eyes</div><div>Time to dilation of the affected pupil</div>
+      <div>3rd order (postganglionic — denervation hypersensitivity)</div><div style="color:#6EE7B7;">Dilates in ≤ 20 min with 1% (normal eye does not)</div>
+      <div>Step 2 — if no 1% response → switch to 10% phenylephrine</div><div>Time to bilateral dilation</div>
+      <div>2nd order (preganglionic)</div><div style="color:#FCD34D;">10% dilates both pupils in 20–40 min</div>
+      <div>1st order (central)</div><div style="color:#FCA5A5;">10% &gt; 40 min (slow / minimal)</div>
     </div>
-    <span style="font-size:9.5px;opacity:.75;">Apply identical drop to contralateral eye and time both — interpret only the time difference, not absolute values. Always document concurrent neurological exam.</span>
+    <span style="font-size:9.5px;opacity:.75;">Apply identical drop to contralateral eye and time both — interpret only the time difference, not absolute values. Note: if Horner's has been present &gt;3 weeks, postganglionic axonal degeneration can still develop hypersensitivity in 2nd-order lesions, blurring the test. Always document concurrent neurological exam.</span>
   </div>
   <div class="dx-arrow">↓</div>
 
@@ -423,7 +425,7 @@ ${dxTabs('dx')}
   • <strong>Acute glaucoma:</strong> topical latanoprost 0.005% + dorzolamide 2% + timolol 0.5%; mannitol 1 g/kg IV slow if vision-threatening — refer same day.<br>
   • <strong>Anterior uveitis with miosis:</strong> topical 1% atropine (only if IOP not elevated) + topical 1% prednisolone acetate q6–8h (no ulcer) — treat underlying cause aggressively.<br>
   • <strong>Optic neuritis (suspected MUA):</strong> aggressive immunosuppression (prednisolone 2 mg/kg/day + cytotoxic adjunct) — refer for MRI + CSF before chronic therapy.<br>
-  • <strong>Idiopathic Horner's (Golden Retriever):</strong> reassure, phenylephrine 1% q6h can temporarily improve cosmesis; most resolve over 6–10 weeks.<br>
+  • <strong>Idiopathic Horner's (Golden Retriever):</strong> reassure, phenylephrine 1% q6h can temporarily improve cosmesis; most resolve over weeks to months (median ~15 weeks, up to 6 months).<br>
   • <strong>Dysautonomia:</strong> supportive care, dilute pilocarpine drops to maintain pupil function, artificial tears; guarded prognosis.<br>
   • <strong>SARDS:</strong> no proven specific therapy; manage HAC-like phenotype if present; counsel on blindness and quality of life.
 </div>
