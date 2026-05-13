@@ -32,7 +32,7 @@ export const wetEyeFlowHtml = `
       • <strong>Foreign body under the third eyelid</strong> — always evert the TEL under topical anaesthetic in any acute unilateral wet eye<br>
       • <strong>Subclinical KCS</strong> — early KCS can present with paradoxical reflex tearing (low STT but mucoid epiphora) before full lacrimal failure<br>
       • <strong>Dacryocystitis with mucopurulent discharge</strong> — often masquerades as bacterial conjunctivitis; antibiotics fail without flushing the NLS<br>
-      • <strong>Older patient with unilateral chronic epiphora ± epistaxis ± facial deformity</strong> → orbital / nasal neoplasia obstructing the NLS (Bonny disease)<br>
+      • <strong>Older patient with unilateral chronic epiphora ± epistaxis ± facial deformity</strong> → orbital / nasal neoplasia obstructing the NLS<br>
       • <strong>Bilateral chronic wet eye in a young dog with no ocular discomfort</strong> → consider congenital puncta atresia or micropuncta
     </div>
   </div>
@@ -104,7 +104,7 @@ ${dxTabs('history')}
         <strong style="color:#FCD34D;">Cavalier King Charles Spaniel, Westie, Yorkie, Bichon</strong> → KCS — paradoxical reflex tearing.<br><br>
         <strong style="color:#C4B5FD;">Young dog (&lt;1 yr) with bilateral lifelong wet eyes</strong> → puncta atresia / micropuncta — examine puncta under sedation.<br><br>
         <strong style="color:#FCA5A5;">German Shepherd, Greyhound, Husky</strong> → pannus / plasmoma.<br><br>
-        <strong style="color:#93C5FD;">Older dog, unilateral epiphora ± epistaxis ± facial deformity</strong> → orbital or nasal neoplasia (Bonny disease).
+        <strong style="color:#93C5FD;">Older dog, unilateral epiphora ± epistaxis ± facial deformity</strong> → orbital or nasal neoplasia.
       </div>
       <div>
         <strong style="color:#FB923C;font-size:10px;">🐱 CAT</strong><br><br>
@@ -183,7 +183,7 @@ ${dxTabs('exam')}
       <div>Bilateral serous + sneezing + nasal discharge + young cat</div><div style="color:#6EE7B7;">Feline URTI (FHV-1, FCV, Chlamydia)</div>
       <div>Unilateral chronic mucopurulent + medial canthal swelling + reflux on lacrimal sac press</div><div style="color:#FCD34D;">Dacryocystitis</div>
       <div>Chronic bilateral wet eye in young dog + no discomfort + small/absent puncta</div><div style="color:#93C5FD;">Congenital puncta atresia / micropuncta</div>
-      <div>Chronic unilateral wet eye + epistaxis ± facial deformity + older animal</div><div style="color:#F87171;">Nasal / orbital neoplasia (Bonny disease)</div>
+      <div>Chronic unilateral wet eye + epistaxis ± facial deformity + older animal</div><div style="color:#F87171;">Nasal / orbital neoplasia</div>
       <div>Concurrent entropion + ectropion + macroblepharon (large eyelid opening)</div><div style="color:#FCD34D;">Diamond eye conformation</div>
       <div>Photophobia + blepharospasm but no surface lesion identified</div><div style="color:#FCA5A5;">Anterior uveitis (rule out flare + IOP)</div>
     </div>

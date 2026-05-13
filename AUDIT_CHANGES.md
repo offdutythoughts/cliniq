@@ -93,3 +93,14 @@ short rationale with source.
   - **Before:** "Acquired in utero (parvo, lymphocytic choriomeningitis virus)"
   - **After:** "Inherited (most common); acquired in utero (canine herpesvirus, parvovirus); radiation / drug / nutritional injury in utero"
   - **Why:** Lymphocytic choriomeningitis virus is a rodent zoonotic agent without documented role in canine fetal retinal dysplasia. Canine herpesvirus is the best-documented in-utero infectious cause; parvovirus also reported. Replaced LCMV with CHV.
+
+---
+
+## 4. Wet Eye / Epiphora (commit a81c800)
+
+### `src/lib/signs/wetEye.ts` and `src/data/lesions.ts`
+
+- **Removed all references to "Bonny disease"**
+  - **Before:** Three places in `wetEye.ts` and the lesion subtype in `LES-WE-DR-NEO` referred to NLS-obstructing nasal / orbital neoplasia as "Bonny disease".
+  - **After:** Eponym removed; the underlying clinical entity (chronic unilateral epiphora ± epistaxis ± facial deformity in an older patient → nasal / orbital neoplasia compressing the NLS) is unchanged.
+  - **Why:** No such eponym appears in Merck, BSAVA, VetTimes, or PubMed sources. It is not a recognised veterinary or human ophthalmology term, and including a fabricated eponym would mislead readers into thinking it is a textbook diagnosis they should know.
