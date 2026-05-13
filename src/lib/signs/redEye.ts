@@ -29,7 +29,7 @@ export const redEyeFlowHtml = `
         • Dichotomous (tree-like) branching<br>
         • Superficial — MOVES with conjunctiva on cotton-tip<br>
         • Most evident in the <strong>fornixes</strong><br>
-        • Blanches with topical phenylephrine<br>
+        • Blanches rapidly with topical phenylephrine 2.5%<br>
         <strong style="color:#FCD34D;">⇒ Ocular surface disease</strong>
       </div>
       <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
@@ -37,7 +37,7 @@ export const redEyeFlowHtml = `
         • No dichotomous division — straight radial vessels<br>
         • Deeper — does <strong>NOT move</strong> with the conjunctiva<br>
         • Most evident close to the <strong>limbus</strong><br>
-        • Does NOT blanch with phenylephrine<br>
+        • Blanches with phenylephrine 2.5% (slower / less complete than conjunctival — scleritis vessels do NOT blanch)<br>
         <strong style="color:#F87171;">⇒ Deeper / intraocular disease (uveitis, glaucoma, scleritis)</strong>
       </div>
     </div>
@@ -384,7 +384,7 @@ ${dxTabs('exam')}
       • Hypopyon (white) vs hyphaema (red) vs fibrin (clot)<br>
       • Keratic precipitates (KP — endothelial; chronic uveitis)
     </div>
-    <strong>7. Iris:</strong> colour change, rubeosis, pigmented or vascular mass, iris cyst (transilluminates) vs neoplasia (does not), synechiae (PIS = posterior · PAS = peripheral anterior).<br>
+    <strong>7. Iris:</strong> colour change, rubeosis, pigmented or vascular mass, iris cyst (transilluminates) vs neoplasia (does not), synechiae (PS = posterior, iris-to-lens · PAS = peripheral anterior, iris-to-cornea/angle).<br>
     <strong>8. Pupil:</strong> size, shape (dyscoria → synechiae, iris atrophy, congenital), symmetry (anisocoria), PLR.<br>
     <strong>9. Lens:</strong> position (subluxation = aphakic crescent · luxation), opacity (cataract vs nuclear sclerosis — retroillumination), lens capsule rupture.<br>
     <strong>10. Vitreous + fundus:</strong> haemorrhage, asteroid hyalosis, retinal detachment, optic disc oedema (papilloedema · papillitis), tapetal hyperreflectivity (retinal atrophy) vs dullness (oedema/infiltrate), retinal vessel attenuation, chorioretinitis foci.
@@ -437,7 +437,7 @@ ${dxTabs('dx')}
     <strong>Performed before any solutions, drops, or bright light.</strong><br>
     • Technique: fold strip in packaging → retract lower lid → place tip at lateral fornix → close lids for 60 s.<br>
     • <strong>Dog normal:</strong> ≥15 mm/min · 10–14 = early/borderline KCS · &lt;10 = clinical KCS · &lt;5 = severe<br>
-    • <strong>Cat normal:</strong> highly variable (3–32 mm/min); cats stress-tear so a single low reading is less specific. Trend + clinical signs (mucoid discharge, corneal scarring) more informative.<br>
+    • <strong>Cat normal:</strong> wide reference (median ~14 mm/min, 95% PI ~8–22); a substantial proportion of clinically normal cats read &lt;10. Interpret with clinical signs (mucoid discharge, corneal scarring) — single low readings without clinical correlation are non-diagnostic.<br>
     • <strong>Pitfalls:</strong> Recent topicals · sedation · third eyelid disease · neurogenic KCS (CN VII) — often dry ipsilateral nostril; do contralateral STT for comparison.
   </div>
   <div class="dx-arrow">↓</div>
@@ -471,14 +471,14 @@ ${dxTabs('dx')}
   <div class="dx-arrow">↓</div>
   <div class="dx-check">
     <strong>Methods:</strong> Rebound (TonoVet) preferred — no anaesthetic required, accurate; Applanation (Tono-Pen) — topical anaesthetic needed; Schiotz — indentation, weight calibration needed.<br>
-    <strong>Normal IOP:</strong> 10–25 mmHg both species. Inter-eye difference &lt;20%.<br>
+    <strong>Normal IOP:</strong> 10–25 mmHg both species. Inter-eye difference of &gt;8 mmHg is generally considered clinically significant.<br>
     <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:3px 6px;font-size:9.5px;margin:4px 0;">
       <div style="font-weight:600;">IOP</div><div style="font-weight:600;">Interpretation</div>
       <div>&gt;25 mmHg + clinical signs</div><div style="color:#F87171;">Glaucoma (primary or secondary)</div>
       <div>&gt;40 mmHg</div><div style="color:#EF4444;font-weight:700;">Acute glaucoma — emergency · vision-threatening</div>
       <div>10–25</div><div style="color:#6EE7B7;">Normal</div>
       <div>&lt;10 mmHg</div><div style="color:#FCD34D;">Uveitis (most common) · phthisis bulbi · scleral rupture</div>
-      <div>Difference &gt;20% between eyes</div><div style="color:#FCD34D;">Clinically significant — investigate the abnormal eye</div>
+      <div>Inter-eye difference &gt;8 mmHg</div><div style="color:#FCD34D;">Clinically significant — investigate the abnormal eye</div>
     </div>
     <strong>Pitfalls:</strong> Squeezing eyelids · jugular compression · head position · poor calibration → falsely high readings. Take 3+ readings and use the mean.
   </div>
