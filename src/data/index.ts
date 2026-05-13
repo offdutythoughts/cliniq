@@ -14,4 +14,5 @@ export const BODY_SYSTEMS: BodySystem[] = [
   {id:'cardiohaem',   label:'Cardiovascular / Haematology',locs:['LOC-PM-ANAEMIA','LOC-PM-PERFUSION']},
   {id:'endocrine',    label:'Endocrine / PU·PD',          locs:['LOC-PUPD-RENAL','LOC-PUPD-ENDO','LOC-PUPD-MED','LOC-PUPD-CDI','LOC-PUPD-NDI','LOC-PUPD-PRIM']},
   {id:'ophthalmic',   label:'Ophthalmic',                  locs:['LOC-RE-ADNEXA','LOC-RE-TEL','LOC-RE-CONJ','LOC-RE-EPISC','LOC-RE-CORNEA-SUP','LOC-RE-CORNEA-DEEP','LOC-RE-UVEA','LOC-RE-AC','LOC-RE-GLAUCOMA','LOC-RE-RETINA','LOC-RE-ORBIT','LOC-AP-IRIS','LOC-AP-LENS','LOC-AP-RETINA','LOC-AP-MIOSIS','LOC-AP-MYDR','LOC-AP-NEURO','LOC-BL-OPAQUE','LOC-BL-RETINA','LOC-BL-OPTIC','LOC-BL-CHIASM','LOC-BL-CORTEX','LOC-WE-DRAIN','LOC-WE-PROD']},
+  {id:'urinary',      label:'Urinary / Genital',           locs:['LOC-HU-UPPER','LOC-HU-BLADDER','LOC-HU-URETHRA','LOC-HU-PROST','LOC-HU-GENIT','LOC-HU-SYS']},
 ]
