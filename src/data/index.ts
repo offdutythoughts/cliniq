@@ -13,4 +13,5 @@ export const BODY_SYSTEMS: BodySystem[] = [
   {id:'spine',        label:'Spine / Myelopathy',         locs:['LOC-MY-CERV','LOC-MY-TL']},
   {id:'cardiohaem',   label:'Cardiovascular / Haematology',locs:['LOC-PM-ANAEMIA','LOC-PM-PERFUSION']},
   {id:'endocrine',    label:'Endocrine / PU·PD',          locs:['LOC-PUPD-RENAL','LOC-PUPD-ENDO','LOC-PUPD-MED','LOC-PUPD-CDI','LOC-PUPD-NDI','LOC-PUPD-PRIM']},
+  {id:'ophthalmic',   label:'Ophthalmic',                  locs:['LOC-RE-ADNEXA','LOC-RE-TEL','LOC-RE-CONJ','LOC-RE-EPISC','LOC-RE-CORNEA-SUP','LOC-RE-CORNEA-DEEP','LOC-RE-UVEA','LOC-RE-AC','LOC-RE-GLAUCOMA','LOC-RE-RETINA','LOC-RE-ORBIT']},
 ]
