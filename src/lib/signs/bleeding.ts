@@ -120,7 +120,7 @@ ${dxTabs('history')}
     <strong>Snake / spider envenomation:</strong> rattlesnake (combined primary + secondary defect), Australian elapids (procoagulant + neurotoxic), brown recluse / Latrodectus.<br>
     <strong>Acetaminophen / paracetamol (cat especially):</strong> Heinz-body haemolytic anaemia → haemoglobinuria (NOT true bleeding).<br>
     <strong>Heparin / dabigatran / rivaroxaban:</strong> deliberate or accidental.<br>
-    <strong>Plant toxins:</strong> sweet vernal hay (anticoagulant), bracken (thrombocytopenia in livestock), foxglove (cardiac).<br>
+    <strong>Plant toxins:</strong> moldy sweet clover hay (Melilotus — dicoumarol; primarily a livestock toxicity but anecdotally reported in dogs), bracken (thrombocytopenia in livestock), foxglove (cardiac).<br>
     <strong>Heat / environmental:</strong> heatstroke → DIC.<br>
     <strong>Recent vaccinations:</strong> rare association with immune-mediated thrombocytopenia.
   </div>
@@ -136,7 +136,7 @@ ${dxTabs('history')}
       • Boxer, Cairn Terrier → factor VIII or factor IX<br>
       • Otterhound → Glanzmann thrombasthenia<br>
       • Beagle → factor VII deficiency (usually asymptomatic)<br>
-      • Lhasa Apso → vasculopathy syndrome
+      • Breed-predisposed cutaneous vasculitis: GSD (familial cutaneous vasculopathy), Jack Russell, Greyhound, Scottish Terrier, Saint Bernard, Shar-Pei
     </div>
     <strong>Concurrent illness:</strong> sepsis, neoplasia, IMHA, severe pancreatitis, parvoviral enteritis → DIC risk.<br>
     <strong>Hyperestrogenism in older intact male dog</strong> (Sertoli cell tumour): symmetrical alopecia + gynaecomastia + bilateral pendulous abdomen + bone marrow suppression → thrombocytopenia + non-regenerative anaemia + bleeding.<br>
@@ -262,7 +262,7 @@ ${dxTabs('dx')}
     2. <strong>Blood sampling order matters</strong>: minimise venepuncture sites; use small-gauge needles; apply pressure for ≥ 5 min. Send: CBC, biochem, coag profile (PT, aPTT), blood smear, ± buccal mucosal bleeding time (BMBT) if cooperative.<br>
     3. <strong>Empirical therapy while awaiting results</strong>: vitamin K1 5 mg/kg SC (NOT IV — anaphylaxis) for any suspected rodenticide; fresh frozen plasma if active cavity bleeding and PT/aPTT severely prolonged.<br>
     4. <strong>Avoid intramuscular injections</strong> and cystocentesis in any patient with suspected coagulopathy.<br>
-    5. <strong>Type and cross-match</strong> before transfusion. Cats: type before transfusion is mandatory (Type B and AB cats react severely to Type A blood).
+    5. <strong>Type and cross-match</strong> before transfusion. Cats: type before transfusion is mandatory — Type B cats carry strong naturally-occurring anti-A antibodies and react severely (potentially fatal) to Type A blood. Type A cats have weak anti-B (mild reaction). Type AB cats have no anti-A or anti-B antibodies and are universal recipients.
   </div>
   <div class="dx-arrow">↓</div>
 
@@ -367,7 +367,7 @@ ${dxTabs('dx')}
   • In Doberman with epistaxis or pre-surgical patient, screen vWF antigen — don't wait for the surgical bleed.<br>
   • Use small-gauge needles, peripheral veins, and prolonged pressure for any bleeding patient.<br>
   • Vitamin K1 IV causes anaphylaxis — give SC at multiple sites.<br>
-  • Cat blood typing is mandatory before any transfusion (Type B cats have strong anti-A antibodies → severe haemolytic reaction).<br>
+  • Cat blood typing is mandatory before any transfusion (Type B cats have strong naturally-occurring anti-A antibodies → severe, potentially fatal haemolytic reaction to Type A blood; Type AB cats are universal recipients).<br>
   • Always image for splenic / hepatic mass in any acute haemoperitoneum — HSA, hepatocellular carcinoma, less commonly HSA-like vascular lesions.
 </div>
 <div class="disclaimer">For qualified veterinary professionals only.</div>

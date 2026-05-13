@@ -128,3 +128,28 @@ short rationale with source.
 ### `src/data/lesions.ts`
 
 - **LES-HU-BL-TCC diagnostic line** — CADET BRAF figures updated to match the signs file (sensitivity range, BRAF-Plus, >99% specificity).
+
+---
+
+## 6. Bleeding / Petechiae / Ecchymoses (commit c0c7b7e)
+
+### `src/lib/signs/bleeding.ts`
+
+- **Feline blood-type AB transfusion compatibility**
+  - **Before:** "Type B and AB cats react severely to Type A blood."
+  - **After:** "Type B cats carry strong naturally-occurring anti-A antibodies and react severely (potentially fatal) to Type A blood. Type A cats have weak anti-B (mild reaction). Type AB cats have no anti-A or anti-B antibodies and are universal recipients."
+  - **Why:** AB cats *lack* anti-A and anti-B antibodies — they are universal recipients, not severe reactors. The original wording would have caused a clinician to withhold compatible Type A blood from an AB cat needing emergency transfusion. The pearls section was corrected to match.
+
+- **Anticoagulant plant toxin — "sweet vernal hay"**
+  - **Before:** "sweet vernal hay (anticoagulant)"
+  - **After:** "moldy sweet clover hay (Melilotus — dicoumarol; primarily a livestock toxicity but anecdotally reported in dogs)"
+  - **Why:** Sweet vernal grass (Anthoxanthum odoratum) is what gives hay its smell but is not the documented anticoagulant. Moldy *sweet clover* (Melilotus) is the source of dicoumarol — the original natural vitamin-K antagonist on which warfarin was modelled.
+
+- **Fabricated "Lhasa Apso vasculopathy syndrome"**
+  - **Before:** Signalment list said "Lhasa Apso → vasculopathy syndrome".
+  - **After:** Replaced with the documented breed-predisposed vasculitis list (GSD, Jack Russell, Greyhound, Scottish Terrier, Saint Bernard, Shar-Pei).
+  - **Why:** Lhasa Apso is not a published predisposed breed for cutaneous vasculitis or vasculopathy. The standard list of breeds with reported familial cutaneous vasculopathy / vasculitis comes from the WSAVA dermatology review and PubMed.
+
+### `src/data/lesions.ts`
+
+- **LES-BD-VS-LH → LES-BD-VS-FAM** — renamed and rewritten from the fabricated "Lhasa Apso vasculopathy syndrome" entry to a generic "Familial / breed-predisposed cutaneous vasculopathy" entry listing the actual published predisposed breeds.
