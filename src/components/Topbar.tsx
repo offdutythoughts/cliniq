@@ -1,5 +1,7 @@
 'use client'
 
+import AccountMenu from './AccountMenu'
+
 interface Props {
   title: string
   showBack: boolean
@@ -21,6 +23,7 @@ export default function Topbar({ title, showBack, onBack, onToggleNotes }: Props
       </div>
       <div className={`topbar-title${title ? ' show' : ''}`}>{title}</div>
       <button className="notes-topbar-btn" onClick={onToggleNotes}>📝 Notes</button>
+      <AccountMenu />
     </div>
   )
 }

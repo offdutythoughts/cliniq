@@ -1,5 +1,7 @@
+import { ConvexAuthNextjsServerProvider } from '@convex-dev/auth/nextjs/server'
 import type { Metadata, Viewport } from 'next'
 import { DM_Sans, DM_Mono } from 'next/font/google'
+import { ConvexClientProvider } from './ConvexClientProvider'
 import './globals.css'
 
 const dmSans = DM_Sans({
@@ -29,12 +31,16 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${dmMono.variable}`} suppressHydrationWarning>
-      <head>
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-      </head>
-      <body>{children}</body>
-    </html>
+    <ConvexAuthNextjsServerProvider>
+      <html lang="en" className={`${dmSans.variable} ${dmMono.variable}`} suppressHydrationWarning>
+        <head>
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        </head>
+        <body>
+          <ConvexClientProvider>{children}</ConvexClientProvider>
+        </body>
+      </html>
+    </ConvexAuthNextjsServerProvider>
   )
 }
