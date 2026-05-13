@@ -341,10 +341,11 @@ ${dxTabs('dx')}
     <strong>MRI brain + CSF analysis</strong> — required for:<br>
     • Optic neuritis (differentiate MUA from infectious / neoplastic — affects treatment)<br>
     • Suspected forebrain / cortical disease (MUA, neoplasia, CVA, hydrocephalus)<br>
-    • Chiasmal lesion (pituitary macroadenoma — bitemporal hemianopia pattern)<br>
+    • Chiasmal lesion (pituitary macroadenoma — bilateral blindness; see chiasm note below)<br>
     • CN III + altered mentation + blindness = brainstem / midbrain emergency<br><br>
     <strong>CT</strong>: orbital / retrobulbar mass with secondary blindness, skull trauma, dental disease causing optic neuropathy.<br><br>
-    <strong>Visual evoked potentials</strong> — referral test for central versus post-retinal pathway differentiation when MRI is normal.
+    <strong>Visual evoked potentials</strong> — referral test for central versus post-retinal pathway differentiation when MRI is normal.<br><br>
+    <strong>Chiasmal lesion — species note:</strong> dogs cross ~75% and cats ~65% of optic fibres at the chiasm, so chiasmal compression (e.g. pituitary macroadenoma) typically produces near-complete bilateral blindness rather than the discrete bitemporal hemianopia seen in humans (~50% crossover). Endocrine signs (HAC, diabetes insipidus) often accompany.
   </div>
 
 </div>

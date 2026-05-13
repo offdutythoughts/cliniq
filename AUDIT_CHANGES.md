@@ -73,3 +73,23 @@ short rationale with source.
 ### `src/data/lesions.ts`
 
 - **Horner's lesion entry (LES-AP-MI-HORN)** — updated phenylephrine test description to the two-step protocol and revised the idiopathic-Horner's resolution wording to match the literature (median ~15 weeks instead of "~75% resolve 6–10 wks").
+
+---
+
+## 3. Blind Eye / Acute Vision Loss (commit 462ea78)
+
+### `src/lib/signs/blindEye.ts`
+
+- **Chiasmal lesion visual-field pattern**
+  - **Before:** "Chiasmal lesion (pituitary macroadenoma — bitemporal hemianopia pattern)"
+  - **After:** "Chiasmal lesion (pituitary macroadenoma — bilateral blindness)" with an added species note explaining that ~75% of canine and ~65% of feline optic fibres decussate at the chiasm, so chiasmal compression produces near-complete bilateral blindness rather than the discrete bitemporal hemianopia seen in humans (~50% crossover).
+  - **Why:** Bitemporal hemianopia is the *human* chiasmal pattern, dependent on equal nasal/temporal fibre crossing. With three-quarters of fibres crossing in dogs, a chiasmal lesion blinds the whole field of both eyes rather than just the temporal halves. The previous wording implied an inappropriate clinical sign pattern.
+
+### `src/data/lesions.ts`
+
+- **Pituitary macroadenoma entry (LES-BL-CH-PIT)** — updated the signs description to reflect the same species-specific chiasmal anatomy (bilateral blindness, not bitemporal hemianopia).
+
+- **Retinal dysplasia in utero infectious causes (LES-BL-RT-DYSPL)**
+  - **Before:** "Acquired in utero (parvo, lymphocytic choriomeningitis virus)"
+  - **After:** "Inherited (most common); acquired in utero (canine herpesvirus, parvovirus); radiation / drug / nutritional injury in utero"
+  - **Why:** Lymphocytic choriomeningitis virus is a rodent zoonotic agent without documented role in canine fetal retinal dysplasia. Canine herpesvirus is the best-documented in-utero infectious cause; parvovirus also reported. Replaced LCMV with CHV.
