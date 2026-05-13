@@ -1,0 +1,4536 @@
+// ClinIQ application logic — bridges original render functions to React state
+// render() generates HTML strings; React injects them via dangerouslySetInnerHTML
+// onclick handlers in generated HTML call window globals set up by mountGlobals()
+
+/* eslint-disable */
+// @ts-nocheck
+
+type SetContent = (html: string, dir: 'left' | 'right') => void
+type SetTopbar = (title: string, showBack: boolean) => void
+type SetTab = (tab: number) => void
+
+let _setContent: SetContent = () => {}
+let _setTopbar: SetTopbar = () => {}
+let _setTab: SetTab = () => {}
+
+// HMR resilience: restore callbacks from window if the module is hot-reloaded
+// (Turbopack re-evaluates the module on file save, resetting module-level vars)
+if (typeof window !== 'undefined' && (window as any).__cliniqCbs) {
+  const cb = (window as any).__cliniqCbs
+  _setContent = cb.c
+  _setTopbar = cb.t
+  _setTab = cb.s
+}
+
+export function initCliniqApp(setContent: SetContent, setTopbarCb: SetTopbar, setTabCb: SetTab) {
+  _setContent = setContent
+  _setTopbar = setTopbarCb
+  _setTab = setTabCb
+  // Persist across HMR re-evaluations
+  if (typeof window !== 'undefined') {
+    ;(window as any).__cliniqCbs = { c: setContent, t: setTopbarCb, s: setTabCb }
+  }
+}
+
+const DB = {
+  lesion_type: [
+    {id:'LES-PL-FL',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Pure transudate (low protein)',urg:'Moderate',signs:'Fluid: clear/colourless, TP <2.5g/dL, TNCC <1,500/µL. Mostly macrophages with low numbers of neutrophils, lymphocytes, mesothelial cells.',proto:'PROT-RESP',filter:'DIFF-PL-TRANS',note:'Causes: severe hypoalbuminaemia (<15g/L), venous/lymphatic hypertension (non-exfoliating neoplasia, lung lobe torsion), portal hypertension (liver disease).'},
+    {id:'LES-PL-FL5',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Modified transudate (high protein)',urg:'Moderate',signs:'Fluid: light yellow, may be blood-tinged, TP >2.5g/dL, TNCC <5,000/µL. Macrophages + neutrophils. Variable RBC. Plasma cells may be seen.',proto:'PROT-RESP',filter:'DIFF-PL-MODTRANS',note:'Causes: cardiac disease (dog: biventricular/L-sided failure; cat: L or R heart failure), sinusoidal/post-sinusoidal hypertension, non-exfoliating neoplasia, inflammation affecting pleural vasculature.'},
+    {id:'LES-PL-FL2',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Exudate',urg:'High',signs:'Fluid: cloudy/turbid, TP >2.5 (often >4.0)g/dL, TNCC >5,000/µL. Neutrophils predominate. Cause may be identified on cytology (bacteria, fungi). Clear supernatant after centrifugation.',proto:'PROT-RESP',filter:'DIFF-PL-EXU',note:'Causes: pyothorax (bacterial/fungal), FIP (cats — high protein but low TNCC variant), pancreatitis, ruptured viscus, parasites, underlying neoplasia.'},
+    {id:'LES-PL-FL3',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Chylous effusion',urg:'Moderate',signs:'Fluid: white to pink, opaque. TP usually >2.5g/dL (lipid artefact on refractometer). Triglycerides >100mg/dL and usually >2× serum. Small lymphocytes predominate. Cream layer forms on standing.',proto:'PROT-RESP',filter:'DIFF-PL-CHYL',note:'Causes: cardiac disease (cats most common), idiopathic (dogs + cats), neoplasia (thymoma, lymphoma), thoracic duct rupture/trauma. Cream layer forms on standing.'},
+    {id:'LES-PL-FL4',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Cat',cat:'Fluid',sub:'Modified transudate — cardiogenic',urg:'EMERGENCY',signs:'⚠️ Bradycardia, hypothermia, gallop rhythm, tachypnoea, open-mouth breathing',proto:'PROT-RESP',filter:'DIFF-PL-CARD',note:'Cat CHF. Bradycardia + hypothermia = severe decompensation. DO NOT STRESS. Tap first.'},
+    {id:'LES-PL-HAEM',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Haemorrhagic effusion',urg:'EMERGENCY',signs:'⚠️ Red/serosanguineous fluid. PCV measurable (usually >1%). Does NOT clot in red-top tube. If >24h: erythrophages, hemosiderin, hematoidin crystals.',proto:'PROT-RESP',filter:'DIFF-PL-HAEM',note:'Causes: trauma, ruptured splenic/hepatic mass (haemangiosarcoma), coagulopathy (anticoagulant rodenticide), pericarditis, neoplasia.'},
+    {id:'LES-PL-GS',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Gas',sub:'Pneumothorax',urg:'EMERGENCY',signs:'⚠️ Hyper-resonant percussion, reduced sounds, tachypnoea, possible history of trauma',proto:'PROT-RESP',filter:'DIFF-PL-PNEUMO',note:'Spontaneous or traumatic. Bilateral = severe. Needle decompress immediately if tension.'},
+    {id:'LES-PL-MS',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Mass',sub:'Pleural/mediastinal mass',urg:'High',signs:'Progressive dyspnoea, non-compressible cranial mediastinum (cat), weight loss',proto:'PROT-RESP',filter:'DIFF-PL-MASS',note:'Cranial mediastinal mass in young cat = lymphoma until proven otherwise. Check compressibility.'},
+    {id:'LES-PL-INF',loc:'LOC-PLEURAL',loc_name:'Pleural cavity',sp:'Dog + Cat',cat:'Fluid',sub:'Pyothorax (septic exudate)',urg:'EMERGENCY',signs:'⚠️ Fever, toxic, septic shock signs, unilateral dullness, pain on thoracic palpation',proto:'PROT-RESP',filter:'DIFF-PL-PYO',note:'Foul-smelling fluid on tap. Broad-spectrum antibiotics + drain. Surgical if not responding.'},
+    {id:'LES-PA-OE',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog + Cat',cat:'Fluid/Oedema',sub:'Cardiogenic oedema',urg:'EMERGENCY',signs:'⚠️ Crackles, murmur/gallop, bilateral perihilar CXR pattern, tachypnoea',proto:'PROT-RESP',filter:'DIFF-PA-CARDOEDE',note:'Perihilar distribution in dog; diffuse or patchy in cat. Furosemide urgently.'},
+    {id:'LES-PA-OE2',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog + Cat',cat:'Fluid/Oedema',sub:'Non-cardiogenic oedema',urg:'EMERGENCY',signs:'⚠️ Acute onset, history of electric shock / seizure / near-drowning, no cardiac signs',proto:'PROT-RESP',filter:'DIFF-PA-NCOEDE',note:'Exclude cardiac cause — echo or NT-proBNP. Treat supportively.'},
+    {id:'LES-PA-INF',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog + Cat',cat:'Infection',sub:'Aspiration pneumonia',urg:'High',signs:'History of vomiting/regurgitation/GA, ventral distribution on CXR, pyrexia',proto:'PROT-RESP',filter:'DIFF-PA-ASP',note:'Right middle lung lobe most common. Always check for underlying megaoesophagus or laryngeal disease.'},
+    {id:'LES-PA-INF2',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog + Cat',cat:'Infection',sub:'Bacterial pneumonia',urg:'High',signs:'Pyrexia, productive cough, crackles, leucocytosis. Common pathogens: Bordetella, Pasteurella, Streptococcus, E. coli, Mycoplasma.',proto:'PROT-RESP',filter:'DIFF-PA-BACT',note:'Mycoplasma: consider in cats with chronic lower airway disease. Culture + sensitivity essential — BAL preferred over TTW.'},
+    {id:'LES-PA-MS',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog + Cat',cat:'Mass/Neoplasia',sub:'Primary lung tumour / metastatic',urg:'Moderate',signs:'Often subclinical early. Cough, weight loss, haemoptysis if advanced.',proto:'',filter:'DIFF-PA-NEO',note:'CXR first. CT for surgical planning. Often found incidentally.'},
+    {id:'LES-PA-ARDS',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog + Cat',cat:'Fluid/Oedema',sub:'ARDS (Acute Respiratory Distress Syndrome)',urg:'EMERGENCY',signs:'⚠️ Acute severe hypoxaemia (P/F ≤200 mmHg or S/F ≤235) within 72h of trigger. Bilateral pulmonary infiltrates. Normal cardiac silhouette. Triggers: pneumonia, sepsis, pancreatitis, pulmonary contusions, smoke inhalation, drowning, transfusion.',proto:'PROT-RESP',filter:'DIFF-PA-NCOEDE',note:'P/F ≤100 = severe ARDS. Distinguish from cardiogenic oedema: NT-proBNP normal, no LA enlargement, no murmur/gallop. Lung-protective ventilation (6 mL/kg tidal volume), PEEP titration — ICU ventilator required. Survival 15–36%; better for short-duration ventilation for CHF (63–66%).'},
+    {id:'LES-PA-PTE',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog',cat:'Vascular',sub:'Pulmonary thromboembolism (PTE)',urg:'High',signs:'🐕 Acute severe dyspnoea often disproportionate to CXR findings. Tachycardia, haemoptysis. History of hypercoagulable disease: IMHA, hyperadrenocorticism, PLN, pancreatitis, neoplasia, heartworm, protein-losing enteropathy.',proto:'PROT-RESP',filter:'DIFF-PA-PTE',note:'CXR often normal/near-normal early; may show focal oligaemia, focal consolidation, blunted costophrenic angle. D-dimers elevated (supportive, not diagnostic). CT pulmonary angiography = gold standard. POCUS: wedge sign; CVC distension (R-sided failure). Treat: anticoagulation (clopidogrel, LMWH/enoxaparin, rivaroxaban); O₂; treat trigger. Prognosis variable by severity and underlying cause.'},
+    {id:'LES-PA-HW',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog',cat:'Parasitic/Vascular',sub:'Heartworm disease (Dirofilaria immitis)',urg:'Moderate–High',signs:'🐕 Endemic region. Cough, exercise intolerance, haemoptysis. Eosinophilia. CXR: prominent pulmonary vasculature, right cardiomegaly. Caval syndrome: sudden collapse, haemoglobinuria, haemoglobinaemia.',proto:'PROT-RESP',filter:'DIFF-PA-HW',note:'Diagnosis: Ag test (adult female HW — highly sensitive/specific); modified Knott test (microfilaria). POCUS: double-lined structures in pulmonary artery/right heart. Treat: pre-treatment prednisone + doxycycline 30 days, then melarsomine IM (3-dose protocol); strict exercise restriction 6–8 weeks post-treatment (risk of PTE from dead worm embolism). Monthly prevention in endemic regions.'},
+    {id:'LES-PA-HIST',loc:'LOC-PARENCH',loc_name:'Lung parenchyma',sp:'Dog + Cat',cat:'Infection/Fungal',sub:'Systemic fungal pneumonia — Histoplasma / Blastomyces / Coccidioides',urg:'High',signs:'🐕 Endemic region. Chronic cough, weight loss, fever, lymphadenopathy, miliary or nodular CXR pattern. GI signs (histoplasmosis). Bone lesions (blastomycosis). Uveitis. Eosinophilia. Ocular + CNS involvement possible.',proto:'',filter:'DIFF-PA-BACT',note:'Histoplasma (OH/MS valleys, midwest/SE USA): urine antigen ELISA preferred; cytology BAL/rectal scraping (2–5 μm oval yeasts in macrophages). Blastomyces (midwest/SE USA, Great Lakes, Canada): urine antigen ELISA (cross-reacts with Histoplasma); cytology (large 8–20 μm yeast, thick refractile wall, broad-based budding). Coccidioides (SW USA, Mexico, CA): AGID serology (IgM early; IgG = established). Treatment: itraconazole long-term (6–12+ months); fluconazole for CNS/ocular. Prognosis variable.'},
+    {id:'LES-NA-POLYP',loc:'LOC-NASAL',loc_name:'Nasal cavity / Nasopharynx',sp:'Cat',cat:'Mass',sub:'Nasopharyngeal polyp',urg:'Moderate',signs:'Young cat. Chronic stertor, nasal discharge, ± Horner syndrome, ± otitis media.',proto:'',filter:'DIFF-NA-POLYP',note:'Check bullae — middle ear involvement changes surgical approach. Traction avulsion or ventral bulla osteotomy.'},
+    {id:'LES-NA-EOPOLY',loc:'LOC-NASAL',loc_name:'Nasal cavity / Nasopharynx',sp:'Cat',cat:'Mass',sub:'Eosinophilic polyp',urg:'Low',signs:'Young to middle-aged cat. Stertor, nasal discharge. Eosinophilic infiltrate on histopathology.',proto:'',filter:'DIFF-NA-POLYP',note:'Histologically distinct from inflammatory polyp. May respond to corticosteroids.'},
+    {id:'LES-NA-LYMPH',loc:'LOC-NASAL',loc_name:'Nasal cavity / Nasopharynx',sp:'Cat',cat:'Mass',sub:'Nasal lymphoma',urg:'High',signs:'Cat. Unilateral then bilateral nasal discharge, facial deformity. FeLV association. Responds to chemotherapy/radiation.',proto:'',filter:'DIFF-NA-NEO',note:'Most common nasal tumour in cats. CT + biopsy essential. Good initial response to treatment.'},
+    {id:'LES-NA-ADENO',loc:'LOC-NASAL',loc_name:'Nasal cavity / Nasopharynx',sp:'Dog',cat:'Mass',sub:'Nasal adenocarcinoma',urg:'High',signs:'Older dolichocephalic dog. Progressive unilateral epistaxis, facial deformity, epiphora. Turbinate destruction on CT.',proto:'',filter:'DIFF-NA-NEO',note:'Most common nasal tumour in dogs. CT essential for staging. Radiation therapy is primary treatment.'},
+    {id:'LES-NA-VIRAL',loc:'LOC-NASAL',loc_name:'Nasal cavity / Nasopharynx',sp:'Cat',cat:'Infection',sub:'Viral rhinitis — feline herpesvirus / calicivirus',urg:'Moderate',signs:'Bilateral serous then mucopurulent discharge. Conjunctivitis, pyrexia, anorexia. FHV-1: corneal ulcers, symblepharon. FCV: oral ulceration.',proto:'',filter:'DIFF-NA-VIRAL',note:'Support and manage secondary bacterial infection. L-lysine evidence weak. Famciclovir for severe FHV-1.'},
+    {id:'LES-NA-FB',loc:'LOC-NASAL',loc_name:'Nasal cavity / Nasopharynx',sp:'Dog + Cat',cat:'Inflammation',sub:'Nasal foreign body',urg:'Moderate',signs:'Acute onset violent unilateral sneezing, pawing at face. History of outdoor activity. Grass awn most common.',proto:'',filter:'DIFF-NA-INFLAM',note:'Rhinoscopy for visualisation and removal. CT if not found on rhinoscopy.'},
+    {id:'LES-NA-NPS',loc:'LOC-NASAL',loc_name:'Nasal cavity / Nasopharynx',sp:'Cat',cat:'Inflammation',sub:'Acquired nasopharyngeal stenosis (NPS)',urg:'Moderate',signs:'Chronic stertor, open-mouth breathing. Secondary to chronic infection (FHV-1), gastric acid reflux, or chronic irritation.',proto:'',filter:'DIFF-NA-INFLAM',note:'Diagnosed by nasopharyngoscopy — web-like membrane across nasopharynx. Balloon dilation or stenting. High recurrence rate.'},
+    {id:'LES-NA-CRS',loc:'LOC-NASAL',loc_name:'Nasal cavity / Nasopharynx',sp:'Cat',cat:'Inflammation',sub:'Chronic rhinosinusitis',urg:'Low',signs:'Chronic bilateral nasal discharge post-URTI. Turbinate damage from FHV-1/FCV allows secondary bacterial infection. Fungal granulomatous infection less common.',proto:'',filter:'DIFF-NA-INFLAM',note:'Long-term management not cure. CT shows turbinate lysis. Deep nasal culture for targeted antibiotics. Rule out neoplasia with biopsy.'},
+    {id:'LES-NA-BOAS',loc:'LOC-NASAL',loc_name:'Nasal cavity / Nasopharynx',sp:'Dog',cat:'Structural',sub:'Brachycephalic obstructive airway syndrome (BOAS)',urg:'Moderate–High',signs:'🐕 Brachycephalic breed (English Bulldog, French Bulldog, Pug, Boston Terrier, Shih Tzu). Inspiratory distress with stertor ± stridor. Exercise intolerance, hyperthermia, syncope. Prolonged inspiratory phase. Worsens with heat and excitement.',proto:'PROT-RESP',filter:'DIFF-NA-BOAS',note:'Primary abnormalities: stenotic nares, soft palate hyperplasia, aberrant nasal turbinates, hypoplastic trachea, macroglossia. Secondary (from chronic negative pressure): everted laryngeal saccules → laryngeal collapse (Grade I–III). Diagnosis: airway exam under sedation/GA; CT airway for full assessment. Treat: rhinoplasty (stenotic nares), staphylectomy/palatoplasty, sacculectomy. Post-op: may require temporary tracheostomy; nebulised epinephrine 0.05 mg/kg in 5 mL saline q6h ×24h for mucosal oedema; nebulised 7.2% hypertonic saline 5 mL over 15 min. GOR common — treat with PPI + prokinetic. Weight management essential.'},
+    {id:'LES-NA-RHINIT-D',loc:'LOC-NASAL',loc_name:'Nasal cavity / Nasopharynx',sp:'Dog',cat:'Inflammation',sub:'Nasal disease (dog) — rhinitis / Aspergillus / NP stenosis',urg:'Moderate',signs:'🐕 Inspiratory distress, stertor, sneezing, nasal discharge. Unilateral: FB, neoplasia, fungal. Bilateral: lymphoplasmacytic rhinitis, Aspergillus (depigmentation nasal planum + nasal discharge), nasopharyngeal stenosis.',proto:'',filter:'DIFF-NA-INFLAM',note:'Unilateral discharge + sneezing → rhinoscopy (FB, neoplasia). Nasal depigmentation + serosanguineous discharge → Aspergillosis (CT: turbinate lysis; serology + rhinoscopic biopsy). Lymphoplasmacytic rhinitis: diagnosis of exclusion after CT + biopsy. Treat Aspergillus: intranasal clotrimazole infusion (80–90% success rate).'},
+    {id:'LES-LA-NM',loc:'LOC-LARYNX',loc_name:'Larynx / Cervical trachea',sp:'Dog',cat:'Neuromuscular',sub:'Laryngeal paralysis',urg:'High',signs:'Change in bark, exercise intolerance, stridor, gagging when eating',proto:'PROT-RESP',filter:'DIFF-LA-LP',note:'Older large breed dog. Check for aspiration pneumonia. GOLPP association.'},
+    {id:'LES-LA-DY',loc:'LOC-LARYNX',loc_name:'Larynx / Cervical trachea',sp:'Dog',cat:'Dynamic collapse',sub:'Tracheal collapse (cervical)',urg:'Moderate',signs:'Goose-honk cough, worsens on excitement/lead pulling, toy breed',proto:'',filter:'DIFF-LA-TC',note:'Confirm with fluoroscopy. Medical vs stenting depending on severity.'},
+    {id:'LES-LA-BOASLAR',loc:'LOC-LARYNX',loc_name:'Larynx / Cervical trachea',sp:'Dog',cat:'Structural',sub:'Laryngeal collapse (BOAS complication)',urg:'High',signs:'🐕 Brachycephalic dog with progressive worsening inspiratory distress, stridor, cyanosis despite prior BOAS management. Grade I (everted saccules) → Grade II (aryepiglottic fold collapse) → Grade III (corniculate/cuneiform collapse).',proto:'PROT-RESP',filter:'DIFF-LA-LP',note:'End-stage consequence of chronic negative airway pressure from BOAS components. Grade III may require permanent tracheostomy. Diagnose under GA — assess arytenoid mobility and saccule eversion. Sacculectomy for Grade I; surgical airway correction for Grade II–III. Early primary BOAS surgery prevents progression. Nebulised epinephrine for acute oedema.'},
+    // ── TRACHEA / BRONCHI ──
+    {id:'LES-BR-ASTHMA',loc:'LOC-BRONCHI',loc_name:'Trachea / Bronchi',sp:'Cat',cat:'Inflammatory',sub:'Feline asthma / bronchial disease',urg:'High',signs:'Young to middle-aged cat. Episodic expiratory dyspnoea, wheeze, paroxysmal dry cough. May present as acute crisis with open-mouth breathing. Auscultation: wheeze or prolonged expiration; may be silent in severe bronchospasm. CXR: bronchial pattern, hyperinflation, air trapping; may be normal interictally.',proto:'PROT-RESP',filter:'DIFF-BR-ASTHMA',note:'BAL cytology: eosinophils >17% = allergic/asthma; mast cells may be present. Acute treatment: terbutaline 0.01 mg/kg SC or salbutamol MDI via spacer; dexamethasone 0.2 mg/kg IV/IM. Long-term: inhaled fluticasone ± salbutamol MDI. Identify and remove triggers (dust, litter, aerosols, smoke, scented products).'},
+    {id:'LES-BR-BRON',loc:'LOC-BRONCHI',loc_name:'Trachea / Bronchi',sp:'Dog + Cat',cat:'Inflammatory',sub:'Chronic bronchitis',urg:'Moderate',signs:'Dog: chronic cough >2 months, afebrile, otherwise systemically well. Cat: overlaps with asthma — chronic cough, variable expiratory effort, no acute crisis. No weight loss. Auscultation: adventitious sounds, possible wheeze.',proto:'',filter:'DIFF-BR-BRON',note:'Diagnosis of exclusion — rule out cardiac disease, infectious, and parasitic causes first. CXR: bronchial pattern. BAL: neutrophilic inflammation (dog). Treat: corticosteroids (prednisolone 0.5–1 mg/kg tapering), bronchodilator (terbutaline or theophylline), nebulisation + coupage. Environmental modification essential.'},
+    {id:'LES-BR-PARA',loc:'LOC-BRONCHI',loc_name:'Trachea / Bronchi',sp:'Cat',cat:'Parasitic',sub:'Lungworm (Aelurostrongylus abstrusus)',urg:'Moderate',signs:'Outdoor or hunting cat. Chronic or intermittent cough, expiratory effort, tachypnoea. Often younger cats. May mimic asthma clinically. CBC: eosinophilia in some cases. Slugs and snails are intermediate hosts.',proto:'',filter:'DIFF-BR-PARA',note:'CXR: nodular or diffuse interstitial + peribronchial pattern; may look similar to asthma. Diagnose: Baermann technique on fresh faeces (L1 larvae); faecal PCR (more sensitive); BAL cytology (eosinophils + larvae possible). Treat: fenbendazole 50 mg/kg SID ×10–14 days OR emodepside + praziquantel (Profender spot-on). Repeat Baermann at 4 weeks to confirm clearance.'},
+    {id:'LES-BR-COLL',loc:'LOC-BRONCHI',loc_name:'Trachea / Bronchi',sp:'Dog',cat:'Dynamic collapse',sub:'Tracheal/bronchial collapse (intrathoracic)',urg:'Moderate',signs:'Small/toy breed dog. Expiratory dyspnoea, end-expiratory wheeze. Worsens with excitement and heat. Often concurrent cervical tracheal collapse. Obesity a significant exacerbating factor.',proto:'',filter:'DIFF-BR-COLL',note:'Intrathoracic component collapses on expiration (distinguishes from cervical — collapses on inspiration). Fluoroscopy for dynamic assessment (gold standard). CT for surgical planning. Medical: weight loss, cough suppressants (butorphanol/codeine), bronchodilators, sedation for crises. Intraluminal stenting for refractory or life-threatening cases.'},
+    {id:'LES-BR-EBP',loc:'LOC-BRONCHI',loc_name:'Trachea / Bronchi',sp:'Dog',cat:'Inflammatory/Allergic',sub:'Eosinophilic bronchopneumopathy (EBP)',urg:'Moderate',signs:'🐕 Young to middle-aged dog. Chronic cough, expiratory effort, exercise intolerance, nasal discharge. Husky and Malamute overrepresented. CBC: eosinophilia. CXR: bronchointerstitial to alveolar pattern.',proto:'',filter:'DIFF-BR-EBP',note:'BAL: eosinophilia (often markedly elevated, >17%); mast cells may be present. Rule out parasitic causes (heartworm Ag, Angiostrongylus, Paragonimus) and fungal disease first. Treat: corticosteroids (prednisolone 1–2 mg/kg/day tapering to lowest effective dose); inhaled fluticasone for long-term maintenance. Recurrence common on dose reduction. Immunotherapy for allergen desensitisation in some cases.'},
+    {id:'LES-BR-LUNG-D',loc:'LOC-BRONCHI',loc_name:'Trachea / Bronchi',sp:'Dog',cat:'Parasitic',sub:'Pulmonary parasites (dog) — Oslerus, Angiostrongylus, Paragonimus, Eucoleus',urg:'Moderate',signs:'🐕 Chronic cough, tachypnoea, haemoptysis (Paragonimus). Eosinophilia. CXR: nodular, bronchial, or interstitial pattern. Angiostrongylus: coagulopathy (petechiae, haemorrhage). Secondary pneumothorax possible (Paragonimus).',proto:'',filter:'DIFF-BR-PARA',note:'Oslerus osleri: raised nodules at tracheal bifurcation — visualised on bronchoscopy; Baermann and PCR. Angiostrongylus vasorum (UK/Europe endemic): inhibits clotting factors → coagulopathy; L1 larvae by Baermann/PCR; treat with imidacloprid + moxidectin (Advocate). Paragonimus kellicotti (North America): operculated eggs in sputum/BAL; cystic pulmonary lesions on CT; treat with praziquantel. Eucoleus aerophilus (syn. Capillaria): Baermann; fenbendazole. Treat: fenbendazole 50–100 mg/kg SID ×7–14 days for most species.'},
+    {id:'LES-BR-BRONCH',loc:'LOC-BRONCHI',loc_name:'Trachea / Bronchi',sp:'Dog + Cat',cat:'Structural',sub:'Bronchiectasis',urg:'Moderate',signs:'Chronic productive cough. Recurrent bacterial pneumonia. Cocker Spaniels predisposed. Moist crackles on auscultation. CXR: bronchi visible far peripherally, lack of normal tapering ("tram lines" and "donuts").',proto:'',filter:'DIFF-BR-BRON',note:'Irreversible dilation of bronchi from chronic inflammation/infection. CT superior for full extent assessment. Comorbid chronic bronchitis or primary ciliary dyskinesia common. Management: treat concurrent infections (BAL culture + sensitivity); regular physiotherapy + coupage; bronchodilator; anti-inflammatory if no infection. Not curable — long-term management.'},
+    // ── NEUROMUSCULAR / CHEST WALL / DIAPHRAGM ──
+    {id:'LES-ME-DH',loc:'LOC-MECHANIC',loc_name:'Neuromuscular / Chest wall / Diaphragm',sp:'Dog + Cat',cat:'Structural',sub:'Diaphragmatic hernia',urg:'High',signs:'History of trauma (RTA, falls). Acute or chronic dyspnoea. GI sounds auscultated in thorax. Muffled heart sounds. Possible GI signs if organs herniated. Peritoneopericardial hernia: congenital, may be incidental.',proto:'PROT-RESP',filter:'DIFF-ME-DH',note:'CXR: loss of diaphragmatic line, intrathoracic soft tissue or gas-filled viscera, cardiac silhouette displacement. US: liver or bowel in thorax. Treat: stabilise before surgery — O₂, gastric decompression if gastric herniation. Surgical repair once stable.'},
+    {id:'LES-ME-TR',loc:'LOC-MECHANIC',loc_name:'Neuromuscular / Chest wall / Diaphragm',sp:'Dog + Cat',cat:'Trauma',sub:'Chest wall trauma / rib fractures',urg:'High',signs:'History of trauma. Painful thoracic palpation, crepitus over ribs. Paradoxical chest wall movement (flail chest). Concurrent pneumothorax or pulmonary contusion common.',proto:'PROT-RESP',filter:'DIFF-ME-TRAUMA',note:'CXR: rib fractures, pulmonary contusion (fluffy consolidation), pneumothorax. CT superior for contusion assessment. Treat: O₂, analgesia (intercostal nerve block, systemic opioids), drain pneumothorax if present. Flail chest: positive pressure ventilation may be required.'},
+    {id:'LES-ME-NM',loc:'LOC-MECHANIC',loc_name:'Neuromuscular / Chest wall / Diaphragm',sp:'Dog + Cat',cat:'Neuromuscular',sub:'Respiratory muscle weakness',urg:'High',signs:'Progressive or acute respiratory distress without primary lung or pleural pathology. Paradoxical abdominal breathing. Hypercapnia on blood gas. Concurrent generalised weakness (myasthenia gravis, polyradiculoneuritis, botulism, tick paralysis).',proto:'',filter:'DIFF-ME-NM',note:'Key test: blood gas — hypercapnia + hypoxia = ventilatory failure (not oxygenation failure). AChR antibody titre (MG). Nerve conduction + EMG. Tick search (removal → rapid improvement in tick paralysis). Treat underlying cause; mechanical ventilation if rapidly progressive.'},
+    // GI lesions
+    // ── STOMACH / UPPER GI ──
+    // Inflammation
+    {id:'LES-GI-UP-GAST',loc:'LOC-GI-UPPER',loc_name:'Stomach',sp:'Dog + Cat',cat:'Inflammation',sub:'Gastritis',urg:'Low–Moderate',signs:'Inappetence / anorexia, vomiting. Possible diarrhoea.',proto:'',filter:'DIFF-GI-GAST-DIET',note:'Usually self-limiting; investigate further if signs of hypovolaemia or other systemic effects.',etiology:'#Acute nonspecific gastritis|Often secondary to dietary indiscretion — broad range of underlying etiologies possible|Any condition that stimulates inflammation qualifies; list of causes is broad|#Chronic gastritis|Secondary to chronic enteropathy|Food sensitivity, food intolerance, or reaction to unknown pathogen or parasite|Definitive cause often not identified',diag:'Baseline bloods + lipase / cPLI|Clinical history (medication and dietary history) and examination usually sufficient — *exclude foreign body if persistent|Imaging: radiograph, AFAST',noDiffFlow:true},
+    {id:'LES-GI-UP-EOGAST',loc:'LOC-GI-UPPER',loc_name:'Stomach',sp:'Dog + Cat',cat:'Inflammation',sub:'Eosinophilic gastritis',urg:'Moderate',signs:'Chronic intermittent vomiting, inappetence, weight loss. Peripheral eosinophilia common. Dogs more commonly affected than cats.',proto:'',filter:'DIFF-GI-GAST-CHRON',note:'',etiology:'Dietary hypersensitivity — food allergy (most common)|Parasitic hypersensitivity (Toxocara, hookworm, Physaloptera)|Idiopathic',dis:'DIS-GI-EOGAST',directDis:true},
+    {id:'LES-GI-UP-ULC',loc:'LOC-GI-UPPER',loc_name:'Stomach',sp:'Dog + Cat',cat:'Inflammation',sub:'Gastric ulceration',urg:'High',signs:'Haematemesis, melaena, anorexia, cranial abdominal pain. Severity varies — risk of perforation with deep ulcers.',proto:'',filter:'DIFF-GI-ULC',note:'',etiology:'NSAIDs / corticosteroids|Uraemia (CKD or AKI)|Hepatic disease (reduced mucosal protection)|Mast cell tumour (histamine → HCl hypersecretion)|Gastrinoma / Zollinger-Ellison syndrome|IBD or neoplasia|Foreign body / physical trauma|Stress ulceration (critical illness, hypoperfusion)|Hypoadrenocorticism|Primary / idiopathic',patho:'NSAIDs / corticosteroids: COX-1 inhibition → ↓ prostaglandins → reduced mucus & bicarbonate secretion + ↓ mucosal blood flow → barrier breakdown|Uraemia: elevated BUN → ammonia in gastric lumen → direct mucosal toxicity + impaired epithelial repair|Hepatic disease: ↓ prostaglandin clearance + portal hypertension → mucosal ischaemia + impaired barrier|Mast cell tumour: histamine → H₂ receptor stimulation → HCl hypersecretion → overwhelms mucosal defences|Gastrinoma / Zollinger-Ellison: autonomous gastrin → unregulated acid hypersecretion → multiple refractory ulcers|IBD / neoplasia: direct mucosal invasion or ischaemia → loss of epithelial integrity|Foreign body: physical pressure necrosis at contact point → localised mucosal ischaemia|Stress ulceration: splanchnic hypoperfusion → ischaemia + reperfusion injury → mucosal breakdown|Hypoadrenocorticism: ↓ cortisol → mucosal fragility + impaired repair|Idiopathic: imbalance of aggressive (acid, pepsin) vs protective (mucus, bicarbonate, blood flow) mucosal factors',diag:'Full blood profile (anaemia, thrombocytopenia, azotaemia, liver enzymes)|Coagulopathy profile (PT, aPTT)|Survey radiograph (rule out radiopaque foreign body, free gas if perforation suspected)|Abdominal ultrasound (radiolucent foreign body, gastric wall thickening, mass lesion)|Endoscopy +/- biopsy (gold standard — visualise ulcer, assess depth, take samples)',treat:'Sucralfate (mucosal protectant — give 30 min before food/other meds)|PPI: omeprazole (first-line acid suppression)|Famotidine (H₂ blocker — especially if mast cell tumour)|Pain relief|Anti-emetic: maropitant or ondansetron|Treat underlying cause',dis:'DIS-GI-ULC',directDis:true},
+    // Obstruction
+    {id:'LES-GI-UP-FB',loc:'LOC-GI-UPPER',loc_name:'Stomach',sp:'Dog + Cat',cat:'Obstruction',sub:'Foreign body',urg:'High',signs:'Persistent vomiting ± related to eating. Young or indiscriminate eater. Palpable mass possible.',proto:'',filter:'DIFF-GI-FB',note:'Rule out in young AND old patients with pica or history of eating non-food objects. Cats: consider linear foreign bodies and trichobezoars. Enteroliths rarely reported.',diag:'Survey radiograph (radiopaque objects, abnormal gas pattern)|Ultrasound (radiolucent objects, obstruction)',treat:'Endoscopic retrieval if accessible in stomach|Surgery if obstructed, perforated, or non-retrievable endoscopically'},
+    {id:'LES-GI-UP-GDV',loc:'LOC-GI-UPPER',loc_name:'Stomach',sp:'Dog',cat:'Obstruction',sub:'Dilatation / volvulus (GDV)',urg:'EMERGENCY',signs:'Large/giant breed. Acute non-productive retching, rapidly progressive abdominal distension, weakness, collapse, shock.',proto:'',filter:'DIFF-GI-GDV',note:'',diag:'Radiograph: gas-dilated stomach; compartmentalisation (double bubble) suggests volvulus|Assess shock: CRT, HR, mucous membrane colour, BP',treat:'IV access + aggressive fluid resuscitation|Gastric decompression (trocarisation or orogastric tube)|Emergency surgery — do not delay',dis:'DIS-GI-GDV',directDis:true},
+    {id:'LES-GI-UP-HH',loc:'LOC-GI-UPPER',loc_name:'Stomach',sp:'Dog + Cat',cat:'Obstruction',sub:'Hiatal hernia',urg:'EMERGENCY',signs:'Regurgitation (rather than vomiting), dysphagia, respiratory signs if herniated. Brachycephalic breeds predisposed. Intermittent in sliding type.',proto:'',filter:'DIFF-GI-HH',note:'',diag:'Contrast fluoroscopy (dynamic — catches intermittent hernias)|CT for fixed or complex hernias',treat:'Medical: antacids, prokinetics for mild/sliding hernias|Surgical correction for symptomatic or fixed hernias',dis:'DIS-GI-HH',directDis:true},
+    {id:'LES-GI-UP-PYL',loc:'LOC-GI-UPPER',loc_name:'Stomach',sp:'Dog + Cat',cat:'Obstruction',sub:'Pyloric stenosis',urg:'Moderate',signs:'Projectile vomiting of undigested food hours after eating. Young small or brachycephalic breeds. Progressive weight loss.',proto:'',filter:'DIFF-GI-PYL',note:'Congenital or acquired.',diag:'Contrast study (delayed gastric emptying)|Endoscopy (narrowed pyloric outlet)',treat:'Pyloromyotomy or pyloroplasty',dis:'DIS-GI-PYL',directDis:true},
+    {id:'LES-GI-UP-GAMH',loc:'LOC-GI-UPPER',loc_name:'Stomach',sp:'Dog',cat:'Obstruction',sub:'Gastric antral mucosal hypertrophy',urg:'Moderate',signs:'Intermittent to progressive vomiting of partially digested food. Older small breed dogs.',proto:'',filter:'DIFF-GI-GAMH',note:'',diag:'Ultrasound: thickened pyloric mucosa|Endoscopy and biopsy for definitive diagnosis',treat:'Surgical pyloroplasty if refractory to medical management'},
+    // Infection
+    {id:'LES-GI-UP-PARA',loc:'LOC-GI-UPPER',loc_name:'Stomach',sp:'Dog + Cat',cat:'Infection',sub:'Parasitic',urg:'Low–Moderate',signs:'Chronic vomiting, weight loss, poor body condition. Physaloptera spp. (dog), Ollulanus tricuspis (cat).',proto:'',filter:'DIFF-GI-GAST-DIET',note:'',etiology:'Physaloptera spp. (dogs)|Ollulanus spp. (cats)|Rarely diagnosed in clinical practice',diag:'Endoscopy: Physaloptera visible in gastric mucosa|Vomit smear: Ollulanus tricuspis larvae|Fecal flotation (often false-negative)',treat:'Fenbendazole or ivermectin'},
+    {id:'LES-GI-UP-HELI',loc:'LOC-GI-UPPER',loc_name:'Stomach',sp:'Dog + Cat',cat:'Infection',sub:'Helicobacter spp.',urg:'Low–Moderate',signs:'Chronic vomiting, possible haematemesis. Clinical significance variable — may be incidental finding.',proto:'',filter:'DIFF-GI-GAST-CHRON',note:'Eradication does not always resolve clinical signs.',etiology:'Pathogenic Helicobacter spp-induced gastritis is controversial — organisms are found in the stomach of many healthy dogs and cats',diag:'Gastric biopsy: spiral organisms on histology|Rapid urease test (CLO test) on biopsy',treat:'Triple therapy: amoxicillin + metronidazole + omeprazole × 2 weeks'},
+    // Motility
+    {id:'LES-GI-UP-MOT',loc:'LOC-GI-UPPER',loc_name:'Stomach',sp:'Dog + Cat',cat:'Motility',sub:'Motility disorders',urg:'Low–Moderate',signs:'Vomiting of undigested or partially digested food after eating (hallmark). Bloating after meals. Bilious vomiting syndrome: small amounts of bile vomited after prolonged fasting (end of fasting window).',proto:'',filter:'DIFF-GI-PYL',note:'Bilious vomiting syndrome — suspected duodenogastric reflux due to upper GI motility disorder.',etiology:'#Outflow obstruction|Congenital stenosis|Foreign bodies|Neoplasia|Pyloric mucosal hypertrophy|#Ineffective propulsion|Gastroenteritis|Dysautonomia|Metabolic disorders',diag:'Nuclear scintigraphy (gold standard for gastric emptying rate)|Serial ultrasound (subjective delayed emptying)|Contrast fluoroscopy',treat:'Prokinetics: metoclopramide, cisapride, or erythromycin (low dose)|Treat underlying cause|Bilious vomiting syndrome: small late-night meal to reduce fasting period'},
+    // Mass
+    {id:'LES-GI-UP-FGESF',loc:'LOC-GI-UPPER',loc_name:'Stomach',sp:'Cat',cat:'Mass',sub:'Feline GI Eosinophilic Sclerosing Fibroplasia (FGESF)',urg:'Moderate–High',signs:'Middle-aged to older cats. Progressive vomiting, weight loss, palpable cranial abdominal mass.',proto:'',filter:'DIFF-GI-GAST-CHRON',note:'Cannot be distinguished from neoplasia on imaging alone — histopathology essential.',diag:'Ultrasound/CT: mural mass (mimics neoplasia)|Biopsy and histopathology: eosinophilic infiltrate with fibroplasia',treat:'Immunosuppressive therapy: prednisolone ± chlorambucil',dis:'DIS-GI-FGESF',directDis:true},
+    // Neoplastic
+    {id:'LES-GI-UP-NEO',loc:'LOC-GI-UPPER',loc_name:'Stomach',sp:'Dog + Cat',cat:'Mass',sub:'Gastric neoplasia',urg:'High',signs:'Weight loss, chronic vomiting, anorexia, haematemesis, melaena. Palpable cranial abdominal mass possible.',proto:'',filter:'DIFF-GI-GAST-CHRON',note:'',etiology:'#Malignant|Gastric adenocarcinoma (most common in dogs)|@DIS-GI-LYMP:Lymphoma (dogs and cats)|-More common in cats than dogs|Mast cell tumour|Leiomyosarcoma (dogs)|Carcinoid tumour|GI stromal tumour (GIST)|#Benign|Leiomyoma',diag:'Abdominal ultrasound (wall thickening, mass, lymphadenopathy)|Endoscopy + biopsy + histopathology / immunohistochemistry|CT for staging',treat:'Surgical resection (adenocarcinoma, leiomyoma, GIST)|Chemotherapy for lymphoma (chlorambucil or CHOP protocol)|Prognosis depends on tumour type and stage'},
+    {id:'LES-GI-UP-GSTR',loc:'LOC-GI-UPPER',loc_name:'Stomach',sp:'Dog + Cat',cat:'Mass',sub:'Gastrinoma',urg:'Moderate–High',signs:'Overproduction of gastrin → gastric hyperacidity → severe or refractory vomiting, weight loss, haematemasis, melaena. Multiple or refractory gastric ulcers.',proto:'',filter:'DIFF-GI-ULC',note:'',etiology:'⚠️ Rare condition|Functional neuroendocrine tumour of pancreatic or duodenal G-cells',diag:'Fasting serum gastrin (markedly elevated)|Abdominal ultrasound / CT (pancreatic or duodenal mass)|Endoscopy (multiple refractory ulcers)',treat:'High-dose PPI: omeprazole (acid suppression)|Surgical resection if localised|Octreotide (somatostatin analogue) may reduce gastrin secretion'},
+    {id:'LES-GI-VINF',loc:'LOC-GI-PRIMARY',loc_name:'GI tract',sp:'Dog + Cat',cat:'Infection',sub:'Viral and bacterial ⚠️',urg:'Moderate–High',signs:'Acute vomiting ± diarrhoea, inappetence, lethargy. Variable severity — may be self-limiting or rapidly deteriorating.',proto:'',filter:'DIFF-GI-ENT',note:'',etiology:'Viral|-@DIS-GI-PARVO:Canine parvovirus|-Canine distemper virus|-Feline panleukopenia|Bacterial|-Salmonellosis|-Campylobacteriosis|-Helicobacter spp. (see Stomach → Infection)',diag:'Baseline bloods (CBC — leucopenia with parvovirus)|Parvovirus SNAP test in young unvaccinated dogs|Faecal culture and PCR|Paired serology for viral causes',treat:'Supportive: IV fluids, anti-emetics, gastric protectants|Antibiotics for confirmed bacterial infection or systemic signs|Isolation and strict hygiene protocols'},
+    {id:'LES-GI-FINF',loc:'LOC-GI-PRIMARY',loc_name:'GI tract',sp:'Dog + Cat',cat:'Infection',sub:'Fungal',urg:'Moderate–High',signs:'Vomiting uncommon relative to emaciation, pulmonary signs (cats), and chronic small intestinal diarrhoea (dogs). Weight loss, poor body condition.',proto:'',filter:'DIFF-GI-ENT',note:'',etiology:'Histoplasma capsulatum (histoplasmosis — disseminated form)|Pythium insidiosum (pythiosis) — suspect with history of travel or residence in endemic region (Gulf Coast, California)',diag:'Urine Histoplasma antigen (EIA)|Pythium serology / agar gel immunodiffusion|Biopsy + histopathology with special stains (PAS, GMS)|CT for extent of disease',treat:'Histoplasmosis: itraconazole long-term (6–12 months)|Pythiosis: surgical resection ± itraconazole + terbinafine — prognosis poor if disseminated'},
+{id:'LES-GI-DRUG',loc:'LOC-GI-PRIMARY',loc_name:'GI tract',sp:'Dog + Cat',cat:'Inflammation',sub:'Drug-induced vomiting',urg:'Low–Moderate',signs:'Vomiting temporally associated with drug administration. May be dose-dependent.',proto:'',filter:'DIFF-GI-ENT',note:'',etiology:'Chemotherapeutics|Antibiotics|Opioids|Non-steroidal immunosuppressants (cyclosporine, mycophenolate)|Xylazine — especially cats|NSAIDs',diag:'Medication history — temporal association with drug administration (key)',treat:'Dose reduction or cessation if clinically appropriate|Anti-emetics: maropitant (effective for chemotherapy-induced)|Administer medications with food if tolerated|#Gastric ulcer prophylaxis / treatment|Omeprazole 1 mg/kg PO q24h (dogs); 0.7–1 mg/kg PO q24h (cats) — first-line acid suppression|Sucralfate 0.5–1 g PO q8–12h (dogs); 0.25 g PO q8–12h (cats) — mucosal protectant; administer 30 min before food and other medications'},
+    {id:'LES-GI-TOX',loc:'LOC-GI-PRIMARY',loc_name:'GI tract',sp:'Dog + Cat',cat:'Inflammation',sub:'Toxin ingestion',urg:'High',signs:'Acute vomiting ± systemic signs depending on toxin. Variable severity.',proto:'PROT-TOX',filter:'DIFF-GI-ENT',note:'',etiology:'Lead|Ethylene glycol (antifreeze)|Ethanol|Theobromine (chocolate)|Lilies — cats only (nephrotoxic; vomiting is early sign)|Many other household and plant toxins',diag:'History of exposure (key)|Toxicology screening|Biochemistry (renal / hepatic involvement)',treat:'Decontamination if recent ingestion (emesis induction ± activated charcoal)|Antidote if available (e.g. fomepizole for ethylene glycol)|Supportive care: IV fluids, anti-emetics|Poison control consultation'},
+    {id:'LES-GI-DIET1',loc:'LOC-GI-PRIMARY',loc_name:'GI tract',sp:'Dog + Cat',cat:'Inflammation',sub:'Food intolerance',urg:'Low',signs:'Vomiting, diarrhoea, poor body condition. Abnormal physiologic response to food — not immunologic in nature.',proto:'',filter:'DIFF-GI-ENT',note:'',etiology:'#Mechanisms (7 categories)|Food toxicity (microbes, toxins, metals)|Pharmacologic reactions (biologically active foods: grapes, xylitol, onions)|Metabolic reactions (carbohydrate intolerance)|Dysmotility (diets high in fat or poorly digestible starches)|Dysbiosis|Physical effects (damage or motility problems)|Nonspecific dietary sensitivity',diag:'Dietary history|Elimination diet trial',treat:'Novel protein or hydrolysed protein diet|Avoid identified trigger foods'},
+    {id:'LES-GI-DIET2',loc:'LOC-GI-PRIMARY',loc_name:'GI tract',sp:'Dog + Cat',cat:'Inflammation',sub:'Food allergy',urg:'Low–Moderate',signs:'Vomiting, weight loss, diarrhoea, and pruritus. Immune reaction to food antigen.',proto:'',filter:'DIFF-GI-ENT',note:'Generally a diagnosis of exclusion — further supported by trials with novel protein, hydrolysed protein, or home-cooked diet.',etiology:'Immune-mediated reaction to dietary protein antigen|Typically requires prolonged prior exposure to the allergen',diag:'Elimination diet trial (novel protein, hydrolysed protein, or home-cooked — minimum 8 weeks)|Improvement on trial + relapse on rechallenge supports diagnosis',treat:'Novel protein or hydrolysed protein diet long-term|Strict avoidance of offending antigen'},
+    {id:'LES-GI-IBD',loc:'LOC-GI-PRIMARY',loc_name:'GI tract',sp:'Dog + Cat',cat:'Inflammation',sub:'Inflammatory bowel disease (IBD)',urg:'Moderate',signs:'Intermittent or continuous. Vomiting, small/large/mixed bowel diarrhoea, weight loss, anorexia.',proto:'',filter:'DIFF-GI-IBD',note:'',etiology:'#3 factors thought to contribute (exact mechanism unknown)|Reduction in normal GI flora|Inappropriate immune response to bacteria and bacterial antigens|Disruption of functional GI barriers — allows frequent immune contact with food and bacterial antigens',diag:'Intestinal biopsy (endoscopic or full-thickness) + histopathology — diagnosis of exclusion|Immunohistochemistry (IHC): CD3 / CD79a to rule out lymphoma|FISH (Fluorescent In Situ Hybridization) — recommended on any intestinal biopsy; helps distinguish IBD from small cell lymphoma when histology is equivocal|PARR (PCR for antigen receptor rearrangement) — adjunct when FISH and IHC inconclusive|Dietary trial (hydrolysed or novel protein) to rule out food-responsive disease|Baseline bloods: CBC, biochemistry, cobalamin, folate, TLI'},
+    {id:'LES-GI-OBS',loc:'LOC-GI-PRIMARY',loc_name:'GI tract',sp:'Dog + Cat',cat:'Obstruction',sub:'Intestinal obstruction / intussusception',urg:'EMERGENCY',signs:'⚠️ Frequent severe vomiting. Painful abdomen. Palpable mass or thickened intestinal loop. Intussusception: vomiting, diarrhoea, haematochezia, anorexia, lethargy.',proto:'',filter:'DIFF-GI-OBS',note:'Animals <1 year at higher risk for intussusception — often secondary to infectious gastroenteritis or foreign body ingestion.',etiology:'#Intussusception|Animals <1 year most common|Secondary to infectious gastroenteritis (parasites, viral enteritis) and/or foreign body ingestion|#Foreign body obstruction|Cats: linear foreign bodies common|Rule out in young AND old patients|Enteroliths rarely reported',dis:'DIS-GI-INTUSS',directDis:true},
+    {id:'LES-GI-MVOL',loc:'LOC-GI-PRIMARY',loc_name:'GI tract',sp:'Dog + Cat',cat:'Obstruction',sub:'Mesenteric volvulus',urg:'EMERGENCY',signs:'⚠️ Uncommon emergency. Intestines wrap around root of mesentery. Severe abdominal distension and pain, haematochezia. Rapid deterioration.',proto:'',filter:'DIFF-GI-OBS',note:'',etiology:'Idiopathic|Secondary to anatomical predisposition or prior GI surgery',diag:'Abdominal radiograph (gas-distended loops, loss of serosal detail)|CT (gold standard)',treat:'Emergency surgery — do not delay|Aggressive IV fluid resuscitation|Guarded to grave prognosis'},
+    {id:'LES-GI-REN',loc:'LOC-GI-SECONDARY',loc_name:'Extra-GI',sp:'Dog + Cat',cat:'Metabolic',sub:'Renal disease (uraemia)',urg:'High',signs:'PU/PD, weight loss, oral ulcers, uraemic breath. Vomiting unrelated to eating.',proto:'',filter:'DIFF-GI-SEC-RENAL',note:'',diag:'Biochemistry: BUN, creatinine, SDMA|Urinalysis: USG, UPC|Haematology: non-regenerative anaemia|Renal ultrasound|Blood pressure|Urine culture'},
+    {id:'LES-GI-HEP',loc:'LOC-GI-SECONDARY',loc_name:'Extra-GI',sp:'Dog + Cat',cat:'Metabolic',sub:'Hepatic disease',urg:'High',signs:'⚠️ Jaundice, PU/PD, ascites, hepatomegaly. Vomiting unrelated to eating.',proto:'',filter:'DIFF-GI-SEC-HEPATIC',note:''},
+    {id:'LES-GI-PAN',loc:'LOC-GI-SECONDARY',loc_name:'Extra-GI',sp:'Dog + Cat',cat:'Metabolic',sub:'Pancreatitis',urg:'High',signs:'⚠️ DOG: behaves like PRIMARY GI — acute vomiting after eating, initially bright. CAT: behaves like SECONDARY GI.',proto:'',filter:'DIFF-GI-SEC-PAN',note:''},
+    {id:'LES-GI-ADR',loc:'LOC-GI-SECONDARY',loc_name:'Extra-GI',sp:'Dog',cat:'Endocrine',sub:"Hypoadrenocorticism (Addison's disease)",urg:'High',signs:"⚠️ Waxing/waning vomiting, weight loss, weakness, hyperkalaemia, hyponatraemia. The great pretender.",proto:'',filter:'DIFF-GI-SEC-HYPO',note:"Atypical Addison's (glucocorticoid deficiency only) has normal electrolytes — do not rely on Na:K alone. If stress leukogram is absent in a sick dog, check basal cortisol as first screening step; if <55 nmol/L or suspicion remains → ACTH stimulation test."},
+    {id:'LES-GI-HYP',loc:'LOC-GI-SECONDARY',loc_name:'Extra-GI',sp:'Cat',cat:'Endocrine',sub:'Hyperthyroidism',urg:'Moderate',signs:'Intermittent vomiting over prolonged period in otherwise apparently well cat.',proto:'',filter:'DIFF-GI-SEC-HYPERT',note:''},
+    {id:'LES-GI-DKA',loc:'LOC-GI-SECONDARY',loc_name:'Extra-GI',sp:'Dog + Cat',cat:'Metabolic',sub:'Diabetic ketoacidosis (DKA)',urg:'EMERGENCY',signs:'⚠️ PU/PD, anorexia, lethargy, fruity/acetone breath, ketonuria.',proto:'',filter:'DIFF-GI-SEC-DKA',note:''},
+    // ── OESOPHAGUS / REGURGITATION ──
+    // Diagnosis established via thorough anamnesis: owners report swallowing attempts, appetite changes, odynophagia, dysphagia, hypersalivation. Video recording may help if history unclear.
+    // Inflammation
+    {id:'LES-OES-ITIS',loc:'LOC-OESOPH',loc_name:'Oesophagus',sp:'Dog + Cat',cat:'Inflammation',sub:'Oesophagitis',urg:'Moderate',signs:'Regurgitation, hypersalivation, dysphagia, odynophagia. Reluctance to eat. Clinical signs typically appear a few days after an anaesthetic event. Stricture signs may emerge 2–21 days post-anaesthesia (occasionally 4–6 weeks later).',proto:'',filter:'DIFF-OES-OBS',note:'Anaesthesia-induced GOR is the most common cause of high-grade oesophagitis and stricture formation in dogs. Many preanesthetic drugs decrease lower oesophageal sphincter pressure (atropine, xylazine, morphine, acepromazine, diazepam). Cats more susceptible than dogs to medication-induced oesophagitis due to slower oesophageal transit times.',etiology:'#Gastro-oesophageal reflux (GOR)|Anaesthesia-induced GOR — most common cause of high-grade oesophagitis + stricture|Chronic GOR / GORD|Hiatal hernia|#Foreign body / trauma|Oesophageal foreign body|Spirocerca lupi infection|#Drugs / caustic substances|Doxycycline, clindamycin (cats especially susceptible — give with food and water)|Household caustic chemicals|#Other|Idiopathic',diag:'Oesophagoscopy (gold standard) — mucosal erythema, erosions, ulceration|Survey radiograph (rule out foreign body, megaoesophagus)|Contrast fluoroscopy if endoscopy unavailable',treat:'Proton pump inhibitor (omeprazole)|Sucralfate (mucosal protectant — give 30 min before food/other meds)|Prokinetic (metoclopramide or cisapride)|Elevated feeding position|Remove/treat underlying cause'},
+    {id:'LES-OES-GOR',loc:'LOC-OESOPH',loc_name:'Oesophagus',sp:'Dog + Cat',cat:'Inflammation',sub:'Gastro-oesophageal reflux disease (GORD)',urg:'Low–Moderate',signs:'Chronic regurgitation, hypersalivation, lip licking, anorexia. May worsen after anaesthesia. Brachycephalic breeds predisposed.',proto:'',filter:'DIFF-OES-OBS',note:'',etiology:'Incompetent lower oesophageal sphincter|Hiatal hernia (predisposes)|Brachycephalic syndrome (increased negative intrathoracic pressure)|Post-anaesthetic relaxation of LOS|Increased intra-abdominal pressure',diag:'Oesophagoscopy: lower oesophageal mucosal erythema/erosions|Survey radiograph / fluoroscopy (rule out structural cause)',treat:'Proton pump inhibitor (omeprazole)|Sucralfate|Prokinetic (metoclopramide or cisapride)|Elevated feeding position',ddx:'Oesophagitis (other cause)|Hiatal hernia|Megaoesophagus|Pharyngeal dysfunction|Vomiting misidentified as regurgitation'},
+    {id:'LES-OES-FIST',loc:'LOC-OESOPH',loc_name:'Oesophagus',sp:'Dog + Cat',cat:'Inflammation',sub:'Oesophageal fistula',urg:'High',signs:'Regurgitation, chronic cough, respiratory signs. Abnormal communication between oesophagus and airways, pleural space, or cervical tissue. Often follows severe oesophagitis or penetrating foreign body.',proto:'',filter:'DIFF-OES-OBS',note:'',etiology:'Penetrating foreign body|Severe oesophagitis with transmural necrosis|Surgical complication|Congenital (rare)',diag:'CT thorax (gold standard — defines fistula tract and extent)|Contrast oesophagram with iohexol (caution aspiration risk)|Endoscopy',treat:'Surgical correction|Remove foreign body if present',ddx:'Aspiration pneumonia (primary)|Bronchiectasis|Pleuritis|Mediastinitis|Oesophagitis without fistula'},
+    // Obstruction
+    {id:'LES-OES-FB',loc:'LOC-OESOPH',loc_name:'Oesophagus',sp:'Dog + Cat',cat:'Obstruction',sub:'Oesophageal foreign body',urg:'High',signs:'Acute onset gagging, retching, ptyalism, regurgitation, hypersalivation, dysphagia, distress. Common objects: bones, coins, toys. Median age 4 years (range 2 months–17 years). No sex predilection.',proto:'',filter:'DIFF-OES-OBS',note:'West Highland white terriers and other terriers more commonly affected. Higher incidence in breeds <10 kg (some studies). Repeated swallowing attempts during entrapment increase GOR risk → secondary oesophagitis. Unresolved FB → oesophageal stricture formation.',etiology:'Ingested bones (most common in dogs)|Coins, toys, sharp or linear objects|Needles or fish bones (cats)|Any ingested material that lodges at oesophageal narrowings (thoracic inlet, heart base, LOS)',diag:'Survey radiograph (radiopaque foreign bodies)|Contrast oesophagram with iohexol (radiolucent objects — avoid barium if perforation suspected)|CT for complex cases',treat:'Endoscopic retrieval (first-line)|Surgery if endoscopy fails or perforation suspected|PPI + sucralfate post-retrieval for secondary oesophagitis',ddx:'Oesophageal stricture|Oesophagitis|Megaoesophagus|Vascular ring anomaly|Extraluminal compression (mass)'},
+    {id:'LES-OES-STEN',loc:'LOC-OESOPH',loc_name:'Oesophagus',sp:'Dog + Cat',cat:'Obstruction',sub:'Oesophageal stenosis / stricture',urg:'Moderate',signs:'Progressive regurgitation of solid food — patients often tolerate water but regurgitate solids immediately after eating. Onset typically 1–4 weeks after acute oesophagitis (foreign body or anaesthesia-induced); some cases not apparent until 4–6 weeks post-anaesthesia. History of oesophageal injury, foreign body, or surgery. Weight loss.',proto:'',filter:'DIFF-OES-OBS',note:'Congenital stricture is rare. Acquired: severe oesophagitis extending into the muscularis → scarring → luminal narrowing. Most commonly follows anaesthesia-induced GOR or oesophageal foreign body. Onset of regurgitation 1–4 weeks after an anaesthetic episode or acute oesophagitis should raise strong clinical suspicion.',etiology:'Anaesthesia-induced GOR → oesophagitis → stricture (most common)|Post-foreign body oesophagitis → stricture|Post-surgical stricture|Chronic severe oesophagitis (any cause)|Congenital stricture (rare)|Intraluminal or extraluminal mass (neoplasm, abscess)',diag:'Contrast fluoroscopy or CT (define location and length of stricture)|Endoscopy (visualise and balloon dilate simultaneously)',treat:'Balloon dilation (endoscopic) — may require multiple sessions|PPI to reduce acid-mediated re-stricturing|Intralesional triamcinolone at time of dilation (reduces re-stricturing)',ddx:'Oesophageal foreign body|Oesophageal neoplasia|Vascular ring anomaly|Extraluminal compression|Megaoesophagus'},
+    {id:'LES-OES-HH',loc:'LOC-OESOPH',loc_name:'Oesophagus',sp:'Dog + Cat',cat:'Obstruction',sub:'Hiatal hernia',urg:'EMERGENCY',signs:'Regurgitation, dysphagia, respiratory signs if herniated. Brachycephalic breeds predisposed. Sliding hernia most common — intermittent presentation.',proto:'',filter:'DIFF-OES-OBS',note:'Sliding hernia (most common): stomach and abdominal oesophagus herniate cranially. Paraoesophageal: stomach herniates into mediastinum adjacent to oesophagus.',etiology:'Congenital weakness of oesophageal hiatus|Brachycephalic syndrome (increased negative intrathoracic pressure)|Trauma',diag:'Contrast fluoroscopy (dynamic — catches intermittent hernias)|CT thorax for fixed or complex hernias',treat:'Medical: PPI + prokinetics for mild/intermittent|Surgical correction for symptomatic or fixed hernias',ddx:'GORD without hiatal hernia|Oesophagitis|Megaoesophagus|Diaphragmatic hernia|Oesophageal stricture',dis:'DIS-GI-HH',directDis:true},
+    {id:'LES-OES-NEO',loc:'LOC-OESOPH',loc_name:'Oesophagus',sp:'Dog + Cat',cat:'Obstruction',sub:'Oesophageal neoplasia',urg:'High',signs:'Progressive regurgitation, weight loss, anorexia. Rare — <0.5% of all neoplasms. Masses at the lower oesophageal sphincter can mimic megaoesophagus. Oesophageal masses may mimic foreign body entrapment on radiographs.',proto:'',filter:'DIFF-OES-OBS',note:'Squamous cell carcinoma is the most common primary oesophageal malignancy in dogs — typically cranial thoracic oesophagus. Sarcomas (osteosarcoma, fibrosarcoma, leiomyosarcoma) may be secondary to Spirocerca lupi infection. Metastatic disease (e.g. thyroid carcinoma) also reported. Oesophageal plasma cell tumour reported in cats.',etiology:'#Primary|Squamous cell carcinoma (most common, dog — cranial thoracic oesophagus)|Osteosarcoma, fibrosarcoma, leiomyosarcoma (may be Spirocerca lupi-associated)|Plasma cell tumour (cat — reported)|#Secondary|Metastatic disease (e.g. thyroid carcinoma)|Direct extension from adjacent tissue (thyroid, mediastinal mass)',diag:'Survey thoracic radiograph (soft tissue mass, oesophageal dilation)|CT thorax for staging|Endoscopy + biopsy (tissue diagnosis)',treat:'Surgical resection if possible (generally poor prognosis)|Palliative stenting',ddx:'Oesophageal foreign body|Oesophageal stricture|Periesophageal abscess or granuloma|Mediastinal mass compressing oesophagus|Spirocercosis (granuloma — endemic areas)'},
+    {id:'LES-OES-VRA',loc:'LOC-OESOPH',loc_name:'Oesophagus',sp:'Dog',cat:'Obstruction',sub:'Vascular ring anomaly',urg:'Moderate',signs:'Regurgitation of solid food from weaning onset. Young dog. Declining body condition despite good appetite. Persistent right aortic arch is most common form.',proto:'',filter:'DIFF-OES-OBS',note:'Congenital malformation of major vessels that encircle and compress the oesophagus.',etiology:'Persistent right aortic arch (PRAA — most common)|Aberrant left or right subclavian artery|Double aortic arch|Right dorsal aorta|Left aortic arch with right arterial ligament',diag:'Survey thoracic radiograph (left-sided tracheal deviation; oesophageal dilation cranial to heart)|CT angiography (gold standard — defines vascular anatomy)|Contrast oesophagram (dilation cranial to heart base)',treat:'Surgical ligation and division of the constricting vessel — best outcome before severe megaoesophagus develops|Post-op: elevated feeding, manage secondary megaoesophagus',ddx:'Idiopathic megaoesophagus|Oesophageal foreign body|Oesophageal stricture|Mediastinal mass|Congenital oesophageal dysmotility'},
+    {id:'LES-OES-INTUSS',loc:'LOC-OESOPH',loc_name:'Oesophagus',sp:'Dog',cat:'Obstruction',sub:'Gastro-oesophageal intussusception',urg:'EMERGENCY',signs:'Acute severe regurgitation, dysphagia, respiratory distress. Usually puppies or young dogs. Invagination of the stomach into the oesophagus. Most have underlying megaoesophagus. Potentially fatal.',proto:'',filter:'DIFF-OES-OBS',note:'Rare condition. Serious and potentially fatal — requires emergency intervention.',etiology:'Underlying megaoesophagus (most cases)|Lax gastro-oesophageal junction|Idiopathic in young/puppies',diag:'Survey radiograph (large soft tissue opacity in caudal thorax)|CT or contrast oesophagram (stomach within thoracic oesophagus)|Endoscopy',treat:'Emergency surgical reduction and gastropexy',ddx:'Megaoesophagus (without intussusception)|Diaphragmatic hernia|Mediastinal mass|Oesophageal obstruction|Pleural effusion'},
+    // Motility
+    {id:'LES-OES-MO',loc:'LOC-OESOPH',loc_name:'Oesophagus',sp:'Dog + Cat',cat:'Motility',sub:'Megaoesophagus',urg:'Moderate',signs:'Passive regurgitation of tubular undigested food — most common cause of regurgitation in dogs. Congenital: signs begin at weaning (transition to solid food); puppies fail to thrive and commonly develop aspiration pneumonia. Acquired: any age. Declining body condition score.',proto:'',filter:'DIFF-OES-MEGA',note:'Decreased to absent peristalsis + generalised oesophageal dilation → accumulation of ingesta in the lumen → passive regurgitation. Congenital form may improve with maturity (20–46%). Always rule out acquired causes — especially myasthenia gravis (focal form: regurgitation as the only sign, no limb weakness). A subset of acquired cases may have lower oesophageal sphincter achalasia.',etiology:'#Congenital|German Shepherd (highest incidence), Labrador Retriever, Great Dane, Miniature Schnauzer, Dachshund|#Acquired|Idiopathic (most common acquired cause)|Myasthenia gravis — focal form (regurgitation as only sign)|Generalised neuromuscular disease|Hypoadrenocorticism|Hypothyroidism|Lead toxicosis|Dysautonomia|Post-surgical (rare)|Lower oesophageal sphincter achalasia (subset)',diag:'Survey thoracic radiograph (air-filled dilated oesophagus — primary screening)|Fluoroscopy: gold standard for motility assessment|+/- Liquid barium contrast: risk of aspiration pneumonia — contrast studies contraindicated unless absolutely necessary|Endoscopic exam: identifies foreign body, stricture, or oesophagitis — not a reliable screening test as anaesthesia may induce transient loss of oesophageal tone|Oesophageal manometry and gammagraphy may facilitate the diagnosis of certain motility disorders|#Additional tests|ACh receptor antibody: myasthenia gravis (accounts for 25–30% of secondary megaoesophagus cases)|ACTH stimulation test: hypoadrenocorticism|Atropine response test: dysautonomia|Blood cholinesterase: organophosphate toxicity|Electromyography: myasthenia gravis, polymyositis|Muscle biopsy: dermatomyositis, polymyositis, glycogen storage disease|Nerve conduction / nerve biopsy: polyneuropathy|Skin biopsy: dermatomyositis|Tensilon test (edrophonium): myasthenia gravis|Total T4: hypothyroidism',treat:'Bailey chair / elevated feeding (upright 10–15 min post-meal)|Small frequent meals — experiment with food texture|Treat underlying cause if identified|Monitor for aspiration pneumonia',ddx:'Oesophagitis|#Focal megaoesophagus|-Vascular ring anomaly|-Oesophageal stricture|#Generalised megaoesophagus|-Oesophageal stricture (near lower oesophageal sphincter)|-Hypoadrenocorticism|-Myasthenia gravis|-Lead poisoning|-Botulism|-Tetanus|-Hypothyroidism|-Polyradiculitis|-Thallium toxicity|#Structural oesophageal disease|-Foreign body|-Extra- or intraoesophageal neoplasia|-Diverticula|-Granuloma: fungal or Spirocerca lupi|Polymyopathy|Polyneuropathy|Organophosphate toxicity|Hiatal hernia|Distemper|Neospora caninum',dis:'DIS-OES-MEGA',directDis:true},
+    {id:'LES-OES-DYS',loc:'LOC-OESOPH',loc_name:'Oesophagus',sp:'Dog + Cat',cat:'Motility',sub:'Dysautonomia',urg:'High',signs:'Oesophageal hypomotility and regurgitation. Autonomic signs: dilated fixed pupils, dry mucous membranes, reduced tear production, bradycardia, urinary retention. Originally described in cats; also reported in dogs.',proto:'',filter:'DIFF-OES-MEGA',note:'Neuropathy of the autonomic nervous system — precise aetiology undetermined. Degeneration of autonomic ganglia.',etiology:'Degeneration of autonomic ganglia — precise cause unknown|Suspected environmental or toxic trigger',diag:'Pilocarpine response test (denervation hypersensitivity)|Fluoroscopy (oesophageal hypomotility)|Schirmer tear test (reduced)|Survey radiograph (megaoesophagus)',treat:'Supportive and nursing care|Elevated feeding|Bethanechol (parasympathomimetic) — variable response|Prognosis guarded',ddx:'Idiopathic megaoesophagus|Myasthenia gravis|Anticholinergic toxicity|Opioid toxicity|Peripheral neuropathy'},
+    {id:'LES-OES-IDYM',loc:'LOC-OESOPH',loc_name:'Oesophagus',sp:'Dog + Cat',cat:'Motility',sub:'Idiopathic oesophageal dysmotility',urg:'Low–Moderate',signs:'Regurgitation without overt megaoesophagus on imaging. May be subclinical. Dogs: suspected delayed oesophageal maturation — some experience spontaneous resolution with age. Cats: 44-cat retrospective study documented idiopathic dysmotility via video fluoroscopy without megaoesophagus.',proto:'',filter:'DIFF-OES-MEGA',note:'Distinct from megaoesophagus — dysmotility present without generalised dilation. Delayed maturation suspected in dogs. Diagnosis requires video fluoroscopy; survey radiographs may be normal.',etiology:'Idiopathic (most common)|Delayed oesophageal neuromuscular maturation (dogs — may resolve with age)|Unknown aetiology in cats',diag:'Video fluoroscopy (gold standard — detects dysmotility without dilation)|Survey thoracic radiograph (may be normal or show subtle dilation)|Rule out secondary causes: AChR antibody, ACTH stimulation, T4',treat:'Elevated feeding position|Small frequent meals|Treat underlying cause if identified|Monitor for aspiration pneumonia|Prognosis variable — spontaneous resolution documented in dogs',ddx:'Megaoesophagus|Myasthenia gravis (focal form)|Dysautonomia|Oesophagitis|Pharyngeal dysphagia'},
+    {id:'LES-OES-DIV',loc:'LOC-OESOPH',loc_name:'Oesophagus',sp:'Dog + Cat',cat:'Motility',sub:'Oesophageal diverticula',urg:'Low–Moderate',signs:'Chronic regurgitation of undigested food. Food retention leads to fermentation and secondary oesophagitis. May be incidental finding on imaging.',proto:'',filter:'DIFF-OES-OBS',note:'Congenital or acquired. Pulsion diverticula: cranial to thoracic inlet. Traction diverticula: mid-oesophagus (post-inflammatory).',etiology:'Congenital wall weakness — pulsion diverticula|Post-inflammatory traction diverticula|Secondary to chronic oesophageal obstruction',diag:'Contrast fluoroscopy (outpouching filled with contrast)|Endoscopy (visualise diverticulum opening and contents)',treat:'Surgical resection if symptomatic|PPI + sucralfate for secondary oesophagitis',ddx:'Megaoesophagus|Oesophageal stricture|Oesophagitis|Oesophageal foreign body|Oesophageal neoplasia'},
+
+    // ── EXTRA-OESOPHAGEAL LESION TYPES ─────────────────────────────────────────
+    {id:'LES-EXOES-VRA',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog',cat:'Structural',sub:'Vascular Ring Anomaly',urg:'Moderate',signs:'Regurgitation of solid food from weaning. Declining BCS. PRAA most common form.',etiology:'Persistent right aortic arch (most common)|Aberrant subclavian artery|Double aortic arch',diag:'CT angiography (gold standard)|Survey thoracic radiograph (oesophageal dilation cranial to heart base)',treat:'Surgical ligation of constricting vessel — best outcome before irreversible dilation develops',note:''},
+    {id:'LES-EXOES-HH',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog + Cat',cat:'Structural',sub:'Hiatal Hernia',urg:'Moderate',signs:'Regurgitation, dysphagia, respiratory signs. Brachycephalic breeds predisposed. Sliding hernia: intermittent.',etiology:'Congenital oesophageal hiatus weakness|Brachycephalic syndrome (increased negative intrathoracic pressure)|Trauma',diag:'Contrast fluoroscopy (dynamic — catches intermittent hernias)|CT for fixed or complex hernias',treat:'Medical: PPI + prokinetics for mild/sliding|Surgical correction for symptomatic or fixed hernias',note:''},
+    {id:'LES-EXOES-BOAS',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog + Cat',cat:'Structural',sub:'BOAS',urg:'Moderate',signs:'Brachycephalic breed. Stridor, stertor, exercise intolerance. Regurgitation due to increased negative intrathoracic pressure → GER.',etiology:'Stenotic nares|Elongated soft palate|Hypoplastic trachea|Everted laryngeal saccules|Nasopharyngeal turbinate hyperplasia',diag:'Airway examination under sedation|CT airway|Thoracic radiograph (aspiration changes)',treat:'Surgical airway correction|PPI for secondary GER|Weight management',note:''},
+    {id:'LES-EXOES-COMP',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog + Cat',cat:'Structural',sub:'Extra-luminal compression',urg:'Moderate–High',signs:'Progressive regurgitation. May have respiratory signs if mediastinal mass. Often concurrent weight loss.',etiology:'Mediastinal mass (lymphoma, thymoma, abscess)|Cervical mass|Enlarged lymph nodes|Thyroid carcinoma',diag:'Thoracic radiograph|CT chest (defines mass and extent)|FNA or biopsy of mass',treat:'Treat underlying mass',note:''},
+    {id:'LES-EXOES-MG',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog + Cat',cat:'Neuromuscular',sub:'Myasthenia gravis',urg:'High',signs:'Megaoesophagus + regurgitation. Exercise-induced fatigable weakness. Focal MG: regurgitation as only sign — no limb weakness.',etiology:'Autoimmune destruction of post-synaptic AChR|Focal form: oesophagus selectively affected',diag:'AChR antibody titre (gold standard)|Chest radiograph (megaoesophagus)|CT chest (thymoma)',treat:'Pyridostigmine|Immunosuppression (prednisolone)|Elevated feeding (Bailey chair)',note:'Focal MG easily missed — always check AChR in megaoesophagus of unknown cause'},
+    {id:'LES-EXOES-POLY',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog + Cat',cat:'Neuromuscular',sub:'Polyneuropathy',urg:'Moderate',signs:'Generalised weakness, ataxia, hyporeflexia, +/- megaoesophagus. May show LMN signs.',etiology:'Idiopathic|Inherited (breeds)|Toxic (lead, organophosphate)|Paraneoplastic',diag:'EMG and nerve conduction studies|Nerve biopsy (definitive)',treat:'Treat underlying cause|Supportive care|Elevated feeding',note:''},
+    {id:'LES-EXOES-DYS',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog + Cat',cat:'Neuromuscular',sub:'Dysautonomia',urg:'High',signs:'Megaoesophagus, dilated fixed pupils, dry mucous membranes, reduced lacrimation, bradycardia, urinary retention.',etiology:'Degeneration of autonomic ganglia — precise cause unknown',diag:'Pilocarpine response test|Schirmer tear test|Fluoroscopy (oesophageal hypomotility)',treat:'Supportive and nursing care|Bethanechol|Elevated feeding|Prognosis guarded',note:''},
+    {id:'LES-EXOES-POM',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog + Cat',cat:'Neuromuscular',sub:'Polymyopathies',urg:'Moderate',signs:'Generalised weakness, muscle pain/atrophy, elevated CK. Megaoesophagus when oesophageal muscles involved.',etiology:'Immune-mediated (polymyositis)|Inherited (muscular dystrophy)|Toxic|Paraneoplastic',diag:'CK elevation|EMG|Muscle biopsy (definitive)',treat:'Immunosuppression if immune-mediated|Elevated feeding',note:''},
+    {id:'LES-EXOES-BOT',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog',cat:'Neuromuscular',sub:'Botulism',urg:'High',signs:'Ascending flaccid paralysis, cranial nerve deficits, megaoesophagus. History of carrion or raw meat ingestion.',etiology:'Clostridium botulinum neurotoxin — blocks presynaptic ACh release at NMJ',diag:'Clinical signs + history|Mouse bioassay (serum, food) — limited availability',treat:'Supportive care|Antitoxin if available early|Elevated feeding|Prognosis good if respiratory function maintained',note:''},
+    {id:'LES-EXOES-TET',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog + Cat',cat:'Neuromuscular',sub:'Tetanus',urg:'High',signs:'Rigid spastic paralysis, risus sardonicus, erect ears, tail held erect, dysphagia. Wound history.',etiology:'Clostridium tetani toxin — inhibits inhibitory interneuron neurotransmitter release',diag:'Clinical signs|Wound identification',treat:'Tetanus antitoxin|Wound debridement|Metronidazole/penicillin|Muscle relaxants (diazepam)|Supportive care',note:''},
+    {id:'LES-EXOES-GOLPP',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog',cat:'Neuromuscular',sub:'Laryngeal paralysis / GOLPP',urg:'Moderate',signs:'Stridor, voice change, exercise intolerance, dysphagia, regurgitation. Geriatric large breed dogs.',etiology:'Recurrent laryngeal nerve dysfunction → oesophageal dysmotility (shared innervation)|Generalised polyneuropathy (GOLPP) impairs oesophageal motility and predisposes to GER',diag:'Laryngoscopy under light sedation (paradoxical laryngeal movement)|Chest radiograph (aspiration changes)|Fluoroscopy if oesophageal dysmotility suspected',treat:'Surgical arytenoid lateralisation|Elevated feeding|PPI if concurrent GER|Monitor for aspiration pneumonia',note:'Oesophageal involvement often underrecognised — screen for regurgitation/dysphagia post-surgery'},
+    {id:'LES-EXOES-ADD',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog',cat:'Metabolic',sub:'Hypoadrenocorticism',urg:'Moderate–High',signs:'Waxing-waning weakness, vomiting, regurgitation, weight loss, hyponatraemia, hyperkalaemia. Classic: absence of stress leukogram.',etiology:'Immune-mediated adrenocortical destruction (most common)|Iatrogenic (steroid withdrawal)|Granulomatous disease',diag:'ACTH stimulation test (gold standard)|Electrolytes (low Na:K ratio <27)|Basal cortisol',treat:'Fludrocortisone + prednisolone (chronic)|DOCP (desoxycorticosterone pivalate) injections|IV fluids in crisis',note:'Always rule out in megaoesophagus of unknown cause'},
+    {id:'LES-EXOES-HYPO',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog',cat:'Metabolic',sub:'Hypothyroidism',urg:'Low',signs:'Weight gain, lethargy, cold intolerance, bilateral symmetric alopecia, bradycardia. Megaoesophagus in severe or long-standing cases.',etiology:'Lymphocytic thyroiditis (most common)|Idiopathic atrophy',diag:'Total T4 + free T4 + cTSH panel|Confirm low free T4 + elevated TSH',treat:'Levothyroxine (thyroxine supplementation) — monitor every 4–6 weeks initially',note:''},
+    {id:'LES-EXOES-LEAD',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog + Cat',cat:'Metabolic',sub:'Lead / Heavy metal toxicosis',urg:'High',signs:'Vomiting, regurgitation, megaoesophagus, neurological signs (seizures, ataxia), abdominal pain. History of exposure.',etiology:'Ingestion of lead-containing objects (paint chips, sinkers, batteries)|Heavy metal environmental exposure',diag:'Blood lead level (>0.4 ppm significant)|Radiograph (metallic foreign bodies)|Basophilic stippling on blood smear',treat:'Chelation therapy (Ca-EDTA, succimer)|Remove metallic foreign body if present',note:''},
+    {id:'LES-EXOES-SLE',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog',cat:'Metabolic',sub:'Systemic Lupus Erythematosus',urg:'Moderate',signs:'Polyarthritis, skin lesions, haemolytic anaemia, thrombocytopenia, protein-losing nephropathy. Megaoesophagus reported.',etiology:'Autoimmune — deposition of immune complexes at multiple tissue sites',diag:'ANA titre|Anti-dsDNA antibody|Coombs test|Complete blood count (pancytopenia)',treat:'Immunosuppression (prednisolone ± azathioprine)',note:''},
+    {id:'LES-EXOES-SNAKE',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog + Cat',cat:'Metabolic',sub:'Snake envenomation',urg:'High',signs:'Flaccid paralysis, megaoesophagus, coagulopathy, local tissue necrosis. Rapid deterioration.',etiology:'Neurotoxic venom (elapids) → NMJ blockade|Haemotoxic venom (vipers) → coagulopathy and tissue damage',diag:'Clinical signs + exposure history|Coagulation profile|Venom detection kit (where available)',treat:'Antivenom (early administration)|Supportive care|Elevated feeding if megaoesophagus|ICU monitoring',note:''},
+    {id:'LES-EXOES-UGI',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog + Cat',cat:'GI Disease',sub:'Upper GI obstruction',urg:'High',signs:'Vomiting ± regurgitation. Partial obstruction: chronic vomiting related to eating. Complete: acute, progressive.',etiology:'Pyloric stenosis / antral mucosal hypertrophy|Gastric foreign body|Duodenal obstruction',diag:'Survey radiograph ± contrast|Ultrasound|Endoscopy',treat:'Treat underlying obstruction',note:'GER secondary to pyloric obstruction → oesophagitis → regurgitation'},
+    {id:'LES-EXOES-GIHYPO',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog + Cat',cat:'GI Disease',sub:'GI hypomotility',urg:'Low–Moderate',signs:'Chronic vomiting of partially digested food, bloating. Regurgitation if secondary GER.',etiology:'Post-surgical|Autonomic neuropathy|Idiopathic',diag:'Nuclear scintigraphy (gold standard)|Serial ultrasound|Contrast fluoroscopy',treat:'Prokinetics: metoclopramide, cisapride, erythromycin|Treat underlying cause',note:''},
+    {id:'LES-EXOES-INTUSS',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog',cat:'GI Disease',sub:'Gastro-oesophageal intussusception',urg:'EMERGENCY',signs:'Acute severe regurgitation, respiratory distress, shock. Usually puppies or young dogs with underlying megaoesophagus. Potentially fatal.',etiology:'Underlying megaoesophagus|Lax gastro-oesophageal junction|Idiopathic in young animals',diag:'Survey radiograph (large soft tissue opacity caudal thorax)|CT or contrast oesophagram|Endoscopy',treat:'Emergency surgical reduction and gastropexy',note:'Rare but serious — requires emergency intervention'},
+    {id:'LES-EXOES-CRICO',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog',cat:'Pharyngeal',sub:'Cricopharyngeal achalasia',urg:'Moderate',signs:'Dysphagia, regurgitation of unswallowed food bolus from pharynx. Young dogs (median 15 months). Signs on transition to solid food. Ravenous appetite despite weight loss.',etiology:'Failure of upper oesophageal sphincter (UOS) relaxation in coordination with pharyngeal muscles during swallowing',diag:'Video fluoroscopy (gold standard — shows UOS non-relaxation during swallowing)|Exclusion of structural mass or neurological cause',treat:'Cricopharyngeal myotomy (surgery — resolves in most cases)',note:''},
+    {id:'LES-EXOES-PHARNM',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog + Cat',cat:'Pharyngeal',sub:'Pharyngeal neuropathy / myopathy',urg:'Moderate',signs:'Dysphagia, food accumulation in pharynx, gagging, regurgitation. May have generalised neuromuscular signs.',etiology:'Cranial nerve neuropathy (CN IX, X, XII)|Pharyngeal myopathy|Generalised neuromuscular disease',diag:'Video fluoroscopy|Neurological examination|EMG|MRI (brainstem lesion?)',treat:'Treat underlying disease|Elevated feeding|Assisted nutrition if required',note:''},
+    {id:'LES-EXOES-PHARFB',loc:'LOC-OESOPH-EXT',loc_name:'Extra-Oesophageal',sp:'Dog + Cat',cat:'Pharyngeal',sub:'Pharyngeal foreign body / mass',urg:'High',signs:'Acute dysphagia, gagging, hypersalivation, pawing at mouth. Pain on opening mouth. Caudal pharyngeal FB may cause regurgitation.',etiology:'Penetrating or space-occupying object lodged in caudal pharynx|Obstructive mass (neoplasia, abscess, polyp)',diag:'Oral examination (sedation often required)|Survey radiograph (radiopaque FB)|CT for deep FB or mass',treat:'FB removal under anaesthesia|Treat underlying mass',note:''},
+
+    // ── DIARRHOEA LESION TYPES (Maddison et al. 2015) ───────────────────────
+    {id:"LES-DI-SI-DIET",loc:"LOC-DI-SI",loc_name:"Small intestine",sp:"Dog + Cat",cat:"Dietary",sub:"Diet-responsive / food-responsive enteropathy",urg:"Low",signs:"Mixed SB and LB pattern common. Chronic intermittent diarrhoea, vomiting, weight loss if chronic. May have concurrent dermatological signs (pruritus, otitis). Eosinophilia may be present. Young to middle-aged animals typical. Exclusive dietary trial is the most rewarding first step.",proto:"",filter:"DIFF-DI-SI",note:"Two separate 3-week exclusive dietary trials recommended (novel protein then hydrolysed, or vice versa). EXCLUSIVE means no treats, chews, flavoured medications, or flavoured preventives — switch to unflavoured. Blood anti-food antibody tests NOT validated in dogs or cats. Eosinophilic enteritis may be diet-responsive — always trial diet before immunosuppression.",diag:"#Exclude other causes first|ZnSO₄ flotation ×3 + Giardia ELISA/SNAP — rule out parasites|Fenbendazole 50 mg/kg SID ×5 days empirically before dietary trial|CBC + biochem: usually unremarkable; mild eosinophilia may be present|#Dietary trials|Exclusive novel protein trial ×4–6 weeks (no treats, chews, flavoured medications)|If no response — exclusive hydrolysed protein trial ×4–6 weeks|Complete response to exclusive diet = diagnosis (food-responsive enteropathy)|Endoscopy + biopsy only if both dietary trials fail"},
+    {id:"LES-DI-SI-PARA",loc:"LOC-DI-SI",loc_name:"Small intestine",sp:"Dog + Cat",cat:"Parasitic",sub:"Intestinal parasites — Giardia, Tritrichomonas, roundworm, hookworm, Cryptosporidium",urg:"Moderate",signs:"Large volume diarrhoea, often young animals, weight loss. Giardia: pale, greasy malodorous stool. Hookworm: haemorrhagic diarrhoea and anaemia. Tritrichomonas foetus: cats in crowded environments (shelters, catteries) — chronic waxing/waning LB-type diarrhoea, anal irritation. Cryptosporidium: immunocompromised patients.",proto:"",filter:"DIFF-DI-SI",note:"Comprehensive faecal testing: direct wet mount (motile trophozoites), zinc sulfate centrifugal flotation ×3, Giardia ELISA or IFA antigen, sedimentation for flukes. Treat empirically: fenbendazole 50mg/kg SID ×3–5d regardless of negative flotation. Tritrichomonas foetus: InPouch culture or PCR (Texas A&M, NCSU); treat with ronidazole — monitor for neurotoxicity. Cryptosporidium: acid-fast stain or faecal PCR.",diag:"#Minimum faecal panel|Direct wet mount — motile Giardia trophozoites (must examine within 10 min of collection)|ZnSO₄ centrifugal flotation ×3 samples (different days increases yield)|Giardia ELISA/SNAP antigen — more sensitive than flotation alone|Parvovirus SNAP — young or unvaccinated animals|#Extended panel if standard panel negative|Tritrichomonas foetus: InPouch TF culture or faecal PCR (Texas A&M / NCSU) — cats in crowded settings|Cryptosporidium: acid-fast stain or faecal PCR (immunocompromised / young animals)|Faecal sedimentation — Heterobilharzia americana ova (Gulf Coast dogs)|Faecal PCR panel: Salmonella, Campylobacter, Clostridium perfringens / difficile|Empiric fenbendazole 50 mg/kg SID ×5 days regardless of floatation result"},
+    {id:"LES-DI-SI-ARD",loc:"LOC-DI-SI",loc_name:"Small intestine",sp:"Dog + Cat",cat:"Antibiotic-responsive",sub:"Antibiotic-responsive diarrhoea (ARD) / dysbiosis",urg:"Low",signs:"Often predominantly LB-type diarrhoea despite SI origin. Chronic diarrhoea in otherwise relatively well patient. No definitive cause found on full workup. May relapse when antibiotics stopped. Primary dysbiosis is rare — exclude secondary causes first.",proto:"",filter:"DIFF-DI-SI",note:"Give probiotics BEFORE reaching for antibiotics. If antibiotic trial needed: tylosin (10–25mg/kg BID ×4–6 wk) or oxytetracycline — avoid metronidazole as first choice (disrupts microbiome further). ARD likely represents abnormal mucosal immune response to normal flora — antibiotics cause further dysbiosis. Most appropriate drug not established by controlled trials.",diag:"#Rule out other causes first|ZnSO₄ flotation ×3 + Giardia ELISA — exclude parasites|CBC + biochem: usually normal or mild changes|Dietary elimination trial — exclude food-responsive enteropathy before ARD trial|#Antibiotic trial|Tylosin 10–25 mg/kg BID ×4–6 weeks — first-choice for ARD|Clinical response = presumptive diagnosis|Relapse on withdrawal = supports ARD; consider long-term low-dose maintenance|#If no response to antibiotic trial|Endoscopy + biopsy — exclude IBD, lymphoma, or other infiltrative disease|Full-thickness biopsy preferred"},
+    {id:"LES-DI-SI-IBD",loc:"LOC-DI-SI",loc_name:"Small intestine",sp:"Dog + Cat",cat:"Infiltrative",sub:"Inflammatory bowel disease (IBD) / chronic inflammatory enteropathy",urg:"Moderate",signs:"Chronic diarrhoea >3 weeks, weight loss, poor BCS. Dogs: diarrhoea most common. Cats: vomiting more common than diarrhoea; IBD and small cell lymphoma often clinically indistinguishable. Panhypoproteinaemia (↓ albumin AND ↓ globulin) = PLE.",proto:"",filter:"DIFF-DI-SI",note:"'Chronic inflammatory enteropathy' now preferred umbrella term. In cats: differentiating IBD from small cell lymphoma is critical — PARR PCR has ~70% sensitivity so negative does NOT exclude lymphoma. Full-thickness biopsy preferred — allows muscularis and submucosa assessment. Two full dietary trials (3 wk each, different protein sources) should precede endoscopy. Biopsy after: worming, empirical parasite treatment, both dietary trials, ARD trial.",diag:"#Minimum database|CBC: eosinophilia (eosinophilic enteritis), lymphopenia (PLE), regenerative anaemia (GI blood loss)|Biochemistry: panhypoproteinaemia (↓ albumin + ↓ globulin = PLE), hypoalbuminaemia alone (malabsorption/loss)|Serum cobalamin (B12) — low in severe SI disease; supplement if deficient|Serum folate — elevated proximal SI SIBO; low proximal SI mucosal disease|cTLI (dog) / fTLI (cat) — exclude EPI|#Imaging|Abdominal US: wall thickening (layering preserved = IBD; layering lost = neoplasia), mesenteric LN, pancreas, adrenals|#Protocol before biopsy|Empiric fenbendazole ×5 days + two full dietary trials (3–6 wk each, different protein sources)|ARD trial (tylosin) if dietary trials non-diagnostic|#Tissue diagnosis|Full-thickness intestinal biopsy (preferred) — allows muscularis and submucosa assessment|Endoscopic biopsy acceptable if surgical risk too high — ensure multiple sites and adequate depth|PARR PCR on biopsy material — ~70% sensitivity for lymphoma; negative does NOT exclude"},
+    {id:"LES-DI-SI-NEO",loc:"LOC-DI-SI",loc_name:"Small intestine",sp:"Dog + Cat",cat:"Infiltrative",sub:"GI neoplasia — small cell lymphoma, high-grade lymphoma, adenocarcinoma, MCT",urg:"High",signs:"Progressive weight loss, hypoalbuminaemia, intestinal wall thickening on ultrasound, palpable mass. Cats: small cell (low-grade) lymphoma most common diffuse SI neoplasm — often clinically and histologically indistinguishable from IBD. Dogs: high-grade lymphoma, adenocarcinoma, smooth muscle tumours.",proto:"",filter:"DIFF-DI-SI",note:"Ultrasound: wall thickening >5mm, loss of wall layering, mesenteric LN enlargement. Full-thickness biopsy gold standard — allows muscularis and submucosa assessment. PARR PCR on endoscopic biopsy if full-thickness not possible — sensitivity ~70%, not definitive. Histology-guided mass spectrometry (proteomics) emerging for IBD vs lymphoma differentiation. Feline small cell lymphoma: chlorambucil + prednisolone — median survival >2 years.",diag:"#Minimum database|CBC: anaemia (blood loss or bone marrow infiltration), lymphocytosis (lymphoma), mastocytaemia (systemic MCT)|Biochemistry: panhypoproteinaemia, hypercalcaemia (T-cell lymphoma), elevated liver enzymes|#Imaging|Abdominal US: wall thickening >5 mm, loss of wall layering (neoplasia vs preserved = IBD), mesenteric LN enlargement, focal mass|Thoracic radiograph: pulmonary metastasis staging|CT abdomen/thorax: surgical staging for resectable masses|#Tissue diagnosis|Full-thickness surgical biopsy — mandatory for lymphoma subtyping, essential for muscularis/submucosa assessment|PARR PCR on biopsy — ~70% sensitivity; negative does not exclude lymphoma|Fine needle aspirate of mesenteric LN — cytology|Buffy coat smear + bone marrow aspirate if MCT suspected|IHC: CD3 (T-cell) vs CD79a (B-cell) lymphoma subtyping"},
+    {id:"LES-DI-SI-EPI",loc:"LOC-DI-SI",loc_name:"Small intestine",sp:"Dog + Cat",cat:"Maldigestion",sub:"Exocrine pancreatic insufficiency (EPI)",urg:"Moderate",signs:"Dog: large volume pale greasy malodorous (cow-pat) stool, severe weight loss despite polyphagia, coprophagia, pica. German Shepherd, Cavalier King Charles Spaniel, Chow Chow, Rough Collie predisposed; young animals. Cat: weight loss, soft faeces, hyporexia, poor coat — less dramatic presentation.",proto:"",filter:"DIFF-DI-SI",note:"Dog: cTLI <2.5 mcg/L diagnostic; borderline 2.5–5.7 → repeat fasted sample. Cat: fTLI <8 mcg/L; rare — nearly always secondary to chronic pancreatitis. ALL cats with EPI need cobalamin supplementation regardless of serum level — cats only produce intrinsic factor in pancreas (unlike dogs who also make it in stomach/duodenum). Concurrent dysbiosis common in dogs — treat with cobalamin and tylosin. Pancreatic enzyme supplementation lifelong.",diag:"cTLI (dog): <2.5 μg/L = diagnostic; 2.5–5.7 borderline — recheck on fasted (12–18h) sample|fTLI (cat): <8 μg/L = diagnostic (rare — nearly always secondary to chronic pancreatitis)|Serum cobalamin (B12): usually low; supplement ALL EPI cats regardless of serum level|Serum folate: often elevated due to secondary dysbiosis / SIBO|CBC + biochem: usually unremarkable; mild hypoproteinaemia if concurrent SI disease|Abdominal US: pancreatic atrophy visible in GSDs; otherwise unremarkable|Response to pancreatic enzyme supplementation (powdered porcine extract) supports diagnosis"},
+    {id:"LES-DI-SI-LYMPH",loc:"LOC-DI-SI",loc_name:"Small intestine",sp:"Dog",cat:"Protein-losing",sub:"Lymphangiectasia",urg:"Moderate",signs:"Panhypoproteinaemia (↓ albumin AND ↓ globulin), peripheral oedema, ascites, pleural/pericardial effusion. Chronic diarrhoea, weight loss. Faeces may appear fatty. Yorkshire Terrier, Soft Coated Wheaten Terrier, Norwegian Lundehund predisposed. Risk of thrombosis — antithrombin III loss via gut.",proto:"",filter:"DIFF-DI-SI",note:"Usually secondary to IBD or neoplasia. Fat restriction CRITICAL — diet <20% fat calories; if concurrent hypoallergenic requirement, use hydrolysed low-fat diet. Food-responsive lymphangiectasia: may develop acute ascites 24–48h after offending protein — strict exclusion essential. Albumin <15 g/L = poor prognosis. Check for chest and pericardial effusion. Monitor Mg. Antithrombin III loss → thrombosis risk — consider prophylactic anticoagulation in severe hypoalbuminaemia.",diag:"#Minimum database|Biochemistry: panhypoproteinaemia (↓ albumin + ↓ globulin) — hallmark finding; hypoalbuminaemia <15 g/L = poor prognosis|Serum triglycerides: often elevated|Serum cobalamin (B12): low (fat-soluble vitamin malabsorption)|Serum magnesium: check (hypomagnesaemia common)|#Imaging|Abdominal US: hyperechoic mucosal striations (dilated lacteals), reduced serosal detail (ascites), intestinal wall thickening|Thoracic radiograph + US: pleural or pericardial effusion|#Tissue diagnosis|Endoscopic biopsy: dilated lacteals, lipid-laden macrophages (villous lacteals visible as white speckling at endoscopy)|Full-thickness biopsy if endoscopic insufficient or concurrent mass lesion suspected"},
+    {id:"LES-DI-SI-SEC-HYPERT",loc:"LOC-DI-SI-SEC",loc_name:"Small intestine — Secondary",sp:"Cat",cat:"Endocrine",sub:"Hyperthyroidism",urg:"Moderate",signs:"Chronic SI diarrhoea, weight loss despite polyphagia, vomiting, tachycardia, palpable goitre, hyperactivity. Increased GI motility → reduced transit time → malabsorption. One of the most common causes of chronic diarrhoea in middle-aged to older cats. Any age cat with chronic diarrhoea warrants T4 measurement.",proto:"",filter:"DIFF-DI-SI",note:"Check serum T4 in ALL cats with chronic diarrhoea regardless of age. Equivocal T4 → free T4 by equilibrium dialysis or recheck in 3 weeks. T4 can be suppressed into normal range by concurrent illness (occult hyperthyroidism) — repeat if suspicion remains. Treatment: methimazole, radioiodine, surgical thyroidectomy, or iodine-restricted diet.",diag:"Serum T4 (total thyroxine) — screen ALL cats with chronic diarrhoea regardless of age|Free T4 by equilibrium dialysis — if T4 equivocal or normal but suspicion high (concurrent illness can suppress T4)|Recheck T4 in 3–6 weeks if concurrent illness may be masking result (occult hyperthyroidism)|T4 auto-antibody screen if free T4 discordant with clinical picture|Renal panel pre- and post-treatment — treatment may unmask underlying CKD by reducing GFR|Response to antithyroid therapy = confirms diagnosis"},
+    {id:"LES-DI-SI-SEC-HYPOAD",loc:"LOC-DI-SI-SEC",loc_name:"Small intestine — Secondary",sp:"Dog + Cat",cat:"Endocrine",sub:"Hypoadrenocorticism (Addison's disease)",urg:"Moderate",signs:"Classic form: hyponatraemia, hyperkalaemia, Na:K <27, bradycardia, weakness, collapse, hypotension, hypoglycaemia. Atypical form: normal electrolytes — waxing/waning GI signs (vomiting, diarrhoea, weight loss), lethargy, weakness, shaking episodes. Absent stress leukogram in a sick dog is the key trigger for suspicion.",proto:"",filter:"DIFF-DI-SI",note:"Atypical hypoadrenocorticism: NO electrolyte changes — cannot be excluded on bloodwork alone. Check basal cortisol; if <55 nmol/L or suspicion remains → ACTH stimulation test. Post-stimulation cortisol <55 nmol/L = diagnostic. Treatment: fludrocortisone or DOCP + prednisolone. Addisonian crisis: IV 0.9% NaCl, dexamethasone, treat hypoglycaemia.",diag:"#Atypical Addison's — key trigger|CBC: absent stress leukogram in a sick dog → check basal cortisol immediately (atypical Addison's may have completely normal Na:K — do not rely on electrolytes alone to exclude); eosinophilia also suspicious|#Classical Addison's — blood panel|Biochemistry: Na:K <27 (classical form), hypoglycaemia, ↑ potassium, ↑ BUN (prerenal azotaemia)|#Cortisol testing|Basal cortisol: if absent stress leukogram, eosinophilia, or Na:K <27 → check basal cortisol as first screening step|Basal cortisol <55 nmol/L or clinical suspicion persists → proceed to ACTH stimulation test|ACTH stimulation test (cosyntropin 5 μg/kg IV): post-stimulation cortisol <55 nmol/L = diagnostic for hypoadrenocorticism|Cortisol 55–165 nmol/L (basal) = equivocal → still perform ACTH stim if clinical signs fit|#Supporting tests|Abdominal US: bilateral small adrenal glands (<3 mm in dogs) — supports diagnosis|ECG: bradycardia, atrial standstill (severe hyperkalaemia in classical form)"},
+    {id:"LES-DI-SI-SEC-PANCREATITIS",loc:"LOC-DI-SI-SEC",loc_name:"Small intestine — Secondary",sp:"Dog + Cat",cat:"Hepatobiliary",sub:"Pancreatitis",urg:"Moderate",signs:"Cranial abdominal pain, vomiting, diarrhoea, anorexia. Acute: severe pain, haemorrhagic effusion, shock. Chronic: subclinical or mild recurrent GI signs; progressive acinar destruction → EPI. Cat: often less dramatic — anorexia, weight loss, or jaundice may dominate. Major driver of triaditis in cats.",proto:"",filter:"DIFF-DI-SI",note:"fPLI (cat) / cPLI (dog) most sensitive and specific serum test. Abdominal US: pancreatic enlargement, altered echogenicity, peripancreatic fat saponification, free fluid. Treatment: IV fluids, analgesia, antiemetics, early enteral nutrition. Chronic pancreatitis → monitor TLI annually for EPI development.",diag:"fPLI (cat) / cPLI (dog) — most sensitive and specific serum test for pancreatitis|Abdominal US: pancreatic enlargement, altered echogenicity, peripancreatic fat saponification, free fluid|CBC: neutrophilia with left shift (acute); may be unremarkable (chronic)|Biochemistry: ↑ ALT/ALP (especially cats); ↑ total bilirubin (biliary obstruction); ↑ glucose (rare — pancreatogenic diabetes)|Abdominal radiograph: mass effect in right cranial abdomen, reduced serosal detail (cats)|Monitor cTLI annually in chronic cases — detect progression to EPI"},
+    {id:"LES-DI-SI-SEC-EPI",loc:"LOC-DI-SI-SEC",loc_name:"Small intestine — Secondary",sp:"Dog + Cat",cat:"Hepatobiliary",sub:"Exocrine pancreatic insufficiency (EPI)",urg:"Moderate",signs:"Dog: large volume pale greasy malodorous stool, severe weight loss despite polyphagia, coprophagia, pica. GSD, Cavalier KCS, Chow Chow, Rough Collie predisposed. Cat: weight loss, soft faeces, hyporexia, poor coat — less dramatic; nearly always secondary to chronic pancreatitis.",proto:"",filter:"DIFF-DI-SI",note:"Dog: cTLI <2.5 mcg/L diagnostic; borderline 2.5–5.7 → repeat fasted sample. Cat: fTLI <8 mcg/L. Cobalamin: supplement ALL cats with EPI regardless of serum level. Treatment: powdered porcine pancreatic enzyme extract added to food 30 min before feeding. Prognosis good with lifelong supplementation.",diag:"cTLI (dog): <2.5 μg/L = diagnostic; 2.5–5.7 borderline — recheck fasted (12–18h) sample|fTLI (cat): <8 μg/L = diagnostic|Serum cobalamin (B12): low in majority; supplement ALL EPI cats regardless of serum level|Serum folate: often elevated (secondary SIBO / dysbiosis)|Abdominal US: pancreatic atrophy (visible in GSDs; often unremarkable in other breeds)|CBC + biochem: usually normal; mild hypoproteinaemia in some cases"},
+    {id:"LES-DI-SI-SEC-TRIADITIS",loc:"LOC-DI-SI-SEC",loc_name:"Small intestine — Secondary",sp:"Cat",cat:"Hepatobiliary",sub:"Triaditis — pancreatitis + cholangitis + IBD",urg:"Moderate",signs:"Concurrent inflammation of pancreas, bile duct/liver, and small intestine. Variable presentation: anorexia, weight loss, vomiting, diarrhoea, jaundice. Signs may be dominated by any one component. Common in middle-aged to older cats; often chronic and smouldering.",proto:"",filter:"DIFF-DI-SI",note:"Check fPLI, ALT, GGT, total bilirubin — often all elevated. Ultrasound: biliary thickening/sludge, pancreatic changes. Liver aspirate or biopsy for cholangitis classification (neutrophilic vs lymphocytic). Treatment: prednisolone (lymphocytic) or amoxicillin-clavulanate (neutrophilic); ursodeoxycholic acid; cobalamin supplementation.",diag:"fPLI — pancreatitis component|ALT, ALP, GGT, total bilirubin — hepatic/biliary component (often all elevated)|Abdominal US: biliary wall thickening, biliary sludge, pancreatic changes, hepatic parenchymal changes|Liver aspirate (FNA) or biopsy — classify cholangitis (neutrophilic vs lymphocytic — guides antibiotic vs prednisolone)|Serum cobalamin (B12): low if IBD component is dominant|Note: all three components may not be clinically apparent simultaneously; screen for all"},
+    {id:"LES-DI-SI-SEC-HEPATIC",loc:"LOC-DI-SI-SEC",loc_name:"Small intestine — Secondary",sp:"Dog + Cat",cat:"Hepatobiliary",sub:"Hepatic disease",urg:"Moderate",signs:"Diarrhoea, vomiting, jaundice, PU/PD, hepatic encephalopathy, ascites, coagulopathy. Causes include chronic hepatitis, hepatic lipidosis (cat), copper storage disease (Bedlington Terrier, WHWT, Labrador), hepatic neoplasia, and toxin-induced hepatopathy.",proto:"",filter:"DIFF-DI-SI",note:"ALT, ALP, GGT, albumin, total bilirubin, bile acids, clotting times. Abdominal US: hepatic architecture, echogenicity, size. Liver biopsy (Tru-cut or surgical) for definitive diagnosis. Hepatic lipidosis in cats: aggressive enteral nutrition via feeding tube is cornerstone of treatment.",diag:"#Minimum database|ALT, ALP, GGT, albumin, total bilirubin, pre/post-prandial bile acids|PT / APTT — coagulopathy assessment|Biochemistry: ↓ albumin, ↑ ammonia (hepatic encephalopathy), hypoglycaemia (hepatic failure)|Urinalysis: bilirubinuria (cat = always pathological), ammonium biurate crystals (hepatic failure/PSVA)|#Imaging|Abdominal US: hepatic echogenicity, size, architecture, vascular pattern, biliary system|#Definitive|Liver biopsy (Tru-cut or surgical) — histopathology for aetiology (hepatitis, lipidosis, fibrosis, neoplasia)|Copper quantification on liver biopsy (Bedlington Terrier, WHWT, Labrador)"},
+    {id:"LES-DI-SI-SEC-PSVA",loc:"LOC-DI-SI-SEC",loc_name:"Small intestine — Secondary",sp:"Dog + Cat",cat:"Hepatobiliary",sub:"Portosystemic vascular anomaly (PSVA)",urg:"Moderate",signs:"Young animal, stunted growth, neurological signs post-feeding (hepatic encephalopathy), microhepatica, renomegaly, ammonium biurate crystalluria. Dogs >> cats. Small/toy breeds: single extrahepatic shunt common. Large breeds: intrahepatic shunt. Signs may worsen after high-protein meal.",proto:"",filter:"DIFF-DI-SI",note:"Paired pre/post-prandial bile acids (fasting sample then 2h post-prandial). Abdominal US: microhepatica, shunt vessel. CT angiography to define vascular anatomy before surgery. Medical management: lactulose, low-protein diet, metronidazole; definitive treatment: surgical attenuation (ameroid constrictor or cellophane banding).",diag:"Paired pre/post-prandial bile acids — markedly elevated post-prandial; single best non-invasive screening test|Serum ammonia (fasting or post-prandial) — hyperammonaemia|Urinalysis: ammonium biurate crystalluria (pathognomonic in young animals)|Abdominal US: microhepatica, dilated portal vasculature, shunt vessel identification|CT angiography (portal venous phase) — gold standard for shunt characterisation and surgical planning|CBC + biochem: microcytic anaemia, hypoproteinaemia, ↑ liver enzymes (variable)"},
+    {id:"LES-DI-SI-SEC-HETERO",loc:"LOC-DI-SI-SEC",loc_name:"Small intestine — Secondary",sp:"Dog",cat:"Infectious",sub:"Heterobilharzia americana",urg:"Moderate",signs:"Gulf Coast / SE USA dogs with outdoor water exposure. Chronic protein-losing enteropathy, ascites, weight loss, hypercalcaemia, granulomatous enteritis. Hypercalcaemia due to granulomatous inflammation → calcitriol production. Often misdiagnosed as IBD or lymphoma.",proto:"",filter:"DIFF-DI-SI",note:"Faecal sedimentation for ova or faecal PCR (most sensitive). Treatment: praziquantel 25 mg/kg TID ×2 days + fenbendazole 50 mg/kg SID ×10 days. Hypercalcaemia resolves with treatment of infection. Abdominal US: granulomatous intestinal wall thickening.",diag:"Faecal sedimentation — Heterobilharzia americana ova (~70% sensitivity)|Faecal PCR — most sensitive test (Texas A&M diagnostic lab)|Biochemistry: hypercalcaemia (granulomatous calcitriol production — hallmark clue), panhypoproteinaemia|CBC: eosinophilia, anaemia|Abdominal US: granulomatous intestinal wall thickening, hepatic changes|Colonoscopy + biopsy: granulomatous inflammation — may be mistaken for IBD or lymphoma"},
+    {id:"LES-DI-SI-SEC-SALM",loc:"LOC-DI-SI-SEC",loc_name:"Small intestine — Secondary",sp:"Dog + Cat",cat:"Infectious",sub:"Salmonellosis",urg:"High",signs:"Acute haemorrhagic diarrhoea, fever, vomiting, systemic sepsis. More severe in young, immunocompromised, or hospitalised animals. Carrier state common in reptile-contact animals. ZOONOTIC — strict barrier nursing required. May cause bacteraemia, endotoxaemia, and DIC in severe cases.",proto:"",filter:"DIFF-DI-SI",note:"Faecal culture (multiple samples increase sensitivity). Blood culture if septicaemia suspected. Supportive care: IV fluids, antibiotics only if systemic signs (risk of prolonged shedding with inappropriate antibiotic use). Zoonotic risk: inform owners, recommend hand hygiene and isolation.",diag:"Faecal culture (aerobic) — multiple samples increase sensitivity (intermittent shedding)|Faecal PCR — Salmonella spp. (faster, highly sensitive)|Blood culture — if bacteraemia or septicaemia suspected|CBC: neutropenia ± left shift (septicaemia); leucopenia in severe cases|Biochemistry: ↑ liver enzymes, electrolyte disturbances (systemic disease)|Antibiotic susceptibility testing — guide treatment if systemic signs present (avoid empiric antibiotics in subclinical cases — promotes prolonged shedding)"},
+    {id:"LES-DI-SI-SEC-HISTO",loc:"LOC-DI-SI-SEC",loc_name:"Small intestine — Secondary",sp:"Dog + Cat",cat:"Infectious",sub:"Histoplasmosis",urg:"Moderate",signs:"Endemic: Ohio/Mississippi/Missouri river valleys, Great Lakes region. Chronic diarrhoea (large or small bowel), weight loss, dyspnoea, hepatosplenomegaly, lymphadenopathy, pancytopenia. Pulmonary signs common. GI histoplasmosis can occur without pulmonary involvement.",proto:"",filter:"DIFF-DI-SI",note:"Rectal scraping cytology (most rapid — intracellular yeast in macrophages). Urine Histoplasma antigen ELISA (sensitive). Faecal PCR. Treatment: itraconazole 5 mg/kg SID or BID for minimum 6 months; monitor with urine antigen titre. Prognosis good with early treatment.",diag:"Rectal scraping cytology — most rapid test; intracellular yeast within macrophages (pathognomonic appearance)|Urine Histoplasma antigen ELISA (MiraVista Diagnostics) — most sensitive test; monitor during treatment|Faecal PCR — Histoplasma capsulatum|Fine needle aspirate of lymph nodes, lung, liver, spleen if accessible|CBC + biochem: pancytopenia (↓ all cell lines), ↑ liver enzymes, hypoproteinaemia|Thoracic radiograph: pulmonary nodules, diffuse interstitial pattern|Monitor treatment response with urine antigen titre (itraconazole × minimum 6 months)"},
+    {id:"LES-DI-SI-SEC-PYTHI",loc:"LOC-DI-SI-SEC",loc_name:"Small intestine — Secondary",sp:"Dog",cat:"Infectious",sub:"Pythiosis (oomycosis)",urg:"High",signs:"Young large-breed dogs in Gulf Coast / tropical regions with water exposure. Rapidly progressive transmural GI mass, severe protein-losing enteropathy, weight loss, vomiting. May mimic alimentary lymphoma or IBD. Skin form also occurs. Carries poor prognosis if not caught early.",proto:"",filter:"DIFF-DI-SI",note:"Serology: Pythium insidiosum ELISA (titre ≥1:400 suggestive). Abdominal US: transmural mass lesion with loss of wall layering. Surgical resection (wide margins) + itraconazole + terbinafine or voriconazole. Prognosis guarded to poor — recurrence common. Early aggressive surgery offers best outcome.",diag:"Pythium insidiosum ELISA serology — titre ≥1:400 strongly suggestive (commercially available)|Abdominal US: transmural GI mass lesion, loss of wall layering, mesenteric LN enlargement|CT abdomen — extent of disease for surgical planning|FNA / biopsy: branching aseptate hyphae on GMS (Gomori methenamine silver) stain or culture on selective media|Pythium insidiosum PCR (tissue or fluid) — most sensitive molecular confirmation|Biochemistry: panhypoproteinaemia, hypoalbuminaemia (severe PLE)"},
+    {id:"LES-DI-SI-SEC-GASTRIN",loc:"LOC-DI-SI-SEC",loc_name:"Small intestine — Secondary",sp:"Dog + Cat",cat:"Mass",sub:"Gastrinoma (Zollinger-Ellison syndrome)",urg:"High",signs:"Refractory GI ulceration, chronic severe vomiting and diarrhoea, haematemesis, melaena, hyporexia, weight loss. Hypergastrinaemia drives massive gastric acid hypersecretion. Ulcers often multiple and in atypical locations (duodenum, jejunum). May present as acute haemorrhage.",proto:"",filter:"DIFF-DI-SI",note:"Fasting serum gastrin >1000 pg/mL strongly suggestive (normal <90). Abdominal US/CT for pancreatic or duodenal mass. High-dose omeprazole 1–2 mg/kg BID essential to control acid. Surgical resection if localised. Prognosis guarded — malignant behaviour common.",diag:"Fasting serum gastrin >1000 pg/mL = strongly suggestive (normal <90 pg/mL) — must fast 12h+; omeprazole elevates gastrin (stop PPI if safe to do so)|Secretin stimulation test: paradoxical ↑ gastrin (>200 pg/mL rise) — most specific confirmatory test|Upper GI endoscopy: multiple ulcers in atypical locations (duodenum, jejunum, oesophagus)|Abdominal US / CT: pancreatic or duodenal mass, hepatic metastases|CBC: anaemia (chronic blood loss from ulceration)|Note: omeprazole 1–2 mg/kg BID required for symptom control before and during workup"},
+    {id:"LES-DI-SI-SEC-MCT",loc:"LOC-DI-SI-SEC",loc_name:"Small intestine — Secondary",sp:"Dog + Cat",cat:"Mass",sub:"Systemic mast cell tumour",urg:"High",signs:"Dog: systemic MCT with GI involvement — histamine release → GI ulceration, haemorrhage, melaena, haematemesis, diarrhoea. Cat: primary visceral MCT (spleen most common) → vomiting, diarrhoea, weight loss; Siamese predisposed. Concurrent cutaneous MCT in dogs warrants abdominal staging.",proto:"",filter:"DIFF-DI-SI",note:"Buffy coat smear (mastocytaemia), bone marrow aspirate, abdominal US (splenic nodules, mesenteric LN). H1 blocker (diphenhydramine) + H2 blocker (famotidine) + PPI before any procedures. Cat primary splenic MCT: splenectomy often curative. Dog: chemotherapy (lomustine, vinblastine) for systemic disease.",diag:"Buffy coat smear — mastocytaemia (mast cells in circulation)|CBC: eosinophilia; anaemia (blood loss from ulceration)|Abdominal US: splenic nodules/enlargement (cat — primary visceral MCT), mesenteric LN, gastric/intestinal wall thickening|Fine needle aspirate of spleen (cats), skin masses (dogs), or accessible LN — cytology for mast cells|Bone marrow aspirate — systemic staging|Endoscopy + GI biopsy if luminal involvement suspected|Pre-procedure: H1 blocker (diphenhydramine) + H2 blocker (famotidine) + PPI — prevent histamine-mediated complications during manipulation"},
+    {id:"LES-DI-SI-SEC-CARCINOID",loc:"LOC-DI-SI-SEC",loc_name:"Small intestine — Secondary",sp:"Dog + Cat",cat:"Mass",sub:"Carcinoid / neuroendocrine tumour",urg:"High",signs:"Rare; episodic watery diarrhoea, vomiting, flushing (serotonin excess). Arise from enterochromaffin cells of GI tract. Often malignant with hepatic metastases at diagnosis. Paraneoplastic signs from serotonin, histamine, or substance P secretion. May be incidental finding on abdominal imaging.",proto:"",filter:"DIFF-DI-SI",note:"Abdominal US/CT: primary mass + hepatic metastases. Urine 5-HIAA (5-hydroxyindoleacetic acid) elevated in serotonin-secreting tumours. Somatostatin scintigraphy if available. Surgical resection + octreotide for secretory control. Prognosis poor if metastatic.",diag:"Abdominal US / CT: primary intestinal mass + hepatic metastases (usually present at diagnosis)|Urine 5-HIAA (5-hydroxyindoleacetic acid) — elevated in serotonin-secreting tumours (24h urine collection)|Serum chromogranin A — general neuroendocrine marker|Somatostatin receptor scintigraphy (octreoscan) — if available; identifies receptor-expressing tumours|FNA / biopsy: neuroendocrine morphology on H&E; IHC confirmation (chromogranin A, synaptophysin, CD56)|CBC + biochem: usually unremarkable unless hepatic metastases or blood loss"},
+    // Large bowel
+    {id:"LES-DI-LB-WHIPWORM",loc:"LOC-DI-LB",loc_name:"Large intestine / colon",sp:"Dog",cat:"Parasitic",sub:"Whipworm (Trichuris vulpis)",urg:"Low",signs:"Chronic haematochezia, tenesmus, mucus, small-volume frequent stools. Ova shed intermittently so faecal floatation often false-negative. Common in dogs with outdoor access.",proto:"",filter:"DIFF-DI-LB",note:"Treat empirically with fenbendazole 50 mg/kg SID × 3 days, repeat at 3 and 6 weeks, even if floatation negative. Prevent reinfection: concrete runs, remove faeces promptly.",diag:"ZnSO₄ centrifugal flotation ×3 samples — ova shed intermittently; multiple samples increase yield|Treat empirically with fenbendazole 50 mg/kg SID ×3 days; repeat at 3 and 6 weeks even if floatation negative|Response to empirical fenbendazole = diagnosis|Note: Trichuris ova can persist in environment for years — concrete runs and regular faecal removal essential to prevent reinfection"},
+    {id:"LES-DI-LB-TRITRICH",loc:"LOC-DI-LB",loc_name:"Large intestine / colon",sp:"Cat",cat:"Parasitic",sub:"Tritrichomonas foetus",urg:"Low",signs:"Chronic or intermittent large bowel diarrhoea in young cats, especially in catteries or multicat households. Waxing and waning course. Anal irritation, liquid to soft faeces with mucus and occasional blood.",proto:"",filter:"DIFF-DI-LB",note:"InPouch TF culture (most sensitive) or PCR via Texas A&M / NCSU diagnostic labs. Treatment: ronidazole 30–50 mg/kg SID × 14 days — monitor for neurotoxicity (seizures, ataxia). Most cats resolve spontaneously over 2 years even without treatment.",diag:"Direct wet mount of fresh faeces — motile trophozoites (must view within 10 min; refrigerate immediately)|InPouch TF culture — most sensitive; send to Texas A&M or NCSU diagnostic labs|Tritrichomonas foetus faecal PCR — sensitive alternative to culture|NOT detectable on routine ZnSO₄ flotation — do not rely on flotation to exclude this organism|CBC + biochem: usually normal"},
+    {id:"LES-DI-LB-DIET",loc:"LOC-DI-LB",loc_name:"Large intestine / colon",sp:"Dog + Cat",cat:"Dietary",sub:"Dietary-responsive large bowel diarrhoea",urg:"Low",signs:"Acute or chronic haematochezia, tenesmus, mucus after dietary change or indiscretion. Often self-limiting. High-fibre diet frequently effective.",proto:"",filter:"DIFF-DI-LB",note:"High-fibre diet (commercial or psyllium/wheat bran 1–6 tsp/day) effective for many cases of idiopathic large bowel diarrhoea. Do not combine with hypoallergenic diet simultaneously.",diag:"Clinical diagnosis based on dietary history and treatment response|Faecal panel first: ZnSO₄ flotation ×3 + Giardia ELISA — exclude parasites before dietary trial|High-fibre dietary trial ×3–4 weeks: psyllium husk / wheat bran 1–6 tsp/day OR commercial high-fibre diet|Do not combine with hypoallergenic diet simultaneously — confounds interpretation|Complete resolution with dietary change = diagnosis|Reintroduce original diet to confirm dietary aetiology if uncertain"},
+    {id:"LES-DI-LB-LPC",loc:"LOC-DI-LB",loc_name:"Large intestine / colon",sp:"Dog + Cat",cat:"Infiltrative",sub:"Lymphoplasmacytic colitis",urg:"Moderate",signs:"Chronic large bowel diarrhoea, haematochezia, mucus, tenesmus. Most common form of inflammatory colitis. Weight loss uncommon unless concurrent SI involvement. Diagnosis by colonoscopy and biopsy.",proto:"",filter:"DIFF-DI-LB",note:"Rule out dietary and infectious causes first. Treatment: dietary trial (hydrolysed or novel protein) then prednisolone if no response. Metronidazole 10–15 mg/kg BID may help via anti-inflammatory mechanism. Lifelong management often needed.",diag:"CBC + biochem: usually unremarkable; check for eosinophilia; hypoproteinaemia if concurrent SI involvement|Faecal panel: ZnSO₄ flotation, Giardia ELISA, faecal culture — exclude infectious causes first|Dietary elimination trial (hydrolysed or novel protein) ×3–4 weeks — trial before endoscopy|Colonoscopy + multiple biopsies (ileum, cecum, ascending, transverse, descending colon — multiple sites)|Histopathology: lymphoplasmacytic mucosal infiltrate; assess severity and depth"},
+    {id:"LES-DI-LB-EOC",loc:"LOC-DI-LB",loc_name:"Large intestine / colon",sp:"Dog + Cat",cat:"Infiltrative",sub:"Eosinophilic colitis",urg:"Moderate",signs:"Chronic haematochezia, mucus, tenesmus, sometimes vomiting. Peripheral eosinophilia often present. May be associated with dietary hypersensitivity or parasitism. Cat: hypereosinophilic syndrome possible.",proto:"",filter:"DIFF-DI-LB",note:"Peripheral blood eosinophilia supports diagnosis. Rule out parasitism first. Dietary trial (hydrolysed or novel protein) often effective. Prednisolone if dietary trial fails. Cat: rule out hypereosinophilic syndrome (systemic eosinophilic infiltration).",diag:"CBC: peripheral eosinophilia present in ~70% — supports diagnosis|Faecal panel: ZnSO₄ flotation ×3 + Giardia ELISA — rule out parasites (major trigger)|Dietary elimination trial: hydrolysed or novel protein ×4–6 weeks — try before biopsy|Colonoscopy + biopsy: eosinophilic mucosal infiltrate (confirm diagnosis and grade severity)|Cat: abdominal US + bone marrow aspirate if hypereosinophilic syndrome suspected (systemic eosinophilic infiltration of multiple organs)"},
+    {id:"LES-DI-LB-HISTIO",loc:"LOC-DI-LB",loc_name:"Large intestine / colon",sp:"Dog",cat:"Infiltrative",sub:"Histiocytic / granulomatous colitis",urg:"Moderate",signs:"Young Boxer, French Bulldog, or Alaskan Malamute. Severe refractory large bowel diarrhoea, haematochezia, hypoproteinaemia. Transmural mucosal infiltration with PAS-positive macrophages. Strongly breed-associated.",proto:"",filter:"DIFF-DI-LB",note:"FISH on colonic biopsy for adherent invasive E. coli (AIEC) — positive in majority of Boxer/French Bulldog cases. Enrofloxacin 5–10 mg/kg SID × 6–8 weeks often curative if AIEC-positive. Prognosis good with early antibiotic treatment; poor if fibrotic or AIEC-negative.",diag:"CBC + biochem: hypoproteinaemia in severe or advanced cases; otherwise may be unremarkable|Colonoscopy + biopsy — multiple sites essential|Histopathology: PAS-positive macrophage infiltration in mucosa (pathognomonic appearance)|FISH (fluorescence in situ hybridisation) on colonic biopsy — identifies adherent invasive E. coli (AIEC); positive in majority of Boxer/French Bulldog cases|Abdominal US: colonic wall thickening|Response to enrofloxacin (AIEC-positive cases) supports diagnosis"},
+    {id:"LES-DI-LB-ADENO",loc:"LOC-DI-LB",loc_name:"Large intestine / colon",sp:"Dog",cat:"Neoplasia",sub:"Colorectal adenocarcinoma",urg:"High",signs:"Older dog, progressive large bowel signs, haematochezia, tenesmus, dyschezia. Rectal mass palpable on digital rectal exam. Annular/constricting lesions cause obstruction. Early metastasis to iliac lymph nodes and liver.",proto:"",filter:"DIFF-DI-LB",note:"Digital rectal exam essential in ALL dogs with chronic large bowel signs. Staging: abdominal and thoracic imaging. Pedunculated rectal masses: better prognosis with surgical excision. Annular carcinoma: poor prognosis. Histopathology essential to differentiate from other rectal masses.",diag:"Digital rectal exam — palpable mass, stricture or mucosal irregularity|Colonoscopy + biopsy — direct visualisation and tissue sampling|Histopathology: adenocarcinoma (confirm and grade)|Abdominal US: colonic wall thickening, loss of layering, iliac lymphadenopathy, hepatic metastases|Thoracic radiograph: pulmonary metastasis staging|CT scan: full surgical staging and planning (recommended before surgery)"},
+    {id:"LES-DI-LB-POLYP",loc:"LOC-DI-LB",loc_name:"Large intestine / colon",sp:"Dog",cat:"Neoplasia",sub:"Rectal polyp",urg:"Moderate",signs:"Intermittent or profuse fresh haematochezia in dogs. Often palpable on rectal examination as soft, pedunculated mass. Usually benign but may cause significant blood loss. Not associated with malignant transformation as in humans.",proto:"",filter:"DIFF-DI-LB",note:"Palpate rectum in ALL dogs with haematochezia. Colonoscopy for visualisation and biopsy. Surgical excision via transanal approach. Prognosis excellent after complete excision. Histopathology required to exclude adenocarcinoma.",diag:"Digital rectal exam — palpable soft pedunculated mass in rectum|Colonoscopy/proctoscopy + biopsy — visualise lesion and confirm histology|Histopathology: benign adenomatous polyp; rules out adenocarcinoma (essential — cannot distinguish clinically)|Abdominal US — check for concurrent lesions elsewhere|Prognosis: excellent after complete surgical excision"},
+    {id:"LES-DI-LB-LYMPH",loc:"LOC-DI-LB",loc_name:"Large intestine / colon",sp:"Dog + Cat",cat:"Neoplasia",sub:"Colorectal lymphoma",urg:"High",signs:"Chronic large bowel diarrhoea, haematochezia, weight loss. Colonic thickening on ultrasound. Cat: more diffuse alimentary lymphoma pattern. May have concurrent peripheral lymphadenopathy.",proto:"",filter:"DIFF-DI-LB",note:"Ultrasound: loss of wall layering, colonic wall thickening, mesenteric lymphadenopathy. Colonoscopy + biopsy (full-thickness preferred). Cat: low-grade alimentary lymphoma — chlorambucil + prednisolone protocol. Dog: CHOP-based chemotherapy. Prognosis variable.",diag:"CBC: lymphocytosis (variable), anaemia|Abdominal US: colonic wall thickening, loss of layering, mesenteric lymphadenopathy|Colonoscopy + biopsy — multiple sites; full-thickness biopsy preferred over endoscopic|Histopathology + IHC (CD3/CD79a): lymphoma subtyping (T-cell vs B-cell)|PARR PCR on biopsy: clonality testing (~70% sensitivity)|Cat: thoracic radiograph, splenic US, bone marrow aspirate for staging|Dog: CHOP chemotherapy staging workup"},
+    {id:"LES-DI-LB-STRESS",loc:"LOC-DI-LB",loc_name:"Large intestine / colon",sp:"Dog",cat:"Stress",sub:"Stress-induced colitis",urg:"Low",signs:"Acute large bowel diarrhoea in hospitalised or stressed dog. Often resolves with supportive care. May reflect Clostridium spp. overgrowth. Self-limiting in most cases.",proto:"",filter:"DIFF-DI-LB",note:"Common in hospitalised dogs. Metronidazole 10–20 mg/kg BID and bland diet. Usually resolves within 3–5 days. Investigate further if does not resolve.",diag:"Clinical diagnosis in context of hospitalisation / recent stress|CBC + biochem: usually normal|Faecal culture: Clostridium perfringens toxin A/B if severe or not resolving in 3–5 days|Resolution with supportive care (metronidazole + bland diet) = diagnosis|Investigate further with colonoscopy + biopsy if not resolved within 5–7 days or recurrent"},
+
+    // ── JAUNDICE LESION TYPES (Maddison et al. 2015 Ch.10) ──────────────────
+    {id:"LES-JD-PRE",loc:"LOC-JD-PREHEP",loc_name:"Pre-hepatic (haemolytic)",sp:"Dog + Cat",cat:"Haemolytic",sub:"Immune-mediated haemolytic anaemia (IMHA)",urg:"EMERGENCY",signs:"⚠️ Rapid onset severe anaemia, icterus, bilirubinuria, tachycardia, pale/icteric mucous membranes. Regenerative anaemia (if bone marrow had time to respond). Spherocytes on blood smear (dog). Auto-agglutination.",proto:"",filter:"DIFF-JD-PREHEP",note:"Pre-hepatic jaundice ALWAYS has significant anaemia. Jaundice from haemolysis means bilirubin conjugation pathway overwhelmed. After a few days, conjugated bilirubinaemia also occurs (hepatic hypoxia). Bilirubinuria in cats is ALWAYS pathological (unlike dogs where mild bilirubinuria can be normal)."},
+    {id:"LES-JD-PRE2",loc:"LOC-JD-PREHEP",loc_name:"Pre-hepatic (haemolytic)",sp:"Dog + Cat",cat:"Haemolytic",sub:"Infectious / toxic haemolysis — Babesia, Mycoplasma haemofelis, onion toxicity, zinc",urg:"High",signs:"Anaemia, icterus, haemoglobinaemia/haemoglobinuria. History of toxin exposure or travel to endemic areas. Mycoplasma haemofelis in cats — often concurrent FeLV/FIV.",proto:"",filter:"DIFF-JD-PREHEP",note:"Babesia: tick-borne, endemic areas, severe haemolysis, thrombocytopenia. Mycoplasma: PCR on EDTA blood. Zinc toxicity: ingestion of coins, nuts. Onion/garlic: Heinz body haemolytic anaemia (cats very sensitive)."},
+    {id:"LES-JD-HEP",loc:"LOC-JD-HEP",loc_name:"Hepatic",sp:"Dog + Cat",cat:"Hepatocellular",sub:"Hepatic disease — cholangiohepatitis, hepatic lipidosis (cat), leptospirosis, neoplasia",urg:"High",signs:"Icterus without significant anaemia. Hepatomegaly or microhepatica. Elevated ALT, ALP, GGT, bile acids. Bilirubin elevated (conjugated). Ascites if portal hypertension.",proto:"",filter:"DIFF-JD-HEP",note:"Cats: cholangiohepatitis most common hepatic cause — acute suppurative (neutrophilic) or chronic lymphocytic. Hepatic lipidosis in obese cats with anorexia — aggressive nutritional support critical. Dogs: leptospirosis, lymphoma, chronic hepatitis most common."},
+    {id:"LES-JD-HEP2",loc:"LOC-JD-HEP",loc_name:"Hepatic",sp:"Cat",cat:"Hepatocellular",sub:"Hepatic lipidosis",urg:"High",signs:"Obese cat with acute anorexia. Icterus, hepatomegaly, weight loss. Often triggered by stress, concurrent illness or dietary change. Elevated ALP markedly elevated in cats (unlike dogs).",proto:"",filter:"DIFF-JD-HEP",note:"Aggressive nutritional support via oesophagostomy or PEG tube is cornerstone of treatment — appetite stimulants alone insufficient. Cobalamin supplementation required. Treatment duration 3-6 weeks. Good prognosis if treated aggressively early."},
+    {id:"LES-JD-POST",loc:"LOC-JD-POSTHEP",loc_name:"Post-hepatic (biliary obstruction)",sp:"Dog + Cat",cat:"Biliary obstruction",sub:"Extrahepatic biliary obstruction — pancreatitis, cholelithiasis, biliary mucocele, neoplasia",urg:"High",signs:"Deep icterus, acholic (pale/clay-coloured) faeces, bilirubin-rich dark urine. No significant anaemia. ALP markedly elevated. Abdominal pain if pancreatitis or biliary rupture.",proto:"",filter:"DIFF-JD-POSTHEP",note:"Ultrasound essential to distinguish hepatic from post-hepatic — dilated bile ducts, gallbladder distension, pancreatic pathology. Biliary mucocele (dog): echogenic non-mobile gallbladder contents — surgical emergency if rupture risk. Pancreatitis most common cause of post-hepatic obstruction."},
+
+    // ── WEAKNESS / COLLAPSE LESION TYPES (Volk, Church & Maddison Ch.6-7) ──
+    // Episodic weakness locations
+    {id:"LES-WK-CV",loc:"LOC-WK-EPISODIC",loc_name:"Episodic weakness",sp:"Dog + Cat",cat:"Cardiovascular",sub:"Cardiovascular / haematopoietic — arrhythmia, structural disease, anaemia",urg:"High",signs:"Episodic weakness / collapse triggered by exercise or excitement. Rapid recovery (seconds to minutes). No loss of consciousness or brief. Pulse deficits, arrhythmia on auscultation, pale mucous membranes, murmur. Symmetrical deficits, no pain.",proto:"",filter:"DIFF-WK-CV",note:"Syncope: sudden transient loss of consciousness and postural tone, flaccid during episode. Recovery nearly instant. Multiple episodes per day possible. Cardiac arrhythmias very common cause. Anti-epileptic drugs can WORSEN syncopal episodes — critical distinction from seizures."},
+    {id:"LES-WK-META",loc:"LOC-WK-EPISODIC",loc_name:"Episodic weakness",sp:"Dog + Cat",cat:"Metabolic",sub:"Metabolic — hypoglycaemia, hyperkalaemia, electrolyte derangements",urg:"High",signs:"Episodic weakness, may progress to collapse or seizures. Hypoglycaemia: exercise-induced weakness, seizures, polyphagia. Hyperkalaemia (Addisons): weakness, bradycardia. Symmetrical. Abnormal biochemistry.",proto:"",filter:"DIFF-WK-META",note:"Hypoglycaemia: collect fasting samples — autonomous insulin production varies hour to hour. Multiple samples may be needed. Insulinoma: post-prandial and exercise-induced hypoglycaemia. Hunting dogs: exercise-induced hypoglycaemia."},
+    {id:"LES-WK-MG",loc:"LOC-WK-EPISODIC",loc_name:"Episodic weakness",sp:"Dog + Cat",cat:"Junctionopathy",sub:"Myasthenia gravis (MG) — acquired or congenital",urg:"High",signs:"Exercise-induced weakness improving with rest (fatigability). Regurgitation (megaoesophagus). Facial weakness. Palpebral reflex diminishes with rapid repeated testing. Spinal reflexes normal to decreased. No sensory deficits. No pain.",proto:"",filter:"DIFF-WK-MG",note:"Gold standard: acetylcholine receptor (AChR) antibody titre. Tensilon test (edrophonium): short-acting anticholinesterase — prepare atropine before test (cholinergic crisis risk). False positives occur. Consider in ANY dog with episodic weakness + regurgitation. Focal MG: regurgitation as only sign."},
+    {id:"LES-WK-EIC",loc:"LOC-WK-EPISODIC",loc_name:"Episodic weakness",sp:"Dog",cat:"Neuropathy",sub:"Exercise-induced collapse (EIC) — CNS dysfunction",urg:"Moderate",signs:"Labrador Retriever predisposed. Collapse after intense exercise. Excited, mentally normal during episode. Legs become weak then unable to support weight. Recovers within 5-25 minutes. Genetic test available.",proto:"",filter:"DIFF-WK-EIC",note:"Autosomal recessive DNM1 gene mutation. Genetic test available. Avoid high-intensity exercise. Distinguish from heat stroke (temperature normal in EIC). Distinct from syncope — no loss of consciousness."},
+    // Persistent weakness locations
+    {id:"LES-WK-NEUROPATHY",loc:"LOC-WK-PERSISTENT",loc_name:"Persistent weakness",sp:"Dog + Cat",cat:"Neuropathy",sub:"Peripheral neuropathy — inflammatory, infectious, immune-mediated, neoplastic",urg:"Moderate",signs:"Flaccid paresis, ataxia (sensory involvement), decreased to absent spinal reflexes, muscle atrophy. Asymmetrical if structural. Symmetrical if functional/toxic. Paraesthesia or self-mutilation. Autonomic signs possible (anisocoria, decreased tear production, bradycardia).",proto:"",filter:"DIFF-WK-NEURO",note:"Key distinguisher: peripheral neuropathy = paresis + ataxia (sensory and motor). Junctionopathy/myopathy = paresis only. CK often normal or mildly elevated. EMG/nerve conduction studies for localisation. Neospora/Toxoplasma serology (dogs)."},
+    {id:"LES-WK-POLYRAD",loc:"LOC-WK-PERSISTENT",loc_name:"Persistent weakness",sp:"Dog",cat:"Neuropathy",sub:"Polyradiculoneuritis (coonhound paralysis)",urg:"High",signs:"Acute ascending flaccid tetraparesis/plegia. Rapid progression over days. Spinal reflexes absent. Normal mentation. Normal to decreased sensation. Often follows raccoon bite, Campylobacter infection or vaccination. No pain.",proto:"",filter:"DIFF-WK-NEURO",note:"Dogs — analogue of Guillain-Barre syndrome in humans. CSF: elevated protein, normal cell count (albuminocytological dissociation). Supportive care only — nursing essential (pneumonia prevention). Most recover over weeks to months."},
+    {id:"LES-WK-MYOPATHY",loc:"LOC-WK-PERSISTENT",loc_name:"Persistent weakness",sp:"Dog + Cat",cat:"Myopathy",sub:"Myopathy — inflammatory (polymyositis), metabolic, inherited, neoplastic",urg:"Moderate",signs:"Stiff stilted gait, paresis without ataxia. Muscle atrophy or hypertrophy. Muscle pain on palpation (inflammatory). Normal to slightly decreased spinal reflexes. Normal mentation. CK markedly elevated in thousands-tens of thousands if primary myopathy.",proto:"",filter:"DIFF-WK-MYOP",note:"CK: mildly elevated (<1000 U/L) does NOT confirm primary myopathy — recumbency, IM injections, seizures all elevate CK. True primary myopathy: CK in thousands. Check ALT and AST also. Masticatory muscle myositis (MMM) — jaw cannot open, type 2M fibre-specific antibodies."},
+    {id:"LES-WK-ENDO",loc:"LOC-WK-PERSISTENT",loc_name:"Persistent weakness",sp:"Dog + Cat",cat:"Endocrine/Metabolic",sub:"Endocrine causes — hypothyroidism, hyperadrenocorticism, hypoadrenocorticism, hypokalaemia",urg:"Moderate",signs:"Generalised symmetrical weakness, exercise intolerance. Hypothyroidism (dog): concurrent skin/coat changes, bradycardia, weight gain. HAC: pot belly, muscle wasting, PU/PD. Hypokalaemia (cat — primary aldosteronism): ventroflexion of neck, elevated CPK.",proto:"",filter:"DIFF-WK-ENDO",note:"Cat with ventroflexion of neck = hypokalaemia until proven otherwise. Check potassium FIRST. Primary hyperaldosteronism (Conn syndrome) in cats — unilateral or bilateral adrenal mass. Hypothyroidism rarely causes clinical weakness without other signs."},
+    {id:"LES-WK-TOXIN",loc:"LOC-WK-PERSISTENT",loc_name:"Persistent weakness",sp:"Dog + Cat",cat:"Toxic",sub:"Toxins / infectious — tick paralysis, botulism, snake envenomation, organophosphate",urg:"EMERGENCY",signs:"⚠️ Acute ascending flaccid paralysis. Tick paralysis: find and remove tick — may recover within hours. Botulism: flaccid tetraplegia, dysphagia, no pain, normal mentation. Snake envenomation: acute onset after known exposure. Organophosphate: SLUDGE signs (salivation, lacrimation, urination, defecation, GI signs, emesis).",proto:"",filter:"DIFF-WK-TOXIN",note:"TICK PARALYSIS: thorough search for tick — check between toes, in ears, under collar. Remove carefully. Improvement expected within hours of removal. Australian/North American ticks most dangerous. Botulism: supportive care — full recovery possible with time."},
+    // Collapse with loss of consciousness
+    {id:"LES-WK-SYNCOPE",loc:"LOC-WK-COLLAPSE",loc_name:"Collapse / loss of consciousness",sp:"Dog + Cat",cat:"Syncope",sub:"Syncope — cardiac arrhythmia, structural heart disease, vasovagal",urg:"High",signs:"Sudden transient loss of consciousness, flaccid, rapid recovery (seconds). Exercise or excitement triggered. No convulsive activity (may have brief myoclonic jerk). Multiple episodes/day possible. Normal inter-episodic. Cardiac signs on examination.",proto:"",filter:"DIFF-WK-SYNC",note:"Syncope vs seizure: syncope = flaccid, triggered by exercise/excitement, instant recovery, no post-ictal phase. Seizure = tonic-clonic movements, post-ictal confusion, may occur at rest. Anti-epileptic drugs can WORSEN syncope — critical distinction."},
+    {id:"LES-WK-SEIZURE",loc:"LOC-WK-COLLAPSE",loc_name:"Collapse / loss of consciousness",sp:"Dog + Cat",cat:"Seizure",sub:"Seizure disorder — idiopathic epilepsy, structural brain disease, metabolic",urg:"EMERGENCY",signs:"⚠️ Status epilepticus (>5 min) or cluster seizures (≥2/day) = emergency. Tonic-clonic movements, loss of consciousness, post-ictal confusion/blindness/hunger. May occur at rest. Pre-ictal aura possible. Ptyalism, urination/defecation during episode.",proto:"",filter:"DIFF-WK-SEIZ",note:"Status epilepticus: IV diazepam 0.5mg/kg or midazolam 0.2mg/kg first line. Idiopathic epilepsy (dogs): onset 1-5 years, normal inter-ictal exam, normal MRI and CSF. Structural: abnormal inter-ictal neuro exam, onset <1yr or >7yr. Always check glucose and electrolytes first."},
+    {id:"LES-WK-NARC",loc:"LOC-WK-COLLAPSE",loc_name:"Collapse / loss of consciousness",sp:"Dog + Cat",cat:"Sleep disorder",sub:"Narcolepsy / cataplexy",urg:"Low",signs:"Cataplectic attacks triggered by food, excitement or stress. Animal becomes flaccid and collapses. No loss of consciousness — can be aroused during episode. Chronic fatigue, disturbed sleep pattern. Breed predisposition (Dobermann, Labrador, Poodle).",proto:"",filter:"DIFF-WK-NARC",note:"Physostigmine provocation test can trigger cataplectic attack. Genetic test available in some breeds (hypocretin receptor 2 mutation). Treat with tricyclic antidepressants (clomipramine) or selegiline. Distinguish from syncope (no arousal during syncope) and seizures (post-ictal confusion)."},
+
+
+
+
+  // ── PU/PD LESION TYPES ─────────────────────────────────────────────────────
+  // Location: LOC-PUPD-RENAL, LOC-PUPD-ENDO, LOC-PUPD-MED, LOC-PUPD-NDI, LOC-PUPD-CDI, LOC-PUPD-PRIM
+  {id:'LES-PUPD-CKD',loc:'LOC-PUPD-RENAL',loc_name:'Renal / Urinary',sp:'Dog + Cat',cat:'Renal failure',sub:'Chronic kidney disease (CKD)',urg:'Moderate',signs:'Isosthenuria or minimally concentrated urine (USG 1.008–1.020). Often static USG. Weight loss, azotaemia. Cats may maintain USG up to 1.040 early.',proto:'',filter:'DIFF-PUPD-RENAL',note:'Loss of urine concentrating ability precedes azotaemia. In dogs, CKD can cause PU/PD without azotaemia. In cats, azotaemia is often present when PU/PD becomes apparent.'},
+  {id:'LES-PUPD-AKI',loc:'LOC-PUPD-RENAL',loc_name:'Renal / Urinary',sp:'Dog + Cat',cat:'Renal failure',sub:'Acute kidney injury (AKI)',urg:'EMERGENCY',signs:'⚠️ Acute onset, oligo/anuria possible, painful kidneys on palpation. Toxin exposure (lily, ethylene glycol, NSAIDs, leptospirosis). Markedly elevated BUN/creatinine.',proto:'',filter:'DIFF-PUPD-AKI',note:'AKI can paradoxically cause PU/PD in early/recovery phase. Oligo/anuria suggests severe injury.'},
+  {id:'LES-PUPD-PYELO',loc:'LOC-PUPD-RENAL',loc_name:'Renal / Urinary',sp:'Dog + Cat',cat:'Infection',sub:'Pyelonephritis',urg:'High',signs:'Fever, painful kidneys on palpation, leucocytosis, active urine sediment. E. coli endotoxin causes secondary NDI → hyposthenuria possible.',proto:'',filter:'DIFF-PUPD-PYELO',note:'Always culture urine in PU/PD patients. Pyelonephritis causes secondary NDI via E. coli endotoxin. Treat infection and reassess.'},
+  {id:'LES-PUPD-GLUC',loc:'LOC-PUPD-RENAL',loc_name:'Renal / Urinary',sp:'Dog + Cat',cat:'Osmotic diuresis',sub:'Glucosuria (renal threshold exceeded or primary renal glucosuria)',urg:'Moderate',signs:'Glucosuria on urinalysis. If blood glucose >180mg/dL (dog) or >270mg/dL (cat) = diabetes mellitus osmotic diuresis. If blood glucose normal = primary renal glucosuria.',proto:'',filter:'DIFF-PUPD-GLUC',note:'Compare blood glucose to renal threshold. Normal blood glucose + glucosuria = primary renal glucosuria or acquired renal tubulopathy (jerky treats, copper hepatitis, drugs/toxins).'},
+  // Endocrine
+  {id:'LES-PUPD-HAC',loc:'LOC-PUPD-ENDO',loc_name:'Endocrine',sp:'Dog',cat:'Adrenal',sub:"Hyperadrenocorticism (Cushing's disease)",urg:'Moderate',signs:'Most common cause of secondary NDI in dogs. Pot-belly, hepatomegaly, truncal alopecia, calcinosis cutis, polyphagia. USG often 1.001–1.015.',proto:'',filter:'DIFF-PUPD-HAC',note:'Glucocorticoids cause secondary NDI — blunted ADH response. Screen with ACTH stim or LDDST. Rule out before desmopressin trial.'},
+  {id:'LES-PUPD-DM',loc:'LOC-PUPD-ENDO',loc_name:'Endocrine',sp:'Dog + Cat',cat:'Pancreatic',sub:'Diabetes mellitus',urg:'Moderate',signs:'Glucosuria, hyperglycaemia, weight loss despite polyphagia, cataracts (dog), neuropathy (cat). PU/PD due to osmotic diuresis from persistent glucosuria.',proto:'',filter:'DIFF-PUPD-DM',note:'Osmotic diuresis from glucosuria exceeding renal threshold (>180 mg/dL dog, >270 mg/dL cat). USG may be high due to glycosuria increasing apparent concentration.'},
+  {id:'LES-PUPD-HYPERT',loc:'LOC-PUPD-ENDO',loc_name:'Endocrine',sp:'Cat',cat:'Thyroid',sub:'Hyperthyroidism',urg:'Moderate',signs:'Weight loss despite polyphagia, tachycardia, palpable thyroid goitre, vomiting, unkempt coat, hypertension. Primary polydipsia mechanism.',proto:'',filter:'DIFF-PUPD-HYPERT',note:'Hyperthyroidism causes primary polydipsia via unclear mechanism. Also increases GFR, masking concurrent CKD — recheck renal values after treatment.'},
+  {id:'LES-PUPD-HYPO',loc:'LOC-PUPD-ENDO',loc_name:'Endocrine',sp:'Dog',cat:'Adrenal',sub:"Hypoadrenocorticism (Addison's disease)",urg:'High',signs:'Waxing/waning, hyponatraemia + hyperkalaemia → medullary washout → PU/PD. Na:K <27. USG often isosthenuric. The great pretender.',proto:'',filter:'DIFF-PUPD-HYPO',note:"Hyponatraemia causes loss of medullary osmotic gradient → impaired urine concentration. PU/PD is less profound than in hyperadrenocorticism. Atypical Addison's has normal electrolytes — if stress leukogram is absent, check basal cortisol; if <55 nmol/L or suspicion persists → ACTH stimulation test."},
+  {id:'LES-PUPD-HCALC',loc:'LOC-PUPD-ENDO',loc_name:'Endocrine',sp:'Dog + Cat',cat:'Calcium',sub:'Hypercalcaemia',urg:'High',signs:'PU/PD, constipation, muscle weakness, vomiting, lethargy. Ca >3.0mmol/L clinically significant. Secondary NDI mechanism. Anal sac adenocarcinoma, lymphoma, hyperparathyroidism.',proto:'',filter:'DIFF-PUPD-HCALC',note:'Hypercalcaemia causes secondary NDI. Always check ionised Ca. Rectal exam for anal sac tumours (27–53% have paraneoplastic hypercalcaemia). Check for peripheral lymphadenopathy (lymphoma).'},
+  {id:'LES-PUPD-ACRO',loc:'LOC-PUPD-ENDO',loc_name:'Endocrine',sp:'Cat',cat:'Pituitary',sub:'Acromegaly (hypersomatotropism)',urg:'Moderate',signs:'Insulin-resistant diabetes mellitus, large body frame, broad facial features, organomegaly. PU/PD driven by concurrent DM.',proto:'',filter:'DIFF-PUPD-ACRO',note:'Acromegaly causes GH-mediated insulin resistance → DM → osmotic diuresis. Consider in poorly-regulated diabetic cat. Measure IGF-1.'},
+  // Medullary washout / other systemic
+  {id:'LES-PUPD-PSS',loc:'LOC-PUPD-MED',loc_name:'Systemic / Hepatic',sp:'Dog',cat:'Hepatic',sub:'Portosystemic shunt / liver failure',urg:'Moderate',signs:'Low BUN (reduced urea synthesis → medullary washout). Young animal, stunted growth, neurological signs (HE), post-prandial behaviour changes. Ammonium biurate crystals.',proto:'',filter:'DIFF-PUPD-PSS',note:'Low BUN depletes medullary urea concentration → loss of osmotic gradient → PU/PD. Also primary polydipsia from hepatic encephalopathy. Bile acids (pre/post-prandial) to screen.'},
+  {id:'LES-PUPD-PYOM',loc:'LOC-PUPD-MED',loc_name:'Systemic / Hepatic',sp:'Dog',cat:'Uterine',sub:'Pyometra',urg:'EMERGENCY',signs:'⚠️ Intact female dog. Vaginal discharge (open) or no discharge (closed). Lethargy, anorexia, abdominal distension. E. coli endotoxin → secondary NDI.',proto:'',filter:'DIFF-PUPD-PYOM',note:'E. coli endotoxin directly inhibits ADH response at renal tubule → secondary NDI. USG can be hyposthenuric despite systemic illness. Immediate surgical management required.'},
+  {id:'LES-PUPD-LEPTO',loc:'LOC-PUPD-MED',loc_name:'Systemic / Hepatic',sp:'Dog',cat:'Infectious',sub:'Leptospirosis',urg:'High',signs:'Acute hepatic/renal injury, fever, jaundice, uveitis. Early/mild infection: PU/PD without azotaemia. Secondary NDI via renal tubular damage.',proto:'',filter:'DIFF-PUPD-LEPTO',note:'Zoonotic — use PPE. Causes PU/PD via loss of functional nephrons + secondary NDI. MAT titres for diagnosis. Important differential in unvaccinated dogs with outdoor exposure.'},
+  {id:'LES-PUPD-HYPO2',loc:'LOC-PUPD-MED',loc_name:'Systemic / Hepatic',sp:'Dog + Cat',cat:'Electrolyte',sub:'Hypokalemia',urg:'Moderate',signs:'Muscle weakness, ventroflexion of neck (cat), hyporexia. Secondary NDI mechanism. Often from chronic disease, vomiting, or diuretics.',proto:'',filter:'DIFF-PUPD-HYPOK',note:'Hypokalemia causes secondary NDI by impairing aquaporin insertion in collecting ducts. Correct underlying cause. Check K+ in all PU/PD patients.'},
+  // CDI
+  {id:'LES-PUPD-CDI',loc:'LOC-PUPD-CDI',loc_name:'Central (ADH deficiency)',sp:'Dog + Cat',cat:'Neurological',sub:'Central diabetes insipidus (CDI)',urg:'Moderate',signs:'Profound PU/PD. Hyposthenuria (USG 1.001–1.007). High-normal to high plasma sodium. No other systemic illness. Idiopathic most common.',proto:'',filter:'DIFF-PUPD-CDI',note:'Lack of sufficient ADH from hypothalamus/pituitary. Causes: idiopathic (most common), head trauma, neoplasia, cysts, inflammation, parasite migration. Desmopressin trial to confirm — NEVER if hyponatraemic.'},
+  // NDI
+  {id:'LES-PUPD-NDI',loc:'LOC-PUPD-NDI',loc_name:'Nephrogenic (ADH resistance)',sp:'Dog + Cat',cat:'Renal tubular',sub:'Nephrogenic diabetes insipidus (NDI) — primary or secondary',urg:'Moderate',signs:'Profound PU/PD. Hyposthenuria. Failure to concentrate urine with desmopressin (primary NDI) or partial response (secondary NDI).',proto:'',filter:'DIFF-PUPD-NDI',note:'Primary NDI = extremely rare. Secondary NDI = common — causes: hyperadrenocorticism (most common in dogs), hypercalcaemia, hypokalemia, E. coli endotoxin (pyometra, pyelonephritis), leptospirosis, intestinal leiomyosarcoma. Always rule out secondary causes first.'},
+  // Primary polydipsia
+  {id:'LES-PUPD-PRIM',loc:'LOC-PUPD-PRIM',loc_name:'Primary polydipsia',sp:'Dog + Cat',cat:'Behavioural/Neurological',sub:'Primary (psychogenic) polydipsia',urg:'Low',signs:'Young large breed dogs often. Variable USG — at least 1 USG >1.030 documented. Hyponatraemia (dilutional). No systemic illness. May be unable to concentrate urine after deprivation (medullary washout).',proto:'',filter:'DIFF-PUPD-PRIM',note:'Diagnosis of exclusion. Rule out ALL other causes first. Hyponatraemia + documented concentrated urine on at least 1 occasion = primary polydipsia. NEVER perform water deprivation without ruling out all other causes. Desmopressin trial only if hyposthenuria on ALL serial samples.'},
+    {id:'LES-SZ-IE',loc:'LOC-SZ-INTRACRANIAL',loc_name:'Intracranial',sp:'Dog + Cat',cat:'Idiopathic',sub:'Idiopathic epilepsy',urg:'Moderate',signs:'Onset 6mo-6yr. Normal interictal neuro exam.',proto:'',filter:'DIFF-SZ-IE',note:''},
+    {id:'LES-SZ-STRUCT',loc:'LOC-SZ-INTRACRANIAL',loc_name:'Intracranial',sp:'Dog + Cat',cat:'Structural',sub:'Structural epilepsy',urg:'High',signs:'Onset <6mo or >6yr. Abnormal neuro exam.',proto:'',filter:'DIFF-SZ-STRUCT',note:''},
+    {id:'LES-SZ-REACT',loc:'LOC-SZ-EXTRACRANIAL',loc_name:'Extracranial',sp:'Dog + Cat',cat:'Reactive',sub:'Reactive seizures',urg:'EMERGENCY',signs:'Any age. Symmetric. High SE risk.',proto:'',filter:'DIFF-SZ-REACT',note:''},
+    {id:'LES-MY-IVDD',loc:'LOC-MY-TL',loc_name:'Thoracolumbar',sp:'Dog',cat:'Compressive',sub:'IVDD Type I',urg:'EMERGENCY',signs:'Chondrodystrophic. Spinal pain.',proto:'',filter:'DIFF-MY-TL',note:''},
+    {id:'LES-MY-FCE',loc:'LOC-MY-TL',loc_name:'Thoracolumbar',sp:'Dog + Cat',cat:'Vascular',sub:'FCE',urg:'High',signs:'Peracute. No pain.',proto:'',filter:'DIFF-MY-TL',note:''},
+    {id:'LES-MY-ANNPE',loc:'LOC-MY-TL',loc_name:'Thoracolumbar',sp:'Dog + Cat',cat:'Non-compressive',sub:'ANNPE',urg:'High',signs:'Peracute.',proto:'',filter:'DIFF-MY-TL',note:''},
+    {id:'LES-MY-FX',loc:'LOC-MY-TL',loc_name:'Thoracolumbar',sp:'Dog + Cat',cat:'Traumatic',sub:'Fracture/luxation',urg:'EMERGENCY',signs:'Trauma.',proto:'',filter:'DIFF-MY-FX',note:''},
+    {id:'LES-MY-CERV',loc:'LOC-MY-CERV',loc_name:'Cervical',sp:'Dog',cat:'Compressive',sub:'Cervical IVDD/AA/CCSM',urg:'High',signs:'Tetraparesis.',proto:'',filter:'DIFF-MY-CERV',note:''},
+    {id:'LES-VE-PERIPH',loc:'LOC-VE-PERIPH',loc_name:'Peripheral vestibular',sp:'Dog + Cat',cat:'Peripheral',sub:'Peripheral vestibular',urg:'Moderate',signs:'Head tilt. Horizontal nystagmus.',proto:'',filter:'DIFF-VE-PERIPH',note:''},
+    {id:'LES-VE-CENTRAL',loc:'LOC-VE-CENTRAL',loc_name:'Central vestibular',sp:'Dog + Cat',cat:'Central',sub:'Central vestibular',urg:'High',signs:'Proprioceptive deficits.',proto:'',filter:'DIFF-VE-CENTRAL',note:''},
+    {id:'LES-VE-BILAT',loc:'LOC-VE-BILAT',loc_name:'Bilateral vestibular',sp:'Dog + Cat',cat:'Bilateral',sub:'Bilateral vestibular',urg:'High',signs:'NO head tilt. NO nystagmus.',proto:'',filter:'DIFF-VE-BILAT',note:''},
+    {id:'LES-EN-IMMUNE',loc:'LOC-EN-INFLAM',loc_name:'Encephalitis',sp:'Dog + Cat',cat:'Immune-mediated',sub:'MUA',urg:'EMERGENCY',signs:'Progressive multifocal.',proto:'',filter:'DIFF-EN-INFLAM',note:''},
+    {id:'LES-EN-INFECT',loc:'LOC-EN-INFLAM',loc_name:'Encephalitis',sp:'Dog + Cat',cat:'Infectious',sub:'Infectious encephalitis',urg:'EMERGENCY',signs:'Systemic signs.',proto:'',filter:'DIFF-EN-INFECT',note:''},
+    {id:'LES-EN-NEO',loc:'LOC-EN-NEO',loc_name:'Neoplasia',sp:'Dog + Cat',cat:'Neoplastic',sub:'Brain tumour',urg:'High',signs:'Older.',proto:'',filter:'DIFF-EN-NEO',note:''},
+    {id:'LES-EN-CVA',loc:'LOC-EN-CVA',loc_name:'CVA',sp:'Dog + Cat',cat:'Vascular',sub:'Stroke',urg:'EMERGENCY',signs:'Peracute.',proto:'',filter:'DIFF-EN-CVA',note:''},
+    {id:'LES-EN-METAB',loc:'LOC-EN-METAB',loc_name:'Metabolic encephalopathy',sp:'Dog + Cat',cat:'Metabolic',sub:'Metabolic encephalopathy',urg:'EMERGENCY',signs:'Diffuse symmetric.',proto:'',filter:'DIFF-EN-METAB',note:''},
+    {id:'LES-NM-NEURO-IDIO',loc:'LOC-NM-NEURO',loc_name:'Neuropathy',sp:'Dog + Cat',cat:'Idiopathic',sub:'Polyradiculoneuritis',urg:'High',signs:'Ascending tetraparesis.',proto:'',filter:'DIFF-NM-NEURO',note:''},
+    {id:'LES-NM-NEURO-METAB',loc:'LOC-NM-NEURO',loc_name:'Neuropathy',sp:'Cat',cat:'Metabolic',sub:'Diabetic polyneuropathy',urg:'Moderate',signs:'Plantigrade.',proto:'',filter:'DIFF-NM-NEURO',note:''},
+    {id:'LES-NM-NEURO-TOXIC',loc:'LOC-NM-NEURO',loc_name:'Neuropathy',sp:'Dog + Cat',cat:'Toxic',sub:'Toxic neuropathy',urg:'High',signs:'Toxin exposure.',proto:'',filter:'DIFF-NM-NEURO',note:''},
+    {id:'LES-NM-JUNC-MG',loc:'LOC-NM-JUNC',loc_name:'Junctionopathy',sp:'Dog + Cat',cat:'Immune-mediated',sub:'Myasthenia gravis',urg:'High',signs:'Exercise intolerance.',proto:'',filter:'DIFF-NM-JUNC',note:''},
+    {id:'LES-NM-JUNC-TOXIC',loc:'LOC-NM-JUNC',loc_name:'Junctionopathy',sp:'Dog + Cat',cat:'Toxic',sub:'Tick paralysis/botulism',urg:'EMERGENCY',signs:'Ascending paralysis.',proto:'',filter:'DIFF-NM-JUNC',note:''},
+    {id:'LES-NM-MYO-METAB',loc:'LOC-NM-MYO',loc_name:'Myopathy',sp:'Cat',cat:'Metabolic',sub:'Hypokalaemic polymyopathy',urg:'High',signs:'Cervical ventroflexion.',proto:'',filter:'DIFF-NM-MYO',note:''},
+    {id:'LES-NM-MYO-INFLAM',loc:'LOC-NM-MYO',loc_name:'Myopathy',sp:'Dog + Cat',cat:'Inflammatory',sub:'Polymyositis',urg:'Moderate',signs:'CK elevated.',proto:'',filter:'DIFF-NM-MYO',note:''},
+    {id:'LES-NM-MYO-INHERIT',loc:'LOC-NM-MYO',loc_name:'Myopathy',sp:'Cat',cat:'Inherited',sub:'Muscular dystrophy',urg:'Moderate',signs:'Young. Progressive.',proto:'',filter:'DIFF-NM-MYO',note:''},
+
+    // Coughing
+    {id:'LES-CO-DRY-COLL',loc:'LOC-CO-DRY',loc_name:'Dry / Unproductive cough',sp:'Dog',cat:'Structural',sub:'Tracheal collapse',urg:'Moderate',signs:'Toy breed. Goose-honk cough. Worsens with excitement, heat, lead pulling.',proto:'',filter:'DIFF-CO-DRY',note:'Fluoroscopy for dynamic collapse.'},
+    {id:'LES-CO-DRY-CARD',loc:'LOC-CO-DRY',loc_name:'Dry / Unproductive cough',sp:'Dog',cat:'Cardiac',sub:'Left atrial enlargement (cardiogenic cough)',urg:'High',signs:'Older small breed. Murmur. Cough worse at night. LA compresses left mainstem bronchus.',proto:'',filter:'DIFF-CO-DRY',note:'Dogs only. Cats do NOT cough from cardiac disease.'},
+    {id:'LES-CO-DRY-KENNEL',loc:'LOC-CO-DRY',loc_name:'Dry / Unproductive cough',sp:'Dog',cat:'Infectious',sub:'Kennel cough (CIRD)',urg:'Low',signs:'Recent boarding/shelter. Paroxysmal honking cough. Tracheal pinch positive. Otherwise well.',proto:'',filter:'DIFF-CO-DRY',note:'Bordetella, parainfluenza, adenovirus-2. Usually self-limiting.'},
+    {id:'LES-CO-DRY-BRON',loc:'LOC-CO-DRY',loc_name:'Dry / Unproductive cough',sp:'Dog',cat:'Inflammatory',sub:'Chronic bronchitis',urg:'Moderate',signs:'Daily cough >2 months. No other cause. Older small breed.',proto:'',filter:'DIFF-CO-DRY',note:'Diagnosis of exclusion. BAL: non-septic inflammation.'},
+    {id:'LES-CO-DRY-ASTHMA',loc:'LOC-CO-DRY',loc_name:'Dry / Unproductive cough',sp:'Cat',cat:'Inflammatory',sub:'Feline asthma / bronchial disease',urg:'High',signs:'Young to middle-aged cat. Expiratory effort, wheeze. Episodic. May have acute crisis.',proto:'',filter:'DIFF-CO-DRY',note:'CXR: bronchial pattern, hyperinflation. Can be EMERGENCY if severe bronchospasm.'},
+    {id:'LES-CO-WET-PNEUM',loc:'LOC-CO-WET',loc_name:'Wet / Productive cough',sp:'Dog + Cat',cat:'Infectious',sub:'Bacterial / aspiration pneumonia',urg:'High',signs:'Pyrexia, productive cough, crackles. Ventral CXR distribution if aspiration. Common: Bordetella, Pasteurella, Streptococcus, E. coli, Mycoplasma.',proto:'',filter:'DIFF-CO-WET',note:'Mycoplasma: important in cats. Always check underlying aspiration cause (megaoesophagus, laryngeal paralysis, recent GA).'},
+    {id:'LES-CO-WET-BRON',loc:'LOC-CO-WET',loc_name:'Wet / Productive cough',sp:'Dog',cat:'Structural',sub:'Bronchiectasis',urg:'Moderate',signs:'Chronic productive cough. Recurrent pneumonia. Irreversible airway dilation.',proto:'',filter:'DIFF-CO-WET',note:'End-stage chronic bronchial disease or ciliary dyskinesia.'},
+    {id:'LES-CO-WET-PARA',loc:'LOC-CO-WET',loc_name:'Wet / Productive cough',sp:'Dog + Cat',cat:'Parasitic',sub:'Lungworm (Angiostrongylus / Aelurostrongylus)',urg:'Moderate',signs:'Young dog with outdoor access. Coagulopathy possible (Angiostrongylus).',proto:'',filter:'DIFF-CO-WET',note:'Life-threatening coagulopathy possible. Baermann faecal test.'},
+    {id:'LES-CO-WET-OEDE',loc:'LOC-CO-WET',loc_name:'Wet / Productive cough',sp:'Dog',cat:'Cardiac',sub:'Cardiogenic pulmonary oedema',urg:'EMERGENCY',signs:'Crackles, murmur, tachypnoea, pink frothy fluid. Perihilar pattern on CXR.',proto:'PROT-RESP',filter:'DIFF-CO-WET',note:'Dogs cough with pulmonary oedema. Cats do NOT.'},
+    {id:'LES-CO-WET-NEO',loc:'LOC-CO-WET',loc_name:'Wet / Productive cough',sp:'Dog + Cat',cat:'Neoplastic',sub:'Pulmonary neoplasia',urg:'Moderate',signs:'Chronic cough, weight loss, haemoptysis. Often incidental on CXR.',proto:'',filter:'DIFF-CO-WET',note:''},
+    // Sneezing
+    {id:'LES-SN-UNI-FB',loc:'LOC-SN-UNI',loc_name:'Unilateral sneezing',sp:'Dog + Cat',cat:'Foreign body',sub:'Nasal foreign body',urg:'Moderate',signs:'Acute violent sneezing. Pawing at face. Post outdoor activity.',proto:'',filter:'DIFF-SN-UNI',note:'Rhinoscopy for removal. CT if not found.'},
+    {id:'LES-SN-UNI-NEO',loc:'LOC-SN-UNI',loc_name:'Unilateral sneezing',sp:'Dog + Cat',cat:'Neoplastic',sub:'Nasal neoplasia',urg:'High',signs:'Older. Progressive unilateral epistaxis, facial deformity.',proto:'',filter:'DIFF-SN-UNI',note:'Dog: adenocarcinoma. Cat: lymphoma. CT + biopsy essential.'},
+    {id:'LES-SN-UNI-FUNG',loc:'LOC-SN-UNI',loc_name:'Unilateral sneezing',sp:'Dog',cat:'Infectious',sub:'Sinonasal aspergillosis',urg:'Moderate',signs:'Dolichocephalic breed. Profuse unilateral haemorrhagic discharge. Frontal sinus pain.',proto:'',filter:'DIFF-SN-UNI',note:'CT: turbinate destruction. Rhinoscopy: fungal plaques.'},
+    {id:'LES-SN-UNI-TOOTH',loc:'LOC-SN-UNI',loc_name:'Unilateral sneezing',sp:'Dog',cat:'Dental',sub:'Oronasal fistula',urg:'Low',signs:'Unilateral discharge worse after eating. Severe periodontal disease.',proto:'',filter:'DIFF-SN-UNI',note:'Maxillary canine tooth root most common.'},
+    {id:'LES-SN-BI-VIRAL',loc:'LOC-SN-BI',loc_name:'Bilateral sneezing',sp:'Cat',cat:'Infectious',sub:'Feline URTI (FHV-1 / FCV)',urg:'Moderate',signs:'Bilateral discharge, conjunctivitis, pyrexia. FHV-1: corneal ulcers. FCV: oral ulcers.',proto:'',filter:'DIFF-SN-BI',note:''},
+    {id:'LES-SN-BI-CHRON',loc:'LOC-SN-BI',loc_name:'Bilateral sneezing',sp:'Cat',cat:'Inflammatory',sub:'Chronic rhinosinusitis (post-viral)',urg:'Low',signs:'Chronic bilateral discharge post-URTI. Turbinate damage.',proto:'',filter:'DIFF-SN-BI',note:'Long-term management not cure.'},
+    {id:'LES-SN-BI-ALLERG',loc:'LOC-SN-BI',loc_name:'Bilateral sneezing',sp:'Dog + Cat',cat:'Inflammatory',sub:'Allergic / lymphoplasmacytic rhinitis',urg:'Low',signs:'Seasonal or perennial. Serous discharge. Reverse sneezing (dogs).',proto:'',filter:'DIFF-SN-BI',note:'Diagnosis of exclusion.'},
+    {id:'LES-SN-BI-POLYP',loc:'LOC-SN-BI',loc_name:'Bilateral sneezing',sp:'Cat',cat:'Mass',sub:'Nasopharyngeal polyp',urg:'Moderate',signs:'Young cat. Stertor. May have otitis. Visible behind soft palate under GA.',proto:'',filter:'DIFF-SN-BI',note:''},
+    {id:'LES-SN-BI-CRYPTO',loc:'LOC-SN-BI',loc_name:'Bilateral sneezing',sp:'Cat',cat:'Infectious',sub:'Cryptococcosis',urg:'Moderate',signs:'Chronic discharge. Subcutaneous swelling over nose. CNS signs possible.',proto:'',filter:'DIFF-SN-BI',note:'LCAT. Itraconazole or fluconazole.'},
+    // Pale gums
+    {id:'LES-PM-REGEN',loc:'LOC-PM-ANAEMIA',loc_name:'Anaemia',sp:'Dog + Cat',cat:'Regenerative',sub:'Regenerative anaemia',urg:'EMERGENCY',signs:'Low PCV with reticulocytosis. IMHA: spherocytes, auto-agglutination. Haemorrhage: low TS.',proto:'',filter:'DIFF-PM-REGEN',note:'Haemolysis: TS normal/high. Haemorrhage: TS drops (takes hours).'},
+    {id:'LES-PM-NONREGEN',loc:'LOC-PM-ANAEMIA',loc_name:'Anaemia',sp:'Dog + Cat',cat:'Non-regenerative',sub:'Non-regenerative anaemia',urg:'High',signs:'Low PCV, NO reticulocytosis after 5+ days. Chronic disease, FeLV, renal, myelophthisis.',proto:'',filter:'DIFF-PM-NONREGEN',note:'Bone marrow aspirate indicated.'},
+    {id:'LES-PM-PREREGEN',loc:'LOC-PM-ANAEMIA',loc_name:'Anaemia',sp:'Dog + Cat',cat:'Pre-regenerative',sub:'Pre-regenerative anaemia (<3-5 days)',urg:'High',signs:'Acute anaemia without reticulocyte response yet. Check smear for clues.',proto:'',filter:'DIFF-PM-REGEN',note:'Recheck reticulocytes in 3-5 days.'},
+    {id:'LES-PM-SHOCK',loc:'LOC-PM-PERFUSION',loc_name:'Poor perfusion',sp:'Dog + Cat',cat:'Shock',sub:'Hypovolaemic / distributive / cardiogenic shock',urg:'EMERGENCY',signs:'Pale gums, prolonged CRT, tachycardia (dogs) or bradycardia (cats), weak pulses.',proto:'',filter:'DIFF-PM-SHOCK',note:'Cat: bradycardia + hypothermia = decompensated.'},
+    {id:'LES-PM-CARD',loc:'LOC-PM-PERFUSION',loc_name:'Poor perfusion',sp:'Dog + Cat',cat:'Cardiac',sub:'Acute cardiac failure / pericardial effusion',urg:'EMERGENCY',signs:'Muffled heart sounds, arrhythmia, jugular distension.',proto:'',filter:'DIFF-PM-SHOCK',note:'Pericardial: pulsus paradoxus, electrical alternans.'}
+,
+    // Cerebellar ataxia
+    {id:'LES-AT-CB-IMMUNE',loc:'LOC-AT-CEREB',loc_name:'Cerebellar ataxia',sp:'Dog + Cat',cat:'Immune-mediated',sub:'Immune-mediated cerebellitis',urg:'High',signs:'Acute onset cerebellar ataxia. Intention tremor, hypermetria, truncal sway. Normal mentation.',proto:'',filter:'DIFF-AT-CEREB',note:'May overlap with MUA affecting cerebellum. MRI + CSF required.'},
+    {id:'LES-AT-CB-VIRAL',loc:'LOC-AT-CEREB',loc_name:'Cerebellar ataxia',sp:'Cat',cat:'Infectious',sub:'Cerebellar hypoplasia (in utero FPV)',urg:'Low',signs:'Non-progressive from birth. Intention tremor, hypermetria, wide-based stance. Normal mentation. Kitten.',proto:'',filter:'DIFF-AT-CEREB',note:'Feline panleukopenia virus in utero or neonatal. Non-progressive. Good quality of life.'},
+    {id:'LES-AT-CB-NEO',loc:'LOC-AT-CEREB',loc_name:'Cerebellar ataxia',sp:'Dog + Cat',cat:'Neoplastic',sub:'Cerebellar neoplasia',urg:'High',signs:'Progressive cerebellar signs. Older animal. May see head tilt if caudal fossa compression.',proto:'',filter:'DIFF-AT-CEREB',note:'Medulloblastoma (young), meningioma, choroid plexus tumour.'},
+    {id:'LES-AT-CB-DEGEN',loc:'LOC-AT-CEREB',loc_name:'Cerebellar ataxia',sp:'Dog',cat:'Degenerative',sub:'Cerebellar abiotrophy / degeneration',urg:'Low',signs:'Breed-specific. Young animal. Progressive cerebellar signs. Intention tremor, hypermetria.',proto:'',filter:'DIFF-AT-CEREB',note:'Breed-specific age of onset. Kerry Blue Terrier, Gordon Setter, Rough-Coated Collie, Australian Kelpie.'},
+    {id:'LES-AT-CB-TOXIC',loc:'LOC-AT-CEREB',loc_name:'Cerebellar ataxia',sp:'Dog + Cat',cat:'Toxic',sub:'Metronidazole / phenytoin toxicity',urg:'High',signs:'Cerebellar signs + vestibular signs. History of drug administration. Dose-dependent.',proto:'',filter:'DIFF-AT-CEREB',note:'Metronidazole: stop drug, improvement in days. MRI may show bilateral symmetric cerebellar lesions.'},
+    {id:'LES-AT-CB-CVA',loc:'LOC-AT-CEREB',loc_name:'Cerebellar ataxia',sp:'Dog + Cat',cat:'Vascular',sub:'Cerebellar infarct',urg:'High',signs:'Peracute onset. Non-progressive. Ipsilateral cerebellar signs. Rostral cerebellar artery territory.',proto:'',filter:'DIFF-AT-CEREB',note:'Most common cerebellar vascular event. Good prognosis. Look for underlying disease (HAC, CKD, hypothyroidism).'}
+  ],
+
+  differentials: [
+    {id:'D001',filter:'DIFF-PL-CARD',loc:'Pleural cavity',sp:'Cat',order:1,name:'Hypertrophic cardiomyopathy (HCM)',feat:'Non-compressible cranial thorax, gallop rhythm, murmur (often absent in HCM)',minDx:'FAST echo, NT-proBNP, CXR',addDx:'Full echocardiography, cardiac biomarkers, renal panel',dis:'DIS-HCM'},
+    {id:'D002',filter:'DIFF-PL-CARD',loc:'Pleural cavity',sp:'Cat',order:2,name:'Dilated cardiomyopathy (DCM)',feat:'Thin-walled, dilated ventricles on echo, marked murmur, taurine deficiency history',minDx:'Echo, taurine level, CXR',addDx:'Full cardiac work-up, dietary history',dis:''},
+    {id:'D003',filter:'DIFF-PL-CARD',loc:'Pleural cavity',sp:'Cat',order:3,name:'Restrictive / unclassified cardiomyopathy',feat:'Echo: diastolic dysfunction, LA enlargement, no obvious hypertrophy or dilation',minDx:'Echo, NT-proBNP',addDx:'Cardiac biomarkers, renal panel',dis:''},
+    {id:'D004',filter:'DIFF-PL-PYO',loc:'Pleural cavity',sp:'Dog + Cat',order:1,name:'Pyothorax — bacterial (aerobic + anaerobic)',feat:'Foul-smelling fluid, degenerate neutrophils + bacteria on cytology, toxic patient',minDx:'Thoracocentesis + cytology + culture',addDx:'CT, thoracic lavage, bloodwork (sepsis screen)',dis:'DIS-PYOTHORAX'},
+    {id:'D005',filter:'DIFF-PL-PYO',loc:'Pleural cavity',sp:'Cat',order:2,name:'FIP — effusive (wet) form',feat:'Yellow viscous fluid, high protein, high globulins, coronavirus titres',minDx:'Fluid analysis (Rivalta test, protein), serology',addDx:'PCR on fluid, alpha-1 AGP, FIP rapid test',dis:''},
+    {id:'D006',filter:'DIFF-PL-PNEUMO',loc:'Pleural cavity',sp:'Dog + Cat',order:1,name:'Traumatic pneumothorax',feat:'Known trauma, subcutaneous emphysema, rib fractures on CXR',minDx:'CXR (expiratory view), FAST ultrasound',addDx:'CT for extent and pulmonary lacerations',dis:''},
+    {id:'D007',filter:'DIFF-PL-PNEUMO',loc:'Pleural cavity',sp:'Dog',order:2,name:'Spontaneous pneumothorax — bullae/bleb rupture',feat:'No trauma, deep-chested breed (Siberian Husky, German Shepherd), recurrent',minDx:'CXR, CT',addDx:'CT essential for surgical planning',dis:''},
+    {id:'D008',filter:'DIFF-PA-CARDOEDE',loc:'Lung parenchyma',sp:'Dog + Cat',order:1,name:'Left-sided CHF — mitral valve disease (dog)',feat:'Older small breed, murmur, perihilar interstitial-alveolar pattern on CXR',minDx:'CXR, auscultation, NT-proBNP',addDx:'Echo — confirm MV disease + LA enlargement',dis:''},
+    {id:'D009',filter:'DIFF-PA-CARDOEDE',loc:'Lung parenchyma',sp:'Cat',order:2,name:'Left-sided CHF — HCM (cat)',feat:'Cat, patchy or diffuse oedema (less perihilar than dog), murmur or gallop',minDx:'FAST echo, NT-proBNP, CXR',addDx:'Full echo, renal panel',dis:'DIS-HCM'},
+    {id:'D010',filter:'DIFF-NA-POLYP',loc:'Nasal cavity / Nasopharynx',sp:'Cat',order:1,name:'Nasopharyngeal inflammatory polyp',feat:'Young cat, stertor, pink fleshy mass visible behind soft palate under GA',minDx:'Oral exam under GA, skull radiograph',addDx:'CT (bulla assessment), otoscopy',dis:'DIS-POLYP'},
+    {id:'D011',filter:'DIFF-LA-LP',loc:'Larynx / Cervical trachea',sp:'Dog',order:1,name:'Idiopathic laryngeal paralysis (GOLPP)',feat:'Older large breed, dysphonia, exercise intolerance, aspiration history',minDx:'Laryngoscopy under light sedation — paradoxical arytenoid movement',addDx:'CXR (aspiration?), thyroid panel, neuro exam',dis:'DIS-LP'},
+    {id:'D012',filter:'DIFF-LA-LP',loc:'Larynx / Cervical trachea',sp:'Dog',order:2,name:'Laryngeal paralysis — secondary (hypothyroidism, neoplasia, trauma)',feat:'Younger dog or known concurrent disease, abnormal thyroid levels',minDx:'Laryngoscopy, thyroid panel, cervical radiograph/CT',addDx:'CT neck/thorax',dis:''},
+    {id:'D013',filter:'DIFF-PA-ASP',loc:'Lung parenchyma',sp:'Dog + Cat',order:1,name:'Aspiration pneumonia',feat:'History of vomiting, regurgitation, or recent GA; ventral lung lobe distribution on CXR',minDx:'CXR, haematology (leucocytosis)',addDx:'BAL + culture + sensitivity, thoracic CT',dis:''},
+    {id:'D014',filter:'DIFF-PA-ASP',loc:'Lung parenchyma',sp:'Dog + Cat',order:2,name:'Aspiration secondary to megaoesophagus',feat:'Regurgitation history, oesophageal dilation on CXR, poor body condition',minDx:'CXR (oesophageal air column), fluoroscopy',addDx:'Oesophagoscopy, search for underlying cause',dis:''},
+    // Vomiting differentials
+    {id:'DV001',filter:'DIFF-GI-GAST-DIET',loc:'Stomach',sp:'Dog + Cat',order:1,name:'Dietary indiscretion — acute gastritis',feat:'History of garbage ingestion / dietary change. Bright alert patient. Self-limiting within 24–72h.',minDx:'Clinical history + exam (often sufficient). Exclude foreign body if persisting.',addDx:'Radiograph if not improving; haematology/biochemistry if systemically unwell.',dis:'DIS-GAST-DIET'},
+    {id:'DV002',filter:'DIFF-GI-GAST-DIET',loc:'Stomach',sp:'Dog + Cat',order:2,name:'Drug-induced gastritis (NSAIDs, steroids)',feat:'Recent NSAID or steroid history. May progress to ulceration. Vomiting ± haematemesis.',minDx:'Medication history (key). Haematology. Gastroscopy if not resolving.',addDx:'Gastroscopy + biopsy if ulceration suspected.',dis:''},
+    {id:'DV003',filter:'DIFF-GI-GAST-CHRON',loc:'Stomach',sp:'Dog + Cat',order:1,name:'Immune-mediated / lymphocytic-plasmacytic gastritis',feat:'Chronic intermittent vomiting. Often older dog/cat. Weight loss variable.',minDx:'Haematology + biochemistry. Gastroscopy + biopsy — definitive.',addDx:'Abdominal ultrasound; B12/folate.',dis:''},
+    {id:'DV004',filter:'DIFF-GI-GAST-CHRON',loc:'Stomach',sp:'Dog + Cat',order:2,name:'Eosinophilic gastritis',feat:'Often younger patient. Dogs more common than cats. Peripheral eosinophilia common. Dietary hypersensitivity most frequent cause.',minDx:'Haematology (eosinophilia?). Gastroscopy + biopsy — definitive.',addDx:'Dietary elimination trial (novel protein or hydrolysed); faecal flotation (parasites).',dis:'DIS-GI-EOGAST'},
+    {id:'DV005',filter:'DIFF-GI-GAST-CHRON',loc:'Stomach',sp:'Dog + Cat',order:3,name:'Helicobacter-associated gastritis',feat:'Spiral organisms on biopsy. Significance disputed — may be incidental finding.',minDx:'Gastroscopy + biopsy (urease test, histology). Exclude other causes first.',addDx:'Urea breath test (less validated in dogs/cats).',dis:''},
+    {id:'DV006',filter:'DIFF-GI-FB',loc:'Stomach',sp:'Dog + Cat',order:1,name:'Gastric foreign body',feat:'Young dog most common. Vomiting ± related to eating. History of chewing objects.',minDx:'Plain radiograph (radio-opaque FB). Contrast study or endoscopy for radio-lucent FB.',addDx:'Ultrasound; CT for complex cases.',dis:''},
+    {id:'DV007',filter:'DIFF-GI-ULC',loc:'Stomach',sp:'Dog + Cat',order:1,name:'Gastric ulceration — primary (FB, IBD, neoplasia)',feat:'Haematemesis, melaena, cranial abdominal pain.',minDx:'Haematology (anaemia type). Endoscopy — definitive. Biopsy all ulcers.',addDx:'Coagulation profile; abdominal ultrasound.',dis:''},
+    {id:'DV008',filter:'DIFF-GI-ULC',loc:'Stomach',sp:'Dog + Cat',order:2,name:'Gastric ulceration — secondary (uraemia, liver disease, mastocytoma, gastrinoma, NSAIDs)',feat:'As above but with concurrent evidence of extra-GI disease. Gastrinoma: refractory multiple ulcers.',minDx:'Biochemistry (renal, hepatic). Haematology. Fasting gastrin if refractory ulcers.',addDx:'Abdominal ultrasound; endoscopy + biopsy.',dis:''},
+    {id:'DV009',filter:'DIFF-GI-PYL',loc:'Stomach',sp:'Dog',order:1,name:'Pyloric obstruction / chronic hypertrophic gastropathy',feat:'Projectile vomiting of food many hours after eating. Brachycephalic breeds, Boxers.',minDx:'Survey radiograph. Contrast study (delayed emptying). Endoscopy.',addDx:'CT for surgical planning.',dis:''},
+    {id:'DV010',filter:'DIFF-GI-OBS',loc:'Small intestine',sp:'Dog + Cat',order:1,name:'Intestinal foreign body',feat:'Frequent profuse vomiting. Painful abdomen. Young animals, toy breeds common. Linear FB (string) in cats.',minDx:'Survey radiograph (gas pattern, plication). Ultrasound. ± Contrast study.',addDx:'CT — gold standard for obstruction site and extent.',dis:''},
+    {id:'DV011',filter:'DIFF-GI-OBS',loc:'Small intestine',sp:'Dog + Cat',order:2,name:'Intussusception',feat:'Young animal, often post-enteritis. Palpable sausage-shaped mass. Blood per rectum possible.',minDx:'Ultrasound — classic target lesion (concentric rings). Confirm before surgery.',addDx:'Contrast radiograph if ultrasound inconclusive.',dis:'DIS-GI-INTUSS'},
+    {id:'DV012',filter:'DIFF-GI-ENT',loc:'Small intestine',sp:'Dog',order:1,name:'Parvovirus enteritis',feat:'Unvaccinated young dog. Haemorrhagic vomiting + diarrhoea. Leucopenia. Severe dehydration.',minDx:'SNAP Parvo test (faecal antigen). Haematology (leucopenia).',addDx:'Biochemistry; electrolytes (hypokalaemia common).',dis:'DIS-GI-PARVO'},
+    {id:'DV013',filter:'DIFF-GI-ENT',loc:'Small intestine',sp:'Dog + Cat',order:2,name:'Haemorrhagic gastroenteritis (HGE / AHDS)',feat:'Dog. Acute explosive haemorrhagic diarrhoea ± vomiting. Elevated PCV despite appearing collapsed.',minDx:'PCV (often >60%). Exclude parvo. Rule out intussusception.',addDx:'Biochemistry; ultrasound if abdominal pain.',dis:''},
+    {id:'DV014',filter:'DIFF-GI-IBD',loc:'Small intestine / Stomach',sp:'Cat',order:1,name:'Lymphocytic-plasmacytic IBD (cat)',feat:'Chronic vomiting (often hairball-like). Weight loss. Vomiting more prominent than diarrhoea.',minDx:'Haematology + biochemistry. B12/folate. Endoscopy + biopsy — definitive.',addDx:'Abdominal ultrasound; distinguish from lymphoma (requires biopsy).',dis:''},
+    {id:'DV015',filter:'DIFF-GI-IBD',loc:'Small intestine / Stomach',sp:'Cat',order:2,name:'Alimentary / GI lymphoma (cat)',feat:'Older cat. Chronic weight loss + vomiting. Clinically indistinguishable from IBD. Biopsy mandatory.',minDx:'Haematology + biochemistry. Ultrasound. Full-thickness biopsy (gold standard).',addDx:'PARR on endoscopic biopsy if full-thickness not possible.',dis:''},
+    {id:'DV016',filter:'DIFF-GI-SEC-RENAL',loc:'Extra-GI',sp:'Dog + Cat',order:1,name:'Chronic kidney disease (CKD) — uraemic vomiting',feat:'PU/PD, weight loss, oral ulcers, uraemic breath. Vomiting often in morning (acid rebound).',minDx:'Biochemistry (BUN, creatinine, SDMA). Urinalysis (USG, UPC). Haematology (non-regenerative anaemia).',addDx:'Renal ultrasound; blood pressure; urine culture.',dis:'DIS-SEC-CKD'},
+    {id:'DV017',filter:'DIFF-GI-SEC-RENAL',loc:'Extra-GI',sp:'Dog + Cat',order:2,name:'Acute kidney injury (AKI)',feat:'⚠️ Acute onset severe vomiting + anuria/oliguria. Toxin ingestion (lily, ethylene glycol, NSAIDs). Painful kidneys.',minDx:'Biochemistry (BUN, creatinine — often very elevated). Urinalysis. Urine output monitoring.',addDx:'Urine electrolytes (FENa); renal ultrasound; toxicology screen.',dis:''},
+    {id:'DV018',filter:'DIFF-GI-SEC-HEPATIC',loc:'Extra-GI',sp:'Dog + Cat',order:1,name:'Hepatic disease — hepatitis, hepatic lipidosis, portosystemic shunt',feat:'Jaundice, PU/PD, ascites, hepatoencephalopathy. Cats: hepatic lipidosis in obese cat with anorexia.',minDx:'Biochemistry (ALT, ALP, bilirubin, albumin). Bile acids (pre/post). Urinalysis.',addDx:'Abdominal ultrasound; liver biopsy; ammonia level (HE); scintigraphy (PSS).',dis:''},
+    {id:'DV019',filter:'DIFF-GI-SEC-PAN',loc:'Extra-GI',sp:'Dog',order:1,name:'Acute pancreatitis (dog) — behaves like PRIMARY GI',feat:'EXCEPTION RULE: Dog pancreatitis = acute vomiting after eating in initially bright alert dog. Cranial abdominal pain, prayer position.',minDx:'Spec cPL (SNAP cPL or quantitative). Lipase (less specific). Haematology (leucocytosis). Ultrasound.',addDx:'CT (gold standard for severity).',dis:'DIS-SEC-PAN-DOG'},
+    {id:'DV020',filter:'DIFF-GI-SEC-PAN',loc:'Extra-GI',sp:'Cat',order:2,name:'Pancreatitis (cat) — behaves like SECONDARY GI',feat:'EXCEPTION RULE: Cat pancreatitis = subclinical or secondary GI presentation. Anorexia, lethargy, weight loss > vomiting.',minDx:'Spec fPL (SNAP fPL or quantitative). Ultrasound. Haematology.',addDx:'Consider triaditis (concurrent pancreatitis + IBD + cholangitis in cats).',dis:''},
+    {id:'DV021',filter:'DIFF-GI-SEC-HYPO',loc:'Extra-GI',sp:'Dog',order:1,name:"Hypoadrenocorticism (Addison's disease)",feat:"The great pretender. Waxing/waning vomiting, weight loss, weakness, collapse episodes. Hyperkalaemia + hyponatraemia.",minDx:"Electrolytes (Na:K ratio <27 suspicious). ACTH stimulation test (gold standard). Atypical Addison's: normal electrolytes — if absent stress leukogram, check basal cortisol first; <55 nmol/L → proceed to ACTH stim.",addDx:'Thoracic radiograph; abdominal ultrasound (small adrenal glands).',dis:'DIS-SEC-HYPO'},
+    {id:'DV022',filter:'DIFF-GI-SEC-HYPERT',loc:'Extra-GI',sp:'Cat',order:1,name:'Hyperthyroidism (cat)',feat:'Intermittent vomiting over prolonged period in otherwise apparently well cat. Weight loss despite polyphagia. Tachycardia.',minDx:'Total T4 (screening). Free T4 by equilibrium dialysis if T4 equivocal.',addDx:'Thyroid scintigraphy; blood pressure; echo (cardiac effects).',dis:''},
+    {id:'DV023',filter:'DIFF-GI-SEC-DKA',loc:'Extra-GI',sp:'Dog + Cat',order:1,name:'Diabetic ketoacidosis (DKA)',feat:'⚠️ PU/PD, anorexia, lethargy, fruity/acetone breath. Vomiting. Ketonuria. Dehydration. Metabolic acidosis.',minDx:'Urinalysis (glucose, ketones). Blood glucose. Biochemistry. Haematology.',addDx:'Blood gas; blood pressure; urine culture (concurrent UTI common).',dis:''},
+    {id:'DV024',filter:'DIFF-GI-SEC-HCA',loc:'Extra-GI',sp:'Dog + Cat',order:1,name:'Hypercalcaemia — neoplastic, hypoadrenocorticism, Vit D toxicity',feat:'PU/PD, constipation, muscle weakness, vomiting. Calcium >3.0mmol/L clinically significant.',minDx:'Serum ionised calcium. PTH + PTHrP (distinguish causes). Biochemistry.',addDx:'Radiograph + ultrasound. Vitamin D level; bone marrow if lymphoma suspected.',dis:''},
+    {id:'DV025',filter:'DIFF-OES-MEGA',loc:'Oesophagus',sp:'Dog + Cat',order:1,name:'Idiopathic megaoesophagus',feat:'Passive regurgitation of undigested food. Aspiration pneumonia risk. Large/giant breeds, German Shepherd predisposed.',minDx:'CXR (oesophageal air column). Contrast fluoroscopy (definitive motility assessment).',addDx:'ACTH stimulation; Tensilon test (exclude MG); lead level; neuro exam.',dis:''},
+    {id:'DV026',filter:'DIFF-OES-MEGA',loc:'Oesophagus',sp:'Dog + Cat',order:2,name:'Megaoesophagus secondary to myasthenia gravis',feat:'Regurgitation as the only or predominant clinical sign (focal MG). Younger dog.',minDx:'AChR antibody titre. CXR + fluoroscopy.',addDx:'Chest CT for thymoma; thoracic radiograph (thymic mass in young dog).',dis:''},
+    {id:'DV027',filter:'DIFF-OES-OBS',loc:'Oesophagus',sp:'Dog + Cat',order:1,name:'Oesophageal foreign body',feat:'⚠️ Acute onset regurgitation + hypersalivation + dysphagia. Bones common in dogs.',minDx:'Survey radiograph (radio-opaque FB, oesophageal gas). Endoscopy (diagnostic + therapeutic).',addDx:'CT if perforation suspected; fluoroscopy if radiolucent FB.',dis:''},
+
+    // ── DIARRHOEA DIFFERENTIALS ───────────────────────────────────────────────
+    {id:"D-DI001",filter:"DIFF-DI-SI",loc:"Small intestine",sp:"Dog + Cat",order:1,name:"Dietary-responsive diarrhoea / food allergy",feat:"Responds to 3-4 week strict novel protein or hydrolysed diet trial. Variable urgency — no systemic illness, otherwise well.",minDx:"3-week exclusive diet trial (commercial hydrolysed e.g. Hills z/d, Royal Canin Ultamino). No treats or flavoured medications.",addDx:"Rechallenge with original diet to confirm food allergy. Dietary trial also warranted even if IBD confirmed on biopsy.",dis:""},
+    {id:"D-DI002",filter:"DIFF-DI-SI",loc:"Small intestine",sp:"Dog + Cat",order:2,name:"Giardia spp.",feat:"Pale greasy malodorous stool, young animals or kennelled dogs. Often self-limiting but can be chronic.",minDx:"Zinc sulfate centrifugation x3 samples (~95% sensitive). SNAP Giardia antigen assay (~90% sensitive).",addDx:"Treat empirically with fenbendazole 50mg/kg SID x3d even if negative. Metronidazole 10-20mg/kg BID x5-7d as alternative.",dis:""},
+    {id:"D-DI003",filter:"DIFF-DI-SI",loc:"Small intestine",sp:"Dog + Cat",order:3,name:"Antibiotic-responsive diarrhoea (ARD) / dysbiosis",feat:"Chronic SI diarrhoea, otherwise relatively well, no systemic disease found. Responds to antibiotics but relapses.",minDx:"Diagnosis of exclusion — after worming, dietary trial, ruling out secondary disease.",addDx:"Oxytetracycline, tylosin or amoxicillin for 4-6 weeks. Role of probiotics not yet established.",dis:""},
+    {id:"D-DI004",filter:"DIFF-DI-SI",loc:"Small intestine",sp:"Dog + Cat",order:4,name:"IBD — lymphoplasmacytic or eosinophilic enteritis",feat:"Chronic diarrhoea >3 weeks, weight loss. Dogs: diarrhoea predominates. Cats: vomiting often predominates. Biopsy required for diagnosis.",minDx:"Biochemistry + haematology (rule out secondary GI). Cobalamin + folate (SI disease pattern). cTLI (exclude EPI). Endoscopic biopsy.",addDx:"Full-thickness biopsy preferred. PARR if distinguishing IBD from alimentary lymphoma. Ultrasound (wall thickening, LN changes).",dis:""},
+    {id:"D-DI005",filter:"DIFF-DI-SI",loc:"Small intestine",sp:"Cat",order:5,name:"Alimentary lymphoma (cat) — distinguish from IBD",feat:"Older cat. Clinically indistinguishable from IBD. Weight loss, vomiting, ± diarrhoea. Palpable gut thickening or mesenteric lymphadenopathy.",minDx:"Ultrasound (wall thickening, lymphadenopathy). Full-thickness biopsy gold standard.",addDx:"PARR (PCR for antigen receptor rearrangement) on endoscopic biopsy. Immunohistochemistry (B vs T cell immunophenotype).",dis:""},
+    {id:"D-DI006",filter:"DIFF-DI-SI",loc:"Small intestine",sp:"Dog",order:6,name:"EPI — exocrine pancreatic insufficiency",feat:"Pale greasy cow-pat stool, severe weight loss despite polyphagia, coprophagia. Young German Shepherd predisposed.",minDx:"cTLI (fasted) <2.5 mcg/L diagnostic. Serum cobalamin + folate (often decreased with concurrent dysbiosis).",addDx:"Trypsin-like immunoreactivity. Cobalamin supplementation if low. Pancreatic enzyme supplementation lifelong.",dis:""},
+    {id:"D-DI007",filter:"DIFF-DI-SI",loc:"Small intestine",sp:"Dog",order:7,name:"Protein-losing enteropathy (PLE) / lymphangiectasia",feat:"Panhypoproteinaemia (low albumin AND globulin), peripheral oedema, ascites, pleural effusion. Yorkshire Terrier, Wheaten Terrier predisposed.",minDx:"Biochemistry (albumin, globulin, cholesterol — all low). Full-thickness biopsy (dilated lacteals = lymphangiectasia).",addDx:"Faecal alpha-1-protease inhibitor (sensitive PLE marker). Ultrasound (free fluid, gut changes). Fat restriction essential in management.",dis:""},
+    {id:"D-DI008",filter:"DIFF-DI-SI",loc:"Extra-GI",sp:"Cat",order:8,name:"Hyperthyroidism (cat) — secondary GI",feat:"Weight loss despite polyphagia, tachycardia, palpable thyroid goitre. Increased GI motility causing rapid intestinal transit and diarrhoea.",minDx:"Total T4 (cats >7yr with chronic SI diarrhoea). Physical exam — thyroid palpation, heart rate, blood pressure.",addDx:"Free T4 by equilibrium dialysis if total T4 equivocal. Recheck renal values after treatment.",dis:"DIS-SEC-HYPERT"},
+    {id:"D-DI009",filter:"DIFF-DI-SI",loc:"Extra-GI",sp:"Dog",order:9,name:"Hypoadrenocorticism — secondary GI (waxing/waning)",feat:"Waxing/waning diarrhoea, weakness, weight loss. No stress leukogram despite systemic illness (suspicious). Na:K <27.",minDx:"Electrolytes (Na:K ratio). ACTH stimulation test — even if electrolytes normal (atypical Addisons).",addDx:"Haematology (lymphocytosis, eosinophilia — absence of stress leukogram in sick dog).",dis:"DIS-SEC-HYPO"},
+    // Large bowel diffs
+    {id:"D-DI010",filter:"DIFF-DI-LB",loc:"Large intestine",sp:"Dog",order:1,name:"Whipworm (Trichuris vulpis)",feat:"Chronic haematochezia and tenesmus. Ova shed intermittently — floatation often negative. Dog only.",minDx:"Empirical treatment even if floatation negative: fenbendazole 50mg/kg SID x3d, repeat at 3 and 6 weeks.",addDx:"Faecal flotation x3 samples. Environment remains contaminated for years due to egg robustness.",dis:""},
+    {id:"D-DI011",filter:"DIFF-DI-LB",loc:"Large intestine",sp:"Cat",order:1,name:"Tritrichomonas foetus (cat)",feat:"Young cats, crowded environment. Chronic waxing/waning large bowel diarrhoea, haematochezia, anal irritation, involuntary passing of faeces.",minDx:"InPouch TF-Feline culture. PCR (Texas A&M or NCSU). Direct saline smear for motile trophozoites.",addDx:"Ronidazole 30mg/kg SID x14d — monitor for neurotoxicity (especially overdose). No environmental contamination risk.",dis:""},
+    {id:"D-DI012",filter:"DIFF-DI-LB",loc:"Large intestine",sp:"Dog + Cat",order:2,name:"Dietary-responsive large bowel diarrhoea",feat:"Haematochezia, mucus, tenesmus — dietary change or indiscretion. Responds to high-fibre diet or dietary elimination.",minDx:"Clinical history. High-fibre diet trial (commercial or psyllium/wheat bran). 1-2 weeks.",addDx:"If no response: faecal examination, consider endoscopy.",dis:""},
+    {id:"D-DI013",filter:"DIFF-DI-LB",loc:"Large intestine",sp:"Dog + Cat",order:3,name:"Colitis — lymphoplasmacytic / eosinophilic",feat:"Chronic haematochezia, tenesmus, mucus, small volumes passed frequently. Weight loss uncommon. Colonoscopy and biopsy required.",minDx:"Digital rectal exam (mass? stricture?). Colonoscopy + multiple biopsies. Haematology (eosinophilia in eosinophilic colitis).",addDx:"Dietary trial first if clinically stable. FeLV/FIV in cats. Abdominal ultrasound.",dis:""},
+    {id:"D-DI014",filter:"DIFF-DI-LB",loc:"Large intestine",sp:"Dog",order:4,name:"Granulomatous colitis (Boxer / French Bulldog) — AIEC",feat:"Boxer or French Bulldog. Severe haematochezia, tenesmus, weight loss. Refractory to most treatment. Caused by adherent invasive E. coli.",minDx:"Colonoscopy + biopsy. FISH (fluorescence in situ hybridisation) for AIEC — highly recommended in these breeds.",addDx:"Enrofloxacin often curative in early/mild cases. Early diagnosis and treatment critical before irreversible mucosal damage.",dis:""},
+    {id:"D-DI015",filter:"DIFF-DI-LB",loc:"Large intestine",sp:"Dog + Cat",order:5,name:"Colorectal neoplasia — adenocarcinoma, polyp, lymphoma",feat:"Progressive large bowel signs, haematochezia in older animal. Palpable rectal mass on digital exam.",minDx:"Digital rectal exam — perform on EVERY diarrhoea patient. Colonoscopy + biopsy. Abdominal ultrasound.",addDx:"Thoracic radiograph for metastasis (adenocarcinoma). FNA mesenteric lymph nodes.",dis:""},
+
+
+    // ── JAUNDICE DIFFERENTIALS ───────────────────────────────────────────────
+    {id:"D-JD001",filter:"DIFF-JD-PREHEP",loc:"Pre-hepatic",sp:"Dog + Cat",order:1,name:"Immune-mediated haemolytic anaemia (IMHA)",feat:"Rapid onset severe regenerative anaemia + icterus. Spherocytes on blood smear (dog). Auto-agglutination. No significant primary liver disease.",minDx:"Haematology (PCV, reticulocytes, spherocytes, auto-agglutination). Biochemistry (bilirubin — primarily unconjugated early). Slide agglutination test.",addDx:"Coombs test. Thoracic radiograph + abdominal ultrasound (thromboembolic risk). Blood pressure. ANA (if SLE suspected).",dis:""},
+    {id:"D-JD002",filter:"DIFF-JD-PREHEP",loc:"Pre-hepatic",sp:"Dog + Cat",order:2,name:"Infectious haemolysis — Babesia, Mycoplasma haemofelis",feat:"Travel history / tick exposure (Babesia). Cats: Mycoplasma haemofelis — often concurrent immunosuppression (FeLV/FIV). Haemoglobinaemia, haemoglobinuria.",minDx:"Blood smear (Babesia — within RBCs). PCR (Mycoplasma haemofelis). FeLV/FIV in cats. Haematology.",addDx:"Babesia serology. Tick-borne disease panel if endemic area.",dis:""},
+    {id:"D-JD003",filter:"DIFF-JD-PREHEP",loc:"Pre-hepatic",sp:"Dog + Cat",order:3,name:"Toxic haemolysis — onion/garlic, zinc, propylene glycol",feat:"History of toxin ingestion. Heinz body haemolytic anaemia (especially cats — very sensitive to oxidative damage). Zinc: coin/nut ingestion.",minDx:"Blood smear (Heinz bodies, eccentrocytes). History of toxin exposure. Abdominal radiograph for metallic foreign body (zinc).",addDx:"Zinc level (serum or whole blood). Specific toxin testing.",dis:""},
+    {id:"D-JD004",filter:"DIFF-JD-HEP",loc:"Hepatic",sp:"Cat",order:1,name:"Cholangiohepatitis — acute suppurative or chronic lymphocytic",feat:"Cat. Acute: fever, abdominal pain, anorexia, icterus. Chronic: weight loss, intermittent icterus. Often concurrent IBD and pancreatitis (triaditis).",minDx:"Biochemistry (ALP, GGT, ALT, bilirubin). Ultrasound (hepatomegaly, bile duct changes). Fine needle aspirate — cytology.",addDx:"Liver biopsy (required for definitive classification — suppurative vs lymphocytic). Culture of liver biopsy (if suppurative).",dis:""},
+    {id:"D-JD005",filter:"DIFF-JD-HEP",loc:"Hepatic",sp:"Cat",order:2,name:"Hepatic lipidosis",feat:"Obese cat with acute anorexia (often triggered by stress or concurrent illness). Icterus, hepatomegaly. Markedly elevated ALP.",minDx:"Biochemistry (ALP markedly elevated, bilirubin elevated). Ultrasound (diffuse hyperechoic liver). Liver FNA (lipid vacuolation).",addDx:"Rule out concurrent disease (pancreatitis, IBD, cholangiohepatitis). Cobalamin level. Nutritional assessment.",dis:""},
+    {id:"D-JD006",filter:"DIFF-JD-HEP",loc:"Hepatic",sp:"Dog",order:1,name:"Chronic hepatitis / leptospirosis",feat:"Dog. Chronic hepatitis: chronic weight loss, ascites, hepatoencephalopathy. Leptospirosis: acute hepatic + renal injury, fever, jaundice, uveitis.",minDx:"Biochemistry (ALT, ALP, bile acids, albumin). Leptospirosis MAT titres + urine PCR. Haematology.",addDx:"Liver biopsy (chronic hepatitis — copper quantification). Coagulation profile (hepatic coagulopathy risk).",dis:""},
+    {id:"D-JD007",filter:"DIFF-JD-POSTHEP",loc:"Post-hepatic",sp:"Dog + Cat",order:1,name:"Pancreatitis causing biliary obstruction",feat:"Abdominal pain, vomiting, deep icterus. Elevated ALP markedly. Dilated bile ducts on ultrasound. Spec cPL/fPL elevated.",minDx:"Biochemistry (ALP, bilirubin, lipase). Spec cPL or fPL. Abdominal ultrasound (bile duct dilation, pancreatic changes).",addDx:"CT (gold standard for pancreatitis severity). Bile acids. Coagulation profile.",dis:"DIS-SEC-PAN-DOG"},
+    {id:"D-JD008",filter:"DIFF-JD-POSTHEP",loc:"Post-hepatic",sp:"Dog",order:2,name:"Biliary mucocele / cholelithiasis",feat:"Dog. Biliary mucocele: echogenic non-mobile gallbladder contents on ultrasound — surgical emergency if rupture risk. Cholelithiasis: often incidental finding but can cause obstruction.",minDx:"Abdominal ultrasound (gallbladder contents, bile duct dilation). Biochemistry (ALP, bilirubin, bile acids).",addDx:"Coagulation profile pre-surgery (vitamin K dependant factors). Culture of bile at surgery.",dis:""},
+
+    // ── WEAKNESS / COLLAPSE DIFFERENTIALS ────────────────────────────────────
+    {id:"D-WK001",filter:"DIFF-WK-CV",loc:"Cardiovascular",sp:"Dog + Cat",order:1,name:"Cardiac arrhythmia — sick sinus syndrome, AV block, ventricular arrhythmia",feat:"Episodic syncope triggered by exercise/excitement. Pulse deficits, irregular rhythm on auscultation. Rapid recovery. ECG essential.",minDx:"ECG (in-clinic + 24h Holter if intermittent). Biochemistry. Haematology.",addDx:"Echocardiography. Chest radiograph (cardiomegaly). Blood pressure.",dis:""},
+    {id:"D-WK002",filter:"DIFF-WK-CV",loc:"Cardiovascular",sp:"Dog + Cat",order:2,name:"Structural heart disease — DCM, HCM, pericardial effusion",feat:"Exercise intolerance, syncope, murmur or muffled heart sounds. Jugular distension (pericardial effusion). Ascites.",minDx:"Echocardiography. Chest radiograph. ECG. NT-proBNP.",addDx:"Pericardiocentesis if effusion confirmed. Troponin I.",dis:"DIS-HCM"},
+    {id:"D-WK003",filter:"DIFF-WK-CV",loc:"Haematopoietic",sp:"Dog + Cat",order:3,name:"Anaemia — haemolytic, haemorrhagic, non-regenerative",feat:"Pale mucous membranes, tachycardia, weakness, exercise intolerance. Severity of signs correlates with speed of onset more than absolute PCV.",minDx:"Haematology (PCV, reticulocytes, blood smear). Biochemistry.",addDx:"Coombs test (IMHA). Bone marrow aspirate if non-regenerative. Search for bleeding source.",dis:""},
+    {id:"D-WK004",filter:"DIFF-WK-META",loc:"Metabolic",sp:"Dog",order:1,name:"Insulinoma (pancreatic islet cell tumour) — hypoglycaemia",feat:"Middle-aged large breed dog. Post-prandial or exercise-induced weakness, seizures, ataxia. Polyphagia. Fasting blood glucose <3.0mmol/L.",minDx:"Fasting blood glucose (multiple samples). Serum insulin:glucose ratio. Biochemistry.",addDx:"Abdominal ultrasound (pancreatic mass — often small). CT scan. Insulin level.",dis:""},
+    {id:"D-WK005",filter:"DIFF-WK-META",loc:"Metabolic",sp:"Dog",order:2,name:"Hypoadrenocorticism — hyperkalaemia causing weakness",feat:"Waxing/waning weakness, bradycardia, Na:K <27. Hyperkalaemia causes characteristic ECG changes (peaked T waves, widened QRS). Addisonian crisis: collapse, hypothermia.",minDx:"Electrolytes (Na:K ratio). ACTH stimulation test. ECG (hyperkalaemia changes). Atypical: if absent stress leukogram with normal Na:K → basal cortisol; <55 nmol/L → ACTH stim.",addDx:"Biochemistry. Abdominal ultrasound (small adrenal glands).",dis:"DIS-SEC-HYPO"},
+    {id:"D-WK006",filter:"DIFF-WK-META",loc:"Metabolic",sp:"Cat",order:3,name:"Hypokalaemia — primary hyperaldosteronism (Conn syndrome)",feat:"Cat. Ventroflexion of neck, generalised weakness, elevated CK. Unilateral or bilateral adrenal mass on ultrasound. Hypertension.",minDx:"Serum potassium (low). Biochemistry. Blood pressure. Abdominal ultrasound (adrenal mass).",addDx:"Aldosterone:renin ratio. CT adrenals. Urine potassium:creatinine ratio.",dis:""},
+    {id:"D-WK007",filter:"DIFF-WK-MG",loc:"Neuromuscular junction",sp:"Dog + Cat",order:1,name:"Acquired myasthenia gravis (focal or generalised)",feat:"Exercise-induced weakness improving with rest. Regurgitation (megaoesophagus) ± aspiration pneumonia. Palpebral reflex fatigues with rapid repetition. Facial weakness possible.",minDx:"AChR antibody titre (gold standard — high sensitivity and specificity). Chest radiograph (megaoesophagus, aspiration pneumonia).",addDx:"Tensilon (edrophonium) test — prepare atropine. CT chest (thymoma — paraneoplastic MG). CK.",dis:""},
+    {id:"D-WK008",filter:"DIFF-WK-NEURO",loc:"Peripheral nerve",sp:"Dog + Cat",order:1,name:"Polyneuropathy — immune-mediated, infectious (Neospora, Toxoplasma), toxic",feat:"Flaccid paresis + ataxia (sensory and motor). Decreased to absent spinal reflexes. Muscle atrophy. May be asymmetrical if structural cause.",minDx:"Biochemistry + haematology. Neospora/Toxoplasma serology (IgG + IgM). EMG + nerve conduction.",addDx:"CSF analysis. Nerve biopsy. Genetic testing (breed-specific).",dis:""},
+    {id:"D-WK009",filter:"DIFF-WK-NEURO",loc:"Peripheral nerve",sp:"Dog",order:2,name:"Polyradiculoneuritis (coonhound paralysis / Guillain-Barre equivalent)",feat:"Acute ascending flaccid tetraparesis. Raccoon exposure or recent vaccination/infection (Campylobacter). Spinal reflexes absent. Normal mentation and sensation. No pain.",minDx:"History (raccoon bite?). CSF (elevated protein, normal cells). EMG (denervation).",addDx:"Campylobacter serology. Nerve conduction studies.",dis:""},
+    {id:"D-WK010",filter:"DIFF-WK-MYOP",loc:"Muscle",sp:"Dog + Cat",order:1,name:"Polymyositis — immune-mediated or infectious",feat:"Muscle pain on palpation, stiff stilted gait, paresis without ataxia. CK markedly elevated (thousands). Masticatory muscle myositis: jaw locked shut, cannot open mouth.",minDx:"CK (markedly elevated in thousands). Haematology (inflammatory). EMG. Muscle biopsy.",addDx:"Toxoplasma/Neospora serology. Type 2M fibre antibodies (masticatory myositis). ANA.",dis:""},
+    {id:"D-WK011",filter:"DIFF-WK-ENDO",loc:"Endocrine",sp:"Dog",order:1,name:"Hypothyroidism — myopathy / neuropathy",feat:"Generalised weakness, exercise intolerance, weight gain, skin/coat changes, bradycardia. CK mildly to moderately elevated. Peripheral neuropathy possible.",minDx:"Total T4 (low) + TSH (elevated). Biochemistry (hypercholesterolaemia). Haematology (normocytic normochromic anaemia).",addDx:"Free T4. EMG (neuropathy pattern). Response to supplementation.",dis:""},
+    {id:"D-WK012",filter:"DIFF-WK-TOXIN",loc:"Toxic",sp:"Dog",order:1,name:"Tick paralysis — Ixodes, Dermacentor species",feat:"⚠️ Acute ascending flaccid paralysis. Search thoroughly for tick. Recovery within hours of removal. Dysphagia and respiratory distress if severe. Normal mentation.",minDx:"Clinical diagnosis — thorough search for tick including ears, between toes, under collar.",addDx:"Supportive care if severe. Monitor respiratory function. Anti-tick serum (Australian tick — Ixodes holocyclus).",dis:""},
+    {id:"D-WK013",filter:"DIFF-WK-SYNC",loc:"Cardiovascular",sp:"Dog + Cat",order:1,name:"Vasovagal / cardiac syncope",feat:"Sudden transient collapse, flaccid, rapid recovery (seconds). Triggered by exercise, excitement, coughing. No post-ictal phase. Normal inter-episodic exam.",minDx:"24h Holter ECG (intermittent arrhythmia). Echocardiography. Biochemistry.",addDx:"Blood pressure (vasovagal). Event recorder. Tilt-table test (rarely available).",dis:""},
+    {id:"D-WK014",filter:"DIFF-WK-SEIZ",loc:"Brain",sp:"Dog + Cat",order:1,name:"Idiopathic epilepsy",feat:"Dog 1-5yr, normal inter-ictal exam, normal MRI and CSF. Generalised tonic-clonic seizures. Post-ictal confusion. May occur at rest or sleep. Hereditary predisposition (Border Collie, Labrador, Belgian Shepherd).",minDx:"Biochemistry + haematology (rule out metabolic). MRI brain (normal). CSF (normal).",addDx:"Genetic testing (breed-specific). EEG (rarely used in veterinary).",dis:""},
+    {id:"D-WK015",filter:"DIFF-WK-SEIZ",loc:"Brain",sp:"Dog + Cat",order:2,name:"Structural epilepsy — neoplasia, encephalitis, vascular accident",feat:"Onset <1yr or >7yr, or abnormal inter-ictal neurological exam. Progressive neurological signs between seizures. Cluster seizures or status epilepticus.",minDx:"MRI brain (contrast-enhanced). CSF analysis. Biochemistry.",addDx:"Infectious disease serology (FIP, CDV, Toxoplasma, Neospora). Thoracic radiograph (primary tumour).",dis:""},
+
+
+
+    // PU/PD differentials
+    {id:'D-PUPD-CKD1',filter:'DIFF-PUPD-RENAL',loc:'Renal',sp:'Dog + Cat',order:1,name:'Chronic kidney disease (CKD)',feat:'Consistently isosthenuric to minimally concentrated USG. Weight loss, azotaemia (may be absent early). Static USG pattern.',minDx:'Biochemistry (BUN, creatinine, SDMA), urinalysis (USG, UPC, sediment), blood pressure, renal ultrasound',addDx:'SDMA for early CKD (detects ~49% nephron loss), GFR measurement (iohexol clearance) if non-azotaemic',dis:'DIS-SEC-CKD'},
+    {id:'D-PUPD-CKD2',filter:'DIFF-PUPD-AKI',loc:'Renal',sp:'Dog + Cat',order:1,name:'Acute kidney injury (AKI)',feat:'Acute onset, often toxin exposure. Markedly elevated BUN/creatinine. Oligo/anuria or paradoxical PU/PD in recovery phase.',minDx:'Biochemistry (BUN, creatinine, phosphate), urinalysis, urine output monitoring',addDx:'Urine electrolytes (FENa), renal ultrasound, toxicology screen, leptospirosis titres',dis:'DIS-SEC-AKI'},
+    {id:'D-PUPD-PYELO',filter:'DIFF-PUPD-PYELO',loc:'Renal',sp:'Dog + Cat',order:1,name:'Bacterial pyelonephritis',feat:'Fever, painful kidneys, leucocytosis, active urine sediment, ± azotaemia. E. coli most common.',minDx:'Urine culture + sensitivity (cystocentesis), haematology, biochemistry',addDx:'Renal ultrasound (pyelectasia, hyperechoic cortices, perirenal mesentery changes), blood culture if septic',dis:''},
+    {id:'D-PUPD-GLUC1',filter:'DIFF-PUPD-GLUC',loc:'Renal',sp:'Dog + Cat',order:1,name:'Diabetes mellitus — osmotic diuresis',feat:'Glucosuria + blood glucose exceeding renal threshold (>180 mg/dL dog, >270 mg/dL cat). Weight loss, polyphagia, cataracts (dog).',minDx:'Blood glucose, urinalysis (glucosuria, ketonuria), haematology, biochemistry',addDx:'Fructosamine (average glucose over 2–3 weeks), urine culture (prone to UTI)',dis:''},
+    {id:'D-PUPD-GLUC2',filter:'DIFF-PUPD-GLUC',loc:'Renal',sp:'Dog + Cat',order:2,name:'Primary renal glucosuria / acquired renal tubulopathy',feat:'Glucosuria with NORMAL blood glucose (<180 mg/dL dog). Exposure to jerky treats, copper-associated hepatitis, Fanconi syndrome.',minDx:'Blood glucose (confirm normal), medication/diet history, urinalysis',addDx:'Liver function testing (bile acids), urine amino acids (Fanconi), liver biopsy if copper hepatitis suspected',dis:''},
+    {id:'D-PUPD-HAC1',filter:'DIFF-PUPD-HAC',loc:'Adrenal',sp:'Dog',order:1,name:'Pituitary-dependent hyperadrenocorticism (PDH)',feat:'Most common form (85%). Bilateral adrenomegaly. Pot-belly, truncal alopecia, hepatomegaly, calcinosis cutis, polyphagia.',minDx:'LDDST (screening) or ACTH stimulation test. Urinary cortisol:creatinine ratio (screening)',addDx:'Abdominal ultrasound (bilateral adrenomegaly, enlarged pituitary on MRI), HDDS',dis:''},
+    {id:'D-PUPD-HAC2',filter:'DIFF-PUPD-HAC',loc:'Adrenal',sp:'Dog',order:2,name:'Adrenal-dependent hyperadrenocorticism (ADH — adrenal tumour)',feat:'Unilateral adrenal mass. May be malignant (adrenocarcinoma). Other adrenal gland atrophied.',minDx:'ACTH stimulation + LDDST (fails to suppress with both). Abdominal ultrasound',addDx:'CT/MRI for surgical planning, chest radiograph (metastasis)',dis:''},
+    {id:'D-PUPD-DM',filter:'DIFF-PUPD-DM',loc:'Pancreatic',sp:'Dog + Cat',order:1,name:'Diabetes mellitus',feat:'Glucosuria, hyperglycaemia, weight loss despite polyphagia. Cataracts in dogs. Neuropathy (plantigrade stance) in cats.',minDx:'Blood glucose, urinalysis (glucosuria ± ketonuria), fructosamine',addDx:'Urine culture, insulin antibodies if poor regulation, abdominal ultrasound (concurrent pancreatitis)',dis:''},
+    {id:'D-PUPD-HYPERT',filter:'DIFF-PUPD-HYPERT',loc:'Thyroid',sp:'Cat',order:1,name:'Hyperthyroidism',feat:'Weight loss despite polyphagia, tachycardia, palpable thyroid goitre, hypertension. Often masks concurrent CKD by increasing GFR.',minDx:'Total T4 (screening test for cats >7yr). Blood pressure measurement.',addDx:'Free T4 by equilibrium dialysis if total T4 equivocal. Echo (cardiac effects). Recheck renal values after treatment.',dis:'DIS-SEC-HYPERT'},
+    {id:'D-PUPD-HYPO',filter:'DIFF-PUPD-HYPO',loc:'Adrenal',sp:'Dog',order:1,name:"Hypoadrenocorticism (Addison's disease)",feat:'Hyponatraemia + hyperkalaemia (Na:K <27). Waxing/waning GI signs, weakness. PU/PD from medullary washout. Less profound than hyperadrenocorticism.',minDx:"Electrolytes (Na:K ratio), ACTH stimulation test (gold standard). Atypical Addison's: normal electrolytes — absent stress leukogram → check basal cortisol; <55 nmol/L → ACTH stim.",addDx:'ECG (hyperkalaemia effects), abdominal ultrasound (small adrenal glands)',dis:'DIS-SEC-HYPO'},
+    {id:'D-PUPD-HCALC1',filter:'DIFF-PUPD-HCALC',loc:'Calcium',sp:'Dog + Cat',order:1,name:'Neoplastic hypercalcaemia — lymphoma, anal sac adenocarcinoma',feat:'Lymphoma (T-cell most common) or AGASACA (27–53% have paraneoplastic hypercalcaemia). Check anal sacs on rectal exam. Peripheral lymphadenopathy.',minDx:'Ionised calcium, PTH + PTHrP panel, haematology, biochemistry',addDx:'Thoracic + abdominal radiographs, abdominal ultrasound, FNA lymph nodes',dis:''},
+    {id:'D-PUPD-HCALC2',filter:'DIFF-PUPD-HCALC',loc:'Calcium',sp:'Dog',order:2,name:'Primary hyperparathyroidism',feat:'Hypercalcaemia with elevated PTH. Often solitary parathyroid adenoma. Older dogs. Urolithiasis (calcium oxalate) possible.',minDx:'Ionised calcium + PTH (elevated PTH with elevated ionised Ca = primary HPT)',addDx:'Neck ultrasound (parathyroid mass), MIBI scintigraphy',dis:''},
+    {id:'D-PUPD-PSS',filter:'DIFF-PUPD-PSS',loc:'Hepatic',sp:'Dog',order:1,name:'Portosystemic shunt',feat:'Young dog, stunted growth, post-prandial neurological signs (HE), low BUN, ammonium biurate crystalluria, microcytic anaemia.',minDx:'Bile acids (pre/post-prandial), ammonia, haematology, biochemistry',addDx:'Abdominal ultrasound (anomalous vessel), scintigraphy (portal flow), CT angiography',dis:''},
+    {id:'D-PUPD-PYOM',filter:'DIFF-PUPD-PYOM',loc:'Uterine',sp:'Dog',order:1,name:'Pyometra',feat:'Intact female dog, vaginal discharge (open) or no discharge (closed). Lethargy, anorexia. E. coli endotoxin causes secondary NDI.',minDx:'Haematology (leucocytosis), biochemistry, abdominal radiograph/ultrasound (uterine distension)',addDx:'Urine culture, blood culture if septic',dis:''},
+    {id:'D-PUPD-LEPTO',filter:'DIFF-PUPD-LEPTO',loc:'Infectious',sp:'Dog',order:1,name:'Leptospirosis',feat:'Unvaccinated dog, outdoor exposure. Acute hepatic/renal injury, fever, jaundice, uveitis. PU/PD ± azotaemia.',minDx:'Leptospira MAT titres (acute + convalescent), urine PCR, haematology, biochemistry',addDx:'Renal ultrasound, urine culture, blood culture',dis:''},
+    {id:'D-PUPD-CDI1',filter:'DIFF-PUPD-CDI',loc:'Hypothalamus/Pituitary',sp:'Dog + Cat',order:1,name:'Idiopathic central diabetes insipidus',feat:'Most common CDI cause. Profound PU/PD. Hyposthenuria (USG 1.001–1.007). High-normal to high plasma sodium. No other disease found.',minDx:'Serial USG (consistently hyposthenuric). Plasma sodium (high-normal or elevated). Rule out all other causes first.',addDx:'Desmopressin response trial (NEVER if hyponatraemic). MRI brain (exclude mass).',dis:''},
+    {id:'D-PUPD-CDI2',filter:'DIFF-PUPD-CDI',loc:'Hypothalamus/Pituitary',sp:'Dog + Cat',order:2,name:'CDI secondary to intracranial disease',feat:'Head trauma, neoplasia (craniopharyngioma, pituitary tumour), cysts, inflammation. Other neurological signs may be present.',minDx:'Serial USG + plasma sodium. MRI brain essential to identify structural cause.',addDx:'CSF analysis if inflammatory disease suspected',dis:''},
+    {id:'D-PUPD-NDI1',filter:'DIFF-PUPD-NDI',loc:'Renal tubule',sp:'Dog + Cat',order:1,name:'Secondary NDI — hyperadrenocorticism (most common)',feat:'Most common cause of secondary NDI in dogs. Glucocorticoids directly antagonise ADH at renal tubule. Screen before desmopressin trial.',minDx:'ACTH stimulation or LDDST. Rule out before desmopressin trial.',addDx:'Abdominal ultrasound (adrenal size), urinary cortisol:creatinine',dis:''},
+    {id:'D-PUPD-NDI2',filter:'DIFF-PUPD-NDI',loc:'Renal tubule',sp:'Dog + Cat',order:2,name:'Primary (congenital) nephrogenic diabetes insipidus',feat:'Extremely rare. Young animal. No other disease found. Fails to respond to desmopressin trial. Diagnosis of exclusion after all secondary causes excluded.',minDx:'Desmopressin trial (no response confirms NDI). Rule out ALL secondary NDI causes first.',addDx:'Genetic testing if available',dis:''},
+    {id:'D-PUPD-PRIM',filter:'DIFF-PUPD-PRIM',loc:'Behavioural',sp:'Dog',order:1,name:'Primary (psychogenic) polydipsia',feat:'Young large breed dogs often. Variable USG — documents USG >1.030 on at least 1 occasion. Hyponatraemia (dilutional). No systemic illness. Diagnosis of exclusion.',minDx:'Serial USG (3–5 samples different times). Plasma sodium (low-normal or low). Full database to exclude all other causes.',addDx:'Desmopressin trial (responds = CDI, no response = NDI, already concentrating = primary polydipsia)',dis:''},
+    {id:'D-SZ-IE1',filter:'DIFF-SZ-IE',loc:'Forebrain',sp:'Dog',order:1,name:'Idiopathic epilepsy',feat:'Onset 6mo-6yr',minDx:'Normal MRI+CSF',addDx:'',dis:'DIS-WK-EPILEPSY'},
+    {id:'D-SZ-ST1',filter:'DIFF-SZ-STRUCT',loc:'Forebrain',sp:'Dog + Cat',order:1,name:'Neoplasia',feat:'Older',minDx:'MRI+CSF',addDx:'',dis:''},
+    {id:'D-SZ-ST2',filter:'DIFF-SZ-STRUCT',loc:'Forebrain',sp:'Dog + Cat',order:2,name:'Meningoencephalitis',feat:'Progressive',minDx:'MRI+CSF+serology',addDx:'',dis:''},
+    {id:'D-SZ-RE1',filter:'DIFF-SZ-REACT',loc:'Extra',sp:'Dog + Cat',order:1,name:'Hypoglycaemia',feat:'32%',minDx:'Glucose',addDx:'',dis:''},
+    {id:'D-SZ-RE2',filter:'DIFF-SZ-REACT',loc:'Extra',sp:'Dog + Cat',order:2,name:'Intoxication',feat:'39%',minDx:'History',addDx:'',dis:''},
+    {id:'D-SZ-RE3',filter:'DIFF-SZ-REACT',loc:'Extra',sp:'Dog + Cat',order:3,name:'Hepatic encephalopathy',feat:'PSS',minDx:'Bile acids',addDx:'',dis:''},
+    {id:'D-MY-TL1',filter:'DIFF-MY-TL',loc:'T3-L3',sp:'Dog',order:1,name:'IVDD',feat:'Pain',minDx:'MRI',addDx:'',dis:''},
+    {id:'D-MY-TL2',filter:'DIFF-MY-TL',loc:'T3-L3',sp:'Dog + Cat',order:2,name:'FCE',feat:'Peracute',minDx:'MRI',addDx:'',dis:''},
+    {id:'D-MY-TL3',filter:'DIFF-MY-TL',loc:'T3-L3',sp:'Dog + Cat',order:3,name:'ANNPE',feat:'Peracute',minDx:'MRI',addDx:'',dis:''},
+    {id:'D-MY-FX1',filter:'DIFF-MY-FX',loc:'Spine',sp:'Dog + Cat',order:1,name:'Fracture/luxation',feat:'Trauma',minDx:'Rads',addDx:'',dis:''},
+    {id:'D-MY-C1',filter:'DIFF-MY-CERV',loc:'Cervical',sp:'Dog',order:1,name:'Cervical IVDD',feat:'Pain',minDx:'MRI',addDx:'',dis:''},
+    {id:'D-MY-C2',filter:'DIFF-MY-CERV',loc:'Cervical',sp:'Dog',order:2,name:'AA instability',feat:'Toy breeds',minDx:'CT',addDx:'',dis:''},
+    {id:'D-MY-C3',filter:'DIFF-MY-CERV',loc:'Cervical',sp:'Dog',order:3,name:'Wobbler',feat:'Large breeds',minDx:'MRI',addDx:'',dis:''},
+    {id:'D-VE-P1',filter:'DIFF-VE-PERIPH',loc:'Ear',sp:'Dog',order:1,name:'Idiopathic vestibular',feat:'Spontaneous improvement',minDx:'Clinical',addDx:'',dis:''},
+    {id:'D-VE-P2',filter:'DIFF-VE-PERIPH',loc:'Ear',sp:'Dog + Cat',order:2,name:'Otitis media/interna',feat:'Ear disease',minDx:'CT',addDx:'',dis:''},
+    {id:'D-VE-C1',filter:'DIFF-VE-CENTRAL',loc:'Brain',sp:'Dog + Cat',order:1,name:'MUA',feat:'Progressive',minDx:'MRI+CSF',addDx:'',dis:''},
+    {id:'D-VE-C2',filter:'DIFF-VE-CENTRAL',loc:'Brain',sp:'Dog + Cat',order:2,name:'Neoplasia',feat:'Older',minDx:'MRI',addDx:'',dis:''},
+    {id:'D-VE-C3',filter:'DIFF-VE-CENTRAL',loc:'Brain',sp:'Dog + Cat',order:3,name:'Stroke',feat:'Peracute',minDx:'MRI',addDx:'',dis:''},
+    {id:'D-VE-B1',filter:'DIFF-VE-BILAT',loc:'Bilateral',sp:'Dog',order:1,name:'Metronidazole toxicity',feat:'Drug history',minDx:'History',addDx:'',dis:''},
+    {id:'D-VE-B2',filter:'DIFF-VE-BILAT',loc:'Bilateral',sp:'Cat',order:2,name:'Thiamine deficiency',feat:'Raw fish',minDx:'History',addDx:'',dis:''},
+    {id:'D-VE-B3',filter:'DIFF-VE-BILAT',loc:'Bilateral',sp:'Dog + Cat',order:3,name:'Bilateral otitis',feat:'Both ears',minDx:'CT',addDx:'',dis:''},
+    {id:'D-EN-I1',filter:'DIFF-EN-INFLAM',loc:'Brain',sp:'Dog',order:1,name:'MUA',feat:'Small breed',minDx:'MRI+CSF',addDx:'',dis:''},
+    {id:'D-EN-INF1',filter:'DIFF-EN-INFECT',loc:'Brain',sp:'Dog + Cat',order:1,name:'Bacterial meningitis',feat:'Pyrexia',minDx:'CSF',addDx:'',dis:''},
+    {id:'D-EN-INF2',filter:'DIFF-EN-INFECT',loc:'Brain',sp:'Cat',order:2,name:'FIP',feat:'Young cat',minDx:'PCR',addDx:'',dis:''},
+    {id:'D-EN-NE1',filter:'DIFF-EN-NEO',loc:'Brain',sp:'Dog + Cat',order:1,name:'Meningioma',feat:'Extra-axial',minDx:'MRI',addDx:'',dis:''},
+    {id:'D-EN-NE2',filter:'DIFF-EN-NEO',loc:'Brain',sp:'Dog',order:2,name:'Glioma',feat:'Brachycephalic',minDx:'MRI',addDx:'',dis:''},
+    {id:'D-EN-CV1',filter:'DIFF-EN-CVA',loc:'Brain',sp:'Dog + Cat',order:1,name:'Ischaemic stroke',feat:'Peracute',minDx:'MRI',addDx:'',dis:''},
+    {id:'D-EN-CV2',filter:'DIFF-EN-CVA',loc:'Brain',sp:'Dog + Cat',order:2,name:'Haemorrhagic stroke',feat:'Coagulopathy',minDx:'MRI, BP',addDx:'',dis:''},
+    {id:'D-EN-ME1',filter:'DIFF-EN-METAB',loc:'Brain',sp:'Dog + Cat',order:1,name:'Hepatic encephalopathy',feat:'PSS',minDx:'Bile acids',addDx:'',dis:''},
+    {id:'D-EN-ME2',filter:'DIFF-EN-METAB',loc:'Brain',sp:'Dog + Cat',order:2,name:'Hypoglycaemia',feat:'Insulinoma',minDx:'Glucose',addDx:'',dis:''},
+    {id:'D-EN-ME3',filter:'DIFF-EN-METAB',loc:'Brain',sp:'Dog + Cat',order:3,name:'Na disorders',feat:'Rapid change',minDx:'Na+',addDx:'',dis:''},
+    {id:'D-NM-N1',filter:'DIFF-NM-NEURO',loc:'Nerves',sp:'Dog + Cat',order:1,name:'Polyradiculoneuritis',feat:'Ascending',minDx:'CSF',addDx:'',dis:''},
+    {id:'D-NM-N2',filter:'DIFF-NM-NEURO',loc:'Nerves',sp:'Cat',order:2,name:'Diabetic neuropathy',feat:'Plantigrade',minDx:'Glucose',addDx:'',dis:''},
+    {id:'D-NM-J1',filter:'DIFF-NM-JUNC',loc:'NMJ',sp:'Dog + Cat',order:1,name:'MG',feat:'Exercise intolerance',minDx:'AChR',addDx:'',dis:'DIS-WK-MG'},
+    {id:'D-NM-J2',filter:'DIFF-NM-JUNC',loc:'NMJ',sp:'Dog + Cat',order:2,name:'Tick paralysis',feat:'Find tick',minDx:'Search',addDx:'',dis:''},
+    {id:'D-NM-M1',filter:'DIFF-NM-MYO',loc:'Muscle',sp:'Cat',order:1,name:'Hypokalaemic myopathy',feat:'Ventroflexion',minDx:'K+',addDx:'',dis:''},
+    {id:'D-NM-M2',filter:'DIFF-NM-MYO',loc:'Muscle',sp:'Dog + Cat',order:2,name:'Polymyositis',feat:'CK elevated',minDx:'Biopsy',addDx:'',dis:''},
+    {id:'D-CO-D1',filter:'DIFF-CO-DRY',loc:'Airway',sp:'Dog',order:1,name:'Tracheal collapse',feat:'Toy breed, goose-honk cough, worsens with excitement/heat',minDx:'Fluoroscopy, CXR',addDx:'Bronchoscopy',dis:''},
+    {id:'D-CO-D2',filter:'DIFF-CO-DRY',loc:'Heart',sp:'Dog',order:2,name:'Left atrial enlargement (cardiogenic cough)',feat:'Older small breed, murmur, cough worse at night',minDx:'CXR, auscultation, NT-proBNP',addDx:'Echocardiography',dis:''},
+    {id:'D-CO-D3',filter:'DIFF-CO-DRY',loc:'Airway',sp:'Dog',order:3,name:'Kennel cough (CIRD)',feat:'Recent boarding/shelter, paroxysmal cough, tracheal pinch positive',minDx:'Clinical presentation',addDx:'Respiratory PCR panel',dis:''},
+    {id:'D-CO-D4',filter:'DIFF-CO-DRY',loc:'Airway',sp:'Dog',order:4,name:'Chronic bronchitis',feat:'Daily cough >2 months, older small breed, diagnosis of exclusion',minDx:'CXR, BAL + cytology',addDx:'CT, bronchoscopy',dis:''},
+    {id:'D-CO-D5',filter:'DIFF-CO-DRY',loc:'Airway',sp:'Cat',order:5,name:'Feline asthma',feat:'Young-middle aged cat, expiratory effort, wheeze, episodic',minDx:'CXR (bronchial pattern, hyperinflation)',addDx:'BAL',dis:''},
+    {id:'D-CO-W1',filter:'DIFF-CO-WET',loc:'Lung',sp:'Dog + Cat',order:1,name:'Bacterial / aspiration pneumonia',feat:'Pyrexia, productive cough, crackles, ventral CXR distribution. Common: Bordetella, Pasteurella, Streptococcus, E. coli, Mycoplasma (esp. cats).',minDx:'CXR, haematology, BAL + culture',addDx:'Check aspiration cause (megaoesophagus, LP, recent GA)',dis:''},
+    {id:'D-CO-W2',filter:'DIFF-CO-WET',loc:'Lung',sp:'Dog',order:2,name:'Lungworm (Angiostrongylus vasorum)',feat:'Young dog, outdoor access, coagulopathy possible',minDx:'Baermann faecal, Angio Detect SNAP',addDx:'CXR, coagulation panel',dis:''},
+    {id:'D-CO-W3',filter:'DIFF-CO-WET',loc:'Lung',sp:'Dog',order:3,name:'Cardiogenic pulmonary oedema',feat:'Murmur, crackles, perihilar CXR pattern, pink frothy fluid',minDx:'CXR, auscultation, NT-proBNP',addDx:'Echocardiography',dis:''},
+    {id:'D-CO-W4',filter:'DIFF-CO-WET',loc:'Lung',sp:'Dog + Cat',order:4,name:'Pulmonary neoplasia',feat:'Chronic cough, weight loss, haemoptysis',minDx:'CXR (3 views), CT',addDx:'FNA, histopathology',dis:''},
+    {id:'D-CO-W5',filter:'DIFF-CO-WET',loc:'Airway',sp:'Dog',order:5,name:'Bronchiectasis',feat:'Chronic productive cough, recurrent pneumonia, irreversible dilation',minDx:'CT',addDx:'BAL + culture',dis:''},
+    {id:'D-SN-U1',filter:'DIFF-SN-UNI',loc:'Nasal',sp:'Dog + Cat',order:1,name:'Nasal foreign body',feat:'Acute violent sneezing, post outdoor activity, grass awn',minDx:'Rhinoscopy',addDx:'CT if not found',dis:''},
+    {id:'D-SN-U2',filter:'DIFF-SN-UNI',loc:'Nasal',sp:'Dog + Cat',order:2,name:'Nasal neoplasia',feat:'Older, progressive epistaxis, facial deformity',minDx:'CT, rhinoscopy + biopsy',addDx:'Staging CT',dis:''},
+    {id:'D-SN-U3',filter:'DIFF-SN-UNI',loc:'Nasal',sp:'Dog',order:3,name:'Sinonasal aspergillosis',feat:'Dolichocephalic, haemorrhagic discharge, turbinate destruction',minDx:'CT, rhinoscopy, Aspergillus serology',addDx:'',dis:''},
+    {id:'D-SN-U4',filter:'DIFF-SN-UNI',loc:'Dental',sp:'Dog',order:4,name:'Oronasal fistula',feat:'Discharge worse after eating, periodontal disease, maxillary canine',minDx:'Dental radiographs, oral exam under GA',addDx:'',dis:''},
+    {id:'D-SN-B1',filter:'DIFF-SN-BI',loc:'Nasal',sp:'Cat',order:1,name:'Feline URTI (FHV-1 / FCV)',feat:'Bilateral discharge, conjunctivitis, FHV-1: corneal ulcers, FCV: oral ulcers',minDx:'Clinical, PCR swab',addDx:'',dis:''},
+    {id:'D-SN-B2',filter:'DIFF-SN-BI',loc:'Nasal',sp:'Cat',order:2,name:'Chronic rhinosinusitis (post-viral)',feat:'Chronic bilateral post-URTI, turbinate lysis on CT',minDx:'CT, deep nasal culture',addDx:'Rhinoscopy + biopsy',dis:''},
+    {id:'D-SN-B3',filter:'DIFF-SN-BI',loc:'Nasal',sp:'Dog + Cat',order:3,name:'Allergic / lymphoplasmacytic rhinitis',feat:'Seasonal, serous discharge, reverse sneezing (dogs), diagnosis of exclusion',minDx:'CT, rhinoscopy + biopsy',addDx:'',dis:''},
+    {id:'D-SN-B4',filter:'DIFF-SN-BI',loc:'Nasal',sp:'Cat',order:4,name:'Nasopharyngeal polyp',feat:'Young cat, stertor, visible behind soft palate under GA',minDx:'Oral exam under GA, CT',addDx:'',dis:''},
+    {id:'D-SN-B5',filter:'DIFF-SN-BI',loc:'Nasal',sp:'Cat',order:5,name:'Cryptococcosis',feat:'Chronic discharge, Roman nose swelling, CNS signs possible',minDx:'LCAT',addDx:'FIV testing',dis:''},
+    {id:'D-PM-R1',filter:'DIFF-PM-REGEN',loc:'Blood',sp:'Dog + Cat',order:1,name:'IMHA',feat:'Spherocytes, auto-agglutination, bilirubinuria, TS normal/high',minDx:'PCV/TS, blood smear, reticulocyte count',addDx:'Coombs test, blood typing',dis:''},
+    {id:'D-PM-R2',filter:'DIFF-PM-REGEN',loc:'Blood',sp:'Dog + Cat',order:2,name:'Haemorrhage',feat:'TS drops (hours), source of blood loss, DIC if consumption',minDx:'PCV/TS, coagulation panel, abdominal US',addDx:'FAST scan',dis:''},
+    {id:'D-PM-R3',filter:'DIFF-PM-REGEN',loc:'Blood',sp:'Dog + Cat',order:3,name:'Oxidative haemolysis (onion, zinc, paracetamol)',feat:'Heinz bodies, eccentrocytes, history of exposure',minDx:'Blood smear, history',addDx:'Zinc level',dis:''},
+    {id:'D-PM-R4',filter:'DIFF-PM-REGEN',loc:'Blood',sp:'Dog + Cat',order:4,name:'Infectious haemolysis (Babesia, M. haemofelis)',feat:'Travel/tick history, thrombocytopenia (Babesia)',minDx:'Blood smear, PCR',addDx:'FIV/FeLV if cat',dis:''},
+    {id:'D-PM-NR1',filter:'DIFF-PM-NONREGEN',loc:'Marrow',sp:'Dog + Cat',order:1,name:'Anaemia of chronic disease',feat:'Mild-moderate, concurrent chronic illness',minDx:'PCV, reticulocytes, identify underlying disease',addDx:'Iron studies',dis:''},
+    {id:'D-PM-NR2',filter:'DIFF-PM-NONREGEN',loc:'Marrow',sp:'Cat',order:2,name:'FeLV-associated anaemia',feat:'FeLV-positive, pure red cell aplasia or myelophthisis',minDx:'FeLV test, bone marrow',addDx:'',dis:''},
+    {id:'D-PM-NR3',filter:'DIFF-PM-NONREGEN',loc:'Marrow',sp:'Dog + Cat',order:3,name:'Renal anaemia (CKD)',feat:'Inadequate erythropoietin, azotaemic',minDx:'Biochemistry, USG',addDx:'SDMA',dis:''},
+    {id:'D-PM-NR4',filter:'DIFF-PM-NONREGEN',loc:'Marrow',sp:'Dog',order:4,name:'Ehrlichiosis / aplastic anaemia',feat:'Pancytopenia, endemic areas, drug-induced possible',minDx:'Ehrlichia serology/PCR, bone marrow',addDx:'Drug history',dis:''},
+    {id:'D-PM-SH1',filter:'DIFF-PM-SHOCK',loc:'CV',sp:'Dog + Cat',order:1,name:'Hypovolaemic shock',feat:'Pale gums, prolonged CRT, tachycardia (dog) or bradycardia (cat), weak pulses',minDx:'PCV/TS, lactate, BP',addDx:'FAST scan',dis:''},
+    {id:'D-PM-SH2',filter:'DIFF-PM-SHOCK',loc:'CV',sp:'Dog + Cat',order:2,name:'Cardiogenic shock',feat:'Muffled heart sounds, arrhythmia, jugular distension, electrical alternans',minDx:'FAST echo, ECG',addDx:'Pericardiocentesis, echocardiography',dis:''},
+    {id:'D-PM-SH3',filter:'DIFF-PM-SHOCK',loc:'CV',sp:'Dog + Cat',order:3,name:'Distributive shock (sepsis, anaphylaxis)',feat:'Vasodilation, hyperdynamic early then decompensated',minDx:'Lactate, blood culture',addDx:'Source identification',dis:''}
+,
+    {id:'D-NA-VIR1',filter:'DIFF-NA-VIRAL',loc:'Nasal',sp:'Cat',order:1,name:'Feline herpesvirus-1 (FHV-1)',feat:'Corneal ulcers, symblepharon, chronic carrier state. Stress reactivation.',minDx:'Clinical signs, PCR (oropharyngeal swab)',addDx:'Fluorescein (corneal ulcers)',dis:''},
+    {id:'D-NA-VIR2',filter:'DIFF-NA-VIRAL',loc:'Nasal',sp:'Cat',order:2,name:'Feline calicivirus (FCV)',feat:'Oral ulceration (tongue, hard palate), pyrexia. Virulent systemic form exists.',minDx:'Clinical signs, PCR',addDx:'',dis:''},
+    {id:'D-NA-INF1',filter:'DIFF-NA-INFLAM',loc:'Nasal',sp:'Dog + Cat',order:1,name:'Nasal foreign body',feat:'Acute unilateral sneezing, pawing at face. Post outdoor activity. Grass awn.',minDx:'Rhinoscopy',addDx:'CT if not found',dis:''},
+    {id:'D-NA-INF2',filter:'DIFF-NA-INFLAM',loc:'Nasal',sp:'Cat',order:2,name:'Acquired nasopharyngeal stenosis (NPS)',feat:'Chronic stertor. Secondary to FHV-1, gastric reflux, chronic irritation. Web-like membrane.',minDx:'Nasopharyngoscopy',addDx:'Balloon dilation, stenting',dis:''},
+    {id:'D-NA-INF3',filter:'DIFF-NA-INFLAM',loc:'Nasal',sp:'Cat',order:3,name:'Chronic rhinosinusitis (post-viral)',feat:'Chronic bilateral discharge post-FHV-1/FCV. Turbinate lysis on CT. Secondary bacterial infection.',minDx:'CT, deep nasal culture',addDx:'Rhinoscopy + biopsy (exclude neoplasia)',dis:''},
+    {id:'D-NA-INF4',filter:'DIFF-NA-INFLAM',loc:'Nasal',sp:'Dog + Cat',order:4,name:'Fungal granulomatous rhinitis',feat:'Dog: sinonasal aspergillosis (dolichocephalic). Cat: cryptococcosis (Roman nose swelling).',minDx:'CT, rhinoscopy, Aspergillus serology (dog), LCAT (cat)',addDx:'',dis:''},
+    {id:'D-AT-CB1',filter:'DIFF-AT-CEREB',loc:'Cerebellum',sp:'Dog + Cat',order:1,name:'Immune-mediated cerebellitis / MUA',feat:'Acute, progressive. Young adult small breed dog. May be multifocal.',minDx:'MRI + CSF',addDx:'Infectious serology/PCR',dis:''},
+    {id:'D-AT-CB2',filter:'DIFF-AT-CEREB',loc:'Cerebellum',sp:'Cat',order:2,name:'Cerebellar hypoplasia (FPV)',feat:'Non-progressive from birth. Kitten. Intention tremor.',minDx:'Clinical (non-progressive, kitten)',addDx:'FPV history of queen',dis:''},
+    {id:'D-AT-CB3',filter:'DIFF-AT-CEREB',loc:'Cerebellum',sp:'Dog + Cat',order:3,name:'Cerebellar neoplasia',feat:'Progressive. Older. Medulloblastoma (young), meningioma.',minDx:'MRI',addDx:'CT staging',dis:''},
+    {id:'D-AT-CB4',filter:'DIFF-AT-CEREB',loc:'Cerebellum',sp:'Dog',order:4,name:'Cerebellar abiotrophy',feat:'Breed-specific. Young. Progressive.',minDx:'MRI (cerebellar atrophy), breed + age',addDx:'Genetic testing if available',dis:''},
+    {id:'D-AT-CB5',filter:'DIFF-AT-CEREB',loc:'Cerebellum',sp:'Dog + Cat',order:5,name:'Metronidazole / drug toxicity',feat:'History of drug. Dose-dependent. Reversible.',minDx:'Drug history, clinical response to withdrawal',addDx:'MRI (bilateral symmetric lesions)',dis:''},
+    {id:'D-AT-CB6',filter:'DIFF-AT-CEREB',loc:'Cerebellum',sp:'Dog + Cat',order:6,name:'Cerebellar infarct',feat:'Peracute. Non-progressive. Rostral cerebellar artery.',minDx:'MRI',addDx:'Screen for underlying disease (HAC, CKD)',dis:''},
+    {id:'D-PA-BC1',filter:'DIFF-PA-BACT',loc:'Lung',sp:'Dog + Cat',order:1,name:'Community-acquired bacterial pneumonia',feat:'Bordetella, Pasteurella, Streptococcus, E. coli, Mycoplasma. Pyrexia, productive cough, crackles, leucocytosis.',minDx:'CXR, haematology, BAL + culture + sensitivity',addDx:'Mycoplasma PCR if cat with chronic lower airway signs',dis:''},
+    {id:'D-PL-TR1',filter:'DIFF-PL-TRANS',loc:'Pleural',sp:'Dog + Cat',order:1,name:'Severe hypoalbuminaemia',feat:'Albumin <15g/L. PLE, PLN, liver failure. Often combined with portal hypertension.',minDx:'Serum albumin, urinalysis (UPC)',addDx:'Abdominal US, GI biopsy if PLE suspected',dis:''},
+    {id:'D-PL-TR2',filter:'DIFF-PL-TRANS',loc:'Pleural',sp:'Dog + Cat',order:2,name:'Venous/lymphatic hypertension (non-exfoliating neoplasia)',feat:'Mass compressing venous return or lymphatics without exfoliating cells into fluid.',minDx:'CT thorax, thoracic US',addDx:'FNA if mass accessible',dis:''},
+    {id:'D-PL-TR3',filter:'DIFF-PL-TRANS',loc:'Pleural',sp:'Dog + Cat',order:3,name:'Lung lobe torsion',feat:'Acute dyspnoea, consolidated opaque lung lobe on CXR. Whippet, Afghan, deep-chested breeds.',minDx:'CXR (consolidated lobe, positional shift), CT',addDx:'Surgery (lobectomy)',dis:''},
+    {id:'D-PL-MT1',filter:'DIFF-PL-MODTRANS',loc:'Pleural',sp:'Dog',order:1,name:'Biventricular / right-sided heart failure',feat:'Jugular distension, hepatomegaly, ascites. Effusion often less severe than ascites.',minDx:'Echocardiography, NT-proBNP, CXR',addDx:'',dis:''},
+    {id:'D-PL-MT2',filter:'DIFF-PL-MODTRANS',loc:'Pleural',sp:'Cat',order:2,name:'Left or right heart failure (any cardiomyopathy)',feat:'Cat effusions associated with worse left atrial function. HCM, DCM, RCM.',minDx:'FAST echo, NT-proBNP',addDx:'Full echocardiography',dis:''},
+    {id:'D-PL-MT3',filter:'DIFF-PL-MODTRANS',loc:'Pleural',sp:'Dog + Cat',order:3,name:'Non-exfoliating neoplasia',feat:'Mass causing venous or lymphatic obstruction without shedding cells into fluid.',minDx:'CT thorax',addDx:'FNA/biopsy',dis:''},
+    {id:'D-PL-MT4',filter:'DIFF-PL-MODTRANS',loc:'Pleural',sp:'Dog + Cat',order:4,name:'Pleural inflammation (non-septic)',feat:'Inflammation affecting pleural vasculature increases permeability.',minDx:'Fluid cytology, CT',addDx:'Culture to rule out sepsis',dis:''},
+    {id:'D-PL-EX1',filter:'DIFF-PL-EXU',loc:'Pleural',sp:'Dog + Cat',order:1,name:'Pyothorax (septic exudate)',feat:'Foul-smelling fluid, degenerate neutrophils + bacteria on cytology. Febrile, toxic.',minDx:'Thoracocentesis + cytology + culture (aerobic + anaerobic)',addDx:'CT thorax',dis:''},
+    {id:'D-PL-EX2',filter:'DIFF-PL-EXU',loc:'Pleural',sp:'Cat',order:2,name:'FIP — effusive form',feat:'Yellow viscous high-protein fluid but low TNCC (<5,000). Hyperglobulinaemia, Rivalta positive.',minDx:'Fluid analysis (A:G ratio, Rivalta), serology',addDx:'PCR on fluid, alpha-1 AGP',dis:''},
+    {id:'D-PL-EX3',filter:'DIFF-PL-EXU',loc:'Pleural',sp:'Dog + Cat',order:3,name:'Neoplastic effusion (exudative)',feat:'Neoplastic cells on cytology. Concurrent inflammation from tumour necrosis.',minDx:'Fluid cytology',addDx:'CT staging, histopathology',dis:''},
+    {id:'D-PL-EX4',filter:'DIFF-PL-EXU',loc:'Pleural',sp:'Dog + Cat',order:4,name:'Ruptured viscus / GI perforation',feat:'Septic peritonitis extending to pleural space, or diaphragmatic hernia with GI compromise.',minDx:'Fluid cytology (bacteria, food material, degenerate neutrophils)',addDx:'CT, surgery',dis:''},
+    {id:'D-PL-CH1',filter:'DIFF-PL-CHYL',loc:'Pleural',sp:'Cat',order:1,name:'Cardiac disease (most common cause in cats)',feat:'HCM, DCM, RCM. Elevated venous pressure impedes thoracic duct drainage.',minDx:'Echocardiography',addDx:'Fluid triglycerides vs serum triglycerides',dis:''},
+    {id:'D-PL-CH2',filter:'DIFF-PL-CHYL',loc:'Pleural',sp:'Dog + Cat',order:2,name:'Idiopathic chylothorax',feat:'No underlying cause found. Afghan Hound, Shiba Inu predisposed (dogs).',minDx:'Fluid triglycerides >2× serum, rule out cardiac/neoplastic cause',addDx:'CT angiography',dis:''},
+    {id:'D-PL-CH3',filter:'DIFF-PL-CHYL',loc:'Pleural',sp:'Dog + Cat',order:3,name:'Mediastinal mass (thymoma, lymphoma)',feat:'Cranial mediastinal mass compressing or invading thoracic duct.',minDx:'CXR, thoracic US, FNA',addDx:'CT staging',dis:''},
+    {id:'D-PL-CH4',filter:'DIFF-PL-CHYL',loc:'Pleural',sp:'Dog + Cat',order:4,name:'Thoracic duct rupture / trauma',feat:'History of trauma or thoracic surgery.',minDx:'CT angiography, history',addDx:'',dis:''},
+    {id:'D-PL-HM1',filter:'DIFF-PL-HAEM',loc:'Pleural',sp:'Dog + Cat',order:1,name:'Trauma',feat:'History of RTA, fall, penetrating wound. Rib fractures on CXR.',minDx:'CXR, FAST, PCV of fluid',addDx:'CT',dis:''},
+    {id:'D-PL-HM2',filter:'DIFF-PL-HAEM',loc:'Pleural',sp:'Dog',order:2,name:'Haemangiosarcoma (ruptured)',feat:'Older dog, GSD, Golden. Concurrent splenic/hepatic mass. Serosanguineous fluid.',minDx:'Abdominal + thoracic US, fluid cytology',addDx:'CT staging',dis:''},
+    {id:'D-PL-HM3',filter:'DIFF-PL-HAEM',loc:'Pleural',sp:'Dog + Cat',order:3,name:'Coagulopathy (anticoagulant rodenticide)',feat:'History of bait access. Prolonged PT/aPTT. Petechiae, ecchymoses.',minDx:'PT/aPTT, coagulation panel',addDx:'PIVKA (proteins invoked by vitamin K absence/antagonism)',dis:''},
+    {id:'D-PL-HM4',filter:'DIFF-PL-HAEM',loc:'Pleural',sp:'Dog + Cat',order:4,name:'Pericardial disease with haemorrhage',feat:'Idiopathic pericarditis or cardiac mass (haemangiosarcoma, chemodectoma).',minDx:'FAST echo, pericardiocentesis',addDx:'Echocardiography, fluid cytology',dis:''},
+    {id:'D-PL-MS1',filter:'DIFF-PL-MASS',loc:'Pleural',sp:'Cat',order:1,name:'Mediastinal lymphoma',feat:'Young cat, non-compressible cranial thorax, FeLV association, hypercalcaemia possible.',minDx:'FNA, FeLV/FIV, ionised calcium',addDx:'Flow cytometry, PARR',dis:''},
+    {id:'D-PL-MS2',filter:'DIFF-PL-MASS',loc:'Pleural',sp:'Dog + Cat',order:2,name:'Thymoma',feat:'Older animal, may cause paraneoplastic MG, exfoliative dermatitis (cat).',minDx:'CXR, FNA, AChR titre if weakness',addDx:'CT staging',dis:''}
+  ],
+
+  disease_page: [
+    {id:'DIS-HCM',name:'Hypertrophic Cardiomyopathy (Cat)',sp:'Cat',synonyms:'HCM, feline HCM',breed:'Maine Coon, Ragdoll, British Shorthair, Persian — any breed',age:'Middle-aged to older; Maine Coon can present young',sex:'Male overrepresented (especially Maine Coon)',path:'Concentric LV hypertrophy → reduced diastolic compliance → elevated LA pressure → pulmonary oedema or pleural effusion. Thrombus risk from LA enlargement (ATE).',signs:'Often subclinical. Reduced activity, anorexia, hiding, tachypnoea, open-mouth breathing (acute decompensation)',severe:'Severe dyspnoea, cyanosis, hypothermia, open-mouth breathing — signs of cardiogenic shock',conf:'Echocardiography — LV wall thickness >6mm in diastole (Maine Coon >7.5mm). NT-proBNP elevated.',supp:'CXR (effusion, cardiomegaly), NT-proBNP, renal panel (pre-diuretic), haematology',tx1:'EMERGENCY: Stress-free O₂, thoracocentesis if effusion, furosemide 1–2mg/kg IV/IM. Stable: oral furosemide, clopidogrel (ATE prevention).',tx2:'Pimobendan in cats with systolic dysfunction or severe LA enlargement. ACEI if azotaemic — use cautiously.',monitor:'Recheck 5–7d post-discharge. Monitor BUN/creatinine (diuretic effect). NT-proBNP for long-term. BPs at home.',prog:'Guarded. Median survival post-CHF: 3–18 months. ATE carries very poor prognosis.',pearl:'DO NOT stress the dyspnoeic cat — handling can be fatal. Tap first, ask later. Hypothermia + bradycardia = severe decompensation. Always check both sides for effusion.'},
+    {id:'DIS-LP',name:'Laryngeal Paralysis / GOLPP',sp:'Dog',synonyms:'LP, idiopathic laryngeal paralysis, geriatric onset laryngeal paralysis and polyneuropathy',breed:'Labrador Retriever, Golden Retriever, Irish Setter, Bouvier des Flandres — large/giant breeds',age:'Typically >9 years; earlier in hereditary forms (Bouvier, Husky)',sex:'Male slightly overrepresented',path:'Denervation of recurrent laryngeal nerve → failure of cricoarytenoid dorsalis to abduct arytenoids → dynamic airway obstruction on inspiration. GOLPP = progressive generalised polyneuropathy — LP is often the first sign.',signs:'Progressive change in bark (dysphonia), exercise intolerance, inspiratory stridor, gagging/coughing when eating or drinking, heat intolerance',severe:'Acute severe respiratory distress, cyanosis, hyperthermia — life-threatening. Crisis often triggered by exercise, heat, or excitement.',conf:'Laryngoscopy under light sedation (doxapram can be used to increase respiratory effort) — paradoxical arytenoid adduction on inspiration.',supp:'CXR (aspiration pneumonia — present in ~30% at diagnosis), haematology, thyroid panel, full neuro exam for GOLPP',tx1:'Acute crisis: cool patient, O₂, butorphanol 0.2mg/kg IM. Definitive: unilateral arytenoid lateralisation (tie-back surgery).',tx2:'Bilateral lateralisation = higher aspiration risk. Conservative: exercise restriction, weight loss, cooling.',monitor:'Recheck 2w and 6w post-op. Lifelong aspiration monitoring. Elevated food and water bowls post-op.',prog:'Good post-surgery if no significant aspiration pneumonia. GOLPP is progressive — hindlimb weakness develops over months to years.',pearl:'Always assess for aspiration pneumonia pre-op — changes anaesthetic risk significantly. Feed from height post-op. Warn owners about lifelong aspiration risk and GOLPP progression.'},
+    {id:'DIS-POLYP',name:'Nasopharyngeal Polyp',sp:'Cat',synonyms:'Inflammatory polyp, nasopharyngeal mass, aural polyp',breed:'No breed predisposition',age:'Young cats most common (often <2yr) but any age',sex:'No sex predisposition',path:'Benign inflammatory mass arising from Eustachian tube or middle ear epithelium. Extends into nasopharynx (causing stertor/obstruction) or external ear canal (causing otitis). Aetiology unclear — possibly viral (FHV, FCV) or congenital.',signs:'Chronic stertor, bilateral or unilateral nasal discharge, open-mouth breathing, ± head shaking, ± otitis externa, ± Horner syndrome',severe:'Severe upper airway obstruction if large. Horner syndrome, vestibular signs if middle ear involvement.',conf:'Oral exam under GA — pink fleshy pedunculated mass visible behind soft palate. CT preferred for surgical planning.',supp:'Otoscopy (concurrent ear canal polyp?), skull radiograph or CT (bulla assessment), haematology',tx1:'Traction avulsion under GA — grasp polyp firmly at base with forceps and apply steady traction. Haemostasis usually achieved with gentle pressure.',tx2:'Ventral bulla osteotomy (VBO) if middle ear involvement on CT/radiograph — reduces recurrence from ~50% to <10%.',monitor:'Recheck 2–4w post-op. Monitor for Horner syndrome resolution (usually weeks to months). Watch for recurrence.',prog:'Good. Traction alone: ~50% recurrence. VBO + traction: <10% recurrence.',pearl:'Always image the bullae before surgery — if middle ear involvement is missed and only traction is performed, recurrence is highly likely. Horner syndrome is usually temporary — always warn owners upfront.'},
+    {id:'DIS-PYOTHORAX',name:'Pyothorax',sp:'Dog + Cat',synonyms:'Septic pleuritis, pleural empyema',breed:'No strong breed predisposition. Outdoor cats, hunting dogs higher risk.',age:'Young to middle-aged adults. Outdoor lifestyle a risk factor.',sex:'Male cats slightly overrepresented',path:'Bacterial infection of pleural space, usually polymicrobial (aerobic + anaerobic). Source: penetrating wound, migrating foreign body (grass awn), haematogenous, extension from pneumonia. Leads to septic shock if untreated.',signs:'Tachypnoea, dyspnoea, lethargy, anorexia, pyrexia, pain on thoracic palpation',severe:'Septic shock: hypothermia, bradycardia, pale/grey mucous membranes — indicates severe systemic sepsis',conf:'Thoracocentesis — turbid, foul-smelling fluid. Cytology: degenerate neutrophils + intracellular bacteria. Culture + sensitivity essential.',supp:'CXR or CT (unilateral vs bilateral, loculations, foreign body, lung consolidation), haematology (leucocytosis or leucopenia in severe cases), biochemistry',tx1:'Chest drain placement (bilateral if bilateral disease) + lavage with warm saline. Broad-spectrum IV antibiotics (amoxicillin-clavulanate + metronidazole pending culture). IV fluid support.',tx2:'Surgical exploration if: not improving after 3–5d drainage, suspected foreign body (grass awn), fibrinous loculation on CT.',monitor:'Drain until output <2ml/kg/day. Recheck culture at 5–7d. Minimum 4–6 weeks antibiotics based on culture.',prog:'Guarded. Survival with aggressive treatment ~70–80%. Prognosis worsens with septic shock, bilateral disease, delayed treatment.',pearl:'Always culture before committing to antibiotics. Grass awn migration is a common cause — CT is superior to radiograph for detection. Bilateral drains required for bilateral disease.'},
+    {id:'DIS-GAST-DIET',name:'Acute Dietary Gastritis',sp:'Dog + Cat',synonyms:'Dietary indiscretion, garbage gut, garbage toxicosis',breed:'No breed predisposition. Labrador, Beagle, Spaniel — notoriously indiscriminate eaters.',age:'Any age; young dogs most commonly present',sex:'No sex predisposition',path:'Ingestion of spoiled food, garbage, or novel foodstuffs causes mucosal irritation and stimulation of the vomiting centre via gastric mucosal receptors and peripheral afferent neurons. Cause is transient — resolves within 24–72h without specific treatment in the majority of cases.',signs:'Acute onset vomiting, usually within hours of ingestion. Patient otherwise bright, alert and happy. May have diarrhoea. Abdomen may be slightly uncomfortable on deep palpation.',severe:'Repeated profuse vomiting leading to dehydration and electrolyte imbalance. Haematemesis if mucosal erosion.',conf:'Clinical diagnosis based on history + resolution within 24–72h with symptomatic management.',supp:'Haematology + biochemistry only if not improving within 48h or if systemically unwell. Radiograph to exclude FB.',tx1:'Withhold food 12–24h. Small bland meals on reintroduction. Maropitant (Cerenia) 1mg/kg SC/PO SID as antiemetic. IV fluids if dehydrated.',tx2:'Sucralfate if mucosal erosion suspected. Metronidazole if concurrent diarrhoea suggests bacterial component.',monitor:'Recheck if not improved within 48–72h. Investigate if recurrent.',prog:'Excellent. Self-limiting. Full recovery expected within 1–3 days.',pearl:"If a previously reliable dog suddenly starts eating rubbish, consider underlying metabolic cause (pain, nausea, pica). Do not over-investigate acute vomiting — most cases are self-limiting. Withholding food is as important as medication."},
+    {id:'DIS-GI-PARVO',topAlert:'ISOLATE IMMEDIATELY — highly contagious',name:'Canine Parvovirus Enteritis',sp:'Dog',synonyms:'Parvo, CPV-2, canine parvoviral enteritis',breed:'All breeds susceptible. Rottweiler, American Pit Bull Terrier, Doberman Pinscher, and German Shepherd may be predisposed to severe disease. Pure-breed predisposition not strongly supported in most studies.',age:'Primarily young dogs <6 months. Peak susceptibility 6–10 weeks — when maternal antibodies are high enough to interfere with vaccination but insufficient to provide protection. Adult dogs increasingly recognised. Recently weaned puppies may be at higher risk.',sex:'No sex predilection in general. Sexually intact males >6 months reportedly twice as likely to acquire CPV as intact females (one study).',risk:'Young age (<6 months)|Unvaccinated or incompletely vaccinated|Maternal antibody interference with vaccination (window typically 6–10 weeks of age)|Immunosuppression|Unsanitary or overcrowded environment|Malnutrition|Endoparasitism|Rottweiler, Doberman Pinscher, American Pit Bull Terrier, German Shepherd (predisposed to severe disease)',path:'CPV-2 infects rapidly dividing cells — intestinal crypt epithelium and bone marrow precursors. Crypt destruction → mucosal barrier failure → haemorrhagic diarrhoea and bacterial translocation. Leucopenia from bone marrow suppression compounds susceptibility to secondary sepsis. Severity ranges from mild self-limiting gastroenteritis to life-threatening septic shock.',signs:'Acute vomiting followed rapidly by haemorrhagic diarrhoea (mucoid to haemorrhagic; mucosal sloughing common)|Lethargy, anorexia|Fever early — hypothermia indicates sepsis|Dehydration, doughy abdomen, apparent abdominal pain|Nausea, fluid-filled intestines on palpation|Regurgitation possible|#Compensatory shock|Tachycardia, pale MM, normal BP|#Decompensatory shock|Obtunded mentation, poor pulse quality, hypotension, hypothermia, cool extremities',severe:'Hypovolaemic and/or septic shock, DIC, hypoglycaemia, severe dehydration, intussusception (complication), aspiration pneumonia, acute lung injury, AKI.',conf:'Fecal ELISA (first-line; rapid in-house result) — false negatives in ≤40% of cases; interpret negative results cautiously in classic presentations|PCR (more sensitive; use when ELISA negative but suspicion remains high; pharyngeal/blood samples preferred to reduce vaccine interference)|Neither ELISA nor PCR differentiates vaccine shedding from natural infection within 3 weeks of MLV vaccination — positive result in this window still warrants treatment if clinical signs are present',supp:'CBC: leucopenia (lymphopenia then neutropenia); anaemia possible (GI haemorrhage); normal CBC at presentation does not rule out — can deteriorate|Biochemistry: hypokalemia, hypoalbuminaemia, hypoglycaemia (concern for sepsis), azotaemia, hypocalcaemia|Serum lactate: elevated with hypoperfusion — guides fluid resuscitation|Abdominal radiography: not required for diagnosis; useful to rule out FB obstruction and intussusception|Fecal flotation: evaluate for concurrent parasitism',tx1:'#Shock stabilisation|IV fluid bolus: 20 mL/kg over 15 min; reassess perfusion after each bolus (max 4 boluses); targets: mentation, MM colour, CRT, HR, BP|Hypoglycaemia: 1 mL/kg 25% dextrose IV|#Ongoing fluid therapy|Dehydration deficit (L) = body weight (kg) × % dehydration — replace over 6–24h plus maintenance (~60 mL/kg/day)|De-escalate fluid rates as patient stabilises; reassess at least q12h|#Antiemetics|Maropitant 1 mg/kg IV/SC q24h|Ondansetron 0.5 mg/kg IV q8h (add for persistent or severe vomiting)|#Antimicrobials|Normal WBC: cefoxitin 22–30 mg/kg IV q6–8h; co-amoxiclav (amoxicillin-clavulanate) 20–25 mg/kg IV q8h; or potentiated aminopenicillin (ampicillin-sulbactam) 30–50 mg/kg IV q6–8h|Leucopenic or septic: add enrofloxacin 5–20 mg/kg IV q24h (use cautiously — cartilage effects in young dogs)|Discontinue once leucopenia resolves and clinical signs improve|#Early enteral nutrition (within 12h of admission)|Nasogastric tube if not eating; start 25–50% RER (RER = 70 × BW kg^0.75); increase 20–25% per day|4–8 feeds/day or hourly CRI; continue if vomiting frequency not worsening with meals|#Anthelmintics (once vomiting controlled)|Fenbendazole 50 mg/kg PO q24h × 3 days|Pyrantel pamoate 5–10 mg/kg PO once; repeat all anthelmintics in 3–4 weeks|#Isolation and nursing|Strict barrier nursing; PPE for all handlers|Bleach 1:32 for all surfaces daily after removing organic material|Keep patient clean and dry; change position q4h if recumbent',tx2:'Colloidal support if albumin <2 g/dL with persistent hypotension: plasma 10–25 mL/kg/day IV; canine albumin 0.5–1.5 g/kg IV over 6–12h|Electrolyte supplementation: potassium IV/PO for persistent hypokalemia; dextrose 1.25–5% in IV fluids for hypoglycaemia|Fecal microbiota transplantation (FMT): 10g donor feces in 10 mL saline PR q48h up to 5 applications — shortens diarrhoea duration|Vasopressors: norepinephrine 0.1–1 mcg/kg/min if shock persists despite adequate volume; dobutamine for concurrent myocardial dysfunction|Prokinetics for ileus: erythromycin 0.5–1 mg/kg IV q8h or metoclopramide CRI 0.01–0.09 mg/kg/h — use with caution; possible risk of intussusception|Blood transfusion if PCV <20% or >20% decrease during treatment|Appetite stimulants (once vomiting controlled): capromorelin 3 mg/kg PO q24h; mirtazapine 1.1–1.3 mg/kg PO q24h — adjunct to encourage voluntary eating; often insufficient alone in active disease|Recombinant feline interferon-omega (rFeIFN-omega): 2.5 milliunits/kg IV q24h × 3 days — antiviral and immunomodulatory; reduces mortality (6.4× lower in unvaccinated dogs in one RCT); not currently available in US or Canada|Filgrastim (G-CSF): consistently improves WBC counts; no confirmed survival benefit — particularly useful in severe or persistent neutropenia',outpatient:'Suitable for mild cases only — NOT if shock, severely obtunded, persistent hypoglycaemia, or fever >104°F|Cefovecin 8 mg/kg SC once|Maropitant 1 mg/kg SC q24h|Ondansetron 0.5 mg/kg SC/PO q8–12h as rescue if vomiting persists|Crystalloid SC 40–60 mL/kg q12h|Offer small frequent meals; appetite stimulants if needed (capromorelin 3 mg/kg PO q24h; mirtazapine 1.1–1.3 mg/kg PO q24h)|Recheck every 24–48h — escalate to inpatient if deteriorating',monitor:'Vitals (including BP) q4–8h|Weight q4–12h — expected weight gain with rehydration; persistent loss = ongoing fluid losses; rapid gain >10% = fluid overload|Blood glucose q24h — more frequent if hypoglycaemic or on dextrose|Electrolytes q24–72h if abnormal or supplemented|CBC q48–72h in leucopenic patients — resolution typically 3–7 days; persistent >7–10 days warrants concern for secondary infection or bone marrow dysfunction|#Discharge criteria|Eating voluntarily and not vomiting — diarrhoea need not be fully resolved but haemorrhage should be|Recheck 1–3 days post-discharge',prog:'Without treatment: 9–43% survival. Outpatient treatment: 63–81% survival. Inpatient hospitalisation: 73–91% survival. Mortality most likely on day 3 — warn owners of expected initial deterioration before improvement. Negative prognostic indicators: leucopenia at admission, weight <4 kg, age <3 months, hypoalbuminaemia, hypoglycaemia, CRP >92 mg/L, persistent leucopenia/neutropenia after 72h.',ddx:'Acute haemorrhagic diarrhoea syndrome (AHDS)|GI foreign body obstruction|Intussusception|Hypoadrenocorticism|Pancreatitis|#Infectious differentials|Coronavirus|Canine distemper virus|Salmonellosis|Clostridium perfringens|Cystoisospora spp. (coccidiosis)|Cryptosporidium spp.|Giardia spp.|Ancylostoma caninum (hookworms)',pearl:'ISOLATE IMMEDIATELY — highly contagious. Bleach 1:32 (½ cup per gallon water) for all surfaces; CPV survives in environment for months — unvaccinated dogs off property for 6–9 months. Viral shedding persists ≤39 days post infection — restrict from other dogs 6 weeks after discharge. False-negative ELISA in ≤40% of cases: treat as CPV if leucopenia + classic signs regardless of ELISA result. Vaccination: MLV q3–4 weeks from 6–8 weeks of age until 16 weeks; booster at 1 year then ≤every 3 years. Outpatient treatment appropriate for mild cases only — NOT if cardiovascular shock, severely obtunded, persistent hypoglycaemia, or fever >104°F.'},
+    {id:'DIS-SEC-CKD',name:'Chronic Kidney Disease — Uraemic Vomiting',sp:'Dog + Cat',synonyms:'CKD, chronic renal failure, CRF, uraemia',breed:'Persian, Abyssinian, Siamese (cats — polycystic kidney disease). Bull Terrier, German Shepherd, Cocker Spaniel (dogs).',age:'Middle-aged to older animals. Congenital forms in young animals.',sex:'No consistent sex predisposition',path:'Progressive nephron loss → reduced GFR → accumulation of uraemic toxins (including gastrin, which stimulates gastric acid secretion). Toxins act on the CRTZ and vomiting centre → secondary GI vomiting. Primary pathology is renal — the gut is the messenger.',signs:'PU/PD, weight loss, poor coat, reduced appetite, halitosis (uraemic breath), oral ulceration, vomiting (often in morning — acid rebound effect). Vomiting typically unrelated to eating.',severe:'Severe uraemia: profound anorexia, haematemesis, uraemic encephalopathy, seizures.',conf:'Biochemistry: elevated BUN + creatinine + SDMA (SDMA most sensitive for early CKD — detects 40% loss of GFR). IRIS staging based on creatinine + SDMA.',supp:'Urinalysis (USG, sediment, UPC ratio), haematology (non-regenerative anaemia), blood pressure, renal ultrasound.',tx1:'Phosphate restriction (diet ± phosphate binders). Anti-nausea: maropitant 1mg/kg PO SID. Anti-ulcer: omeprazole 1mg/kg PO SID. IV fluid diuresis for acute decompensation.',tx2:'Erythropoiesis-stimulating agents (darbepoetin) for anaemia. ACE inhibitor or amlodipine for hypertension. Calcitriol if ionised Ca low and phosphate controlled.',monitor:'IRIS staging guide re-check intervals. Every 3–6 months stable CKD; every 1–3 months if decompensating.',prog:'Variable. Median survival: IRIS Stage 2 = 2–3 years; Stage 3 = 1–2 years; Stage 4 = weeks to months.',pearl:"SDMA should be run on ALL senior wellness bloods — it detects CKD earlier than creatinine. Vomiting in CKD is NOT a primary GI problem — direct diagnostics at kidney, not gut."},
+    {id:'DIS-SEC-HYPO',name:"Hypoadrenocorticism (Addison's Disease)",sp:'Dog',synonyms:"Addison's disease, adrenocortical insufficiency",breed:'Standard Poodle, Portuguese Water Dog, Bearded Collie, West Highland White Terrier, Great Dane, Rottweiler.',age:'Young to middle-aged (2–7 years most common)',sex:'Female overrepresented',path:'Destruction of adrenal cortex (immune-mediated most common) → deficiency of mineralocorticoids (aldosterone) and glucocorticoids (cortisol). Aldosterone deficiency → sodium and water loss, potassium retention → hyponatraemia, hyperkalaemia, hypovolaemia, bradycardia. Cortisol deficiency → reduced stress response, GI signs, hypoglycaemia.',signs:'Waxing/waning vomiting and diarrhoea over weeks to months. Lethargy, weakness, poor appetite, weight loss. Responds temporarily to symptomatic treatment — then relapses.',severe:'Addisonian crisis (acute): collapse, severe hypovolaemia, bradycardia from hyperkalaemia, hypothermia, hypoglycaemia. Life-threatening.',conf:"ACTH stimulation test — gold standard. Both pre- and post-ACTH cortisol <55 nmol/L confirms diagnosis. Atypical Addison's: if absent stress leukogram with normal electrolytes → check basal cortisol first; <55 nmol/L or ongoing suspicion → proceed to ACTH stimulation test.",supp:'Biochemistry: hyponatraemia + hyperkalaemia (Na:K ratio <27 highly suspicious). Haematology: lymphocytosis, eosinophilia (absence of stress leucogram in sick patient is suspicious). ECG.',tx1:'CRISIS: Rapid IV crystalloid bolus (normal saline preferred). Dexamethasone 0.25mg/kg IV (does not interfere with ACTH test). DOCA injection for mineralocorticoid replacement.',tx2:'Long-term: DOCP (Zycortal/Percorten) IM every 25 days. Prednisolone 0.2mg/kg PO SID. Increase prednisolone 2–3x during stress.',monitor:'Electrolytes 10–14 days after DOCP injection initially, then every 25 days at injection time.',prog:'Excellent with appropriate treatment. Normal life expectancy. Requires lifelong medication and owner education.',pearl:"THE GREAT PRETENDER — Addison's should always be on the differential for any dog with waxing/waning GI signs. The Na:K ratio is your screening tool. Beware: atypical Addison's (glucocorticoid deficiency only) has normal electrolytes — ACTH stimulation test still required. Key trigger: absent stress leukogram in a sick dog → check basal cortisol immediately; <55 nmol/L → ACTH stim."},
+    {id:'DIS-SEC-PAN-DOG',name:'Acute Pancreatitis (Dog)',sp:'Dog',synonyms:'Acute pancreatitis, exocrine pancreatic inflammation, pancreatic necrosis',breed:'Miniature Schnauzer (hypertriglyceridaemia-associated), Yorkshire Terrier, Cavalier King Charles Spaniel, Cocker Spaniel. Obese dogs at higher risk.',age:'Middle-aged to older; any age',sex:'Females, neutered animals, and obese animals overrepresented',path:'Premature activation of trypsinogen → trypsin → autodigestion of pancreatic parenchyma → local inflammation → systemic inflammatory response syndrome (SIRS). EXCEPTION RULE: Behaves like primary GI disease — acute vomiting after eating in an initially bright alert dog.',signs:'Acute vomiting, often after a fatty meal. Cranial abdominal pain (prayer position). Anorexia. Initially often bright and alert — unlike most secondary GI disease.',severe:'Severe necrotising pancreatitis: shock, DIC, multiorgan failure, peritonitis, jaundice.',conf:'Spec cPL (Idexx) — most specific test. SNAP cPL (qualitative screen). Lipase elevated (less specific).',supp:'Biochemistry (elevated lipase, ALP, ALT), haematology (leucocytosis), triglycerides (fasted), ultrasound (pancreatic inflammation — not always visible).',tx1:'IV fluid therapy. Nil by mouth initially then early enteral nutrition. Analgesia (buprenorphine, methadone — opioids preferred). Maropitant antiemetic.',tx2:'Fresh frozen plasma (severe cases — FFP for anti-protease activity). Low-fat diet long-term.',monitor:'Daily assessment of pain, vomiting, appetite. Repeat cPL + biochemistry at 48–72h.',prog:'Good for mild/moderate pancreatitis. Guarded for severe necrotising pancreatitis. Recurrence common — lifelong low-fat diet important.',pearl:'EXCEPTION RULE: Dog pancreatitis behaves like PRIMARY GI disease — acute vomiting after eating in an initially bright alert dog. SNAP cPL is a useful in-clinic screen — but false positives occur. Confirm with quantitative Spec cPL.'},
+    {id:'DIS-GI-INTUSS',name:'Intussusception',sp:'Dog + Cat',synonyms:'Bowel invagination, intestinal invagination',breed:'No breed predisposition. Young animals most commonly affected.',age:'Young animals (often <1yr) most common; any age post-enteritis or intestinal surgery',sex:'No sex predisposition',path:'Invagination of one segment of intestine (intussusceptum) into the lumen of the adjacent segment (intussuscipiens). Causes venous obstruction → mucosal oedema → arterial compromise → ischaemia and necrosis if untreated. Most commonly ileocolic junction. Often preceded by enteritis (parvovirus, dietary) or recent intestinal surgery.',signs:'Acute onset profuse vomiting. Abdominal pain. Palpable sausage-shaped abdominal mass. Blood per rectum (haematochezia) possible.',severe:'Intestinal ischaemia and necrosis, peritonitis, septic shock.',conf:'Abdominal ultrasound — classic target lesion (concentric rings / pseudokidney appearance) on cross-section.',supp:'Survey radiograph (small bowel obstruction pattern). Haematology + biochemistry + electrolytes. Blood culture if septic signs.',tx1:'Surgical reduction or intestinal resection and anastomosis if necrotic segment present. IV fluid resuscitation + broad-spectrum antibiotics pre-operatively.',tx2:'Enteroplication (intestinal plication) to prevent recurrence at the time of surgery. Identify and treat underlying cause.',monitor:'Hospitalisation + intensive monitoring post-op. Nutritional support via jejunostomy tube if prolonged ileus.',prog:'Good if diagnosed and treated early before ischaemia. Poor if intestinal necrosis and peritonitis at presentation.',pearl:'Always consider intussusception in a young vomiting animal with a palpable abdominal mass — ultrasound is the diagnostic tool of choice. The closer the intussusception to the pylorus, the more frequent and severe the vomiting.'},
+    {id:'DIS-GI-EOGAST',name:'Eosinophilic Gastroenteritis',sp:'Dog + Cat',synonyms:'Eosinophilic gastritis, allergic gastroenteritis, EGE',breed:'German Shepherd, Rottweiler, Soft-coated Wheaten Terrier, Chinese Shar Pei predisposed. More common in dogs than cats.',age:'Dogs: most common <5 years (any age). Cats: median 8 years (range 1.5–11 years).',sex:'',etiology:'Idiopathic (unknown cause — most common)|Parasitic disease|Food allergy / dietary hypersensitivity (immune-mediated)|Adverse drug reaction|Systemic mastocytosis (mast cell histamine → ↑ HCl secretion)|Hypereosinophilic syndrome (bone marrow eosinophil overproduction → tissue infiltration)|Eosinophilic leukemia|Eosinophilic granuloma',path:'Eosinophilic infiltration of the lamina propria — occasionally involving submucosa and muscularis — causes mucosal oedema, erosion, and impaired motility. May extend throughout the GI tract (eosinophilic gastroenteritis). Severe infiltration disrupts mucosal integrity → protein-losing enteropathy + hypoalbuminaemia.',signs:'Intermittent vomiting, small-bowel diarrhoea, anorexia, weight loss. Cats: 50% present with haematochezia or melaena; thickened bowel loops palpable on physical examination. Hypereosinophilic syndrome: lymphadenopathy, hepatomegaly, splenomegaly.',severe:'Protein-losing enteropathy with hypoalbuminaemia — may require colloid support. Hypereosinophilic syndrome with multi-organ involvement. Severe dehydration requiring hospitalisation.',conf:'Gastroscopy / intestinal endoscopy + biopsy — definitive (eosinophilic infiltration of mucosa ± deeper layers)|Haematology: peripheral eosinophilia (supports diagnosis — not always present)',supp:'Abdominal ultrasound (wall thickening, loss of layering, lymphadenopathy)|Faecal flotation (rule out parasitic cause)|Serum albumin + total protein (assess protein-losing enteropathy)|Bone marrow aspirate if hypereosinophilic syndrome suspected',tx1:'Dietary manipulation — critical first step; hypoallergenic / limited-antigen / hydrolysed protein diet; most cases respond to dietary management alone|Prednisolone (prednisone) — mainstay of pharmacological treatment; taper gradually (rapid taper → relapse)|IV fluids (lactated Ringer\'s solution) if dehydrated or NPO due to vomiting',tx2:'Azathioprine — most common additional immunosuppressive; allows steroid dose reduction|Chlorambucil — alternative immunosuppressive|Budesonide — oral corticosteroid with reduced systemic effects; useful in cats|Colloids (dextran, hetastarch) if severe hypoalbuminaemia from protein-losing enteropathy',monitor:'Frequent initially — eosinophil counts help guide corticosteroid dose adjustment. Less severe cases: recheck 2–5 weeks, then monthly to bimonthly until steroids completed. Azathioprine / chlorambucil: CBC every 10–14 days (bone marrow suppression risk — reversible on drug discontinuation), then monthly, then bimonthly for entire treatment course.',prog:'Majority of dogs respond to dietary manipulation + corticosteroids. Cats: more severe disease, worse prognosis than dogs — often require higher doses of corticosteroids for longer periods. Waxing and waning course — long-term therapy often required. Monitor lifelong for dietary triggers.',pearl:'Dietary manipulation is a critical and often sufficient treatment — always trial a hypoallergenic diet before or alongside immunosuppression. Taper corticosteroids gradually — rapid taper causes relapse. Cats have more severe disease and poorer prognosis than dogs. Monitor CBC carefully with azathioprine or chlorambucil use.',ddx:'Lymphoplasmacytic gastritis / IBD|Gastric lymphoma or mast cell tumour|Helicobacter-associated gastritis|Parasitic gastritis (Physaloptera spp.)|Systemic mastocytosis|Hypereosinophilic syndrome'},
+    {id:'DIS-GI-ULC',name:'Gastric Ulceration',sp:'Dog + Cat',synonyms:'Gastric ulcer, peptic ulcer, gastroduodenal ulceration',breed:'No breed predisposition. NSAIDs use — any breed.',age:'Any age',sex:'',etiology:'NSAIDs / corticosteroids|Uraemia (CKD or AKI)|Hepatic disease (reduced mucosal protection)|Mast cell tumour (histamine → HCl hypersecretion)|Gastrinoma / Zollinger-Ellison syndrome|IBD or neoplasia|Foreign body / physical trauma|Stress ulceration (critical illness, hypoperfusion)|Hypoadrenocorticism|Primary / idiopathic',path:'NSAIDs / corticosteroids: COX-1 inhibition → ↓ prostaglandins → reduced mucus & bicarbonate secretion + ↓ mucosal blood flow → barrier breakdown|Uraemia: elevated BUN → ammonia in gastric lumen → direct mucosal toxicity + impaired epithelial repair|Hepatic disease: ↓ prostaglandin clearance + portal hypertension → mucosal ischaemia|Mast cell tumour: histamine → H₂ receptor stimulation → HCl hypersecretion|Gastrinoma / Zollinger-Ellison: autonomous gastrin → unregulated acid hypersecretion → multiple refractory ulcers|Stress ulceration: splanchnic hypoperfusion → ischaemia + reperfusion injury → mucosal breakdown',signs:'Haematemesis, melaena, anorexia, cranial abdominal pain. Severity varies. Coffee-ground vomitus indicates slow upper GI haemorrhage.',severe:'Perforation → septic peritonitis — acute abdomen, rapid deterioration, collapse. Requires emergency surgery.',conf:'Endoscopy + biopsy — gold standard (visualise, assess depth, sample all ulcers)|Survey radiograph (free gas under diaphragm if perforation)|Abdominal ultrasound (wall thickening, mass lesion, free fluid)',supp:'Full blood profile (anaemia, thrombocytopenia, azotaemia, liver enzymes)|Coagulopathy profile (PT, aPTT)|Fasting serum gastrin if refractory ulcers (gastrinoma)',tx1:'PPI: omeprazole 1 mg/kg PO/IV SID–BID — first-line acid suppression|Sucralfate 0.5–1g PO TID — mucosal protectant (give 30 min before other meds)|Maropitant or ondansetron for nausea|Treat underlying cause',tx2:'Misoprostol (prostaglandin analogue) for NSAID-induced ulcers — prevention and adjunct treatment|Surgery for perforated ulcers — omentalization or primary closure + peritoneal lavage|Famotidine (H₂ blocker) if mast cell tumour',monitor:'Serial PCV/TP if haemorrhage. Repeat endoscopy if not improving at 2–4 weeks. Monitor for melaena resolution.',prog:'Good if underlying cause identified and treated. Perforated ulcers: guarded even with surgery. Gastrinoma (Zollinger-Ellison): poor — refractory disease.',pearl:'Always biopsy gastric ulcers — neoplasia (lymphoma, mast cell tumour, adenocarcinoma) can present as or cause ulceration. Mast cell tumour is a treatable cause — check buffy coat and skin. Refractory or multiple ulcers → measure fasting serum gastrin (gastrinoma).',ddx:'Gastric neoplasia (lymphoma, adenocarcinoma, mast cell tumour)|Gastritis|Oesophagitis (with haematemesis)|Coagulopathy-induced GI haemorrhage|Foreign body'},
+    {id:'DIS-GI-GDV',name:'Gastric Dilatation-Volvulus (GDV)',sp:'Dog',synonyms:'GDV, bloat, gastric torsion',breed:'Large and giant deep-chested breeds: Great Dane (highest lifetime risk ~42%), German Shepherd, Standard Poodle, Irish Setter, Weimaraner, Gordon Setter, Doberman.',age:'Middle-aged to older dogs typically; any age possible',sex:'Males slightly overrepresented',etiology:'Exact cause unknown — multifactorial|Deep narrow thoracic conformation (anatomical predisposition)|Aerophagia: rapid eating, single large meals|Post-exercise feeding|Gastric outflow dysfunction / delayed gastric emptying|Previous splenectomy increases risk|Genetic predisposition in high-risk breeds',path:'Gastric dilatation (gas accumulation) → pyloric displacement → progressive distension → volvulus (rotation, usually clockwise) → venous outflow obstruction → gastric wall ischaemia → splenic torsion (concurrent in many) → hypovolaemic + distributive shock → cardiac arrhythmias.',signs:'Acute non-productive retching, rapidly progressive abdominal distension, hypersalivation, restlessness. Weakness and collapse as shock develops.',severe:'Hypovolaemic shock — tachycardia, weak pulses, pale mucous membranes. Gastric necrosis. Ventricular arrhythmias (peak 12–36h post-op). Splenic torsion.',conf:'#Recommended|Abdominal radiography — prioritise right lateral view; gas-dilated stomach; compartmentalisation (double bubble) confirms volvulus|CBC and/or PCV/TS|-Anaemia: generally indicative of gastric and/or intra-abdominal haemorrhage|-Thrombocytopenia may be present due to consumption and/or DIC|Serum chemistry profile and/or point-of-care venous blood gas analysis|ECG (ventricular arrhythmias)',supp:'#Considered|Point-of-care ultrasonography|Venous blood gas analysis|Serial blood lactate measurement (>6 mmol/L predicts gastric necrosis)|Thoracic radiography|Coagulation testing',tx1:'Immediate IV catheter placement + aggressive fluid resuscitation (crystalloids ± colloids)|Gastric decompression: trocarisation (right paralumbar) or orogastric tube|Emergency surgery: de-rotation + gastropexy — do not delay',tx2:'Ventricular arrhythmias: lidocaine CRI if haemodynamically significant|PPI + analgesia post-op|Partial gastrectomy if gastric necrosis identified intraoperatively',monitor:'ECG 24–48h post-op (arrhythmia peak 12–36h). Serial lactate. Gastric wall viability assessed at surgery. Daily haematology/biochemistry post-op.',prog:'Mortality 10–27% with surgery. Gastric necrosis requiring gastrectomy: mortality 35–60%. Gastropexy prevents recurrence in >95%. Without gastropexy: ~75% recurrence risk.',pearl:'Prophylactic gastropexy strongly recommended for high-risk breeds. Serum lactate >6 mmol/L = high risk of gastric necrosis — prepare owner for guarded prognosis. Do not delay surgery for extended stabilisation. Trocarisation buys time — it is not definitive treatment.',ddx:'Gastric dilatation without volvulus|Splenic mass with haemoabdomen|Mesenteric volvulus|Intestinal obstruction|Pneumoperitoneum'},
+    {id:'DIS-GI-HH',name:'Hiatal Hernia',sp:'Dog + Cat',synonyms:'Oesophageal hiatal hernia; sliding hiatal hernia (Type I); paraesophageal hernia (Type II)',breed:'Dog: Chinese Shar Pei, Chow Chow, English Bulldog, French Bulldog — brachycephalic breeds predisposed to both congenital and acquired; 75% of congenital cases present <1 year. Cat: no breed predilection.',age:'Dog: typically young (<1 year in 75% of congenital cases). Cat: any age; median 7 years; possible degenerative component suggested (20/31 cats >3 years in one study).',sex:'No predilection in either species.',etiology:'Congenital weakness / incomplete fusion of diaphragmatic oesophageal hiatus (most common)|Brachycephalic syndrome / BOAS — increased negative intrathoracic pressure draws stomach cranially|Chronic increased intraabdominal pressure (e.g. chronic vomiting)|Airway obstruction: laryngeal paralysis, inflammatory polyps, rhinitis, neoplasia, pulmonary disease — increased negative intrathoracic pressure|Trauma — phrenic nerve or diaphragmatic muscle damage → hiatal laxity|Gastroesophageal reflux and motility disorders|Idiopathic|Cat: rhinitis or BOAS as trigger in 29% of one study',path:'#Types|Type I (Sliding / axial): abdominal oesophagus and gastroesophageal junction displaced cranially through hiatus — most common; congenital or acquired|Type II (Paraesophageal / rolling): oesophageal junction remains fixed; stomach herniates through defect in phrenoesophageal membrane adjacent to thoracic oesophagus|Type III: features of both I and II — rare|Type IV: complex (I + II) + herniation of abdominal organs (liver, small intestines) — rare|#Mechanism|Laxity of phrenoesophageal membrane + hiatal dilation allows abdominal oesophagus ± stomach (± liver/spleen/pancreas) into thorax|Displacement of gastroesophageal junction → increased pressure against lower oesophageal sphincter|Increased inspiratory effort → paradoxical cranial stomach movement|Gastroesophageal reflux + oesophagitis develop and contribute to clinical disease|Oesophageal hypomotility or stricture can follow|Type II: may result in GDV (dogs); gastric perforation also reported',signs:'Regurgitation — passive, effortless (most common sign in cats; also dogs)|Vomiting|Dysphagia, odynophagia, hypersalivation|Haematemesis|Anorexia, weight loss, poor body condition|Respiratory signs: dyspnoea, coughing, respiratory distress (aspiration pneumonia or large herniation)|Tachypnoea|Fever (secondary aspiration pneumonia)|Dehydration, depression|Gagging, retching, nausea|Intermittent presentation — precipitated by excitement or exercise (sliding type)|Some patients asymptomatic (3/5 cats; 6/11 dogs in respective studies)',severe:'Acute respiratory distress from large thoracic herniation|GDV — consequence of Type II herniation or component of Type IV (dogs)|Gastric perforation (reported)|Oesophageal stricture from chronic oesophagitis',conf:'Videofluoroscopy with contrast — most sensitive for intermittent sliding hernias; assesses oesophageal motility|Contrast radiography (barium): gastroesophageal junction ± rugal folds cranial to hiatus; distinguishes sliding vs paraesophageal|CT thorax/abdomen: useful for fixed or complex hernias; contrast-enhanced CT superior|Endoscopy: large oesophageal hiatus, cranially displaced caudal oesophageal sphincter, oesophagitis/stricture; less sensitive for intermittent hernias|Survey thoracic radiography: intrathoracic gas-filled structure or soft-tissue opacity cranial to diaphragm — definitive in only 38.7% of feline cases; often positive on VD but not lateral|Improving detection: manual abdominal pressure, Trendelenburg position (30°), or temporary ET tube occlusion increases transdiaphragmatic gradient',supp:'Abdominal ultrasound: stomach protruding cranial to diaphragm|Survey radiography: megaoesophagus, aspiration pneumonia (dependent consolidation), pulmonary infiltrates|Biochemistry + CBC: baseline; rule out comorbidities (cats: hyperthyroidism, DM, pancreatitis)',tx1:'Surgery — indicated for symptomatic congenital hernias and acquired hernias with significant signs|Techniques: esophagopexy, left-sided fundopexy, gastropexy, phrenicoplasty, hiatal reduction and plication — can be combined|Treat oesophagitis and aspiration pneumonia ≥30 days prior to surgery|Correct concurrent BOAS, laryngeal paralysis, or other airway disease (inflammatory polyps) — essential in brachycephalics|Laparoscopic techniques increasingly described with good outcomes|Fundoplication not routinely recommended in animals (low success rate, high complication rate)',tx2:'Medical (mild/intermittent or asymptomatic): PPI (omeprazole) + prokinetic (metoclopramide or cisapride) + sucralfate|Small frequent feedings; wet food; low-fat, low-fibre diet; elevated feeding position|H2 blockers as alternative to PPI|Spontaneous resolution reported after removal of concurrent nasopharyngeal polyp (cat)',monitor:'Monitor for recurrence of clinical signs|Postoperative imaging (radiographs ± fluoroscopy) if signs persist|In brachycephalic dogs undergoing BOAS or laryngeal paralysis surgery: consider reflux/regurgitation management perioperatively',prog:'Generally good|Medical management may suffice for mild or asymptomatic cases|Cat (medical): median time to death or follow-up 2,559 days; (surgical): 771 days (one study)|Dog: 8/10 improved postoperatively in multiple independent studies; Chinese Shar Pei: 9/9 asymptomatic at 9–36 months post-op|GOR and sliding hernia may persist despite surgery in some dogs',ddx:'Gastro-oesophageal reflux disease (GORD) without hiatal hernia|Megaoesophagus|Oesophageal stricture|Oesophagitis (other cause)|Traumatic diaphragmatic hernia|Nasopharyngeal polyp / inflammatory polyp (cats)',pearl:'Normal survey radiograph does NOT exclude hiatal hernia — fluoroscopy during active swallowing is most sensitive. Sliding hernias are intermittent: multiple films or provocative positioning (Trendelenburg / abdominal pressure / ET tube occlusion) improve detection. In brachycephalic dogs, always address BOAS concurrently — ongoing inspiratory effort perpetuates recurrence. Cat: 29% have rhinitis/BOAS as trigger; comorbidities present in 77.4%. Dog: 75% of congenital cases present <1 year; consider subclinical hiatal hernia in all brachycephalic dogs undergoing BOAS surgery.'},
+    {id:'DIS-GI-PYL',name:'Pyloric Stenosis',sp:'Dog + Cat',synonyms:'Pyloric outflow obstruction, antral mucosal hypertrophy, pyloric hypertrophy',breed:'Congenital: Bulldogs, Boston Terriers, Boxers, Siamese cats. Acquired (antral mucosal hypertrophy): small breed dogs — Lhasa Apso, Shih Tzu, Pekingese.',age:'Congenital: young animals (signs within first months). Acquired: middle-aged to older.',sex:'Acquired form: males overrepresented',etiology:'#Congenital|Muscular hypertrophy of pyloric sphincter|#Acquired|Antral mucosal hypertrophy (chronic inflammation, hypergastrinaemia)|Pyloric neoplasia|Mechanical obstruction at pylorus (foreign body, mass)',path:'Narrowing of pyloric outflow → delayed gastric emptying → vomiting of partially digested food. Chronic obstruction → hypochloraemic hypokalaemic metabolic alkalosis from repeated loss of HCl-rich gastric contents.',signs:'Projectile vomiting of partially digested food, typically hours after eating. Young animals: failure to thrive, weight loss from weaning. Older dogs: progressive chronic vomiting, possible weight loss.',severe:'Severe dehydration, hypochloraemic hypokalaemic metabolic alkalosis. Aspiration pneumonia from recurrent vomiting.',conf:'Contrast fluoroscopy or contrast radiograph (delayed gastric emptying, narrowed pylorus)|Endoscopy — narrowed pyloric outlet; allows biopsy of mucosal folds',supp:'Biochemistry + electrolytes + blood gas (hypochloraemia, hypokalaemia, metabolic alkalosis)|Abdominal ultrasound (pyloric wall thickening, mural mass)',tx1:'Correct electrolyte and acid-base imbalances pre-operatively (IV 0.9% NaCl + KCl supplementation)|Surgical: pyloromyotomy (Fredet-Ramstedt) or pyloroplasty (Heineke-Mikulicz)',tx2:'Endoscopic balloon dilation for mild acquired mucosal hypertrophy|Prokinetics — limited evidence; rarely sufficient as sole treatment',monitor:'Post-op: vomiting resolution, body weight gain, electrolytes. Long-term: recheck if vomiting recurs.',prog:'Excellent after surgical correction. Congenital: very good prognosis. Acquired: depends on underlying cause — neoplasia has poor prognosis.',pearl:'Hypochloraemic hypokalaemic metabolic alkalosis is the classic biochemical pattern — correct before anaesthesia. Paradoxical aciduria may occur (kidney conserves Na⁺ at expense of H⁺ in the alkalotic, hypokalaemic patient). Always biopsy pyloric tissue in older animals to rule out neoplasia.',ddx:'Gastric foreign body at pylorus|Gastric neoplasia (adenocarcinoma, lymphoma)|Gastric antral mucosal hypertrophy|IBD with gastric involvement|GDV (acute presentation)'},
+    {id:'DIS-GI-FGESF',name:'Feline GI Eosinophilic Sclerosing Fibroplasia',sp:'Cat',synonyms:'FGESF, feline eosinophilic sclerosing fibroplasia',breed:'Ragdoll overrepresented (7/13 in one study). Also reported: Bengal, domestic shorthair/medium hair/longhair, Maine coon, Persian, Scottish fold.',age:'Any age; median 7 years. Most cases middle-aged cats.',sex:'Male cats >70% of reported cases.',etiology:'Unknown — aberrant eosinophilic inflammatory fibroplastic response|Proposed triggers: diet, intestinal microbiota dysbiosis, intracellular bacterial infection, fungal infection, hair/plant ingestion, parasites (Cylicospirura felineus)|Intralesional bacteria identified in ~56% of biopsies — unclear if primary cause or secondary complication|Intralesional fungi identified in some cats|Cylicospirura felineus (nematode) rarely associated with histologically similar lesions|Genetic predisposition proposed — Ragdoll overrepresented in multiple studies|Not described in dogs',path:'Solitary or multiple intramural firm ulcerated masses, most commonly at the pylorus or ileocecocolic junction. Lesions characterised by dense collagen trabeculae, large fibroblasts, and eosinophilic inflammation → mural thickening → luminal stenosis and GI obstruction. Can also affect small intestine, colon, retroperitoneal space, regional lymph nodes, mesentery, bile duct, liver, pancreas, and cranial mediastinal lymph nodes.',signs:'Vomiting — chronic; present in 11/12 cats in one study|Diarrhoea|Weight loss — present in 10/13 cats in one study|Lethargy, depression|Anorexia / hyporexia|Haematemesis|Haematochezia|Tenesmus|Constipation / obstipation|Abdominal pain|Palpable abdominal mass (85% of cases)|Abdominal distension / ascites|Dehydration|Pale mucous membranes|Fever|Pleural effusion and dyspnoea (rare)',severe:'GI obstruction from mass stenosis. Severe hypoalbuminaemia. Ascites. Pleural effusion (rare).',conf:'Biopsy + histopathology — definitive: dense collagen trabeculae, large fibroblasts, predominantly eosinophilic inflammation|Full-thickness biopsy preferred; endoscopic biopsy may be insufficient for deep intramural lesions|FISH (Fluorescent In Situ Hybridization) — recommended on all biopsy samples to evaluate for intralesional infectious agents|IHC: vimentin or TGF-β1 expression (TGF-β1 may help differentiate from IBD)|Special stains for bacteria and fungi if infectious agents suspected|Endoscopy: mucosal proliferation, ulceration, polypoid masses; yellow-green discolouration of ulcers reported in some cats|Culture of biopsy samples: bacteria may be isolated|Exploratory laparotomy if needed to determine extent — lesions are firm, ulcerated, irregular, and can be confused with neoplasia',supp:'CBC: eosinophilia most common (58% of cats); also anaemia, leukocytosis, neutrophilia|Biochemistry: hyperproteinaemia, hyperglobulinaemia (polyclonal gammopathy); hypoalbuminaemia, azotaemia, elevated ALT/AST/ALP possible|Abdominal ultrasound: mural thickening, loss of wall layering, heterogeneous masses at pylorus or ileocecocolic junction; lymphadenopathy; ascites in some|CT: characterises number, location, and extent of lesions; confirms ascites — preferred for surgical planning|Abdominal radiography: abdominal mass effect; dilated intestinal loops if obstruction present|Thoracic radiography: pleural effusion (rare)|Fluid analysis (if ascites): inflammatory cells (neutrophils, lymphocytes, eosinophils), elevated TP and SG; FIP PCR negative in reported case',tx1:'#Multimodal approach (surgery + medical) — most common and most effective|Prednisolone 1 mg/kg PO q12–24h — first-line immunosuppression; significantly longer survival vs other therapies in one study|Surgical resection when possible — complete resection offers best prognosis|Debulking considered if complete resection not feasible due to location or multiple lesions|#Medical therapy alone (if surgery not possible)|Prednisolone 1 mg/kg PO q12–24h|Cyclosporine 7 mg/kg PO q24h ± prednisolone — used for multiple non-resectable lesions; one cat survived to day 689|Mycophenolate mofetil 10 mg/kg PO q24h + prednisolone — resolution of signs ≥6 months in one report',tx2:'Antimicrobials: not proven to improve survival as sole therapy; often co-administered given high rate of intralesional bacteria|Symptomatic: anti-emetics, anti-diarrhoeals as needed|Fenbendazole if Cylicospirura felineus involvement suspected|Immunosuppression tapered slowly once clinical remission achieved; some cats maintained on low-dose prednisolone long-term',monitor:'Serial body weight and abdominal palpation|Repeat abdominal ultrasound or CT — assess lesion regression (medical) or recurrence (post-resection)|Haematology: eosinophilia resolution as marker of response|Biochemistry: albumin and total protein',prog:'Complete surgical resection: good — 2/4 cats alive at 24 and 43 months post-op in one report; recurrence possible|Medical therapy alone: positive outcomes reported — survival up to 18+ months with immunosuppression; one cat alive at day 732 on prednisolone alone|Overall: variable — rewarding with early multimodal treatment; poor outcomes with delayed or suboptimal management|Misdiagnosis as neoplasia may lead to unnecessary euthanasia — always confirm with histopathology',ddx:'Sclerosing mast cell tumour (commonly misdiagnosed as FGESF)|Fibrosarcoma|Extraskeletal osteosarcoma|Gastric lymphoma (high-grade)|Gastric adenocarcinoma|Gastrointestinal pythiosis (Pythium insidiosum)|IBD / eosinophilic gastroenteritis (without fibroplasia)|Granulomatous disease',pearl:'FGESF has been misdiagnosed as sclerosing MCT, fibrosarcoma, and extraskeletal osteosarcoma — always pursue full histopathology and FISH before committing to a prognosis. Cannot be distinguished from neoplasia on imaging alone — biopsy is essential. Ragdoll overrepresented; >70% male cats. Not described in dogs. Intralesional bacteria in ~56% of biopsies — significance uncertain but antibiotics often co-administered. Eosinophilia supports suspicion but absent in ~42% of cases. Reported worldwide: USA, Europe, Japan, South Korea, New Zealand, Spain, Australia, Colombia.'},
+    {id:'DIS-GI-LYMP',name:'Gastric Lymphoma',sp:'Dog + Cat',synonyms:'Alimentary lymphoma, GI lymphoma, gastric LSA',breed:'Cats: Siamese predisposed to high-grade. Any breed dog or cat affected.',age:'Older animals. Low-grade in cats: typically >9 years. High-grade: middle-aged to older.',sex:'',etiology:'Idiopathic neoplastic transformation of GI lymphocytes|Cats: possible FeLV association (high-grade); possible progression from IBD → low-grade small cell lymphoma (controversial)',path:'#Low-grade (small cell)|Slow-growing infiltration of mucosa and submucosa — cats: predominantly T-cell (CD3+). Causes chronic mucosal dysfunction, malabsorption, protein-losing enteropathy. Better prognosis.|#High-grade (large cell)|Aggressive transmural invasion — causes mass effect, obstruction, ulceration. Dogs: typically large B-cell or T-cell. Rapid clinical deterioration.',signs:'Progressive weight loss, chronic vomiting, anorexia. Diarrhoea and hypoalbuminaemia with protein-losing enteropathy. Palpable thickened bowel loops or abdominal mass in some cases.',severe:'Hypoalbuminaemia + anasarca in protein-losing enteropathy. GI perforation or obstruction (high-grade). Severe cachexia.',conf:'Endoscopic biopsy + immunohistochemistry (IHC) — CD3 (T-cell) vs CD79a (B-cell) classification|Full-thickness biopsy preferred if endoscopic biopsy inconclusive|PARR (PCR for antigen receptor rearrangement) to distinguish low-grade lymphoma from IBD|FISH (Fluorescent In Situ Hybridization) — recommended on any intestinal biopsy; detects chromosomal abnormalities supporting malignancy when histology and PARR are equivocal',supp:'Abdominal ultrasound (wall thickening, loss of layer architecture, lymphadenopathy)|Haematology + biochemistry (anaemia, hypoalbuminaemia)|Cobalamin + folate (SI involvement)|FeLV/FIV serology (cats)',tx1:'Low-grade (cats): chlorambucil 15 mg/m² PO every 2 weeks + prednisolone 1–2 mg/kg PO SID — median survival >2 years|High-grade: CHOP-based chemotherapy (cyclophosphamide, doxorubicin, vincristine, prednisolone)',tx2:'Cobalamin supplementation if deficient|Nutritional support (high-protein diet)|Mirtazapine as appetite stimulant',monitor:'Body weight weekly during induction. Ultrasound reassessment at 4–8 weeks. Haematology to monitor for chemotherapy-induced myelosuppression.',prog:'Low-grade feline: median survival >700–1000 days with chlorambucil + prednisolone — excellent. High-grade dogs: remission ~70–90% with CHOP; median survival 6–12 months. High-grade cats: poor prognosis.',pearl:'Low-grade small cell lymphoma in cats is one of the most rewarding GI neoplasms to treat — median survival >2 years with simple oral chlorambucil + prednisolone. Always pursue tissue diagnosis before starting treatment — distinguishing IBD from low-grade lymphoma changes prognosis significantly. PARR is most sensitive when histology is equivocal.',ddx:'Inflammatory bowel disease (IBD — especially vs low-grade lymphoma)|Mast cell tumour (feline visceral)|Gastric adenocarcinoma|Eosinophilic gastritis / FGESF|Fungal granuloma (histoplasmosis, pythiosis)'},
+
+    {id:'DIS-PUPD-HAC',name:"Hyperadrenocorticism (Cushing's Disease)",sp:'Dog',synonyms:"Cushing's disease, hypercortisolism, PDH, ADH (adrenal-dependent)",breed:'Poodle, Dachshund, Boxer, Beagle, Boston Terrier — small to medium breeds most common. Adrenal-dependent more common in large breeds.',age:'Middle-aged to older (7–12 years typical)',sex:'Females slightly overrepresented',path:'Excess cortisol from pituitary-driven ACTH overproduction (PDH, 85%) or autonomous adrenal tumour (ADH, 15%). Cortisol directly antagonises ADH at the renal tubule → secondary NDI → hyposthenuria and PU/PD. Also causes hypertension, hepatomegaly, immunosuppression, and protein catabolism.',signs:'PU/PD, polyphagia, pot-belly, truncal alopecia, calcinosis cutis, hepatomegaly, exercise intolerance, panting, muscle wasting, pendulous abdomen.',severe:"Pulmonary thromboembolism, hypertensive crisis, secondary infections (UTI, skin, respiratory), Cushing myopathy causing respiratory failure.",conf:'ACTH stimulation test (screening + diagnosis of adrenal-dependent). LDDST (screening for PDH). Urine cortisol:creatinine ratio (screening only).',supp:'Biochemistry (elevated ALP, ALT, cholesterol, fasting glucose), haematology (stress leucogram, eosinopenia), urinalysis (dilute urine, proteinuria, glucosuria), urine culture (prone to UTI), abdominal ultrasound (bilateral adrenomegaly, hepatomegaly).',tx1:'PDH: trilostane (starting 1–3mg/kg PO SID) or mitotane. Monitor with ACTH stimulation test. Adrenal-dependent: adrenalectomy (surgical) or medical trilostane/mitotane while awaiting surgery.',tx2:'Supportive: treat concurrent UTI, manage hypertension (amlodipine), control skin infections. Ketoconazole as alternative if trilostane unavailable.',monitor:'ACTH stimulation test 10–14 days after starting treatment, then every 1–3 months once stable. Recheck urine culture every 3–6 months. Blood pressure monitoring.',prog:'Good with appropriate management. Adrenal carcinoma: guarded — metastatic potential. Median survival on trilostane: 2–2.5 years.',pearl:"Always rule out hyperadrenocorticism BEFORE performing a desmopressin trial — some Cushing dogs partially respond to desmopressin and will be misdiagnosed as CDI. Perform a rectal exam on every PU/PD dog — anal sac adenocarcinoma causes paraneoplastic hypercalcaemia."},
+    {id:'DIS-PUPD-CDI',name:'Central Diabetes Insipidus',sp:'Dog + Cat',synonyms:'CDI, central DI, ADH deficiency, vasopressin deficiency',breed:'No strong breed predisposition for idiopathic CDI.',age:'Any age. Idiopathic more common in adults. Trauma/neoplasia any age.',sex:'No sex predisposition',path:'Insufficient production or release of antidiuretic hormone (ADH/vasopressin) from the hypothalamus or posterior pituitary. Without ADH, aquaporin-2 channels are not inserted into renal collecting duct membranes → free water cannot be reabsorbed → profound polyuria → compensatory polydipsia. Idiopathic CDI most common. Other causes: head trauma, neoplasia (craniopharyngioma, pituitary tumour), cysts, inflammation, parasite migration.',signs:'Profound PU/PD. Preference for cold water. Nocturia. Otherwise well systemically. Hyposthenuria on urinalysis (USG typically 1.001–1.007).',severe:'Severe dehydration and hypernatraemia if water access restricted. Rapid neurological deterioration possible.',conf:'Desmopressin response trial — USG increases and water intake decreases after 5–7 days of desmopressin. NEVER perform if patient is hyponatraemic. Document consistently hyposthenuric serial USG first.',supp:'Plasma sodium (high-normal or elevated — free water loss). Full minimum database (rule out all other causes first). MRI brain to identify structural cause.',tx1:'Desmopressin (DDAVP): oral 0.05–0.1mg q8–12h (dogs) or conjunctival drops 1–2 drops q12h. Adjust dose based on USG and water intake.',tx2:'Treat underlying cause if identified (neoplasia, inflammation). Ensure free access to water at all times during treatment.',monitor:'Serial USG and water intake during desmopressin trial. Recheck plasma electrolytes to avoid hyponatraemia (risk if primary polydipsia misdiagnosed as CDI).',prog:'Idiopathic CDI: good with desmopressin treatment — normal quality of life. Secondary CDI depends on underlying cause.',pearl:'NEVER restrict water before all other causes of PU/PD are excluded. NEVER perform a desmopressin trial in a hyponatraemic patient — can cause life-threatening hyponatraemia. Rule out hyperadrenocorticism before desmopressin trial. Document at least 3–5 serial USG measurements (different days/times) before pursuing further testing.'},
+    {id:'DIS-PUPD-NDI',name:'Nephrogenic Diabetes Insipidus (Secondary)',sp:'Dog + Cat',synonyms:'NDI, secondary NDI, ADH resistance',breed:'No breed predisposition. Secondary NDI follows underlying disease.',age:'Any age (depends on underlying cause).',sex:'No sex predisposition',path:'The renal tubule fails to respond to ADH despite adequate ADH production and release. Aquaporin-2 channels cannot be inserted into collecting duct membranes regardless of ADH concentration. Primary NDI (congenital ADH receptor mutation) is extremely rare. Secondary NDI is common — caused by glucocorticoids (endogenous or exogenous), hypercalcaemia, hypokalemia, E. coli endotoxin (pyometra, pyelonephritis), leptospirosis, and intestinal leiomyosarcoma.',signs:'PU/PD ranging from moderate to profound. Hyposthenuria possible depending on cause. Concurrent signs of underlying disease.',severe:'Depends on underlying cause — pyometra and leptospirosis carry emergency urgency.',conf:'Failure to respond to desmopressin trial (unlike CDI which responds). Primary NDI: diagnosis of exclusion after ALL secondary causes excluded.',supp:'Full minimum database to identify underlying cause. Urine culture, haematology, biochemistry, electrolytes (Ca²⁺, K⁺), adrenal function tests.',tx1:'Treat the underlying cause — secondary NDI usually resolves when causative disease is treated. Ensure free access to water.',tx2:'Primary NDI: low-sodium diet + thiazide diuretics (paradoxical reduction of polyuria). Rare and challenging to manage.',monitor:'Monitor USG and water intake. Recheck underlying disease markers.',prog:'Secondary NDI: good if underlying cause identified and treated. Primary NDI: guarded — lifelong management required.',pearl:'Secondary NDI is common — primary NDI is extremely rare. Always search for the underlying cause. Hyperadrenocorticism is the most common cause of secondary NDI in dogs. Always rule out HAC before performing a desmopressin trial as some HAC dogs partially respond.'},
+
+    {id:"DIS-WK-MG",name:"Myasthenia Gravis",sp:"Dog + Cat",synonyms:"MG, acquired myasthenia gravis, junctionopathy",breed:"German Shepherd, Golden Retriever, Labrador Retriever — any breed. Cats: Abyssinian predisposed.",age:"Bimodal: young adults (2-4yr) and older (9-13yr).",sex:"No consistent sex predisposition for acquired MG",path:"Autoimmune destruction of post-synaptic acetylcholine receptors (AChR) at the neuromuscular junction. Antibodies prevent ACh binding → impaired neuromuscular transmission → muscle fatigue with repetitive activity. Generalised MG affects all muscle groups. Focal MG affects oesophagus only.",signs:"Exercise-induced weakness improving with rest (fatigability). Regurgitation (megaoesophagus present in ~90% of dogs with generalised MG). Facial weakness. Palpebral reflex fatigues with rapid repetition. Dysphonia.",severe:"Acute fulminant MG: rapid tetraplegia, severe dysphagia, respiratory failure. Aspiration pneumonia is major complication and cause of death.",conf:"AChR antibody titre — gold standard. Seronegative MG exists in 5-15% (test anti-MuSK antibodies).",supp:"Chest radiograph (megaoesophagus + aspiration pneumonia — present in 40-50%). CT chest (thymoma). CK (usually normal). Tensilon test (edrophonium 0.1-0.2mg/kg IV) — prepare atropine.",tx1:"Pyridostigmine (anticholinesterase): 1-3mg/kg PO BID-TID. Immunosuppression: prednisolone 1-2mg/kg PO SID.",tx2:"Azathioprine if steroids insufficient. Thymectomy if thymoma present. Upright feeding (Bailey chair) to reduce aspiration risk.",monitor:"Serial AChR titres every 4-8 weeks. Chest radiographs (aspiration pneumonia). Titrate pyridostigmine on clinical response.",prog:"Spontaneous remission in ~50% of dogs within 6-18 months. Prognosis worsens significantly with severe aspiration pneumonia.",pearl:"Focal MG (megaoesophagus only, no limb weakness) is easily missed — check AChR titres in any dog with megaoesophagus of unknown cause. Aspiration pneumonia is the main killer. AChR antibody titre is the gold standard — Tensilon test is supportive only."},
+    {id:'DIS-OES-MEGA',name:'Megaoesophagus',sp:'Dog + Cat',synonyms:'Megaesophagus, oesophageal hypomotility, oesophageal dilation',breed:'Congenital: German Shepherd (highest incidence), Labrador Retriever, Great Dane, Miniature Schnauzer, Dachshund, Irish Setter, Newfoundland, Shar Pei. Dermatomyositis form: Rough Collie, Shetland Sheepdog.',age:'Congenital: young puppies (signs at weaning — transition to solid food). Acquired: any age depending on underlying cause.',sex:'No consistent sex predisposition',etiology:'#Congenital|Idiopathic congenital (breed predisposition)|#Acquired|Idiopathic (most common acquired cause)|Myasthenia gravis — focal form (regurgitation as only sign, no limb weakness)|Generalised neuromuscular disease|Hypoadrenocorticism|Hypothyroidism|Lead toxicosis|Dysautonomia|Lower oesophageal sphincter achalasia (subset)|Post-surgical (rare)',path:'Decreased to absent oesophageal peristalsis + generalised dilation → accumulation of ingesta within the oesophageal lumen → passive regurgitation by gravity. Congenital form: incomplete nerve development in the oesophageal wall — some cases improve with maturity (20–46% recovery rate). Acquired form: underlying disease disrupts neuromuscular function of the oesophagus. A subset of acquired cases have lower oesophageal sphincter achalasia.',signs:'Passive regurgitation of tubular undigested food — hallmark sign. Occurs based on gravity, without active heaving or retching. Declining body condition score, weight loss, poor coat. Aspiration pneumonia common complication.',severe:'Aspiration pneumonia: tachypnoea, pyrexia, productive cough, ventral lung consolidation — most common cause of death. Severe cases: inability to maintain weight, recumbency.',conf:'Survey thoracic radiograph (air-filled dilated oesophagus — primary screening)|Fluoroscopy: gold standard for motility assessment|+/- Liquid barium contrast: risk of aspiration pneumonia — contrast studies contraindicated unless absolutely necessary|Endoscopic exam: identifies foreign body, stricture, or oesophagitis — not a reliable screening test as anaesthesia may induce transient loss of oesophageal tone|Oesophageal manometry and gammagraphy may facilitate the diagnosis of certain motility disorders|#Additional tests|ACh receptor antibody: myasthenia gravis (accounts for 25–30% of secondary megaoesophagus cases)|ACTH stimulation test: hypoadrenocorticism|Atropine response test: dysautonomia|Blood cholinesterase: organophosphate toxicity|Electromyography: myasthenia gravis, polymyositis|Muscle biopsy: dermatomyositis, polymyositis, glycogen storage disease|Nerve conduction / nerve biopsy: polyneuropathy|Skin biopsy: dermatomyositis|Tensilon test (edrophonium): myasthenia gravis|Total T4: hypothyroidism',supp:'',tx1:'Bailey chair / elevated feeding (upright 10–15 min post-meal)|Small frequent meals — experiment with food texture|Treat underlying cause if identified|Monitor for aspiration pneumonia',tx2:'Treat aspiration pneumonia aggressively if present (IV antibiotics, O₂ support)|Cisapride or metoclopramide as prokinetics — limited evidence|Sildenafil may reduce lower oesophageal sphincter tone — used in some refractory cases',monitor:'Monitor body weight. Regular chest radiographs to screen for aspiration pneumonia. Reassess AChR titre every 4–8 weeks if myasthenia gravis (may remit). Recheck T4, cortisol response as appropriate.',prog:'Congenital: 20–46% recover with maturity as nerve development improves. Acquired: depends entirely on underlying cause — treat myasthenia gravis, Addison\'s, hypothyroidism → often resolves or improves significantly. Idiopathic: guarded — lifelong management, aspiration pneumonia remains primary risk.',pearl:'Always rule out myasthenia gravis first (AChR antibody titre) — it is the most common treatable cause. Focal MG presents with megaoesophagus as the ONLY sign — no limb weakness. Congenital cases may improve with time — always worth attempting supportive management before committing to euthanasia. Vascular ring anomaly (PRAA) causes focal pre-cardiac dilation — surgery gives the best outcome if performed before severe irreversible dilation develops.',ddx:'Oesophagitis|#Focal megaoesophagus|-Vascular ring anomaly|-Oesophageal stricture|#Generalised megaoesophagus|-Oesophageal stricture (near lower oesophageal sphincter)|-Hypoadrenocorticism|-Myasthenia gravis|-Lead poisoning|-Botulism|-Tetanus|-Hypothyroidism|-Polyradiculitis|-Thallium toxicity|#Structural oesophageal disease|-Foreign body|-Extra- or intraoesophageal neoplasia|-Diverticula|-Granuloma: fungal or Spirocerca lupi|Polymyopathy|Polyneuropathy|Organophosphate toxicity|Hiatal hernia|Distemper|Neospora caninum'},
+    {id:"DIS-WK-EPILEPSY",name:"Idiopathic Epilepsy",sp:"Dog",synonyms:"Idiopathic epilepsy, primary epilepsy, genetic epilepsy",breed:"Border Collie, Belgian Shepherd, Labrador Retriever, Golden Retriever, German Shepherd, Irish Wolfhound, Beagle",age:"Onset 1-5 years (outside this range: investigate for structural cause)",sex:"No consistent sex predisposition",path:"Presumed genetic mutation causing neuronal hyperexcitability. No structural brain lesion on MRI. Seizures from abnormal excessive electrical discharge in the cerebral cortex. Genetic mutations identified in several breeds.",signs:"Generalised tonic-clonic seizures. Post-ictal phase: confusion, blindness, hunger, pacing (minutes to hours). May occur at rest or during sleep. Normal neurological examination between seizures.",severe:"Status epilepticus (>5 minutes): emergency — IV diazepam 0.5mg/kg or midazolam 0.2mg/kg. Cluster seizures (≥2 seizures/24h): high risk of status epilepticus. Both require hospitalisation.",conf:"Diagnosis of exclusion — normal MRI AND normal CSF AND normal metabolic database in a predisposed breed aged 1-5 years.",supp:"Biochemistry + haematology + urinalysis (rule out metabolic). MRI brain. CSF analysis. Genetic testing (breed-specific).",tx1:"Start AEDs when: ≥2 seizures in 6 months, status epilepticus, cluster seizures, or prolonged post-ictal. First line: phenobarbitone 2.5mg/kg PO BID. Monitor serum levels at 2 weeks.",tx2:"Potassium bromide as add-on (dogs ONLY — NEVER cats). Levetiracetam 20mg/kg TID — good safety profile. Imepitoin (Pexion) — licensed for dogs.",monitor:"Serum phenobarbitone levels (target 25-35 mcg/mL). Liver function (ALT, bile acids) every 6 months. Seizure diary.",prog:"Good control in ~70% of dogs. Complete freedom in ~25%. Lifelong medication required.",pearl:"NEVER use potassium bromide in cats — fatal bronchopneumonia. Status epilepticus: check glucose immediately in any seizuring animal. Anti-epileptic drugs can WORSEN syncopal episodes — always get ECG before starting AEDs in a collapsing animal."},
+
+
+  ],
+
+  protocols: [
+    {id:'PROT-RESP',name:'Respiratory Crisis — Initial Stabilisation',sp:'Dog + Cat',trigger:'Severe dyspnoea, open-mouth breathing, cyanosis, orthopnoea',priority:'IMMEDIATE',
+     steps:[
+       {n:1,action:'Flow-by oxygen immediately. Do NOT restrain patient.',note:'Oxygen before everything. A stressed dyspnoeic cat can die from handling.',branch:'',flag:'Cyanosis, paradoxical breathing, exhaustion = imminent arrest'},
+       {n:2,action:'Assess SpO₂ via pulse oximeter (digit or ear). Target >95%.',note:'Consider sedation + intubation if SpO₂ not responding to O₂',branch:'SpO₂ <90% → immediate intervention',flag:''},
+       {n:3,action:'Auscultate once patient tolerating. Identify pattern — refer to Clinical tab.',note:'',branch:'Muffled bilateral → pleural effusion → proceed to thoracocentesis',flag:''},
+       {n:4,action:'CAT SPECIFIC: Check heart rate, gallop rhythm, murmur, rectal temperature.',note:'Bradycardia in a dyspnoeic cat is a red flag — not reassuring.',branch:'Gallop + tachycardia + bilateral muffling → cardiogenic → furosemide 1mg/kg IM',flag:'⚠️ Bradycardia + hypothermia in dyspnoeic cat = severe decompensation or end-stage — grave prognosis'},
+       {n:5,action:'Once SpO₂ >95% and RR settling: targeted diagnostics — CXR, FAST ultrasound, bloodwork.',note:'Never take CXR in a severely dyspnoeic patient — stabilise first.',branch:'',flag:''},
+     ]},
+    {id:'PROT-THOR',name:'Thoracocentesis — Emergency Pleural Tap',sp:'Dog + Cat',trigger:'Suspected pleural effusion or pneumothorax',priority:'URGENT',
+     steps:[
+       {n:1,action:'Equipment: 19–21G butterfly needle, 3-way tap, 20ml syringe, collection pot for cytology.',note:'Confirm with FAST ultrasound if available before proceeding.',branch:'',flag:''},
+       {n:2,action:'Insert needle cranial to rib margin, 7th–9th ICS. Dorsal ⅓ for air, ventral ⅓ for fluid.',note:'Avoid caudal rib edge — intercostal vessels. Can be performed conscious with local anaesthetic.',branch:'',flag:''},
+       {n:3,action:'Aspirate gently. Collect sample in EDTA + plain tube for cytology and culture. Measure volume removed.',note:'',branch:'Haemorrhagic fluid → compare PCV fluid vs peripheral blood. Non-clotting = haemothorax',flag:''},
+       {n:4,action:"Drain to clinical improvement — do not drain completely in first tap (rebound oedema risk).",note:'Monitor SpO₂ throughout. Stop if coughing excessively.',branch:'',flag:''},
+     ]},
+    {id:'PROT-TOX',name:'Toxin Ingestion — Initial Management',sp:'Dog + Cat',trigger:'Known or suspected ingestion of a toxic substance',priority:'URGENT',
+     steps:[
+       {n:1,action:'Assess patient stability. Check mentation, HR, RR, MM colour, temperature. Stabilise first — never induce emesis in a collapsed, seizing, or dyspnoeic patient.',note:'Some toxins cause rapid neurological deterioration (e.g. permethrin in cats, metaldehyde, tremorgenic mycotoxins) — be prepared to manage seizures.',branch:'Signs of shock or collapse → IV access, fluids, supportive care immediately',flag:'⚠️ Never induce emesis if: corrosives/caustics ingested, patient unconscious/seizing, dyspnoeic, species contraindicated (e.g. rabbits, rodents)'},
+       {n:2,action:'Determine ingestion timeline and substance. Contact owner to confirm product name, amount, and time elapsed. Calculate mg/kg dose if possible.',note:'Many toxicoses are dose-dependent — dose calculation changes risk stratification (e.g. xylitol, ibuprofen, paracetamol).',branch:'',flag:''},
+       {n:3,action:'Decontamination if ingestion <2–4h and patient stable: induce emesis (dog: apomorphine 0.03–0.04 mg/kg IV or SC; cat: dexmedetomidine 7–10 mcg/kg IM). Confirm toxin type first.',note:'Cat: hydrogen peroxide contraindicated — causes haemorrhagic gastroenteritis. Apomorphine unreliable in cats.',branch:'Caustic/petroleum/foaming agents → emesis contraindicated; consider gastric lavage under GA',flag:''},
+       {n:4,action:'Activated charcoal if emesis performed or >2h post-ingestion and still in GI tract: 1–3 g/kg PO with sorbitol (first dose only). Repeat q4–8h for enterohepatic recirculating toxins (e.g. NSAIDs, digoxin).',note:'Contraindicated if: caustic ingestion, petroleum products, heavy metals, seizing/neurological compromise, dehydrated patient (sorbitol risk). Do not use in cats with salt-containing charcoal (hypernatraemia risk).',branch:'',flag:''},
+       {n:5,action:'Administer antidote if available. Common antidotes: fomepizole (4-MP) for ethylene glycol in dogs (not cats — use ethanol); N-acetylcysteine for paracetamol; atropine for organophosphates; vitamin K1 for anticoagulant rodenticides; calcium gluconate for oxalate/ethylene glycol.',note:'Fomepizole in dogs: 20 mg/kg IV loading then 15 mg/kg at 12h and 24h then 5 mg/kg at 36h.',branch:'Ethylene glycol in cat → ethanol 1.3 mL/kg of 30% solution IV q6h',flag:'⚠️ Time-critical: ethylene glycol antidote effective only within 3–5h (dog) or 1–3h (cat) of ingestion'},
+       {n:6,action:'Supportive care: IV crystalloids for hydration and perfusion support. Anti-emetics (maropitant 1 mg/kg IV/SC). Gastric protectants (omeprazole 1 mg/kg PO/IV q24h) if GI injury suspected.',note:'Adjust fluid rate to renal and cardiac status — some toxins (e.g. ethylene glycol, lilies in cats, grapes/raisins in dogs) are nephrotoxic — promote diuresis.',branch:'',flag:''},
+       {n:7,action:'Monitor organ function: baseline and serial biochemistry (renal, hepatic), CBC, electrolytes, blood glucose, urinalysis. Frequency depends on toxin.',note:'Anticoagulant rodenticide: check PT/aPTT at 48–72h — not immediately. Paracetamol: liver enzymes 24–48h.',branch:'',flag:''},
+       {n:8,action:'Contact poison control for guidance on specific toxins: VPIS (UK), ASPCA Poison Control (US +1-888-426-4435), or local equivalent.',note:'Provide patient species, weight, product name and ingredient list, quantity ingested, and time elapsed.',branch:'',flag:''},
+     ]},
+  ],
+};
+
+function $(id){ return document.getElementById(id); }
+
+// ── REACT-AWARE NAVIGATION ───────────────────────────────────────────────────
+var slideDir = 'right';
+var currentNoteKey = 'general';
+var currentNoteTitle = 'General Notes';
+var currentNav = 0;
+var history = [];
+var openSystems = new Set();
+
+// HMR: restore currentNav so we re-render the right tab
+if (typeof window !== 'undefined' && (window as any).__cliniqState) {
+  currentNav = (window as any).__cliniqState.nav ?? 0;
+}
+
+function _cb() { return (typeof window !== 'undefined' && (window as any).__cliniqCbs) || { c: _setContent, t: _setTopbar, s: _setTab } }
+
+function render(html) {
+  _cb().c(html, slideDir);
+  slideDir = 'right';
+}
+
+function setTopbar(title, showBack) {
+  _cb().t(title, showBack && history.length > 0);
+}
+
+var _goingBack = false;
+function push(fn, title) {
+  if (!_goingBack) history.push({ fn, title, nav: currentNav });
+  setTopbar(title, history.length > 0);
+}
+function replace(fn, title) {
+  if (history.length > 0) {
+    history[history.length - 1] = { fn, title, nav: currentNav };
+  } else {
+    history.push({ fn, title, nav: currentNav });
+  }
+  setTopbar(title, history.length > 0);
+}
+function goBack() {
+  if (!history.length) return;
+  history.pop();
+  const prev = history[history.length - 1];
+  slideDir = 'left';
+  _goingBack = true;
+  if (prev) {
+    if (prev.nav !== undefined && prev.nav !== currentNav) {
+      currentNav = prev.nav;
+      _setTab(prev.nav);
+    }
+    prev.fn();
+    setTopbar(prev.title, history.length > 0);
+  } else {
+    navTo(currentNav, true);
+  }
+  _goingBack = false;
+}
+
+function navTo(n, noHistory) {
+  currentNav = n;
+  if (typeof window !== 'undefined') (window as any).__cliniqState = { nav: n };
+  if (!noHistory) history = [];
+  var tabNames = ['Clinical', 'Diagnostic', 'Disease', 'Protocols', 'Settings'];
+  currentNoteKey = 'tab-' + n;
+  currentNoteTitle = tabNames[n] + ' — General';
+  _cb().s(n);
+  setTopbar('', false);
+  try {
+    if (n === 0) renderLocalise();
+    else if (n === 1) renderLesionHome();
+    else if (n === 2) renderDiseaseHome();
+    else if (n === 3) renderProtoList();
+    else if (n === 4) renderSettings();
+  } catch(e) {
+    console.error('[ClinIQ navTo] render error for tab', n, e);
+    _setContent('<div style="padding:20px;color:#DC2626;font-size:13px;background:#fff0f0;border-radius:8px;margin:16px;"><strong>Tab render error (tab '+n+')</strong><br><pre style="margin-top:8px;white-space:pre-wrap;font-size:11px;">'+(e && e.stack ? e.stack : String(e))+'</pre></div>', 'right');
+  }
+}
+
+function toggleSystem(id) {
+  if (openSystems.has(id)) openSystems.delete(id); else openSystems.add(id);
+  renderLesionHome();
+}
+
+function setTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  localStorage.setItem('cliniq-theme', t);
+  renderSettings();
+}
+
+function renderSettings(){
+  if(currentNav!==4) navTo(4,true);
+  const dark = document.documentElement.getAttribute('data-theme')==='dark';
+  const btnBase='padding:7px 18px;border-radius:6px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;';
+  const active=btnBase+'background:var(--teal);color:#fff;';
+  const inactive=btnBase+'background:transparent;color:var(--gray);';
+  render(`
+    <div style="padding:4px 0 20px;">
+      <div style="font-size:11px;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;">Appearance</div>
+      <div style="background:var(--navy2);border:1px solid var(--border);border-radius:14px;overflow:hidden;">
+        <div style="padding:16px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+          <div>
+            <div style="font-size:14px;font-weight:500;color:var(--white);">Theme</div>
+            <div style="font-size:12px;color:var(--gray);margin-top:2px;">${dark?'Dark':'Light'} mode active</div>
+          </div>
+          <div style="display:flex;background:var(--navy3);border-radius:8px;padding:3px;gap:2px;flex-shrink:0;">
+            <button onclick="setTheme('light')" style="${!dark?active:inactive}">☀️ Light</button>
+            <button onclick="setTheme('dark')" style="${dark?active:inactive}">🌙 Dark</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `);
+}
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function urgTag(u){
+  if(!u)return'';
+  const u2=u.toUpperCase();
+  if(u2==='EMERGENCY') return'<span class="tag tag-em">⚠️ EMERGENCY</span>';
+  if(u2==='HIGH') return'<span class="tag tag-hi">↑ High</span>';
+  if(u==='Moderate'||u==='Moderate–High'||u==='Low–Moderate') return'<span class="tag tag-mo">Moderate</span>';
+  return'<span class="tag tag-lo">Low</span>';
+}
+function spTag(sp){
+  if(!sp)return'';
+  if(sp==='Dog') return'<span class="tag tag-sp-dog">Dog</span>';
+  if(sp==='Cat') return'<span class="tag tag-sp-cat">Cat</span>';
+  return'<span class="tag tag-sp-all">Dog + Cat</span>';
+}
+function urgClass(u){
+  if(!u)return'';
+  const u2=u.toUpperCase();
+  if(u2==='EMERGENCY')return' em';
+  if(u2==='HIGH')return' hi';
+  return'';
+}
+function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// ── NOTES ──
+function notesBox(key){
+  const saved = localStorage.getItem('cliniq-note-'+key)||'';
+  return `
+  <div class="notes-box">
+    <div class="notes-header">
+      <div class="notes-label">📝 My Notes</div>
+      <div class="notes-saved" id="notes-saved-${key}">✓ Saved</div>
+    </div>
+    <textarea id="notes-${key}" placeholder="Add your personal notes for this page..." oninput="saveNote('${key}')">${esc(saved)}</textarea>
+  </div>`;
+}
+function saveNote(key){
+  var el=document.getElementById('notes-'+key);
+  if(!el)return;
+  localStorage.setItem('cliniq-note-'+key, el.value);
+  var badge=document.getElementById('notes-saved-'+key);
+  if(badge){badge.classList.add('show');setTimeout(function(){badge.classList.remove('show');},1500);}
+}
+
+// ── HOME / LOCALISE ───────────────────────────────────────────────────────────
+function renderLocalise(){
+  render(`
+  <div class="stitle">Select a clinical sign</div>
+  <div class="card" onclick="renderDyspFlow()">
+    <div class="card-row">
+      <div class="card-icon">🌬️</div>
+      <div style="flex:1"><div class="card-title">Dyspnoea</div><div class="card-sub">Dog + Cat · Respiratory pattern → anatomical location</div></div>
+      <div class="card-arrow">›</div>
+    </div>
+  </div>
+  <div class="card" onclick="renderVomFlow()">
+    <div class="card-row">
+      <div class="card-icon">🤢</div>
+      <div style="flex:1"><div class="card-title">Vomiting</div><div class="card-sub">Dog + Cat · True vomit vs regurgitation → primary or secondary GI</div></div>
+      <div class="card-arrow">›</div>
+    </div>
+  </div>
+  <div class="card" onclick="renderDiarrhoeaFlow()">
+    <div class="card-row">
+      <div class="card-icon">💩</div>
+      <div style="flex:1"><div class="card-title">Diarrhoea</div><div class="card-sub">Dog + Cat · Small bowel vs large bowel diagnostic approach</div></div>
+      <div class="card-arrow">›</div>
+    </div>
+  </div>
+  <div class="card" onclick="renderJaundiceFlow()">
+    <div class="card-row">
+      <div class="card-icon">🟡</div>
+      <div style="flex:1"><div class="card-title">Jaundice</div><div class="card-sub">Dog + Cat · Pre-hepatic, hepatic, post-hepatic</div></div>
+      <div class="card-arrow">›</div>
+    </div>
+  </div>
+  <div class="card" onclick="renderWeaknessFlow()">
+    <div class="card-row">
+      <div class="card-icon">⚡</div>
+      <div style="flex:1"><div class="card-title">Weakness / Collapse</div><div class="card-sub">Dog + Cat · Episodic, persistent, syncope vs seizure</div></div>
+      <div class="card-arrow">›</div>
+    </div>
+  </div>
+  <div class="card" onclick="renderPUPDFlow()">
+    <div class="card-row">
+      <div class="card-icon">💧</div>
+      <div style="flex:1"><div class="card-title">Polyuria / Polydipsia</div><div class="card-sub">Dog + Cat · USG-guided stepwise approach</div></div>
+      <div class="card-arrow">›</div>
+    </div>
+  </div>
+  <div class="card" onclick="renderSeizureFlow()"><div class="card-row"><div class="card-icon">🧠</div><div style="flex:1"><div class="card-title">Seizures</div><div class="card-sub">Idiopathic vs structural vs reactive</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderMyelopathyFlow()"><div class="card-row"><div class="card-icon">🦴</div><div style="flex:1"><div class="card-title">Acute Myelopathy</div><div class="card-sub">Spinal cord localisation</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderVestibularFlow()"><div class="card-row"><div class="card-icon">🌀</div><div style="flex:1"><div class="card-title">Acute Vestibular</div><div class="card-sub">Peripheral vs central</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderEncephalopathyFlow()"><div class="card-row"><div class="card-icon">🧬</div><div style="flex:1"><div class="card-title">Acute Encephalopathy</div><div class="card-sub">Encephalitis, neoplasia, CVA, metabolic</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderCoughFlow()"><div class="card-row"><div class="card-icon">🫁</div><div style="flex:1"><div class="card-title">Coughing</div><div class="card-sub">Dry vs wet/productive</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderSneezeFlow()"><div class="card-row"><div class="card-icon">🤧</div><div style="flex:1"><div class="card-title">Sneezing</div><div class="card-sub">Unilateral vs bilateral</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderPaleGumsFlow()"><div class="card-row"><div class="card-icon">🩸</div><div style="flex:1"><div class="card-title">Pale Mucous Membranes</div><div class="card-sub">Anaemia vs poor perfusion</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderAtaxiaFlow()"><div class="card-row"><div class="card-icon">🚶</div><div style="flex:1"><div class="card-title">Ataxia</div><div class="card-sub">Dog + Cat · Cerebellar vs vestibular vs proprioceptive</div></div><div class="card-arrow">›</div></div></div>
+  <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment. Always verify clinical decisions independently.</div>
+  `);
+}
+
+// ── DYSPNOEA FLOWCHART ────────────────────────────────────────────────────────
+function renderDyspFlow(){
+  push(renderDyspFlow,'Dyspnoea');
+  render(`
+  <div class="flow-wrap">
+
+    <div class="flow-node entry">🌬️ DYSPNOEA</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">IDENTIFY RESPIRATORY PATTERN</div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- 4 pattern columns -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;">
+      <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="renderInsp()">🔵 Inspiratory<br><span style="font-size:9px;opacity:.7">tap ↓</span></div>
+      <div class="flow-node exp" style="cursor:pointer;font-size:11px;" onclick="renderExpFlow()">🟢 Expiratory<br><span style="font-size:9px;opacity:.7">± wheeze ± cough</span></div>
+      <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="renderRestFlow()">🟡 Restrictive<br><span style="font-size:9px;opacity:.7">rapid, shallow · muffled sounds</span></div>
+      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="renderMixedFlow()">🔴 Mixed<br><span style="font-size:9px;opacity:.7">both phases</span></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;margin-top:3px;">
+      <div class="flow-arrow-v">↓</div>
+      <div class="flow-arrow-v">↓</div>
+      <div class="flow-arrow-v">↓</div>
+      <div class="flow-arrow-v">↓</div>
+    </div>
+
+    <!-- Inspiratory sub-branch -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;">
+      <div>
+        <div class="flow-node sub-step" style="font-size:10px;margin-bottom:3px;">Characterise sound</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+          <div>
+            <div style="font-size:9px;color:var(--gray2);text-align:center;margin-bottom:2px;">Stertor</div>
+            <div class="flow-arrow-v">↓</div>
+            <div class="flow-endpoint nasal" onclick="goLesionTab('LOC-NASAL','Nasal cavity / Nasopharynx')">
+              Nasal cavity / Nasopharynx
+            </div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:var(--gray2);text-align:center;margin-bottom:2px;">Stridor</div>
+            <div class="flow-arrow-v">↓</div>
+            <div class="flow-endpoint larynx" onclick="goLesionTab('LOC-LARYNX','Larynx / Cervical trachea')">
+              Larynx / Cervical trachea
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Expiratory -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">Body system: Intrathoracic</div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-endpoint bronchi" onclick="goLesionTab('LOC-BRONCHI','Trachea / Bronchi')">
+          Trachea / Bronchi
+        </div>
+      </div>
+
+      <!-- Restrictive -->
+      <div>
+        <div class="flow-node sub-step" style="font-size:10px;margin-bottom:3px;">Auscultation</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
+          <div>
+            <div style="font-size:9px;color:var(--gray2);text-align:center;margin-bottom:2px;">Reduced sounds</div>
+            <div class="flow-arrow-v">↓</div>
+            <div class="flow-endpoint pleural" onclick="goLesionTab('LOC-PLEURAL','Pleural cavity')">
+              Pleural cavity
+            </div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:var(--gray2);text-align:center;margin-bottom:2px;">Normal sounds</div>
+            <div class="flow-arrow-v">↓</div>
+            <div class="flow-endpoint mechanic" onclick="goLesionTab('LOC-MECHANIC','Neuromuscular / Chest wall / Diaphragm')">
+              Neuromuscular / Chest wall
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mixed -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">Crackles ± wheezes</div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-endpoint parench" onclick="goLesionTab('LOC-PARENCH','Lung parenchyma')">
+          Lung parenchyma
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;padding:9px 12px;background:rgba(37,99,235,0.07);border:1px solid rgba(37,99,235,0.15);border-radius:10px;font-size:11px;color:#93C5FD;text-align:center;width:100%;">
+      Tap the coloured location words to open Diagnostic types
+    </div>
+
+    <!-- Cat-specific differentials -->
+    <div style="margin-top:14px;padding:10px 12px;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.25);border-radius:10px;width:100%;">
+      <div style="font-size:11px;font-weight:700;color:#C4B5FD;margin-bottom:8px;">🐱 CAT — KEY DIFFERENTIALS BY PATTERN</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+        <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
+          <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">🟡 Restrictive (rapid, shallow)</div>
+          Pleural effusion (CHF/HCM, pyothorax, chylothorax, neoplasia, FIP)<br>
+          Cranial mediastinal mass — check compressibility<br>
+          Pneumothorax
+        </div>
+        <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
+          <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">🟢 Expiratory / wheeze</div>
+          Feline asthma / bronchitis<br>
+          Lungworm (<em>Aelurostrongylus</em>)<br>
+          Bronchopneumonia
+        </div>
+        <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
+          <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">🔴 Mixed / crackles</div>
+          Cardiogenic pulmonary oedema (HCM → LA ↑ → backpressure)<br>
+          Pneumonia (bacterial, viral)<br>
+          Non-cardiogenic oedema (toxin, trauma)
+        </div>
+        <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
+          <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">🔵 Inspiratory / stertor</div>
+          Nasopharyngeal polyp — stertor ± Horner's<br>
+          Viral URTI (herpes / calici)<br>
+          Nasopharyngeal stenosis
+        </div>
+      </div>
+      <div style="margin-top:7px;font-size:9.5px;line-height:1.6;color:rgba(196,181,253,.8);">
+        ⚠️ <strong style="color:#C4B5FD;">Open-mouth breathing in a cat = SEVERE</strong> — cats are obligate nasal breathers. Any open-mouth breathing → immediate O₂ + minimal handling.<br>
+        ⚠️ <strong style="color:#C4B5FD;">Pleural effusion in cats is usually bilateral.</strong> Non-compressible cranial mediastinum = mass until proven otherwise.<br>
+        ⚠️ <strong style="color:#C4B5FD;">ATE:</strong> Acute limb paresis/pain + cold limbs + respiratory distress → HCM + aortic thromboembolism.
+      </div>
+    </div>
+
+    <!-- Stabilisation reminder -->
+    <div style="margin-top:10px;padding:8px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;width:100%;font-size:9.5px;color:#FCA5A5;line-height:1.6;">
+      <strong style="color:#F87171;">⚡ EMERGENCY PRIORITY:</strong> O₂ → minimal restraint → POCUS (pleural effusion?) → thoracocentesis if indicated → <em>then</em> radiographs. Do NOT delay thoracocentesis to get CXR in a severely dyspnoeic cat.
+    </div>
+  </div>
+  `);
+}
+
+function renderInsp(){
+  push(renderInsp,'Inspiratory');
+  render(`
+  <div class="fn fn-insp">🔵 INSPIRATORY DYSPNOEA</div>
+  <div class="fn-arrow">↓</div>
+  <div class="fn fn-step">CHARACTERISE SOUND</div>
+  <div class="fn-arrow">↓</div>
+  <div class="fn-row">
+    <div class="fn-ep fn-ep-nasal" onclick="goLocEp('LOC-NASAL','Nasal cavity / Nasopharynx','Respiratory – Extrathoracic','fn-ep-nasal')">
+      <div class="ep-sys">Sound: Stertor</div>
+      <div class="ep-loc">Nasal cavity / Nasopharynx</div>
+    </div>
+    <div class="fn-ep fn-ep-larynx" onclick="goLocEp('LOC-LARYNX','Larynx / Cervical trachea','Respiratory – Extrathoracic','fn-ep-larynx')">
+      <div class="ep-sys">Sound: Stridor</div>
+      <div class="ep-loc">Larynx / Cervical trachea</div>
+    </div>
+  </div>
+  `);
+}
+
+function renderRest(){
+  push(renderRest,'Restrictive');
+  render(`
+  <div class="fn fn-rest">🟡 RESTRICTIVE PATTERN — rapid, shallow</div>
+  <div class="fn-arrow">↓</div>
+  <div class="fn fn-step">AUSCULTATION + PERCUSSION</div>
+  <div class="fn-arrow">↓</div>
+  <div class="fn-row">
+    <div class="fn-ep fn-ep-pleural" onclick="goLocEp('LOC-PLEURAL','Pleural cavity','Pleural space','fn-ep-pleural')">
+      <div class="ep-sys">Muffled / absent lung sounds</div>
+      <div class="ep-loc">Pleural cavity</div>
+      <div class="ep-badge">⚠️ EMERGENCY</div>
+    </div>
+    <div class="fn-ep fn-ep-mechanic" onclick="goLocEp('LOC-MECHANIC','Neuromuscular / Chest wall / Diaphragm','Mechanical','fn-ep-mechanic')">
+      <div class="ep-sys">Normal lung sounds</div>
+      <div class="ep-loc">Neuromuscular / Chest wall</div>
+    </div>
+  </div>
+  `);
+}
+
+function goLocEp(locId, locName, system, cls){
+  push(()=>goLocEp(locId,locName,system,cls), locName);
+  const lesions = DB.lesion_type.filter(l=>l.loc===locId);
+  render(`
+  <div class="fn-ep ${cls}" style="cursor:default;margin-bottom:14px;">
+    <div class="ep-sys">${esc(system)}</div>
+    <div class="ep-loc">📍 ${esc(locName)}</div>
+  </div>
+  <div class="stitle">${lesions.length} lesion type${lesions.length!==1?'s':''} at this location</div>
+  ${lesions.length ? lesions.map(l=>`
+    <div class="lesion-card${urgClass(l.urg)}" onclick="renderLesionDetail('${l.id}')">
+      <div class="lesion-head">${urgTag(l.urg)}<span class="lesion-cat">${esc(l.cat)}</span></div>
+      <div class="lesion-name">${esc(l.sub)}</div>
+      <div class="lesion-signs">${esc(l.signs)}</div>
+      ${l.proto?`<div class="lesion-proto">→ Protocol: ${esc(l.proto)}</div>`:''}
+    </div>`).join('') : '<div class="empty"><p>No lesion types for this location yet.</p></div>'}
+  `);
+}
+
+// ── VOMITING FLOWCHART ────────────────────────────────────────────────────────
+function renderVomFlow(){
+  push(renderVomFlow,'Vomiting');
+  render(`
+  <div class="flow-wrap">
+
+    <div class="flow-node entry">🤢 VOMITING</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">DIFFERENTIATE: TRUE VOMIT vs REGURGITATION<br><span style="font-size:10px;color:var(--gray);font-weight:400">Active effort + nausea vs passive no effort</span></div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- Two main branches -->
+    <div style="display:grid;grid-template-columns:3fr 2fr;gap:8px;width:100%;">
+
+      <!-- True vomiting -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node insp" style="width:100%;font-size:11px;">TRUE VOMITING<br><span style="font-size:9px;opacity:.7">active abdominal effort, nausea, retching</span></div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">IS VOMITING RELATED TO EATING?</div>
+        <div class="flow-arrow-v">↓</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
+          <!-- Related to eating -->
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+            <div style="font-size:9px;color:#A7F3D0;text-align:center;">YES — related to eating</div>
+            <div class="flow-arrow-v">↓</div>
+            <div class="flow-endpoint gi-upper" onclick="goLesionTab('LOC-GI-UPPER','Stomach')">
+              Stomach
+            </div>
+          </div>
+          <!-- Unrelated -->
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+            <div style="font-size:9px;color:var(--gray2);text-align:center;">NOT related to eating</div>
+            <div class="flow-arrow-v">↓</div>
+            <div class="flow-node sub-step" style="font-size:9px;">Other systemic signs?<br>PU/PD, jaundice, malaise</div>
+            <div class="flow-arrow-v">↓</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;width:100%;">
+              <div>
+                <div style="font-size:8px;color:#99F6E4;text-align:center;margin-bottom:2px;">NO — bright alert</div>
+                <div class="flow-endpoint gi-primary" onclick="goLesionTab('LOC-GI-PRIMARY','Primary GI')">
+                  Primary GI
+                </div>
+              </div>
+              <div>
+                <div style="font-size:8px;color:var(--amber-text);text-align:center;margin-bottom:2px;">YES — systemic ill</div>
+                <div class="flow-endpoint gi-secondary" onclick="goLesionTab('LOC-GI-SECONDARY','Secondary / Extra-GI')">
+                  Secondary / Extra-GI
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Regurgitation -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node" style="width:100%;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);color:#C7D2FE;font-size:11px;">REGURGITATION<br><span style="font-size:9px;opacity:.7">passive, no effort, no bile</span></div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">Intrinsic vs extrinsic cause?</div>
+        <div class="flow-arrow-v">↓</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
+          <div class="flow-endpoint oesoph" onclick="renderOesophFlow()" style="font-size:10px;">
+            Oesophagus
+          </div>
+          <div class="flow-endpoint" style="background:rgba(217,119,6,0.12);border:1.5px solid rgba(217,119,6,0.4);color:var(--amber-text);font-size:10px;cursor:pointer;" onclick="renderExtraOesophFlow()">
+            Extra-Oesophageal
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;padding:9px 12px;background:rgba(217,119,6,0.08);border:1px solid rgba(217,119,6,0.18);border-radius:10px;font-size:10px;color:var(--amber-text);width:100%;">
+      ⚠️ Exception rules: Dog pancreatitis behaves like PRIMARY GI. Cat pancreatitis behaves like SECONDARY GI. Feline hyperthyroidism = prolonged intermittent vomiting in apparently well cat.
+    </div>
+  </div>
+  `);
+}
+
+
+
+function renderOesophFlow(){
+  goLesionTab('LOC-OESOPH','Oesophageal Disease');
+}
+
+function renderExtraOesophFlow(){
+  goLesionTab('LOC-OESOPH-EXT','Extra-Oesophageal Disease');
+}
+
+function renderWeaknessFlow(){
+  push(renderWeaknessFlow, "Weakness / Collapse");
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry">⚡ WEAKNESS / COLLAPSE</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">STEP 1 — DEFINE THE PROBLEM<div class="fn-sub" style="font-size:10px;color:var(--gray);font-weight:400">What happens before, during and after the episode?</div></div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- 3 main presentations -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
+      <div class="flow-node insp" style="font-size:10px;cursor:pointer;" onclick="renderEpisodicWeakness()">
+        EPISODIC weakness<br>
+        <span style="font-size:9px;opacity:.7">Normal between episodes<br>± exercise triggered</span>
+      </div>
+      <div class="flow-node exp" style="font-size:10px;cursor:pointer;" onclick="renderPersistentWeakness()">
+        PERSISTENT weakness<br>
+        <span style="font-size:9px;opacity:.7">Continuously weak<br>Flaccid or stiff</span>
+      </div>
+      <div class="flow-node mixed" style="font-size:10px;cursor:pointer;" onclick="renderCollapseFlow()">
+        COLLAPSE ± loss of<br>consciousness<br>
+        <span style="font-size:9px;opacity:.7">Syncope vs seizure?</span>
+      </div>
+    </div>
+
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step" style="font-size:11px;">STEP 2 — DEFINE THE SYSTEM<div class="fn-sub" style="font-size:10px;font-weight:400;color:var(--gray)">Primary CNS/neuromuscular OR secondary (cardiovascular, metabolic, toxic)?</div></div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+      <div style="background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.2);border-radius:10px;padding:10px;">
+        <div style="font-size:10px;font-weight:700;color:#BFDBFE;margin-bottom:5px;">PRIMARY — structural CNS/NM</div>
+        <div style="font-size:10px;color:var(--gray);line-height:1.7;">Asymmetrical deficits likely<br>Pain may be present<br>Spinal reflexes decreased<br>Sensory deficits (neuropathy)<br>CK markedly elevated (myopathy)</div>
+      </div>
+      <div style="background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.2);border-radius:10px;padding:10px;">
+        <div style="font-size:10px;font-weight:700;color:#99F6E4;margin-bottom:5px;">SECONDARY — functional</div>
+        <div style="font-size:10px;color:var(--gray);line-height:1.7;">Symmetrical deficits<br>No pain from NM system<br>Abnormal biochemistry<br>Signs of other organ disease<br>Minimum database first</div>
+      </div>
+    </div>
+
+    <!-- Key pearl -->
+    <div style="margin-top:10px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;padding:9px 12px;font-size:10px;color:#FCA5A5;width:100%;">
+      ⚠️ <b>Critical distinction:</b> Syncope (cardiac) vs Seizure (brain) — anti-epileptic drugs can WORSEN syncopal episodes. Always get ECG in collapse patient.
+    </div>
+
+    <div style="margin-top:8px;padding:8px 12px;background:rgba(37,99,235,0.07);border:1px solid rgba(37,99,235,0.15);border-radius:10px;font-size:10px;color:#93C5FD;width:100%;">
+      Tap a presentation above to follow the diagnostic pathway
+    </div>
+  </div>
+  `);
+}
+
+function renderEpisodicWeakness(){
+  push(renderEpisodicWeakness, "Episodic weakness");
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="font-size:11px;">EPISODIC WEAKNESS — normal between episodes</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step" style="font-size:11px;">Is it triggered by exercise / excitement?</div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node insp" style="width:100%;font-size:10px;">YES — exercise/excitement triggered</div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">Check cardiac signs: arrhythmia, pulse deficits, murmur</div>
+        <div class="flow-arrow-v">↓</div>
+        <div style="display:flex;flex-direction:column;gap:4px;width:100%;">
+          <div class="flow-endpoint pleural" onclick="goLesionTab('LOC-WK-EPISODIC','Episodic weakness')" style="font-size:9px;">
+            Cardiovascular causes
+          </div>
+          <div class="flow-endpoint gi-secondary" onclick="goLesionTab('LOC-WK-EPISODIC','Episodic weakness')" style="font-size:9px;">
+            Metabolic causes
+          </div>
+          <div class="flow-endpoint larynx" onclick="renderDiffDetail('D-WK007')" style="font-size:9px;">
+            Myasthenia gravis
+          </div>
+          <div class="flow-endpoint bronchi" onclick="renderDiffDetail('D-WK004')" style="font-size:9px;">
+            Exercise-induced collapse (EIC)
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node exp" style="width:100%;font-size:10px;">With REGURGITATION present</div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">Always consider myasthenia gravis</div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-endpoint larynx" onclick="renderDiffDetail('D-WK007')" style="width:100%;font-size:9px;">
+          Myasthenia gravis
+        </div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:9px;">Chest radiograph: megaoesophagus?<br>Aspiration pneumonia?</div>
+      </div>
+    </div>
+
+    <div style="margin-top:10px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:9px 12px;font-size:10px;color:var(--gray);width:100%;">
+      <b style="color:var(--white);">Minimum database for episodic weakness:</b> Haematology + biochemistry (electrolytes, glucose) + ECG + blood pressure + urinalysis
+    </div>
+  </div>
+  `);
+}
+
+function renderPersistentWeakness(){
+  push(renderPersistentWeakness, "Persistent weakness");
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="font-size:11px;">PERSISTENT WEAKNESS — continuously weak</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step" style="font-size:11px;">NEUROLOGICAL EXAMINATION — flaccid or stiff?</div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node rest" style="width:100%;font-size:10px;">FLACCID paresis<br><span style="font-size:9px;opacity:.7">↓ reflexes, ↓ tone, atrophy</span></div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">Ataxia present?</div>
+        <div class="flow-arrow-v">↓</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
+          <div>
+            <div style="font-size:9px;color:var(--amber-text);text-align:center;margin-bottom:2px;">YES — ataxia</div>
+            <div class="flow-endpoint gi-secondary" onclick="goLesionTab('LOC-WK-PERSISTENT','Peripheral neuropathy')" style="font-size:9px;">
+              Peripheral neuropathy
+            </div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#A7F3D0;text-align:center;margin-bottom:2px;">NO — paresis only</div>
+            <div class="flow-endpoint bronchi" onclick="goLesionTab('LOC-WK-PERSISTENT','Junctionopathy / Myopathy')" style="font-size:9px;">
+              MG / Myopathy
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node mixed" style="width:100%;font-size:10px;">STIFF stilted gait<br><span style="font-size:9px;opacity:.7">normal/↑ tone, pain?</span></div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">CK level?</div>
+        <div class="flow-arrow-v">↓</div>
+        <div style="display:flex;flex-direction:column;gap:4px;width:100%;">
+          <div class="flow-endpoint pleural" onclick="goLesionTab('LOC-WK-PERSISTENT','Myopathy')" style="font-size:9px;">
+            CK markedly elevated →<br>Primary myopathy
+          </div>
+          <div class="flow-endpoint gi-upper" onclick="goLesionTab('LOC-WK-PERSISTENT','Endocrine weakness')" style="font-size:9px;">
+            CK mildly elevated →<br>Endocrine / metabolic
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:10px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:9px 12px;font-size:10px;color:var(--gray);width:100%;">
+      <b style="color:var(--amber-text);">Cat pearl:</b> Ventroflexion of neck = hypokalaemia until proven otherwise. Check K⁺ first.<br>
+      <b style="color:var(--white);">CK interpretation:</b> &lt;1000 U/L = non-specific. Thousands-tens of thousands = likely primary myopathy.
+    </div>
+  </div>
+  `);
+}
+
+function renderCollapseFlow(){
+  push(renderCollapseFlow, "Collapse / LOC");
+  render(`
+  <div class="flow-wrap">
+    <div class="em-alert">⚠️ Collapse with loss of consciousness — always get ECG immediately</div>
+    <div class="flow-node entry" style="font-size:11px;">COLLAPSE ± LOSS OF CONSCIOUSNESS</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step" style="font-size:11px;">KEY QUESTION: Syncope, Seizure, or other?</div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- Comparison table -->
+    <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:10px 12px;width:100%;margin-bottom:8px;">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:10px;">
+        <div style="font-weight:700;color:var(--white);">Feature</div>
+        <div style="font-weight:700;color:#BFDBFE;">Syncope</div>
+        <div style="font-weight:700;color:#FCA5A5;">Seizure</div>
+
+        <div style="color:var(--gray);">Tone during</div>
+        <div style="color:#BFDBFE;">Flaccid</div>
+        <div style="color:#FCA5A5;">Tonic-clonic</div>
+
+        <div style="color:var(--gray);">Trigger</div>
+        <div style="color:#BFDBFE;">Exercise / excitement</div>
+        <div style="color:#FCA5A5;">Often at rest / sleep</div>
+
+        <div style="color:var(--gray);">Recovery</div>
+        <div style="color:#BFDBFE;">Seconds, instant</div>
+        <div style="color:#FCA5A5;">Minutes-hours (post-ictal)</div>
+
+        <div style="color:var(--gray);">Post-episode</div>
+        <div style="color:#BFDBFE;">Normal immediately</div>
+        <div style="color:#FCA5A5;">Confused, blind, hungry</div>
+
+        <div style="color:var(--gray);">AEDs</div>
+        <div style="color:#F87171;font-weight:600;">May WORSEN</div>
+        <div style="color:#A7F3D0;">Help</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
+      <div class="flow-endpoint pleural" onclick="goLesionTab('LOC-WK-COLLAPSE','Syncope')" style="font-size:10px;">
+        SYNCOPE<br>→ ECG, Echo
+      </div>
+      <div class="flow-endpoint parench" onclick="goLesionTab('LOC-WK-COLLAPSE','Seizure')" style="font-size:10px;">
+        SEIZURE<br>→ MRI, CSF
+      </div>
+      <div class="flow-endpoint mechanic" onclick="renderDiffDetail('D-WK013')" style="font-size:10px;">
+        NARCOLEPSY<br>→ trigger by food
+      </div>
+    </div>
+
+    <div style="margin-top:10px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;padding:9px 12px;font-size:10px;color:#FCA5A5;width:100%;">
+      ⚠️ Status epilepticus (>5 min): IV diazepam 0.5mg/kg OR midazolam 0.2mg/kg. Check blood glucose immediately. Do NOT give phenobarbitone IV rapidly — respiratory depression risk.
+    </div>
+  </div>
+  `);
+}
+
+function renderPUPDFlow(){
+  push(renderPUPDFlow,'PU/PD');
+  render(`
+  <div class="flow-wrap">
+
+    <div class="flow-node entry">💧 POLYURIA / POLYDIPSIA</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">STEP 1 — CONFIRM PU/PD vs POLLAKIURIA vs INCONTINENCE<div class="fn-sub" style="font-size:10px;color:var(--gray);font-weight:400;">Large volumes? Conscious voiding? No straining/haematuria?</div></div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">STEP 2 — URINALYSIS: CHECK USG<div class="fn-sub" style="font-size:10px;color:var(--gray);font-weight:400;">Key to mechanistic diagnosis — collect 3–5 serial samples (different days/times)</div></div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- USG branches -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node" style="width:100%;background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.3);color:#A7F3D0;font-size:11px;text-align:center;">USG &gt;1.030<br><span style="font-size:9px;opacity:.7">Well concentrated</span></div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;text-align:center;">Obligate polyuria unlikely<br>→ Consider primary polydipsia</div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-endpoint gi-upper" onclick="goLesionTab('LOC-PUPD-PRIM','Primary polydipsia')" style="width:100%;font-size:10px;">
+          Primary polydipsia
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node" style="width:100%;background:rgba(217,119,6,0.12);border-color:rgba(217,119,6,0.3);color:var(--amber-text);font-size:11px;text-align:center;">USG 1.008–1.029<br><span style="font-size:9px;opacity:.7">Isosthenuric / moderately concentrated</span></div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;text-align:center;">Broad differential<br>→ Full minimum database</div>
+        <div class="flow-arrow-v">↓</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
+          <div class="flow-endpoint" style="background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.4);color:#BFDBFE;font-size:9px;" onclick="goLesionTab('LOC-PUPD-RENAL','Renal / Urinary')">Renal
+          <div class="flow-endpoint" style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.4);color:#DDD6FE;font-size:9px;" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')">Endocrine
+          <div class="flow-endpoint" style="background:rgba(249,115,22,0.12);border:1.5px solid rgba(249,115,22,0.4);color:#FED7AA;font-size:9px;" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')">Systemic
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);color:#FCA5A5;font-size:9px;" onclick="goLesionTab('LOC-PUPD-NDI','Nephrogenic DI')">NDI
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node" style="width:100%;background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.3);color:#FCA5A5;font-size:11px;text-align:center;">USG &lt;1.008<br><span style="font-size:9px;opacity:.7">Hyposthenuric</span></div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;text-align:center;">Check plasma Na⁺<br>Rule out secondary causes</div>
+        <div class="flow-arrow-v">↓</div>
+        <div style="display:flex;flex-direction:column;gap:4px;width:100%;">
+          <div class="flow-endpoint" style="background:rgba(217,119,6,0.15);border:1.5px solid rgba(217,119,6,0.5);color:var(--amber-text);font-size:9px;" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine — HAC, DM')">Endocrine (HAC most common)
+          <div class="flow-endpoint" style="background:rgba(99,102,241,0.15);border:1.5px solid rgba(99,102,241,0.5);color:#C7D2FE;font-size:9px;" onclick="goLesionTab('LOC-PUPD-CDI','Central DI (ADH deficiency)')">Central DI (CDI)
+          <div class="flow-endpoint" style="background:rgba(100,116,139,0.15);border:1.5px solid rgba(100,116,139,0.5);color:#CBD5E1;font-size:9px;" onclick="goLesionTab('LOC-PUPD-NDI','Nephrogenic DI (NDI)')">Nephrogenic DI (NDI)
+          <div class="flow-endpoint gi-upper" style="font-size:9px;" onclick="goLesionTab('LOC-PUPD-PRIM','Primary polydipsia')">Primary polydipsia
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;padding:9px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;font-size:10px;color:var(--gray);width:100%;">
+      <b style="color:var(--white);">Key diagnostic steps:</b> Urinalysis → Biochemistry + haematology → Endocrine testing → Imaging → Urine culture → Serial USG → ± Desmopressin trial<br>
+      <span style="color:#F87171;">⚠️ Never restrict water or perform desmopressin trial in hyponatraemic patients</span>
+    </div>
+  </div>
+  `);
+}
+
+
+function renderDiarrhoeaFlow(){
+  push(renderDiarrhoeaFlow, "Diarrhoea");
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry">💩 DIARRHOEA</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">STEP 1 — CLASSIFY THE DIARRHOEA<div class="fn-sub" style="font-size:10px;color:var(--gray);font-weight:400">Acute or chronic? Mild or severe? Primary or secondary GI?</div></div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- Acute vs Chronic -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node insp" style="width:100%;font-size:11px;">ACUTE diarrhoea<div class="fn-sub" style="font-size:9px;opacity:.7">< 2 weeks</div></div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">Severe / haemorrhagic?</div>
+        <div class="flow-arrow-v">↓</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
+          <div>
+            <div style="font-size:9px;color:#FCA5A5;text-align:center;margin-bottom:2px;">YES — severe</div>
+            <div class="flow-endpoint pleural" onclick="goLesionTab('LOC-DI-SI','Small intestine')" style="font-size:9px;">
+              Parvovirus / HGE
+            </div>
+          </div>
+          <div>
+            <div style="font-size:9px;color:#A7F3D0;text-align:center;margin-bottom:2px;">NO — mild</div>
+            <div class="flow-node sub-step" style="font-size:9px;padding:6px 8px;">Fast 24h + bland diet ± fenbendazole. Most resolve.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node exp" style="width:100%;font-size:11px;">CHRONIC diarrhoea<div class="fn-sub" style="font-size:9px;opacity:.7">> 2-3 weeks</div></div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">STEP 2 — LOCALISE: Small bowel or large bowel?</div>
+        <div class="flow-arrow-v">↓</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+            <div class="flow-endpoint gi-upper" onclick="goLesionTab('LOC-DI-SI','Small intestine')" style="font-size:10px;">
+              Small bowel
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+            <div class="flow-endpoint gi-primary" onclick="goLesionTab('LOC-DI-LB','Large intestine / colon')" style="font-size:10px;">
+              Large bowel
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:4px;" onclick="goLesionTab('LOC-DI-SI-SEC','Small intestine — Secondary')">
+          <div class="flow-endpoint gi-secondary" style="font-size:10px;margin:0;">Secondary / Systemic →</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SB vs LB comparison -->
+    <div style="margin-top:12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;padding:10px 12px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:var(--white);margin-bottom:6px;">SMALL vs LARGE BOWEL — Key differentiators</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:10px;">
+        <div>
+          <div style="color:#A7F3D0;font-weight:600;margin-bottom:3px;">Small bowel</div>
+          <div style="color:var(--gray);line-height:1.6;">Large volume stool<br>Low frequency (3-5x/day)<br>Weight loss if chronic<br>Melaena if blood<br>Vomiting ± present<br>Borborygmus / flatulence</div>
+        </div>
+        <div>
+          <div style="color:#99F6E4;font-weight:600;margin-bottom:3px;">Large bowel</div>
+          <div style="color:var(--gray);line-height:1.6;">Small volume frequent (>5x)<br>Tenesmus / urgency<br>Usually no weight loss<br>Fresh blood (haematochezia)<br>Mucus present<br>Appetite usually normal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  `);
+}
+
+function renderJaundiceFlow(){
+  push(renderJaundiceFlow, "Jaundice");
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry">🟡 JAUNDICE / ICTERUS</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">DEFINE MECHANISM — Pre-hepatic, Hepatic or Post-hepatic?<div class="fn-sub" style="font-size:10px;color:var(--gray);font-weight:400">First key question: haematopoietic vs hepatobiliary?</div></div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node sub-step" style="font-size:11px;">CHECK: Is there significant anaemia?</div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+      <!-- Pre-hepatic branch -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node" style="width:100%;background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.35);color:#FCA5A5;font-size:11px;">YES — significant anaemia<div class="fn-sub" style="font-size:9px;opacity:.7">PCV markedly reduced</div></div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">PRE-HEPATIC<br>Haemolytic jaundice<br>Bilirubin production overwhelmed</div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-endpoint pleural" onclick="goLesionTab('LOC-JD-PREHEP','Pre-hepatic (haemolytic)')" style="width:100%;font-size:10px;">
+          Haemolytic causes
+        </div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:9px;">Regenerative? (reticulocytes)<br>Blood smear (spherocytes, Babesia)<br>Coombs test</div>
+      </div>
+
+      <!-- Hepatic / post-hepatic branch -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node" style="width:100%;background:rgba(217,119,6,0.12);border-color:rgba(217,119,6,0.35);color:var(--amber-text);font-size:11px;">NO / mild anaemia<div class="fn-sub" style="font-size:9px;opacity:.7">Hepatobiliary cause</div></div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">HEPATIC or POST-HEPATIC?<br>Ultrasound: dilated bile ducts?</div>
+        <div class="flow-arrow-v">↓</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
+          <div>
+            <div style="font-size:8px;color:var(--amber-text);text-align:center;margin-bottom:2px;">Normal bile ducts</div>
+            <div class="flow-endpoint gi-secondary" onclick="goLesionTab('LOC-JD-HEP','Hepatic')" style="font-size:9px;">
+              Hepatic causes
+            </div>
+          </div>
+          <div>
+            <div style="font-size:8px;color:#FCA5A5;text-align:center;margin-bottom:2px;">Dilated bile ducts</div>
+            <div class="flow-endpoint pleural" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')" style="font-size:9px;">
+              Post-hepatic causes
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:10px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:9px 12px;font-size:10px;color:var(--gray);width:100%;">
+      <b style="color:var(--white);">Key point (Maddison):</b> Bilirubinuria in <b>cats is ALWAYS pathological</b>. Pre-hepatic jaundice ALWAYS has significant anaemia. Distinguish hepatic from post-hepatic using abdominal ultrasound (bile duct dilation).
+    </div>
+  </div>
+  `);
+}
+
+function renderTrueVom(){
+  push(renderTrueVom,'True Vomiting');
+  render(`
+  <div class="fn fn-insp">TRUE VOMITING<div class="fn-sub">Active abdominal effort, nausea, retching, bile possible</div></div>
+  <div class="fn-arrow">↓</div>
+  <div class="fn fn-step">IS VOMITING RELATED TO EATING?</div>
+  <div class="fn-arrow">↓</div>
+  <div style="margin-bottom:6px;"><div class="branch-btn" style="background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.35);color:#A7F3D0;" onclick="goLocEp('LOC-GI-UPPER','Stomach','Gastrointestinal','fn-ep-gi-upper')">
+    YES — during or shortly after eating<div class="fn-sub">→ Stomach</div>
+  </div></div>
+  <div class="fn fn-step">VOMITING UNRELATED TO EATING → Are there other systemic signs?<div class="fn-sub">PU/PD, jaundice, weight loss, malaise preceding vomiting</div></div>
+  <div class="fn-arrow">↓</div>
+  <div class="fn-row">
+    <div class="fn-ep fn-ep-gi-primary" onclick="goLocEp('LOC-GI-PRIMARY','Primary GI — intestinal','Gastrointestinal','fn-ep-gi-primary')">
+      <div class="ep-sys">NO systemic signs</div>
+      <div class="ep-loc">Primary GI</div>
+      <div class="ep-badge">Bright, alert patient</div>
+    </div>
+    <div class="fn-ep fn-ep-gi-secondary" onclick="goLocEp('LOC-GI-SECONDARY','Secondary / Extra-GI','Extra-gastrointestinal','fn-ep-gi-secondary')">
+      <div class="ep-sys">YES systemic signs</div>
+      <div class="ep-loc">Secondary / Extra-GI</div>
+      <div class="ep-badge">Metabolic illness</div>
+    </div>
+  </div>
+  `);
+}
+
+// ── LESION DETAIL ─────────────────────────────────────────────────────────────
+function renderLesionDetail(id){
+  const l = DB.lesion_type.find(x=>x.id===id);
+  if(!l)return;
+  push(()=>renderLesionDetail(id), l.sub);
+  const diffs = DB.differentials.filter(d=>d.filter===l.filter).sort((a,b)=>a.order-b.order);
+  render(`
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">${urgTag(l.urg)}${spTag(l.sp)}<span class="tag tag-sp-all">${esc(l.cat)}</span></div>
+  <div class="detail-label">Key clinical signs</div>
+  <div class="detail-val highlight">${esc(l.signs)}</div>
+  ${l.note?`<div class="detail-label">Clinical notes</div><div class="detail-val">${esc(l.note)}</div>`:''}
+  ${l.proto?`
+  <hr class="sep">
+  <div class="card" onclick="renderProtoDetail('${l.proto}')">
+    <div class="card-row"><div><div class="card-title">⚡ Protocol: ${esc(l.proto)}</div><div class="card-sub">Tap to open</div></div><div class="card-arrow">›</div></div>
+  </div>`:''}
+  <hr class="sep">
+  <div class="stitle">${diffs.length} differential${diffs.length!==1?'s':''}</div>
+  ${diffs.length ? diffs.map((d,i)=>`
+  <div class="diff-row" onclick="renderDiffDetail('${d.id}')">
+    <div class="diff-num">${i+1}</div>
+    <div class="diff-body">
+      <div class="diff-name">${esc(d.name)}</div>
+      <div class="diff-feat">${esc(d.feat)}</div>
+    </div>
+    <div class="diff-arrow">›</div>
+  </div>`).join('') : '<div class="empty"><p>No differentials listed yet for this lesion type.</p></div>'}
+  `);
+}
+
+// ── LESION HOME ───────────────────────────────────────────────────────────────
+
+function renderLesionHome(){
+  render(`
+  <div class="stitle">Diagnostic approaches</div>
+  <div class="card" onclick="renderDxRegurgitation()"><div class="card-row"><div class="card-icon">🔄</div><div style="flex:1"><div class="card-title">Regurgitation</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxDyspnoea()"><div class="card-row"><div class="card-icon">🌬️</div><div style="flex:1"><div class="card-title">Dyspnoea</div><div class="card-sub">Dog 🐕 + Cat 🐱 · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxVomiting()"><div class="card-row"><div class="card-icon">🤢</div><div style="flex:1"><div class="card-title">Vomiting</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxDiarrhoea()"><div class="card-row"><div class="card-icon">💩</div><div style="flex:1"><div class="card-title">Diarrhoea</div><div class="card-sub">Dog + Cat · Small bowel vs large bowel diagnostic approach</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxJaundice()"><div class="card-row"><div class="card-icon">🟡</div><div style="flex:1"><div class="card-title">Jaundice</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxWeakness()"><div class="card-row"><div class="card-icon">⚡</div><div style="flex:1"><div class="card-title">Weakness / Collapse</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxPUPD()"><div class="card-row"><div class="card-icon">💧</div><div style="flex:1"><div class="card-title">Polyuria / Polydipsia</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxSeizures()"><div class="card-row"><div class="card-icon">🧠</div><div style="flex:1"><div class="card-title">Seizures</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxMyelopathy()"><div class="card-row"><div class="card-icon">🦴</div><div style="flex:1"><div class="card-title">Acute Myelopathy</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxVestibular()"><div class="card-row"><div class="card-icon">🌀</div><div style="flex:1"><div class="card-title">Acute Vestibular</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxEncephalopathy()"><div class="card-row"><div class="card-icon">🧬</div><div style="flex:1"><div class="card-title">Acute Encephalopathy</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxCoughing()"><div class="card-row"><div class="card-icon">🫁</div><div style="flex:1"><div class="card-title">Coughing</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxSneezing()"><div class="card-row"><div class="card-icon">🤧</div><div style="flex:1"><div class="card-title">Sneezing</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxPaleGums()"><div class="card-row"><div class="card-icon">🩸</div><div style="flex:1"><div class="card-title">Pale Mucous Membranes</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxAtaxia()"><div class="card-row"><div class="card-icon">🚶</div><div style="flex:1"><div class="card-title">Ataxia</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment. Always verify clinical decisions independently.</div>
+  `);
+}
+
+function renderLesionFlow(locId, locName){
+  push(()=>renderLesionFlow(locId,locName), locName);
+  const allLesions = DB.lesion_type.filter(l=>l.loc===locId);
+  const cats = [...new Set(allLesions.map(l=>l.cat))];
+
+  // Category colour map
+  const CAT_STYLE = {
+    'Fluid':              'background:rgba(37,99,235,0.12);border-color:rgba(37,99,235,0.35);color:#BFDBFE;',
+    'Gas':                'background:rgba(217,119,6,0.12);border-color:rgba(217,119,6,0.35);color:var(--amber-text);',
+    'Mass':               'background:rgba(139,92,246,0.12);border-color:rgba(139,92,246,0.35);color:#DDD6FE;',
+    'Mass/Neoplasia':     'background:rgba(139,92,246,0.12);border-color:rgba(139,92,246,0.35);color:#DDD6FE;',
+    'Fluid/Oedema':       'background:rgba(37,99,235,0.12);border-color:rgba(37,99,235,0.35);color:#BFDBFE;',
+    'Fluid/Inflammation': 'background:rgba(37,99,235,0.12);border-color:rgba(37,99,235,0.35);color:#BFDBFE;',
+    'Inflammation':       'background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.35);color:#A7F3D0;',
+    'Obstruction':        'background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.35);color:#FCA5A5;',
+    'Obstruction/Dysmotility': 'background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.35);color:#FCA5A5;',
+    'Dysmotility':        'background:rgba(100,116,139,0.12);border-color:rgba(100,116,139,0.35);color:#CBD5E1;',
+    'Ulceration':         'background:rgba(249,115,22,0.12);border-color:rgba(249,115,22,0.35);color:#FED7AA;',
+    'Neuromuscular':      'background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.35);color:#E9D5FF;',
+    'Dynamic collapse':   'background:rgba(100,116,139,0.12);border-color:rgba(100,116,139,0.35);color:#CBD5E1;',
+    'Metabolic':          'background:rgba(249,115,22,0.12);border-color:rgba(249,115,22,0.35);color:#FED7AA;',
+    'Endocrine':          'background:rgba(217,119,6,0.12);border-color:rgba(217,119,6,0.35);color:var(--amber-text);',
+  };
+  const defaultStyle = 'background:var(--card2);border-color:var(--border2);color:var(--white);';
+
+  const catGrid = cats.length <= 3 ? `grid-template-columns:repeat(${cats.length},1fr)`
+                : cats.length === 4 ? 'grid-template-columns:repeat(4,1fr)'
+                : 'grid-template-columns:repeat(3,1fr)';
+
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry">📍 ${esc(locName)}</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step" style="font-size:11px;">IDENTIFY LESION CATEGORY</div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- Category row -->
+    <div style="display:grid;${catGrid};gap:6px;width:100%;">
+      ${cats.map(cat=>{
+        const style = CAT_STYLE[cat] || defaultStyle;
+        const items = allLesions.filter(l=>l.cat===cat);
+        return `<div class="flow-node" style="${style}cursor:pointer;font-size:11px;" onclick="renderSubTypeFlow('${locId}','${esc(locName)}','${esc(cat)}')">${esc(cat)}<br><span style="font-size:9px;opacity:.7">${items.length} type${items.length!==1?'s':''}</span></div>`;
+      }).join('')}
+    </div>
+
+    <div class="flow-arrow-v">↓</div>
+    <div style="padding:9px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;font-size:11px;color:var(--gray);text-align:center;width:100%;">
+      Tap a category to see sub-types and urgency
+    </div>
+  </div>
+  `);
+}
+
+function renderSubTypeFlow(locId, locName, cat){
+  push(()=>renderSubTypeFlow(locId,locName,cat), cat);
+  const items = DB.lesion_type.filter(l=>l.loc===locId && l.cat===cat);
+
+  const URG_STYLE = {
+    'EMERGENCY': 'background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.5);color:#FCA5A5;',
+    'High':      'background:rgba(217,119,6,0.15);border-color:rgba(217,119,6,0.5);color:var(--amber-text);',
+    'Moderate':  'background:rgba(13,148,136,0.15);border-color:rgba(13,148,136,0.5);color:#99F6E4;',
+    'Moderate–High': 'background:rgba(217,119,6,0.15);border-color:rgba(217,119,6,0.5);color:var(--amber-text);',
+    'Low–Moderate':  'background:rgba(13,148,136,0.15);border-color:rgba(13,148,136,0.5);color:#99F6E4;',
+    'Low':       'background:rgba(37,99,235,0.12);border-color:rgba(37,99,235,0.35);color:#BFDBFE;',
+  };
+
+  const subGrid = items.length <= 2 ? `grid-template-columns:repeat(${items.length},1fr)`
+               : items.length === 3 ? 'grid-template-columns:repeat(3,1fr)'
+               : 'grid-template-columns:repeat(2,1fr)';
+
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="font-size:11px;">📍 ${esc(locName)}</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node" style="background:rgba(255,255,255,0.07);border-color:var(--border2);color:var(--white);font-size:12px;">${esc(cat)}</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step" style="font-size:11px;">IDENTIFY SUB-TYPE</div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- Sub-type cards — tappable words -->
+    <div style="display:grid;${subGrid};gap:8px;width:100%;">
+      ${items.map(item=>{
+        const s = URG_STYLE[item.urg] || URG_STYLE['Moderate'];
+        const hasProto = !!item.proto;
+        return `<div onclick="renderSubTypeDetail('${item.id}')" style="${s}border:1.5px solid;border-radius:12px;padding:10px 10px;cursor:pointer;transition:all .2s;font-size:11px;font-weight:600;text-align:center;line-height:1.4;">
+          ${esc(item.sub)}
+          <div style="font-size:9px;font-weight:400;opacity:.75;margin-top:4px;">${urgTag(item.urg)}</div>
+          ${hasProto ? `<div style="font-size:9px;color:#2DD4BF;margin-top:3px;">→ Protocol available</div>` : ''}
+        </div>`;
+      }).join('')}
+    </div>
+
+    <div class="flow-arrow-v">↓</div>
+    <div style="padding:9px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;font-size:11px;color:var(--gray);text-align:center;width:100%;">
+      Tap a sub-type to see key signs, urgency and differentials
+    </div>
+  </div>
+  `);
+}
+
+function renderSubTypeDetail(id){
+  const l = DB.lesion_type.find(x=>x.id===id);
+  if(!l)return;
+  if(l.directDis && l.dis){ currentNav=2; _setTab(2); renderDiseasePage(l.dis); return; }
+  const title = l.sub.slice(0,30)+(l.sub.length>30?'…':'');
+  push(()=>renderSubTypeDetail(id), title);
+  currentNoteKey=id; currentNoteTitle=l.sub;
+
+  const diffs = DB.differentials.filter(d=>d.filter===l.filter).sort((a,b)=>a.order-b.order);
+  const isEM = l.urg === 'EMERGENCY';
+
+  // Collect unique diagnostic tests from differentials
+  const dxTests = new Set();
+  diffs.forEach(d=>{
+    if(d.minDx) d.minDx.split(',').forEach(t=>dxTests.add(t.trim()));
+    if(d.addDx) d.addDx.split(',').forEach(t=>{if(t.trim())dxTests.add(t.trim());});
+  });
+
+  render(`
+  ${isEM ? '<div class="em-alert">⚠️ EMERGENCY — initiate stabilisation before full diagnostic workup</div>' : ''}
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">${urgTag(l.urg)}${spTag(l.sp)}<span class="tag tag-sp-all">${esc(l.cat)}</span></div>
+
+  ${l.proto?`
+  <div class="card" style="margin-bottom:14px;" onclick="renderProtoDetail('${l.proto}')">
+    <div class="card-row"><div><div class="card-title">⚡ Protocol: ${esc(l.proto)}</div><div class="card-sub">Tap to open step-by-step protocol</div></div><div class="card-arrow">›</div></div>
+  </div>`:''}
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Etiology</div>
+    <div style="font-size:12px;color:var(--white);line-height:1.6;">${esc(l.sub)}</div>
+    ${(l.etiology||diffs.length) ? '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">'+(l.etiology ? l.etiology.split('|').map(e=>{const t=e.trim();if(t.startsWith('#'))return '<div style="font-size:10px;font-weight:700;color:var(--teal-light);margin-top:8px;margin-bottom:2px;">▸ '+esc(t.slice(1).trim())+'</div>';const isInd=t.startsWith('-');const inner=isInd?t.slice(1).trim():t;if(inner.startsWith('@')){const ci=inner.indexOf(':');const did=ci>0?inner.slice(1,ci):inner.slice(1);const lbl=ci>0?inner.slice(ci+1):did;const lk='<span onclick="renderDiseasePage(\''+did+'\')" style="color:var(--teal-light);text-decoration:underline;cursor:pointer;">'+esc(lbl)+'</span>';return isInd?'<div style="display:flex;align-items:baseline;gap:4px;font-size:11px;color:var(--gray);line-height:1.5;padding-left:14px;margin-bottom:1px;"><span style="flex-shrink:0;opacity:.5;">–</span>'+lk+'</div>':'<div style="display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;"><span style="color:var(--teal-light);flex-shrink:0;">•</span>'+lk+'</div>';}if(isInd)return '<div style="display:flex;align-items:baseline;gap:4px;font-size:11px;color:var(--gray);line-height:1.5;padding-left:14px;margin-bottom:1px;"><span style="flex-shrink:0;opacity:.5;">–</span>'+esc(inner)+'</div>';return '<div style="display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;"><span style="color:var(--teal-light);flex-shrink:0;">•</span>'+esc(inner)+'</div>';}).join('') : diffs.map(d=>'<div style="display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;"><span style="color:var(--teal-light);flex-shrink:0;">•</span>'+esc(d.name)+'</div>').join(''))+'</div>' : ''}
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Clinical Signs</div>
+    <div style="font-size:12px;color:var(--gray);line-height:1.6;">${esc(l.signs)}</div>
+  </div>
+
+  ${l.patho?`<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Pathophysiology</div>
+    ${l.patho.split('|').map(p=>'<div style="display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;margin-bottom:2px;"><span style="color:var(--teal-light);flex-shrink:0;">•</span>'+esc(p.trim())+'</div>').join('')}
+  </div>`:''}
+
+  ${(l.diag||dxTests.size)?`
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Diagnostic Investigation</div>
+    ${l.diag ? l.diag.split('|').map(d=>{const t=d.trim();if(t.startsWith('#'))return '<div style="font-size:10px;font-weight:700;color:var(--teal-light);margin-top:8px;margin-bottom:2px;">▸ '+esc(t.slice(1).trim())+'</div>';return '<div style="display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;margin-bottom:2px;"><span style="color:var(--teal-light);flex-shrink:0;">•</span>'+esc(t)+'</div>';}).join('') : ''}
+    ${(!l.diag && dxTests.size) ? '<div>'+ [...dxTests].map(t=>'<div style="display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;margin-bottom:2px;"><span style="color:var(--teal-light);flex-shrink:0;">•</span>'+esc(t)+'</div>').join('')+'</div>' : ''}
+  </div>`:''}
+
+  ${l.treat?`<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">General Treatment</div>
+    ${l.treat.split('|').map(t=>{const s=t.trim();if(s.startsWith('#'))return '<div style="font-size:10px;font-weight:700;color:var(--teal-light);margin-top:8px;margin-bottom:2px;">▸ '+esc(s.slice(1).trim())+'</div>';if(s.startsWith('-'))return '<div style="display:flex;align-items:baseline;gap:4px;font-size:11px;color:var(--gray);line-height:1.5;padding-left:14px;margin-bottom:1px;"><span style="flex-shrink:0;opacity:.5;">–</span>'+esc(s.slice(1).trim())+'</div>';return '<div style="display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;margin-bottom:2px;"><span style="color:var(--teal-light);flex-shrink:0;">•</span>'+esc(s)+'</div>';}).join('')}
+  </div>`:''}
+
+  ${l.ddx?`<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Differential Diagnosis</div>
+    ${l.ddx.split('|').map(d=>{const t=d.trim();if(t.startsWith('#'))return '<div style="font-size:10px;font-weight:700;color:var(--teal-light);margin-top:8px;margin-bottom:2px;">▸ '+esc(t.slice(1).trim())+'</div>';if(t.startsWith('-'))return '<div style="display:flex;align-items:baseline;gap:4px;font-size:11px;color:var(--gray);line-height:1.5;padding-left:14px;margin-bottom:1px;"><span style="flex-shrink:0;opacity:.5;">–</span>'+esc(t.slice(1).trim())+'</div>';return '<div style="display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;margin-bottom:2px;"><span style="color:var(--teal-light);flex-shrink:0;">•</span>'+esc(t)+'</div>';}).join('')}
+  </div>`:''}
+
+  ${l.note?`<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;">
+    <div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Notes</div>
+    <div style="font-size:11px;color:var(--gray);line-height:1.6;">${esc(l.note)}</div>
+  </div>`:''}
+
+  ${l.dis?`
+  <div class="card" style="margin-bottom:14px;" onclick="renderDiseasePage('${l.dis}')">
+    <div class="card-row"><div><div class="card-title">📋 Disease Page</div><div class="card-sub">Tap to view full disease profile</div></div><div class="card-arrow">›</div></div>
+  </div>`:''}
+
+  `);
+}
+
+function renderDiffFlowchart(diffs, subName){
+  // Render differentials as a flowchart — location box → ranked diff nodes → tap → disease page
+  const cols = diffs.length <= 2 ? `grid-template-columns:repeat(${diffs.length},1fr)`
+             : diffs.length === 3 ? 'grid-template-columns:repeat(3,1fr)'
+             : 'grid-template-columns:repeat(2,1fr)';
+
+  return `
+  <div class="flow-wrap" style="gap:4px;">
+    <div class="flow-node step" style="font-size:11px;">POSSIBLE CAUSES — ${esc(subName)}</div>
+    <div class="flow-arrow-v">↓</div>
+    <div style="display:grid;${cols};gap:7px;width:100%;">
+      ${diffs.map((d,i)=>`
+      <div onclick="renderDiffDetail('${d.id}')" style="background:rgba(255,255,255,0.05);border:1px solid var(--border2);border-radius:12px;padding:10px 10px;cursor:pointer;transition:all .2s;text-align:center;">
+        <div style="font-size:10px;font-weight:700;color:var(--white);line-height:1.4;margin-bottom:5px;">${esc(d.name)}</div>
+        <div style="font-size:9px;color:var(--gray);line-height:1.4;margin-bottom:5px;">${esc((d.feat||'').slice(0,55))}${(d.feat||'').length>55?'…':''}</div>
+        <div style="font-size:9px;background:var(--card2);border-radius:6px;padding:2px 6px;color:var(--gray2);">Dx: ${esc((d.minDx||'').slice(0,40))}${(d.minDx||'').length>40?'…':''}</div>
+        ${d.dis?`<div style="font-size:9px;color:var(--teal-light);margin-top:5px;font-weight:600;">📋 Disease page →</div>`:''}
+      </div>`).join('')}
+    </div>
+  </div>`;
+}
+
+// ── DIFFERENTIALS HOME ────────────────────────────────────────────────────────
+function renderDiffHome(){
+  render(`
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" placeholder="Search differentials..." oninput="filterDiffs(this.value)" id="diff-search">
+  </div>
+  <div style="padding:9px 12px;background:rgba(13,148,136,0.07);border:1px solid rgba(13,148,136,0.2);border-radius:10px;font-size:11px;color:#2DD4BF;margin-bottom:12px;">
+    💡 Best accessed via Lesion tab: tap a location → category → sub-type → see differentials as a flowchart
+  </div>
+  <div class="stitle">${DB.differentials.length} differentials — all signs</div>
+  <div id="diff-list">${renderDiffRows(DB.differentials)}</div>
+  `);
+}
+function renderDiffRows(diffs){
+  if(!diffs.length) return'<div class="empty"><p>No results</p></div>';
+  return diffs.map((d,i)=>`
+  <div class="diff-row" onclick="renderDiffDetail('${d.id}')">
+    <div class="diff-num">${i+1}</div>
+    <div class="diff-body">
+      <div class="diff-name">${esc(d.name)}</div>
+      <div class="diff-feat">${esc((d.feat||'').slice(0,70))}${(d.feat||'').length>70?'…':''}</div>
+    </div>
+    <div class="diff-arrow">›</div>
+  </div>`).join('');
+}
+function filterDiffs(q){
+  const filtered = q ? DB.differentials.filter(d=>
+    d.name.toLowerCase().includes(q.toLowerCase()) ||
+    (d.feat||'').toLowerCase().includes(q.toLowerCase())
+  ) : DB.differentials;
+  $('diff-list').innerHTML = renderDiffRows(filtered);
+}
+
+// ── DIFF DETAIL ───────────────────────────────────────────────────────────────
+function renderDiffDetail(id){
+  const d = DB.differentials.find(x=>x.id===id);
+  if(!d)return;
+  push(()=>renderDiffDetail(id), d.name.slice(0,30)+(d.name.length>30?'…':''));
+  currentNoteKey=id; currentNoteTitle=d.name;
+  const dis = d.dis ? DB.disease_page.find(x=>x.id===d.dis) : null;
+  render(`
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">${spTag(d.sp)}</div>
+  <div class="detail-label">Key distinguishing feature</div>
+  <div class="detail-val highlight">${esc(d.feat)}</div>
+  <div class="detail-label">Minimum diagnostics</div>
+  <div class="detail-val">${esc(d.minDx)}</div>
+  ${d.addDx?`<div class="detail-label">Additional diagnostics</div><div class="detail-val">${esc(d.addDx)}</div>`:''}
+  ${dis?`
+  <hr class="sep">
+  <div class="card" onclick="renderDiseasePage('${dis.id}')">
+    <div class="card-row"><div><div class="card-title">📋 ${esc(dis.name)}</div><div class="card-sub">Open full disease page</div></div><div class="card-arrow">›</div></div>
+  </div>`:''}  `);
+}
+
+// ── DISEASE HOME ──────────────────────────────────────────────────────────────
+function renderDiseaseHome(){
+  render(`
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" placeholder="Search disease pages..." oninput="filterDiseases(this.value)" id="dis-search">
+  </div>
+  <div class="stitle">${DB.disease_page.length} disease pages</div>
+  <div id="dis-list">${renderDiseaseCards(DB.disease_page)}</div>
+  `);
+}
+function renderDiseaseCards(diseases){
+  if(!diseases.length) return'<div class="empty"><p>No results</p></div>';
+  return diseases.map(d=>`
+  <div class="card" onclick="renderDiseasePage('${d.id}')">
+    <div class="card-row">
+      <div style="flex:1">
+        <div class="card-title">${esc(d.name)}</div>
+        <div class="card-sub" style="margin-top:3px;">${spTag(d.sp)} <span style="font-size:11px;color:var(--gray2)">${esc(d.synonyms||'')}</span></div>
+      </div>
+      <div class="card-arrow">›</div>
+    </div>
+  </div>`).join('');
+}
+function filterDiseases(q){
+  const filtered = q ? DB.disease_page.filter(d=>
+    d.name.toLowerCase().includes(q.toLowerCase()) ||
+    (d.synonyms||'').toLowerCase().includes(q.toLowerCase())
+  ) : DB.disease_page;
+  $('dis-list').innerHTML = renderDiseaseCards(filtered);
+}
+
+// ── DISEASE PAGE ──────────────────────────────────────────────────────────────
+function renderDiseasePage(id){
+  const d = DB.disease_page.find(x=>x.id===id);
+  if(!d){render('<div class="empty"><h3>Not found</h3><p>Disease page coming soon — add content in your Google Sheet.</p></div>');return;}
+  push(()=>renderDiseasePage(id), '');
+  const C = (title,body)=>`<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;"><div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">${title}</div>${body}</div>`;
+  const bul = (str)=>str.split('|').map(s=>{const t=s.trim();if(t.startsWith('#'))return '<div style="font-size:10px;font-weight:700;color:var(--teal-light);margin-top:8px;margin-bottom:2px;">▸ '+esc(t.slice(1).trim())+'</div>';if(t.startsWith('-'))return '<div style="display:flex;align-items:baseline;gap:4px;font-size:11px;color:var(--gray);line-height:1.5;padding-left:14px;margin-bottom:1px;"><span style="flex-shrink:0;opacity:.5;">–</span>'+esc(t.slice(1).trim())+'</div>';return '<div style="display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;margin-bottom:2px;"><span style="color:var(--teal-light);flex-shrink:0;">•</span>'+esc(t)+'</div>';}).join('');
+  const txt = (str)=>`<div style="font-size:12px;color:var(--gray);line-height:1.6;">${esc(str)}</div>`;
+  const pip = (str)=>str&&str.includes('|');
+  const sub = (label)=>`<div style="font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-top:10px;margin-bottom:4px;padding-top:8px;border-top:1px solid var(--border);">${label}</div>`;
+  render(`
+  <div style="font-size:18px;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.3;">${esc(d.name)}</div>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;">${spTag(d.sp)}</div>
+  ${d.topAlert?`<div style="background:rgba(220,38,38,0.18);border:1.5px solid rgba(220,38,38,0.5);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;font-weight:700;color:#FCA5A5;letter-spacing:.01em;">🚨 ${esc(d.topAlert)}</div>`:''}
+  ${d.severe?`<div class="em-alert">⚠️ ${esc(d.severe)}</div>`:''}
+  ${d.etiology?C('Etiology',bul(d.etiology)):''}
+  ${C('Signalment',`
+    <div style="font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">Breed</div>
+    <div style="font-size:12px;color:var(--gray);line-height:1.6;margin-bottom:8px;">${esc(d.breed)}</div>
+    <div style="font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">Age</div>
+    <div style="font-size:12px;color:var(--gray);line-height:1.6;margin-bottom:8px;">${esc(d.age)}</div>
+    ${d.sex?`<div style="font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">Sex</div><div style="font-size:12px;color:var(--gray);line-height:1.6;">${esc(d.sex)}</div>`:''}
+  `)}
+  ${d.risk?C('Risk Factors',bul(d.risk)):''}
+  ${C('Pathophysiology',pip(d.path)?bul(d.path):txt(d.path))}
+  ${C('Clinical Signs',pip(d.signs)?bul(d.signs):txt(d.signs))}
+  ${C('Diagnostic Investigation',(pip(d.conf)?bul(d.conf):txt(d.conf))+(d.supp?sub('Supportive Diagnostics')+(pip(d.supp)?bul(d.supp):txt(d.supp)):''))}
+  ${C('Treatment',`<div style="font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">First-line</div>${pip(d.tx1)?bul(d.tx1):txt(d.tx1)}${d.tx2?sub('Second-line / Alternatives')+(pip(d.tx2)?bul(d.tx2):txt(d.tx2)):''}`)}
+  ${d.outpatient?C('Outpatient Protocol',pip(d.outpatient)?bul(d.outpatient):txt(d.outpatient)):''}
+  ${C('Monitoring',pip(d.monitor)?bul(d.monitor):txt(d.monitor))}
+  ${C('Prognosis',txt(d.prog))}
+  ${d.ddx?C('Differential Diagnosis',bul(d.ddx)):''}
+  <div class="pearl">💡 Clinical pearls: ${esc(d.pearl)}</div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── PROTOCOL LIST ─────────────────────────────────────────────────────────────
+function renderProtoList(){
+  render(`
+  <div class="stitle">Emergency protocols</div>
+  ${DB.protocols.map(p=>`
+  <div class="card" onclick="renderProtoDetail('${p.id}')">
+    <div class="card-row">
+      <div style="flex:1">
+        <div class="card-title">⚡ ${esc(p.name)}</div>
+        <div class="card-sub" style="margin-top:3px;">
+          <span class="tag ${p.priority==='IMMEDIATE'?'tag-em':'tag-hi'}">${p.priority}</span>
+          <span style="font-size:11px;color:var(--gray2);margin-left:6px;">${esc(p.trigger)}</span>
+        </div>
+      </div>
+      <div class="card-arrow">›</div>
+    </div>
+  </div>`).join('')}
+  <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
+  `);
+}
+
+function renderProtoDetail(id){
+  const p = DB.protocols.find(x=>x.id===id);
+  if(!p)return;
+  push(()=>renderProtoDetail(id), p.name.slice(0,28));
+  render(`
+  <div class="em-alert">${p.priority==='IMMEDIATE'?'🚨':'⚡'} ${p.priority} — ${esc(p.trigger)}</div>
+  <div class="stitle">Step-by-step</div>
+  ${p.steps.map(s=>`
+  <div class="proto-step">
+    <div class="step-num">${s.n}</div>
+    <div class="step-body">
+      <div class="step-action">${esc(s.action)}</div>
+      ${s.note?`<div class="step-note">💡 ${esc(s.note)}</div>`:''}
+      ${s.branch?`<div class="step-branch">↳ ${esc(s.branch)}</div>`:''}
+      ${s.flag?`<div class="step-flag">${esc(s.flag)}</div>`:''}
+    </div>
+  </div>`).join('')}  <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
+  `);
+}
+
+
+// Navigate to lesion details, staying within the current tab
+function goLesionTab(locId, locName){
+  push(()=>goLesionTab(locId,locName), locName);
+  const lesions = DB.lesion_type.filter(l=>l.loc===locId);
+  if(!lesions.length){render('<div class="empty"><p>No lesion types for this location yet.</p></div>');return;}
+
+    // Group by category
+    const groups = {};
+    lesions.forEach(l=>{const cat=l.cat||'Other';if(!groups[cat])groups[cat]=[];groups[cat].push(l);});
+    const cats = Object.keys(groups);
+    const cols = cats.length;
+    // Scale down text/padding when many columns must fit side-by-side
+    const catFontSize  = cols <= 4 ? 11 : cols === 5 ? 10 : 9;
+    const cardFontSize = cols <= 4 ? 10 : cols === 5 ?  9 : 8;
+    const cardPadding  = cols <= 4 ? '6px 8px' : cols === 5 ? '5px 6px' : '3px 4px';
+    const noteFontSize = cols <= 4 ?  9 : 7;
+    const noteChars    = cols <= 4 ? 50 : 30;
+    const diffFontSize = cols <= 5 ?  9 : 8;
+
+    // Category colours
+    const CC = {
+      'Mass':'rgba(139,92,246,','Mass/Neoplasia':'rgba(139,92,246,',
+      'Fluid':'rgba(37,99,235,','Fluid/Oedema':'rgba(37,99,235,',
+      'Gas':'rgba(217,119,6,','Infection':'rgba(220,38,38,',
+      'Infection/Inflammation':'rgba(220,38,38,','Inflammation':'rgba(249,115,22,',
+      'Structural':'rgba(100,116,139,','Cardiac':'rgba(220,38,38,',
+      'Infectious':'rgba(220,38,38,','Inflammatory':'rgba(249,115,22,',
+      'Neuromuscular':'rgba(99,102,241,','Dynamic collapse':'rgba(100,116,139,',
+      'Obstruction':'rgba(220,38,38,','Ulceration':'rgba(220,38,38,',
+      'Dysmotility':'rgba(139,92,246,','Haemolytic':'rgba(220,38,38,',
+      'Hepatocellular':'rgba(217,119,6,','Biliary obstruction':'rgba(13,148,136,',
+      'Compressive':'rgba(37,99,235,','Vascular':'rgba(220,38,38,',
+      'Non-compressive':'rgba(13,148,136,','Traumatic':'rgba(220,38,38,',
+      'Peripheral':'rgba(13,148,136,','Central':'rgba(220,38,38,',
+      'Bilateral':'rgba(217,119,6,','Neoplastic':'rgba(139,92,246,',
+      'Immune-mediated':'rgba(249,115,22,','Metabolic':'rgba(217,119,6,',
+      'Idiopathic':'rgba(37,99,235,','Reactive':'rgba(220,38,38,',
+      'Regenerative':'rgba(13,148,136,','Non-regenerative':'rgba(220,38,38,',
+      'Pre-regenerative':'rgba(217,119,6,','Shock':'rgba(220,38,38,',
+      'Foreign body':'rgba(100,116,139,','Dental':'rgba(217,119,6,',
+      'Parasitic':'rgba(217,119,6,','Toxic':'rgba(220,38,38,',
+      'Inherited':'rgba(139,92,246,','Endocrine':'rgba(217,119,6,',
+      'Endocrine/Metabolic':'rgba(217,119,6,',
+      'Cardiovascular':'rgba(220,38,38,','Junctionopathy':'rgba(99,102,241,',
+      'Neuropathy':'rgba(139,92,246,','Myopathy':'rgba(249,115,22,',
+      'Syncope':'rgba(220,38,38,','Seizure':'rgba(220,38,38,',
+      'Sleep disorder':'rgba(99,102,241,','Stress':'rgba(100,116,139,',
+      'Dietary':'rgba(13,148,136,','Antibiotic-responsive':'rgba(37,99,235,',
+      'Infiltrative':'rgba(249,115,22,','Maldigestion':'rgba(139,92,246,',
+      'Protein-losing':'rgba(220,38,38,','Secondary GI':'rgba(217,119,6,',
+      'Neoplasia':'rgba(249,115,22,','Obstruction/Dysmotility':'rgba(220,38,38,',
+      'Behavioural/Neurological':'rgba(99,102,241,',
+      'Renal failure':'rgba(220,38,38,','Osmotic diuresis':'rgba(37,99,235,',
+      'Adrenal':'rgba(217,119,6,','Pancreatic':'rgba(139,92,246,',
+      'Thyroid':'rgba(13,148,136,','Calcium':'rgba(249,115,22,',
+      'Pituitary':'rgba(99,102,241,','Hepatic':'rgba(217,119,6,',
+      'Uterine':'rgba(220,38,38,','Electrolyte':'rgba(37,99,235,',
+      'Neurological':'rgba(139,92,246,','Renal tubular':'rgba(220,38,38,',
+    };
+    const def='rgba(148,163,184,';
+    function cBg(c){return (CC[c]||def)+'0.12)';}
+    function cBd(c){return (CC[c]||def)+'0.4)';}
+    function cTx(c){
+      const m={'rgba(37,99,235,':'#93C5FD','rgba(139,92,246,':'#DDD6FE','rgba(220,38,38,':'#FCA5A5',
+        'rgba(217,119,6,':'var(--amber-text)','rgba(13,148,136,':'#99F6E4','rgba(249,115,22,':'#FED7AA',
+        'rgba(99,102,241,':'#C7D2FE','rgba(100,116,139,':'#CBD5E1','rgba(148,163,184,':'#CBD5E1'};
+      return m[CC[c]||def]||'#CBD5E1';
+    }
+    function isEM(u){return u&&u.toUpperCase()==='EMERGENCY';}
+
+    let html = '<div class="flow-wrap">';
+    html += `<div class="flow-node entry">${esc(locName)}</div>`;
+    html += '<div class="flow-arrow-v">\u2193</div>';
+    html += '<div class="flow-node step">IDENTIFY LESION CATEGORY</div>';
+    html += '<div class="flow-arrow-v">\u2193</div>';
+
+    // Category row
+    html += `<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;">`;
+    cats.forEach(cat=>{
+      html += `<div class="flow-node" style="background:${cBg(cat)};border-color:${cBd(cat)};color:${cTx(cat)};font-size:${catFontSize}px;cursor:default;min-width:0;">${esc(cat)}</div>`;
+    });
+    html += '</div>';
+
+    // Arrows — no margin-top so they connect flush to category boxes
+    html += `<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;">`;
+    cats.forEach(()=>{html += '<div class="flow-arrow-v">\u2193</div>';});
+    html += '</div>';
+
+    // Subtypes as tappable nodes under each column
+    html += `<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;align-items:start;">`;
+    cats.forEach(cat=>{
+      const items = groups[cat];
+      html += '<div style="display:flex;flex-direction:column;gap:4px;">';
+      items.forEach(l=>{
+        const em = isEM(l.urg) ? ' <span class="tag tag-em" style="font-size:8px;padding:2px 5px;">\u26a0\ufe0f</span>' : '';
+        const dc = DB.differentials.filter(d=>d.filter===l.filter).length;
+        html += `<div onclick="renderSubTypeDetail('${l.id}')" style="border-radius:8px;padding:${cardPadding};font-size:${cardFontSize}px;font-weight:600;text-align:center;border:1.5px solid ${cBd(cat)};background:${cBg(cat)};color:${cTx(cat)};cursor:pointer;transition:all .2s;line-height:1.3;word-break:break-word;" onmouseover="this.style.filter='brightness(1.2)'" onmouseout="this.style.filter=''">
+          ${esc(l.sub)}${em}
+        </div>`;
+      });
+      html += '</div>';
+    });
+    html += '</div></div>';
+    // Add diagnostic approach card for relevant locations
+    const dxMap = {
+      'LOC-GI-UPPER':'renderDxVomiting', 'LOC-GI-PRIMARY':'renderDxVomiting',
+      'LOC-GI-SECONDARY':'renderDxVomiting', 'LOC-OESOPH':'renderDxVomiting',
+      'LOC-DI-SI':'renderDxDiarrhoea', 'LOC-DI-SI-SEC':'renderDxDiarrhoea',
+      'LOC-DI-LB':'renderDxDiarrhoea',
+      'LOC-LARYNX':'renderDxDyspnoea', 'LOC-NASAL':'renderDxDyspnoea',
+      'LOC-PARENCH':'renderDxDyspnoea', 'LOC-PLEURAL':'renderDxDyspnoea',
+      'LOC-JD-PREHEP':'renderDxJaundice', 'LOC-JD-HEP':'renderDxJaundice',
+      'LOC-JD-POSTHEP':'renderDxJaundice',
+      'LOC-WK-EPISODIC':'renderDxWeakness', 'LOC-WK-PERSISTENT':'renderDxWeakness',
+      'LOC-WK-COLLAPSE':'renderDxWeakness',
+      'LOC-NM-NEURO':'renderDxWeakness', 'LOC-NM-JUNC':'renderDxWeakness',
+      'LOC-NM-MYO':'renderDxWeakness',
+      'LOC-PUPD-RENAL':'renderDxPUPD', 'LOC-PUPD-ENDO':'renderDxPUPD',
+      'LOC-PUPD-MED':'renderDxPUPD', 'LOC-PUPD-NDI':'renderDxPUPD',
+      'LOC-PUPD-CDI':'renderDxPUPD', 'LOC-PUPD-PRIM':'renderDxPUPD',
+      'LOC-SZ-INTRACRANIAL':'renderDxSeizures', 'LOC-SZ-EXTRACRANIAL':'renderDxSeizures',
+      'LOC-MY-TL':'renderDxMyelopathy', 'LOC-MY-CERV':'renderDxMyelopathy',
+      'LOC-VE-PERIPH':'renderDxVestibular', 'LOC-VE-CENTRAL':'renderDxVestibular',
+      'LOC-VE-BILAT':'renderDxVestibular',
+      'LOC-EN-INFLAM':'renderDxEncephalopathy', 'LOC-EN-NEO':'renderDxEncephalopathy',
+      'LOC-EN-CVA':'renderDxEncephalopathy', 'LOC-EN-METAB':'renderDxEncephalopathy',
+      'LOC-CO-DRY':'renderDxCoughing', 'LOC-CO-WET':'renderDxCoughing',
+      'LOC-SN-UNI':'renderDxSneezing', 'LOC-SN-BI':'renderDxSneezing',
+      'LOC-PM-ANAEMIA':'renderDxPaleGums', 'LOC-PM-PERFUSION':'renderDxPaleGums',
+      'LOC-AT-CEREB':'renderDxAtaxia'
+    };
+    if(dxMap[locId]){
+      html += '<div style="margin-top:12px;"><div class="card" onclick="'+dxMap[locId]+'()"><div class="card-row"><div class="card-icon">🔬</div><div style="flex:1"><div class="card-title">Diagnostic Approach</div><div class="card-sub">Stepwise clinical workup flowchart</div></div><div class="card-arrow">\u203a</div></div></div></div>';
+    }
+    html += '<div class="disclaimer">Tap a subtype to see differentials and causes.</div>';
+    render(html);
+}
+
+
+function renderSeizureFlow(){
+  push(renderSeizureFlow,'Seizures');
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry">🧠 SEIZURES</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step" style="font-size:12px;line-height:1.5;">Confirm epileptic seizure<br><span style="font-size:10px;color:var(--gray);">Rule out: syncope, dyskinesia, vestibular, narcolepsy</span></div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">CHARACTERISE SEIZURE TYPE</div>
+    <div class="flow-arrow-v">↓</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
+      <div class="flow-node insp" style="font-size:11px;">
+        Focal (ipsilateral)<div class="fn-sub">One body region / side<br>Facial twitching, limb jerking<br>Consciousness may be preserved<br>May secondarily generalise<br><strong style="color:#93C5FD;">→ Favours structural lesion</strong></div>
+      </div>
+      <div class="flow-node rest" style="font-size:11px;">
+        Generalised (bilateral)<div class="fn-sub">Both sides simultaneously<br>Tonic-clonic / tonic / atonic<br>Loss of consciousness<br>Autonomic signs<br><strong style="color:var(--amber-text);">→ Can be any category</strong></div>
+      </div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">INTERICTAL NEUROLOGICAL EXAMINATION</div>
+    <div class="flow-arrow-v">↓</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;margin-bottom:6px;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px;font-size:10px;color:var(--gray);line-height:1.5;">
+        <strong style="color:var(--white);">Mentation</strong><br>
+        Alert / obtunded / stuporous?<br>
+        Behavioural changes?<br>
+        Head pressing? Circling?
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px;font-size:10px;color:var(--gray);line-height:1.5;">
+        <strong style="color:var(--white);">Postural reactions</strong><br>
+        Proprioceptive positioning<br>
+        Hopping · Wheelbarrowing<br>
+        Asymmetry = lateralising
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px;font-size:10px;color:var(--gray);line-height:1.5;">
+        <strong style="color:var(--white);">Cranial nerves</strong><br>
+        Menace (CN II, VII) · PLR (II, III)<br>
+        Facial symmetry (VII)<br>
+        Strabismus (III, IV, VI) · Jaw tone (V)
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px;font-size:10px;color:var(--gray);line-height:1.5;">
+        <strong style="color:var(--white);">Gait + Posture</strong><br>
+        Ataxia? Paresis? Head tilt?<br>
+        Circling (ipsilateral to lesion)<br>
+        Fundoscopy (papilloedema = ↑ ICP)
+      </div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- Three-way classification -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
+      <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-SZ-INTRACRANIAL','Intracranial')">Idiopathic<div class="fn-sub">6mo–6yr · Normal exam<br>Normal bloods<br>Usually generalised</div></div>
+      <div class="flow-node rest" style="font-size:11px;cursor:default;">Structural<div class="fn-sub">&lt;6mo or &gt;6yr<br>Abnormal neuro exam<br>Focal onset favours</div></div>
+      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-SZ-EXTRACRANIAL','Extracranial')">Reactive<div class="fn-sub">Abnormal bloods<br>⚠️ High SE risk</div></div>
+    </div>
+
+    <!-- VITAMIN D expander for Structural -->
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step" style="background:#D97706;font-size:12px;">STRUCTURAL — VITAMIN D</div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;width:100%;">
+      <div style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#FCA5A5;line-height:1.3;">
+        <span style="font-size:13px;">V</span>ascular<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">CVA / stroke<br>Peracute, non-progressive</div>
+      </div>
+      <div style="background:rgba(249,115,22,0.12);border:1.5px solid rgba(249,115,22,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#FED7AA;line-height:1.3;">
+        <span style="font-size:13px;">I</span>nflammatory<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">MUA, encephalitis<br>Progressive multifocal</div>
+      </div>
+      <div style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#FCA5A5;line-height:1.3;">
+        <span style="font-size:13px;">T</span>raumatic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Head trauma<br>History of injury</div>
+      </div>
+      <div style="background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#93C5FD;line-height:1.3;">
+        <span style="font-size:13px;">A</span>nomalous<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Hydrocephalus<br>Lissencephaly</div>
+      </div>
+    </div>
+    <div style="height:5px;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;width:100%;">
+      <div style="background:rgba(217,119,6,0.12);border:1.5px solid rgba(217,119,6,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:var(--amber-text);line-height:1.3;">
+        <span style="font-size:13px;">M</span>etabolic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Storage diseases<br>(inborn errors)</div>
+      </div>
+      <div style="background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#93C5FD;line-height:1.3;">
+        <span style="font-size:13px;">I</span>diopathic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">No cause found<br>Dx of exclusion</div>
+      </div>
+      <div style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#DDD6FE;line-height:1.3;">
+        <span style="font-size:13px;">N</span>eoplastic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Meningioma, glioma<br>Older animals</div>
+      </div>
+      <div style="background:rgba(100,116,139,0.12);border:1.5px solid rgba(100,116,139,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#CBD5E1;line-height:1.3;">
+        <span style="font-size:13px;">D</span>egenerative<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Neuronal degen.<br>Breed-specific</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:12px;"><div class="card" onclick="renderDxSeizures()"><div class="card-row"><div class="card-icon">🔬</div><div style="flex:1"><div class="card-title">Diagnostic Approach</div><div class="card-sub">Tier 1 bloods → Tier 2 MRI/CSF → Confirm diagnosis</div></div><div class="card-arrow">›</div></div></div></div>
+
+  <div style="margin-top:6px;padding:10px 14px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:12px;">
+    <div style="font-size:11px;font-weight:600;color:#F87171;">⚠️ Status epilepticus (&gt;5 min)</div>
+    <div style="font-size:11px;color:#FCA5A5;line-height:1.6;margin-top:4px;">
+      <strong>1st:</strong> Diazepam 0.5–2mg/kg IV/rectal OR Midazolam 0.1–0.3mg/kg IV/IM<br>
+      <strong>2nd:</strong> Phenobarbital 2–6mg/kg IV OR Levetiracetam 20–60mg/kg IV<br>
+      <strong>3rd:</strong> Propofol CRI
+    </div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+function renderMyelopathyFlow(){
+  push(renderMyelopathyFlow,'Acute Myelopathy');
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry">🦴 ACUTE MYELOPATHY</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">LOCALISE TO SPINAL CORD SEGMENT</div>
+    <div class="flow-arrow-v">↓</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
+      <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-MY-CERV','Cervical')">Cervical (C1–T2)<div class="fn-sub">Tetraparesis</div></div>
+      <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-MY-TL','Thoracolumbar')">Thoracolumbar (T3–S3)<div class="fn-sub">Paraparesis</div></div>
+    </div>
+  </div>
+  <div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:12px;">
+    <div style="font-size:11px;font-weight:600;color:#F87171;">⚠️ Deep pain perception — most important prognostic indicator</div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+function renderVestibularFlow(){
+  push(renderVestibularFlow,'Vestibular');
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry">🌀 ACUTE VESTIBULAR</div>
+    <div class="flow-arrow-v">↓</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
+      <div class="flow-node exp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-VE-PERIPH','Peripheral vestibular')">Peripheral<div class="fn-sub">No proprioceptive deficits</div></div>
+      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-VE-CENTRAL','Central vestibular')">Central<div class="fn-sub">Proprioceptive deficits</div></div>
+      <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-VE-BILAT','Bilateral vestibular')">Bilateral<div class="fn-sub">NO tilt · NO nystagmus</div></div>
+    </div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+function renderEncephalopathyFlow(){
+  push(renderEncephalopathyFlow,'Encephalopathy');
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry">🧬 ACUTE ENCEPHALOPATHY</div>
+    <div class="flow-arrow-v">↓</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
+      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-EN-INFLAM','Encephalitis')">Encephalitis</div>
+      <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-EN-NEO','Intracranial neoplasia')">Neoplasia</div>
+    </div>
+    <div style="height:6px;"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
+      <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-EN-CVA','CVA')">CVA (Stroke)</div>
+      <div class="flow-node exp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-EN-METAB','Metabolic encephalopathy')">Metabolic</div>
+    </div>
+  </div>
+  <div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:12px;">
+    <div style="font-size:11px;font-weight:600;color:#F87171;">⚠️ Elevated ICP: Mannitol 0.25–0.5g/kg over 15min</div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+
+function renderCoughFlow(){
+  push(renderCoughFlow,'Coughing');
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry">🫁 COUGHING</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step" style="font-size:12px;line-height:1.5;">Observe character of cough<br><span style="font-size:10px;color:var(--gray);">Cats do NOT cough from cardiac disease</span></div>
+    <div class="flow-arrow-v">↓</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+      <div class="flow-node insp" style="cursor:pointer;font-size:11px;line-height:1.5;" onclick="goLesionTab('LOC-CO-DRY','Dry / Unproductive cough')">
+        🔵 Dry / Unproductive<div class="fn-sub">Harsh, honking, hacking<br>No sputum produced<br>Tracheal, cardiac, infectious</div>
+      </div>
+      <div class="flow-node rest" style="cursor:pointer;font-size:11px;line-height:1.5;" onclick="goLesionTab('LOC-CO-WET','Wet / Productive cough')">
+        🟡 Wet / Productive<div class="fn-sub">Moist, rattling<br>Sputum / discharge produced<br>Pneumonia, oedema, lungworm</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:12px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;">
+    <div style="font-size:11px;font-weight:600;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">💡 Key species difference</div>
+    <div style="font-size:12px;color:var(--gray);line-height:1.65;">
+      <strong style="color:var(--white);">Dogs</strong> cough from both cardiac and respiratory disease.<br>
+      <strong style="color:var(--white);">Cats</strong> do <strong style="color:#FCA5A5;">NOT</strong> cough from cardiac disease — if a cat is coughing, it is respiratory.
+    </div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+function renderSneezeFlow(){
+  push(renderSneezeFlow,'Sneezing');
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry">🤧 SNEEZING</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step" style="font-size:12px;line-height:1.5;">Assess laterality of nasal discharge<br><span style="font-size:10px;color:var(--gray);">Unilateral = structural until proven otherwise</span></div>
+    <div class="flow-arrow-v">↓</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;line-height:1.5;" onclick="goLesionTab('LOC-SN-UNI','Unilateral sneezing')">
+        🔴 Unilateral<div class="fn-sub">Foreign body, neoplasia<br>Aspergillosis, oronasal fistula<br>Think structural cause</div>
+      </div>
+      <div class="flow-node exp" style="cursor:pointer;font-size:11px;line-height:1.5;" onclick="goLesionTab('LOC-SN-BI','Bilateral sneezing')">
+        🟢 Bilateral<div class="fn-sub">Viral URTI (cat)<br>Chronic rhinosinusitis<br>Allergic rhinitis, polyp</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:12px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;">
+    <div style="font-size:11px;font-weight:600;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">💡 Key note</div>
+    <div style="font-size:12px;color:var(--gray);line-height:1.65;">
+      <strong style="color:var(--white);">Unilateral</strong> is more likely structural (foreign body, tumour, fungal) and warrants advanced imaging.<br>
+      <strong style="color:var(--white);">Bilateral</strong> is more likely infectious or inflammatory, but always exclude neoplasia in chronic cases.
+    </div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+function renderPaleGumsFlow(){
+  push(renderPaleGumsFlow,'Pale Mucous Membranes');
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry">🩸 PALE MUCOUS MEMBRANES</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step" style="font-size:12px;line-height:1.5;">CHECK PCV/TS + CRT + Heart rate<br><span style="font-size:10px;color:var(--gray);">Is the patient anaemic or poorly perfused?</span></div>
+    <div class="flow-arrow-v">↓</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+      <div class="flow-node insp" style="cursor:pointer;font-size:11px;line-height:1.5;" onclick="goLesionTab('LOC-PM-ANAEMIA','Anaemia')">
+        🟣 Anaemia (low PCV)<div class="fn-sub">Regenerative vs Non-regen<br>vs Pre-regenerative<br>Check reticulocytes + smear</div>
+      </div>
+      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;line-height:1.5;" onclick="goLesionTab('LOC-PM-PERFUSION','Poor perfusion')">
+        🔴 Poor perfusion (normal PCV)<div class="fn-sub">Prolonged CRT, weak pulses<br>Hypovolaemic / cardiogenic<br>/ distributive shock</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:12px;">
+    <div style="font-size:11px;font-weight:600;color:#F87171;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">⚠️ Transfusion thresholds</div>
+    <div style="font-size:12px;color:#FCA5A5;line-height:1.65;">
+      <strong>Dog:</strong> PCV &lt;20%<br>
+      <strong>Cat:</strong> PCV &lt;15%
+    </div>
+  </div>
+  <div style="margin-top:8px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;">
+    <div style="font-size:11px;font-weight:600;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">💡 PCV/TS quick guide</div>
+    <div style="font-size:12px;color:var(--gray);line-height:1.65;">
+      <strong style="color:var(--white);">Low PCV + Normal TS</strong> = haemolysis<br>
+      <strong style="color:var(--white);">Low PCV + Low TS</strong> = haemorrhage (TS drop takes hours)<br>
+      <strong style="color:var(--white);">Normal PCV + Pale</strong> = poor perfusion / shock
+    </div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+
+
+
+// ── DIAGNOSTIC APPROACH: VOMITING ────────────────────────────────────────────
+function renderDxRegurgitationExam(){
+  replace(renderDxRegurgitationExam,'Exam: Regurgitation');
+  render(`
+  <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
+    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxRegurgitationHistory()">📋 History</div>
+    <div class="dx-step alt" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;" onclick="renderDxRegurgitationExam()">🩺 Exam</div>
+    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxRegurgitation()">🔬 Diagnostics</div>
+  </div>
+
+  <div class="dx-wrap">
+
+    <div class="dx-step">🩺 PHYSICAL EXAMINATION</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Temperature</strong><br>
+      • Fever → raises suspicion for aspiration pneumonia<br>
+      <span style="font-size:10px;opacity:.75;">⚠️ Absence of fever does not preclude aspiration pneumonia — &lt;50% of affected dogs are febrile.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Body + Muscle Condition</strong><br>
+      • Compare current weight with historical records — assess for malnourishment<br>
+      • Poor muscle condition without general body condition loss → polymyositis or other polymyopathy
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Neck Palpation</strong><br>
+      • Grossly dilated oesophagus occasionally palpable in left ventral neck (not always detected)<br>
+      • Firm structure in left ventral neck → oesophageal foreign material<br>
+      • Discomfort or repeated swallowing attempts on palpation → oesophagitis or FB obstruction
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Oral Examination</strong><br>
+      • Assess oral cavity for FBs, swellings, or masses<br>
+      • Ptyalism commonly noted
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Upper Airway Noise</strong><br>
+      • Megaoesophagus → subtle bubbling/fluid noise from oesophageal fluid<br>
+      • <strong>Stridor</strong> → laryngeal paralysis / GOLPP<br>
+      • Brachycephalic breeds: assess visible airway conformation + degree of stertor — severity of noise correlates with GI signs<br>
+      • Harsh/stertorous noise in non-brachycephalic breeds → pharyngeal saliva accumulation from weakness — consider generalised neuromuscular disease
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Thoracic Auscultation</strong><br>
+      • Auscultate for crackles, ↑ respiratory rate/effort → aspiration pneumonia<br>
+      <span style="font-size:10px;opacity:.75;">⚠️ Normal pulmonary auscultation does not exclude pneumonia. Oesophageal fluid movement can mimic crackles.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#C4B5FD;">Neurological Examination</strong><br>
+      • Assess for generalised neuromuscular disease<br>
+      • Cranial nerve abnormalities (menace, pupillary light) → MG or dysautonomia<br>
+      • Weak gag reflex + weak corneal reflex on repeated stimulation → myasthenia gravis
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#C4B5FD;">Musculoskeletal Examination</strong><br>
+      • Fatigable muscle weakness → myasthenia gravis<br>
+      • Walk or jog the patient during exam — weakness may only become apparent with activity
+    </div>
+
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
+  `);
+}
+
+function renderDxRegurgitationHistory(){
+  replace(renderDxRegurgitationHistory,'History: Regurgitation');
+  render(`
+  <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
+    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;" onclick="renderDxRegurgitationHistory()">📋 History</div>
+    <div class="dx-step alt" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxRegurgitationExam()">🩺 Exam</div>
+    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxRegurgitation()">🔬 Diagnostics</div>
+  </div>
+
+  <div class="dx-wrap">
+
+    <div class="dx-step">📋 VOMITING vs REGURGITATION?</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:5px 8px;font-size:10.5px;line-height:1.4;">
+        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);">Question</div>
+        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:#6EE7B7;">Regurgitation</div>
+        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:#FCA5A5;">Vomiting</div>
+
+        <div>Retching?</div>
+        <div style="color:#6EE7B7;">Usually absent</div>
+        <div style="color:#FCA5A5;">Usually present</div>
+
+        <div>Abdominal effort?</div>
+        <div style="color:#6EE7B7;">Passive — none</div>
+        <div style="color:#FCA5A5;">Active</div>
+
+        <div>Bile present?</div>
+        <div style="color:#6EE7B7;">Usually absent</div>
+        <div style="color:#FCA5A5;">May be present</div>
+
+        <div>Ingesta digested?</div>
+        <div style="color:#6EE7B7;">Typically undigested, tubular</div>
+        <div style="color:#FCA5A5;">May be digested</div>
+
+        <div>Timing after eating?</div>
+        <div style="color:#6EE7B7;">Any time; soon after ↑ suspicion</div>
+        <div style="color:#FCA5A5;">Variable</div>
+
+        <div>White/clear mucus?</div>
+        <div style="color:#6EE7B7;">Frothy saliva common</div>
+        <div style="color:#FCA5A5;">Less typical</div>
+
+        <div>Frequency?</div>
+        <div style="color:#6EE7B7;">Many/day, no systemic signs</div>
+        <div style="color:#FCA5A5;">Variable</div>
+
+        <div>Duration?</div>
+        <div style="color:#6EE7B7;">Weeks–months (megaoesoph.); acute if obstructive</div>
+        <div style="color:#FCA5A5;">Variable</div>
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">📖 AETIOLOGICAL CLUES — ONCE CONFIRMED</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Neuromuscular disease</strong><br>
+      • Difficulty prehension/swallowing → masticatory/pharyngeal muscle involvement<br>
+      • Generalised weakness → myasthenia gravis or other neuromuscular disease<br>
+      • Stridor (respiratory noise) → laryngeal paralysis or MG-related pharyngeal weakness<br>
+      <span style="font-size:10px;opacity:.75;">Note: uncomplicated idiopathic megaoesophagus can cause ↑ respiratory noise from air mixing with oesophageal fluid.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Inflammation / Oesophagitis</strong><br>
+      • Pain or discomfort during/after eating → oesophagitis, FB, or mass<br>
+      • Gagging, retching, gulping, reverse sneezing → nausea component suggestive of oesophagitis<br>
+      • Regurgitated blood → oesophageal neoplasia or severe ulceration (oesophagitis/FB)<br>
+      • Medications (clindamycin, doxycycline) → oesophagitis/stricture if tablet retained; small patients/cats at higher risk<br>
+      • Recent anaesthesia/sedation → risk factor for GER → oesophagitis → regurgitation
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCA5A5;">Obstructive lesion (FB / Stricture)</strong><br>
+      • History of FB ingestion (bones, rawhide — especially small dogs) → oesophageal FB<br>
+      • Unable to pass any food into stomach → obstructive lesion more likely<br>
+      • Gags and regurgitates forcefully soon after eating → obstructive<br>
+      • Acute, progressive course → obstructive more likely than megaoesophagus<br>
+      <span style="font-size:10px;opacity:.75;">Contrast: megaoesophagus is generally non-painful; some food may pass into the stomach.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#93C5FD;">Systemic / Metabolic clues</strong><br>
+      • Inappetence + lethargy → aspiration pneumonia or hypoadrenocorticism<br>
+      • Weight gain + lethargy → hypothyroidism<br>
+      • Dietary indiscretion → toxin ingestion (lead), botulism, or oesophageal FB<br>
+      • Voice change → laryngeal paralysis / GOLPP<br>
+      • Cough → aspiration pneumonia; also occurs from fluid in caudal pharynx with oesophageal disease<br>
+      • Respiratory signs only → may be the sole presenting complaint
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#C4B5FD;">Travel + Exposure history</strong><br>
+      • Travel to subtropical/tropical regions → <em>Spirocerca lupi</em><br>
+      • Thorough medication history — drug-induced oesophagitis underdiagnosed<br>
+      • Recent general anaesthesia — ask specifically; owners may not volunteer
+    </div>
+
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
+  `);
+}
+
+function renderDxRegurgitation(){
+  replace(renderDxRegurgitation,'Dx: Regurgitation');
+  render(`
+  <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
+    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxRegurgitationHistory()">📋 History</div>
+    <div class="dx-step alt" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxRegurgitationExam()">🩺 Exam</div>
+    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;" onclick="renderDxRegurgitation()">🔬 Diagnostics</div>
+  </div>
+
+  <div class="dx-wrap">
+
+    <div class="dx-step">📋 CONFIRM REGURGITATION</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      Passive, effortless expulsion · No prodromal nausea · Undigested tubular food · No bile<br>
+      <span style="font-size:10px;opacity:.8;">Distinguish from vomiting (active abdominal effort, bile-stained, retching). Diagnostic approach is highly variable and dependent on differentials for the underlying aetiology.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">🔬 FIRST-LINE DIAGNOSTICS</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-row c2">
+      <div class="dx-check" style="margin:0;">
+        <strong>📊 Cervical + Thoracic Radiography</strong><br>
+        <span style="font-size:10.5px;">± contrast · First-line in all cases</span>
+      </div>
+      <div class="dx-check" style="margin:0;">
+        <strong>🧪 CBC · Serum Chemistry · UA</strong><br>
+        <span style="font-size:10.5px;">Assess systemic health + complicating factors</span>
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step">📊 CERVICAL + THORACIC RADIOGRAPHY</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      Most valuable diagnostic tool for oesophageal disease. Perform <strong>without sedation/anaesthesia</strong> where possible.<br><br>
+      <strong>What to look for:</strong><br>
+      • Generalised gas, food or fluid dilation → megaoesophagus (significant hypomotility can exist without radiographic dilation)<br>
+      • Radiopaque foreign body — sensitivity 90–100%; radiolucent FBs may be missed<br>
+      • Ventral lung consolidation → aspiration pneumonia<br><br>
+      <strong>⚠️ Aspiration pneumonia caveat:</strong> Radiographic changes lag behind aspiration (chemical injury precedes fluid accumulation) — radiograph may be normal despite active aspiration. Changes persist for days after clinical improvement with poor correlation to hypoxaemia and prognosis.
+    </div>
+
+    <div class="dx-step alt">🧪 CBC · SERUM CHEMISTRY · URINALYSIS</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      Assess for concurrent disease and complicating factors.<br><br>
+      • <strong>Neutrophilia</strong> → raises suspicion for secondary aspiration pneumonia<br>
+      • <strong>Absence of stress leukogram</strong> → raises suspicion for hypoadrenocorticism, especially with concurrent eosinophilia, hypoglycaemia, hypocholesterolaemia, hyperkalaemia, hyponatraemia<br>
+      • <strong>Creatine kinase (CK):</strong> include to help rule out polymyositis/polymyopathy<br>
+        &nbsp;&nbsp;– Normal: muscle disease unlikely<br>
+        &nbsp;&nbsp;– Mild elevation: non-specific<br>
+        &nbsp;&nbsp;– Significant elevation (&gt;1,000 U/L): raises suspicion for polymyositis/polymyopathy
+    </div>
+
+    <div class="dx-step">🔍 FURTHER DIAGNOSTICS</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">📊 POSITIVE-CONTRAST OESOPHAGRAM<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: normal non-contrast radiograph + oesophageal disease still suspected</span></div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>Indications:</strong> Use when non-contrast radiography is normal but oesophageal disease still suspected — can reveal hypomotility, focal dilation (obstruction: VRA, stricture, mass, FB), filling defects, or diverticula. Abdominal inclusion helps confirm gastric position (hiatal hernia).<br><br>
+      <strong>What to evaluate:</strong><br>
+      • Luminal filling defect(s) — usually focal; dilation proximal to defect suggests obstruction<br>
+      • Extra-luminal contrast — indicates perforation (wispy/feathery tracking into tissues)<br>
+      • Focal luminal narrowing — only diagnose stricture/VRA if persistent on several projections (single narrowing may be a normal peristaltic wave)<br>
+      • Mucosal irregularities — only severe oesophagitis detected; mild forms often missed<br><br>
+      <strong>⚠️ Not indicated</strong> if non-contrast radiography shows overt oesophageal dilation.<br>
+      GER observed on contrast study does not necessarily imply disease (seen in healthy dogs).<br><br>
+      <strong>Contraindications + risks:</strong><br>
+      • Contraindicated: altered consciousness / neurological swallowing abnormalities<br>
+      • Extreme caution: active vomiting, frequent regurgitation, known/suspected perforation, dyspnoea (restraint + oral contrast → respiratory distress)<br>
+      • Aspiration risk: barium is caustic to pulmonary parenchyma → severe inflammatory response; high-osmolality iodinated contrast → severe pulmonary oedema if aspirated<br>
+      • Barium contraindicated for suspected perforation (mediastinitis risk); iodinated contrast preferred — but barium has higher sensitivity for small leaks
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step">🔬 ENDOSCOPY (OESOPHAGOSCOPY)<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: suspected oesophagitis · mucosal assessment · FB retrieval</span></div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      Most sensitive tool for presumptive diagnosis of oesophagitis. Assess mucosa for: hyperaemia, oedema, erosions, ulceration, friability, fibrosis, granular surface texture, increased vascularity, exudative pseudomembranes, submucosal gland proliferation (brown dots).<br><br>
+      <strong>Additional benefits:</strong><br>
+      • Direct visualisation of strictures, intraluminal masses, FBs, granulomas<br>
+      • Biopsy / fine-needle aspiration<br>
+      • Gastrostomy feeding tube placement<br>
+      • Gastroscopy to exclude extra-oesophageal pathology (perform in every patient)<br>
+      • Retroflexion to nasopharynx — assess for laryngopharyngeal reflux changes<br>
+      • Bronchoscopy + BAL — assess lower airways; cytology + culture if concurrent pneumonia<br><br>
+      <strong>⚠️ Limitations:</strong><br>
+      • Cannot assess oesophageal motility or diagnose megaoesophagus<br>
+      • Squamocolumnar junction (erythematous ring near LOS) may mimic reflux oesophagitis — avoid over-insufflation<br>
+      • Strictures challenging to identify in large/giant breeds<br>
+      • Anaesthesia and intubation affect gastro-oesophageal junction assessment<br>
+      • Discrepancies between clinical signs and endoscopic findings are common — 91% of GER-suspected dogs had unremarkable oesophagoscopy in one study<br>
+      • Non-erosive oesophagitis not detectable endoscopically
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">📡 ABDOMINAL RADIOGRAPHY + ULTRASONOGRAPHY<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: concurrent vomiting, weight loss, or hyporexia</span></div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      Generally unhelpful for primary oesophageal disease. Consider when vomiting, weight loss, or hyporexia are concurrent.<br><br>
+      • Rules out reflux secondary to upper GI obstruction<br>
+      • Gastro-oesophageal junction may show mucosal thickening on ultrasound<br>
+      • Pyloric assessment — obstructive lesion or stenosis<br>
+      • Sliding hiatal hernia cannot be excluded by normal gastric positioning on ultrasound
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step">🎬 VIDEO FLUOROSCOPY<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: motility assessment · dynamic GER · sliding hiatal hernia</span></div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      Superior to static contrast radiography — assesses motility throughout the entire swallowing phase.<br><br>
+      • More sensitive than static radiography for dynamic conditions (GER, sliding hiatal hernia)<br>
+      • Allows assessment of lower oesophageal sphincter dysfunction<br>
+      • Perform with both liquid and dry contrast media to maximise stricture detection sensitivity<br>
+      • <strong>Not useful</strong> for diagnosing oesophagitis (assesses function, not mucosa)
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">🖥️ CT + ANGIOGRAPHY<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: confirm vascular ring anomaly · neoplasia staging</span></div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      CT with angiography is the recommended diagnostic to confirm vascular ring anomaly (VRA) — defines vascular anatomy and confirms oesophageal constriction. Also used for neoplasia staging and complex mediastinal disease.
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step">🔍 FURTHER INVESTIGATION — MEGAOESOPHAGUS<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: megaoesophagus confirmed — identify underlying cause</span></div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      When megaoesophagus is confirmed, additional diagnostics to rule out underlying cause:<br><br>
+      • Acetylcholine receptor antibody titre (myasthenia gravis)<br>
+      • Neostigmine challenge (MG)<br>
+      • ACTH stimulation test (hypoadrenocorticism)<br>
+      • Thyroid hormone panel (hypothyroidism)<br>
+      • Blood lead ± heavy metal panel<br>
+      • Electrophysiology — polyneuropathy / polymyopathy ± muscle biopsies<br>
+      • Fecal flotation for <em>Spirocerca lupi</em> eggs (endemic regions) — repeat if negative to maximise sensitivity
+    </div>
+
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
+  `);
+}
+
+function renderDxVomitingHistory(){
+  replace(renderDxVomitingHistory,'History: Vomiting');
+  render(`
+  <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
+    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;" onclick="renderDxVomitingHistory()">📋 History</div>
+    <div class="dx-step alt" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxVomitingExam()">🩺 Exam</div>
+    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxVomiting()">🔬 Diagnostics</div>
+  </div>
+
+  <div class="dx-wrap">
+
+    <div class="dx-step">📋 VOMITING vs REGURGITATION?</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:5px 8px;font-size:10.5px;line-height:1.4;">
+        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);">Feature</div>
+        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:#FCA5A5;">Vomiting</div>
+        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:#6EE7B7;">Regurgitation</div>
+        <div>Retching?</div>
+        <div style="color:#FCA5A5;">Usually present</div>
+        <div style="color:#6EE7B7;">Usually absent</div>
+        <div>Abdominal effort?</div>
+        <div style="color:#FCA5A5;">Active</div>
+        <div style="color:#6EE7B7;">Passive — none</div>
+        <div>Prodromal nausea?</div>
+        <div style="color:#FCA5A5;">Lip licking, ptyalism</div>
+        <div style="color:#6EE7B7;">Absent</div>
+        <div>Bile present?</div>
+        <div style="color:#FCA5A5;">May be present</div>
+        <div style="color:#6EE7B7;">Usually absent</div>
+        <div>Ingesta digested?</div>
+        <div style="color:#FCA5A5;">May be digested</div>
+        <div style="color:#6EE7B7;">Typically undigested, tubular</div>
+        <div>Timing after eating?</div>
+        <div style="color:#FCA5A5;">Variable</div>
+        <div style="color:#6EE7B7;">Any time; soon after ↑ suspicion</div>
+      </div>
+      <div style="margin-top:8px;font-size:10px;opacity:.75;">⚠️ If uncertain, work up as vomiting. If vomiting workup yields no diagnosis, pursue oesophageal investigation. Owner video is very helpful.</div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">📖 AETIOLOGICAL CLUES — CHRONICITY</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Acute vomiting (&lt;7 days)</strong><br>
+      • Dietary indiscretion — most common cause in dogs<br>
+      • Toxin ingestion (ethylene glycol, chocolate, lilies, grapes, xylitol, lead)<br>
+      • Drug-induced (NSAIDs, antibiotics, chemotherapy, opioids, xylazine in cats)<br>
+      • Infectious gastroenteritis — parvovirus, panleukopenia (young unvaccinated)<br>
+      • Foreign body — especially young animals + known pica<br>
+      • GDV — emergency; acute distension + non-productive retching in large breed dog<br>
+      • Intussusception — animals &lt;1 year; often concurrent diarrhoea + haematochezia<br>
+      • Acute pancreatitis<br>
+      <span style="font-size:10px;opacity:.75;">Many acute cases are self-limiting. Red flags require urgent workup.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Chronic vomiting (&gt;7 days)</strong><br>
+      • Chronic enteropathy / IBD<br>
+      • GI neoplasia (lymphoma, adenocarcinoma, mast cell tumour, gastrinoma)<br>
+      • Food allergy or intolerance<br>
+      • Motility disorder / delayed gastric emptying<br>
+      • Helicobacter spp. (clinical significance variable)<br>
+      • Systemic / metabolic: CKD, hepatic disease, hyperthyroidism (cat), hypoadrenocorticism<br>
+      • Hiatal hernia, pyloric stenosis, gastric antral hypertrophy<br>
+      • Pancreatitis (chronic/recurrent)<br>
+      <span style="font-size:10px;opacity:.75;">Requires systematic minimum database + targeted second-tier diagnostics.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">📖 CHARACTER OF VOMITUS</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCA5A5;">Blood (haematemesis)</strong><br>
+      • Frank red blood → active upper GI haemorrhage (ulceration, neoplasia, coagulopathy)<br>
+      • "Coffee grounds" → slow upper GI haemorrhage<br>
+      • Swallowed blood from nasal/oral/pulmonary source can mimic haematemesis
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Bile</strong><br>
+      • Suggests gastric outflow problem or intestinal dysmotility with duodenogastric reflux<br>
+      • Pyloric outflow obstruction: bile usually absent (no communication with duodenum)<br>
+      • Bilious vomiting syndrome: small amounts of bile after prolonged fasting → duodenogastric reflux (end of fasting window)
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Undigested / partially digested food</strong><br>
+      • Hours after eating → motility disorder or gastric outflow obstruction<br>
+      • Immediately / soon after eating → anxiety, oesophageal disease, or obstructive lesion
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">📖 KEY SIGNALMENT + EXPOSURE CLUES</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Age</strong><br>
+      • Young (unvaccinated): parvovirus, panleukopenia, intussusception, FB, parasites<br>
+      • Older: neoplasia (GI or extra-GI), hyperthyroidism (cat), CKD<br>
+      <strong style="color:#FCD34D;">Breed</strong><br>
+      • Brachycephalic: pyloric stenosis, hiatal hernia<br>
+      • Shar Pei / German Shepherd / Rottweiler: IBD<br>
+      • Large / giant breed: GDV — emergency if acute distension<br>
+      • Miniature Schnauzer: dyslipidaemia → pancreatitis<br>
+      • Nova Scotia Duck Tolling Retriever, Great Dane, WHWT: hypoadrenocorticism<br>
+      • Siamese cat: GI adenocarcinoma, intussusception<br>
+      <strong style="color:#FCA5A5;">Sex</strong><br>
+      • Intact female: pyometra — always consider if not neutered
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#93C5FD;">Drug / toxin / vaccination history</strong><br>
+      • NSAIDs → gastric erosion/ulceration; discontinue immediately if vomiting<br>
+      • Antibiotics, chemotherapy, opioids, cyclosporine, mycophenolate, xylazine (cats)<br>
+      • Toxins: ethylene glycol, ethanol, theobromine, lilies (cats), xylitol, grapes<br>
+      • Incomplete vaccination → parvovirus / panleukopenia remain on differential<br>
+      <strong style="color:#C4B5FD;">Travel / geography</strong><br>
+      • Histoplasmosis — endemic area (concurrent diarrhoea, weight loss, lung signs)<br>
+      • Pythium insidiosum — Gulf Coast/tropical region (GI mass, weight loss)<br>
+      <strong style="color:#FCD34D;">Concurrent signs</strong><br>
+      • Concurrent diarrhoea → ileal/jejunal/colonic involvement<br>
+      • Weight loss + hyporexia → diffuse GI disease or systemic illness<br>
+      • Neurological signs → CNS / vestibular cause (motion sickness, intracranial disease)<br>
+      • Intact female + systemic illness → pyometra (even without PU/PD)
+    </div>
+
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
+  `);
+}
+
+function renderDxVomitingExam(){
+  replace(renderDxVomitingExam,'Exam: Vomiting');
+  render(`
+  <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
+    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxVomitingHistory()">📋 History</div>
+    <div class="dx-step alt" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;" onclick="renderDxVomitingExam()">🩺 Exam</div>
+    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxVomiting()">🔬 Diagnostics</div>
+  </div>
+
+  <div class="dx-wrap">
+
+    <div class="dx-step">🩺 PHYSICAL EXAMINATION</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Temperature</strong><br>
+      • Fever → infectious gastroenteritis, aspiration pneumonia, septic peritonitis, pyometra<br>
+      • Hypothermia → shock, hypoadrenocorticism, severe systemic disease<br>
+      <span style="font-size:10px;opacity:.75;">Absence of fever does not exclude serious disease.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Hydration + Cardiovascular</strong><br>
+      • Assess skin turgor, mucous membrane moisture, capillary refill time<br>
+      • Tachycardia + weak pulses + prolonged CRT → hypovolaemic shock (GDV, intussusception, peritonitis)<br>
+      • Bradycardia → hypoadrenocorticism (hyperkalaemia), severe vagal response
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Mucous Membranes</strong><br>
+      • Pale → blood loss (haematemesis/melaena) or hypovolaemic shock<br>
+      • Icteric → hepatic disease, haemolysis, biliary obstruction<br>
+      • Hyperaemic "injected" → early shock, sepsis, SIRS
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Abdominal Palpation</strong><br>
+      • Pain / guarding → pancreatitis, peritonitis, obstruction, GDV<br>
+      • Tympanic distension → GDV, intestinal obstruction — large breed dog + non-productive retching = emergency<br>
+      • Cranial abdominal mass → hepatomegaly, splenomegaly, gastric/pancreatic mass<br>
+      • Mid-abdominal cylindrical mass → intussusception ("sausage loop")<br>
+      • Fluid wave → ascites (hepatic disease, peritonitis, hypoalbuminaemia)<br>
+      • Thickened intestinal loops → IBD, neoplasia, infectious enteritis<br>
+      <span style="font-size:10px;opacity:.75;">⚠️ GDV: large breed dog + tympanic abdomen + non-productive retching → emergency — do not delay.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCA5A5;">Oral Cavity</strong><br>
+      • Linear FB under tongue (especially cats) → intestinal obstruction<br>
+      • Oral ulcers → uraemia (CKD), caustic toxin ingestion<br>
+      • Ptyalism → nausea, oesophagitis, toxin, pharyngeal disease<br>
+      • Halitosis → uraemia, hepatic encephalopathy, oral disease
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Neck + Thyroid</strong><br>
+      • Cat: thyroid nodule (ventral neck) → hyperthyroidism — common cause of chronic vomiting in cats<br>
+      • Submandibular lymphadenopathy → neoplasia, infection, lymphoma
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#C4B5FD;">Neurological Assessment</strong><br>
+      • Head tilt + nystagmus + ataxia → vestibular disease (idiopathic, otitis interna)<br>
+      • Altered mentation / seizures → intracranial disease, hepatic encephalopathy, severe uraemia, toxin<br>
+      • Generalised weakness → hypoadrenocorticism, hypokalaemia, neuromuscular disease<br>
+      <span style="font-size:10px;opacity:.75;">Primary CNS disease causing vomiting alone (without other neurological signs) is rare.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCA5A5;">Rectal Examination</strong><br>
+      • Melaena → upper GI haemorrhage (ulceration, neoplasia)<br>
+      • Haematochezia → large bowel involvement (colitis, intussusception)
+    </div>
+
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
+  `);
+}
+
+function renderDxVomiting(){
+  replace(renderDxVomiting,'Dx: Vomiting');
+  render(`
+  <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
+    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxVomitingHistory()">📋 History</div>
+    <div class="dx-step alt" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxVomitingExam()">🩺 Exam</div>
+    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;" onclick="renderDxVomiting()">🔬 Diagnostics</div>
+  </div>
+
+  <div class="dx-wrap">
+
+    <div class="dx-step">🔬 FIRST-LINE DIAGNOSTICS</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-row c2">
+      <div class="dx-check" style="margin:0;">
+        <strong>🧪 CBC · Serum Chemistry · UA</strong><br>
+        <span style="font-size:10.5px;">All vomiting cases — first-line</span>
+      </div>
+      <div class="dx-check" style="margin:0;">
+        <strong>📊 Abdominal Imaging</strong><br>
+        <span style="font-size:10.5px;">Radiography + Ultrasound</span>
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">🧪 CBC · SERUM CHEMISTRY · URINALYSIS</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>Haematology:</strong><br>
+      • Leucopenia → parvovirus / panleukopenia (young unvaccinated)<br>
+      • Neutrophilia → infection, peritonitis, pyometra<br>
+      • Eosinophilia + absence of stress leukogram → hypoadrenocorticism; also parasites, eosinophilic disease<br>
+      • Anaemia (regenerative) → GI haemorrhage<br>
+      • Thrombocytopenia → DIC, immune-mediated thrombocytopenia<br><br>
+      <strong>Biochemistry:</strong><br>
+      • ↑ BUN/Cr + low USG → CKD / AKI<br>
+      • ↑ ALT/ALP/GGT → hepatobiliary disease<br>
+      • Na:K ratio &lt;27 → hypoadrenocorticism (confirm with ACTH stimulation)<br>
+      • Hyperglycaemia + ketonuria → DKA<br>
+      • ↑ Total Ca²⁺ → neoplasia, hypoadrenocorticism, hypervitaminosis D<br>
+      • Hypoalbuminaemia → protein-losing enteropathy, hepatic failure<br><br>
+      <strong>Urinalysis:</strong><br>
+      • USG &lt;1.030 in dehydrated dog → CKD, hypoadrenocorticism, diabetes insipidus, pyometra<br>
+      • Glucosuria without hyperglycaemia → CKD (Fanconi)<br>
+      • Bilirubinuria → hepatobiliary disease
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step">📊 ABDOMINAL IMAGING</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>Survey radiograph (right lateral + VD):</strong><br>
+      • Gas pattern: dilated loops proximal to obstruction ("stacked" appearance)<br>
+      • Radiopaque FB<br>
+      • Gastric compartmentalisation (double bubble, right lateral view) → GDV<br>
+      • Free peritoneal gas → perforation<br>
+      • Hepatomegaly, splenomegaly, abdominal mass<br>
+      • Reduced serosal detail → peritoneal effusion or emaciation<br><br>
+      <strong>Abdominal ultrasound:</strong><br>
+      • Intestinal wall layering: loss → neoplasia; preserved but thickened → IBD/enteritis<br>
+      • "Bullseye" / "target" sign → intussusception<br>
+      • Pancreatic enlargement, altered echogenicity, peripancreatic fat saponification → pancreatitis<br>
+      • Hepatic, splenic, adrenal lesions<br>
+      • Mesenteric lymphadenopathy (IBD vs lymphoma)<br>
+      • Free abdominal fluid → characterise (ascites, exudate, haemorrhage)
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step">🔍 FURTHER INVESTIGATION — SECONDARY / EXTRA-GI</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>If bloods or imaging abnormal, pursue specific secondary cause:</strong><br><br>
+      • ↑ BUN/Cr + low USG → <strong>Renal disease</strong> — urine culture, UPC ratio, renal imaging<br>
+      • ↑ ALT/ALP/GGT → <strong>Hepatobiliary disease</strong> — bile acids, abdominal US, liver biopsy<br>
+      • Na:K &lt;27, absent stress leukogram, or eosinophilia in sick dog → <strong>Hypoadrenocorticism</strong> — check basal cortisol; if low or suspicion remains → ACTH stimulation test<br>
+      &nbsp;&nbsp;<span style="font-size:10px;opacity:.75;">Atypical Addison's: Na:K ratio normal — do not exclude on electrolytes alone</span><br>
+      • Hyperglycaemia + ketonuria → <strong>DKA</strong> — blood gas, fluid therapy, insulin protocol<br>
+      • ↑ Total Ca²⁺ → <strong>Hypercalcaemia workup</strong> — PTH, PTHrP, vitamin D metabolites, thoracic imaging<br>
+      • Cat ↑ T4 → <strong>Hyperthyroidism</strong> — confirm, recheck in 3 weeks if equivocal<br>
+      • ↑ cPLI / fPLI → <strong>Pancreatitis</strong> — imaging, supportive care<br>
+      • ↓ Albumin + ↓ Globulin → <strong>PLE / hepatic failure</strong> — panhypoproteinaemia = PLE; investigate intestinal vs hepatic origin<br><br>
+      <span style="font-size:10.5px;opacity:.8;">Secondary cause confirmed → investigate primary condition. Not all extra-GI vomiting requires GI workup.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">🔍 FURTHER INVESTIGATION — IF PRIMARY GI SUSPECTED<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: first-line diagnostics normal or non-diagnostic · chronic or refractory</span></div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      • <strong>fPLI / cPLI</strong> — pancreatitis (especially if imaging equivocal)<br>
+      • <strong>Serum T4</strong> — hyperthyroidism (cat, any age; atypical presentations possible)<br>
+      • <strong>Resting cortisol ± ACTH stimulation</strong> — atypical Addison's (absent stress leukogram, eosinophilia in sick dog)<br>
+      • <strong>Cobalamin + folate</strong> — SI disease indicator; cobalamin low in EPI, severe IBD, ileal disease<br>
+      • <strong>Fasting gastrin</strong> — gastrinoma / Zollinger-Ellison (refractory ulcers, profound acid hypersecretion)<br>
+      • <strong>Bile acids ± plasma ammonia</strong> — hepatic function / PSVA<br>
+      • <strong>Dietary trial (4–8 weeks)</strong> — exclusive novel protein or hydrolysed diet; no treats, chews, flavoured medications<br>
+      • <strong>Endoscopy + biopsy</strong> — mucosal assessment, chronic gastritis, IBD, early neoplasia; full-thickness preferred for deeper infiltrates
+    </div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-dx" onclick="goLesionTab('LOC-GI-UPPER','Stomach')">Primary GI lesions →</div>
+    <div style="height:4px;"></div>
+    <div class="dx-dx" onclick="goLesionTab('LOC-GI-SECONDARY','Extra-GI vomiting')">Secondary / extra-GI causes →</div>
+
+  </div>
+
+  <div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-radius:10px;">
+    <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:4px;">⚠️ RED FLAGS — URGENT WORKUP</div>
+    <div style="font-size:10px;color:#FCA5A5;line-height:1.6;">
+      Haematemesis · Projectile vomiting · Acute abdomen + guarding · Tympanic distension + non-productive retching (GDV) · Young unvaccinated (parvo) · Intact female (pyometra) · Known toxin/FB ingestion · Collapse or hypoperfusion
+    </div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── DIAGNOSTIC APPROACH: DIARRHOEA ───────────────────────────────────────────
+function renderDxDiarrhoeaHistory(){
+  replace(renderDxDiarrhoeaHistory,'History: Diarrhoea');
+  render(`
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:14px;">
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;" onclick="renderDxDiarrhoeaHistory()">📋 History</div>
+    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaExam()">🩺 Exam</div>
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaDx()">🔬 Diagnostics</div>
+    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaSec()">🟠 Secondary</div>
+  </div>
+
+  <div class="dx-wrap">
+
+    <div class="dx-branch">SB OR LB LOCALISATION</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-row c2">
+      <div class="dx-test" style="text-align:left;font-size:9px;">
+        <strong style="font-size:10px;">🟡 Small bowel</strong><br>
+        Large volume · Normal or mildly ↑ freq<br>
+        No tenesmus · Weight loss common<br>
+        Melaena · Steatorrhoea (→ run TLI)<br>
+        Watery or soft · Malabsorption signs
+      </div>
+      <div class="dx-test" style="text-align:left;background:#0D7377;font-size:9px;">
+        <strong style="font-size:10px;">🔵 Large bowel</strong><br>
+        Small volume · Markedly ↑ freq<br>
+        Tenesmus, urgency, dyschezia<br>
+        Mucus · Haematochezia<br>
+        Weight loss uncommon
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step">📋 KEY HISTORY</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong>Duration + onset:</strong> Acute (&lt;3 wk) or chronic (&gt;3 wk)?<br>
+      <strong>Diet:</strong> Recent change? Raw diet? Novel exposures? Treats, chews, table scraps?<br>
+      <strong>Parasites:</strong> Worming history? Last treatment? Which product?<br>
+      <strong>Vaccination:</strong> Up to date? (parvo, distemper in young unvaccinated animals)<br>
+      <strong>Medications:</strong> NSAIDs, antibiotics, corticosteroids, chemotherapy?<br>
+      <strong>Environment:</strong> Outdoor access? Boarding? Shelter? Multiple pets? Travel?<br>
+      <strong>Water source:</strong> Ponds, creeks, standing water? (Giardia, Heterobilharzia)<br>
+      <strong>Weight change:</strong> Progressive loss? Polyphagia despite weight loss? (EPI)
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">🐾 SIGNALMENT + BREED CLUES</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong>Young + unvaccinated:</strong> Parvovirus, parasites<br>
+      <strong>Young + polyphagia + weight loss:</strong> EPI (GSD, CKCS, Chow Chow, Rough Collie)<br>
+      <strong>Middle-aged + chronic ± vomiting:</strong> IBD / small cell lymphoma (cats)<br>
+      <strong>Yorkshire Terrier / Wheaten Terrier:</strong> Lymphangiectasia + PLE<br>
+      <strong>Boxer / French Bulldog:</strong> Granulomatous colitis (AIEC)<br>
+      <strong>Cat + chronic diarrhoea + weight loss:</strong> Hyperthyroidism · Small cell lymphoma · IBD<br>
+      <strong>Dog + waxing/waning GI signs:</strong> Addison's — run <strong>basal cortisol</strong> first to rule out; &lt;55 nmol/L → ACTH stim<br>
+      <strong>Dog + Gulf Coast / tropical:</strong> Heterobilharzia americana
+    </div>
+
+  </div>
+
+  <div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-radius:10px;">
+    <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:4px;">⚠️ RED FLAGS</div>
+    <div style="font-size:10px;color:#FCA5A5;line-height:1.6;">
+      Young unvaccinated + haemorrhagic (parvo) · Profuse haemorrhagic diarrhoea (AHDS/HGE) · Acute abdomen · Severe dehydration/shock · Palpable mass or intussusception
+    </div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+function renderDxDiarrhoeaExam(){
+  replace(renderDxDiarrhoeaExam,'Exam: Diarrhoea');
+  render(`
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:14px;">
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaHistory()">📋 History</div>
+    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;" onclick="renderDxDiarrhoeaExam()">🩺 Exam</div>
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaDx()">🔬 Diagnostics</div>
+    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaSec()">🟠 Secondary</div>
+  </div>
+
+  <div class="dx-wrap">
+
+    <div class="dx-step">🩺 PHYSICAL EXAMINATION</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong>BCS / MCS:</strong> Weight loss → chronicity, malabsorption, protein-losing<br>
+      <strong>Coat / skin:</strong> Poor coat quality (EPI, PLE, hypoalbuminaemia); pruritus + otitis (food-responsive)<br>
+      <strong>Mucous membranes:</strong> Pallor (blood loss, anaemia); icterus (hepatic/haemolytic)
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong>Abdomen:</strong><br>
+      • Thickened intestinal loops (IBD, lymphoma, infiltrative disease)<br>
+      • Palpable mass / intussusception<br>
+      • Pain on palpation (pancreatitis, peritonitis, intussusception)<br>
+      • Fluid wave / tympany (ascites → hypoalbuminaemia, lymphangiectasia, PLE)<br>
+      • Borborygmi / gas (malabsorption, EPI, rapid motility)
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong>Digital rectal exam</strong> — ESSENTIAL IN ALL PATIENTS<br>
+      • Mass or stricture in rectum?<br>
+      • Character of faeces: melaena vs haematochezia vs mucus?<br>
+      • Anal tone, perineal exam
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong>Peripheral lymph nodes:</strong> Generalised lymphadenopathy (lymphoma, fungal, systemic disease)<br>
+      <strong>Thyroid (cat):</strong> Goitre or asymmetric lobe → hyperthyroidism<br>
+      <strong>Cavitary effusions:</strong> Pleural dullness · Pericardial muffling (hypoalbuminaemia, lymphangiectasia)<br>
+      <strong>Oedema:</strong> Peripheral pitting oedema (hypoalbuminaemia, lymphangiectasia)<br>
+      <strong>Eyes / CNS:</strong> Hepatic encephalopathy signs (PSS), uveitis (systemic disease)
+    </div>
+
+  </div>
+
+  <div style="margin-top:8px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;">
+    <div style="font-size:10px;color:var(--gray);line-height:1.6;">
+      💡 <strong style="color:var(--white);">Digital rectal exam</strong> is mandatory — rectal masses, polyps and strictures are missed without it.<br>
+      💡 <strong style="color:var(--white);">Ascites + hypoalbuminaemia</strong> — check albumin AND globulin. Panhypoproteinaemia = PLE.
+    </div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+function renderDxDiarrhoea(){ renderDxDiarrhoeaDx(); }
+function renderDxDiarrhoeaSB(){ renderDxDiarrhoeaDx(); }
+function renderDxDiarrhoeaLB(){ renderDxDiarrhoeaDx(); }
+
+function renderDxDiarrhoeaDx(){
+  replace(renderDxDiarrhoeaDx,'Dx: Diarrhoea');
+  render(`
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:14px;">
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaHistory()">📋 History</div>
+    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaExam()">🩺 Exam</div>
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;" onclick="renderDxDiarrhoeaDx()">🔬 Diagnostics</div>
+    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaSec()">🟠 Secondary</div>
+  </div>
+
+  <div class="dx-wrap">
+
+    <div class="dx-step">SB vs LB — KEY FEATURES</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-row c2">
+      <div class="dx-test" style="text-align:left;font-size:9px;">
+        <strong style="font-size:10px;">🔵 Small Bowel</strong><br>
+        Large volume · Low freq (3–5×/day)<br>
+        Weight loss common · Melaena<br>
+        Steatorrhoea (→ run TLI) · Borborygmi<br>
+        Vomiting ±
+      </div>
+      <div class="dx-test" style="text-align:left;background:rgba(13,148,136,0.2);border-color:rgba(13,148,136,0.45);font-size:9px;">
+        <strong style="font-size:10px;color:#5EEAD4;">🟢 Large Bowel</strong><br>
+        Small volume · High freq (&gt;5×/day)<br>
+        Tenesmus · Urgency · Mucus<br>
+        Haematochezia · No weight loss<br>
+        Usually primary GI — systemic workup rarely needed
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div style="background:rgba(13,148,136,0.1);border:1px solid rgba(13,148,136,0.35);border-left:3px solid #14B8A6;border-radius:10px;padding:10px 12px;">
+      <div style="font-size:10px;font-weight:700;color:#5EEAD4;margin-bottom:4px;">🟢 LB FIRST — DIGITAL RECTAL EXAM</div>
+      <div style="font-size:10.5px;color:var(--white);">Mandatory before any further diagnostics in LB disease. Palpate for mass, stricture, polyp, mucosal irregularity, pain. A rectal mass found here changes the entire workup.</div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 1 — EMPIRIC MEDICAL MANAGEMENT</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <span style="font-size:10px;opacity:.8;">Start empiric treatment in all cases while awaiting diagnostics. Many acute diarrhoeas resolve with supportive care alone.</span><br><br>
+      <strong style="color:#FCD34D;">Antiparasitic — give in all cases regardless of faecal result:</strong><br>
+      • <strong>Fenbendazole 50 mg/kg PO SID ×5 days</strong> — covers Giardia, roundworms, hookworms, whipworms<br>
+      • Re-dose at 3 and 6 weeks if LB diarrhoea (whipworm ova shed intermittently — flotation often false-negative)<br><br>
+      <strong style="color:#FCD34D;">Dietary modification:</strong><br>
+      • <strong>Bland diet</strong> — boiled chicken + rice, or commercial GI diet ×3–5 days (acute); reduces antigenic load and is highly digestible<br>
+      • <strong>Novel protein / hydrolysed diet trial</strong> (4–6 weeks exclusive) — if food-responsive enteropathy suspected after acute phase; no treats, chews, or flavoured medications<br>
+      • <strong>Highly digestible low-fat diet</strong> — reduces osmotic load in malabsorptive/SB diarrhoea<br><br>
+      <strong style="color:#FCD34D;">Gut protectants / adsorbents:</strong><br>
+      • <strong>Kaolin-pectin</strong> — coats and soothes mucosa; binds bacterial toxins; safe in all species<br>
+      • <strong>Smectite (diosmectite)</strong> — binds toxins + pathogens; mucosal barrier support<br>
+      • <strong>Sucralfate</strong> 0.5–1g PO TID — if mucosal ulceration suspected (haemorrhagic diarrhoea, known NSAID use)<br><br>
+      <strong style="color:#FCD34D;">Probiotics:</strong><br>
+      • <em>Enterococcus faecium</em> SF68 (FortiFlora®) or multi-strain probiotic — supports microbiome recovery; recommended alongside antibiotics if used<br><br>
+      <strong style="color:#FCD34D;">Metronidazole:</strong><br>
+      • 10–15 mg/kg PO BID ×5–7 days — anti-anaerobic + anti-Giardia; consider if haemorrhagic, mucosal, or high Giardia suspicion<br>
+      • Avoid routine use in every case — emerging resistance and microbiome disruption concerns<br><br>
+      <strong style="color:#FCD34D;">Fluid + electrolyte support:</strong><br>
+      • Oral electrolyte solution if mild–moderate dehydration and not vomiting<br>
+      • IV fluids (Hartmann's / Plasma-Lyte) if moderate–severe dehydration, vomiting, or collapse
+      <div style="margin-top:8px;background:rgba(13,148,136,0.1);border:1px solid rgba(13,148,136,0.3);border-left:3px solid #14B8A6;border-radius:8px;padding:8px 10px;font-size:10.5px;">
+        <span style="font-weight:700;color:#5EEAD4;">🟢 Large Bowel:</span> <strong>High-fibre supplementation first line</strong> — psyllium husk / wheat bran 1–6 tsp/day OR commercial high-fibre diet for 3–4 weeks. Effective for idiopathic LB diarrhoea and stress colitis. Fenbendazole course ×3 (repeat at 3 and 6 weeks) to cover <em>Trichuris vulpis</em> even if flotation negative. Avoid metronidazole as sole treatment — address fibre and parasites first.
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 2 — FAECAL PANEL</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>Minimum panel:</strong><br>
+      • <strong>Direct wet mount</strong> — motile Giardia trophozoites, other protozoa<br>
+      • <strong>Giardia ELISA / SNAP</strong> — more sensitive than wet mount alone<br>
+      • <strong>Parvovirus SNAP</strong> — young or unvaccinated animals (do not delay)<br><br>
+      <strong>Extended panel</strong> (chronic, no response to empiric treatment, or systemic signs):<br>
+      • <strong>ZnSO₄ centrifugal flotation ×3</strong> — helminth ova, protozoan cysts (serial samples improve sensitivity)<br>
+      • <strong>Cryptosporidium</strong> — acid-fast stain or faecal PCR (young / immunocompromised)<br>
+      • <strong>Faecal PCR panel</strong> — Salmonella, Campylobacter, Clostridium perfringens toxin / difficile<br>
+      • <strong>Faecal sedimentation</strong> — <em>Heterobilharzia americana</em> ova (Gulf Coast dogs)
+      <div style="margin-top:8px;background:rgba(13,148,136,0.1);border:1px solid rgba(13,148,136,0.3);border-left:3px solid #14B8A6;border-radius:8px;padding:8px 10px;font-size:10.5px;">
+        <span style="font-weight:700;color:#5EEAD4;">🟢 Large Bowel:</span> Priority target is <strong><em>Trichuris vulpis</em></strong> — ova shed intermittently, flotation frequently negative; treat empirically regardless. <strong>Cats:</strong> <em>Tritrichomonas foetus</em> — <strong>InPouch culture or faecal PCR</strong> (young cats, crowded environments); NOT detected on routine flotation. Treat with ronidazole 30–50 mg/kg PO SID ×14 days. Faecal culture if haemorrhagic, febrile, or zoonotic risk.
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 3 — BLOODWORK<span style="font-weight:400;font-size:9px;opacity:.8;"> · indicated if: not resolving after empiric Rx · chronic (&gt;3 wk) · weight loss · systemic signs</span></div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">CBC:</strong><br>
+      • Leucopenia → parvovirus / panleukopenia (young unvaccinated)<br>
+      • Eosinophilia → parasitism, dietary hypersensitivity, eosinophilic enteritis<br>
+      • <strong>Absent stress leukogram in a sick dog</strong> → hypoadrenocorticism (see biochem below)<br>
+      • Regenerative anaemia → GI haemorrhage / blood loss<br>
+      • Lymphopenia → lymphangiectasia / PLE<br><br>
+      <strong style="color:#FCD34D;">Serum biochemistry:</strong><br>
+      • ↓ Albumin + ↓ Globulin (panhypoproteinaemia) → <strong>PLE</strong> — lymphangiectasia, IBD, neoplasia<br>
+      • ↓ Albumin alone → hepatic disease, malabsorption, GI loss<br>
+      • Na:K &lt;27 → <strong>classical hypoadrenocorticism</strong> — confirm with ACTH stimulation<br>
+      • <strong>Absent stress leukogram</strong> + normal Na:K → <strong>atypical hypoadrenocorticism</strong> — run <strong>basal cortisol</strong>; &lt;55 nmol/L or ongoing suspicion → <strong>ACTH stimulation test</strong><br>
+      • ↑ ALT / ALP / GGT + ↓ albumin → hepatic disease / <strong>PSS (portosystemic shunt)</strong><br>
+      • ↓ BUN + ↓ albumin + ↓ cholesterol + ↑ liver enzymes ± ↑ ammonia → <strong>PSS</strong><br>
+      • <strong>Serum T4 (ALL cats with chronic diarrhoea)</strong> → hyperthyroidism<br>
+      • ↑ fPLI + ↑ ALT (cat) → triaditis (pancreatitis + cholangitis + IBD)<br><br>
+      <strong style="color:#FCD34D;">Urinalysis:</strong><br>
+      • USG &lt;1.030 in dehydrated dog → CKD / hypoadrenocorticism / DI<br>
+      • Ammonium biurate crystals → <strong>PSS (portosystemic shunt)</strong><br><br>
+      <strong style="color:#FCD34D;">GI-specific panel</strong> <span style="font-size:9.5px;opacity:.8;">(chronic SB diarrhoea · steatorrhoea · weight loss)</span><strong style="color:#FCD34D;">:</strong><br>
+      • <strong>cTLI (dog) / fTLI (cat)</strong> — EPI: cTLI &lt;2.5 μg/L diagnostic; fTLI &lt;8 μg/L (cat). <em>Must be fasted sample.</em><br>
+      • <strong>Serum cobalamin (B12)</strong> — low in EPI, severe ileal disease, severe IBD. Supplement ALL EPI cats regardless of level.<br>
+      • <strong>Serum folate</strong> — elevated with proximal SI SIBO; low with proximal SI mucosal disease<br>
+      • <strong>fPLI / cPLI</strong> — pancreatitis (most sensitive/specific serum marker)
+      <div style="margin-top:8px;background:rgba(13,148,136,0.1);border:1px solid rgba(13,148,136,0.3);border-left:3px solid #14B8A6;border-radius:8px;padding:8px 10px;font-size:10.5px;">
+        <span style="font-weight:700;color:#5EEAD4;">🟢 Large Bowel:</span> Bloodwork usually normal in straightforward LB disease. Run if: weight loss, systemic signs, haemorrhagic diarrhoea, refractory to empiric treatment, or patient &gt;7 years old. GI-specific panel (TLI / cobalamin / folate) not routinely indicated — only if concurrent SB signs or systemic disease suspected.
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 4 — ABDOMINAL IMAGING<span style="font-weight:400;font-size:9px;opacity:.8;"> · chronic · weight loss · palpable abnormality</span></div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>Survey radiograph:</strong><br>
+      • Reduced serosal detail → effusion (hypoalbuminaemia, PLE, lymphangiectasia)<br>
+      • Hepatomegaly / splenomegaly / gas pattern / obstruction<br><br>
+      <strong>Abdominal ultrasound:</strong><br>
+      • SI wall thickening — <em>layering preserved + thickened</em> → IBD/enteritis; <em>layering lost</em> → neoplasia<br>
+      • Mesenteric lymphadenopathy — IBD, lymphoma, systemic disease<br>
+      • Pancreatic changes — pancreatitis, EPI (atrophy)<br>
+      • <strong>Bilateral small adrenal glands</strong> → hypoadrenocorticism<br>
+      • Hepatic architecture / gallbladder / bile duct thickening → hepatic / biliary disease, triaditis (cat)<br>
+      • Microhepatica + renomegaly → <strong>PSS (portosystemic shunt)</strong>
+      <div style="margin-top:8px;background:rgba(13,148,136,0.1);border:1px solid rgba(13,148,136,0.3);border-left:3px solid #14B8A6;border-radius:8px;padding:8px 10px;font-size:10.5px;">
+        <span style="font-weight:700;color:#5EEAD4;">🟢 Large Bowel:</span> Lower yield in straightforward LB disease. Ultrasound useful for colonic wall thickening and mesenteric LN if chronic or severe. Rectal exam and colonoscopy are higher-yield.
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 5 — ENDOSCOPY + BIOPSY<span style="font-weight:400;font-size:9px;opacity:.8;"> · dietary trial failed · systemic causes excluded · progressive weight loss</span></div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      • <strong>Full-thickness surgical biopsy</strong> preferred — necessary for lymphoma subtyping, transmural disease (pythiosis, histoplasmosis)<br>
+      • <strong>PARR PCR</strong> on biopsy if lymphoma suspected — sensitivity ~70%; negative does not exclude<br>
+      • <strong>Culture + sensitivity</strong> if infectious aetiology not fully excluded<br>
+      • Duodenal aspirate for quantitative culture if SIBO suspected
+      <div style="margin-top:8px;background:rgba(13,148,136,0.1);border:1px solid rgba(13,148,136,0.3);border-left:3px solid #14B8A6;border-radius:8px;padding:8px 10px;font-size:10.5px;">
+        <span style="font-weight:700;color:#5EEAD4;">🟢 Large Bowel:</span> <strong>Colonoscopy + multiple biopsies</strong> — indicated if chronic, refractory, haemorrhagic, mass on rectal exam, or progressive. <strong>Boxer / French Bulldog / Malamute:</strong> FISH for adherent invasive <em>E. coli</em> (AIEC) — enrofloxacin often curative.
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div class="dx-dx" onclick="goLesionTab('LOC-DI-SI','Small intestine')">SI Primary lesions →</div>
+      <div class="dx-dx" style="background:rgba(13,148,136,0.2);border-color:rgba(13,148,136,0.5);" onclick="goLesionTab('LOC-DI-LB','Large intestine / colon')">LI Primary lesions →</div>
+    </div>
+    <div style="height:4px;"></div>
+    <div class="dx-dx" onclick="renderDxDiarrhoeaSec()" style="background:rgba(217,119,6,0.15);border-color:rgba(217,119,6,0.4);">🟠 Full secondary workup →</div>
+
+  </div>
+
+  <div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-radius:10px;">
+    <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:4px;">⚠️ RED FLAGS</div>
+    <div style="font-size:10px;color:#FCA5A5;line-height:1.6;">
+      Young unvaccinated + haemorrhagic diarrhoea (parvo) · Acute abdomen · Profuse AHDS · Palpable mass / intussusception · Severe dehydration / shock · Addisonian crisis · Palpable rectal mass · Progressive weight loss with LB signs (neoplasia)
+    </div>
+  </div>
+
+  <div style="margin-top:8px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;">
+    <div style="font-size:10px;color:var(--gray);line-height:1.6;">
+      💡 <strong style="color:var(--white);">Fenbendazole in all cases</strong> — treat regardless of faecal result; repeat ×3 for LB diarrhoea (whipworm).<br>
+      💡 <strong style="color:var(--white);">Panhypoproteinaemia</strong> (↓ alb + ↓ glob) = PLE. Albumin &lt;15 g/L = poor prognosis.<br>
+      💡 <strong style="color:var(--white);">T4 in every cat</strong> with chronic diarrhoea — T4 can be falsely normal with concurrent illness.<br>
+      💡 <strong style="color:var(--white);">Waxing/waning GI signs</strong> → always rule out Addison's — run basal cortisol first; &lt;55 nmol/L → ACTH stim. Normal Na:K does NOT exclude atypical disease.<br>
+      💡 <strong style="color:var(--white);">Digital rectal exam mandatory</strong> — polyps and rectal masses are missed without it.<br>
+      💡 <strong style="color:var(--white);">Tritrichomonas</strong> — only InPouch culture or PCR, NOT routine flotation.
+    </div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+function renderDxDiarrhoeaSec(){
+  replace(renderDxDiarrhoeaSec,'Dx: Secondary Diarrhoea');
+  render(`
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:14px;">
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaHistory()">📋 History</div>
+    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaExam()">🩺 Exam</div>
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaDx()">🔬 Diagnostics</div>
+    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;" onclick="renderDxDiarrhoeaSec()">🟠 Secondary</div>
+  </div>
+
+  <div class="dx-wrap">
+    <div class="dx-step" style="background:rgba(217,119,6,0.2);border-color:rgba(217,119,6,0.45);color:var(--amber-text);">🟠 SECONDARY / SYSTEMIC CAUSES — TARGETED TESTS</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check" style="font-size:10.5px;">
+      <strong>Suspect when:</strong> chronic SI-pattern diarrhoea + weight loss · systemic signs (PU/PD, lethargy, episodic weakness, jaundice, tachycardia) · bloodwork abnormalities pointing away from primary GI · poor response to GI treatment
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 1 — BLOODWORK FLAGS + FIRST TESTS</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Hypoadrenocorticism (Addison's):</strong><br>
+      • Na:K &lt;27 → classical — <strong>ACTH stimulation test</strong> to confirm<br>
+      • Absent stress leukogram ± eosinophilia in a sick dog (even with NORMAL Na:K) → atypical — <strong>basal cortisol</strong> first; &lt;55 nmol/L → ACTH stim; 55–165 nmol/L (equivocal) → proceed to ACTH stim anyway<br>
+      • Post-stim cortisol &lt;55 nmol/L = diagnostic<br>
+      • <span style="font-size:10px;opacity:.75;">Normal electrolytes do NOT exclude atypical Addison's — never rely on Na:K alone</span><br><br>
+      <strong style="color:#FCD34D;">Hyperthyroidism (cat):</strong><br>
+      • <strong>Serum T4 — mandatory in ALL cats with chronic diarrhoea</strong><br>
+      • Equivocal result → free T4 by equilibrium dialysis OR recheck in 3 weeks<br>
+      • T4 can be falsely normal with concurrent illness (occult hyperthyroidism)<br><br>
+      <strong style="color:#FCD34D;">Hepatic disease / PSS:</strong><br>
+      • ↑ ALT/ALP/GGT + ↓ albumin → hepatic disease / PSS / hepatic lipidosis (cat)<br>
+      • ↓ BUN + ↓ albumin + ↓ cholesterol + ↑ liver enzymes ± ↑ ammonia → <strong>PSS (portosystemic shunt)</strong><br>
+      • Ammonium biurate crystals on UA → PSS<br><br>
+      <strong style="color:#FCD34D;">EPI (exocrine pancreatic insufficiency):</strong><br>
+      • Polyphagia + weight loss + voluminous steatorrhoeic diarrhoea<br>
+      • <strong>cTLI &lt;2.5 μg/L (dog)</strong> / <strong>fTLI &lt;8 μg/L (cat)</strong> — must be fasted sample; recheck if borderline<br><br>
+      <strong style="color:#FCD34D;">Triaditis (cat):</strong><br>
+      • ↑ fPLI + ↑ ALT + ↑ GGT + bilirubin → pancreatitis + cholangitis + IBD<br><br>
+      <strong style="color:#FCD34D;">Protein-losing enteropathy (PLE):</strong><br>
+      • ↓ Albumin + ↓ Globulin (panhypoproteinaemia) → SI protein loss confirmed<br>
+      • ↓ Albumin alone → hepatic disease or malabsorption (globulins spared)<br><br>
+      <strong style="color:#FCD34D;">Regional infectious clue:</strong><br>
+      • Hypercalcaemia + Gulf Coast dog + outdoor water exposure → <em>Heterobilharzia americana</em>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 2 — TARGETED FOLLOW-UP BY SUSPECTED CAUSE</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">If hypoadrenocorticism suspected:</strong><br>
+      • Abdominal US: bilateral small adrenal glands (&lt;3.5mm) — supportive but not diagnostic<br>
+      • ACTH stimulation test (as above) — gold standard<br>
+      • Treat Addisonian crisis: IV saline + dexamethasone (0.1–0.2 mg/kg IV) stat<br><br>
+      <strong style="color:#6EE7B7;">If hepatic disease / PSS suspected:</strong><br>
+      • <strong>Pre/post-prandial bile acids</strong> — hepatic dysfunction, portosystemic shunting<br>
+      • <strong>Abdominal ultrasound</strong> — hepatic architecture, microhepatica (PSS), aberrant vessel, biliary sludge/wall thickening (triaditis), pancreatic changes<br>
+      • Plasma ammonia if encephalopathic signs<br>
+      • Liver biopsy (Tru-cut or surgical) if hepatic parenchymal disease confirmed<br><br>
+      <strong style="color:#6EE7B7;">If EPI suspected:</strong><br>
+      • Serum cobalamin (B12) + folate — cobalamin low in EPI, severe ileal disease; supplement cobalamin in ALL EPI cats regardless of level<br>
+      • Monitor TLI annually — chronic pancreatitis leads to progressive EPI<br>
+      • Pancreatic enzyme supplementation + low-fat diet<br><br>
+      <strong style="color:#6EE7B7;">If PLE suspected:</strong><br>
+      • Faecal α₁-protease inhibitor (dogs) — most sensitive marker of GI protein loss<br>
+      • Abdominal US: intestinal wall layering, mucosal striations (lymphangiectasia), effusion<br>
+      • Endoscopy + full-thickness biopsy — lymphangiectasia (dilated lacteals), IBD, lymphoma<br>
+      • Check cobalamin + folate (B12 low → ileal disease; folate ↑ → SIBO)
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 3 — REGION-SPECIFIC INFECTIOUS CAUSES</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong style="color:#FCA5A5;">Heterobilharzia americana</strong> (Gulf Coast / SE USA · outdoor + freshwater exposure):<br>
+      • Clue: hypercalcaemia (granulomatous inflammation)<br>
+      • Tests: <strong>faecal sedimentation for ova</strong>; <strong>faecal PCR</strong> (more sensitive)<br>
+      • Treat: praziquantel 25 mg/kg TID ×2 days + fenbendazole 40 mg/kg SID ×10 days<br><br>
+      <strong style="color:#FCA5A5;">Histoplasmosis</strong> (Ohio / Mississippi / Missouri river valleys · Great Lakes):<br>
+      • Clue: concurrent respiratory signs, weight loss, hepatosplenomegaly, pancytopenia<br>
+      • Tests: <strong>urine Histoplasma antigen ELISA</strong> (most sensitive — MiraVista Diagnostics); rectal scraping cytology (intracellular yeast in macrophages — most rapid); faecal PCR<br>
+      • Treat: itraconazole 5 mg/kg SID or BID × minimum 6 months; monitor with urine antigen titre<br><br>
+      <strong style="color:#FCA5A5;">Pythiosis</strong> (Gulf Coast / tropical · freshwater exposure):<br>
+      • Clue: transmural GI mass + weight loss + young large breed dog<br>
+      • Tests: <strong>Pythium ELISA titre ≥1:400</strong> suggestive; abdominal US (transmural mass, mural thickening); full-thickness biopsy + FISH for definitive diagnosis<br>
+      • Treat: surgical resection + itraconazole + terbinafine. Prognosis guarded — early surgery offers best chance
+    </div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-dx" onclick="goLesionTab('LOC-DI-SI-SEC','Small intestine — Secondary')">Secondary / Systemic lesions →</div>
+  </div>
+
+  <div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-radius:10px;">
+    <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:4px;">⚠️ RED FLAGS</div>
+    <div style="font-size:10px;color:#FCA5A5;line-height:1.6;">
+      Addisonian crisis (bradycardia + hypotension + weakness) · Hepatic encephalopathy (PSS) · Pythiosis (rapid transmural mass progression) · Panhypoproteinaemia + ascites (albumin &lt;15 g/L = poor prognosis)
+    </div>
+  </div>
+  <div style="margin-top:8px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;">
+    <div style="font-size:10px;color:var(--gray);line-height:1.6;">
+      💡 <strong style="color:var(--white);">T4 in every cat</strong> with chronic diarrhoea — T4 can be falsely normal with concurrent illness.<br>
+      💡 <strong style="color:var(--white);">Atypical Addison's</strong> — normal Na:K does NOT exclude. Absent stress leukogram = check basal cortisol.<br>
+      💡 <strong style="color:var(--white);">Hypercalcaemia + Gulf Coast dog</strong> → Heterobilharzia until proven otherwise.<br>
+      💡 <strong style="color:var(--white);">Panhypoproteinaemia</strong> (↓ alb + ↓ glob) = PLE — hepatic disease spares globulins.
+    </div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── DIAGNOSTIC APPROACH: DYSPNOEA ────────────────────────────────────────────
+function renderDxDyspnoea(){ renderDxDyspnoeaHistory(); }
+
+function renderDxDyspnoeaHistory(){
+  replace(renderDxDyspnoeaHistory,'History: Dyspnoea');
+  render(`
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:14px;">
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;" onclick="renderDxDyspnoeaHistory()">📋 History</div>
+    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDyspnoeaExam()">🩺 Exam</div>
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDyspnoeaDx()">🔬 Diagnostics</div>
+  </div>
+
+  <div class="dx-wrap">
+
+    <div class="dx-branch">DYSPNOEA vs TACHYPNOEA</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-row c2">
+      <div class="dx-test" style="text-align:left;font-size:9px;">
+        <strong style="font-size:10px;">😮‍💨 Dyspnoea</strong><br>
+        Increased respiratory <strong>effort</strong><br>
+        Visible abdominal effort<br>
+        Orthopnoea · open-mouth breathing<br>
+        <span style="opacity:.75;">Structural / obstructive / space-occupying</span>
+      </div>
+      <div class="dx-test" style="text-align:left;background:#0D7377;font-size:9px;">
+        <strong style="font-size:10px;">💨 Tachypnoea</strong><br>
+        Increased respiratory <strong>rate</strong> only<br>
+        Effort may be minimal<br>
+        Non-resp: pain, fever, anxiety, anaemia, shock, acidosis<br>
+        <span style="opacity:.75;">Does not always = respiratory disease</span>
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step">📋 KEY HISTORY — BOTH SPECIES</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>Onset + duration:</strong><br>
+      • Peracute (min–hours): pleural effusion, pneumothorax, 🐱 ATE, acute cardiac decompensation, 🐕 PTE<br>
+      • Subacute (days): pneumonia, progressive effusion, cardiac decompensation<br>
+      • Chronic + waxing/waning: 🐱 asthma, 🐕 tracheal collapse / airway collapse, neoplasia<br><br>
+      <strong>Cough character:</strong><br>
+      • 🐕 Goose-honking: cervical tracheal collapse — worsens with excitement, lead pulling, eating<br>
+      • 🐕 Harsh hacking: laryngeal, tracheal, or bronchial disease<br>
+      • 🐕🐱 Soft, productive: alveolar/interstitial disease (pneumonia, oedema)<br>
+      • 🐱 Dry, paroxysmal, expiratory: feline asthma/bronchitis<br>
+      • Owners often confuse coughing with retching — confirm by description<br><br>
+      <strong>Prior episodes?</strong><br>
+      • 🐱 Episodic → asthma; recurrent decompensation → HCM<br>
+      • 🐕 Episodic with exertion/heat → tracheal collapse; exertional syncope → pulmonary hypertension<br><br>
+      <strong>Response to previous treatment?</strong><br>
+      • Bronchodilators + steroids → lower airway disease (both species)<br>
+      • Diuretics → CHF (both species)<br>
+      • 🐕 Improvement at rest, worse on exercise → tracheal collapse / cardiac disease
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">🐕 DOG-SPECIFIC HISTORY</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>Vocalization changes:</strong> Hoarse bark, change in bark character → laryngeal disease (laryngeal paralysis, collapse, mass)<br>
+      <strong>Syncope / collapse:</strong> Exertional or at rest → 🐕 pulmonary hypertension (key indicator), severe cardiac disease, tracheal collapse<br>
+      <strong>Vomiting / regurgitation:</strong> Prior to respiratory signs → aspiration pneumonia; laryngeal paralysis → aspiration risk<br>
+      <strong>Exercise intolerance:</strong> Often misattributed to ageing — may reflect early CHF, pulmonary hypertension, or chronic airway disease<br>
+      <strong>Comorbidities increasing PTE risk:</strong> IMHA, hyperadrenocorticism, PLN, pancreatitis, heartworm, neoplasia, diabetes mellitus, protein-losing enteropathy, pregnancy<br>
+      <strong>Exposure history:</strong> Boarding/shelter/dog park → infectious CIRDC (Bordetella, canine influenza, Mycoplasma)<br>
+      <strong>Heartworm prevention:</strong> Endemic region + no prophylaxis → consider HW disease<br>
+      <strong>Travel history:</strong> Histoplasma / Blastomyces (midwest/SE USA, Great Lakes), Coccidioides (SW USA/Mexico), Angiostrongylus vasorum (UK/Europe)
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">🐱 CAT-SPECIFIC HISTORY</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>Concurrent signs:</strong><br>
+      • Sudden hindlimb paralysis + pain + respiratory distress → ATE (HCM emergency)<br>
+      • Weight loss + anorexia → neoplasia, chronic disease, hyperthyroidism<br>
+      • Nasal discharge + sneezing → URTI (herpesvirus, calicivirus)<br><br>
+      <strong>Environment:</strong><br>
+      • Outdoor/hunting → pyothorax (grass awn FB), lungworm (<em>Aelurostrongylus</em>), trauma → pneumothorax<br>
+      • Multi-cat / shelter → viral URTI, FIP, secondary bacterial infections<br>
+      <strong>Drug history:</strong> NSAIDs → renal compromise; corticosteroids → immunosuppression; recent anaesthesia → aspiration
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">🐾 SIGNALMENT + BREED CLUES</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
+        <div>
+          <strong style="color:#60A5FA;font-size:10px;">🐕 DOG</strong><br><br>
+          <strong style="color:#FCD34D;">Brachycephalic</strong> (Bulldog, French Bulldog, Pug, Boston, Shih Tzu)<br>→ BOAS · secondary lower airway disease · post-obstructive NCPE<br><br>
+          <strong style="color:#6EE7B7;">Large/Giant breeds</strong> (Labrador, Golden, Great Dane, Irish Wolfhound)<br>→ Laryngeal paralysis (GOLPP) · DCM<br><br>
+          <strong style="color:#FCA5A5;">Toy/Small breeds</strong> (Yorkshire, Chihuahua, Pomeranian, Toy Poodle, Maltese)<br>→ Tracheal collapse · MMVD<br><br>
+          <strong style="color:#C4B5FD;">CKCS, Dachshund</strong> → MMVD (early onset)<br><br>
+          <strong style="color:#C4B5FD;">Dobermann, Irish Wolfhound, Great Dane</strong> → DCM → CHF<br><br>
+          <strong style="color:#FCD34D;">Husky, Malamute</strong> → Eosinophilic bronchopneumopathy<br><br>
+          <strong style="color:#FCA5A5;">Cocker Spaniel</strong> → Bronchiectasis · PLN → PTE risk
+        </div>
+        <div>
+          <strong style="color:#FB923C;font-size:10px;">🐱 CAT</strong><br><br>
+          <strong style="color:#C4B5FD;">Maine Coon, Ragdoll, BSH, Persian</strong><br>→ HCM (high risk; can present young)<br><br>
+          <strong style="color:#6EE7B7;">Young cat (1–5 yr)</strong><br>→ Feline asthma · viral URTI · pyothorax (outdoor) · lymphoma<br><br>
+          <strong style="color:#FCD34D;">Middle-aged–older cat</strong><br>→ HCM · pleural neoplasia · cranial mediastinal mass · hyperthyroidism<br><br>
+          <strong style="color:#FCA5A5;">Male cat</strong><br>→ HCM more common (esp Maine Coon)<br><br>
+          <strong style="color:#93C5FD;">Outdoor/hunting cat</strong><br>→ Pyothorax · lungworm · trauma<br><br>
+          <strong style="color:#FCD34D;">FIV/FeLV positive</strong><br>→ Secondary infections · lymphoma · FIP
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-radius:10px;">
+    <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:4px;">⚠️ RED FLAGS</div>
+    <div style="font-size:10px;color:#FCA5A5;line-height:1.6;">
+      🐕🐱 Open-mouth breathing · Cyanosis · Orthopnoea (cannot lie down) · Rapid deterioration despite O₂<br>
+      🐱 Open-mouth breathing = SEVERE (obligate nasal breather) · Cold paralysed hindlimbs + resp distress = ATE<br>
+      🐕 Exertional syncope → pulmonary hypertension · Goose-honk + cyanosis → severe collapse · Haemoptysis → PTE/coagulopathy/HW
+    </div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+function renderDxDyspnoeaExam(){
+  replace(renderDxDyspnoeaExam,'Exam: Dyspnoea');
+  render(`
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:14px;">
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDyspnoeaHistory()">📋 History</div>
+    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;" onclick="renderDxDyspnoeaExam()">🩺 Exam</div>
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDyspnoeaDx()">🔬 Diagnostics</div>
+  </div>
+
+  <div class="dx-wrap">
+
+    <div class="dx-step">🩺 OBSERVE BEFORE YOU TOUCH</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong style="color:#F87171;">Minimise stress — especially cats.</strong> Observe from distance first with supplemental O₂:<br>
+      • <strong>Posture:</strong> Head/neck extended + elbows abducted = orthopnoea (severe dyspnoea; cannot lie down)<br>
+      • <strong>Respiratory rate:</strong> Count from distance; &gt;40/min at rest (dog or cat) = clinically significant<br>
+      • <strong>Abdominal effort:</strong> Paradoxical chest/abdominal movement → pleural disease or chest wall pathology<br>
+      • <strong>🐱 Open-mouth breathing:</strong> = SEVERE — cats are obligate nasal breathers<br>
+      • <strong>🐕 Positional preference:</strong> Standing/sitting rather than lying (orthopnoea) = CHF, pleural effusion, severe dyspnoea<br>
+      • <strong>Audible sounds from distance:</strong> Stertor → nasopharyngeal; stridor → laryngeal/cervical tracheal; 🐕 goose-honk → intrathoracic tracheal/bronchial collapse
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Vital Signs</strong><br>
+      • <strong>HR:</strong> Tachycardia = most common; 🐕 sinus bradycardia/arrhythmia unlikely with CHF; bradycardia + hypothermia = severe decompensation<br>
+      • <strong>Temperature (🐕):</strong> Fever → pneumonia, ARDS; upper airway obstruction (BOAS, laryngeal paralysis) → <strong>hyperthermia</strong> (impaired evaporative cooling via panting) — treat urgently<br>
+      • <strong>Temperature (🐱):</strong> Fever → pyothorax, pneumonia; hypothermia + bradycardia → decompensated HCM<br>
+      • <strong>MM colour:</strong> Cyanosis → severe hypoxaemia; pale → anaemia/shock; normal MMs do NOT exclude significant hypoxaemia<br>
+      • <strong>SpO₂:</strong> &lt;95% = clinically significant; &lt;90% = severe → start O₂ immediately<br>
+      • <strong>🐕 Pulse quality + rhythm:</strong> Weak/rapid → shock; irregular pulse with deficits → atrial fibrillation (DCM, advanced MMVD)<br>
+      • <strong>🐕 Jugular distension:</strong> → Right-sided CHF, pulmonary hypertension, pericardial effusion
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">🔊 AUSCULTATION + SOUND LOCALISATION</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;font-size:10px;line-height:1.45;">
+        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Finding</div>
+        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Suggests</div>
+        <div>Muffled sounds ventrally</div><div style="color:#FCD34D;">Pleural effusion (bilateral common in 🐱)</div>
+        <div>Muffled sounds dorsally</div><div style="color:#FCD34D;">Pneumothorax (air rises dorsally)</div>
+        <div>Crackles (inspiratory)</div><div style="color:#FCA5A5;">Pulmonary oedema, pneumonia, fibrosis</div>
+        <div>Wheeze / expiratory effort</div><div style="color:#6EE7B7;">🐱 Asthma · 🐕 Bronchitis/collapse</div>
+        <div>Goose-honk (expiratory)</div><div style="color:#60A5FA;">🐕 Intrathoracic tracheal/bronchial collapse</div>
+        <div>Stridor (inspiratory)</div><div style="color:#93C5FD;">🐕 Laryngeal paralysis/collapse/BOAS · cervical tracheal</div>
+        <div>Stertor (snoring)</div><div style="color:#93C5FD;">🐕 BOAS, pharyngeal disease · 🐱 NP polyp, URTI</div>
+        <div>Murmur (L apex systolic)</div><div style="color:#C4B5FD;">🐕 MMVD · 🐱 HCM — grade ≠ severity</div>
+        <div>Absence of murmur</div><div style="color:#FCD34D;">Makes CHF less likely — but NOT excluded in 🐕 DCM or 🐱 HCM</div>
+        <div>Gallop rhythm (S3/S4)</div><div style="color:#F87171;">Decompensated cardiac — significant in both species</div>
+        <div>Atrial fibrillation</div><div style="color:#F87171;">🐕 DCM or advanced MMVD — increased CHF risk</div>
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">🐕 DOG-SPECIFIC EXAM FINDINGS</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong style="color:#60A5FA;">Tracheal palpation:</strong><br>
+      • Gentle palpation → easy cough elicitation = tracheal sensitivity (tracheitis, bronchitis)<br>
+      • Lateral cervical compression → induces goose-honk = cervical tracheal collapse<br>
+      • 🐕 BOAS: stenotic nares visible externally; palpate larynx for mass or deformity<br><br>
+      <strong style="color:#60A5FA;">Laryngeal/upper airway evaluation:</strong><br>
+      • Change in bark → laryngeal paralysis; exam under sedation to visualise arytenoid abductor function (MUST observe under light sedation only — deep anaesthesia masks paralysis)<br>
+      • Stridor character: inspiratory = laryngeal/cervical tracheal; biphasic = severe bilateral obstruction<br><br>
+      <strong style="color:#60A5FA;">Nasal airflow:</strong><br>
+      • Cotton ball or glass slide beneath nostrils — observe symmetry<br>
+      • Unilateral reduced airflow → FB, neoplasia, mass; bilateral reduced → bilateral disease, NP stenosis, BOAS<br><br>
+      <strong style="color:#60A5FA;">Abdominal assessment:</strong><br>
+      • Distension + fluid wave → ascites (right-sided CHF, portal hypertension, peritoneal effusion)<br>
+      • Hepatomegaly → right CHF, hepatic disease<br>
+      • Organomegaly / abdominal mass → primary disease with pulmonary metastasis or functional compression limiting diaphragm excursion
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">🐱 CAT-SPECIFIC EXAM FINDINGS</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong style="color:#C4B5FD;">Cranial mediastinal compressibility:</strong><br>
+      • <strong>Non-compressible</strong> → cranial mediastinal mass (lymphoma, thymoma, carcinoma) until proven otherwise<br>
+      • Compressible (normal): rules out significant cranial mass<br><br>
+      <strong style="color:#FCA5A5;">Limb assessment:</strong><br>
+      • Cold, painful, cyanotic hindlimbs → ATE — femoral pulse absent/weakened<br>
+      • Muscle rigidity / paralysis → ATE emergency; also check radial pulse<br><br>
+      <strong style="color:#6EE7B7;">Percussion:</strong><br>
+      • Dullness ventrally → pleural effusion (often bilateral in cats)<br>
+      • Hyper-resonance → pneumothorax<br><br>
+      <strong style="color:#FCD34D;">Neck + nasal exam:</strong><br>
+      • Ipsilateral Horner's + stertor → nasopharyngeal polyp (young cat)<br>
+      • Nasal discharge: mucopurulent → URTI, fungal; serous → viral
+    </div>
+
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+function renderDxDyspnoeaDx(){
+  replace(renderDxDyspnoeaDx,'Dx: Dyspnoea — Diagnostics');
+  render(`
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:14px;">
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDyspnoeaHistory()">📋 History</div>
+    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDyspnoeaExam()">🩺 Exam</div>
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;" onclick="renderDxDyspnoeaDx()">🔬 Diagnostics</div>
+  </div>
+
+  <div class="dx-wrap">
+
+    <div class="dx-step" style="background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.4);color:#F87171;">⚡ STEP 1 — STABILISE FIRST</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      • <strong>O₂ immediately:</strong> Flow-by (250–300 mL/kg/min) or O₂ cage (FiO₂ 40–60%); loose mask preferred over bare tubing<br>
+      • O₂ 40–60% adequate for most; SpO₂ persistently ≤90% → escalate to high-flow O₂ or mechanical ventilation<br>
+      • <strong>Minimal restraint</strong> — do NOT force lateral recumbency for CXR if severely dyspnoeic<br>
+      • <strong>Sternal positioning</strong> — preferred for both dogs and cats; maximises ventilation<br>
+      • If pleural effusion clinically likely → <strong>thoracocentesis before radiograph</strong><br>
+      • Light sedation if extreme stress prevents management: butorphanol 0.2–0.4 mg/kg IM ± acepromazine (avoid in shock/severe cardiac disease)<br>
+      • 🐕 BOAS / laryngeal paralysis / upper airway obstruction: nebulised epinephrine (0.05 mg/kg in 5 mL saline q6h ×24h); cool environment; treat hyperthermia urgently<br>
+      • 🐕 Transtracheal O₂ (14–16 gauge catheter, 3rd–5th tracheal ring, 50 mL/kg/min): bypasses upper airway obstruction; achieves FiO₂ ~80%
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 2 — POINT-OF-CARE ULTRASOUND (POCUS / TFAST)</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>First bedside test — &lt;2 min, minimal stress (sternal positioning):</strong><br>
+      • <strong>Absent glide sign:</strong> Pneumothorax; reverse sliding sign also appreciated; B-lines rule out PTX in that region<br>
+      • <strong>Pleural effusion:</strong> Anechoic fluid between parietal + visceral pleura<br>
+      • <strong>B-lines ≥3/window:</strong> Interstitial fluid → oedema; diffuse B-lines = cardiogenic; focal/patchy = pneumonia, contusion<br>
+      • <strong>LA enlargement (🐕 LA:Ao &gt;2:1 · 🐱 LA:Ao &gt;1.5:1):</strong> Strongly supports CHF when combined with B-lines<br>
+      • <strong>Pericardial effusion:</strong> 🐕 Left atrial rupture in severe MMVD → hyperechoic thrombus in pericardial space<br>
+      • <strong>Shred sign:</strong> Irregular pleural-lung interface → consolidation with aeration (pneumonia)<br>
+      • <strong>Tissue sign:</strong> Liver-like lung parenchyma → severe pneumonia, atelectasis, lung lobe torsion<br>
+      • <strong>🐕 Wedge sign:</strong> Subpleural triangular consolidation — in hypercoagulable patient (caudodorsal/perihilar) → PTE<br>
+      • <strong>🐕 CVC distension</strong> (decreased respiratory collapsibility) → pulmonary hypertension or right CHF<br>
+      • <strong>🐕 Heartworms:</strong> Double-lined structures in pulmonary artery/right heart → caval syndrome<br>
+      <span style="font-size:10px;opacity:.75;">⚠️ POCUS rules in pleural disease and oedema — does NOT exclude parenchymal or airway disease. Normal POCUS does not = normal lungs.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 3 — PULSE OXIMETRY + S/F RATIO</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>SpO₂ interpretation (standard conditions):</strong><br>
+      <div style="display:grid;grid-template-columns:1fr 1.2fr 1.2fr;gap:3px 6px;font-size:9px;margin:4px 0;">
+        <div style="font-weight:600;">SpO₂</div><div style="font-weight:600;">~PaO₂ (mmHg)</div><div style="font-weight:600;">Action</div>
+        <div>95–100%</div><div>≥80</div><div style="color:#6EE7B7;">Normal</div>
+        <div>90–94%</div><div>60–70</div><div style="color:#FCD34D;">Hypoxaemia — supplement O₂</div>
+        <div>&lt;90%</div><div>&lt;60</div><div style="color:#F87171;">Severe — escalate immediately</div>
+        <div>&lt;65%</div><div>&lt;30</div><div style="color:#EF4444;font-weight:700;">Life-threatening</div>
+      </div>
+      <strong>S/F ratio (SpO₂:FiO₂):</strong> Quantifies oxygenation efficiency independent of supplemental O₂<br>
+      • Room air (FiO₂ = 0.21): S/F = SpO₂ ÷ 0.21 (e.g. SpO₂ 95% → S/F = 452)<br>
+      • S/F ≥400 = normal · 316–399 = mild · 151–315 = moderate lung injury (ARDS risk) · ≤150 = ARDS<br>
+      • 🚫 Inaccurate: poor perfusion, vasoconstriction, dark pigment, motion, dyshemoglobin (smoke/CO)<br>
+      • Waveform must match heart rate — mismatched waveform = erroneous reading
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 4 — THORACIC RADIOGRAPHS (when stabilised)</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>3 views (as allowed by stability):</strong> R lateral + L lateral + DV; DV less stressful than VD if unstable<br><br>
+      <strong style="color:#60A5FA;">🐕 Trachea + airway assessment:</strong><br>
+      • Tracheal diameter ≥30% change between phases = tracheal collapse (paired insp + exp views essential — sensitivity as low as 45% with single view; normal dogs show up to 24% change)<br>
+      • Axial tracheal collapse: increased DV tracheal dimension (may mimic intraluminal FB; CT to differentiate)<br>
+      • Bronchiectasis: bronchi visible peripherally lacking normal tapering ("tram lines" and "donuts")<br>
+      • Both L and R lateral views increase sensitivity for bronchial collapse (ipsilateral visualisation)<br><br>
+      <strong style="color:#A3E635;">Both species — CXR patterns:</strong><br>
+      • <strong>Alveolar:</strong> 🐕 Perihilar = CHF (MMVD); ventral distribution = CHF (DCM) or aspiration; caudodorsal = NCPE · 🐱 Patchy = CHF, pneumonia<br>
+      • <strong>Cranioventral alveolar:</strong> Aspiration pneumonia (both species)<br>
+      • <strong>Bronchial ("tram lines/donuts"):</strong> 🐱 Asthma + hyperinflation + air trapping · 🐕🐱 Chronic bronchitis<br>
+      • <strong>Interstitial (hazy):</strong> Early oedema, interstitial pneumonia, fibrosis<br>
+      • <strong>Reticular:</strong> 🐕 Fungal disease, pulmonary fibrosis, neoplasia<br>
+      • <strong>Miliary (1–3 mm nodules):</strong> 🐕 Histoplasma, Blastomyces, metastatic neoplasia<br>
+      • <strong>Nodular/mass:</strong> Fungal, metastasis, primary lung tumour<br>
+      • <strong>Pleural effusion:</strong> Blunted costophrenic angles, retracted lung margins; post-tap CXR for full assessment<br>
+      • <strong>Pneumothorax:</strong> Radiolucent zone, no lung markings to chest wall; heart elevated dorsally on lateral<br>
+      • <strong>🐱 Cranial mediastinal opacity:</strong> Mass (lymphoma, thymoma, carcinoma)<br><br>
+      <strong style="color:#60A5FA;">🐕 Objective cardiac measures:</strong><br>
+      • <strong>VHS &gt;11.5:</strong> Cardiomegaly (breed-specific norms: Yorkshire, Pomeranian, Pug, Boston Terrier)<br>
+      • <strong>VLAS ≥2.3–2.5 × 4th thoracic vertebra:</strong> LA enlargement — better CHF predictor than VHS<br>
+      • Pulmonary venous distension (cranial + caudal lobar veins) = cardiogenic — NOT seen with NCPE<br>
+      • 🐕 DCM: ventral alveolar distribution; peribronchial cuffing; dilated CVC; dilated cardiac silhouette
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 5 — BLOODWORK (CBC · BIOCHEMISTRY · URINALYSIS)</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>CBC:</strong><br>
+      • Leukocytosis + left shift → infection/inflammation (pneumonia, pyothorax, ARDS trigger)<br>
+      • 🐕🐱 Eosinophilia → parasitic (lungworm, heartworm), allergic (EBP, asthma); normal count does NOT exclude<br>
+      • Anaemia (PCV &lt;20% dog / &lt;12–15% cat) → compensatory tachypnoea; check reticulocytes<br>
+      • 🐕 Polycythaemia (PCV &gt;65%) → right-to-left shunt; mild (55–65%) = chronic hypoxaemia<br>
+      • Leukopenia → parvovirus, sepsis, overwhelming infection<br><br>
+      <strong>Serum biochemistry:</strong><br>
+      • 🐕 Azotaemia → uremic pneumonitis risk; check for PLN (PTE risk); endocrinopathies (hyperadrenocorticism → PTE)<br>
+      • 🐱 Serum T4 (ALL cats) → hyperthyroidism: cardiac changes, tachypnoea, weight loss<br>
+      • Hypoalbuminaemia (&lt;15 g/L) → non-cardiogenic effusion, protein-losing disease, reduced oncotic pressure<br><br>
+      <strong>Urinalysis:</strong><br>
+      • 🐕 Proteinuria (UPC &gt;0.5) → PLN → PTE risk; also screen renal function (USG, creatinine)<br><br>
+      <strong>Cardiac biomarkers:</strong><br>
+      • <strong>🐕 NT-proBNP:</strong> &lt;900 pmol/L = L-CHF unlikely (primary resp disease more likely); 900–1800 pmol/L = equivocal (correlate with exam + imaging); &gt;1800 pmol/L = L-CHF likely. Elevated in renal disease, sepsis, pulmonary hypertension. 🐕 Healthy Labradors may have NT-proBNP up to 2100 pmol/L.<br>
+      • <strong>🐱 NT-proBNP:</strong> &gt;100 pmol/L = elevated; &gt;265 pmol/L = high specificity for CHF. Normal does NOT fully exclude cardiac disease.<br>
+      • <strong>🐕 cTnI:</strong> Marker of myocardial injury — NOT specific for CHF; elevated in myocarditis, arrhythmias, cardiomyopathy, systemic disease (sepsis, heatstroke). Less useful than NT-proBNP for distinguishing CHF from primary respiratory disease.
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 6 — ARTERIAL BLOOD GAS (when available)</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>Oxygenation:</strong><br>
+      • Hypoxaemia: PaO₂ &lt;80 mmHg; severe: PaO₂ &lt;60 mmHg<br>
+      • Always interpret relative to FiO₂: ideal PaO₂ = 4–5 × FiO₂ (room air FiO₂ 21% → PaO₂ should be 84–105 mmHg)<br>
+      • <strong>P/F ratio (PaO₂:FiO₂):</strong> ≥400 = normal · 301–399 = mild · 101–300 = moderate (ARDS risk) · ≤100 = severe ARDS<br><br>
+      <strong>Ventilation:</strong><br>
+      • Hypercapnia PaCO₂ &gt;45 mmHg = hypoventilation; venous PvCO₂ &gt;50 mmHg also suggestive<br>
+      • Causes: upper airway obstruction, severe pleural disease, bronchoconstriction, neuromuscular disease, respiratory fatigue, obesity hypoventilation<br>
+      • 🐕 PaCO₂–ETCO₂ gradient &gt;5 mmHg → dead space ↑ (PTE, low cardiac output, hypovolaemia)<br><br>
+      <strong>Acid-base:</strong><br>
+      • Metabolic acidosis → Kussmaul breathing (deep, laboured, rapid tachypnoea) = compensatory CO₂ elimination<br>
+      • Respiratory acidosis + metabolic alkalosis → chronic upper airway obstruction with bicarbonate retention
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 7 — ECHOCARDIOGRAPHY</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>🐕 Dog:</strong><br>
+      • MMVD: LA enlargement (LA:Ao &gt;2.0); mitral valve thickening/prolapse; eccentric LV hypertrophy<br>
+      • DCM: dilated LV, reduced systolic function (FS &lt;25%); LA enlargement; AF common<br>
+      • Pulmonary hypertension: TR jet velocity &gt;2.8 m/s; RV hypertrophy/dilatation; CVC distension<br>
+      • Ruptured chordae tendineae: acute MMVD crisis — minimal LA enlargement but severe regurgitation; CXR underestimates severity<br>
+      • 🐕 Differentiate CHF from NCPE in equivocal cases (concurrent tracheal collapse + MMVD)<br><br>
+      <strong>🐱 Cat:</strong><br>
+      • HCM: LV free wall or IVS &gt;6 mm diastole (Maine Coon &gt;7.5 mm)<br>
+      • LA:Ao ratio &gt;1.5 → significant LA enlargement → CHF risk high<br>
+      • SAM of mitral valve → dynamic LVOTO<br>
+      • Always perform before starting cardiac medications
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 8 — PLEURAL FLUID ANALYSIS (post-thoracocentesis)</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <div style="display:grid;grid-template-columns:1.2fr 1fr 1.1fr;gap:4px 6px;font-size:9px;line-height:1.4;">
+        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.2);">Fluid type</div>
+        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.2);">TP / Cells</div>
+        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.2);">Key causes</div>
+        <div>Pure transudate</div><div>&lt;25g/L · &lt;1000/μL</div><div>Hypoalbuminaemia, right CHF</div>
+        <div>Modified transudate</div><div>25–35g/L · mixed</div><div style="color:#FCD34D;">🐕 MMVD/DCM · 🐱 HCM · neoplasia · chylothorax</div>
+        <div>Exudate</div><div>&gt;30g/L · ↑↑ cells</div><div style="color:#FCA5A5;">Pyothorax · 🐱 FIP · neoplasia</div>
+        <div>Chylous</div><div>Milky · lymphocytes · TG &gt; serum</div><div style="color:#6EE7B7;">Lymphoma · cardiac · idiopathic</div>
+        <div>Haemorrhagic</div><div>PCV measurable · no clot</div><div>Trauma · neoplasia (HSA) · coagulopathy</div>
+      </div>
+      <div style="margin-top:6px;font-size:10px;opacity:.8;">Always send cytology. Degenerate neutrophils + intracellular bacteria = pyothorax → culture + sensitivity essential. Post-tap CXR for full parenchymal assessment.</div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">STEP 9 — AIRWAY SAMPLING + ADDITIONAL BY SUSPICION</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong>BAL / Transtracheal wash:</strong> Cell differential + culture + susceptibility<br>
+      • Eosinophils &gt;17% → 🐱 asthma / 🐕 EBP or parasitic; mast cells = allergic<br>
+      • Neutrophilic (septic/non-septic) → bacterial infection, chronic bronchitis<br>
+      • Granulomatous → 🐕 fungal (Histoplasma, Blastomyces)<br>
+      • 🐕 BAL preferred over TTW for culture in suspected bacterial pneumonia<br>
+      • 🐕 Tracheobronchoscopy: gold standard for tracheal/bronchial collapse grade; required before stent planning<br><br>
+      <strong style="color:#FCD34D;">🐕 Heartworm Ag test:</strong> Endemic region + cough + prominent pulmonary vasculature + eosinophilia + right cardiomegaly → Ag test (adult female HW, highly sensitive/specific). Also suspect in caval syndrome (hepatomegaly, ascites, haemoglobinuria).<br><br>
+      <strong style="color:#6EE7B7;">🐕 Respiratory PCR panel:</strong> Young dog + recent kennel/shelter + CIRDC signs → Bordetella, Mycoplasma, canine influenza, CDV, coronavirus, <em>Streptococcus zooepidemicus</em>. Obtain before antimicrobial therapy.<br><br>
+      <strong style="color:#93C5FD;">🐕🐱 Fecal + Baermann:</strong> Cough + eosinophilia + bronchial CXR + endemic region<br>
+      • 🐕 Oslerus osleri, Angiostrongylus vasorum (UK/Europe; check coagulation), Paragonimus kellicotti (NA), Eucoleus aerophilus<br>
+      • 🐱 Aelurostrongylus abstrusus<br><br>
+      <strong style="color:#FCA5A5;">🐕 Fungal testing (endemic regions):</strong><br>
+      • Histoplasma (OH/MS valleys, midwest/SE USA): urine antigen ELISA (preferred); cytology BAL/rectal scraping (2–5 μm oval yeasts in macrophages)<br>
+      • Blastomyces (midwest/SE USA, Great Lakes, Canada): urine antigen ELISA (cross-reacts with Histoplasma); cytology (large 8–20 μm yeast, broad-based budding)<br>
+      • Coccidioides (SW USA, Mexico, CA): AGID serology (IgM = early; IgG = established)<br><br>
+      <strong style="color:#C4B5FD;">🐕 Fluoroscopy:</strong> Real-time tracheal assessment without GA; dynamic tracheal collapse, tracheal kinking, cervical lung herniation. Cannot assess bronchial collapse (use bronchoscopy). Preferred when GA is high-risk.<br><br>
+      <strong>🐕🐱 Thoracic CT:</strong> When standard diagnostics non-diagnostic. Best for interstitial/vascular/nodular disease; CT pulmonary angiography = gold standard for PTE. More sensitive than CXR for pulmonary nodules. Requires GA + breath-hold technique.
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step">🔑 KEY BRANCH DECISIONS</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      • <strong>Pleural effusion on POCUS</strong> → thoracocentesis (diagnostic + therapeutic) → fluid cytology + culture<br>
+      • <strong>B-lines + LA enlargement on POCUS</strong> → NT-proBNP + echo → cardiogenic oedema → furosemide<br>
+      • <strong>🐕 Diuretic trial:</strong> Dog with murmur + equivocal POCUS/CXR → furosemide 2 mg/kg; CHF improves within 30 min IV / 2h IM; primary respiratory disease will not respond. No response after 1–2 doses → do not continue<br>
+      • <strong>🐕 Goose-honk + toy breed</strong> → tracheal collapse → fluoroscopy or bronchoscopy → medical (weight loss, cough suppressants, bronchodilators) vs stenting<br>
+      • <strong>🐕 Stridor + large breed + change in bark</strong> → laryngeal paralysis → exam under light sedation (arytenoid mobility) → surgery (unilateral tieback) + aspiration precautions<br>
+      • <strong>🐕 Brachycephalic + inspiratory distress</strong> → BOAS → airway exam/CT → rhinoplasty + staphylectomy; nebulised epinephrine for acute oedema; cool environment; treat hyperthermia<br>
+      • <strong>🐱 Bronchial pattern + hyperinflation (cat CXR)</strong> → asthma → terbutaline/salbutamol + corticosteroid<br>
+      • <strong>Cranioventral alveolar consolidation</strong> → aspiration pneumonia → BAL culture → ampicillin-sulbactam IV (first-line)<br>
+      • <strong>🐕 Acute dyspnoea + normal/near-normal CXR + hypercoagulable disease</strong> → PTE → D-dimers + CT angiography + anticoagulation<br>
+      • <strong>🐕 Miliary/reticular CXR + endemic region</strong> → fungal → urine antigen testing (do NOT start empiric antifungal without testing)<br>
+      • <strong>🐱 Non-compressible cranial mediastinum</strong> → mass (lymphoma/thymoma) → POCUS-guided FNA cytology
+    </div>
+
+  </div>
+
+  <div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-radius:10px;">
+    <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:4px;">⚠️ RED FLAGS — IMMEDIATE ACTION</div>
+    <div style="font-size:10px;color:#FCA5A5;line-height:1.6;">
+      🐕🐱 Open-mouth breathing · Cyanosis (SpO₂ &lt;90%) · Orthopnoea — cannot lie down · Rapid deterioration despite O₂<br>
+      🐱 ATE (cold limbs + paralysis + resp distress) · Non-compressible cranial mediastinum<br>
+      🐕 Exertional syncope (→ pulmonary hypertension) · Goose-honk + cyanosis (→ severe tracheal collapse) · Haemoptysis (→ PTE/coagulopathy/HW) · Hyperthermia + upper airway obstruction (BOAS/laryngeal paralysis)
+    </div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── DIAGNOSTIC APPROACH: JAUNDICE ────────────────────────────────────────────
+function renderDxJaundice(){
+  push(renderDxJaundice,'Dx: Jaundice');
+  render(`
+  <div class="dx-wrap">
+    <div class="dx-step">JAUNDICE — DIAGNOSTIC APPROACH</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check"><strong>First step:</strong> Check PCV + bilirubin. PCV tells you the category immediately.</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-step alt">CHECK PCV</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-connector">
+      <div class="dx-col">
+        <div class="dx-dx" style="width:100%;">PCV LOW<br><span style="font-weight:400;font-size:9px;">Dog &lt;20% / Cat &lt;15%</span></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-test" style="width:100%;text-align:center;font-weight:600;">PRE-HEPATIC</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-note" style="width:100%;font-size:9px;"><strong>Haemolysis workup:</strong><br>• Blood smear (spherocytes, parasites, Heinz bodies)<br>• Saline agglutination test<br>• Reticulocyte count<br>• Coombs test<br>• Babesia/Mycoplasma PCR</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:10px;" onclick="goLesionTab('LOC-JD-PREHEP','Pre-hepatic jaundice')">Pre-hepatic lesions →</div>
+      </div>
+      <div class="dx-col">
+        <div class="dx-test" style="width:100%;text-align:center;font-weight:600;font-size:11px;">PCV NORMAL</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-branch" style="width:100%;font-size:10px;">HEPATIC OR POST-HEPATIC?</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-note" style="width:100%;font-size:9px;"><strong>Abdominal US:</strong><br>• Biliary dilation? → Post-hepatic<br>• Hepatic parenchymal changes? → Hepatic<br>• Gallbladder mucocoele?</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-row c2">
+          <div class="dx-dx" style="font-size:9px;" onclick="goLesionTab('LOC-JD-HEP','Hepatic jaundice')">Hepatic →</div>
+          <div class="dx-dx" style="font-size:9px;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic jaundice')">Post-hepatic →</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dx-alert" style="margin-top:10px;"><strong>⚠️</strong> Dog PCV &lt;20% or Cat PCV &lt;15% with jaundice = haemolytic crisis. Consider transfusion.</div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── DIAGNOSTIC APPROACH: WEAKNESS ────────────────────────────────────────────
+function renderDxWeakness(){
+  push(renderDxWeakness,'Dx: Weakness');
+  render(`
+  <div class="dx-wrap">
+    <div class="dx-step">WEAKNESS — DIAGNOSTIC APPROACH</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check"><strong>First:</strong> Exclude non-neurological causes — cardiovascular (syncope, arrhythmia), metabolic (hypoglycaemia, electrolytes), respiratory.</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-branch">IS IT NEUROMUSCULAR?</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check"><strong>Key test:</strong> Weakness <strong>WITHOUT</strong> ataxia = neuromuscular. Weakness <strong>WITH</strong> ataxia = spinal cord.<br>Proprioception often intact despite marked paresis (support body weight to test).</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-step alt">NEUROMUSCULAR LOCALISATION</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-row c3">
+      <div class="dx-test" style="text-align:center;font-size:9px;"><strong>Neuropathy</strong><br>↓/absent reflexes<br>Atrophy<br>± Ataxia (sensory)</div>
+      <div class="dx-test" style="text-align:center;font-size:9px;background:#0D7377;"><strong>Junctionopathy</strong><br>Normal reflexes<br>Fatigability<br>Normal at rest</div>
+      <div class="dx-test" style="text-align:center;font-size:9px;"><strong>Myopathy</strong><br>Normal reflexes<br>Myalgia<br>Ventroflexion (cat)</div>
+    </div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-step">MINIMUM DATABASE + TARGETED TESTS</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">CK elevated → <strong>Myopathy</strong> (polymyositis, hypokalaemia, dystrophy)</div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Serum K+ low + cat → <strong>Hypokalaemic polymyopathy</strong></div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">AChR antibody titre positive → <strong>Myasthenia gravis</strong></div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Tick found → Remove → Rapid improvement → <strong>Tick paralysis</strong></div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Ascending LMN paralysis, CSF protein ↑ → <strong>Polyradiculoneuritis</strong></div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">EMG/NCS for definitive neuromuscular localisation if unclear</div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── DIAGNOSTIC APPROACH: PU/PD ───────────────────────────────────────────────
+function renderDxPUPD(){
+  push(renderDxPUPD,'Dx: PU/PD');
+  render(`
+  <div class="dx-wrap">
+    <div class="dx-step">PU/PD — DIAGNOSTIC APPROACH</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check"><strong>Confirm PU/PD:</strong> Rule out pollakiuria and urinary incontinence. Dog >100ml/kg/day, Cat >45ml/kg/day.</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-step alt">URINALYSIS — CHECK USG FIRST</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-connector">
+      <div class="dx-col">
+        <div class="dx-test" style="width:100%;text-align:center;font-size:10px;"><strong>USG &gt;1.030 (dog)<br>&gt;1.035 (cat)</strong><br>No glucosuria</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:10px;">NOT true PU/PD<br><span style="font-weight:400;font-size:9px;">Proceed with appropriate workup</span></div>
+      </div>
+      <div class="dx-col">
+        <div class="dx-test" style="width:100%;text-align:center;font-size:10px;background:#0D7377;"><strong>USG &lt;1.030 (dog)<br>&lt;1.035 (cat)</strong></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-branch" style="width:100%;font-size:10px;">MINIMUM DATABASE</div>
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-step">BIOCHEMISTRY + HAEMATOLOGY FINDINGS</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">↑ ALP + USG &lt;1.008 → <strong>Hyperadrenocorticism</strong> (dogs) → LDDS / UCCR</div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">↑ Total Ca²⁺ → check iCa, PTH, PTHrp → <strong>Hypercalcaemia-induced NDI</strong></div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Glucose &gt;180 dog / &gt;270 cat + glucosuria → <strong>Diabetes mellitus</strong></div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Glucose normal + glucosuria → <strong>Primary renal glucosuria / Fanconi</strong></div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Azotaemia + USG &lt;1.030 → <strong>Renal failure (AKI / CKD)</strong></div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Na low, active sediment → <strong>Hypoadrenocorticism</strong> / Pyelonephritis</div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Low BUN, low albumin, ↓ cholesterol → <strong>Liver dysfunction</strong> → Bile acids</div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Cat &gt;8yr → check T4 → <strong>Hyperthyroidism</strong></div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-note" style="width:100%;">If all normal → <strong>Desmopressin trial:</strong> Response = CDI. No response = NDI. USG &gt;1.030 already = Primary polydipsia.</div>
+  </div>
+  <div class="dx-alert" style="margin-top:10px;"><strong>⚠️</strong> NEVER perform MWDT in patients with azotaemia, hypernatraemia, or obvious dehydration.</div>
+  <div class="disclaimer">Lunn &amp; James 2007, Schmid 2023. For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── DIAGNOSTIC APPROACH: SEIZURES ────────────────────────────────────────────
+function renderDxSeizures(){
+  push(renderDxSeizures,'Dx: Seizures');
+  render(`
+  <div class="dx-wrap">
+    <div class="dx-step">SEIZURES — DIAGNOSTIC APPROACH</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">TIER 1 — MINIMUM DATABASE (all seizure patients)</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-row c2">
+      <div class="dx-test" style="font-size:9px;"><strong>Haematology</strong><br>PCV/TS<br>Leukogram<br>(no stress leukogram → Addison's?)</div>
+      <div class="dx-test" style="font-size:9px;"><strong>Biochemistry</strong><br>Glucose · iCa · Na · K<br>BUN/Cr · ALT/ALP<br>Cholesterol · Albumin</div>
+    </div>
+    <div style="height:5px;"></div>
+    <div class="dx-row c3">
+      <div class="dx-test" style="font-size:9px;"><strong>Urinalysis</strong><br>USG · Glucosuria?<br>Bilirubinuria?<br>Sediment</div>
+      <div class="dx-test" style="font-size:9px;"><strong>Blood pressure</strong><br>Hypertension → retinal<br>haemorrhage, encephalopathy<br>Secondary to renal/endocrine?</div>
+      <div class="dx-test" style="font-size:9px;"><strong>Additional</strong><br>Bile acids / ammonia<br>(hepatic encephalopathy)<br>T4 (cat &gt;8yr)</div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-branch">BLOODS ABNORMAL?</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-connector">
+      <div class="dx-col">
+        <div style="background:#E8713A;color:#fff;border-radius:10px;padding:8px;text-align:center;width:100%;font-weight:600;font-size:11px;">YES → REACTIVE</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:9px;text-align:left;font-weight:400;">Glucose &lt;3.5 mmol/L → <strong>Hypoglycaemia</strong><br>→ insulin:glucose ratio if insulinoma</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;text-align:left;font-weight:400;">History of toxin access → <strong>Intoxication</strong><br>→ toxicology screen</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;text-align:left;font-weight:400;">↑ Bile acids / ↑ ammonia → <strong>Hepatic enceph.</strong><br>→ abdominal US (PSS?)</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;text-align:left;font-weight:400;">iCa &lt;1.0 / Na &gt;180 or &lt;120 → <strong>Electrolyte</strong></div>
+      </div>
+      <div class="dx-col">
+        <div class="dx-test" style="width:100%;text-align:center;font-weight:600;font-size:11px;">NO → TIER 2</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-note" style="width:100%;font-size:9px;">Normal bloods → structural or idiopathic.<br>Proceed to advanced imaging.</div>
+      </div>
+    </div>
+
+    <div class="dx-arrow">↓</div>
+    <div class="dx-step alt">TIER 2 — ADVANCED IMAGING (structural vs idiopathic)</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-row c2">
+      <div class="dx-test" style="font-size:9px;"><strong>MRI brain</strong> (1.5T or 3T)<br>Contrast-enhanced<br>Gold standard for structural lesions<br>Mass? Inflammation? Infarct?</div>
+      <div class="dx-test" style="font-size:9px;background:#0D7377;"><strong>CSF analysis</strong><br>Collect under GA after MRI<br>TNCC · Protein · Cytology<br>↑ Cells = inflammation/infection</div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-branch">MRI / CSF RESULTS</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-connector">
+      <div class="dx-col">
+        <div style="background:#E8713A;color:#fff;border-radius:10px;padding:8px;text-align:center;width:100%;font-weight:600;font-size:10px;">ABNORMAL → STRUCTURAL</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Extra-axial mass → <strong>Meningioma</strong></div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Intra-axial mass → <strong>Glioma</strong></div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">↑ CSF TNCC + protein → <strong>MUA / encephalitis</strong><br>→ infectious serology + PCR on CSF</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Vascular territory lesion → <strong>CVA</strong></div>
+      </div>
+      <div class="dx-col">
+        <div class="dx-test" style="width:100%;text-align:center;font-weight:600;font-size:10px;">NORMAL → IDIOPATHIC</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-note" style="width:100%;font-size:9px;"><strong>Diagnosis of exclusion:</strong><br>Normal MRI + normal CSF + normal metabolic database + onset 6mo–6yr<br>= <strong>Idiopathic epilepsy</strong></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-note" style="width:100%;font-size:9px;"><strong>Optional:</strong> Breed-specific genetic testing if available (DIRAS1, LGI2)</div>
+      </div>
+    </div>
+
+  </div>
+  <div class="dx-alert" style="margin-top:10px;"><strong>⚠️ SE &gt;5min:</strong> Diazepam 0.5–2mg/kg IV → Phenobarbital 2–6mg/kg IV → Propofol CRI</div>
+  <div class="dx-note" style="margin-top:6px;">💡 <strong>When to image:</strong> First seizure &lt;6mo or &gt;6yr, abnormal interictal exam, cluster/status, refractory to first AED, focal onset, progressive.</div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── DIAGNOSTIC APPROACH: MYELOPATHY ──────────────────────────────────────────
+function renderDxMyelopathy(){
+  push(renderDxMyelopathy,'Dx: Myelopathy');
+  render(`
+  <div class="dx-wrap">
+    <div class="dx-step">ACUTE MYELOPATHY — DIAGNOSTIC APPROACH</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-step alt">NEUROLOGICAL EXAMINATION</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check"><strong>Assess:</strong> Gait, proprioception, spinal reflexes (patellar, withdrawal), spinal pain (palpation), <strong>deep pain perception</strong> (most important prognostic factor).</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-branch">LOCALISE SPINAL CORD SEGMENT</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-row c2">
+      <div class="dx-test" style="text-align:center;"><strong>C1–C5:</strong> UMN all 4 limbs<br><strong>C6–T2:</strong> LMN thoracic, UMN pelvic</div>
+      <div class="dx-test" style="text-align:center;background:#0D7377;"><strong>T3–L3:</strong> UMN pelvic limbs<br><strong>L4–S3:</strong> LMN pelvic limbs</div>
+    </div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-step">CHARACTERISE ONSET</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;"><strong>Peracute (seconds)</strong> + lateralised + no pain → <strong>FCE or ANNPE</strong> → MRI (non-surgical)</div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;"><strong>Acute (hours)</strong> + progressive + spinal pain → <strong>IVDD Type I</strong> → CT/MRI → Surgery?</div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;"><strong>Trauma history</strong> + spinal pain → <strong>Fracture/luxation</strong> → Spinal rads, CT</div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;"><strong>Chronic progressive</strong> → Neoplasia, degenerative myelopathy, CCSM → MRI</div>
+  </div>
+  <div class="dx-alert" style="margin-top:10px;"><strong>⚠️ Deep pain absent:</strong> Guarded prognosis. IVDD surgery within 24h = 50–60% good outcome.</div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── DIAGNOSTIC APPROACH: VESTIBULAR ──────────────────────────────────────────
+function renderDxVestibular(){
+  push(renderDxVestibular,'Dx: Vestibular');
+  render(`
+  <div class="dx-wrap">
+    <div class="dx-step">VESTIBULAR — DIAGNOSTIC APPROACH</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-step alt">NEUROLOGICAL EXAMINATION</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check"><strong>Assess:</strong> Head tilt direction, nystagmus type (horizontal/vertical/rotary/direction-changing), proprioception, mentation, cranial nerves (V, VII), Horner syndrome.</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-branch">PERIPHERAL OR CENTRAL?</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-connector">
+      <div class="dx-col">
+        <div class="dx-test" style="width:100%;text-align:center;"><strong>Peripheral</strong><br><span style="font-size:9px;">Normal proprioception<br>Horizontal/rotary nystagmus<br>± CN VII / Horner</span></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-note" style="width:100%;font-size:9px;"><strong>Otoscopy</strong> + <strong>CT/MRI bullae</strong></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Idiopathic (older dog)</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Otitis media/interna</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">NP polyp (young cat)</div>
+      </div>
+      <div class="dx-col">
+        <div style="background:#E8713A;color:#fff;border-radius:10px;padding:8px;text-align:center;width:100%;font-weight:600;font-size:11px;">Central<br><span style="font-weight:400;font-size:9px;">Proprioceptive deficits<br>↓ Mentation · Vertical nystagmus<br>Multiple CN deficits</span></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-note" style="width:100%;font-size:9px;"><strong>MRI brain + CSF analysis</strong></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">MUA / encephalitis</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Brain neoplasia</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Stroke (CVA)</div>
+      </div>
+    </div>
+  </div>
+  <div class="dx-note" style="margin-top:10px;">💡 Central can be <strong>ruled IN</strong> but <strong style="color:#FCA5A5;">not ruled OUT</strong> — ~1/3 with apparent peripheral have central disease.</div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── DIAGNOSTIC APPROACH: ENCEPHALOPATHY ──────────────────────────────────────
+function renderDxEncephalopathy(){
+  push(renderDxEncephalopathy,'Dx: Encephalopathy');
+  render(`
+  <div class="dx-wrap">
+    <div class="dx-step">ACUTE ENCEPHALOPATHY — DIAGNOSTIC APPROACH</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check"><strong>Stabilise (ABC)</strong> → Assess mentation (AVPU or mGCS), posture, cranial nerves, postural reactions.</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-step alt">MINIMUM DATABASE — BLOODS FIRST</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Glucose low → <strong>Hypoglycaemia</strong> → Dextrose bolus</div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Na &gt;180 or &lt;120, or rapid change → <strong>Sodium disorder</strong> → Correct slowly</div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">↑ Ammonia / bile acids, ↓ BUN/albumin → <strong>Hepatic encephalopathy</strong></div>
+    <div style="height:3px;"></div>
+    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Cat + raw fish/preserved meat diet → <strong>Thiamine deficiency</strong> → Supplement immediately</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-branch">BLOODS NORMAL → MRI + CSF</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-connector">
+      <div class="dx-col">
+        <div class="dx-dx" style="width:100%;font-size:9px;">Peracute, non-progressive, focal<br>→ <strong>CVA (stroke)</strong></div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Progressive multifocal, young<br>→ <strong>MUA / encephalitis</strong></div>
+      </div>
+      <div class="dx-col">
+        <div class="dx-dx" style="width:100%;font-size:9px;">Older, progressive, mass on MRI<br>→ <strong>Neoplasia</strong></div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Pyrexia + systemic signs<br>→ <strong>Infectious encephalitis</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="dx-alert" style="margin-top:10px;"><strong>⚠️ Elevated ICP:</strong> Head pressing, obtundation, bilateral mydriasis → Mannitol 0.25–0.5g/kg over 15min</div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── DIAGNOSTIC APPROACH: COUGHING ────────────────────────────────────────────
+function renderDxCoughing(){
+  push(renderDxCoughing,'Dx: Coughing');
+  render(`
+  <div class="dx-wrap">
+    <div class="dx-step">COUGHING — DIAGNOSTIC APPROACH</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check"><strong>Key species rule:</strong> Cats do NOT cough from cardiac disease. If a cat is coughing → respiratory cause.</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-branch">CHARACTERISE COUGH</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-connector">
+      <div class="dx-col">
+        <div class="dx-test" style="width:100%;text-align:center;"><strong>Dry / Unproductive</strong><br><span style="font-size:9px;">Harsh, honking, hacking<br>No sputum</span></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Tracheal pinch + → Kennel cough</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Goose-honk, toy breed → Tracheal collapse</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Dog + murmur + night → Cardiogenic (LA enlargement)</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Cat + wheeze → Feline asthma</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Chronic &gt;2mo → Chronic bronchitis</div>
+      </div>
+      <div class="dx-col">
+        <div class="dx-test" style="width:100%;text-align:center;background:#0D7377;"><strong>Wet / Productive</strong><br><span style="font-size:9px;">Moist, rattling<br>Sputum produced</span></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Pyrexia + crackles → Pneumonia</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Murmur + pink froth → Pulm oedema</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Young dog, outdoor → Lungworm</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Weight loss → Pulm neoplasia</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Recurrent pneumonia → Bronchiectasis</div>
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-step alt">DIAGNOSTICS</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-row c3">
+      <div class="dx-note" style="font-size:9px;"><strong>CXR</strong> (3 views)<br>Bronchial? Alveolar? Mass?</div>
+      <div class="dx-note" style="font-size:9px;"><strong>NT-proBNP</strong><br>Cardiac vs respiratory?</div>
+      <div class="dx-note" style="font-size:9px;"><strong>BAL / Echo</strong><br>If CXR inconclusive</div>
+    </div>
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── DIAGNOSTIC APPROACH: SNEEZING ────────────────────────────────────────────
+function renderDxSneezing(){
+  push(renderDxSneezing,'Dx: Sneezing');
+  render(`
+  <div class="dx-wrap">
+    <div class="dx-step">SNEEZING — DIAGNOSTIC APPROACH</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check"><strong>Key rule:</strong> Unilateral discharge = structural cause until proven otherwise. Always warrant advanced imaging.</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-branch">LATERALITY OF DISCHARGE?</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-connector">
+      <div class="dx-col">
+        <div style="background:#E8713A;color:#fff;border-radius:10px;padding:8px;text-align:center;width:100%;font-weight:600;font-size:11px;">Unilateral<br><span style="font-weight:400;font-size:9px;">Think structural</span></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-note" style="width:100%;font-size:9px;"><strong>CT + Rhinoscopy</strong></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Acute onset → Foreign body</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Progressive + facial deformity → Neoplasia</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Dolichocephalic + haemorrhagic → Aspergillosis</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Worse after eating → Oronasal fistula</div>
+      </div>
+      <div class="dx-col">
+        <div class="dx-test" style="width:100%;text-align:center;font-size:11px;"><strong>Bilateral</strong><br><span style="font-size:9px;">Infectious / inflammatory</span></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-note" style="width:100%;font-size:9px;"><strong>PCR panel, CT if chronic</strong></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Cat + conjunctivitis → FHV-1 / FCV</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Chronic post-URTI → Rhinosinusitis</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Young cat + stertor → NP polyp</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Cat + Roman nose → Cryptococcosis</div>
+      </div>
+    </div>
+  </div>
+  <div class="dx-note" style="margin-top:10px;">💡 Always biopsy chronic nasal disease to exclude neoplasia — even if CT looks inflammatory.</div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── DIAGNOSTIC APPROACH: PALE MUCOUS MEMBRANES ───────────────────────────────
+function renderDxPaleGums(){
+  push(renderDxPaleGums,'Dx: Pale MM');
+  render(`
+  <div class="dx-wrap">
+    <div class="dx-step">PALE MUCOUS MEMBRANES — DIAGNOSTIC APPROACH</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-step alt">CHECK PCV/TS + CRT + HR</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-connector">
+      <div class="dx-col">
+        <div class="dx-test" style="width:100%;text-align:center;"><strong>PCV LOW</strong><br><span style="font-size:9px;">= Anaemia</span></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-branch" style="width:100%;font-size:10px;">CHECK TS</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-row c2">
+          <div class="dx-dx" style="font-size:9px;">TS normal/↑<br>= <strong>Haemolysis</strong></div>
+          <div class="dx-dx" style="font-size:9px;">TS low<br>= <strong>Haemorrhage</strong></div>
+        </div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-note" style="width:100%;font-size:9px;"><strong>Blood smear:</strong> spherocytes (IMHA), Heinz bodies (oxidative), parasites (Babesia). Reticulocyte count → Regenerative or non-regenerative?</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Auto-agglutination → <strong>IMHA</strong></div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Toxin history → <strong>Oxidative haemolysis</strong></div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">No regen after 5d → <strong>Bone marrow disease</strong></div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Cat FeLV+ → <strong>FeLV-associated</strong></div>
+      </div>
+      <div class="dx-col">
+        <div style="background:#E8713A;color:#fff;border-radius:10px;padding:8px;text-align:center;width:100%;font-weight:600;font-size:11px;">PCV NORMAL<br><span style="font-weight:400;font-size:9px;">= Poor perfusion</span></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-note" style="width:100%;font-size:9px;"><strong>Assess:</strong> CRT, pulse quality, HR, BP, lactate, temperature</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Weak pulses + tachycardia → <strong>Hypovolaemic shock</strong></div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Muffled heart + JVD → <strong>Pericardial effusion</strong></div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Arrhythmia → <strong>Cardiogenic shock</strong></div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Hyperdynamic → decompensated → <strong>Sepsis/SIRS</strong></div>
+      </div>
+    </div>
+  </div>
+  <div class="dx-alert" style="margin-top:10px;"><strong>⚠️ Transfusion:</strong> Dog PCV &lt;20% · Cat PCV &lt;15% — or clinical signs (tachycardia, weakness) at higher PCVs.</div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+
+
+// ── ATAXIA CLINICAL FLOWCHART ────────────────────────────────────────────────
+function renderAtaxiaFlow(){
+  push(renderAtaxiaFlow,'Ataxia');
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry">🚶 ATAXIA</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step" style="font-size:12px;line-height:1.5;">Observe gait carefully<br><span style="font-size:10px;color:var(--gray);">Which type of incoordination?</span></div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">CLASSIFY ATAXIA TYPE</div>
+    <div class="flow-arrow-v">↓</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
+      <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-AT-CEREB','Cerebellar ataxia')">
+        Cerebellar<div class="fn-sub">Hypermetria (dysmetria)<br>Intention tremor<br>Truncal sway<br>Wide-based stance<br><strong style="color:#93C5FD;">No paresis</strong><br>Normal mentation</div>
+      </div>
+      <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="renderVestibularFlow()">
+        Vestibular<div class="fn-sub">Head tilt<br>Nystagmus<br>Falling / rolling<br>Circling<br><strong style="color:var(--amber-text);">± Paresis (central)</strong><br>± ↓ Mentation (central)</div>
+      </div>
+      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="renderMyelopathyFlow()">
+        Proprioceptive<div class="fn-sub">Knuckling<br>Crossing over<br>Scuffing toes<br>Delayed CP placing<br><strong style="color:#FCA5A5;">Paresis present</strong><br>Spinal cord / brainstem</div>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:12px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;">
+    <div style="font-size:11px;font-weight:600;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">💡 Key distinctions</div>
+    <div style="font-size:11px;color:var(--gray);line-height:1.65;">
+      <strong style="color:var(--white);">Cerebellar:</strong> No paresis, no proprioceptive deficits — the cerebellum coordinates movement, doesn’t initiate it. Hypermetria is the hallmark.<br>
+      <strong style="color:var(--white);">Vestibular:</strong> Asymmetric — falls/leans to one side. Head tilt + nystagmus = vestibular until proven otherwise.<br>
+      <strong style="color:var(--white);">Proprioceptive (GP):</strong> Always has paresis — weakness + incoordination together. Spinal cord lesion.
+    </div>
+  </div>
+
+  <div style="margin-top:8px;"><div class="card" onclick="renderDxAtaxia()"><div class="card-row"><div class="card-icon">🔬</div><div style="flex:1"><div class="card-title">Diagnostic Approach</div><div class="card-sub">Imaging + targeted testing by ataxia type</div></div><div class="card-arrow">›</div></div></div></div>
+
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── DIAGNOSTIC APPROACH: ATAXIA ──────────────────────────────────────────────
+function renderDxAtaxia(){
+  push(renderDxAtaxia,'Dx: Ataxia');
+  render(`
+  <div class="dx-wrap">
+    <div class="dx-step">ATAXIA — DIAGNOSTIC APPROACH</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-step alt">TIER 1 — MINIMUM DATABASE</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-row c3">
+      <div class="dx-test" style="font-size:9px;"><strong>Haematology</strong><br>PCV/TS<br>Leukogram</div>
+      <div class="dx-test" style="font-size:9px;"><strong>Biochemistry</strong><br>Glucose · Electrolytes<br>BUN/Cr · Liver enzymes<br>T4 (cat)</div>
+      <div class="dx-test" style="font-size:9px;"><strong>Blood pressure</strong><br>Hypertension →<br>retinal/CNS damage?</div>
+    </div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-branch">BY ATAXIA TYPE</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-connector">
+      <div class="dx-col">
+        <div class="dx-test" style="width:100%;text-align:center;"><strong>Cerebellar</strong></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-note" style="width:100%;font-size:9px;"><strong>MRI brain</strong> (cerebellum focus)<br>+ <strong>CSF analysis</strong></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Inflammation on CSF → MUA / cerebellitis</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Mass lesion → Neoplasia</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Cerebellar atrophy + young → Abiotrophy</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Drug history → Metronidazole toxicity</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Vascular territory → Cerebellar infarct</div>
+      </div>
+      <div class="dx-col">
+        <div class="dx-test" style="width:100%;text-align:center;background:#0D7377;"><strong>Vestibular</strong></div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-note" style="width:100%;font-size:9px;"><strong>Otoscopy + CT/MRI bullae</strong> (peripheral)<br><strong>MRI brain + CSF</strong> (central)</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Bulla changes → Otitis media/interna</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">No lesion, older dog → Idiopathic</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Brainstem lesion → Central (MUA/neo/CVA)</div>
+      </div>
+      <div class="dx-col">
+        <div style="background:#E8713A;color:#fff;border-radius:10px;padding:8px;text-align:center;width:100%;font-weight:600;font-size:11px;">Proprioceptive</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-note" style="width:100%;font-size:9px;"><strong>Spinal radiographs</strong><br><strong>CT / MRI spine</strong><br>(segment based on neuro exam)</div>
+        <div class="dx-arrow">↓</div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Compressive → IVDD / fracture</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Non-compressive → FCE / ANNPE</div>
+        <div style="height:3px;"></div>
+        <div class="dx-dx" style="width:100%;font-size:9px;">Chronic progressive → Neoplasia / DM</div>
+      </div>
+    </div>
+  </div>
+  <div class="dx-note" style="margin-top:10px;">💡 <strong>Drug history</strong> is critical — metronidazole, phenytoin, and other drugs can cause reversible cerebellar signs. Always ask before imaging.</div>
+  <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── NOTES SIDEBAR ────────────────────────────────────────────────────────────
+
+// Expose all functions globally so onclick attributes in rendered HTML can call them
+export function mountGlobals() {
+  const w = window;
+  w.navTo = navTo;
+  w.goBack = goBack;
+  w.setTheme = setTheme;
+  w.toggleSystem = toggleSystem;
+  w.renderLocalise = renderLocalise;
+  w.renderDyspFlow = renderDyspFlow;
+  w.renderInsp = renderInsp;
+  w.renderRest = renderRest;
+  w.goLocEp = goLocEp;
+  w.renderVomFlow = renderVomFlow;
+  w.renderOesophFlow = renderOesophFlow;
+  w.renderExtraOesophFlow = renderExtraOesophFlow;
+  w.renderWeaknessFlow = renderWeaknessFlow;
+  w.renderEpisodicWeakness = renderEpisodicWeakness;
+  w.renderPersistentWeakness = renderPersistentWeakness;
+  w.renderCollapseFlow = renderCollapseFlow;
+  w.renderPUPDFlow = renderPUPDFlow;
+  w.renderDiarrhoeaFlow = renderDiarrhoeaFlow;
+  w.renderJaundiceFlow = renderJaundiceFlow;
+  w.renderTrueVom = renderTrueVom;
+  w.renderLesionDetail = renderLesionDetail;
+  w.renderLesionHome = renderLesionHome;
+  w.renderLesionFlow = renderLesionFlow;
+  w.renderSubTypeFlow = renderSubTypeFlow;
+  w.renderSubTypeDetail = renderSubTypeDetail;
+  w.renderDiffFlowchart = renderDiffFlowchart;
+  w.renderDiffHome = renderDiffHome;
+  w.filterDiffs = filterDiffs;
+  w.renderDiffDetail = renderDiffDetail;
+  w.renderDiseaseHome = renderDiseaseHome;
+  w.filterDiseases = filterDiseases;
+  w.renderDiseasePage = renderDiseasePage;
+  w.renderProtoList = renderProtoList;
+  w.renderProtoDetail = renderProtoDetail;
+  w.goLesionTab = goLesionTab;
+  w.renderSeizureFlow = renderSeizureFlow;
+  w.renderMyelopathyFlow = renderMyelopathyFlow;
+  w.renderVestibularFlow = renderVestibularFlow;
+  w.renderEncephalopathyFlow = renderEncephalopathyFlow;
+  w.renderCoughFlow = renderCoughFlow;
+  w.renderSneezeFlow = renderSneezeFlow;
+  w.renderPaleGumsFlow = renderPaleGumsFlow;
+  w.renderDxRegurgitationExam = renderDxRegurgitationExam;
+  w.renderDxRegurgitationHistory = renderDxRegurgitationHistory;
+  w.renderDxRegurgitation = renderDxRegurgitation;
+  w.renderDxVomiting = renderDxVomiting;
+  w.renderDxDiarrhoeaHistory = renderDxDiarrhoeaHistory;
+  w.renderDxDiarrhoeaExam = renderDxDiarrhoeaExam;
+  w.renderDxDiarrhoea = renderDxDiarrhoea;
+  w.renderDxDiarrhoeaSB = renderDxDiarrhoeaSB;
+  w.renderDxDiarrhoeaLB = renderDxDiarrhoeaLB;
+  w.renderDxDiarrhoeaDx = renderDxDiarrhoeaDx;
+  w.renderDxDiarrhoeaSec = renderDxDiarrhoeaSec;
+  w.renderDxDyspnoea = renderDxDyspnoea;
+  w.renderDxDyspnoeaHistory = renderDxDyspnoeaHistory;
+  w.renderDxDyspnoeaExam = renderDxDyspnoeaExam;
+  w.renderDxDyspnoeaDx = renderDxDyspnoeaDx;
+  w.renderDxJaundice = renderDxJaundice;
+  w.renderDxWeakness = renderDxWeakness;
+  w.renderDxPUPD = renderDxPUPD;
+  w.renderDxSeizures = renderDxSeizures;
+  w.renderDxMyelopathy = renderDxMyelopathy;
+  w.renderDxVestibular = renderDxVestibular;
+  w.renderDxEncephalopathy = renderDxEncephalopathy;
+  w.renderDxCoughing = renderDxCoughing;
+  w.renderDxSneezing = renderDxSneezing;
+  w.renderDxPaleGums = renderDxPaleGums;
+  w.renderAtaxiaFlow = renderAtaxiaFlow;
+  w.renderDxAtaxia = renderDxAtaxia;
+  w.saveNote = saveNote;
+}
+
+// HMR auto-re-render: if callbacks exist (app already mounted), re-render the
+// current tab immediately using updated render functions from this new module eval
+if (typeof window !== 'undefined' && (window as any).__cliniqCbs) {
+  setTimeout(() => {
+    try {
+      mountGlobals();
+      const n = currentNav;
+      if (n === 0) renderLocalise();
+      else if (n === 1) renderLesionHome();
+      else if (n === 2) renderDiseaseHome();
+      else if (n === 3) renderProtoList();
+      else if (n === 4) renderSettings();
+    } catch(e) { console.error('[ClinIQ HMR re-render]', e); }
+  }, 0);
+}
+
+export { navTo, goBack, renderLocalise };
