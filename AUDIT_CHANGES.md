@@ -104,3 +104,27 @@ short rationale with source.
   - **Before:** Three places in `wetEye.ts` and the lesion subtype in `LES-WE-DR-NEO` referred to NLS-obstructing nasal / orbital neoplasia as "Bonny disease".
   - **After:** Eponym removed; the underlying clinical entity (chronic unilateral epiphora ± epistaxis ± facial deformity in an older patient → nasal / orbital neoplasia compressing the NLS) is unchanged.
   - **Why:** No such eponym appears in Merck, BSAVA, VetTimes, or PubMed sources. It is not a recognised veterinary or human ophthalmology term, and including a fabricated eponym would mislead readers into thinking it is a textbook diagnosis they should know.
+
+---
+
+## 5. Haematuria (commit e57a31c)
+
+### `src/lib/signs/haematuria.ts`
+
+- **Renal cystadenocarcinoma + nodular dermatofibrosis (RCND) breed**
+  - **Before:** "Welsh Corgi, GSD → renal cystadenocarcinoma / nodular dermatofibrosis syndrome (GSD)"
+  - **After:** "German Shepherd → renal cystadenocarcinoma + nodular dermatofibrosis (RCND, autosomal-dominant FLCN mutation)"
+  - **Why:** RCND is a German Shepherd–specific syndrome with a documented FLCN (folliculin) mutation, autosomal dominant. Welsh Corgi is not a published RCND breed; including it implied a breed predisposition that does not exist.
+
+- **CADET BRAF test performance characteristics**
+  - **Before:** "CADET BRAF (~85% sensitive)" without specificity; "CADET BRAF positive in ~85%" of TCC.
+  - **After:** "~80–85% sensitivity (CADET BRAF), up to ~95% with CADET BRAF-Plus reflex panel; specificity >99% — a positive test is highly confirmatory; a negative does not rule out TCC."
+  - **Why:** Reported sensitivity is ~80% for the original CADET BRAF, ~95% with the CADET BRAF-Plus add-on. The >99% specificity is the clinically relevant figure to highlight, since a positive in a non-TCC case is extremely rare.
+
+- **Bladder TCC breed list — spelling**
+  - **Before:** "Shetland" (ambiguous)
+  - **After:** "Shetland Sheepdog" (explicit, in both DO NOT MISS and signalment table)
+
+### `src/data/lesions.ts`
+
+- **LES-HU-BL-TCC diagnostic line** — CADET BRAF figures updated to match the signs file (sensitivity range, BRAF-Plus, >99% specificity).

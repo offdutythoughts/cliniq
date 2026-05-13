@@ -44,7 +44,7 @@ export const haematuriaFlowHtml = `
       • <strong>Urethral obstruction</strong> (male cat with FIC + plug; male dog with urolith) — life-threatening hyperkalaemia within hours<br>
       • <strong>Anticoagulant rodenticide</strong> — haematuria can be the first sign before generalised bleeding<br>
       • <strong>Closed pyometra in an intact bitch</strong> — sepsis risk; abdominal US essential<br>
-      • <strong>Older Scottie / WHWT / Shetland / Beagle bitch with persistent haematuria</strong> → bladder TCC (CADET BRAF test, ultrasound, cystoscopy)<br>
+      • <strong>Older Scottie / WHWT / Shetland Sheepdog / Beagle bitch with persistent haematuria</strong> → bladder urothelial carcinoma (CADET BRAF urine PCR ~80–85% sensitive, &gt;99% specific; ultrasound; cystoscopy)<br>
       • <strong>Macroscopic haematuria + acute renal failure + pyrexia</strong> → leptospirosis (PPE: zoonotic) or septic pyelonephritis<br>
       • <strong>Bilateral renal haematuria in a young dog</strong> → idiopathic renal haematuria (refractory; renal-sparing surgery may be needed)<br>
       • <strong>Concurrent haemoglobinuria + anaemia</strong> → IMHA, babesia, zinc, onion / garlic, snake envenomation — not true haematuria
@@ -137,12 +137,12 @@ ${dxTabs('history')}
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
       <div>
         <strong style="color:#60A5FA;font-size:10px;">🐕 DOG</strong><br><br>
-        <strong style="color:#FCA5A5;">Older bitch (especially Scottie, WHWT, Beagle, Shetland)</strong><br>→ <strong>Urothelial carcinoma (TCC)</strong> — persistent haematuria refractory to antibiotic, trigonal location, CADET BRAF positive in ~85%.<br><br>
+        <strong style="color:#FCA5A5;">Older bitch (especially Scottie, WHWT, Beagle, Shetland Sheepdog)</strong><br>→ <strong>Urothelial carcinoma (TCC)</strong> — persistent haematuria refractory to antibiotic, trigonal location, CADET BRAF positive in ~80% (specificity &gt;99%).<br><br>
         <strong style="color:#FCD34D;">Intact male middle-aged–older dog</strong><br>→ BPH · bacterial prostatitis · prostatic abscess · prostatic adenocarcinoma (also in neutered males).<br><br>
         <strong style="color:#6EE7B7;">Bitches of any age</strong><br>→ Bacterial cystitis is the most common LUT cause (E. coli predominates). Recurrent → consider underlying disease (HAC, DM, structural anomaly).<br><br>
         <strong style="color:#C4B5FD;">Dalmatian, English Bulldog</strong> → urate uroliths (Dalmatian SLC2A9 mutation; uroliths can also be from PSS).<br><br>
         <strong style="color:#FCA5A5;">Miniature Schnauzer, Bichon, Yorkie, Lhasa Apso, Pug</strong> → calcium oxalate uroliths.<br><br>
-        <strong style="color:#FCD34D;">Welsh Corgi, GSD</strong> → renal cystadenocarcinoma / nodular dermatofibrosis syndrome (GSD).<br><br>
+        <strong style="color:#FCD34D;">German Shepherd</strong> → renal cystadenocarcinoma + nodular dermatofibrosis (RCND, autosomal-dominant FLCN mutation).<br><br>
         <strong style="color:#93C5FD;">Boxer, GSD, Scottie</strong> → idiopathic renal haematuria reported.<br><br>
         <strong style="color:#FCA5A5;">Sighthounds, Greyhounds</strong> → idiopathic cutaneous and renal glomerular vasculopathy ("Alabama rot" / CRGV) — haematuria + skin lesions + AKI.
       </div>
@@ -303,7 +303,7 @@ ${dxTabs('dx')}
     <strong>Contrast cystourethrogram</strong>: filling defects, urethral stricture, ectopic ureter, urachal anomalies, fistulas.<br>
     <strong>CT</strong>: advanced imaging for staging neoplasia, urethral disease, retroperitoneal disease, ureteric obstruction (CT urogram).<br>
     <strong>Cystoscopy</strong>: direct visualisation + biopsy of bladder / urethral mass — diagnostic gold standard for TCC. Female dogs and cats tolerate transurethral cystoscopy under sedation; male dogs may require percutaneous approach.<br>
-    <strong>BRAF mutation testing</strong> (CADET BRAF, voided urine PCR): non-invasive screen for canine urothelial carcinoma — ~85% sensitivity in TCC; high specificity.<br>
+    <strong>BRAF mutation testing</strong> (CADET BRAF, voided urine PCR): non-invasive screen for canine urothelial carcinoma — sensitivity ~80–85% (CADET BRAF), up to ~95% with CADET BRAF-Plus reflex panel; specificity &gt;99% (a positive test is highly confirmatory; a negative does not rule out TCC).<br>
     <strong>Vaginoscopy</strong>: persistent vaginal haematuria in intact / spayed female with no other source.
   </div>
   <div class="dx-arrow">↓</div>
