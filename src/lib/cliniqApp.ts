@@ -41,6 +41,12 @@ import {
   haematuriaDxExamHtml,
   haematuriaDxDxHtml,
 } from './signs/haematuria'
+import {
+  bleedingFlowHtml,
+  bleedingDxHistoryHtml,
+  bleedingDxExamHtml,
+  bleedingDxDxHtml,
+} from './signs/bleeding'
 
 type SetContent = (html: string, dir: 'left' | 'right') => void
 type SetTopbar = (title: string, showBack: boolean) => void
@@ -549,7 +555,34 @@ const DB = {
     {id:'LES-HU-SYS-COAG',loc:'LOC-HU-SYS',loc_name:'Systemic / pseudo-haematuria',sp:'Dog + Cat',cat:'Coagulopathy',sub:'Anticoagulant rodenticide / coagulopathy',urg:'EMERGENCY',signs:'⚠️ Haematuria can be the first sign before generalised bleeding (haemoptysis, epistaxis, petechiae, haemoperitoneum). PT prolongation precedes other coag tests.',etiology:'Anticoagulant rodenticide (warfarin, brodifacoum, bromadiolone, difenacoum)|Severe liver failure with reduced factor synthesis|DIC',diag:'PT and aPTT (PT prolongs first with vit K antagonism — extrinsic + common pathway)|Platelet count|PIVKAs (more sensitive)|Direct test for rodenticide active ingredient (commercial labs)',treat:'Vitamin K1 5 mg/kg PO BID × 4 wks (longer for 2nd-gen products)|Fresh frozen plasma if active bleeding|Recheck PT 72 h after stopping vit K1 to confirm clearance',note:'PT only — aPTT only — both prolonged: distinguishes factor pathway.'},
     {id:'LES-HU-SYS-IMTP',loc:'LOC-HU-SYS',loc_name:'Systemic / pseudo-haematuria',sp:'Dog',cat:'Immune-mediated',sub:'Immune-mediated thrombocytopenia (IMTP)',urg:'EMERGENCY',signs:'⚠️ Petechiae, ecchymoses, mucosal bleeding (gums, epistaxis), haematuria, melena. Platelet count typically <50 ×10⁹/L. Cocker, Poodle, OES, GSD predisposed.',etiology:'Primary (idiopathic) IMTP|Secondary: Ehrlichia, Anaplasma, Babesia, Leishmania (vector-borne) · neoplasia · drug-induced',diag:'CBC + smear (severe thrombocytopenia, large platelets)|Tick-borne PCR / serology|Bone marrow if non-regenerative or no obvious cause|Coombs / ANA / urinalysis|Exclude DIC: PT, aPTT, fibrinogen, D-dimer',treat:'Prednisolone 2 mg/kg/day + adjunct (mycophenolate, cyclosporine, vincristine, azathioprine)|Doxycycline if tick exposure pending serology|Transfuse only if life-threatening haemorrhage|Strict cage rest',note:'See LOC-PM-REGEN and IMTP literature.'},
     {id:'LES-HU-SYS-HEM',loc:'LOC-HU-SYS',loc_name:'Systemic / pseudo-haematuria',sp:'Dog + Cat',cat:'Haemolysis',sub:'Haemoglobinuria (intravascular haemolysis)',urg:'EMERGENCY',signs:'⚠️ Red-port-wine urine, dipstick blood positive, centrifuged supernatant RED (not clear). Concurrent anaemia + jaundice + lethargy + tachycardia. NOT true haematuria.',etiology:'IMHA (most common dog)|Babesia · Mycoplasma haemofelis (cat)|Zinc toxicity (coin ingestion)|Onion / garlic toxicity (cat very sensitive)|Severe envenomation|Transfusion reaction|Heatstroke',diag:'CBC + smear (regenerative anaemia, spherocytes, ghost cells, agglutination)|Saline agglutination, Coombs|Babesia PCR · Mycoplasma haemofelis PCR · zinc level · onion / garlic history|Centrifuge urine: red supernatant',treat:'Treat underlying cause (immunosuppression for IMHA, atovaquone-azithromycin for Babesia gibsoni, antibiotic for Mycoplasma, chelation for zinc)|Supportive: transfusion if PCV <15%|Maintain renal perfusion',note:'See LOC-JD-PREHEP.'},
-    {id:'LES-HU-SYS-MYO',loc:'LOC-HU-SYS',loc_name:'Systemic / pseudo-haematuria',sp:'Dog + Cat',cat:'Muscle',sub:'Myoglobinuria (rhabdomyolysis)',urg:'High',signs:'Dark-brown urine, dipstick blood positive, centrifuged supernatant RED. Severe muscle pain, weakness, ↑↑ CK and AST. Concurrent renal injury risk from pigment nephropathy.',etiology:'Severe muscle trauma / crush injury|Heatstroke|Capture myopathy|Snake envenomation|Hyperthermia|Exertional rhabdomyolysis (hunting dog)|Toxin (gossypol, hops, ionophores)',diag:'CK markedly elevated (often >10,000–100,000 U/L)|AST elevated|Renal panel (AKI risk)|Centrifuge: red supernatant|Muscle biopsy in chronic cases',treat:'IV fluids (maintain UOP, urine pH 6.5–7.5 with bicarbonate if pigment nephropathy)|Treat underlying cause|Analgesia|Monitor renal function',note:''}
+    {id:'LES-HU-SYS-MYO',loc:'LOC-HU-SYS',loc_name:'Systemic / pseudo-haematuria',sp:'Dog + Cat',cat:'Muscle',sub:'Myoglobinuria (rhabdomyolysis)',urg:'High',signs:'Dark-brown urine, dipstick blood positive, centrifuged supernatant RED. Severe muscle pain, weakness, ↑↑ CK and AST. Concurrent renal injury risk from pigment nephropathy.',etiology:'Severe muscle trauma / crush injury|Heatstroke|Capture myopathy|Snake envenomation|Hyperthermia|Exertional rhabdomyolysis (hunting dog)|Toxin (gossypol, hops, ionophores)',diag:'CK markedly elevated (often >10,000–100,000 U/L)|AST elevated|Renal panel (AKI risk)|Centrifuge: red supernatant|Muscle biopsy in chronic cases',treat:'IV fluids (maintain UOP, urine pH 6.5–7.5 with bicarbonate if pigment nephropathy)|Treat underlying cause|Analgesia|Monitor renal function',note:''},
+
+    // ── BLEEDING / PETECHIAE / ECCHYMOSES LESIONS ──
+    // Primary haemostasis
+    {id:'LES-BD-PR-IMTP',loc:'LOC-BD-PRIM',loc_name:'Primary haemostasis',sp:'Dog + Cat',cat:'Immune-mediated',sub:'Immune-mediated thrombocytopenia (IMTP)',urg:'EMERGENCY',signs:'⚠️ Petechiae, ecchymoses, mucosal bleeds. Platelet count typically <30 ×10⁹/L. Cocker, Poodle, OES, GSD predisposed.',etiology:'Primary (idiopathic) IMTP|Secondary: vector-borne, neoplasia, drug-induced, vaccine, IMHA (Evans syndrome)',diag:'CBC + manual smear|Tick-borne PCR + serology|Coombs|ANA · imaging|Bone marrow if refractory|Exclude DIC',treat:'Prednisolone 2 mg/kg/day + adjunct (mycophenolate, cyclosporine, vincristine, azathioprine)|Doxycycline if tick exposure|IVIg, splenectomy refractory|Strict cage rest|Avoid IM injections',note:'Most common cause of severe thrombocytopenia in dogs.'},
+    {id:'LES-BD-PR-VWD',loc:'LOC-BD-PRIM',loc_name:'Primary haemostasis',sp:'Dog',cat:'Inherited',sub:'von Willebrand disease (vWD)',urg:'Moderate',signs:'Mucosal bleeding, prolonged surgical bleeding, BMBT prolonged, normal platelet count, normal PT/aPTT. Doberman type I; Scottie, Shetland type III.',etiology:'Inherited deficiency of vWF|Type I: low quantity (Doberman)|Type II: abnormal multimers|Type III: virtual absence (Scottie, Shetland)',diag:'vWF antigen + collagen-binding activity (referral)|BMBT prolonged|Pre-operative screening',treat:'Cryoprecipitate|FFP if cryoprecipitate unavailable|Desmopressin (DDAVP) 1 µg/kg SC pre-op (Type I)|Avoid platelet inhibitors',note:'Screen Doberman pre-operatively.'},
+    {id:'LES-BD-PR-TCB',loc:'LOC-BD-PRIM',loc_name:'Primary haemostasis',sp:'Dog + Cat',cat:'Infection',sub:'Tick-borne thrombocytopenia / thrombocytopathia',urg:'High',signs:'Petechiae + epistaxis + anaemia + lymphadenopathy. Tick exposure / endemic region.',etiology:'Ehrlichia canis / ewingii · Anaplasma · RMSF · Babesia · Leishmania',diag:'4Dx test|PCR · serology|CBC + smear|Coombs if concurrent IMHA',treat:'Doxycycline 5–10 mg/kg PO BID × 28 d (Ehrlichia, Anaplasma, Borrelia)|Atovaquone + azithromycin (Babesia gibsoni)|Imidocarb (Babesia canis)',note:'Always test for tick-borne in any IMTP case.'},
+    {id:'LES-BD-PR-DRUG',loc:'LOC-BD-PRIM',loc_name:'Primary haemostasis',sp:'Dog + Cat',cat:'Drug',sub:'Drug-induced thrombocytopenia / thrombocytopathia',urg:'Moderate',signs:'Petechiae, mucosal bleeding in patient on culprit drug. Onset days–weeks.',etiology:'Sulfonamides|NSAIDs|Phenobarbital|Chemotherapy|Oestrogen|Methimazole (cat)|Cephalosporins|Heparin (HIT)|Aspirin, clopidogrel',diag:'Drug history|Resolution after withdrawal|CBC trend|Bone marrow if persistent',treat:'Withdraw drug|Supportive|Glucocorticoid if immune-mediated suspected',note:''},
+    {id:'LES-BD-PR-UREM',loc:'LOC-BD-PRIM',loc_name:'Primary haemostasis',sp:'Dog + Cat',cat:'Acquired',sub:'Uraemic platelet dysfunction',urg:'Moderate',signs:'GI bleeding, oral ulceration, epistaxis in azotaemic patient. Normal platelet count + prolonged BMBT.',etiology:'Severe uraemia impairs platelet aggregation',diag:'Renal panel|BMBT prolonged|Platelet count normal',treat:'Treat underlying CKD|Anti-emetic + omeprazole + sucralfate|Desmopressin acutely|ESA for anaemia',note:''},
+    {id:'LES-BD-PR-HYPER',loc:'LOC-BD-PRIM',loc_name:'Primary haemostasis',sp:'Dog',cat:'Hormonal',sub:'Hyperestrogenism (Sertoli cell tumour, exogenous oestrogen)',urg:'High',signs:'Older intact male. Symmetrical alopecia, gynaecomastia, testicular asymmetry, bilateral pancytopenia → severe thrombocytopenia + non-regenerative anaemia.',etiology:'Sertoli cell tumour producing oestrogen|Exogenous oestrogen|Cystic ovaries (rare)',diag:'Testicular palpation + ultrasound|Endogenous oestradiol|CBC (pancytopenia)|Bone marrow aspirate',treat:'Castration urgently|Pre-op: transfusion + antibiotic prophylaxis|Recovery 4–8 wks if marrow not irreversibly damaged',note:'Always palpate testes in older intact male with cytopenia.'},
+
+    // Secondary haemostasis
+    {id:'LES-BD-SEC-ROD',loc:'LOC-BD-SEC',loc_name:'Secondary haemostasis',sp:'Dog + Cat',cat:'Toxic',sub:'Anticoagulant rodenticide intoxication',urg:'EMERGENCY',signs:'⚠️ Peracute cavity bleeding — haemothorax, haemoperitoneum, intramuscular, joint, intracranial. PT prolongs first.',etiology:'Rodenticides inhibit vit K epoxide reductase → ↓ factors II, VII, IX, X|2nd-generation (brodifacoum, bromadiolone) — half-life weeks',diag:'PT prolonged → aPTT prolonged|Platelet count normal|PIVKAs (sensitive, positive within hours)|Active-ingredient assay|Imaging for cavity bleed',treat:'Vitamin K1 5 mg/kg PO BID × 28 d (2nd-gen) — first dose SC|FFP if active bleeding (10–15 mL/kg)|Packed RBC if anaemic|Drain compromising cavity|Recheck PT 72 h after stopping vit K1',note:'Empirical vit K1 SC is safe.'},
+    {id:'LES-BD-SEC-HEP',loc:'LOC-BD-SEC',loc_name:'Secondary haemostasis',sp:'Dog + Cat',cat:'Hepatic',sub:'Hepatic failure-related coagulopathy',urg:'High',signs:'Bleeding tendency + jaundice + ascites + PU/PD ± hepatic encephalopathy. Prolonged PT then aPTT. Hypoalbuminaemia.',etiology:'Reduced hepatic synthesis of factors II, V, VII, IX, X, fibrinogen ± vit K malabsorption (cholestasis)',diag:'PT prolonged first → aPTT|Hypoalbuminaemia|Bile acids elevated|Abdominal US + hepatic FNA / biopsy after correcting coag',treat:'Vitamin K1|FFP for active bleeding / before invasive procedures|Treat underlying hepatic disease|HE management',note:''},
+    {id:'LES-BD-SEC-HEMA',loc:'LOC-BD-SEC',loc_name:'Secondary haemostasis',sp:'Dog',cat:'Inherited',sub:'Haemophilia A (factor VIII) / B (factor IX)',urg:'High',signs:'Young male dog with spontaneous deep haematomas, haemarthrosis, prolonged bleeding after deciduous tooth eruption / neutering. X-linked recessive.',etiology:'Inherited X-linked recessive factor VIII or IX deficiency',diag:'Family history|aPTT prolonged + PT normal|Specific factor assay (referral)|Carrier females identifiable',treat:'FFP (all factors)|Cryoprecipitate (concentrated FVIII)|Cage rest for haemarthrosis|Avoid IM + minimise venepuncture|Genetic counselling',note:'Spay carrier females.'},
+    {id:'LES-BD-SEC-XII',loc:'LOC-BD-SEC',loc_name:'Secondary haemostasis',sp:'Cat',cat:'Inherited',sub:'Factor XII deficiency / Hageman trait',urg:'Low',signs:'Asymptomatic prolongation of aPTT on routine pre-anaesthetic screening. Birman, DSH.',etiology:'Inherited factor XII deficiency — not required for in-vivo haemostasis',diag:'aPTT prolonged + PT normal + no clinical bleeding|Specific factor XII assay',treat:'No treatment — informational only',note:''},
+    {id:'LES-BD-SEC-VII',loc:'LOC-BD-SEC',loc_name:'Secondary haemostasis',sp:'Dog',cat:'Inherited',sub:'Factor VII deficiency',urg:'Low',signs:'Beagle. Usually asymptomatic. Prolonged PT. May bleed at surgery.',etiology:'Inherited factor VII deficiency (extrinsic pathway)',diag:'PT prolonged + aPTT normal|Specific factor VII assay',treat:'FFP for surgical bleeding|Avoid NSAIDs',note:''},
+
+    // Mixed / consumptive
+    {id:'LES-BD-MIX-DIC',loc:'LOC-BD-MIX',loc_name:'Mixed / consumptive',sp:'Dog + Cat',cat:'Consumptive',sub:'Disseminated intravascular coagulation (DIC)',urg:'EMERGENCY',signs:'⚠️ Petechiae + ecchymoses + cavity bleed + thrombocytopenia + prolonged PT/aPTT + ↓ fibrinogen + ↑ D-dimer in patient with severe underlying disease.',etiology:'Pathological activation of coagulation → consumption + secondary fibrinolysis|Triggers: sepsis · neoplasia (HSA, lymphoma) · IMHA · pancreatitis · heatstroke · trauma · GDV · envenomation · parvo',diag:'≥3 of 5: thrombocytopenia, PT prolonged, aPTT prolonged, low fibrinogen, ↑ D-dimer|Antithrombin decreased|Schistocytes',treat:'Treat trigger aggressively|FFP for clotting factor replacement|Cryoprecipitate if hypofibrinogenaemic|Packed RBC|Heparin controversial|Avoid invasive procedures',note:'DIC is always secondary — find and fix the trigger.'},
+    {id:'LES-BD-MIX-HSA',loc:'LOC-BD-MIX',loc_name:'Mixed / consumptive',sp:'Dog',cat:'Mass',sub:'Splenic / hepatic haemangiosarcoma rupture',urg:'EMERGENCY',signs:'⚠️ Acute collapse + pale gums + abdominal distension. Middle-aged–older large breed (GSD, Goldie, Lab). DIC common.',etiology:'Splenic, hepatic, right atrial HSA → rupture',diag:'AFAST/TFAST|Cardiac echo (right atrial mass)|Abdominal US|Thoracic CT for staging|CBC + smear + coag (DIC)|Cytology of effusion',treat:'Stabilise + transfusion + autotransfusion|Emergency splenectomy / partial hepatectomy|Pericardiocentesis if tamponade|Doxorubicin-based chemo — median survival 6–8 mo',note:''},
+    {id:'LES-BD-MIX-ENV',loc:'LOC-BD-MIX',loc_name:'Mixed / consumptive',sp:'Dog + Cat',cat:'Toxic',sub:'Snake / spider envenomation',urg:'EMERGENCY',signs:'⚠️ Local swelling + bruising + cavity bleed + petechiae + neurological signs (elapid) or rhabdomyolysis.',etiology:'Viperidae (coagulopathic, cytotoxic)|Elapidae (neurotoxic + coagulopathic)|Loxosceles (cytotoxic + haemolytic)|Latrodectus (neurotoxic)',diag:'Venom detection kit|CBC + coag|CK / AST|Renal panel',treat:'Species-specific antivenom|Supportive care|FFP|Ventilation for neurotoxic|Monitor for AKI',note:''},
+
+    // Vasculopathies
+    {id:'LES-BD-VS-VASC',loc:'LOC-BD-VASC',loc_name:'Vasculopathies',sp:'Dog + Cat',cat:'Immune-mediated',sub:'Cutaneous / systemic vasculitis',urg:'Moderate',signs:'Ear-tip / footpad / tail-tip necrosis, palpable purpura. Concurrent disease, drug, infection, neoplasia.',etiology:'Immune-mediated (idiopathic, drug, vaccine, infection [Ehrlichia, Leishmania, Lyme, FIP])|Underlying neoplasia|Familial',diag:'Skin biopsy|Infectious panel|Drug history|CBC + UPC',treat:'Remove trigger|Pentoxifylline + ω-3|Immunosuppression for severe / progressive',note:''},
+    {id:'LES-BD-VS-CRGV',loc:'LOC-BD-VASC',loc_name:'Vasculopathies',sp:'Dog',cat:'Vascular',sub:'Cutaneous and renal glomerular vasculopathy (CRGV / "Alabama rot")',urg:'EMERGENCY',signs:'⚠️ Skin ulcers + acute kidney injury 1–10 d later → haematuria, oliguria, thrombocytopenia. High mortality. See LES-HU-UP-CRGV.',etiology:'Idiopathic — Shiga-like toxin vasculopathy suspected',diag:'Skin lesions + AKI + microangiopathic haemolytic anaemia + thrombocytopenia',treat:'Aggressive supportive · plasma exchange / dialysis|Wound care|Prognosis guarded',note:''},
+    {id:'LES-BD-VS-HAC',loc:'LOC-BD-VASC',loc_name:'Vasculopathies',sp:'Dog',cat:'Endocrine',sub:'Hyperadrenocorticism + iatrogenic steroid — capillary fragility',urg:'Low–Moderate',signs:'Easy bruising at venepuncture, ecchymoses, GI ulcer / haemorrhage. Concurrent classic HAC phenotype.',etiology:'Chronic glucocorticoid excess → capillary fragility + GI vulnerability',diag:'ACTH stim / LDDST|History|Abdominal US',treat:'Treat HAC|Wean iatrogenic steroids|GI protectants|Avoid additional NSAIDs / heparin',note:'HAC often paradoxically hypercoagulable — PTE more common than bleeding.'},
+    {id:'LES-BD-VS-LH',loc:'LOC-BD-VASC',loc_name:'Vasculopathies',sp:'Dog',cat:'Inherited',sub:'Lhasa Apso vasculopathy syndrome',urg:'Moderate',signs:'Lhasa Apso. Persistent cutaneous lesions, ear-tip necrosis, recurrent vasculitis.',etiology:'Familial / breed-specific vasculopathy',diag:'Skin biopsy + breed|Exclude triggers',treat:'Pentoxifylline + ω-3|Immunosuppression for flares|Long-term management',note:''}
   ],
 
   differentials: [
@@ -1047,6 +1080,7 @@ function renderLocalise(){
   <div class="card" onclick="renderBlindEyeFlow()"><div class="card-row"><div class="card-icon">⚫</div><div style="flex:1"><div class="card-title">Blind Eye / Acute Vision Loss</div><div class="card-sub">Dog + Cat · Visual pathway localisation · menace · dazzle · PLR · chromatic PLR · ERG</div></div><div class="card-arrow">›</div></div></div>
   <div class="card" onclick="renderWetEyeFlow()"><div class="card-row"><div class="card-icon">💧</div><div style="flex:1"><div class="card-title">Wet Eye / Epiphora</div><div class="card-sub">Dog + Cat · Increased production vs reduced drainage · Jones test · NLS flush</div></div><div class="card-arrow">›</div></div></div>
   <div class="card" onclick="renderHaematuriaFlow()"><div class="card-row"><div class="card-icon">🩸</div><div style="flex:1"><div class="card-title">Haematuria</div><div class="card-sub">Dog + Cat · Upper tract · bladder · urethra · prostate · genital · systemic</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderBleedingFlow()"><div class="card-row"><div class="card-icon">🟣</div><div style="flex:1"><div class="card-title">Bleeding / Petechiae / Ecchymoses</div><div class="card-sub">Dog + Cat · Primary vs secondary haemostasis · DIC · vasculopathy</div></div><div class="card-arrow">›</div></div></div>
   <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment. Always verify clinical decisions independently.</div>
   `);
 }
@@ -1818,6 +1852,7 @@ function renderLesionHome(){
   <div class="card" onclick="renderDxBlindEye()"><div class="card-row"><div class="card-icon">⚫</div><div style="flex:1"><div class="card-title">Blind Eye / Acute Vision Loss</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
   <div class="card" onclick="renderDxWetEye()"><div class="card-row"><div class="card-icon">💧</div><div style="flex:1"><div class="card-title">Wet Eye / Epiphora</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
   <div class="card" onclick="renderDxHaematuria()"><div class="card-row"><div class="card-icon">🩸</div><div style="flex:1"><div class="card-title">Haematuria</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxBleeding()"><div class="card-row"><div class="card-icon">🟣</div><div style="flex:1"><div class="card-title">Bleeding / Petechiae / Ecchymoses</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
   <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment. Always verify clinical decisions independently.</div>
   `);
 }
@@ -2328,7 +2363,9 @@ function goLesionTab(locId, locName){
       'LOC-WE-DRAIN':'renderDxWetEye','LOC-WE-PROD':'renderDxWetEye',
       'LOC-HU-UPPER':'renderDxHaematuria','LOC-HU-BLADDER':'renderDxHaematuria',
       'LOC-HU-URETHRA':'renderDxHaematuria','LOC-HU-PROST':'renderDxHaematuria',
-      'LOC-HU-GENIT':'renderDxHaematuria','LOC-HU-SYS':'renderDxHaematuria'
+      'LOC-HU-GENIT':'renderDxHaematuria','LOC-HU-SYS':'renderDxHaematuria',
+      'LOC-BD-PRIM':'renderDxBleeding','LOC-BD-SEC':'renderDxBleeding',
+      'LOC-BD-MIX':'renderDxBleeding','LOC-BD-VASC':'renderDxBleeding'
     };
     if(dxMap[locId]){
       html += '<div style="margin-top:12px;"><div class="card" onclick="'+dxMap[locId]+'()"><div class="card-row"><div class="card-icon">🔬</div><div style="flex:1"><div class="card-title">Diagnostic Approach</div><div class="card-sub">Stepwise clinical workup flowchart</div></div><div class="card-arrow">\u203a</div></div></div></div>';
@@ -4714,6 +4751,27 @@ function renderDxAtaxia(){
   `);
 }
 
+// ── BLEEDING / PETECHIAE — clinical sign flowchart (Tab 0) ─────────────────
+function renderBleedingFlow(){
+  push(renderBleedingFlow,'Bleeding / Petechiae');
+  render(bleedingFlowHtml);
+}
+
+// ── BLEEDING — diagnostic approach (3 tabs) ────────────────────────────────
+function renderDxBleeding(){ renderDxBleedingHistory(); }
+function renderDxBleedingHistory(){
+  replace(renderDxBleedingHistory,'History: Bleeding');
+  render(bleedingDxHistoryHtml);
+}
+function renderDxBleedingExam(){
+  replace(renderDxBleedingExam,'Exam: Bleeding');
+  render(bleedingDxExamHtml);
+}
+function renderDxBleedingDx(){
+  replace(renderDxBleedingDx,'Dx: Bleeding — Diagnostics');
+  render(bleedingDxDxHtml);
+}
+
 // ── HAEMATURIA — clinical sign flowchart (Tab 0) ───────────────────────────
 function renderHaematuriaFlow(){
   push(renderHaematuriaFlow,'Haematuria');
@@ -4949,6 +5007,11 @@ export function mountGlobals() {
   w.renderDxHaematuriaHistory = renderDxHaematuriaHistory;
   w.renderDxHaematuriaExam = renderDxHaematuriaExam;
   w.renderDxHaematuriaDx = renderDxHaematuriaDx;
+  w.renderBleedingFlow = renderBleedingFlow;
+  w.renderDxBleeding = renderDxBleeding;
+  w.renderDxBleedingHistory = renderDxBleedingHistory;
+  w.renderDxBleedingExam = renderDxBleedingExam;
+  w.renderDxBleedingDx = renderDxBleedingDx;
   w.saveNote = saveNote;
 }
 
