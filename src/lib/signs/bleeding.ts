@@ -9,42 +9,52 @@ export const bleedingFlowHtml = `
 
   <div class="flow-node entry">🩸 BLEEDING / PETECHIAE / ECCHYMOSES</div>
   <div class="flow-arrow-v">↓</div>
-  <div class="flow-node step">PRIMARY vs SECONDARY HAEMOSTASIS<br><span style="font-size:10px;color:var(--gray);font-weight:400">Pattern of bleeding tells you which limb is broken</span></div>
+  <div class="flow-node step">PATTERN RECOGNITION<br><span style="font-size:10px;color:var(--gray);font-weight:400">Walk down the questions — the pattern of bleeding tells you which limb is broken</span></div>
   <div class="flow-arrow-v">↓</div>
 
-  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;width:100%;">
-    <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-BD-PRIM','Primary haemostasis')">🧱 Primary haemostasis<br><span style="font-size:9px;opacity:.7">platelets · vWF · vessel wall</span><br><span style="font-size:9px;opacity:.7">petechiae · mucosal bleed · BMBT prolonged</span></div>
-    <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-BD-SEC','Secondary haemostasis')">🔗 Secondary haemostasis<br><span style="font-size:9px;opacity:.7">coagulation cascade · factor deficiency</span><br><span style="font-size:9px;opacity:.7">cavity bleed · haemarthrosis · PT / aPTT prolonged</span></div>
+  <!-- Q1 — rule out mixed / DIC first -->
+  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:6px;width:100%;align-items:stretch;">
+    <div class="flow-node step" style="font-size:10.5px;text-align:left;line-height:1.4;">
+      <strong>Q1.</strong> Cavity bleed <strong>AND</strong> petechiae <strong>AND</strong> concurrent severe systemic illness (sepsis · IMHA · neoplasia · pancreatitis · heatstroke · envenomation)?
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#FCD34D;padding:0 2px;">YES<br>→</div>
+    <div class="flow-node tile urgent" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-BD-MIX','Mixed / consumptive')">⚡ MIXED / DIC<br><span style="font-size:9px;opacity:.7">primary + secondary + fibrinolysis abnormal</span><br><span style="font-size:9px;opacity:.7">⇒ sepsis · neoplasia · IMHA · heatstroke · snake bite</span></div>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;width:100%;margin-top:6px;">
-    <div class="flow-node exp" style="cursor:pointer;font-size:11px;background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.4);color:#FCA5A5;" onclick="goLesionTab('LOC-BD-MIX','Mixed / consumptive')">⚡ Mixed (DIC, severe haemorrhage)<br><span style="font-size:9px;opacity:.7">primary + secondary + fibrinolysis abnormal</span></div>
-    <div class="flow-node mixed" style="cursor:pointer;font-size:11px;background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.4);color:#DDD6FE;" onclick="goLesionTab('LOC-BD-VASC','Vasculopathies')">🌐 Vasculopathies<br><span style="font-size:9px;opacity:.7">vasculitis · uraemia · steroid · Cushing · scurvy</span></div>
+  <div style="display:flex;align-items:center;justify-content:center;width:100%;gap:4px;margin:4px 0;">
+    <span style="font-size:9px;color:var(--gray);font-weight:700;">NO ↓</span>
   </div>
 
-  <div style="margin-top:14px;padding:10px 12px;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.25);border-radius:10px;width:100%;">
-    <div style="font-size:11px;font-weight:700;color:#C4B5FD;margin-bottom:6px;">🔍 PRIMARY vs SECONDARY — PATTERN RECOGNITION</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-      <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
-        <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">Primary (platelet / vWF / vessel)</div>
-        • <strong>Petechiae</strong> (especially ventrum, sclera, oral mucosa)<br>
-        • <strong>Ecchymoses</strong> (small bruises)<br>
-        • Mucosal bleeding: gingiva, epistaxis, melena, haematuria<br>
-        • Prolonged bleeding from venepuncture / minor wounds<br>
-        • <strong>BMBT prolonged</strong> (&gt; 3.5 min)<br>
-        • Platelet count low (IMTP) or normal with poor function (vWD, drug)<br>
-        <strong style="color:#FCD34D;">⇒ IMTP · vWD · tick-borne · uraemia · drugs</strong>
-      </div>
-      <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
-        <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">Secondary (coagulation cascade)</div>
-        • <strong>Single-cavity bleeding</strong>: haemothorax, haemoperitoneum, haemarthrosis<br>
-        • Large haematomas after minor trauma<br>
-        • Delayed bleeding after surgery / venepuncture<br>
-        • <strong>Petechiae uncommon</strong> (platelets and vWF are intact)<br>
-        • <strong>PT</strong> ± <strong>aPTT</strong> prolonged<br>
-        • Platelet count usually normal<br>
-        <strong style="color:#FCA5A5;">⇒ Rodenticide · hepatic failure · haemophilia A/B · DIC</strong>
-      </div>
+  <!-- Q2 — secondary haemostasis -->
+  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:6px;width:100%;align-items:stretch;">
+    <div class="flow-node step" style="font-size:10.5px;text-align:left;line-height:1.4;">
+      <strong>Q2.</strong> Bleeding into 3rd spaces? <span style="opacity:.75;">(haemothorax · haemoperitoneum · haemarthrosis · large haematoma after minor trauma · delayed bleed post-surgery or venepuncture)</span>
     </div>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#FCD34D;padding:0 2px;">YES<br>→</div>
+    <div class="flow-node tile" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-BD-SEC','Secondary haemostasis')">🔗 SECONDARY HAEMOSTASIS<br><span style="font-size:9px;opacity:.7">coag cascade · factor deficiency</span><br><span style="font-size:9px;opacity:.7">PT ± aPTT prolonged · platelets normal</span><br><span style="font-size:9px;opacity:.7">⇒ rodenticide · hepatic failure · haemophilia A/B</span></div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:center;width:100%;gap:4px;margin:4px 0;">
+    <span style="font-size:9px;color:var(--gray);font-weight:700;">NO ↓</span>
+  </div>
+
+  <!-- Q3 — primary haemostasis -->
+  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:6px;width:100%;align-items:stretch;">
+    <div class="flow-node step" style="font-size:10.5px;text-align:left;line-height:1.4;">
+      <strong>Q3.</strong> Petechiae · ecchymoses · mucosal surface bleeding? <span style="opacity:.75;">(ventrum / sclera / gums · epistaxis · melena · haematuria · prolonged ooze from venepuncture or minor wounds)</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#FCD34D;padding:0 2px;">YES<br>→</div>
+    <div class="flow-node tile" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-BD-PRIM','Primary haemostasis')">🧱 PRIMARY HAEMOSTASIS<br><span style="font-size:9px;opacity:.7">platelets · vWF · vessel wall</span><br><span style="font-size:9px;opacity:.7">BMBT &gt; 3.5 min · ± platelet count low</span><br><span style="font-size:9px;opacity:.7">⇒ IMTP · vWD · tick-borne · uraemia · drugs</span></div>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:center;width:100%;gap:4px;margin:4px 0;">
+    <span style="font-size:9px;color:var(--gray);font-weight:700;">NO ↓</span>
+  </div>
+
+  <!-- Q4 — vasculopathy -->
+  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:6px;width:100%;align-items:stretch;">
+    <div class="flow-node step" style="font-size:10.5px;text-align:left;line-height:1.4;">
+      <strong>Q4.</strong> Cutaneous lesions without classic bleeding pattern? <span style="opacity:.75;">(ear-tip / footpad necrosis · pinnal punched-out ulcers · vasculitic skin lesions · ± normal platelets and coag)</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#FCD34D;padding:0 2px;">YES<br>→</div>
+    <div class="flow-node tile" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-BD-VASC','Vasculopathies')">🌐 VASCULOPATHIES<br><span style="font-size:9px;opacity:.7">vasculitis · uraemia · steroid · Cushing · scurvy</span><br><span style="font-size:9px;opacity:.7">⇒ immune-mediated vasculitis · CRGV · drug · infection</span></div>
   </div>
 
   <div style="margin-top:10px;padding:10px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;width:100%;">
