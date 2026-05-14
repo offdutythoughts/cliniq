@@ -9,32 +9,69 @@ export const haematuriaFlowHtml = `
 
   <div class="flow-node entry">🩸 HAEMATURIA</div>
   <div class="flow-arrow-v">↓</div>
-  <div class="flow-node step">CONFIRM TRUE HAEMATURIA, THEN LOCALISE<br><span style="font-size:10px;color:var(--gray);font-weight:400">Centrifuge supernatant + stream-timing pattern</span></div>
+  <div class="flow-node step">RAPID LOCALISATION<br><span style="font-size:10px;color:var(--gray);font-weight:400">Centrifuge first · then localise by stream-timing pattern</span></div>
   <div class="flow-arrow-v">↓</div>
 
-  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;width:100%;">
-    <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">🫘 Upper urinary tract<br><span style="font-size:9px;opacity:.7">renal · ureter · pyelonephritis · neoplasia · idiopathic renal haematuria · trauma</span></div>
-    <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">🫧 Bladder<br><span style="font-size:9px;opacity:.7">cystitis · urolith · TCC · FIC · polypoid cystitis · trauma</span></div>
+  <!-- Step 1 — centrifuge / true vs pseudo -->
+  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:6px;width:100%;align-items:stretch;">
+    <div class="flow-node step" style="font-size:10.5px;text-align:left;line-height:1.4;">
+      <strong>Step 1.</strong> Centrifuge — is the <strong>supernatant red</strong> (sediment clear)? <span style="opacity:.75;">→ haemoglobinuria · myoglobinuria · pigmenturia (NOT true haematuria)</span>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#FCD34D;padding:0 2px;">YES<br>→</div>
+    <div class="flow-node tile urgent" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-HU-SYS','Systemic / pseudo-haematuria')">🌐 SYSTEMIC / PSEUDO<br><span style="font-size:9px;opacity:.7">coagulopathy · haemoglobinuria · myoglobinuria</span><br><span style="font-size:9px;opacity:.7">⇒ IMHA · babesia · rhabdo · zinc / onion · rodenticide</span></div>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;width:100%;margin-top:6px;">
-    <div class="flow-node exp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">🩻 Urethra<br><span style="font-size:9px;opacity:.7">urolith · trauma · TCC / SCC · urethritis · urethral plug</span></div>
-    <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">⚙️ Prostate (intact male)<br><span style="font-size:9px;opacity:.7">BPH · prostatitis · abscess · adenocarcinoma · paraprostatic cyst</span></div>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;width:100%;margin-top:6px;">
-    <div class="flow-node insp" style="cursor:pointer;font-size:11px;background:rgba(168,85,247,0.12);border-color:rgba(168,85,247,0.4);color:#DDD6FE;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">♀️ Genital tract<br><span style="font-size:9px;opacity:.7">pyometra · oestrus · vaginal mass · TVT</span></div>
-    <div class="flow-node rest" style="cursor:pointer;font-size:11px;background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.4);color:#FCA5A5;" onclick="goLesionTab('LOC-HU-SYS','Systemic / pseudo-haematuria')">🌐 Systemic / pseudo<br><span style="font-size:9px;opacity:.7">coagulopathy · haemoglobinuria · myoglobinuria</span></div>
+  <div style="display:flex;align-items:center;justify-content:center;width:100%;gap:4px;margin:4px 0;">
+    <span style="font-size:9px;color:var(--gray);font-weight:700;">RED SEDIMENT (true haematuria) ↓</span>
   </div>
 
-  <div style="margin-top:14px;padding:10px 12px;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.25);border-radius:10px;width:100%;">
-    <div style="font-size:11px;font-weight:700;color:#C4B5FD;margin-bottom:6px;">🔍 STREAM-TIMING PATTERN — RAPID LOCALISATION</div>
-    <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:3px 6px;font-size:9.5px;line-height:1.4;">
-      <div style="font-weight:700;border-bottom:1px solid rgba(168,85,247,.3);">Timing</div>
-      <div style="font-weight:700;border-bottom:1px solid rgba(168,85,247,.3);">Most likely source</div>
-      <div>At start of urination (initial)</div><div>Distal urethra · vagina · prepuce · prostate</div>
-      <div>End of stream (terminal)</div><div>Bladder neck / trigone · proximal urethra · prostate</div>
-      <div>Throughout urination (uniform)</div><div>Bladder body · upper tract (kidney, ureter)</div>
-      <div>Independent of urination (drips between voids)</div><div>Distal urethra · prepuce · vagina · prostate · vulva</div>
-      <div>Concurrent oestrus / cycling intact female</div><div>Vaginal — physiological</div>
+  <!-- Step 2 — stream timing -->
+  <div class="flow-node step"><strong>Step 2.</strong> WHEN does blood appear in the stream?</div>
+  <div class="flow-arrow-v">↓</div>
+
+  <!-- Initial -->
+  <div style="display:grid;grid-template-columns:96px 1fr;gap:6px;width:100%;align-items:stretch;margin-top:2px;">
+    <div class="flow-node step" style="font-size:10px;text-align:center;line-height:1.25;padding:7px 6px;">INITIAL<br><span style="font-size:8.5px;opacity:.75;font-weight:400;">(start of stream)</span></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;">
+      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">🩻 Distal urethra</div>
+      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">♀️ Vagina · prepuce</div>
+      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">⚙️ Prostate</div>
+    </div>
+  </div>
+
+  <!-- Terminal -->
+  <div style="display:grid;grid-template-columns:96px 1fr;gap:6px;width:100%;align-items:stretch;margin-top:4px;">
+    <div class="flow-node step" style="font-size:10px;text-align:center;line-height:1.25;padding:7px 6px;">TERMINAL<br><span style="font-size:8.5px;opacity:.75;font-weight:400;">(end of stream)</span></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;">
+      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">🫧 Bladder neck / trigone</div>
+      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">🩻 Proximal urethra</div>
+      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">⚙️ Prostate</div>
+    </div>
+  </div>
+
+  <!-- Uniform -->
+  <div style="display:grid;grid-template-columns:96px 1fr;gap:6px;width:100%;align-items:stretch;margin-top:4px;">
+    <div class="flow-node step" style="font-size:10px;text-align:center;line-height:1.25;padding:7px 6px;">UNIFORM<br><span style="font-size:8.5px;opacity:.75;font-weight:400;">(throughout)</span></div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px;">
+      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">🫧 Bladder body</div>
+      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">🫘 Upper UT (kidney · ureter)</div>
+    </div>
+  </div>
+
+  <!-- Independent -->
+  <div style="display:grid;grid-template-columns:96px 1fr;gap:6px;width:100%;align-items:stretch;margin-top:4px;">
+    <div class="flow-node step" style="font-size:10px;text-align:center;line-height:1.25;padding:7px 6px;">INDEPENDENT<br><span style="font-size:8.5px;opacity:.75;font-weight:400;">(drips between voids)</span></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;">
+      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">🩻 Distal urethra</div>
+      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">♀️ Vagina · vulva · prepuce</div>
+      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">⚙️ Prostate</div>
+    </div>
+  </div>
+
+  <!-- Oestrus -->
+  <div style="display:grid;grid-template-columns:96px 1fr;gap:6px;width:100%;align-items:stretch;margin-top:4px;">
+    <div class="flow-node step" style="font-size:10px;text-align:center;line-height:1.25;padding:7px 6px;">OESTRUS ♀<br><span style="font-size:8.5px;opacity:.75;font-weight:400;">(cycling intact)</span></div>
+    <div style="display:grid;grid-template-columns:1fr;gap:4px;">
+      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">♀️ Vaginal — physiological (confirm by digital exam · vaginoscopy · timed cytology)</div>
     </div>
   </div>
 
