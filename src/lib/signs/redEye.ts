@@ -15,36 +15,10 @@ export const redEyeFlowHtml = `
 
   <!-- 4 pattern columns -->
   <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;">
-    <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="renderRedEyeCoats()">🩸 Ocular coats<br><span style="font-size:9px;opacity:.7">eyelid · TEL · conj · episcl · cornea</span></div>
-    <div class="flow-node exp" style="cursor:pointer;font-size:11px;" onclick="renderRedEyeIris()">🟣 Iris hyperaemia<br><span style="font-size:9px;opacity:.7">rubeosis · PIFM · uveal mass</span></div>
-    <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="renderRedEyeBleed()">🩸 Intraocular bleed<br><span style="font-size:9px;opacity:.7">hyphaema · vitreal · retinal</span></div>
-    <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="renderRedEyeOrbit()">🦴 Retrobulbar<br><span style="font-size:9px;opacity:.7">orbital cellulitis · neoplasia</span></div>
-  </div>
-
-  <div style="margin-top:14px;padding:10px 12px;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.25);border-radius:10px;width:100%;">
-    <div style="font-size:11px;font-weight:700;color:#C4B5FD;margin-bottom:8px;">🔍 CONJUNCTIVAL vs EPISCLERAL INJECTION — KEY DISCRIMINATOR</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-      <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
-        <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">Conjunctival hyperaemia</div>
-        • Dichotomous (tree-like) branching<br>
-        • Superficial — MOVES with conjunctiva on cotton-tip<br>
-        • Most evident in the <strong>fornixes</strong><br>
-        • Blanches rapidly with topical phenylephrine 2.5%<br>
-        <strong style="color:#FCD34D;">⇒ Ocular surface disease</strong>
-      </div>
-      <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
-        <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">Episcleral hyperaemia</div>
-        • No dichotomous division — straight radial vessels<br>
-        • Deeper — does <strong>NOT move</strong> with the conjunctiva<br>
-        • Most evident close to the <strong>limbus</strong><br>
-        • Blanches with phenylephrine 2.5% (slower / less complete than conjunctival — scleritis vessels do NOT blanch)<br>
-        <strong style="color:#F87171;">⇒ Deeper / intraocular disease (uveitis, glaucoma, scleritis)</strong>
-      </div>
-    </div>
-    <div style="margin-top:7px;font-size:9.5px;line-height:1.6;color:rgba(196,181,253,.8);">
-      💡 <strong style="color:#C4B5FD;">Superficial corneal vascularisation</strong> = long, branching ("trees") → surface disease.<br>
-      💡 <strong style="color:#C4B5FD;">Deep corneal vascularisation</strong> = short, straight, deep red ("brush") → uveitis or glaucoma.
-    </div>
+    <div class="flow-node tile" style="cursor:pointer;font-size:11px;" onclick="renderRedEyeCoats()">Ocular coats<br><span style="font-size:9px;opacity:.7">eyelid · TEL · conj · episcl · cornea</span></div>
+    <div class="flow-node tile" style="cursor:pointer;font-size:11px;" onclick="renderRedEyeIris()">Iris hyperaemia<br><span style="font-size:9px;opacity:.7">rubeosis · PIFM · uveal mass</span></div>
+    <div class="flow-node tile" style="cursor:pointer;font-size:11px;" onclick="renderRedEyeBleed()">Intraocular bleed<br><span style="font-size:9px;opacity:.7">hyphaema · vitreal · retinal</span></div>
+    <div class="flow-node tile" style="cursor:pointer;font-size:11px;" onclick="renderRedEyeOrbit()">Retrobulbar<br><span style="font-size:9px;opacity:.7">orbital cellulitis · neoplasia</span></div>
   </div>
 
   <div style="margin-top:10px;padding:10px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;width:100%;">
@@ -66,7 +40,7 @@ export const redEyeFlowHtml = `
 
 // ── Sub-region flow → endpoint cards (route to existing goLesionTab) ─────
 export const redEyeCoatsHtml = `
-<div class="fn fn-insp">🩸 OCULAR COATS</div>
+<div class="fn fn-insp">OCULAR COATS</div>
 <div class="fn-arrow">↓</div>
 <div class="fn fn-step">SUB-LOCALISE</div>
 <div class="fn-arrow">↓</div>
@@ -100,10 +74,36 @@ export const redEyeCoatsHtml = `
     <div class="ep-loc">Cornea — deep / intraocular signal</div>
   </div>
 </div>
+
+<div style="margin-top:14px;padding:10px 12px;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.25);border-radius:10px;width:100%;">
+  <div style="font-size:11px;font-weight:700;color:#C4B5FD;margin-bottom:8px;">🔍 CONJUNCTIVAL vs EPISCLERAL INJECTION — KEY DISCRIMINATOR</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+    <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
+      <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">Conjunctival hyperaemia</div>
+      • Dichotomous (tree-like) branching<br>
+      • Superficial — MOVES with conjunctiva on cotton-tip<br>
+      • Most evident in the <strong>fornixes</strong><br>
+      • Blanches rapidly with topical phenylephrine 2.5%<br>
+      <strong style="color:#FCD34D;">⇒ Ocular surface disease</strong>
+    </div>
+    <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
+      <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">Episcleral hyperaemia</div>
+      • No dichotomous division — straight radial vessels<br>
+      • Deeper — does <strong>NOT move</strong> with the conjunctiva<br>
+      • Most evident close to the <strong>limbus</strong><br>
+      • Blanches with phenylephrine 2.5% (slower / less complete than conjunctival — scleritis vessels do NOT blanch)<br>
+      <strong style="color:#F87171;">⇒ Deeper / intraocular disease (uveitis, glaucoma, scleritis)</strong>
+    </div>
+  </div>
+  <div style="margin-top:7px;font-size:9.5px;line-height:1.6;color:rgba(196,181,253,.8);">
+    💡 <strong style="color:#C4B5FD;">Superficial corneal vascularisation</strong> = long, branching ("trees") → surface disease.<br>
+    💡 <strong style="color:#C4B5FD;">Deep corneal vascularisation</strong> = short, straight, deep red ("brush") → uveitis or glaucoma.
+  </div>
+</div>
 `;
 
 export const redEyeIrisHtml = `
-<div class="fn fn-exp">🟣 IRIS HYPERAEMIA</div>
+<div class="fn fn-exp">IRIS HYPERAEMIA</div>
 <div class="fn-arrow">↓</div>
 <div class="fn fn-step">DIFFERENTIATE MECHANISM</div>
 <div class="fn-arrow">↓</div>
@@ -133,7 +133,7 @@ export const redEyeIrisHtml = `
 `;
 
 export const redEyeBleedHtml = `
-<div class="fn fn-rest">🩸 INTRAOCULAR BLEED</div>
+<div class="fn fn-rest">INTRAOCULAR BLEED</div>
 <div class="fn-arrow">↓</div>
 <div class="fn fn-step">LOCALISE BLEED</div>
 <div class="fn-arrow">↓</div>
@@ -164,7 +164,7 @@ export const redEyeBleedHtml = `
 `;
 
 export const redEyeOrbitHtml = `
-<div class="fn fn-mixed">🦴 RETROBULBAR / ORBITAL DISEASE</div>
+<div class="fn fn-mixed">RETROBULBAR / ORBITAL DISEASE</div>
 <div class="fn-arrow">↓</div>
 <div class="fn fn-step">KEY EXAM CLUES</div>
 <div class="fn-arrow">↓</div>
