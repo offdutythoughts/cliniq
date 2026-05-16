@@ -1,13 +1,36 @@
 'use client'
-import { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import Topbar from '../components/Topbar'
 import BottomNav from '../components/BottomNav'
 import NotesPanel from '../components/NotesPanel'
 import { useNotes } from '../hooks/useNotes'
+import { useNotesLocal } from '../hooks/useNotesLocal'
 import { initCliniqApp, mountGlobals, navTo, renderLocalise } from '../lib/cliniqApp'
 import type { Tab } from '../types'
 
-export default function Page() {
+// Use Convex-backed notes when a deployment URL is configured, otherwise localStorage
+const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
+export default hasConvex ? PageWithConvex : PageWithLocal
+
+function PageWithConvex() {
+  return <PageBase useNotesHook={useNotes} />
+}
+
+function PageWithLocal() {
+  return <PageBase useNotesHook={useNotesLocal} />
+}
+
+type NotesHook = (key: string, title: string, open: boolean) => {
+  editorRef: React.RefObject<HTMLDivElement | null>
+  status: string
+  onInput: () => void
+  onCmd: (cmd: string, val?: string) => void
+  onClear: () => void
+  onExport: () => void
+  isReady: boolean
+}
+
+function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
   const [html, setHtml] = useState('')
   const [slideDir, setSlideDir] = useState<'left' | 'right'>('right')
   const [topbarTitle, setTopbarTitle] = useState('')
@@ -20,7 +43,7 @@ export default function Page() {
   const innerRef = useRef<HTMLDivElement>(null)
   const animTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const notes = useNotes(pageKey, pageTitle, notesOpen)
+  const notes = useNotesHook(pageKey, pageTitle, notesOpen)
 
   useEffect(() => {
     // Apply theme before render to avoid flash

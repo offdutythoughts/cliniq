@@ -1,17 +1,29 @@
-import {
-  convexAuthNextjsMiddleware,
-  createRouteMatcher,
-  nextjsMiddlewareRedirect,
-} from '@convex-dev/auth/nextjs/server'
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
-const isPublicRoute = createRouteMatcher(['/login'])
+// When Convex is not configured locally, skip auth middleware entirely
+const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
 
-export default convexAuthNextjsMiddleware(async (request, { convexAuth }) => {
-  if (isPublicRoute(request)) return
-  if (!(await convexAuth.isAuthenticated())) {
-    return nextjsMiddlewareRedirect(request, '/login')
-  }
-})
+// Dynamically import the real middleware only when Convex is configured
+const convexMiddleware = hasConvex
+  ? (() => {
+      const {
+        convexAuthNextjsMiddleware,
+        createRouteMatcher,
+        nextjsMiddlewareRedirect,
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+      } = require('@convex-dev/auth/nextjs/server') as typeof import('@convex-dev/auth/nextjs/server')
+      const isPublicRoute = createRouteMatcher(['/login'])
+      return convexAuthNextjsMiddleware(async (request: NextRequest, { convexAuth }: { convexAuth: { isAuthenticated: () => Promise<boolean> } }) => {
+        if (isPublicRoute(request)) return
+        if (!(await convexAuth.isAuthenticated())) {
+          return nextjsMiddlewareRedirect(request, '/login')
+        }
+      })
+    })()
+  : (_request: NextRequest) => NextResponse.next()
+
+export default convexMiddleware
 
 export const config = {
   matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],

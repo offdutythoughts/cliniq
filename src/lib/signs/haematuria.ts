@@ -9,88 +9,95 @@ export const haematuriaFlowHtml = `
 
   <div class="flow-node entry">🩸 HAEMATURIA</div>
   <div class="flow-arrow-v">↓</div>
-  <div class="flow-node step">RAPID LOCALISATION<br><span style="font-size:10px;color:var(--gray);font-weight:400">Centrifuge first · then localise by stream-timing pattern</span></div>
+
+  <!-- Q1: centrifuge -->
+  <div class="flow-node step">CENTRIFUGE THE URINE — IS THE SUPERNATANT RED?
+    <div class="fn-sub" style="font-weight:400;margin-top:3px;">Spin 1500 rpm × 5 min · all three (haemoglobinuria, myoglobinuria, pigment) give dipstick +ve blood · only centrifuge separates them</div>
+  </div>
   <div class="flow-arrow-v">↓</div>
 
-  <!-- Step 1 — centrifuge / true vs pseudo -->
-  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:6px;width:100%;align-items:stretch;">
-    <div class="flow-node step" style="font-size:10.5px;text-align:left;line-height:1.4;">
-      <strong>Step 1.</strong> Centrifuge — is the <strong>supernatant red</strong> (sediment clear)? <span style="opacity:.75;">→ haemoglobinuria · myoglobinuria · pigmenturia (NOT true haematuria)</span>
+  <div style="display:grid;grid-template-columns:2fr 3fr;gap:8px;width:100%;">
+
+    <!-- YES — pseudo-haematuria -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+      <div style="font-size:9px;font-weight:600;color:#FCD34D;letter-spacing:.03em;">YES — red supernatant</div>
+      <div class="flow-arrow-v">↓</div>
+      <div class="flow-node" style="width:100%;background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.4);font-size:10px;font-weight:700;color:#FCD34D;">
+        PSEUDO-HAEMATURIA<br>
+        <span style="font-size:9px;font-weight:400;opacity:.8;">No intact RBCs — haemolysis or pigment</span>
+      </div>
+      <div class="flow-arrow-v">↓</div>
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderHaematuriaFlowSystemic()">
+        🌐 Haemoglobinuria<br>Myoglobinuria<br>Pigment ›
+      </div>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#FCD34D;padding:0 2px;">YES<br>→</div>
-    <div class="flow-node tile urgent" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-HU-SYS','Systemic / pseudo-haematuria')">🌐 SYSTEMIC / PSEUDO<br><span style="font-size:9px;opacity:.7">coagulopathy · haemoglobinuria · myoglobinuria</span><br><span style="font-size:9px;opacity:.7">⇒ IMHA · babesia · rhabdo · zinc / onion · rodenticide</span></div>
-  </div>
-  <div style="display:flex;align-items:center;justify-content:center;width:100%;gap:4px;margin:4px 0;">
-    <span style="font-size:9px;color:var(--gray);font-weight:700;">RED SEDIMENT (true haematuria) ↓</span>
-  </div>
 
-  <!-- Step 2 — stream timing -->
-  <div class="flow-node step"><strong>Step 2.</strong> WHEN does blood appear in the stream?</div>
-  <div class="flow-arrow-v">↓</div>
+    <!-- NO — true haematuria -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+      <div style="font-size:9px;font-weight:600;color:#A7F3D0;letter-spacing:.03em;">NO — red sediment (true haematuria)</div>
+      <div class="flow-arrow-v">↓</div>
 
-  <!-- Initial -->
-  <div style="display:grid;grid-template-columns:96px 1fr;gap:6px;width:100%;align-items:stretch;margin-top:2px;">
-    <div class="flow-node step" style="font-size:10px;text-align:center;line-height:1.25;padding:7px 6px;">INITIAL<br><span style="font-size:8.5px;opacity:.75;font-weight:400;">(start of stream)</span></div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;">
-      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">🩻 Distal urethra</div>
-      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">♀️ Vagina · prepuce</div>
-      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">⚙️ Prostate</div>
+      <!-- Q2: systemic signs? -->
+      <div class="flow-node sub-step" style="width:100%;font-size:10px;">Concurrent systemic signs?
+        <div style="font-weight:400;font-size:9px;margin-top:2px;opacity:.85;">Generalised bleeding · petechiae · severe anaemia · jaundice · pyrexia</div>
+      </div>
+      <div class="flow-arrow-v">↓</div>
+
+      <div style="display:grid;grid-template-columns:1fr 2fr;gap:5px;width:100%;">
+
+        <!-- Q2 YES → systemic true HU -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+          <div style="font-size:9px;font-weight:600;color:#FCA5A5;">YES</div>
+          <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderHaematuriaFlowSystemic()">
+            ⚡ Systemic<br>cause ›<br>
+            <span style="opacity:.7;font-size:8px;">coagulopathy · IMTP · DIC</span>
+          </div>
+        </div>
+
+        <!-- Q2 NO → localise by stream -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+          <div style="font-size:9px;font-weight:600;color:var(--gray2);">NO — localise</div>
+          <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+
+          <!-- Q3: when in stream? -->
+          <div class="flow-node sub-step" style="width:100%;font-size:9.5px;">WHEN in the stream?</div>
+          <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;width:100%;">
+            <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:8.5px;cursor:pointer;text-align:center;" onclick="renderHaematuriaFlowInitial()">
+              START<br>
+              <span style="opacity:.75;">Distal urethra · genital · prostate ›</span>
+            </div>
+            <div class="flow-endpoint" style="background:rgba(99,102,241,0.08);border:1.5px solid rgba(99,102,241,0.3);color:#A5B4FC;font-size:8.5px;cursor:pointer;text-align:center;" onclick="renderHaematuriaFlowTerminal()">
+              END<br>
+              <span style="opacity:.75;">Bladder neck · trigone · prostate ›</span>
+            </div>
+            <div class="flow-endpoint" style="background:rgba(37,99,235,0.08);border:1.5px solid rgba(37,99,235,0.3);color:#93C5FD;font-size:8.5px;cursor:pointer;text-align:center;" onclick="renderHaematuriaFlowUniform()">
+              THROUGHOUT<br>
+              <span style="opacity:.75;">Bladder body · upper UT ›</span>
+            </div>
+            <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;font-size:8.5px;cursor:pointer;text-align:center;" onclick="renderHaematuriaFlowIndep()">
+              BETWEEN voids<br>
+              <span style="opacity:.75;">Genital · prostate · distal ›</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
   </div>
 
-  <!-- Terminal -->
-  <div style="display:grid;grid-template-columns:96px 1fr;gap:6px;width:100%;align-items:stretch;margin-top:4px;">
-    <div class="flow-node step" style="font-size:10px;text-align:center;line-height:1.25;padding:7px 6px;">TERMINAL<br><span style="font-size:8.5px;opacity:.75;font-weight:400;">(end of stream)</span></div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;">
-      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">🫧 Bladder neck / trigone</div>
-      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">🩻 Proximal urethra</div>
-      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">⚙️ Prostate</div>
-    </div>
-  </div>
-
-  <!-- Uniform -->
-  <div style="display:grid;grid-template-columns:96px 1fr;gap:6px;width:100%;align-items:stretch;margin-top:4px;">
-    <div class="flow-node step" style="font-size:10px;text-align:center;line-height:1.25;padding:7px 6px;">UNIFORM<br><span style="font-size:8.5px;opacity:.75;font-weight:400;">(throughout)</span></div>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:4px;">
-      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">🫧 Bladder body</div>
-      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">🫘 Upper UT (kidney · ureter)</div>
-    </div>
-  </div>
-
-  <!-- Independent -->
-  <div style="display:grid;grid-template-columns:96px 1fr;gap:6px;width:100%;align-items:stretch;margin-top:4px;">
-    <div class="flow-node step" style="font-size:10px;text-align:center;line-height:1.25;padding:7px 6px;">INDEPENDENT<br><span style="font-size:8.5px;opacity:.75;font-weight:400;">(drips between voids)</span></div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;">
-      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">🩻 Distal urethra</div>
-      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">♀️ Vagina · vulva · prepuce</div>
-      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">⚙️ Prostate</div>
-    </div>
-  </div>
-
-  <!-- Oestrus -->
-  <div style="display:grid;grid-template-columns:96px 1fr;gap:6px;width:100%;align-items:stretch;margin-top:4px;">
-    <div class="flow-node step" style="font-size:10px;text-align:center;line-height:1.25;padding:7px 6px;">OESTRUS ♀<br><span style="font-size:8.5px;opacity:.75;font-weight:400;">(cycling intact)</span></div>
-    <div style="display:grid;grid-template-columns:1fr;gap:4px;">
-      <div class="flow-node tile" style="cursor:pointer;font-size:10px;padding:7px 5px;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">♀️ Vaginal — physiological (confirm by digital exam · vaginoscopy · timed cytology)</div>
-    </div>
-  </div>
-
-  <div style="margin-top:10px;padding:10px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;width:100%;">
-    <div style="font-size:11px;font-weight:700;color:#F87171;margin-bottom:6px;">⚡ DO NOT MISS</div>
+  <div style="margin-top:12px;padding:10px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;width:100%;">
+    <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:5px;">⚡ DO NOT MISS</div>
     <div style="font-size:9.5px;line-height:1.55;color:#FCA5A5;">
-      • <strong>Urethral obstruction</strong> (male cat with FIC + plug; male dog with urolith) — life-threatening hyperkalaemia within hours<br>
-      • <strong>Anticoagulant rodenticide</strong> — haematuria can be the first sign before generalised bleeding<br>
-      • <strong>Closed pyometra in an intact bitch</strong> — sepsis risk; abdominal US essential<br>
-      • <strong>Older Scottie / WHWT / Shetland Sheepdog / Beagle bitch with persistent haematuria</strong> → bladder urothelial carcinoma (CADET BRAF urine PCR ~80–85% sensitive, &gt;99% specific; ultrasound; cystoscopy)<br>
-      • <strong>Macroscopic haematuria + acute renal failure + pyrexia</strong> → leptospirosis (PPE: zoonotic) or septic pyelonephritis<br>
-      • <strong>Bilateral renal haematuria in a young dog</strong> → idiopathic renal haematuria (refractory; renal-sparing surgery may be needed)<br>
-      • <strong>Concurrent haemoglobinuria + anaemia</strong> → IMHA, babesia, zinc, onion / garlic, snake envenomation — not true haematuria
+      • <strong>Urethral obstruction</strong> — male cat (FIC + plug), male dog (urolith) → hyperkalaemia within hours<br>
+      • <strong>Anticoagulant rodenticide</strong> — haematuria can be the presenting sign before generalised bleed<br>
+      • <strong>Older Scottie / WHWT / Beagle bitch + persistent HU</strong> → TCC (CADET BRAF ~85% sensitive)<br>
+      • <strong>HU + ARF + pyrexia</strong> → leptospirosis (PPE — zoonotic) or septic pyelonephritis
     </div>
   </div>
 
-  <div style="margin-top:10px;padding:9px 12px;background:rgba(37,99,235,0.07);border:1px solid rgba(37,99,235,0.15);border-radius:10px;font-size:11px;color:#93C5FD;text-align:center;width:100%;">
-    Tap a region to see specific differentials
-  </div>
 </div>
 `;
 

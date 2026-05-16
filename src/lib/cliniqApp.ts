@@ -1596,54 +1596,119 @@ function renderPUPDFlow(){
 
     <div class="flow-node entry">💧 POLYURIA / POLYDIPSIA</div>
     <div class="flow-arrow-v">↓</div>
-    <div class="flow-node step">STEP 1 — CONFIRM PU/PD vs POLLAKIURIA vs INCONTINENCE<div class="fn-sub" style="font-size:10px;color:var(--gray);font-weight:400;">Large volumes? Conscious voiding? No straining/haematuria?</div></div>
+
+    <!-- Step 1 -->
+    <div class="flow-node step">STEP 1 — CONFIRM PU/PD
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Rule out pollakiuria (small frequent voids, straining) and urinary incontinence (passive leakage). True PU/PD = large volumes, conscious, no dysuria.</div>
+    </div>
     <div class="flow-arrow-v">↓</div>
-    <div class="flow-node step">STEP 2 — URINALYSIS: CHECK USG<div class="fn-sub" style="font-size:10px;color:var(--gray);font-weight:400;">Key to mechanistic diagnosis — collect 3–5 serial samples (different days/times)</div></div>
+
+    <!-- Step 2 -->
+    <div class="flow-node step">STEP 2 — URINALYSIS + SERIAL USG
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Collect before IV fluids. Repeat 3–5 samples on different days/times for accurate characterisation.</div>
+    </div>
     <div class="flow-arrow-v">↓</div>
 
-    <!-- USG branches -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <div class="flow-node" style="width:100%;background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.3);color:#A7F3D0;font-size:11px;text-align:center;">USG &gt;1.030<br><span style="font-size:9px;opacity:.7">Well concentrated</span></div>
-        <div class="flow-arrow-v">↓</div>
-        <div class="flow-node sub-step" style="width:100%;font-size:10px;text-align:center;">Obligate polyuria unlikely<br>→ Consider primary polydipsia</div>
-        <div class="flow-arrow-v">↓</div>
-        <div class="flow-endpoint gi-upper" onclick="goLesionTab('LOC-PUPD-PRIM','Primary polydipsia')" style="width:100%;font-size:10px;">
-          Primary polydipsia
-        </div>
-      </div>
+    <!-- USG table -->
+    <div class="flow-node" style="width:100%;padding:10px 12px;">
+      <div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:5px 10px;font-size:10px;line-height:1.4;">
+        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">USG</div>
+        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Meaning</div>
+        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Consider</div>
 
-      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <div class="flow-node" style="width:100%;background:rgba(217,119,6,0.12);border-color:rgba(217,119,6,0.3);color:var(--amber-text);font-size:11px;text-align:center;">USG 1.008–1.029<br><span style="font-size:9px;opacity:.7">Isosthenuric / moderately concentrated</span></div>
-        <div class="flow-arrow-v">↓</div>
-        <div class="flow-node sub-step" style="width:100%;font-size:10px;text-align:center;">Broad differential<br>→ Full minimum database</div>
-        <div class="flow-arrow-v">↓</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
-          <div class="flow-endpoint" style="background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.4);color:#BFDBFE;font-size:9px;" onclick="goLesionTab('LOC-PUPD-RENAL','Renal / Urinary')">Renal
-          <div class="flow-endpoint" style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.4);color:#DDD6FE;font-size:9px;" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')">Endocrine
-          <div class="flow-endpoint" style="background:rgba(249,115,22,0.12);border:1.5px solid rgba(249,115,22,0.4);color:#FED7AA;font-size:9px;" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')">Systemic
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);color:#FCA5A5;font-size:9px;" onclick="goLesionTab('LOC-PUPD-NDI','Nephrogenic DI')">NDI
-        </div>
-      </div>
+        <div style="color:#6EE7B7;">&gt;1.030 dog<br>&gt;1.035 cat</div>
+        <div>Concentrated — not obligate PU/PD<br><span style="font-size:9px;opacity:.7;">Check for glucosuria (DM raises USG artificially)</span></div>
+        <div style="font-size:9.5px;">Primary polydipsia · DM (if glucosuria)</div>
 
-      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <div class="flow-node" style="width:100%;background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.3);color:#FCA5A5;font-size:11px;text-align:center;">USG &lt;1.008<br><span style="font-size:9px;opacity:.7">Hyposthenuric</span></div>
-        <div class="flow-arrow-v">↓</div>
-        <div class="flow-node sub-step" style="width:100%;font-size:10px;text-align:center;">Check plasma Na⁺<br>Rule out secondary causes</div>
-        <div class="flow-arrow-v">↓</div>
-        <div style="display:flex;flex-direction:column;gap:4px;width:100%;">
-          <div class="flow-endpoint" style="background:rgba(217,119,6,0.15);border:1.5px solid rgba(217,119,6,0.5);color:var(--amber-text);font-size:9px;" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine — HAC, DM')">Endocrine (HAC most common)
-          <div class="flow-endpoint" style="background:rgba(99,102,241,0.15);border:1.5px solid rgba(99,102,241,0.5);color:#C7D2FE;font-size:9px;" onclick="goLesionTab('LOC-PUPD-CDI','Central DI (ADH deficiency)')">Central DI (CDI)
-          <div class="flow-endpoint" style="background:rgba(100,116,139,0.15);border:1.5px solid rgba(100,116,139,0.5);color:#CBD5E1;font-size:9px;" onclick="goLesionTab('LOC-PUPD-NDI','Nephrogenic DI (NDI)')">Nephrogenic DI (NDI)
-          <div class="flow-endpoint gi-upper" style="font-size:9px;" onclick="goLesionTab('LOC-PUPD-PRIM','Primary polydipsia')">Primary polydipsia
+        <div style="color:#FCD34D;">1.013–1.029</div>
+        <div>Partially concentrated — broad differential</div>
+        <div style="font-size:9.5px;">HAC · early CKD · primary polydipsia · endocrine</div>
+
+        <div style="color:#FB923C;">1.008–1.012</div>
+        <div>Isosthenuric — tubular function lost</div>
+        <div style="font-size:9.5px;">CKD · HAC · Addison's (medullary washout) · pyelonephritis</div>
+
+        <div style="color:#F87171;">&lt;1.008</div>
+        <div>Hyposthenuric — active dilution</div>
+        <div style="font-size:9.5px;">CDI · NDI · primary polydipsia · severe HAC</div>
+      </div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- Step 3 -->
+    <div class="flow-node step">STEP 3 — MINIMUM DATABASE</div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div class="flow-node" style="width:100%;padding:10px 12px;font-size:10.5px;line-height:1.6;">
+      <strong style="color:#FCD34D;">Biochemistry:</strong> BUN · creatinine · <strong>SDMA</strong> · phosphate · Ca²⁺ · K⁺ · Na⁺ · glucose · ALP · ALT · albumin · cholesterol<br>
+      <strong style="color:#FCD34D;">Haematology:</strong> CBC — stress leukogram? Absent → Addison's. Leucocytosis → infectious.<br>
+      <strong style="color:#FCD34D;">Urinalysis:</strong> Dipstick (glucose · protein) · sediment (WBC casts → pyelo · ammonium biurate → PSS)<br>
+      <strong style="color:#FCD34D;">T4:</strong> ALL cats &gt;7 yr · dogs with compatible signs<br>
+      <strong style="color:#FCD34D;">BP:</strong> Indirect blood pressure — all PU/PD patients (CKD · HAC · DM · hyperthyroid)
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- Step 4 branching -->
+    <div class="flow-node step">STEP 4 — INTERPRET RESULTS</div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div style="font-size:9.5px;font-weight:600;color:#FCD34D;text-align:center;padding:3px 0;">BIOCHEMISTRY PATTERN</div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.4);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-RENAL','Renal / Urinary')">↑ Cr/BUN/SDMA + isosthenuria → <strong>CKD/AKI</strong> — IRIS stage →</div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.4);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')">↑ ALP + USG &lt;1.015 + polyphagia → <strong>HAC</strong> → LDDST/UCCR →</div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.4);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')">Glucose &gt;180 (dog)/&gt;270 (cat) + glucosuria → <strong>DM</strong> →</div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.4);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')">Na:K &lt;27 → <strong>Addison's</strong> → ACTH stim →</div>
+        <div class="flow-endpoint" style="background:rgba(217,119,6,0.12);border:1.5px solid rgba(217,119,6,0.4);color:#FCD34D;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')">↑ Total Ca²⁺ → iCa + PTH/PTHrP → <strong>Hypercalcaemia-NDI</strong> →</div>
+        <div class="flow-endpoint" style="background:rgba(249,115,22,0.12);border:1.5px solid rgba(249,115,22,0.4);color:#FED7AA;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')">↓ BUN + ↓ albumin + ↓ cholesterol → <strong>PSS</strong> → bile acids →</div>
+        <div class="flow-endpoint" style="background:rgba(249,115,22,0.12);border:1.5px solid rgba(249,115,22,0.4);color:#FED7AA;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')">Intact ♀ + leucocytosis → <strong>Pyometra</strong> → US abdomen →</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div style="font-size:9.5px;font-weight:600;color:#FCD34D;text-align:center;padding:3px 0;">IRIS CKD STAGING (if azotaemic)</div>
+        <div class="flow-node" style="width:100%;padding:8px 10px;font-size:9px;line-height:1.5;">
+          <strong style="color:#6EE7B7;">Stage 1:</strong> SDMA ≥18 µg/dL, Cr &lt;140 µmol/L<br>
+          <strong style="color:#FCD34D;">Stage 2:</strong> Cr 140–249 µmol/L (dog) / 140–249 (cat)<br>
+          <strong style="color:#FB923C;">Stage 3:</strong> Cr 250–499 µmol/L (dog) / 250–439 (cat)<br>
+          <strong style="color:#F87171;">Stage 4:</strong> Cr ≥500 µmol/L (dog) / ≥440 (cat)<br>
+          <div style="margin-top:5px;border-top:1px solid rgba(148,163,184,.2);padding-top:5px;">
+            <strong>Substage UP/C:</strong> &lt;0.2 NP · 0.2–0.5 BP · &gt;0.5 P (dog)<br>
+            <strong>Substage BP:</strong> &lt;140 · 140–159 pre-HT · 160–179 HT · ≥180 severe
+          </div>
         </div>
+        <div class="flow-endpoint" style="background:rgba(16,185,129,0.12);border:1.5px solid rgba(16,185,129,0.3);color:#A7F3D0;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')">↑ T4 (cat) → <strong>Hyperthyroidism</strong> — recheck renal after Rx →</div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-RENAL','Renal / Urinary')">Active sediment + fever + pyuria → <strong>Pyelonephritis</strong> → culture →</div>
+        <div class="flow-endpoint" style="background:rgba(100,116,139,0.12);border:1.5px solid rgba(100,116,139,0.3);color:#CBD5E1;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-NDI','Nephrogenic DI (NDI)')">Glucosuria + normoglycaemia → <strong>Renal glucosuria / Fanconi</strong> →</div>
+      </div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- Step 5 -->
+    <div class="flow-node step">STEP 5 — IF DATABASE NORMAL: SERIAL USG + PLASMA Na⁺</div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;width:100%;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node" style="width:100%;background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3);font-size:10px;text-align:center;">≥1 USG &gt;1.030<br><span style="font-size:9px;opacity:.7;">Na⁺ low-normal</span></div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-endpoint gi-upper" onclick="goLesionTab('LOC-PUPD-PRIM','Primary polydipsia')" style="width:100%;font-size:9px;text-align:center;">Primary polydipsia</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node" style="width:100%;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);color:#C7D2FE;font-size:10px;text-align:center;">All USG &lt;1.007<br><span style="font-size:9px;opacity:.7;">Na⁺ high-normal ↑</span></div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-endpoint" style="width:100%;background:rgba(99,102,241,0.15);border:1.5px solid rgba(99,102,241,0.5);color:#C7D2FE;font-size:9px;text-align:center;cursor:pointer;" onclick="renderDxPUPDDesmopressin()">💉 Desmopressin trial<br>CDI vs NDI</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+        <div class="flow-node" style="width:100%;background:rgba(217,119,6,0.1);border-color:rgba(217,119,6,0.3);color:var(--amber-text);font-size:10px;text-align:center;">Partial response<br><span style="font-size:9px;opacity:.7;">USG variable</span></div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-endpoint" style="width:100%;background:rgba(217,119,6,0.12);border:1.5px solid rgba(217,119,6,0.4);color:var(--amber-text);font-size:9px;text-align:center;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-NDI','Nephrogenic DI (NDI)')">Partial CDI or secondary NDI →</div>
       </div>
     </div>
 
-    <div style="margin-top:12px;padding:9px 12px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;font-size:10px;color:var(--gray);width:100%;">
-      <b style="color:var(--white);">Key diagnostic steps:</b> Urinalysis → Biochemistry + haematology → Endocrine testing → Imaging → Urine culture → Serial USG → ± Desmopressin trial<br>
-      <span style="color:#F87171;">⚠️ Never restrict water or perform desmopressin trial in hyponatraemic patients</span>
+    <div style="margin-top:12px;padding:9px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;font-size:10px;width:100%;">
+      <span style="color:#F87171;font-weight:700;">⚠️ Safety rules:</span>
+      <span style="color:#FCA5A5;"> NEVER restrict water · NEVER perform desmopressin trial if hyponatraemic (Na &lt;145) · NEVER skip HAC screen before desmopressin · Rectal exam mandatory (anal sac carcinoma = hypercalcaemia)</span>
     </div>
+
   </div>
   `);
 }
@@ -4265,52 +4330,510 @@ function renderDxWeakness(){
 }
 
 // ── DIAGNOSTIC APPROACH: PU/PD ───────────────────────────────────────────────
-function renderDxPUPD(){
-  push(renderDxPUPD,'Dx: PU/PD');
+const _pupd_tabs = () => `
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:14px;">
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxPUPDHistory()">📋 History</div>
+    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxPUPDExam()">🩺 Exam</div>
+    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxPUPD()">🔬 Diagnostics</div>
+    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxPUPDDesmopressin()">💉 Desmopressin</div>
+  </div>`;
+
+function renderDxPUPDHistory(){
+  replace(renderDxPUPDHistory,'History: PU/PD');
   render(`
+  ${_pupd_tabs().replace('opacity:.5;" onclick="renderDxPUPDHistory()">📋 History','opacity:1;" onclick="renderDxPUPDHistory()">📋 History')}
   <div class="dx-wrap">
-    <div class="dx-step">PU/PD — DIAGNOSTIC APPROACH</div>
+
+    <div class="dx-step">📋 CONFIRM PU/PD — OWNER HISTORY</div>
     <div class="dx-arrow">↓</div>
-    <div class="dx-check"><strong>Confirm PU/PD:</strong> Rule out pollakiuria and urinary incontinence. Dog >100ml/kg/day, Cat >45ml/kg/day.</div>
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Is it truly PU/PD?</strong><br>
+      • <strong>Pollakiuria</strong> — small frequent voids, urgency, straining → lower urinary tract disease (UTI, urolithiasis, FLUTD). Not polyuria.<br>
+      • <strong>Urinary incontinence</strong> — involuntary leakage during sleep/rest → hormonal, neurological, anatomical. Not polydipsia.<br>
+      • <strong>True PU/PD</strong> — large volume voiding, increased frequency with large volumes, owner reports drinking excessively<br>
+      <div style="margin-top:8px;font-size:10px;opacity:.8;">📏 Thresholds (if owners measure): Dog &gt;100 ml/kg/day (urine) or &gt;100 ml/kg/day (water). Cat &gt;45 ml/kg/day urine output.</div>
+    </div>
     <div class="dx-arrow">↓</div>
-    <div class="dx-step alt">URINALYSIS — CHECK USG FIRST</div>
+
+    <div class="dx-step alt">📖 CHRONICITY + ONSET</div>
     <div class="dx-arrow">↓</div>
-    <div class="dx-connector">
-      <div class="dx-col">
-        <div class="dx-test" style="width:100%;text-align:center;font-size:10px;"><strong>USG &gt;1.030 (dog)<br>&gt;1.035 (cat)</strong><br>No glucosuria</div>
-        <div class="dx-arrow">↓</div>
-        <div class="dx-dx" style="width:100%;font-size:10px;">NOT true PU/PD<br><span style="font-weight:400;font-size:9px;">Proceed with appropriate workup</span></div>
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Acute onset (&lt;1–2 weeks)</strong><br>
+      • AKI (toxin, leptospirosis, lily, NSAID) — severe azotaemia possible<br>
+      • Pyometra — intact female, post-oestrus; may present in shock<br>
+      • DKA — diabetic ketoacidosis (existing or newly diagnosed DM)<br>
+      • Hepatic toxin, acute pancreatitis<br>
+      • Recent glucocorticoid or diuretic administration<br>
+      <span style="font-size:10px;opacity:.75;">Acute severe PU/PD → check for emergency flags first.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Chronic / insidious onset</strong><br>
+      • CKD — gradual progression; owners notice weight loss and water bowl refilling<br>
+      • Hyperadrenocorticism — pot-belly, panting, polyphagia, hair loss — months-years<br>
+      • DM — weight loss despite polyphagia; cataracts in dogs; hind-limb weakness in cats<br>
+      • CDI / primary polydipsia — profound dilute urine, otherwise well<br>
+      • Hyperthyroidism (cat) — weight loss, tachycardia, often concurrent CKD
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">📖 KEY SIGNALMENT CLUES</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Age</strong><br>
+      • Young (&lt;2 yr): CDI, primary NDI (rare), PSS, congenital DM — consider heritable cause<br>
+      • Middle-aged dog: HAC (typical 7–12 yr), DM<br>
+      • Older cat (&gt;8 yr): hyperthyroidism, CKD, DM — always check T4<br>
+      <strong style="color:#FCD34D;">Breed</strong><br>
+      • Poodle, Dachshund, Boxer, Beagle, Boston Terrier → HAC<br>
+      • WHWT, Nova Scotia Duck Tolling Retriever, Gr. Dane → Addison's<br>
+      • Young large breed dog → Primary polydipsia (psychogenic)<br>
+      • Siamese, Burmese → DM (cat)<br>
+      <strong style="color:#FCA5A5;">Sex / reproductive status</strong><br>
+      • Intact female dog (mid-cycle or 4–8 wks post-oestrus) → <strong>Pyometra — emergency</strong><br>
+      • Female dog 4–8 yr → HAC slightly overrepresented in females
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">📖 MEDICATION + EXPOSURE HISTORY</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong style="color:#FCA5A5;">Iatrogenic causes — common and easily missed</strong><br>
+      • <strong>Glucocorticoids</strong> (oral, injectable, topical, ear drops) → secondary NDI; most common iatrogenic cause<br>
+      • <strong>Phenobarbitone / primidone</strong> (dogs) → hepatotoxicity + secondary PU/PD<br>
+      • <strong>Diuretics</strong> (frusemide, spironolactone) → obligatory diuresis<br>
+      • <strong>Lithium</strong> → primary NDI<br>
+      • Recent megestrol acetate (cat) → DM induction<br>
+      <strong style="color:#FCD34D;">Toxin / environmental</strong><br>
+      • Ethylene glycol → AKI (acute, severe), crystalluria<br>
+      • Lily ingestion (cats) → AKI<br>
+      • Jerky treats, copper hepatopathy → Fanconi / glucosuria with normoglycaemia<br>
+      • Grapes / raisins (dogs) → AKI<br>
+      <strong style="color:#93C5FD;">Vaccination + outdoor access</strong><br>
+      • Unvaccinated, outdoor, water access → <strong>Leptospirosis</strong> (zoonotic — PPE!)
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">📖 CONCURRENT SIGNS — NARROW THE DIFFERENTIAL</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;font-size:10px;line-height:1.5;">
+        <div><strong style="color:#FCA5A5;">Polyphagia + PU/PD</strong><br>HAC (dog) · DM · Hyperthyroidism (cat)</div>
+        <div><strong style="color:#FCA5A5;">Weight loss + polyphagia</strong><br>DM · Hyperthyroidism (cat) · Acromegaly (cat)</div>
+        <div><strong style="color:#FCD34D;">Pot-belly + panting</strong><br>HAC — high suspicion</div>
+        <div><strong style="color:#FCD34D;">Waxing/waning illness</strong><br>Hypoadrenocorticism · CKD · PSS</div>
+        <div><strong style="color:#6EE7B7;">Intact female + systemic signs</strong><br>Pyometra — rule out immediately</div>
+        <div><strong style="color:#6EE7B7;">Young + stunted + neurological</strong><br>PSS (portosystemic shunt)</div>
+        <div><strong style="color:#93C5FD;">Constipation + weakness</strong><br>Hypercalcaemia</div>
+        <div><strong style="color:#93C5FD;">Hind-limb weakness (cat)</strong><br>Hypokalemia · Acromegaly (DM)</div>
+        <div><strong style="color:#C4B5FD;">Profound PU/PD — otherwise well</strong><br>CDI · Primary polydipsia</div>
+        <div><strong style="color:#C4B5FD;">Nocturia preference for cold water</strong><br>CDI — high suspicion</div>
       </div>
-      <div class="dx-col">
-        <div class="dx-test" style="width:100%;text-align:center;font-size:10px;background:#0D7377;"><strong>USG &lt;1.030 (dog)<br>&lt;1.035 (cat)</strong></div>
-        <div class="dx-arrow">↓</div>
-        <div class="dx-branch" style="width:100%;font-size:10px;">MINIMUM DATABASE</div>
+    </div>
+
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
+  `);
+}
+
+function renderDxPUPDExam(){
+  replace(renderDxPUPDExam,'Exam: PU/PD');
+  render(`
+  ${_pupd_tabs().replace('opacity:.5;" onclick="renderDxPUPDExam()">🩺 Exam','opacity:1;" onclick="renderDxPUPDExam()">🩺 Exam')}
+  <div class="dx-wrap">
+
+    <div class="dx-step">🩺 PHYSICAL EXAMINATION</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Hydration + Cardiovascular</strong><br>
+      • Dehydration (skin tent, dry MM, sunken eyes) → obligate losses (DM, CKD, HAC)<br>
+      • Tachycardia + weak pulses → septic shock (pyometra), haemorrhage, Addisonian crisis<br>
+      • <strong>Bradycardia</strong> → hyperkalaemia → classical Addison's disease (Na:K &lt;27)<br>
+      • Hypertension on indirect BP → CKD, HAC, DM, hyperthyroidism (cat) — check in all PU/PD patients
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Body Condition + Weight</strong><br>
+      • <strong>Pot-belly + muscle wasting + overweight</strong> → HAC — classic presentation<br>
+      • <strong>Weight loss + muscle wasting</strong> → DM, CKD, hyperthyroidism (cat), lymphoma, acromegaly<br>
+      • <strong>Large body frame (cat)</strong> → Acromegaly — broad head, large paws, prognathia<br>
+      • <strong>Young + stunted growth</strong> → PSS (portosystemic shunt)
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCA5A5;">Skin + Coat</strong><br>
+      • <strong>Truncal alopecia (symmetrical, non-pruritic)</strong> → HAC<br>
+      • <strong>Calcinosis cutis</strong> (white/yellow firm plaques, neck/groin) → HAC — specific but not sensitive<br>
+      • <strong>Thin, inelastic skin</strong> → HAC (collagen loss from cortisol excess)<br>
+      • <strong>Unkempt, poor coat quality</strong> → hyperthyroidism (cat), malnutrition (CKD, PSS)
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Abdominal Palpation</strong><br>
+      • <strong>Hepatomegaly</strong> → HAC (vacuolar hepatopathy), DM, hyperthyroidism, PSS<br>
+      • <strong>Renomegaly / irregular kidneys</strong> → CKD (end-stage: small kidneys), lymphoma, PKD (cats)<br>
+      • <strong>Painful kidneys</strong> → AKI (toxin, leptospirosis), pyelonephritis<br>
+      • <strong>Uterine distension</strong> (intact female) → Pyometra — may be subtle in closed pyometra<br>
+      • <strong>Fluid wave</strong> → ascites (PSS, hepatic failure, hypoalbuminaemia)<br>
+      • <strong>Microhepatica</strong> → PSS (portosystemic shunt), hepatic atrophy
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#93C5FD;">Eyes</strong><br>
+      • <strong>Cataracts</strong> (dog) → DM — bilateral, rapidly progressive in dogs with poorly regulated DM<br>
+      • <strong>Retinal haemorrhage / detachment</strong> → systemic hypertension (CKD, HAC, DM, hyperthyroidism)<br>
+      • <strong>Uveitis</strong> → leptospirosis, lymphoma (paraneoplastic), hypertension, DM<br>
+      • <strong>Dilated unresponsive pupils</strong> (cat) → hypertensive retinopathy — measure BP immediately
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#6EE7B7;">Neck — Thyroid</strong><br>
+      • <strong>Palpable thyroid nodule(s)</strong> (ventral neck, cat) → Hyperthyroidism — most cats &gt;8 yr<br>
+      • Bilateral = toxic multinodular goitre (most common); unilateral = adenoma or carcinoma
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCA5A5;">Rectal Examination — mandatory in all PU/PD dogs</strong><br>
+      • <strong>Anal sac mass</strong> → AGASACA — 27–53% cause paraneoplastic hypercalcaemia → secondary NDI<br>
+      • Examine even without perineal swelling — small masses easily missed<br>
+      • Peripheral lymphadenopathy → lymphoma (T-cell with hypercalcaemia most common)
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#C4B5FD;">Neurological</strong><br>
+      • <strong>Altered mentation / hepatic encephalopathy signs</strong> → PSS, hepatic failure<br>
+      • <strong>Generalised muscle weakness</strong> → hypokalaemia (cat: ventroflexion), hypoadrenocorticism<br>
+      • Plantigrade stance (cat) → diabetic neuropathy<br>
+      • Neurological signs + head trauma history → CDI (hypothalamic damage)
+    </div>
+
+  </div>
+  <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
+  `);
+}
+
+function renderDxPUPD(){
+  replace(renderDxPUPD,'Dx: PU/PD');
+  render(`
+  ${_pupd_tabs().replace('opacity:.5;" onclick="renderDxPUPD()">🔬 Diagnostics','opacity:1;" onclick="renderDxPUPD()">🔬 Diagnostics')}
+  <div class="dx-wrap">
+
+    <div class="dx-step">🔬 STEP 1 — URINALYSIS (first, before IV fluids)</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Serial USG — 3–5 samples on different days/times</strong><br><br>
+      <div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:5px 8px;font-size:10px;line-height:1.4;">
+        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">USG</div>
+        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Interpretation</div>
+        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Consider</div>
+        <div style="color:#6EE7B7;white-space:nowrap;">&gt;1.030 dog<br>&gt;1.035 cat</div>
+        <div>Concentrated — not obligate PU/PD</div>
+        <div style="font-size:9.5px;">Glucosuria? → DM can raise USG artificially. ≥1 concentrated sample → Primary polydipsia possible.</div>
+        <div style="color:#FCD34D;">1.013–1.029</div>
+        <div>Partially concentrated</div>
+        <div style="font-size:9.5px;">HAC · early CKD · primary polydipsia</div>
+        <div style="color:#FB923C;">1.008–1.012</div>
+        <div>Isosthenuric</div>
+        <div style="font-size:9.5px;">CKD · HAC · Addison's medullary washout · pyelonephritis</div>
+        <div style="color:#F87171;">&lt;1.008</div>
+        <div>Hyposthenuric</div>
+        <div style="font-size:9.5px;">CDI · NDI · primary polydipsia · severe HAC</div>
       </div>
     </div>
     <div class="dx-arrow">↓</div>
-    <div class="dx-step">BIOCHEMISTRY + HAEMATOLOGY FINDINGS</div>
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Dipstick + sediment</strong><br>
+      • Glucosuria + <em>hyperglycaemia</em> → DM (osmotic diuresis; glucose &gt;180 mg/dL dog, &gt;270 cat)<br>
+      • Glucosuria + <em>normoglycaemia</em> → renal glucosuria / Fanconi (jerky treats, copper hepatopathy)<br>
+      • Active sediment (WBC casts, bacteriuria) → pyelonephritis — culture regardless<br>
+      • Ammonium biurate crystals → PSS — young dog
+    </div>
     <div class="dx-arrow">↓</div>
-    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">↑ ALP + USG &lt;1.008 → <strong>Hyperadrenocorticism</strong> (dogs) → LDDS / UCCR</div>
-    <div style="height:3px;"></div>
-    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">↑ Total Ca²⁺ → check iCa, PTH, PTHrp → <strong>Hypercalcaemia-induced NDI</strong></div>
-    <div style="height:3px;"></div>
-    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Glucose &gt;180 dog / &gt;270 cat + glucosuria → <strong>Diabetes mellitus</strong></div>
-    <div style="height:3px;"></div>
-    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Glucose normal + glucosuria → <strong>Primary renal glucosuria / Fanconi</strong></div>
-    <div style="height:3px;"></div>
-    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Azotaemia + USG &lt;1.030 → <strong>Renal failure (AKI / CKD)</strong></div>
-    <div style="height:3px;"></div>
-    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Na low, active sediment → <strong>Hypoadrenocorticism</strong> / Pyelonephritis</div>
-    <div style="height:3px;"></div>
-    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Low BUN, low albumin, ↓ cholesterol → <strong>Liver dysfunction</strong> → Bile acids</div>
-    <div style="height:3px;"></div>
-    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;">Cat &gt;8yr → check T4 → <strong>Hyperthyroidism</strong></div>
+
+    <div class="dx-step alt">STEP 2 — MINIMUM DATABASE + IMAGING</div>
     <div class="dx-arrow">↓</div>
-    <div class="dx-note" style="width:100%;">If all normal → <strong>Desmopressin trial:</strong> Response = CDI. No response = NDI. USG &gt;1.030 already = Primary polydipsia.</div>
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Biochemistry:</strong> BUN · Cr · SDMA · phosphate · Ca²⁺ · K⁺ · Na⁺ · glucose · ALP · ALT · albumin · cholesterol<br>
+      <strong style="color:#FCD34D;">Haematology:</strong> CBC — absent stress leukogram in sick dog → Addison's. Leucocytosis + left shift → infectious.<br>
+      <strong style="color:#FCD34D;">T4:</strong> ALL cats &gt;7 yr. Free T4 by equilibrium dialysis if total T4 equivocal.<br>
+      <strong style="color:#FCD34D;">BP:</strong> Indirect measurement — all PU/PD patients.<br>
+      <strong style="color:#FCD34D;">Urine culture:</strong> All PU/PD patients (pyelonephritis often presents without localising signs).<br>
+      <strong style="color:#FCD34D;">Abdominal US:</strong> Adrenal size · uterus (closed pyometra) · kidney architecture · hepatic pattern · lymph nodes
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <!-- CLASSIFY -->
+    <div class="dx-step" style="background:rgba(99,102,241,0.2);border-color:rgba(99,102,241,0.45);color:#C7D2FE;">CLASSIFY — PRIMARY POLYURIA vs PRIMARY POLYDIPSIA</div>
+    <div class="dx-arrow">↓</div>
+
+    <!-- Primary Polydipsia block -->
+    <div style="border:1.5px solid rgba(16,185,129,0.4);border-radius:12px;padding:12px 14px;background:rgba(16,185,129,0.06);">
+      <div style="font-size:12px;font-weight:700;color:#6EE7B7;margin-bottom:8px;">💧 PRIMARY POLYDIPSIA <span style="font-weight:400;font-size:10px;color:var(--gray);">— excessive drinking drives secondary polyuria</span></div>
+
+      <div style="font-size:10px;color:var(--gray);margin-bottom:8px;line-height:1.5;">
+        <strong style="color:var(--white);">USG clue:</strong> At least 1 sample concentrated (&gt;1.030 dog / &gt;1.035 cat) · Plasma Na⁺ low-normal or low (dilutional)
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+        <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-PRIM','Primary polydipsia')" style="font-size:10px;background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.35);cursor:pointer;">
+          <strong>Psychogenic / behavioural</strong><br>
+          <span style="font-weight:400;font-size:9.5px;">Young large-breed dog · variable USG · no systemic illness · dilutional hyponatraemia. Diagnosis of exclusion.</span>
+        </div>
+        <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')" style="font-size:10px;background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.35);cursor:pointer;">
+          <strong>Hepatic encephalopathy</strong><br>
+          <span style="font-weight:400;font-size:9.5px;">PSS / hepatic failure. Low BUN, ammonium biurate crystals, neurological signs. Bile acids confirm.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="dx-arrow">↓</div>
+
+    <!-- Primary Polyuria block -->
+    <div style="border:1.5px solid rgba(99,102,241,0.4);border-radius:12px;padding:12px 14px;background:rgba(99,102,241,0.06);">
+      <div style="font-size:12px;font-weight:700;color:#C7D2FE;margin-bottom:8px;">🚰 PRIMARY POLYURIA <span style="font-weight:400;font-size:10px;color:var(--gray);">— kidney produces excess urine → compensatory thirst</span></div>
+
+      <div style="font-size:10px;color:var(--gray);margin-bottom:10px;line-height:1.5;">
+        <strong style="color:var(--white);">USG clue:</strong> Consistently dilute or isosthenuric · Plasma Na⁺ high-normal or elevated (free water loss)
+      </div>
+
+      <!-- Primary causes -->
+      <div style="font-size:10.5px;font-weight:700;color:#C7D2FE;margin-bottom:6px;padding:4px 8px;background:rgba(99,102,241,0.15);border-radius:6px;">PRIMARY causes <span style="font-weight:400;font-size:9.5px;color:var(--gray);">— intrinsic ADH pathway failure</span></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;">
+        <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-CDI','Central DI')" style="font-size:10px;background:rgba(99,102,241,0.12);border-color:rgba(99,102,241,0.4);cursor:pointer;">
+          <strong>Central DI (CDI)</strong><br>
+          <span style="font-weight:400;font-size:9.5px;">ADH deficiency. Idiopathic (most common) · head trauma · neoplasia · cysts. USG &lt;1.007 consistently. Na⁺ high-normal. → MRI brain + desmopressin trial.</span>
+        </div>
+        <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-NDI','Nephrogenic DI')" style="font-size:10px;background:rgba(99,102,241,0.12);border-color:rgba(99,102,241,0.4);cursor:pointer;">
+          <strong>Primary NDI</strong><br>
+          <span style="font-weight:400;font-size:9.5px;">Congenital ADH receptor defect — extremely rare. Fails desmopressin trial completely. Diagnosis of exclusion after all secondary NDI causes excluded.</span>
+        </div>
+      </div>
+
+      <!-- Secondary causes -->
+      <div style="font-size:10.5px;font-weight:700;color:#FCD34D;margin-bottom:8px;padding:4px 8px;background:rgba(217,119,6,0.15);border-radius:6px;">SECONDARY causes <span style="font-weight:400;font-size:9.5px;color:var(--gray);">— underlying disease drives polyuria</span></div>
+
+      <!-- Endocrine -->
+      <div style="margin-bottom:6px;">
+        <div style="font-size:10px;font-weight:700;color:#C4B5FD;margin-bottom:4px;">⚗️ Endocrine</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+          <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')" style="font-size:9.5px;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.35);cursor:pointer;">
+            <strong>HAC (Cushing's)</strong> <span style="font-size:8.5px;color:var(--gray);">Dog · most common secondary NDI</span><br>
+            <span style="font-weight:400;">↑ ALP · polyphagia · pot-belly · USG &lt;1.015 → LDDST / UCCR. Rule out before desmopressin trial.</span>
+          </div>
+          <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')" style="font-size:9.5px;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.35);cursor:pointer;">
+            <strong>Diabetes mellitus</strong> <span style="font-size:8.5px;color:var(--gray);">Dog + Cat · osmotic diuresis</span><br>
+            <span style="font-weight:400;">Glucosuria + hyperglycaemia. Cataracts (dog). Neuropathy (cat). → fructosamine.</span>
+          </div>
+          <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')" style="font-size:9.5px;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.35);cursor:pointer;">
+            <strong>Hypoadrenocorticism</strong> <span style="font-size:8.5px;color:var(--gray);">Dog · medullary washout</span><br>
+            <span style="font-weight:400;">Na:K &lt;27 (classical). No stress leukogram (atypical) → basal cortisol &lt;55 nmol/L → ACTH stim.</span>
+          </div>
+          <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')" style="font-size:9.5px;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.35);cursor:pointer;">
+            <strong>Hypercalcaemia</strong> <span style="font-size:8.5px;color:var(--gray);">Dog + Cat · secondary NDI</span><br>
+            <span style="font-weight:400;">↑ Ca²⁺ &gt;3.0 mmol/L → iCa + PTH + PTHrP. Rectal exam (AGASACA 27–53% hypercalcaemic). Lymphoma.</span>
+          </div>
+          <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')" style="font-size:9.5px;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.35);cursor:pointer;">
+            <strong>Hyperthyroidism</strong> <span style="font-size:8.5px;color:var(--gray);">Cat &gt;7 yr · primary polydipsia</span><br>
+            <span style="font-weight:400;">↑ T4 · weight loss · tachycardia · thyroid nodule. Masks CKD → recheck renal after treatment.</span>
+          </div>
+          <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')" style="font-size:9.5px;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.35);cursor:pointer;">
+            <strong>Acromegaly</strong> <span style="font-size:8.5px;color:var(--gray);">Cat · GH excess → insulin-resistant DM</span><br>
+            <span style="font-weight:400;">Large frame · broad head · poorly regulated DM. → IGF-1.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Renal -->
+      <div style="margin-bottom:6px;">
+        <div style="font-size:10px;font-weight:700;color:#93C5FD;margin-bottom:4px;">🫘 Renal</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+          <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-RENAL','Renal / Urinary')" style="font-size:9.5px;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.35);cursor:pointer;">
+            <strong>CKD</strong> <span style="font-size:8.5px;color:var(--gray);">Dog + Cat · lost concentrating ability</span><br>
+            <span style="font-weight:400;">Isosthenuria · azotaemia · ↑ SDMA (early). IRIS stage → UP/C + BP substage.</span>
+          </div>
+          <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-RENAL','Renal / Urinary')" style="font-size:9.5px;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.35);cursor:pointer;">
+            <strong>AKI</strong> <span style="font-size:8.5px;color:var(--gray);">Dog + Cat · acute / toxin</span><br>
+            <span style="font-weight:400;">Acute onset · toxin (lily, EG, NSAIDs, leptospirosis). Painful kidneys. Oligo/anuria or paradoxical PU.</span>
+          </div>
+          <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-RENAL','Renal / Urinary')" style="font-size:9.5px;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.35);cursor:pointer;">
+            <strong>Pyelonephritis</strong> <span style="font-size:8.5px;color:var(--gray);">Dog + Cat · E. coli NDI</span><br>
+            <span style="font-weight:400;">Fever · painful kidneys · active sediment · leucocytosis. → Urine C&amp;S (cystocentesis). Renal US.</span>
+          </div>
+          <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-RENAL','Renal / Urinary')" style="font-size:9.5px;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.35);cursor:pointer;">
+            <strong>Renal glucosuria / Fanconi</strong> <span style="font-size:8.5px;color:var(--gray);">Dog · osmotic diuresis</span><br>
+            <span style="font-weight:400;">Glucosuria + normal blood glucose. Jerky treats · copper hepatopathy. → Urine amino acids.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Systemic -->
+      <div>
+        <div style="font-size:10px;font-weight:700;color:#FED7AA;margin-bottom:4px;">🏥 Systemic / Hepatic</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
+          <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')" style="font-size:9.5px;background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.35);cursor:pointer;">
+            <strong>Pyometra</strong> <span style="font-size:8.5px;color:#F87171;">⚠️ EMERGENCY · Intact ♀</span><br>
+            <span style="font-weight:400;">E. coli endotoxin → secondary NDI. 4–8 wk post-oestrus. May lack discharge (closed). → US abdomen immediately.</span>
+          </div>
+          <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')" style="font-size:9.5px;background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.35);cursor:pointer;">
+            <strong>PSS / Hepatic failure</strong> <span style="font-size:8.5px;color:var(--gray);">Dog · medullary washout</span><br>
+            <span style="font-weight:400;">Low BUN · low albumin · ammonium biurate. Young dog · stunted · HE signs. → Bile acids · US · CT angio.</span>
+          </div>
+          <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')" style="font-size:9.5px;background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.35);cursor:pointer;">
+            <strong>Leptospirosis</strong> <span style="font-size:8.5px;color:#F87171;">⚠️ ZOONOTIC — PPE</span><br>
+            <span style="font-weight:400;">Unvaccinated outdoor dog. Acute AKI/hepatic injury · fever · jaundice · uveitis. → MAT titres + urine PCR.</span>
+          </div>
+          <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')" style="font-size:9.5px;background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.35);cursor:pointer;">
+            <strong>Hypokalemia</strong> <span style="font-size:8.5px;color:var(--gray);">Dog + Cat · secondary NDI</span><br>
+            <span style="font-weight:400;">K⁺ &lt;3.5 mmol/L. Muscle weakness · ventroflexion (cat). Impairs aquaporin insertion. Correct underlying cause.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dx-arrow">↓</div>
+    <div class="dx-step alt">IF DATABASE NORMAL — SERIAL USG + PLASMA Na⁺ → DESMOPRESSIN</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      • ≥1 USG &gt;1.030 (dog) / &gt;1.035 (cat) + Na⁺ low-normal → <strong>Primary polydipsia</strong><br>
+      • All USG &lt;1.007 + Na⁺ high-normal → <strong>CDI vs NDI</strong> → desmopressin trial<br>
+      <div style="margin-top:8px;">
+        <div class="dx-dx" onclick="renderDxPUPDDesmopressin()" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.45);cursor:pointer;">💉 → Desmopressin Trial protocol</div>
+      </div>
+    </div>
+
   </div>
-  <div class="dx-alert" style="margin-top:10px;"><strong>⚠️</strong> NEVER perform MWDT in patients with azotaemia, hypernatraemia, or obvious dehydration.</div>
+
+  <div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-radius:10px;">
+    <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:4px;">⚠️ RED FLAGS</div>
+    <div style="font-size:10px;color:#FCA5A5;line-height:1.6;">
+      Intact female + systemic signs (pyometra) · Severe azotaemia + oliguria (AKI) · Addisonian crisis / DKA / sepsis · Hyponatraemia &lt;125 mEq/L · Acute blindness (hypertensive retinal detachment) · Leptospirosis (PPE + isolate)
+    </div>
+  </div>
+
+  <div style="margin-top:8px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;">
+    <div style="font-size:10px;color:var(--gray);line-height:1.6;">
+      💡 <strong style="color:var(--white);">Rectal exam every PU/PD dog</strong> — AGASACA causes hypercalcaemia-induced NDI; easily missed without it.<br>
+      💡 <strong style="color:var(--white);">Rule out HAC before desmopressin</strong> — partial response in HAC mimics partial CDI.<br>
+      💡 <strong style="color:var(--white);">Absent stress leukogram</strong> in sick dog → atypical Addison's — basal cortisol first.<br>
+      💡 <strong style="color:var(--white);">T4 every cat &gt;7 yr</strong> — hyperthyroidism masks CKD by raising GFR; always recheck renal after treatment.
+    </div>
+  </div>
   <div class="disclaimer">Lunn &amp; James 2007, Schmid 2023. For qualified veterinary professionals only.</div>
   `);
+}
+
+function renderDxPUPDDesmopressin(){
+  replace(renderDxPUPDDesmopressin,'Desmopressin Trial: PU/PD');
+  render(`
+  ${_pupd_tabs().replace('opacity:.5;" onclick="renderDxPUPDDesmopressin()">💉 Desmopressin','opacity:1;" onclick="renderDxPUPDDesmopressin()">💉 Desmopressin')}
+  <div class="dx-wrap">
+
+    <div class="dx-step" style="background:rgba(99,102,241,0.2);border-color:rgba(99,102,241,0.45);color:#C7D2FE;">💉 DESMOPRESSIN (DDAVP) RESPONSE TRIAL</div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-check">
+      <strong style="color:#FCA5A5;">⚠️ BEFORE STARTING — absolute prerequisites</strong><br>
+      • Minimum database complete (biochemistry, haematology, urinalysis)<br>
+      • <strong>Hyperadrenocorticism excluded</strong> — some HAC dogs partially respond to DDAVP → false CDI diagnosis<br>
+      • <strong>Pyometra excluded</strong> (ultrasound or confirmed spayed)<br>
+      • <strong>Hypercalcaemia excluded</strong> (total Ca²⁺ checked)<br>
+      • Patient is <strong>not hyponatraemic</strong> (Na &lt;145 mEq/L) → desmopressin in primary polydipsia → severe hyponatraemia → death<br>
+      • Patient is <strong>not azotaemic</strong> without knowing cause<br>
+      • Patient has <strong>free access to water at all times</strong> during the trial — NEVER restrict water
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">BASELINE MEASUREMENTS (Day 0)</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      • <strong>Serial USG</strong> — minimum 3–5 samples (different days); confirm all are &lt;1.007 for CDI/NDI workup<br>
+      • <strong>Plasma sodium</strong> — baseline (repeat at Day 5–7)<br>
+      • <strong>Water intake</strong> — owner to measure daily (ml/kg/day)<br>
+      • <strong>Bodyweight</strong> — monitor for water retention<br>
+      <span style="font-size:10px;opacity:.75;">📝 Instruct owner to record water intake carefully — the most sensitive response indicator.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">DESMOPRESSIN ADMINISTRATION</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <strong style="color:#FCD34D;">Dog:</strong><br>
+      • <strong>Oral DDAVP tablets:</strong> 0.05–0.1 mg (50–100 µg) PO q8–12h<br>
+      • <strong>Conjunctival drops (ophthalmic):</strong> 1–2 drops into conjunctival sac q12–24h (0.01% solution = 10 µg/drop)<br>
+      • <strong>Intranasal solution used conjunctivally:</strong> 1–2 drops q12h (if ophthalmic not available)<br><br>
+      <strong style="color:#FCD34D;">Cat:</strong><br>
+      • <strong>Conjunctival drops:</strong> 1–2 drops q12–24h<br>
+      • Oral DDAVP less predictable in cats — conjunctival route preferred<br><br>
+      <span style="font-size:10px;opacity:.8;">Duration: <strong>5–7 days</strong> for full response assessment. USG checked Days 3–4 then Day 7.</span>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">INTERPRETING RESPONSE (Day 5–7)</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px 10px;font-size:10px;line-height:1.4;">
+        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">USG response</div>
+        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Water intake</div>
+        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Interpretation</div>
+        <div style="color:#6EE7B7;">USG increases to &gt;1.015<br>(ideally &gt;1.025)</div>
+        <div style="color:#6EE7B7;">↓ significantly (&gt;50%)</div>
+        <div><strong>CDI confirmed</strong><br>ADH-responsive collecting duct → commence long-term DDAVP</div>
+        <div style="color:#FCA5A5;">USG remains &lt;1.007<br>No change</div>
+        <div style="color:#FCA5A5;">No change</div>
+        <div><strong>Primary NDI</strong><br>Collecting duct unresponsive to ADH — treat underlying cause</div>
+        <div style="color:#FCD34D;">USG already &gt;1.030 (dog)<br>/ &gt;1.035 (cat)</div>
+        <div style="color:#FCD34D;">↓ or unchanged</div>
+        <div><strong>Primary polydipsia</strong><br>Patient was concentrating urine all along — medullary washout may blur earlier readings</div>
+        <div style="color:#C4B5FD;">Partial response<br>(USG 1.008–1.015)</div>
+        <div style="color:#C4B5FD;">Mild ↓</div>
+        <div><strong>Partial CDI</strong> or secondary NDI<br>Rule out HAC (most common secondary NDI) — treat underlying cause and retest</div>
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">MONITORING DURING TRIAL</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      • <strong>Bodyweight daily</strong> — weight gain &gt;5% → water retention → reduce dose or discontinue<br>
+      • <strong>Plasma sodium Day 5–7</strong> — hyponatraemia developing → primary polydipsia (overdrinking + ADH effect) → stop immediately<br>
+      • <strong>Oedema / ascites</strong> — rare with physiological DDAVP doses; more likely if primary polydipsia misclassified<br>
+      <div style="margin-top:8px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-left:3px solid #F87171;border-radius:8px;padding:8px 10px;font-size:10.5px;">
+        <span style="font-weight:700;color:#F87171;">⚠️ STOP IMMEDIATELY IF:</span> Plasma Na falls &lt;140 mEq/L · Bodyweight gain &gt;5% · Oedema develops · Owner stops measuring water and patient appears more depressed
+      </div>
+    </div>
+    <div class="dx-arrow">↓</div>
+
+    <div class="dx-step alt">CDI CONFIRMED — LONG-TERM MANAGEMENT</div>
+    <div class="dx-arrow">↓</div>
+    <div class="dx-check">
+      • Continue DDAVP at effective trial dose — titrate to lowest effective dose<br>
+      • <strong>MRI brain</strong> — mandatory to identify structural cause (neoplasia, cysts, inflammation)<br>
+      • <strong>Dog DDAVP dose:</strong> 0.05–0.1 mg PO q8–12h or 1–2 conjunctival drops q12–24h<br>
+      • <strong>Cat:</strong> 1 conjunctival drop q12–24h; adjust based on USG monitoring<br>
+      • Recheck USG + plasma Na + water intake every 4–6 weeks until stable, then every 3–6 months<br>
+      • Ensure free access to water at ALL times — water restriction with DDAVP is dangerous
+    </div>
+
+  </div>
+
+  <div style="margin-top:8px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;">
+    <div style="font-size:10px;color:var(--gray);line-height:1.6;">
+      💡 <strong style="color:var(--white);">Rule out HAC first</strong> — most common pitfall. HAC dogs can partially respond to DDAVP and be misdiagnosed as partial CDI.<br>
+      💡 <strong style="color:var(--white);">Hyponatraemia = STOP</strong> — it means primary polydipsia; continuing DDAVP risks life-threatening hyponatraemia.<br>
+      💡 <strong style="color:var(--white);">Conjunctival drops</strong> — place in conjunctival sac; nasal solution used off-label this way is effective and less expensive than ophthalmic preparation.<br>
+      💡 <strong style="color:var(--white);">MRI is essential in CDI</strong> — idiopathic CDI is a diagnosis of exclusion; structural causes (neoplasia, cysts) must be ruled out.
+    </div>
+  </div>
+  <div class="disclaimer">Lunn &amp; James 2007, Schmid 2023, Nelson &amp; Couto 2024. For qualified veterinary professionals only.</div>
+  `)
 }
 
 // ── DIAGNOSTIC APPROACH: SEIZURES ────────────────────────────────────────────
@@ -4782,10 +5305,773 @@ function renderDxBleedingDx(){
   render(bleedingDxDxHtml);
 }
 
+// ── BLEEDING — clinical flowchart sub-branches ─────────────────────────────
+function renderBleedingFlowPrimary(){
+  replace(renderBleedingFlowPrimary,'Bleeding — Primary Haemostasis');
+  render(`
+  <div class="flow-wrap">
+
+    <div class="flow-node entry" style="background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.4);color:#FCA5A5;">🧱 PRIMARY HAEMOSTASIS FAILURE</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">CHECK PLATELET COUNT
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">This single result divides the branch into two distinct pathways</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+
+      <!-- Thrombocytopenic -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div class="flow-node" style="width:100%;background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.4);font-size:10.5px;font-weight:700;color:#FCA5A5;text-align:center;">
+          LOW &lt; 50 ×10⁹/L<br>
+          <span style="font-size:9px;font-weight:400;color:var(--gray);">Thrombocytopenic</span>
+        </div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">Destruction / consumption<br>vs reduced production?</div>
+        <div class="flow-arrow-v">↓</div>
+
+        <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab && goLesionTab('DIFF-IMTP','IMTP')">
+            <strong>IMTP</strong> — #1 cause dog<br>
+            <span style="opacity:.75;">Abrupt onset · spleen enlgd · +ve Coombs (30%)</span>
+          </div>
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
+            <strong>Tick-borne</strong><br>
+            <span style="opacity:.75;">Ehrlichia · Anaplasma · R. rickettsii</span>
+          </div>
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
+            <strong>Bone marrow suppression</strong><br>
+            <span style="opacity:.75;">Neoplasia · oestrogen · phenylbutazone · FeLV</span>
+          </div>
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
+            <strong>Drug-induced</strong><br>
+            <span style="opacity:.75;">Sulphonamides · phenobarb · chloramphenicol</span>
+          </div>
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
+            <strong>Consumption (DIC)</strong><br>
+            <span style="opacity:.75;">Concurrent coag abnormalities</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Normal count -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div class="flow-node" style="width:100%;background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.4);font-size:10.5px;font-weight:700;color:#6EE7B7;text-align:center;">
+          NORMAL COUNT<br>
+          <span style="font-size:9px;font-weight:400;color:var(--gray);">Thrombocytopathy / vWD</span>
+        </div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">Check BMBT<br>(buccal mucosal bleed time)</div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-node" style="width:100%;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.3);font-size:9.5px;color:var(--amber-text);">
+          <strong>BMBT prolonged &gt; 4 min</strong><br>
+          <span style="opacity:.8;">Platelet dysfunction or vWD</span>
+        </div>
+        <div class="flow-arrow-v">↓</div>
+
+        <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
+          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+            <strong>von Willebrand Disease</strong><br>
+            <span style="opacity:.75;">Dobermann · Shetland · GSD · cats rarely<br>Send vWF:Ag assay</span>
+          </div>
+          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+            <strong>Uraemia</strong><br>
+            <span style="opacity:.75;">Acquired platelet dysfunction — reversible with dialysis / desmopressin</span>
+          </div>
+          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+            <strong>Drug-induced</strong><br>
+            <span style="opacity:.75;">Aspirin · NSAIDs · clopidogrel</span>
+          </div>
+          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+            <strong>Glanzmann's Thrombasthenia</strong><br>
+            <span style="opacity:.75;">GRT · Otterhound — breed-linked<br>No platelet aggregation</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;padding:10px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:5px;">🔬 MINIMUM DATABASE — Primary Haemostasis</div>
+      <div style="font-size:9.5px;line-height:1.6;color:var(--gray);">
+        <strong style="color:var(--white);">1st line:</strong> CBC with platelet count · Blood smear (clumping, morphology) · PT · aPTT<br>
+        <strong style="color:var(--white);">2nd line:</strong> Tick titres · BM aspirate (if pancytopenia) · vWF:Ag assay · BMBT<br>
+        <strong style="color:var(--white);">Threshold:</strong> Spontaneous bleed risk at &lt;30 ×10⁹/L · life-threatening at &lt;10 ×10⁹/L
+      </div>
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderBleedingFlowSecondary(){
+  replace(renderBleedingFlowSecondary,'Bleeding — Secondary Haemostasis');
+  render(`
+  <div class="flow-wrap">
+
+    <div class="flow-node entry" style="background:rgba(37,99,235,0.15);border-color:rgba(37,99,235,0.4);color:#93C5FD;">🔗 SECONDARY HAEMOSTASIS FAILURE</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">CHECK PT AND aPTT
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">The combination pattern localises the defect in the coagulation cascade</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- 4-pattern grid -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+
+      <!-- PT only prolonged -->
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="flow-node" style="background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.4);font-size:9.5px;font-weight:700;color:#FCD34D;">
+          PT ↑ only<br>
+          <span style="font-size:9px;font-weight:400;color:var(--gray);">aPTT normal</span>
+        </div>
+        <div class="flow-arrow-v" style="font-size:12px;">↓</div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9px;">
+            <strong>Anticoagulant rodenticide</strong><br>
+            <span style="opacity:.75;">Early — factor VII depletes first<br>Treat now: Vit K1 2.5 mg/kg SC</span>
+          </div>
+          <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9px;">
+            <strong>Factor VII deficiency</strong><br>
+            <span style="opacity:.75;">Congenital — Beagle, Malamute</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- aPTT only prolonged -->
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="flow-node" style="background:rgba(99,102,241,0.12);border-color:rgba(99,102,241,0.4);font-size:9.5px;font-weight:700;color:#A5B4FC;">
+          aPTT ↑ only<br>
+          <span style="font-size:9px;font-weight:400;color:var(--gray);">PT normal</span>
+        </div>
+        <div class="flow-arrow-v" style="font-size:12px;">↓</div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div class="flow-endpoint" style="background:rgba(99,102,241,0.08);border:1.5px solid rgba(99,102,241,0.3);color:#A5B4FC;font-size:9px;">
+            <strong>Haemophilia A</strong><br>
+            <span style="opacity:.75;">Factor VIII deficiency — all breeds<br>X-linked: males affected</span>
+          </div>
+          <div class="flow-endpoint" style="background:rgba(99,102,241,0.08);border:1.5px solid rgba(99,102,241,0.3);color:#A5B4FC;font-size:9px;">
+            <strong>Haemophilia B</strong><br>
+            <span style="opacity:.75;">Factor IX deficiency — Cairn terrier</span>
+          </div>
+          <div class="flow-endpoint" style="background:rgba(99,102,241,0.08);border:1.5px solid rgba(99,102,241,0.3);color:#A5B4FC;font-size:9px;">
+            <strong>Factor XII deficiency</strong><br>
+            <span style="opacity:.75;">Cats — usually non-bleeding phenotype</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Both prolonged -->
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="flow-node" style="background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.4);font-size:9.5px;font-weight:700;color:#FCA5A5;">
+          PT ↑ + aPTT ↑<br>
+          <span style="font-size:9px;font-weight:400;color:var(--gray);">Both prolonged</span>
+        </div>
+        <div class="flow-arrow-v" style="font-size:12px;">↓</div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9px;">
+            <strong>Rodenticide (advanced)</strong><br>
+            <span style="opacity:.75;">Multiple factors depleted — Vit K1 urgently</span>
+          </div>
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9px;">
+            <strong>Hepatic failure</strong><br>
+            <span style="opacity:.75;">Reduced synthesis — check ALT, bilirubin, albumin</span>
+          </div>
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9px;">
+            <strong>DIC</strong><br>
+            <span style="opacity:.75;">Thrombocytopenia concurrent → confirm with FDPs/D-dimer</span>
+          </div>
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9px;">
+            <strong>Multi-factor deficiency</strong><br>
+            <span style="opacity:.75;">Congenital — rare; send mixing studies</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Both normal -->
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="flow-node" style="background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.4);font-size:9.5px;font-weight:700;color:#6EE7B7;">
+          PT + aPTT normal<br>
+          <span style="font-size:9px;font-weight:400;color:var(--gray);">Coags intact</span>
+        </div>
+        <div class="flow-arrow-v" style="font-size:12px;">↓</div>
+        <div style="display:flex;flex-direction:column;gap:4px;">
+          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9px;">
+            <strong>Vascular rupture / trauma</strong><br>
+            <span style="opacity:.75;">HSA · surgery complication · arterial</span>
+          </div>
+          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9px;">
+            <strong>Factor XIII deficiency</strong><br>
+            <span style="opacity:.75;">Not measured by PT/aPTT — clot unstable in 5M urea</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:14px;padding:10px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#FCD34D;margin-bottom:5px;">⚠️ RODENTICIDE PEARL</div>
+      <div style="font-size:9.5px;line-height:1.6;color:var(--gray);">
+        PT prolongs <strong style="color:var(--white);">before</strong> aPTT — Factor VII has the shortest half-life. Don't wait for clinical bleeding. If suspected, treat with Vitamin K1 <strong style="color:var(--white);">2.5 mg/kg SC</strong> (not IV — anaphylaxis risk), continue 3–4 weeks (brodifacoum). Recheck PT 48–72 h after stopping to confirm resolution.
+      </div>
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderBleedingFlowDIC(){
+  replace(renderBleedingFlowDIC,'Bleeding — Mixed / DIC');
+  render(`
+  <div class="flow-wrap">
+
+    <div class="flow-node entry" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.4);color:#FCD34D;">⚡ MIXED / DISSEMINATED INTRAVASCULAR COAGULATION</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">RECOGNISE THE PATTERN
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">DIC is always secondary — find and treat the underlying cause urgently</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- DIC panel + triggers side by side -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:10px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.35);">
+          🔬 DIC PANEL — ALL of these:
+        </div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          Platelets <strong>↓↓</strong><br>
+          <span style="opacity:.75;">&lt;100 ×10⁹/L typically</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          PT <strong>↑</strong> + aPTT <strong>↑</strong><br>
+          <span style="opacity:.75;">Both prolonged</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          Fibrinogen <strong>↓</strong><br>
+          <span style="opacity:.75;">&lt;1.5 g/L — consumed</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          FDPs / D-dimer <strong>↑↑</strong><br>
+          <span style="opacity:.75;">Fibrin degradation products elevated</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          Schistocytes on smear<br>
+          <span style="opacity:.75;">RBC fragmentation from fibrin strands</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:10px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.35);">
+          🔥 COMMON TRIGGERS
+        </div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+          <strong>Sepsis / SIRS</strong><br>
+          <span style="opacity:.75;">Pyometra · GDV · peritonitis</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+          <strong>Neoplasia</strong><br>
+          <span style="opacity:.75;">Haemangiosarcoma · lymphoma · carcinoma</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+          <strong>IMHA</strong><br>
+          <span style="opacity:.75;">Haemolytic crisis triggers coag cascade</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+          <strong>Pancreatitis (severe)</strong><br>
+          <span style="opacity:.75;">Proteolytic enzyme activation</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+          <strong>Envenomation</strong><br>
+          <span style="opacity:.75;">Snake bite · spider — direct venom activation</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+          <strong>Heat stroke / major trauma</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">MANAGEMENT APPROACH</div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
+      <div class="flow-endpoint" style="border-color:rgba(220,38,38,0.4);background:rgba(220,38,38,0.08);font-size:9.5px;color:#FCA5A5;">
+        <strong>1. Treat the underlying cause urgently</strong> — DIC does not resolve without this
+      </div>
+      <div class="flow-endpoint" style="font-size:9.5px;">
+        <strong>2. Fresh frozen plasma</strong> — 10–15 ml/kg IV; replaces all coag factors and antithrombin
+      </div>
+      <div class="flow-endpoint" style="font-size:9.5px;">
+        <strong>3. Platelet-rich plasma / whole blood</strong> — if platelets &lt;20–30 ×10⁹/L with active bleed
+      </div>
+      <div class="flow-endpoint" style="font-size:9.5px;">
+        <strong>4. Heparin</strong> — controversial; some use low-dose unfractionated heparin (5–10 U/kg/h CRI) in hypercoagulable phase only
+      </div>
+      <div class="flow-endpoint" style="font-size:9.5px;">
+        <strong>5. Monitor serially</strong> — PT, aPTT, platelets, D-dimer q 4–6 h
+      </div>
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderBleedingFlowVasc(){
+  replace(renderBleedingFlowVasc,'Bleeding — Vasculopathy');
+  render(`
+  <div class="flow-wrap">
+
+    <div class="flow-node entry" style="background:rgba(139,92,246,0.15);border-color:rgba(139,92,246,0.4);color:#C4B5FD;">🌐 VASCULOPATHY / VASCULITIS</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">RECOGNISE THE PATTERN
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Bleeding from vessel wall disease — platelets and coagulation profile are <em>normal</em></div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div class="flow-node sub-step">TYPICAL LESION DISTRIBUTION</div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
+      <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;font-size:9.5px;">
+        Ear pinna — <strong>punched-out necrotic ulcers</strong>
+      </div>
+      <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;font-size:9.5px;">
+        Paw pads — ulcers, necrosis, sloughing
+      </div>
+      <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;font-size:9.5px;">
+        Skin — purpura, necrotic plaques, pitting oedema
+      </div>
+      <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;font-size:9.5px;">
+        Retinal haemorrhage / detachment (hypertension)
+      </div>
+    </div>
+
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node sub-step">COMMON CAUSES</div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#C4B5FD;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.35);">🦠 Infectious</div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
+          <strong>Rocky Mountain Spotted Fever</strong><br>
+          <span style="opacity:.75;">Rickettsia rickettsii · acute systemic illness<br>Tick titres / PCR</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
+          <strong>Ehrlichiosis</strong><br>
+          <span style="opacity:.75;">Ehrlichia canis · thrombocytopenia common<br>Morulae on smear</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
+          <strong>Leptospirosis</strong><br>
+          <span style="opacity:.75;">Renal + hepatic failure · MAT serology</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
+          <strong>FIP (feline)</strong><br>
+          <span style="opacity:.75;">Effusive form · coronavirus · young cat</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#C4B5FD;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.35);">⚙️ Non-Infectious</div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
+          <strong>Immune-mediated vasculitis</strong><br>
+          <span style="opacity:.75;">Drug reaction · vaccine reaction · idiopathic<br>Skin biopsy confirms</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
+          <strong>Uraemic vasculopathy</strong><br>
+          <span style="opacity:.75;">CKD / AKI — toxin-mediated endothelial damage</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
+          <strong>Hyperglobulinaemia</strong><br>
+          <span style="opacity:.75;">Ehrlichia · myeloma · Leishmania<br>Hyperviscosity → vessel damage</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
+          <strong>Hypertension</strong><br>
+          <span style="opacity:.75;">BP &gt;160 mmHg → retinal haemorrhage<br>Check BP in every bleeding patient</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;padding:10px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.25);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#C4B5FD;margin-bottom:5px;">🔬 DIAGNOSTICS — Vasculopathy</div>
+      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
+        <strong style="color:var(--white);">Blood pressure</strong> — mandatory; Doppler or oscillometric<br>
+        <strong style="color:var(--white);">Tick-borne titres</strong> — Ehrlichia, Rickettsia, Anaplasma<br>
+        <strong style="color:var(--white);">Leptospira MAT</strong> — paired titres; PCR urine if acute<br>
+        <strong style="color:var(--white);">Serum protein electrophoresis</strong> — if hyperglobulinaemia<br>
+        <strong style="color:var(--white);">Skin biopsy</strong> — deep wedge from leading edge of lesion; neutrophilic / lymphocytic vasculitis pattern confirms<br>
+        <strong style="color:var(--white);">CBC + chem + UA</strong> — CKD, inflammatory pattern
+      </div>
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
 // ── HAEMATURIA — clinical sign flowchart (Tab 0) ───────────────────────────
 function renderHaematuriaFlow(){
   push(renderHaematuriaFlow,'Haematuria');
   render(haematuriaFlowHtml);
+}
+
+// ── HAEMATURIA — clinical flowchart sub-branches ───────────────────────────
+function renderHaematuriaFlowSystemic(){
+  replace(renderHaematuriaFlowSystemic,'Haematuria — Systemic / Pseudo');
+  render(`
+  <div class="flow-wrap">
+
+    <div class="flow-node entry" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.4);color:#FCD34D;">🌐 SYSTEMIC / PSEUDO-HAEMATURIA</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">CENTRIFUGE DISCRIMINATES
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">All give dipstick +ve blood — the supernatant colour separates them</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+
+      <!-- Pseudo-haematuria column -->
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:10px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.35);">PSEUDO-HAEMATURIA<br><span style="font-size:9px;font-weight:400;">Red supernatant after spin</span></div>
+
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          <strong>Haemoglobinuria</strong><br>
+          <span style="opacity:.75;">Intravascular haemolysis — IMHA, babesia, zinc toxicity, onion/garlic, severe thermal injury<br>Plasma pink/red · spherocytes · agglutination on smear</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          <strong>Myoglobinuria</strong><br>
+          <span style="opacity:.75;">Rhabdomyolysis — trauma, heatstroke, envenomation, exertional<br>CK markedly ↑ (&gt;10,000 U/L) · AKI risk from pigment nephropathy</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          <strong>Pigmenturia</strong><br>
+          <span style="opacity:.75;">Dietary (beetroot, food dye) · drugs (rifampin, phenazopyridine)<br>Dipstick negative for blood — confirms</span>
+        </div>
+      </div>
+
+      <!-- True systemic column -->
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:10px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.1);border-color:rgba(220,38,38,0.35);">TRUE SYSTEMIC HU<br><span style="font-size:9px;font-weight:400;">Red sediment · intact RBCs</span></div>
+
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+          <strong>Anticoagulant rodenticide</strong><br>
+          <span style="opacity:.75;">PT prolongs first (factor VII, shortest T½)<br>Vit K1 2.5 mg/kg SC now · confirm with PIVKAs</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+          <strong>IMTP</strong><br>
+          <span style="opacity:.75;">Platelet &lt;50 ×10⁹/L · mucosal bleeds · coags normal<br>Prednisolone 2 mg/kg/day + adjunct immunosuppression</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+          <strong>DIC</strong><br>
+          <span style="opacity:.75;">Platelets ↓ + PT ↑ + aPTT ↑ + fibrinogen ↓ + D-dimer ↑<br>Treat the underlying cause (sepsis, HSA, IMHA)</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+          <strong>Leptospirosis</strong><br>
+          <span style="opacity:.75;">AKI + hepatopathy + pyrexia + haematuria<br>MAT serology + urine PCR · PPE (zoonotic)</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:14px;padding:10px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:5px;">🔬 MINIMUM DATABASE — Systemic</div>
+      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
+        <strong style="color:var(--white);">Centrifuge urine</strong> — supernatant colour<br>
+        <strong style="color:var(--white);">CBC + smear</strong> — platelets, spherocytes, agglutination, ghost cells<br>
+        <strong style="color:var(--white);">PT + aPTT</strong> — rodenticide (PT first), hepatic failure, DIC<br>
+        <strong style="color:var(--white);">CK + renal panel</strong> — myoglobinuria, pigment nephropathy<br>
+        <strong style="color:var(--white);">Coombs test + Babesia PCR</strong> — haemolytic screen<br>
+        <strong style="color:var(--white);">Leptospira MAT / urine PCR</strong> — if AKI + pyrexia
+      </div>
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderHaematuriaFlowInitial(){
+  replace(renderHaematuriaFlowInitial,'Haematuria — Initial Stream');
+  render(`
+  <div class="flow-wrap">
+
+    <div class="flow-node entry" style="background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.4);color:#6EE7B7;">🩸 HAEMATURIA — START OF STREAM</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">SOURCE: DISTAL URETHRA · GENITAL TRACT · PROSTATE
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Blood visible at the beginning of voiding, clears as stream progresses — source is distal to the bladder</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
+
+      <!-- Distal urethra -->
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#6EE7B7;background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3);">🩻 Distal Urethra</div>
+        <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:#6EE7B7;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
+          <strong>Urolithiasis</strong><br><span style="opacity:.75;">Urethral stone · stranguria · obstruction risk</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:#6EE7B7;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
+          <strong>TCC / SCC</strong><br><span style="opacity:.75;">Older dog · palpable mass · CADET BRAF</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:#6EE7B7;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
+          <strong>Granulomatous urethritis</strong><br><span style="opacity:.75;">Bitch · mimics TCC · CADET BRAF negative</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:#6EE7B7;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
+          <strong>Trauma</strong><br><span style="opacity:.75;">Pelvic fracture · catheter injury · retrograde urethrogram</span>
+        </div>
+      </div>
+
+      <!-- Genital tract -->
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#F9A8D4;background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);">♀ Genital Tract</div>
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+          <strong>Oestrus</strong><br><span style="opacity:.75;">Intact bitch · pro-oestrus / oestrus · confirm with timed vaginal cytology</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+          <strong>Vaginitis</strong><br><span style="opacity:.75;">Juvenile or adult · discharge · vaginoscopy</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+          <strong>Vaginal / vulvar tumour</strong><br><span style="opacity:.75;">Leiomyoma (benign intact), TVT, fibrosarcoma</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+          <strong>Subinvolution of placental sites</strong><br><span style="opacity:.75;">Post-whelp bitch · persistent haemorrhagic discharge</span>
+        </div>
+      </div>
+
+      <!-- Prostate -->
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#93C5FD;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);">⚙️ Prostate</div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
+          <strong>BPH</strong><br><span style="opacity:.75;">Intact male · symmetric enlargement · drip of clear-bloody fluid</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
+          <strong>Bacterial prostatitis</strong><br><span style="opacity:.75;">Pyrexia · painful DRE · E. coli most common</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
+          <strong>Prostatic cyst / abscess</strong><br><span style="opacity:.75;">Fluctuant on US · surgical drainage</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
+          <strong>Prostatic carcinoma</strong><br><span style="opacity:.75;">Intact OR neutered · asymmetric · fixed · sublumbar LN</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;padding:9px 12px;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.2);border-radius:10px;font-size:9.5px;color:var(--gray);width:100%;">
+      <strong style="color:#6EE7B7;">Pearl:</strong> Blood dripping independently between voids (not associated with urination) also localises to the distal urethra, genital tract, or prostate — same anatomy as initial stream haematuria.
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderHaematuriaFlowTerminal(){
+  replace(renderHaematuriaFlowTerminal,'Haematuria — Terminal Stream');
+  render(`
+  <div class="flow-wrap">
+
+    <div class="flow-node entry" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.4);color:#A5B4FC;">🩸 HAEMATURIA — END OF STREAM</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">SOURCE: BLADDER NECK / TRIGONE · PROXIMAL URETHRA · PROSTATE
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Stream starts clear, blood appears as the bladder empties and contracts — trigone or proximal source</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+
+      <!-- Bladder neck / trigone -->
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#A5B4FC;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);">🫧 Bladder Neck / Trigone</div>
+        <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
+          <strong>Urothelial carcinoma (TCC)</strong><br>
+          <span style="opacity:.75;">Trigone is the #1 site · older bitch (Scottie, WHWT, Beagle)<br>CADET BRAF urine PCR ~85% sensitive · sublumbar LN · piroxicam</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
+          <strong>Bacterial cystitis</strong><br>
+          <span style="opacity:.75;">Pollakiuria + stranguria + HU · E. coli most common<br>Cystocentesis culture — gold standard</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
+          <strong>Cystic calculi (trigonal)</strong><br>
+          <span style="opacity:.75;">Mobile on US · stone analysis essential<br>Struvite: diet dissolution; oxalate: surgical</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
+          <strong>Polypoid cystitis</strong><br>
+          <span style="opacity:.75;">Often apical — biopsy essential to exclude TCC</span>
+        </div>
+      </div>
+
+      <!-- Proximal urethra + prostate -->
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#93C5FD;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);">🩻 Proximal Urethra · ⚙️ Prostate</div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
+          <strong>Urethral TCC</strong><br>
+          <span style="opacity:.75;">Extension from bladder trigone · stranguria · stent for obstruction</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
+          <strong>Prostatic disease</strong><br>
+          <span style="opacity:.75;">BPH · prostatitis · carcinoma<br>Prostatic wash + culture + US</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
+          <strong>Feline idiopathic cystitis (FIC)</strong><br>
+          <span style="opacity:.75;">Cat &lt;10 yr · sterile · stress-related · self-resolving in 5–10 days<br>Multimodal stress reduction · wet diet · NO antibiotics</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
+          <strong>Bladder trauma / rupture</strong><br>
+          <span style="opacity:.75;">Post-RTA · abdominal effusion · contrast cystography · repair urgently</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderHaematuriaFlowUniform(){
+  replace(renderHaematuriaFlowUniform,'Haematuria — Throughout Stream');
+  render(`
+  <div class="flow-wrap">
+
+    <div class="flow-node entry" style="background:rgba(37,99,235,0.15);border-color:rgba(37,99,235,0.4);color:#93C5FD;">🩸 HAEMATURIA — THROUGHOUT THE STREAM</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">SOURCE: BLADDER BODY · UPPER URINARY TRACT
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Uniform blood mixed throughout — origin is the bladder body itself or proximal to it (kidney or ureter)</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- Key discriminating question -->
+    <div class="flow-node sub-step">Is there evidence of upper tract involvement?
+      <div style="font-size:9px;font-weight:400;margin-top:3px;opacity:.85;">Renomegaly · renal pain · azotaemia · fever · US pyelectasia</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+
+      <!-- Upper UT -->
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#93C5FD;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);">🫘 Upper UT — YES</div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
+          <strong>Pyelonephritis</strong><br>
+          <span style="opacity:.75;">Fever · lumbar pain · WBC casts · pyelectasia on US<br>E. coli most common · fluoroquinolone 4–6 wks</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
+          <strong>Renal neoplasia</strong><br>
+          <span style="opacity:.75;">Renal cell carcinoma (dog) · lymphoma (cat, bilateral)<br>Asymmetric renal mass · CT staging · weight loss</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
+          <strong>Renal calculi / nephrolithiasis</strong><br>
+          <span style="opacity:.75;">Often incidental · haematuria if obstructing · stone analysis</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
+          <strong>Idiopathic renal haematuria</strong><br>
+          <span style="opacity:.75;">Young dog · unilateral pulsatile bleed from ureter · cystoscopy + ureteric catheterisation · renal-sparing surgery</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
+          <strong>CRGV / "Alabama rot"</strong><br>
+          <span style="opacity:.75;">Skin ulcers + AKI + HU · microangiopathic haemolytic anaemia · high mortality</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
+          <strong>Renal / ureteric trauma</strong><br>
+          <span style="opacity:.75;">Post-RTA · retroperitoneal haemorrhage · contrast CT gold standard</span>
+        </div>
+      </div>
+
+      <!-- Bladder body -->
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#A5B4FC;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);">🫧 Bladder Body — NO</div>
+        <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
+          <strong>Bacterial cystitis (diffuse)</strong><br>
+          <span style="opacity:.75;">Entire mucosa inflamed · uniform HU · cystocentesis culture</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
+          <strong>Cystic calculi (body)</strong><br>
+          <span style="opacity:.75;">Non-trigonal stones · mobile on US · struvite vs oxalate vs urate</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
+          <strong>FIC (cat)</strong><br>
+          <span style="opacity:.75;">Diffuse mucosal haemorrhage · sterile · self-resolving<br>Multimodal stress reduction</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
+          <strong>Bladder lymphoma (cat)</strong><br>
+          <span style="opacity:.75;">Diffuse wall thickening · sterile urine · FeLV/FIV status · CHOP</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderHaematuriaFlowIndep(){
+  replace(renderHaematuriaFlowIndep,'Haematuria — Between Voids');
+  render(`
+  <div class="flow-wrap">
+
+    <div class="flow-node entry" style="background:rgba(139,92,246,0.15);border-color:rgba(139,92,246,0.4);color:#C4B5FD;">🩸 HAEMATURIA — INDEPENDENT OF VOIDING</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">BLOOD DRIPS WITHOUT URINATION
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Source is distal to the bladder — blood collects and drips spontaneously between urination episodes</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
+
+      <!-- Genital tract -->
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#F9A8D4;background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);">♀ Genital</div>
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+          <strong>Oestrus</strong><br><span style="opacity:.75;">Intact bitch in pro-oestrus · confirm with vaginal cytology</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+          <strong>Vaginal / vulvar tumour</strong><br><span style="opacity:.75;">Leiomyoma · TVT · vaginoscopy + biopsy</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+          <strong>Subinvolution of placental sites</strong><br><span style="opacity:.75;">Post-whelping bitch · haemorrhagic vulvar discharge</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+          <strong>Open pyometra</strong><br><span style="opacity:.75;">Mucopurulent ± bloody discharge · intact bitch · US: uterine distension</span>
+        </div>
+      </div>
+
+      <!-- Prostate -->
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#93C5FD;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);">⚙️ Prostate</div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
+          <strong>BPH</strong><br><span style="opacity:.75;">Spontaneous bloody urethral discharge between voids · intact male · finasteride / castration</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
+          <strong>Chronic prostatitis</strong><br><span style="opacity:.75;">Recurrent HU between voids · E. coli · prostatic wash + culture</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
+          <strong>Prostatic carcinoma</strong><br><span style="opacity:.75;">Intact OR neutered · fixed asymmetric mass on DRE · sublumbar LN</span>
+        </div>
+      </div>
+
+      <!-- Distal urethra -->
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#C4B5FD;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.3);">🩻 Distal Urethra</div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
+          <strong>Urethral neoplasia</strong><br><span style="opacity:.75;">TCC / SCC · palpable urethral mass · CADET BRAF</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
+          <strong>Urethral prolapse</strong><br><span style="opacity:.75;">Young intact Bulldog / Boxer male · visible red tissue at preputial opening</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
+          <strong>Granulomatous urethritis</strong><br><span style="opacity:.75;">Bitch · intermittent drip · cystoscopy + biopsy to exclude TCC</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;padding:9px 12px;background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.2);border-radius:10px;font-size:9.5px;color:var(--gray);width:100%;">
+      <strong style="color:#C4B5FD;">Key step:</strong> Observe whether blood is present on the coat/bedding between urination attempts — true independent drip distinguishes from initial stream haematuria. In intact bitches, always check vaginal cytology and progesterone to time oestrus.
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
 }
 
 // ── HAEMATURIA — diagnostic approach (3 tabs) ──────────────────────────────
@@ -4977,6 +6263,9 @@ export function mountGlobals() {
   w.renderDxJaundice = renderDxJaundice;
   w.renderDxWeakness = renderDxWeakness;
   w.renderDxPUPD = renderDxPUPD;
+  w.renderDxPUPDHistory = renderDxPUPDHistory;
+  w.renderDxPUPDExam = renderDxPUPDExam;
+  w.renderDxPUPDDesmopressin = renderDxPUPDDesmopressin;
   w.renderDxSeizures = renderDxSeizures;
   w.renderDxMyelopathy = renderDxMyelopathy;
   w.renderDxVestibular = renderDxVestibular;
@@ -5013,11 +6302,20 @@ export function mountGlobals() {
   w.renderDxWetEyeExam = renderDxWetEyeExam;
   w.renderDxWetEyeDx = renderDxWetEyeDx;
   w.renderHaematuriaFlow = renderHaematuriaFlow;
+  w.renderHaematuriaFlowSystemic = renderHaematuriaFlowSystemic;
+  w.renderHaematuriaFlowInitial = renderHaematuriaFlowInitial;
+  w.renderHaematuriaFlowTerminal = renderHaematuriaFlowTerminal;
+  w.renderHaematuriaFlowUniform = renderHaematuriaFlowUniform;
+  w.renderHaematuriaFlowIndep = renderHaematuriaFlowIndep;
   w.renderDxHaematuria = renderDxHaematuria;
   w.renderDxHaematuriaHistory = renderDxHaematuriaHistory;
   w.renderDxHaematuriaExam = renderDxHaematuriaExam;
   w.renderDxHaematuriaDx = renderDxHaematuriaDx;
   w.renderBleedingFlow = renderBleedingFlow;
+  w.renderBleedingFlowPrimary = renderBleedingFlowPrimary;
+  w.renderBleedingFlowSecondary = renderBleedingFlowSecondary;
+  w.renderBleedingFlowDIC = renderBleedingFlowDIC;
+  w.renderBleedingFlowVasc = renderBleedingFlowVasc;
   w.renderDxBleeding = renderDxBleeding;
   w.renderDxBleedingHistory = renderDxBleedingHistory;
   w.renderDxBleedingExam = renderDxBleedingExam;

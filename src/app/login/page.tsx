@@ -5,6 +5,12 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 export default function LoginPage() {
+  // Without a Convex deployment, the middleware won't redirect here — just return null
+  if (!process.env.NEXT_PUBLIC_CONVEX_URL) return null
+  return <LoginForm />
+}
+
+function LoginForm() {
   const { signIn } = useAuthActions()
   const router = useRouter()
   const [flow, setFlow] = useState<'signIn' | 'signUp'>('signIn')

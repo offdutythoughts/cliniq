@@ -9,69 +9,116 @@ export const bleedingFlowHtml = `
 
   <div class="flow-node entry">🩸 BLEEDING / PETECHIAE / ECCHYMOSES</div>
   <div class="flow-arrow-v">↓</div>
-  <div class="flow-node step">PATTERN RECOGNITION<br><span style="font-size:10px;color:var(--gray);font-weight:400">Walk down the questions — the pattern of bleeding tells you which limb is broken</span></div>
+
+  <!-- Q1 -->
+  <div class="flow-node step">SIGNS OF 3RD SPACE BLEEDING?
+    <div class="fn-sub" style="font-weight:400;margin-top:3px;">Haemothorax · haemoperitoneum · deep haematoma after minor trauma · delayed post-surgical bleed</div>
+  </div>
   <div class="flow-arrow-v">↓</div>
 
-  <!-- Q1 — rule out mixed / DIC first -->
-  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:6px;width:100%;align-items:stretch;">
-    <div class="flow-node step" style="font-size:10.5px;text-align:left;line-height:1.4;">
-      <strong>Q1.</strong> Cavity bleed <strong>AND</strong> petechiae <strong>AND</strong> concurrent severe systemic illness (sepsis · IMHA · neoplasia · pancreatitis · heatstroke · envenomation)?
+  <div style="display:grid;grid-template-columns:3fr 2fr;gap:8px;width:100%;">
+
+    <!-- YES branch -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+      <div style="font-size:9px;font-weight:600;color:#93C5FD;letter-spacing:.03em;">YES — cavity / deep bleed</div>
+      <div class="flow-arrow-v">↓</div>
+      <div class="flow-node" style="width:100%;background:rgba(37,99,235,0.12);border-color:rgba(37,99,235,0.4);font-size:10px;font-weight:700;color:#93C5FD;">
+        LIKELY SECONDARY<br>
+        <span style="font-size:9px;font-weight:400;opacity:.8;">Coag cascade · factor deficiency</span>
+      </div>
+      <div class="flow-arrow-v">↓</div>
+
+      <!-- Q2a -->
+      <div class="flow-node sub-step" style="width:100%;font-size:10px;">Also petechiae / ecchymoses?</div>
+      <div class="flow-arrow-v">↓</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;">
+
+        <!-- Q2a YES → MIXED -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+          <div style="font-size:9px;font-weight:600;color:#FCD34D;">YES</div>
+          <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+          <div class="flow-node" style="width:100%;background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.4);font-size:9.5px;font-weight:700;color:#FCD34D;">
+            LIKELY MIXED
+          </div>
+          <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+          <div class="flow-node sub-step" style="width:100%;font-size:9px;">Severe systemic<br>illness present?</div>
+          <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;width:100%;">
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <div style="font-size:8px;font-weight:600;color:#FCA5A5;">YES</div>
+              <div class="flow-arrow-v" style="font-size:10px;">↓</div>
+              <div class="flow-endpoint" style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderBleedingFlowDIC()">
+                ⚡ DIC<br>
+                <span style="opacity:.75;font-size:8px;">Treat urgently ›</span>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+              <div style="font-size:8px;font-weight:600;color:var(--gray2);">NO</div>
+              <div class="flow-arrow-v" style="font-size:10px;">↓</div>
+              <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:8.5px;cursor:pointer;text-align:center;" onclick="renderBleedingFlowSecondary()">
+                Concurrent<br>primary +<br>secondary ›
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Q2a NO → Pure secondary -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+          <div style="font-size:9px;font-weight:600;color:var(--gray2);">NO</div>
+          <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+          <div class="flow-endpoint" style="background:rgba(37,99,235,0.1);border:1.5px solid rgba(37,99,235,0.35);color:#93C5FD;font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderBleedingFlowSecondary()">
+            🔗 Pure<br>SECONDARY<br>
+            <span style="opacity:.75;font-size:8px;">PT · aPTT ›</span>
+          </div>
+        </div>
+
+      </div>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#FCD34D;padding:0 2px;">YES<br>→</div>
-    <div class="flow-node tile urgent" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-BD-MIX','Mixed / consumptive')">⚡ MIXED / DIC<br><span style="font-size:9px;opacity:.7">primary + secondary + fibrinolysis abnormal</span><br><span style="font-size:9px;opacity:.7">⇒ sepsis · neoplasia · IMHA · heatstroke · snake bite</span></div>
-  </div>
-  <div style="display:flex;align-items:center;justify-content:center;width:100%;gap:4px;margin:4px 0;">
-    <span style="font-size:9px;color:var(--gray);font-weight:700;">NO ↓</span>
+
+    <!-- NO branch -->
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+      <div style="font-size:9px;font-weight:600;color:var(--gray2);">NO cavity / deep bleed</div>
+      <div class="flow-arrow-v">↓</div>
+
+      <!-- Q2b -->
+      <div class="flow-node sub-step" style="width:100%;font-size:10px;">Petechiae /<br>ecchymoses?</div>
+      <div class="flow-arrow-v">↓</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
+        <!-- YES → PRIMARY -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+          <div style="font-size:9px;font-weight:600;color:#FCA5A5;">YES</div>
+          <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderBleedingFlowPrimary()">
+            🧱 PRIMARY<br>
+            <span style="opacity:.75;font-size:8px;">Platelet · vWF ›</span>
+          </div>
+        </div>
+        <!-- NO → VASCULOPATHY -->
+        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+          <div style="font-size:9px;font-weight:600;color:var(--gray2);">NO</div>
+          <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+          <div class="flow-endpoint" style="background:rgba(139,92,246,0.1);border:1.5px solid rgba(139,92,246,0.35);color:#C4B5FD;font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderBleedingFlowVasc()">
+            🌐 VASCULO-<br>PATHY<br>
+            <span style="opacity:.75;font-size:8px;">Vessel wall ›</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- Q2 — secondary haemostasis -->
-  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:6px;width:100%;align-items:stretch;">
-    <div class="flow-node step" style="font-size:10.5px;text-align:left;line-height:1.4;">
-      <strong>Q2.</strong> Bleeding into 3rd spaces? <span style="opacity:.75;">(haemothorax · haemoperitoneum · haemarthrosis · large haematoma after minor trauma · delayed bleed post-surgery or venepuncture)</span>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#FCD34D;padding:0 2px;">YES<br>→</div>
-    <div class="flow-node tile" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-BD-SEC','Secondary haemostasis')">🔗 SECONDARY HAEMOSTASIS<br><span style="font-size:9px;opacity:.7">coag cascade · factor deficiency</span><br><span style="font-size:9px;opacity:.7">PT ± aPTT prolonged · platelets normal</span><br><span style="font-size:9px;opacity:.7">⇒ rodenticide · hepatic failure · haemophilia A/B</span></div>
-  </div>
-  <div style="display:flex;align-items:center;justify-content:center;width:100%;gap:4px;margin:4px 0;">
-    <span style="font-size:9px;color:var(--gray);font-weight:700;">NO ↓</span>
-  </div>
-
-  <!-- Q3 — primary haemostasis -->
-  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:6px;width:100%;align-items:stretch;">
-    <div class="flow-node step" style="font-size:10.5px;text-align:left;line-height:1.4;">
-      <strong>Q3.</strong> Petechiae · ecchymoses · mucosal surface bleeding? <span style="opacity:.75;">(ventrum / sclera / gums · epistaxis · melena · haematuria · prolonged ooze from venepuncture or minor wounds)</span>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#FCD34D;padding:0 2px;">YES<br>→</div>
-    <div class="flow-node tile" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-BD-PRIM','Primary haemostasis')">🧱 PRIMARY HAEMOSTASIS<br><span style="font-size:9px;opacity:.7">platelets · vWF · vessel wall</span><br><span style="font-size:9px;opacity:.7">BMBT &gt; 3.5 min · ± platelet count low</span><br><span style="font-size:9px;opacity:.7">⇒ IMTP · vWD · tick-borne · uraemia · drugs</span></div>
-  </div>
-  <div style="display:flex;align-items:center;justify-content:center;width:100%;gap:4px;margin:4px 0;">
-    <span style="font-size:9px;color:var(--gray);font-weight:700;">NO ↓</span>
-  </div>
-
-  <!-- Q4 — vasculopathy -->
-  <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:6px;width:100%;align-items:stretch;">
-    <div class="flow-node step" style="font-size:10.5px;text-align:left;line-height:1.4;">
-      <strong>Q4.</strong> Cutaneous lesions without classic bleeding pattern? <span style="opacity:.75;">(ear-tip / footpad necrosis · pinnal punched-out ulcers · vasculitic skin lesions · ± normal platelets and coag)</span>
-    </div>
-    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#FCD34D;padding:0 2px;">YES<br>→</div>
-    <div class="flow-node tile" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-BD-VASC','Vasculopathies')">🌐 VASCULOPATHIES<br><span style="font-size:9px;opacity:.7">vasculitis · uraemia · steroid · Cushing · scurvy</span><br><span style="font-size:9px;opacity:.7">⇒ immune-mediated vasculitis · CRGV · drug · infection</span></div>
-  </div>
-
-  <div style="margin-top:10px;padding:10px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;width:100%;">
-    <div style="font-size:11px;font-weight:700;color:#F87171;margin-bottom:6px;">⚡ DO NOT MISS — LIFE-THREATENING</div>
+  <div style="margin-top:12px;padding:10px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;width:100%;">
+    <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:5px;">⚡ ALWAYS RULE OUT FIRST</div>
     <div style="font-size:9.5px;line-height:1.55;color:#FCA5A5;">
-      • <strong>Anticoagulant rodenticide</strong> — peracute cavity bleeding, PT prolongs first; vitamin K1 lifesaving<br>
-      • <strong>DIC</strong> — petechiae + cavity bleed + thrombocytopenia + prolonged PT/aPTT + low fibrinogen + ↑ D-dimer; treat underlying cause (sepsis, neoplasia, IMHA, snake bite, heatstroke, pancreatitis)<br>
-      • <strong>Splenic / hepatic haemangiosarcoma rupture</strong> — collapse + pale gums + haemoperitoneum; older large breed dog<br>
-      • <strong>IMTP</strong> — platelet count typically &lt; 30 ×10⁹/L; start immunosuppression urgently<br>
-      • <strong>Severe envenomation</strong> (snake / spider) — combined primary + secondary defect + ± rhabdomyolysis<br>
-      • <strong>Acute haemoperitoneum + petechiae + mucosal bleeding</strong> → think DIC, severe rodenticide, hyperestrogenism (Sertoli cell tumour)
+      • <strong>Anticoagulant rodenticide</strong> — PT prolongs first; Vit K1 SC now, confirm later<br>
+      • <strong>DIC</strong> — petechiae + cavity bleed + systemic illness → treat cause urgently<br>
+      • <strong>Haemoperitoneum</strong> (HSA rupture) — collapse + pale gums → emergency surgery<br>
+      • <strong>IMTP</strong> platelet &lt;30 ×10⁹/L — start immunosuppression urgently
     </div>
   </div>
 
-  <div style="margin-top:10px;padding:9px 12px;background:rgba(37,99,235,0.07);border:1px solid rgba(37,99,235,0.15);border-radius:10px;font-size:11px;color:#93C5FD;text-align:center;width:100%;">
-    Tap a category to see specific differentials and workup
-  </div>
 </div>
 `;
 

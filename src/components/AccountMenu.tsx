@@ -6,7 +6,12 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { api } from '../../convex/_generated/api'
 
+const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
+
 export default function AccountMenu() {
+  // Without Convex, skip auth UI entirely
+  if (!hasConvex) return null
+
   return (
     <>
       <Authenticated>

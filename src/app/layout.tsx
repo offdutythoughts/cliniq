@@ -1,4 +1,3 @@
-import { ConvexAuthNextjsServerProvider } from '@convex-dev/auth/nextjs/server'
 import type { Metadata, Viewport } from 'next'
 import { DM_Sans, DM_Mono } from 'next/font/google'
 import { ConvexClientProvider } from './ConvexClientProvider'
@@ -29,18 +28,28 @@ export const viewport: Viewport = {
   themeColor: '#F1F5F9',
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+const htmlBody = (children: React.ReactNode) => (
+  <html lang="en" className={`${dmSans.variable} ${dmMono.variable}`} suppressHydrationWarning>
+    <head>
+      <meta name="apple-mobile-web-app-capable" content="yes" />
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    </head>
+    <body>{children}</body>
+  </html>
+)
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // Without a Convex URL (local dev), skip auth providers entirely
+  if (!process.env.NEXT_PUBLIC_CONVEX_URL) {
+    return htmlBody(children)
+  }
+
+  // Dynamic import so the module is never loaded when Convex isn't configured
+  const { ConvexAuthNextjsServerProvider } = await import('@convex-dev/auth/nextjs/server')
+
   return (
     <ConvexAuthNextjsServerProvider>
-      <html lang="en" className={`${dmSans.variable} ${dmMono.variable}`} suppressHydrationWarning>
-        <head>
-          <meta name="apple-mobile-web-app-capable" content="yes" />
-          <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        </head>
-        <body>
-          <ConvexClientProvider>{children}</ConvexClientProvider>
-        </body>
-      </html>
+      {htmlBody(<ConvexClientProvider>{children}</ConvexClientProvider>)}
     </ConvexAuthNextjsServerProvider>
   )
 }

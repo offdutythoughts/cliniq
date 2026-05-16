@@ -3,6 +3,8 @@
 import { Authenticated } from 'convex/react'
 import AccountMenu from './AccountMenu'
 
+const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
+
 interface Props {
   title: string
   showBack: boolean
@@ -23,9 +25,13 @@ export default function Topbar({ title, showBack, onBack, onToggleNotes }: Props
         Vet use only
       </div>
       <div className={`topbar-title${title ? ' show' : ''}`}>{title}</div>
-      <Authenticated>
+      {hasConvex ? (
+        <Authenticated>
+          <button className="notes-topbar-btn" onClick={onToggleNotes}>📝 Notes</button>
+        </Authenticated>
+      ) : (
         <button className="notes-topbar-btn" onClick={onToggleNotes}>📝 Notes</button>
-      </Authenticated>
+      )}
       <AccountMenu />
     </div>
   )
