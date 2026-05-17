@@ -1597,118 +1597,312 @@ function renderPUPDFlow(){
     <div class="flow-node entry">💧 POLYURIA / POLYDIPSIA</div>
     <div class="flow-arrow-v">↓</div>
 
-    <!-- Step 1 -->
-    <div class="flow-node step">STEP 1 — CONFIRM PU/PD
-      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Rule out pollakiuria (small frequent voids, straining) and urinary incontinence (passive leakage). True PU/PD = large volumes, conscious, no dysuria.</div>
-    </div>
-    <div class="flow-arrow-v">↓</div>
-
-    <!-- Step 2 -->
-    <div class="flow-node step">STEP 2 — URINALYSIS + SERIAL USG
-      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Collect before IV fluids. Repeat 3–5 samples on different days/times for accurate characterisation.</div>
-    </div>
-    <div class="flow-arrow-v">↓</div>
-
-    <!-- USG table -->
-    <div class="flow-node" style="width:100%;padding:10px 12px;">
-      <div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:5px 10px;font-size:10px;line-height:1.4;">
-        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">USG</div>
-        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Meaning</div>
-        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Consider</div>
-
-        <div style="color:#6EE7B7;">&gt;1.030 dog<br>&gt;1.035 cat</div>
-        <div>Concentrated — not obligate PU/PD<br><span style="font-size:9px;opacity:.7;">Check for glucosuria (DM raises USG artificially)</span></div>
-        <div style="font-size:9.5px;">Primary polydipsia · DM (if glucosuria)</div>
-
-        <div style="color:#FCD34D;">1.013–1.029</div>
-        <div>Partially concentrated — broad differential</div>
-        <div style="font-size:9.5px;">HAC · early CKD · primary polydipsia · endocrine</div>
-
-        <div style="color:#FB923C;">1.008–1.012</div>
-        <div>Isosthenuric — tubular function lost</div>
-        <div style="font-size:9.5px;">CKD · HAC · Addison's (medullary washout) · pyelonephritis</div>
-
-        <div style="color:#F87171;">&lt;1.008</div>
-        <div>Hyposthenuric — active dilution</div>
-        <div style="font-size:9.5px;">CDI · NDI · primary polydipsia · severe HAC</div>
+    <!-- Q1: Confirm PU/PD -->
+    <div style="display:grid;grid-template-columns:3fr 2fr;gap:8px;width:100%;">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:5px;">
+        <div class="flow-node step" style="width:100%;">IS THIS TRUE PU/PD?
+          <div class="fn-sub">Large-volume conscious voiding · nocturia · owner witnessed increased drinking</div>
+        </div>
+        <div style="font-size:10px;color:var(--gray);align-self:flex-start;padding-left:4px;">YES ↓</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div style="font-size:9.5px;color:var(--gray);text-align:center;padding-top:8px;">NO →</div>
+        <div class="flow-endpoint" style="background:rgba(100,116,139,0.12);border:1.5px solid rgba(100,116,139,0.35);color:#CBD5E1;font-size:9.5px;text-align:center;">
+          <strong>Pollakiuria / Incontinence</strong><br>
+          <span style="opacity:.8;">Small frequent voids · dysuria · straining · passive leakage<br>→ LUTD / urinary incontinence workup</span>
+        </div>
       </div>
     </div>
     <div class="flow-arrow-v">↓</div>
 
-    <!-- Step 3 -->
-    <div class="flow-node step">STEP 3 — MINIMUM DATABASE</div>
-    <div class="flow-arrow-v">↓</div>
-
-    <div class="flow-node" style="width:100%;padding:10px 12px;font-size:10.5px;line-height:1.6;">
-      <strong style="color:#FCD34D;">Biochemistry:</strong> BUN · creatinine · <strong>SDMA</strong> · phosphate · Ca²⁺ · K⁺ · Na⁺ · glucose · ALP · ALT · albumin · cholesterol<br>
-      <strong style="color:#FCD34D;">Haematology:</strong> CBC — stress leukogram? Absent → Addison's. Leucocytosis → infectious.<br>
-      <strong style="color:#FCD34D;">Urinalysis:</strong> Dipstick (glucose · protein) · sediment (WBC casts → pyelo · ammonium biurate → PSS)<br>
-      <strong style="color:#FCD34D;">T4:</strong> ALL cats &gt;7 yr · dogs with compatible signs<br>
-      <strong style="color:#FCD34D;">BP:</strong> Indirect blood pressure — all PU/PD patients (CKD · HAC · DM · hyperthyroid)
+    <!-- Q2: USG -->
+    <div class="flow-node step">MEASURE SERIAL USG — 3–5 SAMPLES
+      <div class="fn-sub">Different days and times · before IV fluids · note: glucosuria (DM) raises USG artificially · check dipstick glucose on every sample</div>
     </div>
     <div class="flow-arrow-v">↓</div>
 
-    <!-- Step 4 branching -->
-    <div class="flow-node step">STEP 4 — INTERPRET RESULTS</div>
-    <div class="flow-arrow-v">↓</div>
+    <!-- 3-column USG grid -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;width:100%;">
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <div style="font-size:9.5px;font-weight:600;color:#FCD34D;text-align:center;padding:3px 0;">BIOCHEMISTRY PATTERN</div>
-        <div class="flow-endpoint" style="background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.4);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-RENAL','Renal / Urinary')">↑ Cr/BUN/SDMA + isosthenuria → <strong>CKD/AKI</strong> — IRIS stage →</div>
-        <div class="flow-endpoint" style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.4);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')">↑ ALP + USG &lt;1.015 + polyphagia → <strong>HAC</strong> → LDDST/UCCR →</div>
-        <div class="flow-endpoint" style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.4);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')">Glucose &gt;180 (dog)/&gt;270 (cat) + glucosuria → <strong>DM</strong> →</div>
-        <div class="flow-endpoint" style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.4);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')">Na:K &lt;27 → <strong>Addison's</strong> → ACTH stim →</div>
-        <div class="flow-endpoint" style="background:rgba(217,119,6,0.12);border:1.5px solid rgba(217,119,6,0.4);color:#FCD34D;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')">↑ Total Ca²⁺ → iCa + PTH/PTHrP → <strong>Hypercalcaemia-NDI</strong> →</div>
-        <div class="flow-endpoint" style="background:rgba(249,115,22,0.12);border:1.5px solid rgba(249,115,22,0.4);color:#FED7AA;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')">↓ BUN + ↓ albumin + ↓ cholesterol → <strong>PSS</strong> → bile acids →</div>
-        <div class="flow-endpoint" style="background:rgba(249,115,22,0.12);border:1.5px solid rgba(249,115,22,0.4);color:#FED7AA;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')">Intact ♀ + leucocytosis → <strong>Pyometra</strong> → US abdomen →</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <div style="font-size:9.5px;font-weight:600;color:#FCD34D;text-align:center;padding:3px 0;">IRIS CKD STAGING (if azotaemic)</div>
-        <div class="flow-node" style="width:100%;padding:8px 10px;font-size:9px;line-height:1.5;">
-          <strong style="color:#6EE7B7;">Stage 1:</strong> SDMA ≥18 µg/dL, Cr &lt;140 µmol/L<br>
-          <strong style="color:#FCD34D;">Stage 2:</strong> Cr 140–249 µmol/L (dog) / 140–249 (cat)<br>
-          <strong style="color:#FB923C;">Stage 3:</strong> Cr 250–499 µmol/L (dog) / 250–439 (cat)<br>
-          <strong style="color:#F87171;">Stage 4:</strong> Cr ≥500 µmol/L (dog) / ≥440 (cat)<br>
-          <div style="margin-top:5px;border-top:1px solid rgba(148,163,184,.2);padding-top:5px;">
-            <strong>Substage UP/C:</strong> &lt;0.2 NP · 0.2–0.5 BP · &gt;0.5 P (dog)<br>
-            <strong>Substage BP:</strong> &lt;140 · 140–159 pre-HT · 160–179 HT · ≥180 severe
+      <!-- Concentrated -->
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="flex:1;background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.35);font-size:9.5px;text-align:center;">
+          <div style="font-weight:700;color:#6EE7B7;margin-bottom:4px;">CONCENTRATED<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">&gt;1.030 dog · &gt;1.035 cat</span></div>
+          <div style="text-align:left;color:var(--gray);line-height:1.55;">
+            • Check glucosuria<br>
+            • Glucosuria → DM<br>
+            &nbsp;&nbsp;(osmotic diuresis)<br>
+            • No glucosuria →<br>
+            &nbsp;&nbsp;Primary polydipsia<br>
+            • Na⁺ low-normal
           </div>
         </div>
-        <div class="flow-endpoint" style="background:rgba(16,185,129,0.12);border:1.5px solid rgba(16,185,129,0.3);color:#A7F3D0;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')">↑ T4 (cat) → <strong>Hyperthyroidism</strong> — recheck renal after Rx →</div>
-        <div class="flow-endpoint" style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-RENAL','Renal / Urinary')">Active sediment + fever + pyuria → <strong>Pyelonephritis</strong> → culture →</div>
-        <div class="flow-endpoint" style="background:rgba(100,116,139,0.12);border:1.5px solid rgba(100,116,139,0.3);color:#CBD5E1;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-NDI','Nephrogenic DI (NDI)')">Glucosuria + normoglycaemia → <strong>Renal glucosuria / Fanconi</strong> →</div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-endpoint" style="background:rgba(16,185,129,0.15);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9.5px;text-align:center;cursor:pointer;" onclick="renderPUPDFlowConc()">Concentrated USG →<br><span style="font-size:8.5px;opacity:.8;">DM · Primary polydipsia</span></div>
       </div>
+
+      <!-- Partial / Isosthenuric -->
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="flex:1;background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.4);font-size:9.5px;text-align:center;">
+          <div style="font-weight:700;color:#FCD34D;margin-bottom:4px;">PARTIAL / ISO<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">1.008–1.029</span></div>
+          <div style="text-align:left;color:var(--gray);line-height:1.55;">
+            • Broad differential<br>
+            • HAC · CKD · DM<br>
+            • Addison's · pyelonephritis<br>
+            • Check ALP · Na:K<br>
+            • Intact ♀ → pyometra<br>
+            • ↑ Ca²⁺ → lymphoma
+          </div>
+        </div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.12);border:1.5px solid rgba(245,158,11,0.4);color:#FCD34D;font-size:9.5px;text-align:center;cursor:pointer;" onclick="renderPUPDFlowPartial()">Systemic disease →<br><span style="font-size:8.5px;opacity:.8;">HAC · CKD · Addison's · more</span></div>
+      </div>
+
+      <!-- Hyposthenuria -->
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="flex:1;background:rgba(220,38,38,0.1);border-color:rgba(220,38,38,0.4);font-size:9.5px;text-align:center;">
+          <div style="font-weight:700;color:#FCA5A5;margin-bottom:4px;">HYPOSTHENURIA<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">&lt;1.008</span></div>
+          <div style="text-align:left;color:var(--gray);line-height:1.55;">
+            • Active dilution<br>
+            • CDI · NDI · primary PD<br>
+            • Na⁺ high-normal → CDI<br>
+            • Na⁺ low-normal →<br>
+            &nbsp;&nbsp;Primary polydipsia<br>
+            • Desmopressin trial
+          </div>
+        </div>
+        <div class="flow-arrow-v">↓</div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);color:#FCA5A5;font-size:9.5px;text-align:center;cursor:pointer;" onclick="renderPUPDFlowHypo()">Hyposthenuria →<br><span style="font-size:8.5px;opacity:.8;">CDI · NDI · desmopressin trial</span></div>
+      </div>
+
+    </div>
+
+    <!-- Pearls -->
+    <div style="margin-top:10px;padding:9px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:4px;">🔬 CLINICAL PEARLS</div>
+      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
+        <strong style="color:var(--white);">Absent stress leukogram</strong> in a sick dog → think Addison's (low cortisol abolishes stress response)<br>
+        <strong style="color:var(--white);">↑ ALP + polyphagia + pot belly + USG &lt;1.015</strong> → HAC until proven otherwise<br>
+        <strong style="color:var(--white);">Young dog</strong> with profound PU/PD + no systemic signs + plasma Na⁺ low-normal → primary polydipsia<br>
+        <strong style="color:var(--white);">Cat &gt;7 yr</strong> + weight loss + tachycardia → T4 first; hyperthyroidism masks concurrent CKD
+      </div>
+    </div>
+
+    <!-- Safety -->
+    <div style="margin-top:8px;padding:9px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;font-size:9.5px;width:100%;">
+      <span style="color:#F87171;font-weight:700;">⚠️ SAFETY: </span>
+      <span style="color:#FCA5A5;">NEVER restrict water · NEVER desmopressin if hyponatraemic (Na &lt;145) · Rule out HAC before desmopressin · Rectal exam mandatory (anal sac carcinoma → hypercalcaemia)</span>
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderPUPDFlowConc(){
+  replace(renderPUPDFlowConc,'PU/PD — Concentrated USG');
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.4);color:#6EE7B7;">💧 CONCENTRATED USG — PU/PD CAUSES</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">KEY: USG &gt;1.030 (dog) · &gt;1.035 (cat)
+      <div class="fn-sub" style="font-weight:400;margin-top:2px;">First check dipstick — glucosuria raises USG artificially in DM and may mask dilute urine</div>
     </div>
     <div class="flow-arrow-v">↓</div>
 
-    <!-- Step 5 -->
-    <div class="flow-node step">STEP 5 — IF DATABASE NORMAL: SERIAL USG + PLASMA Na⁺</div>
+    <!-- Q: glucosuria? -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#6EE7B7;background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3);text-align:center;">GLUCOSURIA PRESENT</div>
+        <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+          <strong>Diabetes mellitus</strong> ⚠️<br>
+          <span style="opacity:.8;">Blood glucose &gt;180 mg/dL (dog) · &gt;270 mg/dL (cat)<br>Osmotic diuresis drives PU/PD<br>USG may be deceptively concentrated<br>→ Confirm: BG + repeat fructosamine</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+          <strong>Renal glucosuria / Fanconi syndrome</strong><br>
+          <span style="opacity:.8;">Normal blood glucose + glucosuria<br>Renal tubular threshold defect · Basenji predisposed<br>→ Urinary amino acids · renal biochemistry panel</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+          <strong>Stress hyperglycaemia (cat)</strong><br>
+          <span style="opacity:.8;">Transient glucose &gt;270 in stressed cat · no glucosuria on repeat<br>→ Fructosamine to distinguish from true DM</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#6EE7B7;background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3);text-align:center;">NO GLUCOSURIA</div>
+        <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+          <strong>Primary (psychogenic) polydipsia</strong><br>
+          <span style="opacity:.8;">Diagnosis of exclusion · young large breed dog<br>At least 1 USG &gt;1.030 documented<br>Plasma Na⁺ low-normal or low (dilutional)<br>Variable USG on serial samples · no systemic illness</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+          <strong>Hyperthyroidism (cat)</strong><br>
+          <span style="opacity:.8;">Primary polydipsia mechanism · weight loss despite polyphagia<br>Tachycardia · palpable goitre<br>→ T4 (all cats &gt;7 yr with PU/PD)</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+          <strong>Medullary washout (resolving)</strong><br>
+          <span style="opacity:.8;">After correction of any chronic cause · USG gradually reconcentrates<br>→ Serial USG over days to weeks</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:10px;padding:9px 12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#6EE7B7;margin-bottom:4px;">🔬 DIAGNOSTIC APPROACH — Concentrated USG</div>
+      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
+        <strong style="color:var(--white);">All cases:</strong> Dipstick urinalysis (glucose, protein) · blood glucose · CBC + biochemistry · blood pressure<br>
+        <strong style="color:var(--white);">If glucosuria + hyperglycaemia:</strong> Fructosamine (cat — rule out stress) · urinalysis culture (UTI common in DM)<br>
+        <strong style="color:var(--white);">If glucosuria + normoglycaemia:</strong> Urinary amino acids · renal tubular panel (Fanconi)<br>
+        <strong style="color:var(--white);">Primary polydipsia suspected:</strong> Serial USG (document ≥1 &gt;1.030) · plasma Na⁺ · rule out ALL other causes first · NEVER perform water deprivation without full workup
+      </div>
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderPUPDFlowPartial(){
+  replace(renderPUPDFlowPartial,'PU/PD — Systemic Disease');
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.4);color:#FCD34D;">💧 PARTIAL / ISOSTHENURIC USG — PU/PD CAUSES</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">KEY: USG 1.008–1.029 — broad differential
+      <div class="fn-sub" style="font-weight:400;margin-top:2px;">Minimum database (biochem · haematology · urinalysis · T4 cats · BP) will usually identify the cause</div>
+    </div>
     <div class="flow-arrow-v">↓</div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;width:100%;">
-      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <div class="flow-node" style="width:100%;background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3);font-size:10px;text-align:center;">≥1 USG &gt;1.030<br><span style="font-size:9px;opacity:.7;">Na⁺ low-normal</span></div>
-        <div class="flow-arrow-v">↓</div>
-        <div class="flow-endpoint gi-upper" onclick="goLesionTab('LOC-PUPD-PRIM','Primary polydipsia')" style="width:100%;font-size:9px;text-align:center;">Primary polydipsia</div>
+    <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
+        <strong>Hyperadrenocorticism (HAC / Cushing's)</strong> — most common cause of secondary NDI in dogs<br>
+        <span style="opacity:.85;">↑ ALP (often markedly) · polyphagia · pot belly · truncal alopecia · calcinosis cutis<br>USG often 1.001–1.015 · stress leukogram present<br>→ UCCR (screen) → LDDST or ACTH stim (confirm) → abdominal US (adrenal size)</span>
       </div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <div class="flow-node" style="width:100%;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);color:#C7D2FE;font-size:10px;text-align:center;">All USG &lt;1.007<br><span style="font-size:9px;opacity:.7;">Na⁺ high-normal ↑</span></div>
-        <div class="flow-arrow-v">↓</div>
-        <div class="flow-endpoint" style="width:100%;background:rgba(99,102,241,0.15);border:1.5px solid rgba(99,102,241,0.5);color:#C7D2FE;font-size:9px;text-align:center;cursor:pointer;" onclick="renderDxPUPDDesmopressin()">💉 Desmopressin trial<br>CDI vs NDI</div>
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
+        <strong>Chronic kidney disease (CKD)</strong><br>
+        <span style="opacity:.85;">↑ SDMA (early) · ↑ creatinine · ↑ BUN · isosthenuria (1.008–1.012) · weight loss<br>→ IRIS staging · UPC · BP · renal US · urine culture</span>
       </div>
-      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <div class="flow-node" style="width:100%;background:rgba(217,119,6,0.1);border-color:rgba(217,119,6,0.3);color:var(--amber-text);font-size:10px;text-align:center;">Partial response<br><span style="font-size:9px;opacity:.7;">USG variable</span></div>
-        <div class="flow-arrow-v">↓</div>
-        <div class="flow-endpoint" style="width:100%;background:rgba(217,119,6,0.12);border:1.5px solid rgba(217,119,6,0.4);color:var(--amber-text);font-size:9px;text-align:center;cursor:pointer;" onclick="goLesionTab('LOC-PUPD-NDI','Nephrogenic DI (NDI)')">Partial CDI or secondary NDI →</div>
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
+        <strong>Diabetes mellitus</strong><br>
+        <span style="opacity:.85;">Glucosuria + hyperglycaemia (BG &gt;180 mg/dL dog / &gt;270 mg/dL cat) · weight loss · polyphagia<br>USG variable — glucosuria raises it artificially → check dipstick every time<br>→ Fructosamine in cats (stress hyperglycaemia)</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
+        <strong>Hypoadrenocorticism (Addison's disease)</strong> — the great pretender<br>
+        <span style="opacity:.85;">Na:K &lt;27 · stress leukogram ABSENT despite illness<br>Waxing/waning history · medullary washout → isosthenuria<br>→ Basal cortisol &lt;55 nmol/L or ACTH stimulation test</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
+        <strong>Hypercalcaemia</strong> — secondary NDI<br>
+        <span style="opacity:.85;">Ca²⁺ &gt;3.0 mmol/L · constipation · muscle weakness · vomiting · lethargy<br>Causes: lymphoma · anal sac adenocarcinoma · hyperparathyroidism · Addison's · Vit D toxicity<br>→ Ionised Ca²⁺ · PTH · PTHrP · rectal exam (anal sac) · lymph nodes · abdominal US</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
+        <strong>Pyometra</strong> ⚠️<br>
+        <span style="opacity:.85;">Intact ♀ · 4–8 wks post-oestrus · vaginal discharge (open) or none (closed)<br>E. coli endotoxin → secondary NDI · leucocytosis<br>→ Abdominal US · surgical management</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
+        <strong>Pyelonephritis</strong><br>
+        <span style="opacity:.85;">Fever · painful kidneys · leucocytosis · active urine sediment (WBC casts) · ± azotaemia<br>E. coli endotoxin → secondary NDI<br>→ Urine culture (cystocentesis) · renal US</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
+        <strong>Portosystemic shunt (PSS)</strong> — dog<br>
+        <span style="opacity:.85;">Young dog · stunted growth · post-prandial neurological signs · ammonium biurate crystals<br>↓ BUN · ↓ albumin · ↓ cholesterol · microcytic anaemia (medullary urea washout)<br>→ Pre/post-prandial bile acids · ammonia · abdominal US · CT angiography</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
+        <strong>Hyperthyroidism (cat)</strong> · <strong>Hypothyroidism (dog)</strong><br>
+        <span style="opacity:.85;">Cat hyperthyroidism: primary polydipsia mechanism · also increases GFR masking CKD → recheck renal after Rx<br>Dog hypothyroidism: uncommon cause · weight gain · bradycardia · symmetrical alopecia<br>→ T4 (all cats &gt;7 yr) · free T4 + TSH (dog)</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
+        <strong>Hypokalemia</strong> — secondary NDI<br>
+        <span style="opacity:.85;">Impairs aquaporin insertion in collecting duct · muscle weakness · ventroflexion of neck (cat)<br>→ Serum K⁺ · identify and treat underlying cause</span>
+      </div>
+
+    </div>
+
+    <div style="margin-top:10px;padding:9px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#FCD34D;margin-bottom:4px;">🔬 DIAGNOSTIC APPROACH — Partial/Isosthenuric USG</div>
+      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
+        <strong style="color:var(--white);">All cases:</strong> CBC · biochemistry (BUN · Cr · SDMA · ALP · ALT · Na · K · Ca²⁺ · glucose · albumin) · urinalysis + culture · BP<br>
+        <strong style="color:var(--white);">Dog:</strong> UCCR (HAC screen) · LDDST/ACTH stim if UCCR elevated · rectal exam (anal sac)<br>
+        <strong style="color:var(--white);">Cat &gt;7 yr:</strong> T4 first — hyperthyroidism most common endocrine PU/PD in older cat<br>
+        <strong style="color:var(--white);">Intact ♀:</strong> Abdominal US (pyometra) before pursuing further endocrine workup<br>
+        <strong style="color:var(--white);">↑ Ca²⁺:</strong> Ionised Ca²⁺ + PTHrP + PTH → rectal exam + lymph node palpation + chest radiograph
       </div>
     </div>
 
-    <div style="margin-top:12px;padding:9px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;font-size:10px;width:100%;">
-      <span style="color:#F87171;font-weight:700;">⚠️ Safety rules:</span>
-      <span style="color:#FCA5A5;"> NEVER restrict water · NEVER perform desmopressin trial if hyponatraemic (Na &lt;145) · NEVER skip HAC screen before desmopressin · Rectal exam mandatory (anal sac carcinoma = hypercalcaemia)</span>
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderPUPDFlowHypo(){
+  replace(renderPUPDFlowHypo,'PU/PD — Hyposthenuria');
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.4);color:#FCA5A5;">💧 HYPOSTHENURIA (&lt;1.008) — PU/PD CAUSES</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">KEY: Active dilution — renal tubule is producing urine more dilute than plasma
+      <div class="fn-sub" style="font-weight:400;margin-top:2px;">Confirm consistently &lt;1.008 on 3–5 serial samples · check plasma Na⁺ — key discriminator · rule out secondary causes before desmopressin trial</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+
+      <!-- Na high-normal / CDI -->
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.1);border-color:rgba(220,38,38,0.3);text-align:center;">Na⁺ HIGH-NORMAL ↑<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">Free water loss → concentrated plasma</span></div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+          <strong>Central diabetes insipidus (CDI)</strong><br>
+          <span style="opacity:.8;">Insufficient ADH from hypothalamus/posterior pituitary<br>Profound PU/PD · otherwise well · USG 1.001–1.007<br>Causes: idiopathic (most common) · head trauma · pituitary neoplasia · cysts · inflammation<br>→ Responds to desmopressin</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+          <strong>Primary NDI</strong> — rare<br>
+          <span style="opacity:.8;">Congenital ADH receptor mutation · extremely rare<br>Profound hyposthenuria · NO response to desmopressin<br>→ Diagnosis of exclusion after all secondary causes excluded</span>
+        </div>
+      </div>
+
+      <!-- Na low-normal / Primary PD + secondary NDI -->
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.1);border-color:rgba(220,38,38,0.3);text-align:center;">Na⁺ LOW-NORMAL ↓<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">Excessive water intake → dilutional</span></div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+          <strong>Primary (psychogenic) polydipsia</strong><br>
+          <span style="opacity:.8;">Young large breed dog · anxious or stimulus-seeking · may have had ≥1 USG &gt;1.030<br>Dilutional hyponatraemia · medullary washout → variable USG<br>→ Serial USG · exclude all other causes · <strong>NO desmopressin if hyponatraemic</strong></span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+          <strong>Secondary NDI</strong> — from underlying disease<br>
+          <span style="opacity:.8;">HAC (glucocorticoids blunt ADH) · hypercalcaemia · hypokalemia<br>Pyometra / pyelonephritis (E. coli endotoxin) · leptospirosis<br>→ Treat the underlying cause — NDI resolves</span>
+        </div>
+      </div>
+
     </div>
 
+    <!-- Desmopressin CTA -->
+    <div style="margin-top:10px;padding:9px 12px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:5px;">💉 DESMOPRESSIN TRIAL — CDI vs NDI vs Primary PD</div>
+      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
+        <strong style="color:var(--white);">Prerequisites:</strong> HAC excluded · pyometra excluded · hypercalcaemia excluded · Na⁺ ≥145 · free water access throughout<br>
+        <strong style="color:var(--white);">Dose:</strong> 0.05–0.1 mg PO q8–12h (dog) · conjunctival drops 1–2 drops q12–24h (cat) — 5–7 days<br>
+        <strong style="color:var(--white);">USG &gt;1.015 + ↓ water intake &gt;50%</strong> → CDI — commence long-term DDAVP<br>
+        <strong style="color:var(--white);">No response</strong> → Primary NDI or secondary NDI (check for undiagnosed cause)<br>
+        <strong style="color:var(--white);">Partial response</strong> → Partial CDI · secondary NDI · or primary polydipsia with medullary washout
+      </div>
+      <div style="margin-top:6px;font-size:9.5px;cursor:pointer;color:#818CF8;text-decoration:underline;" onclick="renderDxPUPDDesmopressin()">→ Full desmopressin trial protocol (diagnostics)</div>
+    </div>
+
+    <div style="margin-top:8px;padding:9px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;font-size:9.5px;width:100%;">
+      <span style="color:#F87171;font-weight:700;">⚠️ NEVER: </span>
+      <span style="color:#FCA5A5;">Restrict water access · Desmopressin if Na⁺ &lt;145 (severe hyponatraemia risk) · Skip HAC screen before desmopressin (some HAC dogs partially respond → false CDI diagnosis)</span>
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
   </div>
   `);
 }
@@ -6559,6 +6753,9 @@ export function mountGlobals() {
   w.renderPersistentWeakness = renderPersistentWeakness;
   w.renderCollapseFlow = renderCollapseFlow;
   w.renderPUPDFlow = renderPUPDFlow;
+  w.renderPUPDFlowConc = renderPUPDFlowConc;
+  w.renderPUPDFlowPartial = renderPUPDFlowPartial;
+  w.renderPUPDFlowHypo = renderPUPDFlowHypo;
   w.renderDiarrhoeaFlow = renderDiarrhoeaFlow;
   w.renderJaundiceFlow = renderJaundiceFlow;
   w.renderTrueVom = renderTrueVom;
