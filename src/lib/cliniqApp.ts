@@ -2678,31 +2678,138 @@ function renderPaleGumsFlow(){
   <div class="flow-wrap">
     <div class="flow-node entry">🩸 PALE MUCOUS MEMBRANES</div>
     <div class="flow-arrow-v">↓</div>
-    <div class="flow-node step" style="font-size:12px;line-height:1.5;">CHECK PCV/TS + CRT + Heart rate<br><span style="font-size:10px;color:var(--gray);">Is the patient anaemic or poorly perfused?</span></div>
+
+    <!-- Step 1 -->
+    <div class="flow-node step">CHECK PCV · TS · CRT · HEART RATE
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Is the patient anaemic (low PCV) or poorly perfused (normal PCV)?</div>
+    </div>
     <div class="flow-arrow-v">↓</div>
+
+    <!-- PCV/TS quick guide -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;width:100%;margin-bottom:10px;">
+      <div style="padding:7px 8px;background:rgba(99,102,241,0.1);border:1px solid rgba(99,102,241,0.3);border-radius:8px;font-size:9px;line-height:1.4;">
+        <strong style="color:#A5B4FC;">Low PCV + Normal TS</strong><br>
+        <span style="color:var(--gray);">Haemolysis</span>
+      </div>
+      <div style="padding:7px 8px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.3);border-radius:8px;font-size:9px;line-height:1.4;">
+        <strong style="color:#FCA5A5;">Low PCV + Low TS</strong><br>
+        <span style="color:var(--gray);">Haemorrhage<br>(TS lags hrs)</span>
+      </div>
+      <div style="padding:7px 8px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:8px;font-size:9px;line-height:1.4;">
+        <strong style="color:#FCD34D;">Normal PCV + Pale</strong><br>
+        <span style="color:var(--gray);">Poor perfusion / shock</span>
+      </div>
+    </div>
+
+    <!-- Two main branches -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
-      <div class="flow-node insp" style="cursor:pointer;font-size:11px;line-height:1.5;" onclick="goLesionTab('LOC-PM-ANAEMIA','Anaemia')">
-        🟣 Anaemia (low PCV)<div class="fn-sub">Regenerative vs Non-regen<br>vs Pre-regenerative<br>Check reticulocytes + smear</div>
+
+      <!-- ANAEMIA branch -->
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node insp" style="font-size:10.5px;font-weight:700;">🟣 PCV LOW — ANAEMIA</div>
+
+        <!-- Regenerative? -->
+        <div class="flow-node sub-step" style="font-size:9.5px;">Regenerative or Non-regenerative?<br><span style="font-weight:400;opacity:.8;">Reticulocytes &gt;70k/μL dog · &gt;50k/μL cat</span></div>
+
+        <!-- Smear -->
+        <div style="padding:7px 9px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:8px;font-size:9px;line-height:1.5;color:var(--gray);">
+          <strong style="color:#A5B4FC;">🔬 Blood smear first:</strong><br>
+          Spherocytes → <strong style="color:var(--white);">IMHA</strong><br>
+          Heinz bodies → <strong style="color:var(--white);">Oxidative haemolysis</strong><br>
+          Parasites → <strong style="color:var(--white);">Babesia · Mycoplasma</strong><br>
+          Agglutination → <strong style="color:var(--white);">IMHA</strong> (saline wash)<br>
+          Schistocytes → <strong style="color:var(--white);">DIC / microangiopathy</strong>
+        </div>
+
+        <!-- Regenerative causes -->
+        <div class="flow-node" style="font-size:9px;font-weight:700;color:#6EE7B7;background:rgba(16,185,129,0.08);border-color:rgba(16,185,129,0.25);">REGENERATIVE</div>
+        <div style="display:flex;flex-direction:column;gap:3px;">
+          <div class="flow-endpoint" style="font-size:9px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);color:#6EE7B7;">
+            <strong>IMHA</strong><br><span style="opacity:.75;">Spherocytes + agglutination · Coombs +ve · prednisolone + adjunct</span>
+          </div>
+          <div class="flow-endpoint" style="font-size:9px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);color:#6EE7B7;">
+            <strong>Haemorrhage</strong><br><span style="opacity:.75;">Low TS · acute bleed · trauma · coagulopathy · GI ulcer</span>
+          </div>
+          <div class="flow-endpoint" style="font-size:9px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);color:#6EE7B7;">
+            <strong>Oxidative haemolysis</strong><br><span style="opacity:.75;">Heinz bodies · onion/garlic/zinc/paracetamol (cat)</span>
+          </div>
+          <div class="flow-endpoint" style="font-size:9px;background:rgba(16,185,129,0.06);border:1px solid rgba(16,185,129,0.2);color:#6EE7B7;">
+            <strong>Babesia / Mycoplasma</strong><br><span style="opacity:.75;">PCR · tick history · geographical risk</span>
+          </div>
+        </div>
+
+        <!-- Non-regenerative causes -->
+        <div class="flow-node" style="font-size:9px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.08);border-color:rgba(220,38,38,0.25);">NON-REGENERATIVE</div>
+        <div style="display:flex;flex-direction:column;gap:3px;">
+          <div class="flow-endpoint" style="font-size:9px;background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.2);color:#FCA5A5;">
+            <strong>Anaemia of chronic disease</strong><br><span style="opacity:.75;">Normocytic normochromic · inflammation / neoplasia</span>
+          </div>
+          <div class="flow-endpoint" style="font-size:9px;background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.2);color:#FCA5A5;">
+            <strong>CKD</strong><br><span style="opacity:.75;">↓ EPO production · non-regenerative · darbepoetin</span>
+          </div>
+          <div class="flow-endpoint" style="font-size:9px;background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.2);color:#FCA5A5;">
+            <strong>Bone marrow disease</strong><br><span style="opacity:.75;">Aplasia · infiltration · BM aspirate if no regen by day 5</span>
+          </div>
+          <div class="flow-endpoint" style="font-size:9px;background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.2);color:#FCA5A5;">
+            <strong>FeLV / FIV</strong><br><span style="opacity:.75;">Cats · retroviral suppression · SNAP test</span>
+          </div>
+          <div class="flow-endpoint" style="font-size:9px;background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.2);color:#FCA5A5;">
+            <strong>Iron deficiency</strong><br><span style="opacity:.75;">Chronic blood loss · microcytic hypochromic · serum iron + TIBC</span>
+          </div>
+        </div>
       </div>
-      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;line-height:1.5;" onclick="goLesionTab('LOC-PM-PERFUSION','Poor perfusion')">
-        🔴 Poor perfusion (normal PCV)<div class="fn-sub">Prolonged CRT, weak pulses<br>Hypovolaemic / cardiogenic<br>/ distributive shock</div>
+
+      <!-- POOR PERFUSION branch -->
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node mixed" style="font-size:10.5px;font-weight:700;">🔴 PCV NORMAL — POOR PERFUSION</div>
+
+        <!-- Assess -->
+        <div class="flow-node sub-step" style="font-size:9.5px;">Assess: CRT · pulse quality · HR · BP · lactate · temp</div>
+
+        <!-- Shock types -->
+        <div class="flow-node" style="font-size:9px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.25);">HYPOVOLAEMIC</div>
+        <div class="flow-endpoint" style="font-size:9px;">
+          Weak/absent pulses · tachycardia · prolonged CRT<br>
+          <span style="opacity:.75;">Haemorrhage · GI loss · third-spacing · dehydration<br>→ IV crystalloids + colloids · find and stop the source</span>
+        </div>
+
+        <div class="flow-node" style="font-size:9px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.25);">CARDIOGENIC</div>
+        <div class="flow-endpoint" style="font-size:9px;">
+          Arrhythmia or murmur · pulmonary oedema · JVD<br>
+          <span style="opacity:.75;">DCM · HCM · valvular disease<br>→ Echo · furosemide · antiarrhythmics</span>
+        </div>
+
+        <div class="flow-node" style="font-size:9px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.25);">OBSTRUCTIVE</div>
+        <div class="flow-endpoint" style="font-size:9px;">
+          Muffled heart sounds · JVD · pulsus paradoxus<br>
+          <span style="opacity:.75;">Pericardial effusion / tamponade · GDV<br>→ Pericardiocentesis · echo · emergency surgery</span>
+        </div>
+
+        <div class="flow-node" style="font-size:9px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.25);">DISTRIBUTIVE (SEPSIS / SIRS)</div>
+        <div class="flow-endpoint" style="font-size:9px;">
+          Hyperdynamic early (bounding pulses, short CRT, fever)<br>
+          → Decompensates to pale + weak + hypothermic<br>
+          <span style="opacity:.75;">Pyometra · GDV · peritonitis · aspiration pneumonia<br>→ IV fluids + broad-spectrum antibiotics · source control</span>
+        </div>
+
+        <div class="flow-node" style="font-size:9px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.25);">HYPOADRENOCORTICISM</div>
+        <div class="flow-endpoint" style="font-size:9px;">
+          Waxing/waning collapse · bradycardia (hyperkalaemia) · hyponatraemia<br>
+          <span style="opacity:.75;">Na:K &lt;27 · ACTH stimulation test<br>→ IV NaCl + dexamethasone acutely · DOCP/fludrocortisone long-term</span>
+        </div>
       </div>
     </div>
-  </div>
-  <div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:12px;">
-    <div style="font-size:11px;font-weight:600;color:#F87171;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">⚠️ Transfusion thresholds</div>
-    <div style="font-size:12px;color:#FCA5A5;line-height:1.65;">
-      <strong>Dog:</strong> PCV &lt;20%<br>
-      <strong>Cat:</strong> PCV &lt;15%
+
+    <!-- Transfusion threshold -->
+    <div style="margin-top:12px;padding:9px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:4px;">⚠️ TRANSFUSION THRESHOLDS</div>
+      <div style="font-size:9.5px;color:#FCA5A5;line-height:1.6;">
+        <strong>Dog:</strong> PCV &lt;20% (or clinical signs — tachycardia, weakness — at higher PCVs)<br>
+        <strong>Cat:</strong> PCV &lt;15%<br>
+        <strong>Type:</strong> pRBC for chronic anaemia · whole blood / FFP if coagulopathy concurrent
+      </div>
     </div>
-  </div>
-  <div style="margin-top:8px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;">
-    <div style="font-size:11px;font-weight:600;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">💡 PCV/TS quick guide</div>
-    <div style="font-size:12px;color:var(--gray);line-height:1.65;">
-      <strong style="color:var(--white);">Low PCV + Normal TS</strong> = haemolysis<br>
-      <strong style="color:var(--white);">Low PCV + Low TS</strong> = haemorrhage (TS drop takes hours)<br>
-      <strong style="color:var(--white);">Normal PCV + Pale</strong> = poor perfusion / shock
-    </div>
+
   </div>
   <div class="disclaimer">For qualified veterinary professionals only.</div>
   `);
