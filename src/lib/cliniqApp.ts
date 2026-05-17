@@ -2688,26 +2688,14 @@ function renderPaleGumsFlow(){
         <div class="flow-node insp" style="width:100%;font-size:11px;font-weight:700;">Anaemia<div class="fn-sub" style="font-weight:400;">Low PCV · check reticulocytes + smear</div></div>
         <div class="flow-arrow-v">↓</div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;width:100%;">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-            <div class="flow-node" style="width:100%;font-size:9.5px;font-weight:700;color:#6EE7B7;background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.4);text-align:center;">Regenerative</div>
-            <div class="flow-arrow-v" style="font-size:11px;">↓</div>
-            <div class="flow-endpoint" style="width:100%;background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-REGEN')">
-              Regenerative anaemia ⚠️
-            </div>
+          <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-REGEN')">
+            Regenerative anaemia ⚠️
           </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-            <div class="flow-node" style="width:100%;font-size:9.5px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.4);text-align:center;">Non-regenerative</div>
-            <div class="flow-arrow-v" style="font-size:11px;">↓</div>
-            <div class="flow-endpoint" style="width:100%;background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-NONREGEN')">
-              Non-regenerative anaemia
-            </div>
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-NONREGEN')">
+            Non-regenerative anaemia
           </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-            <div class="flow-node" style="width:100%;font-size:9.5px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.4);text-align:center;">Pre-regenerative</div>
-            <div class="flow-arrow-v" style="font-size:11px;">↓</div>
-            <div class="flow-endpoint" style="width:100%;background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-PREREGEN')">
-              Pre-regenerative anaemia (&lt;3–5 days)
-            </div>
+          <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-PREREGEN')">
+            Pre-regenerative anaemia (&lt;3–5 days)
           </div>
         </div>
       </div>
@@ -2717,19 +2705,11 @@ function renderPaleGumsFlow(){
         <div class="flow-node mixed" style="width:100%;font-size:11px;font-weight:700;">Poor perfusion<div class="fn-sub" style="font-weight:400;">Normal PCV · prolonged CRT · weak pulses</div></div>
         <div class="flow-arrow-v">↓</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-            <div class="flow-node" style="width:100%;font-size:9.5px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.4);text-align:center;">Shock</div>
-            <div class="flow-arrow-v" style="font-size:11px;">↓</div>
-            <div class="flow-endpoint" style="width:100%;background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-SHOCK')">
-              Hypovolaemic / distributive / cardiogenic shock ⚠️
-            </div>
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-SHOCK')">
+            Hypovolaemic / distributive / cardiogenic shock ⚠️
           </div>
-          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-            <div class="flow-node" style="width:100%;font-size:9.5px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.4);text-align:center;">Cardiac</div>
-            <div class="flow-arrow-v" style="font-size:11px;">↓</div>
-            <div class="flow-endpoint" style="width:100%;background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-CARD')">
-              Acute cardiac failure / pericardial effusion ⚠️
-            </div>
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-CARD')">
+            Acute cardiac failure / pericardial effusion ⚠️
           </div>
         </div>
       </div>
