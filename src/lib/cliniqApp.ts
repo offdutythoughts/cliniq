@@ -2678,27 +2678,73 @@ function renderPaleGumsFlow(){
   <div class="flow-wrap">
     <div class="flow-node entry">🩸 PALE MUCOUS MEMBRANES</div>
     <div class="flow-arrow-v">↓</div>
-    <div class="flow-node step" style="font-size:12px;line-height:1.5;">CHECK PCV/TS + CRT + Heart rate<br><span style="font-size:10px;color:var(--gray);">Is the patient anaemic or poorly perfused?</span></div>
+    <div class="flow-node step">IDENTIFY LESION CATEGORY<br><span style="font-size:10px;color:var(--gray);font-weight:400;">CHECK PCV · TS · CRT · Heart rate</span></div>
     <div class="flow-arrow-v">↓</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
-      <div class="flow-node insp" style="cursor:pointer;font-size:11px;line-height:1.5;" onclick="goLesionTab('LOC-PM-ANAEMIA','Anaemia')">
-        🟣 Anaemia (low PCV)<div class="fn-sub">Regenerative vs Non-regen<br>vs Pre-regenerative<br>Check reticulocytes + smear</div>
+
+    <div style="display:grid;grid-template-columns:3fr 2fr;gap:10px;width:100%;">
+
+      <!-- ANAEMIA branch -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div class="flow-node insp" style="width:100%;font-size:11px;font-weight:700;">Anaemia<div class="fn-sub" style="font-weight:400;">Low PCV · check reticulocytes + smear</div></div>
+        <div class="flow-arrow-v">↓</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;width:100%;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+            <div class="flow-node" style="width:100%;font-size:9.5px;font-weight:700;color:#6EE7B7;background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.4);text-align:center;">Regenerative</div>
+            <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+            <div class="flow-endpoint" style="width:100%;background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-REGEN')">
+              Regenerative anaemia ⚠️
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+            <div class="flow-node" style="width:100%;font-size:9.5px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.4);text-align:center;">Non-regenerative</div>
+            <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+            <div class="flow-endpoint" style="width:100%;background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-NONREGEN')">
+              Non-regenerative anaemia
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+            <div class="flow-node" style="width:100%;font-size:9.5px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.4);text-align:center;">Pre-regenerative</div>
+            <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+            <div class="flow-endpoint" style="width:100%;background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-PREREGEN')">
+              Pre-regenerative anaemia (&lt;3–5 days)
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;line-height:1.5;" onclick="goLesionTab('LOC-PM-PERFUSION','Poor perfusion')">
-        🔴 Poor perfusion (normal PCV)<div class="fn-sub">Prolonged CRT, weak pulses<br>Hypovolaemic / cardiogenic<br>/ distributive shock</div>
+
+      <!-- POOR PERFUSION branch -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div class="flow-node mixed" style="width:100%;font-size:11px;font-weight:700;">Poor perfusion<div class="fn-sub" style="font-weight:400;">Normal PCV · prolonged CRT · weak pulses</div></div>
+        <div class="flow-arrow-v">↓</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+            <div class="flow-node" style="width:100%;font-size:9.5px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.4);text-align:center;">Shock</div>
+            <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+            <div class="flow-endpoint" style="width:100%;background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-SHOCK')">
+              Hypovolaemic / distributive / cardiogenic shock ⚠️
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
+            <div class="flow-node" style="width:100%;font-size:9.5px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.4);text-align:center;">Cardiac</div>
+            <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+            <div class="flow-endpoint" style="width:100%;background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-CARD')">
+              Acute cardiac failure / pericardial effusion ⚠️
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
   </div>
   <div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:12px;">
-    <div style="font-size:11px;font-weight:600;color:#F87171;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">⚠️ Transfusion thresholds</div>
-    <div style="font-size:12px;color:#FCA5A5;line-height:1.65;">
-      <strong>Dog:</strong> PCV &lt;20%<br>
-      <strong>Cat:</strong> PCV &lt;15%
+    <div style="font-size:11px;font-weight:600;color:#F87171;margin-bottom:4px;">⚠️ Transfusion thresholds</div>
+    <div style="font-size:11px;color:#FCA5A5;line-height:1.65;">
+      <strong>Dog:</strong> PCV &lt;20% · <strong>Cat:</strong> PCV &lt;15%
     </div>
   </div>
   <div style="margin-top:8px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;">
-    <div style="font-size:11px;font-weight:600;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">💡 PCV/TS quick guide</div>
-    <div style="font-size:12px;color:var(--gray);line-height:1.65;">
+    <div style="font-size:11px;font-weight:600;color:var(--gray2);margin-bottom:4px;">💡 PCV/TS quick guide</div>
+    <div style="font-size:11px;color:var(--gray);line-height:1.65;">
       <strong style="color:var(--white);">Low PCV + Normal TS</strong> = haemolysis<br>
       <strong style="color:var(--white);">Low PCV + Low TS</strong> = haemorrhage (TS drop takes hours)<br>
       <strong style="color:var(--white);">Normal PCV + Pale</strong> = poor perfusion / shock
