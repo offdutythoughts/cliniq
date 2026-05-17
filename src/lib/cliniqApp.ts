@@ -2583,13 +2583,326 @@ function renderVestibularFlow(){
   <div class="flow-wrap">
     <div class="flow-node entry">🌀 ACUTE VESTIBULAR</div>
     <div class="flow-arrow-v">↓</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
-      <div class="flow-node exp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-VE-PERIPH','Peripheral vestibular')">Peripheral<div class="fn-sub">No proprioceptive deficits</div></div>
-      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-VE-CENTRAL','Central vestibular')">Central<div class="fn-sub">Proprioceptive deficits</div></div>
-      <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-VE-BILAT','Bilateral vestibular')">Bilateral<div class="fn-sub">NO tilt · NO nystagmus</div></div>
+    <div class="flow-node step">IDENTIFY LESION CATEGORY
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Full neurological exam — mentation · CP placing · nystagmus type · other CN deficits</div>
     </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
+
+      <!-- Peripheral -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div class="flow-node exp" style="width:100%;font-size:10.5px;font-weight:700;">Peripheral
+          <div class="fn-sub" style="font-weight:400;font-size:9px;margin-top:4px;line-height:1.5;">
+            Alert · normal mentation<br>
+            Horizontal or rotary nystagmus<br>
+            Fast phase <em>away</em> from lesion<br>
+            Direction <strong>fixed</strong> (head pos. unchanged)<br>
+            <strong style="color:#F87171;">NO CP deficits</strong><br>
+            ± Horner's · ± CN VII palsy
+          </div>
+        </div>
+        <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+        <div class="flow-endpoint" style="width:100%;background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9px;cursor:pointer;text-align:center;" onclick="renderVestibularFlowPeriph()">
+          Peripheral vestibular<br>causes ›
+        </div>
+      </div>
+
+      <!-- Central -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div class="flow-node mixed" style="width:100%;font-size:10.5px;font-weight:700;">Central
+          <div class="fn-sub" style="font-weight:400;font-size:9px;margin-top:4px;line-height:1.5;">
+            Often depressed / obtunded<br>
+            ANY nystagmus type<br>
+            <strong style="color:#FCA5A5;">Vertical nystagmus = always central</strong><br>
+            Direction-changing nystagmus<br>
+            Disconjugate nystagmus<br>
+            <strong style="color:#FCA5A5;">CP deficits present</strong><br>
+            Multiple CN deficits (V–XII)
+          </div>
+        </div>
+        <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+        <div class="flow-endpoint" style="width:100%;background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.4);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderVestibularFlowCentral()">
+          Central vestibular<br>causes ›
+        </div>
+      </div>
+
+      <!-- Bilateral -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+        <div class="flow-node rest" style="width:100%;font-size:10.5px;font-weight:700;">Bilateral
+          <div class="fn-sub" style="font-weight:400;font-size:9px;margin-top:4px;line-height:1.5;">
+            Alert · normal mentation<br>
+            <strong style="color:#FCD34D;">NO head tilt</strong><br>
+            <strong style="color:#FCD34D;">NO nystagmus</strong><br>
+            Absent physiological VOR<br>
+            Wide head sway side-to-side<br>
+            Bilateral ventrolat. strabismus<br>
+            Wide-based crouching gait
+          </div>
+        </div>
+        <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+        <div class="flow-endpoint" style="width:100%;background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.4);color:#FCD34D;font-size:9px;cursor:pointer;text-align:center;" onclick="renderVestibularFlowBilat()">
+          Bilateral vestibular<br>causes ›
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:12px;padding:9px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:4px;">⚠️ PEARLS</div>
+      <div style="font-size:9.5px;line-height:1.6;color:#FCA5A5;">
+        • <strong>Vertical nystagmus</strong> = central until proven otherwise<br>
+        • <strong>Peripheral exam does NOT rule out central disease</strong> — ~⅓ of peripheral-appearing cases have central lesion on MRI<br>
+        • <strong>Paradoxical head tilt</strong>: tilt/circle <em>away</em> from lesion = cerebellar (flocculonodular lobe)<br>
+        • Horner's + CN VII palsy = petrous temporal bone — peripheral, not central
+      </div>
+    </div>
+
   </div>
   <div class="disclaimer">For qualified veterinary professionals only.</div>
+  `);
+}
+
+// ── VESTIBULAR — clinical flowchart sub-branches ───────────────────────────
+function renderVestibularFlowPeriph(){
+  replace(renderVestibularFlowPeriph,'Vestibular — Peripheral');
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.4);color:#6EE7B7;">🌀 PERIPHERAL VESTIBULAR — CAUSES</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">RVC DOG: Idiopathic 33% · OM/OI 23% · MUO 15% · Neoplasia 11% · Infarct 10%
+      <div class="fn-sub" style="font-weight:400;margin-top:2px;">CAT: OM/OI 28% · Idiopathic 22% · Neoplasia 14% · Polyp 10% · FIP 7% · Thiamine 7%</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:flex;flex-direction:column;gap:6px;width:100%;">
+
+      <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9.5px;">
+        <strong>#1 DOG — Idiopathic vestibular disease</strong><br>
+        <span style="opacity:.85;">Peracute onset · older large breed dog (any age possible) · no CN VII/Horner's<br>
+        Expect improvement after <strong>3 days</strong>; full recovery 3 wks · head tilt can persist<br>
+        Tx: supportive · maropitant/meclozine for nausea · padded confinement<br>
+        ⚠️ If no improvement by 2–4 wks → image the brain</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9.5px;">
+        <strong>#1 CAT / #2 DOG — Otitis media/interna (OM/OI)</strong><br>
+        <span style="opacity:.85;">Extension of OE · Staph · Pseudomonas · haematogenous spread<br>
+        Signs: OE on exam · facial nerve palsy · Horner's · neurogenic KCS<br>
+        Dx: otoscopy + myringotomy (cytology + C&amp;S) · CT/MRI bullae (most sensitive)<br>
+        Tx: 4–6 wks systemic abx (amoxiclav / fluoroquinolone based on culture)<br>
+        Surgical bulla osteotomy if unresponsive · don't use otic cleaners if TM ruptured</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9.5px;">
+        <strong>#2 CAT — Nasopharyngeal polyp</strong><br>
+        <span style="opacity:.85;">Young cats 1–5 yr · arises from auditory tube or tympanic cavity<br>
+        Signs: URTI · dysphagia · peripheral vestibular signs<br>
+        Dx: pharyngeal exam under GA · CT/MRI for extent<br>
+        Tx: surgical removal ± ventral bulla osteotomy · Horner's common post-op (transient)</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9.5px;">
+        <strong>Hypothyroidism</strong><br>
+        <span style="opacity:.85;">Dogs · head tilt + ataxia · classic hypothyroid signs often absent<br>
+        ± Concurrent facial nerve paresis · hypercholesterolaemia on biochem<br>
+        Dx: free T4 + TSH · Tx: levothyroxine → most signs resolve within 2 months</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9.5px;">
+        <strong>Ototoxicity</strong><br>
+        <span style="opacity:.85;">Aminoglycosides (gentamicin, streptomycin) — systemic &gt;2 wks or renal impairment<br>
+        Topical: chlorhexidine / iodophors if tympanic membrane ruptured<br>
+        Dx: history + exclude other causes + BAEP · Tx: discontinue drug<br>
+        ⚠️ Never use topical otic agents when TM cannot be visualised</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9.5px;">
+        <strong>Congenital vestibular disease</strong><br>
+        <span style="opacity:.85;">Dogs (Dobermann, Cocker, GSD, Beagle) · Cats (Siamese, Burmese)<br>
+        Onset 3–12 wks · head tilt + ataxia · nystagmus not typical · ± deafness<br>
+        No treatment · compensation occurs · deafness permanent</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9.5px;">
+        <strong>Trauma / Middle ear neoplasia</strong><br>
+        <span style="opacity:.85;">Trauma: petrous temporal bone fracture post-RTA · haemorrhage in ear canal<br>
+        Neoplasia: SCC, ceruminous gland adenocarcinoma, fibrosarcoma, lymphoma<br>
+        Dx: skull rads + CT/MRI · Prognosis: neoplasia generally poor</span>
+      </div>
+
+    </div>
+
+    <div style="margin-top:12px;padding:9px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:4px;">🔬 DIAGNOSTIC APPROACH — Peripheral</div>
+      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
+        1. CBC · biochem · UA · <strong style="color:var(--white);">thyroid panel</strong> · blood pressure<br>
+        2. Thorough <strong style="color:var(--white);">otoscopic exam</strong> under GA · myringotomy if fluid<br>
+        3. Cats: pharyngeal exam for polyp<br>
+        4. <strong style="color:var(--white);">CT bullae</strong> (preferred over rads) · MRI if CT inconclusive<br>
+        5. BAEP if cochlear involvement suspected<br>
+        6. No improvement by 2–4 wks → MRI brain to exclude central
+      </div>
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderVestibularFlowCentral(){
+  replace(renderVestibularFlowCentral,'Vestibular — Central');
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.4);color:#FCA5A5;">🌀 CENTRAL VESTIBULAR — CAUSES</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">REQUIRES MRI + CSF — DO NOT DELAY IMAGING
+      <div class="fn-sub" style="font-weight:400;margin-top:2px;">Central localisation on exam confirms central disease — but peripheral exam does NOT exclude it</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:flex;flex-direction:column;gap:6px;width:100%;">
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
+        <strong>#1 DOG — MUO / GME / Necrotising meningoencephalitis</strong><br>
+        <span style="opacity:.85;">Small breeds: Maltese · WHWT · Pug · Yorkie · French Bulldog · Chihuahua<br>
+        Young adult · progressive · ± multifocal signs · obtundation · seizures · neck pain<br>
+        MRI: multifocal T2 hyperintensities ± enhancement · CSF: mononuclear pleocytosis<br>
+        Tx: prednisolone ± cytarabine (50 mg/m² SC q12h × 2d q3wks) · ciclosporin 6 mg/kg q12h<br>
+        Prognosis: variable — focal form better (up to 5 yr) · diffuse form poor (wks–months)</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
+        <strong>Brain neoplasia</strong><br>
+        <span style="opacity:.85;">Dog 11% · Cat 14% · Meningioma / CPP predilection for caudal fossa → vestibular signs<br>
+        Signs: progressive · depression · seizures · elevated ICP signs (cluster Sz · bilateral mydriasis)<br>
+        MRI: solitary enhancing mass (primary) · multifocal round lesions at grey-white junction (mets)<br>
+        Tx: prednisolone 0.5–1 mg/kg/day · surgery / RT / chemo depending on type<br>
+        Prognosis: palliative ~2 months · surgery + RT → 6 months–2 yr</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
+        <strong>Ischaemic infarct (CVA / stroke)</strong><br>
+        <span style="opacity:.85;"><strong style="color:var(--white);">Peracute + non-progressive + focal + central = infarct until proven otherwise</strong><br>
+        ~50% dogs have underlying disease: HAC · CKD · hypothyroidism · hypertension · cardiac · PLE/PLN<br>
+        Cats: hyperthyroidism · CKD · HCM · hypertension<br>
+        MRI: vascular territory lesion · T2/FLAIR hyperintense · DWI for acute<br>
+        Tx: optimise physiology (PaO₂ · BP · PaCO₂) · treat underlying cause · no corticosteroids<br>
+        Prognosis: good — most improve rapidly; treat cause to prevent recurrence</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
+        <strong>Thiamine deficiency (cats primarily)</strong><br>
+        <span style="opacity:.85;">Raw fish diet (thiaminase) · sulphite-preserved meats · anorexia · malabsorption<br>
+        Signs: <strong style="color:var(--white);">bilateral</strong> central vestibular · cervical ventroflexion · dilated pupils · altered mentation · seizures<br>
+        MRI: bilateral symmetrical T2 hyperintensities in caudal colliculi · vestibular/oculomotor/facial nuclei<br>
+        Tx: thiamine 12.5–25 mg/cat IM/SC q24h → switch to oral · correct diet<br>
+        ⚠️ Rapidly fatal untreated · rapidly reversible if treated early</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
+        <strong>Metronidazole toxicity</strong><br>
+        <span style="opacity:.85;">Dogs: &gt;60 mg/kg/day typical (as low as 30 mg/kg/day) · onset as early as 3 days<br>
+        Signs: bilateral · generalised ataxia · positional <strong style="color:var(--white);">vertical nystagmus</strong> · anorexia · vomiting<br>
+        Tx: <strong style="color:var(--white);">discontinue metronidazole</strong> + diazepam 0.43 mg/kg PO q8h × 3 days → recovery 1–3 d<br>
+        Without diazepam: 2–3 wks recovery · fully reversible</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
+        <strong>Infectious encephalitis</strong><br>
+        <span style="opacity:.85;"><strong>CDV (dog):</strong> myoclonus (most characteristic) · multifocal · may be vaccinated · PCR urine/CSF<br>
+        <strong>FIP (cat):</strong> &lt;3 yr · multi-cat household · pyogranulomatous CSF (&gt;200 mg/dL protein)<br>
+        <strong>Toxoplasma/Neospora:</strong> progressive limb rigidity + CN deficits · clindamycin + TMS<br>
+        <strong>Cryptococcus:</strong> nasal discharge + skin lesions + chorioretinitis · antigen test · amphotericin</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
+        <strong>Intracranial empyema</strong><br>
+        <span style="opacity:.85;">Extension of OM/OI into cranial vault · dog 2% · cat 6%<br>
+        Rapid progression · marked CSF neutrophilia<br>
+        Tx: surgical bulla osteotomy + cranial drainage + systemic abx</span>
+      </div>
+
+    </div>
+
+    <div style="margin-top:12px;padding:9px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:4px;">🔬 DIAGNOSTIC APPROACH — Central</div>
+      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
+        1. CBC · biochem · UA · thyroid · HAC screen · <strong style="color:var(--white);">blood pressure</strong><br>
+        2. <strong style="color:var(--white);">MRI brain</strong> (preferred over CT for soft tissue)<br>
+        3. <strong style="color:var(--white);">CSF analysis</strong> from cerebellomedullary cistern (only if no raised ICP on MRI)<br>
+        4. Infectious serology + CSF PCR (CDV · FIP · Toxoplasma · Crypto) if CSF inflammatory<br>
+        5. Thoracic/abdominal imaging if metastatic neoplasia suspected
+      </div>
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderVestibularFlowBilat(){
+  replace(renderVestibularFlowBilat,'Vestibular — Bilateral');
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.4);color:#FCD34D;">🌀 BILATERAL VESTIBULAR — CAUSES</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">KEY: NO head tilt · NO nystagmus · absent VOR · wide head sway
+      <div class="fn-sub" style="font-weight:400;margin-top:2px;">Bilateral deficit cancels asymmetric input — NO tilt, NO nystagmus despite profound ataxia</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.3);">🐕 Dog — Think first</div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          <strong>Metronidazole toxicity</strong><br>
+          <span style="opacity:.8;">Bilateral · generalised · vertical nystagmus<br>Discontinue + diazepam → recovery 1–3 days</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          <strong>Bilateral OM/OI</strong><br>
+          <span style="opacity:.8;">Bilateral otitis — symmetric involvement<br>Otoscopy + CT bullae · culture + treat</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          <strong>Hypothyroidism</strong><br>
+          <span style="opacity:.8;">Bilateral vestibular neuropathy · wide head excursions<br>Free T4 + TSH · levothyroxine → resolves</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          <strong>Aminoglycoside ototoxicity</strong><br>
+          <span style="opacity:.8;">Bilateral cochleo-vestibulotoxic · deafness + ataxia<br>BAEP confirms · discontinue drug</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:5px;">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.3);">🐈 Cat — Think first</div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          <strong>Thiamine deficiency</strong><br>
+          <span style="opacity:.8;">Raw fish diet · sulphite-preserved food · anorexia<br>Cervical ventroflexion · dilated pupils · seizures<br>Thiamine IM/SC — <strong style="color:var(--white);">treat before imaging</strong></span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          <strong>Bilateral OM/OI</strong><br>
+          <span style="opacity:.8;">Most common bilateral cause in cats<br>Otoscopy + CT bullae</span>
+        </div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+          <strong>Idiopathic bilateral vestibular</strong><br>
+          <span style="opacity:.8;">Rare · diagnosis of exclusion · supportive care<br>Spontaneous improvement expected</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:12px;padding:9px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#FCD34D;margin-bottom:4px;">🔬 DIAGNOSTIC APPROACH — Bilateral</div>
+      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
+        <strong style="color:var(--white);">Cat:</strong> Thiamine level + dietary history · treat with thiamine IM/SC before imaging<br>
+        <strong style="color:var(--white);">Dog:</strong> Metronidazole history → discontinue + diazepam<br>
+        Both: CBC · biochem · <strong style="color:var(--white);">thyroid panel</strong> · otoscopy + CT bullae · BAEP<br>
+        MRI brain if no cause found on above workup
+      </div>
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
   `);
 }
 function renderEncephalopathyFlow(){
@@ -6267,6 +6580,9 @@ export function mountGlobals() {
   w.renderSeizureFlow = renderSeizureFlow;
   w.renderMyelopathyFlow = renderMyelopathyFlow;
   w.renderVestibularFlow = renderVestibularFlow;
+  w.renderVestibularFlowPeriph = renderVestibularFlowPeriph;
+  w.renderVestibularFlowCentral = renderVestibularFlowCentral;
+  w.renderVestibularFlowBilat = renderVestibularFlowBilat;
   w.renderEncephalopathyFlow = renderEncephalopathyFlow;
   w.renderCoughFlow = renderCoughFlow;
   w.renderSneezeFlow = renderSneezeFlow;
