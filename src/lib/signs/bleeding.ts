@@ -112,13 +112,30 @@ export const bleedingFlowHtml = `
   <div style="margin-top:12px;padding:10px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;width:100%;">
     <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:5px;">⚡ ALWAYS RULE OUT FIRST</div>
     <div style="font-size:9.5px;line-height:1.55;color:#FCA5A5;">
-      • <strong>Anticoagulant rodenticide</strong> — PT prolongs first; Vit K1 SC now, confirm later<br>
-      • <strong>DIC</strong> — petechiae + cavity bleed + systemic illness → treat cause urgently<br>
+      • <strong onclick="renderDiseasePage('DIS-BD-ROD')" style="cursor:pointer;text-decoration:underline;">Anticoagulant rodenticide</strong> — PT prolongs first; Vit K1 SC now, confirm later (acts in 6–12 h — transfuse for active bleeds)<br>
+      • <strong onclick="renderDiseasePage('DIS-BD-DIC')" style="cursor:pointer;text-decoration:underline;">DIC</strong> — petechiae + cavity bleed + systemic illness → ≥ 3 of 5 abnormal; treat cause urgently<br>
       • <strong>Haemoperitoneum</strong> (HSA rupture) — collapse + pale gums → emergency surgery<br>
-      • <strong>IMTP</strong> platelet &lt;30 ×10⁹/L — start immunosuppression urgently
+      • <strong onclick="renderDiseasePage('DIS-BD-IMTP')" style="cursor:pointer;text-decoration:underline;">IMTP</strong> platelet &lt;30 ×10⁹/L — start immunosuppression urgently
     </div>
   </div>
 
+  <div style="margin-top:10px;padding:10px 12px;background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.25);border-radius:10px;width:100%;">
+    <div style="font-size:11px;font-weight:700;color:#5EEAD4;margin-bottom:6px;">📋 DISEASE PAGES</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;">
+      <div onclick="renderDiseasePage('DIS-BD-DIC')" style="cursor:pointer;color:#99F6E4;">→ DIC</div>
+      <div onclick="renderDiseasePage('DIS-BD-ROD')" style="cursor:pointer;color:#99F6E4;">→ Anticoagulant rodenticide</div>
+      <div onclick="renderDiseasePage('DIS-BD-IMTP')" style="cursor:pointer;color:#99F6E4;">→ Immune-mediated thrombocytopenia</div>
+      <div onclick="renderDiseasePage('DIS-BD-TCP')" style="cursor:pointer;color:#99F6E4;">→ Thrombocytopenia (broad)</div>
+      <div onclick="renderDiseasePage('DIS-BD-TPATH')" style="cursor:pointer;color:#99F6E4;">→ Thrombocytopathia</div>
+      <div onclick="renderDiseasePage('DIS-BD-ICT')" style="cursor:pointer;color:#99F6E4;">→ Infectious cyclic thrombocytopenia</div>
+      <div onclick="renderDiseasePage('DIS-BD-HEMA')" style="cursor:pointer;color:#99F6E4;">→ Haemophilia A (FVIII)</div>
+      <div onclick="renderDiseasePage('DIS-BD-HEMB')" style="cursor:pointer;color:#99F6E4;">→ Haemophilia B (FIX)</div>
+      <div onclick="renderDiseasePage('DIS-BD-HEMC')" style="cursor:pointer;color:#99F6E4;">→ Haemophilia C (FXI)</div>
+      <div onclick="renderDiseasePage('DIS-BD-FX')" style="cursor:pointer;color:#99F6E4;">→ Factor X deficiency</div>
+      <div onclick="renderDiseasePage('DIS-BD-FII')" style="cursor:pointer;color:#99F6E4;">→ Factor II deficiency</div>
+      <div onclick="renderDiseasePage('DIS-BD-FVII')" style="cursor:pointer;color:#99F6E4;">→ Factor VII deficiency</div>
+    </div>
+  </div>
 </div>
 `;
 
@@ -415,6 +432,26 @@ ${dxTabs('dx')}
     <strong>Snake envenomation:</strong> antivenom (region-specific); supportive care; FFP for cascade defect; monitor renal function (myoglobinuria, AKI).
   </div>
 
+</div>
+
+<div style="margin-top:10px;padding:10px 12px;background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.25);border-radius:10px;">
+  <div style="font-size:11px;font-weight:700;color:#5EEAD4;margin-bottom:6px;">📋 LINKED DISEASE PAGES</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;">
+    <div onclick="renderDiseasePage('DIS-BD-DIC')" style="cursor:pointer;color:#99F6E4;">→ DIC</div>
+    <div onclick="renderDiseasePage('DIS-BD-ROD')" style="cursor:pointer;color:#99F6E4;">→ Anticoagulant rodenticide</div>
+    <div onclick="renderDiseasePage('DIS-BD-IMTP')" style="cursor:pointer;color:#99F6E4;">→ Immune-mediated thrombocytopenia</div>
+    <div onclick="renderDiseasePage('DIS-BD-TCP')" style="cursor:pointer;color:#99F6E4;">→ Thrombocytopenia (broad)</div>
+    <div onclick="renderDiseasePage('DIS-BD-TPATH')" style="cursor:pointer;color:#99F6E4;">→ Thrombocytopathia</div>
+    <div onclick="renderDiseasePage('DIS-BD-TCS')" style="cursor:pointer;color:#99F6E4;">→ Thrombocytosis</div>
+    <div onclick="renderDiseasePage('DIS-BD-ICT')" style="cursor:pointer;color:#99F6E4;">→ Infectious cyclic thrombocytopenia</div>
+    <div onclick="renderDiseasePage('DIS-BD-IMHA')" style="cursor:pointer;color:#99F6E4;">→ Immune-mediated haemolytic anaemia</div>
+    <div onclick="renderDiseasePage('DIS-BD-HEMA')" style="cursor:pointer;color:#99F6E4;">→ Haemophilia A (FVIII)</div>
+    <div onclick="renderDiseasePage('DIS-BD-HEMB')" style="cursor:pointer;color:#99F6E4;">→ Haemophilia B (FIX)</div>
+    <div onclick="renderDiseasePage('DIS-BD-HEMC')" style="cursor:pointer;color:#99F6E4;">→ Haemophilia C (FXI)</div>
+    <div onclick="renderDiseasePage('DIS-BD-FX')" style="cursor:pointer;color:#99F6E4;">→ Factor X deficiency</div>
+    <div onclick="renderDiseasePage('DIS-BD-FII')" style="cursor:pointer;color:#99F6E4;">→ Factor II deficiency</div>
+    <div onclick="renderDiseasePage('DIS-BD-FVII')" style="cursor:pointer;color:#99F6E4;">→ Factor VII deficiency</div>
+  </div>
 </div>
 
 <div class="dx-alert" style="margin-top:10px;">
