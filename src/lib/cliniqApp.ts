@@ -6328,6 +6328,10 @@ function renderBleedingFlowDIC(){
 
 function renderBleedingFlowVasc(){
   replace(renderBleedingFlowVasc,'Bleeding — Vasculopathy');
+  const lnk=(label,fn)=>`<span onclick="${fn}" style="color:#C4B5FD;text-decoration:underline;cursor:pointer;">${label}</span>`;
+  const chip=(label,fn)=>fn
+    ? `<div onclick="${fn}" style="display:inline-block;cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;margin:2px;">${label}</div>`
+    : `<div style="display:inline-block;background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.2);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;opacity:.75;margin:2px;">${label}</div>`;
   render(`
   <div class="flow-wrap">
 
@@ -6337,70 +6341,36 @@ function renderBleedingFlowVasc(){
       <div class="fn-sub" style="font-weight:400;margin-top:3px;">Bleeding from vessel wall disease — platelets and coagulation profile are <em>normal</em></div>
     </div>
     <div class="flow-arrow-v">↓</div>
-
-    <div class="flow-node sub-step">TYPICAL LESION DISTRIBUTION</div>
+    <div class="flow-node sub-step">LESION DISTRIBUTION → COMMON CAUSES</div>
     <div class="flow-arrow-v">↓</div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
-      <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;font-size:9.5px;">
-        Ear pinna — <strong>punched-out necrotic ulcers</strong>
-      </div>
-      <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;font-size:9.5px;">
-        Paw pads — ulcers, necrosis, sloughing
-      </div>
-      <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;font-size:9.5px;">
-        Skin — purpura, necrotic plaques, pitting oedema
-      </div>
-      <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;font-size:9.5px;">
-        Retinal haemorrhage / detachment (hypertension)
-      </div>
-    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;width:100%;">
 
-    <div class="flow-arrow-v">↓</div>
-    <div class="flow-node sub-step">COMMON CAUSES</div>
-    <div class="flow-arrow-v">↓</div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
-
-      <div style="display:flex;flex-direction:column;gap:5px;">
-        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#C4B5FD;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.35);">🦠 Infectious</div>
-        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
-          <strong>Rocky Mountain Spotted Fever</strong><br>
-          <span style="opacity:.75;">Rickettsia rickettsii · acute systemic illness<br>Tick titres / PCR</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
-          <strong>Ehrlichiosis</strong><br>
-          <span style="opacity:.75;">Ehrlichia canis · thrombocytopenia common<br>Morulae on smear</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
-          <strong>Leptospirosis</strong><br>
-          <span style="opacity:.75;">Renal + hepatic failure · MAT serology</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
-          <strong>FIP (feline)</strong><br>
-          <span style="opacity:.75;">Effusive form · coronavirus · young cat</span>
-        </div>
+      <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;">
+        <div style="font-size:9.5px;font-weight:700;margin-bottom:5px;">Ear pinna / distal extremity — punched-out necrotic ulcers</div>
+        <div>${chip('Cutaneous vasculitis',"renderLesionDetail('LES-BD-VS-VASC')")}${chip('CRGV / Alabama rot',"renderLesionDetail('LES-BD-VS-CRGV')")}${chip('Lhasa Apso vasculopathy',"renderLesionDetail('LES-BD-VS-LH')")}${chip('Ehrlichiosis','')}${chip('RMSF','')}</div>
       </div>
 
-      <div style="display:flex;flex-direction:column;gap:5px;">
-        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#C4B5FD;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.35);">⚙️ Non-Infectious</div>
-        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
-          <strong>Immune-mediated vasculitis</strong><br>
-          <span style="opacity:.75;">Drug reaction · vaccine reaction · idiopathic<br>Skin biopsy confirms</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
-          <strong>Uraemic vasculopathy</strong><br>
-          <span style="opacity:.75;">CKD / AKI — toxin-mediated endothelial damage</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
-          <strong>Hyperglobulinaemia</strong><br>
-          <span style="opacity:.75;">Ehrlichia · myeloma · Leishmania<br>Hyperviscosity → vessel damage</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;">
-          <strong>Hypertension</strong><br>
-          <span style="opacity:.75;">BP &gt;160 mmHg → retinal haemorrhage<br>Check BP in every bleeding patient</span>
-        </div>
+      <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;">
+        <div style="font-size:9.5px;font-weight:700;margin-bottom:5px;">Paw pads — ulcers, necrosis, sloughing</div>
+        <div>${chip('CRGV / Alabama rot',"renderLesionDetail('LES-BD-VS-CRGV')")}${chip('Cutaneous vasculitis',"renderLesionDetail('LES-BD-VS-VASC')")}${chip('Ehrlichiosis','')}${chip('Leishmaniasis','')}</div>
       </div>
+
+      <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;">
+        <div style="font-size:9.5px;font-weight:700;margin-bottom:5px;">Skin — purpura, necrotic plaques, pitting oedema</div>
+        <div>${chip('Cutaneous vasculitis',"renderLesionDetail('LES-BD-VS-VASC')")}${chip('Leptospirosis','')}${chip('RMSF','')}${chip('Ehrlichiosis','')}${chip('FIP (cat)','')}${chip('Uraemic vasculopathy',"renderDiseasePage('DIS-SEC-CKD')")}${chip('Hyperglobulinaemia','')}</div>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;">
+        <div style="font-size:9.5px;font-weight:700;margin-bottom:5px;">Retinal haemorrhage / detachment</div>
+        <div>${chip('Systemic hypertension','')}${chip('Hyperglobulinaemia','')}${chip('Ehrlichiosis','')}</div>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;">
+        <div style="font-size:9.5px;font-weight:700;margin-bottom:5px;">Easy bruising at venepuncture / GI haemorrhage</div>
+        <div>${chip('HAC / iatrogenic steroids',"renderDiseasePage('DIS-PUPD-HAC')")}</div>
+      </div>
+
     </div>
 
     <div style="margin-top:14px;padding:10px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.25);border-radius:10px;width:100%;">
