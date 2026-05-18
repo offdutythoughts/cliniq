@@ -6328,10 +6328,15 @@ function renderBleedingFlowDIC(){
 
 function renderBleedingFlowVasc(){
   replace(renderBleedingFlowVasc,'Bleeding — Vasculopathy');
-  const lnk=(label,fn)=>`<span onclick="${fn}" style="color:#C4B5FD;text-decoration:underline;cursor:pointer;">${label}</span>`;
   const chip=(label,fn)=>fn
-    ? `<div onclick="${fn}" style="display:inline-block;cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;margin:2px;">${label}</div>`
-    : `<div style="display:inline-block;background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.2);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;opacity:.75;margin:2px;">${label}</div>`;
+    ? `<div onclick="${fn}" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">${label}</div>`
+    : `<div style="background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.2);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;opacity:.7;text-align:center;">${label}</div>`;
+  const col=(title,chips)=>`
+    <div style="display:flex;flex-direction:column;align-items:stretch;gap:0;">
+      <div style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.35);border-radius:8px;padding:7px 8px;font-size:9px;font-weight:700;color:#C4B5FD;text-align:center;line-height:1.35;">${title}</div>
+      <div style="color:#C4B5FD;text-align:center;font-size:11px;line-height:1;padding:3px 0;">↓</div>
+      <div style="display:flex;flex-direction:column;gap:3px;">${chips}</div>
+    </div>`;
   render(`
   <div class="flow-wrap">
 
@@ -6342,40 +6347,45 @@ function renderBleedingFlowVasc(){
     </div>
     <div class="flow-arrow-v">↓</div>
     <div class="flow-node sub-step">LESION DISTRIBUTION</div>
+    <div class="flow-arrow-v">↓</div>
 
-    <div class="flow-arrow-v">↓</div>
-    <div class="flow-node" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;font-size:9.5px;font-weight:700;">Ear pinna / distal extremity — punched-out necrotic ulcers</div>
-    <div class="flow-arrow-v">↓</div>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;width:100%;margin-bottom:4px;">
-      ${chip('Cutaneous vasculitis',"renderLesionDetail('LES-BD-VS-VASC')")}${chip('CRGV / Alabama rot',"renderLesionDetail('LES-BD-VS-CRGV')")}${chip('Lhasa Apso vasculopathy',"renderLesionDetail('LES-BD-VS-LH')")}${chip('Ehrlichiosis','')}${chip('RMSF','')}
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+      ${col('Ear pinna / distal extremity — necrotic ulcers',
+        chip('Cutaneous vasculitis',"renderLesionDetail('LES-BD-VS-VASC')")+
+        chip('CRGV / Alabama rot',"renderLesionDetail('LES-BD-VS-CRGV')")+
+        chip('Lhasa Apso vasculopathy',"renderLesionDetail('LES-BD-VS-LH')")+
+        chip('Ehrlichiosis','')+
+        chip('RMSF',''))}
+      ${col('Paw pads — ulcers, necrosis, sloughing',
+        chip('CRGV / Alabama rot',"renderLesionDetail('LES-BD-VS-CRGV')")+
+        chip('Cutaneous vasculitis',"renderLesionDetail('LES-BD-VS-VASC')")+
+        chip('Ehrlichiosis','')+
+        chip('Leishmaniasis',''))}
     </div>
 
     <div class="flow-arrow-v">↓</div>
-    <div class="flow-node" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;font-size:9.5px;font-weight:700;">Paw pads — ulcers, necrosis, sloughing</div>
-    <div class="flow-arrow-v">↓</div>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;width:100%;margin-bottom:4px;">
-      ${chip('CRGV / Alabama rot',"renderLesionDetail('LES-BD-VS-CRGV')")}${chip('Cutaneous vasculitis',"renderLesionDetail('LES-BD-VS-VASC')")}${chip('Ehrlichiosis','')}${chip('Leishmaniasis','')}
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+      ${col('Skin — purpura, necrotic plaques, pitting oedema',
+        chip('Cutaneous vasculitis',"renderLesionDetail('LES-BD-VS-VASC')")+
+        chip('Leptospirosis','')+
+        chip('RMSF','')+
+        chip('Ehrlichiosis','')+
+        chip('FIP (cat)','')+
+        chip('Uraemic vasculopathy',"renderDiseasePage('DIS-SEC-CKD')")+
+        chip('Hyperglobulinaemia',''))}
+      ${col('Retinal haemorrhage / detachment',
+        chip('Systemic hypertension','')+
+        chip('Hyperglobulinaemia','')+
+        chip('Ehrlichiosis',''))}
     </div>
 
     <div class="flow-arrow-v">↓</div>
-    <div class="flow-node" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;font-size:9.5px;font-weight:700;">Skin — purpura, necrotic plaques, pitting oedema</div>
-    <div class="flow-arrow-v">↓</div>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;width:100%;margin-bottom:4px;">
-      ${chip('Cutaneous vasculitis',"renderLesionDetail('LES-BD-VS-VASC')")}${chip('Leptospirosis','')}${chip('RMSF','')}${chip('Ehrlichiosis','')}${chip('FIP (cat)','')}${chip('Uraemic vasculopathy',"renderDiseasePage('DIS-SEC-CKD')")}${chip('Hyperglobulinaemia','')}
-    </div>
 
-    <div class="flow-arrow-v">↓</div>
-    <div class="flow-node" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;font-size:9.5px;font-weight:700;">Retinal haemorrhage / detachment</div>
-    <div class="flow-arrow-v">↓</div>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;width:100%;margin-bottom:4px;">
-      ${chip('Systemic hypertension','')}${chip('Hyperglobulinaemia','')}${chip('Ehrlichiosis','')}
-    </div>
-
-    <div class="flow-arrow-v">↓</div>
-    <div class="flow-node" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:#C4B5FD;font-size:9.5px;font-weight:700;">Easy bruising at venepuncture / GI haemorrhage</div>
-    <div class="flow-arrow-v">↓</div>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:4px;width:100%;margin-bottom:4px;">
-      ${chip('HAC / iatrogenic steroids',"renderDiseasePage('DIS-PUPD-HAC')")}
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+      ${col('Easy bruising at venepuncture / GI haemorrhage',
+        chip('HAC / iatrogenic steroids',"renderDiseasePage('DIS-PUPD-HAC')"))}
+      <div></div>
     </div>
 
     <div style="margin-top:14px;padding:10px 12px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.25);border-radius:10px;width:100%;">
