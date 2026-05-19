@@ -6597,56 +6597,128 @@ function renderHaematuriaFlowSystemic(){
     <div class="flow-arrow-v">↓</div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+      <div class="flow-node" style="cursor:pointer;font-size:10px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.35);" onclick="renderHaematuriaFlowPseudo()">PSEUDO-HAEMATURIA<br><span style="font-size:9px;font-weight:400;">Red supernatant after spin</span></div>
+      <div class="flow-node" style="cursor:pointer;font-size:10px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.1);border-color:rgba(220,38,38,0.35);" onclick="renderHaematuriaFlowTrueSystemic()">SYSTEMIC CAUSE<br><span style="font-size:9px;font-weight:400;">Red sediment · intact RBCs</span></div>
+    </div>
 
-      <!-- Pseudo-haematuria column -->
-      <div style="display:flex;flex-direction:column;gap:5px;">
-        <div class="flow-node" style="font-size:10px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.35);">PSEUDO-HAEMATURIA<br><span style="font-size:9px;font-weight:400;">Red supernatant after spin</span></div>
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
 
-        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
-          <strong>Haemoglobinuria</strong><br>
-          <span style="opacity:.75;">Intravascular haemolysis — IMHA, babesia, zinc toxicity, onion/garlic, severe thermal injury<br>Plasma pink/red · spherocytes · agglutination on smear</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
-          <strong>Myoglobinuria</strong><br>
-          <span style="opacity:.75;">Rhabdomyolysis — trauma, heatstroke, envenomation, exertional<br>CK markedly ↑ (&gt;10,000 U/L) · AKI risk from pigment nephropathy</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
-          <strong>Pigmenturia</strong><br>
-          <span style="opacity:.75;">Dietary (beetroot, food dye) · drugs (rifampin, phenazopyridine)<br>Dipstick negative for blood — confirms</span>
+function renderHaematuriaFlowPseudo(){
+  replace(renderHaematuriaFlowPseudo,'Haematuria — Pseudo-haematuria');
+  render(`
+  <div class="flow-wrap">
+
+    <div class="flow-node entry" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.4);color:#FCD34D;">PSEUDO-HAEMATURIA — Red supernatant after spin</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">Dipstick +ve for blood · no intact RBCs on sediment · supernatant remains red/brown after centrifuge
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Haemoglobin or myoglobin in filtrate · or non-haem pigment (dipstick −ve)</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:flex;flex-direction:column;gap:6px;width:100%;">
+
+      <div style="padding:8px 10px;background:rgba(245,158,11,0.1);border:1.5px solid rgba(245,158,11,0.35);border-radius:10px;">
+        <div style="font-size:10px;font-weight:700;color:#FCD34D;margin-bottom:4px;">Haemoglobinuria</div>
+        <div style="font-size:9.5px;color:var(--gray);line-height:1.6;">
+          Intravascular haemolysis → free Hb passes glomerular filtration threshold<br>
+          <strong style="color:var(--white);">Causes:</strong> IMHA · Babesia · zinc toxicity · Allium (onion/garlic) · severe thermal injury<br>
+          <strong style="color:var(--white);">Clues:</strong> Plasma pink/red · spherocytes · agglutination on smear · ↓ PCV
         </div>
       </div>
 
-      <!-- True systemic column -->
-      <div style="display:flex;flex-direction:column;gap:5px;">
-        <div class="flow-node" style="font-size:10px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.1);border-color:rgba(220,38,38,0.35);">TRUE SYSTEMIC HU<br><span style="font-size:9px;font-weight:400;">Red sediment · intact RBCs</span></div>
+      <div style="padding:8px 10px;background:rgba(245,158,11,0.1);border:1.5px solid rgba(245,158,11,0.35);border-radius:10px;">
+        <div style="font-size:10px;font-weight:700;color:#FCD34D;margin-bottom:4px;">Myoglobinuria</div>
+        <div style="font-size:9.5px;color:var(--gray);line-height:1.6;">
+          Rhabdomyolysis → myoglobin released from damaged muscle → pigment nephropathy<br>
+          <strong style="color:var(--white);">Causes:</strong> Trauma · heatstroke · envenomation · exertional myopathy<br>
+          <strong style="color:var(--white);">Clues:</strong> CK markedly ↑ (&gt;10,000 U/L) · normal plasma colour (no free Hb) · AKI risk
+        </div>
+      </div>
 
-        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-          <strong>Anticoagulant rodenticide</strong><br>
-          <span style="opacity:.75;">PT prolongs first (factor VII, shortest T½)<br>Vit K1 2.5 mg/kg SC now · confirm with PIVKAs</span>
+      <div style="padding:8px 10px;background:rgba(245,158,11,0.1);border:1.5px solid rgba(245,158,11,0.35);border-radius:10px;">
+        <div style="font-size:10px;font-weight:700;color:#FCD34D;margin-bottom:4px;">Pigmenturia</div>
+        <div style="font-size:9.5px;color:var(--gray);line-height:1.6;">
+          Non-haem pigment — dipstick <strong style="color:var(--white);">negative</strong> for blood confirms (not haemoglobin/myoglobin)<br>
+          <strong style="color:var(--white);">Causes:</strong> Dietary (beetroot · food dye) · drugs (rifampin · phenazopyridine)<br>
+          <strong style="color:var(--white);">Clues:</strong> No systemic signs · resolves with dietary change / drug withdrawal
         </div>
-        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-          <strong>IMTP</strong><br>
-          <span style="opacity:.75;">Platelet &lt;50 ×10⁹/L · mucosal bleeds · coags normal<br>Prednisolone 2 mg/kg/day + adjunct immunosuppression</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-          <strong>DIC</strong><br>
-          <span style="opacity:.75;">Platelets ↓ + PT ↑ + aPTT ↑ + fibrinogen ↓ + D-dimer ↑<br>Treat the underlying cause (sepsis, HSA, IMHA)</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-          <strong>Leptospirosis</strong><br>
-          <span style="opacity:.75;">AKI + hepatopathy + pyrexia + haematuria<br>MAT serology + urine PCR · PPE (zoonotic)</span>
-        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:10px;padding:9px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:4px;">🔬 KEY WORKUP</div>
+      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
+        <strong style="color:var(--white);">Centrifuge urine</strong> — red supernatant + clear sediment confirms pseudo-haematuria<br>
+        <strong style="color:var(--white);">Dipstick</strong> — negative for blood rules out Hb/Mb; positive with red supernatant = Hb or Mb<br>
+        <strong style="color:var(--white);">CK</strong> — markedly ↑ = myoglobinuria<br>
+        <strong style="color:var(--white);">Plasma colour</strong> — pink/red = haemoglobinaemia (intravascular haemolysis)<br>
+        <strong style="color:var(--white);">CBC + smear</strong> — spherocytes · agglutination · ↓ PCV → haemolysis screen
       </div>
     </div>
 
-    <div style="margin-top:14px;padding:10px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
-      <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:5px;">🔬 MINIMUM DATABASE — Systemic</div>
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderHaematuriaFlowTrueSystemic(){
+  replace(renderHaematuriaFlowTrueSystemic,'Haematuria — Systemic Cause');
+  render(`
+  <div class="flow-wrap">
+
+    <div class="flow-node entry" style="background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.4);color:#FCA5A5;">🩸 SYSTEMIC CAUSE — Red sediment · intact RBCs</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">Haemostatic failure or systemic disease → RBCs leak into urine throughout the tract
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Dipstick +ve · sediment shows intact RBCs · concurrent mucosal bleeding, petechiae, or ecchymoses common</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:flex;flex-direction:column;gap:6px;width:100%;">
+
+      <div style="padding:8px 10px;background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);border-radius:10px;">
+        <div style="font-size:10px;font-weight:700;color:#FCA5A5;margin-bottom:4px;">Anticoagulant rodenticide</div>
+        <div style="font-size:9.5px;color:var(--gray);line-height:1.6;">
+          PT prolongs first — factor VII has the shortest half-life<br>
+          <strong style="color:var(--white);">Tx:</strong> Vit K1 2.5 mg/kg SC now · continue 3–4 weeks (brodifacoum) · confirm with PIVKAs
+        </div>
+      </div>
+
+      <div style="padding:8px 10px;background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);border-radius:10px;">
+        <div style="font-size:10px;font-weight:700;color:#FCA5A5;margin-bottom:4px;">IMTP</div>
+        <div style="font-size:9.5px;color:var(--gray);line-height:1.6;">
+          Platelet &lt;50 ×10⁹/L · mucosal bleeds (gums, epistaxis) · coags normal<br>
+          <strong style="color:var(--white);">Tx:</strong> Prednisolone 2 mg/kg/day + adjunct immunosuppression · strict cage rest
+        </div>
+      </div>
+
+      <div style="padding:8px 10px;background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);border-radius:10px;">
+        <div style="font-size:10px;font-weight:700;color:#FCA5A5;margin-bottom:4px;">DIC</div>
+        <div style="font-size:9.5px;color:var(--gray);line-height:1.6;">
+          Platelets ↓ + PT ↑ + aPTT ↑ + fibrinogen ↓ + D-dimer ↑<br>
+          <strong style="color:var(--white);">Tx:</strong> Treat the underlying cause (sepsis · HSA · IMHA) · FFP if active haemorrhage
+        </div>
+      </div>
+
+      <div style="padding:8px 10px;background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);border-radius:10px;">
+        <div style="font-size:10px;font-weight:700;color:#FCA5A5;margin-bottom:4px;">Leptospirosis</div>
+        <div style="font-size:9.5px;color:var(--gray);line-height:1.6;">
+          AKI + hepatopathy + pyrexia + haematuria · zoonotic — use PPE<br>
+          <strong style="color:var(--white);">Dx:</strong> MAT serology + urine PCR · <strong style="color:var(--white);">Tx:</strong> Penicillin (acute) → doxycycline (carrier phase)
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:10px;padding:9px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:4px;">🔬 MINIMUM DATABASE — Systemic</div>
       <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
-        <strong style="color:var(--white);">Centrifuge urine</strong> — supernatant colour<br>
-        <strong style="color:var(--white);">CBC + smear</strong> — platelets, spherocytes, agglutination, ghost cells<br>
-        <strong style="color:var(--white);">PT + aPTT</strong> — rodenticide (PT first), hepatic failure, DIC<br>
-        <strong style="color:var(--white);">CK + renal panel</strong> — myoglobinuria, pigment nephropathy<br>
-        <strong style="color:var(--white);">Coombs test + Babesia PCR</strong> — haemolytic screen<br>
+        <strong style="color:var(--white);">CBC + smear</strong> — platelets · spherocytes · agglutination · ghost cells<br>
+        <strong style="color:var(--white);">PT + aPTT</strong> — rodenticide (PT first) · hepatic failure · DIC<br>
+        <strong style="color:var(--white);">Biochemistry</strong> — renal panel · ALT · bilirubin (leptospirosis, DIC)<br>
         <strong style="color:var(--white);">Leptospira MAT / urine PCR</strong> — if AKI + pyrexia
       </div>
     </div>
@@ -7181,6 +7253,8 @@ export function mountGlobals() {
   w.renderDxWetEyeDx = renderDxWetEyeDx;
   w.renderHaematuriaFlow = renderHaematuriaFlow;
   w.renderHaematuriaFlowSystemic = renderHaematuriaFlowSystemic;
+  w.renderHaematuriaFlowPseudo = renderHaematuriaFlowPseudo;
+  w.renderHaematuriaFlowTrueSystemic = renderHaematuriaFlowTrueSystemic;
   w.renderHaematuriaFlowInitial = renderHaematuriaFlowInitial;
   w.renderHaematuriaFlowTerminal = renderHaematuriaFlowTerminal;
   w.renderHaematuriaFlowUniform = renderHaematuriaFlowUniform;
