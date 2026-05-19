@@ -22,13 +22,9 @@ export const haematuriaFlowHtml = `
     <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
       <div style="font-size:9px;font-weight:600;color:#FCD34D;letter-spacing:.03em;">YES — red supernatant</div>
       <div class="flow-arrow-v">↓</div>
-      <div class="flow-node" style="width:100%;background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.4);font-size:10px;font-weight:700;color:#FCD34D;">
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.12);border:1.5px solid rgba(245,158,11,0.4);font-size:10px;font-weight:700;color:#FCD34D;cursor:pointer;width:100%;text-align:center;" onclick="renderHaematuriaFlowPseudo()">
         PSEUDO-HAEMATURIA<br>
-        <span style="font-size:9px;font-weight:400;opacity:.8;">No intact RBCs — haemolysis or pigment</span>
-      </div>
-      <div class="flow-arrow-v">↓</div>
-      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderHaematuriaFlowSystemic()">
-        🌐 Haemoglobinuria<br>Myoglobinuria<br>Pigment ›
+        <span style="font-size:9px;font-weight:400;opacity:.8;">Red supernatant after spin ›</span>
       </div>
     </div>
 
@@ -49,9 +45,9 @@ export const haematuriaFlowHtml = `
         <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
           <div style="font-size:9px;font-weight:600;color:#FCA5A5;">YES</div>
           <div class="flow-arrow-v" style="font-size:11px;">↓</div>
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderHaematuriaFlowSystemic()">
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderHaematuriaFlowTrueSystemic()">
             ⚡ Systemic<br>cause ›<br>
-            <span style="opacity:.7;font-size:8px;">coagulopathy · IMTP · DIC</span>
+            <span style="opacity:.7;font-size:8px;">Red sediment · intact RBCs</span>
           </div>
         </div>
 

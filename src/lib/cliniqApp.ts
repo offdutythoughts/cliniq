@@ -6584,28 +6584,6 @@ function renderHaematuriaFlow(){
 }
 
 // ── HAEMATURIA — clinical flowchart sub-branches ───────────────────────────
-function renderHaematuriaFlowSystemic(){
-  push(renderHaematuriaFlowSystemic,'Haematuria — Systemic / Pseudo');
-  render(`
-  <div class="flow-wrap">
-
-    <div class="flow-node entry" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.4);color:#FCD34D;">🌐 SYSTEMIC / PSEUDO-HAEMATURIA</div>
-    <div class="flow-arrow-v">↓</div>
-    <div class="flow-node step">CENTRIFUGE DISCRIMINATES
-      <div class="fn-sub" style="font-weight:400;margin-top:3px;">All give dipstick +ve blood — the supernatant colour separates them</div>
-    </div>
-    <div class="flow-arrow-v">↓</div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
-      <div class="flow-node" style="cursor:pointer;font-size:10px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.35);" onclick="renderHaematuriaFlowPseudo()">PSEUDO-HAEMATURIA<br><span style="font-size:9px;font-weight:400;">Red supernatant after spin</span></div>
-      <div class="flow-node" style="cursor:pointer;font-size:10px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.1);border-color:rgba(220,38,38,0.35);" onclick="renderHaematuriaFlowTrueSystemic()">SYSTEMIC CAUSE<br><span style="font-size:9px;font-weight:400;">Red sediment · intact RBCs</span></div>
-    </div>
-
-    <div class="disclaimer">For qualified veterinary professionals only.</div>
-  </div>
-  `);
-}
-
 function renderHaematuriaFlowPseudo(){
   replace(renderHaematuriaFlowPseudo,'Haematuria — Pseudo-haematuria');
   const CAT={
@@ -7235,7 +7213,6 @@ export function mountGlobals() {
   w.renderDxWetEyeExam = renderDxWetEyeExam;
   w.renderDxWetEyeDx = renderDxWetEyeDx;
   w.renderHaematuriaFlow = renderHaematuriaFlow;
-  w.renderHaematuriaFlowSystemic = renderHaematuriaFlowSystemic;
   w.renderHaematuriaFlowPseudo = renderHaematuriaFlowPseudo;
   w.renderHaematuriaFlowTrueSystemic = renderHaematuriaFlowTrueSystemic;
   w.renderHaematuriaFlowInitial = renderHaematuriaFlowInitial;
