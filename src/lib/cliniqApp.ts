@@ -860,7 +860,7 @@ const DB = {
     {id:'DIS-INFECT-RMSF',name:'Rocky Mountain Spotted Fever',sp:'Dog',topAlert:'RMSF kills within days if untreated — start doxycycline immediately on clinical suspicion; do not wait for confirmatory serology.',synonyms:'RMSF, spotted fever rickettsiosis, Rickettsia rickettsii infection',breed:'No breed predisposition; any tick-exposed dog at risk.',age:'Any age; young dogs may have more severe disease.',sex:'No sex predisposition.',etiology:'Rickettsia rickettsii — obligate intracellular gram-negative bacterium|Vector: Dermacentor variabilis (American dog tick), D. andersoni (Rocky Mountain wood tick), Amblyomma americanum (lone star tick), Rhipicephalus sanguineus|Endemic: USA (especially south-eastern, south-central, eastern states), Brazil, Canada, Mexico|Transmission: tick attached ≥2 h; risk increases with duration of attachment|Seasonal: spring to autumn (tick activity); year-round in warm climates|Dogs are incidental dead-end hosts (not a reservoir)',path:'R. rickettsii infects and lyses vascular endothelial cells → systemic vasculitis|↑Vascular permeability → oedema, hypovolaemia, thrombosis|Platelet consumption + endothelial damage → thrombocytopenia + coagulopathy|Multi-organ injury: brain, lung, kidney, GI, myocardium|Disseminated intravascular coagulation in severe cases|Cerebral oedema and haemorrhage: ataxia, seizures, coma',signs:'Acute febrile illness — high fever (39.5–41°C)|Anorexia, lethargy, depression|Facial/limb oedema|Skin: petechiae, ecchymoses, cutaneous necrosis (ear pinna, prepuce, digits, scrotum)|Epistaxis, haematemesis, melena, haematuria|Vomiting, diarrhoea, abdominal pain|Ocular: conjunctivitis, retinal haemorrhage, uveitis, anterior chamber bleeding|Neurological: ataxia, hyperaesthesia, seizures, stupor, vestibular signs|Acute scrotal oedema/necrosis in males',severe:'Rapidly progressive systemic vasculitis with DIC, multiorgan failure, haemorrhage, neurological signs and circulatory collapse. Untreated mortality approaches 20–30%.',conf:'Serology (IFA): paired titres ≥4-fold rise between acute and 2–3-week convalescent sample — diagnostic but delayed|Single acute titre ≥1:64 supports diagnosis in endemic area|PCR of whole blood (EDTA) or skin biopsy — highest sensitivity in first 3–4 days|Direct immunofluorescence on skin biopsy (punch from petechial lesion)|Culture: only in BSL-3 facilities',supp:'CBC: thrombocytopenia (hallmark), mild-moderate non-regenerative anaemia, often leukopenia early then leukocytosis|Biochem: ↑ALT, ↑ALP, hypoalbuminaemia, hyponatraemia (most common electrolyte abnormality), azotaemia|Coagulation: prolonged PT/aPTT; ↑D-dimers if DIC developing|CSF: pleocytosis if meningeal involvement',tx1:'Doxycycline 5 mg/kg PO/IV q12h or 10 mg/kg q24h × 7–14 days (minimum 3 days after fever resolves)|Start immediately on clinical suspicion — do not wait for confirmatory serology|Aggressive IV fluid support for vasculitis-driven hypovolaemia|Plasma or albumin supplementation if severely hypoalbuminaemic|Treat DIC: fresh frozen plasma 10–15 mL/kg q6–8h; heparin controversial|Blood pressure monitoring and pressor support (noradrenaline) if hypotensive',tx2:'Chloramphenicol 15–25 mg/kg PO/IV q6–8h — alternative if doxycycline unavailable (avoid in thrombocytopenic patients — bone marrow suppression)|Enrofloxacin and other antibiotics ineffective|Corticosteroids: no evidence of benefit; may worsen outcome|Tick removal: check entire body and remove all ticks promptly',monitor:'Daily CBC (platelets) and biochemistry until stable|Fever resolution expected within 24–48 h of appropriate treatment — if no response, question the diagnosis|Monitor neurological status, urinary output, blood pressure and coagulation',prog:'Excellent with early treatment. Fatal in 20–30% of untreated or late-treated dogs. Neurological signs indicate severe disease and carry a more guarded prognosis. Recovery from systemic signs within 1–2 weeks of treatment; skin lesion healing may take 2–4 weeks.',pearl:'RMSF is a clinical diagnosis — start doxycycline immediately if you suspect it. Waiting for serology confirmation while the dog deteriorates is a fatal mistake. Hyponatraemia in a febrile thrombocytopenic dog with necrotic ear tips is RMSF until proven otherwise.'},
     {id:'DIS-INFECT-LEISHM',name:'Leishmaniasis',sp:'Dog',topAlert:'Progressive multisystem disease — early treatment controls but rarely cures. Zoonotic risk: mandatory reporting requirements in many countries.',synonyms:'Leishmania, canine leishmaniosis, visceral leishmaniasis, CanL',breed:'Iberian, Boxer, Cocker Spaniel, Rottweiler and other immunocompromised or working breeds reported at higher risk. Hunting and outdoor breeds highest exposure risk.',age:'Young (immunologically naive to parasite) and immunocompromised adults most at risk.',sex:'No sex predisposition.',etiology:'Leishmania infantum (syn. L. chagasi in Americas) — most clinically relevant for dogs|Vector: Phlebotomus spp. sandfly (Southern Europe, Middle East, Central/South America, sub-Saharan Africa)|Transmission: sandfly bite; less commonly transfusion, vertical, venereal, direct contact|Endemic: Mediterranean basin, Iberian Peninsula, Middle East, Central and South America|Imported disease in northern Europe and North America',path:'Amastigotes infect tissue macrophages → disseminate via lymphatics and blood|Ineffective cellular immunity → organism replication in skin, bone marrow, spleen, liver, kidney, eye|Systemic inflammation → polyclonal hyperglobulinaemia, immune-complex deposition|Glomerulonephritis (immune complex) → protein-losing nephropathy → hypoalbuminaemia|Bone marrow infiltration → non-regenerative anaemia, thrombocytopenia|Vasculitis, coagulopathy (from glomerular disease and thrombocytopenia)|Skin: granulomatous inflammation → exfoliative dermatitis, ulceration, onychogryphosis',signs:'#Cutaneous|Periocular alopecia and scaling (classic sign)|Exfoliative / hyperkeratotic dermatitis (nose, ear pinna, elbows, hocks)|Nasal hyperkeratosis|Ulcers (ear tips, limbs, pressure points)|Onychogryphosis (abnormally long, brittle nails)|Nodular skin lesions|#Systemic|Lymphadenopathy (regional and generalised)|Splenomegaly, hepatomegaly|Epistaxis, bleeding from skin lesions|Weight loss, muscle wasting|Polyuria / polydipsia (renal involvement)|Lethargy, exercise intolerance|Anterior uveitis, chorioretinitis, keratoconjunctivitis|Epistaxis, melena (coagulopathy / glomerulonephritis)|Lameness / polyarthritis|Pale mucous membranes (anaemia)',severe:'Oliguric or anuric renal failure from end-stage glomerulonephritis — poor prognosis regardless of treatment.',conf:'Cytology: amastigotes in lymph node, spleen, bone marrow or skin aspirate (high specificity, moderate sensitivity)|Serology: IFA ≥1:160 or quantitative ELISA (high sensitivity and specificity; false negative in early or immune-competent infection)|PCR: whole blood or bone marrow — highest sensitivity; also used to monitor treatment response|Leishmanin skin test (LST / Montenegro test) — negative in clinical disease (no cellular immunity); positive in exposed immune-competent dogs',supp:'CBC: moderate non-regenerative anaemia; thrombocytopenia; lymphopenia or lymphocytosis|Biochem: markedly elevated total protein, massive hyperglobulinaemia (>3.5 g/dL), hypoalbuminaemia, ↑BUN/creatinine (renal), ↑ALT/ALP|UPC: elevated (>0.5 indicates glomerulonephritis)|Urinalysis: proteinuria|SPEP: polyclonal or narrow-band gamma globulin peak|Imaging: lymphadenopathy, splenomegaly; renal irregular architecture',tx1:'#First-line combination|Meglumine antimoniate (N-methylglucamine antimonate) 75–100 mg/kg SC or slow IV q24h × 28 days|PLUS allopurinol 10 mg/kg PO q12h (long-term; often lifelong)|#Where antimonials unavailable|Miltefosine 2 mg/kg PO q24h × 28 days + allopurinol|#Renal staging guides intensity|Stage I–II: treat aggressively|Stage III–IV: miltefosine preferred (lower nephrotoxicity); guarded prognosis',tx2:'Allopurinol monotherapy — maintenance only in stable dogs post-induction|Domperidone 0.5 mg/kg PO q24h (immunostimulant; limited evidence)|Marbofloxacin (off-label adjunct)|Immunotherapy + allopurinol in dogs with adequate cellular immune response|Liposomal amphotericin B — specialist use',monitor:'UPC and renal function q1–3 months|Serology and PCR to assess treatment response at 3, 6 months and annually|Allopurinol xanthinuria risk: urinalysis annually (urate crystalluria in some dogs)|Indefinite monitoring — clinical cure rarely achieved; disease may resurge especially on immunosuppression',prog:'Variable. Dogs with early-stage disease (no or mild renal involvement) can achieve clinical remission for years. Dogs with advanced protein-losing nephropathy and azotaemia have a poor prognosis regardless of treatment. Lifelong allopurinol and regular monitoring are the mainstays of management.',pearl:'Marked hyperglobulinaemia with hypoalbuminaemia in an imported Mediterranean dog = Leishmania first. Serology is highly sensitive — a negative ELISA in an endemic-exposed dog with compatible signs should prompt PCR. Allopurinol alone is maintenance, not cure — induction with antimonials or miltefosine is required for clinical disease.'},
     {id:'DIS-INFECT-LEPTO',name:'Leptospirosis',sp:'Dog + Cat',topAlert:'ZOONOTIC — leptospirosis is a notifiable human pathogen. Barrier nursing: gloves, gowns and eye protection for all staff handling the patient and their urine.',synonyms:'Leptospira, Weil\'s disease (humans), canine leptospirosis, Stuttgart disease',breed:'Dogs: hunting, working, farm, and outdoor breeds at highest risk. Any breed in urban environments with wildlife exposure or flooding. Cats: infection common but clinical disease uncommon.',age:'Young dogs <6 months and unvaccinated adults at highest risk.',sex:'Male overrepresented in some studies (increased roaming and environmental exposure).',etiology:'Leptospira interrogans (pathogenic serovars) — thin motile spirochaete|Key serovars: Icterohaemorrhagiae (rats), Grippotyphosa (rodents/wildlife), Canicola (dogs), Pomona (cattle/pigs), Australis, Bratislava|Reservoir hosts: rats and wild rodents (asymptomatic shedders), cattle, pigs, foxes, raccoons, hedgehogs|Transmission: contact with infected urine, urine-contaminated water/soil, direct animal contact, vertical (in utero), bite wounds|Survives in warm stagnant water and moist soil for weeks to months|Highest risk: autumn/winter, flooding, after heavy rainfall|Cats are relatively resistant to clinical disease but can seroconvert|Vaccination covers 4–6 serovars; cross-protection limited',path:'Spirochaetes enter via mucous membranes, abraded skin, or conjunctivae|Leptospiraemia → seeding of liver, kidney, lung, CNS, reproductive tract|Hepatocellular damage → icterus, coagulopathy|Renal tubular and interstitial nephritis → AKI (most common presentation in dogs)|Pulmonary haemorrhage syndrome (LPHS) — emerging severe complication|Vasculitis and platelet dysfunction → haemorrhage|Uveitis (immune-mediated, may occur weeks to months after infection)',signs:'#Peracute/Acute|High fever, rigors, lethargy, anorexia, vomiting|Polyuria progressing to oliguria/anuria (AKI)|Icterus (hepatic involvement)|Abdominal pain (hepatomegaly, nephromegaly)|Petechiae, ecchymoses, epistaxis, haematemesis, haematuria, melena|Tachypnoea, dyspnoea, haemoptysis (LPHS — severe)|#Chronic|Vague weight loss, polydipsia, polyuria|Uveitis (weeks to months post-infection)|Progressive CKD',severe:'Acute renal failure, pulmonary haemorrhage syndrome (LPHS) or severe coagulopathy/DIC — high mortality without aggressive treatment.',conf:'MAT (microscopic agglutination test): ≥1:800 acute or ≥4-fold titre rise in paired convalescent sample (2–4 weeks apart)|PCR (whole blood early; urine 7–10 days post-onset) — most sensitive in acute phase before antibiotics|Urine dark-field microscopy: low sensitivity, rarely used|Antigen ELISA and point-of-care lateral flow tests (sensitivity variable by serovar)',supp:'CBC: leukocytosis with left shift; thrombocytopenia (30–40%); anaemia|Biochem: ↑BUN, creatinine, phosphate (AKI); ↑ALT, ALP, bilirubin, bile acids (hepatic); ↑CK; hyponatraemia, hypokalaemia|Urinalysis: glucosuria (tubular injury), haemoglobinuria, casts, proteinuria|Coagulation: prolonged PT/aPTT, ↑D-dimers (DIC 10–40%)|Imaging: renomegaly (bilateral), perirenal fluid, hepatomegaly; pulmonary interstitial infiltrate (LPHS)|CXR/lung US: LPHS — bilateral interstitial to alveolar pattern',tx1:'Penicillin/amoxicillin — first line for leptospiraemic phase: amoxicillin 22 mg/kg PO/IV q12h or ampicillin 22 mg/kg IV q6–8h × 14 days (clears leptospiraemia)|THEN doxycycline 5 mg/kg PO q12h × 14 days (clears renal carrier state — essential to prevent zoonotic shedding)|Aggressive IV fluid support (LRS): manage AKI with urine output monitoring; target 1–2 mL/kg/h|Barrier nursing throughout; decontaminate all urine with dilute bleach (1:32)|Anti-emetics (maropitant 1 mg/kg SC/IV q24h); GI protectants; pain management',tx2:'Pulmonary haemorrhage: dexamethasone 0.5–2 mg/kg IV q12–24h (controversial but clinically used)|Oliguria/anuria: furosemide 2–4 mg/kg IV; mannitol 0.25–0.5 g/kg IV over 15 min; vasopressors if refractory|Dialysis at referral centre for refractory AKI|FFP 10–15 mL/kg for coagulopathy/DIC|Anti-uveitis therapy (topical ± systemic prednisolone, atropine) for post-infectious uveitis — weeks to months after infection|Notify public health authorities',monitor:'Urine output hourly in acute phase|Daily renal function, electrolytes, hydration status|Platelet count and coagulation status daily|MAT and/or PCR confirmation if still pending|Urine PCR to confirm shedding cessation before discharge',prog:'Good if AKI caught early and aggressive IV fluids started promptly — most dogs recover renal function. Severe AKI requiring dialysis: guarded. LPHS: poor (mortality ~40%). DIC: guarded to poor. CKD may persist post-recovery in some patients.',pearl:'Two-phase antibiotic protocol is essential: amoxicillin/ampicillin stops systemic disease, but doxycycline is needed to clear the renal carrier state. If you only give one drug, you leave a zoonotic shedder. Any febrile dog with AKI and thrombocytopenia in autumn/winter after waterway exposure = leptospirosis until proven otherwise. Barrier nurse all suspected cases before the result is back.'},
-    {id:'DIS-INFECT-FIP',name:'Feline Infectious Peritonitis (FIP)',sp:'Cat',topAlert:'GS-441524 (oral) or remdesivir (injectable) are curative in most cats — do not euthanase without attempting antiviral treatment. Contact a specialist or feline medicine service.',synonyms:'FIP, feline coronavirus (FCoV) mutant disease, feline coronavirus-associated disease',breed:'Purebred cats at higher risk (Abyssinian, Bengal, Birman, Himalayan, Ragdoll, Devon Rex, British Shorthair, Persian). Multi-cat households and catteries.',age:'Bimodal: <2 years (most common) and >10 years (second peak). Cats 3 months–3 years highest risk.',sex:'Male slightly overrepresented.',etiology:'FIP caused by a virulent biotype of Feline Coronavirus (FCoV)|Ubiquitous enteric FCoV → spontaneous mutation in individual cats → FIP-FCoV biotype|Mutation in spike protein and/or ORF3c / ORF7 → macrophage tropism|Direct cat-to-cat transmission of FIP-FCoV uncommon|FCoV prevalence: 20–60% household cats; >90% in multi-cat households|FIP develops in ~5–12% of FCoV-infected cats|Risk factors: high FCoV titre, male sex, young age, immunosuppression, stress, concurrent disease',path:'Virulent FCoV replicates in monocytes/macrophages → systemic dissemination|Pyogranulomatous vasculitis → effusions (wet form) or granulomata (dry form)|Effusions: modified transudate with high protein (>35 g/L), yellow-straw colour, tendency to clot|Fibrinous peritonitis / pleuritis, omentum/mesentery granulomata|Dry form: CNS (ependymitis, choroiditis), eyes, abdominal organs|Extreme hyperglobulinaemia (polyclonal) + hypoalbuminaemia (low A:G ratio)',signs:'#Wet (effusive) form|Abdominal distension (peritoneal effusion)|Dyspnoea (pleural effusion)|Weight loss, anorexia, lethargy|Fluctuating fever unresponsive to antibiotics|Icterus (hepatic granulomata)|#Dry (non-effusive) form|Neurological: ataxia, seizures, nystagmus, paraparesis, behavioural change|Uveitis, chorioretinitis, retinal haemorrhage, hypopyon|Abdominal organomegaly, granulomata|#Both forms|Progressive weight loss and cachexia|Persistent fever|Pale mucous membranes (anaemia)',severe:'Respiratory failure from bilateral pleural effusion; acute neurological deterioration; anuric renal failure from granulomatous nephritis.',conf:'#Effusion analysis (gold standard for wet FIP)|High protein (>35 g/L, typically 35–90 g/L), yellow/viscous|Low cellularity (predominantly neutrophils, macrophages)|Rivalta test: positive (but not specific)|RT-PCR of effusion for FCoV RNA (high sensitivity/specificity — preferred)|Immunofluorescence or immunohistochemistry of macrophages in effusion/tissue|#Supportive serology|FCoV antibody titre ≥1:1,600 (high but not diagnostic alone)|A:G ratio <0.4 highly suggestive|Serum AGP (alpha-1 acid glycoprotein) >1.5 mg/mL',supp:'CBC: non-regenerative anaemia (chronic disease), neutrophilia with left shift, lymphopenia|Biochem: elevated globulins (>35 g/L, often 50–100 g/L), hypoalbuminaemia, ↑bilirubin, ↑ALT/ALP|A:G ratio <0.4 (very sensitive + specific combined with effusion)|Urinalysis: proteinuria|Ophthalmology: uveitis, keratic precipitates, hypopyon, chorioretinitis|Brain MRI/CSF in neurological FIP: periventricular inflammation, hydrocephalus',tx1:'#Antiviral treatment — recommended for all forms|GS-441524 (oral nucleoside analogue): 8 mg/kg PO q24h (wet FIP, ocular); 12 mg/kg PO q24h (dry FIP, neurological); 15–20 mg/kg for neurological refractory — 84 days minimum course|Remdesivir (GS-5734 prodrug): injectable alternative 2 mg/kg IV or SC q24h; useful for cats unable to take oral medication — 12 weeks minimum|Response expected within 7–14 days — fever resolution, weight gain, effusion reduction|Prednisolone 1–2 mg/kg PO q24h: adjunct to manage inflammatory exudate — taper over 4 weeks as patient responds',tx2:'Therapeutic thoracocentesis / abdominocentesis for effusion causing respiratory distress — do not over-drain|Supportive: enteral nutrition (microchip feeding tube if not eating)|Antithrombotics: unfractionated heparin 100 U/kg SC q8h in effusive cases (hypercoagulable state)|B12 supplementation (cobalamin 250 mcg SC q7d) if wasting|Monitor for relapse at 84 days: if clinical relapse, extend treatment to 12 weeks or increase dose',monitor:'CBC and biochemistry weekly × first 2 months then monthly|Body weight and effusion volume q1–2 weeks|A:G ratio and globulins: normalisation expected by weeks 4–8|At end of treatment: clinical exam + CBC/biochem — if normal, no relapse at 12 weeks post-treatment → strong indicator of sustained remission|PCR negative post-treatment is positive sign but not mandatory for stopping',prog:'Without treatment: uniformly fatal, typically within days to weeks of diagnosis. With GS-441524: sustained remission in ~85–90% of wet FIP cases; ~70–80% of dry FIP; neurological FIP ~60–70%. Relapse most common in first 12 weeks post-treatment — re-treat with extended course at higher dose. Prognosis improving rapidly as treatment access expands.',pearl:'FIP is treatable and often curable — do not euthanase without attempting GS-441524 or remdesivir. A cat with yellow viscous ascites, low A:G ratio (<0.4), and high globulins has FIP until proven otherwise. FCoV antibody titre alone is not diagnostic. Neurological and ocular FIP require higher doses and longer courses than effusive FIP.'},
+    {id:'DIS-INFECT-FIP',name:'Feline Infectious Peritonitis (FIP)',sp:'Cat',topAlert:'Antiviral treatment (GS-441524 oral; remdesivir injectable) achieves sustained remission in most cats — discuss treatment options, realistic costs, and prognosis with the owner before any clinical decision.',synonyms:'FIP, feline coronavirus (FCoV) mutant disease, feline coronavirus-associated disease',breed:'Purebred cats at higher risk (Abyssinian, Bengal, Birman, Himalayan, Ragdoll, Devon Rex, British Shorthair, Persian). Multi-cat households and catteries.',age:'Bimodal: <2 years (most common) and >10 years (second peak). Cats 3 months–3 years highest risk.',sex:'Male slightly overrepresented.',etiology:'FIP caused by a virulent biotype of Feline Coronavirus (FCoV)|Ubiquitous enteric FCoV → spontaneous mutation in individual cats → FIP-FCoV biotype|Mutation in spike protein and/or ORF3c / ORF7 → macrophage tropism|Direct cat-to-cat transmission of FIP-FCoV uncommon|FCoV prevalence: 20–60% household cats; >90% in multi-cat households|FIP develops in ~5–12% of FCoV-infected cats|Risk factors: high FCoV titre, male sex, young age, immunosuppression, stress, concurrent disease',path:'Virulent FCoV replicates in monocytes/macrophages → systemic dissemination|Pyogranulomatous vasculitis → effusions (wet form) or granulomata (dry form)|Effusions: modified transudate with high protein (>35 g/L), yellow-straw colour, tendency to clot|Fibrinous peritonitis / pleuritis, omentum/mesentery granulomata|Dry form: CNS (ependymitis, choroiditis), eyes, abdominal organs|Extreme hyperglobulinaemia (polyclonal) + hypoalbuminaemia (low A:G ratio)',signs:'#Wet (effusive) form|Abdominal distension (peritoneal effusion)|Dyspnoea (pleural effusion)|Weight loss, anorexia, lethargy|Fluctuating fever unresponsive to antibiotics|Icterus (hepatic granulomata)|#Dry (non-effusive) form|Neurological: ataxia, seizures, nystagmus, paraparesis, behavioural change|Uveitis, chorioretinitis, retinal haemorrhage, hypopyon|Abdominal organomegaly, granulomata|#Both forms|Progressive weight loss and cachexia|Persistent fever|Pale mucous membranes (anaemia)',severe:'Respiratory failure from bilateral pleural effusion; acute neurological deterioration; anuric renal failure from granulomatous nephritis.',conf:'#Effusion analysis (gold standard for wet FIP)|High protein (>35 g/L, typically 35–90 g/L), yellow/viscous|Low cellularity (predominantly neutrophils, macrophages)|Rivalta test: positive (but not specific)|RT-PCR of effusion for FCoV RNA (high sensitivity/specificity — preferred)|Immunofluorescence or immunohistochemistry of macrophages in effusion/tissue|#Supportive serology|FCoV antibody titre ≥1:1,600 (high but not diagnostic alone)|A:G ratio <0.4 highly suggestive|Serum AGP (alpha-1 acid glycoprotein) >1.5 mg/mL',supp:'CBC: non-regenerative anaemia (chronic disease), neutrophilia with left shift, lymphopenia|Biochem: elevated globulins (>35 g/L, often 50–100 g/L), hypoalbuminaemia, ↑bilirubin, ↑ALT/ALP|A:G ratio <0.4 (very sensitive + specific combined with effusion)|Urinalysis: proteinuria|Ophthalmology: uveitis, keratic precipitates, hypopyon, chorioretinitis|Brain MRI/CSF in neurological FIP: periventricular inflammation, hydrocephalus',tx1:'#Antiviral treatment — recommended for all forms|GS-441524 (oral nucleoside analogue): 8 mg/kg PO q24h (wet FIP, ocular); 12 mg/kg PO q24h (dry FIP, neurological); 15–20 mg/kg for neurological refractory — 84 days minimum course|Remdesivir (GS-5734 prodrug): injectable alternative 2 mg/kg IV or SC q24h; useful for cats unable to take oral medication — 12 weeks minimum|Response expected within 7–14 days — fever resolution, weight gain, effusion reduction|Prednisolone 1–2 mg/kg PO q24h: adjunct to manage inflammatory exudate — taper over 4 weeks as patient responds',tx2:'Therapeutic thoracocentesis / abdominocentesis for effusion causing respiratory distress — do not over-drain|Supportive: enteral nutrition (microchip feeding tube if not eating)|Antithrombotics: unfractionated heparin 100 U/kg SC q8h in effusive cases (hypercoagulable state)|B12 supplementation (cobalamin 250 mcg SC q7d) if wasting|Monitor for relapse at 84 days: if clinical relapse, extend treatment to 12 weeks or increase dose',monitor:'CBC and biochemistry weekly × first 2 months then monthly|Body weight and effusion volume q1–2 weeks|A:G ratio and globulins: normalisation expected by weeks 4–8|At end of treatment: clinical exam + CBC/biochem — if normal, no relapse at 12 weeks post-treatment → strong indicator of sustained remission|PCR negative post-treatment is positive sign but not mandatory for stopping',prog:'Without treatment: uniformly fatal, typically within days to weeks of diagnosis. With GS-441524: sustained remission in ~85–90% of wet FIP cases; ~70–80% of dry FIP; neurological FIP ~60–70%. Relapse most common in first 12 weeks post-treatment — re-treat with extended course at higher dose. Prognosis improving rapidly as treatment access expands.',pearl:'FIP is treatable and often curable with antivirals (GS-441524 or remdesivir). A cat with yellow viscous ascites, low A:G ratio (<0.4), and high globulins has FIP until proven otherwise. FCoV antibody titre alone is not diagnostic. Neurological and ocular FIP require higher doses and longer courses than effusive FIP.'},
     {id:'DIS-VASC-HYPERT',name:'Systemic Hypertension',sp:'Dog + Cat',topAlert:'BP >180 mmHg with end-organ signs (retinal detachment, acute blindness, neurological signs) = hypertensive emergency — start antihypertensive within the hour.',synonyms:'Systemic arterial hypertension, SAH, hypertensive crisis, secondary hypertension',breed:'No breed predisposition. Cat: Birman may have benign hypertension; Ragdoll lower reference ranges. Dog: any breed if underlying cause present.',age:'Cat: predominantly middle-aged to older (>7 years); correlates with CKD, hyperthyroidism. Dog: age dependent on underlying cause.',sex:'No sex predisposition.',etiology:'#Cat — most common causes|Chronic kidney disease (CKD) — ~20–65% hypertensive|Hyperthyroidism — ~20–25% hypertensive; correcting hyperthyroidism may resolve hypertension|Hyperaldosteronism (adrenal tumour) — rare; hypertension + hypokalaemia|Idiopathic (essential hypertension) — ~10–20% of hypertensive cats|Phaeochromocytoma (very rare)|#Dog — most common causes|Chronic kidney disease|Hyperadrenocorticism (HAC) — cortisol-driven mineralocorticoid effect|Phaeochromocytoma — paroxysmal severe hypertension|Diabetes mellitus|Hypothyroidism (some cases)|Primary hyperaldosteronism|Obesity',path:'Sustained ↑ systemic arterial pressure → pressure-related end-organ injury|Retinal: arteriolar spasm → retinal oedema, haemorrhage, serous retinal detachment|Renal: glomerular hypertension → glomerulosclerosis → progressive CKD (vicious cycle)|CNS: hypertensive encephalopathy → cerebral oedema, haemorrhage, seizures|Cardiac: concentric LV hypertrophy → reduced cardiac output; cats: gallop rhythm|Ocular: anterior uveitis, choroidal vessels rupture',signs:'Often subclinical until end-organ signs develop|#Ocular (most common presenting complaint)|Sudden acute blindness — bilateral retinal detachment|Retinal haemorrhage (fundoscopy: flame haemorrhages, detachment)|Dilated, unresponsive pupils; mydriasis|Anterior uveitis|#Neurological|Disorientation, dementia-like behaviour change|Seizures, ataxia, head-tilt, nystagmus|Circling|#Cardiac|Gallop rhythm, murmur (cat)|Dyspnoea (secondary LV hypertrophy, pleural effusion)|#Renal|PU/PD|Progressive azotaemia|Proteinuria|#Epistaxis (uncommon in cats; more common in dogs with HAC)',severe:'Hypertensive emergency: BP >180 mmHg + retinal detachment, acute blindness, neurological signs or cardiac decompensation requiring treatment within 1 hour.',conf:'Blood pressure: Doppler (preferred in cats — systolic only; reliable); oscillometric (HDMS — validated for cats)|Minimum 5 measurements after acclimatisation, discard first; use median|Cat: systolic >160 mmHg = hypertensive; >180 = severely hypertensive|Dog: systolic >160 mmHg = hypertensive; >180 = severely hypertensive|White coat effect common — repeat in-home measurement (headset or owner monitoring) if borderline|Ophthalmic exam: fundoscopy — retinal haemorrhage, detachment, tortuosity',supp:'Biochemistry, T4, urinalysis, UPC: identify underlying cause|Echocardiography: LV wall thickness (concentric hypertrophy)|Abdominal imaging: adrenal mass (phaeochromocytoma, hyperaldosteronism); renal architecture|Urinary catecholamines/aldosterone if phaeochromocytoma/hyperaldosteronism suspected|CBC: usually unremarkable',tx1:'#Amlodipine — first-line for CATS and dogs|Cat: 0.625–1.25 mg/cat PO q24h; begin at 0.625 mg; recheck BP in 7–14 days|Dog: 0.1–0.4 mg/kg PO q24h; increase by 25% at 2-week intervals if target not reached|Target: systolic <150 mmHg (cat); <140 mmHg (dog)|#Hypertensive emergency|If acute blindness ± retinal detachment: start amlodipine at full dose immediately; do not delay waiting for recheck|Avoid too rapid reduction — autoregulatory failure risk|Restore perfusion pressure: slow controlled reduction over 24–48 h|#Address underlying cause|Treat CKD, hyperthyroidism, HAC, phaeochromocytoma, hyperaldosteronism as appropriate',tx2:'#Add-on antihypertensives if amlodipine monotherapy inadequate|Telmisartan (ARB): cat 1–2 mg/kg PO q24h — also antiproteinuric|Benazepril (ACEI): dog 0.5 mg/kg PO q24h — avoid in cats with CKD if not concurrent ARB|Prazosin (α1 blocker): phaeochromocytoma — must be started before beta-blocker if needed|#Phaeochromocytoma|Phenoxybenzamine preoperatively; adrenalectomy curative',monitor:'Blood pressure recheck 7–14 days after each dose change|Once stable: q3–6 months|Renal function and UPC before/after starting RAAS agents (risk of azotaemia)|Ophthalmic recheck for retinal re-attachment (can occur within weeks if treated early)',prog:'Controlled hypertension: good long-term quality of life. Retinal detachment: vision may recover if treated within 24–72 h (approximately 40–60% regain some sight); bilateral detachment of >72 h duration — permanent blindness likely. Hypertensive encephalopathy: guarded; full neurological recovery possible with aggressive treatment. Outcome strongly linked to successful management of the underlying cause.',pearl:'Acute blindness in a middle-aged or older cat = hypertensive retinal detachment until proven otherwise — take blood pressure immediately, not after a full work-up. Vision can be saved if treatment starts within 24–72 hours. White coat hypertension is common in cats; acclimatise, take multiple readings, and consider repeat measurements before committing to lifelong medication.'},
     {id:'DIS-VASC-HYPERVSC',name:'Hyperglobulinaemia / Hyperviscosity Syndrome',sp:'Dog + Cat',synonyms:'Hyperviscosity syndrome, HVS, paraproteinaemia, monoclonal gammopathy, polyclonal hyperglobulinaemia',breed:'Dog: German Shepherd, Labrador, and Cocker Spaniel reported in Ehrlichia. Multiple myeloma: no breed predisposition. Cat: Siamese anecdotally.',age:'Middle-aged to older adults for neoplastic causes; any age for infectious.',sex:'No sex predisposition.',etiology:'#Monoclonal (M-protein / paraprotein)|Multiple myeloma (IgA or IgG — dog; IgG or IgM — cat)|Plasma cell leukaemia|Waldenström macroglobulinaemia (IgM; rare)|B-cell lymphoma with secretion|Extramedullary plasmacytoma (rarely causes HVS)|#Polyclonal|Infectious: Ehrlichia canis, Leishmania infantum, FIP (cat), Bartonella, chronic fungal|Immune-mediated / chronic inflammatory: SLE, immune-mediated polyarthritis|Hepatic disease (reduced clearance)|Idiopathic',path:'Excess immunoglobulin (monoclonal >> polyclonal) → ↑serum viscosity|↑Viscosity → reduced microcirculatory flow → tissue hypoxia|CNS: impaired perfusion → neurological signs|Retina: dilated tortuous vessels, haemorrhage, detachment|Kidneys: light-chain deposition (Bence-Jones) → cast nephropathy (myeloma kidney)|Coagulopathy: M-protein coating platelets (thrombocytopathy), inhibiting clotting factors → bleeding|Bone lysis (myeloma): RANK-L mediated → hypercalcaemia, pathological fractures, pain|Immunosuppression: normal B-cell/Ab suppressed by malignant clone → recurrent infections',signs:'#Neurological|Mental dullness, confusion, dementia-like behaviour|Seizures, ataxia, circling, head-tilt, weakness|Coma (severe)|#Ocular|Dilated tortuous retinal vessels (sausage-link / string of sausages appearance)|Retinal haemorrhage|Retinal detachment|Anterior uveitis|#Haemostatic|Epistaxis, mucosal bleeding, prolonged bleeding from venepuncture sites|Haematuria, melena|#Renal|Polyuria / polydipsia|Azotaemia, proteinuria (Bence-Jones)|#Bone (myeloma)|Shifting lameness, pain on vertebral palpation|Pathological fractures|Hypercalcaemia signs (PU/PD, lethargy, anorexia)|#Other|Weight loss, lethargy, anorexia|Recurrent infections',severe:'Neurological crisis, uncontrolled haemorrhage, or acute renal failure from cast nephropathy.',conf:'SPEP (serum protein electrophoresis): M-spike (narrow monoclonal band) vs polyclonal broadening|Urine electrophoresis / Bence-Jones protein: light chains in urine (myeloma)|Immunofixation electrophoresis: characterises immunoglobulin type|Serum viscosity measurement: >5 cP symptomatic (normal <3 cP in dogs)|Bone marrow aspirate/core: >20% plasma cells = myeloma|Skeletal survey radiographs: punched-out lytic lesions (myeloma)',supp:'CBC: normocytic normochromic anaemia (marrow infiltration / anaemia of chronic disease); thrombocytopenia|Biochem: ↑total protein, markedly ↑globulin, ↓albumin; ↑creatinine; hypercalcaemia (30–50% of myeloma dogs); ↑ALT|Urinalysis: proteinuria, Bence-Jones protein|Coagulation: prolonged PT/aPTT; platelet function test (if available)|Imaging: lytic bone lesions on radiograph; abdominal US for organomegaly, lymphadenopathy',tx1:'#Treat underlying cause|Infectious: doxycycline (Ehrlichia), antimonials + allopurinol (Leishmania) — polyclonal globulin often normalises with treatment|#Multiple myeloma — chemotherapy|Melphalan 0.1 mg/kg PO q24h × 10 days then 0.05 mg/kg q24h + prednisolone 0.5 mg/kg PO q24h (M+P protocol — most widely used)|Cyclophosphamide + prednisolone (alternative)|Bortezomib-based protocols (referral)|#Hyperviscosity emergency|Plasmapheresis / therapeutic plasma exchange — most effective for rapid viscosity reduction|IV fluid diuresis (does not reduce globulins but temporarily dilutes)|Phlebotomy (rarely used)',tx2:'Bisphosphonates (pamidronate 1–2 mg/kg IV q3–4 weeks) for myeloma bone lesions and hypercalcaemia|Allopurinol for tumour lysis prevention|Analgesics for bone pain|Antibiotics for secondary infections (immunocompromised)|Retinal detachment: systemic hypertension must also be addressed',monitor:'SPEP and total protein monthly — response = M-spike reduction ≥50%|CBC weekly initially (melphalan is myelosuppressive)|Renal function q1–3 months|Urine Bence-Jones protein clearance|Skeletal pain and mobility assessment|Median survival myeloma dog: 540 days with M+P protocol; partial remission expected in ~43%',prog:'Infectious polyclonal: excellent if underlying infection treated. Myeloma: median survival 540 days (dog) with chemotherapy; renal failure and uncontrolled hypercalcaemia reduce survival. Cats with myeloma generally have shorter survival. Waldenström macroglobulinaemia: intermediate. Hyperviscosity crisis: guarded without plasmapheresis.',pearl:'A dog with epistaxis, neurological signs, and a massive globulin spike on biochemistry has hyperviscosity syndrome until proven otherwise. Dilated tortuous retinal vessels are pathognomonic on fundoscopy. Myeloma requires bone marrow biopsy and skeletal survey — SPEP showing an M-spike is the first clue. Infectious causes are fully reversible — always test for Ehrlichia and Leishmania before committing to a myeloma diagnosis.'},
     {id:'DIS-TOX-APAP',name:'Acetaminophen (Paracetamol) Toxicosis',sp:'Dog + Cat',topAlert:'Chocolate-brown blood, muddy/cyanotic mucous membranes and facial/paw oedema = methaemoglobinaemia — give N-acetylcysteine immediately, especially in cats.',synonyms:'Paracetamol toxicosis, APAP toxicosis, acetaminophen poisoning',breed:'No breed predisposition.',age:'No age predisposition; kittens highly susceptible.',sex:'No sex predisposition.',etiology:'Over-the-counter aspirin-free analgesics / antipyretics|Combination prescription products (e.g. with codeine)|Owner-administered to pet (especially to cats — never safe)|Accidental ingestion of tablets|#Toxic dose|Dog: intervene >50 mg/kg; hepatotoxicity >75–100 mg/kg; methaemoglobinaemia/death >200 mg/kg|Cat: methaemoglobinaemia at >40 mg/kg, occasionally as low as 10 mg/kg',path:'Parent drug low toxicity — toxic metabolites cause injury|High dose overwhelms glucuronidation/sulfation → ↑NAPQI via P450|NAPQI depletes glutathione → hepatocellular necrosis (centrilobular)|Deacetylation to para-aminophenol (PAP) → oxidises Hb iron Fe2+→Fe3+ → methaemoglobin|MetHb cannot carry O2 → hypoxia; further oxidation → Heinz bodies, haemolysis|#Species difference|Dog: hepatotoxicity is primary; methaemoglobinaemia at very high doses|Cat: deficient glucuronidation + slow NAT-1, 8 reactive sulfhydryl groups → methaemoglobinaemia is the predominant, early effect|Renal tubular injury at very high doses; KCS and facial/paw oedema also reported',signs:'#Methaemoglobinaemia (1–4 h, esp. cats)|Cyanosis, muddy-brown mucous membranes|Dyspnoea, tachypnoea, respiratory distress|Facial and paw oedema|Depression, weakness, hypothermia|#Hepatic/renal (esp. dogs, 24–36 h)|Anorexia, lethargy, vomiting, diarrhoea|Abdominal pain, icterus|Neurological signs (ataxia, stupor, coma), syncope|Bruising/haemorrhage; polyuria/polydipsia|Keratoconjunctivitis sicca, ocular discharge',severe:'Severe methaemoglobinaemia with hypoxia and Heinz-body haemolysis or fulminant hepatic necrosis and failure.',conf:'Chocolate-brown blood / muddy mucous membranes with compatible history|Co-oximetry — quantifies methaemoglobin fraction|Spot test: brown blood spot on white paper|Serum acetaminophen (human lab) — ideally within 4 h (max 16–20 h)',supp:'CBC: regenerative anaemia, marked neutrophilia|Smear (2–3 days): Heinz bodies, fragmented RBCs, spherocytes, brown-tinged cells|Biochem: ↑ALT, ALP, bilirubin; ↓glucose/albumin/cholesterol with hepatic failure; azotaemia if renal injury; metabolic acidosis|Low serum glutathione|Histopath: centrilobular hepatic necrosis',tx1:'Stabilise first — oxygen for severe dyspnoea/hypoxia; whole-blood transfusion if severe anaemia|#Decontamination|Emesis if recent and asymptomatic (dog: apomorphine 0.03–0.04 mg/kg IV/SC or conjunctival sac — rinse eye after vomiting; cat: dexmedetomidine 3.5 µg/kg IV or xylazine)|Activated charcoal + cathartic 1–3 g/kg PO; repeat in 8–12 h for large ingestions|#Antidote|N-acetylcysteine: loading 140 mg/kg PO/IV (up to 280 for severe), then 70–100 mg/kg q6h ×3–7 doses; dilute to 5% for PO',tx2:'SAM-e 18–20 mg/kg PO q24h ×2 wks (hepatoprotection; ineffective vs metHb)|Ascorbic acid 30 mg/kg PO/SC q6–12h (adjunct antioxidant)|Silibinin 30 mg/kg PO within 4 h (cats; bioavailability questioned)|Methylene blue 1 mg/kg IV slowly over 20 min in dogs — many consider contraindicated in cats|Dialysis or plasmapheresis in severe cases|Supportive: IV fluids, thermoregulation, artificial tears for KCS',monitor:'Haematocrit, methaemoglobin, liver enzymes and tear production|Methaemoglobinaemia usually resolves in 5–7 days|Liver enzymes peak ~72 h then fall over days–weeks|Tear production normalises in 1–2 weeks',prog:'Fair to good with prompt, aggressive treatment; cats treated within 14 hours of exposure fare better. Prognosis worsens with established methaemoglobinaemia, significant liver injury or pre-existing hepatic disease.',ddx:'@DIS-TOX-ALLIUM:Allium (garlic/onion) toxicosis|@DIS-TOX-ZN:Zinc toxicosis|Other methaemoglobinaemia/oxidative causes: nitrites/nitrates, benzocaine, naphthalene, skunk spray, phenazopyridine|Congenital methaemoglobin reductase deficiency|@DIS-BD-IMHA:Immune-mediated haemolytic anaemia|Acute hepatopathy from other hepatotoxins (xylitol, sago palm, mushrooms, NSAID)',pearl:'Cats develop methaemoglobinaemia early and at low doses (≥10 mg/kg) due to deficient glucuronidation — never give paracetamol to a cat. Dogs predominantly suffer hepatotoxicity. N-acetylcysteine is the antidote; start without waiting for confirmation. Methylene blue is often contraindicated in cats. Look for facial/paw oedema as a clue.'},
@@ -1881,6 +1881,7 @@ function renderPUPDFlow(){
 
 function renderPUPDFlowPrimPD(){
   replace(renderPUPDFlowPrimPD,'PU/PD — Primary Polydipsia');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.4);color:#6EE7B7;">💧 PRIMARY POLYDIPSIA (PD) — CAUSES</div>
@@ -1893,22 +1894,22 @@ function renderPUPDFlowPrimPD(){
     <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
 
       <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
-        <strong>Psychogenic / behavioural polydipsia</strong><br>
+        ${cat('A')}<strong>Psychogenic / behavioural polydipsia</strong><br>
         <span style="opacity:.85;">Most common cause · young large-breed dogs · anxious, bored, or stimulus-seeking<br>USG variable — at least 1 sample &gt;1.030 · Na⁺ low-normal or low (dilutional)<br>Medullary washout from chronic excess intake → may be unable to concentrate urine on WDT<br>→ Diagnosis of exclusion · rule out ALL other causes first · serial USG over weeks</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
-        <strong>Hyperthyroidism (cat)</strong><br>
+        ${cat('ME')}<strong>Hyperthyroidism (cat)</strong><br>
         <span style="opacity:.85;">Primary polydipsia mechanism (exact pathway unclear) · weight loss despite polyphagia<br>Tachycardia · hypertension · palpable ventral neck mass · unkempt coat · vomiting<br>Concurrent CKD often masked by elevated GFR — recheck renal panel after treatment<br>→ Total T4 (all cats &gt;7 yr) · free T4 + TSH if borderline</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
-        <strong>Hepatic encephalopathy (PSS / liver failure)</strong><br>
+        ${cat('ME')}<strong>Hepatic encephalopathy (PSS / liver failure)</strong><br>
         <span style="opacity:.85;">Central drive to drink · young dog with stunted growth or post-prandial neurological signs<br>Ammonium biurate crystalluria · ↓ BUN · ↓ albumin · ↓ cholesterol · microcytic RBCs<br>→ Pre/post-prandial bile acids · ammonia · abdominal US · CT angiography for PSS</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
-        <strong>Medullary washout (resolving or mixed)</strong><br>
+        ${cat('D')}<strong>Medullary washout (resolving or mixed)</strong><br>
         <span style="opacity:.85;">Any chronic PU/PD cause depletes medullary osmotic gradient → USG may not reconcentrate even after resolution<br>Resolves gradually with controlled water intake · serial USG over days to weeks<br>→ Confirm underlying cause treated · recheck USG</span>
       </div>
 
@@ -1932,6 +1933,7 @@ function renderPUPDFlowPrimPD(){
 
 function renderPUPDFlowPrimPU(){
   replace(renderPUPDFlowPrimPU,'PU/PD — Primary Polyuria');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.4);color:#A5B4FC;">💧 PRIMARY POLYURIA (PU) — CAUSES</div>
@@ -1947,11 +1949,11 @@ function renderPUPDFlowPrimPU(){
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#A5B4FC;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);text-align:center;">ADH DEFICIENCY / RESISTANCE<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">Hyposthenuria — USG &lt;1.008</span></div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.1);border:1.5px solid rgba(99,102,241,0.3);color:#A5B4FC;font-size:9.5px;">
-          <strong>Central diabetes insipidus (CDI)</strong><br>
+          ${cat('ME')}<strong>Central diabetes insipidus (CDI)</strong><br>
           <span style="opacity:.85;">Insufficient ADH from hypothalamus/posterior pituitary<br>Profound PU/PD · otherwise systemically well · USG 1.001–1.007 · Na⁺ high-normal<br>Causes: idiopathic (most common) · head trauma · pituitary neoplasia · cysts · parasites<br>→ Desmopressin trial: USG &gt;1.015 + ↓ water intake confirms CDI</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.1);border:1.5px solid rgba(99,102,241,0.3);color:#A5B4FC;font-size:9.5px;">
-          <strong>Primary nephrogenic DI (NDI)</strong> — extremely rare<br>
+          ${cat('A')}<strong>Primary nephrogenic DI (NDI)</strong> — extremely rare<br>
           <span style="opacity:.85;">Congenital ADH receptor (V2R) or aquaporin-2 mutation<br>Profound hyposthenuria from birth · NO response to desmopressin<br>→ Diagnosis of exclusion after ALL secondary NDI causes excluded<br>Treatment: low-Na⁺ diet · thiazide diuretics (paradoxical ↓ in polyuria)</span>
         </div>
       </div>
@@ -1960,15 +1962,15 @@ function renderPUPDFlowPrimPU(){
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#A5B4FC;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);text-align:center;">OSMOTIC / TUBULAR LOSS<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">USG variable — often partial</span></div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.1);border:1.5px solid rgba(99,102,241,0.3);color:#A5B4FC;font-size:9.5px;">
-          <strong>Diabetes mellitus — osmotic diuresis</strong><br>
+          ${cat('ME')}<strong>Diabetes mellitus — osmotic diuresis</strong><br>
           <span style="opacity:.85;">Glucosuria (BG exceeds renal threshold: &gt;180 mg/dL dog / &gt;270 mg/dL cat)<br>Glucose in tubule draws water out → osmotic diuresis<br>USG can be high despite dilute urine (glucose raises USG artificially)<br>→ Blood glucose + urine dipstick on every sample · fructosamine (cat)</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.1);border:1.5px solid rgba(99,102,241,0.3);color:#A5B4FC;font-size:9.5px;">
-          <strong>Renal glucosuria / Fanconi syndrome</strong><br>
+          ${cat('A')}<strong>Renal glucosuria / Fanconi syndrome</strong><br>
           <span style="opacity:.85;">Glucosuria with normal blood glucose → renal tubular threshold defect<br>Basenji · Norwegian Elkhound · Shetland Sheepdog predisposed · acquired (copper hepatitis, toxins)<br>→ Urinary amino acids · serum electrolytes · Fanconi panel</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.1);border:1.5px solid rgba(99,102,241,0.3);color:#A5B4FC;font-size:9.5px;">
-          <strong>Chronic kidney disease (CKD) / AKI</strong><br>
+          ${cat('D')}<strong>Chronic kidney disease (CKD) / AKI</strong><br>
           <span style="opacity:.85;">Loss of functional nephron mass → loss of tubular concentrating ability<br>Isosthenuria (1.008–1.012) · ↑ SDMA · ↑ creatinine · weight loss<br>AKI: paradoxical PU in recovery phase (tubular repair)<br>→ IRIS staging · UPC · BP · renal US · urine culture</span>
         </div>
       </div>
@@ -1993,6 +1995,7 @@ function renderPUPDFlowPrimPU(){
 
 function renderPUPDFlowSecPU(){
   replace(renderPUPDFlowSecPU,'PU/PD — Secondary Polyuria');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.4);color:#FCD34D;">💧 SECONDARY POLYURIA (PU) — CAUSES</div>
@@ -2005,42 +2008,42 @@ function renderPUPDFlowSecPU(){
     <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
 
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        <strong>Hyperadrenocorticism (HAC / Cushing's)</strong> ⭐ most common cause in dogs<br>
+        ${cat('ME')}<strong>Hyperadrenocorticism (HAC / Cushing's)</strong> ⭐ most common cause in dogs<br>
         <span style="opacity:.85;">Glucocorticoids competitively inhibit ADH at V2 receptor → secondary NDI<br>↑ ALP (often markedly) · polyphagia · pot belly · truncal alopecia · calcinosis cutis · muscle wasting<br>USG often 1.001–1.015 · stress leukogram · ↑ cholesterol<br>→ UCCR (screen) → LDDST or ACTH stim (confirm) → abdominal US (adrenal size/symmetry)</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        <strong>Hypercalcaemia</strong> — secondary NDI<br>
+        ${cat('ME')}<strong>Hypercalcaemia</strong> — secondary NDI<br>
         <span style="opacity:.85;">↑ Ca²⁺ blocks aquaporin-2 insertion → collecting duct unresponsive to ADH<br>Ca²⁺ &gt;3.0 mmol/L clinically significant · constipation · muscle weakness · vomiting<br>Causes: lymphoma (most common) · anal sac adenocarcinoma · hyperparathyroidism · Addison's · Vit D toxicity<br>→ Ionised Ca²⁺ · PTHrP · PTH · rectal exam + lymph nodes + chest radiograph · abdominal US</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        <strong>Pyometra</strong> ⚠️<br>
+        ${cat('I')}<strong>Pyometra</strong> ⚠️<br>
         <span style="opacity:.85;">E. coli endotoxin directly inhibits ADH response at renal tubule → secondary NDI<br>Intact ♀ · 4–8 wks post-oestrus · vaginal discharge (open) or no discharge (closed)<br>Leucocytosis · anorexia · abdominal distension<br>→ Abdominal US · OHE (gold standard) · broad-spectrum antibiotics + IV fluids</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        <strong>Pyelonephritis / Leptospirosis</strong><br>
+        ${cat('I')}<strong>Pyelonephritis / Leptospirosis</strong><br>
         <span style="opacity:.85;">E. coli endotoxin (pyelo) or renal tubular damage (lepto) → secondary NDI<br>Fever · painful kidneys · leucocytosis · active sediment (WBC casts, bacteria)<br>Leptospirosis: jaundice · uveitis · acute hepatorenal syndrome · zoonotic — PPE<br>→ Urine culture (cystocentesis) · renal US · MAT titres (lepto) · PCR</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        <strong>Hypoadrenocorticism (Addison's disease)</strong><br>
+        ${cat('ME')}<strong>Hypoadrenocorticism (Addison's disease)</strong><br>
         <span style="opacity:.85;">Hyponatraemia → loss of medullary osmotic gradient → impaired urine concentration<br>Na:K &lt;27 · waxing/waning history · absent stress leukogram · hyperkalaemia<br>→ Basal cortisol &lt;55 nmol/L or ACTH stimulation test</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        <strong>Hypokalemia</strong><br>
+        ${cat('ME')}<strong>Hypokalemia</strong><br>
         <span style="opacity:.85;">↓ K⁺ impairs aquaporin-2 insertion into collecting duct → secondary NDI<br>Muscle weakness · ventroflexion of neck (cat — primary hyperaldosteronism)<br>Causes: chronic illness · vomiting · loop diuretics · hyperaldosteronism<br>→ Serum K⁺ · identify and treat underlying cause · supplement K⁺</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        <strong>Portosystemic shunt / liver failure — medullary washout</strong><br>
+        ${cat('ME')}<strong>Portosystemic shunt / liver failure — medullary washout</strong><br>
         <span style="opacity:.85;">Low BUN (reduced urea synthesis) → loss of medullary osmotic gradient → can't concentrate urine<br>Young dog · stunted · post-prandial neurological signs (HE) · ammonium biurate crystalluria<br>→ Pre/post-prandial bile acids · ammonia · abdominal US · CT angiography</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        <strong>Acromegaly (cat) — GH-induced DM</strong><br>
+        ${cat('ME')}<strong>Acromegaly (cat) — GH-induced DM</strong><br>
         <span style="opacity:.85;">GH → peripheral insulin resistance → diabetes mellitus → osmotic diuresis<br>Poorly controlled diabetic cat · broad facial features · large body frame · organomegaly<br>→ IGF-1 · pituitary MRI · high insulin doses needed</span>
       </div>
 
@@ -2152,8 +2155,8 @@ function renderJaundiceFlow(){
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node sub-step" style="width:100%;font-size:10px;">PRE-HEPATIC<br>Haemolytic jaundice<br>Bilirubin production overwhelmed</div>
         <div class="flow-arrow-v">↓</div>
-        <div class="flow-endpoint pleural" onclick="goLesionTab('LOC-JD-PREHEP','Pre-hepatic (haemolytic)')" style="width:100%;font-size:10px;">
-          Haemolytic causes
+        <div class="flow-endpoint pleural" onclick="renderJaundiceFlowPreHep()" style="width:100%;font-size:10px;cursor:pointer;">
+          Haemolytic causes →
         </div>
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node sub-step" style="width:100%;font-size:9px;">Regenerative? (reticulocytes)<br>Blood smear (spherocytes, Babesia)<br>Coombs test</div>
@@ -2168,14 +2171,14 @@ function renderJaundiceFlow(){
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
           <div>
             <div style="font-size:8px;color:var(--amber-text);text-align:center;margin-bottom:2px;">Normal bile ducts</div>
-            <div class="flow-endpoint gi-secondary" onclick="goLesionTab('LOC-JD-HEP','Hepatic')" style="font-size:9px;">
-              Hepatic causes
+            <div class="flow-endpoint gi-secondary" onclick="renderJaundiceFlowHep()" style="font-size:9px;cursor:pointer;">
+              Hepatic causes →
             </div>
           </div>
           <div>
             <div style="font-size:8px;color:#FCA5A5;text-align:center;margin-bottom:2px;">Dilated bile ducts</div>
-            <div class="flow-endpoint pleural" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')" style="font-size:9px;">
-              Post-hepatic causes
+            <div class="flow-endpoint pleural" onclick="renderJaundiceFlowPostHep()" style="font-size:9px;cursor:pointer;">
+              Post-hepatic causes →
             </div>
           </div>
         </div>
@@ -2185,6 +2188,183 @@ function renderJaundiceFlow(){
     <div style="margin-top:10px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:9px 12px;font-size:10px;color:var(--gray);width:100%;">
       <b style="color:var(--white);">Key point (Maddison):</b> Bilirubinuria in <b>cats is ALWAYS pathological</b>. Pre-hepatic jaundice ALWAYS has significant anaemia. Distinguish hepatic from post-hepatic using abdominal ultrasound (bile duct dilation).
     </div>
+  </div>
+  `);
+}
+
+function renderJaundiceFlowPreHep(){
+  replace(renderJaundiceFlowPreHep,'Jaundice — Pre-hepatic');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.35);color:#FCA5A5;">🟡 JAUNDICE — PRE-HEPATIC (Haemolytic)</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">Excess bilirubin from RBC destruction overwhelms hepatic conjugation capacity<div class="fn-sub" style="font-weight:400;">Significant anaemia · regenerative · bilirubinuria · haemoglobinaemia</div></div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="renderLesionDetail('LES-PM-REGEN')">
+        ${cat('Im')}<strong>Immune-mediated haemolytic anaemia (IMHA)</strong><br>
+        <span style="opacity:.85;">Most common cause of haemolytic jaundice in dogs · spherocytes · agglutination · Coombs +ve<br>Prednisolone ± azathioprine/ciclosporin · thrombosis risk → antithrombotic prophylaxis</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="renderLesionDetail('LES-PM-REGEN')">
+        ${cat('I')}<strong>Infectious haemolysis — Babesia spp. / Mycoplasma haemofelis</strong><br>
+        <span style="opacity:.85;">Babesia: piroplasms on RBC smear · PCR · imidocarb<br>Mycoplasma haemofelis (cat): PCR · doxycycline + prednisolone</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="renderLesionDetail('LES-PM-REGEN')">
+        ${cat('Tx')}<strong>Toxic haemolysis — zinc, Allium, paracetamol, oxidant drugs</strong><br>
+        <span style="opacity:.85;">Heinz bodies (cat) · eccentrocytes (dog) · history of exposure essential<br>Remove source · N-acetylcysteine (paracetamol) · supportive care</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="renderLesionDetail('LES-PM-REGEN')">
+        ${cat('V')}<strong>Haemorrhage into body cavity (pseudo-pre-hepatic: rare)</strong><br>
+        <span style="opacity:.85;">Blood pooling in cavities → RBC breakdown → bilirubin release<br>Low TS alongside low PCV · effusion on imaging</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="renderLesionDetail('LES-PM-REGEN')">
+        ${cat('A')}<strong>Hereditary / congenital — PK deficiency, neonatal isoerythrolysis</strong><br>
+        <span style="opacity:.85;">PK deficiency: young Basenji · Abyssinian cat · regenerative anaemia · splenomegaly<br>Neonatal isoerythrolysis: blood type mismatch dam/kitten · jaundice at birth</span>
+      </div>
+
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderJaundiceFlowHep(){
+  replace(renderJaundiceFlowHep,'Jaundice — Hepatic');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="background:rgba(217,119,6,0.12);border-color:rgba(217,119,6,0.35);color:#FCD34D;">🟡 JAUNDICE — HEPATIC</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">Hepatocyte dysfunction → impaired bilirubin uptake, conjugation, and/or excretion<div class="fn-sub" style="font-weight:400;">Normal to mildly dilated bile ducts on US · elevated ALT + ALP · ± coagulopathy</div></div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
+
+      <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
+        ${cat('I')}<strong>Acute hepatitis — infectious (leptospirosis, ICH, toxoplasmosis, FIP)</strong><br>
+        <span style="opacity:.85;">Fever · hepatomegaly · marked ALT elevation · coagulopathy in severe cases<br>Leptospirosis: AKI + pyrexia · MAT titres + PCR · PPE (zoonotic)</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
+        ${cat('I')}<strong>Immune-mediated / chronic hepatitis (dog)</strong><br>
+        <span style="opacity:.85;">Cocker Spaniel · Dobermann · Labrador · chronic waxing/waning signs · copper accumulation<br>Liver biopsy essential · immunosuppression ± ursodiol ± copper chelation</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
+        ${cat('I')}<strong>Cholangitis / cholangiohepatitis (cat)</strong><br>
+        <span style="opacity:.85;">Most common hepatic cause of jaundice in cats · neutrophilic (bacterial) or lymphocytic<br>Concurrent IBD + pancreatitis (triaditis) · ursodiol + antibiotics ± prednisolone</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
+        ${cat('ME')}<strong>Hepatic lipidosis (cat) — most common hepatic cause in cats</strong><br>
+        <span style="opacity:.85;">Rapid weight loss (often 25–50% BW) · anorexia >3–7 days · hepatomegaly<br>Nutritional support (NG/PEG tube) is the cornerstone of treatment</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
+        ${cat('ME')}<strong>Steroid hepatopathy (dog) — HAC or iatrogenic</strong><br>
+        <span style="opacity:.85;">Markedly elevated ALP · hyper-echogenic liver on US · glycogen vacuolation on biopsy<br>Manage underlying HAC or reduce corticosteroid dose</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
+        ${cat('ME')}<strong>Copper storage hepatopathy (Bedlington, WHWT, Labrador)</strong><br>
+        <span style="opacity:.85;">Rhodanine stain on biopsy · copper quantification · d-penicillamine or trientine + low-copper diet</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
+        ${cat('M')}<strong>Primary hepatic neoplasia — HCC, biliary carcinoma</strong><br>
+        <span style="opacity:.85;">Massive hepatomegaly (HCC) · solitary lobe · surgical resection if localised<br>Biliary carcinoma: more aggressive · diffuse or nodular</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
+        ${cat('M')}<strong>Hepatic metastasis / lymphoma</strong><br>
+        <span style="opacity:.85;">Multifocal hypoechoic nodules · lymphoma: FNA diagnostic · CHOP protocol</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
+        ${cat('D')}<strong>Hepatic cirrhosis / end-stage fibrosis</strong><br>
+        <span style="opacity:.85;">Small irregular liver · ascites · hypoalbuminaemia · coagulopathy · poor prognosis<br>Supportive: ursodiol · lactulose · protein-restricted diet · diuretics for ascites</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
+        ${cat('Tx')}<strong>Drug-induced hepatotoxicity — carprofen, phenobarbitone, paracetamol, azathioprine</strong><br>
+        <span style="opacity:.85;">Idiosyncratic or dose-dependent · discontinue offending drug immediately<br>N-acetylcysteine (paracetamol) · SAMe + silymarin as hepatoprotectants</span>
+      </div>
+
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderJaundiceFlowPostHep(){
+  replace(renderJaundiceFlowPostHep,'Jaundice — Post-hepatic');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.35);color:#FCA5A5;">🟡 JAUNDICE — POST-HEPATIC (Biliary Obstruction)</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">Obstruction to bile flow → conjugated bilirubin reflux into circulation<div class="fn-sub" style="font-weight:400;">Dilated bile ducts on US · marked ALP elevation · bilirubinuria · pale faeces</div></div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
+        ${cat('D')}<strong>Biliary mucocele (dog) ⚠️</strong> — most common post-hepatic cause in dogs; gallbladder necrosis risk<br>
+        <span style="opacity:.85;">Immobile stellate/kiwi pattern on US · cholecystocentesis contraindicated · cholecystectomy urgently<br>Cocker Spaniel · Shetland Sheepdog predisposed · peritonitis risk if rupture</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
+        ${cat('I')}<strong>Pancreatitis causing biliary obstruction</strong><br>
+        <span style="opacity:.85;">Inflammation / oedema compressing common bile duct · concurrent vomiting + abdominal pain<br>Pancreatic lipase + abdominal US · management of pancreatitis usually resolves obstruction</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
+        ${cat('I')}<strong>Ascending cholangitis / bile duct inflammation</strong><br>
+        <span style="opacity:.85;">Bacterial ascent from duodenum · E. coli most common · pyrexia<br>IV antibiotics (ampicillin + enrofloxacin) · biliary lavage if unresponsive</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
+        ${cat('M')}<strong>Biliary / gall bladder carcinoma</strong><br>
+        <span style="opacity:.85;">Rare · poor prognosis · biliary epithelial mass on US · FNA/biopsy for diagnosis</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
+        ${cat('M')}<strong>Pancreatic adenocarcinoma — compression of CBD</strong><br>
+        <span style="opacity:.85;">Mass in pancreatic region compressing common bile duct · poor surgical candidate<br>CT staging · palliative biliary stenting</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
+        ${cat('M')}<strong>Duodenal neoplasia</strong><br>
+        <span style="opacity:.85;">Adenocarcinoma / carcinoid · obstruction at ampulla of Vater · endoscopy + biopsy</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
+        ${cat('Tr')}<strong>Bile duct rupture / biliary peritonitis ⚠️</strong><br>
+        <span style="opacity:.85;">Post-traumatic or from mucocele rupture · bilious effusion · abdominocentesis confirms<br>Emergency surgery · high mortality without prompt intervention</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
+        ${cat('A')}<strong>Biliary cyst / choledochal cyst (rare)</strong><br>
+        <span style="opacity:.85;">Congenital dilatation of bile duct · cystic structure adjacent to biliary tree on US<br>Surgical excision</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
+        ${cat('Tx')}<strong>Cholecalciferol toxicosis (bile stasis component)</strong><br>
+        <span style="opacity:.85;">Hypercalcaemia → mineralisation of bile ducts · history of rodenticide exposure<br>Pamidronate + IV fluids + furosemide · check Ca²⁺ + phosphorus</span>
+      </div>
+
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
   </div>
   `);
 }
@@ -3355,13 +3535,13 @@ function renderPaleGumsFlow(){
         <div class="flow-node insp" style="width:100%;font-size:11px;font-weight:700;">Anaemia<div class="fn-sub" style="font-weight:400;">Low PCV · check reticulocytes + smear</div></div>
         <div class="flow-arrow-v">↓</div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;width:100%;">
-          <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-REGEN')">
+          <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9px;cursor:pointer;text-align:center;" onclick="renderPaleFlowRegen()">
             Regenerative anaemia ⚠️
           </div>
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-NONREGEN')">
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderPaleFlowNonRegen()">
             Non-regenerative anaemia
           </div>
-          <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-PREREGEN')">
+          <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9px;cursor:pointer;text-align:center;" onclick="renderPaleFlowPreRegen()">
             Pre-regenerative anaemia (&lt;3–5 days)
           </div>
         </div>
@@ -3372,10 +3552,10 @@ function renderPaleGumsFlow(){
         <div class="flow-node mixed" style="width:100%;font-size:11px;font-weight:700;">Poor perfusion<div class="fn-sub" style="font-weight:400;">Normal PCV · prolonged CRT · weak pulses</div></div>
         <div class="flow-arrow-v">↓</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;">
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-SHOCK')">
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderPaleFlowShock()">
             Hypovolaemic / distributive / cardiogenic shock ⚠️
           </div>
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderLesionDetail('LES-PM-CARD')">
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderPaleFlowCardiac()">
             Acute cardiac failure / pericardial effusion ⚠️
           </div>
         </div>
@@ -3403,6 +3583,243 @@ function renderPaleGumsFlow(){
 
 
 
+
+// ── PALE GUMS — sub-flows ─────────────────────────────────────────────────────
+function renderPaleFlowRegen(){
+  replace(renderPaleFlowRegen,'Pale MM — Regenerative Anaemia');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.4);color:#6EE7B7;">🩸 PALE MM — REGENERATIVE ANAEMIA</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">Active bone marrow response — reticulocytosis present<div class="fn-sub" style="font-weight:400;">Reticulocytes >60,000/µL (dog) / >50,000/µL (cat) · macrocytosis · polychromasia</div></div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
+
+      <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;cursor:pointer;" onclick="renderDiseasePage('DIS-BD-IMHA')">
+        ${cat('Im')}<strong>IMHA (immune-mediated haemolytic anaemia)</strong><br>
+        <span style="opacity:.85;">Spherocytes · auto-agglutination · Coombs +ve · prednisolone ± adjunct immunosuppression · antithrombotic prophylaxis essential</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+        ${cat('I')}<strong>Infectious haemolysis — Babesia, Mycoplasma haemofelis, Haemobartonella</strong><br>
+        <span style="opacity:.85;">Babesia: piroplasms on smear · PCR · imidocarb dipropionate<br>Mycoplasma haemofelis (cat): PCR · doxycycline + prednisolone</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+        ${cat('Tx')}<strong>Toxic haemolysis — zinc, Allium, paracetamol, oxidant drugs</strong><br>
+        <span style="opacity:.85;">
+          Zinc: <span style="cursor:pointer;text-decoration:underline;" onclick="renderDiseasePage('DIS-TOX-ZN')">→ DIS-TOX-ZN</span> · Allium: <span style="cursor:pointer;text-decoration:underline;" onclick="renderDiseasePage('DIS-TOX-ALLIUM')">→ DIS-TOX-ALLIUM</span> · Paracetamol: <span style="cursor:pointer;text-decoration:underline;" onclick="renderDiseasePage('DIS-TOX-APAP')">→ DIS-TOX-APAP</span><br>
+          Heinz bodies (cat) · eccentrocytes (dog) · remove source · N-acetylcysteine
+        </span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+        ${cat('V')}<strong>Acute haemorrhage — external or internal</strong><br>
+        <span style="opacity:.85;">Low PCV + low TS · haemoabdomen (splenic HSA), GI bleed<br>TS drops alongside PCV distinguishes from haemolysis</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+        ${cat('Tr')}<strong>Traumatic haemorrhage</strong><br>
+        <span style="opacity:.85;">Post-RTA · body wall haematoma · haemothorax · FAST scan · IV fluids + haemostasis</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+        ${cat('A')}<strong>Hereditary RBC defects — PK deficiency, phosphofructokinase deficiency</strong><br>
+        <span style="opacity:.85;">Young Basenji / Abyssinian / West Highland White Terrier · lifelong regenerative anaemia<br>Genetic testing available · splenectomy may extend survival</span>
+      </div>
+
+    </div>
+
+    <div style="margin-top:10px;padding:9px 12px;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.2);border-radius:10px;font-size:9.5px;color:var(--gray);width:100%;">
+      <strong style="color:#6EE7B7;">Pearl:</strong> Low PCV + normal TS = haemolysis; Low PCV + low TS = haemorrhage
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderPaleFlowNonRegen(){
+  replace(renderPaleFlowNonRegen,'Pale MM — Non-Regenerative Anaemia');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.4);color:#FCA5A5;">🩸 PALE MM — NON-REGENERATIVE ANAEMIA</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">Bone marrow failure to respond — reticulocytes absent or low<div class="fn-sub" style="font-weight:400;">Normocytic normochromic · reticulocytes &lt;60,000/µL · bone marrow aspirate often required</div></div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('ME')}<strong>CKD — reduced EPO production</strong><br>
+        <span style="opacity:.85;">↑ SDMA + creatinine · normocytic normochromic · EPO deficiency<br>IRIS staging · EPO supplementation if IRIS 3–4</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('ME')}<strong>Hypothyroidism</strong><br>
+        <span style="opacity:.85;">Dog · mild normocytic anaemia · lethargy · weight gain<br>Free T4 + TSH · levothyroxine supplementation</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('ME')}<strong>Hypoadrenocorticism</strong><br>
+        <span style="opacity:.85;">Na:K &lt;27 · waxing/waning · absent stress leukogram<br>ACTH stimulation test · hormone supplementation</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('I')}<strong>Anaemia of chronic inflammatory disease</strong><br>
+        <span style="opacity:.85;">Mild normocytic normochromic · hepcidin-mediated iron sequestration<br>Treat underlying inflammatory condition</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('Im')}<strong>Immune-mediated non-regenerative anaemia / pure red cell aplasia</strong><br>
+        <span style="opacity:.85;">Selective erythroid precursor destruction · bone marrow confirms absent erythroid line<br>Immunosuppression · EPO antibody testing</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('M')}<strong>Bone marrow infiltration — lymphoma, leukaemia, myeloma, mast cell</strong><br>
+        <span style="opacity:.85;">Pancytopenia (low WBC + platelets) · bone marrow aspirate + core biopsy essential<br>CHOP protocol (lymphoma) · palliative support</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('Tx')}<strong>Drug/toxin-induced aplasia — chloramphenicol, oestrogen toxicity, chemotherapy</strong><br>
+        <span style="opacity:.85;">Oestrogen (Sertoli cell tumour, exogenous) → severe aplastic pancytopenia<br>Discontinue drug · G-CSF · transfusion support</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('A')}<strong>Aplastic anaemia (idiopathic)</strong><br>
+        <span style="opacity:.85;">Severe pancytopenia · bone marrow hypocellular · diagnosis of exclusion<br>Immunosuppression + anabolic steroids + G-CSF · transfusion</span>
+      </div>
+
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderPaleFlowPreRegen(){
+  replace(renderPaleFlowPreRegen,'Pale MM — Pre-Regenerative Anaemia');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.4);color:#FCD34D;">🩸 PALE MM — PRE-REGENERATIVE ANAEMIA (&lt;3–5 days)</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">Acute onset — reticulocyte response not yet detectable<div class="fn-sub" style="font-weight:400;">Reticulocyte response takes 3–5 days (dog) / 4–7 days (cat) · repeat CBC at 5–7 days to reassess</div></div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+        ${cat('Im')}<strong>Acute IMHA (early)</strong><br>
+        <span style="opacity:.85;">May appear non-regenerative in first 3–5 days · spherocytes + agglutination present<br>Do not rule out IMHA based on absent reticulocytosis alone</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+        ${cat('V')}<strong>Acute haemorrhage (early)</strong><br>
+        <span style="opacity:.85;">Low TS + low PCV · TS drops hours before PCV normalises with fluid shifts<br>Serial PCV + TS monitoring every 4–6 h in acute haemorrhage</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+        ${cat('I')}<strong>Acute infectious haemolysis (early)</strong><br>
+        <span style="opacity:.85;">Babesia / Mycoplasma haemofelis — reticulocytes may not yet appear<br>PCR and blood smear essential in acute presentation</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
+        ${cat('Tx')}<strong>Acute toxic haemolysis (early)</strong><br>
+        <span style="opacity:.85;">History of oxidant toxin exposure · Heinz bodies / eccentrocytes may already be visible<br>Reticulocytosis follows within days</span>
+      </div>
+
+    </div>
+
+    <div style="margin-top:10px;padding:9px 12px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.2);border-radius:10px;font-size:9.5px;color:var(--gray);width:100%;">
+      <strong style="color:#FCD34D;">Key point:</strong> Any cause of regenerative anaemia may appear non-regenerative in the first 3–5 days. Always repeat CBC at 5–7 days before concluding non-regenerative.
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderPaleFlowShock(){
+  replace(renderPaleFlowShock,'Pale MM — Shock / Poor Perfusion');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.4);color:#FCA5A5;">⚠️ PALE MM — SHOCK / POOR PERFUSION</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">Normal PCV · prolonged CRT · weak rapid pulses · cold extremities<div class="fn-sub" style="font-weight:400;">Emergency — IV access immediately · crystalloid bolus 10–20 mL/kg over 15 min · reassess</div></div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('V')}<strong>Hypovolaemic shock — haemorrhage, dehydration, GI losses</strong><br>
+        <span style="opacity:.85;">Tachycardia · weak pulses · low blood pressure · cold extremities<br>Crystalloid bolus → reassess → blood products if haemorrhagic</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('I')}<strong>Distributive / septic shock — gram-negative sepsis, SIRS</strong><br>
+        <span style="opacity:.85;">Fever or hypothermia · tachycardia · bounding pulses early (warm shock) → collapse late<br>Broad-spectrum antibiotics · IVFT · source control · vasopressors if refractory</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('Tr')}<strong>Traumatic shock — internal haemorrhage</strong><br>
+        <span style="opacity:.85;">Post-RTA · haemoabdomen (splenic HSA) · haemothorax<br>FAST scan · permissive hypotension if active haemorrhage · surgical haemostasis</span>
+      </div>
+
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
+
+function renderPaleFlowCardiac(){
+  replace(renderPaleFlowCardiac,'Pale MM — Cardiac Failure');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  render(`
+  <div class="flow-wrap">
+    <div class="flow-node entry" style="background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.4);color:#FCA5A5;">⚠️ PALE MM — CARDIAC FAILURE</div>
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step">Reduced cardiac output → poor peripheral perfusion<div class="fn-sub" style="font-weight:400;">Normal PCV · muffled heart sounds · arrhythmia · coughing / respiratory distress</div></div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('D')}<strong>Dilated cardiomyopathy (DCM)</strong><br>
+        <span style="opacity:.85;">Large breed dogs (Dobermann, Great Dane, Boxer) · eccentric hypertrophy · low contractility<br>Pimobendan + frusemide + ACE-I · Holter for Dobermann screening</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('D')}<strong>Hypertrophic cardiomyopathy (HCM — cat)</strong><br>
+        <span style="opacity:.85;">Most common cardiac disease in cats · often subclinical until ATE or CHF<br>Echo essential · atenolol ± frusemide · clopidogrel for ATE prophylaxis</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('V')}<strong>Pericardial effusion / cardiac tamponade</strong><br>
+        <span style="opacity:.85;">Muffled heart sounds · jugular distension · pulsus paradoxus · globoid cardiac silhouette<br>Pericardiocentesis immediately · echo-guided · consider HSA vs idiopathic</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('A')}<strong>Congenital cardiac defects — PDA, VSD, subaortic stenosis</strong><br>
+        <span style="opacity:.85;">Young animal · continuous machinery murmur (PDA) · echo diagnostic<br>PDA: catheter-based occlusion · SAS: atenolol ± surgical</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
+        ${cat('M')}<strong>Cardiac neoplasia — haemangiosarcoma, mesothelioma (pericardial effusion)</strong><br>
+        <span style="opacity:.85;">Right atrial mass (HSA dog) · pericardiocentesis relieves tamponade<br>Echo + CT staging · pericardiectomy for palliation</span>
+      </div>
+
+    </div>
+
+    <div class="disclaimer">For qualified veterinary professionals only.</div>
+  </div>
+  `);
+}
 
 // ── DIAGNOSTIC APPROACH: VOMITING ────────────────────────────────────────────
 function renderDxRegurgitationExam(){
@@ -6421,6 +6838,7 @@ function renderHaematuriaFlow(){
 // ── HAEMATURIA — clinical flowchart sub-branches ───────────────────────────
 function renderHaematuriaFlowSystemic(){
   replace(renderHaematuriaFlowSystemic,'Haematuria — Systemic / Pseudo');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
   render(`
   <div class="flow-wrap">
 
@@ -6438,15 +6856,15 @@ function renderHaematuriaFlowSystemic(){
         <div class="flow-node" style="font-size:10px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.35);">PSEUDO-HAEMATURIA<br><span style="font-size:9px;font-weight:400;">Red supernatant after spin</span></div>
 
         <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
-          <strong>Haemoglobinuria</strong><br>
+          ${cat('Im')}<strong>Haemoglobinuria</strong><br>
           <span style="opacity:.75;">Intravascular haemolysis — IMHA, babesia, zinc toxicity, onion/garlic, severe thermal injury<br>Plasma pink/red · spherocytes · agglutination on smear</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
-          <strong>Myoglobinuria</strong><br>
+          ${cat('Tr')}<strong>Myoglobinuria</strong><br>
           <span style="opacity:.75;">Rhabdomyolysis — trauma, heatstroke, envenomation, exertional<br>CK markedly ↑ (&gt;10,000 U/L) · AKI risk from pigment nephropathy</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
-          <strong>Pigmenturia</strong><br>
+          ${cat('Tx')}<strong>Pigmenturia</strong><br>
           <span style="opacity:.75;">Dietary (beetroot, food dye) · drugs (rifampin, phenazopyridine)<br>Dipstick negative for blood — confirms</span>
         </div>
       </div>
@@ -6456,19 +6874,19 @@ function renderHaematuriaFlowSystemic(){
         <div class="flow-node" style="font-size:10px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.1);border-color:rgba(220,38,38,0.35);">TRUE SYSTEMIC HU<br><span style="font-size:9px;font-weight:400;">Red sediment · intact RBCs</span></div>
 
         <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-          <strong>Anticoagulant rodenticide</strong><br>
+          ${cat('Tx')}<strong>Anticoagulant rodenticide</strong><br>
           <span style="opacity:.75;">PT prolongs first (factor VII, shortest T½)<br>Vit K1 2.5 mg/kg SC now · confirm with PIVKAs</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-          <strong>IMTP</strong><br>
+          ${cat('Im')}<strong>IMTP</strong><br>
           <span style="opacity:.75;">Platelet &lt;50 ×10⁹/L · mucosal bleeds · coags normal<br>Prednisolone 2 mg/kg/day + adjunct immunosuppression</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-          <strong>DIC</strong><br>
+          ${cat('V')}<strong>DIC</strong><br>
           <span style="opacity:.75;">Platelets ↓ + PT ↑ + aPTT ↑ + fibrinogen ↓ + D-dimer ↑<br>Treat the underlying cause (sepsis, HSA, IMHA)</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-          <strong>Leptospirosis</strong><br>
+          ${cat('I')}<strong>Leptospirosis</strong><br>
           <span style="opacity:.75;">AKI + hepatopathy + pyrexia + haematuria<br>MAT serology + urine PCR · PPE (zoonotic)</span>
         </div>
       </div>
@@ -6493,6 +6911,7 @@ function renderHaematuriaFlowSystemic(){
 
 function renderHaematuriaFlowInitial(){
   replace(renderHaematuriaFlowInitial,'Haematuria — Initial Stream');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
   render(`
   <div class="flow-wrap">
 
@@ -6509,16 +6928,16 @@ function renderHaematuriaFlowInitial(){
       <div style="display:flex;flex-direction:column;gap:4px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#6EE7B7;background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3);">🩻 Distal Urethra</div>
         <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:#6EE7B7;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          <strong>Urolithiasis</strong><br><span style="opacity:.75;">Urethral stone · stranguria · obstruction risk</span>
+          ${cat('M')}<strong>Urolithiasis</strong><br><span style="opacity:.75;">Urethral stone · stranguria · obstruction risk</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:#6EE7B7;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          <strong>TCC / SCC</strong><br><span style="opacity:.75;">Older dog · palpable mass · CADET BRAF</span>
+          ${cat('M')}<strong>TCC / SCC</strong><br><span style="opacity:.75;">Older dog · palpable mass · CADET BRAF</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:#6EE7B7;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          <strong>Granulomatous urethritis</strong><br><span style="opacity:.75;">Bitch · mimics TCC · CADET BRAF negative</span>
+          ${cat('I')}<strong>Granulomatous urethritis</strong><br><span style="opacity:.75;">Bitch · mimics TCC · CADET BRAF negative</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:#6EE7B7;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          <strong>Trauma</strong><br><span style="opacity:.75;">Pelvic fracture · catheter injury · retrograde urethrogram</span>
+          ${cat('Tr')}<strong>Trauma</strong><br><span style="opacity:.75;">Pelvic fracture · catheter injury · retrograde urethrogram</span>
         </div>
       </div>
 
@@ -6526,16 +6945,16 @@ function renderHaematuriaFlowInitial(){
       <div style="display:flex;flex-direction:column;gap:4px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#F9A8D4;background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);">♀ Genital Tract</div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          <strong>Oestrus</strong><br><span style="opacity:.75;">Intact bitch · pro-oestrus / oestrus · confirm with timed vaginal cytology</span>
+          ${cat('ME')}<strong>Oestrus</strong><br><span style="opacity:.75;">Intact bitch · pro-oestrus / oestrus · confirm with timed vaginal cytology</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          <strong>Vaginitis</strong><br><span style="opacity:.75;">Juvenile or adult · discharge · vaginoscopy</span>
+          ${cat('I')}<strong>Vaginitis</strong><br><span style="opacity:.75;">Juvenile or adult · discharge · vaginoscopy</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          <strong>Vaginal / vulvar tumour</strong><br><span style="opacity:.75;">Leiomyoma (benign intact), TVT, fibrosarcoma</span>
+          ${cat('M')}<strong>Vaginal / vulvar tumour</strong><br><span style="opacity:.75;">Leiomyoma (benign intact), TVT, fibrosarcoma</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          <strong>Subinvolution of placental sites</strong><br><span style="opacity:.75;">Post-whelp bitch · persistent haemorrhagic discharge</span>
+          ${cat('V')}<strong>Subinvolution of placental sites</strong><br><span style="opacity:.75;">Post-whelp bitch · persistent haemorrhagic discharge</span>
         </div>
       </div>
 
@@ -6543,16 +6962,16 @@ function renderHaematuriaFlowInitial(){
       <div style="display:flex;flex-direction:column;gap:4px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#93C5FD;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);">⚙️ Prostate</div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          <strong>BPH</strong><br><span style="opacity:.75;">Intact male · symmetric enlargement · drip of clear-bloody fluid</span>
+          ${cat('ME')}<strong>BPH</strong><br><span style="opacity:.75;">Intact male · symmetric enlargement · drip of clear-bloody fluid</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          <strong>Bacterial prostatitis</strong><br><span style="opacity:.75;">Pyrexia · painful DRE · E. coli most common</span>
+          ${cat('I')}<strong>Bacterial prostatitis</strong><br><span style="opacity:.75;">Pyrexia · painful DRE · E. coli most common</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          <strong>Prostatic cyst / abscess</strong><br><span style="opacity:.75;">Fluctuant on US · surgical drainage</span>
+          ${cat('I')}<strong>Prostatic cyst / abscess</strong><br><span style="opacity:.75;">Fluctuant on US · surgical drainage</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          <strong>Prostatic carcinoma</strong><br><span style="opacity:.75;">Intact OR neutered · asymmetric · fixed · sublumbar LN</span>
+          ${cat('M')}<strong>Prostatic carcinoma</strong><br><span style="opacity:.75;">Intact OR neutered · asymmetric · fixed · sublumbar LN</span>
         </div>
       </div>
     </div>
@@ -6568,6 +6987,7 @@ function renderHaematuriaFlowInitial(){
 
 function renderHaematuriaFlowTerminal(){
   replace(renderHaematuriaFlowTerminal,'Haematuria — Terminal Stream');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
   render(`
   <div class="flow-wrap">
 
@@ -6584,19 +7004,19 @@ function renderHaematuriaFlowTerminal(){
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#A5B4FC;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);">🫧 Bladder Neck / Trigone</div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          <strong>Urothelial carcinoma (TCC)</strong><br>
+          ${cat('M')}<strong>Urothelial carcinoma (TCC)</strong><br>
           <span style="opacity:.75;">Trigone is the #1 site · older bitch (Scottie, WHWT, Beagle)<br>CADET BRAF urine PCR ~85% sensitive · sublumbar LN · piroxicam</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          <strong>Bacterial cystitis</strong><br>
+          ${cat('I')}<strong>Bacterial cystitis</strong><br>
           <span style="opacity:.75;">Pollakiuria + stranguria + HU · E. coli most common<br>Cystocentesis culture — gold standard</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          <strong>Cystic calculi (trigonal)</strong><br>
+          ${cat('M')}<strong>Cystic calculi (trigonal)</strong><br>
           <span style="opacity:.75;">Mobile on US · stone analysis essential<br>Struvite: diet dissolution; oxalate: surgical</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          <strong>Polypoid cystitis</strong><br>
+          ${cat('I')}<strong>Polypoid cystitis</strong><br>
           <span style="opacity:.75;">Often apical — biopsy essential to exclude TCC</span>
         </div>
       </div>
@@ -6605,11 +7025,11 @@ function renderHaematuriaFlowTerminal(){
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#93C5FD;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);">🩻 Proximal Urethra · ⚙️ Prostate</div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          <strong>Urethral TCC</strong><br>
+          ${cat('M')}<strong>Urethral TCC</strong><br>
           <span style="opacity:.75;">Extension from bladder trigone · stranguria · stent for obstruction</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          <strong>Prostatic disease</strong><br>
+          ${cat('M')}<strong>Prostatic disease</strong><br>
           <span style="opacity:.75;">BPH · prostatitis · carcinoma<br>Prostatic wash + culture + US</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
@@ -6630,6 +7050,7 @@ function renderHaematuriaFlowTerminal(){
 
 function renderHaematuriaFlowUniform(){
   replace(renderHaematuriaFlowUniform,'Haematuria — Throughout Stream');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
   render(`
   <div class="flow-wrap">
 
@@ -6652,27 +7073,27 @@ function renderHaematuriaFlowUniform(){
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#93C5FD;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);">🫘 Upper UT — YES</div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
-          <strong>Pyelonephritis</strong><br>
+          ${cat('I')}<strong>Pyelonephritis</strong><br>
           <span style="opacity:.75;">Fever · lumbar pain · WBC casts · pyelectasia on US<br>E. coli most common · fluoroquinolone 4–6 wks</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
-          <strong>Renal neoplasia</strong><br>
+          ${cat('M')}<strong>Renal neoplasia</strong><br>
           <span style="opacity:.75;">Renal cell carcinoma (dog) · lymphoma (cat, bilateral)<br>Asymmetric renal mass · CT staging · weight loss</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
-          <strong>Renal calculi / nephrolithiasis</strong><br>
+          ${cat('M')}<strong>Renal calculi / nephrolithiasis</strong><br>
           <span style="opacity:.75;">Often incidental · haematuria if obstructing · stone analysis</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
-          <strong>Idiopathic renal haematuria</strong><br>
+          ${cat('V')}<strong>Idiopathic renal haematuria</strong><br>
           <span style="opacity:.75;">Young dog · unilateral pulsatile bleed from ureter · cystoscopy + ureteric catheterisation · renal-sparing surgery</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
-          <strong>CRGV / "Alabama rot"</strong><br>
+          ${cat('V')}<strong>CRGV / "Alabama rot"</strong><br>
           <span style="opacity:.75;">Skin ulcers + AKI + HU · microangiopathic haemolytic anaemia · high mortality</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
-          <strong>Renal / ureteric trauma</strong><br>
+          ${cat('Tr')}<strong>Renal / ureteric trauma</strong><br>
           <span style="opacity:.75;">Post-RTA · retroperitoneal haemorrhage · contrast CT gold standard</span>
         </div>
       </div>
@@ -6681,19 +7102,19 @@ function renderHaematuriaFlowUniform(){
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#A5B4FC;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);">🫧 Bladder Body — NO</div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          <strong>Bacterial cystitis (diffuse)</strong><br>
+          ${cat('I')}<strong>Bacterial cystitis (diffuse)</strong><br>
           <span style="opacity:.75;">Entire mucosa inflamed · uniform HU · cystocentesis culture</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          <strong>Cystic calculi (body)</strong><br>
+          ${cat('M')}<strong>Cystic calculi (body)</strong><br>
           <span style="opacity:.75;">Non-trigonal stones · mobile on US · struvite vs oxalate vs urate</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          <strong>FIC (cat)</strong><br>
+          ${cat('A')}<strong>FIC (cat)</strong><br>
           <span style="opacity:.75;">Diffuse mucosal haemorrhage · sterile · self-resolving<br>Multimodal stress reduction</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          <strong>Bladder lymphoma (cat)</strong><br>
+          ${cat('M')}<strong>Bladder lymphoma (cat)</strong><br>
           <span style="opacity:.75;">Diffuse wall thickening · sterile urine · FeLV/FIV status · CHOP</span>
         </div>
       </div>
@@ -6706,6 +7127,7 @@ function renderHaematuriaFlowUniform(){
 
 function renderHaematuriaFlowIndep(){
   replace(renderHaematuriaFlowIndep,'Haematuria — Between Voids');
+  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
   render(`
   <div class="flow-wrap">
 
@@ -6722,16 +7144,16 @@ function renderHaematuriaFlowIndep(){
       <div style="display:flex;flex-direction:column;gap:4px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#F9A8D4;background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);">♀ Genital</div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          <strong>Oestrus</strong><br><span style="opacity:.75;">Intact bitch in pro-oestrus · confirm with vaginal cytology</span>
+          ${cat('ME')}<strong>Oestrus</strong><br><span style="opacity:.75;">Intact bitch in pro-oestrus · confirm with vaginal cytology</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          <strong>Vaginal / vulvar tumour</strong><br><span style="opacity:.75;">Leiomyoma · TVT · vaginoscopy + biopsy</span>
+          ${cat('M')}<strong>Vaginal / vulvar tumour</strong><br><span style="opacity:.75;">Leiomyoma · TVT · vaginoscopy + biopsy</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          <strong>Subinvolution of placental sites</strong><br><span style="opacity:.75;">Post-whelping bitch · haemorrhagic vulvar discharge</span>
+          ${cat('V')}<strong>Subinvolution of placental sites</strong><br><span style="opacity:.75;">Post-whelping bitch · haemorrhagic vulvar discharge</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          <strong>Open pyometra</strong><br><span style="opacity:.75;">Mucopurulent ± bloody discharge · intact bitch · US: uterine distension</span>
+          ${cat('I')}<strong>Open pyometra</strong><br><span style="opacity:.75;">Mucopurulent ± bloody discharge · intact bitch · US: uterine distension</span>
         </div>
       </div>
 
@@ -6739,13 +7161,13 @@ function renderHaematuriaFlowIndep(){
       <div style="display:flex;flex-direction:column;gap:4px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#93C5FD;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);">⚙️ Prostate</div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          <strong>BPH</strong><br><span style="opacity:.75;">Spontaneous bloody urethral discharge between voids · intact male · finasteride / castration</span>
+          ${cat('ME')}<strong>BPH</strong><br><span style="opacity:.75;">Spontaneous bloody urethral discharge between voids · intact male · finasteride / castration</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          <strong>Chronic prostatitis</strong><br><span style="opacity:.75;">Recurrent HU between voids · E. coli · prostatic wash + culture</span>
+          ${cat('I')}<strong>Chronic prostatitis</strong><br><span style="opacity:.75;">Recurrent HU between voids · E. coli · prostatic wash + culture</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          <strong>Prostatic carcinoma</strong><br><span style="opacity:.75;">Intact OR neutered · fixed asymmetric mass on DRE · sublumbar LN</span>
+          ${cat('M')}<strong>Prostatic carcinoma</strong><br><span style="opacity:.75;">Intact OR neutered · fixed asymmetric mass on DRE · sublumbar LN</span>
         </div>
       </div>
 
@@ -6753,13 +7175,13 @@ function renderHaematuriaFlowIndep(){
       <div style="display:flex;flex-direction:column;gap:4px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#C4B5FD;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.3);">🩻 Distal Urethra</div>
         <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          <strong>Urethral neoplasia</strong><br><span style="opacity:.75;">TCC / SCC · palpable urethral mass · CADET BRAF</span>
+          ${cat('M')}<strong>Urethral neoplasia</strong><br><span style="opacity:.75;">TCC / SCC · palpable urethral mass · CADET BRAF</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          <strong>Urethral prolapse</strong><br><span style="opacity:.75;">Young intact Bulldog / Boxer male · visible red tissue at preputial opening</span>
+          ${cat('A')}<strong>Urethral prolapse</strong><br><span style="opacity:.75;">Young intact Bulldog / Boxer male · visible red tissue at preputial opening</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          <strong>Granulomatous urethritis</strong><br><span style="opacity:.75;">Bitch · intermittent drip · cystoscopy + biopsy to exclude TCC</span>
+          ${cat('I')}<strong>Granulomatous urethritis</strong><br><span style="opacity:.75;">Bitch · intermittent drip · cystoscopy + biopsy to exclude TCC</span>
         </div>
       </div>
     </div>
@@ -6924,6 +7346,9 @@ export function mountGlobals() {
   w.renderPUPDFlowSecPU = renderPUPDFlowSecPU;
   w.renderDiarrhoeaFlow = renderDiarrhoeaFlow;
   w.renderJaundiceFlow = renderJaundiceFlow;
+  w.renderJaundiceFlowPreHep = renderJaundiceFlowPreHep;
+  w.renderJaundiceFlowHep = renderJaundiceFlowHep;
+  w.renderJaundiceFlowPostHep = renderJaundiceFlowPostHep;
   w.renderTrueVom = renderTrueVom;
   w.renderLesionDetail = renderLesionDetail;
   w.renderLesionHome = renderLesionHome;
@@ -6950,6 +7375,11 @@ export function mountGlobals() {
   w.renderCoughFlow = renderCoughFlow;
   w.renderSneezeFlow = renderSneezeFlow;
   w.renderPaleGumsFlow = renderPaleGumsFlow;
+  w.renderPaleFlowRegen = renderPaleFlowRegen;
+  w.renderPaleFlowNonRegen = renderPaleFlowNonRegen;
+  w.renderPaleFlowPreRegen = renderPaleFlowPreRegen;
+  w.renderPaleFlowShock = renderPaleFlowShock;
+  w.renderPaleFlowCardiac = renderPaleFlowCardiac;
   w.renderDxRegurgitationExam = renderDxRegurgitationExam;
   w.renderDxRegurgitationHistory = renderDxRegurgitationHistory;
   w.renderDxRegurgitation = renderDxRegurgitation;
