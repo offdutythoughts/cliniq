@@ -6608,45 +6608,28 @@ function renderHaematuriaFlowSystemic(){
 
 function renderHaematuriaFlowPseudo(){
   replace(renderHaematuriaFlowPseudo,'Haematuria — Pseudo-haematuria');
+  const CAT={
+    Hb:{bg:'rgba(220,38,38,0.15)',border:'rgba(220,38,38,0.4)',col:'#FCA5A5',lbl:'Haemoglobinuria'},
+    Mb:{bg:'rgba(249,115,22,0.15)',border:'rgba(249,115,22,0.4)',col:'#FB923C',lbl:'Myoglobinuria'},
+    Pg:{bg:'rgba(20,184,166,0.15)',border:'rgba(20,184,166,0.4)',col:'#5EEAD4',lbl:'Pigmenturia'},
+  };
+  const col=(k,chips)=>{const s=CAT[k];const chipHtml=chips.map(label=>`<div style="background:${s.bg};border:1.5px solid ${s.border};border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:${s.col};text-align:center;line-height:1.35;">${label}</div>`).join('');return `<div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:${s.bg};border:1.5px solid ${s.border};border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:${s.col};text-align:center;line-height:1.3;">${s.lbl}</div><div style="color:${s.col};text-align:center;font-size:11px;line-height:1;">↓</div>${chipHtml}</div>`;};
   render(`
   <div class="flow-wrap">
 
     <div class="flow-node entry" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.4);color:#FCD34D;">PSEUDO-HAEMATURIA — Red supernatant after spin</div>
     <div class="flow-arrow-v">↓</div>
-    <div class="flow-node step">Dipstick +ve for blood · no intact RBCs on sediment · supernatant remains red/brown after centrifuge
+    <div class="flow-node step">Dipstick +ve · no intact RBCs on sediment · supernatant remains red/brown after centrifuge
       <div class="fn-sub" style="font-weight:400;margin-top:3px;">Haemoglobin or myoglobin in filtrate · or non-haem pigment (dipstick −ve)</div>
     </div>
     <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step" style="font-size:11px;">IDENTIFY CAUSE</div>
+    <div class="flow-arrow-v">↓</div>
 
-    <div style="display:flex;flex-direction:column;gap:6px;width:100%;">
-
-      <div style="padding:8px 10px;background:rgba(245,158,11,0.1);border:1.5px solid rgba(245,158,11,0.35);border-radius:10px;">
-        <div style="font-size:10px;font-weight:700;color:#FCD34D;margin-bottom:4px;">Haemoglobinuria</div>
-        <div style="font-size:9.5px;color:var(--gray);line-height:1.6;">
-          Intravascular haemolysis → free Hb passes glomerular filtration threshold<br>
-          <strong style="color:var(--white);">Causes:</strong> IMHA · Babesia · zinc toxicity · Allium (onion/garlic) · severe thermal injury<br>
-          <strong style="color:var(--white);">Clues:</strong> Plasma pink/red · spherocytes · agglutination on smear · ↓ PCV
-        </div>
-      </div>
-
-      <div style="padding:8px 10px;background:rgba(245,158,11,0.1);border:1.5px solid rgba(245,158,11,0.35);border-radius:10px;">
-        <div style="font-size:10px;font-weight:700;color:#FCD34D;margin-bottom:4px;">Myoglobinuria</div>
-        <div style="font-size:9.5px;color:var(--gray);line-height:1.6;">
-          Rhabdomyolysis → myoglobin released from damaged muscle → pigment nephropathy<br>
-          <strong style="color:var(--white);">Causes:</strong> Trauma · heatstroke · envenomation · exertional myopathy<br>
-          <strong style="color:var(--white);">Clues:</strong> CK markedly ↑ (&gt;10,000 U/L) · normal plasma colour (no free Hb) · AKI risk
-        </div>
-      </div>
-
-      <div style="padding:8px 10px;background:rgba(245,158,11,0.1);border:1.5px solid rgba(245,158,11,0.35);border-radius:10px;">
-        <div style="font-size:10px;font-weight:700;color:#FCD34D;margin-bottom:4px;">Pigmenturia</div>
-        <div style="font-size:9.5px;color:var(--gray);line-height:1.6;">
-          Non-haem pigment — dipstick <strong style="color:var(--white);">negative</strong> for blood confirms (not haemoglobin/myoglobin)<br>
-          <strong style="color:var(--white);">Causes:</strong> Dietary (beetroot · food dye) · drugs (rifampin · phenazopyridine)<br>
-          <strong style="color:var(--white);">Clues:</strong> No systemic signs · resolves with dietary change / drug withdrawal
-        </div>
-      </div>
-
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;">
+      ${col('Hb',['IMHA','Babesia','Zinc toxicity','Allium (onion / garlic)','Severe thermal injury'])}
+      ${col('Mb',['Trauma','Heatstroke','Envenomation','Exertional myopathy'])}
+      ${col('Pg',['Dietary (beetroot · food dye)','Drugs (rifampin · phenazopyridine)'])}
     </div>
 
     <div style="margin-top:10px;padding:9px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
