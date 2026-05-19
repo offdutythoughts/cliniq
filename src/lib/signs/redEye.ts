@@ -8,7 +8,7 @@
 export const redEyeFlowHtml = `
 <div class="flow-wrap">
 
-  <div class="flow-node entry">🔴 RED EYE</div>
+  <div class="flow-node entry">👁️ RED EYE</div>
   <div class="flow-arrow-v">↓</div>
   <div class="flow-node step">WHERE IS THE REDNESS?<br><span style="font-size:10px;color:var(--gray);font-weight:400">Ocular coats vs iris hyperaemia vs intraocular bleed vs retrobulbar</span></div>
   <div class="flow-arrow-v">↓</div>
@@ -210,7 +210,7 @@ ${dxTabs('history')}
   <div class="dx-arrow">↓</div>
   <div class="dx-row c3">
     <div class="dx-test" style="text-align:left;font-size:9px;">
-      <strong style="font-size:10px;">🔴 Red eye</strong><br>
+      <strong style="font-size:10px;">👁️ Red eye</strong><br>
       Ocular coat hyperaemia<br>
       Iris hyperaemia<br>
       Intraocular bleed<br>
