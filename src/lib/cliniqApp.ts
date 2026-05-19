@@ -2925,19 +2925,80 @@ function renderSeizureFlow(){
 }
 function renderMyelopathyFlow(){
   push(renderMyelopathyFlow,'Acute Myelopathy');
+  const th=(txt,col)=>`<th style="padding:7px 6px;font-size:9px;font-weight:700;color:${col};border-bottom:2px solid ${col};text-align:center;white-space:nowrap;">${txt}</th>`;
+  const td=(txt,col)=>`<td style="padding:7px 6px;font-size:9px;color:${col||'var(--gray)'};text-align:center;border-bottom:1px solid rgba(148,163,184,0.1);line-height:1.4;">${txt}</td>`;
+  const tr=(label,...cells)=>`<tr><td style="padding:7px 6px;font-size:9px;font-weight:600;color:var(--white);border-bottom:1px solid rgba(148,163,184,0.1);white-space:nowrap;">${label}</td>${cells.join('')}</tr>`;
+  const C1='#6EE7B7'; const C6='#A5B4FC'; const T3='#FCD34D';
+  const N=(c)=>td('Normal',c||'var(--gray)');
+  const UP=(c)=>td('↑ / Normal',c);
+  const DOWN=(c)=>td('↓ / Absent',c);
   render(`
   <div class="flow-wrap">
-    <div class="flow-node entry">🦴 ACUTE MYELOPATHY</div>
+    <div class="flow-node entry">🦴 ACUTE MYELOPATHY — NEUROLOGICAL LOCALISATION</div>
     <div class="flow-arrow-v">↓</div>
-    <div class="flow-node step">LOCALISE TO SPINAL CORD SEGMENT</div>
+    <div class="flow-node step" style="font-size:10.5px;text-align:left;line-height:1.7;">
+      Perform <strong>head-to-tail</strong> neurological examination · compare findings to table below to localise lesion
+      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Assess in order: mentation → pain on palpation → gait → postural reactions → spinal reflexes → special tests</div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <div style="overflow-x:auto;width:100%;">
+    <table style="width:100%;border-collapse:collapse;font-size:9px;">
+      <thead>
+        <tr>
+          <th style="padding:7px 6px;font-size:9px;font-weight:700;color:var(--gray);border-bottom:2px solid rgba(148,163,184,0.3);text-align:left;">Examination finding</th>
+          ${th('C1–C5',C1)}
+          ${th('C6–T2',C6)}
+          ${th('T3–L3',T3)}
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td colspan="4" style="padding:5px 6px 2px;font-size:8.5px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.08);">General &amp; Gait</td></tr>
+        ${tr('Mentation',td('Normal',C1),td('Normal',C6),td('Normal',T3))}
+        ${tr('Pain on palpation',td('Cervical pain · low head carriage · stiff neck',C1),td('Caudal cervical / thoracic inlet pain',C6),td('Thoracolumbar pain · kyphosis · reluctance to jump',T3))}
+        ${tr('Gait pattern',td('Tetraparesis (all 4 limbs)',C1),td('Tetraparesis (FL worse)',C6),td('Paraparesis (HL only; FL normal)',T3))}
+
+        <tr><td colspan="4" style="padding:5px 6px 2px;font-size:8.5px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.08);">Postural Reactions (Conscious Proprioception)</td></tr>
+        ${tr('Forelimb CP',td('Deficient (knuckling / scuffing)',C1),td('Deficient',C6),N())}
+        ${tr('Hindlimb CP',td('Deficient',C1),td('Deficient',C6),td('Deficient',T3))}
+
+        <tr><td colspan="4" style="padding:5px 6px 2px;font-size:8.5px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.08);">Muscle Tone</td></tr>
+        ${tr('Forelimb tone',td('UMN — spastic / ↑ tone',C1),td('LMN — flaccid · atrophy · ↓ tone',C6),N())}
+        ${tr('Hindlimb tone',td('UMN — spastic / ↑ tone',C1),td('UMN — spastic / ↑ tone',C6),td('UMN — spastic / ↑ tone',T3))}
+
+        <tr><td colspan="4" style="padding:5px 6px 2px;font-size:8.5px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.08);">Spinal Reflexes</td></tr>
+        ${tr('Biceps reflex (C6–C8)',UP(C1),DOWN(C6),N())}
+        ${tr('Triceps reflex (C7–T1)',UP(C1),DOWN(C6),N())}
+        ${tr('FL withdrawal (C6–T1)',UP(C1),DOWN(C6),N())}
+        ${tr('Patellar reflex (L3–L4)',UP(C1),UP(C6),UP(T3))}
+        ${tr('HL withdrawal (L5–S2)',UP(C1),UP(C6),UP(T3))}
+        ${tr('Perineal / anal (S1–S3)',N(C1),N(C6),N(T3))}
+
+        <tr><td colspan="4" style="padding:5px 6px 2px;font-size:8.5px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.08);">Special Tests</td></tr>
+        ${tr('Cutaneous trunci reflex',td('Present bilaterally',C1),td('Absent / ↓ if C8–T1 LMN affected',C6),td('Absent caudal to lesion (cutoff sign ≈ 1–2 segments caudal)',T3))}
+        ${tr("Horner's syndrome",N(C1),td('Present (T1–T3 preganglionic sympathetics)',C6),N(T3))}
+        ${tr('Schiff-Sherrington',N(C1),N(C6),td('May be present — FL extension with HL paralysis; indicates severe lesion',T3))}
+        ${tr('Bladder function',td('UMN — spastic · large · difficult to express',C1),td('UMN — spastic',C6),td('UMN — spastic · reflexic',T3))}
+      </tbody>
+    </table>
+    </div>
+
+    <div style="margin-top:10px;padding:9px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:4px;">⚠️ DEEP PAIN PERCEPTION — most important prognostic indicator</div>
+      <div style="font-size:9.5px;line-height:1.6;color:var(--gray);">
+        Test by applying firm pressure to digit with haemostat (separate from withdrawal — look for conscious response: turning head, vocalisation, behavioural change).<br>
+        <strong style="color:var(--white);">DPP absent:</strong> Thoracolumbar &lt;48 h → 50–60% recovery with decompression; &gt;48 h → poor prognosis (myelomalacia risk).
+      </div>
+    </div>
+
+    <div class="flow-arrow-v">↓</div>
+    <div class="flow-node step" style="font-size:11px;">NAVIGATE TO LESION DATABASE</div>
     <div class="flow-arrow-v">↓</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
       <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-MY-CERV','Cervical')">Cervical (C1–T2)<div class="fn-sub">Tetraparesis</div></div>
       <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-MY-TL','Thoracolumbar')">Thoracolumbar (T3–S3)<div class="fn-sub">Paraparesis</div></div>
     </div>
-  </div>
-  <div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:12px;">
-    <div style="font-size:11px;font-weight:600;color:#F87171;">⚠️ Deep pain perception — most important prognostic indicator</div>
+
   </div>
   <div class="disclaimer">For qualified veterinary professionals only.</div>
   `);
