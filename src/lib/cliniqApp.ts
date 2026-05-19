@@ -6585,7 +6585,7 @@ function renderHaematuriaFlow(){
 
 // ── HAEMATURIA — clinical flowchart sub-branches ───────────────────────────
 function renderHaematuriaFlowSystemic(){
-  replace(renderHaematuriaFlowSystemic,'Haematuria — Systemic / Pseudo');
+  push(renderHaematuriaFlowSystemic,'Haematuria — Systemic / Pseudo');
   render(`
   <div class="flow-wrap">
 
