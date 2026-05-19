@@ -1881,7 +1881,7 @@ function renderPUPDFlow(){
 
 function renderPUPDFlowPrimPD(){
   replace(renderPUPDFlowPrimPD,'PU/PD — Primary Polydipsia');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  const sec=c=>{const m={V:['#FCA5A5','VASCULAR'],I:['#FCD34D','INFLAMMATORY'],M:['#C4B5FD','MASS'],N:['#6EE7B7','NUTRITIONAL'],Im:['#93C5FD','IMMUNE-MEDIATED'],D:['#94A3B8','DEGENERATIVE'],ME:['#5EEAD4','METABOLIC / ENDOCRINE'],Tx:['#FB923C','TOXIC'],Tr:['#D1D5DB','TRAUMA'],A:['#F9A8D4','ANOMALOUS']};const[col,lbl]=m[c]||m.D;return `<div style="display:flex;align-items:center;gap:6px;margin:8px 0 2px;"><div style="flex:1;height:1px;background:${col};opacity:.25;"></div><span style="font-size:8px;font-weight:700;color:${col};letter-spacing:.06em;white-space:nowrap;">${lbl}</span><div style="flex:1;height:1px;background:${col};opacity:.25;"></div></div>`;};
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.4);color:#6EE7B7;">💧 PRIMARY POLYDIPSIA (PD) — CAUSES</div>
@@ -1893,23 +1893,26 @@ function renderPUPDFlowPrimPD(){
 
     <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
 
+      ${sec('A')}
       <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
-        ${cat('A')}<strong>Psychogenic / behavioural polydipsia</strong><br>
+        <strong>Psychogenic / behavioural polydipsia</strong><br>
         <span style="opacity:.85;">Most common cause · young large-breed dogs · anxious, bored, or stimulus-seeking<br>USG variable — at least 1 sample &gt;1.030 · Na⁺ low-normal or low (dilutional)<br>Medullary washout from chronic excess intake → may be unable to concentrate urine on WDT<br>→ Diagnosis of exclusion · rule out ALL other causes first · serial USG over weeks</span>
       </div>
 
+      ${sec('ME')}
       <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
-        ${cat('ME')}<strong>Hyperthyroidism (cat)</strong><br>
+        <strong>Hyperthyroidism (cat)</strong><br>
         <span style="opacity:.85;">Primary polydipsia mechanism (exact pathway unclear) · weight loss despite polyphagia<br>Tachycardia · hypertension · palpable ventral neck mass · unkempt coat · vomiting<br>Concurrent CKD often masked by elevated GFR — recheck renal panel after treatment<br>→ Total T4 (all cats &gt;7 yr) · free T4 + TSH if borderline</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
-        ${cat('ME')}<strong>Hepatic encephalopathy (PSS / liver failure)</strong><br>
+        <strong>Hepatic encephalopathy (PSS / liver failure)</strong><br>
         <span style="opacity:.85;">Central drive to drink · young dog with stunted growth or post-prandial neurological signs<br>Ammonium biurate crystalluria · ↓ BUN · ↓ albumin · ↓ cholesterol · microcytic RBCs<br>→ Pre/post-prandial bile acids · ammonia · abdominal US · CT angiography for PSS</span>
       </div>
 
+      ${sec('D')}
       <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
-        ${cat('D')}<strong>Medullary washout (resolving or mixed)</strong><br>
+        <strong>Medullary washout (resolving or mixed)</strong><br>
         <span style="opacity:.85;">Any chronic PU/PD cause depletes medullary osmotic gradient → USG may not reconcentrate even after resolution<br>Resolves gradually with controlled water intake · serial USG over days to weeks<br>→ Confirm underlying cause treated · recheck USG</span>
       </div>
 
@@ -1933,7 +1936,6 @@ function renderPUPDFlowPrimPD(){
 
 function renderPUPDFlowPrimPU(){
   replace(renderPUPDFlowPrimPU,'PU/PD — Primary Polyuria');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.4);color:#A5B4FC;">💧 PRIMARY POLYURIA (PU) — CAUSES</div>
@@ -1949,11 +1951,11 @@ function renderPUPDFlowPrimPU(){
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#A5B4FC;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);text-align:center;">ADH DEFICIENCY / RESISTANCE<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">Hyposthenuria — USG &lt;1.008</span></div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.1);border:1.5px solid rgba(99,102,241,0.3);color:#A5B4FC;font-size:9.5px;">
-          ${cat('ME')}<strong>Central diabetes insipidus (CDI)</strong><br>
+          <strong>Central diabetes insipidus (CDI)</strong><br>
           <span style="opacity:.85;">Insufficient ADH from hypothalamus/posterior pituitary<br>Profound PU/PD · otherwise systemically well · USG 1.001–1.007 · Na⁺ high-normal<br>Causes: idiopathic (most common) · head trauma · pituitary neoplasia · cysts · parasites<br>→ Desmopressin trial: USG &gt;1.015 + ↓ water intake confirms CDI</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.1);border:1.5px solid rgba(99,102,241,0.3);color:#A5B4FC;font-size:9.5px;">
-          ${cat('A')}<strong>Primary nephrogenic DI (NDI)</strong> — extremely rare<br>
+          <strong>Primary nephrogenic DI (NDI)</strong> — extremely rare<br>
           <span style="opacity:.85;">Congenital ADH receptor (V2R) or aquaporin-2 mutation<br>Profound hyposthenuria from birth · NO response to desmopressin<br>→ Diagnosis of exclusion after ALL secondary NDI causes excluded<br>Treatment: low-Na⁺ diet · thiazide diuretics (paradoxical ↓ in polyuria)</span>
         </div>
       </div>
@@ -1962,15 +1964,15 @@ function renderPUPDFlowPrimPU(){
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#A5B4FC;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);text-align:center;">OSMOTIC / TUBULAR LOSS<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">USG variable — often partial</span></div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.1);border:1.5px solid rgba(99,102,241,0.3);color:#A5B4FC;font-size:9.5px;">
-          ${cat('ME')}<strong>Diabetes mellitus — osmotic diuresis</strong><br>
+          <strong>Diabetes mellitus — osmotic diuresis</strong><br>
           <span style="opacity:.85;">Glucosuria (BG exceeds renal threshold: &gt;180 mg/dL dog / &gt;270 mg/dL cat)<br>Glucose in tubule draws water out → osmotic diuresis<br>USG can be high despite dilute urine (glucose raises USG artificially)<br>→ Blood glucose + urine dipstick on every sample · fructosamine (cat)</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.1);border:1.5px solid rgba(99,102,241,0.3);color:#A5B4FC;font-size:9.5px;">
-          ${cat('A')}<strong>Renal glucosuria / Fanconi syndrome</strong><br>
+          <strong>Renal glucosuria / Fanconi syndrome</strong><br>
           <span style="opacity:.85;">Glucosuria with normal blood glucose → renal tubular threshold defect<br>Basenji · Norwegian Elkhound · Shetland Sheepdog predisposed · acquired (copper hepatitis, toxins)<br>→ Urinary amino acids · serum electrolytes · Fanconi panel</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.1);border:1.5px solid rgba(99,102,241,0.3);color:#A5B4FC;font-size:9.5px;">
-          ${cat('D')}<strong>Chronic kidney disease (CKD) / AKI</strong><br>
+          <strong>Chronic kidney disease (CKD) / AKI</strong><br>
           <span style="opacity:.85;">Loss of functional nephron mass → loss of tubular concentrating ability<br>Isosthenuria (1.008–1.012) · ↑ SDMA · ↑ creatinine · weight loss<br>AKI: paradoxical PU in recovery phase (tubular repair)<br>→ IRIS staging · UPC · BP · renal US · urine culture</span>
         </div>
       </div>
@@ -1995,7 +1997,7 @@ function renderPUPDFlowPrimPU(){
 
 function renderPUPDFlowSecPU(){
   replace(renderPUPDFlowSecPU,'PU/PD — Secondary Polyuria');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  const sec=c=>{const m={V:['#FCA5A5','VASCULAR'],I:['#FCD34D','INFLAMMATORY'],M:['#C4B5FD','MASS'],N:['#6EE7B7','NUTRITIONAL'],Im:['#93C5FD','IMMUNE-MEDIATED'],D:['#94A3B8','DEGENERATIVE'],ME:['#5EEAD4','METABOLIC / ENDOCRINE'],Tx:['#FB923C','TOXIC'],Tr:['#D1D5DB','TRAUMA'],A:['#F9A8D4','ANOMALOUS']};const[col,lbl]=m[c]||m.D;return `<div style="display:flex;align-items:center;gap:6px;margin:8px 0 2px;"><div style="flex:1;height:1px;background:${col};opacity:.25;"></div><span style="font-size:8px;font-weight:700;color:${col};letter-spacing:.06em;white-space:nowrap;">${lbl}</span><div style="flex:1;height:1px;background:${col};opacity:.25;"></div></div>`;};
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(245,158,11,0.12);border-color:rgba(245,158,11,0.4);color:#FCD34D;">💧 SECONDARY POLYURIA (PU) — CAUSES</div>
@@ -2007,43 +2009,45 @@ function renderPUPDFlowSecPU(){
 
     <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
 
+      ${sec('I')}
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        ${cat('ME')}<strong>Hyperadrenocorticism (HAC / Cushing's)</strong> ⭐ most common cause in dogs<br>
-        <span style="opacity:.85;">Glucocorticoids competitively inhibit ADH at V2 receptor → secondary NDI<br>↑ ALP (often markedly) · polyphagia · pot belly · truncal alopecia · calcinosis cutis · muscle wasting<br>USG often 1.001–1.015 · stress leukogram · ↑ cholesterol<br>→ UCCR (screen) → LDDST or ACTH stim (confirm) → abdominal US (adrenal size/symmetry)</span>
-      </div>
-
-      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        ${cat('ME')}<strong>Hypercalcaemia</strong> — secondary NDI<br>
-        <span style="opacity:.85;">↑ Ca²⁺ blocks aquaporin-2 insertion → collecting duct unresponsive to ADH<br>Ca²⁺ &gt;3.0 mmol/L clinically significant · constipation · muscle weakness · vomiting<br>Causes: lymphoma (most common) · anal sac adenocarcinoma · hyperparathyroidism · Addison's · Vit D toxicity<br>→ Ionised Ca²⁺ · PTHrP · PTH · rectal exam + lymph nodes + chest radiograph · abdominal US</span>
-      </div>
-
-      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        ${cat('I')}<strong>Pyometra</strong> ⚠️<br>
+        <strong>Pyometra</strong> ⚠️<br>
         <span style="opacity:.85;">E. coli endotoxin directly inhibits ADH response at renal tubule → secondary NDI<br>Intact ♀ · 4–8 wks post-oestrus · vaginal discharge (open) or no discharge (closed)<br>Leucocytosis · anorexia · abdominal distension<br>→ Abdominal US · OHE (gold standard) · broad-spectrum antibiotics + IV fluids</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        ${cat('I')}<strong>Pyelonephritis / Leptospirosis</strong><br>
+        <strong>Pyelonephritis / Leptospirosis</strong><br>
         <span style="opacity:.85;">E. coli endotoxin (pyelo) or renal tubular damage (lepto) → secondary NDI<br>Fever · painful kidneys · leucocytosis · active sediment (WBC casts, bacteria)<br>Leptospirosis: jaundice · uveitis · acute hepatorenal syndrome · zoonotic — PPE<br>→ Urine culture (cystocentesis) · renal US · MAT titres (lepto) · PCR</span>
       </div>
 
+      ${sec('ME')}
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        ${cat('ME')}<strong>Hypoadrenocorticism (Addison's disease)</strong><br>
+        <strong>Hyperadrenocorticism (HAC / Cushing's)</strong> ⭐ most common cause in dogs<br>
+        <span style="opacity:.85;">Glucocorticoids competitively inhibit ADH at V2 receptor → secondary NDI<br>↑ ALP (often markedly) · polyphagia · pot belly · truncal alopecia · calcinosis cutis · muscle wasting<br>USG often 1.001–1.015 · stress leukogram · ↑ cholesterol<br>→ UCCR (screen) → LDDST or ACTH stim (confirm) → abdominal US (adrenal size/symmetry)</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
+        <strong>Hypercalcaemia</strong> — secondary NDI<br>
+        <span style="opacity:.85;">↑ Ca²⁺ blocks aquaporin-2 insertion → collecting duct unresponsive to ADH<br>Ca²⁺ &gt;3.0 mmol/L clinically significant · constipation · muscle weakness · vomiting<br>Causes: lymphoma (most common) · anal sac adenocarcinoma · hyperparathyroidism · Addison's · Vit D toxicity<br>→ Ionised Ca²⁺ · PTHrP · PTH · rectal exam + lymph nodes + chest radiograph · abdominal US</span>
+      </div>
+
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
+        <strong>Hypoadrenocorticism (Addison's disease)</strong><br>
         <span style="opacity:.85;">Hyponatraemia → loss of medullary osmotic gradient → impaired urine concentration<br>Na:K &lt;27 · waxing/waning history · absent stress leukogram · hyperkalaemia<br>→ Basal cortisol &lt;55 nmol/L or ACTH stimulation test</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        ${cat('ME')}<strong>Hypokalemia</strong><br>
+        <strong>Hypokalemia</strong><br>
         <span style="opacity:.85;">↓ K⁺ impairs aquaporin-2 insertion into collecting duct → secondary NDI<br>Muscle weakness · ventroflexion of neck (cat — primary hyperaldosteronism)<br>Causes: chronic illness · vomiting · loop diuretics · hyperaldosteronism<br>→ Serum K⁺ · identify and treat underlying cause · supplement K⁺</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        ${cat('ME')}<strong>Portosystemic shunt / liver failure — medullary washout</strong><br>
+        <strong>Portosystemic shunt / liver failure — medullary washout</strong><br>
         <span style="opacity:.85;">Low BUN (reduced urea synthesis) → loss of medullary osmotic gradient → can't concentrate urine<br>Young dog · stunted · post-prandial neurological signs (HE) · ammonium biurate crystalluria<br>→ Pre/post-prandial bile acids · ammonia · abdominal US · CT angiography</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9.5px;">
-        ${cat('ME')}<strong>Acromegaly (cat) — GH-induced DM</strong><br>
+        <strong>Acromegaly (cat) — GH-induced DM</strong><br>
         <span style="opacity:.85;">GH → peripheral insulin resistance → diabetes mellitus → osmotic diuresis<br>Poorly controlled diabetic cat · broad facial features · large body frame · organomegaly<br>→ IGF-1 · pituitary MRI · high insulin doses needed</span>
       </div>
 
@@ -2194,7 +2198,7 @@ function renderJaundiceFlow(){
 
 function renderJaundiceFlowPreHep(){
   replace(renderJaundiceFlowPreHep,'Jaundice — Pre-hepatic');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  const sec=c=>{const m={V:['#FCA5A5','VASCULAR'],I:['#FCD34D','INFLAMMATORY'],M:['#C4B5FD','MASS'],N:['#6EE7B7','NUTRITIONAL'],Im:['#93C5FD','IMMUNE-MEDIATED'],D:['#94A3B8','DEGENERATIVE'],ME:['#5EEAD4','METABOLIC / ENDOCRINE'],Tx:['#FB923C','TOXIC'],Tr:['#D1D5DB','TRAUMA'],A:['#F9A8D4','ANOMALOUS']};const[col,lbl]=m[c]||m.D;return `<div style="display:flex;align-items:center;gap:6px;margin:8px 0 2px;"><div style="flex:1;height:1px;background:${col};opacity:.25;"></div><span style="font-size:8px;font-weight:700;color:${col};letter-spacing:.06em;white-space:nowrap;">${lbl}</span><div style="flex:1;height:1px;background:${col};opacity:.25;"></div></div>`;};
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.35);color:#FCA5A5;">🟡 JAUNDICE — PRE-HEPATIC (Haemolytic)</div>
@@ -2204,28 +2208,33 @@ function renderJaundiceFlowPreHep(){
 
     <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
 
+      ${sec('Im')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="renderLesionDetail('LES-PM-REGEN')">
-        ${cat('Im')}<strong>Immune-mediated haemolytic anaemia (IMHA)</strong><br>
+        <strong>Immune-mediated haemolytic anaemia (IMHA)</strong><br>
         <span style="opacity:.85;">Most common cause of haemolytic jaundice in dogs · spherocytes · agglutination · Coombs +ve<br>Prednisolone ± azathioprine/ciclosporin · thrombosis risk → antithrombotic prophylaxis</span>
       </div>
 
+      ${sec('I')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="renderLesionDetail('LES-PM-REGEN')">
-        ${cat('I')}<strong>Infectious haemolysis — Babesia spp. / Mycoplasma haemofelis</strong><br>
+        <strong>Infectious haemolysis — Babesia spp. / Mycoplasma haemofelis</strong><br>
         <span style="opacity:.85;">Babesia: piroplasms on RBC smear · PCR · imidocarb<br>Mycoplasma haemofelis (cat): PCR · doxycycline + prednisolone</span>
       </div>
 
+      ${sec('Tx')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="renderLesionDetail('LES-PM-REGEN')">
-        ${cat('Tx')}<strong>Toxic haemolysis — zinc, Allium, paracetamol, oxidant drugs</strong><br>
+        <strong>Toxic haemolysis — zinc, Allium, paracetamol, oxidant drugs</strong><br>
         <span style="opacity:.85;">Heinz bodies (cat) · eccentrocytes (dog) · history of exposure essential<br>Remove source · N-acetylcysteine (paracetamol) · supportive care</span>
       </div>
 
+      ${sec('V')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="renderLesionDetail('LES-PM-REGEN')">
-        ${cat('V')}<strong>Haemorrhage into body cavity (pseudo-pre-hepatic: rare)</strong><br>
+        <strong>Haemorrhage into body cavity (pseudo-pre-hepatic: rare)</strong><br>
         <span style="opacity:.85;">Blood pooling in cavities → RBC breakdown → bilirubin release<br>Low TS alongside low PCV · effusion on imaging</span>
       </div>
 
+      ${sec('A')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="renderLesionDetail('LES-PM-REGEN')">
-        ${cat('A')}<strong>Hereditary / congenital — PK deficiency, neonatal isoerythrolysis</strong><br>
+        <strong>Hereditary / congenital — PK deficiency, neonatal isoerythrolysis</strong><br>
         <span style="opacity:.85;">PK deficiency: young Basenji · Abyssinian cat · regenerative anaemia · splenomegaly<br>Neonatal isoerythrolysis: blood type mismatch dam/kitten · jaundice at birth</span>
       </div>
 
@@ -2238,7 +2247,7 @@ function renderJaundiceFlowPreHep(){
 
 function renderJaundiceFlowHep(){
   replace(renderJaundiceFlowHep,'Jaundice — Hepatic');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  const sec=c=>{const m={V:['#FCA5A5','VASCULAR'],I:['#FCD34D','INFLAMMATORY'],M:['#C4B5FD','MASS'],N:['#6EE7B7','NUTRITIONAL'],Im:['#93C5FD','IMMUNE-MEDIATED'],D:['#94A3B8','DEGENERATIVE'],ME:['#5EEAD4','METABOLIC / ENDOCRINE'],Tx:['#FB923C','TOXIC'],Tr:['#D1D5DB','TRAUMA'],A:['#F9A8D4','ANOMALOUS']};const[col,lbl]=m[c]||m.D;return `<div style="display:flex;align-items:center;gap:6px;margin:8px 0 2px;"><div style="flex:1;height:1px;background:${col};opacity:.25;"></div><span style="font-size:8px;font-weight:700;color:${col};letter-spacing:.06em;white-space:nowrap;">${lbl}</span><div style="flex:1;height:1px;background:${col};opacity:.25;"></div></div>`;};
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(217,119,6,0.12);border-color:rgba(217,119,6,0.35);color:#FCD34D;">🟡 JAUNDICE — HEPATIC</div>
@@ -2248,53 +2257,58 @@ function renderJaundiceFlowHep(){
 
     <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
 
+      ${sec('I')}
       <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
-        ${cat('I')}<strong>Acute hepatitis — infectious (leptospirosis, ICH, toxoplasmosis, FIP)</strong><br>
+        <strong>Acute hepatitis — infectious (leptospirosis, ICH, toxoplasmosis, FIP)</strong><br>
         <span style="opacity:.85;">Fever · hepatomegaly · marked ALT elevation · coagulopathy in severe cases<br>Leptospirosis: AKI + pyrexia · MAT titres + PCR · PPE (zoonotic)</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
-        ${cat('I')}<strong>Immune-mediated / chronic hepatitis (dog)</strong><br>
+        <strong>Immune-mediated / chronic hepatitis (dog)</strong><br>
         <span style="opacity:.85;">Cocker Spaniel · Dobermann · Labrador · chronic waxing/waning signs · copper accumulation<br>Liver biopsy essential · immunosuppression ± ursodiol ± copper chelation</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
-        ${cat('I')}<strong>Cholangitis / cholangiohepatitis (cat)</strong><br>
+        <strong>Cholangitis / cholangiohepatitis (cat)</strong><br>
         <span style="opacity:.85;">Most common hepatic cause of jaundice in cats · neutrophilic (bacterial) or lymphocytic<br>Concurrent IBD + pancreatitis (triaditis) · ursodiol + antibiotics ± prednisolone</span>
       </div>
 
+      ${sec('ME')}
       <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
-        ${cat('ME')}<strong>Hepatic lipidosis (cat) — most common hepatic cause in cats</strong><br>
+        <strong>Hepatic lipidosis (cat) — most common hepatic cause in cats</strong><br>
         <span style="opacity:.85;">Rapid weight loss (often 25–50% BW) · anorexia >3–7 days · hepatomegaly<br>Nutritional support (NG/PEG tube) is the cornerstone of treatment</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
-        ${cat('ME')}<strong>Steroid hepatopathy (dog) — HAC or iatrogenic</strong><br>
+        <strong>Steroid hepatopathy (dog) — HAC or iatrogenic</strong><br>
         <span style="opacity:.85;">Markedly elevated ALP · hyper-echogenic liver on US · glycogen vacuolation on biopsy<br>Manage underlying HAC or reduce corticosteroid dose</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
-        ${cat('ME')}<strong>Copper storage hepatopathy (Bedlington, WHWT, Labrador)</strong><br>
+        <strong>Copper storage hepatopathy (Bedlington, WHWT, Labrador)</strong><br>
         <span style="opacity:.85;">Rhodanine stain on biopsy · copper quantification · d-penicillamine or trientine + low-copper diet</span>
       </div>
 
+      ${sec('M')}
       <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
-        ${cat('M')}<strong>Primary hepatic neoplasia — HCC, biliary carcinoma</strong><br>
+        <strong>Primary hepatic neoplasia — HCC, biliary carcinoma</strong><br>
         <span style="opacity:.85;">Massive hepatomegaly (HCC) · solitary lobe · surgical resection if localised<br>Biliary carcinoma: more aggressive · diffuse or nodular</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
-        ${cat('M')}<strong>Hepatic metastasis / lymphoma</strong><br>
+        <strong>Hepatic metastasis / lymphoma</strong><br>
         <span style="opacity:.85;">Multifocal hypoechoic nodules · lymphoma: FNA diagnostic · CHOP protocol</span>
       </div>
 
+      ${sec('D')}
       <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
-        ${cat('D')}<strong>Hepatic cirrhosis / end-stage fibrosis</strong><br>
+        <strong>Hepatic cirrhosis / end-stage fibrosis</strong><br>
         <span style="opacity:.85;">Small irregular liver · ascites · hypoalbuminaemia · coagulopathy · poor prognosis<br>Supportive: ursodiol · lactulose · protein-restricted diet · diuretics for ascites</span>
       </div>
 
+      ${sec('Tx')}
       <div class="flow-endpoint" style="background:rgba(217,119,6,0.08);border:1.5px solid rgba(217,119,6,0.3);color:#FCD34D;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-HEP','Hepatic')">
-        ${cat('Tx')}<strong>Drug-induced hepatotoxicity — carprofen, phenobarbitone, paracetamol, azathioprine</strong><br>
+        <strong>Drug-induced hepatotoxicity — carprofen, phenobarbitone, paracetamol, azathioprine</strong><br>
         <span style="opacity:.85;">Idiosyncratic or dose-dependent · discontinue offending drug immediately<br>N-acetylcysteine (paracetamol) · SAMe + silymarin as hepatoprotectants</span>
       </div>
 
@@ -2307,7 +2321,7 @@ function renderJaundiceFlowHep(){
 
 function renderJaundiceFlowPostHep(){
   replace(renderJaundiceFlowPostHep,'Jaundice — Post-hepatic');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  const sec=c=>{const m={V:['#FCA5A5','VASCULAR'],I:['#FCD34D','INFLAMMATORY'],M:['#C4B5FD','MASS'],N:['#6EE7B7','NUTRITIONAL'],Im:['#93C5FD','IMMUNE-MEDIATED'],D:['#94A3B8','DEGENERATIVE'],ME:['#5EEAD4','METABOLIC / ENDOCRINE'],Tx:['#FB923C','TOXIC'],Tr:['#D1D5DB','TRAUMA'],A:['#F9A8D4','ANOMALOUS']};const[col,lbl]=m[c]||m.D;return `<div style="display:flex;align-items:center;gap:6px;margin:8px 0 2px;"><div style="flex:1;height:1px;background:${col};opacity:.25;"></div><span style="font-size:8px;font-weight:700;color:${col};letter-spacing:.06em;white-space:nowrap;">${lbl}</span><div style="flex:1;height:1px;background:${col};opacity:.25;"></div></div>`;};
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(220,38,38,0.12);border-color:rgba(220,38,38,0.35);color:#FCA5A5;">🟡 JAUNDICE — POST-HEPATIC (Biliary Obstruction)</div>
@@ -2317,48 +2331,54 @@ function renderJaundiceFlowPostHep(){
 
     <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
 
+      ${sec('D')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
-        ${cat('D')}<strong>Biliary mucocele (dog) ⚠️</strong> — most common post-hepatic cause in dogs; gallbladder necrosis risk<br>
+        <strong>Biliary mucocele (dog) ⚠️</strong> — most common post-hepatic cause in dogs; gallbladder necrosis risk<br>
         <span style="opacity:.85;">Immobile stellate/kiwi pattern on US · cholecystocentesis contraindicated · cholecystectomy urgently<br>Cocker Spaniel · Shetland Sheepdog predisposed · peritonitis risk if rupture</span>
       </div>
 
+      ${sec('I')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
-        ${cat('I')}<strong>Pancreatitis causing biliary obstruction</strong><br>
+        <strong>Pancreatitis causing biliary obstruction</strong><br>
         <span style="opacity:.85;">Inflammation / oedema compressing common bile duct · concurrent vomiting + abdominal pain<br>Pancreatic lipase + abdominal US · management of pancreatitis usually resolves obstruction</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
-        ${cat('I')}<strong>Ascending cholangitis / bile duct inflammation</strong><br>
+        <strong>Ascending cholangitis / bile duct inflammation</strong><br>
         <span style="opacity:.85;">Bacterial ascent from duodenum · E. coli most common · pyrexia<br>IV antibiotics (ampicillin + enrofloxacin) · biliary lavage if unresponsive</span>
       </div>
 
+      ${sec('M')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
-        ${cat('M')}<strong>Biliary / gall bladder carcinoma</strong><br>
+        <strong>Biliary / gall bladder carcinoma</strong><br>
         <span style="opacity:.85;">Rare · poor prognosis · biliary epithelial mass on US · FNA/biopsy for diagnosis</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
-        ${cat('M')}<strong>Pancreatic adenocarcinoma — compression of CBD</strong><br>
+        <strong>Pancreatic adenocarcinoma — compression of CBD</strong><br>
         <span style="opacity:.85;">Mass in pancreatic region compressing common bile duct · poor surgical candidate<br>CT staging · palliative biliary stenting</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
-        ${cat('M')}<strong>Duodenal neoplasia</strong><br>
+        <strong>Duodenal neoplasia</strong><br>
         <span style="opacity:.85;">Adenocarcinoma / carcinoid · obstruction at ampulla of Vater · endoscopy + biopsy</span>
       </div>
 
+      ${sec('Tr')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
-        ${cat('Tr')}<strong>Bile duct rupture / biliary peritonitis ⚠️</strong><br>
+        <strong>Bile duct rupture / biliary peritonitis ⚠️</strong><br>
         <span style="opacity:.85;">Post-traumatic or from mucocele rupture · bilious effusion · abdominocentesis confirms<br>Emergency surgery · high mortality without prompt intervention</span>
       </div>
 
+      ${sec('A')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
-        ${cat('A')}<strong>Biliary cyst / choledochal cyst (rare)</strong><br>
+        <strong>Biliary cyst / choledochal cyst (rare)</strong><br>
         <span style="opacity:.85;">Congenital dilatation of bile duct · cystic structure adjacent to biliary tree on US<br>Surgical excision</span>
       </div>
 
+      ${sec('Tx')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)')">
-        ${cat('Tx')}<strong>Cholecalciferol toxicosis (bile stasis component)</strong><br>
+        <strong>Cholecalciferol toxicosis (bile stasis component)</strong><br>
         <span style="opacity:.85;">Hypercalcaemia → mineralisation of bile ducts · history of rodenticide exposure<br>Pamidronate + IV fluids + furosemide · check Ca²⁺ + phosphorus</span>
       </div>
 
@@ -3587,7 +3607,7 @@ function renderPaleGumsFlow(){
 // ── PALE GUMS — sub-flows ─────────────────────────────────────────────────────
 function renderPaleFlowRegen(){
   replace(renderPaleFlowRegen,'Pale MM — Regenerative Anaemia');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  const sec=c=>{const m={V:['#FCA5A5','VASCULAR'],I:['#FCD34D','INFLAMMATORY'],M:['#C4B5FD','MASS'],N:['#6EE7B7','NUTRITIONAL'],Im:['#93C5FD','IMMUNE-MEDIATED'],D:['#94A3B8','DEGENERATIVE'],ME:['#5EEAD4','METABOLIC / ENDOCRINE'],Tx:['#FB923C','TOXIC'],Tr:['#D1D5DB','TRAUMA'],A:['#F9A8D4','ANOMALOUS']};const[col,lbl]=m[c]||m.D;return `<div style="display:flex;align-items:center;gap:6px;margin:8px 0 2px;"><div style="flex:1;height:1px;background:${col};opacity:.25;"></div><span style="font-size:8px;font-weight:700;color:${col};letter-spacing:.06em;white-space:nowrap;">${lbl}</span><div style="flex:1;height:1px;background:${col};opacity:.25;"></div></div>`;};
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.4);color:#6EE7B7;">🩸 PALE MM — REGENERATIVE ANAEMIA</div>
@@ -3597,36 +3617,42 @@ function renderPaleFlowRegen(){
 
     <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
 
+      ${sec('Im')}
       <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;cursor:pointer;" onclick="renderDiseasePage('DIS-BD-IMHA')">
-        ${cat('Im')}<strong>IMHA (immune-mediated haemolytic anaemia)</strong><br>
+        <strong>IMHA (immune-mediated haemolytic anaemia)</strong><br>
         <span style="opacity:.85;">Spherocytes · auto-agglutination · Coombs +ve · prednisolone ± adjunct immunosuppression · antithrombotic prophylaxis essential</span>
       </div>
 
+      ${sec('I')}
       <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
-        ${cat('I')}<strong>Infectious haemolysis — Babesia, Mycoplasma haemofelis, Haemobartonella</strong><br>
+        <strong>Infectious haemolysis — Babesia, Mycoplasma haemofelis, Haemobartonella</strong><br>
         <span style="opacity:.85;">Babesia: piroplasms on smear · PCR · imidocarb dipropionate<br>Mycoplasma haemofelis (cat): PCR · doxycycline + prednisolone</span>
       </div>
 
+      ${sec('Tx')}
       <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
-        ${cat('Tx')}<strong>Toxic haemolysis — zinc, Allium, paracetamol, oxidant drugs</strong><br>
+        <strong>Toxic haemolysis — zinc, Allium, paracetamol, oxidant drugs</strong><br>
         <span style="opacity:.85;">
           Zinc: <span style="cursor:pointer;text-decoration:underline;" onclick="renderDiseasePage('DIS-TOX-ZN')">→ DIS-TOX-ZN</span> · Allium: <span style="cursor:pointer;text-decoration:underline;" onclick="renderDiseasePage('DIS-TOX-ALLIUM')">→ DIS-TOX-ALLIUM</span> · Paracetamol: <span style="cursor:pointer;text-decoration:underline;" onclick="renderDiseasePage('DIS-TOX-APAP')">→ DIS-TOX-APAP</span><br>
           Heinz bodies (cat) · eccentrocytes (dog) · remove source · N-acetylcysteine
         </span>
       </div>
 
+      ${sec('V')}
       <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
-        ${cat('V')}<strong>Acute haemorrhage — external or internal</strong><br>
+        <strong>Acute haemorrhage — external or internal</strong><br>
         <span style="opacity:.85;">Low PCV + low TS · haemoabdomen (splenic HSA), GI bleed<br>TS drops alongside PCV distinguishes from haemolysis</span>
       </div>
 
+      ${sec('Tr')}
       <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
-        ${cat('Tr')}<strong>Traumatic haemorrhage</strong><br>
+        <strong>Traumatic haemorrhage</strong><br>
         <span style="opacity:.85;">Post-RTA · body wall haematoma · haemothorax · FAST scan · IV fluids + haemostasis</span>
       </div>
 
+      ${sec('A')}
       <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
-        ${cat('A')}<strong>Hereditary RBC defects — PK deficiency, phosphofructokinase deficiency</strong><br>
+        <strong>Hereditary RBC defects — PK deficiency, phosphofructokinase deficiency</strong><br>
         <span style="opacity:.85;">Young Basenji / Abyssinian / West Highland White Terrier · lifelong regenerative anaemia<br>Genetic testing available · splenectomy may extend survival</span>
       </div>
 
@@ -3643,7 +3669,7 @@ function renderPaleFlowRegen(){
 
 function renderPaleFlowNonRegen(){
   replace(renderPaleFlowNonRegen,'Pale MM — Non-Regenerative Anaemia');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  const sec=c=>{const m={V:['#FCA5A5','VASCULAR'],I:['#FCD34D','INFLAMMATORY'],M:['#C4B5FD','MASS'],N:['#6EE7B7','NUTRITIONAL'],Im:['#93C5FD','IMMUNE-MEDIATED'],D:['#94A3B8','DEGENERATIVE'],ME:['#5EEAD4','METABOLIC / ENDOCRINE'],Tx:['#FB923C','TOXIC'],Tr:['#D1D5DB','TRAUMA'],A:['#F9A8D4','ANOMALOUS']};const[col,lbl]=m[c]||m.D;return `<div style="display:flex;align-items:center;gap:6px;margin:8px 0 2px;"><div style="flex:1;height:1px;background:${col};opacity:.25;"></div><span style="font-size:8px;font-weight:700;color:${col};letter-spacing:.06em;white-space:nowrap;">${lbl}</span><div style="flex:1;height:1px;background:${col};opacity:.25;"></div></div>`;};
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.4);color:#FCA5A5;">🩸 PALE MM — NON-REGENERATIVE ANAEMIA</div>
@@ -3653,43 +3679,49 @@ function renderPaleFlowNonRegen(){
 
     <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
 
+      ${sec('ME')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('ME')}<strong>CKD — reduced EPO production</strong><br>
+        <strong>CKD — reduced EPO production</strong><br>
         <span style="opacity:.85;">↑ SDMA + creatinine · normocytic normochromic · EPO deficiency<br>IRIS staging · EPO supplementation if IRIS 3–4</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('ME')}<strong>Hypothyroidism</strong><br>
+        <strong>Hypothyroidism</strong><br>
         <span style="opacity:.85;">Dog · mild normocytic anaemia · lethargy · weight gain<br>Free T4 + TSH · levothyroxine supplementation</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('ME')}<strong>Hypoadrenocorticism</strong><br>
+        <strong>Hypoadrenocorticism</strong><br>
         <span style="opacity:.85;">Na:K &lt;27 · waxing/waning · absent stress leukogram<br>ACTH stimulation test · hormone supplementation</span>
       </div>
 
+      ${sec('I')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('I')}<strong>Anaemia of chronic inflammatory disease</strong><br>
+        <strong>Anaemia of chronic inflammatory disease</strong><br>
         <span style="opacity:.85;">Mild normocytic normochromic · hepcidin-mediated iron sequestration<br>Treat underlying inflammatory condition</span>
       </div>
 
+      ${sec('Im')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('Im')}<strong>Immune-mediated non-regenerative anaemia / pure red cell aplasia</strong><br>
+        <strong>Immune-mediated non-regenerative anaemia / pure red cell aplasia</strong><br>
         <span style="opacity:.85;">Selective erythroid precursor destruction · bone marrow confirms absent erythroid line<br>Immunosuppression · EPO antibody testing</span>
       </div>
 
+      ${sec('M')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('M')}<strong>Bone marrow infiltration — lymphoma, leukaemia, myeloma, mast cell</strong><br>
+        <strong>Bone marrow infiltration — lymphoma, leukaemia, myeloma, mast cell</strong><br>
         <span style="opacity:.85;">Pancytopenia (low WBC + platelets) · bone marrow aspirate + core biopsy essential<br>CHOP protocol (lymphoma) · palliative support</span>
       </div>
 
+      ${sec('Tx')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('Tx')}<strong>Drug/toxin-induced aplasia — chloramphenicol, oestrogen toxicity, chemotherapy</strong><br>
+        <strong>Drug/toxin-induced aplasia — chloramphenicol, oestrogen toxicity, chemotherapy</strong><br>
         <span style="opacity:.85;">Oestrogen (Sertoli cell tumour, exogenous) → severe aplastic pancytopenia<br>Discontinue drug · G-CSF · transfusion support</span>
       </div>
 
+      ${sec('A')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('A')}<strong>Aplastic anaemia (idiopathic)</strong><br>
+        <strong>Aplastic anaemia (idiopathic)</strong><br>
         <span style="opacity:.85;">Severe pancytopenia · bone marrow hypocellular · diagnosis of exclusion<br>Immunosuppression + anabolic steroids + G-CSF · transfusion</span>
       </div>
 
@@ -3702,7 +3734,7 @@ function renderPaleFlowNonRegen(){
 
 function renderPaleFlowPreRegen(){
   replace(renderPaleFlowPreRegen,'Pale MM — Pre-Regenerative Anaemia');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  const sec=c=>{const m={V:['#FCA5A5','VASCULAR'],I:['#FCD34D','INFLAMMATORY'],M:['#C4B5FD','MASS'],N:['#6EE7B7','NUTRITIONAL'],Im:['#93C5FD','IMMUNE-MEDIATED'],D:['#94A3B8','DEGENERATIVE'],ME:['#5EEAD4','METABOLIC / ENDOCRINE'],Tx:['#FB923C','TOXIC'],Tr:['#D1D5DB','TRAUMA'],A:['#F9A8D4','ANOMALOUS']};const[col,lbl]=m[c]||m.D;return `<div style="display:flex;align-items:center;gap:6px;margin:8px 0 2px;"><div style="flex:1;height:1px;background:${col};opacity:.25;"></div><span style="font-size:8px;font-weight:700;color:${col};letter-spacing:.06em;white-space:nowrap;">${lbl}</span><div style="flex:1;height:1px;background:${col};opacity:.25;"></div></div>`;};
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.4);color:#FCD34D;">🩸 PALE MM — PRE-REGENERATIVE ANAEMIA (&lt;3–5 days)</div>
@@ -3712,23 +3744,27 @@ function renderPaleFlowPreRegen(){
 
     <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
 
+      ${sec('Im')}
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
-        ${cat('Im')}<strong>Acute IMHA (early)</strong><br>
+        <strong>Acute IMHA (early)</strong><br>
         <span style="opacity:.85;">May appear non-regenerative in first 3–5 days · spherocytes + agglutination present<br>Do not rule out IMHA based on absent reticulocytosis alone</span>
       </div>
 
+      ${sec('V')}
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
-        ${cat('V')}<strong>Acute haemorrhage (early)</strong><br>
+        <strong>Acute haemorrhage (early)</strong><br>
         <span style="opacity:.85;">Low TS + low PCV · TS drops hours before PCV normalises with fluid shifts<br>Serial PCV + TS monitoring every 4–6 h in acute haemorrhage</span>
       </div>
 
+      ${sec('I')}
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
-        ${cat('I')}<strong>Acute infectious haemolysis (early)</strong><br>
+        <strong>Acute infectious haemolysis (early)</strong><br>
         <span style="opacity:.85;">Babesia / Mycoplasma haemofelis — reticulocytes may not yet appear<br>PCR and blood smear essential in acute presentation</span>
       </div>
 
+      ${sec('Tx')}
       <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
-        ${cat('Tx')}<strong>Acute toxic haemolysis (early)</strong><br>
+        <strong>Acute toxic haemolysis (early)</strong><br>
         <span style="opacity:.85;">History of oxidant toxin exposure · Heinz bodies / eccentrocytes may already be visible<br>Reticulocytosis follows within days</span>
       </div>
 
@@ -3745,7 +3781,7 @@ function renderPaleFlowPreRegen(){
 
 function renderPaleFlowShock(){
   replace(renderPaleFlowShock,'Pale MM — Shock / Poor Perfusion');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  const sec=c=>{const m={V:['#FCA5A5','VASCULAR'],I:['#FCD34D','INFLAMMATORY'],M:['#C4B5FD','MASS'],N:['#6EE7B7','NUTRITIONAL'],Im:['#93C5FD','IMMUNE-MEDIATED'],D:['#94A3B8','DEGENERATIVE'],ME:['#5EEAD4','METABOLIC / ENDOCRINE'],Tx:['#FB923C','TOXIC'],Tr:['#D1D5DB','TRAUMA'],A:['#F9A8D4','ANOMALOUS']};const[col,lbl]=m[c]||m.D;return `<div style="display:flex;align-items:center;gap:6px;margin:8px 0 2px;"><div style="flex:1;height:1px;background:${col};opacity:.25;"></div><span style="font-size:8px;font-weight:700;color:${col};letter-spacing:.06em;white-space:nowrap;">${lbl}</span><div style="flex:1;height:1px;background:${col};opacity:.25;"></div></div>`;};
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.4);color:#FCA5A5;">⚠️ PALE MM — SHOCK / POOR PERFUSION</div>
@@ -3755,18 +3791,21 @@ function renderPaleFlowShock(){
 
     <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
 
+      ${sec('V')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('V')}<strong>Hypovolaemic shock — haemorrhage, dehydration, GI losses</strong><br>
+        <strong>Hypovolaemic shock — haemorrhage, dehydration, GI losses</strong><br>
         <span style="opacity:.85;">Tachycardia · weak pulses · low blood pressure · cold extremities<br>Crystalloid bolus → reassess → blood products if haemorrhagic</span>
       </div>
 
+      ${sec('I')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('I')}<strong>Distributive / septic shock — gram-negative sepsis, SIRS</strong><br>
+        <strong>Distributive / septic shock — gram-negative sepsis, SIRS</strong><br>
         <span style="opacity:.85;">Fever or hypothermia · tachycardia · bounding pulses early (warm shock) → collapse late<br>Broad-spectrum antibiotics · IVFT · source control · vasopressors if refractory</span>
       </div>
 
+      ${sec('Tr')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('Tr')}<strong>Traumatic shock — internal haemorrhage</strong><br>
+        <strong>Traumatic shock — internal haemorrhage</strong><br>
         <span style="opacity:.85;">Post-RTA · haemoabdomen (splenic HSA) · haemothorax<br>FAST scan · permissive hypotension if active haemorrhage · surgical haemostasis</span>
       </div>
 
@@ -3779,7 +3818,7 @@ function renderPaleFlowShock(){
 
 function renderPaleFlowCardiac(){
   replace(renderPaleFlowCardiac,'Pale MM — Cardiac Failure');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
+  const sec=c=>{const m={V:['#FCA5A5','VASCULAR'],I:['#FCD34D','INFLAMMATORY'],M:['#C4B5FD','MASS'],N:['#6EE7B7','NUTRITIONAL'],Im:['#93C5FD','IMMUNE-MEDIATED'],D:['#94A3B8','DEGENERATIVE'],ME:['#5EEAD4','METABOLIC / ENDOCRINE'],Tx:['#FB923C','TOXIC'],Tr:['#D1D5DB','TRAUMA'],A:['#F9A8D4','ANOMALOUS']};const[col,lbl]=m[c]||m.D;return `<div style="display:flex;align-items:center;gap:6px;margin:8px 0 2px;"><div style="flex:1;height:1px;background:${col};opacity:.25;"></div><span style="font-size:8px;font-weight:700;color:${col};letter-spacing:.06em;white-space:nowrap;">${lbl}</span><div style="flex:1;height:1px;background:${col};opacity:.25;"></div></div>`;};
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.4);color:#FCA5A5;">⚠️ PALE MM — CARDIAC FAILURE</div>
@@ -3789,28 +3828,32 @@ function renderPaleFlowCardiac(){
 
     <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
 
+      ${sec('D')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('D')}<strong>Dilated cardiomyopathy (DCM)</strong><br>
+        <strong>Dilated cardiomyopathy (DCM)</strong><br>
         <span style="opacity:.85;">Large breed dogs (Dobermann, Great Dane, Boxer) · eccentric hypertrophy · low contractility<br>Pimobendan + frusemide + ACE-I · Holter for Dobermann screening</span>
       </div>
 
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('D')}<strong>Hypertrophic cardiomyopathy (HCM — cat)</strong><br>
+        <strong>Hypertrophic cardiomyopathy (HCM — cat)</strong><br>
         <span style="opacity:.85;">Most common cardiac disease in cats · often subclinical until ATE or CHF<br>Echo essential · atenolol ± frusemide · clopidogrel for ATE prophylaxis</span>
       </div>
 
+      ${sec('V')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('V')}<strong>Pericardial effusion / cardiac tamponade</strong><br>
+        <strong>Pericardial effusion / cardiac tamponade</strong><br>
         <span style="opacity:.85;">Muffled heart sounds · jugular distension · pulsus paradoxus · globoid cardiac silhouette<br>Pericardiocentesis immediately · echo-guided · consider HSA vs idiopathic</span>
       </div>
 
+      ${sec('A')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('A')}<strong>Congenital cardiac defects — PDA, VSD, subaortic stenosis</strong><br>
+        <strong>Congenital cardiac defects — PDA, VSD, subaortic stenosis</strong><br>
         <span style="opacity:.85;">Young animal · continuous machinery murmur (PDA) · echo diagnostic<br>PDA: catheter-based occlusion · SAS: atenolol ± surgical</span>
       </div>
 
+      ${sec('M')}
       <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-        ${cat('M')}<strong>Cardiac neoplasia — haemangiosarcoma, mesothelioma (pericardial effusion)</strong><br>
+        <strong>Cardiac neoplasia — haemangiosarcoma, mesothelioma (pericardial effusion)</strong><br>
         <span style="opacity:.85;">Right atrial mass (HSA dog) · pericardiocentesis relieves tamponade<br>Echo + CT staging · pericardiectomy for palliation</span>
       </div>
 
@@ -6838,7 +6881,6 @@ function renderHaematuriaFlow(){
 // ── HAEMATURIA — clinical flowchart sub-branches ───────────────────────────
 function renderHaematuriaFlowSystemic(){
   replace(renderHaematuriaFlowSystemic,'Haematuria — Systemic / Pseudo');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
   render(`
   <div class="flow-wrap">
 
@@ -6856,15 +6898,15 @@ function renderHaematuriaFlowSystemic(){
         <div class="flow-node" style="font-size:10px;font-weight:700;color:#FCD34D;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.35);">PSEUDO-HAEMATURIA<br><span style="font-size:9px;font-weight:400;">Red supernatant after spin</span></div>
 
         <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
-          ${cat('Im')}<strong>Haemoglobinuria</strong><br>
+          <strong>Haemoglobinuria</strong><br>
           <span style="opacity:.75;">Intravascular haemolysis — IMHA, babesia, zinc toxicity, onion/garlic, severe thermal injury<br>Plasma pink/red · spherocytes · agglutination on smear</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
-          ${cat('Tr')}<strong>Myoglobinuria</strong><br>
+          <strong>Myoglobinuria</strong><br>
           <span style="opacity:.75;">Rhabdomyolysis — trauma, heatstroke, envenomation, exertional<br>CK markedly ↑ (&gt;10,000 U/L) · AKI risk from pigment nephropathy</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:9.5px;">
-          ${cat('Tx')}<strong>Pigmenturia</strong><br>
+          <strong>Pigmenturia</strong><br>
           <span style="opacity:.75;">Dietary (beetroot, food dye) · drugs (rifampin, phenazopyridine)<br>Dipstick negative for blood — confirms</span>
         </div>
       </div>
@@ -6874,19 +6916,19 @@ function renderHaematuriaFlowSystemic(){
         <div class="flow-node" style="font-size:10px;font-weight:700;color:#FCA5A5;background:rgba(220,38,38,0.1);border-color:rgba(220,38,38,0.35);">TRUE SYSTEMIC HU<br><span style="font-size:9px;font-weight:400;">Red sediment · intact RBCs</span></div>
 
         <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-          ${cat('Tx')}<strong>Anticoagulant rodenticide</strong><br>
+          <strong>Anticoagulant rodenticide</strong><br>
           <span style="opacity:.75;">PT prolongs first (factor VII, shortest T½)<br>Vit K1 2.5 mg/kg SC now · confirm with PIVKAs</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-          ${cat('Im')}<strong>IMTP</strong><br>
+          <strong>IMTP</strong><br>
           <span style="opacity:.75;">Platelet &lt;50 ×10⁹/L · mucosal bleeds · coags normal<br>Prednisolone 2 mg/kg/day + adjunct immunosuppression</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-          ${cat('V')}<strong>DIC</strong><br>
+          <strong>DIC</strong><br>
           <span style="opacity:.75;">Platelets ↓ + PT ↑ + aPTT ↑ + fibrinogen ↓ + D-dimer ↑<br>Treat the underlying cause (sepsis, HSA, IMHA)</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);color:#FCA5A5;font-size:9.5px;">
-          ${cat('I')}<strong>Leptospirosis</strong><br>
+          <strong>Leptospirosis</strong><br>
           <span style="opacity:.75;">AKI + hepatopathy + pyrexia + haematuria<br>MAT serology + urine PCR · PPE (zoonotic)</span>
         </div>
       </div>
@@ -6911,7 +6953,6 @@ function renderHaematuriaFlowSystemic(){
 
 function renderHaematuriaFlowInitial(){
   replace(renderHaematuriaFlowInitial,'Haematuria — Initial Stream');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
   render(`
   <div class="flow-wrap">
 
@@ -6928,16 +6969,16 @@ function renderHaematuriaFlowInitial(){
       <div style="display:flex;flex-direction:column;gap:4px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#6EE7B7;background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3);">🩻 Distal Urethra</div>
         <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:#6EE7B7;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          ${cat('M')}<strong>Urolithiasis</strong><br><span style="opacity:.75;">Urethral stone · stranguria · obstruction risk</span>
+          <strong>Urolithiasis</strong><br><span style="opacity:.75;">Urethral stone · stranguria · obstruction risk</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:#6EE7B7;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          ${cat('M')}<strong>TCC / SCC</strong><br><span style="opacity:.75;">Older dog · palpable mass · CADET BRAF</span>
+          <strong>TCC / SCC</strong><br><span style="opacity:.75;">Older dog · palpable mass · CADET BRAF</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:#6EE7B7;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          ${cat('I')}<strong>Granulomatous urethritis</strong><br><span style="opacity:.75;">Bitch · mimics TCC · CADET BRAF negative</span>
+          <strong>Granulomatous urethritis</strong><br><span style="opacity:.75;">Bitch · mimics TCC · CADET BRAF negative</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:#6EE7B7;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          ${cat('Tr')}<strong>Trauma</strong><br><span style="opacity:.75;">Pelvic fracture · catheter injury · retrograde urethrogram</span>
+          <strong>Trauma</strong><br><span style="opacity:.75;">Pelvic fracture · catheter injury · retrograde urethrogram</span>
         </div>
       </div>
 
@@ -6945,16 +6986,16 @@ function renderHaematuriaFlowInitial(){
       <div style="display:flex;flex-direction:column;gap:4px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#F9A8D4;background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);">♀ Genital Tract</div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          ${cat('ME')}<strong>Oestrus</strong><br><span style="opacity:.75;">Intact bitch · pro-oestrus / oestrus · confirm with timed vaginal cytology</span>
+          <strong>Oestrus</strong><br><span style="opacity:.75;">Intact bitch · pro-oestrus / oestrus · confirm with timed vaginal cytology</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          ${cat('I')}<strong>Vaginitis</strong><br><span style="opacity:.75;">Juvenile or adult · discharge · vaginoscopy</span>
+          <strong>Vaginitis</strong><br><span style="opacity:.75;">Juvenile or adult · discharge · vaginoscopy</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          ${cat('M')}<strong>Vaginal / vulvar tumour</strong><br><span style="opacity:.75;">Leiomyoma (benign intact), TVT, fibrosarcoma</span>
+          <strong>Vaginal / vulvar tumour</strong><br><span style="opacity:.75;">Leiomyoma (benign intact), TVT, fibrosarcoma</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          ${cat('V')}<strong>Subinvolution of placental sites</strong><br><span style="opacity:.75;">Post-whelp bitch · persistent haemorrhagic discharge</span>
+          <strong>Subinvolution of placental sites</strong><br><span style="opacity:.75;">Post-whelp bitch · persistent haemorrhagic discharge</span>
         </div>
       </div>
 
@@ -6962,16 +7003,16 @@ function renderHaematuriaFlowInitial(){
       <div style="display:flex;flex-direction:column;gap:4px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#93C5FD;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);">⚙️ Prostate</div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          ${cat('ME')}<strong>BPH</strong><br><span style="opacity:.75;">Intact male · symmetric enlargement · drip of clear-bloody fluid</span>
+          <strong>BPH</strong><br><span style="opacity:.75;">Intact male · symmetric enlargement · drip of clear-bloody fluid</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          ${cat('I')}<strong>Bacterial prostatitis</strong><br><span style="opacity:.75;">Pyrexia · painful DRE · E. coli most common</span>
+          <strong>Bacterial prostatitis</strong><br><span style="opacity:.75;">Pyrexia · painful DRE · E. coli most common</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          ${cat('I')}<strong>Prostatic cyst / abscess</strong><br><span style="opacity:.75;">Fluctuant on US · surgical drainage</span>
+          <strong>Prostatic cyst / abscess</strong><br><span style="opacity:.75;">Fluctuant on US · surgical drainage</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          ${cat('M')}<strong>Prostatic carcinoma</strong><br><span style="opacity:.75;">Intact OR neutered · asymmetric · fixed · sublumbar LN</span>
+          <strong>Prostatic carcinoma</strong><br><span style="opacity:.75;">Intact OR neutered · asymmetric · fixed · sublumbar LN</span>
         </div>
       </div>
     </div>
@@ -6987,7 +7028,6 @@ function renderHaematuriaFlowInitial(){
 
 function renderHaematuriaFlowTerminal(){
   replace(renderHaematuriaFlowTerminal,'Haematuria — Terminal Stream');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
   render(`
   <div class="flow-wrap">
 
@@ -7004,19 +7044,19 @@ function renderHaematuriaFlowTerminal(){
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#A5B4FC;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);">🫧 Bladder Neck / Trigone</div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          ${cat('M')}<strong>Urothelial carcinoma (TCC)</strong><br>
+          <strong>Urothelial carcinoma (TCC)</strong><br>
           <span style="opacity:.75;">Trigone is the #1 site · older bitch (Scottie, WHWT, Beagle)<br>CADET BRAF urine PCR ~85% sensitive · sublumbar LN · piroxicam</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          ${cat('I')}<strong>Bacterial cystitis</strong><br>
+          <strong>Bacterial cystitis</strong><br>
           <span style="opacity:.75;">Pollakiuria + stranguria + HU · E. coli most common<br>Cystocentesis culture — gold standard</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          ${cat('M')}<strong>Cystic calculi (trigonal)</strong><br>
+          <strong>Cystic calculi (trigonal)</strong><br>
           <span style="opacity:.75;">Mobile on US · stone analysis essential<br>Struvite: diet dissolution; oxalate: surgical</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          ${cat('I')}<strong>Polypoid cystitis</strong><br>
+          <strong>Polypoid cystitis</strong><br>
           <span style="opacity:.75;">Often apical — biopsy essential to exclude TCC</span>
         </div>
       </div>
@@ -7025,11 +7065,11 @@ function renderHaematuriaFlowTerminal(){
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#93C5FD;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);">🩻 Proximal Urethra · ⚙️ Prostate</div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          ${cat('M')}<strong>Urethral TCC</strong><br>
+          <strong>Urethral TCC</strong><br>
           <span style="opacity:.75;">Extension from bladder trigone · stranguria · stent for obstruction</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          ${cat('M')}<strong>Prostatic disease</strong><br>
+          <strong>Prostatic disease</strong><br>
           <span style="opacity:.75;">BPH · prostatitis · carcinoma<br>Prostatic wash + culture + US</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
@@ -7050,7 +7090,6 @@ function renderHaematuriaFlowTerminal(){
 
 function renderHaematuriaFlowUniform(){
   replace(renderHaematuriaFlowUniform,'Haematuria — Throughout Stream');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
   render(`
   <div class="flow-wrap">
 
@@ -7073,27 +7112,27 @@ function renderHaematuriaFlowUniform(){
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#93C5FD;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);">🫘 Upper UT — YES</div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
-          ${cat('I')}<strong>Pyelonephritis</strong><br>
+          <strong>Pyelonephritis</strong><br>
           <span style="opacity:.75;">Fever · lumbar pain · WBC casts · pyelectasia on US<br>E. coli most common · fluoroquinolone 4–6 wks</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
-          ${cat('M')}<strong>Renal neoplasia</strong><br>
+          <strong>Renal neoplasia</strong><br>
           <span style="opacity:.75;">Renal cell carcinoma (dog) · lymphoma (cat, bilateral)<br>Asymmetric renal mass · CT staging · weight loss</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
-          ${cat('M')}<strong>Renal calculi / nephrolithiasis</strong><br>
+          <strong>Renal calculi / nephrolithiasis</strong><br>
           <span style="opacity:.75;">Often incidental · haematuria if obstructing · stone analysis</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
-          ${cat('V')}<strong>Idiopathic renal haematuria</strong><br>
+          <strong>Idiopathic renal haematuria</strong><br>
           <span style="opacity:.75;">Young dog · unilateral pulsatile bleed from ureter · cystoscopy + ureteric catheterisation · renal-sparing surgery</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
-          ${cat('V')}<strong>CRGV / "Alabama rot"</strong><br>
+          <strong>CRGV / "Alabama rot"</strong><br>
           <span style="opacity:.75;">Skin ulcers + AKI + HU · microangiopathic haemolytic anaemia · high mortality</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
-          ${cat('Tr')}<strong>Renal / ureteric trauma</strong><br>
+          <strong>Renal / ureteric trauma</strong><br>
           <span style="opacity:.75;">Post-RTA · retroperitoneal haemorrhage · contrast CT gold standard</span>
         </div>
       </div>
@@ -7102,19 +7141,19 @@ function renderHaematuriaFlowUniform(){
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#A5B4FC;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);">🫧 Bladder Body — NO</div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          ${cat('I')}<strong>Bacterial cystitis (diffuse)</strong><br>
+          <strong>Bacterial cystitis (diffuse)</strong><br>
           <span style="opacity:.75;">Entire mucosa inflamed · uniform HU · cystocentesis culture</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          ${cat('M')}<strong>Cystic calculi (body)</strong><br>
+          <strong>Cystic calculi (body)</strong><br>
           <span style="opacity:.75;">Non-trigonal stones · mobile on US · struvite vs oxalate vs urate</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          ${cat('A')}<strong>FIC (cat)</strong><br>
+          <strong>FIC (cat)</strong><br>
           <span style="opacity:.75;">Diffuse mucosal haemorrhage · sterile · self-resolving<br>Multimodal stress reduction</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(99,102,241,0.06);border:1.5px solid rgba(99,102,241,0.25);color:#A5B4FC;font-size:9.5px;cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
-          ${cat('M')}<strong>Bladder lymphoma (cat)</strong><br>
+          <strong>Bladder lymphoma (cat)</strong><br>
           <span style="opacity:.75;">Diffuse wall thickening · sterile urine · FeLV/FIV status · CHOP</span>
         </div>
       </div>
@@ -7127,7 +7166,6 @@ function renderHaematuriaFlowUniform(){
 
 function renderHaematuriaFlowIndep(){
   replace(renderHaematuriaFlowIndep,'Haematuria — Between Voids');
-  const cat=c=>{const m={V:['rgba(220,38,38,0.22)','#FCA5A5','Vascular'],I:['rgba(245,158,11,0.22)','#FCD34D','Inflammatory'],M:['rgba(139,92,246,0.22)','#C4B5FD','Mass'],N:['rgba(16,185,129,0.22)','#6EE7B7','Nutritional'],Im:['rgba(59,130,246,0.22)','#93C5FD','Immune-mediated'],D:['rgba(100,116,139,0.22)','#94A3B8','Degenerative'],ME:['rgba(20,184,166,0.22)','#5EEAD4','Metabolic / Endocrine'],Tx:['rgba(249,115,22,0.22)','#FB923C','Toxic'],Tr:['rgba(107,114,128,0.22)','#D1D5DB','Trauma'],A:['rgba(236,72,153,0.22)','#F9A8D4','Anomalous']};const[bg,col,lbl]=m[c]||m.D;return `<span style="display:inline-block;font-size:7.5px;font-weight:700;padding:2px 6px;border-radius:4px;background:${bg};color:${col};margin-bottom:4px;letter-spacing:.04em;">${lbl}</span><br>`;};
   render(`
   <div class="flow-wrap">
 
@@ -7144,16 +7182,16 @@ function renderHaematuriaFlowIndep(){
       <div style="display:flex;flex-direction:column;gap:4px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#F9A8D4;background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);">♀ Genital</div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          ${cat('ME')}<strong>Oestrus</strong><br><span style="opacity:.75;">Intact bitch in pro-oestrus · confirm with vaginal cytology</span>
+          <strong>Oestrus</strong><br><span style="opacity:.75;">Intact bitch in pro-oestrus · confirm with vaginal cytology</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          ${cat('M')}<strong>Vaginal / vulvar tumour</strong><br><span style="opacity:.75;">Leiomyoma · TVT · vaginoscopy + biopsy</span>
+          <strong>Vaginal / vulvar tumour</strong><br><span style="opacity:.75;">Leiomyoma · TVT · vaginoscopy + biopsy</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          ${cat('V')}<strong>Subinvolution of placental sites</strong><br><span style="opacity:.75;">Post-whelping bitch · haemorrhagic vulvar discharge</span>
+          <strong>Subinvolution of placental sites</strong><br><span style="opacity:.75;">Post-whelping bitch · haemorrhagic vulvar discharge</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          ${cat('I')}<strong>Open pyometra</strong><br><span style="opacity:.75;">Mucopurulent ± bloody discharge · intact bitch · US: uterine distension</span>
+          <strong>Open pyometra</strong><br><span style="opacity:.75;">Mucopurulent ± bloody discharge · intact bitch · US: uterine distension</span>
         </div>
       </div>
 
@@ -7161,13 +7199,13 @@ function renderHaematuriaFlowIndep(){
       <div style="display:flex;flex-direction:column;gap:4px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#93C5FD;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);">⚙️ Prostate</div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          ${cat('ME')}<strong>BPH</strong><br><span style="opacity:.75;">Spontaneous bloody urethral discharge between voids · intact male · finasteride / castration</span>
+          <strong>BPH</strong><br><span style="opacity:.75;">Spontaneous bloody urethral discharge between voids · intact male · finasteride / castration</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          ${cat('I')}<strong>Chronic prostatitis</strong><br><span style="opacity:.75;">Recurrent HU between voids · E. coli · prostatic wash + culture</span>
+          <strong>Chronic prostatitis</strong><br><span style="opacity:.75;">Recurrent HU between voids · E. coli · prostatic wash + culture</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:#93C5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          ${cat('M')}<strong>Prostatic carcinoma</strong><br><span style="opacity:.75;">Intact OR neutered · fixed asymmetric mass on DRE · sublumbar LN</span>
+          <strong>Prostatic carcinoma</strong><br><span style="opacity:.75;">Intact OR neutered · fixed asymmetric mass on DRE · sublumbar LN</span>
         </div>
       </div>
 
@@ -7175,13 +7213,13 @@ function renderHaematuriaFlowIndep(){
       <div style="display:flex;flex-direction:column;gap:4px;">
         <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#C4B5FD;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.3);">🩻 Distal Urethra</div>
         <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          ${cat('M')}<strong>Urethral neoplasia</strong><br><span style="opacity:.75;">TCC / SCC · palpable urethral mass · CADET BRAF</span>
+          <strong>Urethral neoplasia</strong><br><span style="opacity:.75;">TCC / SCC · palpable urethral mass · CADET BRAF</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          ${cat('A')}<strong>Urethral prolapse</strong><br><span style="opacity:.75;">Young intact Bulldog / Boxer male · visible red tissue at preputial opening</span>
+          <strong>Urethral prolapse</strong><br><span style="opacity:.75;">Young intact Bulldog / Boxer male · visible red tissue at preputial opening</span>
         </div>
         <div class="flow-endpoint" style="background:rgba(139,92,246,0.06);border:1.5px solid rgba(139,92,246,0.25);color:#C4B5FD;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          ${cat('I')}<strong>Granulomatous urethritis</strong><br><span style="opacity:.75;">Bitch · intermittent drip · cystoscopy + biopsy to exclude TCC</span>
+          <strong>Granulomatous urethritis</strong><br><span style="opacity:.75;">Bitch · intermittent drip · cystoscopy + biopsy to exclude TCC</span>
         </div>
       </div>
     </div>
