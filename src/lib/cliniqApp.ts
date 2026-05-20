@@ -47,6 +47,11 @@ import {
   bleedingDxExamHtml,
   bleedingDxDxHtml,
 } from './signs/bleeding'
+import {
+  seizureDxHistoryHtml,
+  seizureDxExamHtml,
+  seizureDxDxHtml,
+} from './signs/seizures'
 
 type SetContent = (html: string, dir: 'left' | 'right') => void
 type SetTopbar = (title: string, showBack: boolean) => void
@@ -863,6 +868,12 @@ const DB = {
     {id:'DIS-INFECT-FIP',name:'Feline Infectious Peritonitis (FIP)',sp:'Cat',topAlert:'Antiviral treatment (GS-441524 oral; remdesivir injectable) is now available for suspected FIP cases.',synonyms:'FIP, feline coronavirus (FCoV) mutant disease, feline coronavirus-associated disease',breed:'Purebred cats at higher risk (Abyssinian, Bengal, Birman, Himalayan, Ragdoll, Devon Rex, British Shorthair, Persian). Multi-cat households and catteries.',age:'Bimodal: <2 years (most common) and >10 years (second peak). Cats 3 months–3 years highest risk.',sex:'Male slightly overrepresented.',etiology:'FIP caused by a virulent biotype of Feline Coronavirus (FCoV)|Ubiquitous enteric FCoV → spontaneous mutation in individual cats → FIP-FCoV biotype|Mutation in spike protein and/or ORF3c / ORF7 → macrophage tropism|Direct cat-to-cat transmission of FIP-FCoV uncommon|FCoV prevalence: 20–60% household cats; >90% in multi-cat households|FIP develops in ~5–12% of FCoV-infected cats|Risk factors: high FCoV titre, male sex, young age, immunosuppression, stress, concurrent disease',path:'Virulent FCoV replicates in monocytes/macrophages → systemic dissemination|Pyogranulomatous vasculitis → effusions (wet form) or granulomata (dry form)|Effusions: modified transudate with high protein (>35 g/L), yellow-straw colour, tendency to clot|Fibrinous peritonitis / pleuritis, omentum/mesentery granulomata|Dry form: CNS (ependymitis, choroiditis), eyes, abdominal organs|Extreme hyperglobulinaemia (polyclonal) + hypoalbuminaemia (low A:G ratio)',signs:'#Wet (effusive) form|Abdominal distension (peritoneal effusion)|Dyspnoea (pleural effusion)|Weight loss, anorexia, lethargy|Fluctuating fever unresponsive to antibiotics|Icterus (hepatic granulomata)|#Dry (non-effusive) form|Neurological: ataxia, seizures, nystagmus, paraparesis, behavioural change|Uveitis, chorioretinitis, retinal haemorrhage, hypopyon|Abdominal organomegaly, granulomata|#Both forms|Progressive weight loss and cachexia|Persistent fever|Pale mucous membranes (anaemia)',severe:'Respiratory failure from bilateral pleural effusion; acute neurological deterioration; anuric renal failure from granulomatous nephritis.',conf:'#Effusion analysis (gold standard for wet FIP)|High protein (>35 g/L, typically 35–90 g/L), yellow/viscous|Low cellularity (predominantly neutrophils, macrophages)|Rivalta test: positive (but not specific)|RT-PCR of effusion for FCoV RNA (high sensitivity/specificity — preferred)|Immunofluorescence or immunohistochemistry of macrophages in effusion/tissue|#Supportive serology|FCoV antibody titre ≥1:1,600 (high but not diagnostic alone)|A:G ratio <0.4 highly suggestive|Serum AGP (alpha-1 acid glycoprotein) >1.5 mg/mL',supp:'CBC: non-regenerative anaemia (chronic disease), neutrophilia with left shift, lymphopenia|Biochem: elevated globulins (>35 g/L, often 50–100 g/L), hypoalbuminaemia, ↑bilirubin, ↑ALT/ALP|A:G ratio <0.4 (very sensitive + specific combined with effusion)|Urinalysis: proteinuria|Ophthalmology: uveitis, keratic precipitates, hypopyon, chorioretinitis|Brain MRI/CSF in neurological FIP: periventricular inflammation, hydrocephalus',tx1:'#Antiviral treatment — recommended for all forms|GS-441524 (oral nucleoside analogue): 8 mg/kg PO q24h (wet FIP, ocular); 12 mg/kg PO q24h (dry FIP, neurological); 15–20 mg/kg for neurological refractory — 84 days minimum course|Remdesivir (GS-5734 prodrug): injectable alternative 2 mg/kg IV or SC q24h; useful for cats unable to take oral medication — 12 weeks minimum|Response expected within 7–14 days — fever resolution, weight gain, effusion reduction|Prednisolone 1–2 mg/kg PO q24h: adjunct to manage inflammatory exudate — taper over 4 weeks as patient responds',tx2:'Therapeutic thoracocentesis / abdominocentesis for effusion causing respiratory distress — do not over-drain|Supportive: enteral nutrition (microchip feeding tube if not eating)|Antithrombotics: unfractionated heparin 100 U/kg SC q8h in effusive cases (hypercoagulable state)|B12 supplementation (cobalamin 250 mcg SC q7d) if wasting|Monitor for relapse at 84 days: if clinical relapse, extend treatment to 12 weeks or increase dose',monitor:'CBC and biochemistry weekly × first 2 months then monthly|Body weight and effusion volume q1–2 weeks|A:G ratio and globulins: normalisation expected by weeks 4–8|At end of treatment: clinical exam + CBC/biochem — if normal, no relapse at 12 weeks post-treatment → strong indicator of sustained remission|PCR negative post-treatment is positive sign but not mandatory for stopping',prog:'Without treatment: uniformly fatal, typically within days to weeks of diagnosis. With GS-441524: sustained remission in ~85–90% of wet FIP cases; ~70–80% of dry FIP; neurological FIP ~60–70%. Relapse most common in first 12 weeks post-treatment — re-treat with extended course at higher dose. Prognosis improving rapidly as treatment access expands.',pearl:'FIP is treatable and often curable with antivirals (GS-441524 or remdesivir). A cat with yellow viscous ascites, low A:G ratio (<0.4), and high globulins has FIP until proven otherwise. FCoV antibody titre alone is not diagnostic. Neurological and ocular FIP require higher doses and longer courses than effusive FIP.'},
     {id:'DIS-VASC-HYPERT',name:'Systemic Hypertension',sp:'Dog + Cat',topAlert:'BP >180 mmHg with end-organ signs (retinal detachment, acute blindness, neurological signs) = hypertensive emergency — start antihypertensive within the hour.',synonyms:'Systemic arterial hypertension, SAH, hypertensive crisis, secondary hypertension',breed:'No breed predisposition. Cat: Birman may have benign hypertension; Ragdoll lower reference ranges. Dog: any breed if underlying cause present.',age:'Cat: predominantly middle-aged to older (>7 years); correlates with CKD, hyperthyroidism. Dog: age dependent on underlying cause.',sex:'No sex predisposition.',etiology:'#Cat — most common causes|Chronic kidney disease (CKD) — ~20–65% hypertensive|Hyperthyroidism — ~20–25% hypertensive; correcting hyperthyroidism may resolve hypertension|Hyperaldosteronism (adrenal tumour) — rare; hypertension + hypokalaemia|Idiopathic (essential hypertension) — ~10–20% of hypertensive cats|Phaeochromocytoma (very rare)|#Dog — most common causes|Chronic kidney disease|Hyperadrenocorticism (HAC) — cortisol-driven mineralocorticoid effect|Phaeochromocytoma — paroxysmal severe hypertension|Diabetes mellitus|Hypothyroidism (some cases)|Primary hyperaldosteronism|Obesity',path:'Sustained ↑ systemic arterial pressure → pressure-related end-organ injury|Retinal: arteriolar spasm → retinal oedema, haemorrhage, serous retinal detachment|Renal: glomerular hypertension → glomerulosclerosis → progressive CKD (vicious cycle)|CNS: hypertensive encephalopathy → cerebral oedema, haemorrhage, seizures|Cardiac: concentric LV hypertrophy → reduced cardiac output; cats: gallop rhythm|Ocular: anterior uveitis, choroidal vessels rupture',signs:'Often subclinical until end-organ signs develop|#Ocular (most common presenting complaint)|Sudden acute blindness — bilateral retinal detachment|Retinal haemorrhage (fundoscopy: flame haemorrhages, detachment)|Dilated, unresponsive pupils; mydriasis|Anterior uveitis|#Neurological|Disorientation, dementia-like behaviour change|Seizures, ataxia, head-tilt, nystagmus|Circling|#Cardiac|Gallop rhythm, murmur (cat)|Dyspnoea (secondary LV hypertrophy, pleural effusion)|#Renal|PU/PD|Progressive azotaemia|Proteinuria|#Epistaxis (uncommon in cats; more common in dogs with HAC)',severe:'Hypertensive emergency: BP >180 mmHg + retinal detachment, acute blindness, neurological signs or cardiac decompensation requiring treatment within 1 hour.',conf:'Blood pressure: Doppler (preferred in cats — systolic only; reliable); oscillometric (HDMS — validated for cats)|Minimum 5 measurements after acclimatisation, discard first; use median|Cat: systolic >160 mmHg = hypertensive; >180 = severely hypertensive|Dog: systolic >160 mmHg = hypertensive; >180 = severely hypertensive|White coat effect common — repeat in-home measurement (headset or owner monitoring) if borderline|Ophthalmic exam: fundoscopy — retinal haemorrhage, detachment, tortuosity',supp:'Biochemistry, T4, urinalysis, UPC: identify underlying cause|Echocardiography: LV wall thickness (concentric hypertrophy)|Abdominal imaging: adrenal mass (phaeochromocytoma, hyperaldosteronism); renal architecture|Urinary catecholamines/aldosterone if phaeochromocytoma/hyperaldosteronism suspected|CBC: usually unremarkable',tx1:'#Amlodipine — first-line for CATS and dogs|Cat: 0.625–1.25 mg/cat PO q24h; begin at 0.625 mg; recheck BP in 7–14 days|Dog: 0.1–0.4 mg/kg PO q24h; increase by 25% at 2-week intervals if target not reached|Target: systolic <150 mmHg (cat); <140 mmHg (dog)|#Hypertensive emergency|If acute blindness ± retinal detachment: start amlodipine at full dose immediately; do not delay waiting for recheck|Avoid too rapid reduction — autoregulatory failure risk|Restore perfusion pressure: slow controlled reduction over 24–48 h|#Address underlying cause|Treat CKD, hyperthyroidism, HAC, phaeochromocytoma, hyperaldosteronism as appropriate',tx2:'#Add-on antihypertensives if amlodipine monotherapy inadequate|Telmisartan (ARB): cat 1–2 mg/kg PO q24h — also antiproteinuric|Benazepril (ACEI): dog 0.5 mg/kg PO q24h — avoid in cats with CKD if not concurrent ARB|Prazosin (α1 blocker): phaeochromocytoma — must be started before beta-blocker if needed|#Phaeochromocytoma|Phenoxybenzamine preoperatively; adrenalectomy curative',monitor:'Blood pressure recheck 7–14 days after each dose change|Once stable: q3–6 months|Renal function and UPC before/after starting RAAS agents (risk of azotaemia)|Ophthalmic recheck for retinal re-attachment (can occur within weeks if treated early)',prog:'Controlled hypertension: good long-term quality of life. Retinal detachment: vision may recover if treated within 24–72 h (approximately 40–60% regain some sight); bilateral detachment of >72 h duration — permanent blindness likely. Hypertensive encephalopathy: guarded; full neurological recovery possible with aggressive treatment. Outcome strongly linked to successful management of the underlying cause.',pearl:'Acute blindness in a middle-aged or older cat = hypertensive retinal detachment until proven otherwise — take blood pressure immediately, not after a full work-up. Vision can be saved if treatment starts within 24–72 hours. White coat hypertension is common in cats; acclimatise, take multiple readings, and consider repeat measurements before committing to lifelong medication.'},
     {id:'DIS-VASC-HYPERVSC',name:'Hyperglobulinaemia / Hyperviscosity Syndrome',sp:'Dog + Cat',synonyms:'Hyperviscosity syndrome, HVS, paraproteinaemia, monoclonal gammopathy, polyclonal hyperglobulinaemia',breed:'Dog: German Shepherd, Labrador, and Cocker Spaniel reported in Ehrlichia. Multiple myeloma: no breed predisposition. Cat: Siamese anecdotally.',age:'Middle-aged to older adults for neoplastic causes; any age for infectious.',sex:'No sex predisposition.',etiology:'#Monoclonal (M-protein / paraprotein)|Multiple myeloma (IgA or IgG — dog; IgG or IgM — cat)|Plasma cell leukaemia|Waldenström macroglobulinaemia (IgM; rare)|B-cell lymphoma with secretion|Extramedullary plasmacytoma (rarely causes HVS)|#Polyclonal|Infectious: Ehrlichia canis, Leishmania infantum, FIP (cat), Bartonella, chronic fungal|Immune-mediated / chronic inflammatory: SLE, immune-mediated polyarthritis|Hepatic disease (reduced clearance)|Idiopathic',path:'Excess immunoglobulin (monoclonal >> polyclonal) → ↑serum viscosity|↑Viscosity → reduced microcirculatory flow → tissue hypoxia|CNS: impaired perfusion → neurological signs|Retina: dilated tortuous vessels, haemorrhage, detachment|Kidneys: light-chain deposition (Bence-Jones) → cast nephropathy (myeloma kidney)|Coagulopathy: M-protein coating platelets (thrombocytopathy), inhibiting clotting factors → bleeding|Bone lysis (myeloma): RANK-L mediated → hypercalcaemia, pathological fractures, pain|Immunosuppression: normal B-cell/Ab suppressed by malignant clone → recurrent infections',signs:'#Neurological|Mental dullness, confusion, dementia-like behaviour|Seizures, ataxia, circling, head-tilt, weakness|Coma (severe)|#Ocular|Dilated tortuous retinal vessels (sausage-link / string of sausages appearance)|Retinal haemorrhage|Retinal detachment|Anterior uveitis|#Haemostatic|Epistaxis, mucosal bleeding, prolonged bleeding from venepuncture sites|Haematuria, melena|#Renal|Polyuria / polydipsia|Azotaemia, proteinuria (Bence-Jones)|#Bone (myeloma)|Shifting lameness, pain on vertebral palpation|Pathological fractures|Hypercalcaemia signs (PU/PD, lethargy, anorexia)|#Other|Weight loss, lethargy, anorexia|Recurrent infections',severe:'Neurological crisis, uncontrolled haemorrhage, or acute renal failure from cast nephropathy.',conf:'SPEP (serum protein electrophoresis): M-spike (narrow monoclonal band) vs polyclonal broadening|Urine electrophoresis / Bence-Jones protein: light chains in urine (myeloma)|Immunofixation electrophoresis: characterises immunoglobulin type|Serum viscosity measurement: >5 cP symptomatic (normal <3 cP in dogs)|Bone marrow aspirate/core: >20% plasma cells = myeloma|Skeletal survey radiographs: punched-out lytic lesions (myeloma)',supp:'CBC: normocytic normochromic anaemia (marrow infiltration / anaemia of chronic disease); thrombocytopenia|Biochem: ↑total protein, markedly ↑globulin, ↓albumin; ↑creatinine; hypercalcaemia (30–50% of myeloma dogs); ↑ALT|Urinalysis: proteinuria, Bence-Jones protein|Coagulation: prolonged PT/aPTT; platelet function test (if available)|Imaging: lytic bone lesions on radiograph; abdominal US for organomegaly, lymphadenopathy',tx1:'#Treat underlying cause|Infectious: doxycycline (Ehrlichia), antimonials + allopurinol (Leishmania) — polyclonal globulin often normalises with treatment|#Multiple myeloma — chemotherapy|Melphalan 0.1 mg/kg PO q24h × 10 days then 0.05 mg/kg q24h + prednisolone 0.5 mg/kg PO q24h (M+P protocol — most widely used)|Cyclophosphamide + prednisolone (alternative)|Bortezomib-based protocols (referral)|#Hyperviscosity emergency|Plasmapheresis / therapeutic plasma exchange — most effective for rapid viscosity reduction|IV fluid diuresis (does not reduce globulins but temporarily dilutes)|Phlebotomy (rarely used)',tx2:'Bisphosphonates (pamidronate 1–2 mg/kg IV q3–4 weeks) for myeloma bone lesions and hypercalcaemia|Allopurinol for tumour lysis prevention|Analgesics for bone pain|Antibiotics for secondary infections (immunocompromised)|Retinal detachment: systemic hypertension must also be addressed',monitor:'SPEP and total protein monthly — response = M-spike reduction ≥50%|CBC weekly initially (melphalan is myelosuppressive)|Renal function q1–3 months|Urine Bence-Jones protein clearance|Skeletal pain and mobility assessment|Median survival myeloma dog: 540 days with M+P protocol; partial remission expected in ~43%',prog:'Infectious polyclonal: excellent if underlying infection treated. Myeloma: median survival 540 days (dog) with chemotherapy; renal failure and uncontrolled hypercalcaemia reduce survival. Cats with myeloma generally have shorter survival. Waldenström macroglobulinaemia: intermediate. Hyperviscosity crisis: guarded without plasmapheresis.',pearl:'A dog with epistaxis, neurological signs, and a massive globulin spike on biochemistry has hyperviscosity syndrome until proven otherwise. Dilated tortuous retinal vessels are pathognomonic on fundoscopy. Myeloma requires bone marrow biopsy and skeletal survey — SPEP showing an M-spike is the first clue. Infectious causes are fully reversible — always test for Ehrlichia and Leishmania before committing to a myeloma diagnosis.'},
+    // ── PSEUDO-HAEMATURIA — haemoglobinuria / myoglobinuria causes ──────────────
+    {id:'DIS-BD-BABS',name:'Babesiosis',sp:'Dog + Cat',topAlert:'Rapidly progressive haemolytic anaemia — cerebral babesiosis (B. rossi) and multi-organ failure can be fatal within hours.',synonyms:'Babesia, canine babesiosis, tick-borne haemolytic anaemia, piroplasma',breed:'Dog: Pitbull Terrier and American Staffordshire Terrier highly predisposed to B. gibsoni (dog-bite transmission). Greyhound racing (B. canis). Cat: rare; Babesia felis in South Africa.',age:'Any age; young or immunocompromised animals most severely affected.',sex:'No sex predisposition.',etiology:'#Canine — species by geography|Babesia canis (Europe/Mediterranean) — large form; Ixodes/Dermacentor tick|Babesia rossi (sub-Saharan Africa) — large form; Haemaphysalis tick; most severe disease|Babesia gibsoni (worldwide; US/Asia) — small form; tick + dog-bite transmission|Babesia vogeli (subtropical/tropical) — large form; mild disease|#Feline|Babesia felis (South Africa) — small form; Ixodes tick|Babesia cati and Theileria felis — rare|#Routes|Tick bite (primary): larva/nymph feeds on infected host then transmits at next blood meal|Dog bite: B. gibsoni — fighting breeds; horizontal transmission without tick|Blood transfusion: screen donors with PCR|Transplacental (rare)',path:'Intraerythrocytic merozoites multiply → RBC lysis (intravascular haemolysis) → haemoglobinaemia + haemoglobinuria|Antibody-coated parasitised RBCs cleared by spleen → extravascular haemolysis|Concurrent immune-mediated component: autoantibodies attack unparasitised RBCs|Systemic inflammation → SIRS → DIC, ARDS, multi-organ failure (severe strains)|Sequestration of parasitised RBCs in cerebral vessels (B. rossi) → cerebral babesiosis|Thrombocytopenia: immune-mediated platelet consumption + splenic sequestration',signs:'Fever, lethargy, weakness, anorexia|Pale or icteric mucous membranes|Haemoglobinuria (dark brown/red urine — intravascular haemolysis)|Tachycardia, tachypnoea|Splenomegaly, hepatomegaly, lymphadenopathy|Vomiting, diarrhoea|#Complicated / severe (B. rossi)|Cerebral signs: seizures, ataxia, obtundation, coma|Acute lung injury / ARDS: dyspnoea, cyanosis|Renal failure: oliguria, azotaemia|DIC: petechiae, haemorrhage|Haemoconcentration (haemoconcentrated babesiosis) — haematocrit paradoxically high',severe:'Cerebral babesiosis, severe haemolytic crisis, DIC, AKI, ARDS — any can be rapidly fatal.',conf:'Blood smear — intraerythrocytic piroplasms (pear-shaped pairs in large Babesia; small rings/single in B. gibsoni); sensitivity low when parasitaemia <1%|PCR (blood) — most sensitive and specific; use when smear negative but suspicion high; species differentiation guides treatment|SNAP 4Dx / serology (IFA, ELISA) — antibody; cross-reactions between species; use for screening|Saline agglutination + Coombs — if concurrent immune-mediated component|Centrifuge urine: red supernatant = haemoglobinuria (confirms intravascular haemolysis)',supp:'CBC: regenerative haemolytic anaemia, thrombocytopenia (nearly universal), leukocytosis or leukopenia|Biochem: hyperbilirubinaemia, elevated ALT/AST/ALP, azotaemia if renal involvement, hypoglycaemia in severe/complicated disease|Coagulation panel (PT, aPTT, D-dimer, fibrinogen) — DIC screen in severe cases|Blood glucose: hypoglycaemia is a poor prognostic indicator in complicated babesiosis|Chest radiograph + echocardiography if respiratory compromise',tx1:'#B. canis / B. vogeli (Europe/tropics)|Imidocarb dipropionate 6.6 mg/kg IM × 2 doses 14 days apart (premedicate with atropine 0.05 mg/kg SC 15 min before each injection — reduces cholinergic side effects)|Diminazene aceturate 3.5 mg/kg IM once — alternative in some regions|#B. gibsoni (pitbulls; US)|Atovaquone 13.3 mg/kg PO q8h + azithromycin 10 mg/kg PO q24h × 10 days — most effective combination; give atovaquone with fatty meal|Imidocarb does NOT reliably clear B. gibsoni; may reduce parasitaemia|#B. rossi (Africa — severe disease)|Imidocarb dipropionate as above; aggressive ICU support|#All cases — supportive|Packed RBC transfusion if PCV <15% or acute decompensation; crossmatch/type before transfusion|IV fluids for hypovolaemia and renal support|Doxycycline 10 mg/kg PO q24h empirically pending tick-borne results|Maropitant + anti-emetics if vomiting',tx2:'Glucocorticoids ONLY if confirmed immune-mediated component (persistent anaemia despite treatment, strongly positive Coombs, autoagglutination) — use with caution (parasitaemia may worsen)|Tick prevention: fipronil, permethrin (dogs), isoxazoline collar|Antiparasitic clearance of B. gibsoni with atovaquone/azithromycin is partial — PCR-positive animals may remain reservoirs|Avoid blood donation from recovered dogs without confirmed PCR clearance',monitor:'CBC daily until PCV stabilises (target PCV >15–20%)|Blood smear + PCR at 30–60 days post-treatment (especially B. gibsoni — assess clearance)|Biochemistry every 48–72h in hospitalised patients|Platelet count recovery usually precedes PCV recovery|Relapse can occur months to years later — PCR on any febrile episode in a recovered animal',prog:'B. vogeli and B. canis in dogs: good with treatment; mortality <5% in uncomplicated cases. B. rossi in South Africa: high mortality without treatment (30–50%); complicated disease (cerebral, ARDS, renal failure) carries 25–50% mortality even with treatment. B. gibsoni: antiparasitic clearance rarely achieved; chronic subclinical infection common in pitbulls; relapses triggered by splenectomy or immunosuppression. Cat babesiosis: limited data; moderate severity; responds to imidocarb.',ddx:'@DIS-BD-IMHA:Immune-mediated haemolytic anaemia|@DIS-TOX-ZN:Zinc toxicosis|@DIS-TOX-ALLIUM:Allium (onion/garlic) toxicosis|Mycoplasma haemofelis (cats) / Mycoplasma haemocanis (dogs)|Cytauxzoonosis (cats — often fatal)|Ehrlichiosis, anaplasmosis — concurrent thrombocytopenia|Leptospirosis — haemolysis + AKI|Hereditary RBC defects (phosphofructokinase deficiency — English Springer Spaniel, Cocker Spaniel)|@DIS-BD-DIC:DIC (secondary to babesiosis)',pearl:'B. gibsoni is spreading via dog-bite transmission in pitbulls and fighting dogs — a negative tick history does not rule it out. Blood smear sensitivity is low; use PCR when suspicion is high. Atovaquone/azithromycin is the best option for B. gibsoni but rarely achieves sterile clearance. Imidocarb causes cholinergic side effects — always premedicate with atropine. Hypoglycaemia in a Babesia-positive dog signals complicated disease with high mortality.'},
+    {id:'DIS-ENV-HEAT',name:'Heatstroke',sp:'Dog + Cat',topAlert:'EMERGENCY — active cooling to 39.5°C must begin immediately; delay is fatal. Stop cooling once rectal temperature reaches 39.5°C — overcooling causes hypothermia and vasoconstriction.',synonyms:'Heat stroke, hyperthermia, exertional heat illness, non-pyrogenic hyperthermia',breed:'Dog: brachycephalic breeds at highest risk (Bulldog, Pug, French Bulldog, Pekingese — impaired thermoregulation). Large/giant working breeds, young/obese animals, animals with laryngeal paralysis, respiratory disease, or heavy coat. Cat: any breed; Persian and other flat-faced cats predisposed.',age:'Any age. Young dogs (exertional) and older/brachycephalic dogs (environmental) most commonly affected.',sex:'No sex predisposition.',etiology:'#Environmental (non-exertional)|Confinement in hot vehicle or building — most common; temperature can exceed 49°C within minutes|High ambient temperature + humidity (impairs evaporative cooling)|Inability to escape heat source|Sedation, general anaesthesia — impair thermoregulatory mechanisms|#Exertional|Excessive exercise in hot/humid conditions|Working dogs, sporting events, seizures (status epilepticus)|#Predisposing factors|Brachycephalic conformation|Respiratory disease (laryngeal paralysis, tracheal hypoplasia)|Obesity|Hyperthyroidism (cats)|Cardiovascular disease|Inability to pant / sweat normally|Medications (phenothiazines, beta-blockers impair thermoregulation)',path:'Hyperthermia >41°C triggers progressive cellular injury proportional to temperature and duration|#Cellular level|Protein denaturation — enzymes, structural proteins, heat shock proteins overwhelmed|Mitochondrial dysfunction → cellular energy failure|Membrane disruption → cell necrosis|#Systemic cascade|Endothelial injury → vasodilation → hypotension|Splanchnic ischaemia → GI mucosal barrier failure → bacterial translocation → endotoxaemia|Activation of coagulation (tissue factor) + platelet consumption → DIC|Rhabdomyolysis: thermal muscle injury + ischaemia-reperfusion → myoglobinuria → AKI|Intravascular haemolysis: thermal RBC destruction → haemoglobinuria|Cerebral oedema: cytotoxic + vasogenic → neurological signs|Hepatocellular necrosis: heat + hypoperfusion|Renal tubular necrosis: from haemoglobin + myoglobin + hypoperfusion|SIRS → MODS',signs:'Hyperthermia >41°C — hallmark|Excessive panting, hypersalivation, respiratory distress|Tachycardia, weak pulses, pale/injected mucous membranes|Vomiting, haemorrhagic diarrhoea, haematochezia (mucosal barrier failure)|Dark brown/red urine (haemoglobinuria ± myoglobinuria)|Neurological: obtundation, ataxia, disorientation, seizures, coma|Muscle tremors, stiffness (myopathy)|Petechiae, epistaxis, prolonged bleeding (DIC)|Collapse',severe:'DIC, AKI, hepatic failure, cerebral oedema — multi-organ dysfunction syndrome (MODS) with mortality >50% if multiple organs fail.',conf:'Rectal temperature >41°C in an appropriate clinical context|Clinical diagnosis — no specific test|Centrifuge urine: red supernatant = haemoglobinuria (intravascular haemolysis); may also have myoglobinuria|CBC + biochemistry + coagulation panel to stage organ involvement',supp:'CBC: leukocytosis or leukopenia (stress/endotoxaemia), thrombocytopenia (DIC/consumption)|Biochem: elevated ALT/AST (hepatic injury), azotaemia (AKI), hypoglycaemia, lactic acidosis|Coagulation: PT prolonged, aPTT prolonged, D-dimer elevated, fibrinogen low (DIC)|Urinalysis: haemoglobinuria (red supernatant), granular/pigment casts (AKI), myoglobinuria|CK: markedly elevated if significant rhabdomyolysis|Blood gas: metabolic acidosis, lactic acidosis|Chest radiograph if respiratory compromise',tx1:'#EMERGENCY COOLING — start within minutes|Remove from heat source immediately|Wet entire body with room temperature (15–25°C) water — tepid; ice or very cold water causes peripheral vasoconstriction (traps heat) and is contraindicated|Fan to enhance evaporative cooling|Measure rectal temperature every 2–3 min; stop all cooling at 39.5°C (overcooling → hypothermia and counterproductive vasoconstriction)|Do NOT use ice baths or alcohol rubs (vasoconstriction worsens heat entrapment)|#IV fluid resuscitation|IV catheter immediately; blood volume expansion with crystalloids (Hartmann / 0.9% NaCl)|20 mL/kg IV bolus; reassess and repeat; careful titration — cerebral and pulmonary oedema are risks|#Oxygen supplementation|High-flow O₂ via mask; intubation if obtunded|#Haemoglobinuria / myoglobinuria|Aggressive IV fluid diuresis: 5–10 mL/kg/h; target urine output 2–3 mL/kg/h|Urinary catheter to monitor output accurately|Do NOT use furosemide acutely — worsens dehydration and AKI',tx2:'DIC management: FFP 10–15 mL/kg IV for active haemorrhage; low-dose heparin prophylaxis (controversial)|Mannitol 0.5–1 g/kg IV if cerebral oedema suspected|Sucralfate + PPI for GI mucosal protection|Broad-spectrum IV antibiotics if evidence of bacterial translocation/sepsis|No antipyretics — heatstroke is not pyrogenic; NSAIDs / corticosteroids are not effective and can worsen GI and renal injury|Anticonvulsants if seizuring: diazepam 0.5 mg/kg IV; midazolam 0.2 mg/kg IV',monitor:'Temperature every 2–3 min until 39.5°C, then hourly for 24h (risk of rebound hyperthermia)|HR, RR, BP, SpO₂ continuous or q30min|Urine output (urinary catheter) every 1–2h|CBC + biochemistry + coagulation q6–12h first 24h|CK if rhabdomyolysis suspected — daily|Neurological status hourly|Glucose q4h|Lactate q4–6h until resolving',prog:'Depends on severity and duration of hyperthermia. Dogs reaching 39.5°C within 30–90 min of cooling and showing no DIC, AKI, or neurological signs: good prognosis. Overall reported mortality 39–50% for hospitalised cases. Cerebral involvement, DIC, and PCV <20% are significant negative prognostic indicators. Neurological signs that persist >24h post-treatment carry a poor prognosis. Cats have limited outcome data — generally considered more susceptible than dogs.',ddx:'Pyrexia (infectious / immune-mediated — differentiates from heatstroke by history and antipyretic response)|Thyroid storm (hyperthyroidism — cats)|Status epilepticus (also causes hyperthermia and rhabdomyolysis)|Malignant hyperthermia (anaesthetic complication — extremely rare in small animals)|Phaeochromocytoma|@DIS-BD-IMHA:IMHA (haemoglobinuria)|@DIS-MUSC-RHAB:Rhabdomyolysis (other causes)',pearl:'Stop cooling at 39.5°C — do not ice-cool to 37°C; overcooling causes rebound hypothermia and peripheral vasoconstriction that traps core heat. Antipyretics are useless in heatstroke — this is not a fever. Brachycephalic dogs in hot cars is the classic presentation; educate owners proactively. Early urine output monitoring is critical — oliguric AKI from haemoglobin/myoglobin can develop rapidly. Onset of DIC is the turning point; check coagulation from the start.'},
+    {id:'DIS-MUSC-RHAB',name:'Rhabdomyolysis',sp:'Dog + Cat',synonyms:'Myoglobinuria, exertional myopathy, traumatic rhabdomyolysis, capture myopathy',breed:'Dog: working breeds, racing greyhounds (exertional); pitbulls (envenomation); any breed with severe trauma. Cat: any breed.',age:'Any age depending on cause; exertional myopathy — working/young dogs; trauma — any age.',sex:'No sex predisposition.',etiology:'#Traumatic|Road traffic accident, crush injury, prolonged recumbency (compartment syndrome), electric shock|#Exertional|Overexertion — sled dogs, hunting dogs, working dogs, racing greyhounds|Capture myopathy — wildlife, exotic species (deer, gazelle, bird); handling/pursuit-induced|Seizures (status epilepticus — sustained muscle contraction)|#Thermal / environmental|Heatstroke — see @DIS-ENV-HEAT:Heatstroke|Severe burns / thermal injury|#Envenomation|Snake myotoxins — especially elapids (brown snake, tiger snake, taipan); direct muscle necrosis|Bee/wasp envenomation — severe; loxoscelism (brown recluse); tick paralysis|#Metabolic|Hypokalaemia (cats especially — potassium-depleted diets, chronic CKD)|Hypothyroidism, hypocalcaemia, Addison disease|Drugs: ionophore toxicosis (horses/cattle; rare in dogs), statins (very rare in animals)|#Idiopathic|Inflammatory myopathy — polymyositis, dermatomyositis|Malignant hyperthermia (anaesthetic complication — rare)',path:'Massive skeletal muscle necrosis → release of intracellular contents into circulation|Myoglobin (MW 17,000 Da) freely filtered by glomerulus → myoglobinuric nephropathy via three mechanisms: -Direct tubular toxicity (oxidative injury, lipid peroxidation) -Tubular cast formation (myoglobin + Tamm-Horsfall protein) -Renal vasoconstriction (myoglobin scavenges nitric oxide)|Hyperkalaemia, hyperphosphataemia, hyperuricaemia from cell lysis|Calcium influx into injured myocytes → sequestration → hypocalcaemia|CK leakage: markedly elevated, often >10,000 IU/L|Third-space fluid loss into injured muscle → hypovolaemia|@DIS-BD-DIC:DIC risk with massive muscle injury',signs:'Muscle pain, stiffness, reluctance to move|Weakness, trembling, exercise intolerance|Dark brown / port-wine urine (myoglobinuria)|Swollen, firm, painful muscles over affected areas|Tachycardia, tachypnoea from pain and volume depletion|Vomiting|Hyperkalaemia signs: bradycardia, weakness, cardiac arrhythmias|#Severe|Oliguria/anuria (AKI from myoglobinuric nephropathy)|Seizures (metabolic: hypocalcaemia, uraemia)|Collapse',severe:'Acute kidney injury from myoglobinuric nephropathy — can develop within 24–48h. Hyperkalaemia-induced cardiac arrhythmias. DIC with massive muscle injury.',conf:'Markedly elevated serum CK — often >10,000 IU/L; levels up to millions in severe cases|Centrifuged urine: red-brown supernatant (myoglobin) + minimal red cells; dipstick blood-positive|Serum myoglobin (pigmented plasma — pink/red — suggests haemoglobinuria; clear plasma = myoglobin alone)|Distinguish haemoglobinuria vs myoglobinuria: centrifuge urine — both give red supernatant; check plasma colour — haemoglobinuria gives pink plasma (haemoglobin in blood), myoglobinuria gives clear plasma (myoglobin only, rapidly cleared)|AST elevated (muscle + liver source)',supp:'CBC: haemoconcentration from third-space loss; possible haemolysis|Biochem: elevated CK, AST, azotaemia, hyperkalaemia, hyperphosphataemia, hypocalcaemia, metabolic acidosis, elevated uric acid|Urinalysis: pigmented granular casts, tubular cells|Blood gas: metabolic acidosis, lactic acidosis|ECG if hyperkalaemia (peaked T-waves, sine-wave, bradycardia)|Radiographs/ultrasound: assess for fractures, haematoma, muscle swelling',tx1:'#Aggressive IV fluid diuresis — cornerstone of treatment|0.9% NaCl or Hartmann solution; target urine output 3–5 mL/kg/h|Large volumes required: often 2–3× maintenance|Monitor urine output hourly (urinary catheter)|Continue until CK consistently declining and urine colour clears|#Urinary alkalinisation (controversial; commonly used)|Sodium bicarbonate 1–2 mEq/kg IV in fluids to alkalinise urine (target urine pH >6.5)|Reduces myoglobin precipitation in tubules (myoglobin more soluble at alkaline pH)|Not used if metabolic alkalosis or hypocalcaemia already present|#Analgesia|Opioids: methadone 0.3–0.5 mg/kg IV/IM q4h or CRI; buprenorphine 0.01–0.02 mg/kg IV q6h|AVOID NSAIDs — nephrotoxic and contraindicated with impaired renal perfusion|#Treat the underlying cause|Envenomation: antivenin if available; wound management|Exertional: remove from activity; cool if hyperthermic|Metabolic: correct electrolyte deficits (potassium carefully — already hyperkalaemic acutely)',tx2:'Hyperkalaemia management: calcium gluconate 50–100 mg/kg IV slowly (cardiac protection); sodium bicarbonate; insulin/dextrose; ion-exchange resin; dialysis in refractory cases|Furosemide (0.5–1 mg/kg IV) once adequately hydrated — promotes tubular flow; do NOT use if volume-depleted|Mannitol 0.5 g/kg IV: osmotic diuretic + free radical scavenger — used in some protocols|Nutritional support: early enteral feeding once stable|Dialysis (peritoneal or haemodialysis) for refractory AKI or severe hyperkalaemia',monitor:'Urine colour and output every 1–2h (urinary catheter essential)|Serum CK every 12–24h — expect to peak at 24–48h then decline; CK should halve every 24–48h with adequate treatment|Creatinine, BUN, potassium, calcium, phosphate every 12–24h|Blood gas for acid-base monitoring|ECG if hyperkalaemia|Body weight q4–12h (third-space accumulation)|Discontinue IV fluids when CK <1,000 IU/L and urine clear',prog:'Good if identified early and treated with aggressive fluid diuresis before AKI develops. AKI occurs in 5–30% of cases and significantly worsens prognosis (mortality up to 50% in myoglobinuric AKI). Exertional myopathy with early treatment: excellent. Envenomation-associated: depends on venom type and antivenin availability. Metabolic causes: resolve with underlying disease treatment.',ddx:'Haemoglobinuria from intravascular haemolysis — plasma red/pink (haemoglobin) vs clear (myoglobin alone)|@DIS-BD-IMHA:IMHA (haemoglobinuria, not myoglobinuria)|@DIS-TOX-ZN:Zinc toxicosis (haemoglobinuria)|Acute kidney injury from other causes (leptospirosis, NSAIDs, ethylene glycol)|Myositis / polymyositis (inflammatory; less acute CK rise)|@DIS-ENV-HEAT:Heatstroke (common cause of rhabdomyolysis)|Exertional myopathy vs underlying metabolic disease (thyroid, adrenal)|Black-water fever / haemolytic crises',pearl:'CK is the diagnostic key — levels >10,000 IU/L confirm significant muscle injury. Distinguish myoglobinuria from haemoglobinuria by plasma colour: clear plasma with pigmented urine = myoglobin; pink/red plasma = haemoglobin. The goal of IV fluid therapy is to dilute myoglobin and maintain tubular flow before AKI develops — once oliguric AKI is established, volume is less effective. Avoid NSAIDs completely. Urine alkalinisation is widely used but evidence is largely extrapolated from humans.'},
+    {id:'DIS-ENV-BURN',name:'Severe Thermal Injury (Burns)',sp:'Dog + Cat',synonyms:'Burns, thermal burns, scalding, smoke inhalation injury, electrical burns',breed:'No breed predisposition. Cats more likely to be trapped in house fires; brachycephalic dogs at higher risk of smoke inhalation injury.',age:'Any age.',sex:'No sex predisposition.',etiology:'#Thermal (most common)|Flame burns — house fires, barbecue, campfires|Scalding — hot water, steam (cats on cookers/in dryers)|Contact with hot surface — exhaust pipes, radiators|Hot water bottles, heating pads (especially in unconscious animals)|#Electrical|Chewing electrical cords — common in puppies and kittens; mouth burns at commissures|High-voltage contact — severe tissue necrosis, cardiac arrhythmias|#Smoke inhalation (concurrent with thermal injury)|Carbon monoxide (CO) poisoning — impairs O₂ delivery|Hydrogen cyanide (HCN), acrolein, other toxic gases|Thermal airway injury — upper respiratory tract|#Chemical burns|Strong acids/alkalis (tissue necrosis, dermal penetration)',path:'#Local injury|Heat denatures proteins → coagulative necrosis (zone of coagulation) or inflammatory response with blistering (zone of stasis → zone of hyperaemia)|Full-thickness burns: complete dermal/epidermal necrosis; no regeneration from wound edges|Depth zones: 1st degree (epidermal only — erythema, no blisters), 2nd degree partial thickness (painful, blistered), 3rd degree full thickness (painless, leathery, char)|#Systemic effects — burns >15% TBSA in dogs; >10% TBSA in cats|Massive fluid extravasation from burn wound → hypovolaemia (Starling forces disrupted)|Systemic inflammatory response: IL-1, IL-6, TNF → SIRS, MODS|Massive thermal haemolysis: RBC destruction from direct heat → haemoglobinaemia → haemoglobinuria|Hypermetabolic state: ↑glucose, ↑catecholamines, ↑protein catabolism (persists weeks)|Immunosuppression: impaired neutrophil and T-cell function → sepsis risk|Renal injury: from haemoglobin + myoglobin (rhabdomyolysis often concurrent) + hypoperfusion|#Smoke inhalation|CO: binds Hb with 240× affinity → carboxyhaemoglobinaemia → tissue hypoxia; cherry-red mucous membranes|Upper airway oedema: stridor, obstruction, acute respiratory failure|Chemical tracheobronchitis: days 1–3 → mucosal sloughing, airway obstruction, pneumonia',signs:'#Skin|Erythema, alopecia, blistering (partial thickness)|Painless leathery or charred wound (full thickness — pain fibres destroyed)|Wound oedema, weeping, exudate|#Systemic|Hypovolaemic shock: tachycardia, weak pulses, pale mucous membranes|Haemoglobinuria (dark red/brown urine — thermal RBC destruction)|Dark urine from myoglobin if concurrent rhabdomyolysis|Fever or hypothermia|Anorexia, lethargy|#Smoke inhalation|Coughing, wheezing, stridor, dyspnoea|Soot in nares/mouth, singed nasal hairs|Cherry-red mucous membranes (CO poisoning)|Altered mentation, collapse (CO, HCN)|#Electrical|Oral burns at commissures, hypersalivation (cord chewing)|Pulmonary oedema (neurogenic — cats commonly)|Cardiac arrhythmias',severe:'Extensive burns (>15% TBSA dogs, >10% TBSA cats), smoke inhalation with CO poisoning, pulmonary oedema, haemoglobinuria, sepsis from wound infection, multi-organ failure.',conf:'Clinical diagnosis based on history and wound appearance|Estimate TBSA affected: rule of nines adapted for species (head/neck 9%, thorax 18%, abdomen 18%, each limb ~9%, perineum 1%)|Centrifuge urine: red supernatant (haemoglobinuria from thermal haemolysis) ± concurrent myoglobinuria|CO-oximetry: carboxyhaemoglobin level (SpO₂ falsely normal on standard pulse oximetry in CO poisoning)',supp:'CBC: haemolytic anaemia (thermal haemolysis), leukocytosis, thrombocytopenia if DIC|Biochem: elevated ALT/AST (hepatic hypoperfusion), azotaemia (renal injury from haemoglobin/myoglobin/hypovolaemia), elevated CK (rhabdomyolysis)|Coagulation panel: DIC with extensive burns|Blood gas: metabolic acidosis, lactic acidosis; check carboxyhaemoglobin if smoke inhalation|Chest radiograph: pulmonary oedema (electrical burns/CO), inhalation bronchopneumonia|ECG: arrhythmias (electrical burns)',tx1:'#EMERGENCY STABILISATION|Remove from heat/toxic environment immediately|Cool burn area with room temperature (15–25°C) running water × 10–20 min — tepid water only; ice or very cold water worsens vasoconstriction and extends injury|Cover wounds with clean damp dressings; do not use creams or butter|O₂ supplementation: high-flow 100% O₂ mask (treats CO — accelerates CO half-life from 4h to 1h)|IV fluid resuscitation: Hartmann or 0.9% NaCl|#Resuscitation formula (first 24h)|Parkland-modified: 4 mL/kg per % TBSA burnt (give half in first 8h, remainder over 16h) + maintenance|Adjust based on urine output: target 1–2 mL/kg/h|#Haemoglobinuria|Aggressive IV fluid diuresis: target urine output 2–3 mL/kg/h; monitor hourly|#Analgesia|Opioids: methadone 0.3–0.5 mg/kg IV/IM q4h or fentanyl CRI 2–5 µg/kg/h|Ketamine CRI 2–10 µg/kg/min (multimodal; reduces opioid requirements)|Avoid NSAIDs acutely (renal compromise)',tx2:'Wound management: clipping/debridement under GA; silver sulfadiazine 1% cream or manuka honey (antimicrobial, promotes healing); non-adherent secondary dressing; change every 1–3 days|Systemic antibiotics only if wound infection confirmed (culture + sensitivity) — not prophylactically (promotes resistance)|Nutritional support: early enteral nutrition within 12–24h; high-protein, high-calorie; NG tube if not eating|Smoke inhalation: nebulised N-acetylcysteine (mucolytic), bronchodilators (salbutamol), mucolytics; ventilation if respiratory failure|Electrical burns: prolonged ECG monitoring; wound debridement (delayed — extent of necrosis declares over days)|Surgical: escharotomy for circumferential full-thickness burns (compartment syndrome); wound grafting if large full-thickness areas|Colloids / FFP: for severe hypoalbuminaemia from protein losses and capillary leak',monitor:'Urine output hourly (urinary catheter) — primary indicator of fluid adequacy|Temperature: hypothermia risk with wet dressings and large wound surface area|Pain scoring and sedation assessment q4h|CBC + biochemistry + coagulation q12–24h (first 48–72h)|CK daily if rhabdomyolysis suspected|Wound assessment every 24–48h at dressing changes|Watch for signs of sepsis: pyrexia, wound odour/purulence, unexpected deterioration; wound culture if suspected',prog:'Small burns (<10% TBSA), prompt cooling, no smoke inhalation, no haemoglobinuria: good prognosis. Extensive burns (>30% TBSA) carry 50–70% mortality in dogs. Smoke inhalation with CO poisoning worsens prognosis significantly. Haemoglobinuria and AKI are negative prognostic indicators. Electrical burns in puppies from cord chewing: fair if no pulmonary oedema; guarded if neurogenic pulmonary oedema develops. Wound infection and sepsis are the leading delayed causes of death.',ddx:'@DIS-ENV-HEAT:Heatstroke (thermal haemolysis, hyperthermia)|Electrical injury (subset of thermal injury)|Chemical burns|Other causes of haemoglobinuria: @DIS-BD-IMHA:IMHA, @DIS-TOX-ZN:zinc toxicosis, @DIS-TOX-ALLIUM:allium toxicosis|@DIS-MUSC-RHAB:Rhabdomyolysis (myoglobinuria — concurrent with burns)',pearl:'Cool burns with room temperature water — cold or iced water causes vasoconstriction and worsens depth of injury. Thermal haemolysis causes haemoglobinuria from direct RBC destruction; concurrent rhabdomyolysis from muscle injury may add myoglobinuria — both require aggressive fluid diuresis. CO poisoning is invisible: pulse oximetry reads falsely normal and the patient may appear alert before collapsing. 100% O₂ is the antidote for CO — start before confirmation. Electrical cord burns in puppies and kittens are common and often missed if owners do not witness the event.'},
+
     {id:'DIS-TOX-APAP',name:'Acetaminophen (Paracetamol) Toxicosis',sp:'Dog + Cat',topAlert:'Chocolate-brown blood, muddy/cyanotic mucous membranes and facial/paw oedema = methaemoglobinaemia — give N-acetylcysteine immediately, especially in cats.',synonyms:'Paracetamol toxicosis, APAP toxicosis, acetaminophen poisoning',breed:'No breed predisposition.',age:'No age predisposition; kittens highly susceptible.',sex:'No sex predisposition.',etiology:'Over-the-counter aspirin-free analgesics / antipyretics|Combination prescription products (e.g. with codeine)|Owner-administered to pet (especially to cats — never safe)|Accidental ingestion of tablets|#Toxic dose|Dog: intervene >50 mg/kg; hepatotoxicity >75–100 mg/kg; methaemoglobinaemia/death >200 mg/kg|Cat: methaemoglobinaemia at >40 mg/kg, occasionally as low as 10 mg/kg',path:'Parent drug low toxicity — toxic metabolites cause injury|High dose overwhelms glucuronidation/sulfation → ↑NAPQI via P450|NAPQI depletes glutathione → hepatocellular necrosis (centrilobular)|Deacetylation to para-aminophenol (PAP) → oxidises Hb iron Fe2+→Fe3+ → methaemoglobin|MetHb cannot carry O2 → hypoxia; further oxidation → Heinz bodies, haemolysis|#Species difference|Dog: hepatotoxicity is primary; methaemoglobinaemia at very high doses|Cat: deficient glucuronidation + slow NAT-1, 8 reactive sulfhydryl groups → methaemoglobinaemia is the predominant, early effect|Renal tubular injury at very high doses; KCS and facial/paw oedema also reported',signs:'#Methaemoglobinaemia (1–4 h, esp. cats)|Cyanosis, muddy-brown mucous membranes|Dyspnoea, tachypnoea, respiratory distress|Facial and paw oedema|Depression, weakness, hypothermia|#Hepatic/renal (esp. dogs, 24–36 h)|Anorexia, lethargy, vomiting, diarrhoea|Abdominal pain, icterus|Neurological signs (ataxia, stupor, coma), syncope|Bruising/haemorrhage; polyuria/polydipsia|Keratoconjunctivitis sicca, ocular discharge',severe:'Severe methaemoglobinaemia with hypoxia and Heinz-body haemolysis or fulminant hepatic necrosis and failure.',conf:'Chocolate-brown blood / muddy mucous membranes with compatible history|Co-oximetry — quantifies methaemoglobin fraction|Spot test: brown blood spot on white paper|Serum acetaminophen (human lab) — ideally within 4 h (max 16–20 h)',supp:'CBC: regenerative anaemia, marked neutrophilia|Smear (2–3 days): Heinz bodies, fragmented RBCs, spherocytes, brown-tinged cells|Biochem: ↑ALT, ALP, bilirubin; ↓glucose/albumin/cholesterol with hepatic failure; azotaemia if renal injury; metabolic acidosis|Low serum glutathione|Histopath: centrilobular hepatic necrosis',tx1:'Stabilise first — oxygen for severe dyspnoea/hypoxia; whole-blood transfusion if severe anaemia|#Decontamination|Emesis if recent and asymptomatic (dog: apomorphine 0.03–0.04 mg/kg IV/SC or conjunctival sac — rinse eye after vomiting; cat: dexmedetomidine 3.5 µg/kg IV or xylazine)|Activated charcoal + cathartic 1–3 g/kg PO; repeat in 8–12 h for large ingestions|#Antidote|N-acetylcysteine: loading 140 mg/kg PO/IV (up to 280 for severe), then 70–100 mg/kg q6h ×3–7 doses; dilute to 5% for PO',tx2:'SAM-e 18–20 mg/kg PO q24h ×2 wks (hepatoprotection; ineffective vs metHb)|Ascorbic acid 30 mg/kg PO/SC q6–12h (adjunct antioxidant)|Silibinin 30 mg/kg PO within 4 h (cats; bioavailability questioned)|Methylene blue 1 mg/kg IV slowly over 20 min in dogs — many consider contraindicated in cats|Dialysis or plasmapheresis in severe cases|Supportive: IV fluids, thermoregulation, artificial tears for KCS',monitor:'Haematocrit, methaemoglobin, liver enzymes and tear production|Methaemoglobinaemia usually resolves in 5–7 days|Liver enzymes peak ~72 h then fall over days–weeks|Tear production normalises in 1–2 weeks',prog:'Fair to good with prompt, aggressive treatment; cats treated within 14 hours of exposure fare better. Prognosis worsens with established methaemoglobinaemia, significant liver injury or pre-existing hepatic disease.',ddx:'@DIS-TOX-ALLIUM:Allium (garlic/onion) toxicosis|@DIS-TOX-ZN:Zinc toxicosis|Other methaemoglobinaemia/oxidative causes: nitrites/nitrates, benzocaine, naphthalene, skunk spray, phenazopyridine|Congenital methaemoglobin reductase deficiency|@DIS-BD-IMHA:Immune-mediated haemolytic anaemia|Acute hepatopathy from other hepatotoxins (xylitol, sago palm, mushrooms, NSAID)',pearl:'Cats develop methaemoglobinaemia early and at low doses (≥10 mg/kg) due to deficient glucuronidation — never give paracetamol to a cat. Dogs predominantly suffer hepatotoxicity. N-acetylcysteine is the antidote; start without waiting for confirmation. Methylene blue is often contraindicated in cats. Look for facial/paw oedema as a clue.'},
 
 
@@ -1039,6 +1050,17 @@ const DB = {
        {n:4,action:'Leucovorin (folinic acid) 3 mg/kg IV q3h × 3 doses — may reduce toxicity by restoring folate pathway. Thiamine (Vit B1) 25–50 mg IV or IM q24h empirically. IV fluids at 1.5–2× maintenance.',note:'Evidence for leucovorin is limited but generally safe; used in human 5-FU overdose protocols.',branch:'',flag:''},
        {n:5,action:'Dogs: GI toxicity predominates (vomiting, diarrhoea, haemorrhagic gastroenteritis). Gastric protectants, anti-emetics, IV fluids. Bone marrow suppression at higher doses — CBC at 48h, 72h, 5 days, and 10 days (neutropenia, thrombocytopenia).',note:'',branch:'',flag:''},
        {n:6,action:'Prognosis: cats — poor to grave, especially with seizures or treatment delays. Dogs — better prognosis with prompt treatment. Owner education: 5-FU cream must be kept completely away from cats; apply only in a room cats cannot access; cover treated skin; wash hands before handling pets.',note:'Contact VPIS (UK) for specific management guidance.',branch:'',flag:''},
+     ]},
+    {id:'PROT-SEIZ',name:'Seizure — Emergency Management & Status Epilepticus',sp:'Dog + Cat',trigger:'Active seizure >5 min; cluster seizures (≥2 in 24h); refractory or breakthrough seizures',priority:'IMMEDIATE',
+     steps:[
+       {n:1,action:'Confirm it is a seizure (not syncope, collapse, or narcolepsy). Maintain airway — sternal recumbency, extend head. High-flow O₂ 5–10 L/min (mask or flow-by). Establish IV access (cephalic or saphenous). Do NOT restrain limbs — protect head only. Note exact time seizure began.',note:'Syncope: sudden onset, brief, rapid recovery, triggered by exertion or excitement. Seizure: tonic-clonic movements, autonomic signs (urination, hypersalivation), prolonged postictal.',branch:'',flag:'⚠️ Any seizure >5min = status epilepticus — do not wait, treat immediately'},
+       {n:2,action:'Point-of-care blood glucose immediately. If BG <3.5 mmol/L: dextrose 50% at 0.5–1 mL/kg IV over 5–10 min (dilute 1:1 to 1:3 with 0.9% NaCl to reduce phlebitis risk). If BG normal: skip dextrose and continue protocol.',note:'Hypoglycaemia is a common and treatable cause — always rule out first. Causes: insulinoma (middle-aged dog), PSS (toy breed <1yr), Addison\'s disease, severe hepatic failure.',branch:'BG <3.5 mmol/L → dextrose IV then recheck; BG normal → step 3',flag:''},
+       {n:3,action:'First-line — benzodiazepines (0–5 min mark): Diazepam 0.5 mg/kg IV — can repeat up to 3× at 5-min intervals; alternatively diazepam 1–2 mg/kg PR (per rectum) if no IV access yet. OR Midazolam 0.2–0.3 mg/kg IV / IM / intranasal — intranasal is highly effective (0.2 mL/kg of 5 mg/mL solution per nostril).',note:'Diazepam degrades in plastic — use glass syringe or administer immediately. Midazolam is water-soluble and can be given IM or intranasally. Both cause respiratory depression at high doses — monitor RR.',branch:'Seizure stops → monitor, proceed to step 7; Seizure continues after 3 doses → step 4',flag:'⚠️ Do not exceed 3 diazepam doses — cumulative respiratory depression risk'},
+       {n:4,action:'Second-line (seizure continues >10–15 min or after 3 benzodiazepine doses): Levetiracetam 20–60 mg/kg IV over 5–15 min (60 mg/kg loading dose shown to reduce SE in dogs). OR Phenobarbital 2–5 mg/kg IV slowly over 5–10 min — repeat q20–30 min to a maximum of 24 mg/kg in 24h total.',note:'Levetiracetam preferred if minimal sedation required — causes little cardiovascular or respiratory depression. Phenobarbital causes sedation and respiratory depression but is effective; monitor BP and RR closely.',branch:'Seizure stops → monitor, proceed to step 7; Seizure continues >30min → step 5',flag:'⚠️ Phenobarbital: monitor BP + RR; never exceed 24 mg/kg/24h total'},
+       {n:5,action:'Refractory SE (>30 min or no response after 2nd-line): Propofol 1–3 mg/kg IV bolus to effect, then CRI 0.1–0.6 mg/kg/min. Intubate and provide intermittent positive pressure ventilation (IPPV). Consider referral to specialist centre for EEG-guided anaesthesia.',note:'Propofol CRI can cause prolonged recovery and Heinz body anaemia in cats — limit duration and monitor PCV every 12h. Ketamine (2–5 mg/kg IV bolus then 0.1–0.5 mg/kg/min CRI) is an alternative NMDA antagonist adjunct.',branch:'',flag:'⚠️ Propofol CRI in cats: limit to <24h, monitor PCV q12h'},
+       {n:6,action:'Adjunct treatments — address alongside AEDs: (A) Hyperthermia T°>41°C: wet towels + fan + cold IV fluids — stop active cooling at 39.5°C to avoid overshoot. (B) Hypocalcaemia (iCa <1.0 mmol/L or eclampsia): calcium gluconate 10% 50–150 mg/kg IV slowly over 15–20 min with ECG monitoring. (C) Raised ICP (papilloedema, obtunded post-SE, head trauma, suspected neoplasia): mannitol 20% 0.5–1 g/kg IV over 15–20 min OR hypertonic saline 3% at 4 mL/kg IV over 5–10 min.',note:'Mannitol is contraindicated if serum osmolality >320 mOsm/kg or patient is dehydrated; use hypertonic saline as alternative. Thiamine 25–50 mg IV or IM if thiamine deficiency suspected (cats on poor diet, anorexic).',branch:'',flag:''},
+       {n:7,action:'Post-ictal monitoring (once stable): ECG for cardiac arrhythmias. Recheck T°. Monitor urine output — myoglobinuria from rhabdomyolysis after prolonged SE can cause AKI (brown urine, elevated CK). IV fluids at 1.5–2× maintenance to promote myoglobin clearance. Collect Tier 1 bloods: haematology, biochemistry, bile acids, UA + BP.',note:'Post-SE cerebellar herniation can cause sudden deterioration — monitor pupil symmetry and mentation changes closely. Aspiration pneumonia is a risk during seizures — thoracic radiographs if respiratory signs develop.',branch:'',flag:''},
+       {n:8,action:'Maintenance AED decision — start if ANY of the following: cluster seizures (≥2 in 24h); SE has occurred; >1 seizure/6 months; increasing frequency or severity; prolonged postictal (>24h); structural cause identified. DRUGS: Phenobarbital 2–3 mg/kg PO q12h (dogs + cats) — monitor serum level at 2–3 weeks, target 65–170 μmol/L dogs / 65–130 μmol/L cats; liver enzymes + fasted bile acids q6 months. Potassium bromide (KBr) 30–40 mg/kg PO q24h — dogs ONLY (loading 400–600 mg/kg over 5 days for rapid control). Levetiracetam 20–30 mg/kg PO q8h (dogs + cats; ER form allows q12h in some dogs).',note:'Never stop AEDs abruptly — withdrawal SE risk. Missed doses are a common cause of breakthrough seizures; counsel owners carefully. KBr takes 3–4 months to reach steady state.',branch:'',flag:'⚠️ KBr is absolutely contraindicated in cats — fatal bronchospasm / eosinophilic bronchopneumopathy'},
      ]},
   ],
 };
@@ -1880,7 +1902,7 @@ function renderPUPDFlow(){
 }
 
 function renderPUPDFlowPrimPD(){
-  replace(renderPUPDFlowPrimPD,'PU/PD — Primary Polydipsia');
+  push(renderPUPDFlowPrimPD,'PU/PD — Primary Polydipsia');
   const CAT_STYLE={V:{bg:'rgba(220,38,38,0.15)',border:'rgba(220,38,38,0.4)',col:'#FCA5A5',lbl:'Vascular'},I:{bg:'rgba(245,158,11,0.15)',border:'rgba(245,158,11,0.4)',col:'#FCD34D',lbl:'Inflammatory'},M:{bg:'rgba(139,92,246,0.15)',border:'rgba(139,92,246,0.4)',col:'#C4B5FD',lbl:'Mass'},Im:{bg:'rgba(59,130,246,0.15)',border:'rgba(59,130,246,0.4)',col:'#93C5FD',lbl:'Immune-mediated'},D:{bg:'rgba(100,116,139,0.15)',border:'rgba(100,116,139,0.4)',col:'#94A3B8',lbl:'Degenerative'},ME:{bg:'rgba(20,184,166,0.15)',border:'rgba(20,184,166,0.4)',col:'#5EEAD4',lbl:'Metabolic / Endocrine'},Tx:{bg:'rgba(249,115,22,0.15)',border:'rgba(249,115,22,0.4)',col:'#FB923C',lbl:'Toxic'},Tr:{bg:'rgba(107,114,128,0.15)',border:'rgba(107,114,128,0.4)',col:'#D1D5DB',lbl:'Trauma'},A:{bg:'rgba(236,72,153,0.15)',border:'rgba(236,72,153,0.4)',col:'#F9A8D4',lbl:'Anomalous'}};
   const col=(catKey,chips)=>{const s=CAT_STYLE[catKey];const chipHtml=chips.map(({label,fn})=>`<div style="background:${s.bg};border:1.5px solid ${s.border};border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:${s.col};text-align:center;line-height:1.35;${fn?'cursor:pointer;':''}" ${fn?`onclick="${fn}"`:''}>${label}</div>`).join('');return `<div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:${s.bg};border:1.5px solid ${s.border};border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:${s.col};text-align:center;line-height:1.3;">${s.lbl}</div><div style="color:${s.col};text-align:center;font-size:11px;line-height:1;">↓</div>${chipHtml}</div>`;};
   render(`
@@ -1915,7 +1937,7 @@ function renderPUPDFlowPrimPD(){
 }
 
 function renderPUPDFlowPrimPU(){
-  replace(renderPUPDFlowPrimPU,'PU/PD — Primary Polyuria');
+  push(renderPUPDFlowPrimPU,'PU/PD — Primary Polyuria');
   const CAT_STYLE={V:{bg:'rgba(220,38,38,0.15)',border:'rgba(220,38,38,0.4)',col:'#FCA5A5',lbl:'Vascular'},I:{bg:'rgba(245,158,11,0.15)',border:'rgba(245,158,11,0.4)',col:'#FCD34D',lbl:'Inflammatory'},M:{bg:'rgba(139,92,246,0.15)',border:'rgba(139,92,246,0.4)',col:'#C4B5FD',lbl:'Mass'},Im:{bg:'rgba(59,130,246,0.15)',border:'rgba(59,130,246,0.4)',col:'#93C5FD',lbl:'Immune-mediated'},D:{bg:'rgba(100,116,139,0.15)',border:'rgba(100,116,139,0.4)',col:'#94A3B8',lbl:'Degenerative'},ME:{bg:'rgba(20,184,166,0.15)',border:'rgba(20,184,166,0.4)',col:'#5EEAD4',lbl:'Metabolic / Endocrine'},Tx:{bg:'rgba(249,115,22,0.15)',border:'rgba(249,115,22,0.4)',col:'#FB923C',lbl:'Toxic'},Tr:{bg:'rgba(107,114,128,0.15)',border:'rgba(107,114,128,0.4)',col:'#D1D5DB',lbl:'Trauma'},A:{bg:'rgba(236,72,153,0.15)',border:'rgba(236,72,153,0.4)',col:'#F9A8D4',lbl:'Anomalous'}};
   const col=(catKey,chips)=>{const s=CAT_STYLE[catKey];const chipHtml=chips.map(({label,fn})=>`<div style="background:${s.bg};border:1.5px solid ${s.border};border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:${s.col};text-align:center;line-height:1.35;${fn?'cursor:pointer;':''}" ${fn?`onclick="${fn}"`:''}>${label}</div>`).join('');return `<div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:${s.bg};border:1.5px solid ${s.border};border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:${s.col};text-align:center;line-height:1.3;">${s.lbl}</div><div style="color:${s.col};text-align:center;font-size:11px;line-height:1;">↓</div>${chipHtml}</div>`;};
   render(`
@@ -1950,7 +1972,7 @@ function renderPUPDFlowPrimPU(){
 }
 
 function renderPUPDFlowSecPU(){
-  replace(renderPUPDFlowSecPU,'PU/PD — Secondary Polyuria');
+  push(renderPUPDFlowSecPU,'PU/PD — Secondary Polyuria');
   const CAT_STYLE={V:{bg:'rgba(220,38,38,0.15)',border:'rgba(220,38,38,0.4)',col:'#FCA5A5',lbl:'Vascular'},I:{bg:'rgba(245,158,11,0.15)',border:'rgba(245,158,11,0.4)',col:'#FCD34D',lbl:'Inflammatory'},M:{bg:'rgba(139,92,246,0.15)',border:'rgba(139,92,246,0.4)',col:'#C4B5FD',lbl:'Mass'},Im:{bg:'rgba(59,130,246,0.15)',border:'rgba(59,130,246,0.4)',col:'#93C5FD',lbl:'Immune-mediated'},D:{bg:'rgba(100,116,139,0.15)',border:'rgba(100,116,139,0.4)',col:'#94A3B8',lbl:'Degenerative'},ME:{bg:'rgba(20,184,166,0.15)',border:'rgba(20,184,166,0.4)',col:'#5EEAD4',lbl:'Metabolic / Endocrine'},Tx:{bg:'rgba(249,115,22,0.15)',border:'rgba(249,115,22,0.4)',col:'#FB923C',lbl:'Toxic'},Tr:{bg:'rgba(107,114,128,0.15)',border:'rgba(107,114,128,0.4)',col:'#D1D5DB',lbl:'Trauma'},A:{bg:'rgba(236,72,153,0.15)',border:'rgba(236,72,153,0.4)',col:'#F9A8D4',lbl:'Anomalous'}};
   const col=(catKey,chips)=>{const s=CAT_STYLE[catKey];const chipHtml=chips.map(({label,fn})=>`<div style="background:${s.bg};border:1.5px solid ${s.border};border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:${s.col};text-align:center;line-height:1.35;${fn?'cursor:pointer;':''}" ${fn?`onclick="${fn}"`:''}>${label}</div>`).join('');return `<div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:${s.bg};border:1.5px solid ${s.border};border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:${s.col};text-align:center;line-height:1.3;">${s.lbl}</div><div style="color:${s.col};text-align:center;font-size:11px;line-height:1;">↓</div>${chipHtml}</div>`;};
   render(`
@@ -2269,7 +2291,7 @@ function renderLesionHome(){
   <div class="card" onclick="renderDxJaundice()"><div class="card-row"><div class="card-icon">🟡</div><div style="flex:1"><div class="card-title">Jaundice</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
   <div class="card" onclick="renderDxWeakness()"><div class="card-row"><div class="card-icon">⚡</div><div style="flex:1"><div class="card-title">Weakness / Collapse</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
   <div class="card" onclick="renderDxPUPD()"><div class="card-row"><div class="card-icon">💧</div><div style="flex:1"><div class="card-title">Polyuria / Polydipsia</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxSeizures()"><div class="card-row"><div class="card-icon">🧠</div><div style="flex:1"><div class="card-title">Seizures</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxSeizures()"><div class="card-row"><div class="card-icon">🧠</div><div style="flex:1"><div class="card-title">Seizures</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
   <div class="card" onclick="renderDxMyelopathy()"><div class="card-row"><div class="card-icon">🦴</div><div style="flex:1"><div class="card-title">Acute Myelopathy</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
   <div class="card" onclick="renderDxVestibular()"><div class="card-row"><div class="card-icon">🌀</div><div style="flex:1"><div class="card-title">Acute Vestibular</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
   <div class="card" onclick="renderDxEncephalopathy()"><div class="card-row"><div class="card-icon">🧬</div><div style="flex:1"><div class="card-title">Acute Encephalopathy</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
@@ -2612,12 +2634,14 @@ function renderDiseasePage(id){
 // ── PROTOCOL LIST ─────────────────────────────────────────────────────────────
 function renderProtoList(){
   const emergency = DB.protocols.filter(p=>p.id==='PROT-RESP'||p.id==='PROT-THOR');
+  const neuro = DB.protocols.filter(p=>p.id.startsWith('PROT-SEIZ')||p.id.startsWith('PROT-NEURO'));
   const tox = DB.protocols.filter(p=>p.id==='PROT-TOX'||p.id.startsWith('PROT-TOX-'));
+  const icon = p => p.id.startsWith('PROT-TOX') ? '☠️' : p.id.startsWith('PROT-SEIZ')||p.id.startsWith('PROT-NEURO') ? '🧠' : '⚡';
   const card = p=>`
   <div class="card" onclick="renderProtoDetail('${p.id}')">
     <div class="card-row">
       <div style="flex:1">
-        <div class="card-title">${p.id.startsWith('PROT-TOX')?'☠️':'⚡'} ${esc(p.name)}</div>
+        <div class="card-title">${icon(p)} ${esc(p.name)}</div>
         <div class="card-sub" style="margin-top:3px;">
           <span class="tag ${p.priority==='IMMEDIATE'?'tag-em':'tag-hi'}">${p.priority}</span>
           <span style="font-size:11px;color:var(--gray2);margin-left:6px;">${esc(p.sp)}</span>
@@ -2629,6 +2653,8 @@ function renderProtoList(){
   render(`
   <div class="stitle">Emergency Protocols</div>
   ${emergency.map(card).join('')}
+  <div class="stitle">Neurology</div>
+  ${neuro.map(card).join('')}
   <div class="stitle">Toxicology</div>
   ${tox.map(card).join('')}
   <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
@@ -2821,103 +2847,216 @@ function renderSeizureFlow(){
   <div class="flow-wrap">
     <div class="flow-node entry">🧠 SEIZURES</div>
     <div class="flow-arrow-v">↓</div>
-    <div class="flow-node step" style="font-size:12px;line-height:1.5;">Confirm epileptic seizure<br><span style="font-size:10px;color:var(--gray);">Rule out: syncope, dyskinesia, vestibular, narcolepsy</span></div>
+
+    <!-- Seizure phases -->
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;width:100%;">
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 8px;font-size:9px;color:var(--gray);line-height:1.5;text-align:center;">
+        <strong style="color:#C4B5FD;font-size:10px;">Prodrome</strong><br>Hours–days before<br>Restlessness · anxiety<br>Hiding · attention-seeking<br><em>Not always present</em>
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 8px;font-size:9px;color:var(--gray);line-height:1.5;text-align:center;">
+        <strong style="color:#FCD34D;font-size:10px;">Ictal</strong><br>Active seizure<br>Tonic-clonic · tonic · atonic<br>Autonomic signs<br>Focal or generalised
+      </div>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 8px;font-size:9px;color:var(--gray);line-height:1.5;text-align:center;">
+        <strong style="color:#6EE7B7;font-size:10px;">Postictal</strong><br>After seizure ends<br>Disorientation · blindness<br>Ataxia · hypersalivation<br>Minutes to hours
+      </div>
+    </div>
     <div class="flow-arrow-v">↓</div>
+
+    <!-- Rule out mimics -->
+    <div class="flow-node step" style="font-size:11px;">CONFIRM EPILEPTIC SEIZURE</div>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px;font-size:9px;color:var(--gray);line-height:1.6;width:100%;box-sizing:border-box;margin-top:5px;">
+      <strong style="color:var(--white);">Rule out mimics:</strong><br>
+      <strong>Syncope</strong> — sudden onset, brief, rapid full recovery; triggered by exertion or Valsalva; no tonic-clonic, no postictal<br>
+      <strong>Vestibular episode</strong> — head tilt, rolling, nystagmus; consciousness preserved; no tonic-clonic<br>
+      <strong>Dyskinesia / paroxysmal movement disorder</strong> — dystonia, no loss of consciousness, breed-specific (Cavalier, Scottish Terrier, Labrador)<br>
+      <strong>Narcolepsy / cataplexy</strong> — sudden loss of muscle tone triggered by excitement; rapid recovery; Dobermann, Labrador<br>
+      <strong>REM sleep disorder</strong> — occurs during sleep, stops when woken; often mistaken for seizures<br>
+      <strong>Neuromuscular collapse</strong> — exercise-induced; Labrador, Border Collie; no loss of consciousness
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- Seizure type -->
     <div class="flow-node step">CHARACTERISE SEIZURE TYPE</div>
     <div class="flow-arrow-v">↓</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
       <div class="flow-node insp" style="font-size:11px;">
-        Focal (ipsilateral)<div class="fn-sub">One body region / side<br>Facial twitching, limb jerking<br>Consciousness may be preserved<br>May secondarily generalise<br><strong style="color:#93C5FD;">→ Favours structural lesion</strong></div>
+        Focal<div class="fn-sub">One body region / side<br>Facial twitching · lip smacking<br>Fly-catching · limb jerking<br>Consciousness may be preserved<br>May secondarily generalise<br><strong style="color:#93C5FD;">→ Strongly favours structural</strong></div>
       </div>
       <div class="flow-node rest" style="font-size:11px;">
-        Generalised (bilateral)<div class="fn-sub">Both sides simultaneously<br>Tonic-clonic / tonic / atonic<br>Loss of consciousness<br>Autonomic signs<br><strong style="color:var(--amber-text);">→ Can be any category</strong></div>
+        Generalised<div class="fn-sub">Both sides simultaneously<br>Tonic-clonic · tonic · atonic<br>Loss of consciousness<br>Urination · defaecation<br><strong style="color:var(--amber-text);">→ Any category possible</strong></div>
       </div>
     </div>
     <div class="flow-arrow-v">↓</div>
+
+    <!-- Interictal neuro exam -->
     <div class="flow-node step">INTERICTAL NEUROLOGICAL EXAMINATION</div>
     <div class="flow-arrow-v">↓</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;margin-bottom:6px;">
       <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px;font-size:10px;color:var(--gray);line-height:1.5;">
         <strong style="color:var(--white);">Mentation</strong><br>
         Alert / obtunded / stuporous?<br>
-        Behavioural changes?<br>
-        Head pressing? Circling?
+        Head pressing? Compulsive circling?<br>
+        Personality / behaviour change?
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px;font-size:10px;color:var(--gray);line-height:1.5;">
         <strong style="color:var(--white);">Postural reactions</strong><br>
-        Proprioceptive positioning<br>
-        Hopping · Wheelbarrowing<br>
-        Asymmetry = lateralising
+        CP positioning · Hopping<br>
+        Hemi-walking · Wheelbarrowing<br>
+        <strong>Asymmetry = lateralising sign</strong>
       </div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
       <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px;font-size:10px;color:var(--gray);line-height:1.5;">
         <strong style="color:var(--white);">Cranial nerves</strong><br>
-        Menace (CN II, VII) · PLR (II, III)<br>
-        Facial symmetry (VII)<br>
-        Strabismus (III, IV, VI) · Jaw tone (V)
+        Menace (II, VII) · PLR (II, III)<br>
+        Facial symmetry (VII) · Jaw tone (V)<br>
+        Fixed dilated pupil = herniation ⚠️
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 10px;font-size:10px;color:var(--gray);line-height:1.5;">
-        <strong style="color:var(--white);">Gait + Posture</strong><br>
-        Ataxia? Paresis? Head tilt?<br>
+        <strong style="color:var(--white);">Gait + Fundoscopy</strong><br>
+        Ataxia · Paresis · Head tilt?<br>
         Circling (ipsilateral to lesion)<br>
-        Fundoscopy (papilloedema = ↑ ICP)
+        Papilloedema = ↑ ICP
       </div>
+    </div>
+    <div style="margin-top:5px;background:rgba(37,99,235,0.1);border:1px solid rgba(37,99,235,0.25);border-radius:10px;padding:8px 10px;font-size:9.5px;color:#93C5FD;line-height:1.5;">
+      <strong>Normal interictal exam</strong> → idiopathic epilepsy possible (if 6mo–6yr and normal bloods)<br>
+      <strong>Abnormal interictal exam</strong> → structural disease until proven otherwise — proceed to MRI
     </div>
     <div class="flow-arrow-v">↓</div>
 
     <!-- Three-way classification -->
+    <div class="flow-node step">CLASSIFY AETIOLOGY</div>
+    <div class="flow-arrow-v">↓</div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
-      <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-SZ-INTRACRANIAL','Intracranial')">Idiopathic<div class="fn-sub">6mo–6yr · Normal exam<br>Normal bloods<br>Usually generalised</div></div>
-      <div class="flow-node rest" style="font-size:11px;cursor:default;">Structural<div class="fn-sub">&lt;6mo or &gt;6yr<br>Abnormal neuro exam<br>Focal onset favours</div></div>
-      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-SZ-EXTRACRANIAL','Extracranial')">Reactive<div class="fn-sub">Abnormal bloods<br>⚠️ High SE risk</div></div>
+      <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-SZ-INTRACRANIAL','Intracranial')">
+        Idiopathic<div class="fn-sub">Onset 6mo–6yr<br>Normal bloods<br>Normal interictal exam<br>Usually generalised<br>Breed predisposed↓</div>
+      </div>
+      <div class="flow-node rest" style="font-size:11px;cursor:default;">
+        Structural<div class="fn-sub">&lt;6mo or &gt;6yr<br>Abnormal interictal exam<br>Focal onset / signs<br>Progressive course<br>VITAMIN D↓</div>
+      </div>
+      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-SZ-EXTRACRANIAL','Extracranial')">
+        Reactive<div class="fn-sub">Abnormal bloods<br>Metabolic / toxic cause<br>Any age<br>⚠️ High SE risk<br>Causes↓</div>
+      </div>
     </div>
-
-    <!-- VITAMIN D expander for Structural -->
-    <div class="flow-arrow-v">↓</div>
-    <div class="flow-node step" style="background:#D97706;font-size:12px;">STRUCTURAL — VITAMIN D</div>
     <div class="flow-arrow-v">↓</div>
 
+    <!-- Idiopathic breed clues -->
+    <div class="flow-node step" style="background:#1E40AF;font-size:11px;">IDIOPATHIC — BREED PREDISPOSITIONS</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;margin-top:5px;">
+      <div style="background:rgba(37,99,235,0.1);border:1px solid rgba(37,99,235,0.25);border-radius:10px;padding:8px 9px;font-size:8.5px;color:var(--gray);line-height:1.6;">
+        <strong style="color:#93C5FD;">🐕 Dog (genetic epilepsy)</strong><br>
+        Border Collie · Labrador · GSD<br>
+        Golden Retriever · Belgian Shepherd<br>
+        Beagle · Keeshond · Vizsla<br>
+        Finnish Spitz · Irish Setter
+      </div>
+      <div style="background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.25);border-radius:10px;padding:8px 9px;font-size:8.5px;color:var(--gray);line-height:1.6;">
+        <strong style="color:#C4B5FD;">⚠️ Structural mimics</strong><br>
+        <strong>MUO:</strong> Pug · Yorkie · Maltese<br>
+        · Chihuahua · French Bulldog<br>
+        <strong>Glioma:</strong> brachycephalics (&gt;5yr)<br>
+        <strong>Meningioma:</strong> dolichocephalics<br>
+        <strong>PSS reactive:</strong> toy breeds &lt;1yr
+      </div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- VITAMIN D for Structural -->
+    <div class="flow-node step" style="background:#D97706;font-size:11px;">STRUCTURAL — VITAMIN D</div>
+    <div class="flow-arrow-v">↓</div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;width:100%;">
       <div style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#FCA5A5;line-height:1.3;">
-        <span style="font-size:13px;">V</span>ascular<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">CVA / stroke<br>Peracute, non-progressive</div>
+        <span style="font-size:13px;">V</span>ascular<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">CVA / stroke<br>Peracute, non-progressive<br>Cats: ischaemic</div>
       </div>
       <div style="background:rgba(249,115,22,0.12);border:1.5px solid rgba(249,115,22,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#FED7AA;line-height:1.3;">
-        <span style="font-size:13px;">I</span>nflammatory<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">MUA, encephalitis<br>Progressive multifocal</div>
+        <span style="font-size:13px;">I</span>nflammatory<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">MUO / GME<br>Encephalitis<br>Multifocal, progressive</div>
       </div>
       <div style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#FCA5A5;line-height:1.3;">
-        <span style="font-size:13px;">T</span>raumatic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Head trauma<br>History of injury</div>
+        <span style="font-size:13px;">T</span>raumatic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Head trauma<br>History of injury<br>RTA, falls</div>
       </div>
       <div style="background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#93C5FD;line-height:1.3;">
-        <span style="font-size:13px;">A</span>nomalous<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Hydrocephalus<br>Lissencephaly</div>
+        <span style="font-size:13px;">A</span>nomalous<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Hydrocephalus<br>Lissencephaly<br>&lt;1yr, toy/brachy breeds</div>
       </div>
     </div>
     <div style="height:5px;"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;width:100%;">
       <div style="background:rgba(217,119,6,0.12);border:1.5px solid rgba(217,119,6,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:var(--amber-text);line-height:1.3;">
-        <span style="font-size:13px;">M</span>etabolic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Storage diseases<br>(inborn errors)</div>
+        <span style="font-size:13px;">M</span>etabolic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Storage diseases<br>NCL (inborn errors)<br>Breed-specific</div>
       </div>
       <div style="background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#93C5FD;line-height:1.3;">
-        <span style="font-size:13px;">I</span>diopathic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">No cause found<br>Dx of exclusion</div>
+        <span style="font-size:13px;">I</span>diopathic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">No cause found<br>Dx of exclusion<br>Normal MRI + CSF</div>
       </div>
       <div style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#DDD6FE;line-height:1.3;">
-        <span style="font-size:13px;">N</span>eoplastic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Meningioma, glioma<br>Older animals</div>
+        <span style="font-size:13px;">N</span>eoplastic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Meningioma · Glioma<br>Lymphoma · Met.<br>Older animals</div>
       </div>
       <div style="background:rgba(100,116,139,0.12);border:1.5px solid rgba(100,116,139,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#CBD5E1;line-height:1.3;">
-        <span style="font-size:13px;">D</span>egenerative<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Neuronal degen.<br>Breed-specific</div>
+        <span style="font-size:13px;">D</span>egenerative<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Neuronal degen.<br>NCL / lysosomal<br>Breed-specific</div>
+      </div>
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
+    <!-- Reactive causes -->
+    <div class="flow-node step" style="background:#059669;font-size:11px;">REACTIVE CAUSES — METABOLIC &amp; TOXIC</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;width:100%;margin-top:5px;">
+      <div style="background:rgba(5,150,105,0.1);border:1px solid rgba(5,150,105,0.3);border-radius:10px;padding:8px 9px;font-size:8.5px;color:var(--gray);line-height:1.6;">
+        <strong style="color:#6EE7B7;">Metabolic</strong><br>
+        Hypoglycaemia (insulinoma, PSS,<br>Addison's, toy breed pup)<br>
+        Hepatic encephalopathy (PSS)<br>
+        Hypocalcaemia (eclampsia)<br>
+        Hyponatraemia / Hypernatraemia<br>
+        Uraemic encephalopathy<br>
+        Polycythaemia (↑ viscosity)<br>
+        Hypertensive encephalopathy<br>
+        Hyperthyroidism (cats — rare)
+      </div>
+      <div style="background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;padding:8px 9px;font-size:8.5px;color:var(--gray);line-height:1.6;">
+        <strong style="color:#FCA5A5;">Toxins</strong><br>
+        Organophosphates / carbamates<br>
+        Bromethalin rodenticide<br>
+        Metaldehyde (slug bait)<br>
+        Ethylene glycol (antifreeze)<br>
+        Mycotoxins (mouldy food)<br>
+        Lead (young dogs)<br>
+        Methylxanthines (chocolate)<br>
+        Strychnine<br>
+        Ivermectin (MDR1 dogs)
+      </div>
+      <div style="background:rgba(217,119,6,0.08);border:1px solid rgba(217,119,6,0.2);border-radius:10px;padding:8px 9px;font-size:8.5px;color:var(--gray);line-height:1.6;">
+        <strong style="color:var(--amber-text);">Medications</strong><br>
+        5-FU cream (cats — any trace)<br>
+        SSRIs / SNRIs<br>
+        Metronidazole (esp. cats)<br>
+        Tramadol (cats)<br>
+        Fluoroquinolones (cats)<br>
+        Lidocaine (cats)<br>
+        Pyrethrins / pyrethroids (cats)<br>
+        Amphetamines / stimulants<br>
+        <strong>AED withdrawal</strong> → SE risk
       </div>
     </div>
 
   </div>
 
-  <div style="margin-top:12px;"><div class="card" onclick="renderDxSeizures()"><div class="card-row"><div class="card-icon">🔬</div><div style="flex:1"><div class="card-title">Diagnostic Approach</div><div class="card-sub">Tier 1 bloods → Tier 2 MRI/CSF → Confirm diagnosis</div></div><div class="card-arrow">›</div></div></div></div>
+  <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+    <div class="card" onclick="renderDxSeizures()"><div class="card-row"><div class="card-icon">🔬</div><div style="flex:1"><div class="card-title">Diagnostic Approach</div><div class="card-sub">History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
+    <div class="card" onclick="renderProtoDetail('PROT-SEIZ')"><div class="card-row"><div class="card-icon">🚨</div><div style="flex:1"><div class="card-title">SE Protocol</div><div class="card-sub">Diazepam → LEV → PB → Propofol</div></div><div class="card-arrow">›</div></div></div>
+  </div>
 
-  <div style="margin-top:6px;padding:10px 14px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:12px;">
-    <div style="font-size:11px;font-weight:600;color:#F87171;">⚠️ Status epilepticus (&gt;5 min)</div>
-    <div style="font-size:11px;color:#FCA5A5;line-height:1.6;margin-top:4px;">
-      <strong>1st:</strong> Diazepam 0.5–2mg/kg IV/rectal OR Midazolam 0.1–0.3mg/kg IV/IM<br>
-      <strong>2nd:</strong> Phenobarbital 2–6mg/kg IV OR Levetiracetam 20–60mg/kg IV<br>
-      <strong>3rd:</strong> Propofol CRI
+  <div style="margin-top:8px;padding:10px 14px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:12px;">
+    <div style="font-size:11px;font-weight:600;color:#F87171;">⚠️ Status epilepticus (&gt;5 min) — treat immediately</div>
+    <div style="font-size:10px;color:#FCA5A5;line-height:1.7;margin-top:4px;">
+      <strong>1st:</strong> Diazepam 0.5 mg/kg IV (×3, q5min) OR Midazolam 0.2–0.3 mg/kg IM/intranasal<br>
+      <strong>2nd:</strong> Levetiracetam 20–60 mg/kg IV over 5–15 min OR Phenobarbital 2–5 mg/kg IV (max 24 mg/kg/24h)<br>
+      <strong>3rd:</strong> Propofol 1–3 mg/kg IV → CRI 0.1–0.6 mg/kg/min + intubation<br>
+      Check BG immediately — dextrose IV if &lt;3.5 mmol/L
+    </div>
+  </div>
+  <div style="margin-top:6px;padding:8px 14px;background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.2);border-radius:12px;">
+    <div style="font-size:10px;font-weight:600;color:#93C5FD;">💊 When to start maintenance AEDs</div>
+    <div style="font-size:9.5px;color:#BFDBFE;line-height:1.6;margin-top:3px;">
+      Cluster (≥2/24h) · SE occurred · &gt;1 seizure/6 months · Progressive or focal signs · Structural disease confirmed<br>
+      <strong>PB</strong> 2–3 mg/kg q12h PO · <strong>KBr</strong> 30–40 mg/kg q24h PO (dogs only ⚠️) · <strong>LEV</strong> 20–30 mg/kg q8h PO
     </div>
   </div>
   <div class="disclaimer">For qualified veterinary professionals only.</div>
@@ -3091,7 +3230,7 @@ function renderVestibularFlow(){
 
 // ── VESTIBULAR — clinical flowchart sub-branches ───────────────────────────
 function renderVestibularFlowPeriph(){
-  replace(renderVestibularFlowPeriph,'Vestibular — Peripheral');
+  push(renderVestibularFlowPeriph,'Vestibular — Peripheral');
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(16,185,129,0.15);border-color:rgba(16,185,129,0.4);color:#6EE7B7;">🌀 PERIPHERAL VESTIBULAR — CAUSES</div>
@@ -3177,7 +3316,7 @@ function renderVestibularFlowPeriph(){
 }
 
 function renderVestibularFlowCentral(){
-  replace(renderVestibularFlowCentral,'Vestibular — Central');
+  push(renderVestibularFlowCentral,'Vestibular — Central');
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.4);color:#FCA5A5;">🌀 CENTRAL VESTIBULAR — CAUSES</div>
@@ -3268,7 +3407,7 @@ function renderVestibularFlowCentral(){
 }
 
 function renderVestibularFlowBilat(){
-  replace(renderVestibularFlowBilat,'Vestibular — Bilateral');
+  push(renderVestibularFlowBilat,'Vestibular — Bilateral');
   render(`
   <div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(245,158,11,0.15);border-color:rgba(245,158,11,0.4);color:#FCD34D;">🌀 BILATERAL VESTIBULAR — CAUSES</div>
@@ -5734,87 +5873,18 @@ function renderDxPUPDDesmopressin(){
 }
 
 // ── DIAGNOSTIC APPROACH: SEIZURES ────────────────────────────────────────────
-function renderDxSeizures(){
-  push(renderDxSeizures,'Dx: Seizures');
-  render(`
-  <div class="dx-wrap">
-    <div class="dx-step">SEIZURES — DIAGNOSTIC APPROACH</div>
-    <div class="dx-arrow">↓</div>
-
-    <div class="dx-step alt">TIER 1 — MINIMUM DATABASE (all seizure patients)</div>
-    <div class="dx-arrow">↓</div>
-    <div class="dx-row c2">
-      <div class="dx-test" style="font-size:9px;"><strong>Haematology</strong><br>PCV/TS<br>Leukogram<br>(no stress leukogram → Addison's?)</div>
-      <div class="dx-test" style="font-size:9px;"><strong>Biochemistry</strong><br>Glucose · iCa · Na · K<br>BUN/Cr · ALT/ALP<br>Cholesterol · Albumin</div>
-    </div>
-    <div style="height:5px;"></div>
-    <div class="dx-row c3">
-      <div class="dx-test" style="font-size:9px;"><strong>Urinalysis</strong><br>USG · Glucosuria?<br>Bilirubinuria?<br>Sediment</div>
-      <div class="dx-test" style="font-size:9px;"><strong>Blood pressure</strong><br>Hypertension → retinal<br>haemorrhage, encephalopathy<br>Secondary to renal/endocrine?</div>
-      <div class="dx-test" style="font-size:9px;"><strong>Additional</strong><br>Bile acids / ammonia<br>(hepatic encephalopathy)<br>T4 (cat &gt;8yr)</div>
-    </div>
-    <div class="dx-arrow">↓</div>
-
-    <div class="dx-branch">BLOODS ABNORMAL?</div>
-    <div class="dx-arrow">↓</div>
-
-    <div class="dx-connector">
-      <div class="dx-col">
-        <div style="background:#E8713A;color:#fff;border-radius:10px;padding:8px;text-align:center;width:100%;font-weight:600;font-size:11px;">YES → REACTIVE</div>
-        <div class="dx-arrow">↓</div>
-        <div class="dx-dx" style="width:100%;font-size:9px;text-align:left;font-weight:400;">Glucose &lt;3.5 mmol/L → <strong>Hypoglycaemia</strong><br>→ insulin:glucose ratio if insulinoma</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;text-align:left;font-weight:400;">History of toxin access → <strong>Intoxication</strong><br>→ toxicology screen</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;text-align:left;font-weight:400;">↑ Bile acids / ↑ ammonia → <strong>Hepatic enceph.</strong><br>→ abdominal US (PSS?)</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;text-align:left;font-weight:400;">iCa &lt;1.0 / Na &gt;180 or &lt;120 → <strong>Electrolyte</strong></div>
-      </div>
-      <div class="dx-col">
-        <div class="dx-test" style="width:100%;text-align:center;font-weight:600;font-size:11px;">NO → TIER 2</div>
-        <div class="dx-arrow">↓</div>
-        <div class="dx-note" style="width:100%;font-size:9px;">Normal bloods → structural or idiopathic.<br>Proceed to advanced imaging.</div>
-      </div>
-    </div>
-
-    <div class="dx-arrow">↓</div>
-    <div class="dx-step alt">TIER 2 — ADVANCED IMAGING (structural vs idiopathic)</div>
-    <div class="dx-arrow">↓</div>
-    <div class="dx-row c2">
-      <div class="dx-test" style="font-size:9px;"><strong>MRI brain</strong> (1.5T or 3T)<br>Contrast-enhanced<br>Gold standard for structural lesions<br>Mass? Inflammation? Infarct?</div>
-      <div class="dx-test" style="font-size:9px;background:#0D7377;"><strong>CSF analysis</strong><br>Collect under GA after MRI<br>TNCC · Protein · Cytology<br>↑ Cells = inflammation/infection</div>
-    </div>
-    <div class="dx-arrow">↓</div>
-
-    <div class="dx-branch">MRI / CSF RESULTS</div>
-    <div class="dx-arrow">↓</div>
-
-    <div class="dx-connector">
-      <div class="dx-col">
-        <div style="background:#E8713A;color:#fff;border-radius:10px;padding:8px;text-align:center;width:100%;font-weight:600;font-size:10px;">ABNORMAL → STRUCTURAL</div>
-        <div class="dx-arrow">↓</div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">Extra-axial mass → <strong>Meningioma</strong></div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">Intra-axial mass → <strong>Glioma</strong></div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">↑ CSF TNCC + protein → <strong>MUA / encephalitis</strong><br>→ infectious serology + PCR on CSF</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">Vascular territory lesion → <strong>CVA</strong></div>
-      </div>
-      <div class="dx-col">
-        <div class="dx-test" style="width:100%;text-align:center;font-weight:600;font-size:10px;">NORMAL → IDIOPATHIC</div>
-        <div class="dx-arrow">↓</div>
-        <div class="dx-note" style="width:100%;font-size:9px;"><strong>Diagnosis of exclusion:</strong><br>Normal MRI + normal CSF + normal metabolic database + onset 6mo–6yr<br>= <strong>Idiopathic epilepsy</strong></div>
-        <div class="dx-arrow">↓</div>
-        <div class="dx-note" style="width:100%;font-size:9px;"><strong>Optional:</strong> Breed-specific genetic testing if available (DIRAS1, LGI2)</div>
-      </div>
-    </div>
-
-  </div>
-  <div class="dx-alert" style="margin-top:10px;"><strong>⚠️ SE &gt;5min:</strong> Diazepam 0.5–2mg/kg IV → Phenobarbital 2–6mg/kg IV → Propofol CRI</div>
-  <div class="dx-note" style="margin-top:6px;">💡 <strong>When to image:</strong> First seizure &lt;6mo or &gt;6yr, abnormal interictal exam, cluster/status, refractory to first AED, focal onset, progressive.</div>
-  <div class="disclaimer">For qualified veterinary professionals only.</div>
-  `);
+function renderDxSeizures(){ renderDxSeizuresHistory(); }
+function renderDxSeizuresHistory(){
+  replace(renderDxSeizuresHistory,'History: Seizures');
+  render(seizureDxHistoryHtml);
+}
+function renderDxSeizuresExam(){
+  replace(renderDxSeizuresExam,'Exam: Seizures');
+  render(seizureDxExamHtml);
+}
+function renderDxSeizuresDx(){
+  replace(renderDxSeizuresDx,'Dx: Seizures — Diagnostics');
+  render(seizureDxDxHtml);
 }
 
 // ── DIAGNOSTIC APPROACH: MYELOPATHY ──────────────────────────────────────────
@@ -6225,7 +6295,7 @@ function renderDxBleedingDx(){
 
 // ── BLEEDING — clinical flowchart sub-branches ─────────────────────────────
 function renderBleedingFlowPrimary(){
-  replace(renderBleedingFlowPrimary,'Bleeding — Primary Haemostasis');
+  push(renderBleedingFlowPrimary,'Bleeding — Primary Haemostasis');
   render(`
   <div class="flow-wrap">
 
@@ -6323,7 +6393,7 @@ function renderBleedingFlowPrimary(){
 }
 
 function renderBleedingFlowSecondary(){
-  replace(renderBleedingFlowSecondary,'Bleeding — Secondary Haemostasis');
+  push(renderBleedingFlowSecondary,'Bleeding — Secondary Haemostasis');
   render(`
   <div class="flow-wrap">
 
@@ -6401,7 +6471,7 @@ function renderBleedingFlowSecondary(){
 }
 
 function renderBleedingFlowDIC(){
-  replace(renderBleedingFlowDIC,'Bleeding — Mixed / DIC');
+  push(renderBleedingFlowDIC,'Bleeding — Mixed / DIC');
   render(`
   <div class="flow-wrap">
 
@@ -6499,7 +6569,7 @@ function renderBleedingFlowDIC(){
 }
 
 function renderBleedingFlowVasc(){
-  replace(renderBleedingFlowVasc,'Bleeding — Vasculopathy');
+  push(renderBleedingFlowVasc,'Bleeding — Vasculopathy');
   const chip=(label,fn)=>fn
     ? `<div onclick="${fn}" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">${label}</div>`
     : `<div style="background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.2);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;opacity:.7;text-align:center;">${label}</div>`;
@@ -6585,13 +6655,13 @@ function renderHaematuriaFlow(){
 
 // ── HAEMATURIA — clinical flowchart sub-branches ───────────────────────────
 function renderHaematuriaFlowPseudo(){
-  replace(renderHaematuriaFlowPseudo,'Haematuria — Pseudo-haematuria');
+  push(renderHaematuriaFlowPseudo,'Haematuria — Pseudo-haematuria');
   const CAT={
     Hb:{bg:'rgba(220,38,38,0.15)',border:'rgba(220,38,38,0.4)',col:'#FCA5A5',lbl:'Haemoglobinuria'},
     Mb:{bg:'rgba(249,115,22,0.15)',border:'rgba(249,115,22,0.4)',col:'#FB923C',lbl:'Myoglobinuria'},
     Pg:{bg:'rgba(20,184,166,0.15)',border:'rgba(20,184,166,0.4)',col:'#5EEAD4',lbl:'Pigmenturia'},
   };
-  const col=(k,chips)=>{const s=CAT[k];const chipHtml=chips.map(label=>`<div style="background:${s.bg};border:1.5px solid ${s.border};border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:${s.col};text-align:center;line-height:1.35;">${label}</div>`).join('');return `<div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:${s.bg};border:1.5px solid ${s.border};border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:${s.col};text-align:center;line-height:1.3;">${s.lbl}</div><div style="color:${s.col};text-align:center;font-size:11px;line-height:1;">↓</div>${chipHtml}</div>`;};
+  const col=(k,chips)=>{const s=CAT[k];const chipHtml=chips.map(c=>{const label=typeof c==='string'?c:c.label;const fn=typeof c==='object'&&c.fn?c.fn:null;return `<div style="background:${s.bg};border:1.5px solid ${s.border};border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:${s.col};text-align:center;line-height:1.35;${fn?'cursor:pointer;':''}" ${fn?`onclick="${fn}"`:''}>${label}</div>`;}).join('');return `<div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:${s.bg};border:1.5px solid ${s.border};border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:${s.col};text-align:center;line-height:1.3;">${s.lbl}</div><div style="color:${s.col};text-align:center;font-size:11px;line-height:1;">↓</div>${chipHtml}</div>`;};
   render(`
   <div class="flow-wrap">
 
@@ -6605,8 +6675,8 @@ function renderHaematuriaFlowPseudo(){
     <div class="flow-arrow-v">↓</div>
 
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;">
-      ${col('Hb',['IMHA','Babesia','Zinc toxicity','Allium (onion / garlic)','Severe thermal injury'])}
-      ${col('Mb',['Trauma','Heatstroke','Envenomation','Exertional myopathy'])}
+      ${col('Hb',[{label:'IMHA',fn:"renderDiseasePage('DIS-BD-IMHA')"},{label:'Babesia',fn:"renderDiseasePage('DIS-BD-BABS')"},{label:'Zinc toxicity',fn:"renderDiseasePage('DIS-TOX-ZN')"},{label:'Allium (onion / garlic)',fn:"renderDiseasePage('DIS-TOX-ALLIUM')"},{label:'Severe thermal injury',fn:"renderDiseasePage('DIS-ENV-BURN')"}])}
+      ${col('Mb',[{label:'Rhabdomyolysis — trauma',fn:"renderDiseasePage('DIS-MUSC-RHAB')"},{label:'Heatstroke',fn:"renderDiseasePage('DIS-ENV-HEAT')"},{label:'Envenomation → rhabdomyolysis',fn:"renderDiseasePage('DIS-MUSC-RHAB')"},{label:'Exertional myopathy',fn:"renderDiseasePage('DIS-MUSC-RHAB')"}])}
       ${col('Pg',['Dietary (beetroot · food dye)','Drugs (rifampin · phenazopyridine)'])}
     </div>
 
@@ -6627,7 +6697,7 @@ function renderHaematuriaFlowPseudo(){
 }
 
 function renderHaematuriaFlowTrueSystemic(){
-  replace(renderHaematuriaFlowTrueSystemic,'Haematuria — Systemic Cause');
+  push(renderHaematuriaFlowTrueSystemic,'Haematuria — Systemic Cause');
   render(`
   <div class="flow-wrap">
 
@@ -6690,7 +6760,7 @@ function renderHaematuriaFlowTrueSystemic(){
 }
 
 function renderHaematuriaFlowInitial(){
-  replace(renderHaematuriaFlowInitial,'Haematuria — Initial Stream');
+  push(renderHaematuriaFlowInitial,'Haematuria — Initial Stream');
   render(`
   <div class="flow-wrap">
 
@@ -6765,7 +6835,7 @@ function renderHaematuriaFlowInitial(){
 }
 
 function renderHaematuriaFlowTerminal(){
-  replace(renderHaematuriaFlowTerminal,'Haematuria — Terminal Stream');
+  push(renderHaematuriaFlowTerminal,'Haematuria — Terminal Stream');
   render(`
   <div class="flow-wrap">
 
@@ -6827,7 +6897,7 @@ function renderHaematuriaFlowTerminal(){
 }
 
 function renderHaematuriaFlowUniform(){
-  replace(renderHaematuriaFlowUniform,'Haematuria — Throughout Stream');
+  push(renderHaematuriaFlowUniform,'Haematuria — Throughout Stream');
   render(`
   <div class="flow-wrap">
 
@@ -6903,7 +6973,7 @@ function renderHaematuriaFlowUniform(){
 }
 
 function renderHaematuriaFlowIndep(){
-  replace(renderHaematuriaFlowIndep,'Haematuria — Between Voids');
+  push(renderHaematuriaFlowIndep,'Haematuria — Between Voids');
   render(`
   <div class="flow-wrap">
 
@@ -7178,6 +7248,9 @@ export function mountGlobals() {
   w.renderDxPUPDExam = renderDxPUPDExam;
   w.renderDxPUPDDesmopressin = renderDxPUPDDesmopressin;
   w.renderDxSeizures = renderDxSeizures;
+  w.renderDxSeizuresHistory = renderDxSeizuresHistory;
+  w.renderDxSeizuresExam = renderDxSeizuresExam;
+  w.renderDxSeizuresDx = renderDxSeizuresDx;
   w.renderDxMyelopathy = renderDxMyelopathy;
   w.renderDxVestibular = renderDxVestibular;
   w.renderDxEncephalopathy = renderDxEncephalopathy;
