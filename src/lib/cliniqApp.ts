@@ -2099,8 +2099,6 @@ function renderJaundiceFlow(){
         <div class="flow-endpoint pleural" onclick="renderJaundiceFlowPreHep()" style="width:100%;font-size:10px;cursor:pointer;">
           Haemolytic causes →
         </div>
-        <div class="flow-arrow-v">↓</div>
-        <div class="flow-node sub-step" style="width:100%;font-size:9px;">Regenerative? (reticulocytes)<br>Blood smear (spherocytes, Babesia)<br>Coombs test</div>
       </div>
 
       <!-- Hepatic / post-hepatic branch -->
@@ -2127,7 +2125,7 @@ function renderJaundiceFlow(){
     </div>
 
     <div style="margin-top:10px;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:9px 12px;font-size:10px;color:var(--gray);width:100%;">
-      <b style="color:var(--white);">Key point (Maddison):</b> Bilirubinuria in <b>cats is ALWAYS pathological</b>. Pre-hepatic jaundice ALWAYS has significant anaemia. Distinguish hepatic from post-hepatic using abdominal ultrasound (bile duct dilation).
+      <b style="color:var(--white);">Key point:</b> Bilirubinuria in <b>cats is ALWAYS pathological</b>. Pre-hepatic jaundice ALWAYS has significant anaemia. Distinguish hepatic from post-hepatic using abdominal ultrasound (bile duct dilation).
     </div>
   </div>
   `);
