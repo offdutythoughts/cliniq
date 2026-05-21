@@ -3190,10 +3190,6 @@ function renderMyelopathyCervical(){
         🟣 Neoplasia
         <div class="fn-sub" style="font-weight:400;font-size:9px;margin-top:3px;">Meningioma · nerve sheath tumour<br>Vertebral tumour · metastasis</div>
       </div>
-      <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-MY-CERV','Cervical')">
-        🟠 Degenerative
-        <div class="fn-sub" style="font-weight:400;font-size:9px;margin-top:3px;">Degenerative myelopathy (GSD, Labrador)<br>Progressive, symmetric, non-painful</div>
-      </div>
     </div>
   </div>
   <div class="disclaimer">For qualified veterinary professionals only.</div>
