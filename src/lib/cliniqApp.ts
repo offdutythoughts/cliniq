@@ -3212,48 +3212,10 @@ function renderMyelopathyCervicalCompressive(){
     </div>
     <div class="flow-arrow-v">↓</div>
 
-    <div style="display:flex;flex-direction:column;gap:6px;width:100%;">
-      <div class="card" style="cursor:pointer;" onclick="renderDiseasePage('DIS-IVDD')">
-        <div class="card-row">
-          <div style="flex:1">
-            <div class="card-title">Intervertebral Disc Disease (IVDD)</div>
-            <div class="card-sub" style="margin-top:3px;">Dog + Cat · Any cervical level · Hansen Type I &amp; II</div>
-            <div style="font-size:10px;color:var(--gray2);margin-top:3px;line-height:1.5;">
-              Type I: chondrodystrophic breeds (Dachshund, French Bulldog), acute extrusion, 3–8yr<br>
-              Type II: large breeds (GSD, Doberman), chronic protrusion, &gt;7yr
-            </div>
-          </div>
-          <div class="card-arrow">›</div>
-        </div>
-      </div>
-
-      <div class="card" style="cursor:pointer;" onclick="renderDiseasePage('DIS-AA')">
-        <div class="card-row">
-          <div style="flex:1">
-            <div class="card-title">Atlantoaxial Instability (AA)</div>
-            <div class="card-sub" style="margin-top:3px;">Dog · C1–C2 · Young toy breeds</div>
-            <div style="font-size:10px;color:var(--gray2);margin-top:3px;line-height:1.5;">
-              Chihuahua, Yorkshire Terrier, Pomeranian · congenital dens aplasia / ligament laxity<br>
-              Neck pain ± tetraparesis · trauma risk
-            </div>
-          </div>
-          <div class="card-arrow">›</div>
-        </div>
-      </div>
-
-      <div class="card" style="cursor:pointer;" onclick="renderDiseasePage('DIS-CCSM')">
-        <div class="card-row">
-          <div style="flex:1">
-            <div class="card-title">Caudal Cervical Spondylomyelopathy (CCSM)</div>
-            <div class="card-sub" style="margin-top:3px;">Dog · C4–C7 · Large &amp; giant breeds</div>
-            <div style="font-size:10px;color:var(--gray2);margin-top:3px;line-height:1.5;">
-              Wobbler syndrome · Doberman (disc-associated) · Great Dane (osseous)<br>
-              Chronic progressive ataxia · hindlimbs worse than forelimbs
-            </div>
-          </div>
-          <div class="card-arrow">›</div>
-        </div>
-      </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
+      <div class="flow-node insp" style="cursor:pointer;font-size:11px;font-weight:700;text-align:center;" onclick="renderDiseasePage('DIS-IVDD')">IVDD<div class="fn-sub" style="font-size:9px;margin-top:2px;">›</div></div>
+      <div class="flow-node insp" style="cursor:pointer;font-size:11px;font-weight:700;text-align:center;" onclick="renderDiseasePage('DIS-AA')">AA<div class="fn-sub" style="font-size:9px;margin-top:2px;">›</div></div>
+      <div class="flow-node insp" style="cursor:pointer;font-size:11px;font-weight:700;text-align:center;" onclick="renderDiseasePage('DIS-CCSM')">CCSM<div class="fn-sub" style="font-size:9px;margin-top:2px;">›</div></div>
     </div>
 
     <div style="margin-top:10px;padding:9px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
