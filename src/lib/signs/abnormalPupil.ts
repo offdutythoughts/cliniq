@@ -94,30 +94,35 @@ export const abnormalPupilOphthalmicHtml = `
 </div>
 `;
 
-// ── Neurological branch ────────────────────────────────────────────────────
+// ── Neurological branch — top split ──────────────────────────────────────
 export const abnormalPupilNeuroBranchHtml = `
-<div class="fn fn-mixed">🧠 NEUROLOGICAL CAUSES</div>
-<div class="fn-arrow">↓</div>
-<div class="fn fn-step">MIOSIS or MYDRIASIS?</div>
-<div class="fn-arrow">↓</div>
-<div class="fn-row">
-  <div class="fn-ep fn-ep-larynx" onclick="goLesionTab('LOC-AP-MIOSIS','Miosis')">
-    <div class="ep-sys">Constricted pupil — efferent sympathetic block or parasympathetic stimulation</div>
-    <div class="ep-loc">Miosis (uveitis · Horner's)</div>
+<div class="flow-wrap">
+
+  <div class="flow-node entry" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.4);color:#C4B5FD;">🧠 NEUROLOGICAL ANISOCORIA</div>
+  <div class="flow-node step" style="margin-top:6px;font-size:10.5px;">Identify the ABNORMAL pupil
+    <div class="fn-sub" style="font-weight:400;margin-top:3px;">Bright light: large pupil = abnormal · Dim light: small pupil = abnormal</div>
   </div>
-  <div class="fn-ep fn-ep-nasal" onclick="goLesionTab('LOC-AP-MYDR','Mydriasis')">
-    <div class="ep-sys">Dilated pupil — efferent CN III block or sympathetic discharge</div>
-    <div class="ep-loc">Mydriasis (glaucoma · dysautonomia · fear · cortical)</div>
+  <div class="flow-arrow-v">↓</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+    <div class="flow-node" style="background:rgba(139,92,246,0.12);border-color:rgba(139,92,246,0.4);color:#DDD6FE;font-size:11px;font-weight:700;text-align:center;cursor:pointer;" onclick="renderAnisocoriaMydriasis()">
+      MYDRIASIS<br><span style="font-size:9px;font-weight:400;opacity:.75;">Large pupil<br>PS deficit</span><br><span style="font-size:9px;color:#A78BFA;margin-top:4px;display:block;">Tap to localise ›</span>
+    </div>
+    <div class="flow-node" style="background:rgba(37,99,235,0.12);border-color:rgba(37,99,235,0.4);color:#BFDBFE;font-size:11px;font-weight:700;text-align:center;cursor:pointer;" onclick="renderAnisocoriaHorners()">
+      MIOSIS<br><span style="font-size:9px;font-weight:400;opacity:.75;">Horner's syndrome<br>Sympathetic deficit</span><br><span style="font-size:9px;color:#60A5FA;margin-top:4px;display:block;">Tap to localise ›</span>
+    </div>
   </div>
-</div>
-<div class="fn-row">
-  <div class="fn-ep fn-ep-pleural" onclick="goLesionTab('LOC-AP-NEURO','PLR pathway lesions')">
-    <div class="ep-sys">Localisation table — pre-chiasmal · optic tract · chiasm · CN III · CN III parasymp nucleus</div>
-    <div class="ep-loc">PLR / Visual pathway lesions</div>
+
+  <div style="margin-top:10px;padding:9px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:10px;width:100%;">
+    <div style="font-size:10px;font-weight:700;color:#FCD34D;margin-bottom:4px;">💡 PEARLS</div>
+    <div style="font-size:9.5px;line-height:1.6;color:#FDE68A;">
+      • Anisocoria + altered mentation = <strong>emergency</strong> — assume herniation until proven otherwise<br>
+      • <strong>Absent direct PLR, consensual intact</strong> = pre-chiasmal (retina/optic nerve) — NOT CN III<br>
+      • CN III peripheral: mydriasis <em>without</em> ptosis or lateral strabismus = parasympathetic fibres only<br>
+      • Horner's: always exclude uveitis first (aqueous flare + IOP) before labelling as sympathetic denervation
+    </div>
   </div>
-</div>
-<div style="margin-top:10px;padding:9px 12px;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.25);border-radius:10px;font-size:10px;line-height:1.55;color:#C4B5FD;width:100%;">
-  💡 <strong>Horner's syndrome</strong> = miosis + ptosis + enophthalmos + 3rd eyelid protrusion. <strong>Always exclude uveitis first</strong> by checking for aqueous flare, episcleral injection, and IOP — miosis from uveitis is treated very differently.
+
 </div>
 `;
 
