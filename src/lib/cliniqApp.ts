@@ -301,7 +301,12 @@ const DB = {
     {id:'LES-MY-FCE',loc:'LOC-MY-TL',loc_name:'Thoracolumbar',sp:'Dog + Cat',cat:'Vascular',sub:'FCE',urg:'High',signs:'Peracute. No pain.',proto:'',filter:'DIFF-MY-TL',note:''},
     {id:'LES-MY-ANNPE',loc:'LOC-MY-TL',loc_name:'Thoracolumbar',sp:'Dog + Cat',cat:'Non-compressive',sub:'ANNPE',urg:'High',signs:'Peracute.',proto:'',filter:'DIFF-MY-TL',note:''},
     {id:'LES-MY-FX',loc:'LOC-MY-TL',loc_name:'Thoracolumbar',sp:'Dog + Cat',cat:'Traumatic',sub:'Fracture/luxation',urg:'EMERGENCY',signs:'Trauma.',proto:'',filter:'DIFF-MY-FX',note:''},
-    {id:'LES-MY-CERV',loc:'LOC-MY-CERV',loc_name:'Cervical',sp:'Dog',cat:'Compressive',sub:'Cervical IVDD/AA/CCSM',urg:'High',signs:'Tetraparesis.',proto:'',filter:'DIFF-MY-CERV',note:''},
+    {id:'LES-MY-CERV-IVDD',loc:'LOC-MY-CERV',loc_name:'Cervical',sp:'Dog + Cat',cat:'Compressive',sub:'IVDD',urg:'EMERGENCY',signs:'Neck pain. ± Tetraparesis. Chondrodystrophic (Type I) or large breed (Type II).',proto:'',filter:'DIFF-MY-CERV',note:'',dis:'DIS-IVDD',directDis:true},
+    {id:'LES-MY-CERV-AA',loc:'LOC-MY-CERV',loc_name:'Cervical',sp:'Dog',cat:'Compressive',sub:'AA instability',urg:'EMERGENCY',signs:'Young toy breed. Neck pain ± tetraparesis. ⚠️ Do not flex neck.',proto:'',filter:'DIFF-MY-CERV',note:'',dis:'DIS-AA',directDis:true},
+    {id:'LES-MY-CERV-CCSM',loc:'LOC-MY-CERV',loc_name:'Cervical',sp:'Dog',cat:'Compressive',sub:'CCSM (Wobbler)',urg:'High',signs:'Large/giant breed. Chronic progressive. Hindlimbs worse than forelimbs.',proto:'',filter:'DIFF-MY-CERV',note:'',dis:'DIS-CCSM',directDis:true},
+    {id:'LES-MY-CERV-FCE',loc:'LOC-MY-CERV',loc_name:'Cervical',sp:'Dog + Cat',cat:'Vascular',sub:'FCE',urg:'High',signs:'Peracute. Asymmetric. No pain. Non-progressive after 24h.',proto:'',filter:'DIFF-MY-CERV',note:''},
+    {id:'LES-MY-CERV-INFLAM',loc:'LOC-MY-CERV',loc_name:'Cervical',sp:'Dog + Cat',cat:'Inflammatory',sub:'GME / SRMA / Discospondylitis',urg:'High',signs:'Fever. Neck pain. ± Progressive signs. Young dogs with SRMA.',proto:'',filter:'DIFF-MY-CERV',note:''},
+    {id:'LES-MY-CERV-NEO',loc:'LOC-MY-CERV',loc_name:'Cervical',sp:'Dog + Cat',cat:'Neoplasia',sub:'Meningioma / NST',urg:'Moderate',signs:'Older dog. Slowly progressive. Meningioma common at cervical level.',proto:'',filter:'DIFF-MY-CERV',note:''},
     {id:'LES-VE-PERIPH',loc:'LOC-VE-PERIPH',loc_name:'Peripheral vestibular',sp:'Dog + Cat',cat:'Peripheral',sub:'Peripheral vestibular',urg:'Moderate',signs:'Head tilt. Horizontal nystagmus.',proto:'',filter:'DIFF-VE-PERIPH',note:''},
     {id:'LES-VE-CENTRAL',loc:'LOC-VE-CENTRAL',loc_name:'Central vestibular',sp:'Dog + Cat',cat:'Central',sub:'Central vestibular',urg:'High',signs:'Proprioceptive deficits.',proto:'',filter:'DIFF-VE-CENTRAL',note:''},
     {id:'LES-VE-BILAT',loc:'LOC-VE-BILAT',loc_name:'Bilateral vestibular',sp:'Dog + Cat',cat:'Bilateral',sub:'Bilateral vestibular',urg:'High',signs:'NO head tilt. NO nystagmus.',proto:'',filter:'DIFF-VE-BILAT',note:''},
@@ -3151,7 +3156,7 @@ function renderMyelopathyFlow(){
     <div class="flow-node step" style="font-size:11px;">NAVIGATE TO LESION DATABASE</div>
     <div class="flow-arrow-v">↓</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
-      <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="renderMyelopathyCervical()">Cervical (C1–T2)<div class="fn-sub">Tetraparesis</div></div>
+      <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-MY-CERV','Cervical')">Cervical (C1–T2)<div class="fn-sub">Tetraparesis</div></div>
       <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-MY-TL','Thoracolumbar')">Thoracolumbar (T3–S3)<div class="fn-sub">Paraparesis</div></div>
     </div>
 
@@ -3159,75 +3164,6 @@ function renderMyelopathyFlow(){
   <div class="disclaimer">For qualified veterinary professionals only.</div>
   `);
 }
-function renderMyelopathyCervical(){
-  push(renderMyelopathyCervical,'Cervical Myelopathy');
-  render(`
-  <div class="flow-wrap">
-    <div class="flow-node entry">🦴 CERVICAL MYELOPATHY — LESION CATEGORY</div>
-    <div class="flow-arrow-v">↓</div>
-    <div class="flow-node step" style="font-size:10.5px;text-align:left;line-height:1.7;">
-      Signs: <strong>tetraparesis</strong> (all 4 limbs) · cervical pain / low head carriage · ± Horner's
-      <div class="fn-sub" style="font-weight:400;margin-top:2px;">C1–C5: UMN all 4 limbs · C6–T2: LMN forelimbs + UMN hindlimbs</div>
-    </div>
-    <div class="flow-arrow-v">↓</div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
-      <div class="flow-node insp" style="cursor:pointer;font-size:11px;grid-column:1/-1;" onclick="renderMyelopathyCervicalCompressive()">
-        🔵 Compressive
-        <div class="fn-sub" style="font-weight:400;font-size:9.5px;margin-top:3px;">IVDD · Atlantoaxial instability · Wobbler (CCSM)<br>Acute or chronic progressive · often responds to surgery</div>
-        <div style="font-size:10px;color:var(--teal-light);margin-top:4px;">Tap to see diseases ›</div>
-      </div>
-
-      <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-MY-CERV','Cervical')">
-        🟡 Vascular / FCE
-        <div class="fn-sub" style="font-weight:400;font-size:9px;margin-top:3px;">Fibrocartilaginous embolism<br>Acute, non-progressive, asymmetric, minimal pain</div>
-      </div>
-      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-MY-CERV','Cervical')">
-        🔴 Inflammatory / Infectious
-        <div class="fn-sub" style="font-weight:400;font-size:9px;margin-top:3px;">GME · Discospondylitis<br>Steroid-responsive meningitis-arteritis</div>
-      </div>
-      <div class="flow-node exp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-MY-CERV','Cervical')">
-        🟣 Neoplasia
-        <div class="fn-sub" style="font-weight:400;font-size:9px;margin-top:3px;">Meningioma · nerve sheath tumour<br>Vertebral tumour · metastasis</div>
-      </div>
-    </div>
-  </div>
-  <div class="disclaimer">For qualified veterinary professionals only.</div>
-  `);
-}
-
-function renderMyelopathyCervicalCompressive(){
-  push(renderMyelopathyCervicalCompressive,'Cervical — Compressive');
-  render(`
-  <div class="flow-wrap">
-    <div class="flow-node entry">🔵 CERVICAL COMPRESSIVE MYELOPATHY</div>
-    <div class="flow-arrow-v">↓</div>
-    <div class="flow-node step" style="font-size:10.5px;text-align:left;line-height:1.6;">
-      Key features: cervical pain · ± tetraparesis · UMN or LMN forelimb signs based on level<br>
-      <span style="font-size:9.5px;color:var(--gray2);">Image first (MRI or CT myelogram) to confirm diagnosis, level, and guide surgery</span>
-    </div>
-    <div class="flow-arrow-v">↓</div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
-      <div class="flow-node insp" style="cursor:pointer;font-size:11px;font-weight:700;text-align:center;" onclick="renderDiseasePage('DIS-IVDD')">IVDD<div class="fn-sub" style="font-size:9px;margin-top:2px;">›</div></div>
-      <div class="flow-node insp" style="cursor:pointer;font-size:11px;font-weight:700;text-align:center;" onclick="renderDiseasePage('DIS-AA')">AA<div class="fn-sub" style="font-size:9px;margin-top:2px;">›</div></div>
-      <div class="flow-node insp" style="cursor:pointer;font-size:11px;font-weight:700;text-align:center;" onclick="renderDiseasePage('DIS-CCSM')">CCSM<div class="fn-sub" style="font-size:9px;margin-top:2px;">›</div></div>
-    </div>
-
-    <div style="margin-top:10px;padding:9px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
-      <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:4px;">📋 General approach — cervical compressive myelopathy</div>
-      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
-        1. Neurological grade → MRI or CT myelogram to confirm site and extent of compression<br>
-        2. Grades I–II: conservative (strict rest, NSAIDs, gabapentin)<br>
-        3. Grades III–V or pain refractory to medical management: surgical decompression<br>
-        4. Post-op: bladder management · physiotherapy · hydrotherapy
-      </div>
-    </div>
-  </div>
-  <div class="disclaimer">For qualified veterinary professionals only.</div>
-  `);
-}
-
 function renderVestibularFlow(){
   push(renderVestibularFlow,'Vestibular');
   render(`
@@ -7299,8 +7235,6 @@ export function mountGlobals() {
   w.goLesionTab = goLesionTab;
   w.renderSeizureFlow = renderSeizureFlow;
   w.renderMyelopathyFlow = renderMyelopathyFlow;
-  w.renderMyelopathyCervical = renderMyelopathyCervical;
-  w.renderMyelopathyCervicalCompressive = renderMyelopathyCervicalCompressive;
   w.renderVestibularFlow = renderVestibularFlow;
   w.renderVestibularFlowPeriph = renderVestibularFlowPeriph;
   w.renderVestibularFlowCentral = renderVestibularFlowCentral;
