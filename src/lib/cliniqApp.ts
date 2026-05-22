@@ -3334,73 +3334,45 @@ function renderMyelopathyFlow(){
     </table>
     </div>
 
-    <!-- Neurological localisation table: Cervical / TL -->
-    <div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Neurological Localisation — Cervical &amp; Thoracolumbar</div>
+    <!-- Neurological localisation table: all 5 regions -->
+    <div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Neurological Localisation</div>
     <div style="overflow-x:auto;width:100%;">
-    <table style="width:100%;border-collapse:collapse;font-size:9px;">
+    <table style="border-collapse:collapse;font-size:8.5px;min-width:560px;">
       <thead>
         <tr>
-          <th style="padding:7px 6px;font-size:9px;font-weight:700;color:var(--gray);border-bottom:2px solid rgba(148,163,184,0.3);text-align:left;">Examination finding</th>
+          <th style="padding:6px 5px;font-size:8.5px;font-weight:700;color:var(--gray);border-bottom:2px solid rgba(148,163,184,0.3);text-align:left;min-width:90px;">Finding</th>
           ${th('C1–C5',C1)}
           ${th('C6–T2',C6)}
           ${th('T3–L3',T3)}
-        </tr>
-      </thead>
-      <tbody>
-        <tr><td colspan="4" style="padding:5px 6px 2px;font-size:8.5px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.08);">General &amp; Gait</td></tr>
-        ${tr('Mentation',td('Normal',C1),td('Normal',C6),td('Normal',T3))}
-        ${tr('Pain on palpation',td('Cervical pain · low head carriage · stiff neck',C1),td('Caudal cervical / thoracic inlet pain',C6),td('Thoracolumbar pain · kyphosis · reluctance to jump',T3))}
-        ${tr('Gait pattern',td('Tetraparesis (all 4 limbs)',C1),td('Tetraparesis (FL worse)',C6),td('Paraparesis (HL only; FL normal)',T3))}
-
-        <tr><td colspan="4" style="padding:5px 6px 2px;font-size:8.5px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.08);">Postural Reactions (Conscious Proprioception)</td></tr>
-        ${tr('Forelimb CP',td('Deficient (knuckling / scuffing)',C1),td('Deficient',C6),N())}
-        ${tr('Hindlimb CP',td('Deficient',C1),td('Deficient',C6),td('Deficient',T3))}
-
-        <tr><td colspan="4" style="padding:5px 6px 2px;font-size:8.5px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.08);">Muscle Tone</td></tr>
-        ${tr('Forelimb tone',td('UMN — spastic / ↑ tone',C1),td('LMN — flaccid · atrophy · ↓ tone',C6),N())}
-        ${tr('Hindlimb tone',td('UMN — spastic / ↑ tone',C1),td('UMN — spastic / ↑ tone',C6),td('UMN — spastic / ↑ tone',T3))}
-
-        <tr><td colspan="4" style="padding:5px 6px 2px;font-size:8.5px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.08);">Spinal Reflexes</td></tr>
-        ${tr('Biceps reflex (C6–C8)',UP(C1),DOWN(C6),N())}
-        ${tr('Triceps reflex (C7–T1)',UP(C1),DOWN(C6),N())}
-        ${tr('FL withdrawal (C6–T1)',UP(C1),DOWN(C6),N())}
-        ${tr('Patellar reflex (L3–L4)',UP(C1),UP(C6),UP(T3))}
-        ${tr('HL withdrawal (L5–S2)',UP(C1),UP(C6),UP(T3))}
-        ${tr('Perineal / anal (S1–S3)',N(C1),N(C6),N(T3))}
-
-        <tr><td colspan="4" style="padding:5px 6px 2px;font-size:8.5px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.08);">Special Tests</td></tr>
-        ${tr('Cutaneous trunci reflex',td('Present bilaterally',C1),td('Absent / ↓ if C8–T1 LMN affected',C6),td('Absent caudal to lesion (cutoff sign ≈ 1–2 segments caudal)',T3))}
-        ${tr("Horner's syndrome",N(C1),td('Present (T1–T3 preganglionic sympathetics)',C6),N(T3))}
-        ${tr('Schiff-Sherrington',N(C1),N(C6),td('May be present — FL extension with HL paralysis; indicates severe lesion',T3))}
-        ${tr('Bladder function',td('UMN — spastic · large · difficult to express',C1),td('UMN — spastic',C6),td('UMN — spastic · reflexic',T3))}
-      </tbody>
-    </table>
-    </div>
-
-    <!-- Lumbosacral localisation table: L4-S3 / S2-Ca5 -->
-    <div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-top:10px;margin-bottom:4px;">Neurological Localisation — Lumbosacral</div>
-    <div style="overflow-x:auto;width:100%;margin-bottom:8px;">
-    <table style="width:100%;border-collapse:collapse;font-size:9px;">
-      <thead>
-        <tr>
-          <th style="padding:7px 6px;font-size:9px;font-weight:700;color:var(--gray);border-bottom:2px solid rgba(148,163,184,0.3);text-align:left;">Examination finding</th>
           ${th('L4–S3','#C084FC')}
-          ${th('S2–Ca5 (conus)','#F472B6')}
+          ${th('S2–Ca5',`#F472B6`)}
         </tr>
       </thead>
       <tbody>
-        ${tr('Gait',td('Paraparesis / paraplegia (HL only)','#C084FC'),td('Paraparesis / paraplegia (HL + tail)','#F472B6'))}
-        ${tr('Forelimb CP',N(),N())}
-        ${tr('Hindlimb CP',td('Deficient','#C084FC'),td('Deficient','#F472B6'))}
-        ${tr('Forelimb tone',N(),N())}
-        ${tr('Hindlimb tone',td('<strong>LMN</strong> — flaccid · ↓ tone · atrophy','#C084FC'),td('<strong>LMN</strong> — flaccid · ↓ tone · atrophy','#F472B6'))}
-        ${tr('Patellar reflex (L3–L4)',td('↓ / Absent','#C084FC'),td('Normal','#F472B6'))}
-        ${tr('HL withdrawal (L5–S2)',td('↓ / Absent','#C084FC'),td('Absent','#F472B6'))}
-        ${tr('Perineal / anal (S1–S3)',td('↓ / Absent','#C084FC'),td('Absent','#F472B6'))}
-        ${tr('Cutaneous trunci',N(),N())}
-        ${tr('Bladder function',td('LMN — flaccid · easily expressed','#C084FC'),td('LMN — flaccid · easily expressed','#F472B6'))}
-        ${tr('Tail tone',td('May be reduced','#C084FC'),td('Flaccid','#F472B6'))}
-        ${tr('Pain on palpation',td('Lumbosacral / lumbar pain','#C084FC'),td('Lumbosacral / perineal pain','#F472B6'))}
+        <tr><td colspan="6" style="padding:4px 5px 2px;font-size:8px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.08);">General &amp; Gait</td></tr>
+        ${tr('Pain',td('Cervical<br>low head · stiff neck',C1),td('Caudal cervical /<br>thoracic inlet',C6),td('Thoracolumbar<br>kyphosis',T3),td('Lumbosacral<br>pain','#C084FC'),td('Lumbosacral /<br>perineal pain','#F472B6'))}
+        ${tr('Gait',td('Tetraparesis<br>(all 4 limbs)',C1),td('Tetraparesis<br>(FL worse)',C6),td('Paraparesis<br>(HL; FL normal)',T3),td('Paraparesis /<br>monoparesis (HL)','#C084FC'),td('Paraparesis<br>(HL + tail)','#F472B6'))}
+
+        <tr><td colspan="6" style="padding:4px 5px 2px;font-size:8px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.08);">CP &amp; Muscle Tone</td></tr>
+        ${tr('Forelimb CP',td('Deficient',C1),td('Deficient',C6),N(),N(),N())}
+        ${tr('Hindlimb CP',td('Deficient',C1),td('Deficient',C6),td('Deficient',T3),td('Deficient','#C084FC'),td('Deficient','#F472B6'))}
+        ${tr('FL tone',td('UMN<br>spastic / ↑',C1),td('LMN<br>flaccid · atrophy',C6),N(),N(),N())}
+        ${tr('HL tone',td('UMN<br>spastic / ↑',C1),td('UMN<br>spastic / ↑',C6),td('UMN<br>spastic / ↑',T3),td('LMN<br>flaccid / ↓','#C084FC'),td('LMN<br>flaccid / ↓','#F472B6'))}
+
+        <tr><td colspan="6" style="padding:4px 5px 2px;font-size:8px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.08);">Spinal Reflexes</td></tr>
+        ${tr('Biceps (C6–C8)',UP(C1),DOWN(C6),N(),N(),N())}
+        ${tr('Triceps (C7–T1)',UP(C1),DOWN(C6),N(),N(),N())}
+        ${tr('FL withdrawal',UP(C1),DOWN(C6),N(),N(),N())}
+        ${tr('Patellar (L3–L4)',UP(C1),UP(C6),UP(T3),DOWN('#C084FC'),N('#F472B6'))}
+        ${tr('HL withdrawal',UP(C1),UP(C6),UP(T3),DOWN('#C084FC'),td('Absent','#F472B6'))}
+        ${tr('Perineal / anal',N(C1),N(C6),N(T3),DOWN('#C084FC'),td('Absent','#F472B6'))}
+
+        <tr><td colspan="6" style="padding:4px 5px 2px;font-size:8px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.08);">Special Tests</td></tr>
+        ${tr('Cutaneous trunci',td('Present bilateral',C1),td('↓/absent if C8–T1',C6),td('Absent caudal<br>(cutoff ≈1–2 segs)',T3),N(),N())}
+        ${tr("Horner's",N(C1),td('Present<br>(T1–T3)',C6),N(T3),N(),N())}
+        ${tr('Schiff-Sherrington',N(C1),N(C6),td('± FL ext · HL<br>paralysis (severe)',T3),N(),N())}
+        ${tr('Bladder',td('UMN<br>spastic · large',C1),td('UMN<br>spastic',C6),td('UMN<br>spastic · reflexic',T3),td('LMN<br>flaccid · easy',`#C084FC`),td('LMN<br>flaccid · easy','#F472B6'))}
+        ${tr('Tail tone',N(C1),N(C6),N(T3),td('↓ reduced','#C084FC'),td('Flaccid','#F472B6'))}
       </tbody>
     </table>
     </div>
