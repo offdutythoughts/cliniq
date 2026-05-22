@@ -6963,37 +6963,129 @@ function renderAbnormalPupilNeuro(){
 // ── ANISOCORIA — neurological decision trees ───────────────────────────────
 function renderAnisocoriaMydriasis(){
   push(renderAnisocoriaMydriasis,'Mydriasis — Localisation');
-  const dec = (q:string) => `<div style="background:rgba(99,102,241,0.12);border:1.5px solid rgba(99,102,241,0.4);border-radius:10px;padding:9px 12px;width:100%;text-align:center;"><div style="font-size:8px;font-weight:700;color:#818CF8;letter-spacing:.07em;margin-bottom:2px;">◆ DECISION</div><div style="font-size:11px;font-weight:700;color:#C4B5FD;">${q}</div></div>`;
-  const br = (yes:string,no:string) => `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;margin-top:6px;">${yes}${no}</div>`;
-  const yes = (c:string) => `<div style="border-left:2.5px solid rgba(16,185,129,0.5);padding-left:8px;"><div style="font-size:9.5px;font-weight:700;color:#6EE7B7;margin-bottom:4px;">YES ↓</div>${c}</div>`;
-  const no  = (c:string) => `<div style="border-left:2.5px solid rgba(220,38,38,0.5);padding-left:8px;"><div style="font-size:9.5px;font-weight:700;color:#FCA5A5;margin-bottom:4px;">NO ↓</div>${c}</div>`;
-  const out = (bg:string,bd:string,body:string) => `<div style="background:${bg};border:1.5px solid ${bd};border-radius:9px;padding:8px 10px;font-size:9.5px;line-height:1.5;">${body}</div>`;
+
+  // ── Shared style helpers ──────────────────────────────────────────────────
+  const dec = (q:string, sub='') =>
+    `<div style="background:rgba(245,158,11,0.13);border:1.5px solid rgba(245,158,11,0.55);border-radius:10px;padding:9px 14px;width:100%;text-align:center;">
+       <div style="font-size:11.5px;font-weight:700;color:#FCD34D;line-height:1.4;">${q}</div>
+       ${sub ? `<div style="font-size:9px;color:#FDE68A;opacity:.8;margin-top:3px;">${sub}</div>` : ''}
+     </div>`;
+
+  // step: YES continues down (left label), NO exits (right outcome)
+  const stepY = (decHtml:string, noBox:string) =>
+    `${decHtml}
+     <div style="display:flex;gap:5px;width:100%;margin:4px 0 10px;">
+       <div style="width:28%;display:flex;flex-direction:column;align-items:center;padding-top:4px;">
+         <div style="font-size:9px;font-weight:700;color:#34D399;">YES</div>
+         <div style="font-size:18px;color:rgba(52,211,153,0.5);line-height:1.1;">↓</div>
+       </div>
+       <div style="flex:1;">
+         <div style="font-size:9px;font-weight:700;color:#F87171;margin-bottom:4px;">NO →</div>
+         ${noBox}
+       </div>
+     </div>`;
+
+  // step: NO continues down (left label), YES exits (right outcome)
+  const stepN = (decHtml:string, yesBox:string) =>
+    `${decHtml}
+     <div style="display:flex;gap:5px;width:100%;margin:4px 0 10px;">
+       <div style="width:28%;display:flex;flex-direction:column;align-items:center;padding-top:4px;">
+         <div style="font-size:9px;font-weight:700;color:#F87171;">NO</div>
+         <div style="font-size:18px;color:rgba(248,113,113,0.5);line-height:1.1;">↓</div>
+       </div>
+       <div style="flex:1;">
+         <div style="font-size:9px;font-weight:700;color:#34D399;margin-bottom:4px;">YES →</div>
+         ${yesBox}
+       </div>
+     </div>`;
+
+  // terminal step: both outcomes side-by-side
+  const stepBoth = (decHtml:string, noLabel:string, noBox:string, yesLabel:string, yesBox:string) =>
+    `${decHtml}
+     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;margin-top:4px;">
+       <div>
+         <div style="font-size:9px;font-weight:700;color:#F87171;margin-bottom:4px;">${noLabel}</div>
+         ${noBox}
+       </div>
+       <div>
+         <div style="font-size:9px;font-weight:700;color:#34D399;margin-bottom:4px;">${yesLabel}</div>
+         ${yesBox}
+       </div>
+     </div>`;
+
+  const outRed    = (b:string) => `<div style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.5);border-radius:9px;padding:9px 10px;font-size:9px;line-height:1.55;color:#FCA5A5;">${b}</div>`;
+  const outBlue   = (b:string) => `<div style="background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.45);border-radius:9px;padding:9px 10px;font-size:9px;line-height:1.55;color:#93C5FD;">${b}</div>`;
+  const outGrey   = (b:string) => `<div style="background:rgba(100,116,139,0.12);border:1.5px solid rgba(100,116,139,0.45);border-radius:9px;padding:9px 10px;font-size:9px;line-height:1.55;color:#CBD5E1;">${b}</div>`;
+  const outGreen  = (b:string) => `<div style="background:rgba(16,185,129,0.10);border:1.5px solid rgba(16,185,129,0.45);border-radius:9px;padding:9px 10px;font-size:9px;line-height:1.55;color:#6EE7B7;">${b}</div>`;
+  const outPurple = (b:string) => `<div style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.45);border-radius:9px;padding:9px 10px;font-size:9px;line-height:1.55;color:#DDD6FE;">${b}</div>`;
+
   render(`<div class="flow-wrap">
-    <div class="flow-node entry" style="background:rgba(139,92,246,0.15);border-color:rgba(139,92,246,0.4);color:#DDD6FE;">🔵 MYDRIASIS — Neurological Localisation</div>
-    <div class="flow-node step" style="margin-top:6px;font-size:10px;">Large pupil is abnormal (anisocoria less obvious in dim light)<br><span class="fn-sub" style="font-weight:400;">Exclude: iris atrophy (retroilluminate) · pharmacological (drug history) · fear/stress (re-examine calm)</span></div>
+    <div class="flow-node entry" style="background:rgba(139,92,246,0.15);border-color:rgba(139,92,246,0.4);color:#DDD6FE;">🔵 NEUROLOGICAL MYDRIASIS — Localisation</div>
+    <div class="flow-node step" style="margin-top:6px;font-size:9.5px;text-align:left;">
+      <strong>Exclude first:</strong> iris atrophy (retroilluminate) · pharmacological mydriasis (drug history) · fear/stress (re-examine calm)
+    </div>
     <div class="flow-arrow-v">↓</div>
-    ${dec('Normal mentation?')}
-    ${br(
-      yes(`<div class="flow-arrow-v" style="font-size:11px;">↓</div>
-        ${dec('Visual tracking present?<br><span style="font-size:9px;font-weight:400;color:#A5B4FC;">(menace + tracking + dazzle)</span>')}
-        ${br(
-          yes(`<div class="flow-arrow-v" style="font-size:11px;">↓</div>
-            ${dec('Direct PLR present?')}
-            ${br(
-              yes(out('rgba(37,99,235,0.09)','rgba(37,99,235,0.4)','<strong style="color:#93C5FD;">Not neurological / Cortical</strong><br>Physiological (±1mm) · Pharmacological · Iris atrophy<br>Cortical blindness (PLR intact, menace absent)<br><span style="opacity:.75;">→ Re-examine calm · drug history · consider MRI for cortical cause</span>')),
-              no(out('rgba(245,158,11,0.09)','rgba(245,158,11,0.4)','<strong style="color:#FCD34D;">CN III peripheral</strong><br>Parasympathetic fibres only (somatic intact)<br>Causes: orbital mass · retrobulbar · cavernous sinus · CN III NST<br><span style="opacity:.75;">→ MRI fat-sat + contrast orbit + cavernous sinus</span>'))
-            )}`),
-          no(out('rgba(16,185,129,0.09)','rgba(16,185,129,0.4)','<strong style="color:#6EE7B7;">Pre-chiasmal (Retina / Optic nerve)</strong><br>Amaurotic mydriasis: absent direct PLR, consensual intact<br>Causes: SARDS · PRA · optic neuritis · retinal detachment<br><span style="opacity:.75;">→ Chromatic PLR + ERG + fundoscopy + MRI optic nerve</span>'))
-        )}`),
-      no(out('rgba(220,38,38,0.1)','rgba(220,38,38,0.4)','<strong style="color:#F87171;">🚨 BRAINSTEM / CN III EMERGENCY</strong><br>Ipsilateral fixed dilated pupil + altered mentation<br>Causes: transtentorial herniation (↑ ICP) · brainstem neoplasia · severe head trauma<br>Watch: Cushing\'s reflex (bradycardia + hypertension + irregular breathing)<br><span style="opacity:.75;">→ Mannitol 0.5–1 g/kg IV over 15 min · urgent MRI · neurosurgical referral</span>'))
+
+    ${stepY(
+      dec('Normal mentation, posture & gait?',
+          'No altered consciousness · no hemiparesis · no vestibular or other CN deficits'),
+      outRed(`<strong>🚨 BRAINSTEM EMERGENCY</strong><br>
+        Fixed dilated pupil + altered mentation<br>
+        Transtentorial herniation (↑ ICP)<br>
+        Brainstem neoplasia · Head trauma<br>
+        ⚠️ Cushing's reflex: bradycardia + HTN + irregular breathing<br>
+        → Mannitol 0.5–1 g/kg IV over 15 min<br>
+        → Urgent MRI · neurosurgical referral`)
     )}
+
+    ${stepY(
+      dec('Visual tracking intact?',
+          'Menace response + cotton ball tracking + dazzle reflex — all three present'),
+      outBlue(`<strong>Pre-chiasmal — Afferent lesion</strong><br>
+        Retina or optic nerve (amaurotic mydriasis)<br>
+        Absent direct PLR · consensual (indirect) PLR intact<br>
+        SARDS · PRA · Optic neuritis · Retinal detachment<br>
+        → Chromatic PLR + ERG + fundoscopy<br>
+        → MRI optic nerve/chiasm if ERG inconclusive`)
+    )}
+
+    ${stepN(
+      dec('Direct PLR present in the mydriatic eye?'),
+      outGrey(`<strong>Not truly neurological / Cortical</strong><br>
+        Physiological anisocoria (±1 mm) · Pharmacological<br>
+        Iris atrophy (retroilluminate again!)<br>
+        Cortical blindness: absent menace, intact PLR + dazzle<br>
+        → Drug history · repeat exam<br>
+        → MRI forebrain if cortical cause suspected`)
+    )}
+
+    ${stepBoth(
+      dec('Ptosis or lateral strabismus present?',
+          'Somatic branch of CN III also affected?'),
+      'NO →',
+      outGreen(`<strong>CN III — Parasympathetic only</strong><br>
+        Somatic CN III intact; PS fibres compressed<br>
+        Orbital mass · retrobulbar disease<br>
+        Cavernous sinus lesion · CN III NST<br>
+        → MRI fat-sat + contrast:<br>
+        orbit + cavernous sinus`),
+      'YES →',
+      outPurple(`<strong>Full CN III Palsy</strong><br>
+        Mydriasis + ptosis + lateral strabismus<br>
+        Pituitary/hypothalamic mass<br>
+        Cavernous sinus syndrome<br>
+        Transtentorial herniation (↑ ICP)<br>
+        → MRI brain + post-contrast<br>
+        → Assess ICP`)
+    )}
+
     <div style="margin-top:10px;padding:9px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:10px;width:100%;">
       <div style="font-size:10px;font-weight:700;color:#FCD34D;margin-bottom:4px;">💡 PEARLS</div>
       <div style="font-size:9.5px;line-height:1.6;color:#FDE68A;">
-        • <strong>Absent direct PLR + consensual intact</strong> = pre-chiasmal lesion (retina/optic nerve) — NOT efferent CN III<br>
-        • <strong>CN III peripheral</strong>: mydriasis without ptosis or ophthalmoparesis = parasympathetic fibres only<br>
-        • <strong>Cortical blindness</strong>: absent menace + intact PLR + intact dazzle = forebrain — MRI essential<br>
-        • SARDS: PLR absent to red light, preserved to blue light (melanopsin RGCs intact) — ERG flat
+        • <strong>Absent direct PLR + consensual intact</strong> = pre-chiasmal — NOT efferent CN III<br>
+        • CN III parasympathetic only: mydriasis without ptosis or lateral strabismus → orbital/cavernous sinus<br>
+        • Cortical blindness: absent menace + intact PLR + intact dazzle = forebrain lesion → MRI<br>
+        • SARDS: PLR absent to red light, preserved to blue (melanopsin RGCs) — ERG flat
       </div>
     </div>
   </div><div class="disclaimer">For qualified veterinary professionals only.</div>`);
@@ -7001,32 +7093,81 @@ function renderAnisocoriaMydriasis(){
 
 function renderAnisocoriaHorners(){
   push(renderAnisocoriaHorners,"Horner's Syndrome — Localisation");
-  const dec = (q:string) => `<div style="background:rgba(99,102,241,0.12);border:1.5px solid rgba(99,102,241,0.4);border-radius:10px;padding:9px 12px;width:100%;text-align:center;"><div style="font-size:8px;font-weight:700;color:#818CF8;letter-spacing:.07em;margin-bottom:2px;">◆ DECISION</div><div style="font-size:11px;font-weight:700;color:#C4B5FD;">${q}</div></div>`;
-  const br = (yes:string,no:string) => `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;margin-top:6px;">${yes}${no}</div>`;
-  const yes = (c:string) => `<div style="border-left:2.5px solid rgba(16,185,129,0.5);padding-left:8px;"><div style="font-size:9.5px;font-weight:700;color:#6EE7B7;margin-bottom:4px;">YES ↓</div>${c}</div>`;
-  const no  = (c:string) => `<div style="border-left:2.5px solid rgba(220,38,38,0.5);padding-left:8px;"><div style="font-size:9.5px;font-weight:700;color:#FCA5A5;margin-bottom:4px;">NO ↓</div>${c}</div>`;
-  const out = (bg:string,bd:string,body:string) => `<div style="background:${bg};border:1.5px solid ${bd};border-radius:9px;padding:8px 10px;font-size:9.5px;line-height:1.5;">${body}</div>`;
+
+  const dec = (q:string, sub='') =>
+    `<div style="background:rgba(245,158,11,0.13);border:1.5px solid rgba(245,158,11,0.55);border-radius:10px;padding:9px 14px;width:100%;text-align:center;">
+       <div style="font-size:11.5px;font-weight:700;color:#FCD34D;line-height:1.4;">${q}</div>
+       ${sub ? `<div style="font-size:9px;color:#FDE68A;opacity:.8;margin-top:3px;">${sub}</div>` : ''}
+     </div>`;
+
+  const stepY = (decHtml:string, yesBox:string) =>
+    `${decHtml}
+     <div style="display:flex;gap:5px;width:100%;margin:4px 0 10px;">
+       <div style="width:28%;display:flex;flex-direction:column;align-items:center;padding-top:4px;">
+         <div style="font-size:9px;font-weight:700;color:#F87171;">NO</div>
+         <div style="font-size:18px;color:rgba(248,113,113,0.5);line-height:1.1;">↓</div>
+       </div>
+       <div style="flex:1;">
+         <div style="font-size:9px;font-weight:700;color:#34D399;margin-bottom:4px;">YES →</div>
+         ${yesBox}
+       </div>
+     </div>`;
+
+  const outBlue   = (b:string) => `<div style="background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.45);border-radius:9px;padding:9px 10px;font-size:9px;line-height:1.55;color:#93C5FD;">${b}</div>`;
+  const outAmber  = (b:string) => `<div style="background:rgba(245,158,11,0.12);border:1.5px solid rgba(245,158,11,0.5);border-radius:9px;padding:9px 10px;font-size:9px;line-height:1.55;color:#FCD34D;">${b}</div>`;
+  const outRed    = (b:string) => `<div style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.5);border-radius:9px;padding:9px 10px;font-size:9px;line-height:1.55;color:#FCA5A5;">${b}</div>`;
+
   render(`<div class="flow-wrap">
     <div class="flow-node entry" style="background:rgba(37,99,235,0.15);border-color:rgba(37,99,235,0.4);color:#BFDBFE;">🔵 HORNER'S SYNDROME — Localisation</div>
-    <div class="flow-node step" style="margin-top:6px;font-size:10px;">Miosis + ptosis + enophthalmos + 3rd eyelid protrusion<br><span class="fn-sub" style="font-weight:400;">⚠️ Always exclude uveitis first: check aqueous flare + IOP. Uveitis miosis is treated very differently.</span></div>
+    <div class="flow-node step" style="margin-top:6px;font-size:9.5px;text-align:left;">
+      Confirm signs: miosis + ptosis + enophthalmos + 3rd eyelid elevation<br>
+      <strong>⚠️ Exclude uveitis first</strong> — aqueous flare + IOP; uveitic miosis requires very different management
+    </div>
     <div class="flow-arrow-v">↓</div>
-    ${dec('Phenylephrine 1% applied to both eyes<br>Does the miotic pupil dilate ≤ 20 min?<br><span style="font-size:9px;font-weight:400;color:#A5B4FC;">(denervation hypersensitivity of postganglionic axon)</span>')}
-    ${br(
-      yes(out('rgba(37,99,235,0.09)','rgba(37,99,235,0.4)','<strong style="color:#93C5FD;">3rd Order — Postganglionic</strong><br>After the cranial cervical ganglion<br>Causes: OM/OI (middle ear) · retrobulbar mass · nasopharyngeal polyp (cat) · idiopathic<br>🐕 Golden Retriever idiopathic → most common; median resolution 15 wks (up to 6 months)<br>± CN VII + CN VIII signs → middle ear (CT bullae)<br><span style="opacity:.75;">→ Otoscopy + CT/MRI bullae + retrobulbar space</span>')),
-      no(`<div class="flow-arrow-v" style="font-size:11px;">↓</div>
-        ${dec('Phenylephrine 10% applied<br>Dilates in 20–40 min?')}
-        ${br(
-          yes(out('rgba(245,158,11,0.09)','rgba(245,158,11,0.4)','<strong style="color:#FCD34D;">2nd Order — Preganglionic</strong><br>C8–T3 roots → cervical sympathetic trunk → thorax<br>Causes: mediastinal mass · thymoma · lymphoma · brachial plexus avulsion · thoracic surgery / trauma<br>± Ipsilateral LMN forelimb signs (if brachial plexus)<br><span style="opacity:.75;">→ Thoracic radiographs + CT thorax + CT/MRI cervical / brachial plexus</span>')),
-          no(out('rgba(220,38,38,0.1)','rgba(220,38,38,0.4)','<strong style="color:#FCA5A5;">1st Order — Central</strong><br>Brain or cervical spinal cord (C1–T3)<br>Causes: cervical IVDD · FCE · CVA · GME · brainstem neoplasia<br>Associated signs: neck pain · ataxia · paresis · vestibular signs · other CN deficits<br><span style="opacity:.75;">→ MRI brain + cervical cord + CSF analysis</span>'))
-        )}`)
+
+    ${stepY(
+      dec('Phenylephrine 1% — both eyes',
+          'Does the miotic pupil dilate within 20 min? (denervation hypersensitivity of postganglionic axon)'),
+      outBlue(`<strong>3rd Order — Postganglionic</strong><br>
+        After the cranial cervical ganglion<br>
+        Middle ear (OM/OI) · retrobulbar mass<br>
+        Nasopharyngeal polyp (🐱) · Idiopathic<br>
+        🐕 Golden Retriever idiopathic: most common;<br>
+        median resolution 15 wks; up to 6 months<br>
+        ± CN VII + CN VIII = middle ear → CT bullae<br>
+        → Otoscopy + CT/MRI bullae + retrobulbar space`)
     )}
-    <div style="margin-top:10px;padding:9px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:10px;width:100%;">
+
+    ${stepY(
+      dec('Phenylephrine 10% — both eyes',
+          'Does the miotic pupil dilate within 20–40 min?'),
+      outAmber(`<strong>2nd Order — Preganglionic</strong><br>
+        C8–T3 roots → cervical sympathetic trunk → thorax<br>
+        Mediastinal mass · Thymoma · Lymphoma<br>
+        Brachial plexus avulsion · Thoracic surgery/trauma<br>
+        ± Ipsilateral LMN forelimb signs (brachial plexus)<br>
+        → Thoracic rads + CT thorax<br>
+        → CT/MRI cervical cord + brachial plexus`)
+    )}
+
+    <div style="margin-bottom:8px;">
+      <div style="font-size:9px;font-weight:700;color:#F87171;margin-bottom:4px;">NO RESPONSE →</div>
+      ${outRed(`<strong>1st Order — Central</strong><br>
+        Brain or cervical spinal cord (C1–T3)<br>
+        Cervical IVDD · FCE · CVA<br>
+        GME · Brainstem neoplasia<br>
+        Associated: neck pain · ataxia · paresis · vestibular signs · other CN deficits<br>
+        → MRI brain + cervical cord<br>
+        → CSF analysis`)}
+    </div>
+
+    <div style="padding:9px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:10px;width:100%;">
       <div style="font-size:10px;font-weight:700;color:#FCD34D;margin-bottom:4px;">💡 PEARLS</div>
       <div style="font-size:9.5px;line-height:1.6;color:#FDE68A;">
-        • <strong>Golden Retriever idiopathic Horner's</strong>: 3rd order, self-limiting — phenylephrine 1% q6h for cosmesis; median resolution ~15 weeks<br>
-        • Concurrent <strong>CN VII palsy</strong> + Horner's = petrous temporal bone / middle ear (3rd order) → CT bullae<br>
+        • <strong>Golden Retriever idiopathic Horner's</strong>: 3rd order, self-limiting — phenylephrine 1% q6–8h for cosmesis; median resolution ~15 weeks<br>
+        • CN VII palsy + Horner's = petrous temporal bone / middle ear (3rd order) → CT bullae<br>
         • Horner's + neck pain/paresis = 1st order cord lesion → MRI cervical cord urgently<br>
-        • If Horner's &gt;3 weeks: 2nd-order lesions can develop denervation hypersensitivity — phenylephrine test less reliable
+        • Horner's &gt;3 weeks: 2nd-order lesions may develop denervation hypersensitivity — phenylephrine test less reliable
       </div>
     </div>
   </div><div class="disclaimer">For qualified veterinary professionals only.</div>`);
