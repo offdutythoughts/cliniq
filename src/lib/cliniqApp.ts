@@ -395,7 +395,7 @@ const DB = {
     {id:'LES-PM-REGEN',dis:'DIS-BD-IMHA',loc:'LOC-PM-ANAEMIA',loc_name:'Anaemia',sp:'Dog + Cat',cat:'Regenerative',sub:'Regenerative anaemia',urg:'EMERGENCY',signs:'Low PCV with reticulocytosis. IMHA: spherocytes, auto-agglutination. Haemorrhage: low TS.',proto:'',filter:'DIFF-PM-REGEN',note:'Haemolysis: TS normal/high. Haemorrhage: TS drops (takes hours).'},
     {id:'LES-PM-NONREGEN',loc:'LOC-PM-ANAEMIA',loc_name:'Anaemia',sp:'Dog + Cat',cat:'Non-regenerative',sub:'Non-regenerative anaemia',urg:'High',signs:'Low PCV, NO reticulocytosis after 5+ days. Chronic disease, FeLV, renal, myelophthisis.',proto:'',filter:'DIFF-PM-NONREGEN',note:'Bone marrow aspirate indicated.'},
     {id:'LES-PM-PREREGEN',loc:'LOC-PM-ANAEMIA',loc_name:'Anaemia',sp:'Dog + Cat',cat:'Pre-regenerative',sub:'Pre-regenerative anaemia (<3-5 days)',urg:'High',signs:'Acute anaemia without reticulocyte response yet. Check smear for clues.',proto:'',filter:'DIFF-PM-REGEN',note:'Recheck reticulocytes in 3-5 days.'},
-    {id:'LES-PM-SHOCK',loc:'LOC-PM-PERFUSION',loc_name:'Poor perfusion',sp:'Dog + Cat',cat:'Shock',sub:'Hypovolaemic / distributive / cardiogenic shock',urg:'EMERGENCY',signs:'Pale gums, prolonged CRT, tachycardia (dogs) or bradycardia (cats), weak pulses.',proto:'',filter:'DIFF-PM-SHOCK',note:'Cat: bradycardia + hypothermia = decompensated.'},
+    {id:'LES-PM-SHOCK',loc:'LOC-PM-PERFUSION',loc_name:'Poor perfusion',sp:'Dog + Cat',cat:'Shock',sub:'Hypovolaemic / distributive / cardiogenic shock',urg:'EMERGENCY',signs:'Pale gums, prolonged CRT, tachycardia (dogs) or bradycardia (cats), weak pulses.',proto:'PROT-SHOCK',filter:'DIFF-PM-SHOCK',note:'Cat: bradycardia + hypothermia = decompensated.'},
     {id:'LES-PM-CARD',loc:'LOC-PM-PERFUSION',loc_name:'Poor perfusion',sp:'Dog + Cat',cat:'Cardiac',sub:'Acute cardiac failure / pericardial effusion',urg:'EMERGENCY',signs:'Muffled heart sounds, arrhythmia, jugular distension.',proto:'',filter:'DIFF-PM-SHOCK',note:'Pericardial: pulsus paradoxus, electrical alternans.'}
 ,
     // Cerebellar ataxia
@@ -3035,7 +3035,7 @@ function renderDiseasePage(id){
   push(()=>renderDiseasePage(id), '', 'disease:'+id);
   currentNoteTitle = d.name;
   const C = (title,body)=>`<div style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;"><div style="font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">${title}</div>${body}</div>`;
-  const linkify = (s)=>{if(s.startsWith('@')){const ci=s.indexOf(':');const did=ci>0?s.slice(1,ci):s.slice(1);const lbl=ci>0?s.slice(ci+1):did;return '<span onclick="renderDiseasePage(\''+did+'\')" style="color:var(--teal-light);text-decoration:underline;cursor:pointer;">'+esc(lbl)+'</span>';}return esc(s);};
+  const linkify = (s)=>{if(s.startsWith('@')){const ci=s.indexOf(':');const did=ci>0?s.slice(1,ci):s.slice(1);const lbl=ci>0?s.slice(ci+1):did;const fn=did.startsWith('PROT-')?'renderProtoDetail':'renderDiseasePage';return '<span onclick="'+fn+'(\''+did+'\')" style="color:var(--teal-light);text-decoration:underline;cursor:pointer;">'+esc(lbl)+'</span>';}return esc(s);};
   const bul = (str)=>str.split('|').map(s=>{const t=s.trim();if(t.startsWith('#'))return '<div style="font-size:10px;font-weight:700;color:var(--teal-light);margin-top:8px;margin-bottom:2px;">▸ '+esc(t.slice(1).trim())+'</div>';if(t.startsWith('-'))return '<div style="display:flex;align-items:baseline;gap:4px;font-size:11px;color:var(--gray);line-height:1.5;padding-left:14px;margin-bottom:1px;"><span style="flex-shrink:0;opacity:.5;">–</span>'+linkify(t.slice(1).trim())+'</div>';return '<div style="display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;margin-bottom:2px;"><span style="color:var(--teal-light);flex-shrink:0;">•</span>'+linkify(t)+'</div>';}).join('');
   const txt = (str)=>`<div style="font-size:12px;color:var(--gray);line-height:1.6;">${esc(str)}</div>`;
   const pip = (str)=>str&&str.includes('|');
@@ -3069,7 +3069,7 @@ function renderDiseasePage(id){
 
 // ── PROTOCOL LIST ─────────────────────────────────────────────────────────────
 function renderProtoList(){
-  const emergency = DB.protocols.filter(p=>p.id==='PROT-CPR'||p.id==='PROT-RESP'||p.id==='PROT-THOR');
+  const emergency = DB.protocols.filter(p=>p.id==='PROT-CPR'||p.id==='PROT-RESP'||p.id==='PROT-SHOCK'||p.id==='PROT-THOR');
   const neuro = DB.protocols.filter(p=>p.id.startsWith('PROT-SEIZ')||p.id.startsWith('PROT-NEURO'));
   const tox = DB.protocols.filter(p=>p.id==='PROT-TOX'||p.id.startsWith('PROT-TOX-'));
   const icon = p => p.id.startsWith('PROT-TOX') ? '☠️' : p.id.startsWith('PROT-SEIZ')||p.id.startsWith('PROT-NEURO') ? '🧠' : '⚡';
