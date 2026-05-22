@@ -2798,9 +2798,9 @@ function renderDiseasePage(id){
   ${d.etiology?C('Etiology',bul(d.etiology)):''}
   ${C('Signalment',`
     <div style="font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">Breed</div>
-    <div style="font-size:12px;color:var(--gray);line-height:1.6;margin-bottom:8px;">${esc(d.breed)}</div>
+    <div style="font-size:12px;color:var(--gray);line-height:1.6;margin-bottom:8px;">${pip(d.breed)?bul(d.breed):esc(d.breed)}</div>
     <div style="font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">Age</div>
-    <div style="font-size:12px;color:var(--gray);line-height:1.6;margin-bottom:8px;">${esc(d.age)}</div>
+    <div style="font-size:12px;color:var(--gray);line-height:1.6;margin-bottom:8px;">${pip(d.age)?bul(d.age):esc(d.age)}</div>
     ${d.sex?`<div style="font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;">Sex</div><div style="font-size:12px;color:var(--gray);line-height:1.6;">${esc(d.sex)}</div>`:''}
   `)}
   ${d.risk?C('Risk Factors',bul(d.risk)):''}
@@ -2810,7 +2810,7 @@ function renderDiseasePage(id){
   ${C('Treatment',`<div style="font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">First-line</div>${pip(d.tx1)?bul(d.tx1):txt(d.tx1)}${d.tx2?sub('Second-line / Alternatives')+(pip(d.tx2)?bul(d.tx2):txt(d.tx2)):''}`)}
   ${d.outpatient?C('Outpatient Protocol',pip(d.outpatient)?bul(d.outpatient):txt(d.outpatient)):''}
   ${C('Monitoring',pip(d.monitor)?bul(d.monitor):txt(d.monitor))}
-  ${C('Prognosis',txt(d.prog))}
+  ${C('Prognosis',pip(d.prog)?bul(d.prog):txt(d.prog))}
   ${d.ddx?C('Differential Diagnosis',bul(d.ddx)):''}
   <div class="pearl">💡 Clinical pearls: ${esc(d.pearl)}</div>
   <div class="disclaimer">For qualified veterinary professionals only.</div>
