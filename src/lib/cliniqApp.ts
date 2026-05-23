@@ -8287,30 +8287,31 @@ function renderAnisocoriaMydriasis(){
 
 function renderAnisocoriaHorners(){
   push(renderAnisocoriaHorners,'Miosis — Causes');
-  render(`
-<div class="fn fn-step" style="background:rgba(37,99,235,0.15);border-color:rgba(37,99,235,0.4);color:#BFDBFE;">🔵 MIOSIS — POSSIBLE CAUSES</div>
-<div class="fn-arrow">↓</div>
-<div class="fn-row">
-  <div class="fn-ep fn-ep-larynx" style="cursor:pointer;" onclick="renderDiseasePage('DIS-NEU-HORNERS')">
-    <div class="ep-sys">Miosis + ptosis + enophthalmos + 3rd eyelid</div>
-    <div class="ep-loc">Horner's syndrome</div>
-  </div>
-  <div class="fn-ep fn-ep-pleural" style="cursor:pointer;" onclick="goLesionTab('LOC-RE-UVEA','Anterior uvea')">
-    <div class="ep-sys">Miosis + aqueous flare + ↓IOP + ciliary flush</div>
-    <div class="ep-loc">Anterior uveitis</div>
-  </div>
-</div>
-<div class="fn-row">
-  <div class="fn-ep fn-ep-nasal">
-    <div class="ep-sys">Opioids · alpha-2 agonists · pilocarpine · organophosphates</div>
-    <div class="ep-loc">Pharmacological</div>
-  </div>
-  <div class="fn-ep" style="background:rgba(100,116,139,0.12);border-color:rgba(100,116,139,0.4);">
-    <div class="ep-sys" style="color:var(--gray);">Focal/segmental · post-trauma · post-surgery</div>
-    <div class="ep-loc" style="color:#CBD5E1;">Iris sphincter damage</div>
-  </div>
-</div>
-`);
+  const cats = [
+    {label:'Sympathetic',  bg:'rgba(37,99,235,0.12)',  bd:'rgba(37,99,235,0.4)',  tx:'#93C5FD'},
+    {label:'Uveal',        bg:'rgba(220,38,38,0.12)',  bd:'rgba(220,38,38,0.4)',  tx:'#FCA5A5'},
+    {label:'Drug-induced', bg:'rgba(13,148,136,0.12)', bd:'rgba(13,148,136,0.4)', tx:'#99F6E4'},
+    {label:'Structural',   bg:'rgba(100,116,139,0.12)',bd:'rgba(100,116,139,0.4)',tx:'#CBD5E1'},
+  ];
+  const tile = (cat:{bg:string,bd:string,tx:string}, label:string, onclick='', extra='') =>
+    `<div style="border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;border:1.5px solid ${cat.bd};background:${cat.bg};color:${cat.tx};${onclick?'cursor:pointer;':'cursor:default;'}line-height:1.3;word-break:break-word;${extra}" ${onclick?`onclick="${onclick}" onmouseover="this.style.filter='brightness(1.2)'" onmouseout="this.style.filter=''"`:''}">${label}</div>`;
+  const tiles = [
+    tile(cats[0], "Horner\'s syndrome",   "renderDiseasePage('DIS-NEU-HORNERS')"),
+    tile(cats[1], 'Anterior uveitis',     "goLesionTab('LOC-RE-UVEA','Anterior uvea')"),
+    tile(cats[2], 'Pharmacological miosis'),
+    tile(cats[3], 'Iris sphincter damage'),
+  ];
+  const cols = cats.length;
+  const grid = (content:string) => `<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;">${content}</div>`;
+  render(`<div class="flow-wrap">
+  <div class="flow-node entry">🔵 MIOSIS — POSSIBLE CAUSES</div>
+  <div class="flow-arrow-v">↓</div>
+  <div class="flow-node step">IDENTIFY CAUSE</div>
+  <div class="flow-arrow-v">↓</div>
+  ${grid(cats.map(c=>`<div class="flow-node" style="background:${c.bg};border-color:${c.bd};color:${c.tx};font-size:11px;cursor:default;min-width:0;">${c.label}</div>`).join(''))}
+  ${grid(cats.map(()=>'<div class="flow-arrow-v">↓</div>').join(''))}
+  ${grid(tiles.map(t=>`<div style="display:flex;flex-direction:column;gap:4px;">${t}</div>`).join(''))}
+</div>`);
 }
 
 function renderAnisocoriaHornersLocalise(){
