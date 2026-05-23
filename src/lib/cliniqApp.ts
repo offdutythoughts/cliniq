@@ -8156,7 +8156,36 @@ function renderAbnormalPupilNeuro(){
 
 // ── ANISOCORIA — neurological decision trees ───────────────────────────────
 function renderAnisocoriaMydriasis(){
-  push(renderAnisocoriaMydriasis,'Mydriasis — Localisation');
+  push(renderAnisocoriaMydriasis,'Mydriasis — Causes');
+  const cats = [
+    {label:'Neurological',  bg:'rgba(139,92,246,0.12)', bd:'rgba(139,92,246,0.4)', tx:'#DDD6FE'},
+    {label:'Afferent',      bg:'rgba(37,99,235,0.12)',  bd:'rgba(37,99,235,0.4)',  tx:'#93C5FD'},
+    {label:'Drug-induced',  bg:'rgba(13,148,136,0.12)', bd:'rgba(13,148,136,0.4)', tx:'#99F6E4'},
+    {label:'Iris / Ocular', bg:'rgba(245,158,11,0.12)', bd:'rgba(245,158,11,0.4)', tx:'#FCD34D'},
+  ];
+  const tile = (cat:{bg:string,bd:string,tx:string}, label:string, onclick='') =>
+    `<div style="border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;border:1.5px solid ${cat.bd};background:${cat.bg};color:${cat.tx};${onclick?'cursor:pointer;':'cursor:default;'}line-height:1.3;word-break:break-word;" ${onclick?`onclick="${onclick}" onmouseover="this.style.filter='brightness(1.2)'" onmouseout="this.style.filter=''"`:''}">${label}</div>`;
+  const cols = cats.length;
+  const grid = (content:string) => `<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;">${content}</div>`;
+  const colTiles = [
+    `<div style="display:flex;flex-direction:column;gap:4px;">${tile(cats[0],'CN III / Brainstem','renderAnisocoriaMydriasisLocalise()')}</div>`,
+    `<div style="display:flex;flex-direction:column;gap:4px;">${tile(cats[1],'Retina / Optic nerve',"goLesionTab('LOC-AP-RETINA','Retina / Optic nerve')")}</div>`,
+    `<div style="display:flex;flex-direction:column;gap:4px;">${tile(cats[2],'Pharmacological mydriasis')}</div>`,
+    `<div style="display:flex;flex-direction:column;gap:4px;">${tile(cats[3],'Iris atrophy',"goLesionTab('LOC-AP-IRIS','Iris')")}${tile(cats[3],'Glaucoma',"goLesionTab('LOC-RE-GLAUCOMA','Glaucoma')")}</div>`,
+  ];
+  render(`<div class="flow-wrap">
+  <div class="flow-node entry">🔵 MYDRIASIS — POSSIBLE CAUSES</div>
+  <div class="flow-arrow-v">↓</div>
+  <div class="flow-node step">IDENTIFY CAUSE</div>
+  <div class="flow-arrow-v">↓</div>
+  ${grid(cats.map(c=>`<div class="flow-node" style="background:${c.bg};border-color:${c.bd};color:${c.tx};font-size:11px;cursor:default;min-width:0;">${c.label}</div>`).join(''))}
+  ${grid(cats.map(()=>'<div class="flow-arrow-v">↓</div>').join(''))}
+  ${grid(colTiles.join(''))}
+</div>`);
+}
+
+function renderAnisocoriaMydriasisLocalise(){
+  push(renderAnisocoriaMydriasisLocalise,'Mydriasis — Localisation');
 
   // ── Shared style helpers ──────────────────────────────────────────────────
   const dec = (q:string, sub='') =>
@@ -8580,6 +8609,7 @@ export function mountGlobals() {
   w.renderAbnormalPupilOphthalmic = renderAbnormalPupilOphthalmic;
   w.renderAbnormalPupilNeuro = renderAbnormalPupilNeuro;
   w.renderAnisocoriaMydriasis = renderAnisocoriaMydriasis;
+  w.renderAnisocoriaMydriasisLocalise = renderAnisocoriaMydriasisLocalise;
   w.renderAnisocoriaHorners = renderAnisocoriaHorners;
   w.renderAnisocoriaHornersLocalise = renderAnisocoriaHornersLocalise;
   w.renderDxAbnormalPupil = renderDxAbnormalPupil;
