@@ -100,14 +100,18 @@ export const abnormalPupilNeuroBranchHtml = `
       </div>
     </div>
   </div>
-  <div class="flow-arrow-v">↓</div>
-
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
-    <div class="flow-node" style="background:rgba(139,92,246,0.12);border-color:rgba(139,92,246,0.4);color:#DDD6FE;font-size:11px;font-weight:700;text-align:center;cursor:pointer;" onclick="renderAnisocoriaMydriasis()">
-      MYDRIASIS<br><span style="font-size:9px;font-weight:400;opacity:.75;">Large pupil<br>PS deficit</span><br><span style="font-size:9px;color:#A78BFA;margin-top:4px;display:block;">Tap to localise ›</span>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;margin-top:2px;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+      <div style="font-size:18px;color:rgba(139,92,246,0.5);line-height:1;">↓</div>
+      <div class="flow-node" style="width:100%;background:rgba(139,92,246,0.12);border-color:rgba(139,92,246,0.4);color:#DDD6FE;font-size:11px;font-weight:700;text-align:center;cursor:pointer;" onclick="renderAnisocoriaMydriasis()">
+        MYDRIASIS<br><span style="font-size:9px;color:#A78BFA;margin-top:4px;display:block;">Tap to localise ›</span>
+      </div>
     </div>
-    <div class="flow-node" style="background:rgba(37,99,235,0.12);border-color:rgba(37,99,235,0.4);color:#BFDBFE;font-size:11px;font-weight:700;text-align:center;cursor:pointer;" onclick="renderAnisocoriaHorners()">
-      MIOSIS<br><span style="font-size:9px;font-weight:400;opacity:.75;">Horner's syndrome<br>Sympathetic deficit</span><br><span style="font-size:9px;color:#60A5FA;margin-top:4px;display:block;">Tap to localise ›</span>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
+      <div style="font-size:18px;color:rgba(37,99,235,0.5);line-height:1;">↓</div>
+      <div class="flow-node" style="width:100%;background:rgba(37,99,235,0.12);border-color:rgba(37,99,235,0.4);color:#BFDBFE;font-size:11px;font-weight:700;text-align:center;cursor:pointer;" onclick="renderAnisocoriaHorners()">
+        MIOSIS<br><span style="font-size:9px;color:#60A5FA;margin-top:4px;display:block;">Tap to localise ›</span>
+      </div>
     </div>
   </div>
 
