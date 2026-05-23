@@ -9,7 +9,7 @@ export const abnormalPupilFlowHtml = `
 
   <div class="flow-node entry">🔵 ABNORMAL PUPIL</div>
   <div class="flow-arrow-v">↓</div>
-  <div class="flow-node step">OPHTHALMIC vs NEUROLOGICAL?<br><span style="font-size:10px;color:var(--gray);font-weight:400">Is there visible ocular disease or only a pupil/PLR abnormality?</span></div>
+  <div class="flow-node step">OPHTHALMIC vs NEUROLOGICAL?</div>
   <div class="flow-arrow-v">↓</div>
 
   <!-- Top-level branches -->
