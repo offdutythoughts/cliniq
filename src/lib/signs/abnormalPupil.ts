@@ -14,8 +14,8 @@ export const abnormalPupilFlowHtml = `
 
   <!-- Top-level branches -->
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
-    <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="renderAbnormalPupilOphthalmic()">👁️ Ophthalmic<br><span style="font-size:9px;opacity:.7">Iris · Lens · Retina / Optic n.</span></div>
-    <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="renderAbnormalPupilNeuro()">🧠 Neurological<br><span style="font-size:9px;opacity:.7">Miosis · Mydriasis · PLR pathway</span></div>
+    <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="renderAbnormalPupilOphthalmic()">👁️ Ophthalmic<br><span style="font-size:9px;opacity:.7">Visible ocular changes</span></div>
+    <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="renderAbnormalPupilNeuro()">🧠 Neurological<br><span style="font-size:9px;opacity:.7">Only pupil/PLR abnormality</span></div>
   </div>
 
   <div style="margin-top:10px;padding:9px 12px;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.25);border-radius:10px;width:100%;">
