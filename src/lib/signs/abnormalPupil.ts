@@ -57,8 +57,6 @@ export const abnormalPupilOphthalmicHtml = `
   <div class="fn-ep fn-ep-larynx" onclick="goLesionTab('LOC-AP-LENS','Lens causes')">
     <div class="ep-loc">Lens</div>
   </div>
-</div>
-<div class="fn-row">
   <div class="fn-ep fn-ep-pleural" onclick="goLesionTab('LOC-AP-RETINA','Retina / Optic nerve')">
     <div class="ep-loc">Retina / Optic nerve</div>
   </div>

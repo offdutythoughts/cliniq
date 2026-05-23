@@ -1103,6 +1103,21 @@ ddx:'@DIS-NEU-METRO:Metronidazole toxicity (drug history; bilateral central vest
      prog:'Favourable for vestibular function — most affected animals compensate substantially over weeks to months; residual head tilt may persist permanently but rarely impairs quality of life|Rate and degree of improvement vary by individual and severity of the initial deficit|Bilateral form (Beagle, Akita): generally compensates well; animals may remain susceptible to disorientation in unfamiliar or visually complex environments|Sensorineural deafness is PERMANENT — does not resolve with vestibular compensation|Quality of life is generally good once compensation occurs, even in deaf animals',
      ddx:'@DIS-NEU-OMI:Otitis media/interna (acquired — any age; ear pain, ± facial nerve palsy, ± Horner\'s; CT bullae)|@DIS-NEU-IDVEST:Idiopathic vestibular disease (older animals; peracute onset; nystagmus common; no deafness)|Hypothyroid vestibular neuropathy (older dog; bilateral; wide head excursions; free T4 + TSH)|@DIS-NEU-THIAMINE:Thiamine deficiency (young cat on fish-based diet; progressive; treat immediately)|Central vestibular disease — brainstem lesion (abnormal mentation, vertical nystagmus, UMN signs, proprioceptive deficits)|Nasopharyngeal polyp (cat — ascending OMI)|Trauma (history of birth injury)',
      pearl:'Congenital vestibular disease presents from birth to 3 months in predisposed breeds — nystagmus is typically ABSENT (unlike acquired vestibular disease). Always perform BAER testing: sensorineural deafness can be present even when the animal appears to hear in a noisy environment. Deafness is permanent even when vestibular signs resolve. Wide head excursions WITHOUT a fixed head tilt = bilateral vestibular syndrome (Beagle or Akita). PTPRQ genetic testing is available for Dobermans — test all breeding animals. Vestibular signs improve with compensation; prognosis for functional quality of life is favourable.'},
+    {id:'DIS-NEU-HORNERS',name:'Horner\'s Syndrome',sp:'Dog + Cat',synonyms:'Oculosympathetic paresis, sympathetic denervation, Horner\'s syndrome',
+ breed:'Golden Retriever (idiopathic 3rd-order most common breed).',
+ age:'Any age. Idiopathic most common in middle-aged to older dogs.',
+ sex:'No sex predisposition.',
+ etiology:'#1st Order (central — brain / cord C1–T3)|Cervical IVDD · FCE · GME · CVA · brainstem neoplasia|Associated: neck pain, ataxia, paresis, other CN deficits|#2nd Order (preganglionic — C8–T3 → thorax)|Mediastinal mass (thymoma, lymphoma) · brachial plexus avulsion · thoracic trauma/surgery|± Ipsilateral LMN forelimb signs (brachial plexus root damage)|#3rd Order (postganglionic — after cranial cervical ganglion)|Otitis media/interna · retrobulbar mass · nasopharyngeal polyp (🐱)|🐕 Golden Retriever idiopathic — most common cause overall|± CN VII + VIII involvement = middle ear lesion',
+ path:'3-neuron sympathetic pathway: hypothalamus → C1–T3 cord (1st order) → cervical sympathetic trunk (2nd order) → cranial cervical ganglion → orbit (3rd order). Loss of sympathetic tone → failure of pupil dilation (miosis), relaxation of Müller\'s muscle (ptosis), globe retraction (enophthalmos), passive 3rd eyelid protrusion.',
+ signs:'Miosis (partial) + ptosis (upper lid droop) + enophthalmos + 3rd eyelid protrusion — ipsilateral only. Signs may be subtle. ± Conjunctival hyperaemia.',
+ severe:'Horner\'s + altered mentation / paresis / neck pain = 1st-order cord or brainstem lesion — MRI urgently.',
+ conf:'#Confirm diagnosis|Verify all 4 signs: miosis · ptosis · enophthalmos · 3rd eyelid protrusion|Exclude uveitis first: slit-lamp (aqueous flare?) + tonometry (↓ IOP = uveitis, not Horner\'s)|#Phenylephrine localisation test — see interactive button below|1% phenyephrine → dilates within 20 min = 3rd order (denervation hypersensitivity)|10% phenylephrine → dilates within 20–40 min = 2nd order|No response = 1st order (central)|#Targeted imaging by order|1st order: MRI brain + cervical cord · CSF analysis|2nd order: thoracic radiographs · CT thorax · CT/MRI brachial plexus|3rd order: CT/MRI bullae + retrobulbar space · otoscopy + myringotomy',
+ tx1:'Treat the underlying cause by lesion order|#3rd Order — idiopathic (Golden Retriever most common)|Phenylephrine 1% topical q6–8h for cosmesis (optional)|Monitor for spontaneous resolution — median 15 weeks (up to 6 months)|Recheck at 8–12 weeks if no improvement (exclude occult structural disease)|#1st Order — CNS lesion|MRI cervical cord ± brain urgently|CSF if inflammatory disease suspected|Treat IVDD, GME, FCE, neoplasia as appropriate|#2nd Order — thoracic|CT thorax + brachial plexus imaging|Lymphoma → chemotherapy · Thymoma → surgery|#3rd Order — structural (OM/OI)|Long-course antibiotics (4–6 wks) ± ventral bulla osteotomy',
+ monitor:'Resolution of signs (miosis typically resolves last)|Repeat phenylephrine test if lesion order is uncertain|Monitor for concurrent CN VII/VIII involvement (3rd order → middle ear disease)',
+ prog:'Idiopathic 3rd order: excellent — most resolve within 15 weeks. Structural causes: depends on underlying disease. 1st order: requires urgent MRI; prognosis depends on cause.',
+ pearl:'Always exclude uveitis first — miosis + aqueous flare + ↓IOP = uveitis. Golden Retriever idiopathic Horner\'s is self-limiting and benign. CN VII palsy + Horner\'s = middle ear (3rd order) → CT bullae urgently.',
+ ddx:'Anterior uveitis (miosis + aqueous flare + ↓IOP + ciliary flush)|Pharmacological miosis (opioids, alpha-2, pilocarpine, organophosphates — check drug history)|Iris sphincter damage (focal/segmental miosis, post-trauma/surgery)|Physiological anisocoria (<1 mm difference, no other signs — normal variant)',
+ locFunc:'renderAnisocoriaHornersLocalise'},
     {id:'DIS-NEU-IDVEST',name:'Idiopathic Vestibular Disease',sp:'Dog + Cat',synonyms:'Geriatric vestibular disease, old dog vestibular, idiopathic feline vestibular syndrome, canine idiopathic vestibular disease, IVD',
 breed:'No breed predisposition (dogs or cats).',
 age:'Dogs: more common in geriatric patients but can occur at any age. Cats: all ages; more common in adult cats.',
@@ -3056,7 +3071,7 @@ function renderDiseasePage(id){
   ${d.risk?C('Risk Factors',bul(d.risk)):''}
   ${C('Pathophysiology',pip(d.path)?bul(d.path):txt(d.path))}
   ${C('Clinical Signs',(pip(d.signs)?bul(d.signs):txt(d.signs))+(d.showGradingTable?injuryGradingTable():''))}
-  ${C('Diagnostic Investigation',(pip(d.conf)?bul(d.conf):txt(d.conf))+(d.supp?sub('Supportive Diagnostics')+(pip(d.supp)?bul(d.supp):txt(d.supp)):''))}
+  ${C('Diagnostic Investigation',(pip(d.conf)?bul(d.conf):txt(d.conf))+(d.supp?sub('Supportive Diagnostics')+(pip(d.supp)?bul(d.supp):txt(d.supp)):'')+((d as any).locFunc?`<div style="margin-top:10px;"><div class="card" style="cursor:pointer;padding:10px 14px;" onclick="${(d as any).locFunc}()"><div class="card-row"><div class="card-icon">🔬</div><div style="flex:1;"><div class="card-title">Localise lesion</div><div class="card-sub">Phenylephrine test — interactive decision tree</div></div><div class="card-arrow">›</div></div></div></div>` : ''))}
   ${C('Treatment',`<div style="font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">First-line</div>${pip(d.tx1)?bul(d.tx1):txt(d.tx1)}${d.tx2?sub('Second-line / Alternatives')+(pip(d.tx2)?bul(d.tx2):txt(d.tx2)):''}`)}
   ${d.outpatient?C('Outpatient Protocol',pip(d.outpatient)?bul(d.outpatient):txt(d.outpatient)):''}
   ${C('Monitoring',pip(d.monitor)?bul(d.monitor):txt(d.monitor))}
@@ -8271,7 +8286,35 @@ function renderAnisocoriaMydriasis(){
 }
 
 function renderAnisocoriaHorners(){
-  push(renderAnisocoriaHorners,"Horner's Syndrome — Localisation");
+  push(renderAnisocoriaHorners,'Miosis — Causes');
+  render(`
+<div class="fn fn-step" style="background:rgba(37,99,235,0.15);border-color:rgba(37,99,235,0.4);color:#BFDBFE;">🔵 MIOSIS — POSSIBLE CAUSES</div>
+<div class="fn-arrow">↓</div>
+<div class="fn-row">
+  <div class="fn-ep fn-ep-larynx" style="cursor:pointer;" onclick="renderDiseasePage('DIS-NEU-HORNERS')">
+    <div class="ep-sys">Miosis + ptosis + enophthalmos + 3rd eyelid</div>
+    <div class="ep-loc">Horner's syndrome</div>
+  </div>
+  <div class="fn-ep fn-ep-pleural" style="cursor:pointer;" onclick="goLesionTab('LOC-RE-UVEA','Anterior uvea')">
+    <div class="ep-sys">Miosis + aqueous flare + ↓IOP + ciliary flush</div>
+    <div class="ep-loc">Anterior uveitis</div>
+  </div>
+</div>
+<div class="fn-row">
+  <div class="fn-ep fn-ep-nasal">
+    <div class="ep-sys">Opioids · alpha-2 agonists · pilocarpine · organophosphates</div>
+    <div class="ep-loc">Pharmacological</div>
+  </div>
+  <div class="fn-ep" style="background:rgba(100,116,139,0.12);border-color:rgba(100,116,139,0.4);">
+    <div class="ep-sys" style="color:var(--gray);">Focal/segmental · post-trauma · post-surgery</div>
+    <div class="ep-loc" style="color:#CBD5E1;">Iris sphincter damage</div>
+  </div>
+</div>
+`);
+}
+
+function renderAnisocoriaHornersLocalise(){
+  push(renderAnisocoriaHornersLocalise,"Horner's Syndrome — Localisation");
 
   const dec = (q:string, sub='') =>
     `<div style="background:rgba(245,158,11,0.13);border:1.5px solid rgba(245,158,11,0.55);border-radius:10px;padding:9px 14px;width:100%;text-align:center;">
@@ -8537,6 +8580,7 @@ export function mountGlobals() {
   w.renderAbnormalPupilNeuro = renderAbnormalPupilNeuro;
   w.renderAnisocoriaMydriasis = renderAnisocoriaMydriasis;
   w.renderAnisocoriaHorners = renderAnisocoriaHorners;
+  w.renderAnisocoriaHornersLocalise = renderAnisocoriaHornersLocalise;
   w.renderDxAbnormalPupil = renderDxAbnormalPupil;
   w.renderDxAbnormalPupilHistory = renderDxAbnormalPupilHistory;
   w.renderDxAbnormalPupilExam = renderDxAbnormalPupilExam;
