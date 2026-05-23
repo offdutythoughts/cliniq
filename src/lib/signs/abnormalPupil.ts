@@ -18,26 +18,6 @@ export const abnormalPupilFlowHtml = `
     <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="renderAbnormalPupilNeuro()">🧠 Neurological<br><span style="font-size:9px;opacity:.7">Miosis · Mydriasis · PLR pathway</span></div>
   </div>
 
-  <div style="margin-top:14px;padding:10px 12px;background:rgba(37,99,235,0.07);border:1px solid rgba(37,99,235,0.25);border-radius:10px;width:100%;">
-    <div style="font-size:11px;font-weight:700;color:#93C5FD;margin-bottom:8px;">💡 WHICH PUPIL IS ABNORMAL? — LIGHT vs DARK ROOM RULE</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-      <div style="font-size:9.5px;line-height:1.5;background:rgba(37,99,235,0.08);border-radius:7px;padding:7px 9px;">
-        <div style="color:#93C5FD;font-weight:700;margin-bottom:3px;">Abnormally LARGE pupil</div>
-        Anisocoria <strong>LESS obvious</strong> in the dark<br>
-        (the normal pupil now also dilates, narrowing the gap)<br>
-        <strong style="color:#FCD34D;">⇒ Lesion preventing constriction</strong><br>
-        — efferent CN III · iris atrophy · pharmacological mydriasis · glaucoma · sympathetic discharge
-      </div>
-      <div style="font-size:9.5px;line-height:1.5;background:rgba(37,99,235,0.08);border-radius:7px;padding:7px 9px;">
-        <div style="color:#93C5FD;font-weight:700;margin-bottom:3px;">Abnormally SMALL pupil</div>
-        Anisocoria <strong>MORE obvious</strong> in the dark<br>
-        (the normal pupil dilates while the abnormal stays small)<br>
-        <strong style="color:#F87171;">⇒ Lesion preventing dilation</strong><br>
-        — sympathetic denervation (Horner's) · uveitis · pharmacological miotic · posterior synechiae
-      </div>
-    </div>
-  </div>
-
   <div style="margin-top:10px;padding:9px 12px;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.25);border-radius:10px;width:100%;">
     <div style="font-size:11px;font-weight:700;color:#C4B5FD;margin-bottom:6px;">🔬 KEY EXAM CHECKS BEFORE LOCALISING</div>
     <div style="font-size:9.5px;line-height:1.55;color:rgba(196,181,253,.85);">
@@ -99,8 +79,26 @@ export const abnormalPupilNeuroBranchHtml = `
 <div class="flow-wrap">
 
   <div class="flow-node entry" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.4);color:#C4B5FD;">🧠 NEUROLOGICAL ANISOCORIA</div>
-  <div class="flow-node step" style="margin-top:6px;font-size:10.5px;">Identify the ABNORMAL pupil
-    <div class="fn-sub" style="font-weight:400;margin-top:3px;">Bright light: large pupil = abnormal · Dim light: small pupil = abnormal</div>
+  <div class="flow-node step" style="margin-top:6px;font-size:10.5px;">Identify the ABNORMAL pupil</div>
+
+  <div style="margin-top:8px;padding:10px 12px;background:rgba(37,99,235,0.07);border:1px solid rgba(37,99,235,0.25);border-radius:10px;width:100%;">
+    <div style="font-size:11px;font-weight:700;color:#93C5FD;margin-bottom:8px;">💡 WHICH PUPIL IS ABNORMAL? — LIGHT vs DARK ROOM RULE</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+      <div style="font-size:9.5px;line-height:1.5;background:rgba(37,99,235,0.08);border-radius:7px;padding:7px 9px;">
+        <div style="color:#93C5FD;font-weight:700;margin-bottom:3px;">Abnormally LARGE pupil</div>
+        Anisocoria <strong>LESS obvious</strong> in the dark<br>
+        (normal pupil also dilates, narrowing the gap)<br>
+        <strong style="color:#FCD34D;">⇒ Lesion preventing constriction</strong><br>
+        → CN III · iris atrophy · pharmacological mydriasis · glaucoma
+      </div>
+      <div style="font-size:9.5px;line-height:1.5;background:rgba(37,99,235,0.08);border-radius:7px;padding:7px 9px;">
+        <div style="color:#93C5FD;font-weight:700;margin-bottom:3px;">Abnormally SMALL pupil</div>
+        Anisocoria <strong>MORE obvious</strong> in the dark<br>
+        (normal pupil dilates; abnormal stays small)<br>
+        <strong style="color:#F87171;">⇒ Lesion preventing dilation</strong><br>
+        → Horner's · uveitis · pharmacological miotic · synechiae
+      </div>
+    </div>
   </div>
   <div class="flow-arrow-v">↓</div>
 
