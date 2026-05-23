@@ -50,27 +50,18 @@ export const abnormalPupilFlowHtml = `
 export const abnormalPupilOphthalmicHtml = `
 <div class="fn fn-insp">👁️ OPHTHALMIC CAUSES</div>
 <div class="fn-arrow">↓</div>
-<div class="fn fn-step">WHICH STRUCTURE?</div>
-<div class="fn-arrow">↓</div>
 <div class="fn-row">
   <div class="fn-ep fn-ep-nasal" onclick="goLesionTab('LOC-AP-IRIS','Iris causes')">
-    <div class="ep-sys">Coloboma · PPM · cyst · atrophy · synechia · melanoma</div>
     <div class="ep-loc">Iris</div>
   </div>
   <div class="fn-ep fn-ep-larynx" onclick="goLesionTab('LOC-AP-LENS','Lens causes')">
-    <div class="ep-sys">Anterior lens luxation · cataract + 2° glaucoma</div>
     <div class="ep-loc">Lens</div>
   </div>
 </div>
 <div class="fn-row">
   <div class="fn-ep fn-ep-pleural" onclick="goLesionTab('LOC-AP-RETINA','Retina / Optic nerve')">
-    <div class="ep-sys">SARDS · RD · PRA · ONH hypoplasia · optic neuritis</div>
     <div class="ep-loc">Retina / Optic nerve</div>
-    <div class="ep-badge">Vision affected</div>
   </div>
-</div>
-<div style="margin-top:10px;padding:9px 12px;background:rgba(37,99,235,0.07);border:1px solid rgba(37,99,235,0.25);border-radius:10px;font-size:10px;line-height:1.55;color:#93C5FD;width:100%;">
-  💡 <strong>Always retroilluminate</strong> when pupil looks abnormally large — senile iris atrophy is commonly mistaken for true mydriasis. Look for ragged pupil margins and visible transillumination defects.
 </div>
 `;
 
