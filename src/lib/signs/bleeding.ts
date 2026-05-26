@@ -113,9 +113,25 @@ export const bleedingFlowHtml = `
     <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:5px;">⚡ ALWAYS RULE OUT FIRST</div>
     <div style="font-size:9.5px;line-height:1.55;color:#FCA5A5;">
       • <strong onclick="renderDiseasePage('DIS-BD-ROD')" style="cursor:pointer;text-decoration:underline;">Anticoagulant rodenticide</strong> — PT prolongs first; Vit K1 SC now, confirm later (acts in 6–12 h — transfuse for active bleeds)<br>
-      • <strong onclick="renderDiseasePage('DIS-BD-DIC')" style="cursor:pointer;text-decoration:underline;">DIC</strong> — petechiae + cavity bleed + systemic illness → ≥ 3 of 5 abnormal; treat cause urgently<br>
+      • <strong onclick="renderDiseasePage('DIS-BD-DIC')" style="cursor:pointer;text-decoration:underline;">DIC</strong> — petechiae + cavity bleed + systemic illness → ≥ 3 of 5 abnormal; treat cause urgently. <em>Dogs bleed (haemorrhagic phenotype); cats clot (thrombotic phenotype, ~7 % survival).</em><br>
       • <strong>Haemoperitoneum</strong> (HSA rupture) — collapse + pale gums → emergency surgery<br>
       • <strong onclick="renderDiseasePage('DIS-BD-IMTP')" style="cursor:pointer;text-decoration:underline;">IMTP</strong> platelet &lt;30 ×10⁹/L — start immunosuppression urgently
+    </div>
+  </div>
+
+  <div style="margin-top:10px;padding:10px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
+    <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:5px;">🐕 vs 🐱 KEY SPECIES DIFFERENCES</div>
+    <div style="font-size:9px;line-height:1.5;color:#C7D2FE;">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;">
+        <div><strong style="color:#60A5FA;">DOG</strong></div><div><strong style="color:#FB923C;">CAT</strong></div>
+        <div>DIC: haemorrhagic; ~78 % survive nonovert · ~38 % survive overt</div><div>DIC: <strong>thrombotic phenotype</strong> dominates; bleeding rare; ~7 % survival</div>
+        <div>IMTP: common; primary form predominates; F &gt; M 2:1</div><div>IMTP: rare (~3 % of feline thrombocytopenia) — almost always secondary (FeLV/FIV, lymphoma, FIP, Mycoplasma haemofelis)</div>
+        <div>Babesia: <em>B. canis</em> (large) → imidocarb; <em>B. gibsoni</em> (small) → atovaquone + azithromycin</div><div>Babesia: <em>B. felis</em> (Africa); FeLV/FIV co-infection in ~46 %; <strong>primaquine ≤0.5 mg/kg</strong> (toxic ≥1 mg/kg)</div>
+        <div>Snake envenomation: rapid presentation; pigmenturia common</div><div>Snake envenomation: <strong>delayed</strong> (cats hide); pulmonary pooling of killing fraction; pigmenturia less common</div>
+        <div>Inherited coagulopathy: vWD, haemophilia A/B, factor VII (Beagle)</div><div>Inherited coagulopathy: <strong>Factor XII (Hageman) deficiency</strong> — most common feline; Birman, Siamese, DSH — <strong>asymptomatic</strong>; isolated prolonged aPTT</div>
+        <div>Drug list: azathioprine OK</div><div>Drug list: <strong>NEVER azathioprine</strong> (myelotoxic); methimazole can cause thrombocytopenia</div>
+        <div>D-dimer 75–100 % sensitive for DIC</div><div>D-dimer ~67 % sens / 56 % spec; <strong>ATIII unreliable</strong></div>
+      </div>
     </div>
   </div>
 
@@ -124,16 +140,25 @@ export const bleedingFlowHtml = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;">
       <div onclick="renderDiseasePage('DIS-BD-DIC')" style="cursor:pointer;color:#99F6E4;">→ DIC</div>
       <div onclick="renderDiseasePage('DIS-BD-ROD')" style="cursor:pointer;color:#99F6E4;">→ Anticoagulant rodenticide</div>
+      <div onclick="renderDiseasePage('DIS-BD-VITK')" style="cursor:pointer;color:#99F6E4;">→ Vitamin K deficiency (broad)</div>
       <div onclick="renderDiseasePage('DIS-BD-IMTP')" style="cursor:pointer;color:#99F6E4;">→ Immune-mediated thrombocytopenia</div>
       <div onclick="renderDiseasePage('DIS-BD-TCP')" style="cursor:pointer;color:#99F6E4;">→ Thrombocytopenia (broad)</div>
       <div onclick="renderDiseasePage('DIS-BD-TPATH')" style="cursor:pointer;color:#99F6E4;">→ Thrombocytopathia</div>
       <div onclick="renderDiseasePage('DIS-BD-ICT')" style="cursor:pointer;color:#99F6E4;">→ Infectious cyclic thrombocytopenia</div>
+      <div onclick="renderDiseasePage('DIS-BD-EHRL')" style="cursor:pointer;color:#99F6E4;">→ Ehrlichiosis (CME)</div>
+      <div onclick="renderDiseasePage('DIS-BD-BABS')" style="cursor:pointer;color:#99F6E4;">→ Babesiosis</div>
+      <div onclick="renderDiseasePage('DIS-BD-IMHA')" style="cursor:pointer;color:#99F6E4;">→ Immune-mediated haemolytic anaemia</div>
+      <div onclick="renderDiseasePage('DIS-BD-VWD')" style="cursor:pointer;color:#99F6E4;">→ von Willebrand disease</div>
       <div onclick="renderDiseasePage('DIS-BD-HEMA')" style="cursor:pointer;color:#99F6E4;">→ Haemophilia A (FVIII)</div>
       <div onclick="renderDiseasePage('DIS-BD-HEMB')" style="cursor:pointer;color:#99F6E4;">→ Haemophilia B (FIX)</div>
       <div onclick="renderDiseasePage('DIS-BD-HEMC')" style="cursor:pointer;color:#99F6E4;">→ Haemophilia C (FXI)</div>
       <div onclick="renderDiseasePage('DIS-BD-FX')" style="cursor:pointer;color:#99F6E4;">→ Factor X deficiency</div>
       <div onclick="renderDiseasePage('DIS-BD-FII')" style="cursor:pointer;color:#99F6E4;">→ Factor II deficiency</div>
       <div onclick="renderDiseasePage('DIS-BD-FVII')" style="cursor:pointer;color:#99F6E4;">→ Factor VII deficiency</div>
+      <div onclick="renderDiseasePage('DIS-BD-FXII')" style="cursor:pointer;color:#99F6E4;">→ Factor XII deficiency (feline)</div>
+      <div onclick="renderDiseasePage('DIS-BD-ENV')" style="cursor:pointer;color:#99F6E4;">→ Snake / spider envenomation</div>
+      <div onclick="renderDiseasePage('DIS-BD-VASC')" style="cursor:pointer;color:#99F6E4;">→ Cutaneous vasculitis</div>
+      <div onclick="renderDiseasePage('DIS-BD-CRGV')" style="cursor:pointer;color:#99F6E4;">→ CRGV / Alabama rot</div>
     </div>
   </div>
 </div>
@@ -316,6 +341,9 @@ ${dxTabs('exam')}
       <div>Bleeding + acute renal failure + skin ulcers + sighthound</div><div style="color:#FCA5A5;">CRGV / "Alabama rot"</div>
       <div>Concurrent anaemia + thrombocytopenia + tick exposure</div><div style="color:#6EE7B7;">Tick-borne (Ehrlichia, Anaplasma, Babesia)</div>
       <div>Jaundice + ascites + bleeding</div><div style="color:#FCA5A5;">Hepatic failure</div>
+      <div>🐱 Cat with FIP / lymphoma / cytauxzoon and thromboembolic signs (acute hindlimb paresis, pulmonary signs) — minimal external bleeding</div><div style="color:#A5B4FC;">Feline DIC (thrombotic phenotype) — grave</div>
+      <div>🐱 Birman / Siamese / DSH with isolated aPTT prolongation pre-op, no bleeding</div><div style="color:#A5B4FC;">Factor XII deficiency — clinically silent</div>
+      <div>Mediterranean / African origin cat with regenerative anaemia + FeLV positive</div><div style="color:#A5B4FC;">Babesia felis</div>
     </div>
   </div>
 
@@ -439,18 +467,37 @@ ${dxTabs('dx')}
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;">
     <div onclick="renderDiseasePage('DIS-BD-DIC')" style="cursor:pointer;color:#99F6E4;">→ DIC</div>
     <div onclick="renderDiseasePage('DIS-BD-ROD')" style="cursor:pointer;color:#99F6E4;">→ Anticoagulant rodenticide</div>
+    <div onclick="renderDiseasePage('DIS-BD-VITK')" style="cursor:pointer;color:#99F6E4;">→ Vitamin K deficiency (broad)</div>
     <div onclick="renderDiseasePage('DIS-BD-IMTP')" style="cursor:pointer;color:#99F6E4;">→ Immune-mediated thrombocytopenia</div>
     <div onclick="renderDiseasePage('DIS-BD-TCP')" style="cursor:pointer;color:#99F6E4;">→ Thrombocytopenia (broad)</div>
     <div onclick="renderDiseasePage('DIS-BD-TPATH')" style="cursor:pointer;color:#99F6E4;">→ Thrombocytopathia</div>
     <div onclick="renderDiseasePage('DIS-BD-TCS')" style="cursor:pointer;color:#99F6E4;">→ Thrombocytosis</div>
     <div onclick="renderDiseasePage('DIS-BD-ICT')" style="cursor:pointer;color:#99F6E4;">→ Infectious cyclic thrombocytopenia</div>
+    <div onclick="renderDiseasePage('DIS-BD-EHRL')" style="cursor:pointer;color:#99F6E4;">→ Ehrlichiosis (CME)</div>
+    <div onclick="renderDiseasePage('DIS-BD-BABS')" style="cursor:pointer;color:#99F6E4;">→ Babesiosis</div>
     <div onclick="renderDiseasePage('DIS-BD-IMHA')" style="cursor:pointer;color:#99F6E4;">→ Immune-mediated haemolytic anaemia</div>
+    <div onclick="renderDiseasePage('DIS-BD-VWD')" style="cursor:pointer;color:#99F6E4;">→ von Willebrand disease</div>
     <div onclick="renderDiseasePage('DIS-BD-HEMA')" style="cursor:pointer;color:#99F6E4;">→ Haemophilia A (FVIII)</div>
     <div onclick="renderDiseasePage('DIS-BD-HEMB')" style="cursor:pointer;color:#99F6E4;">→ Haemophilia B (FIX)</div>
     <div onclick="renderDiseasePage('DIS-BD-HEMC')" style="cursor:pointer;color:#99F6E4;">→ Haemophilia C (FXI)</div>
     <div onclick="renderDiseasePage('DIS-BD-FX')" style="cursor:pointer;color:#99F6E4;">→ Factor X deficiency</div>
     <div onclick="renderDiseasePage('DIS-BD-FII')" style="cursor:pointer;color:#99F6E4;">→ Factor II deficiency</div>
     <div onclick="renderDiseasePage('DIS-BD-FVII')" style="cursor:pointer;color:#99F6E4;">→ Factor VII deficiency</div>
+    <div onclick="renderDiseasePage('DIS-BD-FXII')" style="cursor:pointer;color:#99F6E4;">→ Factor XII deficiency (feline)</div>
+    <div onclick="renderDiseasePage('DIS-BD-ENV')" style="cursor:pointer;color:#99F6E4;">→ Snake / spider envenomation</div>
+    <div onclick="renderDiseasePage('DIS-BD-VASC')" style="cursor:pointer;color:#99F6E4;">→ Cutaneous vasculitis</div>
+    <div onclick="renderDiseasePage('DIS-BD-CRGV')" style="cursor:pointer;color:#99F6E4;">→ CRGV / Alabama rot</div>
+  </div>
+</div>
+
+<div style="margin-top:10px;padding:10px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;">
+  <div style="font-size:11px;font-weight:700;color:#FCA5A5;margin-bottom:6px;">⚡ EMERGENCY PROTOCOLS</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;">
+    <div onclick="renderProtoDetail('PROT-BLEED-IMTP')" style="cursor:pointer;color:#FECACA;">→ IMTP / severe thrombocytopenia</div>
+    <div onclick="renderProtoDetail('PROT-BLEED-HEMABD')" style="cursor:pointer;color:#FECACA;">→ Acute haemoabdomen (HSA / rodenticide)</div>
+    <div onclick="renderProtoDetail('PROT-BLEED-DIC')" style="cursor:pointer;color:#FECACA;">→ DIC — diagnosis &amp; supportive care</div>
+    <div onclick="renderProtoDetail('PROT-BLEED-SNAKE')" style="cursor:pointer;color:#FECACA;">→ Snake envenomation</div>
+    <div onclick="renderProtoDetail('PROT-TOX-ACRM')" style="cursor:pointer;color:#FECACA;">→ Anticoagulant rodenticide (existing)</div>
   </div>
 </div>
 
