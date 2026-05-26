@@ -201,29 +201,60 @@ ${dxTabs('history')}
 
   <div class="dx-step alt">🐾 SIGNALMENT + BREED CLUES</div>
   <div class="dx-arrow">↓</div>
+
+  <div style="margin-bottom:8px;padding:10px 12px;background:rgba(37,99,235,0.07);border:1px solid rgba(37,99,235,0.2);border-radius:10px;width:100%;">
+    <div style="font-size:10.5px;font-weight:700;color:#93C5FD;margin-bottom:7px;">🔑 CANINE vs FELINE — KEY SPECIES DIFFERENCES</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;font-size:9px;line-height:1.5;">
+      <div style="color:#93C5FD;font-weight:700;padding-bottom:2px;border-bottom:1px solid rgba(148,163,184,.15);">🐕 Dog</div>
+      <div style="color:#FB923C;font-weight:700;padding-bottom:2px;border-bottom:1px solid rgba(148,163,184,.15);">🐱 Cat</div>
+      <div>Normal pupil: <strong>round</strong></div>
+      <div>Normal pupil: <strong>vertical ellipse / slit</strong> (can appear round in dim light)</div>
+      <div>Iris atrophy: <strong>common</strong> (senile, small breeds) — most often <em>primary</em> degenerative</div>
+      <div>Iris atrophy: <strong>uncommon</strong>; secondary (uveitis, glaucoma) &gt; primary in cats</div>
+      <div>PPMs: <strong>common</strong> (27% of dogs with congenital anomalies); many breeds</div>
+      <div>PPMs: <strong>rare</strong> (~1.4–2.3% prevalence); often in eyes with other anomalies</div>
+      <div>Uveal cysts: <strong>transilluminate</strong> — reliably distinguish from melanoma</div>
+      <div>Uveal cysts: may be <strong>darkly pigmented, do NOT transilluminate</strong> — mimic melanoma; ultrasound needed</div>
+      <div>Opioids → <strong>miosis</strong> (morphine, fentanyl)</div>
+      <div>Opioids → <strong>mydriasis</strong> (paradoxical in cats)</div>
+      <div>Pilocarpine test: safe at 0.05–2%; may cause conjunctival hyperaemia / blepharospasm</div>
+      <div>Pilocarpine test: irritating; <strong>concentrations ≥1% can cause salivation, vomiting, anorexia, diarrhoea</strong> — use 0.05–0.5% only</div>
+      <div>Glaucoma: usually <strong>primary closed-angle</strong> (goniodysgenesis, breed-specific); responds to latanoprost</div>
+      <div>Glaucoma: usually <strong>secondary</strong> to chronic uveitis / lens luxation; <strong>latanoprost ineffective</strong> (no FP receptors in feline ciliary body)</div>
+      <div>Horner's: idiopathic 3rd order most common (<strong>Golden Retriever</strong>, median resolution ~15 weeks)</div>
+      <div>Horner's: <strong>middle ear disease</strong> most common cause; screen with otoscopy + CT bullae</div>
+      <div>Spastic pupil syndrome: <strong>not described</strong></div>
+      <div>Spastic pupil syndrome: <strong>FeLV-associated</strong> — tonic anisocoria (one pupil intermittently dilated, constriction impaired)</div>
+      <div>Lens luxation: primary (ADAMTS17 mutation) in <strong>terrier breeds</strong>; secondary to uveitis/glaucoma</div>
+      <div>Lens luxation: primary is <strong>rare</strong>; secondary to chronic uveitis is most common cause in cats</div>
+    </div>
+  </div>
+
   <div class="dx-check">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
       <div>
-        <strong style="color:#60A5FA;font-size:10px;">🐕 DOG</strong><br><br>
+        <strong style="color:#60A5FA;font-size:10px;">🐕 DOG — BREED-SPECIFIC CLUES</strong><br><br>
         <strong style="color:#FCD34D;">Golden Retriever</strong> → idiopathic Horner's (3rd order — most common breed); pigmentary uveitis (iris cysts → uveitis → 2° glaucoma)<br><br>
-        <strong style="color:#FCA5A5;">Jack Russell, Tibetan Terrier, Border Collie, Sealyham</strong> → primary anterior lens luxation<br><br>
+        <strong style="color:#FCA5A5;">Jack Russell, Tibetan Terrier, Border Collie, Sealyham, Manchester Terrier</strong> → primary anterior lens luxation (ADAMTS17 mutation)<br><br>
         <strong style="color:#6EE7B7;">Cocker, Basset, Springer, Bouvier, Chow, Akita</strong> → primary closed-angle glaucoma → mid-fixed mydriasis<br><br>
         <strong style="color:#C4B5FD;">Miniature Schnauzer, Toy Poodle, Cocker</strong> → cataract → lens-induced uveitis → posterior synechiae<br><br>
         <strong style="color:#FCA5A5;">Miniature Schnauzer (especially), Dachshund, Brittany</strong> → SARDS<br><br>
-        <strong style="color:#FCD34D;">Toy and miniature breeds, senior</strong> → senile iris atrophy<br><br>
+        <strong style="color:#FCD34D;">Toy and miniature breeds, senior small breeds</strong> → senile iris atrophy (most common in Poodle, Shih Tzu, Yorkshire Terrier — may appear as early as 4–5 yr)<br><br>
         <strong style="color:#6EE7B7;">Beagle, Norwegian Elkhound</strong> → PRA<br><br>
-        <strong style="color:#C4B5FD;">Any large breed</strong> → mediastinal mass / brachial plexus tumour → 2nd-order Horner's
+        <strong style="color:#C4B5FD;">Any large breed</strong> → mediastinal mass / brachial plexus tumour → 2nd-order Horner's<br><br>
+        <strong style="color:#FCD34D;">Akita, Samoyed, Husky</strong> → uveodermatologic syndrome → bilateral granulomatous uveitis + periocular depigmentation
       </div>
       <div>
-        <strong style="color:#FB923C;font-size:10px;">🐱 CAT</strong><br><br>
-        <strong style="color:#C4B5FD;">Older cat</strong> → systemic hypertension → bilateral mydriasis + retinal detachment + intraocular bleed<br><br>
-        <strong style="color:#FCD34D;">FIV/FeLV positive</strong> → chronic uveitis → dyscoria · iris melanoma (diffuse, age-related)<br><br>
-        <strong style="color:#6EE7B7;">Burmese</strong> → corneal sequestrum (chronic corneal pain → reflex uveitis → miosis)<br><br>
-        <strong style="color:#FCA5A5;">Outdoor cat</strong> → trauma → 2nd / 3rd order Horner's · toxoplasma uveitis · proptosis<br><br>
-        <strong style="color:#93C5FD;">Cat with otitis</strong> → 3rd-order Horner's (postganglionic — middle ear)<br><br>
-        <strong style="color:#FCD34D;">Cat: spastic pupil syndrome</strong> → FeLV-associated tonic anisocoria<br><br>
-        <strong style="color:#C4B5FD;">Multi-cat household / FIP</strong> → pyogranulomatous uveitis → miosis · hypopyon<br><br>
-        <strong style="color:#6EE7B7;">Key-Gaskell cat (UK)</strong> → dysautonomia: bilateral fixed mydriasis + dry mucosae + megaoesophagus
+        <strong style="color:#FB923C;font-size:10px;">🐱 CAT — BREED-SPECIFIC CLUES</strong><br><br>
+        <strong style="color:#C4B5FD;">Older cat (any breed)</strong> → systemic hypertension → bilateral mydriasis + retinal detachment ± intraocular haemorrhage — <em>check BP FIRST</em><br><br>
+        <strong style="color:#FCD34D;">FIV/FeLV positive</strong> → chronic uveitis → dyscoria; diffuse iris melanosis (age-related, progressive)<br><br>
+        <strong style="color:#FCA5A5;">FeLV positive</strong> → spastic pupil syndrome — tonic anisocoria with impaired constriction; one or both eyes<br><br>
+        <strong style="color:#6EE7B7;">Burmese</strong> → corneal sequestrum → reflex uveitis → miosis; uveal cysts (breed-associated); more susceptible to eyelid agenesis<br><br>
+        <strong style="color:#FCA5A5;">Outdoor cat</strong> → trauma → 2nd / 3rd order Horner's; toxoplasma uveitis; proptosis<br><br>
+        <strong style="color:#93C5FD;">Cat with otitis media</strong> → 3rd-order Horner's (postganglionic — middle ear via chorda tympani); ± CN VII deficit<br><br>
+        <strong style="color:#C4B5FD;">Multi-cat household / FIP</strong> → pyogranulomatous uveitis → miosis · hypopyon · aqueous flare<br><br>
+        <strong style="color:#6EE7B7;">Key-Gaskell cat (UK / Australia)</strong> → dysautonomia: bilateral fixed mydriasis + dry mucosae + megaoesophagus<br><br>
+        <strong style="color:#FCD34D;">Bengal, Domestic Shorthair</strong> → PPMs (iris-to-cornea type) — rare but reported
       </div>
     </div>
   </div>
@@ -245,13 +276,24 @@ ${dxTabs('exam')}
 
 <div class="dx-wrap">
 
+  <div style="margin-bottom:10px;padding:9px 12px;background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.25);border-radius:10px;width:100%;">
+    <div style="font-size:10.5px;font-weight:700;color:#FB923C;margin-bottom:6px;">🐾 SPECIES — NORMAL PUPIL SHAPE (confirm before labelling as abnormal)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;font-size:9.5px;line-height:1.5;">
+      <div><strong style="color:#60A5FA;">🐕 Dog:</strong> <strong>round</strong> at all light levels. Any deviation from round = abnormal.</div>
+      <div><strong style="color:#FB923C;">🐱 Cat:</strong> <strong>vertical slit/ellipse in bright light → round/oval in dim light.</strong> A round pupil in a cat with bright ambient light is normal dilation — not mydriasis. Judge only in standardised lighting.</div>
+      <div><strong style="color:#60A5FA;">Iris atrophy (dog):</strong> very common in senior small breeds — moth-eaten ragged pupil margin, transillumination defects. Can masquerade as neurological mydriasis.</div>
+      <div><strong style="color:#FB923C;">Iris atrophy (cat):</strong> uncommon; usually secondary (chronic uveitis, glaucoma). Blue irises normally thinner and more prone. Always retroilluminate before ascribing to primary degenerative disease in a cat.</div>
+    </div>
+  </div>
+
   <div class="dx-step">🩺 STEP 1 — CONFIRM ANISOCORIA + IDENTIFY THE ABNORMAL PUPIL</div>
   <div class="dx-arrow">↓</div>
   <div class="dx-check">
     <strong>Compare in bright light AND in a dark room</strong> using a focal light at arm's length:<br>
     • <strong>Abnormally LARGE pupil</strong> → anisocoria LESS obvious in the dark (the normal pupil dilates and the gap narrows) — lesion preventing constriction (CN III · iris atrophy · pharmacological mydriasis · glaucoma · sympathetic discharge).<br>
     • <strong>Abnormally SMALL pupil</strong> → anisocoria MORE obvious in the dark (the normal pupil dilates while the abnormal stays small) — lesion preventing dilation (sympathetic denervation = Horner's · uveitis · pharmacological miotic · posterior synechiae).<br>
-    • Always compare to baseline pupil size in normal light; bilateral fixed mydriasis or miosis is missed when you fail to compare to expected size.
+    • Always compare to baseline pupil size in normal light; bilateral fixed mydriasis or miosis is missed when you fail to compare to expected size.<br>
+    • <strong>Cat-specific:</strong> assess in both bright and dim light — cat pupil normally transitions from slit to round; a "dilated" cat pupil in a dim exam room may be normal. Also note that the feline iris sphincter is more powerful than the dilator — miosis from uveitis or pilocarpine is more pronounced in cats than dogs at equivalent doses.
   </div>
   <div class="dx-arrow">↓</div>
 
@@ -316,7 +358,8 @@ ${dxTabs('exam')}
   <div class="dx-check">
     <strong>1st order (central / brainstem / cervical cord T1):</strong> Rare. Concurrent neurological deficits — ataxia, paresis, hemineglect, vestibular signs. Lesions: cervical IVDD, fibrocartilaginous embolism, cerebrovascular accident, neoplasia. <strong>MRI</strong> + CSF.<br>
     <strong>2nd order (preganglionic, T1–T3 → cervical sympathetic chain):</strong> Look in the chest and neck — thoracic radiographs (mediastinal mass, thymoma, lymphoma), trauma (brachial plexus avulsion), cervical neoplasia, head/neck surgery history.<br>
-    <strong>3rd order (postganglionic, after cranial cervical ganglion):</strong> Middle / inner ear disease, retrobulbar mass, idiopathic (most common — particularly <strong>Golden Retriever idiopathic Horner's</strong>, typically resolves spontaneously over weeks to months; published median ~15 weeks, range 11–20 weeks, up to 6 months). Otoscopy + CT/MRI bullae and orbit.<br><br>
+    <strong>3rd order (postganglionic, after cranial cervical ganglion):</strong> Middle / inner ear disease, retrobulbar mass, idiopathic (most common — particularly <strong>Golden Retriever idiopathic Horner's</strong>, typically resolves spontaneously over weeks to months; published median ~15 weeks, range 11–20 weeks, up to 6 months). Otoscopy + CT/MRI bullae and orbit.<br>
+    <strong style="color:#FB923C;">Cat-specific:</strong> middle ear disease is the most common 3rd-order cause in cats (otitis media, nasopharyngeal polyp extending to bulla). Check CN VII concurrently (facial nerve travels through petrous temporal bone — CN VII deficit + Horner's = middle ear). Also consider thoracic causes in outdoor or trauma-exposed cats (rib fracture, thoracic mass). FeLV screen in cats with unexplained anisocoria — spastic pupil syndrome can mimic Horner's.<br><br>
     <strong>Pharmacological localisation — two-step phenylephrine protocol:</strong>
     <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:3px 6px;font-size:9.5px;margin:4px 0;">
       <div style="font-weight:600;">Step / Order</div><div style="font-weight:600;">Expected response</div>
@@ -378,7 +421,14 @@ ${dxTabs('dx')}
   <div class="dx-arrow">↓</div>
   <div class="dx-check">
     <strong>1% phenylephrine — Horner's localisation</strong> (as in Exam step 5): rapid response (≤20 min) = 3rd order; intermediate = 2nd order; slow = 1st order. Always run a contralateral control.<br><br>
-    <strong>Dilute pilocarpine (0.05–0.1%) — dysautonomia / denervation hypersensitivity:</strong> dilute pilocarpine causes constriction within 30 min in a parasympathetically denervated pupil (dysautonomia, CN III parasympathetic nucleus lesion) but no constriction in a normal pupil.<br><br>
+    <strong>Dilute pilocarpine (0.05–0.1%) — dysautonomia / denervation hypersensitivity:</strong> dilute pilocarpine causes constriction within 30 min in a parasympathetically denervated pupil (dysautonomia, CN III parasympathetic nucleus lesion) but no constriction in a normal pupil.<br>
+    <div style="margin:6px 0;padding:7px 10px;background:rgba(251,146,60,0.08);border:1px solid rgba(251,146,60,0.2);border-radius:7px;font-size:9px;line-height:1.55;">
+      <strong style="color:#FB923C;">🐱 CAT — Pilocarpine Testing Cautions:</strong><br>
+      • Pilocarpine is irritating to feline eyes — use 0.05–0.1% only for testing.<br>
+      • Concentrations ≥1% may cause <strong>salivation, vomiting, anorexia, and diarrhoea</strong> from systemic absorption — do NOT use 1–2% pilocarpine in cats (unlike dogs).<br>
+      • Pharmacological testing is <strong>rarely needed in cats</strong> — most iris atrophy is secondary and diagnosable by clinical examination under magnification. Reserve for cases where efferent CN III dysfunction cannot be excluded clinically.<br>
+      • Iris atrophy in cats: uncommon (vs dogs); suspect if slit-lamp shows thinning, holes, or transillumination defects in the iris. Most cases are secondary to chronic uveitis or glaucoma.
+    </div><br>
     <strong>Atropine response test:</strong> in dysautonomia, atropine 0.04 mg/kg SC produces no rise in heart rate (failed parasympathetic blockade) — supportive evidence.<br><br>
     <strong>Cocaine 10% or apraclonidine 0.5%</strong>: classical Horner's confirmation tests in humans — limited availability and not routinely used in veterinary practice; phenylephrine is the practical choice.
   </div>
@@ -418,7 +468,7 @@ ${dxTabs('dx')}
 
 <div class="dx-alert" style="margin-top:10px;">
   <strong>⚠️ Therapy pearls while you investigate:</strong><br>
-  • <strong>Acute glaucoma:</strong> topical latanoprost 0.005% + dorzolamide 2% + timolol 0.5%; mannitol 1 g/kg IV slow if vision-threatening — refer same day.<br>
+  • <strong>Acute glaucoma (dog):</strong> topical latanoprost 0.005% q6h + dorzolamide 2% + timolol 0.5%; mannitol 1 g/kg IV slow if vision-threatening — refer same day. <strong>Note: latanoprost is ineffective in cats</strong> (no functional FP prostanoid receptors in feline ciliary body) — use dorzolamide + timolol ± oral carbonic anhydrase inhibitor instead.<br>
   • <strong>Anterior uveitis with miosis:</strong> topical 1% atropine (only if IOP not elevated) + topical 1% prednisolone acetate q6–8h (no ulcer) — treat underlying cause aggressively.<br>
   • <strong>Optic neuritis (suspected MUA):</strong> aggressive immunosuppression (prednisolone 2 mg/kg/day + cytotoxic adjunct) — refer for MRI + CSF before chronic therapy.<br>
   • <strong>Idiopathic Horner's (Golden Retriever):</strong> reassure, phenylephrine 1% q6h can temporarily improve cosmesis; most resolve over weeks to months (median ~15 weeks, up to 6 months).<br>
