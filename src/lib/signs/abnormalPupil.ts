@@ -210,7 +210,17 @@ ${dxTabs('history')}
       <div>Normal pupil: <strong>round</strong></div>
       <div>Normal pupil: <strong>vertical ellipse / slit</strong> (can appear round in dim light)</div>
       <div>Iris atrophy: <strong>common</strong> (senile, small breeds) — most often <em>primary</em> degenerative</div>
-      <div>Iris atrophy: <strong>uncommon</strong>; secondary (uveitis, glaucoma) &gt; primary in cats</div>
+      <div>Iris atrophy: <strong>uncommon</strong>; secondary (uveitis, glaucoma) &gt; primary in cats; blue irises predisposed (thinner stroma)</div>
+      <div>Iris innervation: <strong>5–8 short ciliary nerves</strong> — denervated pupil = round, fully dilated</div>
+      <div>Iris innervation: <strong>only 2 short ciliary nerves</strong> (malar lateral · nasal medial) — partial denervation = <strong>D-shaped or reverse-D pupil</strong> (hemi-dilation)</div>
+      <div>Optic neuritis: <strong>immune-mediated forms well-documented</strong> (MUE/GME/NME) — empiric immunosuppression after ruling out infection is reasonable</div>
+      <div>Optic neuritis: <strong>no immune-mediated form described</strong> — workup must aggressively pursue infection (FIP, toxo, crypto) or neoplasia; enrofloxacin/fluoroquinolone toxic retinopathy is a key DDx</div>
+      <div>Lens luxation: typically <strong>↑ IOP (often &gt;40)</strong> with anterior luxation in dogs</div>
+      <div>Lens luxation: <strong>many cats remain normotensive</strong> despite luxation — normal IOP does NOT exclude the diagnosis</div>
+      <div>Cataract aetiology: <strong>diabetes mellitus is a major cause</strong> (rapid progression, lens-induced uveitis); many inherited breed forms</div>
+      <div>Cataract aetiology: <strong>chronic uveitis is the most common cause</strong> (DM cataracts are rare in cats — Russian Blue, Bengal hereditary)</div>
+      <div>Spastic pupil syndrome: <strong>not described</strong></div>
+      <div>Spastic pupil syndrome: <strong>FeLV-associated</strong> — tonic anisocoria; viral neuritis of short ciliary nerves; D-shape characteristic</div>
       <div>PPMs: <strong>common</strong> (27% of dogs with congenital anomalies); many breeds</div>
       <div>PPMs: <strong>rare</strong> (~1.4–2.3% prevalence); often in eyes with other anomalies</div>
       <div>Uveal cysts: <strong>transilluminate</strong> — reliably distinguish from melanoma</div>
@@ -223,10 +233,10 @@ ${dxTabs('history')}
       <div>Glaucoma: usually <strong>secondary</strong> to chronic uveitis / lens luxation; <strong>latanoprost ineffective</strong> (no FP receptors in feline ciliary body)</div>
       <div>Horner's: idiopathic 3rd order most common (<strong>Golden Retriever</strong>, median resolution ~15 weeks)</div>
       <div>Horner's: <strong>middle ear disease</strong> most common cause; screen with otoscopy + CT bullae</div>
-      <div>Spastic pupil syndrome: <strong>not described</strong></div>
-      <div>Spastic pupil syndrome: <strong>FeLV-associated</strong> — tonic anisocoria (one pupil intermittently dilated, constriction impaired)</div>
       <div>Lens luxation: primary (ADAMTS17 mutation) in <strong>terrier breeds</strong>; secondary to uveitis/glaucoma</div>
       <div>Lens luxation: primary is <strong>rare</strong>; secondary to chronic uveitis is most common cause in cats</div>
+      <div>Optic nerve hypoplasia: <strong>SIX6 mutation in Golden Retriever</strong> (autosomal dominant CEM syndrome); reported in mini/toy poodle, shih tzu, beagle, borzoi, GSD</div>
+      <div>Optic nerve hypoplasia: <strong>extremely rare</strong>; specifically linked to <strong>griseofulvin (teratogen)</strong> in queens and feline parvovirus</div>
     </div>
   </div>
 
