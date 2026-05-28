@@ -4548,6 +4548,28 @@ function dxTabBar(tabs:{label:string,fn:string}[], activeIndex:number){
   return `<div style="${wrap}">${tabs.map((t,i)=>`<div class="dx-step${i%2===1?' alt':''}" style="${base}${i!==activeIndex?dim:''}" onclick="${t.fn}()">${t.label}</div>`).join('')}</div>`;
 }
 
+const VOM_REGURG_ROWS:{q:string,vom:string,reg:string}[] = [
+  {q:'Retching?',           vom:'Usually present',                              reg:'Usually absent'},
+  {q:'Abdominal effort?',   vom:'Active',                                       reg:'Passive — none'},
+  {q:'Prodromal nausea?',   vom:'Lip licking, ptyalism',                        reg:'Absent'},
+  {q:'Bile present?',       vom:'May be present',                               reg:'Usually absent'},
+  {q:'Ingesta digested?',   vom:'May be digested',                              reg:'Typically undigested, tubular'},
+  {q:'Timing after eating?',vom:'Variable',                                     reg:'Any time; soon after ↑ suspicion'},
+  {q:'White/clear mucus?',  vom:'Less typical',                                 reg:'Frothy saliva common'},
+  {q:'Frequency?',          vom:'Variable',                                     reg:'Many/day, no systemic signs'},
+  {q:'Duration?',           vom:'Variable',                                     reg:'Weeks–months (megaoesoph.); acute if obstructive'},
+];
+function vomRegurgTable(lead:'vomiting'|'regurgitation'){
+  const VOM='#FCA5A5', REG='#6EE7B7';
+  const [c2col,c3col,c2lbl,c3lbl] = lead==='vomiting' ? [VOM,REG,'Vomiting','Regurgitation'] : [REG,VOM,'Regurgitation','Vomiting'];
+  const rows = VOM_REGURG_ROWS.map(r=>{
+    const c2 = lead==='vomiting' ? r.vom : r.reg;
+    const c3 = lead==='vomiting' ? r.reg : r.vom;
+    return `<div>${r.q}</div><div style="color:${c2col};">${c2}</div><div style="color:${c3col};">${c3}</div>`;
+  }).join('');
+  return `<div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:5px 8px;font-size:10.5px;line-height:1.4;"><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);">Feature</div><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:${c2col};">${c2lbl}</div><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:${c3col};">${c3lbl}</div>${rows}</div>`;
+}
+
 function renderDxRegurgitationExam(){
   replace(renderDxRegurgitationExam,'Exam: Regurgitation');
   render(`
@@ -4632,43 +4654,7 @@ function renderDxRegurgitationHistory(){
     <div class="dx-step">📋 VOMITING vs REGURGITATION?</div>
     <div class="dx-arrow">↓</div>
     <div class="dx-check">
-      <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:5px 8px;font-size:10.5px;line-height:1.4;">
-        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);">Question</div>
-        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:#6EE7B7;">Regurgitation</div>
-        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:#FCA5A5;">Vomiting</div>
-
-        <div>Retching?</div>
-        <div style="color:#6EE7B7;">Usually absent</div>
-        <div style="color:#FCA5A5;">Usually present</div>
-
-        <div>Abdominal effort?</div>
-        <div style="color:#6EE7B7;">Passive — none</div>
-        <div style="color:#FCA5A5;">Active</div>
-
-        <div>Bile present?</div>
-        <div style="color:#6EE7B7;">Usually absent</div>
-        <div style="color:#FCA5A5;">May be present</div>
-
-        <div>Ingesta digested?</div>
-        <div style="color:#6EE7B7;">Typically undigested, tubular</div>
-        <div style="color:#FCA5A5;">May be digested</div>
-
-        <div>Timing after eating?</div>
-        <div style="color:#6EE7B7;">Any time; soon after ↑ suspicion</div>
-        <div style="color:#FCA5A5;">Variable</div>
-
-        <div>White/clear mucus?</div>
-        <div style="color:#6EE7B7;">Frothy saliva common</div>
-        <div style="color:#FCA5A5;">Less typical</div>
-
-        <div>Frequency?</div>
-        <div style="color:#6EE7B7;">Many/day, no systemic signs</div>
-        <div style="color:#FCA5A5;">Variable</div>
-
-        <div>Duration?</div>
-        <div style="color:#6EE7B7;">Weeks–months (megaoesoph.); acute if obstructive</div>
-        <div style="color:#FCA5A5;">Variable</div>
-      </div>
+      ${vomRegurgTable('regurgitation')}
     </div>
     <div class="dx-arrow">↓</div>
 
@@ -4879,29 +4865,7 @@ function renderDxVomitingHistory(){
     <div class="dx-step">📋 VOMITING vs REGURGITATION?</div>
     <div class="dx-arrow">↓</div>
     <div class="dx-check">
-      <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:5px 8px;font-size:10.5px;line-height:1.4;">
-        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);">Feature</div>
-        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:#FCA5A5;">Vomiting</div>
-        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:#6EE7B7;">Regurgitation</div>
-        <div>Retching?</div>
-        <div style="color:#FCA5A5;">Usually present</div>
-        <div style="color:#6EE7B7;">Usually absent</div>
-        <div>Abdominal effort?</div>
-        <div style="color:#FCA5A5;">Active</div>
-        <div style="color:#6EE7B7;">Passive — none</div>
-        <div>Prodromal nausea?</div>
-        <div style="color:#FCA5A5;">Lip licking, ptyalism</div>
-        <div style="color:#6EE7B7;">Absent</div>
-        <div>Bile present?</div>
-        <div style="color:#FCA5A5;">May be present</div>
-        <div style="color:#6EE7B7;">Usually absent</div>
-        <div>Ingesta digested?</div>
-        <div style="color:#FCA5A5;">May be digested</div>
-        <div style="color:#6EE7B7;">Typically undigested, tubular</div>
-        <div>Timing after eating?</div>
-        <div style="color:#FCA5A5;">Variable</div>
-        <div style="color:#6EE7B7;">Any time; soon after ↑ suspicion</div>
-      </div>
+      ${vomRegurgTable('vomiting')}
       <div style="margin-top:8px;font-size:10px;opacity:.75;">⚠️ If uncertain, work up as vomiting. If vomiting workup yields no diagnosis, pursue oesophageal investigation. Owner video is very helpful.</div>
     </div>
     <div class="dx-arrow">↓</div>
