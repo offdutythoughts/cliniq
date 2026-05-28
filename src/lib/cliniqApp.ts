@@ -4531,14 +4531,27 @@ function renderPaleFlowCardiac(){
 }
 
 // ── DIAGNOSTIC APPROACH: VOMITING ────────────────────────────────────────────
+
+const TABS_VOMITING     = [{label:'📋 History',fn:'renderDxVomitingHistory'},{label:'🩺 Exam',fn:'renderDxVomitingExam'},{label:'🔬 Diagnostics',fn:'renderDxVomiting'}];
+const TABS_REGURGITATION = [{label:'📋 History',fn:'renderDxRegurgitationHistory'},{label:'🩺 Exam',fn:'renderDxRegurgitationExam'},{label:'🔬 Diagnostics',fn:'renderDxRegurgitation'}];
+const TABS_DIARRHOEA    = [{label:'📋 History',fn:'renderDxDiarrhoeaHistory'},{label:'🩺 Exam',fn:'renderDxDiarrhoeaExam'},{label:'🔬 Diagnostics',fn:'renderDxDiarrhoeaDx'},{label:'🟠 Secondary',fn:'renderDxDiarrhoeaSec'}];
+
+function dxTabBar(tabs:{label:string,fn:string}[], activeIndex:number){
+  const is4 = tabs.length === 4;
+  const wrap = is4
+    ? 'display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:14px;'
+    : 'display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;';
+  const base = is4
+    ? 'padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;'
+    : 'flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;text-align:center;';
+  const dim = is4 ? 'opacity:.5;' : 'opacity:.65;';
+  return `<div style="${wrap}">${tabs.map((t,i)=>`<div class="dx-step${i%2===1?' alt':''}" style="${base}${i!==activeIndex?dim:''}" onclick="${t.fn}()">${t.label}</div>`).join('')}</div>`;
+}
+
 function renderDxRegurgitationExam(){
   replace(renderDxRegurgitationExam,'Exam: Regurgitation');
   render(`
-  <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
-    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxRegurgitationHistory()">📋 History</div>
-    <div class="dx-step alt" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;" onclick="renderDxRegurgitationExam()">🩺 Exam</div>
-    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxRegurgitation()">🔬 Diagnostics</div>
-  </div>
+  ${dxTabBar(TABS_REGURGITATION,1)}
 
   <div class="dx-wrap">
 
@@ -4612,11 +4625,7 @@ function renderDxRegurgitationExam(){
 function renderDxRegurgitationHistory(){
   replace(renderDxRegurgitationHistory,'History: Regurgitation');
   render(`
-  <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
-    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;" onclick="renderDxRegurgitationHistory()">📋 History</div>
-    <div class="dx-step alt" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxRegurgitationExam()">🩺 Exam</div>
-    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxRegurgitation()">🔬 Diagnostics</div>
-  </div>
+  ${dxTabBar(TABS_REGURGITATION,0)}
 
   <div class="dx-wrap">
 
@@ -4721,11 +4730,7 @@ function renderDxRegurgitationHistory(){
 function renderDxRegurgitation(){
   replace(renderDxRegurgitation,'Dx: Regurgitation');
   render(`
-  <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
-    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxRegurgitationHistory()">📋 History</div>
-    <div class="dx-step alt" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxRegurgitationExam()">🩺 Exam</div>
-    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;" onclick="renderDxRegurgitation()">🔬 Diagnostics</div>
-  </div>
+  ${dxTabBar(TABS_REGURGITATION,2)}
 
   <div class="dx-wrap">
 
@@ -4867,11 +4872,7 @@ function renderDxRegurgitation(){
 function renderDxVomitingHistory(){
   replace(renderDxVomitingHistory,'History: Vomiting');
   render(`
-  <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
-    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;" onclick="renderDxVomitingHistory()">📋 History</div>
-    <div class="dx-step alt" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxVomitingExam()">🩺 Exam</div>
-    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxVomiting()">🔬 Diagnostics</div>
-  </div>
+  ${dxTabBar(TABS_VOMITING,0)}
 
   <div class="dx-wrap">
 
@@ -5005,11 +5006,7 @@ function renderDxVomitingHistory(){
 function renderDxVomitingExam(){
   replace(renderDxVomitingExam,'Exam: Vomiting');
   render(`
-  <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
-    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxVomitingHistory()">📋 History</div>
-    <div class="dx-step alt" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;" onclick="renderDxVomitingExam()">🩺 Exam</div>
-    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxVomiting()">🔬 Diagnostics</div>
-  </div>
+  ${dxTabBar(TABS_VOMITING,1)}
 
   <div class="dx-wrap">
 
@@ -5091,11 +5088,7 @@ function renderDxVomitingExam(){
 function renderDxVomiting(){
   replace(renderDxVomiting,'Dx: Vomiting');
   render(`
-  <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
-    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxVomitingHistory()">📋 History</div>
-    <div class="dx-step alt" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;opacity:.65;" onclick="renderDxVomitingExam()">🩺 Exam</div>
-    <div class="dx-step" style="flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;" onclick="renderDxVomiting()">🔬 Diagnostics</div>
-  </div>
+  ${dxTabBar(TABS_VOMITING,2)}
 
   <div class="dx-wrap">
 
@@ -5206,12 +5199,7 @@ function renderDxVomiting(){
 function renderDxDiarrhoeaHistory(){
   replace(renderDxDiarrhoeaHistory,'History: Diarrhoea');
   render(`
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:14px;">
-    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;" onclick="renderDxDiarrhoeaHistory()">📋 History</div>
-    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaExam()">🩺 Exam</div>
-    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaDx()">🔬 Diagnostics</div>
-    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaSec()">🟠 Secondary</div>
-  </div>
+  ${dxTabBar(TABS_DIARRHOEA,0)}
 
   <div class="dx-wrap">
 
@@ -5280,12 +5268,7 @@ function renderDxDiarrhoeaHistory(){
 function renderDxDiarrhoeaExam(){
   replace(renderDxDiarrhoeaExam,'Exam: Diarrhoea');
   render(`
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:14px;">
-    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaHistory()">📋 History</div>
-    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;" onclick="renderDxDiarrhoeaExam()">🩺 Exam</div>
-    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaDx()">🔬 Diagnostics</div>
-    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaSec()">🟠 Secondary</div>
-  </div>
+  ${dxTabBar(TABS_DIARRHOEA,1)}
 
   <div class="dx-wrap">
 
@@ -5344,12 +5327,7 @@ function renderDxDiarrhoeaLB(){ renderDxDiarrhoeaDx(); }
 function renderDxDiarrhoeaDx(){
   replace(renderDxDiarrhoeaDx,'Dx: Diarrhoea');
   render(`
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:14px;">
-    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaHistory()">📋 History</div>
-    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaExam()">🩺 Exam</div>
-    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;" onclick="renderDxDiarrhoeaDx()">🔬 Diagnostics</div>
-    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaSec()">🟠 Secondary</div>
-  </div>
+  ${dxTabBar(TABS_DIARRHOEA,2)}
 
   <div class="dx-wrap">
 
@@ -5523,12 +5501,7 @@ function renderDxDiarrhoeaDx(){
 function renderDxDiarrhoeaSec(){
   replace(renderDxDiarrhoeaSec,'Dx: Secondary Diarrhoea');
   render(`
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:14px;">
-    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaHistory()">📋 History</div>
-    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaExam()">🩺 Exam</div>
-    <div class="dx-step" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;opacity:.5;" onclick="renderDxDiarrhoeaDx()">🔬 Diagnostics</div>
-    <div class="dx-step alt" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;" onclick="renderDxDiarrhoeaSec()">🟠 Secondary</div>
-  </div>
+  ${dxTabBar(TABS_DIARRHOEA,3)}
 
   <div class="dx-wrap">
     <div class="dx-step" style="background:rgba(217,119,6,0.2);border-color:rgba(217,119,6,0.45);color:var(--amber-text);">🟠 SECONDARY / SYSTEMIC CAUSES — TARGETED TESTS</div>

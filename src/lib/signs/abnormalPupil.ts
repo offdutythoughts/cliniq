@@ -50,7 +50,7 @@ export const abnormalPupilFlowHtml = `
 export const abnormalPupilOphthalmicHtml = `
 <div class="fn fn-insp">👁️ OPHTHALMIC CAUSES</div>
 <div class="fn-arrow">↓</div>
-<div class="fn-row">
+<div class="fn-row" style="grid-template-columns:1fr 1fr 1fr;">
   <div class="fn-ep fn-ep-nasal" onclick="goLesionTab('LOC-AP-IRIS','Iris causes')">
     <div class="ep-loc">Iris</div>
   </div>
