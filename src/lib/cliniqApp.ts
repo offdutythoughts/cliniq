@@ -7063,7 +7063,7 @@ function renderBleedingFlowDIC(){
     <div class="flow-arrow-v">↓</div>
 
     <!-- Step 1: Clinical signs -->
-    <div class="flow-node step">STEP 1 — CLINICAL SIGNS</div>
+    <div class="flow-node step">CLINICAL SIGNS</div>
     <div class="flow-arrow-v">↓</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
       <div style="padding:9px 11px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.3);border-radius:9px;">
@@ -7091,7 +7091,7 @@ function renderBleedingFlowDIC(){
     <div class="flow-arrow-v">↓</div>
 
     <!-- Step 2: Species-specific causes -->
-    <div class="flow-node step">STEP 2 — TOP CAUSES</div>
+    <div class="flow-node step">TOP CAUSES</div>
     <div class="flow-arrow-v">↓</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
       <div style="padding:9px 11px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.3);border-radius:9px;">
