@@ -32,11 +32,11 @@ export const abnormalPupilFlowHtml = `
   <div style="margin-top:10px;padding:10px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;width:100%;">
     <div style="font-size:11px;font-weight:700;color:#F87171;margin-bottom:6px;">⚡ DO NOT MISS</div>
     <div style="font-size:9.5px;line-height:1.55;color:#FCA5A5;">
-      • <strong>Acute glaucoma</strong> — fixed mid-dilated unresponsive pupil + ↑ IOP → sight-threatening (refer same day)<br>
-      • <strong>Anterior lens luxation</strong> — altered pupil shape + pain + ↑ IOP risk (Jack Russell, Tibetan Terrier) → emergency lensectomy<br>
-      • <strong>Optic neuritis (MUA, infectious, idiopathic)</strong> — bilateral mydriasis + acute blindness → MRI + CSF, aggressive immunosuppression<br>
+      • <strong onclick="renderDiseasePage('DIS-OPH-GLAUCOMA')" style="cursor:pointer;text-decoration:underline;">Acute glaucoma</strong> — fixed mid-dilated unresponsive pupil + ↑ IOP → sight-threatening (refer same day)<br>
+      • <strong onclick="renderDiseasePage('DIS-EYE-LENS-LUX')" style="cursor:pointer;text-decoration:underline;">Anterior lens luxation</strong> — altered pupil shape + pain + ↑ IOP risk (Jack Russell, Tibetan Terrier) → emergency lensectomy<br>
+      • <strong onclick="renderDiseasePage('DIS-EYE-OPTNEUR')" style="cursor:pointer;text-decoration:underline;">Optic neuritis (MUA, infectious, idiopathic)</strong> — bilateral mydriasis + acute blindness → MRI + CSF, aggressive immunosuppression<br>
       • <strong>Brainstem / CN III lesion</strong> — anisocoria + altered mentation, hemiparesis, cranial nerve deficits → emergency neuro workup<br>
-      • <strong>SARDS</strong> — acute bilateral blindness + dilated unresponsive pupils + normal fundus + PU/PD → chromatic PLR + ERG
+      • <strong onclick="renderDiseasePage('DIS-EYE-SARDS')" style="cursor:pointer;text-decoration:underline;">SARDS</strong> — acute bilateral blindness + dilated unresponsive pupils + normal fundus + PU/PD → chromatic PLR + ERG
     </div>
   </div>
 

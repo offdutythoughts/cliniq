@@ -24,8 +24,8 @@ export const redEyeFlowHtml = `
   <div style="margin-top:10px;padding:10px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;width:100%;">
     <div style="font-size:11px;font-weight:700;color:#F87171;margin-bottom:6px;">⚡ SIGHT-THREATENING RED EYE — DO NOT MISS</div>
     <div style="font-size:9.5px;line-height:1.55;color:#FCA5A5;">
-      • <strong>Acute glaucoma</strong> — episcleral congestion + mydriasis + corneal oedema + IOP &gt;25 mmHg → sight loss within hours<br>
-      • <strong>Anterior uveitis</strong> — miosis + aqueous flare + ↓ IOP → if untreated → secondary glaucoma, blindness<br>
+      • <strong onclick="renderDiseasePage('DIS-OPH-GLAUCOMA')" style="cursor:pointer;text-decoration:underline;">Acute glaucoma</strong> — episcleral congestion + mydriasis + corneal oedema + IOP &gt;25 mmHg → sight loss within hours<br>
+      • <strong onclick="renderDiseasePage('DIS-EYE-UVEITIS-ANT')" style="cursor:pointer;text-decoration:underline;">Anterior uveitis</strong> — miosis + aqueous flare + ↓ IOP → if untreated → secondary glaucoma, blindness<br>
       • <strong>Deep / melting ulcer</strong> — stromal loss + Seidel-positive → globe rupture<br>
       • <strong>Hyphaema with hypertension</strong> — measure BP; uncontrolled HT can blind quickly<br>
       • <strong>Globe rupture / corneal laceration</strong> — minimise handling, no tonometry, refer

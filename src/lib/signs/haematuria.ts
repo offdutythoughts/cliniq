@@ -88,7 +88,7 @@ export const haematuriaFlowHtml = `
     <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:5px;">⚡ DO NOT MISS</div>
     <div style="font-size:9.5px;line-height:1.55;color:#FCA5A5;">
       • <strong>Urethral obstruction</strong> — male cat (FIC + plug), male dog (urolith) → hyperkalaemia within hours<br>
-      • <strong>Anticoagulant rodenticide</strong> — haematuria can be the presenting sign before generalised bleed<br>
+      • <strong onclick="renderDiseasePage('DIS-BD-ROD')" style="cursor:pointer;text-decoration:underline;">Anticoagulant rodenticide</strong> — haematuria can be the presenting sign before generalised bleed<br>
       • <strong>Older Scottie / WHWT / Beagle bitch + persistent HU</strong> → TCC (CADET BRAF ~85% sensitive)<br>
       • <strong>HU + ARF + pyrexia</strong> → leptospirosis (PPE — zoonotic) or septic pyelonephritis
     </div>

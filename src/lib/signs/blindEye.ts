@@ -392,7 +392,7 @@ export const blindEyeAcuteHtml = `
         <div style="font-size:10.5px;font-weight:700;color:#F87171;">Acute Glaucoma <span style="font-size:9px;font-weight:400;color:#FCA5A5;">Dog + Cat ›</span></div>
         <div style="font-size:9px;color:rgba(252,165,165,.8);line-height:1.4;">Fixed mid-dilated pupil · corneal oedema · IOP &gt;25 mmHg · pain · episcleral injection</div>
       </div>
-      <div style="background:rgba(220,38,38,0.08);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-OPH-LENS-LUX')">
+      <div style="background:rgba(220,38,38,0.08);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-EYE-LENS-LUX')">
         <div style="font-size:10.5px;font-weight:700;color:#F87171;">Anterior Lens Luxation <span style="font-size:9px;font-weight:400;color:#FCA5A5;">Dog ›</span></div>
         <div style="font-size:9px;color:rgba(252,165,165,.8);line-height:1.4;">Aphakic crescent · lens in AC · secondary glaucoma · Jack Russell / Tibetan Terrier / Border Collie</div>
       </div>
@@ -403,15 +403,15 @@ export const blindEyeAcuteHtml = `
   <div style="padding:10px 12px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.25);border-radius:10px;width:100%;margin-bottom:8px;">
     <div style="font-size:11px;font-weight:700;color:#FCD34D;margin-bottom:6px;">🌑 RETINAL — Sudden onset, absent dazzle + PLR, abnormal or normal fundus</div>
     <div style="display:flex;flex-direction:column;gap:5px;">
-      <div style="background:rgba(245,158,11,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-OPH-SARDS')">
+      <div style="background:rgba(245,158,11,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-EYE-SARDS')">
         <div style="font-size:10.5px;font-weight:700;color:#FCD34D;">SARDS — Sudden Acquired Retinal Degeneration Syndrome <span style="font-size:9px;font-weight:400;color:#FDE68A;">Dog ›</span></div>
         <div style="font-size:9px;color:rgba(253,230,138,.8);line-height:1.4;">Peracute bilateral blindness · dilated unresponsive pupils · <strong>normal fundus</strong> (key clue) · PU/PD + weight gain (Cushingoid phenotype) · Red PLR absent · Blue PLR <em>present</em> (melanopsin RGCs spared) · Flat ERG confirms · Mini Schnauzer / Brittany / Dachshund predisposed</div>
       </div>
-      <div style="background:rgba(245,158,11,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-OPH-RD')">
+      <div style="background:rgba(245,158,11,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-EYE-RD')">
         <div style="font-size:10.5px;font-weight:700;color:#FCD34D;">Hypertensive Retinal Detachment <span style="font-size:9px;font-weight:400;color:#FDE68A;">Cat &gt;&gt; Dog ›</span></div>
         <div style="font-size:9px;color:rgba(253,230,138,.8);line-height:1.4;">Bilateral · bullous retinal detachment · tortuous vessels · hyphaema · SBP &gt;180 mmHg · <strong>Measure BP FIRST</strong> · older cat → CKD / hyperthyroid / HAC · Retina may reattach if BP controlled within 24–48 h</div>
       </div>
-      <div style="background:rgba(245,158,11,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-OPH-UVEITIS')">
+      <div style="background:rgba(245,158,11,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-EYE-UVEITIS-ANT')">
         <div style="font-size:10.5px;font-weight:700;color:#FCD34D;">Exudative Retinal Detachment from Uveitis <span style="font-size:9px;font-weight:400;color:#FDE68A;">Dog + Cat ›</span></div>
         <div style="font-size:9px;color:rgba(253,230,138,.8);line-height:1.4;">Aqueous flare + ↓ IOP → uveitis driving RD · Infectious (toxo, FIP, tick-borne, fungal) or immune-mediated</div>
       </div>
@@ -422,7 +422,7 @@ export const blindEyeAcuteHtml = `
   <div style="padding:10px 12px;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.25);border-radius:10px;width:100%;margin-bottom:8px;">
     <div style="font-size:11px;font-weight:700;color:#C4B5FD;margin-bottom:6px;">🧬 OPTIC NERVE — Bilateral mydriasis, absent PLR (red + blue), abnormal disc</div>
     <div style="display:flex;flex-direction:column;gap:5px;">
-      <div style="background:rgba(168,85,247,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-OPH-OPTIC-NEURITIS')">
+      <div style="background:rgba(168,85,247,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-EYE-OPTNEUR')">
         <div style="font-size:10.5px;font-weight:700;color:#C4B5FD;">Optic Neuritis — MUA / Infectious / Idiopathic <span style="font-size:9px;font-weight:400;color:#DDD6FE;">Dog (&gt; Cat) ›</span></div>
         <div style="font-size:9px;color:rgba(221,214,254,.8);line-height:1.4;">Acute bilateral blindness · dilated unresponsive pupils · swollen / haemorrhagic optic disc · both Red AND Blue PLR absent (distinguishes from SARDS) · MRI + CSF mandatory · aggressive immunosuppression (prednisolone 2 mg/kg + cytarabine)</div>
       </div>
@@ -478,7 +478,7 @@ export const blindEyeChronicHtml = `
   <div style="padding:10px 12px;background:rgba(245,158,11,0.07);border:1px solid rgba(245,158,11,0.25);border-radius:10px;width:100%;margin-bottom:8px;">
     <div style="font-size:11px;font-weight:700;color:#FCD34D;margin-bottom:6px;">🌑 RETINAL DEGENERATION — Tapetal hyperreflectivity, vessel attenuation, absent ERG</div>
     <div style="display:flex;flex-direction:column;gap:5px;">
-      <div style="background:rgba(245,158,11,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-OPH-PRA')">
+      <div style="background:rgba(245,158,11,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-EYE-PRA')">
         <div style="font-size:10.5px;font-weight:700;color:#FCD34D;">Progressive Retinal Atrophy (PRA) <span style="font-size:9px;font-weight:400;color:#FDE68A;">Dog &gt;&gt; Cat ›</span></div>
         <div style="font-size:9px;color:rgba(253,230,138,.8);line-height:1.4;">Rod loss first → night blindness → day blindness over months to years · Tapetal hyperreflectivity + vessel attenuation + disc pallor · Labrador, Poodle, Cocker, Irish Setter, Tibetan Terrier, Mini Schnauzer · Genetic testing (prcd, rcd1) available for many breeds · No treatment</div>
       </div>
@@ -486,7 +486,7 @@ export const blindEyeChronicHtml = `
         <div style="font-size:10.5px;font-weight:700;color:#FCD34D;">Taurine-deficient Central Retinal Degeneration (TCRD) <span style="font-size:9px;font-weight:400;color:#FDE68A;">Cat</span></div>
         <div style="font-size:9px;color:rgba(253,230,138,.8);line-height:1.4;">Vegetarian / homemade / taurine-deficient diet · bilateral central hyperreflective ellipse before peripheral involvement · early supplementation may halt progression · test diet history</div>
       </div>
-      <div style="background:rgba(245,158,11,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-OPH-RD')">
+      <div style="background:rgba(245,158,11,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-EYE-RD')">
         <div style="font-size:10.5px;font-weight:700;color:#FCD34D;">Chorioretinitis (Infectious) <span style="font-size:9px;font-weight:400;color:#FDE68A;">Dog + Cat ›</span></div>
         <div style="font-size:9px;color:rgba(253,230,138,.8);line-height:1.4;">Multifocal grey-white retinal lesions ± haemorrhage · Cat: Toxoplasma, FIP, FeLV/FIV, Cryptococcus · Dog: Ehrlichia, RMSF, Leishmania, Blastomyces, Histoplasma · systemic infectious workup + titres</div>
       </div>
@@ -497,7 +497,7 @@ export const blindEyeChronicHtml = `
   <div style="padding:10px 12px;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.25);border-radius:10px;width:100%;margin-bottom:8px;">
     <div style="font-size:11px;font-weight:700;color:#6EE7B7;margin-bottom:6px;">👁️ LENS / ANTERIOR SEGMENT — Ocular media opacity blocking visual pathway</div>
     <div style="display:flex;flex-direction:column;gap:5px;">
-      <div style="background:rgba(16,185,129,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-OPH-CATARACT')">
+      <div style="background:rgba(16,185,129,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-EYE-CATARACT')">
         <div style="font-size:10.5px;font-weight:700;color:#6EE7B7;">Mature / Hypermature Cataract <span style="font-size:9px;font-weight:400;color:#A7F3D0;">Dog &gt;&gt; Cat ›</span></div>
         <div style="font-size:9px;color:rgba(167,243,208,.8);line-height:1.4;">No fundus reflex · white/grey lens opacity · DM is a major cause in dogs (rapid bilateral progression) · chronic uveitis is the main cause in cats · lens-induced uveitis common · phacoemulsification referral if patient is healthy and owner is motivated</div>
       </div>
@@ -505,7 +505,7 @@ export const blindEyeChronicHtml = `
         <div style="font-size:10.5px;font-weight:700;color:#6EE7B7;">Chronic Glaucoma with Buphthalmos <span style="font-size:9px;font-weight:400;color:#A7F3D0;">Dog + Cat ›</span></div>
         <div style="font-size:9px;color:rgba(167,243,208,.8);line-height:1.4;">Globe enlargement · Haab's striae · corneal oedema · blind + painful · enucleation often the most humane option</div>
       </div>
-      <div style="background:rgba(16,185,129,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-OPH-UVEITIS')">
+      <div style="background:rgba(16,185,129,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-EYE-UVEITIS-ANT')">
         <div style="font-size:10.5px;font-weight:700;color:#6EE7B7;">Chronic Uveitis with Posterior Sequelae <span style="font-size:9px;font-weight:400;color:#A7F3D0;">Dog + Cat ›</span></div>
         <div style="font-size:9px;color:rgba(167,243,208,.8);line-height:1.4;">360° posterior synechiae → iris bombé → secondary glaucoma · cataract from nutritional lens deprivation · exudative RD · FIV / FeLV / tick-borne / immune-mediated in background</div>
       </div>
@@ -531,7 +531,7 @@ export const blindEyeChronicHtml = `
   <div style="padding:10px 12px;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.25);border-radius:10px;width:100%;margin-bottom:8px;">
     <div style="font-size:11px;font-weight:700;color:#C4B5FD;margin-bottom:6px;">🔬 NEOPLASIA / CNS — Insidious, may present with other neurological signs</div>
     <div style="display:flex;flex-direction:column;gap:5px;">
-      <div style="background:rgba(168,85,247,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-OPH-IRIS-MEL')">
+      <div style="background:rgba(168,85,247,0.07);border-radius:7px;padding:7px 10px;cursor:pointer;" onclick="renderDiseasePage('DIS-EYE-IRIS-MEL')">
         <div style="font-size:10.5px;font-weight:700;color:#C4B5FD;">Feline Diffuse Iris Melanoma → Secondary Glaucoma <span style="font-size:9px;font-weight:400;color:#DDD6FE;">Cat ›</span></div>
         <div style="font-size:9px;color:rgba(221,214,254,.8);line-height:1.4;">Progressive flat hyperpigmentation → dyscoria → ↑ IOP → blind painful eye · enucleate early at first stromal infiltration signs · metastatic risk 19–63%</div>
       </div>

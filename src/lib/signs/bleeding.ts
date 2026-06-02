@@ -462,6 +462,84 @@ ${dxTabs('dx')}
 
 </div>
 
+<div style="margin-top:10px;padding:10px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;">
+  <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:5px;">🔬 MINIMUM DATABASE — Primary Haemostasis</div>
+  <div style="font-size:9.5px;line-height:1.6;color:var(--gray);">
+    <strong style="color:var(--white);">1st line:</strong> CBC with platelet count · Blood smear (clumping, morphology, intracellular organisms) · PT · aPTT · biochemistry (total protein, liver function)<br>
+    <strong style="color:var(--white);">2nd line (plt normal + bleeding):</strong> BMBT · vWF activity assay · infectious disease titres / PCR (Ehrlichia canis, Anaplasma phagocytophilum, A. platys, R. rickettsii)<br>
+    <strong style="color:var(--white);">3rd line:</strong> BM aspirate + core (if other cell lines ↑ or ↓ unexpectedly) · individual factor assays<br>
+    <strong style="color:var(--white);">Threshold:</strong> Spontaneous bleed risk at &lt;50,000/µL · life-threatening at &lt;10 ×10⁹/L<br>
+    <strong style="color:var(--white);">Inherited red flag:</strong> Repeated bleeding from puppyhood (teething, vaccination, elective surgery) → inherited coagulopathy likely
+  </div>
+  <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-top:10px;margin-bottom:5px;">📊 COAG TEST PATTERN — identify defect type</div>
+  <table style="width:100%;border-collapse:collapse;font-size:8.5px;">
+    <thead>
+      <tr style="border-bottom:1.5px solid rgba(148,163,184,0.3);">
+        <th style="padding:5px 6px;text-align:left;color:var(--gray);font-weight:700;width:30%;"></th>
+        <th style="padding:5px 6px;text-align:center;color:#FCA5A5;font-weight:700;">Plt &lt;50k</th>
+        <th style="padding:5px 6px;text-align:center;color:#FCD34D;font-weight:700;">PT</th>
+        <th style="padding:5px 6px;text-align:center;color:#A5B4FC;font-weight:700;">aPTT</th>
+        <th style="padding:5px 6px;text-align:left;color:var(--gray);font-weight:700;">Other</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+        <td style="padding:5px 6px;color:var(--white);font-weight:600;">Thrombocytopenia</td>
+        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">Yes</td>
+        <td style="padding:5px 6px;text-align:center;color:#6EE7B7;">Normal</td>
+        <td style="padding:5px 6px;text-align:center;color:#6EE7B7;">Normal</td>
+        <td style="padding:5px 6px;color:var(--gray);"></td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+        <td style="padding:5px 6px;color:var(--white);font-weight:600;">Thrombocytopathia</td>
+        <td style="padding:5px 6px;text-align:center;color:#6EE7B7;">No</td>
+        <td style="padding:5px 6px;text-align:center;color:#6EE7B7;">Normal</td>
+        <td style="padding:5px 6px;text-align:center;color:#6EE7B7;">Normal</td>
+        <td style="padding:5px 6px;color:#FCD34D;">↑ BMBT</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+        <td style="padding:5px 6px;color:var(--white);font-weight:600;">Rodenticide</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--gray);font-size:8px;">No*</td>
+        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">↑</td>
+        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">↑</td>
+        <td style="padding:5px 6px;color:var(--gray);"></td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+        <td style="padding:5px 6px;color:var(--white);font-weight:600;">Hepatic failure</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--gray);font-size:8px;">No*</td>
+        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">↑</td>
+        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">↑</td>
+        <td style="padding:5px 6px;color:#FCD34D;">Abnormal LFTs</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+        <td style="padding:5px 6px;color:var(--white);font-weight:600;">DIC</td>
+        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">Typically</td>
+        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">↑</td>
+        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">↑</td>
+        <td style="padding:5px 6px;color:#FCD34D;">↑ D-dimers</td>
+      </tr>
+      <tr>
+        <td style="padding:5px 6px;color:var(--white);font-weight:600;">Haemophilia A+B</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--gray);font-size:8px;">No*</td>
+        <td style="padding:5px 6px;text-align:center;color:#6EE7B7;">Normal</td>
+        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">↑</td>
+        <td style="padding:5px 6px;color:#FCD34D;">Factor assays</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="font-size:8px;color:var(--gray);margin-top:4px;">* No unless haemorrhage is extreme</div>
+</div>
+
+<div style="margin-top:10px;padding:10px 12px;background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.25);border-radius:10px;">
+  <div style="font-size:10px;font-weight:700;color:#5EEAD4;margin-bottom:5px;">💊 TREATMENT POINTERS — Primary Haemostasis</div>
+  <div style="font-size:9.5px;line-height:1.6;color:var(--gray);">
+    <strong style="color:var(--white);">IMTP:</strong> Prednisolone 2 mg/kg/day ± mycophenolate / cyclosporine / azathioprine (dog only). Vincristine 0.02 mg/kg IV once to stimulate platelet release. Doxycycline 5–10 mg/kg PO BID while tick serology pending.<br>
+    <strong style="color:var(--white);">vWD:</strong> Cryoprecipitate (richest vWF source) or FFP. DDAVP 1 µg/kg SC 30 min pre-op (type I only — not type III). Avoid platelet inhibitors.<br>
+    <strong style="color:var(--white);">Transfusion:</strong> PCV &lt;20 % after acute blood loss → packed RBC or fresh whole blood (provides RBCs + clotting factors). Type and cross-match; cats must be blood-typed before any transfusion.<br>
+    <strong style="color:var(--white);">Cage rest:</strong> Strict cage rest for all actively thrombocytopenic patients. Avoid IM injections and cystocentesis.
+  </div>
+</div>
+
 <div style="margin-top:10px;padding:10px 12px;background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.25);border-radius:10px;">
   <div style="font-size:11px;font-weight:700;color:#5EEAD4;margin-bottom:6px;">📋 LINKED DISEASE PAGES</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;">
