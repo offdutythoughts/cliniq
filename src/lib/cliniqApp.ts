@@ -6614,7 +6614,7 @@ function renderAtaxiaFlow(){
         Cerebellar<div class="fn-sub">Hypermetria (dysmetria)<br>Intention tremor<br>Truncal sway<br>Wide-based stance<br><strong style="color:#93C5FD;">No paresis</strong><br>Normal mentation</div>
       </div>
       <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="renderVestibularFlow()">
-        Vestibular<div class="fn-sub">Head tilt<br>Nystagmus<br>Falling / rolling<br>Circling<br><strong style="color:var(--amber-text);">± Paresis (central)</strong><br>± ↓ Mentation (central)</div>
+        Vestibular<div class="fn-sub">Head tilt<br>Nystagmus<br>Falling / rolling<br>Tight circling<br><strong style="color:var(--amber-text);">± Paresis (central)</strong><br>± ↓ Mentation (central)</div>
       </div>
       <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="renderMyelopathyFlow()">
         Proprioceptive<div class="fn-sub">Knuckling<br>Crossing over<br>Scuffing toes<br>Delayed CP placing<br><strong style="color:#FCA5A5;">Paresis present</strong><br>Spinal cord / brainstem</div>
@@ -6719,7 +6719,7 @@ function renderDxAtaxiaExam(){
     <div class="dx-arrow">↓</div>
     <div class="dx-row c3">
       <div class="dx-test" style="text-align:center;font-size:9px;"><strong>Cerebellar</strong><br>Hypermetria (dysmetria)<br>Intention tremor · truncal sway<br>Wide-based stance<br><strong>No paresis</strong> · normal mentation</div>
-      <div class="dx-test" style="text-align:center;font-size:9px;background:#0D7377;"><strong>Vestibular</strong><br>Head tilt · nystagmus<br>Falling / rolling / circling<br>± paresis (central)<br>± ↓ mentation (central)</div>
+      <div class="dx-test" style="text-align:center;font-size:9px;background:#0D7377;"><strong>Vestibular</strong><br>Head tilt · nystagmus<br>Falling / rolling / tight circling<br>± paresis (central)<br>± ↓ mentation (central)</div>
       <div class="dx-test" style="text-align:center;font-size:9px;"><strong>Proprioceptive</strong><br>Knuckling · crossing over<br>Scuffing toes · delayed CP<br><strong>Paresis present</strong><br>Spinal cord / brainstem</div>
     </div>
     <div class="dx-arrow">↓</div>
