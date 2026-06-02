@@ -37,6 +37,7 @@ export interface Disease {
   id: string
   name: string
   sp: string
+  category?: string
   synonyms?: string
   breed?: string
   age?: string
