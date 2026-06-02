@@ -25,6 +25,8 @@ import {
 } from './signs/abnormalPupil'
 import {
   blindEyeFlowHtml,
+  blindEyeAcuteHtml,
+  blindEyeChronicHtml,
   blindEyeDxHistoryHtml,
   blindEyeDxExamHtml,
   blindEyeDxDxHtml,
@@ -1670,6 +1672,156 @@ ddx:'@DIS-NEU-CEREHYPO:Cerebellar hypoplasia (non-progressive from first ambulat
      pearl:'⚠️ ANY cat with unexplained anisocoria — especially with a D-shape or reverse-D pupil — should be FeLV-tested. SPS is distinct from Horner\'s (which has miosis PLUS ptosis + enophthalmos + 3rd eyelid protrusion). It is also distinct from efferent mydriasis (vision normal in BOTH but FeLV-positive points to SPS, not CN III lesion).',
      ddx:'@DIS-NEU-HORNERS:Horner\'s syndrome (miosis + ptosis + enophthalmos + 3rd eyelid)|@DIS-EYE-EFF-MYDR:Efferent (CN III) mydriasis (anisocoria but vision normal — distinguish by FeLV status and pupil shape)|@DIS-EYE-IRIS-ATR:Iris atrophy (ragged margin, transilluminates)|@DIS-EYE-UVEITIS-ANT:Anterior uveitis (aqueous flare + low IOP)|Pharmacological miosis (history)'},
 
+    // ── OPHTHALMIC DISEASE PAGES — BLINDNESS ─────────────────────────────
+    {id:'DIS-OPH-HORNER',name:"Horner's Syndrome",sp:'Dog + Cat',synonyms:"Oculosympathetic paresis, Horner syndrome",
+    breed:"Golden Retriever (idiopathic 3rd-order — most common breed-specific form)|Cat: middle ear disease is the most common 3rd-order cause|Dog 2nd-order: mediastinal mass, thymoma, lymphoma, brachial plexus avulsion",
+    age:'Any age',sex:'No sex predisposition',
+    path:"Interruption of the 3-neuron oculosympathetic pathway|#1st order (central)|-Brainstem or cervical spinal cord lesion|#2nd order (preganglionic)|-T1–T3 → thoracic inlet → mediastinum → cranial cervical ganglion|#3rd order (postganglionic)|-Cranial cervical ganglion → tympanic bulla → orbit|#Signs of sympathetic loss|-Loss of iris dilator → miosis|-Loss of Müller muscle → ptosis and enophthalmos|-Loss of retractor bulbi smooth muscle → 3rd eyelid protrusion",
+    signs:"Classic tetrad (all unilateral): miosis + ptosis + enophthalmos + 3rd eyelid protrusion|Anisocoria most obvious in dim light|No visual deficit, no pain, no aqueous flare|#Species differences|-Cats: concurrent CN VII signs if tympanic bulla involved|-Golden Retriever: idiopathic 3rd-order most common; spontaneous resolution expected",
+    severe:"Concurrent respiratory distress (2nd-order mediastinal mass)|Rapidly progressive neurological deficits (1st-order cord compression)|Bilateral Horner's = catastrophic spinal or intracranial pathology",
+    conf:"Clinical diagnosis + pharmacological localisation|Phenylephrine 1%: instil both eyes — affected eye dilates within 20 min = 3rd order (denervation hypersensitivity)|No dilation to 1%: instil phenylephrine 10% — dilation 20-40 min = 2nd order; >40 min = 1st order",
+    supp:"1st order: MRI brain + cervical cord + CSF|2nd order: thoracic radiograph + CT thorax/neck|3rd order: otoscopy + CT/MRI tympanic bullae|All: complete neurological examination|Cat: FeLV/FIV serology",
+    tx1:"Treat underlying cause — this takes priority|Idiopathic 3rd-order in Golden Retriever: conservative management; spontaneous resolution in >90% within weeks to months|Phenylephrine 1% q6h topically for cosmesis only (temporary)",
+    tx2:"1st-order: neurosurgical decompression if cord compression identified|2nd-order: treat mediastinal disease (lymphoma, thymoma)|3rd-order otitis media/polyp: bulla osteotomy + antimicrobials",
+    monitor:"Serial neurological examinations|3rd-order idiopathic: monthly recheck until resolution|Note time to resolution",
+    prog:"3rd-order idiopathic (Golden Retriever): excellent — spontaneous resolution >90% within weeks to months|1st/2nd-order: depends on underlying pathology",
+    pearl:"Horner's causes MIOSIS (small pupil) — not mydriasis. The 3rd eyelid protrusion is passive (enophthalmos), not active. ALWAYS examine the full nervous system. Cat with concurrent CN VII + Horner's = middle ear pathology. Resist excessive investigation of idiopathic Horner's in the Golden Retriever — the vast majority resolve spontaneously.",
+    ddx:"Anterior uveitis (miosis + aqueous flare + low IOP)|Iris sphincter atrophy (cat — no ptosis or enophthalmos)|Spastic pupil syndrome (FeLV, cat — episodic unilateral)|Pharmacological miosis|Physiological anisocoria"},
+
+    {id:'DIS-OPH-UVEITIS',name:'Anterior Uveitis',sp:'Dog + Cat',synonyms:'Anterior uveitis, iridocyclitis, iritis',
+    breed:"Akita, Samoyed, Siberian Husky — uveodermatologic syndrome (VKH-like)|Golden Retriever — pigmentary uveitis (cystic)|Cocker Spaniel, Labrador Retriever — inherited cataract causing lens-induced uveitis",
+    age:'Any age. Infectious causes: young adults. Immune-mediated/neoplastic: older animals.',sex:'No sex predisposition',
+    path:"Breakdown of blood-aqueous barrier via immune complex deposition, direct pathogen invasion, or neurogenic mechanisms|Protein-rich aqueous (flare) + inflammatory cells accumulate in anterior chamber|#Consequences of untreated uveitis|-Posterior synechiae → iris adheres to lens|-Secondary glaucoma → angle obstruction|-Cataract — nutritional lens deprivation|-Exudative retinal detachment",
+    signs:"Blepharospasm, photophobia, epiphora|Episcleral injection (deep circumlimbal — hot ring)|Miosis|Aqueous flare (Tyndall effect on slit-lamp)|Low IOP (<10 mmHg)|Keratic precipitates on corneal endothelium|Hypopyon (white cell layer, ventral AC)|Hyphaema|Posterior synechiae (festooned or irregular pupil)|#Species differences|-Cats: FeLV/FIV, FIP, Bartonella, Toxoplasma — most common infectious causes|-Dogs: Brucella, tick-borne disease, Leptospira, fungal — rule out systematically",
+    severe:"Acute IOP rise >25 mmHg = secondary glaucoma complicating uveitis — URGENT|Panophthalmitis (septic extension)|Exudative retinal detachment",
+    conf:"Slit-lamp: aqueous flare (Tyndall effect), KP, posterior synechiae|Tonometry: IOP typically <=10 mmHg (contrast: glaucoma has elevated IOP)|Fluorescein: MANDATORY to exclude concurrent corneal ulcer before any topical steroids|Schirmer tear test (exclude KCS)|Ocular ultrasound if view obscured",
+    supp:"CBC, biochemistry, urinalysis, blood pressure|#Cat: FeLV/FIV serology, Toxoplasma IgG/IgM, FCoV titre (FIP), Bartonella serology, Cryptococcus LCAT|#Dog: Brucella canis (ZOONOTIC — mandatory), tick-borne panel (Ehrlichia/Anaplasma/RMSF/Borrelia), Leptospirosis MAT titre, fungal serology (Blastomyces/Histoplasma/Coccidioides)|Thoracic + abdominal imaging (older animal — neoplasia screen)",
+    tx1:"Topical 1% prednisolone acetate q4-6h — ONLY after fluorescein ulcer excluded|Topical atropine 1% q12-24h if IOP normal — maintain mydriasis, prevent posterior synechiae, reduce ciliary spasm|Monitor IOP every 24-72h",
+    tx2:"Topical NSAID (diclofenac or ketorolac) if steroids contraindicated|Systemic prednisolone if no infection and severe bilateral disease|Cyclosporine or azathioprine for uveodermatologic syndrome (lifelong)|Specific antimicrobial for infectious cause|Secondary glaucoma: add dorzolamide + timolol; withdraw atropine",
+    monitor:"IOP every 24-72h during acute phase|Slit-lamp recheck at 1-2 weeks|Taper topical steroids gradually|Recheck 6-8 weeks post-infectious treatment",
+    prog:"Single episode treated early: good|Recurrent or chronic: guarded — >50% develop cataract, synechiae, or secondary glaucoma over time|Uveodermatologic syndrome: lifelong immunosuppression required|Infectious uveitis: depends on pathogen response",
+    pearl:"NEVER apply topical steroids without fluorescein first — a concurrent melting ulcer will rapidly perforate under steroids. IOP LOW in uveitis; IOP HIGH = uveitis has caused secondary glaucoma — tonometry distinguishes them. Brucella canis is zoonotic — notify owners before testing. Bilateral acute uveitis in an older animal demands a neoplasia screen.",
+    ddx:"@DIS-OPH-GLAUCOMA:Acute glaucoma (IOP elevated, fixed mid-dilated pupil vs miosis)|Corneal ulcer or melting ulcer (fluorescein positive)|Keratoconjunctivitis sicca (Schirmer <15 mm/min)|Iris atrophy (no flare, older dog)|Coagulopathy-induced hyphaema|Blunt trauma"},
+
+    {id:'DIS-OPH-GLAUCOMA',name:'Acute Glaucoma',sp:'Dog + Cat',synonyms:'Acute angle-closure glaucoma, primary closed-angle glaucoma, PACG, acute IOP elevation',
+    breed:'Dog primary: American Cocker Spaniel, Basset Hound, Chow Chow, Shar Pei, Shih Tzu, Akita, Springer Spaniel|Cat primary: rare — Siamese, Burmese|Secondary: any breed from uveitis, lens luxation, neoplasia',
+    age:'Middle-aged to older for primary; any age secondary',sex:'Female American Cocker Spaniel slightly overrepresented for primary',
+    severe:"EMERGENCY — permanent blindness often established within 24-72h of severely elevated IOP|Buphthalmos (globe enlargement) and Haab striae indicate chronic end-stage|Bilateral disease is inevitable in primary glaucoma",
+    path:"Aqueous humour: ciliary body → pupil → iridocorneal angle (ICA) → episcleral veins|#Primary closed-angle glaucoma|-Pectinate ligament dysplasia → congenitally narrow ICA|-Impaired drainage → IOP rises|#Secondary glaucoma|-Uveitis (synechiae, fibrin block)|-Anterior lens luxation (pupillary block)|-Neoplasia, hyphaema, pigmentary uveitis|#End result|-Rising IOP → retinal ganglion cell apoptosis — irreversible within hours to days",
+    signs:"Acute severe ocular pain — blepharospasm, pawing at eye, head shyness|Episcleral injection (deep circumlimbal congestion)|Diffuse corneal oedema (blue/steamy cornea)|Mid-dilated fixed pupil unresponsive to light|IOP typically 40-80 mmHg (normal 15-25 mmHg)|Reduced or absent vision|#Species differences|-Dogs: primary closed-angle common in predisposed breeds; latanoprost effective|-Cats: primary glaucoma rare; latanoprost INEFFECTIVE — use dorzolamide + timolol",
+    conf:"Tonometry (rebound tonometer preferred): IOP >25 mmHg suspicious; >40 mmHg diagnostic in acute pain|Gonioscopy (referral): assess ICA width and pectinate ligament|Slit-lamp: lens position (exclude luxation), uveitis signs|Ocular ultrasound: retina, vitreous, mass",
+    supp:"Tonometry + complete ophthalmic exam of contralateral eye (high bilateral risk in primary)|Fluorescein (concurrent exposure ulcer)|Blood pressure (hypertensive optic neuropathy)|CBC/biochemistry + FeLV/FIV (cats) for secondary cause workup",
+    tx1:"IMMEDIATE IOP reduction — time is vision|Dorzolamide 2% + timolol 0.5% (Cosopt) 1 drop q8h — first-line combination safe in both species|Mannitol 1-2 g/kg IV over 20 min if IOP >50 mmHg or no topical response|Analgesia: NSAID IV/SC +/- opioid|Refer same day",
+    tx2:"Dog: latanoprost 0.005% q12-24h — increases uveoscleral outflow via FP receptors (effective in dogs)|Cat: latanoprost INEFFECTIVE — cats lack functional FP prostaglandin receptors in the ciliary body; use dorzolamide + timolol alone|Enucleation or evisceration for blind painful eye",
+    monitor:"IOP q4-6h in acute phase, then daily until stable|Refer same day for gonioscopy and surgical intervention|Contralateral eye: baseline tonometry + preventive medication in primary glaucoma",
+    prog:"Vision present at presentation with rapid IOP control: guarded — >50% blind within 1 year in primary glaucoma|Blind + painful: enucleation gives immediate pain relief and excellent quality of life|Primary glaucoma: fellow eye median ~8 months to presentation without prophylaxis",
+    pearl:"LATANOPROST IS EFFECTIVE IN DOGS BUT INEFFECTIVE IN CATS — the single most important species drug difference in veterinary ophthalmology. Cats lack functional FP prostaglandin receptors. Tonometrise BOTH eyes. Blue eye + elevated IOP = glaucoma; blue eye + LOW IOP = uveitis. Tonometry always distinguishes them.",
+    ddx:"@DIS-OPH-UVEITIS:Anterior uveitis (IOP LOW, miosis, aqueous flare)|@DIS-OPH-LENS-LUX:Anterior lens luxation (lens in AC — causing secondary glaucoma)|Corneal oedema from endothelial disease (IOP normal)|Blunt trauma or hyphaema"},
+
+    {id:'DIS-OPH-IRIS-MEL',name:'Feline Diffuse Iris Melanoma',sp:'Cat',synonyms:'Feline iris melanoma, feline iris melanosis, diffuse iris melanocytoma',
+    breed:'No breed predisposition. Older domestic cats.',age:'Typically >7 years',sex:'No sex predisposition',
+    path:"Diffuse melanocyte proliferation in the anterior iris stroma|#Progression|-Flat multifocal pigmentation → confluent hyperpigmentation → stromal infiltration|-Invasion through trabecular meshwork → secondary glaucoma|-Ciliary body/scleral invasion → increased metastatic risk|#Metastasis|-Haematogenous to liver, lungs, spleen, regional lymph nodes|-Reported rate 19-63% depending on grade and invasion depth",
+    signs:"#Early|Flat, multifocal brown-black iris pigmentation — often incidental|#Progressive|Confluent hyperpigmentation, irregular or thickened iris surface|Dyscoria (pupil shape distortion)|#Late|Iris rubeosis (neovascularisation), elevated IOP, aqueous flare|Lens subluxation, vision loss",
+    severe:"Secondary glaucoma — acute pain, blepharospasm, episcleral injection, elevated IOP, globe enlargement|Systemic metastasis signs: hepatomegaly, respiratory signs, anorexia, weight loss",
+    conf:"Serial fundoscopic photography — documents progression (most important monitoring tool)|Slit-lamp biomicroscopy: flat + smooth = melanosis; raised, irregular, thickened borders = melanoma|Ocular ultrasound: iris thickening >1.5 mm suggests neoplasia|Histopathology of enucleated globe: definitive",
+    supp:"Serial photographs + IOP every 3-6 months|Staging when progression confirmed: thoracic 3-view radiographs + abdominal ultrasound + regional lymph node FNA|FeLV/FIV serology",
+    tx1:"Benign melanosis (flat, non-progressive, no dyscoria, IOP normal): serial monitoring with photography q3-6 months — no treatment required|Enucleation indications: progressive iris thickening, dyscoria, elevated IOP, aqueous flare, any confirmed progression|Enucleate at first evidence of stromal infiltration — do NOT wait for glaucoma to develop",
+    tx2:"Post-enucleation: staging and periodic re-evaluation|Adjunct chemotherapy: no proven benefit for feline ocular melanoma",
+    monitor:"Photography + IOP every 3-6 months for apparent melanosis|Monthly monitoring if any progression noted|Post-enucleation: thoracic + abdominal imaging every 6-12 months|Histopathology of enucleated globe is mandatory",
+    prog:"Benign iris melanosis: no metastatic risk, excellent prognosis|Iris-confined melanoma post-enucleation: median survival >24 months|Ciliary body or scleral invasion: metastatic rate 35-63%; median survival months to <1 year",
+    pearl:"Act on PROGRESSION, not presence of pigment alone. Dyscoria (pupil shape change) is a critical sign indicating stromal infiltration — enucleation counselling mandatory. Benign melanosis and early melanoma are clinically indistinguishable; serial photography is your only monitoring tool. Histopathology of the globe is essential for staging.",
+    ddx:"Benign iris melanosis (flat, non-progressive, no dyscoria, IOP normal)|Post-inflammatory iris hyperpigmentation|Congenital iris freckles|@DIS-OPH-GLAUCOMA:Secondary glaucoma (elevated IOP, pain)|Metastatic melanoma to uvea"},
+
+    {id:'DIS-OPH-LENS-LUX',name:'Anterior Lens Luxation',sp:'Dog',synonyms:'Lens luxation, ALL, primary lens luxation, PLL, lens instability',
+    topAlert:'EMERGENCY — anterior lens luxation causes rapid IOP elevation and irreversible blindness within 24-72h. Refer same day.',
+    breed:'Jack Russell Terrier (highest risk), Tibetan Terrier, Parson Russell Terrier, Border Collie, Sealyham Terrier, Welsh Terrier, Bull Terrier, Fox Terrier|Secondary: any breed with chronic uveitis or buphthalmos',
+    age:'Primary hereditary: 3-7 years. Secondary: any age.',sex:'No consistent sex predisposition',
+    path:"Zonular fibre degeneration → lens subluxation → complete luxation|#Primary (hereditary)|-ADAMTS17 autosomal recessive mutation — premature zonular structural failure|-Bilateral — fellow eye follows months to years later|#Secondary|-Chronic uveitis, buphthalmos, or trauma → zonule destruction|#Consequence of anterior luxation|-Lens in anterior chamber → pupillary block → IOP rises within hours|-Retinal ganglion cell apoptosis → irreversible vision loss",
+    signs:"Acute severe pain — blepharospasm|Diffuse corneal oedema|Episcleral injection|Aphakic crescent — arc of light at zonule-free zone|Lens visible in anterior chamber or at pupil plane|Iridodonesis, phakodonesis (trembling iris/lens)|Secondary glaucoma — occurs in virtually all anterior luxation cases within hours",
+    severe:"EMERGENCY — anterior luxation → IOP rises rapidly → irreversible blindness within 24-72h without surgical intervention",
+    conf:"Slit-lamp: lens in AC, aphakic crescent, iridodonesis, phakodonesis|Tonometry: IOP markedly elevated (typically >40 mmHg)|Genetic DNA test for ADAMTS17 mutation in terrier breeds",
+    supp:"Ocular ultrasound (lens position, vitreous, posterior segment when view obscured)|Contralateral complete ophthalmic exam + tonometry|Fluorescein (concurrent corneal ulcer from exposure)|ADAMTS17 genetic test in all terrier breeds at risk",
+    tx1:"EMERGENCY SURGICAL REFERRAL — intracapsular lensectomy within 24-48h for best vision preservation (~60-75% if vision present at presentation)|Medical temporising: dorzolamide 2% + timolol 0.5% (Cosopt) q8h|Mannitol 1-2 g/kg IV if IOP >50 mmHg",
+    tx2:"DO NOT USE MIOTICS (pilocarpine, demecarium) — pupillary constriction worsens pupillary block and traps the lens|Posterior luxation: less acute surgical urgency; manage IOP medically + refer for elective surgery|Prophylactic intracapsular lensectomy of contralateral subluxating eye recommended at same surgical visit",
+    monitor:"IOP q4-6h while awaiting surgery|Post-surgery: IOP + slit-lamp at 48h, 1 week, 1 month, then 3-monthly|Contralateral eye: quarterly tonometry and slit-lamp",
+    prog:"Emergency surgery within 24-48h with vision at presentation: ~60-75% vision preservation|Delayed surgery or prolonged uncontrolled IOP: majority lose vision|Primary lens luxation is bilateral — fellow eye requires monitoring and likely prophylactic surgery",
+    pearl:"Emergency means within 24 hours — not next week. BOTH eyes are affected in primary lens luxation (ADAMTS17) — examine and tonometrise the contralateral eye immediately. DO NOT use miotics — they trap the lens and worsen the block.",
+    ddx:"@DIS-OPH-GLAUCOMA:Acute glaucoma without lens luxation|@DIS-OPH-UVEITIS:Anterior uveitis (miosis, aqueous flare — no lens displacement)|Traumatic hyphaema (no lens displacement)|Cataract (lens in normal position, no luxation)"},
+
+    {id:'DIS-OPH-SARDS',name:'SARDS — Sudden Acquired Retinal Degeneration',sp:'Dog',synonyms:'SARDS, sudden acquired retinal degeneration syndrome, acute blindness dog, retinal photoreceptor death',
+    breed:'Miniature Schnauzer, Dachshund, Pug, Maltese, Cocker Spaniel, Brittany Spaniel, Bichon Frise|Smaller-breed dogs overrepresented|Crossbreeds most commonly affected',age:'Middle-aged to older; average 7-10 years',sex:'Possible female (spayed) overrepresentation — evidence conflicting',
+    path:"Diffuse loss of rod and cone photoreceptors in the outer retinal layers|Melanopsin-containing ganglion cells (ipRGCs) in the INNER retina are SPARED — explains preserved blue-light PLR|Idiopathic; possible immune-mediated component|40-60% have Cushing-like biochemistry without confirmed HAC",
+    signs:"Peracute bilateral blindness — complete within days|Absent menace response bilaterally|Absent or diminished dazzle reflex|Normal to mid-mydriatic pupils with abnormal PLR|#Fundus|Early: NORMAL (key diagnostic clue)|Late (weeks-months): tapetal hyperreflectivity + vessel attenuation + disc pallor|#Systemic (56-85%)|Polyphagia / weight gain (Cushingoid phenotype)|Polyuria / polydipsia|Panting|Elevated ALP, ALT, cholesterol",
+    severe:"Permanent bilateral blindness — no treatment restores vision|Adaptation is generally good; >95% of owners would not choose euthanasia",
+    conf:"Chromatic PLR (MOST USEFUL in-practice test):|  Red light PLR: ABSENT (outer retinal photoreceptors lost)|  Blue light PLR: PRESENT (melanopsin ipRGCs preserved) — distinguishes from optic neuritis where BOTH are absent|ERG (gold standard): flat or extinguished a- and b-waves|Fundoscopy: normal early; degeneration develops over weeks to months|Blood pressure: rule out hypertensive retinopathy",
+    supp:"CBC + biochemistry (ALP/ALT elevated, stress leukogram, low USG)|Blood pressure (rule out hypertensive RD)|ACTH stim / LDDST if systemic endocrine signs persist",
+    tx1:"No treatment restores vision — counsel owners early and honestly|Do NOT treat with immunosuppressants or IVIg (no evidence of benefit)|Treat concurrent confirmed HAC only if genuinely diagnosed",
+    tx2:"Home environment modifications: baby gates on stairs, pool fencing, avoid furniture rearrangement, auditory + olfactory cues|PU/PD management: increased outdoor access, potty pads|Secondary cataracts: may develop later — monitor IOP",
+    monitor:"No mandatory rechecks unless secondary cataracts, uveitis, or IOP elevation develop|Systemic signs often resolve within months",
+    prog:"Vision: grave — permanent bilateral blindness|Quality of life: good to excellent; most dogs adapt well within weeks to months",
+    pearl:"The chromatic PLR is the key in-practice test: RED absent + BLUE present = SARDS (outer retinal loss, inner retinal spared). If BOTH red AND blue PLR are absent = optic neuritis. Do NOT assume HAC — Cushingoid phenotype is common in SARDS dogs without true cortisol excess. Fundus is NORMAL early. ERG is the gold standard: flat ERG = SARDS.",
+    ddx:"@DIS-OPH-GLAUCOMA:Acute glaucoma (elevated IOP, corneal oedema)|@DIS-OPH-OPTIC-NEURITIS:Optic neuritis (both red AND blue PLR absent, swollen optic disc)|@DIS-OPH-RD:Hypertensive retinal detachment (check BP)|@DIS-OPH-PRA:Progressive retinal atrophy (gradual, night blindness first, abnormal fundus)|Central/cortical blindness (dazzle + PLR intact, menace absent)|Enrofloxacin retinal toxicity (cat — stop drug immediately)"},
+
+    {id:'DIS-OPH-PRA',name:'Progressive Retinal Atrophy (PRA)',sp:'Dog',synonyms:'PRA, progressive retinal atrophy, hereditary retinal degeneration, photoreceptor degeneration, prcd-PRA, rcd1',
+    breed:"prcd: Labrador, Poodle (mini/toy), Cocker, Nova Scotia Duck Tolling Retriever, and others|rcd1: Irish Setter|CSNB (congenital stationary night blindness): Briard|>25 breeds affected — genetic testing available for most",
+    age:'Variable: early-onset (months) to late-onset (3-9 years)',sex:'No sex predisposition',
+    path:"Inherited, bilateral retinal degeneration — rod photoreceptors fail first, then cones|prcd (progressive rod-cone degeneration) — most common; autosomal recessive|rcd1 (rod-cone dysplasia 1) — Irish Setter; rods fail to develop normally|Rods fail → nyctalopia → loss of peripheral vision → cones fail → total blindness|Tapetum becomes hyperreflective as photoreceptors disappear",
+    signs:"#Early (rods only)|Night blindness / nyctalopia — often first complaint|Reluctance to move in dim light|Bumping objects in low light|Dilated pupils in dim light|#Progressive|Bilateral and symmetric — distinguishes from most acquired diseases|Day vision lost as cones fail — months to years after night blindness|Maze test: normal in bright light early, fails in dark room|#Late|Complete bilateral blindness|Absent menace, dazzle, PLR bilaterally|Tapetal hyperreflectivity|Retinal vascular attenuation|Optic disc pallor|Secondary cataracts in ~50%",
+    severe:"Progressive to complete bilateral blindness — inevitable|Secondary cataracts can lead to IOP elevation — monitor",
+    conf:"Fundoscopy (dilate with tropicamide 1%): tapetal hyperreflectivity, vascular attenuation, disc pallor|ERG (gold standard): markedly reduced or absent a- and b-wave amplitudes; ERG changes precede fundoscopic changes|Genetic testing: breed-specific mutations available (Optigen, Laboklin, Animal Health Trust)|Chromatic PLR: both red AND blue PLR reduced/absent in end-stage",
+    supp:"Genetic testing of breeding relatives|Ocular ultrasound if cataracts obscure fundoscopy|Blood pressure (exclude concurrent hypertension)",
+    tx1:"No effective treatment — gene therapy under investigation (not commercially available)|Antioxidant supplements (Ocu-GLO): used by many ophthalmologists — no controlled evidence but considered low-risk|Genetic counselling — affected dogs should not be bred",
+    tx2:"Secondary cataract management: anti-inflammatory if lens-induced uveitis; phacoemulsification rarely indicated (retina degenerate)|Home adaptation: memorise layout, auditory cues, fencing",
+    monitor:"Annual ophthalmic exam to assess progression|Genetic testing of littermates and parents|IOP monitoring if secondary cataracts develop",
+    prog:"Inexorably progressive to complete bilateral blindness|Rate varies from months (early-onset) to years (late-onset prcd forms)|Quality of life is good — dogs adapt well to gradual vision loss",
+    pearl:"Night blindness first = rods affected = PRA until proven otherwise. Bilateral and symmetric = genetic/systemic; unilateral = acquired/structural. Tapetal HYPERreflectivity = photoreceptors dead. Tapetal HYPOreflectivity = fluid under retina = retinal detachment. Genetic testing is available for >25 breeds. Cataracts in a PRA dog are secondary — phacoemulsification will NOT restore vision.",
+    ddx:"@DIS-OPH-SARDS:SARDS (acute, normal fundus early, flat ERG, Cushingoid phenotype)|@DIS-OPH-RD:Retinal detachment (tapetal HYPOreflectivity, V sign, often more rapid/unilateral)|@DIS-OPH-CATARACT:Mature cataract (no fundus reflex — lens opacity; retina normal on ultrasound)|Taurine-deficient retinal degeneration (cat; central hyperreflective ellipse)|@DIS-OPH-OPTIC-NEURITIS:Optic neuritis (acute, swollen disc, altered PLR)"},
+
+    {id:'DIS-OPH-RD',name:'Retinal Detachment',sp:'Dog + Cat',synonyms:'Retinal detachment, RD, exudative retinal detachment, hypertensive retinopathy, bullous retinal detachment, rhegmatogenous detachment',
+    breed:'Collie, merle breeds (collie eye anomaly, merle ocular dysgenesis)|Labrador Retriever, Samoyed (oculoskeletal dysplasia)|Shih Tzu, Italian Greyhound (vitreal degeneration)|Akita, Samoyed, Husky (uveodermatologic syndrome)|Any cat with hypertension (older cats — CKD, hyperthyroid, HAC)',
+    age:'Any. Hypertensive RD: older cat (>7-10 yr). Congenital forms: young.',sex:'Female cats overrepresented in feline hypertensive chorioretinopathy',
+    path:"Three mechanisms:|#1. Exudative (most common in small animals)|Subretinal fluid accumulates from increased choroidal vascular permeability|Causes: systemic hypertension (most common in cats), infectious chorioretinitis, neoplasia (lymphoma), immune-mediated, hyperviscosity|#2. Rhegmatogenous|Tear or hole in retina → fluid enters subretinal space|Causes: congenital (collie eye anomaly), post-surgical, vitreoretinal degeneration, trauma|Rare in cats|#3. Tractional|Fibrotic vitreoretinal bands pull retina anteriorly|Causes: chronic uveitis, lens luxation, post-surgical scarring",
+    signs:"#Exudative / Hypertensive (acute onset)|Sudden bilateral or unilateral blindness|Dilated pupils, absent PLR, absent dazzle (complete detachment)|Fundoscopy: grey/opaque retinal veil or V/morning-glory fold attached at optic nerve|Subretinal haemorrhage, hyphema|Tortuous retinal vessels|#Systemic clues (hypertensive)|Cat: SBP >160-180 mmHg leading to CKD / hyperthyroidism / HAC|Dog: coagulopathy / neoplasia / HAC / infectious disease|#Physical findings|Anisocoria (mydriasis affected eye) or bilateral mydriasis|Ocular ultrasound: V or sea-gull shape attached at optic nerve head",
+    severe:"Complete bilateral detachment = permanent blindness if not treated within 24-72h (hypertensive) or weeks|Secondary glaucoma and uveitis are common complications",
+    conf:"Blood pressure (Doppler x 3 calm readings) — FIRST STEP in any cat with acute bilateral blindness|Fundoscopy (dilate): grey veil or V or morning-glory detachment|Ocular ultrasound: detached retina visible even through corneal oedema or mature cataract — V or sea-gull sign|CBC + biochemistry + urinalysis|T4 (cat >7 yr) — hyperthyroidism|FeLV/FIV/FCoV titre (cat)|Tick-borne panel (dog)|Fungal serology (region-dependent)",
+    supp:"Thoracic + abdominal imaging (lymphoma, neoplasia staging)|ACTH stim/LDDST (dog with elevated BP + adrenal signs)|Toxoplasma IgG/IgM|Brucella canis (dog — zoonotic, notify owner)",
+    tx1:"#Hypertensive retinal detachment — TIME-CRITICAL|Amlodipine 0.625-1.25 mg PO q24h (cat) OR 0.1-0.5 mg/kg PO q24h (dog)|Target SBP <160 mmHg|57.6% of blind cats regain vision if BP controlled — retina may reattach within 24-72h of BP normalisation|Treat underlying cause (CKD: dietary management; hyperthyroid: methimazole / radioiodine)|#Inflammatory/Infectious|Treat specific pathogen: antifungals, clindamycin (toxoplasma), doxycycline (Ehrlichia/RMSF)|Topical +/- systemic anti-inflammatory for chorioretinitis",
+    tx2:"#Surgical (rhegmatogenous and tractional — dogs only)|Vitrectomy + perfluorocarbon + laser retinopexy + silicone oil tamponade|71.7% of surgically treated eyes maintained vision at last follow-up (mean 550 days)|Best outcome: dazzle reflex present, short duration of detachment, retinal architecture preserved|Topical NSAIDs (diclofenac, flurbiprofen) + systemic anti-inflammatory for concurrent uveitis",
+    monitor:"BP q24-48h until SBP <160 mmHg then q2-4 weeks|T4 (cat) at 2-4 weeks if hyperthyroid being treated|Fundoscopy at 48h, 1 week, 1 month (assess reattachment in hypertensive cases)|IOP monitoring (secondary glaucoma risk)",
+    prog:"Hypertensive: good if treated within 24-72h — 57.6% of cats regain vision|Infectious/immune-mediated: variable depending on pathogen and response|Rhegmatogenous surgical (dogs): 71.7% maintain vision at ~550 days|Complete bilateral detachment >48-72h: poor — permanent retinal degeneration",
+    pearl:"MEASURE BLOOD PRESSURE FIRST in every cat with acute bilateral blindness — it is the single most treatable cause. Retina can reattach and vision can return if BP is controlled within 24-48h. Ocular ultrasound is the most valuable tool when the fundus is invisible — the V or sea-gull sign is pathognomonic. Brucella canis causes posterior uveitis and retinal detachment in dogs — zoonotic, notify owners immediately.",
+    ddx:"@DIS-OPH-SARDS:SARDS (normal fundus early, flat ERG, Cushingoid phenotype)|@DIS-OPH-PRA:Progressive retinal atrophy (tapetal HYPERreflectivity — not veil; gradual)|@DIS-OPH-GLAUCOMA:Acute glaucoma (elevated IOP, corneal oedema)|@DIS-OPH-UVEITIS:Anterior uveitis (miosis, low IOP, flare — may be secondary cause)|@DIS-OPH-OPTIC-NEURITIS:Optic neuritis (normal fundus or swollen disc, no subretinal fluid)"},
+
+    {id:'DIS-OPH-CATARACT',name:'Cataract',sp:'Dog + Cat',synonyms:'Cataract, lens opacity, mature cataract, diabetic cataract, uveitis-induced cataract, lens-induced uveitis, phacoemulsification',
+    breed:'Dog: Poodle (mini/toy), American Cocker Spaniel, Golden Retriever, Labrador Retriever, Yorkshire Terrier, Bichon Frise, Boston Terrier, Miniature Schnauzer — inherited/hereditary forms|Any breed: diabetes mellitus (rapid bilateral), chronic uveitis|Cat: Russian Blue, Bengal (hereditary — autosomal recessive)|Any cat: chronic anterior uveitis (most common cause)',
+    age:'Variable. Inherited: young to middle-aged. Diabetic (dog): any age. Senile: older (>12 yr in cats)',sex:'No sex predisposition',
+    path:"Lens fibre disorganisation → opacification of the normally transparent lens|#Classification by stage|Incipient: <=10% — rarely affects vision|Immature: 10-99% — vision variably reduced|Mature: 100% — no fundus reflex, vision lost|Hypermature/resorbing: lens liquefaction, capsule wrinkling — high risk lens-induced uveitis|#Major causes|Dog: (1) Inherited/hereditary — most common; (2) Diabetes mellitus — rapid bilateral, osmotic; (3) Chronic uveitis|Cat: (1) Chronic anterior uveitis — most common; (2) Old age (>12 yr); (3) Inherited (Russian Blue, Bengal)|#Complications|Lens-induced uveitis (phacolytic) — leakage of lens proteins|Secondary glaucoma via ICA obstruction or posterior synechiae|Retinal detachment (advanced)|Lens luxation (chronic uveitis → zonule weakening)",
+    signs:"#Gradual (inherited, age-related)|Slow loss of vision — weeks to months|Absent/reduced tapetal reflex on torch|Grey-white lens opacity visible to owner|Nuclear sclerosis (normal ageing — does NOT cause blindness) must be distinguished|#Rapid (diabetic — dog)|Bilateral, often within days to weeks of DM diagnosis|Lens-induced uveitis concurrent (aqueous flare, episcleral injection, miosis)|#Mature cataract|No fundus reflex|Absent or diminished PLR",
+    severe:"Lens-induced uveitis — untreated leads to posterior synechiae, secondary glaucoma|Secondary glaucoma — emergency if acute (IOP >25 mmHg)|Lens luxation from chronic uveitis (especially cat)",
+    conf:"Slit-lamp / focal light: lens opacity stage and location|Tropicamide 1% dilation (after tonometry and fluorescein): full lens and fundus assessment|Tonometry: detect secondary glaucoma (IOP >25 mmHg) or uveitis (low IOP)|Fluorescein: rule out corneal ulcer before topical steroids|Ocular ultrasound: assess posterior segment when fundus not visible|#Dog: blood glucose + fructosamine (diabetic cataract)|#Cat: FIV/FeLV/FCoV (uveitis aetiologies), BP",
+    supp:"STT: exclude KCS (dry eye can cause uveitis)|ERG before phacoemulsification referral (ensure retinal function preserved)|Abdominal ultrasound (DM workup)",
+    tx1:"#Medical (stabilise before surgery / manage non-surgical cases)|Topical prednisolone acetate 1% q6-8h (no ulcer): reduce lens-induced uveitis|Topical diclofenac or flurbiprofen q8-12h: NSAID adjunct|Topical atropine 1% q8-12h (only if IOP normal)|Secondary glaucoma: dorzolamide 2% + timolol 0.5% q8h +/- mannitol 1 g/kg IV if IOP >50 mmHg|#Surgical|Phacoemulsification (dog — widely performed; cat — less common; refer to ophthalmologist)|Best results: vision present, posterior segment intact on ultrasound, ERG normal, IOP controlled, no active uveitis|60-80% of dogs retain vision post-surgery",
+    tx2:"Post-operative: topical prednisolone acetate + atropine for 3-6 months minimum|Monthly IOP monitoring post-surgery|Patients with secondary glaucoma, posterior synechiae, or degenerate retina: surgery rarely indicated",
+    monitor:"Recheck every 3-6 months for cataract progression|IOP at every visit (secondary glaucoma risk)|Document menace, PLR, dazzle|ERG and ultrasound before phacoemulsification referral|DM cataracts: usually progress rapidly — refer early",
+    prog:"Surgical: 60-80% vision preservation (dog); less data in cats; worse with active uveitis or secondary glaucoma|Non-surgical: progressive blindness; quality of life generally good with adaptation",
+    pearl:"Nuclear sclerosis does NOT equal cataract — it is normal ageing of the central lens; fundic reflex is still present (hazy but not absent); it does NOT cause blindness and does NOT require treatment. Cataracts in diabetic dogs are osmotic and bilateral, often developing within weeks of DM diagnosis — urgent referral before lens-induced uveitis creates surgical complications. The single most important pre-surgical test is ocular ultrasound — if the retina is detached or the ERG is flat, phacoemulsification will NOT restore vision.",
+    ddx:"Nuclear sclerosis (normal ageing — fundic reflex present, no PLR impairment)|@DIS-OPH-GLAUCOMA:Corneal oedema from glaucoma (IOP elevated)|@DIS-OPH-PRA:Progressive retinal atrophy (normal lens, hyperreflective fundus)|@DIS-OPH-UVEITIS:Active uveitis with aqueous flare (IOP low vs cataract-induced high IOP)|Corneal opacity / scarring (at cornea level — slit-lamp distinguishes)"},
+
+    {id:'DIS-OPH-OPTIC-NEURITIS',name:'Optic Neuritis',sp:'Dog',synonyms:'Optic neuritis, inflammatory optic neuropathy, MUA optic neuritis, meningoencephalitis unknown aetiology optic, GME optic nerve, optic disc oedema',
+    breed:'MUA/GME: Pug (NME), Maltese (NME), Yorkshire Terrier (NME), French Bulldog, Chihuahua — small/brachycephalic breeds for NME|Any breed for infectious causes',
+    age:'MUA/GME: middle-aged (3-8 yr); NME: young adults',sex:'Female overrepresentation reported for some MUA forms',
+    path:"Inflammation of the optic nerve (CN II) — unilateral or bilateral|#Causes|Immune-mediated (most common in dogs): MUA — includes GME, NME, NLE; isolated optic neuritis without CNS involvement also described|Infectious: Toxoplasma gondii, Neospora caninum, Cryptococcus, Blastomyces, canine distemper virus, Ehrlichia, RMSF, Leishmania|Neoplastic: lymphoma infiltrating optic nerve, pituitary macroadenoma compressing chiasm|#Cats: no immune-mediated form described — aggressive infectious workup mandatory|Inflammatory cells infiltrate nerve sheath → oedema → axonal damage → demyelination → axonal loss",
+    signs:"Acute bilateral blindness (most cases — bilateral more common than unilateral in MUA)|Bilaterally dilated pupils — absent direct PLR AND indirect PLR|Absent dazzle reflex|Absent menace response|#Fundoscopy|Papilloedema: swollen, pink, haemorrhagic optic disc (~60% of cases)|Normal disc if retrobulbar disease — does NOT exclude the diagnosis|#Chromatic PLR — KEY differentiator|Red light PLR: ABSENT|Blue light PLR: ABSENT — distinguishes optic neuritis from SARDS (where blue is PRESENT)|#Concurrent neurological signs (MUA/GME)|Seizures, behavioural change, circling, hemiparesis, ataxia, cervical pain",
+    severe:"Rapid permanent blindness — optic nerve axons do not regenerate|Bilateral without treatment: irreversible visual loss within days|Concurrent systemic CNS disease (MUA/GME): guarded to poor long-term prognosis",
+    conf:"Chromatic PLR: both red AND blue absent (most important in-practice differentiator from SARDS)|Fundoscopy: swollen/haemorrhagic optic disc (papilloedema) — absent in retrobulbar disease|ERG: PRESERVED (differentiates from SARDS and retinal degeneration — retina is functional)|MRI brain + orbits: enhancing optic nerve(s) + meningeal enhancement = MUA; pituitary mass; lymphoma|CSF analysis: protein elevation, pleocytosis",
+    supp:"Infectious titres: Toxoplasma IgG/IgM, Neospora, Ehrlichia/Anaplasma/RMSF panel, Leishmania, Blastomyces/Cryptococcus/Histoplasma (regional)|Cat: FeLV/FIV PCR, FCoV titre, Toxoplasma, Cryptococcus LCAT|Ocular ultrasound: optic nerve thickening|CBC + biochemistry baseline",
+    tx1:"#Immune-mediated (MUA — dog): Start AFTER infectious panel sent (do not delay >24-48h if critically blind)|Prednisolone 2 mg/kg PO q24h (induction)|Add cytotoxic adjunct:|  Cytarabine (ara-C) 200-250 mg/m2 SC or IV over 8h, q3-6 weeks (preferred CNS penetration)|  Lomustine (CCNU) 60-90 mg/m2 PO q6-8 weeks (hepatotoxic — monitor LFTs)|  Mycophenolate mofetil 10 mg/kg PO q12h|  Cyclosporine 5-10 mg/kg PO q12-24h|Taper prednisolone over months to lowest effective dose|#Infectious: treat identified pathogen|Toxoplasma: clindamycin 10-12.5 mg/kg PO q12h x 4 weeks|Ehrlichia/RMSF: doxycycline 5 mg/kg PO q12h x 4 weeks|Cryptococcus: fluconazole 5-10 mg/kg PO q12-24h (long-term)",
+    tx2:"#Cat: no immune-mediated form — treat underlying cause aggressively|FIP: GS-441524 antiviral|FeLV-associated lymphoma: chemotherapy|Toxoplasmosis: clindamycin|Cryptococcosis: fluconazole +/- amphotericin B|Referral to veterinary neurology/ophthalmology if possible",
+    monitor:"Weekly PLR + menace + fundoscopy in acute phase|CBC + chemistry q2-4 weeks on immunosuppression|Lomustine: pre-treatment LFTs and recheck at 2-4 weeks (hepatotoxic)|MRI +/- CSF at 3-6 months to assess treatment response|Relapses common in MUA (20-40%) — require therapy intensification",
+    prog:"Isolated optic neuritis (idiopathic): variable — some recover vision with immunosuppression|MUA/GME: guarded — ~25-40% achieve long-term remission with multi-drug immunosuppression|Infectious: depends on pathogen|Irreversible blindness if treatment delayed",
+    pearl:"ERG is the critical test: PRESERVED ERG + acute bilateral blindness + dilated pupils = optic neuritis (retina works, nerve does not) vs FLAT ERG = SARDS / retinal degeneration (retina dead). Both red AND blue PLR absent = optic neuritis; Red absent + Blue present = SARDS. Never start immunosuppression without ruling out infection — treating fungal optic neuritis with prednisolone alone accelerates dissemination. MRI is mandatory. In cats, there is NO immune-mediated optic neuritis — every case must have an aggressive infectious workup.",
+    ddx:"@DIS-OPH-SARDS:SARDS (flat ERG, blue PLR preserved, Cushingoid phenotype)|@DIS-OPH-PRA:PRA (gradual onset, tapetal hyperreflectivity, flat ERG, blue PLR absent in end-stage)|@DIS-OPH-GLAUCOMA:Acute glaucoma (elevated IOP, corneal oedema)|@DIS-OPH-RD:Retinal detachment (subretinal fluid on US, V sign on fundoscopy)|Central/cortical blindness (dazzle + PLR intact, menace absent)|Enrofloxacin toxicity in cat (retinal — ERG flat, PLR may be partially preserved)"},
+
   ],
 
   protocols: [
@@ -2013,6 +2165,7 @@ ddx:'@DIS-NEU-CEREHYPO:Cerebellar hypoplasia (non-progressive from first ambulat
        {n:6,action:'#Local wound + delayed complications|Mark advancing oedema q2h initially then q6h|No tourniquet, no incision, no excessive cleaning — minimal touching|Topical silver sulfadiazine 1% bid; non-adherent dressing|Serial debridement of necrotic tissue starting day 3–5 (full extent declares slowly)|Skin grafts may be needed in cats (extensive delayed necrosis)|Antibiotics ONLY if confirmed wound infection (snake mouth flora ≠ infection risk in most cases)|Venom depot syndrome: re-bleeding/symptoms days–weeks after discharge as venom slowly leaches from tissue|Counsel owner: STRICT REST 14 days post-discharge; re-present for any new lethargy, bruising, dark urine',note:'CroFab and short-Fab products have shorter half-lives → higher risk of recurrence; long Fab(ab\\\'\\\\)₂ products more durable.',branch:'',flag:''},
        {n:7,action:'#Monitoring & follow-up|CBC, coagulation panel, CK, biochem q4–6h × first 24h, then daily|Cardiac troponin I at 24h and 36h (cardiotoxic venom)|Continuous ECG × 24h minimum (rattlesnake: arrhythmias in 42 % of eastern diamondback bites)|Urine output hourly via catheter for first 24h|Wound assessment + photograph every 24h × 2 weeks|Discharge criteria: stable vitals, normal coagulation, eating, ambulating, no advancing oedema|Recheck CBC + biochem at 1, 2, and 3 weeks post-discharge (delayed haemolysis can occur up to 3 weeks)|Renal function 2–3 weeks (pigment nephropathy can manifest late)',note:'Prognosis: mortality 3.7–11 % dogs viperid; higher in cats (delayed presentation); neurotoxic ~17.6 %; mechanical ventilation cases 72 % survival.',branch:'',flag:''},
      ]},
+
   ],
 };
 
@@ -6878,12 +7031,19 @@ function renderBleedingFlowPrimary(){
 
     <div class="flow-node entry" style="background:rgba(220,38,38,0.15);border-color:rgba(220,38,38,0.4);color:#FCA5A5;">🧱 PRIMARY HAEMOSTASIS FAILURE</div>
     <div class="flow-arrow-v">↓</div>
+
+    <div style="padding:8px 10px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);border-radius:8px;width:100%;font-size:9px;color:#FCD34D;line-height:1.55;">
+      <strong>Pattern:</strong> Petechiae · ecchymoses · mucosal haemorrhage (epistaxis, haematuria, gingival bleeding, haematemesis, melaena, haemoptysis) · prolonged surface bleeding from minor wounds<br>
+      <strong>Trigger VWD workup if:</strong> unexplained bleeding in young dogs ± trauma OR excessive bleeding after elective surgery (spay/neuter)
+    </div>
+    <div class="flow-arrow-v">↓</div>
+
     <div class="flow-node step">CHECK PLATELET COUNT
       <div class="fn-sub" style="font-weight:400;margin-top:3px;">This single result divides the branch into two distinct pathways</div>
     </div>
     <div class="flow-arrow-v">↓</div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
+    <div style="display:grid;grid-template-columns:3fr 2fr;gap:8px;width:100%;">
 
       <!-- Thrombocytopenic -->
       <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
@@ -6892,30 +7052,53 @@ function renderBleedingFlowPrimary(){
           <span style="font-size:9px;font-weight:400;color:var(--gray);">Thrombocytopenic</span>
         </div>
         <div class="flow-arrow-v">↓</div>
-        <div class="flow-node sub-step" style="width:100%;font-size:10px;">Destruction / consumption<br>vs reduced production?</div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;text-align:center;">IDENTIFY MECHANISM</div>
         <div class="flow-arrow-v">↓</div>
 
-        <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;cursor:pointer;" onclick="goLesionTab && goLesionTab('DIFF-IMTP','IMTP')">
-            <strong>IMTP</strong> — #1 cause dog<br>
-            <span style="opacity:.75;">Abrupt onset · spleen enlgd · +ve Coombs (30%)</span>
+        <!-- 3-way branch labels -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;width:100%;">
+          <div style="font-size:8px;font-weight:700;color:#F87171;text-align:center;">↓ PRODUCTION</div>
+          <div style="font-size:8px;font-weight:700;color:#FCA5A5;text-align:center;">CONSUMPTION &amp; SEQUESTRATION</div>
+          <div style="font-size:8px;font-weight:700;color:#FCA5A5;text-align:center;">DESTRUCTION</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;width:100%;">
+          <div style="font-size:9px;text-align:center;color:#F87171;">↓</div>
+          <div style="font-size:9px;text-align:center;color:#FCA5A5;">↓</div>
+          <div style="font-size:9px;text-align:center;color:#FCA5A5;">↓</div>
+        </div>
+
+        <!-- 3 endpoint columns -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;width:100%;align-items:start;">
+
+          <!-- ↓ Production -->
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:8.5px;">
+            <em style="opacity:.85;">Primary:</em><br>
+            Neoplasia · immune-mediated · fibrosis · myelophthisis<br><br>
+            <em style="opacity:.85;">Drug-induced:</em><br>
+            Chloramphenicol · oestrogen · bleomycin · lomustine · cytarabine · melphalan · methotrexate · platinum · doxorubicin · actinomycin D<br><br>
+            <em style="opacity:.85;">Secondary:</em><br>
+            FeLV · ehrlichiosis · hypothyroidism<br><br>
+            <span style="opacity:.6;">→ BM aspirate + core if other cell lines also affected</span>
           </div>
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
-            <strong>Tick-borne</strong><br>
-            <span style="opacity:.75;">Ehrlichia · Anaplasma · R. rickettsii</span>
+
+          <!-- Consumption & Sequestration -->
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:8.5px;">
+            Significant haemorrhage · splenomegaly · sepsis · vasculitis · DIC<br><br>
+            <span style="opacity:.6;">DIC: early thrombosis → late haemorrhage; PT + aPTT both prolonged</span>
           </div>
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
-            <strong>Bone marrow suppression</strong><br>
-            <span style="opacity:.75;">Neoplasia · oestrogen · phenylbutazone · FeLV</span>
+
+          <!-- Destruction -->
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:8.5px;">
+            <em style="opacity:.85;">Drug-induced:</em><br>
+            Furosemide · H2 antagonists · cephalosporins · penicillins · TMP-SMX · quinines · phenylbutazone · cardiac medications<br><br>
+            <em style="opacity:.85;">Primary (IMTP):</em><br>
+            Antibodies vs platelet antigens — #1 cause dog<br>Cocker · Poodle · OES · Lhasa · Maltese<br><br>
+            <em style="opacity:.85;">Secondary:</em><br>
+            Inflammation · neoplasia<br><br>
+            <em style="opacity:.85;">Infectious:</em><br>
+            Distemper · parvovirus · adenovirus · herpesvirus · FeLV · panleukopenia · FIV · FIP · ehrlichiosis · babesiosis · haemobartonellosis · rickettsiosis · leishmaniasis · cytauxzoonosis · borreliosis · dirofilariasis · histoplasmosis · candidiasis · leptospirosis · septicaemia
           </div>
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
-            <strong>Drug-induced</strong><br>
-            <span style="opacity:.75;">Sulphonamides · phenobarb · chloramphenicol</span>
-          </div>
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9.5px;">
-            <strong>Consumption (DIC)</strong><br>
-            <span style="opacity:.75;">Concurrent coag abnormalities</span>
-          </div>
+
         </div>
       </div>
 
@@ -6930,37 +7113,28 @@ function renderBleedingFlowPrimary(){
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node" style="width:100%;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.3);font-size:9.5px;color:var(--amber-text);">
           <strong>BMBT prolonged &gt; 4 min</strong><br>
-          <span style="opacity:.8;">Platelet dysfunction or vWD</span>
+          <span style="opacity:.8;">Abnormal platelet function, vWD, or vasculitis</span>
         </div>
         <div class="flow-arrow-v">↓</div>
 
         <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
-          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9px;">
             <strong>von Willebrand Disease</strong><br>
-            <span style="opacity:.75;">Dobermann · Shetland · GSD · cats rarely<br>Send vWF:Ag assay</span>
+            <span style="opacity:.75;">Dobermann (type I) · Scottie (type III) · Shetland · GSD · cats rarely<br>Send vWF activity assay<br>Pre-op: DDAVP 1 µg/kg SC 30 min before (type I only)</span>
           </div>
-          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9px;">
             <strong>Uraemia</strong><br>
             <span style="opacity:.75;">Acquired platelet dysfunction — reversible with dialysis / desmopressin</span>
           </div>
-          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9px;">
             <strong>Drug-induced</strong><br>
             <span style="opacity:.75;">Aspirin · NSAIDs · clopidogrel</span>
           </div>
-          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9.5px;">
+          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:#6EE7B7;font-size:9px;">
             <strong>Glanzmann's Thrombasthenia</strong><br>
             <span style="opacity:.75;">GRT · Otterhound — breed-linked<br>No platelet aggregation</span>
           </div>
         </div>
-      </div>
-    </div>
-
-    <div style="margin-top:14px;padding:10px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
-      <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:5px;">🔬 MINIMUM DATABASE — Primary Haemostasis</div>
-      <div style="font-size:9.5px;line-height:1.6;color:var(--gray);">
-        <strong style="color:var(--white);">1st line:</strong> CBC with platelet count · Blood smear (clumping, morphology) · PT · aPTT<br>
-        <strong style="color:var(--white);">2nd line:</strong> Tick titres · BM aspirate (if pancytopenia) · vWF:Ag assay · BMBT<br>
-        <strong style="color:var(--white);">Threshold:</strong> Spontaneous bleed risk at &lt;30 ×10⁹/L · life-threatening at &lt;10 ×10⁹/L
       </div>
     </div>
 
@@ -7649,6 +7823,14 @@ function renderBlindEyeFlow(){
   push(renderBlindEyeFlow,'Blind Eye');
   render(blindEyeFlowHtml);
 }
+function renderBlindEyeAcute(){
+  push(renderBlindEyeAcute,'Acute Vision Loss');
+  render(blindEyeAcuteHtml);
+}
+function renderBlindEyeChronic(){
+  push(renderBlindEyeChronic,'Chronic Vision Loss');
+  render(blindEyeChronicHtml);
+}
 
 // ── BLIND EYE — diagnostic approach (3 tabs) ───────────────────────────────
 function renderDxBlindEye(){ renderDxBlindEyeHistory(); }
@@ -8144,6 +8326,8 @@ export function mountGlobals() {
   w.renderDxAbnormalPupilExam = renderDxAbnormalPupilExam;
   w.renderDxAbnormalPupilDx = renderDxAbnormalPupilDx;
   w.renderBlindEyeFlow = renderBlindEyeFlow;
+  w.renderBlindEyeAcute = renderBlindEyeAcute;
+  w.renderBlindEyeChronic = renderBlindEyeChronic;
   w.renderDxBlindEye = renderDxBlindEye;
   w.renderDxBlindEyeHistory = renderDxBlindEyeHistory;
   w.renderDxBlindEyeExam = renderDxBlindEyeExam;
