@@ -8,7 +8,8 @@ import type { FlowPage } from '../flowTypes'
 import { epistaxisFlow } from './epistaxis'
 import { wetEyeFlow } from './wetEye'
 import { blindEyeFlows } from './blindEye'
+import { redEyeFlows } from './redEye'
 
 export const FLOWS: Record<string, FlowPage> = Object.fromEntries(
-  [epistaxisFlow, wetEyeFlow, ...blindEyeFlows].map(p => [p.id, p]),
+  [epistaxisFlow, wetEyeFlow, ...blindEyeFlows, ...redEyeFlows].map(p => [p.id, p]),
 )

@@ -63,6 +63,21 @@ export type NodeBlock = Connectable & {
 export type BranchBlock = Connectable & { kind: 'branch'; columns: Column[] }
 export type EndpointsBlock = Connectable & { kind: 'endpoints'; cols?: number; items: Endpoint[] }
 
+/** An `.fn`-layout header box (the legacy `.fn .fn-insp/.fn-exp/.fn-rest/
+ *  .fn-mixed/.fn-step` headers used by sub-flows authored in that system). */
+export type FnHeaderBlock = Connectable & {
+  kind: 'fnHeader'
+  variant: 'insp' | 'exp' | 'rest' | 'mixed' | 'step' | 'entry'
+  text: string
+}
+
+/** A grid of `.fn-ep` location cards (system line + bold location + optional
+ *  badge), laid out `perRow` per `.fn-row`. `anat` selects the `.fn-ep-…`
+ *  colour class (nasal, larynx, pleural, mechanic, bronchi, parench, gi-upper,
+ *  gi-primary, gi-secondary, oesoph). */
+export type CardTile = { anat: string; sys?: string; loc: string; badge?: string; link?: Link }
+export type CardGridBlock = Connectable & { kind: 'cardGrid'; perRow?: number; tiles: CardTile[] }
+
 /** A grid of clickable pattern-nodes used as branch choices. Colour comes from
  *  either a pattern `variant` (.flow-node.insp/.exp/.rest/.mixed) or a `tone`.
  *  `label`/`sublabel` are HTML (may contain <br>). */
@@ -120,6 +135,8 @@ export type Block =
   | NodeBlock
   | BranchBlock
   | EndpointsBlock
+  | FnHeaderBlock
+  | CardGridBlock
   | ChoicesBlock
   | BannerBlock
   | AlertBlock
@@ -132,9 +149,13 @@ export type Block =
   | SpeciesCompareBlock
   | HtmlBlock
 
-/** One screen of a flowchart. A sign has an entry page + 0..n sub-flow pages. */
+/** One screen of a flowchart. A sign has an entry page + 0..n sub-flow pages.
+ *  `layout` selects the wrapper/connector system: 'flow' (default) wraps in
+ *  `.flow-wrap` with `.flow-arrow-v` connectors; 'fn' renders bare with
+ *  `.fn-arrow` connectors (for sub-flows authored in the legacy `.fn` system). */
 export type FlowPage = {
   id: string
   title: string
+  layout?: 'flow' | 'fn'
   blocks: Block[]
 }

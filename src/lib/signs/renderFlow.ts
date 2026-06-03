@@ -6,7 +6,7 @@
 // / renderDx<Id>). No dependency on cliniqApp internals — unit-testable.
 
 import type {
-  FlowPage, Block, Column, Endpoint, ChoiceItem, TableCell, Link, LabeledLink, Tone,
+  FlowPage, Block, Column, Endpoint, ChoiceItem, CardTile, TableCell, Link, LabeledLink, Tone,
 } from './flowTypes'
 
 const esc = (s: string): string =>
@@ -54,15 +54,16 @@ function onclick(link: Link): string {
 // "after" and the second connects "before". Defaults are kind-based; a block may
 // set connectAfter to override (e.g. a sub-step that feeds straight into
 // endpoints with no arrow).
-const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout'])
+const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout', 'fnHeader', 'cardGrid'])
 const connectsAfter = (b: Block): boolean => b.connectAfter ?? SPINE.has(b.kind)
 const connectsBefore = (b: Block): boolean => SPINE.has(b.kind)
-const ARROW = '<div class="flow-arrow-v">↓</div>'
+const FLOW_ARROW = '<div class="flow-arrow-v">↓</div>'
+const FN_ARROW = '<div class="fn-arrow">↓</div>'
 
-function joinBlocks(blocks: Block[]): string {
+function joinBlocks(blocks: Block[], arrow: string = FLOW_ARROW): string {
   let out = ''
   blocks.forEach((b, i) => {
-    if (i > 0 && connectsAfter(blocks[i - 1]) && connectsBefore(b)) out += ARROW
+    if (i > 0 && connectsAfter(blocks[i - 1]) && connectsBefore(b)) out += arrow
     out += renderBlock(b)
   })
   return out
@@ -152,8 +153,28 @@ function renderColumnHeader(col: Column): string {
 }
 
 function renderColumn(col: Column): string {
-  const body = col.blocks.length ? ARROW + joinBlocks(col.blocks) : ''
+  const body = col.blocks.length ? FLOW_ARROW + joinBlocks(col.blocks) : ''
   return `<div style="display:flex;flex-direction:column;align-items:center;gap:4px;">${renderColumnHeader(col)}${body}</div>`
+}
+
+// ── fn-layout header + card grid ──────────────────────────────────────────────
+function renderFnHeader(b: Extract<Block, { kind: 'fnHeader' }>): string {
+  return `<div class="fn fn-${b.variant}">${esc(b.text)}</div>`
+}
+
+function renderCardGrid(perRow: number, tiles: CardTile[]): string {
+  let rows = ''
+  for (let i = 0; i < tiles.length; i += perRow) {
+    const group = tiles.slice(i, i + perRow)
+    const cards = group.map(t => {
+      const sys = t.sys ? `<div class="ep-sys">${esc(t.sys)}</div>` : ''
+      const badge = t.badge ? `<div class="ep-badge">${esc(t.badge)}</div>` : ''
+      const attr = t.link ? ` onclick="${onclick(t.link)}"` : ''
+      return `<div class="fn-ep fn-ep-${t.anat}"${attr}>${sys}<div class="ep-loc">${esc(t.loc)}</div>${badge}</div>`
+    }).join('')
+    rows += `<div class="fn-row">${cards}</div>`
+  }
+  return rows
 }
 
 function renderBranch(columns: Column[]): string {
@@ -211,6 +232,8 @@ function renderBlock(b: Block): string {
     case 'node':        return renderNode(b)
     case 'branch':      return renderBranch(b.columns)
     case 'endpoints':   return renderEndpoints(b.items)
+    case 'fnHeader':    return renderFnHeader(b)
+    case 'cardGrid':    return renderCardGrid(b.perRow ?? 2, b.tiles)
     case 'choices':     return renderChoices(b.cols ?? b.items.length, b.size ?? 11, b.items)
     case 'banner':      return renderBanner(b.tone, b.html)
     case 'callout':     return renderCallout(b)
@@ -227,7 +250,10 @@ function renderBlock(b: Block): string {
   }
 }
 
-/** Render a whole flow page to an HTML string. */
+/** Render a whole flow page to an HTML string. 'flow' layout wraps in
+ *  `.flow-wrap` with `.flow-arrow-v` connectors; 'fn' renders bare with
+ *  `.fn-arrow` connectors (matching legacy `.fn`-system sub-flows). */
 export function renderFlowPage(page: FlowPage): string {
+  if (page.layout === 'fn') return joinBlocks(page.blocks, FN_ARROW)
   return `<div class="flow-wrap">${joinBlocks(page.blocks)}</div>`
 }

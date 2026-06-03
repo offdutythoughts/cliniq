@@ -7,6 +7,7 @@ import { SIGNS } from './registry'
 import { epistaxisFlowHtml } from './epistaxis'
 import { wetEyeFlowHtml } from './wetEye'
 import { blindEyeFlowHtml, blindEyeAcuteHtml, blindEyeChronicHtml } from './blindEye'
+import { redEyeFlowHtml, redEyeCoatsHtml, redEyeIrisHtml, redEyeBleedHtml, redEyeOrbitHtml } from './redEye'
 import type { Block, Column, Link } from './flowTypes'
 
 // cliniqApp.ts as text (browser-coupled, not imported) — used to verify that
@@ -23,6 +24,11 @@ const LEGACY_HTML: Record<string, string> = {
   'blind-eye': blindEyeFlowHtml,
   'blind-eye-acute': blindEyeAcuteHtml,
   'blind-eye-chronic': blindEyeChronicHtml,
+  'red-eye': redEyeFlowHtml,
+  'red-eye-coats': redEyeCoatsHtml,
+  'red-eye-iris': redEyeIrisHtml,
+  'red-eye-bleed': redEyeBleedHtml,
+  'red-eye-orbit': redEyeOrbitHtml,
 }
 
 const pascal = (s: string) => s.replace(/(^|[-_ ])(\w)/g, (_, __, c) => c.toUpperCase())
@@ -39,6 +45,7 @@ function collectLinks(blocks: Block[]): Link[] {
       if (b.kind === 'branch') b.columns.forEach((c: Column) => walk(c.blocks))
       else if (b.kind === 'endpoints') b.items.forEach(e => { if (e.link) out.push(e.link) })
       else if (b.kind === 'choices') b.items.forEach(c => { if (c.link) out.push(c.link) })
+      else if (b.kind === 'cardGrid') b.tiles.forEach(t => { if (t.link) out.push(t.link) })
       else if (b.kind === 'cardSection') b.cards.forEach(c => { if (c.link) out.push(c.link) })
       else if (b.kind === 'diseaseGrid') b.links.forEach(l => out.push(l.link))
       else if (b.kind === 'dxRow') b.items.forEach(l => out.push(l.link))
@@ -59,11 +66,18 @@ describe('FLOWS registry', () => {
     }
   })
 
-  it('every page starts with an entry node and renders to .flow-wrap HTML', () => {
+  it('every page starts with an entry header and renders non-trivial HTML', () => {
     for (const page of Object.values(FLOWS)) {
-      expect(page.blocks[0], page.id).toMatchObject({ kind: 'node', variant: 'entry' })
+      // 'flow' pages open with an entry node + .flow-wrap; 'fn' pages open with
+      // an fnHeader and render bare (no .flow-wrap).
       const html = renderFlowPage(page)
-      expect(html, page.id).toContain('class="flow-wrap"')
+      if (page.layout === 'fn') {
+        expect(page.blocks[0].kind, page.id).toBe('fnHeader')
+        expect(html, page.id).toContain('class="fn ')
+      } else {
+        expect(page.blocks[0], page.id).toMatchObject({ kind: 'node', variant: 'entry' })
+        expect(html, page.id).toContain('class="flow-wrap"')
+      }
       expect(html.length, page.id).toBeGreaterThan(300)
     }
   })
