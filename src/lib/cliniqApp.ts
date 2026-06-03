@@ -2290,22 +2290,17 @@ function renderFlowId(flowId){
 // 3-tab nav swaps in place exactly like the hand-authored views did.
 function renderDxId(sign, tab){
   tab = tab || 'history';
-  // Legacy renderDx<Stem> name stem. Pascal of the kebab key, except a few whose
-  // hand-authored function used a non-pascal spelling (renderDxPUPD).
-  const ALIAS = { pupd: 'PUPD' };
-  const Pascal = ALIAS[sign] || (sign||'').replace(/(^|[-_ ])(\w)/g, function(_,__,c){ return c.toUpperCase(); });
-  const Tab = tab.charAt(0).toUpperCase() + tab.slice(1); // History | Exam | Dx
   const approach = DX[sign];
   if(approach){
+    // The note key matches the legacy page slug (page:dx<Stem><Tab>) so saved
+    // notes carry over. <Stem> = Pascal of the kebab key, except PUPD's all-caps.
+    const Pascal = (sign === 'pupd') ? 'PUPD' : sign.replace(/(^|[-_ ])(\w)/g, function(_,__,c){ return c.toUpperCase(); });
+    const Tab = tab.charAt(0).toUpperCase() + tab.slice(1); // History | Exam | Dx
     const t = approach.tabs[tab] || approach.tabs.history;
     replace(()=>renderDxId(sign, tab), t.title, 'page:dx'+Pascal+Tab);
     render(renderDxApproach(sign, approach, tab));
     return;
   }
-  // Legacy fallback: renderDx<Stem><Tab>(), or the container for history.
-  const w = window as any;
-  const fn = w['renderDx'+Pascal+(tab==='history'?'':Tab)] || w['renderDx'+Pascal];
-  if(typeof fn === 'function'){ fn(); return; }
   render('<div class="empty"><h3>Not found</h3><p>Diagnostic approach “'+esc(sign)+'” is not available.</p></div>');
 }
 
