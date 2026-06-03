@@ -174,9 +174,9 @@ with `purple`/`indigo`.
 - [x] **Wet Eye** — entry (1 page) ✅ byte-identical text; indistinguishable screenshots; lesion links verified
 - [x] **Blind Eye** — entry + `acute`, `chronic` (3 pages) ✅ all 3 byte-identical text (1972/3005/3201 chars); table + cardSection + tone-choices verified; entry→sub-flow + disease links work
 - [x] **Red Eye** — entry + `coats`, `iris`, `bleed`, `orbit` (5 pages) ✅ all byte-identical; coats sub-flow **pixel-identical** to legacy. Added `cardGrid` (fn-ep card grid), `fnHeader`, and FlowPage `layout:'fn'` (bare + `.fn-arrow`) for the legacy `.fn` system
-- [ ] **Abnormal Pupil** — entry + 6 sub-flows (7 pages) — needs `categoryGrid` (4-col tile grid) + `decisionTree` (YES/NO) blocks (in progress)
+- [x] **Abnormal Pupil** — entry + 6 sub-flows (7 pages) ✅ all 7 byte-identical text; `categoryGrid` (cause pages) + `decisionTree` (localise pages) **pixel-identical** to legacy. Added `categoryGrid`, `decisionTree`, `disclaimer` blocks + `slate` tone. (The neurological-branch page stays `html` — a bespoke 2-col compare + arrow-branch layout; same pattern as the Red Eye coats discriminator → a future `compareBox` block.)
 - [ ] Eye-family **Dx views** (History/Exam/Diagnostics × 4 signs) — after the Dx-block model extension
-- [ ] Parity + tests + build green for each; `flowId` set for all four
+- [x] All four eye-family **flowcharts** migrated, parity-verified, committed; `flowId` set for each
 
 ### Phase 1b — Simple / regular signs  ⏸️ *Checkpoint*
 - [ ] **Coughing** — entry (1)

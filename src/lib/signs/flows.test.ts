@@ -8,6 +8,7 @@ import { epistaxisFlowHtml } from './epistaxis'
 import { wetEyeFlowHtml } from './wetEye'
 import { blindEyeFlowHtml, blindEyeAcuteHtml, blindEyeChronicHtml } from './blindEye'
 import { redEyeFlowHtml, redEyeCoatsHtml, redEyeIrisHtml, redEyeBleedHtml, redEyeOrbitHtml } from './redEye'
+import { abnormalPupilFlowHtml, abnormalPupilOphthalmicHtml, abnormalPupilNeuroBranchHtml } from './abnormalPupil'
 import type { Block, Column, Link } from './flowTypes'
 
 // cliniqApp.ts as text (browser-coupled, not imported) — used to verify that
@@ -29,6 +30,9 @@ const LEGACY_HTML: Record<string, string> = {
   'red-eye-iris': redEyeIrisHtml,
   'red-eye-bleed': redEyeBleedHtml,
   'red-eye-orbit': redEyeOrbitHtml,
+  'abnormal-pupil': abnormalPupilFlowHtml,
+  'abnormal-pupil-ophthalmic': abnormalPupilOphthalmicHtml,
+  'abnormal-pupil-neuro': abnormalPupilNeuroBranchHtml,
 }
 
 const pascal = (s: string) => s.replace(/(^|[-_ ])(\w)/g, (_, __, c) => c.toUpperCase())
@@ -71,11 +75,14 @@ describe('FLOWS registry', () => {
       // 'flow' pages open with an entry node + .flow-wrap; 'fn' pages open with
       // an fnHeader and render bare (no .flow-wrap).
       const html = renderFlowPage(page)
+      const first = page.blocks[0].kind
       if (page.layout === 'fn') {
-        expect(page.blocks[0].kind, page.id).toBe('fnHeader')
+        expect(first, page.id).toBe('fnHeader')
         expect(html, page.id).toContain('class="fn ')
       } else {
-        expect(page.blocks[0], page.id).toMatchObject({ kind: 'node', variant: 'entry' })
+        // flow pages open with an entry node, or an html block for fully-bespoke pages
+        expect(['node', 'html'], page.id).toContain(first)
+        if (first === 'node') expect(page.blocks[0], page.id).toMatchObject({ variant: 'entry' })
         expect(html, page.id).toContain('class="flow-wrap"')
       }
       expect(html.length, page.id).toBeGreaterThan(300)

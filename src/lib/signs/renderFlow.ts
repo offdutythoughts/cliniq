@@ -6,7 +6,8 @@
 // / renderDx<Id>). No dependency on cliniqApp internals — unit-testable.
 
 import type {
-  FlowPage, Block, Column, Endpoint, ChoiceItem, CardTile, TableCell, Link, LabeledLink, Tone,
+  FlowPage, Block, Column, Endpoint, ChoiceItem, CardTile, CategoryColumn,
+  DecisionStep, DecisionOutcome, TableCell, Link, LabeledLink, Tone,
 } from './flowTypes'
 
 const esc = (s: string): string =>
@@ -28,6 +29,7 @@ const HUE: Record<Tone, { rgb: string; color: string }> = {
   purple:  { rgb: '168,85,247',  color: '#C4B5FD' },
   indigo:  { rgb: '99,102,241',  color: '#A5B4FC' },
   orange:  { rgb: '249,115,22',  color: '#FED7AA' },
+  slate:   { rgb: '100,116,139', color: '#CBD5E1' },
   neutral: { rgb: '255,255,255', color: 'var(--gray)' },
 }
 // Brighter title colour for box headers, where the legacy used a lighter shade.
@@ -54,7 +56,7 @@ function onclick(link: Link): string {
 // "after" and the second connects "before". Defaults are kind-based; a block may
 // set connectAfter to override (e.g. a sub-step that feeds straight into
 // endpoints with no arrow).
-const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout', 'fnHeader', 'cardGrid'])
+const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout', 'fnHeader', 'cardGrid', 'categoryGrid', 'decisionTree'])
 const connectsAfter = (b: Block): boolean => b.connectAfter ?? SPINE.has(b.kind)
 const connectsBefore = (b: Block): boolean => SPINE.has(b.kind)
 const FLOW_ARROW = '<div class="flow-arrow-v">↓</div>'
@@ -163,6 +165,8 @@ function renderFnHeader(b: Extract<Block, { kind: 'fnHeader' }>): string {
 }
 
 function renderCardGrid(perRow: number, tiles: CardTile[]): string {
+  // .fn-row defaults to 2 columns; override the grid only when perRow differs.
+  const rowStyle = perRow === 2 ? '' : ` style="grid-template-columns:repeat(${perRow},1fr);"`
   let rows = ''
   for (let i = 0; i < tiles.length; i += perRow) {
     const group = tiles.slice(i, i + perRow)
@@ -172,9 +176,57 @@ function renderCardGrid(perRow: number, tiles: CardTile[]): string {
       const attr = t.link ? ` onclick="${onclick(t.link)}"` : ''
       return `<div class="fn-ep fn-ep-${t.anat}"${attr}>${sys}<div class="ep-loc">${esc(t.loc)}</div>${badge}</div>`
     }).join('')
-    rows += `<div class="fn-row">${cards}</div>`
+    rows += `<div class="fn-row"${rowStyle}>${cards}</div>`
   }
   return rows
+}
+
+// ── Category grid (header row → arrow row → tile-column row) ───────────────────
+function renderCategoryGrid(columns: CategoryColumn[]): string {
+  const n = columns.length
+  const grid = (inner: string) => `<div style="display:grid;grid-template-columns:repeat(${n},1fr);gap:6px;width:100%;">${inner}</div>`
+  const headers = columns.map(c => {
+    const h = HUE[c.tone]
+    return `<div class="flow-node" style="background:rgba(${h.rgb},0.12);border-color:rgba(${h.rgb},0.4);color:${h.color};font-size:11px;cursor:default;min-width:0;">${esc(c.cat)}</div>`
+  }).join('')
+  const arrows = columns.map(() => FLOW_ARROW).join('')
+  const cols = columns.map(c => {
+    const h = HUE[c.tone]
+    const tiles = c.tiles.map(t => {
+      const click = t.link ? 'cursor:pointer;' : 'cursor:default;'
+      const attr = t.link ? ` onclick="${onclick(t.link)}" onmouseover="this.style.filter='brightness(1.2)'" onmouseout="this.style.filter=''"` : ''
+      return `<div style="border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;border:1.5px solid rgba(${h.rgb},0.4);background:rgba(${h.rgb},0.12);color:${h.color};${click}line-height:1.3;word-break:break-word;"${attr}>${esc(t.label)}</div>`
+    }).join('')
+    return `<div style="display:flex;flex-direction:column;gap:4px;">${tiles}</div>`
+  }).join('')
+  return grid(headers) + grid(arrows) + grid(cols)
+}
+
+// ── Decision tree (YES/NO localisation) ───────────────────────────────────────
+function decBox(question: string, sub?: string): string {
+  const subDiv = sub ? `<div style="font-size:9px;color:#FDE68A;opacity:.8;margin-top:3px;">${esc(sub)}</div>` : ''
+  return `<div style="background:rgba(245,158,11,0.13);border:1.5px solid rgba(245,158,11,0.55);border-radius:10px;padding:9px 14px;width:100%;text-align:center;"><div style="font-size:11.5px;font-weight:700;color:#FCD34D;line-height:1.4;">${esc(question)}</div>${subDiv}</div>`
+}
+function outBox(o: DecisionOutcome): string {
+  const h = HUE[o.tone]
+  return `<div style="background:rgba(${h.rgb},0.12);border:1.5px solid rgba(${h.rgb},0.5);border-radius:9px;padding:9px 10px;font-size:9px;line-height:1.55;color:${h.color};">${o.html}</div>`
+}
+function renderDecisionStep(s: DecisionStep): string {
+  if (s.type === 'split') {
+    return decBox(s.question, s.sub) +
+      `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;margin-top:4px;"><div><div style="font-size:9px;font-weight:700;color:#F87171;margin-bottom:4px;">${esc(s.noLabel)}</div>${outBox(s.no)}</div><div><div style="font-size:9px;font-weight:700;color:#34D399;margin-bottom:4px;">${esc(s.yesLabel)}</div>${outBox(s.yes)}</div></div>`
+  }
+  if (s.type === 'outcome') {
+    return `<div style="margin-bottom:8px;"><div style="font-size:9px;font-weight:700;color:#F87171;margin-bottom:4px;">${esc(s.label)}</div>${outBox(s.box)}</div>`
+  }
+  // type 'step': continue answer goes down, the other exits to the side
+  const down = s.continue === 'YES'
+  const contColor = down ? '#34D399' : '#F87171'
+  const arrowColor = down ? 'rgba(52,211,153,0.5)' : 'rgba(248,113,113,0.5)'
+  const exitColor = down ? '#F87171' : '#34D399'
+  const exitLabel = down ? 'NO →' : 'YES →'
+  return decBox(s.question, s.sub) +
+    `<div style="display:flex;gap:5px;width:100%;margin:4px 0 10px;"><div style="width:28%;display:flex;flex-direction:column;align-items:center;padding-top:4px;"><div style="font-size:9px;font-weight:700;color:${contColor};">${s.continue}</div><div style="font-size:18px;color:${arrowColor};line-height:1.1;">↓</div></div><div style="flex:1;"><div style="font-size:9px;font-weight:700;color:${exitColor};margin-bottom:4px;">${exitLabel}</div>${outBox(s.exit)}</div></div>`
 }
 
 function renderBranch(columns: Column[]): string {
@@ -242,6 +294,9 @@ function renderBlock(b: Block): string {
     case 'dxRow':       return renderDxRow(b.items)
     case 'table':       return renderTable(b)
     case 'cardSection': return renderCardSection(b)
+    case 'categoryGrid': return renderCategoryGrid(b.columns)
+    case 'decisionTree': return b.steps.map(renderDecisionStep).join('')
+    case 'disclaimer':  return '<div class="disclaimer">For qualified veterinary professionals only.</div>'
     case 'html':        return b.html
     default:
       // table / categoryGrid / speciesCompare — renderer support lands when a
@@ -255,5 +310,10 @@ function renderBlock(b: Block): string {
  *  `.fn-arrow` connectors (matching legacy `.fn`-system sub-flows). */
 export function renderFlowPage(page: FlowPage): string {
   if (page.layout === 'fn') return joinBlocks(page.blocks, FN_ARROW)
-  return `<div class="flow-wrap">${joinBlocks(page.blocks)}</div>`
+  // A trailing disclaimer renders OUTSIDE .flow-wrap (matches the legacy markup).
+  const blocks = page.blocks
+  const lastIsDisc = blocks.length > 0 && blocks[blocks.length - 1].kind === 'disclaimer'
+  const main = lastIsDisc ? blocks.slice(0, -1) : blocks
+  const disc = lastIsDisc ? '<div class="disclaimer">For qualified veterinary professionals only.</div>' : ''
+  return `<div class="flow-wrap">${joinBlocks(main)}</div>${disc}`
 }

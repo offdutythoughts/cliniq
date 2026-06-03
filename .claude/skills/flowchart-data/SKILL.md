@@ -41,12 +41,15 @@ A `FlowPage` is `{ id, title, layout?, blocks: Block[] }`. `layout` is `'flow'` 
 | `dxRow` | row of diagnostic-approach buttons | `items: { label, link, accent? }[]` |
 | `table` | comparison grid + optional tinted box | `cols`, `headers`, `rows: (string\|{text,tone})[][]`, `boxTone?`, `title?`, `footnote?`, `gap?` |
 | `cardSection` | tinted group of disease cards | `tone`, `title`, `cards: { title, tag?, desc, link? }[]`, `gap?` |
+| `categoryGrid` | N-col category-tile grid (headers → arrows → tile columns) | `columns: { cat, tone, tiles: { label, link? }[] }[]` |
+| `decisionTree` | YES/NO localisation tree | `steps: ({type:'step',continue,question,sub?,exit} \| {type:'split',question,…,no,yes} \| {type:'outcome',label,box})[]` |
+| `disclaimer` | "For qualified veterinary professionals only." footer (renders outside `.flow-wrap`) | — |
 | `html` | **escape hatch** — raw legacy HTML | `html` |
 
-Typed but **not yet rendered** (build the renderer when first needed): `categoryGrid` (4-col category-tile grid with per-column arrows), `speciesCompare` (🐕/🐱 columns).
+Typed but **not yet rendered** (build the renderer when first needed): `speciesCompare` (🐕/🐱 columns). A recurring **2-col compare box** (Red Eye coats discriminator, Abnormal Pupil neuro "light/dark room rule") is still `html` — a good candidate for the next typed block.
 
 ### Tones (closed enum → rgba in `HUE`)
-`danger` (red 220,38,38) · `warning` (amber 245,158,11) · `info` (blue 37,99,235) · `teal` (13,148,136) · `green` (16,185,129) · `violet` (139,92,246) · `purple` (168,85,247) · `indigo` (99,102,241) · `orange` (249,115,22) · `neutral`. Match the legacy box's rgba to the closest hue; colour lives once in `HUE`, data only names the tone.
+`danger` (red 220,38,38) · `warning` (amber 245,158,11) · `info` (blue 37,99,235) · `teal` (13,148,136) · `green` (16,185,129) · `violet` (139,92,246) · `purple` (168,85,247) · `indigo` (99,102,241) · `orange` (249,115,22) · `slate` (100,116,139) · `neutral`. Match the legacy box's rgba to the closest hue; colour lives once in `HUE`, data only names the tone. Small shade differences (e.g. violet-200 vs violet-300) are imperceptible at the app's text size.
 
 ### Links (typed cross-references)
 Map legacy `onclick` handlers to `Link` objects — never bury them in `html` blocks (then they aren't validated):

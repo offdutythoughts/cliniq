@@ -17,6 +17,7 @@ export type Tone =
   | 'purple'
   | 'indigo'
   | 'orange'
+  | 'slate'
   | 'neutral'
 
 /** Where an interactive element points. The renderer serialises these to the
@@ -126,8 +127,28 @@ export type CardSectionBlock = Connectable & {
   gap?: number
 }
 
+/** A 4-(or N-)column category grid: a row of category headers, a row of
+ *  connector arrows, then a row of tile-columns (each column 1+ clickable
+ *  tiles). The mydriasis/miosis cause pages; later jaundice/pale/seizures. */
+export type CategoryTile = { label: string; link?: Link }
+export type CategoryColumn = { cat: string; tone: Tone; tiles: CategoryTile[] }
+export type CategoryGridBlock = Connectable & { kind: 'categoryGrid'; columns: CategoryColumn[] }
+
+/** A YES/NO localisation decision tree. Each `step` is a decision box with a
+ *  continue-arrow (down) for the `continue` answer and a side exit outcome for
+ *  the other; `split` ends with two side-by-side outcomes; `outcome` is a
+ *  standalone terminal box. */
+export type DecisionOutcome = { tone: Tone; html: string }
+export type DecisionStep =
+  | { type: 'step'; continue: 'YES' | 'NO'; question: string; sub?: string; exit: DecisionOutcome }
+  | { type: 'split'; question: string; sub?: string; noLabel: string; no: DecisionOutcome; yesLabel: string; yes: DecisionOutcome }
+  | { type: 'outcome'; label: string; box: DecisionOutcome }
+export type DecisionTreeBlock = Connectable & { kind: 'decisionTree'; steps: DecisionStep[] }
+
+/** The "For qualified veterinary professionals only." footer. */
+export type DisclaimerBlock = Connectable & { kind: 'disclaimer' }
+
 // Typed now for model completeness; renderer support added when first used.
-export type CategoryGridBlock = Connectable & { kind: 'categoryGrid'; columns: { cat: string; items: string[] }[] }
 export type SpeciesCompareBlock = Connectable & { kind: 'speciesCompare'; dog: string[]; cat: string[] }
 export type HtmlBlock = Connectable & { kind: 'html'; html: string } // escape hatch — last resort
 
@@ -146,6 +167,8 @@ export type Block =
   | TableBlock
   | CardSectionBlock
   | CategoryGridBlock
+  | DecisionTreeBlock
+  | DisclaimerBlock
   | SpeciesCompareBlock
   | HtmlBlock
 
