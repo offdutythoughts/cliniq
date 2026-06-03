@@ -72,7 +72,14 @@ function renderDxBlock(b: DxBlock): string {
 export function renderDxApproach(sign: string, approach: DxApproach, active: string): string {
   const nav = approach.nav ?? STD_NAV
   const tab: DxTab = approach.tabs[active] ?? approach.tabs.history
-  const wrap = `<div class="dx-wrap">${tab.blocks.map(renderDxBlock).join(DX_ARROW)}</div>`
+  // Arrow spine: a .dx-arrow between consecutive blocks, unless the preceding
+  // block sets noArrowAfter (legacy arrow placement is author-controlled).
+  let spine = ''
+  tab.blocks.forEach((b, i) => {
+    if (i > 0 && !tab.blocks[i - 1].noArrowAfter) spine += DX_ARROW
+    spine += renderDxBlock(b)
+  })
+  const wrap = `<div class="dx-wrap">${spine}</div>`
   const after = (tab.after ?? []).map(renderDxBlock).join('')
   return renderDxTabs(sign, nav, active) + wrap + after
 }

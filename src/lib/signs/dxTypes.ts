@@ -15,7 +15,13 @@ import type { Tone, LabeledLink } from './flowTypes'
  *  `html` is the card body (may contain <strong>/<br>/nested markup). */
 export type DxCard = { html: string; style?: string }
 
-export type DxBlock =
+/** Arrow-spine control common to every block. The renderer draws a `.dx-arrow`
+ *  between consecutive blocks inside `.dx-wrap`; set `noArrowAfter` to suppress
+ *  the connector after this block (the legacy `.dx-arrow` placement is
+ *  author-controlled — e.g. a leading intro box has no arrow after it). */
+type DxArrowCtl = { noArrowAfter?: boolean }
+
+export type DxBlock = DxArrowCtl & (
   /** `.dx-branch` — a goal / decision header box. */
   | { kind: 'branch'; text: string }
   /** `.dx-step` step header. `alt` selects the alternating colour; `tone` paints
@@ -37,6 +43,7 @@ export type DxBlock =
   | { kind: 'html'; html: string }
   /** The "For qualified veterinary professionals only." footer. */
   | { kind: 'disclaimer' }
+)
 
 /** One tab of a sign's diagnostic approach. `blocks` render inside `.dx-wrap`
  *  (arrow-connected spine); `after` render after it, un-connected. */
