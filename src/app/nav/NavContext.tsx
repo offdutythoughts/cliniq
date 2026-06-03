@@ -1,0 +1,72 @@
+'use client'
+// ── Navigation context ──────────────────────────────────────────────────────
+// The React replacement for the legacy imperative engine (history[] / push /
+// replace / goBack / navTo / slideDir in cliniqApp.ts). The current screen is a
+// `View` (data); the back stack is `View[]`; re-rendering a screen is just
+// <Screen view={...}/>. No window globals, no HMR callback plumbing.
+
+import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from 'react'
+import type { View } from './view'
+import type { Tab } from '../../types'
+
+export interface Nav {
+  /** The screen currently shown: top of the stack, or the tab root. */
+  view: View
+  stack: View[]
+  tab: Tab
+  slideDir: 'left' | 'right'
+  /** Bumped by refresh() to force a re-render without changing the view. */
+  tick: number
+  /** Push a new screen (forward slide). */
+  navigate: (v: View) => void
+  /** Replace the current screen in place (e.g. dx tab switches). */
+  replace: (v: View) => void
+  /** Pop back one screen (reverse slide). */
+  goBack: () => void
+  /** Switch bottom-nav tab, clearing the back stack. */
+  navTo: (tab: Tab) => void
+  /** Re-render the current view (e.g. after a theme toggle / system expand). */
+  refresh: () => void
+}
+
+interface NavState {
+  tab: Tab
+  stack: View[]
+  slideDir: 'left' | 'right'
+  tick: number
+}
+
+const NavCtx = createContext<Nav | null>(null)
+
+export function NavProvider({ children }: { children: ReactNode }) {
+  const [st, setSt] = useState<NavState>({ tab: 0, stack: [], slideDir: 'right', tick: 0 })
+
+  const navigate = useCallback((v: View) => {
+    setSt(s => ({ ...s, stack: [...s.stack, v], slideDir: 'right' }))
+  }, [])
+  const replace = useCallback((v: View) => {
+    setSt(s => ({ ...s, stack: s.stack.length ? [...s.stack.slice(0, -1), v] : [v], slideDir: 'right' }))
+  }, [])
+  const goBack = useCallback(() => {
+    setSt(s => ({ ...s, stack: s.stack.slice(0, -1), slideDir: 'left' }))
+  }, [])
+  const navTo = useCallback((tab: Tab) => {
+    setSt(s => ({ ...s, tab, stack: [], slideDir: 'right' }))
+  }, [])
+  const refresh = useCallback(() => {
+    setSt(s => ({ ...s, tick: s.tick + 1 }))
+  }, [])
+
+  const nav = useMemo<Nav>(() => {
+    const view: View = st.stack.length ? st.stack[st.stack.length - 1] : { kind: 'tab', tab: st.tab }
+    return { view, stack: st.stack, tab: st.tab, slideDir: st.slideDir, tick: st.tick, navigate, replace, goBack, navTo, refresh }
+  }, [st.stack, st.tab, st.slideDir, st.tick, navigate, replace, goBack, navTo, refresh])
+
+  return <NavCtx.Provider value={nav}>{children}</NavCtx.Provider>
+}
+
+export function useNav(): Nav {
+  const ctx = useContext(NavCtx)
+  if (!ctx) throw new Error('useNav must be used within <NavProvider>')
+  return ctx
+}

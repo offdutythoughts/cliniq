@@ -66,7 +66,12 @@ function _pageSlug(fnName) {
   return fnName.replace(/^render/, '').replace(/^[A-Z]/, function(c){ return c.toLowerCase(); });
 }
 
+// Migration bridge: when capturing (renderViewToString), render() returns the
+// HTML string to the buffer instead of pushing it to the (now-unused) React
+// callbacks. Removed in Phase 5 with the rest of the legacy engine.
+var _captureBuf = null;
 function render(html) {
+  if (_captureBuf !== null) { _captureBuf = html; return; }
   _cb().c(html, slideDir);
   _cb().p(currentNoteKey, currentNoteTitle);
   slideDir = 'right';
@@ -1041,6 +1046,39 @@ function injuryGradingTable(){
 
 // ── NOTES SIDEBAR ────────────────────────────────────────────────────────────
 
+// ── Migration bridge: render a View to its legacy HTML string ────────────────
+// Drives the matching legacy builder with render() in capture mode, returning
+// the HTML the old engine would have injected. Used by page.tsx for any View
+// kind not yet migrated to a React component. Removed in Phase 5.
+export function renderViewToString(view) {
+  _captureBuf = '';
+  try {
+    switch (view.kind) {
+      case 'tab': navTo(view.tab, true); break;
+      case 'flow': renderFlowId(view.flowId); break;
+      case 'dx': renderDxId(view.sign, view.tab); break;
+      case 'disease': renderDiseasePage(view.id); break;
+      case 'protocol': renderProtoDetail(view.id); break;
+      case 'lesionLoc': goLesionTab(view.loc, view.name); break;
+      case 'lesionEp': goLocEp(view.loc, view.name, view.system, view.cls); break;
+      case 'lesionCatFlow': renderLesionFlow(view.loc, view.name); break;
+      case 'subTypeFlow': renderSubTypeFlow(view.loc, view.name, view.cat); break;
+      case 'subTypeDetail': renderSubTypeDetail(view.id); break;
+      case 'lesionDetail': renderLesionDetail(view.id); break;
+      case 'diff': renderDiffDetail(view.id); break;
+    }
+    return _captureBuf || '';
+  } finally {
+    _captureBuf = null;
+  }
+}
+
+// Toggle a body-system's expand/collapse state without rendering (the React
+// bridge re-renders via nav.refresh). Removed in Phase 5.
+export function toggleSystemState(id) {
+  if (openSystems.has(id)) openSystems.delete(id); else openSystems.add(id);
+}
+
 // Expose all functions globally so onclick attributes in rendered HTML can call them
 export function mountGlobals() {
   const w = window;
@@ -1085,4 +1123,4 @@ if (typeof window !== 'undefined' && (window as any).__cliniqCbs) {
   }, 0);
 }
 
-export { navTo, goBack, renderLocalise };
+export { navTo, goBack, renderLocalise, filterDiffs, filterDiseases };
