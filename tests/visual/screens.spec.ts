@@ -32,13 +32,23 @@ const SCREENS: { name: string; nav: Nav }[] = [
   { name: 'flow-seizures', nav: { fn: 'renderFlowId', args: ['seizures'] } },
   { name: 'flow-weakness', nav: { fn: 'renderFlowId', args: ['weakness'] } },
   { name: 'flow-pupd', nav: { fn: 'renderFlowId', args: ['pupd'] } },
+  // flow-myelopathy is the only flow page that exercises the `table` block
+  // (<table>/colspan markup) — guard it before the renderer is migrated.
+  { name: 'flow-myelopathy', nav: { fn: 'renderFlowId', args: ['myelopathy'] } },
   // Diagnostic-approach: all three tabs (different .dx-* block mixes).
   { name: 'dx-coughing-history', nav: { fn: 'renderDxId', args: ['coughing', 'history'] } },
   { name: 'dx-coughing-exam', nav: { fn: 'renderDxId', args: ['coughing', 'exam'] } },
   { name: 'dx-coughing-dx', nav: { fn: 'renderDxId', args: ['coughing', 'dx'] } },
+  // dx-bleeding-dx is the only Dx view with an html-block <table>; pupd/diarrhoea
+  // cover the 'pupd'/'alt' nav variants and the densest leaf-html tabs.
+  { name: 'dx-bleeding-dx', nav: { fn: 'renderDxId', args: ['bleeding', 'dx'] } },
+  { name: 'dx-pupd-dx', nav: { fn: 'renderDxId', args: ['pupd', 'dx'] } },
+  { name: 'dx-diarrhoea-history', nav: { fn: 'renderDxId', args: ['diarrhoea', 'history'] } },
   // Disease pages, protocols, and a lesion-location list (lesion-card + tag-*).
   { name: 'disease-hcm', nav: { fn: 'renderDiseasePage', args: ['DIS-HCM'] } },
   { name: 'disease-aa', nav: { fn: 'renderDiseasePage', args: ['DIS-AA'] } },
+  // disease-dic carries @DIS-/@PROT- link tokens — guards the linkify() path.
+  { name: 'disease-dic', nav: { fn: 'renderDiseasePage', args: ['DIS-BD-DIC'] } },
   { name: 'protocol-cpr', nav: { fn: 'renderProtoDetail', args: ['PROT-CPR'] } },
   { name: 'protocol-ataxia', nav: { fn: 'renderProtoDetail', args: ['PROT-ATAXIA'] } },
   { name: 'lesion-hepatic', nav: { fn: 'goLesionTab', args: ['LOC-JD-HEP', 'Hepatic'] } },
