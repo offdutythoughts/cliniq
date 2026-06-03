@@ -357,7 +357,7 @@ export const pupdDx: DxApproach = {
         html: `• ≥1 USG &gt;1.030 (dog) / &gt;1.035 (cat) + Na⁺ low-normal → <strong>Primary polydipsia</strong><br>
       • All USG &lt;1.007 + Na⁺ high-normal → <strong>CDI vs NDI</strong> → desmopressin trial<br>
       <div style="margin-top:8px;">
-        <div class="dx-dx" onclick="renderDxPUPDDesmopressin()" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.45);cursor:pointer;">💉 → Desmopressin Trial protocol</div>
+        <div class="dx-dx" onclick="renderDxId('pupd','desmopressin')" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.45);cursor:pointer;">💉 → Desmopressin Trial protocol</div>
       </div>`,
       },
     ],

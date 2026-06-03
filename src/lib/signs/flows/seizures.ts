@@ -2,7 +2,7 @@
 // Migration of renderSeizureFlow (inline in src/lib/cliniqApp.ts, ~line 3945)
 // to the FlowPage model. Self-contained: one entry page, no sub-flows. The only
 // onclicks are two goLesionTab lesion links (Idiopathic → LOC-SZ-INTRACRANIAL,
-// Reactive → LOC-SZ-EXTRACRANIAL), a renderDxSeizures() dx button and a
+// Reactive → LOC-SZ-EXTRACRANIAL), a renderDxId('seizures') dx button and a
 // renderProtoDetail('PROT-SEIZ') protocol card in the trailing card row. The Dx
 // views (seizureDx*Html / renderDxSeizures*) are OUT of scope.
 //
@@ -35,7 +35,7 @@
 // ⚠️ FLAG — links inside `html` are NOT validated by the link-integrity test:
 //   • goLesionTab('LOC-SZ-INTRACRANIAL','Intracranial')  (Idiopathic box)
 //   • goLesionTab('LOC-SZ-EXTRACRANIAL','Extracranial')  (Reactive box)
-//   • renderDxSeizures()           (Diagnostic Approach card → dx id 'seizures')
+//   • renderDxId('seizures')           (Diagnostic Approach card → dx id 'seizures')
 //   • renderProtoDetail('PROT-SEIZ')                      (SE Protocol card)
 // All four targets exist in cliniqApp.ts.
 //
@@ -291,7 +291,7 @@ export const seizuresFlow: FlowPage = {
       kind: 'html',
       connectAfter: false,
       html: `<div style="width:100%;"><div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-    <div class="card" onclick="renderDxSeizures()"><div class="card-row"><div class="card-icon">🔬</div><div style="flex:1"><div class="card-title">Diagnostic Approach</div><div class="card-sub">History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
+    <div class="card" onclick="renderDxId('seizures')"><div class="card-row"><div class="card-icon">🔬</div><div style="flex:1"><div class="card-title">Diagnostic Approach</div><div class="card-sub">History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
     <div class="card" onclick="renderProtoDetail('PROT-SEIZ')"><div class="card-row"><div class="card-icon">🚨</div><div style="flex:1"><div class="card-title">SE Protocol</div><div class="card-sub">Diazepam → LEV → PB → Propofol</div></div><div class="card-arrow">›</div></div></div>
   </div>
 

@@ -13,7 +13,7 @@
 // markup these bespoke parts are authored as `html` blocks (FLAGGED below);
 // clean entry/step headers use typed `node` blocks. Sub-flow cross-links use
 // typed `{to:'flow'}` Links. The CDI/desmopressin onclicks point at the Dx view
-// renderDxPUPDDesmopressin() and are preserved inline in html (Dx tranche).
+// renderDxId('pupd','desmopressin') and are preserved inline in html (Dx tranche).
 
 import type { FlowPage } from '../flowTypes'
 
@@ -213,7 +213,7 @@ const pupdPrimPU: FlowPage = {
       connectAfter: false,
       html: `<div class="flow-arrow-v">↓</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;">
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:#5EEAD4;text-align:center;line-height:1.3;">Metabolic / Endocrine</div><div style="color:#5EEAD4;text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#5EEAD4;text-align:center;line-height:1.35;cursor:pointer;" onclick="renderDxPUPDDesmopressin()">Central DI (CDI)</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#5EEAD4;text-align:center;line-height:1.35;">Diabetes mellitus</div></div>
+      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:#5EEAD4;text-align:center;line-height:1.3;">Metabolic / Endocrine</div><div style="color:#5EEAD4;text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#5EEAD4;text-align:center;line-height:1.35;cursor:pointer;" onclick="renderDxId('pupd','desmopressin')">Central DI (CDI)</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#5EEAD4;text-align:center;line-height:1.35;">Diabetes mellitus</div></div>
       <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:#F9A8D4;text-align:center;line-height:1.3;">Anomalous</div><div style="color:#F9A8D4;text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#F9A8D4;text-align:center;line-height:1.35;">Primary nephrogenic DI</div><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#F9A8D4;text-align:center;line-height:1.35;">Renal glucosuria / Fanconi</div></div>
       <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(100,116,139,0.15);border:1.5px solid rgba(100,116,139,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:#94A3B8;text-align:center;line-height:1.3;">Degenerative</div><div style="color:#94A3B8;text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(100,116,139,0.15);border:1.5px solid rgba(100,116,139,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#94A3B8;text-align:center;line-height:1.35;">CKD / AKI</div></div>
     </div>`,
@@ -229,7 +229,7 @@ const pupdPrimPU: FlowPage = {
         <strong style="color:var(--white);">NDI:</strong> No USG response to desmopressin<br>
         <strong style="color:var(--white);">Partial response:</strong> Partial CDI · or secondary NDI (review for missed underlying cause)
       </div>
-      <div style="margin-top:6px;font-size:9.5px;cursor:pointer;color:#818CF8;text-decoration:underline;" onclick="renderDxPUPDDesmopressin()">→ Full desmopressin trial protocol (diagnostics)</div>
+      <div style="margin-top:6px;font-size:9.5px;cursor:pointer;color:#818CF8;text-decoration:underline;" onclick="renderDxId('pupd','desmopressin')">→ Full desmopressin trial protocol (diagnostics)</div>
     </div>`,
     },
 

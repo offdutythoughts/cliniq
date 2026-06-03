@@ -99,7 +99,7 @@ export const paleGumsDx: DxApproach = {
         <div style="height:3px;"></div>
         <div class="dx-dx" style="width:100%;font-size:9px;cursor:pointer;" onclick="renderDiseasePage('DIS-TOX-APAP')">Brown blood + muddy MM (esp. cat) → <strong>Paracetamol</strong></div>
         <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;cursor:pointer;" onclick="renderDxBleeding()">Blood-loss anaemia → find the bleed (<strong>bleeding workup</strong>)</div>
+        <div class="dx-dx" style="width:100%;font-size:9px;cursor:pointer;" onclick="renderDxId('bleeding')">Blood-loss anaemia → find the bleed (<strong>bleeding workup</strong>)</div>
         <div style="height:3px;"></div>
         <div class="dx-dx" style="width:100%;font-size:9px;">No regen after 5 d → <strong>Bone marrow disease</strong> · cat FeLV/FIV</div>
       </div>

@@ -268,7 +268,7 @@ export const diarrhoeaDx: DxApproach = {
     <div class="dx-dx" style="background:rgba(13,148,136,0.2);border-color:rgba(13,148,136,0.5);" onclick="goLesionTab('LOC-DI-LB','Large intestine / colon')">LI Primary lesions →</div>
   </div>
   <div style="height:4px;"></div>
-  <div class="dx-dx" onclick="renderDxDiarrhoeaSec()" style="background:rgba(217,119,6,0.15);border-color:rgba(217,119,6,0.4);">🟠 Full secondary workup →</div>`,
+  <div class="dx-dx" onclick="renderDxId('diarrhoea','sec')" style="background:rgba(217,119,6,0.15);border-color:rgba(217,119,6,0.4);">🟠 Full secondary workup →</div>`,
         },
       ],
       after: [

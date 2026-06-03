@@ -87,12 +87,12 @@ const ataxiaEntry: FlowPage = {
 
     // Two trailing action cards (.card rows). No typed block reproduces the
     // .card-icon/.card-title/.card-sub/.card-arrow layout (dxRow renders .dx-test
-    // buttons, visually different) → html. Onclicks mapped: renderDxAtaxia() is a
+    // buttons, visually different) → html. Onclicks mapped: renderDxId('ataxia') is a
     // dx view; renderProtoDetail('PROT-ATAXIA') a protocol. (FLAG: a typed
     // linkCard/cardRow block would let these be validated links.)
     {
       kind: 'html',
-      html: `<div style="margin-top:8px;width:100%;"><div class="card" onclick="renderDxAtaxia()"><div class="card-row"><div class="card-icon">🔬</div><div style="flex:1"><div class="card-title">Diagnostic Approach</div><div class="card-sub">Imaging + targeted testing by ataxia type</div></div><div class="card-arrow">›</div></div></div></div>
+      html: `<div style="margin-top:8px;width:100%;"><div class="card" onclick="renderDxId('ataxia')"><div class="card-row"><div class="card-icon">🔬</div><div style="flex:1"><div class="card-title">Diagnostic Approach</div><div class="card-sub">Imaging + targeted testing by ataxia type</div></div><div class="card-arrow">›</div></div></div></div>
   <div style="margin-top:6px;width:100%;"><div class="card" onclick="renderProtoDetail('PROT-ATAXIA')"><div class="card-row"><div class="card-icon">⚡</div><div style="flex:1"><div class="card-title">Emergency Ataxia Protocol</div><div class="card-sub">Stabilisation + workup for the acutely ataxic patient</div></div><div class="card-arrow">›</div></div></div></div>`,
     },
 
