@@ -56,7 +56,7 @@ function onclick(link: Link): string {
 // "after" and the second connects "before". Defaults are kind-based; a block may
 // set connectAfter to override (e.g. a sub-step that feeds straight into
 // endpoints with no arrow).
-const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout', 'fnHeader', 'cardGrid', 'categoryGrid', 'decisionTree'])
+const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout', 'fnHeader', 'cardGrid', 'categoryGrid', 'categoryColumns', 'decisionTree'])
 const connectsAfter = (b: Block): boolean => b.connectAfter ?? SPINE.has(b.kind)
 const connectsBefore = (b: Block): boolean => SPINE.has(b.kind)
 const FLOW_ARROW = '<div class="flow-arrow-v">↓</div>'
@@ -202,6 +202,33 @@ function renderCategoryGrid(columns: CategoryColumn[]): string {
   return grid(headers) + grid(arrows) + grid(cols)
 }
 
+// ── Category columns (wrapping grid of header+↓+chips units, CAT_STYLE) ───────
+// Matches the legacy col()/CAT_STYLE grids (jaundice / pale / pupd). Each column
+// is keyed by its category label, which carries the exact legacy colour.
+const CAT_STYLE: Record<string, { bg: string; border: string; col: string }> = {
+  'Vascular':              { bg: 'rgba(220,38,38,0.15)',  border: 'rgba(220,38,38,0.4)',  col: '#FCA5A5' },
+  'Inflammatory':          { bg: 'rgba(245,158,11,0.15)', border: 'rgba(245,158,11,0.4)', col: '#FCD34D' },
+  'Mass':                  { bg: 'rgba(139,92,246,0.15)', border: 'rgba(139,92,246,0.4)', col: '#C4B5FD' },
+  'Immune-mediated':       { bg: 'rgba(59,130,246,0.15)', border: 'rgba(59,130,246,0.4)', col: '#93C5FD' },
+  'Degenerative':          { bg: 'rgba(100,116,139,0.15)', border: 'rgba(100,116,139,0.4)', col: '#94A3B8' },
+  'Metabolic / Endocrine': { bg: 'rgba(20,184,166,0.15)', border: 'rgba(20,184,166,0.4)', col: '#5EEAD4' },
+  'Toxic':                 { bg: 'rgba(249,115,22,0.15)', border: 'rgba(249,115,22,0.4)', col: '#FB923C' },
+  'Trauma':                { bg: 'rgba(107,114,128,0.15)', border: 'rgba(107,114,128,0.4)', col: '#D1D5DB' },
+  'Anomalous':             { bg: 'rgba(236,72,153,0.15)', border: 'rgba(236,72,153,0.4)', col: '#F9A8D4' },
+}
+function renderCategoryColumns(cols: number, columns: { cat: string; tiles: { label: string; link?: Link }[] }[]): string {
+  const units = columns.map(c => {
+    const s = CAT_STYLE[c.cat] ?? { bg: 'rgba(255,255,255,0.04)', border: 'var(--border2)', col: 'var(--gray)' }
+    const chips = c.tiles.map(t => {
+      const click = t.link ? 'cursor:pointer;' : ''
+      const attr = t.link ? ` onclick="${onclick(t.link)}"` : ''
+      return `<div style="background:${s.bg};border:1.5px solid ${s.border};border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:${s.col};text-align:center;line-height:1.35;${click}"${attr}>${esc(t.label)}</div>`
+    }).join('')
+    return `<div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:${s.bg};border:1.5px solid ${s.border};border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:${s.col};text-align:center;line-height:1.3;">${esc(c.cat)}</div><div style="color:${s.col};text-align:center;font-size:11px;line-height:1;">↓</div>${chips}</div>`
+  }).join('')
+  return `<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;">${units}</div>`
+}
+
 // ── Decision tree (YES/NO localisation) ───────────────────────────────────────
 function decBox(question: string, sub?: string): string {
   const subDiv = sub ? `<div style="font-size:9px;color:#FDE68A;opacity:.8;margin-top:3px;">${esc(sub)}</div>` : ''
@@ -295,6 +322,7 @@ function renderBlock(b: Block): string {
     case 'table':       return renderTable(b)
     case 'cardSection': return renderCardSection(b)
     case 'categoryGrid': return renderCategoryGrid(b.columns)
+    case 'categoryColumns': return renderCategoryColumns(b.cols ?? 3, b.columns)
     case 'decisionTree': return b.steps.map(renderDecisionStep).join('')
     case 'disclaimer':  return '<div class="disclaimer">For qualified veterinary professionals only.</div>'
     case 'html':        return b.html

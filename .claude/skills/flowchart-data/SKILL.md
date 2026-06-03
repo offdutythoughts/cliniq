@@ -41,7 +41,8 @@ A `FlowPage` is `{ id, title, layout?, blocks: Block[] }`. `layout` is `'flow'` 
 | `dxRow` | row of diagnostic-approach buttons | `items: { label, link, accent? }[]` |
 | `table` | comparison grid + optional tinted box | `cols`, `headers`, `rows: (string\|{text,tone})[][]`, `boxTone?`, `title?`, `footnote?`, `gap?` |
 | `cardSection` | tinted group of disease cards | `tone`, `title`, `cards: { title, tag?, desc, link? }[]`, `gap?` |
-| `categoryGrid` | N-col category-tile grid (headers → arrows → tile columns) | `columns: { cat, tone, tiles: { label, link? }[] }[]` |
+| `categoryGrid` | N-col category-tile grid, 3 rows (headers → `.flow-arrow-v` row → tile columns); no wrap. The abnormal-pupil mydriasis/miosis cause grids | `columns: { cat, tone, tiles: { label, link? }[] }[]` |
+| `categoryColumns` | wrapping `cols`-col grid of self-contained units (header + coloured ↓ + chips); the legacy `col()`/CAT_STYLE grids (jaundice/pale/pupd). `cat` must be a CAT_STYLE label (Vascular/Inflammatory/Mass/Immune-mediated/Degenerative/Metabolic / Endocrine/Toxic/Trauma/Anomalous) which carries its own exact colour | `cols?`, `columns: { cat, tiles: { label, link? }[] }[]` |
 | `decisionTree` | YES/NO localisation tree | `steps: ({type:'step',continue,question,sub?,exit} \| {type:'split',question,…,no,yes} \| {type:'outcome',label,box})[]` |
 | `disclaimer` | "For qualified veterinary professionals only." footer (renders outside `.flow-wrap`) | — |
 | `html` | **escape hatch** — raw legacy HTML | `html` |

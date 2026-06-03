@@ -134,6 +134,15 @@ export type CategoryTile = { label: string; link?: Link }
 export type CategoryColumn = { cat: string; tone: Tone; tiles: CategoryTile[] }
 export type CategoryGridBlock = Connectable & { kind: 'categoryGrid'; columns: CategoryColumn[] }
 
+/** A wrapping `cols`-column grid of self-contained category units (header +
+ *  coloured ↓ + chips). `cat` is one of the shared CAT_STYLE category labels
+ *  (Vascular / Inflammatory / Mass / Immune-mediated / Degenerative /
+ *  Metabolic / Endocrine / Toxic / Trauma / Anomalous), which carries its own
+ *  exact colour. Used by the jaundice / pale / pupd `col()` grids. */
+export type CatColumnTile = { label: string; link?: Link }
+export type CatColumn = { cat: string; tiles: CatColumnTile[] }
+export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; cols?: number; columns: CatColumn[] }
+
 /** A YES/NO localisation decision tree. Each `step` is a decision box with a
  *  continue-arrow (down) for the `continue` answer and a side exit outcome for
  *  the other; `split` ends with two side-by-side outcomes; `outcome` is a
@@ -167,6 +176,7 @@ export type Block =
   | TableBlock
   | CardSectionBlock
   | CategoryGridBlock
+  | CategoryColumnsBlock
   | DecisionTreeBlock
   | DisclaimerBlock
   | SpeciesCompareBlock

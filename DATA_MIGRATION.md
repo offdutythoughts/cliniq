@@ -186,14 +186,14 @@ with `purple`/`indigo`.
 - [x] **Dyspnoea** — entry + `insp`, `rest` (3) ✅ byte-identical. NB: the legacy entry's Expiratory/Restrictive/Mixed tiles call `renderExpFlow`/`renderRestFlow`/`renderMixedFlow`, which **do not exist** (pre-existing broken links) — faithfully preserved; only `insp`/`rest` sub-flows exist. Entry tile grid + 🐱 cat box kept as html.
 - [x] Browser-verified byte-identical for all 7 pages; tests 94/94; `flowId` set. Migrated by parallel sub-agents using the flowchart-data skill.
 
-### Phase 1c — GI / uro / metabolic families  ⏸️ *Checkpoint*
-- [ ] **Vomiting** — entry + `oesoph`, `extra-oesoph`, `true-vom` (4); vomit-vs-regurg comparison `table`
-- [ ] **Haematuria** — entry + `pseudo`, `true-systemic`, `initial`, `terminal`, `uniform`, `indep` (7)
-- [ ] **Jaundice** — entry + `pre-hep`, `hep`, `post-hep` (4); `categoryGrid`
-- [ ] **Pale Mucous Membranes** — entry + `regen`, `non-regen`, `pre-regen`, `shock`, `cardiac` (6); `categoryGrid`; transfusion-threshold `callout`
-- [ ] **Polyuria / Polydipsia** — entry + `prim-pd`, `prim-pu`, `sec-pu` (4)
-- [ ] **Weakness / Collapse** — entry + `episodic`, `persistent`, `collapse` (4)
-- [ ] Parity + tests + build green for each; `flowId` set
+### Phase 1c — GI / uro / metabolic families  ✅ *Done*
+- [x] **Vomiting** — entry (1) ✅ byte-identical (oesoph/extra-oesoph are goLesionTab redirects, not pages; renderTrueVom is an orphan). Bespoke branch kept as html.
+- [x] **Haematuria** — entry + 6 sub-flows (7) ✅ byte-identical (entry const-backed → content-parity test). Bespoke stream/chip grids kept as html (flagged: a typed `diff` link + pink/genital tones would let these become typed).
+- [x] **Jaundice** — entry + `pre-hep`, `hep`, `post-hep` (4) ✅ byte-identical + **pixel-identical**. hep/post-hep use the new `categoryColumns` block.
+- [x] **Pale Mucous Membranes** — entry + `regen`, `non-regen`, `pre-regen`, `shock`, `cardiac` (6) ✅ byte-identical. Sub-flow cause grids use `categoryColumns`.
+- [x] **Polyuria / Polydipsia** — entry + `prim-pd`, `prim-pu`, `sec-pu` (4) ✅ byte-identical (bespoke grids kept as html).
+- [x] **Weakness / Collapse** — entry + `episodic`, `persistent`, `collapse` (4) ✅ byte-identical (entry typed; sub-flow bodies html — need a `diff` link + anat-endpoint colours).
+- [x] All 26 pages browser-verified byte-identical; tests 173/173; `flowId` set. **Added `categoryColumns` block** (wrapping 3-col grid of header+↓+chips units, CAT_STYLE palette incl. pink "Anomalous") — the legacy `col()` grids of jaundice/pale/pupd. (Migrated by parallel sub-agents; categoryColumns built + converted by parent.)
 
 ### Phase 2 — Bespoke-heavy signs  ⏸️ *Checkpoint: stress-tests table/categoryGrid/speciesCompare*
 - [ ] **Seizures** — entry; VITAMIN-D acronym grid, breed/structural-mimic boxes, reactive-cause lists (`categoryGrid` + `speciesCompare` + `alert`)

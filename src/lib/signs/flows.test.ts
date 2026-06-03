@@ -9,6 +9,7 @@ import { wetEyeFlowHtml } from './wetEye'
 import { blindEyeFlowHtml, blindEyeAcuteHtml, blindEyeChronicHtml } from './blindEye'
 import { redEyeFlowHtml, redEyeCoatsHtml, redEyeIrisHtml, redEyeBleedHtml, redEyeOrbitHtml } from './redEye'
 import { abnormalPupilFlowHtml, abnormalPupilOphthalmicHtml, abnormalPupilNeuroBranchHtml } from './abnormalPupil'
+import { haematuriaFlowHtml } from './haematuria'
 import type { Block, Column, Link } from './flowTypes'
 
 // cliniqApp.ts as text (browser-coupled, not imported) — used to verify that
@@ -33,6 +34,7 @@ const LEGACY_HTML: Record<string, string> = {
   'abnormal-pupil': abnormalPupilFlowHtml,
   'abnormal-pupil-ophthalmic': abnormalPupilOphthalmicHtml,
   'abnormal-pupil-neuro': abnormalPupilNeuroBranchHtml,
+  'haematuria': haematuriaFlowHtml,
 }
 
 const pascal = (s: string) => s.replace(/(^|[-_ ])(\w)/g, (_, __, c) => c.toUpperCase())
@@ -50,6 +52,8 @@ function collectLinks(blocks: Block[]): Link[] {
       else if (b.kind === 'endpoints') b.items.forEach(e => { if (e.link) out.push(e.link) })
       else if (b.kind === 'choices') b.items.forEach(c => { if (c.link) out.push(c.link) })
       else if (b.kind === 'cardGrid') b.tiles.forEach(t => { if (t.link) out.push(t.link) })
+      else if (b.kind === 'categoryGrid') b.columns.forEach(c => c.tiles.forEach(t => { if (t.link) out.push(t.link) }))
+      else if (b.kind === 'categoryColumns') b.columns.forEach(c => c.tiles.forEach(t => { if (t.link) out.push(t.link) }))
       else if (b.kind === 'cardSection') b.cards.forEach(c => { if (c.link) out.push(c.link) })
       else if (b.kind === 'diseaseGrid') b.links.forEach(l => out.push(l.link))
       else if (b.kind === 'dxRow') b.items.forEach(l => out.push(l.link))

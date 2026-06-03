@@ -15,11 +15,19 @@ import { sneezingFlows } from './sneezing'
 import { encephalopathyFlows } from './encephalopathy'
 import { diarrhoeaFlow } from './diarrhoea'
 import { dyspnoeaFlows } from './dyspnoea'
+import { vomitingFlows } from './vomiting'
+import { haematuriaFlows } from './haematuria'
+import { jaundiceFlows } from './jaundice'
+import { paleGumsFlows } from './paleGums'
+import { pupdFlows } from './pupd'
+import { weaknessFlows } from './weakness'
 
 export const FLOWS: Record<string, FlowPage> = Object.fromEntries(
   [
     epistaxisFlow, wetEyeFlow, ...blindEyeFlows, ...redEyeFlows, ...abnormalPupilFlows,
     // Phase 1b
     ...coughingFlows, ...sneezingFlows, ...encephalopathyFlows, diarrhoeaFlow, ...dyspnoeaFlows,
+    // Phase 1c
+    ...vomitingFlows, ...haematuriaFlows, ...jaundiceFlows, ...paleGumsFlows, ...pupdFlows, ...weaknessFlows,
   ].map(p => [p.id, p]),
 )
