@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Claude session files
 .claude/
+
+# Playwright MCP scratch artifacts (snapshots, console logs)
+.playwright-mcp/
