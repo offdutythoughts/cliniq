@@ -17,6 +17,9 @@ export type SignEntry = {
   sub: string
   /** Name of the global render function invoked when the card is tapped. */
   flow: string
+  /** If set, the sign is migrated: render from FLOWS data via renderFlowId
+   *  instead of the legacy `flow` function. See DATA_MIGRATION.md. */
+  flowId?: string
 }
 
 export const SIGNS: SignEntry[] = [
@@ -30,7 +33,7 @@ export const SIGNS: SignEntry[] = [
   { id: 'coughing', icon: '🫁', title: 'Coughing', sub: 'Dry vs wet/productive', flow: 'renderCoughFlow' },
   { id: 'diarrhoea', icon: '💩', title: 'Diarrhoea', sub: 'Dog + Cat · Small bowel vs large bowel diagnostic approach', flow: 'renderDiarrhoeaFlow' },
   { id: 'dyspnoea', icon: '🌬️', title: 'Dyspnoea', sub: 'Dog + Cat · Respiratory pattern → anatomical location', flow: 'renderDyspFlow' },
-  { id: 'epistaxis', icon: '👃', title: 'Epistaxis', sub: 'Dog + Cat · Local (intranasal) vs systemic disease', flow: 'renderEpistaxisFlow' },
+  { id: 'epistaxis', icon: '👃', title: 'Epistaxis', sub: 'Dog + Cat · Local (intranasal) vs systemic disease', flow: 'renderEpistaxisFlow', flowId: 'epistaxis' },
   { id: 'haematuria', icon: '🩸', title: 'Haematuria', sub: 'Dog + Cat · Upper tract · bladder · urethra · prostate · genital · systemic', flow: 'renderHaematuriaFlow' },
   { id: 'jaundice', icon: '🟡', title: 'Jaundice', sub: 'Dog + Cat · Pre-hepatic, hepatic, post-hepatic', flow: 'renderJaundiceFlow' },
   { id: 'pale-mm', icon: '🩸', title: 'Pale Mucous Membranes', sub: 'Anaemia vs poor perfusion', flow: 'renderPaleGumsFlow' },

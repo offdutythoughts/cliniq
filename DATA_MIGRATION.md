@@ -132,7 +132,7 @@ Swapping inline styles for tone classes **changes the DOM**, so parity is **NOT*
 | # | Decision | Status |
 |---|---|---|
 | D1 | Bespoke content uses **typed blocks** (alert/table/diseaseGrid/categoryGrid/speciesCompare), escape-hatch HTML only as last resort | ✅ Decided |
-| D2 | Implicit arrows; closed `tone` enum; recursive `Column.blocks` nesting | ✅ Decided |
+| D2 | Implicit arrows (+ `connectAfter` override); closed `tone` enum (8 tones after pilot); recursive `Column.blocks` nesting | ✅ Decided |
 | D3 | `flowId` coexistence switch on `SignEntry`; `FLOWS` map; one file per sign | ✅ Decided |
 | D4 | Parity = visual + content, not DOM-identical | ✅ Decided |
 | D5 | **Dx views (History/Exam/Diagnostics, ~70 views) are OUT of #1** — fast-follow using the same model; design blocks to cover them | 🔶 Proposed — default unless Chris says otherwise |
@@ -145,17 +145,24 @@ Swapping inline styles for tone classes **changes the DOM**, so parity is **NOT*
 
 Each sign is a natural checkpoint (app is consistent and shippable). Each phase end is a larger checkpoint. **Per-sign "Done" = model written · parity verified (screenshot + content) · `flowId` set in registry · `npm test` + `npm run build` + `npx tsc --noEmit` green.**
 
-### Phase 0 — Framework + pilot  ⏸️ *Checkpoint: model proven on one real sign*
-- [ ] `flowTypes.ts` — the model (§2.4)
-- [ ] `renderFlow.ts` — generic renderer for `node` / `branch` / `endpoints` blocks
-- [ ] Renderer support for typed bespoke blocks: `alert`, `callout`, `table`, `diseaseGrid`, `categoryGrid`, `speciesCompare`, `html`
-- [ ] Link dispatch (delegated handler) + `onclick` compatibility shim
-- [ ] Extend `SignEntry` with `flowId`; wire dispatcher fallback (legacy vs data)
-- [ ] `flows/epistaxis.ts` — epistaxis entry page as `FlowPage` data (2-col branch + alert + diseaseGrid + dx-row + cross-flow link to bleeding)
-- [ ] Parity verified for epistaxis: screenshot match + all clinical text present
-- [ ] Tests: flow-data integrity test scaffold; `npm test` green
-- [ ] `npx tsc --noEmit`, `npm run build`, `npm run lint` green
-- [ ] **STOP — review the model shape with Chris before scaling**
+### Phase 0 — Framework + pilot  ✅ *Checkpoint reached: model proven on epistaxis*
+- [x] `flowTypes.ts` — the complete model (§2.4)
+- [x] `renderFlow.ts` — generic renderer for `node` / `branch` / `endpoints`
+- [x] Renderer support for the bespoke blocks epistaxis exercises: `alert`, `callout`, `diseaseGrid`, `dxRow`, `html`. `table` / `categoryGrid` / `speciesCompare` are typed in the model but deferred to first use (eye / bespoke phases) to avoid untested code
+- [x] Link serialisation to existing global handlers + `renderFlowId` dispatcher with `LEGACY_FLOWS` fallback (delegated handler + `mountGlobals` shrink deferred to Phase 3)
+- [x] Extend `SignEntry` with `flowId`; `renderLocalise` coexistence switch (data vs legacy)
+- [x] `flows/epistaxis.ts` — epistaxis page as `FlowPage` data + `flows/index.ts` FLOWS map
+- [x] Parity verified: rendered innerText **byte-identical** to legacy (2405 chars, 0 word diff); screenshots visually indistinguishable
+- [x] Tests: `flows.test.ts` (8 tests) incl. node-level content-parity + link integrity; `npm test` 14/14 green
+- [x] `npx tsc --noEmit`, `npm run build`, `npm run lint` green
+- [ ] **STOP — review the model shape with Chris before scaling**  ← *we are here*
+
+**Phase 0 outcome / refinements to the spec (surfaced by the pilot):**
+- **Tone palette is now 8 tones** — added `green` + `orange` to faithfully reproduce epistaxis (fungal / foreign-body). Colours are defined once as a `HUE` map in `renderFlow.ts`; data only names the tone.
+- **Added `dxRow` block + `LabeledLink` type** — for the "Full diagnostic approach" button row and the disease-grid link list (each is a labelled link).
+- **Added a per-block `connectAfter` override** to the implicit-arrow rule — used exactly once in epistaxis (the SYSTEMIC sub-step feeds straight into endpoints with no connector).
+- **Link dispatch for the pilot** serialises `Link`s to the existing global `onclick` handlers (`renderDiseasePage` / `renderProtoDetail` / `goLesionTab` / `renderFlowId` / `renderDx<Id>`) — faithful, zero new event wiring. The delegated handler stays a Phase-3 concern.
+- **Parity gate met strongly:** identical visible text + indistinguishable screenshots; disease, cross-flow (→ legacy bleeding), and dx links all verified navigating in the browser with 0 console errors.
 
 ### Phase 1a — Eye family  ⏸️ *Checkpoint: block library matures on similar shapes*
 - [ ] **Red Eye** — entry + `coats`, `iris`, `bleed`, `orbit` (5 pages)
