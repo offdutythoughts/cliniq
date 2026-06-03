@@ -178,13 +178,13 @@ with `purple`/`indigo`.
 - [ ] Eye-family **Dx views** (History/Exam/Diagnostics × 4 signs) — after the Dx-block model extension
 - [x] All four eye-family **flowcharts** migrated, parity-verified, committed; `flowId` set for each
 
-### Phase 1b — Simple / regular signs  ⏸️ *Checkpoint*
-- [ ] **Coughing** — entry (1)
-- [ ] **Sneezing** — entry (1)
-- [ ] **Acute Encephalopathy** — entry (1)
-- [ ] **Diarrhoea** — entry (1)
-- [ ] **Dyspnoea** — entry + `insp`, `rest`, `exp`, `mixed` (5); includes 🐱 cat-differentials box (`speciesCompare`/`callout`)
-- [ ] Parity + tests + build green for each; `flowId` set
+### Phase 1b — Simple / regular signs  ✅ *Done*
+- [x] **Coughing** — entry (1) ✅ byte-identical
+- [x] **Sneezing** — entry (1) ✅ byte-identical
+- [x] **Acute Encephalopathy** — entry (1) ✅ byte-identical
+- [x] **Diarrhoea** — entry (1) ✅ byte-identical (bespoke branch + SB/LB compare kept as html)
+- [x] **Dyspnoea** — entry + `insp`, `rest` (3) ✅ byte-identical. NB: the legacy entry's Expiratory/Restrictive/Mixed tiles call `renderExpFlow`/`renderRestFlow`/`renderMixedFlow`, which **do not exist** (pre-existing broken links) — faithfully preserved; only `insp`/`rest` sub-flows exist. Entry tile grid + 🐱 cat box kept as html.
+- [x] Browser-verified byte-identical for all 7 pages; tests 94/94; `flowId` set. Migrated by parallel sub-agents using the flowchart-data skill.
 
 ### Phase 1c — GI / uro / metabolic families  ⏸️ *Checkpoint*
 - [ ] **Vomiting** — entry + `oesoph`, `extra-oesoph`, `true-vom` (4); vomit-vs-regurg comparison `table`
