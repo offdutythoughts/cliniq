@@ -8,7 +8,6 @@
 // bridge and by RichText when raw html-block markup still carries onclick).
 
 import type { Link } from '../../lib/signs/flowTypes'
-import type { DxTabKey } from '../../lib/signs/dxTypes'
 import type { Tab } from '../../types'
 import { FLOWS } from '../../lib/signs/flows'
 import { DX } from '../../lib/signs/dx'
@@ -17,7 +16,7 @@ import { DB } from '../../data/db'
 export type View =
   | { kind: 'tab'; tab: Tab }                                                    // navTo(0..4)
   | { kind: 'flow'; flowId: string }                                             // renderFlowId
-  | { kind: 'dx'; sign: string; tab: DxTabKey }                                  // renderDxId
+  | { kind: 'dx'; sign: string; tab: string }                                    // renderDxId (tab: history|exam|dx|extras)
   | { kind: 'disease'; id: string }                                              // renderDiseasePage
   | { kind: 'protocol'; id: string }                                             // renderProtoDetail
   | { kind: 'lesionLoc'; loc: string; name: string }                             // goLesionTab
@@ -72,7 +71,7 @@ export function parseLegacyOnclick(js: string): View | null {
     case 'renderDiseasePage': return { kind: 'disease', id: args[0] }
     case 'renderProtoDetail': return { kind: 'protocol', id: args[0] }
     case 'renderFlowId': return { kind: 'flow', flowId: args[0] }
-    case 'renderDxId': return { kind: 'dx', sign: args[0], tab: (args[1] as DxTabKey) || 'history' }
+    case 'renderDxId': return { kind: 'dx', sign: args[0], tab: args[1] || 'history' }
     case 'goLesionTab': return { kind: 'lesionLoc', loc: args[0], name: args[1] }
     case 'goLocEp': return { kind: 'lesionEp', loc: args[0], name: args[1], system: args[2], cls: args[3] }
     case 'renderLesionDetail': return { kind: 'lesionDetail', id: args[0] }

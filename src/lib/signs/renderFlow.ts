@@ -16,29 +16,11 @@ export const esc = (s: string): string =>
 // Single quote escape for ids placed inside onclick="x('...')".
 const q = (s: string): string => (s || '').replace(/'/g, "\\'")
 
-// ── Tone → colour. Defined ONCE here; flow data only names the tone. ──────────
-// `rgb` is the hue; alpha is applied per context (endpoints vs boxes vs column
-// headers use slightly different opacities, matching the legacy look).
-// Values live in globals.css as `--tone-*` / `--tone-*-fg` (single source shared
-// with the CSS). `rgb` is the triplet fed into rgba(var(--tone-x), α); `color`
-// is the readable foreground (re-resolves per theme via the var() cascade).
-export const HUE: Record<Tone, { rgb: string; color: string }> = {
-  danger:  { rgb: 'var(--tone-danger)',  color: 'var(--tone-danger-fg)' },
-  warning: { rgb: 'var(--tone-warning)', color: 'var(--tone-warning-fg)' },
-  info:    { rgb: 'var(--tone-info)',    color: 'var(--tone-info-fg)' },
-  teal:    { rgb: 'var(--tone-teal)',    color: 'var(--tone-teal-fg)' },
-  green:   { rgb: 'var(--tone-green)',   color: 'var(--tone-green-fg)' },
-  violet:  { rgb: 'var(--tone-violet)',  color: 'var(--tone-violet-fg)' },
-  purple:  { rgb: 'var(--tone-purple)',  color: 'var(--tone-purple-fg)' },
-  indigo:  { rgb: 'var(--tone-indigo)',  color: 'var(--tone-indigo-fg)' },
-  orange:  { rgb: 'var(--tone-orange)',  color: 'var(--tone-orange-fg)' },
-  slate:   { rgb: 'var(--tone-slate)',   color: 'var(--tone-slate-fg)' },
-  neutral: { rgb: 'var(--tone-neutral)', color: 'var(--gray)' },
-}
-// Brighter title colour for box headers, where the legacy used a lighter shade.
-export const TITLE: Partial<Record<Tone, string>> = {
-  danger: 'var(--tone-danger-title)', teal: 'var(--tone-teal-fg)', warning: 'var(--tone-warning-title)',
-}
+// Tone → colour tables now live in ./tone (shared with the React components and
+// surviving the Phase 5 deletion of this file). Re-exported for the existing
+// imports here and in renderDx.ts.
+import { HUE, TITLE } from './tone'
+export { HUE, TITLE }
 
 // ── Link → onclick JS ─────────────────────────────────────────────────────────
 export function onclick(link: Link): string {
