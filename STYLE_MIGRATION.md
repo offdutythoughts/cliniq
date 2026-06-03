@@ -230,14 +230,32 @@ vitest 185 ✓, `tsc` clean, Playwright **22/22 empty diff** both themes. A pre-
 no collisions between the ~103 emitted class tokens and Tailwind utility names, so the
 auto-detected utilities are inert (no element gains a generated utility).
 
-### Phase 2 — Tokens-first + dark-mode fix (the centralized style library)
-- [ ] Lift colors/spacing/radii/type into `@theme`; reconcile the CSS↔TS misalignments
-      into one canonical palette.
-- [ ] Replace the 113 rogue literals + opacity ramps with tokens (+ v4 `--alpha()` /
-      slash-modifiers for tints).
-- [ ] Implement the tone-token CSS-variable bridge (§3) and repoint `HUE`/`CAT_STYLE`/
-      `TITLE` at it; verify dark-mode contrast on the flowcharts.
-- [ ] Visually inert except the intended dark-mode contrast improvements.
+### Phase 2 — Tokens-first + dark-mode fix (the centralized style library) — ✅ DONE
+- [x] Lift colors/type into `@theme` (`@theme inline` semantic tokens) + a single CSS-var
+      tone/category/fg palette. **Note:** the disagreeing CSS↔TS values were centralized as
+      distinct named tokens rather than *merged* into one value — merging would change pixels,
+      and Phase 2 had to stay light-inert. Picking canonical values is a deferred decision.
+- [x] Replace the rogue literals with tokens. Used `rgba(var(--tone-x), α)` (cleaner for the
+      rgb-triplet tints) rather than `--alpha()`/slash-modifiers. Left as distinct (not
+      duplicates): the solid dx-flow box palette, two one-off tag colours, `#fff` on solids.
+- [x] Implemented the tone-token CSS-variable bridge (§3); repointed `HUE`/`CAT_STYLE`/`TITLE`.
+- [x] Visually **fully inert** — see the dark-mode finding below.
+
+**Phase 2 outcome (incl. the guardrail expansion to 20 screens / 40 baselines):**
+- One token source: `globals.css :root` defines `--tone-*`(+`-fg`/`-title`), `--cat-*`(+`-fg`),
+  `--fg-*-deep/-bright` (the location palette, which **flips deep→bright in dark via tokens**,
+  letting 16 per-class `[data-theme=dark]` rules be deleted), and `@theme inline` semantic
+  tokens. `renderFlow.ts` `HUE`/`TITLE`/`CAT_STYLE` now read those vars. CSS↔TS disconnect gone.
+- **Dark-mode fix — the audit over-stated it.** Reviewed every captured dark screen (tabs,
+  jaundice/vomiting/pupd/seizures flows, all dx tabs, disease/protocol/lesion): dark already
+  reads legibly. The prior `[data-theme=dark]` overrides + bright HUE/category fgs + theme-var
+  use in the html blocks had already handled contrast; the bridge now also makes the *tints*
+  themeable (§3's blocked case) so any future tweak is a one-line token override. No contrast
+  retune was warranted, so the phase landed **100% pixel-identical** (40/40 visual ✓ both
+  themes) — the "intended dark improvements" reduced to "infrastructure now in place".
+- Remaining hardcoded-colour items are component-level and belong to Phase 4 (Topbar "Vet use
+  only" badge, login `#fff`, viewport `themeColor`).
+- Verified: vitest 185 ✓, `tsc` clean, Playwright 40/40 empty diff (both themes).
 
 ### Phase 3 — Semantic classes into `@layer components`
 - [ ] Wrap the kept component classes (`.card`, `.tag*`, `.fn*`, `.flow-*`, `.dx-*`,
