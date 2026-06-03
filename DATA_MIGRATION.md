@@ -204,14 +204,30 @@ with `purple`/`indigo`.
 - [x] All 9 pages browser-verified byte-identical; tests 201/201; `flowId` set.
 - [x] **All 21 signs now data-driven** — every registry entry has a `flowId`. ✅🎉
 
-**Structural backlog (flagged by agents; faithful as html for now, would replace escape hatches):**
-- `speciesCompare` renderer (🐕/🐱 matrices — bleeding, dyspnoea cat box)
-- `mnemonicGrid` (VITAMIN-D / DAMNIT-V acronym grids — seizures)
-- richer `table` (per-column header colours, colspan section rows, pink/free cell colours — myelopathy, vestibular, bleeding)
-- `navTiles`/`linkCard` (3-col `.flow-endpoint` / `.card` rows — vestibular, ataxia, many)
-- `compareBox` (2-col compare — red-eye coats, abnormal-pupil neuro, bleeding DIC panels)
-- new `Link` kinds: `{to:'lesion-detail',id}` (renderLesionDetail) and `{to:'diff',id}` (renderDiffDetail) — jaundice/haematuria/weakness/bleeding
-- pink/rose + a couple of exact category shades in the tone palette
+**Structural backlog — outcome.** Of the 61 flow `html` escape hatches, only one
+was a genuinely *recurring* pattern worth a typed block:
+- [x] `compareBox` (tinted panel + header/body sub-card grid + footnote) — built and
+  converted the 2 occurrences (red-eye coats discriminator, dyspnoea cat box).
+  Byte-identical (git-stash A/B). Flow html blocks: 61 → 59.
+
+The remaining ~59 are **genuinely bespoke one-offs** where a typed block would be
+over-engineering — building a single-use block barely beats the faithful html, and
+several would need so many params (to stay byte-identical) that they'd be html in
+disguise:
+- asymmetric YES/NO branch trees with nested grids + custom endpoint colours
+  (bleeding, haematuria, pupd, weakness, diarrhoea, vomiting) — each one-off.
+- seizures: phase step-nodes with hard-coded backgrounds + the VITAMIN-D grid.
+- `var(--card)` "💡 tip" boxes (ataxia / coughing / paleGums) — share a shape but
+  vary per instance (margin-top 12 vs 8, body 11 vs 12px, uppercase title vs not,
+  `width:100%` vs not), so a `tip` block needs ~5 params for 3 conversions.
+- the `speciesCompare`/`mnemonicGrid`/richer-`table`/`navTiles` ideas each cover
+  only 1–2 bespoke blocks — not worth a block type.
+
+**Decision: stop here.** The html escape hatches are faithful and their onclicks
+are validated by the rendered-link-integrity test; converting the bespoke remainder
+is cosmetic churn with no correctness/behaviour benefit. The escape hatch did its
+job (≈3% of blocks, all one-off). `{to:'lesion-detail'}`/`{to:'diff'}` link kinds +
+pink tone are deferred unless a future block actually needs them.
 
 ### Phase 3 — Cutover + validation  ✅ *Done (only optional delegated-dispatch remains)*
 - [x] **Dispatch cutover** — removed the registry `flow` field (`flowId` is now the sole, required mechanism), `renderLocalise` always routes to `renderFlowId`, and removed `LEGACY_FLOWS` + the legacy fallback in `renderFlowId`. FLOWS is the single source.
