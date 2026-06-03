@@ -19,22 +19,25 @@ const q = (s: string): string => (s || '').replace(/'/g, "\\'")
 // ── Tone → colour. Defined ONCE here; flow data only names the tone. ──────────
 // `rgb` is the hue; alpha is applied per context (endpoints vs boxes vs column
 // headers use slightly different opacities, matching the legacy look).
+// Values live in globals.css as `--tone-*` / `--tone-*-fg` (single source shared
+// with the CSS). `rgb` is the triplet fed into rgba(var(--tone-x), α); `color`
+// is the readable foreground (re-resolves per theme via the var() cascade).
 export const HUE: Record<Tone, { rgb: string; color: string }> = {
-  danger:  { rgb: '220,38,38',   color: '#FCA5A5' },
-  warning: { rgb: '245,158,11',  color: '#FCD34D' },
-  info:    { rgb: '37,99,235',   color: '#93C5FD' },
-  teal:    { rgb: '13,148,136',  color: '#5EEAD4' },
-  green:   { rgb: '16,185,129',  color: '#A7F3D0' },
-  violet:  { rgb: '139,92,246',  color: '#C4B5FD' },
-  purple:  { rgb: '168,85,247',  color: '#C4B5FD' },
-  indigo:  { rgb: '99,102,241',  color: '#A5B4FC' },
-  orange:  { rgb: '249,115,22',  color: '#FED7AA' },
-  slate:   { rgb: '100,116,139', color: '#CBD5E1' },
-  neutral: { rgb: '255,255,255', color: 'var(--gray)' },
+  danger:  { rgb: 'var(--tone-danger)',  color: 'var(--tone-danger-fg)' },
+  warning: { rgb: 'var(--tone-warning)', color: 'var(--tone-warning-fg)' },
+  info:    { rgb: 'var(--tone-info)',    color: 'var(--tone-info-fg)' },
+  teal:    { rgb: 'var(--tone-teal)',    color: 'var(--tone-teal-fg)' },
+  green:   { rgb: 'var(--tone-green)',   color: 'var(--tone-green-fg)' },
+  violet:  { rgb: 'var(--tone-violet)',  color: 'var(--tone-violet-fg)' },
+  purple:  { rgb: 'var(--tone-purple)',  color: 'var(--tone-purple-fg)' },
+  indigo:  { rgb: 'var(--tone-indigo)',  color: 'var(--tone-indigo-fg)' },
+  orange:  { rgb: 'var(--tone-orange)',  color: 'var(--tone-orange-fg)' },
+  slate:   { rgb: 'var(--tone-slate)',   color: 'var(--tone-slate-fg)' },
+  neutral: { rgb: 'var(--tone-neutral)', color: 'var(--gray)' },
 }
 // Brighter title colour for box headers, where the legacy used a lighter shade.
 export const TITLE: Partial<Record<Tone, string>> = {
-  danger: '#F87171', teal: '#5EEAD4', warning: 'var(--amber-text)',
+  danger: 'var(--tone-danger-title)', teal: 'var(--tone-teal-fg)', warning: 'var(--tone-warning-title)',
 }
 
 // ── Link → onclick JS ─────────────────────────────────────────────────────────
@@ -202,16 +205,17 @@ function renderCategoryGrid(columns: CategoryColumn[]): string {
 // ── Category columns (wrapping grid of header+↓+chips units, CAT_STYLE) ───────
 // Matches the legacy col()/CAT_STYLE grids (jaundice / pale / pupd). Each column
 // is keyed by its category label, which carries the exact legacy colour.
+// Values live in globals.css as `--cat-*` / `--cat-*-fg` (single source).
 const CAT_STYLE: Record<string, { bg: string; border: string; col: string }> = {
-  'Vascular':              { bg: 'rgba(220,38,38,0.15)',  border: 'rgba(220,38,38,0.4)',  col: '#FCA5A5' },
-  'Inflammatory':          { bg: 'rgba(245,158,11,0.15)', border: 'rgba(245,158,11,0.4)', col: '#FCD34D' },
-  'Mass':                  { bg: 'rgba(139,92,246,0.15)', border: 'rgba(139,92,246,0.4)', col: '#C4B5FD' },
-  'Immune-mediated':       { bg: 'rgba(59,130,246,0.15)', border: 'rgba(59,130,246,0.4)', col: '#93C5FD' },
-  'Degenerative':          { bg: 'rgba(100,116,139,0.15)', border: 'rgba(100,116,139,0.4)', col: '#94A3B8' },
-  'Metabolic / Endocrine': { bg: 'rgba(20,184,166,0.15)', border: 'rgba(20,184,166,0.4)', col: '#5EEAD4' },
-  'Toxic':                 { bg: 'rgba(249,115,22,0.15)', border: 'rgba(249,115,22,0.4)', col: '#FB923C' },
-  'Trauma':                { bg: 'rgba(107,114,128,0.15)', border: 'rgba(107,114,128,0.4)', col: '#D1D5DB' },
-  'Anomalous':             { bg: 'rgba(236,72,153,0.15)', border: 'rgba(236,72,153,0.4)', col: '#F9A8D4' },
+  'Vascular':              { bg: 'rgba(var(--cat-vascular),0.15)',     border: 'rgba(var(--cat-vascular),0.4)',     col: 'var(--cat-vascular-fg)' },
+  'Inflammatory':          { bg: 'rgba(var(--cat-inflammatory),0.15)', border: 'rgba(var(--cat-inflammatory),0.4)', col: 'var(--cat-inflammatory-fg)' },
+  'Mass':                  { bg: 'rgba(var(--cat-mass),0.15)',         border: 'rgba(var(--cat-mass),0.4)',         col: 'var(--cat-mass-fg)' },
+  'Immune-mediated':       { bg: 'rgba(var(--cat-immune),0.15)',       border: 'rgba(var(--cat-immune),0.4)',       col: 'var(--cat-immune-fg)' },
+  'Degenerative':          { bg: 'rgba(var(--cat-degenerative),0.15)', border: 'rgba(var(--cat-degenerative),0.4)', col: 'var(--cat-degenerative-fg)' },
+  'Metabolic / Endocrine': { bg: 'rgba(var(--cat-metabolic),0.15)',    border: 'rgba(var(--cat-metabolic),0.4)',    col: 'var(--cat-metabolic-fg)' },
+  'Toxic':                 { bg: 'rgba(var(--cat-toxic),0.15)',        border: 'rgba(var(--cat-toxic),0.4)',        col: 'var(--cat-toxic-fg)' },
+  'Trauma':                { bg: 'rgba(var(--cat-trauma),0.15)',       border: 'rgba(var(--cat-trauma),0.4)',       col: 'var(--cat-trauma-fg)' },
+  'Anomalous':             { bg: 'rgba(var(--cat-anomalous),0.15)',    border: 'rgba(var(--cat-anomalous),0.4)',    col: 'var(--cat-anomalous-fg)' },
 }
 function renderCategoryColumns(cols: number, columns: { cat: string; tiles: { label: string; link?: Link }[] }[]): string {
   const units = columns.map(c => {
@@ -259,10 +263,6 @@ function renderBranch(columns: Column[]): string {
 }
 
 // ── Compare box (tinted panel: title + grid of header+body sub-cards + foot) ───
-const hexToRgb = (hex: string): string => {
-  const h = hex.replace('#', '')
-  return `${parseInt(h.slice(0, 2), 16)},${parseInt(h.slice(2, 4), 16)},${parseInt(h.slice(4, 6), 16)}`
-}
 function renderCompareBox(b: Extract<Block, { kind: 'compareBox' }>): string {
   const h = HUE[b.tone]
   const grid = Array(b.cols ?? 2).fill('1fr').join(' ')
@@ -270,7 +270,9 @@ function renderCompareBox(b: Extract<Block, { kind: 'compareBox' }>): string {
   const cards = b.cards.map(c =>
     `<div style="font-size:9.5px;line-height:1.5;background:rgba(${h.rgb},0.08);border-radius:7px;padding:7px 9px;"><div style="color:${h.color};font-weight:700;margin-bottom:3px;">${c.header}</div>${c.html}</div>`,
   ).join('')
-  const foot = b.footnote ? `<div style="margin-top:7px;font-size:9.5px;line-height:1.6;color:rgba(${hexToRgb(h.color)},.8);">${b.footnote}</div>` : ''
+  // footnote = the tone fg at 80% alpha (color-mix works with the var()-based fg,
+  // exactly equivalent to the old rgba(r,g,b,.8)).
+  const foot = b.footnote ? `<div style="margin-top:7px;font-size:9.5px;line-height:1.6;color:color-mix(in srgb, ${h.color}, transparent 20%);">${b.footnote}</div>` : ''
   return `<div style="margin-top:${b.gap ?? 14}px;padding:10px 12px;background:rgba(${h.rgb},0.07);border:1px solid rgba(${h.rgb},0.25);border-radius:10px;width:100%;">${title}<div style="display:grid;grid-template-columns:${grid};gap:6px;">${cards}</div>${foot}</div>`
 }
 

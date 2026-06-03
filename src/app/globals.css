@@ -36,6 +36,49 @@
   --lo-bg: rgba(37,99,235,0.08);
   --font: var(--font-dm-sans, 'DM Sans', sans-serif);
   --mono: var(--font-dm-mono, 'DM Mono', monospace);
+
+  /* ── Tone palette — single source for the typed flow/dx renderers (HUE/TITLE)
+     and the disease-category colours (CAT_STYLE). The `--tone-*` values are rgb
+     triplets fed into rgba(var(--tone-x), α); the `-fg`/`-title` are the readable
+     foregrounds. Foregrounds are overridable per theme in the dark block below. */
+  --tone-danger: 220,38,38;     --tone-danger-fg: #FCA5A5;   --tone-danger-title: #F87171;
+  --tone-warning: 245,158,11;   --tone-warning-fg: #FCD34D;  --tone-warning-title: var(--amber-text);
+  --tone-info: 37,99,235;       --tone-info-fg: #93C5FD;
+  --tone-teal: 13,148,136;      --tone-teal-fg: #5EEAD4;
+  --tone-green: 16,185,129;     --tone-green-fg: #A7F3D0;
+  --tone-violet: 139,92,246;    --tone-violet-fg: #C4B5FD;
+  --tone-purple: 168,85,247;    --tone-purple-fg: #C4B5FD;
+  --tone-indigo: 99,102,241;    --tone-indigo-fg: #A5B4FC;
+  --tone-orange: 249,115,22;    --tone-orange-fg: #FED7AA;
+  --tone-slate: 100,116,139;    --tone-slate-fg: #CBD5E1;
+  --tone-neutral: 255,255,255;  --tone-neutral-fg: var(--gray);
+
+  /* Disease-category palette (renderFlow CAT_STYLE): rgb triplet + readable fg. */
+  --cat-vascular: 220,38,38;       --cat-vascular-fg: #FCA5A5;
+  --cat-inflammatory: 245,158,11;  --cat-inflammatory-fg: #FCD34D;
+  --cat-mass: 139,92,246;          --cat-mass-fg: #C4B5FD;
+  --cat-immune: 59,130,246;        --cat-immune-fg: #93C5FD;
+  --cat-degenerative: 100,116,139; --cat-degenerative-fg: #94A3B8;
+  --cat-metabolic: 20,184,166;     --cat-metabolic-fg: #5EEAD4;
+  --cat-toxic: 249,115,22;         --cat-toxic-fg: #FB923C;
+  --cat-trauma: 107,114,128;       --cat-trauma-fg: #D1D5DB;
+  --cat-anomalous: 236,72,153;     --cat-anomalous-fg: #F9A8D4;
+}
+
+/* Semantic tokens for Tailwind utilities (Phase 4 consumes bg-surface, text-fg,
+   etc.). `inline` so each utility resolves to the LIVE var() — which re-resolves
+   per theme — instead of snapshotting the light value. */
+@theme inline {
+  --color-surface: var(--navy);
+  --color-surface-2: var(--navy2);
+  --color-card: var(--card);
+  --color-fg: var(--white);
+  --color-muted: var(--gray);
+  --color-accent: var(--teal-light);
+  --color-line: var(--border);
+  --font-sans: var(--font);
+  --font-mono: var(--mono);
+  --radius-card: 14px;
 }
 /* ── DARK THEME ── */
 html[data-theme="dark"]{
