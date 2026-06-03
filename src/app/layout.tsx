@@ -25,12 +25,22 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: '#F1F5F9',
+  // Mobile browser chrome follows the OS scheme (the in-app theme is attribute-
+  // driven, but this is the closest the static viewport meta can get).
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#F1F5F9' },
+    { media: '(prefers-color-scheme: dark)', color: '#0A1628' },
+  ],
 }
+
+// Set data-theme from localStorage BEFORE paint so dark-mode users don't get a
+// light flash. Runs in <head> ahead of hydration; <html> has suppressHydrationWarning.
+const themeScript = `try{document.documentElement.dataset.theme=localStorage.getItem('cliniq-theme')||'light'}catch(e){}`
 
 const htmlBody = (children: React.ReactNode) => (
   <html lang="en" className={`${dmSans.variable} ${dmMono.variable}`} suppressHydrationWarning>
     <head>
+      <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     </head>

@@ -19,8 +19,7 @@ export default function Topbar({ title, showBack, onBack, onToggleNotes }: Props
       <div className={`logo${title ? ' hide' : ''}`}>Clin<span>IQ</span></div>
       <div
         id="vet-badge"
-        className={title ? 'hide' : ''}
-        style={{fontSize:'9px',fontWeight:500,color:'#F87171',background:'rgba(220,38,38,0.15)',border:'1px solid rgba(220,38,38,0.2)',borderRadius:'20px',padding:'2px 7px',letterSpacing:'.02em',whiteSpace:'nowrap'}}
+        className={`${title ? 'hide' : ''} text-[9px] font-medium text-(--tone-danger-title) bg-[rgba(var(--tone-danger),0.15)] border border-[rgba(var(--tone-danger),0.2)] rounded-[20px] px-[7px] py-0.5 tracking-[.02em] whitespace-nowrap`}
       >
         Vet use only
       </div>

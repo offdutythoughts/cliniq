@@ -46,10 +46,7 @@ function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
   const notes = useNotesHook(pageKey, pageTitle, notesOpen)
 
   useEffect(() => {
-    // Apply theme before render to avoid flash
-    const stored = localStorage.getItem('cliniq-theme') || 'light'
-    document.documentElement.setAttribute('data-theme', stored)
-
+    // Theme is applied pre-hydration by the inline script in layout.tsx <head>.
     initCliniqApp(
       (newHtml, dir) => {
         setSlideDir(dir)
