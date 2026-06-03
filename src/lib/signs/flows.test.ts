@@ -7,12 +7,14 @@ import { renderFlowPage } from './renderFlow'
 import { SIGNS } from './registry'
 import type { Block, Column, Link } from './flowTypes'
 
-// cliniqApp.ts as text (browser-coupled, not imported) — used to verify that
-// every Link target the data references actually exists in the app.
-const appSrc = readFileSync(
-  fileURLToPath(new URL('../cliniqApp.ts', import.meta.url)),
-  'utf8',
-)
+// cliniqApp.ts (the render functions) + data/db.ts (the clinical DB ids) as
+// text (browser-coupled, not imported) — used to verify that every Link target
+// the data references actually exists in the app. The DB was relocated out of
+// cliniqApp.ts into src/data/db.ts during the React migration, so id lookups
+// must scan both.
+const appSrc =
+  readFileSync(fileURLToPath(new URL('../cliniqApp.ts', import.meta.url)), 'utf8') +
+  readFileSync(fileURLToPath(new URL('../../data/db.ts', import.meta.url)), 'utf8')
 
 const pascal = (s: string) => s.replace(/(^|[-_ ])(\w)/g, (_, __, c) => c.toUpperCase())
 
