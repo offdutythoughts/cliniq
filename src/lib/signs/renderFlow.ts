@@ -6,7 +6,7 @@
 // / renderDx<Id>). No dependency on cliniqApp internals — unit-testable.
 
 import type {
-  FlowPage, Block, Column, Endpoint, ChoiceItem, Link, LabeledLink, Tone,
+  FlowPage, Block, Column, Endpoint, ChoiceItem, TableCell, Link, LabeledLink, Tone,
 } from './flowTypes'
 
 const esc = (s: string): string =>
@@ -25,6 +25,8 @@ const HUE: Record<Tone, { rgb: string; color: string }> = {
   teal:    { rgb: '13,148,136',  color: '#5EEAD4' },
   green:   { rgb: '16,185,129',  color: '#A7F3D0' },
   violet:  { rgb: '139,92,246',  color: '#C4B5FD' },
+  purple:  { rgb: '168,85,247',  color: '#C4B5FD' },
+  indigo:  { rgb: '99,102,241',  color: '#A5B4FC' },
   orange:  { rgb: '249,115,22',  color: '#FED7AA' },
   neutral: { rgb: '255,255,255', color: 'var(--gray)' },
 }
@@ -91,13 +93,47 @@ function renderEndpoints(items: Endpoint[]): string {
 }
 
 // ── Choices (grid of clickable pattern-nodes) ─────────────────────────────────
-function renderChoices(cols: number, items: ChoiceItem[]): string {
+// Colour from a pattern `variant` (CSS class) or a `tone` (inline). label /
+// sublabel are HTML (may contain <br>).
+function renderChoices(cols: number, size: number, items: ChoiceItem[]): string {
   const cells = items.map(it => {
-    const sub = it.sublabel ? `<br><span style="font-size:9px;opacity:.7">${esc(it.sublabel)}</span>` : ''
-    const attr = it.link ? ` style="cursor:pointer;font-size:11px;" onclick="${onclick(it.link)}"` : ' style="font-size:11px;"'
-    return `<div class="flow-node ${it.variant}"${attr}>${esc(it.label)}${sub}</div>`
+    const sub = it.sublabel ? `<br><span style="font-size:${size - 2}px;font-weight:400;opacity:.8;">${it.sublabel}</span>` : ''
+    const cls = it.variant ? ` ${it.variant}` : ''
+    const toneStyle = it.tone ? `background:rgba(${HUE[it.tone].rgb},0.12);border-color:rgba(${HUE[it.tone].rgb},0.4);color:${HUE[it.tone].color};` : ''
+    const cursor = it.link ? 'cursor:pointer;' : ''
+    const attr = it.link ? ` onclick="${onclick(it.link)}"` : ''
+    return `<div class="flow-node${cls}" style="${toneStyle}${cursor}font-size:${size}px;font-weight:700;"${attr}>${it.label}${sub}</div>`
   }).join('')
   return `<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;">${cells}</div>`
+}
+
+// ── Table (comparison/reference grid, optional tinted box) ────────────────────
+function renderTable(b: Extract<Block, { kind: 'table' }>): string {
+  const cell = (c: TableCell, header = false): string => {
+    const text = typeof c === 'string' ? c : c.text
+    const color = !header && typeof c !== 'string' && c.tone ? `color:${HUE[c.tone].color};` : ''
+    const head = header ? 'font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);' : ''
+    return `<div style="${head}${color}">${text}</div>`
+  }
+  const grid = `<div style="display:grid;grid-template-columns:${b.cols};gap:3px 6px;font-size:9.5px;line-height:1.4;">${b.headers.map(h => cell(h, true)).join('')}${b.rows.map(r => r.map(c => cell(c)).join('')).join('')}</div>`
+  const footColor = b.boxTone ? `color:${HUE[b.boxTone].color};opacity:.85;` : 'opacity:.9;'
+  const foot = b.footnote ? `<div style="margin-top:7px;font-size:9.5px;line-height:1.55;${footColor}">${b.footnote}</div>` : ''
+  if (!b.boxTone && !b.title) return grid
+  const tone = b.boxTone ?? 'neutral'
+  const title = b.title ? `<div style="font-size:11px;font-weight:700;color:${TITLE[tone] ?? HUE[tone].color};margin-bottom:8px;">${b.title}</div>` : ''
+  return `${boxOpen(tone, 0.07, 0.25, `padding:10px 12px;${b.gap ? `margin-top:${b.gap}px;` : ''}`)}${title}${grid}${foot}</div>`
+}
+
+// ── Card section (tinted group of disease cards) ──────────────────────────────
+function renderCardSection(b: Extract<Block, { kind: 'cardSection' }>): string {
+  const h = HUE[b.tone]
+  const cards = b.cards.map(c => {
+    const tag = c.tag ? ` <span style="font-size:9px;font-weight:400;opacity:.8;">${c.tag}</span>` : ''
+    const click = c.link ? `cursor:pointer;` : ''
+    const attr = c.link ? ` onclick="${onclick(c.link)}"` : ''
+    return `<div style="background:rgba(${h.rgb},0.08);border-radius:7px;padding:7px 10px;${click}"${attr}><div style="font-size:10.5px;font-weight:700;color:${h.color};">${c.title}${tag}</div><div style="font-size:9px;color:${h.color};opacity:.8;line-height:1.4;">${c.desc}</div></div>`
+  }).join('')
+  return `${boxOpen(b.tone, 0.08, 0.28, `padding:10px 12px;margin-top:${b.gap ?? 10}px;`)}<div style="font-size:11px;font-weight:700;color:${TITLE[b.tone] ?? h.color};margin-bottom:6px;">${b.title}</div><div style="display:flex;flex-direction:column;gap:5px;">${cards}</div></div>`
 }
 
 // ── Banner (centered info strip) ──────────────────────────────────────────────
@@ -158,7 +194,11 @@ function renderDxRow(items: LabeledLink[]): string {
 
 // ── Node ──────────────────────────────────────────────────────────────────────
 function renderNode(b: Extract<Block, { kind: 'node' }>): string {
-  if (b.variant === 'entry') return `<div class="flow-node entry">${esc(b.text)}</div>`
+  if (b.variant === 'entry') {
+    const tone = b.tone ? ` style="background:rgba(${HUE[b.tone].rgb},0.15);border-color:rgba(${HUE[b.tone].rgb},0.4);color:${HUE[b.tone].color};"` : ''
+    const sub = b.sub ? `<div style="font-size:9.5px;color:var(--gray);text-align:center;margin:4px 0 6px 0;">${esc(b.sub)}</div>` : ''
+    return `<div class="flow-node entry"${tone}>${esc(b.text)}</div>${sub}`
+  }
   if (b.variant === 'sub-step')
     return `<div class="flow-node sub-step" style="width:100%;font-size:9.5px;">${esc(b.text)}</div>`
   const sub = b.sub ? `<div class="fn-sub" style="font-weight:400;margin-top:3px;">${esc(b.sub)}</div>` : ''
@@ -171,12 +211,14 @@ function renderBlock(b: Block): string {
     case 'node':        return renderNode(b)
     case 'branch':      return renderBranch(b.columns)
     case 'endpoints':   return renderEndpoints(b.items)
-    case 'choices':     return renderChoices(b.cols ?? b.items.length, b.items)
+    case 'choices':     return renderChoices(b.cols ?? b.items.length, b.size ?? 11, b.items)
     case 'banner':      return renderBanner(b.tone, b.html)
     case 'callout':     return renderCallout(b)
     case 'alert':       return renderAlert(b.tone, b.title, b.items)
     case 'diseaseGrid': return renderDiseaseGrid(b.title, b.links)
     case 'dxRow':       return renderDxRow(b.items)
+    case 'table':       return renderTable(b)
+    case 'cardSection': return renderCardSection(b)
     case 'html':        return b.html
     default:
       // table / categoryGrid / speciesCompare — renderer support lands when a

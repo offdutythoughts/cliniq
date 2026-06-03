@@ -14,6 +14,8 @@ export type Tone =
   | 'teal'
   | 'green'    // emerald
   | 'violet'
+  | 'purple'
+  | 'indigo'
   | 'orange'
   | 'neutral'
 
@@ -55,19 +57,23 @@ export type NodeBlock = Connectable & {
   variant: 'entry' | 'step' | 'sub-step'
   text: string
   sub?: string
+  /** Recolour an entry node (e.g. red acute / blue chronic pathway headers). */
+  tone?: Tone
 }
 export type BranchBlock = Connectable & { kind: 'branch'; columns: Column[] }
 export type EndpointsBlock = Connectable & { kind: 'endpoints'; cols?: number; items: Endpoint[] }
 
-/** A grid of clickable pattern-nodes (the .flow-node.insp/.exp/.rest/.mixed
- *  boxes used as branch choices, e.g. wet-eye production vs drainage). */
+/** A grid of clickable pattern-nodes used as branch choices. Colour comes from
+ *  either a pattern `variant` (.flow-node.insp/.exp/.rest/.mixed) or a `tone`.
+ *  `label`/`sublabel` are HTML (may contain <br>). */
 export type ChoiceItem = {
-  variant: 'insp' | 'exp' | 'rest' | 'mixed' | 'step'
+  variant?: 'insp' | 'exp' | 'rest' | 'mixed' | 'step'
+  tone?: Tone
   label: string
   sublabel?: string
   link?: Link
 }
-export type ChoicesBlock = Connectable & { kind: 'choices'; cols?: number; items: ChoiceItem[] }
+export type ChoicesBlock = Connectable & { kind: 'choices'; cols?: number; size?: number; items: ChoiceItem[] }
 
 /** A centered, full-width info strip (e.g. "Tap a branch to drill down"). */
 export type BannerBlock = Connectable & { kind: 'banner'; tone: Tone; html: string }
@@ -79,8 +85,33 @@ export type CalloutBlock = Connectable & { kind: 'callout'; tone: Tone; title?: 
 export type DiseaseGridBlock = Connectable & { kind: 'diseaseGrid'; title: string; links: LabeledLink[] }
 export type DxRowBlock = Connectable & { kind: 'dxRow'; items: LabeledLink[] }
 
+/** A comparison/reference table, optionally wrapped in a tinted box with a
+ *  title + footnote. Cells are plain text or `{ text, tone }` for a coloured
+ *  value. `cols` is a CSS grid-template-columns string. */
+export type TableCell = string | { text: string; tone?: Tone }
+export type TableBlock = Connectable & {
+  kind: 'table'
+  cols: string
+  headers: string[]
+  rows: TableCell[][]
+  boxTone?: Tone
+  title?: string
+  footnote?: string
+  gap?: number
+}
+
+/** A tinted section containing a title and a stack of disease cards (the
+ *  category groups in the blind-eye acute/chronic pathways). */
+export type DiseaseCard = { title: string; tag?: string; desc: string; link?: Link }
+export type CardSectionBlock = Connectable & {
+  kind: 'cardSection'
+  tone: Tone
+  title: string
+  cards: DiseaseCard[]
+  gap?: number
+}
+
 // Typed now for model completeness; renderer support added when first used.
-export type TableBlock = Connectable & { kind: 'table'; headers: string[]; rows: string[][]; tone?: Tone }
 export type CategoryGridBlock = Connectable & { kind: 'categoryGrid'; columns: { cat: string; items: string[] }[] }
 export type SpeciesCompareBlock = Connectable & { kind: 'speciesCompare'; dog: string[]; cat: string[] }
 export type HtmlBlock = Connectable & { kind: 'html'; html: string } // escape hatch — last resort
@@ -96,6 +127,7 @@ export type Block =
   | DiseaseGridBlock
   | DxRowBlock
   | TableBlock
+  | CardSectionBlock
   | CategoryGridBlock
   | SpeciesCompareBlock
   | HtmlBlock

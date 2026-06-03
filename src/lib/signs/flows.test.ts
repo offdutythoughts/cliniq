@@ -6,6 +6,7 @@ import { renderFlowPage } from './renderFlow'
 import { SIGNS } from './registry'
 import { epistaxisFlowHtml } from './epistaxis'
 import { wetEyeFlowHtml } from './wetEye'
+import { blindEyeFlowHtml, blindEyeAcuteHtml, blindEyeChronicHtml } from './blindEye'
 import type { Block, Column, Link } from './flowTypes'
 
 // cliniqApp.ts as text (browser-coupled, not imported) — used to verify that
@@ -19,6 +20,9 @@ const appSrc = readFileSync(
 const LEGACY_HTML: Record<string, string> = {
   epistaxis: epistaxisFlowHtml,
   'wet-eye': wetEyeFlowHtml,
+  'blind-eye': blindEyeFlowHtml,
+  'blind-eye-acute': blindEyeAcuteHtml,
+  'blind-eye-chronic': blindEyeChronicHtml,
 }
 
 const pascal = (s: string) => s.replace(/(^|[-_ ])(\w)/g, (_, __, c) => c.toUpperCase())
@@ -35,6 +39,7 @@ function collectLinks(blocks: Block[]): Link[] {
       if (b.kind === 'branch') b.columns.forEach((c: Column) => walk(c.blocks))
       else if (b.kind === 'endpoints') b.items.forEach(e => { if (e.link) out.push(e.link) })
       else if (b.kind === 'choices') b.items.forEach(c => { if (c.link) out.push(c.link) })
+      else if (b.kind === 'cardSection') b.cards.forEach(c => { if (c.link) out.push(c.link) })
       else if (b.kind === 'diseaseGrid') b.links.forEach(l => out.push(l.link))
       else if (b.kind === 'dxRow') b.items.forEach(l => out.push(l.link))
     }

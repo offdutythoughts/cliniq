@@ -29,7 +29,7 @@ export const SIGNS: SignEntry[] = [
   { id: 'abnormal-pupil', icon: '🔵', title: 'Anisocoria / Abnormal Pupil', sub: 'Dog + Cat · Ophthalmic vs neurological · light/dark room rule · PLR battery', flow: 'renderAbnormalPupilFlow' },
   { id: 'ataxia', icon: '🚶', title: 'Ataxia', sub: 'Dog + Cat · Cerebellar vs vestibular vs proprioceptive', flow: 'renderAtaxiaFlow' },
   { id: 'bleeding', icon: '🔴', title: 'Bleeding / Petechiae / Ecchymoses', sub: 'Dog + Cat · Primary vs secondary haemostasis · DIC · vasculopathy', flow: 'renderBleedingFlow' },
-  { id: 'blind-eye', icon: '⚫', title: 'Blind Eye / Acute Vision Loss', sub: 'Dog + Cat · Visual pathway localisation · menace · dazzle · PLR · chromatic PLR · ERG', flow: 'renderBlindEyeFlow' },
+  { id: 'blind-eye', icon: '⚫', title: 'Blind Eye / Acute Vision Loss', sub: 'Dog + Cat · Visual pathway localisation · menace · dazzle · PLR · chromatic PLR · ERG', flow: 'renderBlindEyeFlow', flowId: 'blind-eye' },
   { id: 'coughing', icon: '🫁', title: 'Coughing', sub: 'Dry vs wet/productive', flow: 'renderCoughFlow' },
   { id: 'diarrhoea', icon: '💩', title: 'Diarrhoea', sub: 'Dog + Cat · Small bowel vs large bowel diagnostic approach', flow: 'renderDiarrhoeaFlow' },
   { id: 'dyspnoea', icon: '🌬️', title: 'Dyspnoea', sub: 'Dog + Cat · Respiratory pattern → anatomical location', flow: 'renderDyspFlow' },

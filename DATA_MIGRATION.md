@@ -167,9 +167,12 @@ Each sign is a natural checkpoint (app is consistent and shippable). Each phase 
 ### Phase 1a — Eye family  ⏸️ *Checkpoint: block library matures on similar shapes*
 Flowcharts first (below); each sign's **Dx views** follow once the Dx-block model
 extension lands (D5). Flow blocks added so far: `choices` (clickable pattern-node
-grid), `banner` (centered info strip), callout `gap`/`center`.
-- [x] **Wet Eye** — entry (1 page) ✅ flow migrated; byte-identical text + indistinguishable screenshots; lesion links verified
-- [ ] **Blind Eye** — entry + `acute`, `chronic` (3 pages)
+grid, tone or pattern-variant), `banner` (centered info strip), callout
+`gap`/`center`, `table` (comparison grid w/ coloured cells + tinted box),
+`cardSection` (tinted disease-card groups), entry-node `tone`; tones extended
+with `purple`/`indigo`.
+- [x] **Wet Eye** — entry (1 page) ✅ byte-identical text; indistinguishable screenshots; lesion links verified
+- [x] **Blind Eye** — entry + `acute`, `chronic` (3 pages) ✅ all 3 byte-identical text (1972/3005/3201 chars); table + cardSection + tone-choices verified; entry→sub-flow + disease links work
 - [ ] **Red Eye** — entry + `coats`, `iris`, `bleed`, `orbit` (5 pages)
 - [ ] **Abnormal Pupil** — entry + `ophthalmic`, `neuro`, `mydriasis`, `mydriasis-localise`, `horners`, `horners-localise` (7 pages)
 - [ ] Eye-family **Dx views** (History/Exam/Diagnostics × 4 signs) — after the Dx-block model extension
