@@ -1,11 +1,15 @@
 'use client'
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import Topbar from '../components/Topbar'
 import BottomNav from '../components/BottomNav'
 import NotesPanel from '../components/NotesPanel'
 import { useNotes } from '../hooks/useNotes'
 import { useNotesLocal } from '../hooks/useNotesLocal'
-import { initCliniqApp, mountGlobals, navTo, renderLocalise } from '../lib/cliniqApp'
+import { NavProvider, useNav } from './nav/NavContext'
+import { screenMeta, viewKey } from './nav/view'
+import { installBridgeGlobals } from './nav/legacyGlobals'
+import { Screen, isMigrated } from './screens/Screen'
+import { renderViewToString } from '../lib/cliniqApp'
 import type { Tab } from '../types'
 
 // Use Convex-backed notes when a deployment URL is configured, otherwise localStorage
@@ -13,11 +17,11 @@ const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
 export default hasConvex ? PageWithConvex : PageWithLocal
 
 function PageWithConvex() {
-  return <PageBase useNotesHook={useNotes} />
+  return <NavProvider><PageBase useNotesHook={useNotes} /></NavProvider>
 }
 
 function PageWithLocal() {
-  return <PageBase useNotesHook={useNotesLocal} />
+  return <NavProvider><PageBase useNotesHook={useNotesLocal} /></NavProvider>
 }
 
 type NotesHook = (key: string, title: string, open: boolean) => {
@@ -31,87 +35,71 @@ type NotesHook = (key: string, title: string, open: boolean) => {
 }
 
 function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
-  const [html, setHtml] = useState('')
-  const [slideDir, setSlideDir] = useState<'left' | 'right'>('right')
-  const [topbarTitle, setTopbarTitle] = useState('')
-  const [showBack, setShowBack] = useState(false)
-  const [activeTab, setActiveTab] = useState<Tab>(0)
+  const nav = useNav()
   const [notesOpen, setNotesOpen] = useState(false)
-  const [pageKey, setPageKey] = useState('tab-0')
-  const [pageTitle, setPageTitle] = useState('Clinical — General')
   const screenRef = useRef<HTMLDivElement>(null)
-  const innerRef = useRef<HTMLDivElement>(null)
-  const animTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const notes = useNotesHook(pageKey, pageTitle, notesOpen)
+  const meta = screenMeta(nav.view)
+  const notes = useNotesHook(meta.noteKey, meta.noteTitle, notesOpen)
 
+  // Migration bridge: render any not-yet-migrated View to its legacy HTML
+  // string. Recomputed only when the view (or a refresh tick) changes, so the
+  // string reference is stable across unrelated re-renders — preserving in-place
+  // DOM mutations (legacy search) and avoiding needless re-injection.
+  const vk = viewKey(nav.view)
+  const migrated = isMigrated(nav.view)
+  const legacyHtml = useMemo(
+    () => (migrated ? '' : renderViewToString(nav.view)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [vk, nav.tick, migrated],
+  )
+
+  // Re-point the legacy window globals (called by inline onclick handlers inside
+  // bridged HTML) at the React router. Removed in Phase 5 with the bridge.
   useEffect(() => {
-    // Theme is applied pre-hydration by the inline script in layout.tsx <head>.
-    initCliniqApp(
-      (newHtml, dir) => {
-        setSlideDir(dir)
-        setHtml(newHtml)
-        if (screenRef.current) screenRef.current.scrollTop = 0
-      },
-      (title, back) => {
-        setTopbarTitle(title)
-        setShowBack(back)
-      },
-      (tab) => {
-        setActiveTab(tab as Tab)
-      },
-      (key, title) => {
-        setPageKey(key)
-        setPageTitle(title)
-      },
-    )
-    mountGlobals()
-    renderLocalise()
-  }, [])
+    installBridgeGlobals(nav)
+  }, [nav])
 
-  // Trigger slide animation on html change
-  const [animClass, setAnimClass] = useState('')
+  // Reset the scroll container to the top on every view change. (The slide
+  // animation itself is driven by remounting .screen-inner via key={vk} below,
+  // so the CSS animation replays — no setState/timer needed.)
   useEffect(() => {
-    if (!html) return
-    if (animTimer.current) clearTimeout(animTimer.current)
-    setAnimClass(slideDir === 'left' ? 'slide-in-left' : 'slide-in-right')
-    animTimer.current = setTimeout(() => setAnimClass(''), 300)
-  }, [html, slideDir])
+    if (screenRef.current) screenRef.current.scrollTop = 0
+  }, [vk, nav.tick])
 
-  const handleNavTo = useCallback((tab: Tab) => {
-    navTo(tab, false)
-  }, [])
-
-  const handleToggleNotes = useCallback(() => {
-    setNotesOpen((v) => !v)
-  }, [])
+  const slideClass = nav.slideDir === 'left' ? 'slide-in-left' : 'slide-in-right'
+  const handleNavTo = useCallback((tab: Tab) => nav.navTo(tab), [nav])
+  const handleToggleNotes = useCallback(() => setNotesOpen((v) => !v), [])
 
   return (
-    <div style={{display:'flex',flexDirection:'column',height:'100%'}}>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <Topbar
-        title={topbarTitle}
-        showBack={showBack}
-        onBack={() => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          if (typeof (window as any).goBack === 'function') (window as any).goBack()
-        }}
+        title={meta.topbarTitle}
+        showBack={nav.stack.length > 0}
+        onBack={nav.goBack}
         onToggleNotes={handleToggleNotes}
       />
 
       <div className="screen" ref={screenRef}>
-        <div
-          className={`screen-inner ${animClass}`}
-          ref={innerRef}
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
+        {migrated ? (
+          <div key={vk} className={`screen-inner ${slideClass}`}>
+            <Screen view={nav.view} />
+          </div>
+        ) : (
+          <div
+            key={vk}
+            className={`screen-inner ${slideClass}`}
+            dangerouslySetInnerHTML={{ __html: legacyHtml }}
+          />
+        )}
       </div>
 
-      <BottomNav activeTab={activeTab} onNavTo={handleNavTo} />
+      <BottomNav activeTab={nav.tab} onNavTo={handleNavTo} />
 
       <NotesPanel
         isOpen={notesOpen}
         onClose={handleToggleNotes}
-        noteTitle={pageTitle}
+        noteTitle={meta.noteTitle}
         status={notes.status}
         isReady={notes.isReady}
         editorRef={notes.editorRef}

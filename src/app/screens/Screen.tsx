@@ -5,6 +5,7 @@
 // from legacy HTML strings by the bridge in page.tsx (see isMigrated). When
 // MIGRATED covers every kind (Phase 5) the bridge — and this comment — go away.
 
+import type { ReactNode } from 'react'
 import type { View, ViewKind } from '../nav/view'
 
 /** View kinds rendered by real React components (vs the legacy-html bridge). */
@@ -16,7 +17,7 @@ export function isMigrated(view: View): boolean {
   return MIGRATED.has(view.kind)
 }
 
-export function Screen({ view }: { view: View }) {
+export function Screen({ view }: { view: View }): ReactNode {
   switch (view.kind) {
     // Component cases land here as each kind is migrated, e.g.
     //   case 'protocol': return <ProtocolDetailView id={view.id} />
