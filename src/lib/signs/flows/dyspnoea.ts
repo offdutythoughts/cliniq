@@ -122,45 +122,39 @@ const dyspnoeaEntry: FlowPage = {
     },
 
     {
-      // 🐱 Cat-specific differentials: purple box, title + 2x2 grid of tinted
-      // sub-cards + footnote. No typed block reproduces a 4-cell tinted-subcard
-      // grid (cardSection is a vertical stack with no footnote) → html escape-
-      // hatch, matching the redEye CONJUNCTIVAL/EPISCLERAL precedent. FLAGGED.
-      kind: 'html',
-      html: `<div style="margin-top:14px;padding:10px 12px;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.25);border-radius:10px;width:100%;">
-      <div style="font-size:11px;font-weight:700;color:#C4B5FD;margin-bottom:8px;">🐱 CAT — KEY DIFFERENTIALS BY PATTERN</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-        <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
-          <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">🟡 Restrictive (rapid, shallow)</div>
-          Pleural effusion (CHF/HCM, pyothorax, chylothorax, neoplasia, FIP)<br>
+      // 🐱 Cat-specific differentials — a 2×2 grid of tinted pattern cards.
+      kind: 'compareBox',
+      tone: 'purple',
+      title: '🐱 CAT — KEY DIFFERENTIALS BY PATTERN',
+      cards: [
+        {
+          header: '🟡 Restrictive (rapid, shallow)',
+          html: `Pleural effusion (CHF/HCM, pyothorax, chylothorax, neoplasia, FIP)<br>
           Cranial mediastinal mass — check compressibility<br>
-          Pneumothorax
-        </div>
-        <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
-          <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">🟢 Expiratory / wheeze</div>
-          Feline asthma / bronchitis<br>
+          Pneumothorax`,
+        },
+        {
+          header: '🟢 Expiratory / wheeze',
+          html: `Feline asthma / bronchitis<br>
           Lungworm (<em>Aelurostrongylus</em>)<br>
-          Bronchopneumonia
-        </div>
-        <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
-          <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">🔴 Mixed / crackles</div>
-          Cardiogenic pulmonary oedema (HCM → LA ↑ → backpressure)<br>
+          Bronchopneumonia`,
+        },
+        {
+          header: '🔴 Mixed / crackles',
+          html: `Cardiogenic pulmonary oedema (HCM → LA ↑ → backpressure)<br>
           Pneumonia (bacterial, viral)<br>
-          Non-cardiogenic oedema (toxin, trauma)
-        </div>
-        <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
-          <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">🔵 Inspiratory / stertor</div>
-          Nasopharyngeal polyp — stertor ± Horner's<br>
+          Non-cardiogenic oedema (toxin, trauma)`,
+        },
+        {
+          header: '🔵 Inspiratory / stertor',
+          html: `Nasopharyngeal polyp — stertor ± Horner's<br>
           Viral URTI (herpes / calici)<br>
-          Nasopharyngeal stenosis
-        </div>
-      </div>
-      <div style="margin-top:7px;font-size:9.5px;line-height:1.6;color:rgba(196,181,253,.8);">
-        ⚠️ <strong style="color:#C4B5FD;">Open-mouth breathing in a cat = SEVERE</strong> — cats are obligate nasal breathers. Any open-mouth breathing → immediate O₂ + minimal handling.<br>
+          Nasopharyngeal stenosis`,
+        },
+      ],
+      footnote: `⚠️ <strong style="color:#C4B5FD;">Open-mouth breathing in a cat = SEVERE</strong> — cats are obligate nasal breathers. Any open-mouth breathing → immediate O₂ + minimal handling.<br>
         ⚠️ <strong style="color:#C4B5FD;">Pleural effusion in cats is usually bilateral.</strong> Non-compressible cranial mediastinum = mass until proven otherwise.<br>
-        ⚠️ <strong style="color:#C4B5FD;">ATE:</strong> Acute limb paresis/pain + cold limbs + respiratory distress → HCM + aortic thromboembolism.
-      </div>
-    </div>`,
+        ⚠️ <strong style="color:#C4B5FD;">ATE:</strong> Acute limb paresis/pain + cold limbs + respiratory distress → HCM + aortic thromboembolism.`,
     },
 
     {

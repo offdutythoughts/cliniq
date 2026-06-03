@@ -258,6 +258,22 @@ function renderBranch(columns: Column[]): string {
   return `<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:8px;width:100%;">${columns.map(renderColumn).join('')}</div>`
 }
 
+// ── Compare box (tinted panel: title + grid of header+body sub-cards + foot) ───
+const hexToRgb = (hex: string): string => {
+  const h = hex.replace('#', '')
+  return `${parseInt(h.slice(0, 2), 16)},${parseInt(h.slice(2, 4), 16)},${parseInt(h.slice(4, 6), 16)}`
+}
+function renderCompareBox(b: Extract<Block, { kind: 'compareBox' }>): string {
+  const h = HUE[b.tone]
+  const grid = Array(b.cols ?? 2).fill('1fr').join(' ')
+  const title = b.title ? `<div style="font-size:11px;font-weight:700;color:${h.color};margin-bottom:8px;">${b.title}</div>` : ''
+  const cards = b.cards.map(c =>
+    `<div style="font-size:9.5px;line-height:1.5;background:rgba(${h.rgb},0.08);border-radius:7px;padding:7px 9px;"><div style="color:${h.color};font-weight:700;margin-bottom:3px;">${c.header}</div>${c.html}</div>`,
+  ).join('')
+  const foot = b.footnote ? `<div style="margin-top:7px;font-size:9.5px;line-height:1.6;color:rgba(${hexToRgb(h.color)},.8);">${b.footnote}</div>` : ''
+  return `<div style="margin-top:${b.gap ?? 14}px;padding:10px 12px;background:rgba(${h.rgb},0.07);border:1px solid rgba(${h.rgb},0.25);border-radius:10px;width:100%;">${title}<div style="display:grid;grid-template-columns:${grid};gap:6px;">${cards}</div>${foot}</div>`
+}
+
 // ── Boxes (callout / alert / diseaseGrid) ─────────────────────────────────────
 function boxOpen(tone: Tone, bgA: number, bdA: number, extra = ''): string {
   const h = HUE[tone]
@@ -321,6 +337,7 @@ function renderBlock(b: Block): string {
     case 'categoryGrid': return renderCategoryGrid(b.columns)
     case 'categoryColumns': return renderCategoryColumns(b.cols ?? 3, b.columns)
     case 'decisionTree': return b.steps.map(renderDecisionStep).join('')
+    case 'compareBox':  return renderCompareBox(b)
     case 'disclaimer':  return '<div class="disclaimer">For qualified veterinary professionals only.</div>'
     case 'html':        return b.html
     default:

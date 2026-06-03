@@ -157,6 +157,22 @@ export type DecisionTreeBlock = Connectable & { kind: 'decisionTree'; steps: Dec
 /** The "For qualified veterinary professionals only." footer. */
 export type DisclaimerBlock = Connectable & { kind: 'disclaimer' }
 
+/** A tinted comparison box: a coloured panel with a title, a 2-(or N-)column
+ *  wrapping grid of tinted sub-cards (each a bold `header` + html `body`), and an
+ *  optional footnote. The "X vs Y — KEY DISCRIMINATOR" / species-pattern boxes. */
+export type CompareCard = { header: string; html: string }
+export type CompareBoxBlock = Connectable & {
+  kind: 'compareBox'
+  tone: Tone
+  title?: string
+  /** Grid columns (default 2; cards wrap). */
+  cols?: number
+  cards: CompareCard[]
+  footnote?: string
+  /** margin-top (px); default 14. */
+  gap?: number
+}
+
 // Typed now for model completeness; renderer support added when first used.
 export type SpeciesCompareBlock = Connectable & { kind: 'speciesCompare'; dog: string[]; cat: string[] }
 export type HtmlBlock = Connectable & { kind: 'html'; html: string } // escape hatch — last resort
@@ -179,6 +195,7 @@ export type Block =
   | CategoryColumnsBlock
   | DecisionTreeBlock
   | DisclaimerBlock
+  | CompareBoxBlock
   | SpeciesCompareBlock
   | HtmlBlock
 

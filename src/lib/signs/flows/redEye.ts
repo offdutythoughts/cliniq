@@ -63,35 +63,30 @@ const redEyeCoats: FlowPage = {
       ],
     },
     {
-      // Conjunctival vs episcleral discriminator — a bespoke 2-column compare
-      // box (purple, two tinted sub-cards + footnote). Escape-hatch html keeps
-      // it byte-identical (a 2-col compare block would be the typed home later).
-      kind: 'html',
-      html: `<div style="margin-top:14px;padding:10px 12px;background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.25);border-radius:10px;width:100%;">
-  <div style="font-size:11px;font-weight:700;color:#C4B5FD;margin-bottom:8px;">🔍 CONJUNCTIVAL vs EPISCLERAL INJECTION — KEY DISCRIMINATOR</div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-    <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
-      <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">Conjunctival hyperaemia</div>
-      • Dichotomous (tree-like) branching<br>
+      // Conjunctival vs episcleral discriminator — a 2-column tinted compare box.
+      kind: 'compareBox',
+      tone: 'purple',
+      title: '🔍 CONJUNCTIVAL vs EPISCLERAL INJECTION — KEY DISCRIMINATOR',
+      cards: [
+        {
+          header: 'Conjunctival hyperaemia',
+          html: `• Dichotomous (tree-like) branching<br>
       • Superficial — MOVES with conjunctiva on cotton-tip<br>
       • Most evident in the <strong>fornixes</strong><br>
       • Blanches rapidly with topical phenylephrine 2.5%<br>
-      <strong style="color:#FCD34D;">⇒ Ocular surface disease</strong>
-    </div>
-    <div style="font-size:9.5px;line-height:1.5;background:rgba(168,85,247,0.08);border-radius:7px;padding:7px 9px;">
-      <div style="color:#C4B5FD;font-weight:700;margin-bottom:3px;">Episcleral hyperaemia</div>
-      • No dichotomous division — straight radial vessels<br>
+      <strong style="color:#FCD34D;">⇒ Ocular surface disease</strong>`,
+        },
+        {
+          header: 'Episcleral hyperaemia',
+          html: `• No dichotomous division — straight radial vessels<br>
       • Deeper — does <strong>NOT move</strong> with the conjunctiva<br>
       • Most evident close to the <strong>limbus</strong><br>
       • Blanches with phenylephrine 2.5% (slower / less complete than conjunctival — scleritis vessels do NOT blanch)<br>
-      <strong style="color:#F87171;">⇒ Deeper / intraocular disease (uveitis, glaucoma, scleritis)</strong>
-    </div>
-  </div>
-  <div style="margin-top:7px;font-size:9.5px;line-height:1.6;color:rgba(196,181,253,.8);">
-    💡 <strong style="color:#C4B5FD;">Superficial corneal vascularisation</strong> = long, branching ("trees") → surface disease.<br>
-    💡 <strong style="color:#C4B5FD;">Deep corneal vascularisation</strong> = short, straight, deep red ("brush") → uveitis or glaucoma.
-  </div>
-</div>`,
+      <strong style="color:#F87171;">⇒ Deeper / intraocular disease (uveitis, glaucoma, scleritis)</strong>`,
+        },
+      ],
+      footnote: `💡 <strong style="color:#C4B5FD;">Superficial corneal vascularisation</strong> = long, branching ("trees") → surface disease.<br>
+    💡 <strong style="color:#C4B5FD;">Deep corneal vascularisation</strong> = short, straight, deep red ("brush") → uveitis or glaucoma.`,
     },
   ],
 }
