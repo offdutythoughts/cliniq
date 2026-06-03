@@ -141,3 +141,40 @@ describe('content parity (data render vs legacy HTML)', () => {
     })
   }
 })
+
+// ── Comprehensive link-integrity (Phase 3 / refactor #3) ─────────────────────
+// Render every flow page and validate EVERY onclick reference (typed links +
+// raw onclicks inside html blocks): functions must be defined in cliniqApp.ts,
+// ids must exist, flow ids must be in FLOWS.
+describe('rendered link integrity (every onclick target resolves)', () => {
+  // Pre-existing broken legacy links faithfully preserved from the source: the
+  // dyspnoea Expiratory/Restrictive/Mixed entry tiles call functions that never
+  // existed in the codebase. Documented + allow-listed here, not introduced by us.
+  const KNOWN_BROKEN = new Set(['renderExpFlow', 'renderRestFlow', 'renderMixedFlow'])
+  const fnDefined = (fn: string) => new RegExp(`function\\s+${fn}\\s*\\(`).test(appSrc)
+  const idInSource = (id: string) => appSrc.includes(`'${id}'`)
+
+  const problems: string[] = []
+  for (const [pageId, page] of Object.entries(FLOWS)) {
+    const html = renderFlowPage(page)
+    const re = /onclick="([a-zA-Z]+)\(([^"]*)\)"/g
+    let m: RegExpExecArray | null
+    while ((m = re.exec(html)) !== null) {
+      const fn = m[1]
+      const firstArg = (m[2].match(/'([^']*)'/) || [])[1]
+      const note = `${pageId}: ${fn}(${m[2]})`
+      if (KNOWN_BROKEN.has(fn)) continue
+      if (fn === 'renderFlowId') { if (!firstArg || !FLOWS[firstArg]) problems.push(`${note} → flow id not in FLOWS`); continue }
+      if (fn === 'renderDiseasePage' || fn === 'renderProtoDetail' || fn === 'renderLesionDetail' || fn === 'goLesionTab' || fn === 'renderDiffDetail') {
+        if (!firstArg || !idInSource(firstArg)) problems.push(`${note} → id not found in app`)
+        continue
+      }
+      // every other called function (renderDx*, renderInsp, renderBleedingFlow*, ...) must be defined
+      if (!fnDefined(fn)) problems.push(`${note} → function not defined`)
+    }
+  }
+
+  it('every onclick target resolves', () => {
+    expect(problems, '\n' + problems.join('\n')).toEqual([])
+  })
+})

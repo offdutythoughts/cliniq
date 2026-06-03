@@ -213,14 +213,14 @@ with `purple`/`indigo`.
 - new `Link` kinds: `{to:'lesion-detail',id}` (renderLesionDetail) and `{to:'diff',id}` (renderDiffDetail) — jaundice/haematuria/weakness/bleeding
 - pink/rose + a couple of exact category shades in the tone palette
 
-### Phase 3 — Cutover + validation  ⏸️ *Checkpoint: refactor complete*
-- [ ] Remove now-dead legacy `render*Flow*()` functions + their `mountGlobals` registrations (only those fully replaced by data)
-- [ ] Collapse remaining flow `onclick` shim into pure delegated dispatch
-- [ ] **Link-integrity test** (extends `registry.test.ts`): every `Link` resolves — `disease`/`protocol` id exists in `DB`, `flow` id exists in `FLOWS`, `lesion` loc is valid (this folds in refactor #3's win)
-- [ ] Full regression: visit all 21 signs + a sample of sub-flows in the browser; 0 console errors
-- [ ] `npm test`, `npm run build`, `npx tsc --noEmit`, `npm run lint` green
-- [ ] Update `registry.test.ts` count/assertions as needed
-- [ ] (Optional) Revisit D6 — was a skeleton parser worth it in hindsight? Note outcome.
+### Phase 3 — Cutover + validation  ◐ *Dispatch cutover + validation done; dead-code deletion deferred*
+- [x] **Dispatch cutover** — removed the registry `flow` field (`flowId` is now the sole, required mechanism), `renderLocalise` always routes to `renderFlowId`, and removed `LEGACY_FLOWS` + the legacy fallback in `renderFlowId`. FLOWS is the single source.
+- [x] **Link-integrity validation** (refactor #3) — `flows.test.ts` now renders every page and asserts EVERY `onclick` reference resolves (typed links + raw onclicks inside html blocks): functions defined in cliniqApp.ts, ids present, flow ids in FLOWS. 3 pre-existing-broken dyspnoea links (`renderExpFlow`/`renderRestFlow`/`renderMixedFlow` — never existed) are documented + allow-listed.
+- [x] `registry.test.ts` rewritten — validates every `flowId` resolves to a real FLOWS page (no more legacy `flow`-function checks).
+- [x] **Full regression** — all 59 FLOWS pages render in the browser, 0 failures, 0 console errors; home cards all route via `renderFlowId`.
+- [x] `npm test` (200) · `npx tsc --noEmit` · `npm run build` · `npm run lint` green.
+- [ ] **Deferred: delete the dead legacy `render*Flow*()` definitions + their `mountGlobals` registrations.** The 21 entry functions are confirmed dead (no callers), but several legacy *sub-flow* functions (`renderInsp`, `renderBleedingFlow{Primary,Secondary,DIC,Vasc}`, `renderOesophFlow`, `renderExtraOesophFlow`) are still called from the `html` escape hatches, and the un-migrated **Dx views** also live in cliniqApp.ts. Cleanest to delete once the escape hatches (structural backlog) and Dx views are migrated — the link-integrity test will guard the removal.
+- [ ] Deferred: delegated event dispatch (replace `onclick` strings) — optional optimisation; current onclick strings are validated and work.
 
 ### Dx views — now IN scope (D5)
 The ~70 Diagnostic-approach views (`renderDx*`, `.dx-*` vocabulary) are part of #1.

@@ -2336,12 +2336,9 @@ function esc(s){return(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace
 // single source of truth for the home screen. To add/edit a sign, change the
 // registry, not this function.
 function renderLocalise(){
-  const cards = SIGNS.map(s=>{
-    // Coexistence switch: a sign with a flowId renders from data (renderFlowId);
-    // otherwise it uses its legacy render function. See DATA_MIGRATION.md.
-    const action = s.flowId ? `renderFlowId('${s.flowId}')` : `${s.flow}()`;
-    return `<div class="card" onclick="${action}"><div class="card-row"><div class="card-icon">${s.icon}</div><div style="flex:1"><div class="card-title">${esc(s.title)}</div><div class="card-sub">${esc(s.sub)}</div></div><div class="card-arrow">›</div></div></div>`;
-  }).join('');
+  const cards = SIGNS.map(s=>
+    `<div class="card" onclick="renderFlowId('${s.flowId}')"><div class="card-row"><div class="card-icon">${s.icon}</div><div style="flex:1"><div class="card-title">${esc(s.title)}</div><div class="card-sub">${esc(s.sub)}</div></div><div class="card-arrow">›</div></div></div>`
+  ).join('');
   render(`
   <div class="stitle">Select a clinical sign</div>
   ${cards}
@@ -2350,13 +2347,8 @@ function renderLocalise(){
 }
 
 // ── DATA-DRIVEN FLOW DISPATCH ─────────────────────────────────────────────────
-// Renders a migrated flow page from FLOWS data. Flow links (e.g. epistaxis →
-// bleeding) route here; targets not yet migrated fall back to their legacy
-// render function via LEGACY_FLOWS. As each sign migrates, move its id from
-// LEGACY_FLOWS into FLOWS. See DATA_MIGRATION.md.
-const LEGACY_FLOWS = {
-  bleeding: () => renderBleedingFlow(),
-};
+// Renders a flow page from FLOWS data. Home cards and flow→flow links both route
+// here. Every clinical sign is migrated, so FLOWS is the sole source.
 function renderFlowId(flowId){
   const page = FLOWS[flowId];
   if(page){
@@ -2364,9 +2356,7 @@ function renderFlowId(flowId){
     render(renderFlowPage(page));
     return;
   }
-  const legacy = LEGACY_FLOWS[flowId];
-  if(legacy){ legacy(); return; }
-  render('<div class="empty"><h3>Not found</h3><p>Flow “'+esc(flowId)+'” is not available yet.</p></div>');
+  render('<div class="empty"><h3>Not found</h3><p>Flow “'+esc(flowId)+'” is not available.</p></div>');
 }
 
 // ── DYSPNOEA FLOWCHART ────────────────────────────────────────────────────────
