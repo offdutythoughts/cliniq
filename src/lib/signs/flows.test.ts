@@ -5,13 +5,6 @@ import { FLOWS } from './flows'
 import { DX } from './dx'
 import { renderFlowPage } from './renderFlow'
 import { SIGNS } from './registry'
-import { epistaxisFlowHtml } from './epistaxis'
-import { wetEyeFlowHtml } from './wetEye'
-import { blindEyeFlowHtml, blindEyeAcuteHtml, blindEyeChronicHtml } from './blindEye'
-import { redEyeFlowHtml, redEyeCoatsHtml, redEyeIrisHtml, redEyeBleedHtml, redEyeOrbitHtml } from './redEye'
-import { abnormalPupilFlowHtml, abnormalPupilOphthalmicHtml, abnormalPupilNeuroBranchHtml } from './abnormalPupil'
-import { haematuriaFlowHtml } from './haematuria'
-import { bleedingFlowHtml } from './bleeding'
 import type { Block, Column, Link } from './flowTypes'
 
 // cliniqApp.ts as text (browser-coupled, not imported) — used to verify that
@@ -21,30 +14,7 @@ const appSrc = readFileSync(
   'utf8',
 )
 
-// Migrated flow id → its legacy HTML const, for content-parity checks.
-const LEGACY_HTML: Record<string, string> = {
-  epistaxis: epistaxisFlowHtml,
-  'wet-eye': wetEyeFlowHtml,
-  'blind-eye': blindEyeFlowHtml,
-  'blind-eye-acute': blindEyeAcuteHtml,
-  'blind-eye-chronic': blindEyeChronicHtml,
-  'red-eye': redEyeFlowHtml,
-  'red-eye-coats': redEyeCoatsHtml,
-  'red-eye-iris': redEyeIrisHtml,
-  'red-eye-bleed': redEyeBleedHtml,
-  'red-eye-orbit': redEyeOrbitHtml,
-  'abnormal-pupil': abnormalPupilFlowHtml,
-  'abnormal-pupil-ophthalmic': abnormalPupilOphthalmicHtml,
-  'abnormal-pupil-neuro': abnormalPupilNeuroBranchHtml,
-  'haematuria': haematuriaFlowHtml,
-  'bleeding': bleedingFlowHtml,
-}
-
 const pascal = (s: string) => s.replace(/(^|[-_ ])(\w)/g, (_, __, c) => c.toUpperCase())
-
-// Significant words (≥4 letters) for content-parity comparison.
-const words = (html: string): Set<string> =>
-  new Set(html.replace(/<[^>]+>/g, ' ').toLowerCase().match(/[a-z]{4,}/g) ?? [])
 
 // Recursively collect every Link in a flow page.
 function collectLinks(blocks: Block[]): Link[] {
@@ -127,19 +97,6 @@ describe('link integrity (all migrated flows)', () => {
           expect(ok, `dx ${l.id}`).toBe(true)
         }
       }
-    })
-  }
-})
-
-describe('content parity (data render vs legacy HTML)', () => {
-  for (const [id, legacyHtml] of Object.entries(LEGACY_HTML)) {
-    it(`${id}: data render preserves every significant word from the legacy flowchart`, () => {
-      const page = FLOWS[id]
-      expect(page, `FLOWS[${id}]`).toBeTruthy()
-      const legacy = words(legacyHtml)
-      const data = words(renderFlowPage(page))
-      const missing = [...legacy].filter(w => !data.has(w))
-      expect(missing, `missing from data: ${missing.join(', ')}`).toEqual([])
     })
   }
 })

@@ -222,7 +222,7 @@ with `purple`/`indigo`.
 - [x] **Deleted the dead legacy `render*Flow*()` definitions + their `mountGlobals` registrations.** First re-pointed the 7 onclicks still inside `html` escape hatches (`renderBleedingFlow{Primary,Secondary,DIC,Vasc}` → `renderFlowId('bleeding-…')`, `renderInsp` → `renderFlowId('dyspnoea-insp')`, `renderOesophFlow`/`renderExtraOesophFlow` → direct `goLesionTab`), then deleted **62 dead flow functions (~2845 lines)** + their 62 `mountGlobals` registrations via a brace-matching extractor. cliniqApp.ts: 8350 → 5505 lines; mountGlobals: 173 → 111. The link-integrity test guarded it (caught one real-but-double-quoted diff id whose only single-quoted occurrence was inside a deleted function → fixed the test to accept both quote styles). `renderDx*` + helpers kept (Dx views not yet migrated). Verified: all 59 pages render + every link-handler type executes, 0 console errors.
 - [ ] Deferred: delegated event dispatch (replace `onclick` strings) — optional optimisation; current onclick strings are validated and work.
 
-### Phase 4 — Dx views (diagnostic-approach migration)  ◐ *Foundation + pilot done*
+### Phase 4 — Dx views (diagnostic-approach migration)  ✅ *Done — all 22 signs data-driven, legacy deleted*
 The ~22 signs × 3 tabs (History / Exam / Diagnostics) diagnostic-approach views
 (`renderDx*`, `.dx-*` vocabulary). Content lives partly in extracted consts
 (`signs/*.ts`: 8 signs) and partly inline in `cliniqApp.ts` (the rest). The
@@ -250,12 +250,24 @@ The ~22 signs × 3 tabs (History / Exam / Diagnostics) diagnostic-approach views
   structure identical modulo invisible template-literal whitespace + the intended
   nav-onclick change. Nav (data path), flow→dx link, and legacy fallback for
   unmigrated signs all verified, 0 console errors. `tsc`/`test` (200)/`build`/`lint` green.
-- [ ] Migrate the remaining ~21 signs into `DX` (sub-agents, byte-identical per tab),
-  flipping each sign's callers; handle extra sub-views (diarrhoea sec/LB/SB,
-  vomiting Regurgitation, pupd Desmopressin).
-- [ ] Once all migrated: delete the 89 `renderDx*` wrappers + their `mountGlobals`
-  registrations + the Dx HTML consts/inline strings; `renderDxId` becomes sole path.
-  The `*FlowHtml` consts can also go once the content-parity test is repointed.
+- [x] **Migrated all 22 signs into `DX`** (parallel sub-agents, byte-identical per
+  tab). Const-backed (8): epistaxis, wetEye, haematuria, redEye, blindEye,
+  abnormalPupil, bleeding, seizures. Inline (10): coughing, encephalopathy,
+  sneezing, paleGums, vestibular, dyspnoea, jaundice, myelopathy, weakness, ataxia.
+  Non-standard (4): vomiting + regurgitation (flex nav; computed vomit-vs-regurg
+  table captured + embedded), diarrhoea (4-tab + Secondary), pupd (4-tab +
+  Desmopressin). A/B oracle: **68/68 tab views byte-identical**, 0 console errors.
+- [x] **Model grew to cover the hand-authored variety:** `DxApproach.nav` /
+  `navVariant` ('std'|'alt'|'flex'|'pupd') reproduces each nav strip; `DxBlock`
+  gained `noArrowAfter` (author-controlled arrows) and `check.style`.
+- [x] **Cut every entry point over to `renderDxId`:** the 22 Diagnostic-home tiles,
+  flow `{to:'dx'}` links, lesion-page "Diagnostic Approach" cards (dxMap rekeyed to
+  sign ids), Dx diseaseGrid cross-links, and raw onclicks inside data html.
+- [x] **Deleted the legacy:** 89 `renderDx*` functions + 10 `_*_tabs` helpers + 89
+  `mountGlobals` registrations (cliniqApp.ts 5534 → 3147 lines); the dead per-sign
+  import block; and all 11 old `signs/<sign>.ts` files (Dx consts + `*FlowHtml`
+  consts). The content-parity test (its frozen-HTML baseline) was retired — the
+  link-integrity + registry tests remain (185 tests). `renderDxId` is the sole path.
 
 ---
 
