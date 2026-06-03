@@ -9,7 +9,7 @@ export const dyspnoeaDx: DxApproach = {
   title: 'Dyspnoea',
   // Hand-authored nav alternated classes by position (middle tab always `alt`)
   // with opacity-only active state — match it byte-for-byte.
-  navAltFixed: true,
+  navVariant: 'alt',
   tabs: {
 
   history: {

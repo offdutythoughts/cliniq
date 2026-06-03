@@ -27,8 +27,9 @@ export type DxBlock = DxArrowCtl & (
   /** `.dx-step` step header. `alt` selects the alternating colour; `tone` paints
    *  a coloured intro step (e.g. teal "complete PE", red "STABILISE FIRST"). */
   | { kind: 'step'; text: string; alt?: boolean; tone?: Tone }
-  /** `.dx-check` — an explanation box (html body). */
-  | { kind: 'check'; html: string }
+  /** `.dx-check` — an explanation box (html body). `style` appends a raw inline
+   *  style to the box (a few checks carry e.g. `font-size:10.5px;`). */
+  | { kind: 'check'; html: string; style?: string }
   /** `.dx-row c{cols}` — a row of `.dx-test` cards. */
   | { kind: 'row'; cols?: number; items: DxCard[] }
   /** `.dx-alert` — a tinted pearls / warning box (html body). */
@@ -68,12 +69,14 @@ export type DxApproach = {
   title: string
   /** Tab buttons in order. Omit for the standard 3 (history / exam / dx). */
   nav?: DxNavItem[]
-  /** Tab-button class logic. Default (false): the active tab is `dx-step`, the
-   *  rest `dx-step alt` (active-state encodes the alt class, like most signs).
-   *  true: classes alternate by position (odd index = `dx-step alt`) and the
-   *  active state is shown only by opacity — a few hand-authored navs (dyspnoea)
-   *  were built this way. */
-  navAltFixed?: boolean
+  /** Nav strip style, matching the hand-authored variants byte-for-byte:
+   *  - 'std' (default): grid; the active tab is `dx-step`, the rest `dx-step alt`.
+   *  - 'alt': grid; classes alternate by position (odd index = `dx-step alt`),
+   *    active shown by opacity only (dyspnoea, diarrhoea).
+   *  - 'flex': flex-wrap; alternating classes; inactive `opacity:.65`; larger
+   *    cells (vomiting, regurgitation).
+   *  - 'pupd': grid; alternating classes; active = explicit `opacity:1`. */
+  navVariant?: 'std' | 'alt' | 'flex' | 'pupd'
   /** Tab content keyed by nav key ('history' | 'exam' | 'dx' | extras). */
   tabs: Record<string, DxTab>
 }

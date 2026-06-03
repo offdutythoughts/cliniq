@@ -15,15 +15,26 @@ const STD_NAV: DxNavItem[] = [
   { key: 'exam', label: '🩺 Exam' },
   { key: 'dx', label: '🔬 Diagnostics' },
 ]
-function renderDxTabs(sign: string, nav: DxNavItem[], active: string, altFixed = false): string {
+type NavVariant = 'std' | 'alt' | 'flex' | 'pupd'
+function renderDxTabs(sign: string, nav: DxNavItem[], active: string, variant: NavVariant = 'std'): string {
+  const flex = variant === 'flex'
+  const cellBase = flex
+    ? 'flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;text-align:center;'
+    : 'padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;'
   const cells = nav.map((t, i) => {
     const on = t.key === active
-    // Default: active tab loses the `alt` class. altFixed: classes alternate by
-    // position and only opacity reflects the active tab (dyspnoea-style navs).
-    const cls = altFixed ? (i % 2 === 1 ? 'dx-step alt' : 'dx-step') : `dx-step${on ? '' : ' alt'}`
-    return `<div class="${cls}" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;${on ? '' : 'opacity:.5;'}" onclick="renderDxId('${sign}','${t.key}')">${t.label}</div>`
+    // 'std' encodes active in the class (active = no `alt`); the others alternate
+    // the class by position and reflect active via opacity only.
+    const cls = variant === 'std' ? `dx-step${on ? '' : ' alt'}` : (i % 2 === 1 ? 'dx-step alt' : 'dx-step')
+    const op = on
+      ? (variant === 'pupd' ? 'opacity:1;' : '')
+      : (flex ? 'opacity:.65;' : 'opacity:.5;')
+    return `<div class="${cls}" style="${cellBase}${op}" onclick="renderDxId('${sign}','${t.key}')">${t.label}</div>`
   }).join('')
-  return `<div style="display:grid;grid-template-columns:repeat(${nav.length},1fr);gap:4px;margin-bottom:14px;">${cells}</div>`
+  const container = flex
+    ? 'display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;'
+    : `display:grid;grid-template-columns:repeat(${nav.length},1fr);gap:4px;margin-bottom:14px;`
+  return `<div style="${container}">${cells}</div>`
 }
 
 // ── Blocks ────────────────────────────────────────────────────────────────────
@@ -58,7 +69,7 @@ function renderDxBlock(b: DxBlock): string {
   switch (b.kind) {
     case 'branch':      return `<div class="dx-branch">${b.text}</div>`
     case 'step':        return renderStep(b)
-    case 'check':       return `<div class="dx-check">${b.html}</div>`
+    case 'check':       return `<div class="dx-check"${b.style ? ` style="${b.style}"` : ''}>${b.html}</div>`
     case 'row':         return renderRow(b.cols ?? b.items.length, b.items)
     case 'alert':       return `<div class="dx-alert"${b.gap ? ` style="margin-top:${b.gap}px;"` : ''}>${b.html}</div>`
     case 'callout':     return renderCallout(b)
@@ -84,5 +95,5 @@ export function renderDxApproach(sign: string, approach: DxApproach, active: str
   })
   const wrap = `<div class="dx-wrap">${spine}</div>`
   const after = (tab.after ?? []).map(renderDxBlock).join('')
-  return renderDxTabs(sign, nav, active, approach.navAltFixed) + wrap + after
+  return renderDxTabs(sign, nav, active, approach.navVariant) + wrap + after
 }

@@ -25,6 +25,10 @@ import { jaundiceDx } from './jaundice'
 import { myelopathyDx } from './myelopathy'
 import { weaknessDx } from './weakness'
 import { ataxiaDx } from './ataxia'
+import { vomitingDx } from './vomiting'
+import { regurgitationDx } from './regurgitation'
+import { diarrhoeaDx } from './diarrhoea'
+import { pupdDx } from './pupd'
 
 export const DX: Record<string, DxApproach> = {
   'epistaxis': epistaxisDx,
@@ -45,4 +49,8 @@ export const DX: Record<string, DxApproach> = {
   'myelopathy': myelopathyDx,
   'weakness': weaknessDx,
   'ataxia': ataxiaDx,
+  'vomiting': vomitingDx,
+  'regurgitation': regurgitationDx,
+  'diarrhoea': diarrhoeaDx,
+  'pupd': pupdDx,
 }
