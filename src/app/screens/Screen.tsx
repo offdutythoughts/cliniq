@@ -10,13 +10,15 @@ import type { View, ViewKind } from '../nav/view'
 import { ProtocolDetailView } from './ProtocolDetailView'
 import { DiseasePageView } from './DiseasePageView'
 import { DxApproachView } from './DxApproachView'
+import { FlowPageView } from './FlowPageView'
 
 /** View kinds rendered by real React components (vs the legacy-html bridge). */
 export const MIGRATED = new Set<ViewKind>([
   'protocol',
   'disease',
   'dx',
-  // grows each phase: 'flow', 'tab', ...
+  'flow',
+  // grows each phase: lesion subsystem, 'tab', ...
 ])
 
 export function isMigrated(view: View): boolean {
@@ -28,6 +30,7 @@ export function Screen({ view }: { view: View }): ReactNode {
     case 'protocol': return <ProtocolDetailView id={view.id} />
     case 'disease': return <DiseasePageView id={view.id} />
     case 'dx': return <DxApproachView sign={view.sign} active={view.tab} />
+    case 'flow': return <FlowPageView flowId={view.flowId} />
     // more cases land here as each kind is migrated
     default:
       // Unreachable: page.tsx only mounts <Screen> for migrated kinds.
