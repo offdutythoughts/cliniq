@@ -26,10 +26,7 @@ export function installBridgeGlobals(nav: Nav) {
   w.renderDiseasePage = (id: string) => nav.navigate({ kind: 'disease', id })
   w.renderProtoDetail = (id: string) => nav.navigate({ kind: 'protocol', id })
   w.goLesionTab = (loc: string, name: string) => nav.navigate({ kind: 'lesionLoc', loc, name })
-  w.goLocEp = (loc: string, name: string, system: string, cls: string) => nav.navigate({ kind: 'lesionEp', loc, name, system, cls })
   w.renderLesionDetail = (id: string) => nav.navigate({ kind: 'lesionDetail', id })
-  w.renderLesionFlow = (loc: string, name: string) => nav.navigate({ kind: 'lesionCatFlow', loc, name })
-  w.renderSubTypeFlow = (loc: string, name: string, cat: string) => nav.navigate({ kind: 'subTypeFlow', loc, name, cat })
   w.renderSubTypeDetail = (id: string) => nav.navigate({ kind: 'subTypeDetail', id })
   w.renderDiffDetail = (id: string) => nav.navigate({ kind: 'diff', id })
   // In-place DOM mutations inside bridged html (legacy search) — keep as-is.

@@ -1060,9 +1060,6 @@ export function renderViewToString(view) {
       case 'disease': renderDiseasePage(view.id); break;
       case 'protocol': renderProtoDetail(view.id); break;
       case 'lesionLoc': goLesionTab(view.loc, view.name); break;
-      case 'lesionEp': goLocEp(view.loc, view.name, view.system, view.cls); break;
-      case 'lesionCatFlow': renderLesionFlow(view.loc, view.name); break;
-      case 'subTypeFlow': renderSubTypeFlow(view.loc, view.name, view.cat); break;
       case 'subTypeDetail': renderSubTypeDetail(view.id); break;
       case 'lesionDetail': renderLesionDetail(view.id); break;
       case 'diff': renderDiffDetail(view.id); break;

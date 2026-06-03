@@ -20,9 +20,6 @@ export type View =
   | { kind: 'disease'; id: string }                                              // renderDiseasePage
   | { kind: 'protocol'; id: string }                                             // renderProtoDetail
   | { kind: 'lesionLoc'; loc: string; name: string }                             // goLesionTab
-  | { kind: 'lesionEp'; loc: string; name: string; system: string; cls: string }// goLocEp
-  | { kind: 'lesionCatFlow'; loc: string; name: string }                         // renderLesionFlow
-  | { kind: 'subTypeFlow'; loc: string; name: string; cat: string }              // renderSubTypeFlow
   | { kind: 'subTypeDetail'; id: string }                                        // renderSubTypeDetail
   | { kind: 'lesionDetail'; id: string }                                         // renderLesionDetail
   | { kind: 'diff'; id: string }                                                 // renderDiffDetail
@@ -38,9 +35,6 @@ export function viewKey(v: View): string {
     case 'disease': return `disease:${v.id}`
     case 'protocol': return `protocol:${v.id}`
     case 'lesionLoc': return `lesionLoc:${v.loc}`
-    case 'lesionEp': return `lesionEp:${v.loc}`
-    case 'lesionCatFlow': return `lesionCatFlow:${v.loc}`
-    case 'subTypeFlow': return `subTypeFlow:${v.loc}:${v.cat}`
     case 'subTypeDetail': return `subTypeDetail:${v.id}`
     case 'lesionDetail': return `lesionDetail:${v.id}`
     case 'diff': return `diff:${v.id}`
@@ -73,10 +67,7 @@ export function parseLegacyOnclick(js: string): View | null {
     case 'renderFlowId': return { kind: 'flow', flowId: args[0] }
     case 'renderDxId': return { kind: 'dx', sign: args[0], tab: args[1] || 'history' }
     case 'goLesionTab': return { kind: 'lesionLoc', loc: args[0], name: args[1] }
-    case 'goLocEp': return { kind: 'lesionEp', loc: args[0], name: args[1], system: args[2], cls: args[3] }
     case 'renderLesionDetail': return { kind: 'lesionDetail', id: args[0] }
-    case 'renderLesionFlow': return { kind: 'lesionCatFlow', loc: args[0], name: args[1] }
-    case 'renderSubTypeFlow': return { kind: 'subTypeFlow', loc: args[0], name: args[1], cat: args[2] }
     case 'renderSubTypeDetail': return { kind: 'subTypeDetail', id: args[0] }
     case 'renderDiffDetail': return { kind: 'diff', id: args[0] }
     default: return null // renderRestFlow/renderMixedFlow/renderExpFlow: known-broken legacy links
@@ -134,11 +125,7 @@ export function screenMeta(v: View): ScreenMeta {
       return { topbarTitle: trunc(name, 28), noteKey: `proto:${v.id}`, noteTitle: name }
     }
     case 'lesionLoc':
-    case 'lesionEp':
-    case 'lesionCatFlow':
       return { topbarTitle: v.name, noteKey: `loc:${v.loc}`, noteTitle: v.name }
-    case 'subTypeFlow':
-      return { topbarTitle: v.cat, noteKey: `loc:${v.loc}:${v.cat}`, noteTitle: v.cat }
     case 'subTypeDetail': {
       const sub = lesionById.get(v.id)?.sub ?? ''
       return { topbarTitle: trunc(sub, 30), noteKey: `lesion:${v.id}`, noteTitle: sub }

@@ -70,7 +70,7 @@ describe('screenMeta — legacy note-key/title parity', () => {
     expect(screenMeta({ kind: 'dx', sign: 'coughing', tab: 'history' }).noteKey).toBe('page:dxCoughingHistory')
     expect(screenMeta({ kind: 'disease', id: 'DIS-HCM' }).noteKey).toBe('disease:DIS-HCM')
     expect(screenMeta({ kind: 'protocol', id: 'PROT-CPR' }).noteKey).toBe('proto:PROT-CPR')
-    expect(screenMeta({ kind: 'subTypeFlow', loc: 'LOC-X', name: 'N', cat: 'Mass' }).noteKey).toBe('loc:LOC-X:Mass')
+    expect(screenMeta({ kind: 'lesionLoc', loc: 'LOC-X', name: 'N' }).noteKey).toBe('loc:LOC-X')
     expect(screenMeta({ kind: 'tab', tab: 0 }).noteTitle).toBe('Clinical — General')
   })
 

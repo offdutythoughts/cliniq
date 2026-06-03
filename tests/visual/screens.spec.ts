@@ -17,6 +17,9 @@ type Nav =
   | { fn: 'renderDiseasePage'; args: [string] }
   | { fn: 'renderProtoDetail'; args: [string] }
   | { fn: 'goLesionTab'; args: [string, string] }
+  | { fn: 'renderSubTypeDetail'; args: [string] }
+  | { fn: 'renderLesionDetail'; args: [string] }
+  | { fn: 'renderDiffDetail'; args: [string] }
 
 const SCREENS: { name: string; nav: Nav }[] = [
   { name: 'tab-0-clinical', nav: { fn: 'navTo', args: [0] } },
@@ -52,6 +55,14 @@ const SCREENS: { name: string; nav: Nav }[] = [
   { name: 'protocol-cpr', nav: { fn: 'renderProtoDetail', args: ['PROT-CPR'] } },
   { name: 'protocol-ataxia', nav: { fn: 'renderProtoDetail', args: ['PROT-ATAXIA'] } },
   { name: 'lesion-hepatic', nav: { fn: 'goLesionTab', args: ['LOC-JD-HEP', 'Hepatic'] } },
+  // Lesion drill-down detail leaves (reached from the lesion grid / flows).
+  // subtype-gi-neo exercises the subTypeDetail etiology #/-/@ parser + diag +
+  // treat; subtype-hepatic a simpler one; lesion-detail-regen renderLesionDetail
+  // (signs + differentials list); diff-d001 renderDiffDetail.
+  { name: 'subtype-gi-neo', nav: { fn: 'renderSubTypeDetail', args: ['LES-GI-UP-NEO'] } },
+  { name: 'subtype-hepatic', nav: { fn: 'renderSubTypeDetail', args: ['LES-JD-HEP'] } },
+  { name: 'lesion-detail-regen', nav: { fn: 'renderLesionDetail', args: ['LES-PM-REGEN'] } },
+  { name: 'diff-d001', nav: { fn: 'renderDiffDetail', args: ['D001'] } },
 ]
 
 const THEMES = ['light', 'dark'] as const
