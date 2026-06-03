@@ -6,7 +6,9 @@
 
 import type { FlowPage } from '../flowTypes'
 import { epistaxisFlow } from './epistaxis'
+import { wetEyeFlow } from './wetEye'
 
 export const FLOWS: Record<string, FlowPage> = {
   [epistaxisFlow.id]: epistaxisFlow,
+  [wetEyeFlow.id]: wetEyeFlow,
 }

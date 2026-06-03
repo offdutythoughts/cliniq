@@ -43,5 +43,5 @@ export const SIGNS: SignEntry[] = [
   { id: 'sneezing', icon: '🤧', title: 'Sneezing', sub: 'Unilateral vs bilateral', flow: 'renderSneezeFlow' },
   { id: 'vomiting', icon: '🤢', title: 'Vomiting', sub: 'Dog + Cat · True vomit vs regurgitation → primary or secondary GI', flow: 'renderVomFlow' },
   { id: 'weakness', icon: '⚡', title: 'Weakness / Collapse', sub: 'Dog + Cat · Episodic, persistent, syncope vs seizure', flow: 'renderWeaknessFlow' },
-  { id: 'wet-eye', icon: '💧', title: 'Wet Eye / Epiphora', sub: 'Dog + Cat · Increased production vs reduced drainage · Jones test · NLS flush', flow: 'renderWetEyeFlow' },
+  { id: 'wet-eye', icon: '💧', title: 'Wet Eye / Epiphora', sub: 'Dog + Cat · Increased production vs reduced drainage · Jones test · NLS flush', flow: 'renderWetEyeFlow', flowId: 'wet-eye' },
 ]

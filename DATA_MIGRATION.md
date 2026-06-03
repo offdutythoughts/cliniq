@@ -135,9 +135,9 @@ Swapping inline styles for tone classes **changes the DOM**, so parity is **NOT*
 | D2 | Implicit arrows (+ `connectAfter` override); closed `tone` enum (8 tones after pilot); recursive `Column.blocks` nesting | ✅ Decided |
 | D3 | `flowId` coexistence switch on `SignEntry`; `FLOWS` map; one file per sign | ✅ Decided |
 | D4 | Parity = visual + content, not DOM-identical | ✅ Decided |
-| D5 | **Dx views (History/Exam/Diagnostics, ~70 views) are OUT of #1** — fast-follow using the same model; design blocks to cover them | 🔶 Proposed — default unless Chris says otherwise |
-| D6 | **Parser-assist deferred** — hand-migrate epistaxis + 2–3 first; only then consider a narrow skeleton parser | 🔶 Proposed — revisit after pilot |
-| D7 | **Sequencing:** pilot → eye family → simple → GI/uro/metabolic families → bespoke-heavy last; migrate whole signs (entry + sub-flows) together | 🔶 Proposed — default unless Chris says otherwise |
+| D5 | **Dx views ARE IN scope for #1** (Chris's call, post-pilot) — migrated per sign, after that sign's flowchart; needs a Dx-block model extension for the `.dx-*` vocabulary (next increment) | ✅ Decided |
+| D6 | **No parser — hand-migrate** (the pilot was clean; content-parity test is the safety net) | ✅ Decided |
+| D7 | **Sequencing:** pilot → eye family → simple → GI/uro/metabolic families → bespoke-heavy last; migrate whole signs together. Within a sign: **flowchart first, then its Dx views** | ✅ Decided |
 
 ---
 
@@ -165,10 +165,14 @@ Each sign is a natural checkpoint (app is consistent and shippable). Each phase 
 - **Parity gate met strongly:** identical visible text + indistinguishable screenshots; disease, cross-flow (→ legacy bleeding), and dx links all verified navigating in the browser with 0 console errors.
 
 ### Phase 1a — Eye family  ⏸️ *Checkpoint: block library matures on similar shapes*
-- [ ] **Red Eye** — entry + `coats`, `iris`, `bleed`, `orbit` (5 pages)
+Flowcharts first (below); each sign's **Dx views** follow once the Dx-block model
+extension lands (D5). Flow blocks added so far: `choices` (clickable pattern-node
+grid), `banner` (centered info strip), callout `gap`/`center`.
+- [x] **Wet Eye** — entry (1 page) ✅ flow migrated; byte-identical text + indistinguishable screenshots; lesion links verified
 - [ ] **Blind Eye** — entry + `acute`, `chronic` (3 pages)
+- [ ] **Red Eye** — entry + `coats`, `iris`, `bleed`, `orbit` (5 pages)
 - [ ] **Abnormal Pupil** — entry + `ophthalmic`, `neuro`, `mydriasis`, `mydriasis-localise`, `horners`, `horners-localise` (7 pages)
-- [ ] **Wet Eye** — entry (1 page)
+- [ ] Eye-family **Dx views** (History/Exam/Diagnostics × 4 signs) — after the Dx-block model extension
 - [ ] Parity + tests + build green for each; `flowId` set for all four
 
 ### Phase 1b — Simple / regular signs  ⏸️ *Checkpoint*
@@ -206,8 +210,12 @@ Each sign is a natural checkpoint (app is consistent and shippable). Each phase 
 - [ ] Update `registry.test.ts` count/assertions as needed
 - [ ] (Optional) Revisit D6 — was a skeleton parser worth it in hindsight? Note outcome.
 
-### Fast-follow (separate effort, not #1)
-- [ ] Migrate the ~70 Diagnostic-approach views (`renderDx*`, `.dx-*` vocabulary) using the same model + a few Dx-specific blocks.
+### Dx views — now IN scope (D5)
+The ~70 Diagnostic-approach views (`renderDx*`, `.dx-*` vocabulary) are part of #1.
+They share `node`/`callout`/`alert`/`table` ideas but need a Dx-block extension
+(3-tab nav, `dxStep` → `dxCheck` sequences, comparison tables, red-flag boxes).
+Migrated **per sign, after that sign's flowchart**. The Dx-block model is the next
+design increment (proposed on the first eye sign's Dx views).
 
 ---
 

@@ -58,8 +58,24 @@ export type NodeBlock = Connectable & {
 }
 export type BranchBlock = Connectable & { kind: 'branch'; columns: Column[] }
 export type EndpointsBlock = Connectable & { kind: 'endpoints'; cols?: number; items: Endpoint[] }
+
+/** A grid of clickable pattern-nodes (the .flow-node.insp/.exp/.rest/.mixed
+ *  boxes used as branch choices, e.g. wet-eye production vs drainage). */
+export type ChoiceItem = {
+  variant: 'insp' | 'exp' | 'rest' | 'mixed' | 'step'
+  label: string
+  sublabel?: string
+  link?: Link
+}
+export type ChoicesBlock = Connectable & { kind: 'choices'; cols?: number; items: ChoiceItem[] }
+
+/** A centered, full-width info strip (e.g. "Tap a branch to drill down"). */
+export type BannerBlock = Connectable & { kind: 'banner'; tone: Tone; html: string }
+
 export type AlertBlock = Connectable & { kind: 'alert'; tone: Tone; title: string; items: string[] }
-export type CalloutBlock = Connectable & { kind: 'callout'; tone: Tone; title?: string; html: string }
+/** `gap` adds margin-top (px) when the callout is a trailing reference box
+ *  rather than part of the arrow-connected spine. `center` centres the text. */
+export type CalloutBlock = Connectable & { kind: 'callout'; tone: Tone; title?: string; html: string; gap?: number; center?: boolean }
 export type DiseaseGridBlock = Connectable & { kind: 'diseaseGrid'; title: string; links: LabeledLink[] }
 export type DxRowBlock = Connectable & { kind: 'dxRow'; items: LabeledLink[] }
 
@@ -73,6 +89,8 @@ export type Block =
   | NodeBlock
   | BranchBlock
   | EndpointsBlock
+  | ChoicesBlock
+  | BannerBlock
   | AlertBlock
   | CalloutBlock
   | DiseaseGridBlock

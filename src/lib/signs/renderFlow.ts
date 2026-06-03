@@ -6,7 +6,7 @@
 // / renderDx<Id>). No dependency on cliniqApp internals — unit-testable.
 
 import type {
-  FlowPage, Block, Column, Endpoint, Link, LabeledLink, Tone,
+  FlowPage, Block, Column, Endpoint, ChoiceItem, Link, LabeledLink, Tone,
 } from './flowTypes'
 
 const esc = (s: string): string =>
@@ -52,7 +52,7 @@ function onclick(link: Link): string {
 // "after" and the second connects "before". Defaults are kind-based; a block may
 // set connectAfter to override (e.g. a sub-step that feeds straight into
 // endpoints with no arrow).
-const SPINE = new Set(['node', 'branch', 'endpoints', 'callout'])
+const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout'])
 const connectsAfter = (b: Block): boolean => b.connectAfter ?? SPINE.has(b.kind)
 const connectsBefore = (b: Block): boolean => SPINE.has(b.kind)
 const ARROW = '<div class="flow-arrow-v">↓</div>'
@@ -90,6 +90,22 @@ function renderEndpoints(items: Endpoint[]): string {
   return `<div style="display:flex;flex-direction:column;gap:4px;width:100%;">${items.map(renderEndpoint).join('')}</div>`
 }
 
+// ── Choices (grid of clickable pattern-nodes) ─────────────────────────────────
+function renderChoices(cols: number, items: ChoiceItem[]): string {
+  const cells = items.map(it => {
+    const sub = it.sublabel ? `<br><span style="font-size:9px;opacity:.7">${esc(it.sublabel)}</span>` : ''
+    const attr = it.link ? ` style="cursor:pointer;font-size:11px;" onclick="${onclick(it.link)}"` : ' style="font-size:11px;"'
+    return `<div class="flow-node ${it.variant}"${attr}>${esc(it.label)}${sub}</div>`
+  }).join('')
+  return `<div style="display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;">${cells}</div>`
+}
+
+// ── Banner (centered info strip) ──────────────────────────────────────────────
+function renderBanner(tone: Tone, html: string): string {
+  const h = HUE[tone]
+  return `<div style="margin-top:10px;padding:9px 12px;background:rgba(${h.rgb},0.07);border:1px solid rgba(${h.rgb},0.15);border-radius:10px;font-size:11px;color:${h.color};text-align:center;width:100%;">${html}</div>`
+}
+
 // ── Branch + columns ──────────────────────────────────────────────────────────
 function renderColumnHeader(col: Column): string {
   const h = HUE[col.tone]
@@ -115,9 +131,10 @@ function boxOpen(tone: Tone, bgA: number, bdA: number, extra = ''): string {
   return `<div style="background:rgba(${h.rgb},${bgA});border:1px solid rgba(${h.rgb},${bdA});border-radius:10px;width:100%;${extra}">`
 }
 
-function renderCallout(tone: Tone, title: string | undefined, html: string): string {
-  const t = title ? `<div style="font-size:10px;font-weight:700;color:${TITLE[tone] ?? HUE[tone].color};margin-bottom:5px;">${title}</div>` : ''
-  return `${boxOpen(tone, 0.10, 0.3, 'padding:9px 12px;font-size:9.5px;color:' + (HUE[tone].color) + ';line-height:1.5;')}${t}${html}</div>`
+function renderCallout(b: Extract<Block, { kind: 'callout' }>): string {
+  const t = b.title ? `<div style="font-size:11px;font-weight:700;color:${TITLE[b.tone] ?? HUE[b.tone].color};margin-bottom:6px;">${b.title}</div>` : ''
+  const extra = `padding:9px 12px;font-size:9.5px;color:${HUE[b.tone].color};line-height:1.5;${b.gap ? `margin-top:${b.gap}px;` : ''}${b.center ? 'text-align:center;' : ''}`
+  return `${boxOpen(b.tone, 0.10, 0.3, extra)}${t}${b.html}</div>`
 }
 
 function renderAlert(tone: Tone, title: string, items: string[]): string {
@@ -154,7 +171,9 @@ function renderBlock(b: Block): string {
     case 'node':        return renderNode(b)
     case 'branch':      return renderBranch(b.columns)
     case 'endpoints':   return renderEndpoints(b.items)
-    case 'callout':     return renderCallout(b.tone, b.title, b.html)
+    case 'choices':     return renderChoices(b.cols ?? b.items.length, b.items)
+    case 'banner':      return renderBanner(b.tone, b.html)
+    case 'callout':     return renderCallout(b)
     case 'alert':       return renderAlert(b.tone, b.title, b.items)
     case 'diseaseGrid': return renderDiseaseGrid(b.title, b.links)
     case 'dxRow':       return renderDxRow(b.items)
