@@ -40,8 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# Claude session files
-.claude/
+# Claude session files (but keep shared, checked-in skills)
+.claude/*
+!.claude/skills/
 
 # Playwright MCP scratch artifacts (snapshots, console logs)
 .playwright-mcp/
