@@ -3,22 +3,16 @@ import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
 import { FLOWS } from './flows'
 import { DX } from './dx'
-import { renderFlowPage } from './renderFlow'
 import { SIGNS } from './registry'
 import type { Block, Column, Link } from './flowTypes'
 
-// cliniqApp.ts (the render functions) + data/db.ts (the clinical DB ids) as
-// text (browser-coupled, not imported) — used to verify that every Link target
-// the data references actually exists in the app. The DB was relocated out of
-// cliniqApp.ts into src/data/db.ts during the React migration, so id lookups
-// must scan both.
-const appSrc =
-  readFileSync(fileURLToPath(new URL('../cliniqApp.ts', import.meta.url)), 'utf8') +
-  readFileSync(fileURLToPath(new URL('../../data/db.ts', import.meta.url)), 'utf8')
+// The clinical DB (src/data/db.ts) as text — used to verify that every
+// disease/protocol/lesion id a flow Link (or a raw html-block onclick) targets
+// actually exists. Records use mixed quoting, so accept either.
+const dbSrc = readFileSync(fileURLToPath(new URL('../../data/db.ts', import.meta.url)), 'utf8')
+const idInDb = (id: string) => dbSrc.includes(`'${id}'`) || dbSrc.includes(`"${id}"`)
 
-const pascal = (s: string) => s.replace(/(^|[-_ ])(\w)/g, (_, __, c) => c.toUpperCase())
-
-// Recursively collect every Link in a flow page.
+// Recursively collect every typed Link in a flow page.
 function collectLinks(blocks: Block[]): Link[] {
   const out: Link[] = []
   const walk = (bs: Block[]) => {
@@ -49,96 +43,56 @@ describe('FLOWS registry', () => {
     }
   })
 
-  it('every page starts with an entry header and renders non-trivial HTML', () => {
+  it('every page opens with the right entry block', () => {
     for (const page of Object.values(FLOWS)) {
-      // 'flow' pages open with an entry node + .flow-wrap; 'fn' pages open with
-      // an fnHeader and render bare (no .flow-wrap).
-      const html = renderFlowPage(page)
       const first = page.blocks[0].kind
       if (page.layout === 'fn') {
         expect(first, page.id).toBe('fnHeader')
-        expect(html, page.id).toContain('class="fn ')
       } else {
-        // flow pages open with an entry node, or an html block for fully-bespoke pages
+        // flow pages open with an entry node, or an html block for bespoke pages
         expect(['node', 'html'], page.id).toContain(first)
         if (first === 'node') expect(page.blocks[0], page.id).toMatchObject({ variant: 'entry' })
-        expect(html, page.id).toContain('class="flow-wrap"')
       }
-      expect(html.length, page.id).toBeGreaterThan(300)
+      expect(page.blocks.length, page.id).toBeGreaterThan(0)
     }
   })
 })
 
-describe('link integrity (all migrated flows)', () => {
+describe('typed-link integrity (every flow Link resolves)', () => {
   for (const [id, page] of Object.entries(FLOWS)) {
     const links = collectLinks(page.blocks)
-
-    it(`${id}: disease/protocol/lesion targets exist in cliniqApp.ts`, () => {
+    it(`${id}: disease / protocol / lesion / flow / dx targets exist`, () => {
       for (const l of links) {
-        if (l.to === 'disease' || l.to === 'protocol') {
-          expect(appSrc.includes(`'${l.id}'`), `${l.to} id ${l.id}`).toBe(true)
-        } else if (l.to === 'lesion') {
-          expect(appSrc.includes(`'${l.loc}'`), `lesion loc ${l.loc}`).toBe(true)
-        }
-      }
-    })
-
-    it(`${id}: flow links resolve (migrated or legacy-mapped)`, () => {
-      for (const l of links) {
-        if (l.to === 'flow') {
-          const known = !!FLOWS[l.id] || new RegExp(`\\b${l.id}\\s*:\\s*\\(\\)\\s*=>`).test(appSrc)
-          expect(known, `flow id ${l.id}`).toBe(true)
-        }
-      }
-    })
-
-    it(`${id}: dx links resolve (migrated DX entry or legacy renderDx<Id>)`, () => {
-      for (const l of links) {
-        if (l.to === 'dx') {
-          const ok = !!DX[l.id] || new RegExp(`function\\s+renderDx${pascal(l.id)}\\s*\\(`).test(appSrc)
-          expect(ok, `dx ${l.id}`).toBe(true)
-        }
+        if (l.to === 'disease' || l.to === 'protocol') expect(idInDb(l.id), `${l.to} id ${l.id}`).toBe(true)
+        else if (l.to === 'lesion') expect(idInDb(l.loc), `lesion loc ${l.loc}`).toBe(true)
+        else if (l.to === 'flow') expect(FLOWS[l.id], `flow id ${l.id}`).toBeTruthy()
+        else if (l.to === 'dx') expect(DX[l.id], `dx ${l.id}`).toBeTruthy()
       }
     })
   }
 })
 
-// ── Comprehensive link-integrity (Phase 3 / refactor #3) ─────────────────────
-// Render every flow page and validate EVERY onclick reference (typed links +
-// raw onclicks inside html blocks): functions must be defined in cliniqApp.ts,
-// ids must exist, flow ids must be in FLOWS.
-describe('rendered link integrity (every onclick target resolves)', () => {
+// Raw onclick handlers embedded in html-block / leaf-html fields aren't typed
+// Links — scan the serialised page for them and validate their targets too.
+describe('raw-html onclick integrity (every onclick target resolves)', () => {
   // Pre-existing broken legacy links faithfully preserved from the source: the
   // dyspnoea Expiratory/Restrictive/Mixed entry tiles call functions that never
-  // existed in the codebase. Documented + allow-listed here, not introduced by us.
+  // existed. Documented + allow-listed, not introduced by us.
   const KNOWN_BROKEN = new Set(['renderExpFlow', 'renderRestFlow', 'renderMixedFlow'])
-  const fnDefined = (fn: string) => new RegExp(`function\\s+${fn}\\s*\\(`).test(appSrc)
-  // DB ids are defined quoted; disease/lesion use single quotes, differentials
-  // (DB.differentials) use double — accept either.
-  const idInSource = (id: string) => appSrc.includes(`'${id}'`) || appSrc.includes(`"${id}"`)
+  const NAV_FN = /\b(renderFlowId|renderDxId|renderDiseasePage|renderProtoDetail|renderLesionDetail|goLesionTab|renderDiffDetail|renderSubTypeDetail|renderExpFlow|renderRestFlow|renderMixedFlow)\('([^']*)'/g
 
   const problems: string[] = []
   for (const [pageId, page] of Object.entries(FLOWS)) {
-    const html = renderFlowPage(page)
-    const re = /onclick="([a-zA-Z]+)\(([^"]*)\)"/g
+    const json = JSON.stringify(page)
     let m: RegExpExecArray | null
-    while ((m = re.exec(html)) !== null) {
-      const fn = m[1]
-      const firstArg = (m[2].match(/'([^']*)'/) || [])[1]
-      const note = `${pageId}: ${fn}(${m[2]})`
+    while ((m = NAV_FN.exec(json)) !== null) {
+      const [, fn, arg] = m
+      const note = `${pageId}: ${fn}('${arg}')`
       if (KNOWN_BROKEN.has(fn)) continue
-      if (fn === 'renderFlowId') { if (!firstArg || !FLOWS[firstArg]) problems.push(`${note} → flow id not in FLOWS`); continue }
-      if (fn === 'renderDxId') {
-        const ok = !!firstArg && (!!DX[firstArg] || new RegExp(`function\\s+renderDx${pascal(firstArg)}\\s*\\(`).test(appSrc))
-        if (!ok) problems.push(`${note} → dx sign not in DX and no legacy renderDx fn`)
-        continue
-      }
-      if (fn === 'renderDiseasePage' || fn === 'renderProtoDetail' || fn === 'renderLesionDetail' || fn === 'goLesionTab' || fn === 'renderDiffDetail') {
-        if (!firstArg || !idInSource(firstArg)) problems.push(`${note} → id not found in app`)
-        continue
-      }
-      // every other called function (renderDx*, renderInsp, renderBleedingFlow*, ...) must be defined
-      if (!fnDefined(fn)) problems.push(`${note} → function not defined`)
+      if (fn === 'renderFlowId') { if (!FLOWS[arg]) problems.push(`${note} → flow id not in FLOWS`); continue }
+      if (fn === 'renderDxId') { if (!DX[arg]) problems.push(`${note} → dx sign not in DX`); continue }
+      // disease/protocol/lesion/diff/subtype id must exist in the DB
+      if (!arg || !idInDb(arg)) problems.push(`${note} → id not found in DB`)
     }
   }
 

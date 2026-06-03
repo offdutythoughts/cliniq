@@ -76,11 +76,27 @@ const UNCLIP = `
   *, *::before, *::after { transition: none !important; animation: none !important; caret-color: transparent !important; }
 `
 
+// Map the legacy {fn,args} screen descriptor to a typed View for window.__nav
+// (the app's programmatic-navigation hook). Keeps the SCREENS table stable.
+function toView(nav: Nav): unknown {
+  switch (nav.fn) {
+    case 'navTo': return { kind: 'tab', tab: nav.args[0] }
+    case 'renderFlowId': return { kind: 'flow', flowId: nav.args[0] }
+    case 'renderDxId': return { kind: 'dx', sign: nav.args[0], tab: nav.args[1] ?? 'history' }
+    case 'renderDiseasePage': return { kind: 'disease', id: nav.args[0] }
+    case 'renderProtoDetail': return { kind: 'protocol', id: nav.args[0] }
+    case 'goLesionTab': return { kind: 'lesionLoc', loc: nav.args[0], name: nav.args[1] }
+    case 'renderSubTypeDetail': return { kind: 'subTypeDetail', id: nav.args[0] }
+    case 'renderLesionDetail': return { kind: 'lesionDetail', id: nav.args[0] }
+    case 'renderDiffDetail': return { kind: 'diff', id: nav.args[0] }
+  }
+}
+
 async function boot(page: Page, theme: string) {
   await page.goto('/')
-  // Wait for the SPA to mount and expose its globals + initial render.
+  // Wait for the SPA to mount, expose its nav hook, and render the initial view.
   await page.waitForFunction(
-    () => typeof (window as unknown as Record<string, unknown>).navTo === 'function' &&
+    () => typeof (window as unknown as Record<string, unknown>).__nav === 'function' &&
       (document.querySelector('.screen-inner')?.children.length ?? 0) > 0,
   )
   await page.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme)
@@ -88,10 +104,9 @@ async function boot(page: Page, theme: string) {
 }
 
 async function go(page: Page, nav: Nav) {
-  await page.evaluate(({ fn, args }) => {
-    const w = window as unknown as Record<string, (...a: unknown[]) => unknown>
-    w[fn](...args)
-  }, nav)
+  await page.evaluate((view) => {
+    ;(window as unknown as { __nav: (v: unknown) => void }).__nav(view)
+  }, toView(nav))
   await page.waitForFunction(
     () => (document.querySelector('.screen-inner')?.children.length ?? 0) > 0,
   )

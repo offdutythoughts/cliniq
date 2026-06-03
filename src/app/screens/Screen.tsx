@@ -1,12 +1,10 @@
 'use client'
 // ── Screen dispatcher ────────────────────────────────────────────────────────
-// Renders the component for a migrated View kind. During the migration the set
-// of migrated kinds grows phase by phase; kinds not yet in MIGRATED are rendered
-// from legacy HTML strings by the bridge in page.tsx (see isMigrated). When
-// MIGRATED covers every kind (Phase 5) the bridge — and this comment — go away.
+// Maps the current View to its React component. Every kind is a component — the
+// app no longer renders any HTML strings.
 
 import type { ReactNode } from 'react'
-import type { View, ViewKind } from '../nav/view'
+import type { View } from '../nav/view'
 import { ProtocolDetailView } from './ProtocolDetailView'
 import { DiseasePageView } from './DiseasePageView'
 import { DxApproachView } from './DxApproachView'
@@ -16,24 +14,6 @@ import { SubTypeDetailView } from './SubTypeDetailView'
 import { LesionDetailView } from './LesionDetailView'
 import { DiffDetailView } from './DiffDetailView'
 import { TabHome } from './TabHome'
-
-/** View kinds rendered by real React components. Now covers every kind — the
- *  legacy-html bridge in page.tsx is dead and removed in Phase 5. */
-export const MIGRATED = new Set<ViewKind>([
-  'tab',
-  'protocol',
-  'disease',
-  'dx',
-  'flow',
-  'lesionLoc',
-  'subTypeDetail',
-  'lesionDetail',
-  'diff',
-])
-
-export function isMigrated(view: View): boolean {
-  return MIGRATED.has(view.kind)
-}
 
 export function Screen({ view }: { view: View }): ReactNode {
   switch (view.kind) {
