@@ -33,14 +33,16 @@ export const viewport: Viewport = {
   ],
 }
 
-// Set data-theme from localStorage BEFORE paint so dark-mode users don't get a
-// light flash. Runs in <head> ahead of hydration; <html> has suppressHydrationWarning.
-const themeScript = `try{document.documentElement.dataset.theme=localStorage.getItem('cliniq-theme')||'light'}catch(e){}`
-
 const htmlBody = (children: React.ReactNode) => (
   <html lang="en" className={`${dmSans.variable} ${dmMono.variable}`} suppressHydrationWarning>
     <head>
-      <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+      {/* Render-blocking pre-hydration theme init (public/theme-init.js): sets
+          data-theme before paint so dark-mode users don't get a light flash.
+          External (not inline) so no dangerouslySetInnerHTML anywhere. The
+          synchronous load is intentional and required — it MUST run before the
+          body paints, so the no-sync-scripts guidance doesn't apply here. */}
+      {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+      <script src="/theme-init.js" />
       <meta name="apple-mobile-web-app-capable" content="yes" />
       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     </head>
