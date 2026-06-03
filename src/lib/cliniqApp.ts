@@ -2361,16 +2361,19 @@ function renderFlowId(flowId){
 // 3-tab nav swaps in place exactly like the hand-authored views did.
 function renderDxId(sign, tab){
   tab = tab || 'history';
-  const Pascal = (sign||'').replace(/(^|[-_ ])(\w)/g, function(_,__,c){ return c.toUpperCase(); });
+  // Legacy renderDx<Stem> name stem. Pascal of the kebab key, except a few whose
+  // hand-authored function used a non-pascal spelling (renderDxPUPD).
+  const ALIAS = { pupd: 'PUPD' };
+  const Pascal = ALIAS[sign] || (sign||'').replace(/(^|[-_ ])(\w)/g, function(_,__,c){ return c.toUpperCase(); });
   const Tab = tab.charAt(0).toUpperCase() + tab.slice(1); // History | Exam | Dx
   const approach = DX[sign];
   if(approach){
-    const t = approach[tab] || approach.history;
+    const t = approach.tabs[tab] || approach.tabs.history;
     replace(()=>renderDxId(sign, tab), t.title, 'page:dx'+Pascal+Tab);
     render(renderDxApproach(sign, approach, tab));
     return;
   }
-  // Legacy fallback: renderDx<Pascal><Tab>(), or the container for history.
+  // Legacy fallback: renderDx<Stem><Tab>(), or the container for history.
   const w = window as any;
   const fn = w['renderDx'+Pascal+(tab==='history'?'':Tab)] || w['renderDx'+Pascal];
   if(typeof fn === 'function'){ fn(); return; }
@@ -2436,28 +2439,28 @@ function renderLesionDetail(id){
 function renderLesionHome(){
   render(`
   <div class="stitle">Diagnostic approaches</div>
-  <div class="card" onclick="renderDxEncephalopathy()"><div class="card-row"><div class="card-icon">🧬</div><div style="flex:1"><div class="card-title">Acute Encephalopathy</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxMyelopathy()"><div class="card-row"><div class="card-icon">🦴</div><div style="flex:1"><div class="card-title">Acute Myelopathy</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxVestibular()"><div class="card-row"><div class="card-icon">🌀</div><div style="flex:1"><div class="card-title">Acute Vestibular</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxAbnormalPupil()"><div class="card-row"><div class="card-icon">🔵</div><div style="flex:1"><div class="card-title">Anisocoria / Abnormal Pupil</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxAtaxia()"><div class="card-row"><div class="card-icon">🚶</div><div style="flex:1"><div class="card-title">Ataxia</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxBleeding()"><div class="card-row"><div class="card-icon">🔴</div><div style="flex:1"><div class="card-title">Bleeding / Petechiae / Ecchymoses</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxBlindEye()"><div class="card-row"><div class="card-icon">⚫</div><div style="flex:1"><div class="card-title">Blind Eye / Acute Vision Loss</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxCoughing()"><div class="card-row"><div class="card-icon">🫁</div><div style="flex:1"><div class="card-title">Coughing</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxDiarrhoea()"><div class="card-row"><div class="card-icon">💩</div><div style="flex:1"><div class="card-title">Diarrhoea</div><div class="card-sub">Dog + Cat · Small bowel vs large bowel diagnostic approach</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxDyspnoea()"><div class="card-row"><div class="card-icon">🌬️</div><div style="flex:1"><div class="card-title">Dyspnoea</div><div class="card-sub">Dog 🐕 + Cat 🐱 · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxEpistaxis()"><div class="card-row"><div class="card-icon">👃</div><div style="flex:1"><div class="card-title">Epistaxis</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxHaematuria()"><div class="card-row"><div class="card-icon">🩸</div><div style="flex:1"><div class="card-title">Haematuria</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxJaundice()"><div class="card-row"><div class="card-icon">🟡</div><div style="flex:1"><div class="card-title">Jaundice</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxPaleGums()"><div class="card-row"><div class="card-icon">🩸</div><div style="flex:1"><div class="card-title">Pale Mucous Membranes</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxPUPD()"><div class="card-row"><div class="card-icon">💧</div><div style="flex:1"><div class="card-title">Polyuria / Polydipsia</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxRedEye()"><div class="card-row"><div class="card-icon">👁️</div><div style="flex:1"><div class="card-title">Red Eye</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxRegurgitation()"><div class="card-row"><div class="card-icon">🔄</div><div style="flex:1"><div class="card-title">Regurgitation</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxSeizures()"><div class="card-row"><div class="card-icon">🧠</div><div style="flex:1"><div class="card-title">Seizures</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxSneezing()"><div class="card-row"><div class="card-icon">🤧</div><div style="flex:1"><div class="card-title">Sneezing</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxVomiting()"><div class="card-row"><div class="card-icon">🤢</div><div style="flex:1"><div class="card-title">Vomiting</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxWeakness()"><div class="card-row"><div class="card-icon">⚡</div><div style="flex:1"><div class="card-title">Weakness / Collapse</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
-  <div class="card" onclick="renderDxWetEye()"><div class="card-row"><div class="card-icon">💧</div><div style="flex:1"><div class="card-title">Wet Eye / Epiphora</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('encephalopathy')"><div class="card-row"><div class="card-icon">🧬</div><div style="flex:1"><div class="card-title">Acute Encephalopathy</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('myelopathy')"><div class="card-row"><div class="card-icon">🦴</div><div style="flex:1"><div class="card-title">Acute Myelopathy</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('vestibular')"><div class="card-row"><div class="card-icon">🌀</div><div style="flex:1"><div class="card-title">Acute Vestibular</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('abnormal-pupil')"><div class="card-row"><div class="card-icon">🔵</div><div style="flex:1"><div class="card-title">Anisocoria / Abnormal Pupil</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('ataxia')"><div class="card-row"><div class="card-icon">🚶</div><div style="flex:1"><div class="card-title">Ataxia</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('bleeding')"><div class="card-row"><div class="card-icon">🔴</div><div style="flex:1"><div class="card-title">Bleeding / Petechiae / Ecchymoses</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('blind-eye')"><div class="card-row"><div class="card-icon">⚫</div><div style="flex:1"><div class="card-title">Blind Eye / Acute Vision Loss</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('coughing')"><div class="card-row"><div class="card-icon">🫁</div><div style="flex:1"><div class="card-title">Coughing</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('diarrhoea')"><div class="card-row"><div class="card-icon">💩</div><div style="flex:1"><div class="card-title">Diarrhoea</div><div class="card-sub">Dog + Cat · Small bowel vs large bowel diagnostic approach</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('dyspnoea')"><div class="card-row"><div class="card-icon">🌬️</div><div style="flex:1"><div class="card-title">Dyspnoea</div><div class="card-sub">Dog 🐕 + Cat 🐱 · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('epistaxis')"><div class="card-row"><div class="card-icon">👃</div><div style="flex:1"><div class="card-title">Epistaxis</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('haematuria')"><div class="card-row"><div class="card-icon">🩸</div><div style="flex:1"><div class="card-title">Haematuria</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('jaundice')"><div class="card-row"><div class="card-icon">🟡</div><div style="flex:1"><div class="card-title">Jaundice</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('pale-gums')"><div class="card-row"><div class="card-icon">🩸</div><div style="flex:1"><div class="card-title">Pale Mucous Membranes</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('pupd')"><div class="card-row"><div class="card-icon">💧</div><div style="flex:1"><div class="card-title">Polyuria / Polydipsia</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('red-eye')"><div class="card-row"><div class="card-icon">👁️</div><div style="flex:1"><div class="card-title">Red Eye</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('regurgitation')"><div class="card-row"><div class="card-icon">🔄</div><div style="flex:1"><div class="card-title">Regurgitation</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('seizures')"><div class="card-row"><div class="card-icon">🧠</div><div style="flex:1"><div class="card-title">Seizures</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('sneezing')"><div class="card-row"><div class="card-icon">🤧</div><div style="flex:1"><div class="card-title">Sneezing</div><div class="card-sub">Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('vomiting')"><div class="card-row"><div class="card-icon">🤢</div><div style="flex:1"><div class="card-title">Vomiting</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('weakness')"><div class="card-row"><div class="card-icon">⚡</div><div style="flex:1"><div class="card-title">Weakness / Collapse</div><div class="card-sub">Dog + Cat · Stepwise diagnostic workup</div></div><div class="card-arrow">›</div></div></div>
+  <div class="card" onclick="renderDxId('wet-eye')"><div class="card-row"><div class="card-icon">💧</div><div style="flex:1"><div class="card-title">Wet Eye / Epiphora</div><div class="card-sub">Dog + Cat · History · Exam · Diagnostics</div></div><div class="card-arrow">›</div></div></div>
   <div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment. Always verify clinical decisions independently.</div>
   `);
 }

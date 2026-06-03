@@ -7,6 +7,7 @@ import type { DxApproach } from '../dxTypes'
 
 export const epistaxisDx: DxApproach = {
   title: 'Epistaxis',
+  tabs: {
 
   history: {
     title: 'History: Epistaxis',
@@ -229,5 +230,7 @@ export const epistaxisDx: DxApproach = {
       },
       { kind: 'disclaimer' },
     ],
+  },
+
   },
 }

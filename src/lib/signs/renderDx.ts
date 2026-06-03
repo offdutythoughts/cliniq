@@ -4,23 +4,23 @@
 // returns an HTML string; serialises Links via the shared onclick() from
 // renderFlow. The Dx counterpart to renderFlowPage. See DATA_MIGRATION.md.
 
-import type { DxApproach, DxBlock, DxCard, DxTab, DxTabKey } from './dxTypes'
+import type { DxApproach, DxBlock, DxCard, DxNavItem, DxTab } from './dxTypes'
 import { HUE, TITLE, esc, onclick } from './renderFlow'
 
 const DX_ARROW = '<div class="dx-arrow">↓</div>'
 
-// ── 3-tab nav (📋 History · 🩺 Exam · 🔬 Diagnostics) ─────────────────────────
-const TABS: { key: DxTabKey; label: string }[] = [
+// ── Tab nav. Standard signs get 📋 History · 🩺 Exam · 🔬 Diagnostics. ─────────
+const STD_NAV: DxNavItem[] = [
   { key: 'history', label: '📋 History' },
   { key: 'exam', label: '🩺 Exam' },
   { key: 'dx', label: '🔬 Diagnostics' },
 ]
-function renderDxTabs(sign: string, active: DxTabKey): string {
-  const cells = TABS.map(t => {
+function renderDxTabs(sign: string, nav: DxNavItem[], active: string): string {
+  const cells = nav.map(t => {
     const on = t.key === active
     return `<div class="dx-step${on ? '' : ' alt'}" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;${on ? '' : 'opacity:.5;'}" onclick="renderDxId('${sign}','${t.key}')">${t.label}</div>`
   }).join('')
-  return `<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-bottom:14px;">${cells}</div>`
+  return `<div style="display:grid;grid-template-columns:repeat(${nav.length},1fr);gap:4px;margin-bottom:14px;">${cells}</div>`
 }
 
 // ── Blocks ────────────────────────────────────────────────────────────────────
@@ -69,9 +69,10 @@ function renderDxBlock(b: DxBlock): string {
 /** Render one tab of a sign's diagnostic approach to an HTML string: the 3-tab
  *  nav, the `.dx-wrap` spine (arrow-connected `blocks`), then any `after` boxes
  *  outside the wrap. */
-export function renderDxApproach(sign: string, approach: DxApproach, active: DxTabKey): string {
-  const tab: DxTab = approach[active]
+export function renderDxApproach(sign: string, approach: DxApproach, active: string): string {
+  const nav = approach.nav ?? STD_NAV
+  const tab: DxTab = approach.tabs[active] ?? approach.tabs.history
   const wrap = `<div class="dx-wrap">${tab.blocks.map(renderDxBlock).join(DX_ARROW)}</div>`
   const after = (tab.after ?? []).map(renderDxBlock).join('')
-  return renderDxTabs(sign, active) + wrap + after
+  return renderDxTabs(sign, nav, active) + wrap + after
 }

@@ -47,16 +47,22 @@ export type DxTab = {
   after?: DxBlock[]
 }
 
-/** A sign's full diagnostic approach: a display title + its three tabs. Extra
- *  named tabs (e.g. diarrhoea 'sec') may be added for signs that have them. */
+/** One tab button in the nav strip. */
+export type DxNavItem = { key: string; label: string }
+
+/** A sign's full diagnostic approach: a display title, the tab buttons, and the
+ *  tab content keyed by nav key. Most signs use the standard 3 tabs (History /
+ *  Exam / Diagnostics) — omit `nav` to get them. Signs that differ declare their
+ *  own `nav` (e.g. vomiting = History + Exam only; diarrhoea adds 'sec'). `tabs`
+ *  may also hold extra sub-views reached from within a tab (e.g. pupd
+ *  'desmopressin') that aren't in the nav strip. */
 export type DxApproach = {
-  /** Sign display name used in the tab titles / nav (e.g. "Epistaxis"). */
+  /** Sign display name used in the tab titles (e.g. "Epistaxis"). */
   title: string
-  history: DxTab
-  exam: DxTab
-  dx: DxTab
-  /** Optional extra sub-views reached from within the tabs (not the 3-tab nav). */
-  extra?: Record<string, DxTab>
+  /** Tab buttons in order. Omit for the standard 3 (history / exam / dx). */
+  nav?: DxNavItem[]
+  /** Tab content keyed by nav key ('history' | 'exam' | 'dx' | extras). */
+  tabs: Record<string, DxTab>
 }
 
 export type DxTabKey = 'history' | 'exam' | 'dx'
