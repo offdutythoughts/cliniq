@@ -88,7 +88,7 @@ for (const theme of THEMES) {
         // The closed NotesPanel sits off-screen via transform; once a wide screen
         // (e.g. the dyspnoea flow) widens the page, a full-page shot would reveal
         // it. Hide it here — the dedicated notes-panel test covers it on purpose.
-        await page.addStyleTag({ content: '.notes-panel, .notes-overlay { display: none !important; }' })
+        await page.addStyleTag({ content: '[data-notes-panel], [data-notes-overlay] { display: none !important; }' })
         await expect(page).toHaveScreenshot(`${theme}--${screen.name}.png`, { fullPage: true })
       })
     }
@@ -96,10 +96,10 @@ for (const theme of THEMES) {
     test('notes-panel', async ({ page }) => {
       await boot(page, theme)
       await go(page, { fn: 'navTo', args: [0] })
-      await page.locator('.notes-topbar-btn').first().click()
-      const panel = page.locator('.notes-panel')
-      await expect(panel).toHaveClass(/open/)
-      // Let the (disabled) slide settle and ensure it is fully on-screen.
+      await page.locator('[data-notes-btn]').first().click()
+      const panel = page.locator('[data-notes-panel]')
+      // Open = slid into the viewport (utility classes, so assert position not class).
+      await expect.poll(async () => (await panel.boundingBox())?.x ?? 9999).toBeLessThan(200)
       await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))))
       await expect(panel).toHaveScreenshot(`${theme}--notes-panel.png`)
     })

@@ -16,14 +16,14 @@ interface Props {
 
 export default function BottomNav({ activeTab, onNavTo }: Props) {
   return (
-    <div className="bottom-nav">
+    <div className="flex bg-(--color-surface-2) border-t border-(--color-line) shrink-0 pb-[env(safe-area-inset-bottom)]">
       {NAV_ITEMS.map((item, i) => (
         <div
           key={i}
-          className={`nav-item${activeTab === i ? ' active' : ''}`}
+          className={`flex-1 flex flex-col items-center pt-2 px-1 pb-1.5 cursor-pointer gap-[3px] transition-colors duration-150 text-[10px] font-medium tracking-[.01em] ${activeTab === i ? 'text-(--color-accent)' : 'text-[var(--gray2)] hover:text-(--color-muted)'}`}
           onClick={() => onNavTo(i as Tab)}
         >
-          <div className="nav-icon">{item.icon}</div>
+          <div className="text-[18px] leading-none">{item.icon}</div>
           {item.label}
         </div>
       ))}
