@@ -109,9 +109,19 @@ html[data-theme="dark"]{
   --fg-green-deep: var(--tone-green-fg);     --fg-slate-deep: var(--tone-slate-fg);
   --fg-orange-deep: var(--tone-orange-fg);
 }
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{height:100%;overflow:hidden;background:var(--navy);}
-body{font-family:var(--font);color:var(--white);display:flex;flex-direction:column;color-scheme:light;}
+/* Reset + base element styles — in @layer base so layered components (and the
+   utilities layer) win over them by layer order rather than specificity.
+   (An unlayered `*{padding:0}` would otherwise beat a layered `.card{padding}`.) */
+@layer base {
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{height:100%;overflow:hidden;background:var(--navy);}
+  body{font-family:var(--font);color:var(--white);display:flex;flex-direction:column;color-scheme:light;}
+}
+
+/* Semantic component classes — in @layer components so Phase 4 utilities (the
+   `utilities` layer, declared last) win on conflict. They read tokens via var();
+   they are NOT @apply-rewritten and the HTML-string content keeps these classes. */
+@layer components {
 
 /* ── TOPBAR ── */
 .topbar{
@@ -412,3 +422,5 @@ body{font-family:var(--font);color:var(--white);display:flex;flex-direction:colu
 .notes-footer button{background:none;border:1px solid var(--border);color:var(--gray);border-radius:6px;padding:5px 12px;font-size:10px;cursor:pointer;}
 .notes-footer button:hover{background:var(--card);}
 .notes-footer .notes-status{font-size:9px;color:var(--gray2);}
+
+} /* @layer components */

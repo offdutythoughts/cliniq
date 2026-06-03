@@ -257,11 +257,19 @@ auto-detected utilities are inert (no element gains a generated utility).
   only" badge, login `#fff`, viewport `themeColor`).
 - Verified: vitest 185 ✓, `tsc` clean, Playwright 40/40 empty diff (both themes).
 
-### Phase 3 — Semantic classes into `@layer components`
-- [ ] Wrap the kept component classes (`.card`, `.tag*`, `.fn*`, `.flow-*`, `.dx-*`,
-      `.notes-*`, `.proto-step`, …) in `@layer components`, reading tokens via `var()`.
-- [ ] Do **not** `@apply`-rewrite them (avoids the `@apply` anti-pattern) and do not
-      utility-fy the HTML strings.
+### Phase 3 — Semantic classes into `@layer components` — ✅ DONE
+- [x] Wrapped the kept component classes (`.topbar`→EOF: `.card`, `.tag*`, `.fn*`, `.flow-*`,
+      `.dx-*`, `.notes-*`, `.proto-step`, …) in `@layer components`, reading tokens via `var()`.
+- [x] No `@apply` rewrite; HTML-string content untouched.
+
+**Phase 3 outcome:** The reset (`*`/`html,body`/`body`) moved into `@layer base` — **required**,
+not optional: with cascade layers an unlayered rule beats *all* layered rules regardless of
+specificity, so a layered `.card{padding}` would have been clobbered by the unlayered
+`*{padding:0}`. With `base` before `components` in the declared order, the reset-vs-component
+ordering is preserved, so the change is **fully inert** (40/40 visual ✓ both themes; production
+build compiled the layered CSS via the PostCSS/Lightning pipeline). `:root` / `@theme` / the
+dark-var block / Tailwind imports stay unlayered (they only declare custom properties). The
+payoff lands in Phase 4: components now sit below `utilities`, so a utility wins on conflict.
 
 ### Phase 4 — Convert the 8 React components + pages to utilities (one PR each)
 - [ ] `Topbar`, `BottomNav`, `NotesPanel`, `AccountMenu`, `layout.tsx`, `page.tsx`,
