@@ -195,14 +195,23 @@ with `purple`/`indigo`.
 - [x] **Weakness / Collapse** — entry + `episodic`, `persistent`, `collapse` (4) ✅ byte-identical (entry typed; sub-flow bodies html — need a `diff` link + anat-endpoint colours).
 - [x] All 26 pages browser-verified byte-identical; tests 173/173; `flowId` set. **Added `categoryColumns` block** (wrapping 3-col grid of header+↓+chips units, CAT_STYLE palette incl. pink "Anomalous") — the legacy `col()` grids of jaundice/pale/pupd. (Migrated by parallel sub-agents; categoryColumns built + converted by parent.)
 
-### Phase 2 — Bespoke-heavy signs  ⏸️ *Checkpoint: stress-tests table/categoryGrid/speciesCompare*
-- [ ] **Seizures** — entry; VITAMIN-D acronym grid, breed/structural-mimic boxes, reactive-cause lists (`categoryGrid` + `speciesCompare` + `alert`)
-- [ ] **Myelopathy** — entry; localisation table, injury-grade table, recovery-% table, deep-pain `alert`, 4 nav buttons (`table` ×3)
-- [ ] **Vestibular** — entry; peripheral-vs-central comparison `table`
-- [ ] **Ataxia** — entry; 3-col split + dense 🐕/🐱 species pearls (`speciesCompare`)
-- [ ] **Bleeding** — entry + `primary`, `secondary`, `dic`, `vasc` (5); dog/cat matrix, PT/aPTT pattern table, platelet-mechanism sub-grid
-- [ ] Parity + tests + build green for each; `flowId` set
-- [ ] **All 21 signs now data-driven** — legacy `flow` fallback no longer exercised by the home screen
+### Phase 2 — Bespoke-heavy signs  ✅ *Done*
+- [x] **Seizures** — entry (1) ✅ byte-identical. VITAMIN-D acronym grid / breed grid / reactive lists kept as html (no typed equivalent).
+- [x] **Myelopathy** — entry (1) ✅ byte-identical + **pixel-identical** (colour-coded localisation/grade/recovery tables, colspan section rows — kept as html; the `table` block can't yet do per-column header colours / colspan / pink).
+- [x] **Vestibular** — entry (1) ✅ byte-identical. Comparison table uses the typed `table` block; nav tiles html.
+- [x] **Ataxia** — entry (1) ✅ byte-identical. 3-col split typed (`choices`); flow links → vestibular/myelopathy; info panels + action cards html.
+- [x] **Bleeding** — entry + `primary`, `secondary`, `dic`, `vasc` (5) ✅ byte-identical. Typed `alert`/`diseaseGrid`/`table`/`callout`; bespoke branches + dog/cat matrix html. (Fixed a dropped `↓` connector on the DIC page found in browser verify.)
+- [x] All 9 pages browser-verified byte-identical; tests 201/201; `flowId` set.
+- [x] **All 21 signs now data-driven** — every registry entry has a `flowId`. ✅🎉
+
+**Structural backlog (flagged by agents; faithful as html for now, would replace escape hatches):**
+- `speciesCompare` renderer (🐕/🐱 matrices — bleeding, dyspnoea cat box)
+- `mnemonicGrid` (VITAMIN-D / DAMNIT-V acronym grids — seizures)
+- richer `table` (per-column header colours, colspan section rows, pink/free cell colours — myelopathy, vestibular, bleeding)
+- `navTiles`/`linkCard` (3-col `.flow-endpoint` / `.card` rows — vestibular, ataxia, many)
+- `compareBox` (2-col compare — red-eye coats, abnormal-pupil neuro, bleeding DIC panels)
+- new `Link` kinds: `{to:'lesion-detail',id}` (renderLesionDetail) and `{to:'diff',id}` (renderDiffDetail) — jaundice/haematuria/weakness/bleeding
+- pink/rose + a couple of exact category shades in the tone palette
 
 ### Phase 3 — Cutover + validation  ⏸️ *Checkpoint: refactor complete*
 - [ ] Remove now-dead legacy `render*Flow*()` functions + their `mountGlobals` registrations (only those fully replaced by data)

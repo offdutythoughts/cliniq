@@ -10,6 +10,7 @@ import { blindEyeFlowHtml, blindEyeAcuteHtml, blindEyeChronicHtml } from './blin
 import { redEyeFlowHtml, redEyeCoatsHtml, redEyeIrisHtml, redEyeBleedHtml, redEyeOrbitHtml } from './redEye'
 import { abnormalPupilFlowHtml, abnormalPupilOphthalmicHtml, abnormalPupilNeuroBranchHtml } from './abnormalPupil'
 import { haematuriaFlowHtml } from './haematuria'
+import { bleedingFlowHtml } from './bleeding'
 import type { Block, Column, Link } from './flowTypes'
 
 // cliniqApp.ts as text (browser-coupled, not imported) — used to verify that
@@ -35,6 +36,7 @@ const LEGACY_HTML: Record<string, string> = {
   'abnormal-pupil-ophthalmic': abnormalPupilOphthalmicHtml,
   'abnormal-pupil-neuro': abnormalPupilNeuroBranchHtml,
   'haematuria': haematuriaFlowHtml,
+  'bleeding': bleedingFlowHtml,
 }
 
 const pascal = (s: string) => s.replace(/(^|[-_ ])(\w)/g, (_, __, c) => c.toUpperCase())
