@@ -15,6 +15,16 @@ import { blindEyeDx } from './blindEye'
 import { abnormalPupilDx } from './abnormalPupil'
 import { bleedingDx } from './bleeding'
 import { seizuresDx } from './seizures'
+import { coughingDx } from './coughing'
+import { encephalopathyDx } from './encephalopathy'
+import { sneezingDx } from './sneezing'
+import { paleGumsDx } from './paleGums'
+import { vestibularDx } from './vestibular'
+import { dyspnoeaDx } from './dyspnoea'
+import { jaundiceDx } from './jaundice'
+import { myelopathyDx } from './myelopathy'
+import { weaknessDx } from './weakness'
+import { ataxiaDx } from './ataxia'
 
 export const DX: Record<string, DxApproach> = {
   'epistaxis': epistaxisDx,
@@ -25,4 +35,14 @@ export const DX: Record<string, DxApproach> = {
   'abnormal-pupil': abnormalPupilDx,
   'bleeding': bleedingDx,
   'seizures': seizuresDx,
+  'coughing': coughingDx,
+  'encephalopathy': encephalopathyDx,
+  'sneezing': sneezingDx,
+  'pale-gums': paleGumsDx,
+  'vestibular': vestibularDx,
+  'dyspnoea': dyspnoeaDx,
+  'jaundice': jaundiceDx,
+  'myelopathy': myelopathyDx,
+  'weakness': weaknessDx,
+  'ataxia': ataxiaDx,
 }

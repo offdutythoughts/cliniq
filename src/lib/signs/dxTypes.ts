@@ -68,6 +68,12 @@ export type DxApproach = {
   title: string
   /** Tab buttons in order. Omit for the standard 3 (history / exam / dx). */
   nav?: DxNavItem[]
+  /** Tab-button class logic. Default (false): the active tab is `dx-step`, the
+   *  rest `dx-step alt` (active-state encodes the alt class, like most signs).
+   *  true: classes alternate by position (odd index = `dx-step alt`) and the
+   *  active state is shown only by opacity — a few hand-authored navs (dyspnoea)
+   *  were built this way. */
+  navAltFixed?: boolean
   /** Tab content keyed by nav key ('history' | 'exam' | 'dx' | extras). */
   tabs: Record<string, DxTab>
 }

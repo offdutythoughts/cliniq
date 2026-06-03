@@ -15,10 +15,13 @@ const STD_NAV: DxNavItem[] = [
   { key: 'exam', label: '🩺 Exam' },
   { key: 'dx', label: '🔬 Diagnostics' },
 ]
-function renderDxTabs(sign: string, nav: DxNavItem[], active: string): string {
-  const cells = nav.map(t => {
+function renderDxTabs(sign: string, nav: DxNavItem[], active: string, altFixed = false): string {
+  const cells = nav.map((t, i) => {
     const on = t.key === active
-    return `<div class="dx-step${on ? '' : ' alt'}" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;${on ? '' : 'opacity:.5;'}" onclick="renderDxId('${sign}','${t.key}')">${t.label}</div>`
+    // Default: active tab loses the `alt` class. altFixed: classes alternate by
+    // position and only opacity reflects the active tab (dyspnoea-style navs).
+    const cls = altFixed ? (i % 2 === 1 ? 'dx-step alt' : 'dx-step') : `dx-step${on ? '' : ' alt'}`
+    return `<div class="${cls}" style="padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;${on ? '' : 'opacity:.5;'}" onclick="renderDxId('${sign}','${t.key}')">${t.label}</div>`
   }).join('')
   return `<div style="display:grid;grid-template-columns:repeat(${nav.length},1fr);gap:4px;margin-bottom:14px;">${cells}</div>`
 }
@@ -81,5 +84,5 @@ export function renderDxApproach(sign: string, approach: DxApproach, active: str
   })
   const wrap = `<div class="dx-wrap">${spine}</div>`
   const after = (tab.after ?? []).map(renderDxBlock).join('')
-  return renderDxTabs(sign, nav, active) + wrap + after
+  return renderDxTabs(sign, nav, active, approach.navAltFixed) + wrap + after
 }
