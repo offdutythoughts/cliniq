@@ -79,6 +79,8 @@ import {
 import { SIGNS } from './signs/registry'
 import { renderFlowPage } from './signs/renderFlow'
 import { FLOWS } from './signs/flows'
+import { renderDxApproach } from './signs/renderDx'
+import { DX } from './signs/dx'
 
 type SetContent = (html: string, dir: 'left' | 'right') => void
 type SetTopbar = (title: string, showBack: boolean) => void
@@ -2351,6 +2353,28 @@ function renderFlowId(flowId){
     return;
   }
   render('<div class="empty"><h3>Not found</h3><p>Flow “'+esc(flowId)+'” is not available.</p></div>');
+}
+
+// Diagnostic-approach dispatch. Migrated signs (in DX) render from data; signs
+// not yet migrated fall back to their legacy renderDx<Pascal><Tab> function.
+// `tab` is one of history|exam|dx. Uses replace() + the legacy note key so the
+// 3-tab nav swaps in place exactly like the hand-authored views did.
+function renderDxId(sign, tab){
+  tab = tab || 'history';
+  const Pascal = (sign||'').replace(/(^|[-_ ])(\w)/g, function(_,__,c){ return c.toUpperCase(); });
+  const Tab = tab.charAt(0).toUpperCase() + tab.slice(1); // History | Exam | Dx
+  const approach = DX[sign];
+  if(approach){
+    const t = approach[tab] || approach.history;
+    replace(()=>renderDxId(sign, tab), t.title, 'page:dx'+Pascal+Tab);
+    render(renderDxApproach(sign, approach, tab));
+    return;
+  }
+  // Legacy fallback: renderDx<Pascal><Tab>(), or the container for history.
+  const w = window as any;
+  const fn = w['renderDx'+Pascal+(tab==='history'?'':Tab)] || w['renderDx'+Pascal];
+  if(typeof fn === 'function'){ fn(); return; }
+  render('<div class="empty"><h3>Not found</h3><p>Diagnostic approach “'+esc(sign)+'” is not available.</p></div>');
 }
 
 // ── DYSPNOEA FLOWCHART ────────────────────────────────────────────────────────
@@ -5379,6 +5403,7 @@ export function mountGlobals() {
   w.toggleSystem = toggleSystem;
   w.renderLocalise = renderLocalise;
   w.renderFlowId = renderFlowId;
+  w.renderDxId = renderDxId;
   w.goLocEp = goLocEp;
   w.renderLesionDetail = renderLesionDetail;
   w.renderLesionHome = renderLesionHome;

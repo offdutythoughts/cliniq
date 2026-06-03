@@ -222,12 +222,40 @@ with `purple`/`indigo`.
 - [x] **Deleted the dead legacy `render*Flow*()` definitions + their `mountGlobals` registrations.** First re-pointed the 7 onclicks still inside `html` escape hatches (`renderBleedingFlow{Primary,Secondary,DIC,Vasc}` → `renderFlowId('bleeding-…')`, `renderInsp` → `renderFlowId('dyspnoea-insp')`, `renderOesophFlow`/`renderExtraOesophFlow` → direct `goLesionTab`), then deleted **62 dead flow functions (~2845 lines)** + their 62 `mountGlobals` registrations via a brace-matching extractor. cliniqApp.ts: 8350 → 5505 lines; mountGlobals: 173 → 111. The link-integrity test guarded it (caught one real-but-double-quoted diff id whose only single-quoted occurrence was inside a deleted function → fixed the test to accept both quote styles). `renderDx*` + helpers kept (Dx views not yet migrated). Verified: all 59 pages render + every link-handler type executes, 0 console errors.
 - [ ] Deferred: delegated event dispatch (replace `onclick` strings) — optional optimisation; current onclick strings are validated and work.
 
-### Dx views — now IN scope (D5)
-The ~70 Diagnostic-approach views (`renderDx*`, `.dx-*` vocabulary) are part of #1.
-They share `node`/`callout`/`alert`/`table` ideas but need a Dx-block extension
-(3-tab nav, `dxStep` → `dxCheck` sequences, comparison tables, red-flag boxes).
-Migrated **per sign, after that sign's flowchart**. The Dx-block model is the next
-design increment (proposed on the first eye sign's Dx views).
+### Phase 4 — Dx views (diagnostic-approach migration)  ◐ *Foundation + pilot done*
+The ~22 signs × 3 tabs (History / Exam / Diagnostics) diagnostic-approach views
+(`renderDx*`, `.dx-*` vocabulary). Content lives partly in extracted consts
+(`signs/*.ts`: 8 signs) and partly inline in `cliniqApp.ts` (the rest). The
+`.dx-*` content is *more* regular than the flowcharts — a `.dx-wrap` spine of
+`branch → step(±alt/tone) → check`, arrow-joined, plus `row`/`dx-test` cards,
+`alert`, the teal `diseaseGrid`, and trailing tinted callout boxes.
+
+**Model (mirrors the flowchart system):**
+- `dxTypes.ts` — `DxApproach { title, history, exam, dx, extra? }`; a `DxTab`
+  is `{ title, blocks: DxBlock[], after? }`. `DxBlock` = `branch | step | check |
+  row | alert | callout | diseaseGrid | note | html | disclaimer`.
+- `renderDx.ts` — `renderDxApproach(sign, approach, tab)`: 3-tab nav (auto, onclick
+  → `renderDxId`) + `.dx-wrap` (uniform `.dx-arrow` spine) + `after` boxes. Reuses
+  the flow renderer's exported `HUE`/`TITLE`/`esc`/`onclick`.
+- `dx/index.ts` — the `DX` registry (sign id → DxApproach).
+- `cliniqApp.ts` — `renderDxId(sign, tab='history')`: data render if `DX[sign]`,
+  else **legacy fallback** to `renderDx<Pascal><Tab>()` (coexistence, like
+  `flowId`/`LEGACY_FLOWS`). Uses `replace()` + the legacy note key
+  (`page:dx<Pascal><Tab>`) so the tab nav swaps in place identically. Flow
+  `{ to:'dx', id }` links now serialise to `renderDxId('id')`.
+
+- [x] **Foundation + pilot (epistaxis)** — built the model/renderer/registry/dispatch
+  and migrated epistaxis's 3 tabs to `dx/epistaxis.ts`. Browser A/B vs the legacy
+  consts: visible text **byte-identical** on all 3 tabs (3114 / 2661 / 5859 chars),
+  structure identical modulo invisible template-literal whitespace + the intended
+  nav-onclick change. Nav (data path), flow→dx link, and legacy fallback for
+  unmigrated signs all verified, 0 console errors. `tsc`/`test` (200)/`build`/`lint` green.
+- [ ] Migrate the remaining ~21 signs into `DX` (sub-agents, byte-identical per tab),
+  flipping each sign's callers; handle extra sub-views (diarrhoea sec/LB/SB,
+  vomiting Regurgitation, pupd Desmopressin).
+- [ ] Once all migrated: delete the 89 `renderDx*` wrappers + their `mountGlobals`
+  registrations + the Dx HTML consts/inline strings; `renderDxId` becomes sole path.
+  The `*FlowHtml` consts can also go once the content-parity test is repointed.
 
 ---
 

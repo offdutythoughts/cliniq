@@ -10,7 +10,7 @@ import type {
   DecisionStep, DecisionOutcome, TableCell, Link, LabeledLink, Tone,
 } from './flowTypes'
 
-const esc = (s: string): string =>
+export const esc = (s: string): string =>
   (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
 // Single quote escape for ids placed inside onclick="x('...')".
@@ -19,7 +19,7 @@ const q = (s: string): string => (s || '').replace(/'/g, "\\'")
 // ── Tone → colour. Defined ONCE here; flow data only names the tone. ──────────
 // `rgb` is the hue; alpha is applied per context (endpoints vs boxes vs column
 // headers use slightly different opacities, matching the legacy look).
-const HUE: Record<Tone, { rgb: string; color: string }> = {
+export const HUE: Record<Tone, { rgb: string; color: string }> = {
   danger:  { rgb: '220,38,38',   color: '#FCA5A5' },
   warning: { rgb: '245,158,11',  color: '#FCD34D' },
   info:    { rgb: '37,99,235',   color: '#93C5FD' },
@@ -33,21 +33,18 @@ const HUE: Record<Tone, { rgb: string; color: string }> = {
   neutral: { rgb: '255,255,255', color: 'var(--gray)' },
 }
 // Brighter title colour for box headers, where the legacy used a lighter shade.
-const TITLE: Partial<Record<Tone, string>> = {
+export const TITLE: Partial<Record<Tone, string>> = {
   danger: '#F87171', teal: '#5EEAD4', warning: 'var(--amber-text)',
 }
 
 // ── Link → onclick JS ─────────────────────────────────────────────────────────
-const pascal = (s: string): string =>
-  (s || '').replace(/(^|[-_ ])(\w)/g, (_, __, c) => c.toUpperCase())
-
-function onclick(link: Link): string {
+export function onclick(link: Link): string {
   switch (link.to) {
     case 'disease':  return `renderDiseasePage('${q(link.id)}')`
     case 'protocol': return `renderProtoDetail('${q(link.id)}')`
     case 'lesion':   return `goLesionTab('${q(link.loc)}','${q(link.name)}')`
     case 'flow':     return `renderFlowId('${q(link.id)}')`
-    case 'dx':       return `renderDx${pascal(link.id)}()`
+    case 'dx':       return `renderDxId('${q(link.id)}')`
   }
 }
 

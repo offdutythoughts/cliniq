@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
 import { FLOWS } from './flows'
+import { DX } from './dx'
 import { renderFlowPage } from './renderFlow'
 import { SIGNS } from './registry'
 import { epistaxisFlowHtml } from './epistaxis'
@@ -119,10 +120,11 @@ describe('link integrity (all migrated flows)', () => {
       }
     })
 
-    it(`${id}: dx links resolve to a renderDx<Id> function`, () => {
+    it(`${id}: dx links resolve (migrated DX entry or legacy renderDx<Id>)`, () => {
       for (const l of links) {
         if (l.to === 'dx') {
-          expect(new RegExp(`function\\s+renderDx${pascal(l.id)}\\s*\\(`).test(appSrc), `dx ${l.id}`).toBe(true)
+          const ok = !!DX[l.id] || new RegExp(`function\\s+renderDx${pascal(l.id)}\\s*\\(`).test(appSrc)
+          expect(ok, `dx ${l.id}`).toBe(true)
         }
       }
     })
@@ -167,6 +169,11 @@ describe('rendered link integrity (every onclick target resolves)', () => {
       const note = `${pageId}: ${fn}(${m[2]})`
       if (KNOWN_BROKEN.has(fn)) continue
       if (fn === 'renderFlowId') { if (!firstArg || !FLOWS[firstArg]) problems.push(`${note} → flow id not in FLOWS`); continue }
+      if (fn === 'renderDxId') {
+        const ok = !!firstArg && (!!DX[firstArg] || new RegExp(`function\\s+renderDx${pascal(firstArg)}\\s*\\(`).test(appSrc))
+        if (!ok) problems.push(`${note} → dx sign not in DX and no legacy renderDx fn`)
+        continue
+      }
       if (fn === 'renderDiseasePage' || fn === 'renderProtoDetail' || fn === 'renderLesionDetail' || fn === 'goLesionTab' || fn === 'renderDiffDetail') {
         if (!firstArg || !idInSource(firstArg)) problems.push(`${note} → id not found in app`)
         continue
