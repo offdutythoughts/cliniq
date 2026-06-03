@@ -2,7 +2,7 @@
 // The "Diagnostic approach" views (History / Exam / Diagnostics tabs reachable
 // from a sign's flowchart, or the Diagnostic tab) are described as data here and
 // drawn by the generic renderer in ./renderDx — the Dx counterpart to the
-// flowchart FlowPage / renderFlow system. See DATA_MIGRATION.md.
+// flowchart FlowPage / renderFlow system.
 //
 // Each sign is a DxApproach with three tabs (history / exam / dx); a tab is a
 // vertical spine of DxBlocks inside `.dx-wrap` (uniform `.dx-arrow` connectors),

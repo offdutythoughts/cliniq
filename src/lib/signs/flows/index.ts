@@ -2,7 +2,7 @@
 // All migrated flow pages, keyed by FlowPage.id. A SignEntry.flowId in
 // ../registry that matches a key here is rendered from data (via renderFlowId in
 // cliniqApp.ts); signs without a flowId still use their legacy render function.
-// Add a sign's pages here as they are migrated — see DATA_MIGRATION.md.
+// Add a sign's pages here as they are migrated.
 
 import type { FlowPage } from '../flowTypes'
 import { epistaxisFlow } from './epistaxis'

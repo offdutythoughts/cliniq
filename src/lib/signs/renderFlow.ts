@@ -342,7 +342,7 @@ function renderBlock(b: Block): string {
     case 'html':        return b.html
     default:
       // table / categoryGrid / speciesCompare — renderer support lands when a
-      // migrated sign first needs them (see DATA_MIGRATION.md phases).
+      // migrated sign first needs them.
       throw new Error(`renderFlow: block kind '${(b as Block).kind}' not yet implemented`)
   }
 }

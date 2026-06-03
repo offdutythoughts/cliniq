@@ -1,7 +1,6 @@
 // ── Flowchart data model ────────────────────────────────────────────────────
 // Refactor #1: clinical-sign flowcharts are described as data (a FlowPage of
-// Blocks) and drawn by the generic renderer in ./renderFlow. See
-// DATA_MIGRATION.md for the full plan. Types here are the COMPLETE model; the
+// Blocks) and drawn by the generic renderer in ./renderFlow. Types here are the COMPLETE model; the
 // renderer implements block kinds as they are first exercised by a migrated
 // sign (epistaxis exercises: node, callout, branch, endpoints, alert, dxRow,
 // diseaseGrid). table / categoryGrid / speciesCompare land in later phases.

@@ -1,7 +1,7 @@
 // ── Epistaxis — diagnostic approach (data) ──────────────────────────────────
 // Migration of epistaxisDx{History,Exam,Dx}Html (legacy HTML consts in
 // ../epistaxis.ts) to the typed DxApproach model. Rendered by renderDxApproach.
-// Pilot for the Dx-view migration — see DATA_MIGRATION.md.
+// Pilot for the Dx-view migration.
 
 import type { DxApproach } from '../dxTypes'
 

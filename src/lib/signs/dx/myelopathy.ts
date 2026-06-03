@@ -1,7 +1,7 @@
 // ── Myelopathy — diagnostic approach (data) ─────────────────────────────────
 // Migration of renderDxMyelopathy{History,Exam,Dx} (legacy inline render() HTML
 // in ../cliniqApp.ts) to the typed DxApproach model. Rendered by
-// renderDxApproach. See DATA_MIGRATION.md.
+// renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
 

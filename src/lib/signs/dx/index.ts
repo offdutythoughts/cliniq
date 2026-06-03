@@ -4,7 +4,7 @@
 // renderDx<Pascal> name stem). A sign present here is rendered from data via
 // renderDxId in cliniqApp.ts; signs not yet present fall back to their legacy
 // renderDx<Pascal><Tab> function. Add a sign's DxApproach here as it is
-// migrated — see DATA_MIGRATION.md.
+// migrated.
 
 import type { DxApproach } from '../dxTypes'
 import { epistaxisDx } from './epistaxis'

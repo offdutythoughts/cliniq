@@ -1,7 +1,6 @@
 // ── Ataxia — diagnostic approach (data) ─────────────────────────────────────
 // Migration of renderDxAtaxia{History,Exam,Dx}() (legacy inline render() HTML in
 // ../../cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
-// See DATA_MIGRATION.md.
 
 import type { DxApproach } from '../dxTypes'
 

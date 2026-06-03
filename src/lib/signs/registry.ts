@@ -16,7 +16,7 @@ export type SignEntry = {
   /** Card subtitle / one-line summary. */
   sub: string
   /** Id of this sign's entry FlowPage in FLOWS; rendered via renderFlowId when
-   *  the home card is tapped. Every sign is migrated. See DATA_MIGRATION.md. */
+   *  the home card is tapped. Every sign is migrated. */
   flowId: string
 }
 

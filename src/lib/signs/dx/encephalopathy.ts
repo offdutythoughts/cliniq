@@ -1,7 +1,7 @@
 // ── Encephalopathy — diagnostic approach (data) ─────────────────────────────
 // Migration of the legacy renderDxEncephalopathy{History,Exam,Dx} inline render
 // functions (in ../cliniqApp.ts) to the typed DxApproach model. Rendered by
-// renderDxApproach. See DATA_MIGRATION.md.
+// renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
 

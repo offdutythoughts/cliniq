@@ -1,7 +1,7 @@
 // ── Coughing — diagnostic approach (data) ───────────────────────────────────
 // Migration of the inline renderDxCoughing{History,Exam,Dx} HTML (in
 // ../../cliniqApp.ts) to the typed DxApproach model. Rendered by
-// renderDxApproach. See DATA_MIGRATION.md.
+// renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
 

@@ -1,7 +1,7 @@
 // ── Diarrhoea — diagnostic approach (data) ──────────────────────────────────
 // Migration of diarrhoea{History,Exam,Dx,Sec}Html (legacy HTML consts in
 // ../diarrhoea.ts) to the typed DxApproach model. Rendered by renderDxApproach.
-// Non-standard 4-tab nav (adds 'sec'). See DATA_MIGRATION.md.
+// Non-standard 4-tab nav (adds 'sec').
 
 import type { DxApproach } from '../dxTypes'
 

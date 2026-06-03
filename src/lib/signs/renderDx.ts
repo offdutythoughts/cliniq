@@ -2,7 +2,7 @@
 // Turns a DxApproach (data) into the same `.dx-*` HTML the app already uses, so
 // the output is visually equivalent to the legacy hand-authored Dx views. Pure:
 // returns an HTML string; serialises Links via the shared onclick() from
-// renderFlow. The Dx counterpart to renderFlowPage. See DATA_MIGRATION.md.
+// renderFlow. The Dx counterpart to renderFlowPage.
 
 import type { DxApproach, DxBlock, DxCard, DxNavItem, DxTab } from './dxTypes'
 import { HUE, TITLE, esc, onclick } from './renderFlow'

@@ -1,7 +1,6 @@
 // ── Epistaxis flowchart (data) ──────────────────────────────────────────────
 // Pilot migration of epistaxisFlowHtml (src/lib/signs/epistaxis.ts) to the
-// FlowPage model. Content must stay faithful to the legacy HTML — see the
-// parity gate in DATA_MIGRATION.md §2.8.
+// FlowPage model. Content must stay faithful to the legacy clinical source.
 
 import type { FlowPage } from '../flowTypes'
 

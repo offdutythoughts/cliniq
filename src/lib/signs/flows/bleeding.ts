@@ -2,7 +2,7 @@
 // Migration of bleedingFlowHtml (src/lib/signs/bleeding.ts) + the inline
 // sub-flows renderBleedingFlowPrimary / Secondary / DIC / Vasc (cliniqApp.ts)
 // to the FlowPage model. Visible text is transcribed byte-identically from the
-// legacy source — see the parity gate in DATA_MIGRATION.md.
+// legacy source.
 //
 // Entry id is 'bleeding' (epistaxis links to it). Sub-flow ids:
 // 'bleeding-primary' / '-secondary' / '-dic' / '-vasc'.

@@ -1,7 +1,7 @@
 // ── Regurgitation — diagnostic approach (data) ──────────────────────────────
 // Migration of regurgitation{History,Exam,Dx}Html (legacy HTML consts in
 // ../regurgitation.ts) to the typed DxApproach model. Rendered by
-// renderDxApproach. See DATA_MIGRATION.md.
+// renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
 
