@@ -215,11 +215,20 @@ won't clobber a running `next dev`) on port 3456. Regenerate intentionally with
 `npx playwright test --update-snapshots`. Verified: vitest 185✓, `tsc` clean, 22/22
 visual ✓ (empty diff both themes) after the cleanup.
 
-### Phase 1 — Tooling (zero visual change)
-- [ ] Install `tailwindcss @tailwindcss/postcss postcss` (pin `^4.2`/`^4.3`, not 4.1.18).
-- [ ] Add `postcss.config.mjs`; add the layered import (Preflight omitted) at the top of
+### Phase 1 — Tooling (zero visual change) — ✅ DONE
+- [x] Install `tailwindcss@4.3.0 @tailwindcss/postcss@4.3.0 postcss` (both TW pkgs pinned
+      to the same `^4.3`; avoided the `4.1.18` Turbopack build crash).
+- [x] Add `postcss.config.mjs`; add the layered import (Preflight omitted) at the top of
       `globals.css`; add the `@custom-variant` line.
-- [ ] Confirm `next dev`/`next build` pass and the visual diff is empty.
+- [x] Confirm `next build` passes and the visual diff is empty.
+
+**Phase 1 outcome:** Turbopack processes `postcss.config.mjs` natively (no webpack
+fallback). `globals.css` imports `tailwindcss/theme.css` (layer theme) +
+`tailwindcss/utilities.css` (layer utilities) but **not** `preflight.css`, so the existing
+reset is untouched. Verified: production build ✓ (compiled with the PostCSS pipeline),
+vitest 185 ✓, `tsc` clean, Playwright **22/22 empty diff** both themes. A pre-check found
+no collisions between the ~103 emitted class tokens and Tailwind utility names, so the
+auto-detected utilities are inert (no element gains a generated utility).
 
 ### Phase 2 — Tokens-first + dark-mode fix (the centralized style library)
 - [ ] Lift colors/spacing/radii/type into `@theme`; reconcile the CSS↔TS misalignments

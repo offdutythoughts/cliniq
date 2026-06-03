@@ -1,3 +1,15 @@
+/* ── Tailwind v4 (CSS-first) ──────────────────────────────────────────────────
+   Cascade order: legacy/components sit before utilities so a utility wins on
+   conflict when we want it, while the working semantic classes stay untouched.
+   Preflight is intentionally omitted — we keep the deliberate reset below
+   (*{margin:0;padding:0}, custom scrollbar, ::placeholder). */
+@layer theme, base, legacy, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+/* Attribute-driven dark mode stays the var() cascade; this only matters if a
+   `dark:` utility is ever needed (none yet). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 :root {
   --navy: #F1F5F9;
   --navy2: #FFFFFF;
