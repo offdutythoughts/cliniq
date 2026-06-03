@@ -1,9 +1,8 @@
 // ── Vomiting flowchart (data) ───────────────────────────────────────────────
-// Source: renderVomFlow (inline in cliniqApp.ts) — the legacy "Vomiting" entry
-// screen. It has no separate content sub-flows: the two regurgitation endpoints
-// call renderOesophFlow()/renderExtraOesophFlow(), which are one-line
-// goLesionTab redirects (LOC-OESOPH / LOC-OESOPH-EXT), not real screens; the
-// orphaned renderTrueVom (.fn layout, no caller) is unreachable from this entry.
+// Source: the legacy "Vomiting" entry screen. It has no separate content
+// sub-flows: the two regurgitation endpoints go straight to the lesion tabs via
+// goLesionTab('LOC-OESOPH' / 'LOC-OESOPH-EXT', …) — they were one-line redirects
+// in the legacy, now inlined as direct goLesionTab calls.
 //
 // The entry's middle section is a bespoke asymmetric 2-column branch (3fr 2fr)
 // with nested YES/NO sub-grids and the .flow-endpoint.gi-upper / .gi-primary /
@@ -79,10 +78,10 @@ const vomitingEntry: FlowPage = {
         <div class="flow-node sub-step" style="width:100%;font-size:10px;">Intrinsic vs extrinsic cause?</div>
         <div class="flow-arrow-v">↓</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
-          <div class="flow-endpoint oesoph" onclick="renderOesophFlow()" style="font-size:10px;">
+          <div class="flow-endpoint oesoph" onclick="goLesionTab('LOC-OESOPH','Oesophageal Disease')" style="font-size:10px;">
             Oesophagus
           </div>
-          <div class="flow-endpoint" style="background:rgba(217,119,6,0.12);border:1.5px solid rgba(217,119,6,0.4);color:var(--amber-text);font-size:10px;cursor:pointer;" onclick="renderExtraOesophFlow()">
+          <div class="flow-endpoint" style="background:rgba(217,119,6,0.12);border:1.5px solid rgba(217,119,6,0.4);color:var(--amber-text);font-size:10px;cursor:pointer;" onclick="goLesionTab('LOC-OESOPH-EXT','Extra-Oesophageal Disease')">
             Extra-Oesophageal
           </div>
         </div>

@@ -39,7 +39,8 @@ const bleedingEntry: FlowPage = {
     // 3fr:2fr top grid, nested 1fr:1fr grids with their own arrows, and small
     // colour-coded YES/NO mini-labels — none of which the typed `branch`/
     // `endpoints` blocks (equal columns + column headers) can reproduce
-    // faithfully. onclick handlers preserved verbatim → renderBleedingFlow*().
+    // faithfully. The branch endpoints route to the data sub-flows via
+    // renderFlowId('bleeding-primary' / '-secondary' / '-dic' / '-vasc').
     {
       kind: 'html',
       html: `<div class="flow-arrow-v">↓</div>
@@ -76,7 +77,7 @@ const bleedingEntry: FlowPage = {
             <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
               <div style="font-size:8px;font-weight:600;color:#FCA5A5;">YES</div>
               <div class="flow-arrow-v" style="font-size:10px;">↓</div>
-              <div class="flow-endpoint" style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderBleedingFlowDIC()">
+              <div class="flow-endpoint" style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderFlowId('bleeding-dic')">
                 ⚡ DIC<br>
                 <span style="opacity:.75;font-size:8px;">Treat urgently ›</span>
               </div>
@@ -84,7 +85,7 @@ const bleedingEntry: FlowPage = {
             <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
               <div style="font-size:8px;font-weight:600;color:var(--gray2);">NO</div>
               <div class="flow-arrow-v" style="font-size:10px;">↓</div>
-              <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:8.5px;cursor:pointer;text-align:center;" onclick="renderBleedingFlowSecondary()">
+              <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:#FCD34D;font-size:8.5px;cursor:pointer;text-align:center;" onclick="renderFlowId('bleeding-secondary')">
                 Concurrent<br>primary +<br>secondary ›
               </div>
             </div>
@@ -95,7 +96,7 @@ const bleedingEntry: FlowPage = {
         <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
           <div style="font-size:9px;font-weight:600;color:var(--gray2);">NO</div>
           <div class="flow-arrow-v" style="font-size:11px;">↓</div>
-          <div class="flow-endpoint" style="background:rgba(37,99,235,0.1);border:1.5px solid rgba(37,99,235,0.35);color:#93C5FD;font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderBleedingFlowSecondary()">
+          <div class="flow-endpoint" style="background:rgba(37,99,235,0.1);border:1.5px solid rgba(37,99,235,0.35);color:#93C5FD;font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderFlowId('bleeding-secondary')">
             🔗 Pure<br>SECONDARY<br>
             <span style="opacity:.75;font-size:8px;">PT · aPTT ›</span>
           </div>
@@ -118,7 +119,7 @@ const bleedingEntry: FlowPage = {
         <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
           <div style="font-size:9px;font-weight:600;color:#FCA5A5;">YES</div>
           <div class="flow-arrow-v" style="font-size:11px;">↓</div>
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderBleedingFlowPrimary()">
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderFlowId('bleeding-primary')">
             🧱 PRIMARY<br>
             <span style="opacity:.75;font-size:8px;">Platelet · vWF ›</span>
           </div>
@@ -127,7 +128,7 @@ const bleedingEntry: FlowPage = {
         <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
           <div style="font-size:9px;font-weight:600;color:var(--gray2);">NO</div>
           <div class="flow-arrow-v" style="font-size:11px;">↓</div>
-          <div class="flow-endpoint" style="background:rgba(139,92,246,0.1);border:1.5px solid rgba(139,92,246,0.35);color:#C4B5FD;font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderBleedingFlowVasc()">
+          <div class="flow-endpoint" style="background:rgba(139,92,246,0.1);border:1.5px solid rgba(139,92,246,0.35);color:#C4B5FD;font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderFlowId('bleeding-vasc')">
             🌐 VASCULO-<br>PATHY<br>
             <span style="opacity:.75;font-size:8px;">Vessel wall ›</span>
           </div>

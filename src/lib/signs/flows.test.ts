@@ -152,7 +152,9 @@ describe('rendered link integrity (every onclick target resolves)', () => {
   // existed in the codebase. Documented + allow-listed here, not introduced by us.
   const KNOWN_BROKEN = new Set(['renderExpFlow', 'renderRestFlow', 'renderMixedFlow'])
   const fnDefined = (fn: string) => new RegExp(`function\\s+${fn}\\s*\\(`).test(appSrc)
-  const idInSource = (id: string) => appSrc.includes(`'${id}'`)
+  // DB ids are defined quoted; disease/lesion use single quotes, differentials
+  // (DB.differentials) use double — accept either.
+  const idInSource = (id: string) => appSrc.includes(`'${id}'`) || appSrc.includes(`"${id}"`)
 
   const problems: string[] = []
   for (const [pageId, page] of Object.entries(FLOWS)) {

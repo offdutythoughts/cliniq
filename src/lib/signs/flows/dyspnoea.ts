@@ -10,15 +10,14 @@
 //    broken links, preserved verbatim via the html escape-hatch (see report).
 //  - the sub-branch columns have irregular nested 2-col Stertor/Stridor sub-
 //    grids with no matching typed block.
-// So that middle section is kept as one `html` block (byte-identical markup,
-// every onclick preserved). The Inspiratory tile keeps its legacy
-// `renderInsp()` handler — renderInsp stays on window and renders content
-// identical to the migrated 'dyspnoea-insp' page.
+// So that middle section is kept as one `html` block (byte-identical markup).
+// The Inspiratory tile routes to the data sub-flow via renderFlowId('dyspnoea-insp').
 //
-// The two sub-flows that EXIST are renderInsp (reachable via the entry's
-// Inspiratory tile) and renderRest (NOT reachable from the entry — the
-// Restrictive tile calls the non-existent renderRestFlow). Both are authored in
-// the legacy `.fn` system → 'fn' layout (fnHeader + cardGrid + .fn-arrow).
+// Sub-flows: 'dyspnoea-insp' (reachable via the entry's Inspiratory tile) and
+// 'dyspnoea-rest' (NOT reachable from the entry — the Restrictive tile's legacy
+// onclick called the non-existent renderRestFlow; preserved as a known-broken
+// link). Both are authored in the legacy `.fn` system → 'fn' layout
+// (fnHeader + cardGrid + .fn-arrow).
 
 import type { FlowPage } from '../flowTypes'
 
@@ -40,7 +39,7 @@ const dyspnoeaEntry: FlowPage = {
 
     <!-- 4 pattern columns -->
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;">
-      <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="renderInsp()">🔵 Inspiratory<br><span style="font-size:9px;opacity:.7">tap ↓</span></div>
+      <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="renderFlowId('dyspnoea-insp')">🔵 Inspiratory<br><span style="font-size:9px;opacity:.7">tap ↓</span></div>
       <div class="flow-node exp" style="cursor:pointer;font-size:11px;" onclick="renderExpFlow()">🟢 Expiratory<br><span style="font-size:9px;opacity:.7">± wheeze ± cough</span></div>
       <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="renderRestFlow()">🟡 Restrictive<br><span style="font-size:9px;opacity:.7">rapid, shallow · muffled sounds</span></div>
       <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="renderMixedFlow()">🔴 Mixed<br><span style="font-size:9px;opacity:.7">both phases</span></div>
