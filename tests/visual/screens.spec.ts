@@ -13,9 +13,10 @@ import { test, expect, type Page } from '@playwright/test'
 type Nav =
   | { fn: 'navTo'; args: [number] }
   | { fn: 'renderFlowId'; args: [string] }
-  | { fn: 'renderDxId'; args: [string] }
+  | { fn: 'renderDxId'; args: [string] | [string, string] }
   | { fn: 'renderDiseasePage'; args: [string] }
   | { fn: 'renderProtoDetail'; args: [string] }
+  | { fn: 'goLesionTab'; args: [string, string] }
 
 const SCREENS: { name: string; nav: Nav }[] = [
   { name: 'tab-0-clinical', nav: { fn: 'navTo', args: [0] } },
@@ -23,11 +24,24 @@ const SCREENS: { name: string; nav: Nav }[] = [
   { name: 'tab-2-disease', nav: { fn: 'navTo', args: [2] } },
   { name: 'tab-3-protocols', nav: { fn: 'navTo', args: [3] } },
   { name: 'tab-4-settings', nav: { fn: 'navTo', args: [4] } },
+  // Flowcharts — chosen for block-type variety (endpoints, branch, choices,
+  // categoryColumns, decisionTree, compareBox, table, cardSection).
   { name: 'flow-dyspnoea', nav: { fn: 'renderFlowId', args: ['dyspnoea'] } },
   { name: 'flow-jaundice', nav: { fn: 'renderFlowId', args: ['jaundice'] } },
-  { name: 'dx-coughing', nav: { fn: 'renderDxId', args: ['coughing'] } },
+  { name: 'flow-vomiting', nav: { fn: 'renderFlowId', args: ['vomiting'] } },
+  { name: 'flow-seizures', nav: { fn: 'renderFlowId', args: ['seizures'] } },
+  { name: 'flow-weakness', nav: { fn: 'renderFlowId', args: ['weakness'] } },
+  { name: 'flow-pupd', nav: { fn: 'renderFlowId', args: ['pupd'] } },
+  // Diagnostic-approach: all three tabs (different .dx-* block mixes).
+  { name: 'dx-coughing-history', nav: { fn: 'renderDxId', args: ['coughing', 'history'] } },
+  { name: 'dx-coughing-exam', nav: { fn: 'renderDxId', args: ['coughing', 'exam'] } },
+  { name: 'dx-coughing-dx', nav: { fn: 'renderDxId', args: ['coughing', 'dx'] } },
+  // Disease pages, protocols, and a lesion-location list (lesion-card + tag-*).
   { name: 'disease-hcm', nav: { fn: 'renderDiseasePage', args: ['DIS-HCM'] } },
+  { name: 'disease-aa', nav: { fn: 'renderDiseasePage', args: ['DIS-AA'] } },
   { name: 'protocol-cpr', nav: { fn: 'renderProtoDetail', args: ['PROT-CPR'] } },
+  { name: 'protocol-ataxia', nav: { fn: 'renderProtoDetail', args: ['PROT-ATAXIA'] } },
+  { name: 'lesion-hepatic', nav: { fn: 'goLesionTab', args: ['LOC-JD-HEP', 'Hepatic'] } },
 ]
 
 const THEMES = ['light', 'dark'] as const
