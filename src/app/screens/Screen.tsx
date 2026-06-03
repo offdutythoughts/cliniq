@@ -7,10 +7,14 @@
 
 import type { ReactNode } from 'react'
 import type { View, ViewKind } from '../nav/view'
+import { ProtocolDetailView } from './ProtocolDetailView'
+import { DiseasePageView } from './DiseasePageView'
 
 /** View kinds rendered by real React components (vs the legacy-html bridge). */
 export const MIGRATED = new Set<ViewKind>([
-  // grows each phase: 'protocol', 'disease', 'dx', 'flow', 'tab', ...
+  'protocol',
+  'disease',
+  // grows each phase: 'dx', 'flow', 'tab', ...
 ])
 
 export function isMigrated(view: View): boolean {
@@ -19,8 +23,9 @@ export function isMigrated(view: View): boolean {
 
 export function Screen({ view }: { view: View }): ReactNode {
   switch (view.kind) {
-    // Component cases land here as each kind is migrated, e.g.
-    //   case 'protocol': return <ProtocolDetailView id={view.id} />
+    case 'protocol': return <ProtocolDetailView id={view.id} />
+    case 'disease': return <DiseasePageView id={view.id} />
+    // more cases land here as each kind is migrated
     default:
       // Unreachable: page.tsx only mounts <Screen> for migrated kinds.
       throw new Error(`Screen: no component for migrated view kind '${view.kind}'`)

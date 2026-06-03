@@ -1,0 +1,62 @@
+'use client'
+// Shared pipe-/@-markup renderers — React ports of the disease-page helpers
+// linkify() and bul() (cliniqApp.ts), reused by the disease / lesion / diff
+// detail screens. `@DIS-…`/`@PROT-…` tokens become real React navigation.
+
+import { type ReactNode } from 'react'
+import { useNav } from '../nav/NavContext'
+import { styleStringToObject as s } from './style'
+
+const LINK = s('color:var(--teal-light);text-decoration:underline;cursor:pointer;')
+
+function LinkSpan({ id, label }: { id: string; label: string }) {
+  const nav = useNav()
+  const go = () => nav.navigate(id.startsWith('PROT-') ? { kind: 'protocol', id } : { kind: 'disease', id })
+  return <span style={LINK} role="button" onClick={go}>{label}</span>
+}
+
+/** @TOKEN(:label) → clickable span(s) interleaved with plain text. */
+export function Linkify({ text }: { text: string }) {
+  if (text.startsWith('@')) {
+    const ci = text.indexOf(':')
+    const did = ci > 0 ? text.slice(1, ci) : text.slice(1)
+    const lbl = ci > 0 ? text.slice(ci + 1) : did
+    return <LinkSpan id={did} label={lbl} />
+  }
+  const re = /@([A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+)(?::([A-Za-z0-9 /\-.]+))?/g
+  const parts: ReactNode[] = []
+  let last = 0
+  let k = 0
+  let m: RegExpExecArray | null
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) parts.push(text.slice(last, m.index))
+    const id = m[1]
+    const lbl = (m[2] || id).trim()
+    parts.push(<LinkSpan key={k++} id={id} label={lbl} />)
+    last = m.index + m[0].length
+  }
+  if (last === 0) return <>{text}</>
+  parts.push(text.slice(last))
+  return <>{parts}</>
+}
+
+const HEADER = s('font-size:10px;font-weight:700;color:var(--teal-light);margin-top:8px;margin-bottom:2px;')
+const SUB = s('display:flex;align-items:baseline;gap:4px;font-size:11px;color:var(--gray);line-height:1.5;padding-left:14px;margin-bottom:1px;')
+const DASH = s('flex-shrink:0;opacity:.5;')
+const BULLET = s('display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;margin-bottom:2px;')
+const DOT = s('color:var(--teal-light);flex-shrink:0;')
+
+/** Pipe-markup with @-links: `#`→header, `-`→sub-bullet, else bullet. Empty
+ *  segments render an empty bullet, matching the legacy bul() (no filtering). */
+export function Bul({ text }: { text: string }) {
+  return (
+    <>
+      {text.split('|').map((seg, i) => {
+        const t = seg.trim()
+        if (t.startsWith('#')) return <div key={i} style={HEADER}>▸ {t.slice(1).trim()}</div>
+        if (t.startsWith('-')) return <div key={i} style={SUB}><span style={DASH}>–</span><Linkify text={t.slice(1).trim()} /></div>
+        return <div key={i} style={BULLET}><span style={DOT}>•</span><Linkify text={t} /></div>
+      })}
+    </>
+  )
+}
