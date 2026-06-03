@@ -15,7 +15,16 @@
 
 # next.js
 /.next/
+/.next-pw/
 /out/
+
+# playwright (the tests/visual/__screenshots__ baselines ARE committed)
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+# isolated tsconfig Next mutates during the test build (keeps app tsconfig clean)
+/tsconfig.pw.json
 
 # production
 /build
