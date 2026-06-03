@@ -15,9 +15,12 @@ import { LesionLocView } from './LesionLocView'
 import { SubTypeDetailView } from './SubTypeDetailView'
 import { LesionDetailView } from './LesionDetailView'
 import { DiffDetailView } from './DiffDetailView'
+import { TabHome } from './TabHome'
 
-/** View kinds rendered by real React components (vs the legacy-html bridge). */
+/** View kinds rendered by real React components. Now covers every kind — the
+ *  legacy-html bridge in page.tsx is dead and removed in Phase 5. */
 export const MIGRATED = new Set<ViewKind>([
+  'tab',
   'protocol',
   'disease',
   'dx',
@@ -26,7 +29,6 @@ export const MIGRATED = new Set<ViewKind>([
   'subTypeDetail',
   'lesionDetail',
   'diff',
-  // grows each phase: 'tab'
 ])
 
 export function isMigrated(view: View): boolean {
@@ -35,6 +37,7 @@ export function isMigrated(view: View): boolean {
 
 export function Screen({ view }: { view: View }): ReactNode {
   switch (view.kind) {
+    case 'tab': return <TabHome tab={view.tab} />
     case 'protocol': return <ProtocolDetailView id={view.id} />
     case 'disease': return <DiseasePageView id={view.id} />
     case 'dx': return <DxApproachView sign={view.sign} active={view.tab} />
@@ -43,9 +46,10 @@ export function Screen({ view }: { view: View }): ReactNode {
     case 'subTypeDetail': return <SubTypeDetailView id={view.id} />
     case 'lesionDetail': return <LesionDetailView id={view.id} />
     case 'diff': return <DiffDetailView id={view.id} />
-    // more cases land here as each kind is migrated
-    default:
-      // Unreachable: page.tsx only mounts <Screen> for migrated kinds.
-      throw new Error(`Screen: no component for migrated view kind '${view.kind}'`)
+    default: {
+      // Exhaustive: every View kind has a component.
+      const _exhaustive: never = view
+      throw new Error(`Screen: unhandled view ${JSON.stringify(_exhaustive)}`)
+    }
   }
 }
