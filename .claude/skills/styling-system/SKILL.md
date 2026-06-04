@@ -1,14 +1,14 @@
 ---
 name: styling-system
-description: How ClinIQ is styled — Tailwind v4 (CSS-first, no JS config), the single CSS-variable token source in globals.css (semantic vars + tone/category/fg palettes + @theme utility tokens), attribute-driven light/dark mode, the cascade-layer order, and the two styling worlds (Tailwind utilities in the 8 React components vs semantic @layer-components classes in the renderer HTML strings). Use when changing any colour/spacing/font, adding or editing CSS in globals.css, styling a React component, touching the HUE/CAT_STYLE tone tables, fixing light/dark-mode appearance, or adding a new token. Always verify visual changes with the Playwright guardrail (see "Verifying").
+description: How ClinIQ is styled — Tailwind v4 (CSS-first, no JS config), the single CSS-variable token source in globals.css (semantic vars + tone/category/fg palettes + @theme utility tokens), attribute-driven light/dark mode, the cascade-layer order, and the two styling worlds (Tailwind utilities in the chrome components vs semantic @layer-components classes + inline style objects in the clinical screen components). Use when changing any colour/spacing/font, adding or editing CSS in globals.css, styling a React component, touching the HUE/TITLE/CAT_STYLE tone tables, fixing light/dark-mode appearance, or adding a new token. Always verify visual changes with the Playwright guardrail (see "Verifying").
 ---
 
 # ClinIQ styling system
 
 ClinIQ uses **Tailwind v4, CSS-first, with zero JS config**. There is no `tailwind.config.js`
 and no `content` array (v4 auto-detects sources). Everything style-related lives in
-**one file** — `src/app/globals.css` — plus utility classes in the 8 React components and the
-tone tables in `renderFlow.ts`. All colours flow from **one set of CSS variables**.
+**one file** — `src/app/globals.css` — plus classes/styles in the React components and the
+tone tables in `src/lib/signs/tone.ts`. All colours flow from **one set of CSS variables**.
 
 > History & rationale for every decision below is in **`STYLE_MIGRATION.md`** (the Phase 0–4 plan,
 > with outcome notes). Read it if you need the "why".
@@ -17,13 +17,14 @@ tone tables in `renderFlow.ts`. All colours flow from **one set of CSS variables
 
 | World | What | How it's styled |
 |---|---|---|
-| **8 React components** (`Topbar`, `BottomNav`, `NotesPanel`, `AccountMenu`, `layout`, `page`, `login`, `ConvexClientProvider`) | the app chrome | **Tailwind utilities** referencing tokens (`text-(--color-fg)`, `bg-(--color-surface)`, …). |
-| **Renderer HTML strings** (`renderFlow.ts`, `renderDx.ts`, the `signs/**` data, `cliniqApp.ts`) | all clinical content (cards, flowcharts, dx views, disease pages) | **semantic classes** in `@layer components` (`.card`, `.tag*`, `.fn*`, `.flow-*`, `.dx-*`, `.proto-step`, …) that read tokens via `var()`. |
+| **Chrome components** (`Topbar`, `BottomNav`, `NotesPanel`, `AccountMenu`, `layout`, `page`, `login`, `ConvexClientProvider`) | the app frame | **Tailwind utilities** referencing tokens (`text-(--color-fg)`, `bg-(--color-surface)`, …). |
+| **Clinical screen components** (`src/app/screens/*View.tsx` + `TabHome`, `RichText`) | all clinical content (cards, flowcharts, dx views, disease/lesion pages) | **semantic classes** in `@layer components` (`.card`, `.tag*`, `.fn*`, `.flow-*`, `.dx-*`, `.proto-step`, …) via `className`, **plus inline style objects** for the tone tints / bespoke styles (built with `styleStringToObject` from `screens/style.ts`). |
 
-**Critical rule:** **never put Tailwind utilities inside the renderer HTML strings.** Tailwind's
-scanner reads files as plain text and can't see interpolated fragments like `` `fn-ep-${anat}` `` or
-`` `dx-row c${cols}` `` — utility-fying them would silently break styles. Keep semantic classes for
-HTML-string content; utilities are only for the React components.
+**Critical rule:** **don't use Tailwind utilities in the clinical screen components.** They reproduce
+the data's semantic classes + inline styles **byte-for-pixel**, and the tone tints are computed
+`rgba(var(--tone-x), α)` style objects (e.g. `` `dx-row c${cols}` ``, `` `fn-ep-${anat}` ``). Utility-
+fying them would diverge from the tokens and break pixel parity. Tailwind utilities are only for the
+chrome components; the screen components use `className="…semantic…"` + `style={s('…')}`.
 
 ## Where everything lives
 
@@ -31,8 +32,8 @@ HTML-string content; utilities are only for the React components.
 |---|---|
 | `src/app/globals.css` | **The whole stylesheet.** Tailwind import + cascade layers + all tokens (`:root`) + dark overrides + `@theme` + `@layer base` reset + `@layer components` semantic classes + a few retained pseudo-elements. |
 | `postcss.config.mjs` | One line — the `@tailwindcss/postcss` plugin. Turbopack runs it natively. |
-| `src/lib/signs/renderFlow.ts` | `HUE` / `TITLE` / `CAT_STYLE` tone tables — **these reference the CSS vars** (`var(--tone-danger)` etc.), not literals. Renderers emit `rgba(var(--tone-x), α)`. |
-| `src/app/layout.tsx` | Pre-hydration `<script>` that sets `data-theme` from `localStorage` before paint (anti-flash); `viewport.themeColor` light/dark pair. |
+| `src/lib/signs/tone.ts` | `HUE` / `TITLE` tone tables — **reference the CSS vars** (`var(--tone-danger)` etc.), not literals. Consumed by `FlowPageView` + `DxApproachView`, which emit `rgba(var(--tone-x), α)` style objects. (The `CAT_STYLE` category-column table lives in `FlowPageView.tsx`; the lesion-grid `CC` colour map in `LesionLocView.tsx`.) |
+| `src/app/layout.tsx` + `public/theme-init.js` | The pre-hydration theme init is now an **external render-blocking** `<script src="/theme-init.js">` (sets `data-theme` from `localStorage` before paint — anti-flash; no inline `dangerouslySetInnerHTML`). `viewport.themeColor` light/dark pair is in `layout.tsx`. |
 | `tests/visual/screens.spec.ts` + `playwright.config.ts` | **The visual-regression guardrail** (see "Verifying"). |
 
 ## The token source (all in `globals.css :root`)
@@ -47,9 +48,9 @@ in the React utilities, and in the TS tone tables.
 2. **Tone palette** — `--tone-{danger,warning,info,teal,green,violet,purple,indigo,orange,slate,neutral}`
    are **rgb triplets** (e.g. `220,38,38`) fed into `rgba(var(--tone-x), α)`; `--tone-*-fg` are the
    readable foregrounds; `--tone-{danger,warning}-title` are the brighter header shades. Consumed by
-   `HUE`/`TITLE` in `renderFlow.ts`.
+   `HUE`/`TITLE` in `src/lib/signs/tone.ts`.
 3. **Category palette** — `--cat-{vascular,inflammatory,mass,immune,degenerative,metabolic,toxic,trauma,anomalous}`
-   (+`-fg`). Consumed by `CAT_STYLE` in `renderFlow.ts` (the disease-category columns).
+   (+`-fg`). Consumed by the `CAT_STYLE` map in `FlowPageView.tsx` (the `categoryColumns` disease-category columns).
 4. **Element-fg palette** — `--fg-{blue,teal,amber,red,indigo,violet,green,slate,orange}-deep`: a deep
    shade on light that **flips to a bright shade in the dark block**. Used by `.flow-node.*` /
    `.flow-endpoint.*`. The bright shades `--fg-{blue,teal,indigo,violet}-bright` are reused by the
@@ -67,8 +68,10 @@ in the React utilities, and in the TS tone tables.
   etc. all re-resolve automatically. There is **no** `[data-theme=dark]` rule per component any more.
 - **A `@custom-variant dark` exists** (so a `dark:` utility *could* be written) but we don't use it —
   prefer the var cascade.
-- **Set the theme:** initial value is applied pre-hydration by the inline script in `layout.tsx <head>`
-  (reads `localStorage['cliniq-theme']`); changes go through `setTheme()` in `cliniqApp.ts` (Settings tab).
+- **Set the theme:** initial value is applied pre-hydration by `public/theme-init.js` (a render-blocking
+  `<script src>` in `layout.tsx <head>` reading `localStorage['cliniq-theme']`); changes go through
+  `setTheme()` in `SettingsHome` (`src/app/screens/TabHome.tsx`, the Settings tab), which sets the
+  `data-theme` attribute + localStorage + local state.
 - **To make something theme-aware:** point it at a var that has a dark override (or add one). Light value
   in `:root`, dark value in the `html[data-theme="dark"]` block. Don't hardcode a hex in a rule/utility.
 
@@ -113,18 +116,22 @@ Reference tokens, don't hardcode colours. Two equivalent forms:
 - **`AccountMenu` + `/login` are Convex-gated** (render `null` without `NEXT_PUBLIC_CONVEX_URL`) — the
   visual guardrail can't see them, so changes there are unverified; touch with care.
 
-## Styling renderer content (semantic classes)
+## Styling clinical screen components (semantic classes + style objects)
 
-The clinical content is HTML strings. Use the existing semantic classes; they live in `@layer components`
-and already read tokens. To restyle them, edit the class in `globals.css`. To recolour a tone, **don't
-touch the class** — edit the `--tone-*` / `--cat-*` var (one place, updates CSS + the TS tables together).
+The clinical content is React components (`src/app/screens/*`). They apply the existing semantic classes
+via `className` (they live in `@layer components` and read tokens) and build bespoke/tone styles as
+**inline style objects** with `s('…')` (`styleStringToObject`) — e.g. `style={s(\`background:rgba(\${HUE[tone].rgb},0.1)\`)}`.
+To restyle a class, edit it in `globals.css`. To recolour a tone, **don't touch the component** — edit
+the `--tone-*` / `--cat-*` var (one place, updates the CSS classes + the `tone.ts` tables together).
+Authored-HTML leaf fields render through `<RichText>` (12-tag allowlist); `dangerouslySetInnerHTML` is
+lint-banned (`react/no-danger`).
 
 ## Common changes (recipes)
 
 - **Re-brand the accent / change a colour:** edit the var in `:root` (and its `html[data-theme="dark"]`
   override if it differs per theme). Done — propagates to CSS, utilities, and the TS tone tables.
 - **Add a new tone:** add `--tone-x` (rgb triplet) + `--tone-x-fg` in `:root`; add `x` to the `Tone`
-  type (`flowTypes.ts`) and the `HUE` map (`renderFlow.ts`, pointing at the vars).
+  type (`flowTypes.ts`) and the `HUE` map (`src/lib/signs/tone.ts`, pointing at the vars).
 - **Fix dark contrast on something:** add/adjust the relevant override in the `html[data-theme="dark"]`
   block — a base var, a `--tone-*-fg`, or a `--fg-*-deep`. Light stays untouched.
 - **Add a new semantic component class:** add it inside `@layer components`, colours via `var(--…)`.
@@ -135,22 +142,23 @@ touch the class** — edit the `--tone-*` / `--cat-*` var (one place, updates CS
 
 ## Verifying (do this for ANY visual change)
 
-The guardrail is **20 screens × light/dark = 40 baselines** in `tests/visual/__screenshots__/`.
+The guardrail is **29 screens × light/dark = 58 baselines** in `tests/visual/__screenshots__/`.
 
 ```bash
-npx playwright test                      # compare against baselines — must stay 40/40 green
+npx playwright test                      # compare against baselines — must stay 58/58 green
 npx playwright test --update-snapshots   # ONLY after reviewing an *intended* visual change
 ```
 
 - It builds the app with `NEXT_PUBLIC_CONVEX_URL=` (no auth) + `NEXT_DIST_DIR=.next-pw` (isolated build
-  dir, won't clobber a running `next dev`) on port **3456**, so it's reproducible and standalone.
-- **Any styling change that isn't meant to be visible must keep 40/40 green.** If a test fails,
+  dir, won't clobber a running `next dev`) on port **3456**, so it's reproducible and standalone. It
+  drives navigation via `window.__nav(view)`.
+- **Any styling change that isn't meant to be visible must keep 58/58 green.** If a test fails,
   open `test-results/**/<name>-diff.png` — the red region tells you exactly what moved (e.g. a
   right-edge strip = the off-screen NotesPanel leaking in, not a real regression).
 - A token refactor where the new value **equals** the old (e.g. literal → equal `var()`) is provably
-  inert and stays green even on screens the 20 don't cover.
-- Also run `npx tsc --noEmit` (the renderer/component TS) and `npm test` (vitest — renderer link/structure
-  tests, colour-agnostic). `cliniqApp.ts` is `@ts-nocheck`.
+  inert and stays green even on screens the 29 don't cover.
+- Also run `npx tsc --noEmit` (everything type-checks — nothing is `@ts-nocheck`) and `npm test`
+  (vitest — link/structure tests + the RichText allowlist guard, colour-agnostic).
 
 ## v4 gotchas
 
