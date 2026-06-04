@@ -7,7 +7,7 @@ import { Fragment, type ReactNode } from 'react'
 import { DB } from '../../data/db'
 import { styleStringToObject as s } from './style'
 import { SpTag } from './tags'
-import { Bul } from './markup'
+import { Bul, NavCard } from './markup'
 import { InjuryGradingTable } from './InjuryGradingTable'
 import { NotFound } from './NotFound'
 
@@ -24,7 +24,6 @@ const SIG_VALUE_LAST = s('font-size:12px;color:var(--gray);line-height:1.6;')
 const TX_LABEL = s('font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;')
 const LOC_WRAP = s('margin-top:10px;')
 const LOC_CARD = s('cursor:pointer;padding:10px 14px;')
-const FLEX1 = s('flex:1;')
 
 const str = (v: unknown): string => (typeof v === 'string' ? v : '')
 const pip = (v: unknown): boolean => typeof v === 'string' && v.includes('|')
@@ -90,24 +89,16 @@ export function DiseasePageView({ id }: { id: string }) {
         )}
         {locFunc && (
           <div style={LOC_WRAP}>
-            <div
-              className="card"
-              style={LOC_CARD}
-              role="button"
+            <NavCard
+              icon="🔬"
+              title="Localise lesion"
+              sub="Phenylephrine test — interactive decision tree"
               onClick={() => {
                 const fn = (window as unknown as Record<string, (() => void) | undefined>)[locFunc]
                 if (typeof fn === 'function') fn()
               }}
-            >
-              <div className="card-row">
-                <div className="card-icon">🔬</div>
-                <div style={FLEX1}>
-                  <div className="card-title">Localise lesion</div>
-                  <div className="card-sub">Phenylephrine test — interactive decision tree</div>
-                </div>
-                <div className="card-arrow">›</div>
-              </div>
-            </div>
+              style={LOC_CARD}
+            />
           </div>
         )}
       </Card>

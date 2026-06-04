@@ -4,6 +4,7 @@
 import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s } from './style'
+import { NavCard } from './markup'
 import { SpTag } from './tags'
 
 const SP_ROW = s('display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;')
@@ -31,9 +32,7 @@ export function DiffDetailView({ id }: { id: string }) {
       {dis && (
         <>
           <hr className="sep" />
-          <div className="card" role="button" onClick={() => nav.navigate({ kind: 'disease', id: dis.id })}>
-            <div className="card-row"><div><div className="card-title">📋 {dis.name}</div><div className="card-sub">Open full disease page</div></div><div className="card-arrow">›</div></div>
-          </div>
+          <NavCard title={`📋 ${dis.name}`} sub="Open full disease page" onClick={() => nav.navigate({ kind: 'disease', id: dis.id })} />
         </>
       )}
     </>

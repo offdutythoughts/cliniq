@@ -3,7 +3,7 @@
 // linkify() and bul() (cliniqApp.ts), reused by the disease / lesion / diff
 // detail screens. `@DIS-…`/`@PROT-…` tokens become real React navigation.
 
-import { type ReactNode } from 'react'
+import { type CSSProperties, type ReactNode } from 'react'
 import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s } from './style'
 
@@ -13,6 +13,28 @@ function LinkSpan({ id, label }: { id: string; label: string }) {
   const nav = useNav()
   const go = () => nav.navigate(id.startsWith('PROT-') ? { kind: 'protocol', id } : { kind: 'disease', id })
   return <span style={LINK} role="button" onClick={go}>{label}</span>
+}
+
+/** Tappable navigation card — icon (optional) + title + subtitle + arrow. */
+export function NavCard({ icon, title, sub, onClick, style }: {
+  icon?: string
+  title: ReactNode
+  sub: string
+  onClick: () => void
+  style?: CSSProperties
+}) {
+  return (
+    <div className="card" style={style} role="button" onClick={onClick}>
+      <div className="card-row">
+        {icon && <div className="card-icon">{icon}</div>}
+        <div style={{ flex: 1 }}>
+          <div className="card-title">{title}</div>
+          <div className="card-sub">{sub}</div>
+        </div>
+        <div className="card-arrow">›</div>
+      </div>
+    </div>
+  )
 }
 
 /** @TOKEN(:label) → clickable span(s) interleaved with plain text. */

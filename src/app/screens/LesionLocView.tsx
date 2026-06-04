@@ -8,6 +8,7 @@ import type { LesionRow } from '../../data/db'
 import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s } from './style'
+import { NavCard } from './markup'
 
 // Category → rgba colour prefix.
 const CC: Record<string, string> = {
@@ -138,11 +139,7 @@ export function LesionLocView({ loc, name }: { loc: string; name: string }) {
         </div>
       </div>
       {dxSign && (
-        <div style={s('margin-top:12px;')}>
-          <div className="card" role="button" onClick={() => nav.navigate({ kind: 'dx', sign: dxSign, tab: 'history' })}>
-            <div className="card-row"><div className="card-icon">🔬</div><div style={s('flex:1')}><div className="card-title">Diagnostic Approach</div><div className="card-sub">Stepwise clinical workup flowchart</div></div><div className="card-arrow">›</div></div>
-          </div>
-        </div>
+        <NavCard icon="🔬" title="Diagnostic Approach" sub="Stepwise clinical workup flowchart" onClick={() => nav.navigate({ kind: 'dx', sign: dxSign, tab: 'history' })} style={{ marginTop: 12 }} />
       )}
       <div className="disclaimer">Tap a subtype to see differentials and causes.</div>
     </>

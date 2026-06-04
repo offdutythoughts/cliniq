@@ -11,6 +11,7 @@ import { useNav, type Nav } from '../nav/NavContext'
 import { styleStringToObject as s } from './style'
 import { UrgTag, SpTag } from './tags'
 import { DiseasePageView } from './DiseasePageView'
+import { NavCard } from './markup'
 
 const TAG_ROW = s('display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;')
 const CARD = s('background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;')
@@ -104,9 +105,7 @@ export function SubTypeDetailView({ id }: { id: string }) {
       <div style={TAG_ROW}><UrgTag urg={l.urg} /><SpTag sp={l.sp} /><span className="tag tag-sp-all">{l.cat}</span></div>
 
       {proto && (
-        <div className="card" style={s('margin-bottom:14px;')} role="button" onClick={() => nav.navigate({ kind: 'protocol', id: proto })}>
-          <div className="card-row"><div><div className="card-title">⚡ Protocol: {proto}</div><div className="card-sub">Tap to open step-by-step protocol</div></div><div className="card-arrow">›</div></div>
-        </div>
+        <NavCard title={`⚡ Protocol: ${proto}`} sub="Tap to open step-by-step protocol" onClick={() => nav.navigate({ kind: 'protocol', id: proto })} style={{ marginBottom: 14 }} />
       )}
 
       <div style={CARD}>
@@ -149,9 +148,7 @@ export function SubTypeDetailView({ id }: { id: string }) {
       )}
 
       {dis && (
-        <div className="card" style={s('margin-bottom:14px;')} role="button" onClick={() => nav.navigate({ kind: 'disease', id: dis })}>
-          <div className="card-row"><div><div className="card-title">📋 Disease Page</div><div className="card-sub">Tap to view full disease profile</div></div><div className="card-arrow">›</div></div>
-        </div>
+        <NavCard title="📋 Disease Page" sub="Tap to view full disease profile" onClick={() => nav.navigate({ kind: 'disease', id: dis })} style={{ marginBottom: 14 }} />
       )}
     </>
   )

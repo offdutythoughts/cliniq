@@ -5,6 +5,7 @@
 import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s } from './style'
+import { NavCard } from './markup'
 import { UrgTag, SpTag } from './tags'
 
 const TAG_ROW = s('display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;')
@@ -30,9 +31,7 @@ export function LesionDetailView({ id }: { id: string }) {
       {proto && (
         <>
           <hr className="sep" />
-          <div className="card" role="button" onClick={() => nav.navigate({ kind: 'protocol', id: proto })}>
-            <div className="card-row"><div><div className="card-title">⚡ Protocol: {proto}</div><div className="card-sub">Tap to open</div></div><div className="card-arrow">›</div></div>
-          </div>
+          <NavCard title={`⚡ Protocol: ${proto}`} sub="Tap to open" onClick={() => nav.navigate({ kind: 'protocol', id: proto })} />
         </>
       )}
       <hr className="sep" />
