@@ -3,6 +3,7 @@
 import { useAuthActions } from '@convex-dev/auth/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { track } from '../../lib/analytics'
 
 export default function LoginPage() {
   // Without a Convex deployment, the middleware won't redirect here — just return null
@@ -24,13 +25,17 @@ function LoginForm() {
           e.preventDefault()
           setError(null)
           setSubmitting(true)
+          track('login_started', { flow })
           const form = new FormData(e.currentTarget)
           form.set('flow', flow)
           try {
             await signIn('password', form)
+            track('login_succeeded', { flow })
             router.push('/')
           } catch (err) {
-            setError(friendlyAuthError(err, flow))
+            const errorMsg = friendlyAuthError(err, flow)
+            track('login_failed', { flow, error: errorMsg })
+            setError(errorMsg)
             setSubmitting(false)
           }
         }}
@@ -96,7 +101,9 @@ function LoginForm() {
         <button
           type="button"
           onClick={() => {
-            setFlow(flow === 'signIn' ? 'signUp' : 'signIn')
+            const next = flow === 'signIn' ? 'signUp' : 'signIn'
+            track('login_flow_toggled', { from: flow, to: next })
+            setFlow(next)
             setError(null)
           }}
           style={{

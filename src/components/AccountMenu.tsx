@@ -5,6 +5,7 @@ import { Authenticated, Unauthenticated, useQuery } from 'convex/react'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import { api } from '../../convex/_generated/api'
+import { track } from '../lib/analytics'
 
 const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
 
@@ -64,6 +65,7 @@ function SignedInMenu() {
             role="menuitem"
             onClick={async () => {
               setOpen(false)
+              track('logged_out')
               await signOut()
             }}
             style={menuItemStyle}

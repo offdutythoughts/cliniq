@@ -2,6 +2,7 @@
 
 import { Authenticated } from 'convex/react'
 import AccountMenu from './AccountMenu'
+import { track } from '../lib/analytics'
 
 const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
 
@@ -23,10 +24,10 @@ export default function Topbar({ title, showBack, onBack, onToggleNotes }: Props
     </button>
   )
   return (
-    <div className="flex items-center pt-[14px] px-[18px] pb-[10px] bg-(--color-surface) border-b border-(--color-line) shrink-0 gap-2.5">
+    <div className="flex items-center pt-[calc(14px+env(safe-area-inset-top))] px-[18px] pb-[10px] bg-(--color-surface) border-b border-(--color-line) shrink-0 gap-2.5">
       <div
         className={`${showBack ? 'flex' : 'hidden'} items-center justify-center w-8 h-8 rounded-lg bg-(--color-card) border border-(--color-line) cursor-pointer text-[16px] text-(--color-muted) transition-all duration-150 shrink-0 hover:bg-[var(--card2)] hover:text-(--color-fg)`}
-        onClick={onBack}
+        onClick={() => { track('back_button_clicked'); onBack() }}
       >
         ←
       </div>

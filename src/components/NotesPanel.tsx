@@ -1,5 +1,6 @@
 'use client'
 import type { RefObject } from 'react'
+import { track } from '../lib/analytics'
 
 interface Props {
   isOpen: boolean
@@ -104,8 +105,8 @@ export default function NotesPanel({
         <div className="py-2 px-3 border-t border-(--color-line) flex justify-between items-center shrink-0">
           <span className="text-[9px] text-[var(--gray2)]">{status}</span>
           <div className="flex gap-1.5">
-            <button className={footBtn} onClick={onExport} title="Copy notes as text">📋 Copy</button>
-            <button className={footBtn} onClick={onClear} title="Clear all notes">🗑️ Clear</button>
+            <button className={footBtn} onClick={() => { track('notes_exported'); onExport() }} title="Copy notes as text">📋 Copy</button>
+            <button className={footBtn} onClick={() => { track('notes_cleared'); onClear() }} title="Clear all notes">🗑️ Clear</button>
           </div>
         </div>
       </div>

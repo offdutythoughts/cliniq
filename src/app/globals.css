@@ -114,8 +114,8 @@ html[data-theme="dark"]{
    (An unlayered `*{padding:0}` would otherwise beat a layered `.card{padding}`.) */
 @layer base {
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-  html,body{height:100%;overflow:hidden;background:var(--navy);}
-  body{font-family:var(--font);color:var(--white);display:flex;flex-direction:column;color-scheme:light;}
+  html{height:100%;overflow:hidden;background:var(--navy);}
+  body{height:100dvh;overflow:hidden;background:var(--navy);font-family:var(--font);color:var(--white);display:flex;flex-direction:column;color-scheme:light;}
 }
 
 /* Semantic component classes — in @layer components so Phase 4 utilities (the
@@ -304,12 +304,12 @@ html[data-theme="dark"]{
 .diff-arrow{color:var(--gray2);font-size:14px;margin-top:2px;}
 
 /* ── VISUAL FLOWCHART ── */
-.flow-wrap{display:flex;flex-direction:column;align-items:center;gap:0;padding-bottom:20px;}
+.flow-wrap{display:flex;flex-direction:column;align-items:center;gap:0;padding-bottom:20px;width:100%;}
 .flow-arrow-v{margin:0 auto;width:2px;height:16px;background:var(--gray2);position:relative;color:transparent;font-size:0;}
 .flow-arrow-v::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--gray2);}
 .flow-node{border-radius:10px;padding:9px 14px;font-size:12px;font-weight:500;text-align:center;border:1px solid;line-height:1.4;white-space:normal;}
-.flow-node.entry{background:rgba(var(--tone-info),0.12);border-color:rgba(var(--tone-info),0.35);color:var(--fg-blue-deep);font-size:13px;font-weight:600;min-width:200px;}
-.flow-node.step{background:var(--card);border-color:var(--border2);color:var(--white);min-width:220px;}
+.flow-node.entry{background:rgba(var(--tone-info),0.12);border-color:rgba(var(--tone-info),0.35);color:var(--fg-blue-deep);font-size:13px;font-weight:600;width:100%;}
+.flow-node.step{background:var(--card);border-color:var(--border2);color:var(--white);width:100%;}
 .flow-node.insp{background:rgba(var(--tone-info),0.1);border-color:rgba(var(--tone-info),0.3);color:var(--fg-blue-deep);}
 .flow-node.exp{background:rgba(var(--tone-teal),0.1);border-color:rgba(var(--tone-teal),0.3);color:var(--fg-teal-deep);}
 .flow-node.rest{background:rgba(var(--amber-rgb),0.1);border-color:rgba(var(--amber-rgb),0.3);color:var(--fg-amber-deep);}

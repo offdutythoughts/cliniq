@@ -8,6 +8,7 @@ import { useNotesLocal } from '../hooks/useNotesLocal'
 import { NavProvider, useNav } from './nav/NavContext'
 import { screenMeta, viewKey, type View } from './nav/view'
 import { Screen } from './screens/Screen'
+import { track } from '../lib/analytics'
 import type { Tab } from '../types'
 
 // Use Convex-backed notes when a deployment URL is configured, otherwise localStorage
@@ -55,7 +56,12 @@ function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
 
   const slideClass = nav.slideDir === 'left' ? 'slide-in-left' : 'slide-in-right'
   const handleNavTo = useCallback((tab: Tab) => nav.navTo(tab), [nav])
-  const handleToggleNotes = useCallback(() => setNotesOpen((v) => !v), [])
+  const handleToggleNotes = useCallback(() => {
+    setNotesOpen((v) => {
+      track(v ? 'notes_closed' : 'notes_opened')
+      return !v
+    })
+  }, [])
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>

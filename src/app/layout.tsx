@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { DM_Sans, DM_Mono } from 'next/font/google'
 import { ConvexClientProvider } from './ConvexClientProvider'
+import { PostHogIdentify } from './PostHogProvider'
 import './globals.css'
 
 const dmSans = DM_Sans({
@@ -25,6 +26,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: 'cover',
   // Mobile browser chrome follows the OS scheme (the in-app theme is attribute-
   // driven, but this is the closest the static viewport meta can get).
   themeColor: [
@@ -61,7 +63,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <ConvexAuthNextjsServerProvider>
-      {htmlBody(<ConvexClientProvider>{children}</ConvexClientProvider>)}
+      {htmlBody(<ConvexClientProvider><PostHogIdentify />{children}</ConvexClientProvider>)}
     </ConvexAuthNextjsServerProvider>
   )
 }
