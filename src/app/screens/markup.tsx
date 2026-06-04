@@ -7,6 +7,17 @@ import { type CSSProperties, type ReactNode } from 'react'
 import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s } from './style'
 
+/** Coerce an unknown DB field (may be `undefined` via index signature) to string. */
+export const str = (v: unknown): string => (typeof v === 'string' ? v : '')
+
+const CARD_BOX = s('background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;')
+const CARD_TITLE_STYLE = s('font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;')
+
+/** Primary content card — teal uppercase title + arbitrary children. */
+export function Card({ title, children }: { title: string; children: ReactNode }) {
+  return <div style={CARD_BOX}><div style={CARD_TITLE_STYLE}>{title}</div>{children}</div>
+}
+
 const LINK = s('color:var(--teal-light);text-decoration:underline;cursor:pointer;')
 
 function LinkSpan({ id, label }: { id: string; label: string }) {

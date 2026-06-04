@@ -3,19 +3,16 @@
 // stack, same inline styles, same conditional sections. Pipe fields render via
 // the shared <Bul> (with @-link navigation); plain fields via <Txt>.
 
-import { Fragment, type ReactNode } from 'react'
 import { DB } from '../../data/db'
 import { styleStringToObject as s } from './style'
 import { SpTag } from './tags'
-import { Bul, NavCard } from './markup'
+import { Bul, NavCard, Card, str } from './markup'
 import { InjuryGradingTable } from './InjuryGradingTable'
 import { NotFound } from './NotFound'
 
 const TITLE = s('font-size:18px;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.3;')
 const SP_ROW = s('display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;')
 const TOP_ALERT = s('background:rgba(220,38,38,0.18);border:1.5px solid rgba(220,38,38,0.5);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;font-weight:700;color:#FCA5A5;letter-spacing:.01em;')
-const C_BOX = s('background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;')
-const C_TITLE = s('font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;')
 const TXT = s('font-size:12px;color:var(--gray);line-height:1.6;')
 const SUB_LABEL = s('font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-top:10px;margin-bottom:4px;padding-top:8px;border-top:1px solid var(--border);')
 const SIG_LABEL = s('font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;')
@@ -25,12 +22,7 @@ const TX_LABEL = s('font-size:10px;color:var(--gray2);text-transform:uppercase;l
 const LOC_WRAP = s('margin-top:10px;')
 const LOC_CARD = s('cursor:pointer;padding:10px 14px;')
 
-const str = (v: unknown): string => (typeof v === 'string' ? v : '')
 const pip = (v: unknown): boolean => typeof v === 'string' && v.includes('|')
-
-function Card({ title, children }: { title: string; children: ReactNode }) {
-  return <div style={C_BOX}><div style={C_TITLE}>{title}</div>{children}</div>
-}
 function Txt({ text }: { text: string }) {
   return <div style={TXT}>{text}</div>
 }

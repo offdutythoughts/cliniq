@@ -4,11 +4,10 @@
 import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s } from './style'
-import { NavCard } from './markup'
+import { NavCard, str } from './markup'
 import { SpTag } from './tags'
 
 const SP_ROW = s('display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;')
-const str = (v: unknown): string => (typeof v === 'string' ? v : '')
 
 export function DiffDetailView({ id }: { id: string }) {
   const nav = useNav()

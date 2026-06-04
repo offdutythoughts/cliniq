@@ -11,11 +11,9 @@ import { useNav, type Nav } from '../nav/NavContext'
 import { styleStringToObject as s } from './style'
 import { UrgTag, SpTag } from './tags'
 import { DiseasePageView } from './DiseasePageView'
-import { NavCard } from './markup'
+import { NavCard, Card, str } from './markup'
 
 const TAG_ROW = s('display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;')
-const CARD = s('background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:10px;')
-const CARD_TITLE = s('font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;')
 const ETI_NAME = s('font-size:12px;color:var(--white);line-height:1.6;')
 const ETI_BOX = s('margin-top:10px;padding-top:10px;border-top:1px solid var(--border);')
 const VAL_GRAY = s('font-size:12px;color:var(--gray);line-height:1.6;')
@@ -28,11 +26,6 @@ const BULLET = s('display:flex;align-items:baseline;gap:6px;font-size:11px;color
 const DOT = s('color:var(--teal-light);flex-shrink:0;')
 const LINK = s('color:var(--teal-light);text-decoration:underline;cursor:pointer;')
 
-const str = (v: unknown): string => (typeof v === 'string' ? v : '')
-
-function Card({ title, children }: { title: string; children: ReactNode }) {
-  return <div style={CARD}><div style={CARD_TITLE}>{title}</div>{children}</div>
-}
 
 /** Etiology bullet inner: a whole `@DIS-…:label` segment → disease link, else text. */
 function etiInner(inner: string, nav: Nav): ReactNode {
@@ -108,8 +101,7 @@ export function SubTypeDetailView({ id }: { id: string }) {
         <NavCard title={`⚡ Protocol: ${proto}`} sub="Tap to open step-by-step protocol" onClick={() => nav.navigate({ kind: 'protocol', id: proto })} style={{ marginBottom: 14 }} />
       )}
 
-      <div style={CARD}>
-        <div style={CARD_TITLE}>Etiology</div>
+      <Card title="Etiology">
         <div style={ETI_NAME}>{l.sub}</div>
         {(etiology || diffs.length > 0) && (
           <div style={ETI_BOX}>
@@ -118,12 +110,11 @@ export function SubTypeDetailView({ id }: { id: string }) {
               : diffs.map(d => <div key={d.id} style={BULLET}><span style={DOT}>•</span>{d.name}</div>)}
           </div>
         )}
-      </div>
+      </Card>
 
-      <div style={CARD}>
-        <div style={CARD_TITLE}>Clinical Signs</div>
+      <Card title="Clinical Signs">
         <div style={VAL_GRAY}>{l.signs}</div>
-      </div>
+      </Card>
 
       {patho && (
         <Card title="Pathophysiology">
