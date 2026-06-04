@@ -78,15 +78,18 @@ const SUB = s('display:flex;align-items:baseline;gap:4px;font-size:11px;color:va
 const DASH = s('flex-shrink:0;opacity:.5;')
 const BULLET = s('display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;margin-bottom:2px;')
 const DOT = s('color:var(--teal-light);flex-shrink:0;')
+const WARN = s('font-size:11px;font-weight:700;color:#f87171;margin:4px 0 2px;background:rgba(239,68,68,0.12);padding:3px 7px;border-radius:4px;')
 
-/** Pipe-markup with @-links: `#`→header, `-`→sub-bullet, else bullet. Empty
+/** Pipe-markup with @-links: `#`→header, `-`→sub-bullet, else bullet. Pass
+ *  `warn` to also handle `!`→red warning box (used by protocol steps). Empty
  *  segments render an empty bullet, matching the legacy bul() (no filtering). */
-export function Bul({ text }: { text: string }) {
+export function Bul({ text, warn }: { text: string; warn?: boolean }) {
   return (
     <>
       {text.split('|').map((seg, i) => {
         const t = seg.trim()
         if (t.startsWith('#')) return <div key={i} style={HEADER}>▸ {t.slice(1).trim()}</div>
+        if (warn && t.startsWith('!')) return <div key={i} style={WARN}>⚠️ {t.slice(1).trim()}</div>
         if (t.startsWith('-')) return <div key={i} style={SUB}><span style={DASH}>–</span><Linkify text={t.slice(1).trim()} /></div>
         return <div key={i} style={BULLET}><span style={DOT}>•</span><Linkify text={t} /></div>
       })}
