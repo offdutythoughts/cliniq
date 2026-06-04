@@ -55,3 +55,4 @@ next-env.d.ts
 
 # Playwright MCP scratch artifacts (snapshots, console logs)
 .playwright-mcp/
+references/*.pdf
