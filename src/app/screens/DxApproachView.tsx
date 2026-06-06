@@ -66,10 +66,11 @@ function DxStep({ b, onNav }: { b: Extract<DxBlock, { kind: 'step' }>; onNav: Na
 
 function DxRow({ b, onNav }: { b: Extract<DxBlock, { kind: 'row' }>; onNav: Nav }) {
   const cols = b.cols ?? b.items.length
+  const cls = b.itemKind === 'check' ? 'dx-check' : 'dx-test'
   return (
     <div className={`dx-row c${cols}`}>
       {b.items.map((c, i) => (
-        <div key={i} className="dx-test" style={c.style ? s(c.style) : undefined}><Raw html={c.html} onNav={onNav} /></div>
+        <div key={i} className={cls} style={c.style ? s(c.style) : undefined}><Raw html={c.html} onNav={onNav} /></div>
       ))}
     </div>
   )
@@ -108,6 +109,17 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
     case 'callout': return <DxCallout b={b} onNav={onNav} />
     case 'diseaseGrid': return <DxDiseaseGrid b={b} onNav={onNav} />
     case 'note': return <div className="dx-note" style={b.style ? s(b.style) : undefined}><Raw html={b.html} onNav={onNav} /></div>
+    case 'lesionLink': {
+      const bg = b.tone === 'secondary'
+        ? 'background:rgba(13,148,136,0.2);border-color:rgba(13,148,136,0.5);'
+        : ''
+      return (
+        <div className="dx-dx" role="button" style={bg ? s(bg) : undefined}
+          onClick={() => onNav({ kind: 'lesionLoc', loc: b.loc, name: b.name })}>
+          {b.name} →
+        </div>
+      )
+    }
     case 'html': return <Raw html={b.html} onNav={onNav} />
     case 'disclaimer': return <div className="disclaimer">For qualified veterinary professionals only.</div>
   }

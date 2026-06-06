@@ -30,8 +30,9 @@ export type DxBlock = DxArrowCtl & (
   /** `.dx-check` — an explanation box (html body). `style` appends a raw inline
    *  style to the box (a few checks carry e.g. `font-size:10.5px;`). */
   | { kind: 'check'; html: string; style?: string }
-  /** `.dx-row c{cols}` — a row of `.dx-test` cards. */
-  | { kind: 'row'; cols?: number; items: DxCard[] }
+  /** `.dx-row c{cols}` — a row of cards. `itemKind` selects the card class:
+   *  'test' (default, teal `.dx-test`) or 'check' (dark `.dx-check`). */
+  | { kind: 'row'; cols?: number; items: DxCard[]; itemKind?: 'test' | 'check' }
   /** `.dx-alert` — a tinted pearls / warning box (html body). */
   | { kind: 'alert'; html: string; gap?: number }
   /** A tinted titled callout box (e.g. "⚠️ RED FLAGS IN THE HISTORY"). */
@@ -40,6 +41,9 @@ export type DxBlock = DxArrowCtl & (
   | { kind: 'diseaseGrid'; title: string; links: LabeledLink[] }
   /** `.dx-note` — a small inline note box (html body + optional raw style). */
   | { kind: 'note'; html: string; style?: string }
+  /** A tappable navigation link to a lesion-location view. Renders as a
+   *  `.dx-dx` button; `tone` selects a tint variant ('primary' default, 'secondary'). */
+  | { kind: 'lesionLink'; loc: string; name: string; tone?: 'primary' | 'secondary' }
   /** Escape hatch for genuinely bespoke markup (e.g. the seizures tier tree). */
   | { kind: 'html'; html: string }
   /** The "For qualified veterinary professionals only." footer. */

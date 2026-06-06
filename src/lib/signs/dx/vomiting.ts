@@ -101,12 +101,7 @@ export const vomitingDx: DxApproach = {
     • Intact female + systemic illness → pyometra (even without PU/PD)`,
       },
     ],
-    after: [
-      {
-        kind: 'html',
-        html: `<div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>`,
-      },
-    ],
+    after: [{ kind: 'disclaimer' }],
   },
 
   exam: {
@@ -174,31 +169,17 @@ export const vomitingDx: DxApproach = {
     • Haematochezia → large bowel involvement (colitis, intussusception)`,
       },
     ],
-    after: [
-      {
-        kind: 'html',
-        html: `<div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>`,
-      },
-    ],
+    after: [{ kind: 'disclaimer' }],
   },
 
   dx: {
     title: 'Dx: Vomiting',
     blocks: [
       { kind: 'step', text: '🔬 FIRST-LINE DIAGNOSTICS' },
-      {
-        kind: 'html',
-        html: `<div class="dx-row c2">
-    <div class="dx-check" style="margin:0;">
-      <strong>🧪 CBC · Serum Chemistry · UA</strong><br>
-      <span style="font-size:10.5px;">All vomiting cases — first-line</span>
-    </div>
-    <div class="dx-check" style="margin:0;">
-      <strong>📊 Abdominal Imaging</strong><br>
-      <span style="font-size:10.5px;">Radiography + Ultrasound</span>
-    </div>
-  </div>`,
-      },
+      { kind: 'row', cols: 2, itemKind: 'check', items: [
+        { html: '<strong>🧪 CBC · Serum Chemistry · UA</strong><br><span style="font-size:10.5px;">All vomiting cases — first-line</span>' },
+        { html: '<strong>📊 Abdominal Imaging</strong><br><span style="font-size:10.5px;">Radiography + Ultrasound</span>' },
+      ] },
       { kind: 'step', alt: true, text: '🧪 CBC · SERUM CHEMISTRY · URINALYSIS' },
       {
         kind: 'check',
@@ -265,20 +246,8 @@ export const vomitingDx: DxApproach = {
     • <strong>Dietary trial (4–8 weeks)</strong> — exclusive novel protein or hydrolysed diet; no treats, chews, flavoured medications<br>
     • <strong>Endoscopy + biopsy</strong> — mucosal assessment, chronic gastritis, IBD, early neoplasia; full-thickness preferred for deeper infiltrates`,
       },
-      {
-        kind: 'html',
-        html: `<div class="dx-dx" onclick="goLesionTab('LOC-GI-UPPER','Stomach')">Primary GI lesions →</div>`,
-        noArrowAfter: true,
-      },
-      {
-        kind: 'html',
-        html: `<div style="height:4px;"></div>`,
-        noArrowAfter: true,
-      },
-      {
-        kind: 'html',
-        html: `<div class="dx-dx" onclick="goLesionTab('LOC-GI-SECONDARY','Extra-GI vomiting')">Secondary / extra-GI causes →</div>`,
-      },
+      { kind: 'lesionLink', loc: 'LOC-GI-UPPER', name: 'Primary GI lesions', noArrowAfter: true },
+      { kind: 'lesionLink', loc: 'LOC-GI-SECONDARY', name: 'Secondary / extra-GI causes', tone: 'secondary' },
     ],
     after: [
       {
