@@ -98,29 +98,19 @@ function DiseaseCard({ d, snippet }: { d: DiseaseRow; snippet?: string }) {
   )
 }
 function DiseaseHome() {
-  const [q, setQ] = useState('')
   const { query: globalQ } = useSearch()
 
   // When the global search bar has a query, do a full-content search across all
   // disease fields. Otherwise fall back to the local name/synonym filter.
   const activeQ = globalQ.trim()
-  const lower = activeQ ? activeQ.toLowerCase() : q.toLowerCase()
-  const filtered = (lower
-    ? DB.disease_page.filter(d =>
-        activeQ ? diseaseMatchesFull(d, lower) : (d.name.toLowerCase().includes(lower) || str(d.synonyms).toLowerCase().includes(lower))
-      )
+  const lower = activeQ.toLowerCase()
+  const filtered = (activeQ
+    ? DB.disease_page.filter(d => diseaseMatchesFull(d, lower))
     : DB.disease_page.slice()
   ).sort((a, b) => a.name.localeCompare(b.name))
 
   return (
     <>
-      {/* Hide the local search bar when the global one is driving the filter */}
-      {!activeQ && (
-        <div className="search-wrap">
-          <span className="search-icon">🔍</span>
-          <input type="text" placeholder="Search disease pages..." id="dis-search" value={q} onChange={e => setQ(e.target.value)} />
-        </div>
-      )}
       <div className="stitle">
         {activeQ ? `${filtered.length} of ${DB.disease_page.length} disease pages` : `${DB.disease_page.length} disease pages`}
       </div>
@@ -157,30 +147,18 @@ function ProtoCard({ p }: { p: ProtocolRow }) {
   )
 }
 function ProtoList() {
-  const [q, setQ] = useState('')
-  const lower = q.toLowerCase()
   const P = DB.protocols
-  const match = (p: ProtocolRow) => !q || p.name.toLowerCase().includes(lower) || p.sp.toLowerCase().includes(lower)
-  const emergency = P.filter(p => (p.id === 'PROT-CPR' || p.id === 'PROT-RESP' || p.id === 'PROT-SHOCK' || p.id === 'PROT-THOR') && match(p))
-  const neuro = P.filter(p => (p.id.startsWith('PROT-SEIZ') || p.id.startsWith('PROT-NEURO') || p.id === 'PROT-ATAXIA') && match(p))
-  const tox = P.filter(p => (p.id === 'PROT-TOX' || p.id.startsWith('PROT-TOX-')) && match(p))
-  const eye = P.filter(p => p.id.startsWith('PROT-EYE') && match(p))
+  const emergency = P.filter(p => p.id === 'PROT-CPR' || p.id === 'PROT-RESP' || p.id === 'PROT-SHOCK' || p.id === 'PROT-THOR')
+  const neuro = P.filter(p => p.id.startsWith('PROT-SEIZ') || p.id.startsWith('PROT-NEURO') || p.id === 'PROT-ATAXIA')
+  const tox = P.filter(p => p.id === 'PROT-TOX' || p.id.startsWith('PROT-TOX-'))
+  const eye = P.filter(p => p.id.startsWith('PROT-EYE'))
   const group = (rows: ProtocolRow[]) => rows.map(p => <ProtoCard key={p.id} p={p} />)
-  const total = emergency.length + neuro.length + tox.length + eye.length
   return (
     <>
-      <div className="search-wrap">
-        <span className="search-icon">🔍</span>
-        <input type="text" placeholder="Search protocols..." value={q} onChange={e => setQ(e.target.value)} />
-      </div>
-      {total === 0
-        ? <div className="empty"><p>No results</p></div>
-        : <>
-            {emergency.length > 0 && <><div className="stitle">Emergency Protocols</div>{group(emergency)}</>}
-            {neuro.length > 0 && <><div className="stitle">Neurology</div>{group(neuro)}</>}
-            {tox.length > 0 && <><div className="stitle">Toxicology</div>{group(tox)}</>}
-            {eye.length > 0 && <><div className="stitle">Ophthalmology</div>{group(eye)}</>}
-          </>}
+      {emergency.length > 0 && <><div className="stitle">Emergency Protocols</div>{group(emergency)}</>}
+      {neuro.length > 0 && <><div className="stitle">Neurology</div>{group(neuro)}</>}
+      {tox.length > 0 && <><div className="stitle">Toxicology</div>{group(tox)}</>}
+      {eye.length > 0 && <><div className="stitle">Ophthalmology</div>{group(eye)}</>}
       <div className="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
     </>
   )
