@@ -527,7 +527,7 @@ const bleedingVasc: FlowPage = {
         {
           header: '🩸 CUTANEOUS / SKIN',
           tone: 'violet',
-          sub: 'Distal limb / ear pinna / paw pad ulcers · necrosis · skin purpura — coags + platelets normal',
+          sub: 'Distal limb / ear pinna / paw pad ulcers · necrosis · skin purpura',
           blocks: [
             {
               kind: 'endpoints',
@@ -536,6 +536,18 @@ const bleedingVasc: FlowPage = {
                 { icon: '🩸', label: 'CUTANEOUS VASCULITIS', sublabel: 'Ear pinna · paws · skin plaques', tone: 'violet', link: { to: 'disease', id: 'DIS-BD-VASC' } },
                 { icon: '🦟', label: 'EHRLICHIOSIS', sublabel: 'Tick-borne · distal extremities', tone: 'orange', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
                 { icon: '🔴', label: 'RMSF', sublabel: 'Tick-borne · petechiae · skin', tone: 'danger', link: { to: 'disease', id: 'DIS-INFECT-RMSF' } },
+              ],
+            },
+          ],
+        },
+        {
+          header: '🩸 CUTANEOUS / SKIN (cont.)',
+          tone: 'violet',
+          sub: 'Infectious · breed-specific · zoonotic',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
                 { icon: '🌍', label: 'LEISHMANIASIS', sublabel: 'Paw pad ulcers · endemic regions', tone: 'green', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
                 { icon: '🦠', label: 'LEPTOSPIROSIS', sublabel: 'Skin + renal · purpura · zoonotic', tone: 'warning', link: { to: 'disease', id: 'DIS-INFECT-LEPTO' } },
                 { icon: '🐱', label: 'FIP', sublabel: 'Cats · skin vasculitis', tone: 'neutral', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
@@ -547,13 +559,25 @@ const bleedingVasc: FlowPage = {
         {
           header: '👁 SYSTEMIC / OPHTHALMIC',
           tone: 'danger',
-          sub: 'Retinal haemorrhage · detachment · hypertension · easy bruising · metabolic',
+          sub: 'Retinal haemorrhage · detachment · hypertension',
           blocks: [
             {
               kind: 'endpoints',
               items: [
                 { icon: '📈', label: 'HYPERTENSION', sublabel: 'Most common — retinal detachment', tone: 'danger', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
                 { icon: '🩸', label: 'HYPERVISCOSITY', sublabel: 'Myeloma · hyperglobulinaemia', tone: 'violet', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
+              ],
+            },
+          ],
+        },
+        {
+          header: '👁 SYSTEMIC / OPHTHALMIC (cont.)',
+          tone: 'danger',
+          sub: 'Easy bruising · metabolic · multi-system',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
                 { icon: '🦟', label: 'EHRLICHIOSIS', sublabel: 'Retinal haemorrhage + systemic', tone: 'orange', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
                 { icon: '💊', label: 'HAC / STEROIDS', sublabel: 'Easy bruising · venepuncture · GI', tone: 'warning', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
                 { icon: '🫘', label: 'URAEMIC VASCULOPATHY', sublabel: 'CKD end-stage · widespread', tone: 'neutral', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
