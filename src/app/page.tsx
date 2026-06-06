@@ -10,17 +10,20 @@ import { screenMeta, viewKey, type View } from './nav/view'
 import { Screen } from './screens/Screen'
 import { track } from '../lib/analytics'
 import type { Tab } from '../types'
+import { SearchProvider } from './search/SearchContext'
+import SearchBar from './search/SearchBar'
+import { useSearchHighlight } from './search/useSearchHighlight'
 
 // Use Convex-backed notes when a deployment URL is configured, otherwise localStorage
 const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
 export default hasConvex ? PageWithConvex : PageWithLocal
 
 function PageWithConvex() {
-  return <NavProvider><PageBase useNotesHook={useNotes} /></NavProvider>
+  return <NavProvider><SearchProvider><PageBase useNotesHook={useNotes} /></SearchProvider></NavProvider>
 }
 
 function PageWithLocal() {
-  return <NavProvider><PageBase useNotesHook={useNotesLocal} /></NavProvider>
+  return <NavProvider><SearchProvider><PageBase useNotesHook={useNotesLocal} /></SearchProvider></NavProvider>
 }
 
 type NotesHook = (key: string, title: string, open: boolean) => {
@@ -54,6 +57,8 @@ function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
     if (screenRef.current) screenRef.current.scrollTop = 0
   }, [vk])
 
+  useSearchHighlight(screenRef)
+
   const slideClass = nav.slideDir === 'left' ? 'slide-in-left' : 'slide-in-right'
   const handleNavTo = useCallback((tab: Tab) => nav.navTo(tab), [nav])
   const handleToggleNotes = useCallback(() => {
@@ -71,6 +76,8 @@ function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
         onBack={nav.goBack}
         onToggleNotes={handleToggleNotes}
       />
+
+      <SearchBar />
 
       <div className="screen" ref={screenRef}>
         <div key={vk} className={`screen-inner ${slideClass}`}>

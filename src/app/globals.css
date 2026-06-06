@@ -256,6 +256,42 @@ html[data-theme="dark"]{
 .lesion-proto{font-size:11px;color:var(--teal-light);margin-top:6px;font-weight:500;}
 
 /* ── SEARCH ── */
+/* ── GLOBAL SEARCH BAR ── */
+.global-search-wrap{
+  position:relative;display:flex;align-items:center;
+  padding:8px 16px;
+  background:var(--navy);border-bottom:1px solid var(--border);
+  flex-shrink:0;
+}
+.global-search-wrap .search-icon{
+  position:absolute;left:27px;font-size:13px;color:var(--gray2);pointer-events:none;z-index:1;
+}
+.global-search-wrap input{
+  flex:1;background:var(--card);border:1px solid var(--border);
+  border-radius:10px;padding:8px 80px 8px 34px;
+  font-size:13px;color:var(--white);outline:none;font-family:var(--font);
+  transition:border-color .15s;
+}
+.global-search-wrap input:focus{border-color:var(--border2);}
+.global-search-wrap input::placeholder{color:var(--gray2);}
+.global-search-count{
+  position:absolute;right:44px;
+  font-size:11px;font-weight:500;color:var(--gray2);white-space:nowrap;pointer-events:none;
+}
+.global-search-clear{
+  position:absolute;right:20px;
+  background:none;border:none;cursor:pointer;
+  color:var(--gray2);font-size:18px;line-height:1;padding:2px 4px;
+  transition:color .15s;
+}
+.global-search-clear:hover{color:var(--white);}
+
+/* Highlight marks */
+mark.search-highlight{
+  background:rgba(253,224,71,0.55);color:inherit;border-radius:2px;padding:0 1px;
+}
+[data-theme=dark] mark.search-highlight{background:rgba(234,179,8,0.4);}
+
 .search-wrap{position:relative;margin-bottom:14px;}
 .search-wrap input{
   width:100%;background:var(--card);border:1px solid var(--border);
@@ -266,6 +302,9 @@ html[data-theme="dark"]{
 .search-wrap input:focus{border-color:var(--border2);}
 .search-wrap input::placeholder{color:var(--gray2);}
 .search-icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);color:var(--gray2);font-size:14px;pointer-events:none;}
+
+/* Disease content-match snippet */
+.dis-snippet{margin-top:5px;font-size:11px;color:var(--gray2);line-height:1.5;font-style:italic;}
 
 /* ── DISCLAIMER ── */
 .disclaimer{

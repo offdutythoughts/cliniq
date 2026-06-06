@@ -10,9 +10,31 @@ import type { DiseaseRow, ProtocolRow } from '../../data/db'
 import { DB } from '../../data/db'
 import { SIGNS } from '../../lib/signs/registry'
 import { useNav } from '../nav/NavContext'
+import { useSearch } from '../search/SearchContext'
 import { styleStringToObject as s } from './style'
 import { SpTag } from './tags'
 import { DX_HOME_CARDS } from './diagnosticHomeCards'
+
+/** Search all string fields of a DiseaseRow for the given lowercase query */
+function diseaseMatchesFull(d: DiseaseRow, lower: string): boolean {
+  return Object.values(d).some(v => typeof v === 'string' && v.toLowerCase().includes(lower))
+}
+
+const SNIPPET_LEN = 80
+
+/** Return a short excerpt around the first match in any content field (skips id/name/sp/synonyms) */
+function diseaseSnippet(d: DiseaseRow, lower: string): string {
+  const skip = new Set(['id', 'name', 'sp', 'synonyms'])
+  for (const [k, v] of Object.entries(d)) {
+    if (skip.has(k) || typeof v !== 'string') continue
+    const idx = v.toLowerCase().indexOf(lower)
+    if (idx === -1) continue
+    const start = Math.max(0, idx - 20)
+    const end = Math.min(v.length, idx + SNIPPET_LEN)
+    return (start > 0 ? '…' : '') + v.slice(start, end) + (end < v.length ? '…' : '')
+  }
+  return ''
+}
 
 const FLEX1 = s('flex:1')
 const DISCLAIMER_LONG = 'For qualified veterinary professionals only. Not a substitute for clinical judgment. Always verify clinical decisions independently.'
@@ -21,29 +43,18 @@ const str = (v: unknown): string => (typeof v === 'string' ? v : '')
 // ── Tab 0: Localise ───────────────────────────────────────────────────────────
 function LocaliseHome() {
   const nav = useNav()
-  const [q, setQ] = useState('')
-  const lower = q.toLowerCase()
-  const filtered = q
-    ? SIGNS.filter(s => s.title.toLowerCase().includes(lower) || s.sub.toLowerCase().includes(lower))
-    : SIGNS
   return (
     <>
-      <div className="search-wrap">
-        <span className="search-icon">🔍</span>
-        <input type="text" placeholder="Search clinical signs..." value={q} onChange={e => setQ(e.target.value)} />
-      </div>
       <div className="stitle">Select a clinical sign</div>
-      {filtered.length
-        ? filtered.map(sign => (
-            <div key={sign.flowId} className="card" role="button" onClick={() => nav.navigate({ kind: 'flow', flowId: sign.flowId })}>
-              <div className="card-row">
-                <div className="card-icon">{sign.icon}</div>
-                <div style={FLEX1}><div className="card-title">{sign.title}</div><div className="card-sub">{sign.sub}</div></div>
-                <div className="card-arrow">›</div>
-              </div>
-            </div>
-          ))
-        : <div className="empty"><p>No results</p></div>}
+      {SIGNS.map(sign => (
+        <div key={sign.flowId} className="card" role="button" onClick={() => nav.navigate({ kind: 'flow', flowId: sign.flowId })}>
+          <div className="card-row">
+            <div className="card-icon">{sign.icon}</div>
+            <div style={FLEX1}><div className="card-title">{sign.title}</div><div className="card-sub">{sign.sub}</div></div>
+            <div className="card-arrow">›</div>
+          </div>
+        </div>
+      ))}
       <div className="disclaimer">{DISCLAIMER_LONG}</div>
     </>
   )
@@ -52,43 +63,34 @@ function LocaliseHome() {
 // ── Tab 1: Diagnostic approaches ──────────────────────────────────────────────
 function DiagnosticHome() {
   const nav = useNav()
-  const [q, setQ] = useState('')
-  const lower = q.toLowerCase()
-  const filtered = q
-    ? DX_HOME_CARDS.filter(c => c.title.toLowerCase().includes(lower) || c.sub.toLowerCase().includes(lower))
-    : DX_HOME_CARDS
   return (
     <>
-      <div className="search-wrap">
-        <span className="search-icon">🔍</span>
-        <input type="text" placeholder="Search diagnostic approaches..." value={q} onChange={e => setQ(e.target.value)} />
-      </div>
       <div className="stitle">Diagnostic approaches</div>
-      {filtered.length
-        ? filtered.map(c => (
-            <div key={c.sign} className="card" role="button" onClick={() => nav.navigate({ kind: 'dx', sign: c.sign, tab: 'history' })}>
-              <div className="card-row">
-                <div className="card-icon">{c.icon}</div>
-                <div style={FLEX1}><div className="card-title">{c.title}</div><div className="card-sub">{c.sub}</div></div>
-                <div className="card-arrow">›</div>
-              </div>
-            </div>
-          ))
-        : <div className="empty"><p>No results</p></div>}
+      {DX_HOME_CARDS.map(c => (
+        <div key={c.sign} className="card" role="button" onClick={() => nav.navigate({ kind: 'dx', sign: c.sign, tab: 'history' })}>
+          <div className="card-row">
+            <div className="card-icon">{c.icon}</div>
+            <div style={FLEX1}><div className="card-title">{c.title}</div><div className="card-sub">{c.sub}</div></div>
+            <div className="card-arrow">›</div>
+          </div>
+        </div>
+      ))}
       <div className="disclaimer">{DISCLAIMER_LONG}</div>
     </>
   )
 }
 
 // ── Tab 2: Disease pages (search) ─────────────────────────────────────────────
-function DiseaseCard({ d }: { d: DiseaseRow }) {
+function DiseaseCard({ d, snippet }: { d: DiseaseRow; snippet?: string }) {
   const nav = useNav()
   return (
-    <div className="card" role="button" onClick={() => nav.navigate({ kind: 'disease', id: d.id })}>
+    // data-search-match tells the DOM highlighter not to hide this card
+    <div className="card" role="button" data-search-match={snippet ? '1' : undefined} onClick={() => nav.navigate({ kind: 'disease', id: d.id })}>
       <div className="card-row">
         <div style={FLEX1}>
           <div className="card-title">{d.name}</div>
           <div className="card-sub" style={s('margin-top:3px;')}><SpTag sp={d.sp} /> <span style={s('font-size:11px;color:var(--gray2)')}>{str(d.synonyms)}</span></div>
+          {snippet && <div className="card-sub dis-snippet">{snippet}</div>}
         </div>
         <div className="card-arrow">›</div>
       </div>
@@ -97,20 +99,35 @@ function DiseaseCard({ d }: { d: DiseaseRow }) {
 }
 function DiseaseHome() {
   const [q, setQ] = useState('')
-  const lower = q.toLowerCase()
-  const filtered = (q
-    ? DB.disease_page.filter(d => d.name.toLowerCase().includes(lower) || str(d.synonyms).toLowerCase().includes(lower))
+  const { query: globalQ } = useSearch()
+
+  // When the global search bar has a query, do a full-content search across all
+  // disease fields. Otherwise fall back to the local name/synonym filter.
+  const activeQ = globalQ.trim()
+  const lower = activeQ ? activeQ.toLowerCase() : q.toLowerCase()
+  const filtered = (lower
+    ? DB.disease_page.filter(d =>
+        activeQ ? diseaseMatchesFull(d, lower) : (d.name.toLowerCase().includes(lower) || str(d.synonyms).toLowerCase().includes(lower))
+      )
     : DB.disease_page.slice()
   ).sort((a, b) => a.name.localeCompare(b.name))
+
   return (
     <>
-      <div className="search-wrap">
-        <span className="search-icon">🔍</span>
-        <input type="text" placeholder="Search disease pages..." id="dis-search" value={q} onChange={e => setQ(e.target.value)} />
+      {/* Hide the local search bar when the global one is driving the filter */}
+      {!activeQ && (
+        <div className="search-wrap">
+          <span className="search-icon">🔍</span>
+          <input type="text" placeholder="Search disease pages..." id="dis-search" value={q} onChange={e => setQ(e.target.value)} />
+        </div>
+      )}
+      <div className="stitle">
+        {activeQ ? `${filtered.length} of ${DB.disease_page.length} disease pages` : `${DB.disease_page.length} disease pages`}
       </div>
-      <div className="stitle">{DB.disease_page.length} disease pages</div>
       <div id="dis-list">
-        {filtered.length ? filtered.map(d => <DiseaseCard key={d.id} d={d} />) : <div className="empty"><p>No results</p></div>}
+        {filtered.length
+          ? filtered.map(d => <DiseaseCard key={d.id} d={d} snippet={activeQ ? diseaseSnippet(d, lower) : undefined} />)
+          : <div className="empty"><p>No results</p></div>}
       </div>
     </>
   )
