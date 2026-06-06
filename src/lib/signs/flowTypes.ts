@@ -43,7 +43,8 @@ export type Endpoint = {
 /** One vertical column of a branch. Holds blocks, so branches nest. */
 export type Column = {
   header: string
-  tone: Tone
+  /** Omit to render the header as a plain grey text label (no box). */
+  tone?: Tone
   sub?: string
   blocks: Block[]
 }

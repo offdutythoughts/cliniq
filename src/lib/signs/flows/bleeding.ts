@@ -519,7 +519,7 @@ const bleedingVasc: FlowPage = {
     <div class="flow-arrow-v">↓</div>`,
     },
 
-    { kind: 'node', variant: 'sub-step', text: 'LESION DISTRIBUTION', connectAfter: false },
+    { kind: 'node', variant: 'step', text: 'WHERE ARE THE LESIONS?' },
 
     // FLAGGED html: the violet col()/chip lesion-distribution grid (three
     // 2-col rows of self-contained header+↓+chip units). It is NOT a CAT_STYLE
@@ -575,6 +575,17 @@ const bleedingVasc: FlowPage = {
     </div>
       <div></div>
     </div>`,
+    },
+
+    {
+      kind: 'alert',
+      tone: 'danger',
+      title: '⚡ DON\'T MISS — CRGV / ALABAMA ROT',
+      items: [
+        '<strong>Skin ulcers on distal limbs + AKI developing 1–10 days later</strong> — mortality &gt;80 % once AKI establishes; act at the skin lesion stage',
+        'Baseline <strong>creatinine, platelet count, and urinalysis</strong> at first presentation — warn owner to return urgently for vomiting, lethargy, or inappetence within 14 days',
+        'UK: hounds, gundogs, pastoral breeds after woodland walks in winter/spring — report cases to Anderson Moores CRGV surveillance',
+      ],
     },
 
     {

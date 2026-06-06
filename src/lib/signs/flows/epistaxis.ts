@@ -1,6 +1,8 @@
-// ── Epistaxis flowchart (data) ──────────────────────────────────────────────
-// Pilot migration of epistaxisFlowHtml (src/lib/signs/epistaxis.ts) to the
-// FlowPage model. Content must stay faithful to the legacy clinical source.
+// ── Epistaxis flowchart ──────────────────────────────────────────────────────
+// Clinical logic mirrors vomiting: imperative step → branch → nested
+// sub-question within each column → plain-label sub-split → endpoints.
+// LOCAL column:    ACUTE ONSET vs CHRONIC PROGRESSIVE (no-tone → grey text labels)
+// SYSTEMIC column: PRIMARY vs SECONDARY HAEMOSTASIS   (no-tone → grey text labels)
 
 import type { FlowPage } from '../flowTypes'
 
@@ -19,8 +21,8 @@ export const epistaxisFlow: FlowPage = {
     {
       kind: 'node',
       variant: 'step',
-      text: 'LOCAL (INTRANASAL) vs SYSTEMIC DISEASE?',
-      sub: 'Intranasal disease ≈ 80% of identified canine causes — but rule out systemic bleeding first, it changes everything',
+      text: 'RULE OUT SYSTEMIC BLEEDING FIRST',
+      sub: 'Intranasal disease ≈ 80% of canine cases — but a haemostatic defect changes everything; never perform invasive diagnostics (rhinoscopy, biopsy, CT under GA) without excluding it first',
     },
 
     {
@@ -31,15 +33,38 @@ export const epistaxisFlow: FlowPage = {
           tone: 'teal',
           sub: 'Chronic nasal signs · sneezing · stertor · mucopurulent discharge · unilateral epiphora · facial pain / deformity · nasal planum depigmentation · ↓ retropulsion · submandibular LN',
           blocks: [
+            { kind: 'node', variant: 'sub-step', text: 'ACUTE ONSET vs CHRONIC PROGRESSIVE?', connectAfter: false },
             {
-              kind: 'endpoints',
-              items: [
-                { icon: '🧬', label: 'NEOPLASIA', sublabel: 'Most common local cause (30–66%)', tone: 'violet', link: { to: 'disease', id: 'DIS-NASAL-NEO' } },
-                { icon: '🍄', label: 'FUNGAL RHINITIS', sublabel: 'Aspergillus — depigmentation + pain', tone: 'green', link: { to: 'disease', id: 'DIS-NASAL-ASP' } },
-                { icon: '🔥', label: 'IDIOPATHIC RHINITIS', sublabel: 'Lymphoplasmacytic — Dx of exclusion', tone: 'green', link: { to: 'disease', id: 'DIS-NASAL-LPR' } },
-                { icon: '🌾', label: 'FOREIGN BODY', sublabel: 'Acute violent sneezing → chronic', tone: 'orange', link: { to: 'disease', id: 'DIS-NASAL-FB' } },
-                { icon: '🤕', label: 'TRAUMA', sublabel: 'Acute onset · RTA · head strike', tone: 'danger', link: { to: 'disease', id: 'DIS-NASAL-TRAUMA' } },
-                { icon: '🦷', label: 'Dental / oronasal disease', sublabel: 'periapical abscess · oronasal fistula', tone: 'neutral' },
+              kind: 'branch',
+              columns: [
+                {
+                  // no tone → plain grey text label (no box)
+                  header: 'ACUTE',
+                  blocks: [
+                    {
+                      kind: 'endpoints',
+                      items: [
+                        { icon: '🤕', label: 'TRAUMA', sublabel: 'RTA · head strike', tone: 'danger', link: { to: 'disease', id: 'DIS-NASAL-TRAUMA' } },
+                        { icon: '🌾', label: 'FOREIGN BODY', sublabel: 'Acute violent sneezing → chronic', tone: 'orange', link: { to: 'disease', id: 'DIS-NASAL-FB' } },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  // no tone → plain grey text label (no box)
+                  header: 'CHRONIC / PROGRESSIVE',
+                  blocks: [
+                    {
+                      kind: 'endpoints',
+                      items: [
+                        { icon: '🧬', label: 'NEOPLASIA', sublabel: 'Most common local cause (30–66%)', tone: 'violet', link: { to: 'disease', id: 'DIS-NASAL-NEO' } },
+                        { icon: '🍄', label: 'FUNGAL RHINITIS', sublabel: 'Aspergillus — depigmentation + pain', tone: 'green', link: { to: 'disease', id: 'DIS-NASAL-ASP' } },
+                        { icon: '🔥', label: 'IDIOPATHIC RHINITIS', sublabel: 'Lymphoplasmacytic — Dx of exclusion', tone: 'green', link: { to: 'disease', id: 'DIS-NASAL-LPR' } },
+                        { icon: '🦷', label: 'Dental / oronasal disease', sublabel: 'periapical abscess · oronasal fistula', tone: 'neutral' },
+                      ],
+                    },
+                  ],
+                },
               ],
             },
           ],
@@ -49,17 +74,39 @@ export const epistaxisFlow: FlowPage = {
           tone: 'danger',
           sub: 'Bleeding at other sites · petechiae / ecchymoses · melena · gingival bleed · venepuncture bruising · lethargy · weight loss · hyphema / retinal haemorrhage',
           blocks: [
-            { kind: 'node', variant: 'sub-step', text: 'Bleeding elsewhere → work up as a haemostatic defect', connectAfter: false },
+            { kind: 'node', variant: 'sub-step', text: 'PRIMARY vs SECONDARY HAEMOSTASIS?', connectAfter: false },
             {
-              kind: 'endpoints',
-              items: [
-                { icon: '🔗', label: 'PRIMARY vs SECONDARY HAEMOSTASIS', sublabel: 'Open full bleeding flowchart', tone: 'danger', link: { to: 'flow', id: 'bleeding' } },
-                { icon: '🧱', label: 'THROMBOCYTOPENIA / IMTP', sublabel: 'Commonest systemic cause', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-IMTP' } },
-                { icon: '🩹', label: 'THROMBOCYTOPATHIA / vWD', sublabel: 'Normal count, mucosal bleed', tone: 'warning', link: { to: 'disease', id: 'DIS-BD-TPATH' } },
-                { icon: '☠️', label: 'ANTICOAGULANT RODENTICIDE', sublabel: 'PT prolongs first — give Vit K1', tone: 'info', link: { to: 'disease', id: 'DIS-BD-ROD' } },
-                { icon: '🦟', label: 'VECTOR-BORNE DISEASE', sublabel: 'Ehrlichia · Leishmania · Babesia', tone: 'violet', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
-                { icon: '🩸', label: 'HYPERVISCOSITY', sublabel: 'Myeloma · hyperglobulinaemia', tone: 'violet', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
-                { icon: '📈', label: 'HYPERTENSION', sublabel: 'Exacerbates rather than causes', tone: 'warning', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
+              kind: 'branch',
+              columns: [
+                {
+                  // no tone → plain grey text label (no box)
+                  header: 'PRIMARY — petechiae · mucosal bleed · low/normal platelets',
+                  blocks: [
+                    {
+                      kind: 'endpoints',
+                      items: [
+                        { icon: '🧱', label: 'THROMBOCYTOPENIA / IMTP', sublabel: 'Commonest systemic cause', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-IMTP' } },
+                        { icon: '🩹', label: 'THROMBOCYTOPATHIA / vWD', sublabel: 'Normal count, mucosal bleed', tone: 'warning', link: { to: 'disease', id: 'DIS-BD-TPATH' } },
+                        { icon: '🦟', label: 'VECTOR-BORNE DISEASE', sublabel: 'Ehrlichia · Leishmania · Babesia', tone: 'violet', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  // no tone → plain grey text label (no box)
+                  header: 'SECONDARY — cavity / deep bleed · PT prolongs first',
+                  blocks: [
+                    {
+                      kind: 'endpoints',
+                      items: [
+                        { icon: '☠️', label: 'ANTICOAGULANT RODENTICIDE', sublabel: 'PT prolongs first — give Vit K1', tone: 'info', link: { to: 'disease', id: 'DIS-BD-ROD' } },
+                        { icon: '🩸', label: 'HYPERVISCOSITY', sublabel: 'Myeloma · hyperglobulinaemia', tone: 'violet', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
+                        { icon: '📈', label: 'HYPERTENSION', sublabel: 'Exacerbates rather than causes', tone: 'warning', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
+                        { icon: '🔗', label: 'PRIMARY vs SECONDARY HAEMOSTASIS', sublabel: 'Open full bleeding flowchart', tone: 'danger', link: { to: 'flow', id: 'bleeding' } },
+                      ],
+                    },
+                  ],
+                },
               ],
             },
           ],

@@ -8,6 +8,7 @@
 import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from 'react'
 import type { View } from './view'
 import type { Tab } from '../../types'
+import { track } from '../../lib/analytics'
 
 export interface Nav {
   /** The screen currently shown: top of the stack, or the tab root. */
@@ -42,6 +43,11 @@ export function NavProvider({ children }: { children: ReactNode }) {
   const [st, setSt] = useState<NavState>({ tab: 0, stack: [], slideDir: 'right', tick: 0 })
 
   const navigate = useCallback((v: View) => {
+    const props: Record<string, unknown> = { content_type: v.kind }
+    if ('id' in v) props.content_id = v.id
+    if ('flowId' in v) props.content_id = v.flowId
+    if ('sign' in v) props.content_id = v.sign
+    track('content_navigated', props)
     setSt(s => ({ ...s, stack: [...s.stack, v], slideDir: 'right' }))
   }, [])
   const replace = useCallback((v: View) => {

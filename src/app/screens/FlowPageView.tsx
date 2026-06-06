@@ -169,13 +169,19 @@ function BannerBlock({ tone, html, onNav }: { tone: Tone; html: string; onNav: N
 
 // ── Branch + columns ──────────────────────────────────────────────────────────
 function ColumnView({ col, onNav }: { col: Column; onNav: Nav }) {
-  const h = HUE[col.tone]
+  const h = col.tone ? HUE[col.tone] : null
   return (
     <div style={s('display:flex;flex-direction:column;align-items:center;gap:4px;')}>
-      <div className="flow-node" style={s(`width:100%;background:rgba(${h.rgb},0.12);border-color:rgba(${h.rgb},0.4);font-size:10px;font-weight:700;color:${h.color};`)}>
-        {col.header}
-        {col.sub && <div style={s('font-size:8.5px;font-weight:400;opacity:.85;margin-top:2px;')}>{col.sub}</div>}
-      </div>
+      {h ? (
+        <div className="flow-node" style={s(`width:100%;background:rgba(${h.rgb},0.12);border-color:rgba(${h.rgb},0.4);font-size:10px;font-weight:700;color:${h.color};`)}>
+          {col.header}
+          {col.sub && <div style={s('font-size:8.5px;font-weight:400;opacity:.85;margin-top:2px;')}>{col.sub}</div>}
+        </div>
+      ) : (
+        <div style={s('font-size:9px;font-weight:600;color:var(--gray2);text-align:center;width:100%;padding:2px 0;')}>
+          {col.header}
+        </div>
+      )}
       {col.blocks.length > 0 && (
         <>
           <div className="flow-arrow-v">↓</div>

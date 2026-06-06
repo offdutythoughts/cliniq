@@ -21,18 +21,29 @@ const str = (v: unknown): string => (typeof v === 'string' ? v : '')
 // ── Tab 0: Localise ───────────────────────────────────────────────────────────
 function LocaliseHome() {
   const nav = useNav()
+  const [q, setQ] = useState('')
+  const lower = q.toLowerCase()
+  const filtered = q
+    ? SIGNS.filter(s => s.title.toLowerCase().includes(lower) || s.sub.toLowerCase().includes(lower))
+    : SIGNS
   return (
     <>
+      <div className="search-wrap">
+        <span className="search-icon">🔍</span>
+        <input type="text" placeholder="Search clinical signs..." value={q} onChange={e => setQ(e.target.value)} />
+      </div>
       <div className="stitle">Select a clinical sign</div>
-      {SIGNS.map(sign => (
-        <div key={sign.flowId} className="card" role="button" onClick={() => nav.navigate({ kind: 'flow', flowId: sign.flowId })}>
-          <div className="card-row">
-            <div className="card-icon">{sign.icon}</div>
-            <div style={FLEX1}><div className="card-title">{sign.title}</div><div className="card-sub">{sign.sub}</div></div>
-            <div className="card-arrow">›</div>
-          </div>
-        </div>
-      ))}
+      {filtered.length
+        ? filtered.map(sign => (
+            <div key={sign.flowId} className="card" role="button" onClick={() => nav.navigate({ kind: 'flow', flowId: sign.flowId })}>
+              <div className="card-row">
+                <div className="card-icon">{sign.icon}</div>
+                <div style={FLEX1}><div className="card-title">{sign.title}</div><div className="card-sub">{sign.sub}</div></div>
+                <div className="card-arrow">›</div>
+              </div>
+            </div>
+          ))
+        : <div className="empty"><p>No results</p></div>}
       <div className="disclaimer">{DISCLAIMER_LONG}</div>
     </>
   )
@@ -41,18 +52,29 @@ function LocaliseHome() {
 // ── Tab 1: Diagnostic approaches ──────────────────────────────────────────────
 function DiagnosticHome() {
   const nav = useNav()
+  const [q, setQ] = useState('')
+  const lower = q.toLowerCase()
+  const filtered = q
+    ? DX_HOME_CARDS.filter(c => c.title.toLowerCase().includes(lower) || c.sub.toLowerCase().includes(lower))
+    : DX_HOME_CARDS
   return (
     <>
+      <div className="search-wrap">
+        <span className="search-icon">🔍</span>
+        <input type="text" placeholder="Search diagnostic approaches..." value={q} onChange={e => setQ(e.target.value)} />
+      </div>
       <div className="stitle">Diagnostic approaches</div>
-      {DX_HOME_CARDS.map(c => (
-        <div key={c.sign} className="card" role="button" onClick={() => nav.navigate({ kind: 'dx', sign: c.sign, tab: 'history' })}>
-          <div className="card-row">
-            <div className="card-icon">{c.icon}</div>
-            <div style={FLEX1}><div className="card-title">{c.title}</div><div className="card-sub">{c.sub}</div></div>
-            <div className="card-arrow">›</div>
-          </div>
-        </div>
-      ))}
+      {filtered.length
+        ? filtered.map(c => (
+            <div key={c.sign} className="card" role="button" onClick={() => nav.navigate({ kind: 'dx', sign: c.sign, tab: 'history' })}>
+              <div className="card-row">
+                <div className="card-icon">{c.icon}</div>
+                <div style={FLEX1}><div className="card-title">{c.title}</div><div className="card-sub">{c.sub}</div></div>
+                <div className="card-arrow">›</div>
+              </div>
+            </div>
+          ))
+        : <div className="empty"><p>No results</p></div>}
       <div className="disclaimer">{DISCLAIMER_LONG}</div>
     </>
   )
@@ -118,18 +140,30 @@ function ProtoCard({ p }: { p: ProtocolRow }) {
   )
 }
 function ProtoList() {
+  const [q, setQ] = useState('')
+  const lower = q.toLowerCase()
   const P = DB.protocols
-  const emergency = P.filter(p => p.id === 'PROT-CPR' || p.id === 'PROT-RESP' || p.id === 'PROT-SHOCK' || p.id === 'PROT-THOR')
-  const neuro = P.filter(p => p.id.startsWith('PROT-SEIZ') || p.id.startsWith('PROT-NEURO') || p.id === 'PROT-ATAXIA')
-  const tox = P.filter(p => p.id === 'PROT-TOX' || p.id.startsWith('PROT-TOX-'))
-  const eye = P.filter(p => p.id.startsWith('PROT-EYE'))
+  const match = (p: ProtocolRow) => !q || p.name.toLowerCase().includes(lower) || p.sp.toLowerCase().includes(lower)
+  const emergency = P.filter(p => (p.id === 'PROT-CPR' || p.id === 'PROT-RESP' || p.id === 'PROT-SHOCK' || p.id === 'PROT-THOR') && match(p))
+  const neuro = P.filter(p => (p.id.startsWith('PROT-SEIZ') || p.id.startsWith('PROT-NEURO') || p.id === 'PROT-ATAXIA') && match(p))
+  const tox = P.filter(p => (p.id === 'PROT-TOX' || p.id.startsWith('PROT-TOX-')) && match(p))
+  const eye = P.filter(p => p.id.startsWith('PROT-EYE') && match(p))
   const group = (rows: ProtocolRow[]) => rows.map(p => <ProtoCard key={p.id} p={p} />)
+  const total = emergency.length + neuro.length + tox.length + eye.length
   return (
     <>
-      <div className="stitle">Emergency Protocols</div>{group(emergency)}
-      <div className="stitle">Neurology</div>{group(neuro)}
-      <div className="stitle">Toxicology</div>{group(tox)}
-      <div className="stitle">Ophthalmology</div>{group(eye)}
+      <div className="search-wrap">
+        <span className="search-icon">🔍</span>
+        <input type="text" placeholder="Search protocols..." value={q} onChange={e => setQ(e.target.value)} />
+      </div>
+      {total === 0
+        ? <div className="empty"><p>No results</p></div>
+        : <>
+            {emergency.length > 0 && <><div className="stitle">Emergency Protocols</div>{group(emergency)}</>}
+            {neuro.length > 0 && <><div className="stitle">Neurology</div>{group(neuro)}</>}
+            {tox.length > 0 && <><div className="stitle">Toxicology</div>{group(tox)}</>}
+            {eye.length > 0 && <><div className="stitle">Ophthalmology</div>{group(eye)}</>}
+          </>}
       <div className="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
     </>
   )
