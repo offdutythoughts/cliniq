@@ -505,76 +505,63 @@ const bleedingVasc: FlowPage = {
   id: 'bleeding-vasc',
   title: 'Bleeding — Vasculopathy',
   blocks: [
-    { kind: 'node', variant: 'entry', tone: 'violet', text: '🌐 VASCULOPATHY / VASCULITIS', connectAfter: false },
+    { kind: 'node', variant: 'entry', tone: 'violet', text: '🌐 VASCULOPATHY / VASCULITIS' },
 
-    // Rendered as html (not a typed step `node`) so the <em>normal</em> italic
-    // in the sub-line is preserved — the typed node sub field is text-escaped.
-    // Includes the surrounding connector arrows.
     {
-      kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
-    <div class="flow-node step">RECOGNISE THE PATTERN
-      <div class="fn-sub" style="font-weight:400;margin-top:3px;">Bleeding from vessel wall disease — platelets and coagulation profile are <em>normal</em></div>
-    </div>
-    <div class="flow-arrow-v">↓</div>`,
+      // html needed to preserve <em>normal</em> italic
+      kind: 'callout',
+      tone: 'violet',
+      html: '<strong>Recognise the pattern:</strong> Bleeding from vessel wall disease — platelets and coagulation profile are <em>normal</em>',
     },
 
-    { kind: 'node', variant: 'step', text: 'WHERE ARE THE LESIONS?' },
-
-    // FLAGGED html: the violet col()/chip lesion-distribution grid (three
-    // 2-col rows of self-contained header+↓+chip units). It is NOT a CAT_STYLE
-    // categoryColumns grid (uniform violet, custom 1fr:1fr rows), and crucially
-    // its chips call renderLesionDetail('LES-…') for which there is NO typed
-    // Link (the only lesion Link is goLesionTab → a different handler). The
-    // renderDiseasePage chips are also embedded. Kept verbatim with all
-    // onclick handlers (renderLesionDetail / renderDiseasePage) preserved.
     {
-      kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
+      kind: 'node',
+      variant: 'step',
+      text: 'CUTANEOUS vs SYSTEMIC INVOLVEMENT?',
+      sub: 'Skin / extremity lesions alone vs retinal haemorrhage · hypertension · multi-system illness',
+    },
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
-
-    <div style="display:flex;flex-direction:column;align-items:stretch;gap:0;">
-      <div style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.35);border-radius:8px;padding:7px 8px;font-size:9px;font-weight:700;color:#C4B5FD;text-align:center;line-height:1.35;">Ear pinna / distal extremity — necrotic ulcers</div>
-      <div style="color:#C4B5FD;text-align:center;font-size:11px;line-height:1;padding:3px 0;">↓</div>
-      <div style="display:flex;flex-direction:column;gap:3px;"><div onclick="renderLesionDetail('LES-BD-VS-VASC')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">Cutaneous vasculitis</div><div onclick="renderLesionDetail('LES-BD-VS-CRGV')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">CRGV / Alabama rot</div><div onclick="renderLesionDetail('LES-BD-VS-LH')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">Lhasa Apso vasculopathy</div><div onclick="renderDiseasePage('DIS-INFECT-EHRLICH')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">Ehrlichiosis</div><div onclick="renderDiseasePage('DIS-INFECT-RMSF')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">RMSF</div></div>
-    </div>
-
-    <div style="display:flex;flex-direction:column;align-items:stretch;gap:0;">
-      <div style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.35);border-radius:8px;padding:7px 8px;font-size:9px;font-weight:700;color:#C4B5FD;text-align:center;line-height:1.35;">Paw pads — ulcers, necrosis, sloughing</div>
-      <div style="color:#C4B5FD;text-align:center;font-size:11px;line-height:1;padding:3px 0;">↓</div>
-      <div style="display:flex;flex-direction:column;gap:3px;"><div onclick="renderLesionDetail('LES-BD-VS-CRGV')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">CRGV / Alabama rot</div><div onclick="renderLesionDetail('LES-BD-VS-VASC')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">Cutaneous vasculitis</div><div onclick="renderDiseasePage('DIS-INFECT-EHRLICH')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">Ehrlichiosis</div><div onclick="renderDiseasePage('DIS-INFECT-LEISHM')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">Leishmaniasis</div></div>
-    </div>
-    </div>
-
-    <div class="flow-arrow-v">↓</div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
-
-    <div style="display:flex;flex-direction:column;align-items:stretch;gap:0;">
-      <div style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.35);border-radius:8px;padding:7px 8px;font-size:9px;font-weight:700;color:#C4B5FD;text-align:center;line-height:1.35;">Skin — purpura, necrotic plaques, pitting oedema</div>
-      <div style="color:#C4B5FD;text-align:center;font-size:11px;line-height:1;padding:3px 0;">↓</div>
-      <div style="display:flex;flex-direction:column;gap:3px;"><div onclick="renderLesionDetail('LES-BD-VS-VASC')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">Cutaneous vasculitis</div><div onclick="renderDiseasePage('DIS-INFECT-LEPTO')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">Leptospirosis</div><div onclick="renderDiseasePage('DIS-INFECT-RMSF')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">RMSF</div><div onclick="renderDiseasePage('DIS-INFECT-EHRLICH')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">Ehrlichiosis</div><div onclick="renderDiseasePage('DIS-INFECT-FIP')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">FIP (cat)</div><div onclick="renderDiseasePage('DIS-SEC-CKD')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">Uraemic vasculopathy</div><div onclick="renderDiseasePage('DIS-VASC-HYPERVSC')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">Hyperglobulinaemia</div></div>
-    </div>
-
-    <div style="display:flex;flex-direction:column;align-items:stretch;gap:0;">
-      <div style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.35);border-radius:8px;padding:7px 8px;font-size:9px;font-weight:700;color:#C4B5FD;text-align:center;line-height:1.35;">Retinal haemorrhage / detachment</div>
-      <div style="color:#C4B5FD;text-align:center;font-size:11px;line-height:1;padding:3px 0;">↓</div>
-      <div style="display:flex;flex-direction:column;gap:3px;"><div onclick="renderDiseasePage('DIS-VASC-HYPERT')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">Systemic hypertension</div><div onclick="renderDiseasePage('DIS-VASC-HYPERVSC')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">Hyperglobulinaemia</div><div onclick="renderDiseasePage('DIS-INFECT-EHRLICH')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">Ehrlichiosis</div></div>
-    </div>
-    </div>
-
-    <div class="flow-arrow-v">↓</div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
-
-    <div style="display:flex;flex-direction:column;align-items:stretch;gap:0;">
-      <div style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.35);border-radius:8px;padding:7px 8px;font-size:9px;font-weight:700;color:#C4B5FD;text-align:center;line-height:1.35;">Easy bruising at venepuncture / GI haemorrhage</div>
-      <div style="color:#C4B5FD;text-align:center;font-size:11px;line-height:1;padding:3px 0;">↓</div>
-      <div style="display:flex;flex-direction:column;gap:3px;"><div onclick="renderDiseasePage('DIS-PUPD-HAC')" style="cursor:pointer;background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.35);border-radius:6px;padding:3px 8px;font-size:9px;color:#C4B5FD;text-align:center;">HAC / iatrogenic steroids</div></div>
-    </div>
-      <div></div>
-    </div>`,
+    {
+      kind: 'branch',
+      columns: [
+        {
+          header: '🩸 CUTANEOUS / SKIN',
+          tone: 'violet',
+          sub: 'Distal limb / ear pinna / paw pad ulcers · necrosis · skin purpura — coags + platelets normal',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { icon: '🦺', label: 'CRGV / ALABAMA ROT', sublabel: 'Distal limb ulcers → AKI in 1–10 days', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-CRGV' } },
+                { icon: '🩸', label: 'CUTANEOUS VASCULITIS', sublabel: 'Ear pinna · paws · skin plaques', tone: 'violet', link: { to: 'disease', id: 'DIS-BD-VASC' } },
+                { icon: '🦟', label: 'EHRLICHIOSIS', sublabel: 'Tick-borne · distal extremities', tone: 'orange', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
+                { icon: '🔴', label: 'RMSF', sublabel: 'Tick-borne · petechiae · skin', tone: 'danger', link: { to: 'disease', id: 'DIS-INFECT-RMSF' } },
+                { icon: '🌍', label: 'LEISHMANIASIS', sublabel: 'Paw pad ulcers · endemic regions', tone: 'green', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
+                { icon: '🦠', label: 'LEPTOSPIROSIS', sublabel: 'Skin + renal · purpura · zoonotic', tone: 'warning', link: { to: 'disease', id: 'DIS-INFECT-LEPTO' } },
+                { icon: '🐱', label: 'FIP', sublabel: 'Cats · skin vasculitis', tone: 'neutral', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
+                { label: 'Lhasa Apso vasculopathy', sublabel: 'Breed-specific · ear tips', tone: 'neutral' },
+              ],
+            },
+          ],
+        },
+        {
+          header: '👁 SYSTEMIC / OPHTHALMIC',
+          tone: 'danger',
+          sub: 'Retinal haemorrhage · detachment · hypertension · easy bruising · metabolic',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { icon: '📈', label: 'HYPERTENSION', sublabel: 'Most common — retinal detachment', tone: 'danger', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
+                { icon: '🩸', label: 'HYPERVISCOSITY', sublabel: 'Myeloma · hyperglobulinaemia', tone: 'violet', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
+                { icon: '🦟', label: 'EHRLICHIOSIS', sublabel: 'Retinal haemorrhage + systemic', tone: 'orange', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
+                { icon: '💊', label: 'HAC / STEROIDS', sublabel: 'Easy bruising · venepuncture · GI', tone: 'warning', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
+                { icon: '🫘', label: 'URAEMIC VASCULOPATHY', sublabel: 'CKD end-stage · widespread', tone: 'neutral', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
+              ],
+            },
+          ],
+        },
+      ],
     },
 
     {
