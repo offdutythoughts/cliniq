@@ -114,13 +114,37 @@ export const myelopathyDx: DxApproach = {
       { kind: 'step', text: 'CHARACTERISE ONSET' },
       {
         kind: 'html',
-        html: `<div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;"><strong>Peracute (seconds)</strong> + lateralised + no pain → <strong>FCE or ANNPE</strong> → MRI (non-surgical)</div>
-    <div style="height:3px;"></div>
-    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;"><strong>Acute (hours)</strong> + progressive + spinal pain → <strong>IVDD Type I</strong> → CT/MRI → Surgery?</div>
-    <div style="height:3px;"></div>
-    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;"><strong>Trauma history</strong> + spinal pain → <strong>Fracture/luxation</strong> → Spinal rads, CT</div>
-    <div style="height:3px;"></div>
-    <div class="dx-dx" style="text-align:left;font-weight:400;font-size:10px;line-height:1.6;width:100%;"><strong>Chronic progressive</strong> → Neoplasia, degenerative myelopathy, CCSM → MRI</div>`,
+        html: `<table style="width:100%;border-collapse:collapse;font-size:11px;line-height:1.5;">
+  <thead>
+    <tr>
+      <th style="text-align:left;padding:6px 8px;border-bottom:2px solid #cbd5e1;color:#64748b;font-weight:600;width:28%;">Onset</th>
+      <th style="text-align:left;padding:6px 8px;border-bottom:2px solid #cbd5e1;color:#64748b;font-weight:600;width:30%;">Clinical pattern</th>
+      <th style="text-align:left;padding:6px 8px;border-bottom:2px solid #cbd5e1;color:#64748b;font-weight:600;">Diagnosis → Next step</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;"><strong>Peracute</strong> (seconds)</td>
+      <td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;">Lateralised · non-painful</td>
+      <td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;"><strong>FCE or ANNPE</strong> → MRI (non-surgical)</td>
+    </tr>
+    <tr>
+      <td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;"><strong>Acute</strong> (hours)</td>
+      <td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;">Progressive · spinal pain</td>
+      <td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;"><strong>IVDD Type I</strong> → CT/MRI → Surgery?</td>
+    </tr>
+    <tr>
+      <td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;"><strong>Trauma history</strong></td>
+      <td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;">Spinal pain</td>
+      <td style="padding:6px 8px;border-bottom:1px solid #e2e8f0;"><strong>Fracture/luxation</strong> → Spinal rads, CT</td>
+    </tr>
+    <tr>
+      <td style="padding:6px 8px;"><strong>Chronic progressive</strong></td>
+      <td style="padding:6px 8px;">Weeks–months</td>
+      <td style="padding:6px 8px;">Neoplasia · DM · CCSM → MRI</td>
+    </tr>
+  </tbody>
+</table>`,
       },
     ],
     after: [
