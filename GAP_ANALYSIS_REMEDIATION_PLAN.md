@@ -175,32 +175,32 @@ Highest impact: these light up flows that already exist. *(IDs are provisional.)
 - [x] `DIS-URO-URETHRAL-OBS` — Urethral obstruction / plug (link from Emergency too)
 
 ### 2b. Cardio-respiratory — links from **Weakness/Collapse, Dyspnoea, Pale-MM, Coughing** *(Ch 218–219, 237–238)*
-- [ ] `DIS-CARD-HW` — **Heartworm / Dirofilariasis** (melarsomine 3-dose AHS protocol; doxy 10 mg/kg
+- [x] `DIS-CARD-HW` — **Heartworm / Dirofilariasis** (melarsomine 3-dose AHS protocol; doxy 10 mg/kg
       q12h ×28d) ⚠ distinct from the existing *Angiostrongylus* "lungworm" page
-- [ ] `DIS-CARD-ATE` — Feline arterial thromboembolism / saddle thrombus (clopidogrel 18.75 mg/cat)
-- [ ] `DIS-RESP-PHTN` — Pulmonary hypertension (ACVIM echo probability; sildenafil 1–4 mg/kg q8h)
-- [ ] `DIS-RESP-PTE` — Pulmonary thromboembolism
-- [ ] `DIS-RESP-EBP` — Eosinophilic bronchopneumopathy / PIE
-- [ ] `DIS-RESP-DH` — Diaphragmatic hernia
+- [x] `DIS-CARD-ATE` — Feline arterial thromboembolism / saddle thrombus (clopidogrel 18.75 mg/cat)
+- [x] `DIS-RESP-PHTN` — Pulmonary hypertension (ACVIM echo probability; sildenafil 1–4 mg/kg q8h)
+- [x] `DIS-RESP-PTE` — Pulmonary thromboembolism
+- [x] `DIS-RESP-EBP` — Eosinophilic bronchopneumopathy / PIE
+- [x] `DIS-RESP-DH` — Diaphragmatic hernia
 
 ### 2c. Oncology — links from many signs (masses, cytopenias, paraneoplastic) *(Ch 322–331)*
-- [ ] `DIS-NEO-LSA` — Multicentric lymphoma (WHO staging I–V + a/b; CHOP; B vs T prognosis)
-- [ ] `DIS-NEO-MM` — Multiple myeloma (≥2 of 4 diagnostic criteria)
-- [ ] `DIS-NEO-MCT` — Mast cell tumour (Patnaik + Kiupel grading; toceranib)
-- [ ] `DIS-NEO-OSA` — Osteosarcoma
-- [ ] `DIS-NEO-TCC` — Urothelial/transitional cell carcinoma (BRAF; links from Haematuria)
-- [ ] `DIS-NEO-AGASACA` — Anal sac adenocarcinoma (hypercalcaemia of malignancy)
-- [ ] `DIS-NEO-STS` — Soft-tissue sarcoma · `DIS-NEO-MGT` — Mammary tumours · `DIS-NEO-HISTIO` — Histiocytic
-- [ ] `DIS-NEO-PARANEO` — Paraneoplastic syndromes (cross-cutting reference table)
+- [x] `DIS-NEO-LSA` — Multicentric lymphoma (WHO staging I–V + a/b; CHOP; B vs T prognosis)
+- [x] `DIS-NEO-MM` — Multiple myeloma (≥2 of 4 diagnostic criteria)
+- [x] `DIS-NEO-MCT` — Mast cell tumour (Patnaik + Kiupel grading; toceranib)
+- [x] `DIS-NEO-OSA` — Osteosarcoma
+- [x] `DIS-NEO-TCC` — Urothelial/transitional cell carcinoma (BRAF; links from Haematuria)
+- [x] `DIS-NEO-AGASACA` — Anal sac adenocarcinoma (hypercalcaemia of malignancy)
+- [x] `DIS-NEO-STS` — Soft-tissue sarcoma · `DIS-NEO-MGT` — Mammary tumours · `DIS-NEO-HISTIO` — Histiocytic
+- [x] `DIS-NEO-PARANEO` — Paraneoplastic syndromes (cross-cutting reference table)
 
 ### 2d. Endocrine — links from **PU/PD, Weakness** *(Ch 280–298)*
-- [ ] `DIS-ENDO-HYPOPTH` — Hypoparathyroidism (calcitriol + Ca)
-- [ ] `DIS-ENDO-PHEO` — Phaeochromocytoma (normetanephrine; phenoxybenzamine pre-op)
-- [ ] `DIS-ENDO-HAC-CAT` — Feline hyperadrenocorticism
-- [ ] `DIS-ENDO-HYPOTHY-CAT` — Feline hypothyroidism (mostly iatrogenic)
-- [ ] `DIS-ENDO-HYPERTHY-DOG` — Canine hyperthyroidism / thyroid carcinoma
-- [ ] `DIS-ENDO-HHS` — Hyperosmolar hyperglycaemic state
-- [ ] `DIS-ENDO-GASTRINOMA` — Gastrinoma / glucagonoma
+- [x] `DIS-ENDO-HYPOPTH` — Hypoparathyroidism (calcitriol + Ca)
+- [x] `DIS-ENDO-PHEO` — Phaeochromocytoma (normetanephrine; phenoxybenzamine pre-op)
+- [x] `DIS-ENDO-HAC-CAT` — Feline hyperadrenocorticism
+- [x] `DIS-ENDO-HYPOTHY-CAT` — Feline hypothyroidism (mostly iatrogenic)
+- [x] `DIS-ENDO-HYPERTHY-DOG` — Canine hyperthyroidism / thyroid carcinoma
+- [x] `DIS-ENDO-HHS` — Hyperosmolar hyperglycaemic state
+- [x] `DIS-ENDO-GASTRINOMA` — Gastrinoma / glucagonoma
 
 ### 2e. Renal & hepatobiliary — links from **PU/PD, Jaundice, Vomiting** *(Ch 269–275, 302–305)*
 - [ ] `DIS-REN-GN` — Glomerular disease / protein-losing nephropathy
