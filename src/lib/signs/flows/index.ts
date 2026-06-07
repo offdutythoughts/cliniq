@@ -26,6 +26,8 @@ import { myelopathyFlows } from './myelopathy'
 import { vestibularFlows } from './vestibular'
 import { ataxiaFlows } from './ataxia'
 import { bleedingFlows } from './bleeding'
+// Phase 3 — new sign screens (gap-analysis remediation)
+import { pollakiuriaFlow } from './pollakiuria'
 
 export const FLOWS: Record<string, FlowPage> = Object.fromEntries(
   [
@@ -36,5 +38,7 @@ export const FLOWS: Record<string, FlowPage> = Object.fromEntries(
     ...vomitingFlows, ...haematuriaFlows, ...jaundiceFlows, ...paleGumsFlows, ...pupdFlows, ...weaknessFlows,
     // Phase 2
     ...seizuresFlows, ...myelopathyFlows, ...vestibularFlows, ...ataxiaFlows, ...bleedingFlows,
+    // Phase 3
+    pollakiuriaFlow,
   ].map(p => [p.id, p]),
 )

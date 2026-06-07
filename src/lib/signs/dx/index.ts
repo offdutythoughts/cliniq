@@ -29,8 +29,11 @@ import { vomitingDx } from './vomiting'
 import { regurgitationDx } from './regurgitation'
 import { diarrhoeaDx } from './diarrhoea'
 import { pupdDx } from './pupd'
+// Phase 3 — new sign screens (gap-analysis remediation)
+import { pollakiuriaDx } from './pollakiuria'
 
 export const DX: Record<string, DxApproach> = {
+  'pollakiuria': pollakiuriaDx,
   'epistaxis': epistaxisDx,
   'wet-eye': wetEyeDx,
   'haematuria': haematuriaDx,
