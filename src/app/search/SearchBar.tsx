@@ -1,5 +1,6 @@
 'use client'
 import { useRef, useMemo } from 'react'
+import React from 'react'
 import { useSearch } from './SearchContext'
 import { useNav } from '../nav/NavContext'
 import { DB } from '../../data/db'
@@ -9,6 +10,22 @@ import type { View } from '../nav/view'
 
 type Result = { label: string; sub: string; snippet?: string; icon?: string; view: View }
 type Group = { title: string; results: Result[] }
+
+/** Render text with every occurrence of `term` wrapped in a yellow highlight mark. */
+function Highlight({ text, term }: { text: string; term: string }) {
+  if (!term) return <>{text}</>
+  const lower = term.toLowerCase()
+  const parts: React.ReactNode[] = []
+  let cursor = 0
+  let idx: number
+  while ((idx = text.toLowerCase().indexOf(lower, cursor)) !== -1) {
+    if (idx > cursor) parts.push(text.slice(cursor, idx))
+    parts.push(<mark key={idx} className="search-highlight">{text.slice(idx, idx + term.length)}</mark>)
+    cursor = idx + term.length
+  }
+  if (cursor < text.length) parts.push(text.slice(cursor))
+  return <>{parts}</>
+}
 
 const SNIPPET_CTX = 30
 const SNIPPET_LEN = 90
@@ -178,10 +195,10 @@ export default function SearchBar() {
                 <button key={i} className="global-search-result" onClick={() => handleSelect(r.view)}>
                   {r.icon && <span className="global-search-result-icon">{r.icon}</span>}
                   <span className="global-search-result-text">
-                    <span className="global-search-result-label">{r.label}</span>
+                    <span className="global-search-result-label"><Highlight text={r.label} term={query.trim()} /></span>
                     {r.snippet
-                      ? <span className="global-search-result-snippet">{r.snippet}</span>
-                      : r.sub && <span className="global-search-result-sub">{r.sub}</span>
+                      ? <span className="global-search-result-snippet"><Highlight text={r.snippet} term={query.trim()} /></span>
+                      : r.sub && <span className="global-search-result-sub"><Highlight text={r.sub} term={query.trim()} /></span>
                     }
                   </span>
                   <span className="global-search-result-arrow">›</span>
