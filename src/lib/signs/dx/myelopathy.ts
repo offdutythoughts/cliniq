@@ -14,12 +14,38 @@ export const myelopathyDx: DxApproach = {
     blocks: [
       { kind: 'branch', text: 'ONSET + PAIN = THE TWO KEY HISTORY AXES' },
       {
-        kind: 'check',
-        html: `<strong>Onset</strong> separates the differentials more than anything else:<br>
-      • <strong>Peracute (seconds–minutes), non-progressive, often during exercise, NON-painful</strong> → FCE or ANNPE.<br>
-      • <strong>Acute (hours–days), progressive, PAINFUL</strong> → IVDD Type I (extrusion).<br>
-      • <strong>Chronic progressive</strong> → degenerative myelopathy, neoplasia, CCSM (Wobbler), IVDD Type II.<br>
-      • <strong>Trauma history</strong> → fracture/luxation.`,
+        kind: 'html',
+        html: `<table style="width:100%;border-collapse:collapse;font-size:11px;line-height:1.5;">
+  <thead>
+    <tr>
+      <th style="text-align:left;padding:6px 8px;border-bottom:2px solid #cbd5e1;color:#64748b;font-weight:600;width:28%;">Onset</th>
+      <th style="text-align:left;padding:6px 8px;border-bottom:2px solid #cbd5e1;color:#64748b;font-weight:600;width:30%;">Clinical pattern</th>
+      <th style="text-align:left;padding:6px 8px;border-bottom:2px solid #cbd5e1;color:#64748b;font-weight:600;">Diagnosis → Next step</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:8px 8px;border-bottom:1px solid rgba(148,163,184,0.15);"><strong>Peracute</strong> (seconds)</td>
+      <td style="padding:8px 8px;border-bottom:1px solid rgba(148,163,184,0.15);color:#94a3b8;">Lateralised · non-painful</td>
+      <td style="padding:8px 8px;border-bottom:1px solid rgba(148,163,184,0.15);"><strong>FCE or ANNPE</strong> → MRI (non-surgical)</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 8px;border-bottom:1px solid rgba(148,163,184,0.15);"><strong>Acute</strong> (hours)</td>
+      <td style="padding:8px 8px;border-bottom:1px solid rgba(148,163,184,0.15);color:#94a3b8;">Progressive · spinal pain</td>
+      <td style="padding:8px 8px;border-bottom:1px solid rgba(148,163,184,0.15);"><strong>IVDD Type I</strong> → CT/MRI → Surgery?</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 8px;border-bottom:1px solid rgba(148,163,184,0.15);"><strong>Trauma history</strong></td>
+      <td style="padding:8px 8px;border-bottom:1px solid rgba(148,163,184,0.15);color:#94a3b8;">Spinal pain</td>
+      <td style="padding:8px 8px;border-bottom:1px solid rgba(148,163,184,0.15);"><strong>Fracture/luxation</strong> → Spinal rads, CT</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 8px;"><strong>Chronic progressive</strong></td>
+      <td style="padding:8px 8px;color:#94a3b8;">Weeks–months</td>
+      <td style="padding:8px 8px;">Neoplasia · DM · CCSM → MRI</td>
+    </tr>
+  </tbody>
+</table>`,
       },
       { kind: 'step', text: '🐾 SIGNALMENT & BREED CLUES' },
       {
