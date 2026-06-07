@@ -54,12 +54,67 @@ export const vestibularDx: DxApproach = {
       4. <strong>Decreased level of consciousness.</strong>`,
       },
       {
-        kind: 'row',
-        cols: 2,
-        items: [
-          { style: 'text-align:center;font-size:9px;', html: `<strong>Peripheral</strong><br>Normal proprioception & mentation<br>Horizontal/rotary nystagmus (fast phase away)<br>± ipsilateral CN VII / Horner<br>Head tilt toward lesion` },
-          { style: 'text-align:center;font-size:9px;background:#0D7377;', html: `<strong>Central</strong><br>Proprioceptive deficits<br>Vertical / positional nystagmus<br>Multiple CN deficits<br>↓ Mentation · paradoxical signs possible` },
-        ],
+        kind: 'html',
+        html: `<table style="width:100%;border-collapse:collapse;font-size:9px;margin-top:6px;">
+  <thead>
+    <tr>
+      <th style="width:28%;padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.15);text-align:left;color:#e2e8f0;font-weight:600;"></th>
+      <th style="width:24%;padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.15);text-align:left;color:#86efac;font-weight:600;">Peripheral</th>
+      <th style="width:24%;padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.15);text-align:left;color:#fca5a5;font-weight:600;">Central</th>
+      <th style="width:24%;padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.15);text-align:left;color:#fcd34d;font-weight:600;">Bilateral</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#e2e8f0;">Mentation</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#86efac;">Alert / normal</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#fca5a5;">Often depressed / obtunded</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#fcd34d;">Alert / normal</td>
+    </tr>
+    <tr>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#e2e8f0;">Nystagmus type</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#86efac;">Horizontal or rotary only</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#fca5a5;">Any type incl. vertical</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#fcd34d;">Absent</td>
+    </tr>
+    <tr>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#e2e8f0;">Nystagmus direction</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#86efac;">Fixed — does not change with head position</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#fca5a5;">May be <strong>direction-changing</strong> or disconjugate</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#fcd34d;">—</td>
+    </tr>
+    <tr>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#e2e8f0;">CP deficits</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#86efac;">✗ ABSENT</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#fca5a5;">✓ PRESENT</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#fcd34d;">Variable</td>
+    </tr>
+    <tr>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#e2e8f0;">Head tilt</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#86efac;">Present (toward lesion)</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#fca5a5;">Present (toward lesion) OR paradoxical</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#fcd34d;">✗ ABSENT</td>
+    </tr>
+    <tr>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#e2e8f0;">Other CN deficits</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#86efac;">± Horner's · ± CN VII only</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#fca5a5;">Multiple CN V–XII</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#fcd34d;">Bilateral ventrolateral strabismus</td>
+    </tr>
+    <tr>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#e2e8f0;">VOR</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#86efac;">Intact</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#fca5a5;">May be impaired</td>
+      <td style="padding:5px 6px;border-bottom:1px solid rgba(255,255,255,0.08);color:#fcd34d;">Absent bilaterally</td>
+    </tr>
+    <tr>
+      <td style="padding:5px 6px;color:#e2e8f0;">Gait</td>
+      <td style="padding:5px 6px;color:#86efac;">Rolling/falling toward lesion; ataxic</td>
+      <td style="padding:5px 6px;color:#fca5a5;">Ataxia ± hemiparesis</td>
+      <td style="padding:5px 6px;color:#fcd34d;">Wide-based; side-to-side sway; crouching</td>
+    </tr>
+  </tbody>
+</table>`,
       },
     ],
     after: [
