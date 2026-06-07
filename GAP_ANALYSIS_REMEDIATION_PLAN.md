@@ -243,11 +243,11 @@ clinical frequency. *(Ettinger §II chapters in parens.)*
 ## Phase 4 — Infectious disease expansion *(Ch 183–211)*
 
 Diagnostics + doses already in the notes. Link from Fever (Phase 3) and relevant systemic signs.
-- [ ] `DIS-INFECT-LYME` (Ch 187) · `DIS-INFECT-BART` (191) · `DIS-INFECT-ANAP` (193) · `DIS-INFECT-HMYCO` (194)
-- [ ] `DIS-INFECT-BRUC` (189) · `DIS-INFECT-TETANUS` / `-BOTULISM` (190)
-- [ ] `DIS-INFECT-FIV` (198) · `DIS-INFECT-PARVO` (201) · `DIS-INFECT-RABIES` (202)
-- [ ] `DIS-INFECT-COCCI` (208) · `DIS-INFECT-BLASTO` / `-HISTO` (209) · `DIS-INFECT-CYTAUX` (197)
-- [ ] Enteric bacterial (Salmonella/Campylobacter/Clostridia) — link from Diarrhoea (195)
+- [x] `DIS-INFECT-LYME` (Ch 187) · `DIS-INFECT-BART` (191) · `DIS-INFECT-ANAP` (193) · `DIS-INFECT-HMYCO` (194)
+- [x] `DIS-INFECT-BRUC` (189) · `DIS-INFECT-TETANUS` / `-BOTULISM` (190)
+- [x] `DIS-INFECT-FIV` (198) · `DIS-INFECT-PARVO` (201) · `DIS-INFECT-RABIES` (202)
+- [x] `DIS-INFECT-COCCI` (208) · `DIS-INFECT-BLASTO` / `-HISTO` (209) · `DIS-INFECT-CYTAUX` (197)
+- [x] Enteric bacterial (Salmonella/Campylobacter/Clostridia) — link from Diarrhoea (195)
 
 ---
 
@@ -273,3 +273,4 @@ _(Append a line per completed chunk: date · phase/item · commit SHA · notes.)
 - _2026-06-07 — Phase 0.4 (ophthalmic dedup) · unified DIS-OPH-* dupes onto live DIS-EYE-* set (+DIS-NEU-HORNERS), kept DIS-OPH-GLAUCOMA. 9 dup pages removed (134 lines); tsc/test green._
 - _2026-06-07 — Phase 1 COMPLETE (renal, cardiac, neuro, GI/pancreas, hepatobiliary, endocrine, onco, tox). 17 enrichment items across ~25 pages. Repaired the missing posthog-js dep (tsc 3→0). Notes: MG feline remission stated qualitatively (source has no literal 0%); serum bile-acid numeric cutoffs absent from source (kept qualitative); feline Spec fPL has no clean cutoff in source. disease-hcm Playwright baseline needs regeneration in canonical env (intended growth). tsc 0 + 79 tests green throughout._
 - _2026-06-07 — Phase 2 COMPLETE (2a–2g). Added 62 new disease pages via verbatim subagent drafting + parent splice/verify: LUT (13), cardio-resp (6), oncology (9), endocrine (7), renal/hepatobiliary (8), GI (8), neuro (4). DIS-HEP-COPPER folded into enriched DIS-HEP-CHRONHEP. Wired haematuria lesion rows (cystitis/FIC/urethral-obstruction/BPH/prostatitis/prost-carcinoma/pyelo/TCC) → new pages. 190→245 disease pages; DIS-NEU-HYDRO dangling ref RESOLVED — dangling scan now empty. tsc 0 + 79 tests green throughout._
+- _2026-06-07 — Phase 4 COMPLETE. Added 14 infectious-disease pages (Lyme, Bartonella, Anaplasma, haemotropic Mycoplasma, Brucella, Tetanus, Botulism, Cytauxzoon, enteric bacterial, FIV, Rabies, Cocci, Blasto, Histo). Skipped DIS-INFECT-PARVO (covered by existing DIS-GI-PARVO). 245→259 disease pages; dangling scan empty; tsc 0 + 79 tests green._
