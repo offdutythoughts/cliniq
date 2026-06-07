@@ -3,6 +3,7 @@
 // ../../cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
+import { stepPair } from './shared/dxHelpers'
 
 export const ataxiaDx: DxApproach = {
   title: 'Ataxia',
@@ -12,6 +13,22 @@ export const ataxiaDx: DxApproach = {
     title: 'History: Ataxia',
     blocks: [
       { kind: 'branch', text: 'ONSET, PROGRESSION & DRUG HISTORY' },
+      {
+        kind: 'comparisonTable',
+        cols: [
+          { label: 'Ataxia type', isLabel: true, width: '22%' },
+          { label: 'Key clues in history', color: '#94a3b8', width: '42%' },
+          { label: 'First priority' },
+        ],
+        rows: [
+          { kind: 'row', cells: ['<strong>Cerebellar</strong>', 'Intention tremor, hypermetria, no weakness; breed history', 'Drug/diet first (metronidazole, thiamine)'] },
+          { kind: 'row', cells: ['<strong>Vestibular</strong>', 'Head tilt, nystagmus, rolling, onset in older dog', 'Age, ear history, ototoxic drugs'] },
+          { kind: 'row', cells: ['<strong>Proprioceptive (spinal)</strong>', 'Knuckling, scuffing, paresis; chondrodystrophic breed', 'Spinal pain? Onset speed?'] },
+          { kind: 'row', cells: ['<strong>Multifocal</strong>', 'Combines signs from multiple systems; systemic illness', 'Vaccination status, travel (CDV, Toxoplasma)'] },
+        ],
+        fontSize: '11px',
+        scrollable: false,
+      },
       {
         kind: 'check',
         html: `<strong>Drug history is critical and asked FIRST:</strong> metronidazole (🐕 >40 mg/kg/day, 🐱 lower threshold from slower clearance), phenytoin, aminoglycosides, and ivermectin (MDR1 breeds) cause reversible cerebellovestibular ataxia — always ask before imaging.<br>
@@ -93,6 +110,14 @@ export const ataxiaDx: DxApproach = {
         html: `Proprioceptive deficits, vertical/positional nystagmus, multiple CN deficits, or ↓ consciousness = <strong>central</strong>. Otherwise peripheral. (See the Vestibular approach for the full battery.)<br>
     ⚠️ Vertical nystagmus in a patient on metronidazole = drug toxicity until proven otherwise — STOP the drug first.`,
       },
+      { kind: 'step', text: '🔬 STEP 4 — MINIMUM HANDS-ON TESTS' },
+      {
+        kind: 'check',
+        html: `<strong>Palpate vertebral column</strong> (occiput to sacrum) for spinal pain — pain differentiates spinal/compressive from central cerebellar or vestibular causes.<br>
+      <strong>CK (creatine kinase)</strong> — elevated CK points to myopathy or polymyositis as a mimic for weakness/ataxia.<br>
+      <strong>Blood pressure</strong> (all cats, geriatric dogs) — hypertensive encephalopathy and retinal detachment can present as acute CNS signs.<br>
+      <strong>Fundoscopy</strong> (especially cats) — hypertensive retinopathy, uveitis/chorioretinitis (Toxoplasma, FIP, fungal), papilloedema.`,
+      },
       { kind: 'step', alt: true, text: '🐱 vs 🐕 — SPECIES-SPECIFIC EXAM TIPS' },
       {
         kind: 'check',
@@ -111,92 +136,43 @@ export const ataxiaDx: DxApproach = {
   dx: {
     title: 'Dx: Ataxia — Diagnostics',
     blocks: [
-      { kind: 'step', text: 'ATAXIA — DIAGNOSTIC APPROACH' },
-      { kind: 'step', alt: true, text: 'TIER 1 — MINIMUM DATABASE' },
+      ...stepPair(1, 'MINIMUM DATABASE — ALL ATAXIA', `CBC (leukogram, PCV/TS, platelets). Biochemistry: glucose · iCa · K⁺ · Na⁺ · BUN/Cr · ALP/ALT · globulins/A:G (🐱 FIP screen) · CK (myopathy). Blood pressure — all cats, geriatric dogs. 🐱 FIV/FeLV + T4 (all cats).`),
+      { kind: 'branch', text: 'CLASSIFY ATAXIA TYPE → DICTATES NEXT STEP' },
       {
-        kind: 'row',
-        cols: 3,
-        items: [
-          {
-            style: 'font-size:9px;',
-            html: `<strong>Haematology</strong><br>PCV/TS<br>Leukogram<br>🐱 FIV/FeLV`,
-          },
-          {
-            style: 'font-size:9px;',
-            html: `<strong>Biochemistry</strong><br>Glucose · Electrolytes<br>BUN/Cr · Liver enzymes<br>CK · Globulins/A:G (🐱 FIP)<br>T4 (🐱)`,
-          },
-          {
-            style: 'font-size:9px;',
-            html: `<strong>Blood pressure</strong><br>Hypertension →<br>retinal/CNS damage?<br>🐱 always BP geriatrics`,
-          },
+        kind: 'comparisonTable',
+        scrollable: true,
+        minWidth: '540px',
+        fontSize: '9px',
+        cols: [
+          { label: 'Finding', isLabel: true, width: '26%' },
+          { label: 'Cerebellar', color: '#6EE7B7' },
+          { label: 'Vestibular', color: '#67E8F9' },
+          { label: 'Proprioceptive (spinal)', color: '#C084FC' },
+        ],
+        rows: [
+          { kind: 'row', cells: ['Clinical signs', 'Hypermetria / intention tremor / no paresis', 'Head tilt / nystagmus / rolling', 'Knuckling / scuffing / paresis'] },
+          { kind: 'row', cells: ['Next imaging', 'MRI brain (cerebellum)', 'Otoscopy + CT/MRI bullae (periph) / MRI brain + CSF (central)', 'Spinal rads → CT/MRI spine'] },
+          { kind: 'row', cells: ['Key infectious tests', 'CDV PCR (🐕) · FIP globulins (🐱) · Toxoplasma/Neospora', 'Ear swab · Brucella if chronic', 'CK · protozoal serology · CSF'] },
+          { kind: 'row', cells: ['Key metabolic', 'Thiamine (🐱 fish diet); metronidazole → STOP', 'Hypothyroid T4 (🐕 CN VII + vestibular)', 'Spinal CSF protein (polyradiculo)'] },
+          { kind: 'row', cells: ['Key hereditary/breed', 'Abiotrophy/SCA → DNA test (breed)', 'Idiopathic (excl. by elimination)', 'DM (GSD, older); CCSM (Dobermann)'] },
         ],
       },
-      { kind: 'branch', text: 'BY ATAXIA TYPE' },
-      {
-        kind: 'html',
-        html: `<div class="dx-connector">
-      <div class="dx-col">
-        <div class="dx-test" style="width:100%;text-align:center;"><strong>Cerebellar</strong></div>
-        <div class="dx-arrow">↓</div>
-        <div class="dx-note" style="width:100%;font-size:9px;"><strong>MRI brain</strong> (cerebellum focus)<br>+ <strong>CSF analysis</strong><br>+ <strong>Infectious panel</strong></div>
-        <div class="dx-arrow">↓</div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">Mononuclear CSF pleocytosis → MUO / cerebellitis (🐕)</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">🐱 Periventricular enhancement, high globulins → FIP</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">🐕 Myoclonus + multifocal → CDV PCR</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">Bilateral symmetric brainstem T2/FLAIR → THIAMINE deficiency</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">Mass lesion → Neoplasia (🐱 meningioma — often resectable)</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">Cerebellar atrophy + young breed → Abiotrophy / SCA → DNA test</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">Drug history → Metronidazole / phenytoin toxicity</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">Vascular territory (DWI) → Cerebellar infarct → hunt cause</div>
-      </div>
-      <div class="dx-col">
-        <div class="dx-test" style="width:100%;text-align:center;background:#0D7377;"><strong>Vestibular</strong></div>
-        <div class="dx-arrow">↓</div>
-        <div class="dx-note" style="width:100%;font-size:9px;"><strong>Otoscopy + CT/MRI bullae</strong> (peripheral)<br><strong>MRI brain + CSF</strong> (central)<br>🐱 retroflex pharynx (polyp)</div>
-        <div class="dx-arrow">↓</div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">Bulla changes → Otitis media/interna</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">🐕 No lesion, older dog → Idiopathic</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">🐱 No lesion any age, often summer/outdoor → Idiopathic</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">🐱 Nasopharyngeal polyp → retroflex scope</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">Brainstem lesion → Central (MUO / neo / CVA / FIP / thiamine)</div>
-      </div>
-      <div class="dx-col">
-        <div style="background:#E8713A;color:#fff;border-radius:10px;padding:8px;text-align:center;width:100%;font-weight:600;font-size:11px;">Proprioceptive</div>
-        <div class="dx-arrow">↓</div>
-        <div class="dx-note" style="width:100%;font-size:9px;"><strong>Spinal radiographs</strong><br><strong>CT / MRI spine</strong><br>(segment based on neuro exam)<br>+ CK + serology (protozoal)</div>
-        <div class="dx-arrow">↓</div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">Compressive → IVDD / fracture / tumour</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">Non-compressive → FCE / ANNPE</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">Chronic progressive → Neoplasia / DM</div>
-        <div style="height:3px;"></div>
-        <div class="dx-dx" style="width:100%;font-size:9px;">🐕 Young pup, stiff hyperextended hindlimbs → Neospora</div>
-      </div>
-    </div>`,
-      },
+      ...stepPair(2, 'CEREBELLAR BRANCH — MRI BRAIN + CSF', `MRI brain (focus on cerebellum, brainstem). CSF: mononuclear pleocytosis → MUO/cerebellitis (🐕); periventricular enhancement + high globulins → FIP (🐱); bilateral symmetric brainstem T2/FLAIR → thiamine deficiency; cerebellar atrophy + young breed-predisposed animal → abiotrophy/SCA → DNA test. CDV PCR on CSF if myoclonus / unvaccinated dog.`),
+      ...stepPair(3, 'VESTIBULAR BRANCH — OTOSCOPY + CT/MRI BULLAE or MRI BRAIN', `Peripheral signs (no CP deficits) → otoscopy + CT bullae (fluid, thickening, lysis, polyp). Central signs (CP deficits / vertical nystagmus / ↓ mentation) → MRI brain + CSF. Hypothyroid T4 (dog with vestibular + CN VII). 🐱 Retroflex pharynx for polyp under GA.`),
+      ...stepPair(4, 'PROPRIOCEPTIVE (SPINAL) BRANCH — SPINAL IMAGING', `Localise spinal level by neurological exam (see Myelopathy approach for full localisation table). Spinal radiographs first → CT for bony IVDD/fracture/lysis → MRI for soft-tissue cord lesions (FCE, ANNPE, neoplasia, DM). CK — polymyositis/myopathy mimic. Protozoal serology (Toxoplasma/Neospora) — young dog with stiff hyperextended hindlimbs.`),
     ],
     after: [
       {
-        kind: 'note',
-        style: 'margin-top:10px;',
-        html: `💡 <strong>Drug, diet and vaccination history</strong> first — metronidazole, thiamine deficiency (🐱), CDV (🐕) are missed when imaging precedes the conversation.`,
+        kind: 'callout',
+        tone: 'warning',
+        title: 'TREAT ON SUSPICION — WHEN DELAY IS DANGEROUS',
+        gap: 10,
+        html: `Parenteral thiamine (50–100 mg IV/IM then daily × 3 days) for any cat on fish/homemade diet with cervical ventroflexion + ataxia — do not wait for MRI. Stop metronidazole immediately on first vertical nystagmus presentation. Clindamycin + pyrimethamine started empirically for suspected Neospora in young pup with rigid pelvic limb hyperextension.`,
       },
       {
-        kind: 'note',
-        style: 'margin-top:6px;',
-        html: `🚨 <strong>Treat on suspicion when delay is dangerous:</strong> parenteral thiamine for cervical-ventroflexion cat on a fish/homemade diet; stop metronidazole on first vertical-nystagmus presentation; clindamycin started early for suspected Neospora in young pup with stiff pelvic limbs.`,
+        kind: 'alert',
+        gap: 8,
+        html: `⚠️ <strong>Drug, diet and vaccination history first</strong> — metronidazole, thiamine deficiency (🐱), CDV (🐕) are missed when imaging precedes the conversation. Always classify the ataxia type before choosing imaging.`,
       },
       { kind: 'disclaimer' },
     ],
