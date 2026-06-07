@@ -15,6 +15,46 @@ import type { Tone, LabeledLink } from './flowTypes'
  *  `html` is the card body (may contain <strong>/<br>/nested markup). */
 export type DxCard = { html: string; style?: string }
 
+// ── comparisonTable block types ───────────────────────────────────────────────
+
+/** One column of a comparison table. `color` is applied to the header text and
+ *  to all data cells in the column (unless a cell overrides with `dim`).
+ *  Set `isLabel` for the row-label column: header gets `var(--gray)` and cells
+ *  get `var(--white)` bold, regardless of `color`. */
+export type CompTableCol = {
+  label: string
+  color?: string    // CSS color for header text + cell text
+  width?: string    // CSS width e.g. '28%'
+  isLabel?: boolean // first-column "finding" treatment (white bold cells, gray header)
+}
+
+/** A full-width section-separator row (spans all columns). Renders as a small
+ *  uppercase label, visually grouping the rows that follow it. */
+export type CompTableSection = { kind: 'section'; label: string }
+
+/** A single data cell. Pass a plain string for the common case, or an object
+ *  to set `dim: true` which renders the cell in `var(--gray)` instead of the
+ *  column color (use for "Normal / not affected" cells in localisation tables). */
+export type CompTableCell = string | { html: string; dim?: boolean }
+
+/** A data row in a comparison table; `cells` aligns 1-to-1 with `cols`. */
+export type CompTableDataRow = { kind: 'row'; cells: CompTableCell[] }
+
+/** A structured comparison / localisation table — replaces the `kind: 'html'`
+ *  raw-table escape hatch for columnar differential/localisation data.
+ *  `scrollable` wraps the table in `overflow-x:auto` (default `true`).
+ *  `minWidth` sets the table's minimum width for horizontal scroll (e.g. `'560px'`).
+ *  `fontSize` defaults to `'9px'`. `label` is an optional teal section label. */
+export type ComparisonTableBlock = {
+  kind: 'comparisonTable'
+  cols: CompTableCol[]
+  rows: (CompTableSection | CompTableDataRow)[]
+  label?: string
+  fontSize?: string
+  scrollable?: boolean
+  minWidth?: string
+}
+
 /** Arrow-spine control common to every block. The renderer draws a `.dx-arrow`
  *  between consecutive blocks inside `.dx-wrap`; set `noArrowAfter` to suppress
  *  the connector after this block (the legacy `.dx-arrow` placement is
@@ -48,6 +88,9 @@ export type DxBlock = DxArrowCtl & (
    *  html body that expands on tap. Rendered as native `<details>/<summary>`
    *  (no RichText boundary — body is plain JSX via RichText component). */
   | { kind: 'accordion'; items: { title: string; html: string }[]; cols?: number }
+  /** Structured comparison / localisation table (typed replacement for `kind: 'html'`
+   *  raw tables). Column headers are colour-coded; rows may include section separators. */
+  | ComparisonTableBlock
   /** Escape hatch for genuinely bespoke markup (e.g. the seizures tier tree). */
   | { kind: 'html'; html: string }
   /** The "For qualified veterinary professionals only." footer. */

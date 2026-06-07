@@ -6,7 +6,7 @@
 // linkToView. Same .dx-* classes / inline styles → pixel-identical.
 
 import { Fragment } from 'react'
-import type { DxApproach, DxBlock, DxNavItem } from '../../lib/signs/dxTypes'
+import type { DxApproach, DxBlock, DxNavItem, CompTableCell } from '../../lib/signs/dxTypes'
 import { HUE, TITLE } from '../../lib/signs/tone'
 import { DX } from '../../lib/signs/dx'
 import { RichText } from '../../components/RichText'
@@ -118,6 +118,85 @@ function DxAccordion({ b, onNav }: { b: Extract<DxBlock, { kind: 'accordion' }>;
   )
 }
 
+function DxComparisonTable({ b }: { b: Extract<DxBlock, { kind: 'comparisonTable' }> }) {
+  const fs = b.fontSize ?? '9px'
+  const cellPad = '7px 6px'
+  const borderRow = '1px solid rgba(148,163,184,0.1)'
+  const borderSection = '1px solid rgba(148,163,184,0.08)'
+
+  function cellColor(col: typeof b.cols[number], cell: CompTableCell): string {
+    if (typeof cell !== 'string' && cell.dim) return 'var(--gray)'
+    if (col.isLabel) return 'var(--white)'
+    return col.color ?? 'var(--white)'
+  }
+  function cellHtml(cell: CompTableCell): string {
+    return typeof cell === 'string' ? cell : cell.html
+  }
+
+  const colCount = b.cols.length
+  const table = (
+    <table style={s(`border-collapse:collapse;font-size:${fs};${b.minWidth ? `min-width:${b.minWidth};` : ''}width:100%;`)}>
+      <thead>
+        <tr>
+          {b.cols.map((col, ci) => {
+            const headerColor = col.isLabel ? 'var(--gray)' : (col.color ?? 'var(--white)')
+            const borderB = col.isLabel
+              ? '2px solid rgba(148,163,184,0.3)'
+              : col.color ? `2px solid ${col.color}` : '2px solid rgba(148,163,184,0.3)'
+            return (
+              <th key={ci} style={s(`padding:${cellPad};font-size:${fs};font-weight:700;color:${headerColor};border-bottom:${borderB};text-align:${ci === 0 ? 'left' : 'center'};white-space:nowrap;${col.width ? `width:${col.width};` : ''}`)}>
+                {col.label}
+              </th>
+            )
+          })}
+        </tr>
+      </thead>
+      <tbody>
+        {b.rows.map((row, ri) => {
+          const isLast = ri === b.rows.length - 1
+          if (row.kind === 'section') {
+            return (
+              <tr key={ri}>
+                <td colSpan={colCount} style={s(`padding:4px 6px 2px;font-size:8px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:${borderSection}`)}>
+                  {row.label}
+                </td>
+              </tr>
+            )
+          }
+          return (
+            <tr key={ri}>
+              {row.cells.map((cell, ci) => {
+                const col = b.cols[ci]
+                const color = cellColor(col, cell)
+                const fw = col.isLabel ? '600' : undefined
+                const align = ci === 0 ? 'left' : 'center'
+                return (
+                  <td key={ci} style={s(`padding:${cellPad};font-size:${fs};color:${color};${fw ? `font-weight:${fw};` : ''}text-align:${align};${!isLast ? `border-bottom:${borderRow};` : ''}line-height:1.4;white-space:${ci === 0 ? 'nowrap' : 'normal'};`)}
+                    dangerouslySetInnerHTML={{ __html: cellHtml(cell) }}
+                  />
+                )
+              })}
+            </tr>
+          )
+        })}
+      </tbody>
+    </table>
+  )
+
+  return (
+    <div>
+      {b.label && (
+        <div style={s('font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;')}>
+          {b.label}
+        </div>
+      )}
+      {b.scrollable !== false ? (
+        <div style={s('overflow-x:auto;width:100%;')}>{table}</div>
+      ) : table}
+    </div>
+  )
+}
+
 function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
   switch (b.kind) {
     case 'branch': return <div className="dx-branch"><Raw html={b.text} onNav={onNav} /></div>
@@ -140,6 +219,7 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
         </div>
       )
     }
+    case 'comparisonTable': return <DxComparisonTable b={b} />
     case 'html': return <Raw html={b.html} onNav={onNav} />
     case 'disclaimer': return <div className="disclaimer">For qualified veterinary professionals only.</div>
   }
