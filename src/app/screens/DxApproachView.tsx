@@ -99,6 +99,25 @@ function DxDiseaseGrid({ b, onNav }: { b: Extract<DxBlock, { kind: 'diseaseGrid'
   )
 }
 
+function DxAccordion({ b, onNav }: { b: Extract<DxBlock, { kind: 'accordion' }>; onNav: Nav }) {
+  const grid = b.cols ? `display:grid;grid-template-columns:repeat(${b.cols},1fr);gap:6px;align-items:start;` : 'display:flex;flex-direction:column;gap:6px;'
+  return (
+    <div style={s(grid)}>
+      {b.items.map((item, i) => (
+        <details key={i} style={s('background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.2);border-radius:10px;overflow:hidden;')}>
+          <summary style={s('padding:10px 12px;font-size:11px;font-weight:700;color:#5EEAD4;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;')}>
+            {item.title}
+            <span style={s('font-size:10px;opacity:.6;flex-shrink:0;margin-left:8px;')}>▸ tap to expand</span>
+          </summary>
+          <div style={s('padding:8px 12px 10px;font-size:10.5px;line-height:1.6;color:var(--gray);border-top:1px solid rgba(13,148,136,0.15);')}>
+            <Raw html={item.html} onNav={onNav} />
+          </div>
+        </details>
+      ))}
+    </div>
+  )
+}
+
 function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
   switch (b.kind) {
     case 'branch': return <div className="dx-branch"><Raw html={b.text} onNav={onNav} /></div>
@@ -109,6 +128,7 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
     case 'callout': return <DxCallout b={b} onNav={onNav} />
     case 'diseaseGrid': return <DxDiseaseGrid b={b} onNav={onNav} />
     case 'note': return <div className="dx-note" style={b.style ? s(b.style) : undefined}><Raw html={b.html} onNav={onNav} /></div>
+    case 'accordion': return <DxAccordion b={b} onNav={onNav} />
     case 'lesionLink': {
       const bg = b.tone === 'secondary'
         ? 'background:rgba(13,148,136,0.2);border-color:rgba(13,148,136,0.5);'

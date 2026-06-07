@@ -44,6 +44,10 @@ export type DxBlock = DxArrowCtl & (
   /** A tappable navigation link to a lesion-location view. Renders as a
    *  `.dx-dx` button; `tone` selects a tint variant ('primary' default, 'secondary'). */
   | { kind: 'lesionLink'; loc: string; name: string; tone?: 'primary' | 'secondary' }
+  /** Collapsible accordion list — each item has a visible title row and an
+   *  html body that expands on tap. Rendered as native `<details>/<summary>`
+   *  (no RichText boundary — body is plain JSX via RichText component). */
+  | { kind: 'accordion'; items: { title: string; html: string }[]; cols?: number }
   /** Escape hatch for genuinely bespoke markup (e.g. the seizures tier tree). */
   | { kind: 'html'; html: string }
   /** The "For qualified veterinary professionals only." footer. */
