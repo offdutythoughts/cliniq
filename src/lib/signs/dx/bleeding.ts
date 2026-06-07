@@ -186,61 +186,117 @@ export const bleedingDx: DxApproach = {
       },
       { kind: 'step', alt: true, text: 'STEP 2 — TIER 1 LABORATORY EVALUATION' },
       {
-        kind: 'check',
-        html: `<strong>Complete blood count + manual smear examination</strong>:
-    <div style="margin-left:8px;">
-      • Platelet count — automated platelet counts can be falsely low (clumping); always verify by smear estimation (1 platelet per HPF ≈ 15 ×10⁹/L; normal &gt; 200 ×10⁹/L; &lt;30–50 ×10⁹/L = spontaneous bleeding risk)<br>
-      • Anaemia (regenerative — haemolysis, blood loss; non-regenerative — bone marrow suppression)<br>
-      • Spherocytes (IMHA), schistocytes (DIC, vasculopathy), Heinz bodies (oxidative), nucleated RBCs (bone marrow stress / lead)<br>
-      • Reticulocyte count — regenerative response &gt; 60–80 ×10⁹/L (cat) / &gt; 60 ×10⁹/L (dog)<br>
-      • Leukogram (leucocytosis with stress / inflammation / sepsis / DIC; left shift; lymphocytosis with Ehrlichia)
-    </div>
-    <strong>Coagulation profile</strong>:
-    <div style="margin-left:8px;">
-      • <strong>PT</strong> (extrinsic + common: factors VII, X, V, II, fibrinogen) — prolongs first with vit K antagonists (factor VII shortest half-life)<br>
-      • <strong>aPTT</strong> (intrinsic + common: XII, XI, IX, VIII, X, V, II, fibrinogen)<br>
-      • Combined PT + aPTT prolongation → common pathway, severe deficiency, rodenticide, DIC, hepatic failure<br>
-      • PT only prolonged → factor VII (rare; early rodenticide; hepatic disease)<br>
-      • aPTT only prolonged → factor VIII (haemophilia A), IX (haemophilia B), XI, XII (XII deficiency asymptomatic)<br>
-      • <strong>ACT</strong> (activated clotting time) — bedside aPTT surrogate; less sensitive
-    </div>
-    <strong>Biochemistry + urinalysis</strong>: hepatic panel (factors made in liver), renal (uraemia → platelet dysfunction), albumin (PLN with bleeding), electrolytes (snake envenomation), CK (rhabdomyolysis).<br>
-    <strong>Blood smear photos</strong> — share with referral clinical pathologist if findings unclear.`,
+        kind: 'html',
+        html: `<div style="padding:10px 12px;background:var(--check-bg,rgba(148,163,184,0.07));border:1px solid rgba(148,163,184,0.18);border-radius:10px;display:flex;flex-direction:column;gap:12px;">
+  <div>
+    <div style="font-size:10px;font-weight:700;color:var(--white);margin-bottom:6px;">🔬 Complete Blood Count + Manual Smear</div>
+    <table style="width:100%;border-collapse:collapse;font-size:9px;">
+      <thead>
+        <tr style="border-bottom:1.5px solid rgba(148,163,184,0.3);">
+          <th style="padding:4px 6px;text-align:left;color:var(--gray);font-weight:700;width:38%;">Parameter</th>
+          <th style="padding:4px 6px;text-align:left;color:var(--gray);font-weight:700;">Interpretation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+          <td style="padding:4px 6px;color:var(--white);font-weight:600;">Platelet count</td>
+          <td style="padding:4px 6px;color:var(--gray);">Automated counts can be falsely low (clumping) — verify by smear (1 plt/HPF ≈ 15 ×10⁹/L). Normal &gt;200 ×10⁹/L · &lt;50 ×10⁹/L = spontaneous bleed risk · &lt;10 ×10⁹/L = life-threatening</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+          <td style="padding:4px 6px;color:var(--white);font-weight:600;">Anaemia</td>
+          <td style="padding:4px 6px;color:var(--gray);">Regenerative (haemolysis, blood loss) vs non-regenerative (BM suppression). Reticulocytes: &gt;60–80 ×10⁹/L (cat) / &gt;60 ×10⁹/L (dog) = regenerative</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+          <td style="padding:4px 6px;color:var(--white);font-weight:600;">RBC morphology</td>
+          <td style="padding:4px 6px;color:var(--gray);">Spherocytes → IMHA · Schistocytes → DIC, vasculopathy · Heinz bodies → oxidative injury · Nucleated RBCs → BM stress / lead</td>
+        </tr>
+        <tr>
+          <td style="padding:4px 6px;color:var(--white);font-weight:600;">Leukogram</td>
+          <td style="padding:4px 6px;color:var(--gray);">Leucocytosis → stress / inflammation / sepsis / DIC · Left shift → sepsis · Lymphocytosis → Ehrlichia</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <div style="font-size:10px;font-weight:700;color:var(--white);margin-bottom:6px;">🧪 Coagulation Profile</div>
+    <table style="width:100%;border-collapse:collapse;font-size:9px;">
+      <thead>
+        <tr style="border-bottom:1.5px solid rgba(148,163,184,0.3);">
+          <th style="padding:4px 6px;text-align:left;color:#FCD34D;font-weight:700;width:14%;">Test</th>
+          <th style="padding:4px 6px;text-align:left;color:var(--gray);font-weight:700;width:42%;">Pathway (factors measured)</th>
+          <th style="padding:4px 6px;text-align:left;color:var(--gray);font-weight:700;">Key point</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+          <td style="padding:4px 6px;color:#FCD34D;font-weight:700;">PT</td>
+          <td style="padding:4px 6px;color:var(--gray);">Extrinsic + common: VII, X, V, II, fibrinogen</td>
+          <td style="padding:4px 6px;color:var(--gray);">Prolongs first with vit K antagonists (VII shortest half-life)</td>
+        </tr>
+        <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+          <td style="padding:4px 6px;color:#A5B4FC;font-weight:700;">aPTT</td>
+          <td style="padding:4px 6px;color:var(--gray);">Intrinsic + common: XII, XI, IX, VIII, X, V, II, fibrinogen</td>
+          <td style="padding:4px 6px;color:var(--gray);">Haemophilia A (VIII), B (IX), XII deficiency; intrinsic defects</td>
+        </tr>
+        <tr>
+          <td style="padding:4px 6px;color:var(--gray);font-weight:700;">ACT</td>
+          <td style="padding:4px 6px;color:var(--gray);">Bedside aPTT surrogate</td>
+          <td style="padding:4px 6px;color:var(--gray);">Less sensitive than lab aPTT; useful point-of-care screen</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="font-size:9px;color:var(--gray);"><strong style="color:var(--white);">Biochemistry + urinalysis:</strong> hepatic panel (factors made in liver) · renal (uraemia → platelet dysfunction) · albumin (PLN) · electrolytes (snake envenomation) · CK (rhabdomyolysis) · Blood smear photos — share with referral pathologist if findings unclear.</div>
+</div>`,
       },
-      { kind: 'step', alt: true, text: 'STEP 3 — DECISION BRANCH BASED ON TIER 1' },
       {
-        kind: 'check',
-        html: `<strong>Severe thrombocytopenia (&lt;50 ×10⁹/L) + petechiae + normal PT/aPTT:</strong>
-    <div style="margin-left:8px;">
-      • Tick-borne panel (Ehrlichia, Anaplasma, Babesia, Rickettsia — 4Dx test)<br>
-      • Coombs / saline agglutination (Evans syndrome — IMHA + IMTP)<br>
-      • ANA · imaging for underlying neoplasia<br>
-      • Bone marrow aspirate / core if no obvious cause<br>
-      • Drug review<br>
-      • IMTP often confirmed by exclusion + response to immunosuppression
-    </div>
-    <strong>PT and/or aPTT prolonged + normal platelet count + cavity bleed:</strong>
-    <div style="margin-left:8px;">
-      • Vitamin K1 SC empirically; recheck PT 48–72 h<br>
-      • PIVKAs (proteins induced by vit K absence) — more sensitive for rodenticide than PT<br>
-      • Bile acids + ammonia for hepatic failure<br>
-      • Specific factor assays (VIII, IX, XI, XII) for inherited disease<br>
-      • Fibrinogen + D-dimer + antithrombin (DIC panel)
-    </div>
-    <strong>Normal platelet count + normal coag + prolonged BMBT + mucosal bleeding pattern:</strong>
-    <div style="margin-left:8px;">
-      • vWF antigen (vWD) — predisposed breeds<br>
-      • Platelet function: PFA-100 (limited availability), platelet aggregometry (referral)<br>
-      • Uraemia / hyperglobulinaemia / drug-induced thrombocytopathia
-    </div>
-    <strong>Mixed primary + secondary defects + concurrent illness (sepsis, neoplasia, IMHA, pancreatitis):</strong>
-    <div style="margin-left:8px;">
-      • DIC panel: PT, aPTT, platelet count, fibrinogen, D-dimer, antithrombin<br>
-      • &gt; 3 of 5 abnormalities = clinical DIC (overt vs non-overt scoring)<br>
-      • Treat the underlying cause; supportive plasma transfusion if active bleeding
-    </div>`,
+        kind: 'html',
+        html: `<div style="margin-top:8px;padding:10px 12px;background:rgba(99,102,241,0.07);border:1px solid rgba(99,102,241,0.22);border-radius:10px;">
+  <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:6px;">📊 Coag Pattern Interpretation + Workup</div>
+  <table style="width:100%;border-collapse:collapse;font-size:9px;">
+    <thead>
+      <tr style="border-bottom:1.5px solid rgba(148,163,184,0.3);">
+        <th style="padding:4px 6px;text-align:left;color:var(--gray);font-weight:700;width:22%;">Pattern</th>
+        <th style="padding:4px 6px;text-align:left;color:var(--gray);font-weight:700;width:34%;">Likely diagnoses</th>
+        <th style="padding:4px 6px;text-align:left;color:var(--gray);font-weight:700;">Next test · Empirical Rx</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+        <td style="padding:5px 6px;vertical-align:top;"><span style="color:#FCA5A5;font-weight:700;">Plt ↓ &lt;50k</span><br><span style="color:var(--gray);font-size:8px;">PT + aPTT normal</span></td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:#FCA5A5;">IMTP</span> — primary or secondary (SLE, neoplasia)<br><span style="color:#FCA5A5;">Tick-borne</span> — Ehrlichia, Anaplasma, Babesia, Rickettsia<br><span style="color:#FCA5A5;">Evans syndrome</span> — IMHA + IMTP concurrent<br><span style="color:#FCA5A5;">BM suppression</span> — neoplasia, drugs, oestrogen</td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">4Dx tick panel · Coombs / saline agglutination · ANA · abdominal imaging · bone marrow aspirate + core if unexplained · drug review<br><span style="color:#FCA5A5;font-weight:600;">Prednisolone 2 mg/kg/day</span> + doxycycline 5–10 mg/kg BID pending serology · IMTP confirmed by exclusion + response</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+        <td style="padding:5px 6px;vertical-align:top;"><span style="color:#FCD34D;font-weight:700;">PT ↑ only</span><br><span style="color:var(--gray);font-size:8px;">aPTT normal</span></td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:#FCD34D;">Anticoagulant rodenticide</span> — early (factor VII depletes first)<br><span style="color:#FCD34D;">Factor VII deficiency</span> — congenital; Beagle, Malamute<br><span style="color:#FCD34D;">Early hepatic disease</span> — FVII shortest hepatic half-life</td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">PIVKAs (more sensitive than PT for rodenticide) · factor VII assay · bile acids<br><span style="color:#FCD34D;font-weight:600;">Vit K1 2.5–5 mg/kg SC</span> empirically; recheck PT 48–72 h after last dose</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+        <td style="padding:5px 6px;vertical-align:top;"><span style="color:#A5B4FC;font-weight:700;">aPTT ↑ only</span><br><span style="color:var(--gray);font-size:8px;">PT normal</span></td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:#C4B5FD;">Haemophilia A</span> — factor VIII; X-linked; males<br><span style="color:#C4B5FD;">Haemophilia B</span> — factor IX; Cairn terrier<br><span style="color:#C4B5FD;">Factor XII deficiency</span> — cats; non-bleeding phenotype</td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">Specific factor assays (VIII, IX, XI, XII) · mixing studies (correction = factor deficiency; no correction = inhibitor)<br><span style="color:#C4B5FD;font-weight:600;">FFP</span> if active bleeding · cage rest · avoid IM injections</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+        <td style="padding:5px 6px;vertical-align:top;"><span style="color:#FCA5A5;font-weight:700;">PT ↑ + aPTT ↑</span><br><span style="color:var(--gray);font-size:8px;">Both prolonged</span></td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:#FCA5A5;">Rodenticide (advanced)</span> — multiple factors depleted<br><span style="color:#FCA5A5;">Hepatic failure</span> — check ALT · bilirubin · albumin<br><span style="color:#FCA5A5;">DIC</span> — thrombocytopenia concurrent; &gt;3/5 DIC criteria = overt<br><span style="color:#FCA5A5;">Multi-factor deficiency</span> — congenital; rare</td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">Fibrinogen · D-dimer / FDPs · antithrombin · bile acids + ammonia · mixing studies<br><span style="color:#FCA5A5;font-weight:600;">Vit K1 SC urgently</span> · FFP if active cavity bleed · treat underlying cause (DIC) · cryoprecipitate if hypofibrinogenaemic</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
+        <td style="padding:5px 6px;vertical-align:top;"><span style="color:#6EE7B7;font-weight:700;">Plt + coags normal</span><br><span style="color:var(--gray);font-size:8px;">BMBT ↑ · mucosal bleed</span></td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:#6EE7B7;">von Willebrand disease</span> — Doberman, Sheltie, Scottie<br><span style="color:#6EE7B7;">Thrombocytopathia</span> — uraemia, hyperglobulinaemia, NSAIDs<br><span style="color:#6EE7B7;">Glanzmann / Scott syndrome</span> — rare; referral</td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">vWF antigen assay · PFA-100 closure time · platelet aggregometry (referral) · renal panel · drug review<br><span style="color:#6EE7B7;font-weight:600;">Cryoprecipitate or FFP</span> · DDAVP 1 µg/kg SC 30 min pre-op (type I vWD only) · avoid platelet inhibitors</td>
+      </tr>
+      <tr>
+        <td style="padding:5px 6px;vertical-align:top;"><span style="color:#94A3B8;font-weight:700;">All normal</span><br><span style="color:var(--gray);font-size:8px;">Coags + Plt intact</span></td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:#94A3B8;">Vascular rupture / trauma</span> — HSA · surgical · arterial<br><span style="color:#94A3B8;">Factor XIII deficiency</span> — clot unstable in 5M urea; not measured by PT/aPTT</td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">Imaging (US / CT) for mass / haemoabdomen · clot solubility test (5M urea) · BMBT<br><span style="color:#94A3B8;font-weight:600;">Surgical haemostasis</span> · cryoprecipitate if FXIII suspected</td>
+      </tr>
+    </tbody>
+  </table>
+</div>`,
       },
-      { kind: 'step', alt: true, text: 'STEP 4 — ADVANCED / SPECIALIST TESTS' },
+      { kind: 'step', alt: true, text: 'STEP 3 — ADVANCED / SPECIALIST TESTS' },
       {
         kind: 'check',
         html: `<strong>vWF antigen + collagen-binding activity</strong> (referral lab): screen Doberman, Sheltie, Scottie, Golden Retriever pre-operatively; type I, II, III differentiation.<br>
@@ -253,7 +309,7 @@ export const bleedingDx: DxApproach = {
     <strong>Tick-borne disease workup</strong>: 4Dx (Ehrlichia canis / ewingii, Anaplasma phagocytophilum / platys, Borrelia, heartworm) + Babesia PCR + region-specific (Leishmania ELISA, RMSF, leptospirosis).<br>
     <strong>Abdominal + thoracic imaging</strong>: HSA / hepatic mass, mediastinal mass, retroperitoneal haemorrhage, splenic / hepatic rupture.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 5 — TREATMENT POINTERS' },
+      { kind: 'step', alt: true, text: 'STEP 4 — TREATMENT POINTERS' },
       {
         kind: 'check',
         html: `<strong>Anticoagulant rodenticide:</strong> Vitamin K1 PO 3–5 mg/kg divided BID × 28 d (2nd-generation; 14 d for 1st generation). FFP / PCC if active bleeding. Recheck PT 72 h after last dose.<br>
