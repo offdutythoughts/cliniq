@@ -117,8 +117,11 @@ Capture a new Playwright baseline only for an *intended* visual change.
       `DIS-NEU-IVDD` (←DIS-IVDD content), `DIS-AA` (test-pinned), `DIS-NEU-WOBBLER` (←DIS-CCSM),
       `DIS-NEU-BRAINTUM` (←DIS-BRAIN-NEO), `DIS-NEU-PNST`, `DIS-ENDO-HYPERTHY` (←DIS-SEC-HYPERT),
       `DIS-NEU-OTINTERNA` (←DIS-NEU-OMI). Deleted the 7 leaner dupes, repointed all refs, fixed the
-      pre-existing `@DIS-NEU-EPILEPSY`→`DIS-WK-EPILEPSY` near-match. `DIS-OPH-*` vs `DIS-EYE-*` ophthalmic
-      sets handled in a follow-up commit (needs vetoph6-notes + eye-flow link analysis).
+      pre-existing `@DIS-NEU-EPILEPSY`→`DIS-WK-EPILEPSY` near-match. **Ophthalmic OPH/EYE done:** the
+      live eye flows link to `DIS-EYE-*` (+ `DIS-OPH-GLAUCOMA`), so unified all 8 overlapping pairs onto
+      `DIS-EYE-*` and the orphan `DIS-OPH-HORNER`→`DIS-NEU-HORNERS`; kept `DIS-OPH-GLAUCOMA` (no EYE
+      equivalent, used live). 16 dup pages removed in total (206→190); only dangling ref left is
+      `DIS-NEU-HYDRO` (Phase 2g).
 
 ---
 
@@ -267,3 +270,4 @@ _(Append a line per completed chunk: date · phase/item · commit SHA · notes.)
 - _2026-06-07 — Plan created; gap list verified against db.ts._
 - _2026-06-07 — Phase 0.1–0.3 · confirmed worklist (208 DIS ids), SDMA units (CKD qualitative, no ng/dL bug), added Ettinger pointer to CLAUDE.md._
 - _2026-06-07 — Phase 0.4 (neuro/endo dedup) · merged 7 dup pairs onto canonical ids, repointed all refs, fixed @DIS-NEU-EPILEPSY near-match. 22 dup lines removed; tsc/test green. Only dangling ref left = DIS-NEU-HYDRO (Phase 2g). Ophthalmic OPH/EYE dedup still pending._
+- _2026-06-07 — Phase 0.4 (ophthalmic dedup) · unified DIS-OPH-* dupes onto live DIS-EYE-* set (+DIS-NEU-HORNERS), kept DIS-OPH-GLAUCOMA. 9 dup pages removed (134 lines); tsc/test green._
