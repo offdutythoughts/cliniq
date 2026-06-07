@@ -203,25 +203,25 @@ Highest impact: these light up flows that already exist. *(IDs are provisional.)
 - [x] `DIS-ENDO-GASTRINOMA` — Gastrinoma / glucagonoma
 
 ### 2e. Renal & hepatobiliary — links from **PU/PD, Jaundice, Vomiting** *(Ch 269–275, 302–305)*
-- [ ] `DIS-REN-GN` — Glomerular disease / protein-losing nephropathy
-- [ ] `DIS-REN-RTA` — Renal tubular acidosis · `DIS-REN-AMYLOID` — Renal amyloidosis
-- [ ] `DIS-HEP-COPPER` — Copper-associated hepatopathy
-- [ ] `DIS-HEP-TOXIC` — Acute toxic hepatopathy · `DIS-HEP-VACUOLAR` — Vacuolar/steroid hepatopathy
-- [ ] `DIS-HEP-CHOLELITH` — Cholelithiasis / extrahepatic biliary obstruction
-- [ ] `DIS-HEP-NEO` — Hepatic & biliary neoplasia · `DIS-HEP-HE` — Hepatic encephalopathy (managed)
+- [x] `DIS-REN-GN` — Glomerular disease / protein-losing nephropathy
+- [x] `DIS-REN-RTA` — Renal tubular acidosis · `DIS-REN-AMYLOID` — Renal amyloidosis
+- [x] `DIS-HEP-COPPER` — Copper-associated hepatopathy *(folded into the enriched `DIS-HEP-CHRONHEP`, which is copper-associated chronic hepatitis — not duplicated)*
+- [x] `DIS-HEP-TOXIC` — Acute toxic hepatopathy · `DIS-HEP-VACUOLAR` — Vacuolar/steroid hepatopathy
+- [x] `DIS-HEP-CHOLELITH` — Cholelithiasis / extrahepatic biliary obstruction
+- [x] `DIS-HEP-NEO` — Hepatic & biliary neoplasia · `DIS-HEP-HE` — Hepatic encephalopathy (managed)
 
 ### 2f. GI — links from **Vomiting, Diarrhoea, Dysphagia** *(Ch 258–265)*
-- [ ] `DIS-GI-ESOPHAGITIS` — Oesophagitis · `DIS-GI-STRICTURE` — Oesophageal stricture
-- [ ] `DIS-GI-PRAA` — Vascular ring anomaly (persistent right aortic arch)
-- [ ] `DIS-GI-SIALOCELE` — Salivary mucocele
-- [ ] `DIS-GI-PERIANAL` — Perianal fistula / anal furunculosis (ciclosporin + ketoconazole)
-- [ ] `DIS-GI-ANALSAC` — Anal sac disease
-- [ ] `DIS-GI-SEPTPERIT` — Septic peritonitis (BFG >20 mg/dL, BFL <−2 mmol/L)
-- [ ] `DIS-GI-COBAL` — Cobalamin deficiency
+- [x] `DIS-GI-ESOPHAGITIS` — Oesophagitis · `DIS-GI-STRICTURE` — Oesophageal stricture
+- [x] `DIS-GI-PRAA` — Vascular ring anomaly (persistent right aortic arch)
+- [x] `DIS-GI-SIALOCELE` — Salivary mucocele
+- [x] `DIS-GI-PERIANAL` — Perianal fistula / anal furunculosis (ciclosporin + ketoconazole)
+- [x] `DIS-GI-ANALSAC` — Anal sac disease
+- [x] `DIS-GI-SEPTPERIT` — Septic peritonitis (BFG >20 mg/dL, BFL <−2 mmol/L)
+- [x] `DIS-GI-COBAL` — Cobalamin deficiency
 
 ### 2g. Neuro — links from **Myelopathy, Vestibular, Ataxia** *(Ch 250–255)*
-- [ ] `DIS-NEU-DM` — Degenerative myelopathy (SOD1) · `DIS-NEU-DYSAUTO` — Dysautonomia
-- [ ] `DIS-NEU-HYDRO` — Hydrocephalus · `DIS-NEU-CHIARI` — Chiari-like malformation / syringomyelia
+- [x] `DIS-NEU-DM` — Degenerative myelopathy (SOD1) · `DIS-NEU-DYSAUTO` — Dysautonomia
+- [x] `DIS-NEU-HYDRO` — Hydrocephalus · `DIS-NEU-CHIARI` — Chiari-like malformation / syringomyelia
 
 ---
 
@@ -272,3 +272,4 @@ _(Append a line per completed chunk: date · phase/item · commit SHA · notes.)
 - _2026-06-07 — Phase 0.4 (neuro/endo dedup) · merged 7 dup pairs onto canonical ids, repointed all refs, fixed @DIS-NEU-EPILEPSY near-match. 22 dup lines removed; tsc/test green. Only dangling ref left = DIS-NEU-HYDRO (Phase 2g). Ophthalmic OPH/EYE dedup still pending._
 - _2026-06-07 — Phase 0.4 (ophthalmic dedup) · unified DIS-OPH-* dupes onto live DIS-EYE-* set (+DIS-NEU-HORNERS), kept DIS-OPH-GLAUCOMA. 9 dup pages removed (134 lines); tsc/test green._
 - _2026-06-07 — Phase 1 COMPLETE (renal, cardiac, neuro, GI/pancreas, hepatobiliary, endocrine, onco, tox). 17 enrichment items across ~25 pages. Repaired the missing posthog-js dep (tsc 3→0). Notes: MG feline remission stated qualitatively (source has no literal 0%); serum bile-acid numeric cutoffs absent from source (kept qualitative); feline Spec fPL has no clean cutoff in source. disease-hcm Playwright baseline needs regeneration in canonical env (intended growth). tsc 0 + 79 tests green throughout._
+- _2026-06-07 — Phase 2 COMPLETE (2a–2g). Added 62 new disease pages via verbatim subagent drafting + parent splice/verify: LUT (13), cardio-resp (6), oncology (9), endocrine (7), renal/hepatobiliary (8), GI (8), neuro (4). DIS-HEP-COPPER folded into enriched DIS-HEP-CHRONHEP. Wired haematuria lesion rows (cystitis/FIC/urethral-obstruction/BPH/prostatitis/prost-carcinoma/pyelo/TCC) → new pages. 190→245 disease pages; DIS-NEU-HYDRO dangling ref RESOLVED — dangling scan now empty. tsc 0 + 79 tests green throughout._
