@@ -112,11 +112,13 @@ Capture a new Playwright baseline only for an *intended* visual change.
 - [x] **CLAUDE.md pointer** — add a row to the "Clinical Reference PDFs" table pointing future
       sessions at `references/ettinger9-notes.md` (mirror the `vetoph6` entry): "when working on
       cardiac / renal / endocrine / GI / heme / infectious / oncology entries, read this first."
-- [ ] **De-duplicate existing pages** — ClinIQ has parallel duplicates that should be merged or
-      cross-referenced: `DIS-IVDD` vs `DIS-NEU-IVDD`; `DIS-BRAIN-NEO` vs `DIS-NEU-BRAINTUM`;
-      `DIS-PNST` vs `DIS-NEU-PNST`; `DIS-AA` vs `DIS-NEU-AAI`; `DIS-CCSM` vs `DIS-NEU-WOBBLER`;
-      the `DIS-OPH-*` vs `DIS-EYE-*` ophthalmic sets; `DIS-ENDO-HYPERTHY` vs `DIS-SEC-HYPERT`;
-      `DIS-NEU-OMI` vs `DIS-NEU-OTINTERNA`. Decide canonical id per pair, redirect links, delete dupes.
+- [x] **De-duplicate existing pages** — *(neuro/endo done; ophthalmic done separately below)*. Canonical
+      chosen = richer content unified onto the conventional/integrated id:
+      `DIS-NEU-IVDD` (←DIS-IVDD content), `DIS-AA` (test-pinned), `DIS-NEU-WOBBLER` (←DIS-CCSM),
+      `DIS-NEU-BRAINTUM` (←DIS-BRAIN-NEO), `DIS-NEU-PNST`, `DIS-ENDO-HYPERTHY` (←DIS-SEC-HYPERT),
+      `DIS-NEU-OTINTERNA` (←DIS-NEU-OMI). Deleted the 7 leaner dupes, repointed all refs, fixed the
+      pre-existing `@DIS-NEU-EPILEPSY`→`DIS-WK-EPILEPSY` near-match. `DIS-OPH-*` vs `DIS-EYE-*` ophthalmic
+      sets handled in a follow-up commit (needs vetoph6-notes + eye-flow link analysis).
 
 ---
 
@@ -264,3 +266,4 @@ _(Append a line per completed chunk: date · phase/item · commit SHA · notes.)
 
 - _2026-06-07 — Plan created; gap list verified against db.ts._
 - _2026-06-07 — Phase 0.1–0.3 · confirmed worklist (208 DIS ids), SDMA units (CKD qualitative, no ng/dL bug), added Ettinger pointer to CLAUDE.md._
+- _2026-06-07 — Phase 0.4 (neuro/endo dedup) · merged 7 dup pairs onto canonical ids, repointed all refs, fixed @DIS-NEU-EPILEPSY near-match. 22 dup lines removed; tsc/test green. Only dangling ref left = DIS-NEU-HYDRO (Phase 2g). Ophthalmic OPH/EYE dedup still pending._
