@@ -39,8 +39,18 @@ import { melenaDx } from './melena'
 import { constipationDx } from './constipation'
 import { oedemaDx } from './oedema'
 import { swollenJointsDx } from './swollenJoints'
+import { anorexiaDx } from './anorexia'
+import { weightLossDx } from './weightLoss'
+import { polyphagiaDx } from './polyphagia'
+import { cyanosisDx } from './cyanosis'
+import { tremorsDx } from './tremors'
 
 export const DX: Record<string, DxApproach> = {
+  'anorexia': anorexiaDx,
+  'weight-loss': weightLossDx,
+  'polyphagia': polyphagiaDx,
+  'cyanosis': cyanosisDx,
+  'tremors': tremorsDx,
   'pollakiuria': pollakiuriaDx,
   'syncope': syncopeDx,
   'heart-murmur': heartMurmurDx,

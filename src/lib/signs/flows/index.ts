@@ -36,6 +36,11 @@ import { melenaFlow } from './melena'
 import { constipationFlow } from './constipation'
 import { oedemaFlow } from './oedema'
 import { swollenJointsFlow } from './swollenJoints'
+import { anorexiaFlow } from './anorexia'
+import { weightLossFlow } from './weightLoss'
+import { polyphagiaFlow } from './polyphagia'
+import { cyanosisFlow } from './cyanosis'
+import { tremorsFlow } from './tremors'
 
 export const FLOWS: Record<string, FlowPage> = Object.fromEntries(
   [
@@ -49,5 +54,6 @@ export const FLOWS: Record<string, FlowPage> = Object.fromEntries(
     // Phase 3
     pollakiuriaFlow, syncopeFlow, heartMurmurFlow, feverFlow, dysphagiaFlow,
     melenaFlow, constipationFlow, oedemaFlow, swollenJointsFlow,
+    anorexiaFlow, weightLossFlow, polyphagiaFlow, cyanosisFlow, tremorsFlow,
   ].map(p => [p.id, p]),
 )

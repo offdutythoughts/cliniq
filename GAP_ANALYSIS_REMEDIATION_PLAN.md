@@ -229,14 +229,14 @@ Highest impact: these light up flows that already exist. *(IDs are provisional.)
 
 Each = `flows/<sign>.ts` + `dx/<sign>.ts` + `SIGNS` entry + `FLOWS`/`DX` wiring. Prioritised by
 clinical frequency. *(Ettinger §II chapters in parens.)*
-- [ ] **Syncope** (Ch 40) — links to cardiac arrhythmia, structural heart, neurocardiogenic
-- [ ] **Heart murmur** (Ch 38) — grading I–VI; links to MMVD/HCM/congenital
-- [ ] **Fever / FUO** (Ch 16) — FUO definition; infectious/immune/neoplastic DDx
-- [ ] **Melena & haematochezia** (Ch 50) — links to ulceration/AHDS/colitis/neoplasia
-- [ ] **Dysphagia / gagging** (Ch 47) — oral/pharyngeal/oesophageal localisation
-- [ ] **Pollakiuria / stranguria** (Ch 54) — links to the new LUT pages (Phase 2a)
-- [ ] **Constipation / tenesmus** (Ch 51) · **Peripheral oedema** (Ch 30) · **Swollen joints** (Ch 32)
-- [ ] Lower priority: Anorexia (17), Weight loss (18), Polyphagia (19), Cyanosis (27), Tremors (42)
+- [x] **Syncope** (Ch 40) — links to cardiac arrhythmia, structural heart, neurocardiogenic
+- [x] **Heart murmur** (Ch 38) — grading I–VI; links to MMVD/HCM/congenital
+- [x] **Fever / FUO** (Ch 16) — FUO definition; infectious/immune/neoplastic DDx
+- [x] **Melena & haematochezia** (Ch 50) — links to ulceration/AHDS/colitis/neoplasia
+- [x] **Dysphagia / gagging** (Ch 47) — oral/pharyngeal/oesophageal localisation
+- [x] **Pollakiuria / stranguria** (Ch 54) — links to the new LUT pages (Phase 2a)
+- [x] **Constipation / tenesmus** (Ch 51) · **Peripheral oedema** (Ch 30) · **Swollen joints** (Ch 32)
+- [x] Lower priority: Anorexia (17), Weight loss (18), Polyphagia (19), Cyanosis (27), Tremors (42)
 
 ---
 
@@ -275,3 +275,4 @@ _(Append a line per completed chunk: date · phase/item · commit SHA · notes.)
 - _2026-06-07 — Phase 2 COMPLETE (2a–2g). Added 62 new disease pages via verbatim subagent drafting + parent splice/verify: LUT (13), cardio-resp (6), oncology (9), endocrine (7), renal/hepatobiliary (8), GI (8), neuro (4). DIS-HEP-COPPER folded into enriched DIS-HEP-CHRONHEP. Wired haematuria lesion rows (cystitis/FIC/urethral-obstruction/BPH/prostatitis/prost-carcinoma/pyelo/TCC) → new pages. 190→245 disease pages; DIS-NEU-HYDRO dangling ref RESOLVED — dangling scan now empty. tsc 0 + 79 tests green throughout._
 - _2026-06-07 — Phase 4 COMPLETE. Added 14 infectious-disease pages (Lyme, Bartonella, Anaplasma, haemotropic Mycoplasma, Brucella, Tetanus, Botulism, Cytauxzoon, enteric bacterial, FIV, Rabies, Cocci, Blasto, Histo). Skipped DIS-INFECT-PARVO (covered by existing DIS-GI-PARVO). 245→259 disease pages; dangling scan empty; tsc 0 + 79 tests green._
 - _2026-06-07 — Phase 5 COMPLETE. Added 10 heme/immune/respiratory disease pages (NRA, polycythaemia, IMPA, SLE, pemphigus, immunodeficiency, splenic disease, hypercoagulability, IPF, BOAS) + 6 protocols (PROT-ANAPHYLAXIS, PROT-SEPSIS, PROT-TOX-METALD/-MYCOTOX/-LEAD/-METHB). 259→269 disease pages, 36→42 protocols; dangling scan empty; tsc 0 + 79 tests green._
+- _2026-06-07 — Phase 3 COMPLETE. Added 14 new sign screens (flow + dx + registry/index wiring): pollakiuria, syncope, heart-murmur, fever/FUO, dysphagia, melena/haematochezia, constipation, peripheral-oedema, swollen-joints, anorexia, weight-loss, polyphagia, cyanosis, tremors. SIGNS 21→35; tsc 0 + 93 tests green; browser-verified flows + dx tabs render (incl. Levine/PMI table blocks). ALL PHASES COMPLETE._

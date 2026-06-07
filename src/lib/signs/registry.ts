@@ -52,4 +52,9 @@ export const SIGNS: SignEntry[] = [
   { id: 'constipation', icon: '💩', title: 'Constipation / Tenesmus', sub: 'Dog + Cat · Obstructive · pelvic · neuromuscular/metabolic · megacolon', flowId: 'constipation' },
   { id: 'oedema', icon: '🫧', title: 'Peripheral Oedema', sub: 'Dog + Cat · Hypoalbuminaemia vs hydrostatic/cardiac vs vasculitis', flowId: 'oedema' },
   { id: 'swollen-joints', icon: '🦵', title: 'Swollen Joints', sub: 'Dog + Cat · Arthrocentesis-led · septic vs immune-mediated vs degenerative', flowId: 'swollen-joints' },
+  { id: 'anorexia', icon: '🍽️', title: 'Anorexia / Hyporexia', sub: 'Dog + Cat · Pseudo- vs true · cat = lipidosis emergency', flowId: 'anorexia' },
+  { id: 'weight-loss', icon: '📉', title: 'Weight Loss', sub: 'Dog + Cat · Appetite pivot — malassimilation/hypermetabolism vs reduced intake', flowId: 'weight-loss' },
+  { id: 'polyphagia', icon: '🍖', title: 'Polyphagia', sub: 'Dog + Cat · With weight loss vs weight gain/drug-induced', flowId: 'polyphagia' },
+  { id: 'cyanosis', icon: '🫁', title: 'Cyanosis', sub: 'Dog + Cat · Central/respiratory vs R→L shunt vs methaemoglobinaemia', flowId: 'cyanosis' },
+  { id: 'tremors', icon: '〰️', title: 'Tremors', sub: 'Dog + Cat · Toxic/metabolic vs cerebellar vs idiopathic shaker', flowId: 'tremors' },
 ]
