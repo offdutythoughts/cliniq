@@ -43,4 +43,13 @@ export const SIGNS: SignEntry[] = [
   { id: 'vomiting', icon: '🤢', title: 'Vomiting', sub: 'Dog + Cat · True vomit vs regurgitation → primary or secondary GI', flowId: 'vomiting' },
   { id: 'weakness', icon: '⚡', title: 'Weakness / Collapse', sub: 'Dog + Cat · Episodic, persistent, syncope vs seizure', flowId: 'weakness' },
   { id: 'wet-eye', icon: '💧', title: 'Wet Eye / Epiphora', sub: 'Dog + Cat · Increased production vs reduced drainage · Jones test · NLS flush', flowId: 'wet-eye' },
+  // Phase 3 — new sign screens (gap-analysis remediation)
+  { id: 'syncope', icon: '😵', title: 'Syncope', sub: 'Dog + Cat · Cardiac (arrhythmia/structural) vs reflex vs seizure-mimic', flowId: 'syncope' },
+  { id: 'heart-murmur', icon: '🫀', title: 'Heart Murmur', sub: 'Dog + Cat · Grade I–VI · PMI → lesion · acquired vs congenital vs functional', flowId: 'heart-murmur' },
+  { id: 'fever', icon: '🌡️', title: 'Fever / FUO', sub: 'Dog + Cat · True fever vs hyperthermia · infectious / immune / neoplastic', flowId: 'fever' },
+  { id: 'dysphagia', icon: '😮', title: 'Dysphagia / Gagging', sub: 'Dog + Cat · Oral · pharyngeal · oesophageal localisation', flowId: 'dysphagia' },
+  { id: 'melena', icon: '🩸', title: 'Melena / Haematochezia', sub: 'Dog + Cat · Upper (digested) vs lower (fresh) GI bleeding', flowId: 'melena' },
+  { id: 'constipation', icon: '💩', title: 'Constipation / Tenesmus', sub: 'Dog + Cat · Obstructive · pelvic · neuromuscular/metabolic · megacolon', flowId: 'constipation' },
+  { id: 'oedema', icon: '🫧', title: 'Peripheral Oedema', sub: 'Dog + Cat · Hypoalbuminaemia vs hydrostatic/cardiac vs vasculitis', flowId: 'oedema' },
+  { id: 'swollen-joints', icon: '🦵', title: 'Swollen Joints', sub: 'Dog + Cat · Arthrocentesis-led · septic vs immune-mediated vs degenerative', flowId: 'swollen-joints' },
 ]

@@ -31,9 +31,25 @@ import { diarrhoeaDx } from './diarrhoea'
 import { pupdDx } from './pupd'
 // Phase 3 — new sign screens (gap-analysis remediation)
 import { pollakiuriaDx } from './pollakiuria'
+import { syncopeDx } from './syncope'
+import { heartMurmurDx } from './heartMurmur'
+import { feverDx } from './fever'
+import { dysphagiaDx } from './dysphagia'
+import { melenaDx } from './melena'
+import { constipationDx } from './constipation'
+import { oedemaDx } from './oedema'
+import { swollenJointsDx } from './swollenJoints'
 
 export const DX: Record<string, DxApproach> = {
   'pollakiuria': pollakiuriaDx,
+  'syncope': syncopeDx,
+  'heart-murmur': heartMurmurDx,
+  'fever': feverDx,
+  'dysphagia': dysphagiaDx,
+  'melena': melenaDx,
+  'constipation': constipationDx,
+  'oedema': oedemaDx,
+  'swollen-joints': swollenJointsDx,
   'epistaxis': epistaxisDx,
   'wet-eye': wetEyeDx,
   'haematuria': haematuriaDx,
