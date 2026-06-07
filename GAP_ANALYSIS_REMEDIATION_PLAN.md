@@ -253,13 +253,13 @@ Diagnostics + doses already in the notes. Link from Fever (Phase 3) and relevant
 
 ## Phase 5 — Cross-cutting / lower priority
 
-- [ ] Heme/immune pages: `DIS-BD-NRA` (non-regen anaemia work-up), `DIS-BD-PV` (polycythaemia vera),
+- [x] Heme/immune pages: `DIS-BD-NRA` (non-regen anaemia work-up), `DIS-BD-PV` (polycythaemia vera),
       `DIS-IMPA` (immune polyarthritis), `DIS-IM-SLE`, `DIS-IM-PEMPHIGUS`, `DIS-IM-IMMDEF`,
       `DIS-SPLEEN` (splenic disease/masses), `DIS-BD-HYPERCOAG` *(Ch 171–182)*
-- [ ] Emergency protocols: `PROT-ANAPHYLAXIS` (Ch 129), `PROT-SEPSIS` (SIRS criteria, Ch 128)
-- [ ] Toxicology additions: metaldehyde, tremorgenic mycotoxins, ibuprofen-specific, lead,
+- [x] Emergency protocols: `PROT-ANAPHYLAXIS` (Ch 129), `PROT-SEPSIS` (SIRS criteria, Ch 128)
+- [x] Toxicology additions: metaldehyde, tremorgenic mycotoxins, ibuprofen-specific, lead,
       methaemoglobinaemia agents *(Ch 132–138)*
-- [ ] Respiratory: `DIS-RESP-IPF` (idiopathic pulmonary fibrosis), `DIS-RESP-BOAS` *(Ch 217, 214)*
+- [x] Respiratory: `DIS-RESP-IPF` (idiopathic pulmonary fibrosis), `DIS-RESP-BOAS` *(Ch 217, 214)*
 
 ---
 
@@ -274,3 +274,4 @@ _(Append a line per completed chunk: date · phase/item · commit SHA · notes.)
 - _2026-06-07 — Phase 1 COMPLETE (renal, cardiac, neuro, GI/pancreas, hepatobiliary, endocrine, onco, tox). 17 enrichment items across ~25 pages. Repaired the missing posthog-js dep (tsc 3→0). Notes: MG feline remission stated qualitatively (source has no literal 0%); serum bile-acid numeric cutoffs absent from source (kept qualitative); feline Spec fPL has no clean cutoff in source. disease-hcm Playwright baseline needs regeneration in canonical env (intended growth). tsc 0 + 79 tests green throughout._
 - _2026-06-07 — Phase 2 COMPLETE (2a–2g). Added 62 new disease pages via verbatim subagent drafting + parent splice/verify: LUT (13), cardio-resp (6), oncology (9), endocrine (7), renal/hepatobiliary (8), GI (8), neuro (4). DIS-HEP-COPPER folded into enriched DIS-HEP-CHRONHEP. Wired haematuria lesion rows (cystitis/FIC/urethral-obstruction/BPH/prostatitis/prost-carcinoma/pyelo/TCC) → new pages. 190→245 disease pages; DIS-NEU-HYDRO dangling ref RESOLVED — dangling scan now empty. tsc 0 + 79 tests green throughout._
 - _2026-06-07 — Phase 4 COMPLETE. Added 14 infectious-disease pages (Lyme, Bartonella, Anaplasma, haemotropic Mycoplasma, Brucella, Tetanus, Botulism, Cytauxzoon, enteric bacterial, FIV, Rabies, Cocci, Blasto, Histo). Skipped DIS-INFECT-PARVO (covered by existing DIS-GI-PARVO). 245→259 disease pages; dangling scan empty; tsc 0 + 79 tests green._
+- _2026-06-07 — Phase 5 COMPLETE. Added 10 heme/immune/respiratory disease pages (NRA, polycythaemia, IMPA, SLE, pemphigus, immunodeficiency, splenic disease, hypercoagulability, IPF, BOAS) + 6 protocols (PROT-ANAPHYLAXIS, PROT-SEPSIS, PROT-TOX-METALD/-MYCOTOX/-LEAD/-METHB). 259→269 disease pages, 36→42 protocols; dangling scan empty; tsc 0 + 79 tests green._
