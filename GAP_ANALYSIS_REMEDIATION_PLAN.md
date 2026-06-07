@@ -160,19 +160,19 @@ Each item: edit the existing page; fold in the staging/criteria/doses from the c
 Highest impact: these light up flows that already exist. *(IDs are provisional.)*
 
 ### 2a. Lower urinary tract — links from **Haematuria** (and future Pollakiuria/Stranguria) *(Ch 306–315)*
-- [ ] `DIS-URO-UROLITH-STRUV` — Struvite urolithiasis (dissolution diet, pH target)
-- [ ] `DIS-URO-UROLITH-OXAL` — Calcium oxalate urolithiasis
-- [ ] `DIS-URO-UROLITH-URATE` — Urate urolithiasis (allopurinol 15 mg/kg q12h dissolution)
-- [ ] `DIS-URO-UROLITH-CYST` — Cystine urolithiasis (tiopronin)
-- [ ] `DIS-URO-UTI` — Bacterial cystitis / UTI (ISCAID sporadic vs recurrent vs subclinical)
-- [ ] `DIS-URO-FIC` — Feline idiopathic/interstitial cystitis (MEMO, Pandora)
-- [ ] `DIS-URO-URETER-OBS` — Ureteral obstruction (SUB/stent, MET: prazosin/tamsulosin)
-- [ ] `DIS-URO-USMI` — Urethral sphincter mechanism incompetence (PPA 1–2 mg/kg q8–12h)
-- [ ] `DIS-URO-ECTOPIC` — Ectopic ureter
-- [ ] `DIS-URO-PROSTATITIS` — Bacterial prostatitis (FQ 4–6 wk)
-- [ ] `DIS-URO-BPH` — Benign prostatic hyperplasia (finasteride / castration)
-- [ ] `DIS-URO-PROST-NEO` — Prostatic carcinoma
-- [ ] `DIS-URO-URETHRAL-OBS` — Urethral obstruction / plug (link from Emergency too)
+- [x] `DIS-URO-UROLITH-STRUV` — Struvite urolithiasis (dissolution diet, pH target)
+- [x] `DIS-URO-UROLITH-OXAL` — Calcium oxalate urolithiasis
+- [x] `DIS-URO-UROLITH-URATE` — Urate urolithiasis (allopurinol 15 mg/kg q12h dissolution)
+- [x] `DIS-URO-UROLITH-CYST` — Cystine urolithiasis (tiopronin)
+- [x] `DIS-URO-UTI` — Bacterial cystitis / UTI (ISCAID sporadic vs recurrent vs subclinical)
+- [x] `DIS-URO-FIC` — Feline idiopathic/interstitial cystitis (MEMO, Pandora)
+- [x] `DIS-URO-URETER-OBS` — Ureteral obstruction (SUB/stent, MET: prazosin/tamsulosin)
+- [x] `DIS-URO-USMI` — Urethral sphincter mechanism incompetence (PPA 1–2 mg/kg q8–12h)
+- [x] `DIS-URO-ECTOPIC` — Ectopic ureter
+- [x] `DIS-URO-PROSTATITIS` — Bacterial prostatitis (FQ 4–6 wk)
+- [x] `DIS-URO-BPH` — Benign prostatic hyperplasia (finasteride / castration)
+- [x] `DIS-URO-PROST-NEO` — Prostatic carcinoma
+- [x] `DIS-URO-URETHRAL-OBS` — Urethral obstruction / plug (link from Emergency too)
 
 ### 2b. Cardio-respiratory — links from **Weakness/Collapse, Dyspnoea, Pale-MM, Coughing** *(Ch 218–219, 237–238)*
 - [ ] `DIS-CARD-HW` — **Heartworm / Dirofilariasis** (melarsomine 3-dose AHS protocol; doxy 10 mg/kg
