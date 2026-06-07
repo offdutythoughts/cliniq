@@ -129,28 +129,28 @@ Capture a new Playwright baseline only for an *intended* visual change.
 
 Each item: edit the existing page; fold in the staging/criteria/doses from the cited chapter.
 
-- [ ] `DIS-SEC-CKD` / `DIS-SEC-AKI` — **IRIS CKD staging** (creatinine + SDMA µg/dL + UPC + BP
+- [x] `DIS-SEC-CKD` / `DIS-SEC-AKI` — **IRIS CKD staging** (creatinine + SDMA µg/dL + UPC + BP
       substaging) and **IRIS AKI grades I–V** *(Ettinger Ch 300–301)*
-- [ ] `DIS-CARD-MVD` — **ACVIM MMVD staging A/B1/B2/C/D** (LA:Ao ≥1.6, LVIDDN ≥1.7, VHS >10.5/11.5)
+- [x] `DIS-CARD-MVD` — **ACVIM MMVD staging A/B1/B2/C/D** (LA:Ao ≥1.6, LVIDDN ≥1.7, VHS >10.5/11.5)
       + EPIC pimobendan criteria + HF drug doses *(Ch 232, 229)*
-- [ ] `DIS-VASC-HYPERT` — **ACVIM 2018 BP categories** (<140 / 140–159 / 160–179 / ≥180 mmHg + TOD)
+- [x] `DIS-VASC-HYPERT` — **ACVIM 2018 BP categories** (<140 / 140–159 / 160–179 / ≥180 mmHg + TOD)
       + amlodipine & telmisartan doses *(Ch 236)*
-- [ ] `DIS-HCM`, `DIS-CARD-RCM` — **ACVIM 2020 feline cardiomyopathy staging** + LA:Ao thresholds *(Ch 234)*
-- [ ] `DIS-CARD-DCM` — occult/preclinical Holter + echo criteria; preclinical pimobendan (PROTECT) *(Ch 233)*
-- [ ] `DIS-WK-EPILEPSY` — **IVETF classification** (idiopathic/structural/reactive + Tier I–III) + ASD dose tables *(Ch 247)*
-- [ ] `DIS-NEU-MUE` / `DIS-GME` — cytarabine (CARE) protocol: SC 50 mg/m² q12h ×2d q3–4wk, or 200 mg/m² CRI *(Ch 242)*
-- [ ] `DIS-NEU-HEADTRAUMA` — Modified Glasgow Coma Scale + prognosis; mannitol dog 0.5–1 vs cat 0.25–0.5 g/kg *(Ch 246)*
-- [ ] `DIS-IVDD` / `DIS-NEU-IVDD` — neurologic grading 0–5; deep-pain-perception prognosis (61% vs 22.4%) *(Ch 250)*
-- [ ] `DIS-WK-MG` — anti-AChR titer (98% sens dogs); remission 88% dogs / 0% cats *(Ch 253)*
-- [ ] `DIS-GI-IBD` — CCECAI / CIBDAI scoring; cobalamin weight-banded supplementation *(Ch 262)*
-- [ ] `DIS-HEP-*` (chronic hepatitis/lipidosis/PSS) — bile-acid cutoffs; copper >1000 µg/g chelation
+- [x] `DIS-HCM`, `DIS-CARD-RCM` — **ACVIM 2020 feline cardiomyopathy staging** + LA:Ao thresholds *(Ch 234)*
+- [x] `DIS-CARD-DCM` — occult/preclinical Holter + echo criteria; preclinical pimobendan (PROTECT) *(Ch 233)*
+- [x] `DIS-WK-EPILEPSY` — **IVETF classification** (idiopathic/structural/reactive + Tier I–III) + ASD dose tables *(Ch 247)*
+- [x] `DIS-NEU-MUE` / `DIS-GME` — cytarabine (CARE) protocol: SC 50 mg/m² q12h ×2d q3–4wk, or 200 mg/m² CRI *(Ch 242)*
+- [x] `DIS-NEU-HEADTRAUMA` — Modified Glasgow Coma Scale + prognosis; mannitol dog 0.5–1 vs cat 0.25–0.5 g/kg *(Ch 246)*
+- [x] `DIS-IVDD` / `DIS-NEU-IVDD` — neurologic grading 0–5; deep-pain-perception prognosis (61% vs 22.4%) *(Ch 250)*
+- [x] `DIS-WK-MG` — anti-AChR titer (98% sens dogs); remission 88% dogs / 0% cats *(Ch 253)*
+- [x] `DIS-GI-IBD` — CCECAI / CIBDAI scoring; cobalamin weight-banded supplementation *(Ch 262)*
+- [x] `DIS-HEP-*` (chronic hepatitis/lipidosis/PSS) — bile-acid cutoffs; copper >1000 µg/g chelation
       threshold; ursodiol 10–15 mg/kg, SAMe, D-penicillamine 10–15 mg/kg *(Ch 266–271)*
-- [ ] `DIS-PUPD-HAC` / `DIS-SEC-HYPO` — ACTH-stim & LDDST protocols + cutoffs; trilostane 0.5–1 mg/kg
+- [x] `DIS-PUPD-HAC` / `DIS-SEC-HYPO` — ACTH-stim & LDDST protocols + cutoffs; trilostane 0.5–1 mg/kg
       q12h; DOCP 1.5–2.2 mg/kg; Na:K <27 *(Ch 293, 296)*
-- [ ] `DIS-GI-PANCAT` / `DIS-SEC-PAN-DOG` — Spec cPL ≥400 µg/L; Spec fPL; DGGR lipase *(Ch 277–278)*
-- [ ] `DIS-GI-EPI` — serum TLI cutoffs: dog <2.5 µg/L, cat <8.0 µg/L *(Ch 279)*
-- [ ] `DIS-NEO-HSA` — "rule of two-thirds" (informal); TNM stages; site-based MST *(Ch 325)*
-- [ ] Tox protocol pages (`PROT-TOX-*`) — cross-check antidote doses vs Ettinger (NAC, vit K1
+- [x] `DIS-GI-PANCAT` / `DIS-SEC-PAN-DOG` — Spec cPL ≥400 µg/L; Spec fPL; DGGR lipase *(Ch 277–278)*
+- [x] `DIS-GI-EPI` — serum TLI cutoffs: dog <2.5 µg/L, cat <8.0 µg/L *(Ch 279)*
+- [x] `DIS-NEO-HSA` — "rule of two-thirds" (informal); TNM stages; site-based MST *(Ch 325)*
+- [x] Tox protocol pages (`PROT-TOX-*`) — cross-check antidote doses vs Ettinger (NAC, vit K1
       1.5–2.5 mg/kg q12h, fomepizole, ILE 1.5 mL/kg → 0.25 mL/kg/min) *(Ch 132–138)*
 
 ---
@@ -271,3 +271,4 @@ _(Append a line per completed chunk: date · phase/item · commit SHA · notes.)
 - _2026-06-07 — Phase 0.1–0.3 · confirmed worklist (208 DIS ids), SDMA units (CKD qualitative, no ng/dL bug), added Ettinger pointer to CLAUDE.md._
 - _2026-06-07 — Phase 0.4 (neuro/endo dedup) · merged 7 dup pairs onto canonical ids, repointed all refs, fixed @DIS-NEU-EPILEPSY near-match. 22 dup lines removed; tsc/test green. Only dangling ref left = DIS-NEU-HYDRO (Phase 2g). Ophthalmic OPH/EYE dedup still pending._
 - _2026-06-07 — Phase 0.4 (ophthalmic dedup) · unified DIS-OPH-* dupes onto live DIS-EYE-* set (+DIS-NEU-HORNERS), kept DIS-OPH-GLAUCOMA. 9 dup pages removed (134 lines); tsc/test green._
+- _2026-06-07 — Phase 1 COMPLETE (renal, cardiac, neuro, GI/pancreas, hepatobiliary, endocrine, onco, tox). 17 enrichment items across ~25 pages. Repaired the missing posthog-js dep (tsc 3→0). Notes: MG feline remission stated qualitatively (source has no literal 0%); serum bile-acid numeric cutoffs absent from source (kept qualitative); feline Spec fPL has no clean cutoff in source. disease-hcm Playwright baseline needs regeneration in canonical env (intended growth). tsc 0 + 79 tests green throughout._
