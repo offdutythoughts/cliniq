@@ -9,7 +9,7 @@ const anorexiaEntry: FlowPage = {
     {
       kind: 'callout',
       tone: 'danger',
-      html: '🐈 <strong>Anorexic CAT = emergency.</strong> ≥2–14 days NEB → <strong>feline hepatic lipidosis</strong>. Don\'t rely on appetite stimulants — <strong>feed early</strong> (assisted/tube) once eating &lt;RER for &gt;3–5 days.',
+      html: '🐈 <strong>Anorexic CAT = emergency.</strong> Hepatic lipidosis can develop in as few as <strong>2 days</strong> in obese cats (typically within 1–2 weeks). Don\'t rely on appetite stimulants — <strong>feed early</strong> (assisted/tube) once eating &lt;RER for &gt;3–5 days. RER (kcal/day) = (30 × kg) + 70 for 3–25 kg cats, or 70 × kg<sup>0.75</sup> for any weight.',
     },
     {
       kind: 'node',
