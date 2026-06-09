@@ -106,7 +106,11 @@ export function LesionLocView({ loc, name }: { loc: string; name: string }) {
   const catFontSize = cols <= 4 ? 11 : cols === 5 ? 10 : 9
   const cardFontSize = cols <= 4 ? 10 : cols === 5 ? 9 : 8
   const cardPadding = cols <= 4 ? '6px 8px' : cols === 5 ? '5px 6px' : '3px 4px'
-  const gridStyle = s(`display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;`)
+  // Minimum column width so text always fits; scroll horizontally when needed.
+  const minColPx = cols <= 4 ? 80 : cols <= 6 ? 72 : 68
+  const totalMinPx = cols * minColPx + (cols - 1) * 6
+  const gridCols = `repeat(${cols},minmax(${minColPx}px,1fr))`
+  const gridStyle = s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;`)
   const dxSign = DX_MAP[loc]
 
   return (
@@ -116,26 +120,30 @@ export function LesionLocView({ loc, name }: { loc: string; name: string }) {
         <div className="flow-arrow-v">↓</div>
         <div className="flow-node step">IDENTIFY LESION CATEGORY</div>
         <div className="flow-arrow-v">↓</div>
-        <div style={gridStyle}>
-          {cats.map(cat => (
-            <div key={cat} className="flow-node" style={s(`background:${cBg(cat)};border-color:${cBd(cat)};color:${cTx(cat)};font-size:${catFontSize}px;cursor:default;min-width:0;`)}>{cat}</div>
-          ))}
-        </div>
-        <div style={gridStyle}>{cats.map(cat => <div key={cat} className="flow-arrow-v">↓</div>)}</div>
-        <div style={s(`display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;align-items:start;`)}>
-          {cats.map(cat => (
-            <div key={cat} style={s('display:flex;flex-direction:column;gap:4px;')}>
-              {groups.get(cat)!.map(l => (
-                <div key={l.id} role="button"
-                  style={s(`border-radius:8px;padding:${cardPadding};font-size:${cardFontSize}px;font-weight:600;text-align:center;border:1.5px solid ${cBd(cat)};background:${cBg(cat)};color:${cTx(cat)};cursor:pointer;transition:all .2s;line-height:1.3;word-break:break-word;`)}
-                  onClick={() => nav.navigate({ kind: 'subTypeDetail', id: l.id })}
-                  onMouseOver={e => { e.currentTarget.style.filter = 'brightness(1.2)' }}
-                  onMouseOut={e => { e.currentTarget.style.filter = '' }}>
-                  {l.sub}{isEM(l.urg) && <>{' '}<span className="tag tag-em" style={EM_BADGE}>⚠️</span></>}
-                </div>
-              ))}
-            </div>
-          ))}
+        <div style={s('overflow-x:auto;width:100%;')}>
+          <div style={gridStyle}>
+            {cats.map(cat => (
+              <div key={cat} className="flow-node" style={s(`background:${cBg(cat)};border-color:${cBd(cat)};color:${cTx(cat)};font-size:${catFontSize}px;cursor:default;`)}>{cat}</div>
+            ))}
+          </div>
+          <div style={s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;`)}>
+            {cats.map(cat => <div key={cat} className="flow-arrow-v">↓</div>)}
+          </div>
+          <div style={s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;align-items:start;`)}>
+            {cats.map(cat => (
+              <div key={cat} style={s('display:flex;flex-direction:column;gap:4px;')}>
+                {groups.get(cat)!.map(l => (
+                  <div key={l.id} role="button"
+                    style={s(`border-radius:8px;padding:${cardPadding};font-size:${cardFontSize}px;font-weight:600;text-align:center;border:1.5px solid ${cBd(cat)};background:${cBg(cat)};color:${cTx(cat)};cursor:pointer;transition:all .2s;line-height:1.3;word-break:break-word;`)}
+                    onClick={() => nav.navigate({ kind: 'subTypeDetail', id: l.id })}
+                    onMouseOver={e => { e.currentTarget.style.filter = 'brightness(1.2)' }}
+                    onMouseOut={e => { e.currentTarget.style.filter = '' }}>
+                    {l.sub}{isEM(l.urg) && <>{' '}<span className="tag tag-em" style={EM_BADGE}>⚠️</span></>}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       {dxSign && (

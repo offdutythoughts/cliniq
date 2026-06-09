@@ -17,6 +17,7 @@ const vestibularEntry: FlowPage = {
     // Bilateral→amber/warning); the row-label column is plain text.
     {
       kind: 'table',
+      gap: 12,
       cols: '1fr 1.4fr 1.4fr 1.4fr',
       headers: ['', 'Peripheral', 'Central', 'Bilateral'],
       rows: [

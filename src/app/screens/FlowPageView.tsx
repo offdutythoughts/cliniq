@@ -131,7 +131,7 @@ function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav:
   )
   const footColor = b.boxTone ? `color:${HUE[b.boxTone].color};opacity:.85;` : 'opacity:.9;'
   const foot = b.footnote ? <div style={s(`margin-top:7px;font-size:9.5px;line-height:1.55;${footColor}`)}><Raw html={b.footnote} onNav={onNav} /></div> : null
-  if (!b.boxTone && !b.title) return grid
+  if (!b.boxTone && !b.title) return b.gap ? <div style={s(`margin-top:${b.gap}px;width:100%;`)}>{grid}</div> : grid
   const tone = b.boxTone ?? 'neutral'
   return (
     <Box tone={tone} bgA={0.07} bdA={0.25} extra={`padding:10px 12px;${b.gap ? `margin-top:${b.gap}px;` : ''}`}>
