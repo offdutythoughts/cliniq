@@ -119,13 +119,12 @@ function DxAccordion({ b, onNav }: { b: Extract<DxBlock, { kind: 'accordion' }>;
 }
 
 function DxComparisonTable({ b }: { b: Extract<DxBlock, { kind: 'comparisonTable' }> }) {
-  const fs = b.fontSize ?? '9px'
-  const cellPad = '7px 6px'
+  const fs = b.fontSize ?? '10px'
+  const cellPad = '10px 8px'
   const borderRow = '1px solid rgba(148,163,184,0.1)'
-  const borderSection = '1px solid rgba(148,163,184,0.08)'
 
   function cellColor(col: typeof b.cols[number], cell: CompTableCell): string {
-    if (typeof cell !== 'string' && cell.dim) return 'var(--gray)'
+    if (typeof cell !== 'string' && cell.dim) return 'rgba(148,163,184,0.45)'
     if (col.isLabel) return 'var(--white)'
     return col.color ?? 'var(--white)'
   }
@@ -139,7 +138,7 @@ function DxComparisonTable({ b }: { b: Extract<DxBlock, { kind: 'comparisonTable
       <thead>
         <tr>
           {b.cols.map((col, ci) => {
-            const headerColor = col.isLabel ? 'var(--gray)' : (col.color ?? 'var(--white)')
+            const headerColor = col.isLabel ? 'rgba(148,163,184,0.8)' : (col.color ?? 'var(--white)')
             const borderB = col.isLabel
               ? '2px solid rgba(148,163,184,0.3)'
               : col.color ? `2px solid ${col.color}` : '2px solid rgba(148,163,184,0.3)'
@@ -153,11 +152,10 @@ function DxComparisonTable({ b }: { b: Extract<DxBlock, { kind: 'comparisonTable
       </thead>
       <tbody>
         {b.rows.map((row, ri) => {
-          const isLast = ri === b.rows.length - 1
           if (row.kind === 'section') {
             return (
               <tr key={ri}>
-                <td colSpan={colCount} style={s(`padding:4px 6px 2px;font-size:8px;font-weight:700;color:var(--gray);letter-spacing:.05em;text-transform:uppercase;border-bottom:${borderSection}`)}>
+                <td colSpan={colCount} style={s(`padding:14px 8px 4px;font-size:8px;font-weight:700;color:rgba(148,163,184,0.6);letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.15);`)}>
                   {row.label}
                 </td>
               </tr>
@@ -171,7 +169,7 @@ function DxComparisonTable({ b }: { b: Extract<DxBlock, { kind: 'comparisonTable
                 const fw = col.isLabel ? '600' : undefined
                 const align = ci === 0 ? 'left' : 'center'
                 return (
-                  <td key={ci} style={s(`padding:${cellPad};font-size:${fs};color:${color};${fw ? `font-weight:${fw};` : ''}text-align:${align};${!isLast ? `border-bottom:${borderRow};` : ''}line-height:1.4;white-space:${ci === 0 ? 'nowrap' : 'normal'};`)}
+                  <td key={ci} style={s(`padding:${cellPad};font-size:${fs};color:${color};${fw ? `font-weight:${fw};` : ''}text-align:${align};border-bottom:${borderRow};line-height:1.4;`)}
                     dangerouslySetInnerHTML={{ __html: cellHtml(cell) }}
                   />
                 )
