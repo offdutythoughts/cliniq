@@ -40,21 +40,21 @@ const weaknessEntry: FlowPage = {
     {
       kind: 'node', variant: 'step', text: 'STEP 2 — DEFINE THE SYSTEM',
       sub: 'Primary CNS/neuromuscular OR secondary (cardiovascular, metabolic, toxic)?',
-      connectAfter: false,
     },
     {
-      kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
-      <div style="background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.2);border-radius:10px;padding:10px;">
-        <div style="font-size:10px;font-weight:700;color:#BFDBFE;margin-bottom:5px;">PRIMARY — structural CNS/NM</div>
-        <div style="font-size:10px;color:var(--gray);line-height:1.7;">Asymmetrical deficits likely<br>Pain may be present<br>Spinal reflexes decreased<br>Sensory deficits (neuropathy)<br>CK markedly elevated (myopathy)</div>
-      </div>
-      <div style="background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.2);border-radius:10px;padding:10px;">
-        <div style="font-size:10px;font-weight:700;color:#99F6E4;margin-bottom:5px;">SECONDARY — functional</div>
-        <div style="font-size:10px;color:var(--gray);line-height:1.7;">Symmetrical deficits<br>No pain from NM system<br>Abnormal biochemistry<br>Signs of other organ disease<br>Minimum database first</div>
-      </div>
-    </div>`,
+      kind: 'compareBox',
+      tone: 'info',
+      cols: 2,
+      cards: [
+        {
+          header: 'PRIMARY — structural CNS/NM',
+          html: 'Asymmetrical deficits likely<br>Pain may be present<br>Spinal reflexes decreased<br>Sensory deficits (neuropathy)<br>CK markedly elevated (myopathy)',
+        },
+        {
+          header: 'SECONDARY — functional',
+          html: 'Symmetrical deficits<br>No pain from NM system<br>Abnormal biochemistry<br>Signs of other organ disease<br>Minimum database first',
+        },
+      ],
     },
     {
       kind: 'callout',

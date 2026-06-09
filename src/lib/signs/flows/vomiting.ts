@@ -27,66 +27,73 @@ const vomitingEntry: FlowPage = {
       sub: 'Active effort + nausea vs passive no effort',
     },
     {
-      kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
-    <!-- Two main branches -->
-    <div style="display:grid;grid-template-columns:3fr 2fr;gap:8px;width:100%;">
-
-      <!-- True vomiting -->
-      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <div class="flow-node insp" style="width:100%;font-size:11px;">TRUE VOMITING<br><span style="font-size:9px;opacity:.7">active abdominal effort, nausea, retching</span></div>
-        <div class="flow-arrow-v">↓</div>
-        <div class="flow-node sub-step" style="width:100%;font-size:10px;">IS VOMITING RELATED TO EATING?</div>
-        <div class="flow-arrow-v">↓</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
-          <!-- Related to eating -->
-          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-            <div style="font-size:9px;color:#A7F3D0;text-align:center;">YES — related to eating</div>
-            <div class="flow-arrow-v">↓</div>
-            <div class="flow-endpoint gi-upper" onclick="goLesionTab('LOC-GI-UPPER','Stomach')">
-              Stomach
-            </div>
-          </div>
-          <!-- Unrelated -->
-          <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-            <div style="font-size:9px;color:var(--gray2);text-align:center;">NOT related to eating</div>
-            <div class="flow-arrow-v">↓</div>
-            <div class="flow-node sub-step" style="font-size:9px;">Other systemic signs?<br>PU/PD, jaundice, malaise</div>
-            <div class="flow-arrow-v">↓</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;width:100%;">
-              <div>
-                <div style="font-size:8px;color:#99F6E4;text-align:center;margin-bottom:2px;">NO — bright alert</div>
-                <div class="flow-endpoint gi-primary" onclick="goLesionTab('LOC-GI-PRIMARY','Primary GI')">
-                  Primary GI
-                </div>
-              </div>
-              <div>
-                <div style="font-size:8px;color:var(--amber-text);text-align:center;margin-bottom:2px;">YES — systemic ill</div>
-                <div class="flow-endpoint gi-secondary" onclick="goLesionTab('LOC-GI-SECONDARY','Secondary / Extra-GI')">
-                  Secondary / Extra-GI
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Regurgitation -->
-      <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <div class="flow-node" style="width:100%;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);color:#C7D2FE;font-size:11px;">REGURGITATION<br><span style="font-size:9px;opacity:.7">passive, no effort, no bile</span></div>
-        <div class="flow-arrow-v">↓</div>
-        <div class="flow-node sub-step" style="width:100%;font-size:10px;">Intrinsic vs extrinsic cause?</div>
-        <div class="flow-arrow-v">↓</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
-          <div class="flow-endpoint oesoph" onclick="goLesionTab('LOC-OESOPH','Oesophageal Disease')" style="font-size:10px;">
-            Oesophagus
-          </div>
-          <div class="flow-endpoint" style="background:rgba(217,119,6,0.12);border:1.5px solid rgba(217,119,6,0.4);color:var(--amber-text);font-size:10px;cursor:pointer;" onclick="goLesionTab('LOC-OESOPH-EXT','Extra-Oesophageal Disease')">
-            Extra-Oesophageal
-          </div>
-        </div>
-      </div>
-    </div>`,
+      kind: 'branch',
+      columns: [
+        {
+          header: 'TRUE VOMITING',
+          tone: 'teal',
+          sub: 'active abdominal effort, nausea, retching',
+          blocks: [
+            { kind: 'node', variant: 'step', text: 'IS VOMITING RELATED TO EATING?' },
+            {
+              kind: 'branch',
+              columns: [
+                {
+                  header: 'YES — related to eating',
+                  tone: 'green',
+                  blocks: [
+                    { kind: 'endpoints', items: [
+                      { label: 'Stomach', tone: 'green', link: { to: 'lesion', loc: 'LOC-GI-UPPER', name: 'Stomach' } },
+                    ]},
+                  ],
+                },
+                {
+                  header: 'NOT related to eating',
+                  tone: 'neutral',
+                  blocks: [
+                    { kind: 'node', variant: 'step', text: 'Other systemic signs?\nPU/PD, jaundice, malaise' },
+                    {
+                      kind: 'branch',
+                      columns: [
+                        {
+                          header: 'NO — bright alert',
+                          tone: 'teal',
+                          blocks: [
+                            { kind: 'endpoints', items: [
+                              { label: 'Primary GI', tone: 'teal', link: { to: 'lesion', loc: 'LOC-GI-PRIMARY', name: 'Primary GI' } },
+                            ]},
+                          ],
+                        },
+                        {
+                          header: 'YES — systemic ill',
+                          tone: 'warning',
+                          blocks: [
+                            { kind: 'endpoints', items: [
+                              { label: 'Secondary / Extra-GI', tone: 'warning', link: { to: 'lesion', loc: 'LOC-GI-SECONDARY', name: 'Secondary / Extra-GI' } },
+                            ]},
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          header: 'REGURGITATION',
+          tone: 'indigo',
+          sub: 'passive, no effort, no bile',
+          blocks: [
+            { kind: 'node', variant: 'step', text: 'Intrinsic vs extrinsic cause?' },
+            { kind: 'endpoints', items: [
+              { label: 'Oesophagus', tone: 'teal', link: { to: 'lesion', loc: 'LOC-OESOPH', name: 'Oesophageal Disease' } },
+              { label: 'Extra-Oesophageal', tone: 'orange', link: { to: 'lesion', loc: 'LOC-OESOPH-EXT', name: 'Extra-Oesophageal Disease' } },
+            ]},
+          ],
+        },
+      ],
     },
     {
       kind: 'callout',

@@ -1,113 +1,43 @@
 // ── Tremors flowchart ───────────────────────────────────────────────────────
-// Tremor = involuntary, rhythmic, oscillatory movement of a body part produced
-// by alternating contractions of reciprocally innervated muscles (Ettinger Ch 42).
-// First job: separate a TREMOR (rhythmic oscillation, consciousness preserved)
-// from a SEIZURE (link to the seizures flow) — and recognise that acute toxic
-// tremors with hyperthermia are an emergency. Then triage: TOXIC/METABOLIC (the
-// reversible, time-critical group) vs CEREBELLAR (intention tremor — worsens
-// toward a target) vs IDIOPATHIC/OTHER (steroid-responsive "white-shaker").
-
 import type { FlowPage } from '../flowTypes'
 
-export const tremorsFlow: FlowPage = {
+const tremorsEntry: FlowPage = {
   id: 'tremors',
   title: 'Tremors',
   blocks: [
     { kind: 'node', variant: 'entry', text: '〰️ TREMORS' },
-
     {
       kind: 'callout',
       tone: 'danger',
       html: '🚨 <strong>Is this a tremor or a seizure?</strong> A <strong>tremor</strong> is a rhythmic oscillation with consciousness preserved and no post-ictal phase; a <strong>seizure</strong> has impaired consciousness, increased tone and autonomic signs — if in doubt, work it up as a <strong>seizure</strong>. And remember: an <strong>acute whole-body tremor with hyperthermia</strong> (tremorgenic mycotoxin, metaldehyde, permethrin in a cat) is a <strong>toxic emergency</strong> — stabilise before you investigate. (Ettinger Ch 42)',
     },
-
     {
       kind: 'node',
       variant: 'step',
       text: 'ACUTE & SICK, OR CHRONIC & WELL?',
       sub: 'Acute generalised tremor ± hyperthermia / tachycardia / mydriasis = toxic or metabolic until proven otherwise — check glucose, ionised calcium and potassium and take a toxin history FIRST. A slowly progressive tremor in an otherwise bright dog points cerebellar or idiopathic.',
     },
-
     {
-      kind: 'branch',
-      columns: [
+      kind: 'choices',
+      cols: 3,
+      items: [
         {
-          header: '☠️ TOXIC / METABOLIC',
           tone: 'danger',
-          sub: 'Acute · generalised · whole-body tremor at rest · hyperthermia · tachycardia · mydriasis · GI signs · may progress to seizures — the reversible, time-critical group',
-          blocks: [
-            { kind: 'node', variant: 'sub-step', text: 'TOXIN vs ELECTROLYTE / GLUCOSE?', connectAfter: false },
-            {
-              kind: 'branch',
-              columns: [
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'TOXINS — acute, hyperthermic',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '🍄', label: 'TREMORGENIC MYCOTOXINS', sublabel: 'Penitrem A / roquefortine — commonest cause of acute generalised tremor; mouldy food/compost', tone: 'danger', link: { to: 'protocol', id: 'PROT-TOX-MYCOTOX' } },
-                        { icon: '🐌', label: 'METALDEHYDE', sublabel: 'Slug bait — "shake-and-bake": tremors + non-febrile hyperthermia → seizures', tone: 'danger', link: { to: 'protocol', id: 'PROT-TOX-METALD' } },
-                        { icon: '🐈', label: 'PERMETHRIN (CATS)', sublabel: 'Pyrethroid spot-on misapplied to a cat — tremors, hyperthermia, seizures', tone: 'orange', link: { to: 'protocol', id: 'PROT-TOX-PERM' } },
-                        { icon: '🐛', label: 'ORGANOPHOSPHATE / CARBAMATE', sublabel: 'SLUDGE + muscle fasciculations/tremor; mydriasis', tone: 'warning', link: { to: 'protocol', id: 'PROT-TOX-OP' } },
-                        { icon: '🔩', label: 'LEAD', sublabel: 'GI + neuro signs — tremor, behaviour change, seizures', tone: 'info', link: { to: 'protocol', id: 'PROT-TOX-LEAD' } },
-                        { icon: '☕', label: 'Methylxanthines / other', sublabel: 'Caffeine · theobromine (chocolate) · xylitol · bromethalin · cannabis · macadamia', tone: 'neutral' },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'METABOLIC — check the bloods',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '🦴', label: 'HYPOCALCAEMIA', sublabel: 'Eclampsia · hypoparathyroidism · facial/whole-body tremor, twitching → tetany. Check IONISED calcium', tone: 'danger', link: { to: 'disease', id: 'DIS-ENDO-HYPOPTH' } },
-                        { icon: '🍬', label: 'HYPOGLYCAEMIA', sublabel: 'Insulinoma · sepsis · toy-breed/neonate · hepatic failure — tremor, weakness, seizures', tone: 'warning', link: { to: 'disease', id: 'DIS-MET-HYPOGLY' } },
-                        { icon: '🧬', label: 'INSULINOMA', sublabel: 'Older dog · fasting/exertional hypoglycaemia — insulin on the low-glucose sample', tone: 'violet', link: { to: 'disease', id: 'DIS-NEO-INSULINOMA' } },
-                        { icon: '🥄', label: 'HYPOKALAEMIA', sublabel: 'Weakness/ventroflexion more than tremor; correct K⁺ in every case', tone: 'info', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
+          label: '☠️ TOXIC / METABOLIC',
+          sublabel: 'Acute · generalised · whole-body tremor at rest · hyperthermia · tachycardia · mydriasis · GI signs · may progress to seizures',
+          link: { to: 'flow', id: 'tremors-toxic' },
         },
         {
-          header: '🧠 CEREBELLAR',
           tone: 'violet',
-          sub: 'INTENTION tremor — crescendos as the head/limb approaches a target (eating, sniffing) + postural head tremor + truncal sway; NO weakness, NO proprioceptive deficits (Ettinger Ch 42)',
-          blocks: [
-            {
-              kind: 'endpoints',
-              items: [
-                { icon: '🐱', label: 'CEREBELLAR HYPOPLASIA', sublabel: 'Non-progressive from first ambulation; FPV in kittens', tone: 'teal', link: { to: 'disease', id: 'DIS-NEU-CEREHYPO' } },
-                { icon: '📉', label: 'CEREBELLAR ABIOTROPHY', sublabel: 'Normal period then progressive Purkinje-cell degeneration (breed-related)', tone: 'violet', link: { to: 'disease', id: 'DIS-NEU-ABIOTROPHY' } },
-                { icon: '🔥', label: 'MUO / MENINGOENCEPHALITIS', sublabel: 'Young small breed · progressive multifocal · CSF pleocytosis', tone: 'danger', link: { to: 'disease', id: 'DIS-NEU-MUE' } },
-                { icon: '🔥', label: 'GME', sublabel: 'Granulomatous variant — focal/multifocal inflammatory', tone: 'danger', link: { to: 'disease', id: 'DIS-GME' } },
-                { icon: '💊', label: 'METRONIDAZOLE TOXICITY', sublabel: 'Drug history · central-vestibular/cerebellar signs · resolves on cessation', tone: 'warning', link: { to: 'disease', id: 'DIS-NEU-METRO' } },
-              ],
-            },
-          ],
+          label: '🧠 CEREBELLAR',
+          sublabel: 'INTENTION tremor — crescendos as the head/limb approaches a target · postural head tremor · truncal sway · NO weakness',
+          link: { to: 'flow', id: 'tremors-cerebellar' },
         },
         {
-          header: '⚪ IDIOPATHIC / OTHER',
           tone: 'teal',
-          sub: 'Whole-body fine tremor in a young dog with a normal neuro exam — worse with anxiety; classic "white-shaker", but ANY breed (rare in dogs >20 kg) (Ettinger Ch 42)',
-          blocks: [
-            {
-              kind: 'endpoints',
-              items: [
-                { icon: '🐩', label: 'IDIOPATHIC GENERALISED TREMOR (IGTS)', sublabel: '"White-shaker" — young adult · whole-body fine tremor worsening with anxiety; MRI normal; STEROID-RESPONSIVE (pred 1–2 mg/kg q12–24h, improves 3–10 days). No dedicated page', tone: 'teal' },
-                { icon: '🐶', label: 'Idiopathic head tremor (IHTS)', sublabel: '"Head-bobbing" yes-yes/no-no episodes; Bulldog/Boxer/Doberman/Labrador; benign, AED-unresponsive', tone: 'neutral' },
-                { icon: '🍼', label: 'Hypomyelination ("shaker pup")', sublabel: 'Tremor from ~10 days of age when aroused; Springer/Weimaraner/Chow; many recover by 5 months', tone: 'slate' },
-                { icon: '🐕‍🦺', label: 'Orthostatic tremor', sublabel: 'Limb/trunk tremor only when standing, gone when walking/recumbent; Great Dane/Deerhound or senile', tone: 'slate' },
-              ],
-            },
-          ],
+          label: '⚪ IDIOPATHIC / OTHER',
+          sublabel: 'Whole-body fine tremor in a young dog with a normal neuro exam — worse with anxiety; classic "white-shaker", but ANY breed',
+          link: { to: 'flow', id: 'tremors-idiopathic' },
         },
       ],
     },
@@ -151,3 +81,113 @@ export const tremorsFlow: FlowPage = {
     },
   ],
 }
+
+const tremorsToxic: FlowPage = {
+  id: 'tremors-toxic',
+  title: 'Tremors — Toxic / Metabolic',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: '☠️ TOXIC / METABOLIC', sub: 'Acute · generalised · whole-body tremor at rest · hyperthermia · tachycardia · mydriasis · GI signs · may progress to seizures — the reversible, time-critical group' },
+    { kind: 'node', variant: 'step', text: 'TOXIN vs ELECTROLYTE / GLUCOSE?' },
+    {
+      kind: 'categoryGrid',
+      columns: [
+        {
+          cat: 'Toxins — Acute / Hyperthermic',
+          tone: 'danger',
+          tiles: [
+            { label: '🍄 TREMORGENIC MYCOTOXINS', link: { to: 'protocol', id: 'PROT-TOX-MYCOTOX' } },
+            { label: '🐌 METALDEHYDE', link: { to: 'protocol', id: 'PROT-TOX-METALD' } },
+            { label: '🐈 PERMETHRIN (CATS)', link: { to: 'protocol', id: 'PROT-TOX-PERM' } },
+            { label: '🐛 ORGANOPHOSPHATE / CARBAMATE', link: { to: 'protocol', id: 'PROT-TOX-OP' } },
+            { label: '🔩 LEAD', link: { to: 'protocol', id: 'PROT-TOX-LEAD' } },
+            { label: '☕ Methylxanthines / other — caffeine · theobromine · xylitol · bromethalin · cannabis · macadamia' },
+          ],
+        },
+        {
+          cat: 'Metabolic — Check the Bloods',
+          tone: 'warning',
+          tiles: [
+            { label: '🦴 HYPOCALCAEMIA', link: { to: 'disease', id: 'DIS-ENDO-HYPOPTH' } },
+            { label: '🍬 HYPOGLYCAEMIA', link: { to: 'disease', id: 'DIS-MET-HYPOGLY' } },
+            { label: '🧬 INSULINOMA', link: { to: 'disease', id: 'DIS-NEO-INSULINOMA' } },
+            { label: '🥄 HYPOKALAEMIA', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+const tremorsCerebellar: FlowPage = {
+  id: 'tremors-cerebellar',
+  title: 'Tremors — Cerebellar',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: '🧠 CEREBELLAR', sub: 'INTENTION tremor — crescendos as the head/limb approaches a target (eating, sniffing) + postural head tremor + truncal sway; NO weakness, NO proprioceptive deficits (Ettinger Ch 42)' },
+    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    {
+      kind: 'categoryGrid',
+      columns: [
+        {
+          cat: 'Developmental / Degenerative',
+          tone: 'teal',
+          tiles: [
+            { label: '🐱 CEREBELLAR HYPOPLASIA', link: { to: 'disease', id: 'DIS-NEU-CEREHYPO' } },
+            { label: '📉 CEREBELLAR ABIOTROPHY', link: { to: 'disease', id: 'DIS-NEU-ABIOTROPHY' } },
+          ],
+        },
+        {
+          cat: 'Inflammatory / Infectious',
+          tone: 'danger',
+          tiles: [
+            { label: '🔥 MUO / MENINGOENCEPHALITIS', link: { to: 'disease', id: 'DIS-NEU-MUE' } },
+            { label: '🔥 GME', link: { to: 'disease', id: 'DIS-GME' } },
+          ],
+        },
+        {
+          cat: 'Drug-Induced',
+          tone: 'warning',
+          tiles: [
+            { label: '💊 METRONIDAZOLE TOXICITY', link: { to: 'disease', id: 'DIS-NEU-METRO' } },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+const tremorsIdiopathic: FlowPage = {
+  id: 'tremors-idiopathic',
+  title: 'Tremors — Idiopathic / Other',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: '⚪ IDIOPATHIC / OTHER', sub: 'Whole-body fine tremor in a young dog with a normal neuro exam — worse with anxiety; classic "white-shaker", but ANY breed (rare in dogs >20 kg) (Ettinger Ch 42)' },
+    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    {
+      kind: 'categoryGrid',
+      columns: [
+        {
+          cat: 'Idiopathic / Steroid-Responsive',
+          tone: 'teal',
+          tiles: [
+            { label: '🐩 IDIOPATHIC GENERALISED TREMOR (IGTS) — "white-shaker"; steroid-responsive (pred 1–2 mg/kg q12–24h, improves 3–10 days)' },
+          ],
+        },
+        {
+          cat: 'Breed-Related / Benign',
+          tone: 'neutral',
+          tiles: [
+            { label: '🐶 Idiopathic head tremor (IHTS) — "head-bobbing"; Bulldog/Boxer/Doberman/Labrador; benign, AED-unresponsive' },
+            { label: '🍼 Hypomyelination ("shaker pup") — tremor from ~10 days of age when aroused; many recover by 5 months' },
+            { label: '🐕‍🦺 Orthostatic tremor — limb/trunk tremor only when standing; Great Dane/Deerhound or senile' },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+export const tremorsFlows: FlowPage[] = [
+  tremorsEntry,
+  tremorsToxic,
+  tremorsCerebellar,
+  tremorsIdiopathic,
+]

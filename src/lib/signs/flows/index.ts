@@ -1,9 +1,4 @@
 // ── FLOWS registry ──────────────────────────────────────────────────────────
-// All migrated flow pages, keyed by FlowPage.id. A SignEntry.flowId in
-// ../registry that matches a key here is rendered from data (via renderFlowId in
-// cliniqApp.ts); signs without a flowId still use their legacy render function.
-// Add a sign's pages here as they are migrated.
-
 import type { FlowPage } from '../flowTypes'
 import { epistaxisFlow } from './epistaxis'
 import { wetEyeFlow } from './wetEye'
@@ -28,19 +23,19 @@ import { ataxiaFlows } from './ataxia'
 import { bleedingFlows } from './bleeding'
 // Phase 3 — new sign screens (gap-analysis remediation)
 import { pollakiuriaFlow } from './pollakiuria'
-import { syncopeFlow } from './syncope'
-import { heartMurmurFlow } from './heartMurmur'
-import { feverFlow } from './fever'
-import { dysphagiaFlow } from './dysphagia'
-import { melenaFlow } from './melena'
-import { constipationFlow } from './constipation'
-import { oedemaFlow } from './oedema'
-import { swollenJointsFlow } from './swollenJoints'
-import { anorexiaFlow } from './anorexia'
-import { weightLossFlow } from './weightLoss'
-import { polyphagiaFlow } from './polyphagia'
-import { cyanosisFlow } from './cyanosis'
-import { tremorsFlow } from './tremors'
+import { syncopeFlows } from './syncope'
+import { heartMurmurFlows } from './heartMurmur'
+import { feverFlows } from './fever'
+import { dysphagiaFlows } from './dysphagia'
+import { melenaFlows } from './melena'
+import { constipationFlows } from './constipation'
+import { oedemaFlows } from './oedema'
+import { swollenJointsFlows } from './swollenJoints'
+import { anorexiaFlows } from './anorexia'
+import { weightLossFlows } from './weightLoss'
+import { polyphagiaFlows } from './polyphagia'
+import { cyanosisFlows } from './cyanosis'
+import { tremorsFlows } from './tremors'
 
 export const FLOWS: Record<string, FlowPage> = Object.fromEntries(
   [
@@ -52,8 +47,9 @@ export const FLOWS: Record<string, FlowPage> = Object.fromEntries(
     // Phase 2
     ...seizuresFlows, ...myelopathyFlows, ...vestibularFlows, ...ataxiaFlows, ...bleedingFlows,
     // Phase 3
-    pollakiuriaFlow, syncopeFlow, heartMurmurFlow, feverFlow, dysphagiaFlow,
-    melenaFlow, constipationFlow, oedemaFlow, swollenJointsFlow,
-    anorexiaFlow, weightLossFlow, polyphagiaFlow, cyanosisFlow, tremorsFlow,
+    pollakiuriaFlow,
+    ...syncopeFlows, ...heartMurmurFlows, ...feverFlows, ...dysphagiaFlows,
+    ...melenaFlows, ...constipationFlows, ...oedemaFlows, ...swollenJointsFlows,
+    ...anorexiaFlows, ...weightLossFlows, ...polyphagiaFlows, ...cyanosisFlows, ...tremorsFlows,
   ].map(p => [p.id, p]),
 )

@@ -1,120 +1,37 @@
 // ── Polyphagia flowchart ─────────────────────────────────────────────────────
-// Excessive food intake. The pivotal split is the BODY-WEIGHT trend:
-// polyphagia WITH WEIGHT LOSS (pathologic — ↑metabolic demand or nutrient loss)
-// vs polyphagia WITH WEIGHT GAIN (drug-induced, hyperadrenocorticism, insulinoma,
-// or simple overfeeding/behavioural). Rule out drugs first. PU/PD frequently
-// co-occurs (DM, HAC, hyperthyroid) — cross-links to the PU/PD flow.
-// Links into the endocrine / GI / metabolic disease pages.
-
 import type { FlowPage } from '../flowTypes'
 
-export const polyphagiaFlow: FlowPage = {
+const polyphagiaEntry: FlowPage = {
   id: 'polyphagia',
   title: 'Polyphagia',
   blocks: [
     { kind: 'node', variant: 'entry', text: '🍽️ POLYPHAGIA' },
-
     {
       kind: 'callout',
       tone: 'info',
       html: '🔑 <strong>Body-weight trend is the pivot.</strong> Polyphagia <strong>+ weight LOSS</strong> = pathologic (↑demand or nutrient loss) — diabetes, hyperthyroid cat, EPI, IBD/lymphoma, acromegaly. Polyphagia <strong>+ weight GAIN</strong> = drug-induced, hyperadrenocorticism, insulinoma, or simple overfeeding. <strong>Rule out drugs first</strong> — glucocorticoids, anticonvulsants (phenobarbital, KBr), benzodiazepines, progestins all drive appetite. (Ettinger Ch 19)',
     },
-
     {
       kind: 'node',
       variant: 'step',
       text: 'WEIGH THE PATIENT — IS BW RISING OR FALLING?',
       sub: 'After excluding pregnancy/lactation, growth, increased exercise/cold, and an obvious dietary/behavioural cause, the weight trend splits the differential (Ettinger Ch 19)',
     },
-
     {
-      kind: 'branch',
-      columns: [
+      kind: 'choices',
+      cols: 2,
+      items: [
         {
-          header: '🔻 POLYPHAGIA + WEIGHT LOSS — pathologic',
           tone: 'danger',
-          sub: '↑metabolic demand OR nutrient loss/malabsorption · PU/PD often co-occurs (DM, hyperthyroid) · GI signs point to malassimilation',
-          blocks: [
-            { kind: 'node', variant: 'sub-step', text: '↑METABOLIC DEMAND / ENERGY LOSS vs MALABSORPTION?', connectAfter: false },
-            {
-              kind: 'branch',
-              columns: [
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'ENDOCRINE — ↑demand or glucose loss',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '🍬', label: 'DIABETES MELLITUS', sublabel: 'PU/PD + polyphagia + weight loss · glucosuria', tone: 'danger', link: { to: 'disease', id: 'DIS-ENDO-DM' } },
-                        { icon: '🐈', label: 'FELINE HYPERTHYROIDISM', sublabel: 'Senior cat · weight loss 92% · polyphagia 55% · palpable nodule', tone: 'orange', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
-                        { icon: '🐾', label: 'ACROMEGALY (cat)', sublabel: 'Insulin-resistant DM · IGF-1 ≥1000 ng/mL · organomegaly', tone: 'violet', link: { to: 'disease', id: 'DIS-ENDO-ACRO' } },
-                        { icon: '🚨', label: 'DIABETIC KETOACIDOSIS', sublabel: 'Decompensated DM — sick, dehydrated, ketotic', tone: 'danger', link: { to: 'disease', id: 'DIS-ENDO-DKA' } },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'GI — malassimilation (± diarrhoea, soft stool)',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '💩', label: 'EXOCRINE PANCREATIC INSUFFICIENCY', sublabel: 'Large-volume malodorous soft stool · TLI dog <2.5 / cat <8.0 µg/L', tone: 'green', link: { to: 'disease', id: 'DIS-GI-EPI' } },
-                        { icon: '🦠', label: 'INFLAMMATORY BOWEL DISEASE', sublabel: 'Chronic enteropathy · ↓cobalamin/folate', tone: 'teal', link: { to: 'disease', id: 'DIS-GI-IBD' } },
-                        { icon: '🧬', label: 'ALIMENTARY LYMPHOMA', sublabel: 'Infiltrative malabsorption · esp. older cat', tone: 'violet', link: { to: 'disease', id: 'DIS-GI-LYMP' } },
-                        { icon: '🪱', label: 'Intestinal parasites', sublabel: 'Young, unknown deworming → fecal + deworm trial', tone: 'neutral' },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
+          label: '🔻 POLYPHAGIA + WEIGHT LOSS — pathologic',
+          sublabel: '↑metabolic demand OR nutrient loss/malabsorption · PU/PD often co-occurs (DM, hyperthyroid) · GI signs point to malassimilation',
+          link: { to: 'flow', id: 'polyphagia-weightloss' },
         },
         {
-          header: '🔺 POLYPHAGIA + WEIGHT GAIN — drug / endocrine / behavioural',
           tone: 'teal',
-          sub: 'Caloric intake exceeds expenditure · rule out drugs FIRST · then hyperadrenocorticism, hypoglycaemia-driven, or simple overfeeding',
-          blocks: [
-            { kind: 'node', variant: 'sub-step', text: 'IATROGENIC/DRUG vs ENDOCRINE vs BEHAVIOURAL?', connectAfter: false },
-            {
-              kind: 'branch',
-              columns: [
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'DRUG-INDUCED / ENDOCRINE',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '💊', label: 'GLUCOCORTICOIDS / iatrogenic', sublabel: 'Steroids drive polyphagia/PU-PD/panting — resolve on withdrawal', tone: 'info', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
-                        { icon: '⚡', label: 'ANTICONVULSANTS', sublabel: 'Phenobarbital, KBr — polyphagia + weight gain + PU/PD', tone: 'warning' },
-                        { icon: '🐶', label: 'HYPERADRENOCORTICISM (dog)', sublabel: 'PU/PD · polyphagia 60% · pot-belly · LDDST/ACTH-stim', tone: 'violet', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
-                        { icon: '🐈', label: 'FELINE HYPERADRENOCORTICISM', sublabel: 'Concurrent DM 79% · skin fragility · IDEX', tone: 'violet', link: { to: 'disease', id: 'DIS-ENDO-HAC-CAT' } },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'HYPOGLYCAEMIA-DRIVEN / BEHAVIOURAL',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '🩸', label: 'INSULINOMA', sublabel: 'Whipple triad: BG <60 mg/dL + hyperinsulinaemia · seizures/collapse', tone: 'danger', link: { to: 'disease', id: 'DIS-NEO-INSULINOMA' } },
-                        { icon: '📉', label: 'HYPOGLYCAEMIA (other)', sublabel: 'Hepatic failure · hypoadrenocorticism · insulin overdose', tone: 'warning', link: { to: 'disease', id: 'DIS-MET-HYPOGLY' } },
-                        { icon: '🍖', label: 'Overfeeding / palatable diet', sublabel: 'Most common — diagnosis once disease excluded', tone: 'neutral' },
-                        { icon: '🧠', label: 'Psychogenic / behavioural', sublabel: 'Stress, food competition, learned begging', tone: 'neutral' },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
+          label: '🔺 POLYPHAGIA + WEIGHT GAIN — drug / endocrine / behavioural',
+          sublabel: 'Caloric intake exceeds expenditure · rule out drugs FIRST · then hyperadrenocorticism, hypoglycaemia-driven, or simple overfeeding',
+          link: { to: 'flow', id: 'polyphagia-weightgain' },
         },
       ],
     },
@@ -158,3 +75,83 @@ export const polyphagiaFlow: FlowPage = {
     },
   ],
 }
+
+const polyphagiaWeightLoss: FlowPage = {
+  id: 'polyphagia-weightloss',
+  title: 'Polyphagia + Weight Loss',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: '🔻 POLYPHAGIA + WEIGHT LOSS — pathologic', sub: '↑metabolic demand OR nutrient loss/malabsorption · PU/PD often co-occurs (DM, hyperthyroid) · GI signs point to malassimilation' },
+    { kind: 'node', variant: 'step', text: '↑METABOLIC DEMAND / ENERGY LOSS vs MALABSORPTION?' },
+    {
+      kind: 'categoryGrid',
+      columns: [
+        {
+          cat: 'Endocrine (↑ Demand / Glucose Loss)',
+          tone: 'warning',
+          tiles: [
+            { label: '🍬 DIABETES MELLITUS', link: { to: 'disease', id: 'DIS-ENDO-DM' } },
+            { label: '🐈 FELINE HYPERTHYROIDISM', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
+            { label: '🐾 ACROMEGALY (cat)', link: { to: 'disease', id: 'DIS-ENDO-ACRO' } },
+            { label: '🚨 DIABETIC KETOACIDOSIS', link: { to: 'disease', id: 'DIS-ENDO-DKA' } },
+          ],
+        },
+        {
+          cat: 'GI Malassimilation',
+          tone: 'orange',
+          tiles: [
+            { label: '💩 EXOCRINE PANCREATIC INSUFFICIENCY', link: { to: 'disease', id: 'DIS-GI-EPI' } },
+            { label: '🦠 INFLAMMATORY BOWEL DISEASE', link: { to: 'disease', id: 'DIS-GI-IBD' } },
+            { label: '🧬 ALIMENTARY LYMPHOMA', link: { to: 'disease', id: 'DIS-GI-LYMP' } },
+            { label: '🪱 Intestinal parasites — young / unknown deworming' },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+const polyphagiaWeightGain: FlowPage = {
+  id: 'polyphagia-weightgain',
+  title: 'Polyphagia + Weight Gain',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: '🔺 POLYPHAGIA + WEIGHT GAIN — drug / endocrine / behavioural', sub: 'Caloric intake exceeds expenditure · rule out drugs FIRST · then hyperadrenocorticism, hypoglycaemia-driven, or simple overfeeding' },
+    { kind: 'node', variant: 'step', text: 'IATROGENIC/DRUG vs ENDOCRINE vs BEHAVIOURAL?' },
+    {
+      kind: 'categoryGrid',
+      columns: [
+        {
+          cat: 'Drug-Induced / Endocrine',
+          tone: 'warning',
+          tiles: [
+            { label: '💊 GLUCOCORTICOIDS / iatrogenic', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
+            { label: '⚡ ANTICONVULSANTS — phenobarbital, KBr' },
+            { label: '🐶 HYPERADRENOCORTICISM (dog)', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
+            { label: '🐈 FELINE HYPERADRENOCORTICISM', link: { to: 'disease', id: 'DIS-ENDO-HAC-CAT' } },
+          ],
+        },
+        {
+          cat: 'Hypoglycaemia-Driven',
+          tone: 'danger',
+          tiles: [
+            { label: '🩸 INSULINOMA', link: { to: 'disease', id: 'DIS-NEO-INSULINOMA' } },
+            { label: '📉 HYPOGLYCAEMIA (other)', link: { to: 'disease', id: 'DIS-MET-HYPOGLY' } },
+          ],
+        },
+        {
+          cat: 'Behavioural',
+          tone: 'neutral',
+          tiles: [
+            { label: '🍖 Overfeeding / palatable diet — most common' },
+            { label: '🧠 Psychogenic / behavioural — stress, food competition, learned begging' },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+export const polyphagiaFlows: FlowPage[] = [
+  polyphagiaEntry,
+  polyphagiaWeightLoss,
+  polyphagiaWeightGain,
+]

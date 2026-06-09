@@ -49,51 +49,28 @@ const ataxiaEntry: FlowPage = {
       ],
     },
 
-    // "Key distinctions" box — neutral var(--card) panel with an uppercase
-    // letter-spaced title and var(--white) inline strongs. No typed block
-    // reproduces this exact structure (callout is tone-tinted, 9.5px) → html.
     {
-      kind: 'html',
-      html: `<div style="margin-top:12px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;width:100%;">
-    <div style="font-size:11px;font-weight:600;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">💡 Key distinctions</div>
-    <div style="font-size:11px;color:var(--gray);line-height:1.65;">
-      <strong style="color:var(--white);">Cerebellar:</strong> No paresis, no proprioceptive deficits — the cerebellum coordinates movement, doesn’t initiate it. Hypermetria is the hallmark.<br>
-      <strong style="color:var(--white);">Vestibular:</strong> Asymmetric — falls/leans to one side. Head tilt + nystagmus = vestibular until proven otherwise.<br>
-      <strong style="color:var(--white);">Proprioceptive (GP):</strong> Always has paresis — weakness + incoordination together. Spinal cord lesion.
-    </div>
-  </div>`,
+      kind: 'callout',
+      tone: 'neutral',
+      gap: 12,
+      connectAfter: false,
+      title: '💡 Key distinctions',
+      html: '<strong>Cerebellar:</strong> No paresis, no proprioceptive deficits — the cerebellum coordinates movement, doesn\'t initiate it. Hypermetria is the hallmark.<br><strong>Vestibular:</strong> Asymmetric — falls/leans to one side. Head tilt + nystagmus = vestibular until proven otherwise.<br><strong>Proprioceptive (GP):</strong> Always has paresis — weakness + incoordination together. Spinal cord lesion.',
     },
-
-    // "🐱 vs 🐕 — Species differences" box — teal-tinted panel with dense
-    // dog/cat pearls. SpeciesCompare is typed but unrendered; the legacy is a
-    // single mixed list (not 🐕/🐱 columns) with var(--white) inline strongs →
-    // html (FLAG: a typed species-pearl / titled-list block would help here).
     {
-      kind: 'html',
-      html: `<div style="margin-top:10px;padding:10px 14px;background:rgba(13,115,119,0.10);border:1px solid rgba(13,115,119,0.4);border-radius:12px;width:100%;">
-    <div style="font-size:11px;font-weight:600;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">🐱 vs 🐕 — Species differences</div>
-    <div style="font-size:11px;color:var(--gray);line-height:1.65;">
-      <strong style="color:var(--white);">🐱 Kitten with non-progressive tremor from first ambulation:</strong> almost always FPV cerebellar hypoplasia — reassure owners.<br>
-      <strong style="color:var(--white);">🐱 Cervical ventroflexion + ataxia + dilated pupils:</strong> think THIAMINE deficiency (fish/homemade diet) — treat on suspicion (IM thiamine, NOT IV).<br>
-      <strong style="color:var(--white);">🐱 Young cat from multi-cat household with multifocal CNS signs:</strong> exclude neurological FIP — high globulins, low A:G, periventricular MRI lesions.<br>
-      <strong style="color:var(--white);">🐕 Unvaccinated dog with myoclonus (chewing-gum fits) + multifocal CNS signs:</strong> CDV until proven otherwise — RT-PCR + isolate.<br>
-      <strong style="color:var(--white);">🐕 Young purebred terrier with progressive cerebellar signs ± myokymia (skin rippling):</strong> spinocerebellar ataxia (SAM/SDCA) — breed-specific DNA test.<br>
-      <strong style="color:var(--white);">🐕 Young pup with rigid pelvic-limb hyperextension:</strong> Neospora caninum — serology + clindamycin.<br>
-      <strong style="color:var(--white);">🐱 + 🐕 Currently on metronidazole:</strong> vertical/positional nystagmus = toxicity until proven otherwise — STOP the drug. Cats more susceptible.<br>
-      <strong style="color:var(--white);">🐕 Idiopathic vestibular:</strong> classic in geriatric dogs. <strong style="color:var(--white);">🐱 Idiopathic vestibular:</strong> all ages, often seasonal (summer) in outdoor cats.
-    </div>
-  </div>`,
+      kind: 'callout',
+      tone: 'teal',
+      gap: 10,
+      connectAfter: false,
+      title: '🐱 vs 🐕 — Species differences',
+      html: '🐱 <strong>Kitten with non-progressive tremor from first ambulation:</strong> almost always FPV cerebellar hypoplasia — reassure owners.<br>🐱 <strong>Cervical ventroflexion + ataxia + dilated pupils:</strong> think THIAMINE deficiency (fish/homemade diet) — treat on suspicion (IM thiamine, NOT IV).<br>🐱 <strong>Young cat from multi-cat household with multifocal CNS signs:</strong> exclude neurological FIP — high globulins, low A:G, periventricular MRI lesions.<br>🐕 <strong>Unvaccinated dog with myoclonus (chewing-gum fits) + multifocal CNS signs:</strong> CDV until proven otherwise — RT-PCR + isolate.<br>🐕 <strong>Young purebred terrier with progressive cerebellar signs ± myokymia (skin rippling):</strong> spinocerebellar ataxia (SAM/SDCA) — breed-specific DNA test.<br>🐕 <strong>Young pup with rigid pelvic-limb hyperextension:</strong> Neospora caninum — serology + clindamycin.<br>🐱 + 🐕 <strong>Currently on metronidazole:</strong> vertical/positional nystagmus = toxicity until proven otherwise — STOP the drug. Cats more susceptible.<br>🐕 <strong>Idiopathic vestibular:</strong> classic in geriatric dogs. 🐱 <strong>Idiopathic vestibular:</strong> all ages, often seasonal (summer) in outdoor cats.',
     },
-
-    // Two trailing action cards (.card rows). No typed block reproduces the
-    // .card-icon/.card-title/.card-sub/.card-arrow layout (dxRow renders .dx-test
-    // buttons, visually different) → html. Onclicks mapped: renderDxId('ataxia') is a
-    // dx view; renderProtoDetail('PROT-ATAXIA') a protocol. (FLAG: a typed
-    // linkCard/cardRow block would let these be validated links.)
     {
-      kind: 'html',
-      html: `<div style="margin-top:8px;width:100%;"><div class="card" onclick="renderDxId('ataxia')"><div class="card-row"><div class="card-icon">🔬</div><div style="flex:1"><div class="card-title">Diagnostic Approach</div><div class="card-sub">Imaging + targeted testing by ataxia type</div></div><div class="card-arrow">›</div></div></div></div>
-  <div style="margin-top:6px;width:100%;"><div class="card" onclick="renderProtoDetail('PROT-ATAXIA')"><div class="card-row"><div class="card-icon">⚡</div><div style="flex:1"><div class="card-title">Emergency Ataxia Protocol</div><div class="card-sub">Stabilisation + workup for the acutely ataxic patient</div></div><div class="card-arrow">›</div></div></div></div>`,
+      kind: 'dxRow',
+      items: [
+        { label: '🔬 Diagnostic Approach', link: { to: 'dx', id: 'ataxia' } },
+        { label: '⚡ Emergency Ataxia Protocol', link: { to: 'protocol', id: 'PROT-ATAXIA' } },
+      ],
     },
 
     { kind: 'disclaimer' },

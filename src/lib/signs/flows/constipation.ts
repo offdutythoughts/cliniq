@@ -1,80 +1,163 @@
 // ── Constipation / Tenesmus flowchart ────────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
 
-export const constipationFlow: FlowPage = {
+const constipationEntry: FlowPage = {
   id: 'constipation',
   title: 'Constipation / Tenesmus',
   blocks: [
     { kind: 'node', variant: 'entry', text: '💩 CONSTIPATION / TENESMUS' },
-
     {
       kind: 'callout',
       tone: 'danger',
       html: '🚨 <strong>FIRST: straining to DEFECATE or URINATE?</strong> Tenesmus and <strong>stranguria</strong> look identical to an owner. Palpate the bladder — a blocked male cat straining unproductively is a <strong>hyperkalaemic emergency</strong>, not constipation. <strong>Obstipation</strong> = cannot defecate without intervention; recurrent → <strong>idiopathic megacolon</strong>. (Ettinger Ch 51)',
     },
-
     {
       kind: 'node',
       variant: 'step',
       text: 'CONFIRMED DEFECATION STRAINING — WHAT IS THE MECHANISM?',
       sub: 'Tenesmus precedes defecation in obstructive disease, follows it in inflammatory disease; rectal exam is key — pelvic canal, prostate, masses, stricture, anal sacs',
     },
-
     {
-      kind: 'branch',
+      kind: 'choices',
+      cols: 3,
+      items: [
+        {
+          tone: 'orange',
+          label: '🔴 OBSTRUCTIVE / INTRALUMINAL',
+          sublabel: 'Impacted faeces · foreign material · intraluminal mass · stricture',
+          link: { to: 'flow', id: 'constipation-obstructive' },
+        },
+        {
+          tone: 'violet',
+          label: '⚙️ PELVIC / EXTRALUMINAL',
+          sublabel: 'Narrowed pelvic canal or compressive mass outside the bowel wall',
+          link: { to: 'flow', id: 'constipation-pelvic' },
+        },
+        {
+          tone: 'teal',
+          label: '🧠 NEUROMUSCULAR / METABOLIC',
+          sublabel: 'Failure of colonic propulsion: nerve disease, electrolyte/endocrine derangement, or dehydration',
+          link: { to: 'flow', id: 'constipation-neuromet' },
+        },
+      ],
+    },
+  ],
+}
+
+const constipationObstructive: FlowPage = {
+  id: 'constipation-obstructive',
+  title: 'Constipation — Obstructive / Intraluminal',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: '🔴 OBSTRUCTIVE / INTRALUMINAL', sub: 'Impacted faeces · foreign material · intraluminal mass · stricture' },
+    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    {
+      kind: 'categoryGrid',
       columns: [
         {
-          header: '🔴 OBSTRUCTIVE / INTRALUMINAL',
+          cat: 'Impaction / Dietary',
           tone: 'orange',
-          sub: 'Impacted faeces · foreign material · intraluminal mass · stricture',
-          blocks: [
-            {
-              kind: 'endpoints',
-              items: [
-                { icon: '🪨', label: 'IMPACTED FAECES / DIETARY', sublabel: 'Pica (bones, hair, litter) · obstipation → feline megacolon', tone: 'orange' },
-                { icon: '🧬', label: 'RECTAL / COLONIC MASS', sublabel: 'Neoplasia · stricture · diverticulum', tone: 'violet' },
-                { icon: '🔥', label: 'PERIANAL FISTULA', sublabel: 'GSDs · painful dyschezia + ribbon stool', tone: 'danger', link: { to: 'disease', id: 'DIS-GI-PERIANAL' } },
-                { icon: '💢', label: 'ANAL SACCULITIS', sublabel: 'Perianal tenesmus / scooting / dyschezia', tone: 'orange', link: { to: 'disease', id: 'DIS-GI-ANALSAC' } },
-              ],
-            },
+          tiles: [
+            { label: '🪨 IMPACTED FAECES / DIETARY — pica (bones, hair, litter) · obstipation → feline megacolon' },
           ],
         },
         {
-          header: '⚙️ PELVIC / EXTRALUMINAL',
+          cat: 'Infectious / Inflammatory',
+          tone: 'danger',
+          tiles: [
+            { label: '🔥 PERIANAL FISTULA', link: { to: 'disease', id: 'DIS-GI-PERIANAL' } },
+            { label: '💢 ANAL SACCULITIS', link: { to: 'disease', id: 'DIS-GI-ANALSAC' } },
+          ],
+        },
+        {
+          cat: 'Neoplastic / Mass',
           tone: 'violet',
-          sub: 'Narrowed pelvic canal or compressive mass outside the bowel wall',
-          blocks: [
-            {
-              kind: 'endpoints',
-              items: [
-                { icon: '🦴', label: 'HEALED PELVIC-FRACTURE NARROWING', sublabel: 'Malunion → extraluminal obstruction', tone: 'neutral', link: { to: 'disease', id: 'DIS-NEU-SPFX' } },
-                { icon: '⚙️', label: 'PROSTATOMEGALY — BPH', sublabel: 'Older entire male · thin tape-shaped faeces', tone: 'neutral', link: { to: 'disease', id: 'DIS-URO-BPH' } },
-                { icon: '🔴', label: 'PROSTATITIS', sublabel: 'Febrile entire male · caudal abdominal pain', tone: 'danger', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
-                { icon: '🧬', label: 'PROSTATIC CARCINOMA', sublabel: 'Intact OR castrated · colon invasion · sublumbar LN', tone: 'violet', link: { to: 'disease', id: 'DIS-URO-PROST-NEO' } },
-                { icon: '🍑', label: 'SUBLUMBAR / AGASACA', sublabel: 'Anal-sac carcinoma · paraneoplastic hyperCa', tone: 'violet', link: { to: 'disease', id: 'DIS-NEO-AGASACA' } },
-              ],
-            },
-          ],
-        },
-        {
-          header: '🧠 NEUROMUSCULAR / METABOLIC',
-          tone: 'teal',
-          sub: 'Failure of colonic propulsion: nerve disease, electrolyte/endocrine derangement, or dehydration',
-          blocks: [
-            {
-              kind: 'endpoints',
-              items: [
-                { icon: '🦴', label: 'LUMBOSACRAL / CAUDA EQUINA', sublabel: 'DLSS · IVDD — poor anal tone, dyschezia', tone: 'info', link: { to: 'disease', id: 'DIS-NEU-DLSS' } },
-                { icon: '🧠', label: 'DYSAUTONOMIA', sublabel: 'Rare · cats > dogs · autonomic failure', tone: 'purple', link: { to: 'disease', id: 'DIS-NEU-DYSAUTO' } },
-                { icon: '🔋', label: 'HYPOKALAEMIA', sublabel: 'K⁺ &lt;2.5–3.0 mEq/L → weakness + constipation', tone: 'warning', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },
-                { icon: '🦋', label: 'HYPOTHYROIDISM', sublabel: 'Slow colonic motility', tone: 'teal', link: { to: 'disease', id: 'DIS-ENDO-HYPOTHY' } },
-                { icon: '💧', label: 'CKD / DEHYDRATION', sublabel: 'Prolonged dehydration → dry hard faeces', tone: 'slate', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
-                { icon: '🦴', label: 'HYPERCALCAEMIA', sublabel: 'Reduces colonic motility — screen for AGASACA / lymphoma', tone: 'warning', link: { to: 'disease', id: 'DIS-ENDO-HCALC' } },
-              ],
-            },
+          tiles: [
+            { label: '🧬 RECTAL / COLONIC MASS — neoplasia · stricture · diverticulum' },
           ],
         },
       ],
     },
   ],
 }
+
+const constipationPelvic: FlowPage = {
+  id: 'constipation-pelvic',
+  title: 'Constipation — Pelvic / Extraluminal',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: '⚙️ PELVIC / EXTRALUMINAL', sub: 'Narrowed pelvic canal or compressive mass outside the bowel wall' },
+    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    {
+      kind: 'categoryGrid',
+      columns: [
+        {
+          cat: 'Structural / Mechanical',
+          tone: 'neutral',
+          tiles: [
+            { label: '🦴 HEALED PELVIC-FRACTURE NARROWING', link: { to: 'disease', id: 'DIS-NEU-SPFX' } },
+            { label: '⚙️ PROSTATOMEGALY — BPH', link: { to: 'disease', id: 'DIS-URO-BPH' } },
+          ],
+        },
+        {
+          cat: 'Infectious',
+          tone: 'danger',
+          tiles: [
+            { label: '🔴 PROSTATITIS', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
+          ],
+        },
+        {
+          cat: 'Neoplastic',
+          tone: 'violet',
+          tiles: [
+            { label: '🧬 PROSTATIC CARCINOMA', link: { to: 'disease', id: 'DIS-URO-PROST-NEO' } },
+            { label: '🍑 SUBLUMBAR / AGASACA', link: { to: 'disease', id: 'DIS-NEO-AGASACA' } },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+const constipationNeuromet: FlowPage = {
+  id: 'constipation-neuromet',
+  title: 'Constipation — Neuromuscular / Metabolic',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: '🧠 NEUROMUSCULAR / METABOLIC', sub: 'Failure of colonic propulsion: nerve disease, electrolyte/endocrine derangement, or dehydration' },
+    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    {
+      kind: 'categoryGrid',
+      columns: [
+        {
+          cat: 'Neurological',
+          tone: 'violet',
+          tiles: [
+            { label: '🦴 LUMBOSACRAL / CAUDA EQUINA', link: { to: 'disease', id: 'DIS-NEU-DLSS' } },
+            { label: '🧠 DYSAUTONOMIA', link: { to: 'disease', id: 'DIS-NEU-DYSAUTO' } },
+          ],
+        },
+        {
+          cat: 'Endocrine / Metabolic',
+          tone: 'warning',
+          tiles: [
+            { label: '🔋 HYPOKALAEMIA', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },
+            { label: '🦋 HYPOTHYROIDISM', link: { to: 'disease', id: 'DIS-ENDO-HYPOTHY' } },
+            { label: '🦴 HYPERCALCAEMIA', link: { to: 'disease', id: 'DIS-ENDO-HCALC' } },
+          ],
+        },
+        {
+          cat: 'Renal / Systemic',
+          tone: 'info',
+          tiles: [
+            { label: '💧 CKD / DEHYDRATION', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+export const constipationFlows: FlowPage[] = [
+  constipationEntry,
+  constipationObstructive,
+  constipationPelvic,
+  constipationNeuromet,
+]

@@ -1,111 +1,37 @@
 // ── Fever / Fever of Unknown Origin (FUO) flowchart ──────────────────────────
-// First decision mirrors the source algorithm: is this a TRUE FEVER (regulated,
-// pyrogen-mediated set-point rise) or HYPERTHERMIA (non-pyrogenic — heatstroke,
-// exercise, seizures, stress)? You actively cool hyperthermia, NOT a true fever.
-// Once fever is confirmed and first-line work-up is unrewarding → FUO; localise
-// across the big categories: INFECTIOUS / IMMUNE-MEDIATED / NEOPLASTIC.
-// Numbers transcribed from Ettinger Ch 16 (Fever).
-
 import type { FlowPage } from '../flowTypes'
 
-export const feverFlow: FlowPage = {
+const feverEntry: FlowPage = {
   id: 'fever',
   title: 'Fever / FUO',
   blocks: [
     { kind: 'node', variant: 'entry', text: '🌡️ FEVER / FUO' },
-
     {
       kind: 'callout',
       tone: 'danger',
       html: '🌡️ <strong>TRUE FEVER vs HYPERTHERMIA — decide first.</strong> Fever (pyrexia) is a <strong>regulated</strong>, pyrogen-mediated rise in the hypothalamic set point — the animal does NOT seek to cool. Hyperthermia (heatstroke, exercise, seizures, stress, drugs) raises core temperature WITHOUT a set-point change — the animal pants, vasodilates and seeks cool. <strong>Do NOT actively cool a true fever</strong> — fever improves the host immune response. Reserve active cooling for temperature &gt;41.1°C (106°F), which is far more likely with hyperthermia (Ettinger Ch 16).',
     },
-
     {
       kind: 'node',
       variant: 'step',
       text: 'IS THIS REGULATED FEVER OR HYPERTHERMIA?',
       sub: 'No cooling behaviour + lethargy / anorexia / stiffness / hyperpnea = fever · recent heat / exercise + panting / cold-seeking = hyperthermia · stressed clinic patient: rest 20 min in a cool room (healthy dogs/cats reach 39.7°C / 103.5°F in consult)',
     },
-
     {
-      kind: 'branch',
-      columns: [
+      kind: 'choices',
+      cols: 2,
+      items: [
         {
-          header: '🔥 TRUE FEVER — find the cause',
           tone: 'danger',
-          sub: 'FUO = temp >39.2°C (102.5°F) for ≥3 weeks, no cause after ≥3 visits and/or 3 days hospitalisation (CBC, biochem, UA) ± persisting after a 5–10 day antibacterial trial. Do the systematic work-up BEFORE steroids.',
-          blocks: [
-            { kind: 'node', variant: 'sub-step', text: 'INFECTIOUS · IMMUNE-MEDIATED · NEOPLASTIC?', connectAfter: false },
-            {
-              kind: 'branch',
-              columns: [
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'INFECTIOUS — vector-borne · bacterial focus · fungal · viral',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '🦟', label: 'VECTOR-BORNE DISEASE', sublabel: 'Ehrlichia · Anaplasma · Lyme · RMSF · Bartonella — test by geography', tone: 'violet', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
-                        { icon: '🦴', label: 'DISCOSPONDYLITIS', sublabel: 'Spinal pain + fever — only ~30% febrile; UTI is commonest source; screen Brucella', tone: 'danger', link: { to: 'disease', id: 'DIS-DISCO' } },
-                        { icon: '❤️‍🩹', label: 'Bacterial endocarditis', sublabel: 'New murmur + fever — only 40–43% febrile; blood cultures + echo', tone: 'danger' },
-                        { icon: '💧', label: 'SEPTIC PERITONITIS', sublabel: 'Occult abdominal focus — abdominal effusion glucose/lactate', tone: 'danger', link: { to: 'disease', id: 'DIS-GI-SEPTPERIT' } },
-                        { icon: '🧫', label: 'PYELONEPHRITIS', sublabel: 'Painful kidneys + active sediment — culture urine', tone: 'orange', link: { to: 'disease', id: 'DIS-URO-PYELO' } },
-                        { icon: '🔴', label: 'PROSTATITIS', sublabel: 'Entire male · painful prostate · bacteriuria', tone: 'orange', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
-                        { icon: '🐱', label: 'FIP (young cat)', sublabel: 'FCoV — 20.8% of all feline FUO; low A:G, hyperglobulinaemia', tone: 'teal', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
-                        { icon: '🍄', label: 'SYSTEMIC FUNGAL', sublabel: 'Blasto · Cocci · Histo — by region', tone: 'green', link: { to: 'disease', id: 'DIS-INFECT-BLASTO' } },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'IMMUNE-MEDIATED — steroid-responsive (commonest dog category)',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '🦴', label: 'IMMUNE-MEDIATED POLYARTHRITIS', sublabel: 'Shifting lameness · joint pain · stiff gait — arthrocentesis multiple joints', tone: 'indigo', link: { to: 'disease', id: 'DIS-IMPA' } },
-                        { icon: '🧠', label: 'SRMA', sublabel: 'Young dog · severe neck pain · neutrophilic CSF — 60% of juvenile inflammatory fevers', tone: 'indigo', link: { to: 'disease', id: 'DIS-SRMA' } },
-                        { icon: '🦋', label: 'SLE', sublabel: 'Polysystemic immune-mediated — multi-organ', tone: 'purple', link: { to: 'disease', id: 'DIS-IM-SLE' } },
-                        { icon: '🩸', label: 'IMHA / IMTP', sublabel: 'Immune-mediated cytopenias also cause fever', tone: 'orange' },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'NEOPLASTIC — paraneoplastic / necrotic tumour',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '🧬', label: 'LYMPHOMA / LEUKAEMIA', sublabel: 'Lymphoproliferative disease — node/marrow aspirate', tone: 'violet', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
-                        { icon: '📈', label: 'PARANEOPLASTIC FEVER', sublabel: 'Cytokine-driven; any necrotic or infected tumour', tone: 'violet', link: { to: 'disease', id: 'DIS-NEO-PARANEO' } },
-                        { icon: '🐕', label: 'Histiocytic disease', sublabel: 'Bernese Mountain Dog predisposition', tone: 'neutral' },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
+          label: '🔥 TRUE FEVER — find the cause',
+          sublabel: 'FUO = temp >39.2°C for ≥3 weeks, no cause after ≥3 visits; screen INFECTIOUS · IMMUNE-MEDIATED · NEOPLASTIC',
+          link: { to: 'flow', id: 'fever-true' },
         },
         {
-          header: '☀️ HYPERTHERMIA — non-pyrogenic',
           tone: 'warning',
-          sub: 'Heatstroke · exercise (Labradors reach 42.2°C / 108°F) · seizures · hypermetabolic (hyperthyroid, hypocalcaemia) · drugs (opioids, ketamine/phenobarbital in cats, SSRIs) · stress. ACTIVELY COOL if >41.1°C (106°F).',
-          blocks: [
-            {
-              kind: 'endpoints',
-              items: [
-                { icon: '🥵', label: 'HEATSTROKE', sublabel: 'Core >40°C (104°F) + neuro impairment + multi-organ dysfunction — cool to 39.4°C then stop', tone: 'danger' },
-                { icon: '🏃', label: 'EXERTIONAL / ENVIRONMENTAL', sublabel: 'Exercise in heat · overweight · upper-airway compromise', tone: 'warning' },
-                { icon: '⚡', label: 'SEIZURES / TREMORS', sublabel: 'Sustained muscle activity → non-pyrogenic temperature rise', tone: 'warning' },
-                { icon: '😾', label: 'STRESS HYPERTHERMIA', sublabel: 'Clinic/handling — rest 20 min in a cool room, re-measure', tone: 'neutral' },
-              ],
-            },
-          ],
+          label: '☀️ HYPERTHERMIA — non-pyrogenic',
+          sublabel: 'Heatstroke · exercise · seizures · stress · drugs — ACTIVELY COOL if >41.1°C (106°F)',
+          link: { to: 'flow', id: 'fever-hyperthermia' },
         },
       ],
     },
@@ -165,3 +91,88 @@ export const feverFlow: FlowPage = {
     },
   ],
 }
+
+const feverTrue: FlowPage = {
+  id: 'fever-true',
+  title: 'Fever — Find the Cause',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: '🔥 TRUE FEVER — find the cause', sub: 'FUO = temp >39.2°C (102.5°F) for ≥3 weeks, no cause after ≥3 visits and/or 3 days hospitalisation (CBC, biochem, UA) ± persisting after a 5–10 day antibacterial trial. Do the systematic work-up BEFORE steroids.' },
+    { kind: 'node', variant: 'step', text: 'INFECTIOUS · IMMUNE-MEDIATED · NEOPLASTIC?' },
+    {
+      kind: 'categoryGrid',
+      columns: [
+        {
+          cat: 'Infectious',
+          tone: 'danger',
+          tiles: [
+            { label: '🦟 VECTOR-BORNE DISEASE', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
+            { label: '🦴 DISCOSPONDYLITIS', link: { to: 'disease', id: 'DIS-DISCO' } },
+            { label: '❤️‍🩹 Bacterial endocarditis — new murmur + fever; blood cultures + echo' },
+            { label: '💧 SEPTIC PERITONITIS', link: { to: 'disease', id: 'DIS-GI-SEPTPERIT' } },
+            { label: '🧫 PYELONEPHRITIS', link: { to: 'disease', id: 'DIS-URO-PYELO' } },
+            { label: '🔴 PROSTATITIS', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
+            { label: '🐱 FIP (young cat)', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
+            { label: '🍄 SYSTEMIC FUNGAL', link: { to: 'disease', id: 'DIS-INFECT-BLASTO' } },
+          ],
+        },
+        {
+          cat: 'Immune-Mediated',
+          tone: 'info',
+          tiles: [
+            { label: '🦴 IMMUNE-MEDIATED POLYARTHRITIS', link: { to: 'disease', id: 'DIS-IMPA' } },
+            { label: '🧠 SRMA', link: { to: 'disease', id: 'DIS-SRMA' } },
+            { label: '🦋 SLE', link: { to: 'disease', id: 'DIS-IM-SLE' } },
+            { label: '🩸 IMHA / IMTP — immune-mediated cytopenias also cause fever' },
+          ],
+        },
+        {
+          cat: 'Neoplastic',
+          tone: 'violet',
+          tiles: [
+            { label: '🧬 LYMPHOMA / LEUKAEMIA', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
+            { label: '📈 PARANEOPLASTIC FEVER', link: { to: 'disease', id: 'DIS-NEO-PARANEO' } },
+            { label: '🐕 Histiocytic disease — Bernese Mountain Dog predisposition' },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+const feverHyperthermia: FlowPage = {
+  id: 'fever-hyperthermia',
+  title: 'Hyperthermia — non-pyrogenic',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: '☀️ HYPERTHERMIA — non-pyrogenic', sub: 'Heatstroke · exercise (Labradors reach 42.2°C / 108°F) · seizures · hypermetabolic (hyperthyroid, hypocalcaemia) · drugs (opioids, ketamine/phenobarbital in cats, SSRIs) · stress. ACTIVELY COOL if >41.1°C (106°F).' },
+    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    {
+      kind: 'categoryGrid',
+      columns: [
+        {
+          cat: 'Environmental / Exertional',
+          tone: 'danger',
+          tiles: [
+            { label: '🥵 HEATSTROKE — cool to 39.4°C then stop' },
+            { label: '🏃 EXERTIONAL / ENVIRONMENTAL — exercise in heat · overweight · upper-airway compromise' },
+          ],
+        },
+        {
+          cat: 'Neurological / Metabolic',
+          tone: 'warning',
+          tiles: [
+            { label: '⚡ SEIZURES / TREMORS — sustained muscle activity → temperature rise' },
+          ],
+        },
+        {
+          cat: 'Miscellaneous',
+          tone: 'neutral',
+          tiles: [
+            { label: '😾 STRESS HYPERTHERMIA — clinic/handling; rest 20 min, re-measure' },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+export const feverFlows: FlowPage[] = [feverEntry, feverTrue, feverHyperthermia]

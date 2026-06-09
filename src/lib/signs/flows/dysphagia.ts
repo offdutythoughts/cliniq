@@ -1,158 +1,43 @@
 // ── Dysphagia / Gagging flowchart ────────────────────────────────────────────
-// Swallowing impairment is a clinical finding, not a diagnosis. First separate
-// DYSPHAGIA / REGURGITATION (swallowing problem) from true VOMITING (active,
-// centrally-mediated, with nausea + abdominal effort). Then localise along the
-// swallow: ORAL (prehension/mastication) → PHARYNGEAL/cricopharyngeal → OESOPHAGEAL.
-// Don't-miss: MG-associated megaoesophagus → aspiration; rabies in the dysphagic
-// unvaccinated patient; oesophageal foreign body. (Ettinger Ch 47)
-
 import type { FlowPage } from '../flowTypes'
 
-export const dysphagiaFlow: FlowPage = {
+const dysphagiaEntry: FlowPage = {
   id: 'dysphagia',
   title: 'Dysphagia / Gagging',
   blocks: [
     { kind: 'node', variant: 'entry', text: '🍽️ DYSPHAGIA / GAGGING' },
-
     {
       kind: 'callout',
       tone: 'warning',
       html: '⚠️ <strong>First: is this a swallowing problem or true vomiting?</strong> Dysphagia/regurgitation = <em>passive</em> expulsion of food from the pharynx/oesophagus — head down, material falls out, no nausea or abdominal effort. <strong>Vomiting</strong> is an <em>active</em> centrally-mediated reflex with prodromal nausea, retching and abdominal contractions; bile indicates a patent gastric outflow. Regurgitation is uncommon in cats — assume vomiting in a cat unless proven otherwise. <strong>Aspiration pneumonia is the major lethal complication</strong> — oesophageal disease (megaoesophagus 71% of that group) and neurologic disease are the leading risk factors. (Ettinger Ch 47)',
     },
-
     {
       kind: 'node',
       variant: 'step',
       text: 'LOCALISE ALONG THE SWALLOW',
       sub: 'Where does it break down — prehension/mastication (ORAL) · transfer through the upper sphincter (PHARYNGEAL / cricopharyngeal) · or transport down the oesophagus (OESOPHAGEAL → regurgitation)? Watch the patient eat. (Ettinger Ch 47)',
     },
-
     {
-      kind: 'branch',
-      columns: [
+      kind: 'choices',
+      cols: 3,
+      items: [
         {
-          header: '👄 ORAL (prehension / mastication)',
           tone: 'teal',
-          sub: 'Drops food · drools · pain on opening mouth · pawing at face · head-tilting to chew · ptyalism · tongue/jaw weakness',
-          blocks: [
-            { kind: 'node', variant: 'sub-step', text: 'MECHANICAL vs FUNCTIONAL (CN)?', connectAfter: false },
-            {
-              kind: 'branch',
-              columns: [
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'MECHANICAL (pain / mass)',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '🦷', label: 'DENTAL / ORONASAL DISEASE', sublabel: 'Periodontal disease · oral pain · oronasal fistula', tone: 'orange', link: { to: 'disease', id: 'DIS-DENT-ORONASAL' } },
-                        { icon: '💧', label: 'SALIVARY MUCOCELE / SIALOCELE', sublabel: 'Sublingual/pharyngeal swelling · ptyalism', tone: 'info', link: { to: 'disease', id: 'DIS-GI-SIALOCELE' } },
-                        { icon: '🧬', label: 'Oral mass / FB / trauma', sublabel: 'Tumour · stick FB · TMJ / retrobulbar abscess', tone: 'violet' },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'FUNCTIONAL (cranial nerve / muscle)',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '😬', label: 'MASTICATORY MYOSITIS', sublabel: 'Painful/swollen → atrophied jaw muscles · 2M antibody', tone: 'warning' },
-                        { icon: '🧠', label: 'CN V / VII / XII DYSFUNCTION', sublabel: 'Dropped jaw · facial paresis · tongue paresis', tone: 'purple' },
-                        { icon: '🧪', label: 'Lingual / polymyositis · trigeminal neuritis', sublabel: 'Glossitis · IMPA', tone: 'neutral' },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
+          label: '👄 ORAL (prehension / mastication)',
+          sublabel: 'Drops food · drools · pain on opening mouth · pawing at face · tongue/jaw weakness',
+          link: { to: 'flow', id: 'dysphagia-oral' },
         },
         {
-          header: '🗣️ PHARYNGEAL / CRICOPHARYNGEAL',
           tone: 'indigo',
-          sub: 'Repeated swallowing attempts · gagging · coughing/nasal reflux during eating · the bolus won\'t clear the throat · ↓ gag reflex (CN IX/X)',
-          blocks: [
-            { kind: 'node', variant: 'sub-step', text: 'MECHANICAL vs FUNCTIONAL (CN IX/X / asynchrony)?', connectAfter: false },
-            {
-              kind: 'branch',
-              columns: [
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'MECHANICAL (mass / obstruction)',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '🧬', label: 'Pharyngeal mass / neoplasia', sublabel: 'Tonsillar swelling · retropharyngeal LN · abscess', tone: 'violet' },
-                        { icon: '🌾', label: 'Pharyngeal FB / trauma', sublabel: 'Nasopharyngeal polyp · hyoid disruption · elongated soft palate', tone: 'orange' },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'FUNCTIONAL (neuromuscular)',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '👶', label: 'CRICOPHARYNGEAL ACHALASIA / DYSSYNCHRONY', sublabel: 'Young dog at weaning · Cocker / Golden · VFSS-defined · myotomy', tone: 'teal' },
-                        { icon: '⚡', label: 'MYASTHENIA GRAVIS (focal)', sublabel: 'Pharyngeal/laryngeal weakness · ± megaoesophagus → aspiration', tone: 'danger', link: { to: 'disease', id: 'DIS-WK-MG' } },
-                        { icon: '🦠', label: 'POLYRADICULONEURITIS', sublabel: 'LMN tetraparesis · ± dysphonia / dysphagia', tone: 'purple', link: { to: 'disease', id: 'DIS-NEU-POLYRADIC' } },
-                        { icon: '🧠', label: 'Brainstem lesion (CN IX/X nucleus)', sublabel: 'Tumour · GOLPP · ± other CN deficits', tone: 'violet', link: { to: 'disease', id: 'DIS-NEU-BRAINTUM' } },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
+          label: '🗣️ PHARYNGEAL / CRICOPHARYNGEAL',
+          sublabel: 'Repeated swallowing attempts · gagging · coughing/nasal reflux during eating',
+          link: { to: 'flow', id: 'dysphagia-pharyngeal' },
         },
         {
-          header: '🌀 OESOPHAGEAL (regurgitation)',
           tone: 'orange',
-          sub: 'Passive regurgitation of undigested food/saliva · cervical oesophageal distension · variable timing after eating · weight loss · high aspiration risk',
-          blocks: [
-            { kind: 'node', variant: 'sub-step', text: 'MECHANICAL vs FUNCTIONAL (motility)?', connectAfter: false },
-            {
-              kind: 'branch',
-              columns: [
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'MECHANICAL (obstruction)',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '🦴', label: 'OESOPHAGEAL FOREIGN BODY', sublabel: 'Acute · bone/chew · emergency endoscopic retrieval', tone: 'danger', link: { to: 'disease', id: 'DIS-GI-OESFB' } },
-                        { icon: '⛓️', label: 'STRICTURE', sublabel: 'Post-anaesthetic reflux · post-FB · balloon dilation', tone: 'warning', link: { to: 'disease', id: 'DIS-GI-STRICTURE' } },
-                        { icon: '🫀', label: 'VASCULAR RING ANOMALY (PRAA)', sublabel: 'Young pup at weaning · regurg of solids · GSD / Irish Setter', tone: 'info', link: { to: 'disease', id: 'DIS-GI-PRAA' } },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'FUNCTIONAL (motility / inflammation)',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { icon: '🎈', label: 'MEGAOESOPHAGUS', sublabel: 'Primary (idiopathic/hereditary) OR secondary (MG, hypothyroid, hypoadreno, lead)', tone: 'danger', link: { to: 'disease', id: 'DIS-OES-MEGA' } },
-                        { icon: '🔥', label: 'OESOPHAGITIS', sublabel: 'GERD · post-anaesthetic reflux · caustic — odynophagia', tone: 'orange', link: { to: 'disease', id: 'DIS-GI-ESOPHAGITIS' } },
-                        { icon: '⚡', label: 'MYASTHENIA GRAVIS', sublabel: 'Megaoesophagus in 84% of dogs / 40% of cats with generalised MG', tone: 'danger', link: { to: 'disease', id: 'DIS-WK-MG' } },
-                        { icon: '🌡️', label: 'DYSAUTONOMIA', sublabel: 'Diffuse autonomic failure · ± mydriasis, dry MM, bradycardia', tone: 'purple', link: { to: 'disease', id: 'DIS-NEU-DYSAUTO' } },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
+          label: '🌀 OESOPHAGEAL (regurgitation)',
+          sublabel: 'Passive regurgitation of undigested food/saliva · weight loss · high aspiration risk',
+          link: { to: 'flow', id: 'dysphagia-oesophageal' },
         },
       ],
     },
@@ -197,3 +82,107 @@ export const dysphagiaFlow: FlowPage = {
     },
   ],
 }
+
+const dysphagiaOral: FlowPage = {
+  id: 'dysphagia-oral',
+  title: 'Dysphagia — Oral',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: '👄 ORAL (prehension / mastication)', sub: 'Drops food · drools · pain on opening mouth · pawing at face · head-tilting to chew · ptyalism · tongue/jaw weakness' },
+    { kind: 'node', variant: 'step', text: 'MECHANICAL vs FUNCTIONAL (CN)?' },
+    {
+      kind: 'categoryGrid',
+      columns: [
+        {
+          cat: 'Mechanical (Pain / Mass)',
+          tone: 'orange',
+          tiles: [
+            { label: '🦷 DENTAL / ORONASAL DISEASE', link: { to: 'disease', id: 'DIS-DENT-ORONASAL' } },
+            { label: '💧 SALIVARY MUCOCELE / SIALOCELE', link: { to: 'disease', id: 'DIS-GI-SIALOCELE' } },
+            { label: '🧬 Oral mass / FB / trauma — tumour · stick FB · TMJ / retrobulbar abscess' },
+          ],
+        },
+        {
+          cat: 'Neuromuscular (CN / Muscle)',
+          tone: 'violet',
+          tiles: [
+            { label: '😬 MASTICATORY MYOSITIS — jaw muscles, 2M antibody' },
+            { label: '🧠 CN V / VII / XII DYSFUNCTION — dropped jaw · facial paresis · tongue paresis' },
+            { label: '🧪 Lingual / polymyositis · trigeminal neuritis' },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+const dysphagiaPhary: FlowPage = {
+  id: 'dysphagia-pharyngeal',
+  title: 'Dysphagia — Pharyngeal / Cricopharyngeal',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: '🗣️ PHARYNGEAL / CRICOPHARYNGEAL', sub: 'Repeated swallowing attempts · gagging · coughing/nasal reflux during eating · the bolus won\'t clear the throat · ↓ gag reflex (CN IX/X)' },
+    { kind: 'node', variant: 'step', text: 'MECHANICAL vs FUNCTIONAL (CN IX/X / asynchrony)?' },
+    {
+      kind: 'categoryGrid',
+      columns: [
+        {
+          cat: 'Mechanical (Mass / Obstruction)',
+          tone: 'orange',
+          tiles: [
+            { label: '🧬 Pharyngeal mass / neoplasia — tonsillar swelling · retropharyngeal LN · abscess' },
+            { label: '🌾 Pharyngeal FB / trauma — nasopharyngeal polyp · hyoid disruption · elongated soft palate' },
+          ],
+        },
+        {
+          cat: 'Neuromuscular',
+          tone: 'teal',
+          tiles: [
+            { label: '👶 CRICOPHARYNGEAL ACHALASIA / DYSSYNCHRONY — young dog at weaning · VFSS-defined · myotomy' },
+            { label: '⚡ MYASTHENIA GRAVIS (focal)', link: { to: 'disease', id: 'DIS-WK-MG' } },
+            { label: '🦠 POLYRADICULONEURITIS', link: { to: 'disease', id: 'DIS-NEU-POLYRADIC' } },
+            { label: '🧠 Brainstem lesion (CN IX/X nucleus)', link: { to: 'disease', id: 'DIS-NEU-BRAINTUM' } },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+const dysphagiaOeso: FlowPage = {
+  id: 'dysphagia-oesophageal',
+  title: 'Dysphagia — Oesophageal',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: '🌀 OESOPHAGEAL (regurgitation)', sub: 'Passive regurgitation of undigested food/saliva · cervical oesophageal distension · variable timing after eating · weight loss · high aspiration risk' },
+    { kind: 'node', variant: 'step', text: 'MECHANICAL vs FUNCTIONAL (motility)?' },
+    {
+      kind: 'categoryGrid',
+      columns: [
+        {
+          cat: 'Mechanical (Obstruction)',
+          tone: 'orange',
+          tiles: [
+            { label: '🦴 OESOPHAGEAL FOREIGN BODY', link: { to: 'disease', id: 'DIS-GI-OESFB' } },
+            { label: '⛓️ STRICTURE', link: { to: 'disease', id: 'DIS-GI-STRICTURE' } },
+            { label: '🫀 VASCULAR RING ANOMALY (PRAA)', link: { to: 'disease', id: 'DIS-GI-PRAA' } },
+          ],
+        },
+        {
+          cat: 'Motility / Inflammatory',
+          tone: 'teal',
+          tiles: [
+            { label: '🎈 MEGAOESOPHAGUS', link: { to: 'disease', id: 'DIS-OES-MEGA' } },
+            { label: '🔥 OESOPHAGITIS', link: { to: 'disease', id: 'DIS-GI-ESOPHAGITIS' } },
+            { label: '⚡ MYASTHENIA GRAVIS', link: { to: 'disease', id: 'DIS-WK-MG' } },
+            { label: '🌡️ DYSAUTONOMIA', link: { to: 'disease', id: 'DIS-NEU-DYSAUTO' } },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+export const dysphagiaFlows: FlowPage[] = [
+  dysphagiaEntry,
+  dysphagiaOral,
+  dysphagiaPhary,
+  dysphagiaOeso,
+]

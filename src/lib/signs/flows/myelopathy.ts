@@ -174,15 +174,6 @@ const myelopathyBody = `
     <div style="font-size:8px;color:var(--gray2);line-height:1.5;margin-top:3px;">*Partial urinary/faecal incontinence may persist. †Increases to 69% including recovery without pain perception.</div>
     </div>
 
-    <div class="flow-arrow-v">↓</div>
-    <div class="flow-node step" style="font-size:11px;">NAVIGATE TO LESION DATABASE</div>
-    <div class="flow-arrow-v">↓</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
-      <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-MY-CERV','Cervical')">Cervical (C1–T2)<div class="fn-sub">Tetraparesis</div></div>
-      <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="goLesionTab('LOC-MY-TL','Thoracolumbar')">Thoracolumbar (T3–L3)<div class="fn-sub">Paraparesis</div></div>
-      <div class="flow-node" style="cursor:pointer;font-size:11px;background:rgba(192,132,252,0.12);border:1.5px solid rgba(192,132,252,0.4);border-radius:10px;padding:10px;text-align:center;color:#C084FC;" onclick="goLesionTab('LOC-MY-L4S3','L4–S3')">L4–S3<div class="fn-sub" style="color:rgba(192,132,252,0.7);">LMN paraparesis</div></div>
-      <div class="flow-node" style="cursor:pointer;font-size:11px;background:rgba(244,114,182,0.12);border:1.5px solid rgba(244,114,182,0.4);border-radius:10px;padding:10px;text-align:center;color:#F472B6;" onclick="goLesionTab('LOC-MY-CONUS','S2–Ca5')">S2–Ca5 (conus)<div class="fn-sub" style="color:rgba(244,114,182,0.7);">Cauda equina</div></div>
-    </div>
 `
 
 const myelopathyEntry: FlowPage = {
@@ -194,6 +185,16 @@ const myelopathyEntry: FlowPage = {
     // colour-coded reference tables, the deep-pain alert and the four nav tiles
     // (lesion links live here, unvalidated by the link-integrity test).
     { kind: 'html', html: myelopathyBody },
+    { kind: 'node', variant: 'step', text: 'NAVIGATE TO LESION DATABASE' },
+    {
+      kind: 'categoryGrid',
+      columns: [
+        { cat: 'Cervical (C1–T2)', tone: 'green', tiles: [{ label: 'Tetraparesis', link: { to: 'lesion', loc: 'LOC-MY-CERV', name: 'Cervical' } }] },
+        { cat: 'Thoracolumbar (T3–L3)', tone: 'warning', tiles: [{ label: 'Paraparesis', link: { to: 'lesion', loc: 'LOC-MY-TL', name: 'Thoracolumbar' } }] },
+        { cat: 'L4–S3', tone: 'violet', tiles: [{ label: 'LMN paraparesis', link: { to: 'lesion', loc: 'LOC-MY-L4S3', name: 'L4–S3' } }] },
+        { cat: 'S2–Ca5 (conus)', tone: 'purple', tiles: [{ label: 'Cauda equina', link: { to: 'lesion', loc: 'LOC-MY-CONUS', name: 'S2–Ca5' } }] },
+      ],
+    },
     { kind: 'disclaimer' },
   ],
 }
