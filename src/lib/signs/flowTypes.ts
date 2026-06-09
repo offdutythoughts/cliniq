@@ -103,17 +103,22 @@ export type DxRowBlock = Connectable & { kind: 'dxRow'; items: LabeledLink[] }
 
 /** A comparison/reference table, optionally wrapped in a tinted box with a
  *  title + footnote. Cells are plain text or `{ text, tone }` for a coloured
- *  value. `cols` is a CSS grid-template-columns string. */
+ *  value. `cols` is a CSS grid-template-columns string.
+ *  Headers may carry a `tone` to colour the header text + bottom border.
+ *  Rows may be a `{ section: string }` to render a full-width section divider. */
 export type TableCell = string | { text: string; tone?: Tone }
+export type TableRow = TableCell[] | { section: string }
 export type TableBlock = Connectable & {
   kind: 'table'
   cols: string
-  headers: string[]
-  rows: TableCell[][]
+  headers: TableCell[]
+  rows: TableRow[]
   boxTone?: Tone
   title?: string
   footnote?: string
   gap?: number
+  scroll?: boolean
+  minWidth?: number
 }
 
 /** A tinted section containing a title and a stack of disease cards (the

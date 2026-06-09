@@ -8,7 +8,7 @@
 import { Fragment, type ReactNode } from 'react'
 import type {
   Block, Column, Endpoint, ChoiceItem, CardTile, CategoryColumn, CatColumn, DecisionStep,
-  DecisionOutcome, TableCell, LabeledLink, Tone,
+  DecisionOutcome, TableCell, TableRow, LabeledLink, Tone,
 } from '../../lib/signs/flowTypes'
 import { HUE, TITLE } from '../../lib/signs/tone'
 import { FLOWS } from '../../lib/signs/flows'
@@ -118,25 +118,35 @@ function ChoicesBlock({ cols, size, items, onNav }: { cols: number; size: number
 // ── Table ─────────────────────────────────────────────────────────────────────
 function Cell({ c, header, onNav }: { c: TableCell; header?: boolean; onNav: Nav }) {
   const text = typeof c === 'string' ? c : c.text
-  const color = !header && typeof c !== 'string' && c.tone ? `color:${HUE[c.tone].color};` : ''
-  const head = header ? 'font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);' : ''
-  return <div style={s(`${head}${color}`)}><Raw html={text} onNav={onNav} /></div>
+  const tone = typeof c !== 'string' ? c.tone : undefined
+  const color = tone ? `color:${HUE[tone].color};` : ''
+  const head = header
+    ? tone
+      ? `font-weight:700;padding-bottom:4px;border-bottom:2px solid ${HUE[tone].color};white-space:nowrap;${color}`
+      : 'font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);'
+    : color
+  return <div style={s(head)}><Raw html={text} onNav={onNav} /></div>
 }
 function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav: Nav }) {
   const grid = (
-    <div style={s(`display:grid;grid-template-columns:${b.cols};gap:3px 6px;font-size:9.5px;line-height:1.4;`)}>
+    <div style={s(`display:grid;grid-template-columns:${b.cols};gap:3px 6px;font-size:9.5px;line-height:1.4;${b.minWidth ? `min-width:${b.minWidth}px;` : ''}`)}>
       {b.headers.map((h, i) => <Cell key={`h${i}`} c={h} header onNav={onNav} />)}
-      {b.rows.map((r, ri) => r.map((c, ci) => <Cell key={`${ri}-${ci}`} c={c} onNav={onNav} />))}
+      {b.rows.map((row, ri) =>
+        Array.isArray(row)
+          ? row.map((c, ci) => <Cell key={`${ri}-${ci}`} c={c} onNav={onNav} />)
+          : <div key={`s${ri}`} style={s('grid-column:1/-1;padding:4px 0 2px;font-size:8px;font-weight:700;color:var(--gray2);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,.08);margin-top:2px;')}>{row.section}</div>
+      )}
     </div>
   )
+  const wrapped = b.scroll ? <div style={s('overflow-x:auto;width:100%;')}>{grid}</div> : grid
   const footColor = b.boxTone ? `color:${HUE[b.boxTone].color};opacity:.85;` : 'opacity:.9;'
   const foot = b.footnote ? <div style={s(`margin-top:7px;font-size:9.5px;line-height:1.55;${footColor}`)}><Raw html={b.footnote} onNav={onNav} /></div> : null
-  if (!b.boxTone && !b.title) return b.gap ? <div style={s(`margin-top:${b.gap}px;width:100%;`)}>{grid}</div> : grid
+  if (!b.boxTone && !b.title) return b.gap ? <div style={s(`margin-top:${b.gap}px;width:100%;`)}>{wrapped}{foot}</div> : <>{wrapped}{foot}</>
   const tone = b.boxTone ?? 'neutral'
   return (
     <Box tone={tone} bgA={0.07} bdA={0.25} extra={`padding:10px 12px;${b.gap ? `margin-top:${b.gap}px;` : ''}`}>
-      {b.title && <div style={s(`font-size:11px;font-weight:700;color:${TITLE[tone] ?? HUE[tone].color};margin-bottom:8px;`)}><Raw html={b.title} onNav={onNav} /></div>}
-      {grid}
+      {b.title && <div style={s(`font-size:10px;font-weight:700;color:${TITLE[tone] ?? HUE[tone].color};text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;`)}><Raw html={b.title} onNav={onNav} /></div>}
+      {wrapped}
       {foot}
     </Box>
   )
