@@ -72,6 +72,7 @@ export const DX: Record<string, DxApproach> = {
   'encephalopathy': encephalopathyDx,
   'sneezing': sneezingDx,
   'pale-gums': paleGumsDx,
+  'pale-mm': paleGumsDx,
   'vestibular': vestibularDx,
   'dyspnoea': dyspnoeaDx,
   'jaundice': jaundiceDx,
