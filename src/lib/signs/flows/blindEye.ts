@@ -86,7 +86,7 @@ const blindEyeAcute: FlowPage = {
       kind: 'cardSection',
       tone: 'danger',
       gap: 0,
-      title: '⚠️ RULE OUT EMERGENCIES FIRST — Tonometry + BP + Neuro exam',
+      title: '👁️ ANTERIOR OPACITY — IOP + slit lamp · light cannot reach retina',
       cards: [
         { title: 'Acute Glaucoma', tag: 'Dog + Cat ›', desc: 'Fixed mid-dilated pupil · corneal oedema · IOP &gt;25 mmHg · pain · episcleral injection', link: { to: 'disease', id: 'DIS-OPH-GLAUCOMA' } },
         { title: 'Anterior Lens Luxation', tag: 'Dog ›', desc: 'Aphakic crescent · lens in AC · secondary glaucoma · Jack Russell / Tibetan Terrier / Border Collie', link: { to: 'disease', id: 'DIS-EYE-LENS-LUX' } },
@@ -97,11 +97,12 @@ const blindEyeAcute: FlowPage = {
       kind: 'cardSection',
       tone: 'warning',
       gap: 8,
-      title: '🌑 RETINAL — Sudden onset, absent dazzle + PLR, abnormal or normal fundus',
+      title: '🌑 RETINA — Absent dazzle + PLR · abnormal or normal fundus',
       cards: [
         { title: 'SARDS — Sudden Acquired Retinal Degeneration Syndrome', tag: 'Dog ›', desc: 'Peracute bilateral blindness · dilated unresponsive pupils · <strong>normal fundus</strong> (key clue) · PU/PD + weight gain (Cushingoid phenotype) · Red PLR absent · Blue PLR <em>present</em> (melanopsin RGCs spared) · Flat ERG confirms · Mini Schnauzer / Brittany / Dachshund predisposed', link: { to: 'disease', id: 'DIS-EYE-SARDS' } },
         { title: 'Hypertensive Retinal Detachment', tag: 'Cat &gt;&gt; Dog ›', desc: 'Bilateral · bullous retinal detachment · tortuous vessels · hyphaema · SBP &gt;180 mmHg · <strong>Measure BP FIRST</strong> · older cat → CKD / hyperthyroid / HAC · Retina may reattach if BP controlled within 24–48 h', link: { to: 'disease', id: 'DIS-EYE-RD' } },
         { title: 'Exudative Retinal Detachment from Uveitis', tag: 'Dog + Cat ›', desc: 'Aqueous flare + ↓ IOP → uveitis driving RD · Infectious (toxo, FIP, tick-borne, fungal) or immune-mediated', link: { to: 'disease', id: 'DIS-EYE-UVEITIS-ANT' } },
+        { title: 'Enrofloxacin Retinal Toxicity', tag: 'Cat — STOP DRUG', desc: 'Fluoroquinolone use (esp. &gt;5 mg/kg/day) · acute bilateral blindness · mydriasis · retinal degeneration on fundoscopy · <strong>stop drug immediately</strong> · switch antibiotic · some recovery if caught early' },
       ],
     },
 
@@ -109,10 +110,9 @@ const blindEyeAcute: FlowPage = {
       kind: 'cardSection',
       tone: 'purple',
       gap: 8,
-      title: '🧬 OPTIC NERVE — Bilateral mydriasis, absent PLR (red + blue), abnormal disc',
+      title: '🧬 OPTIC NERVE — Absent PLR (red + blue) · swollen / haemorrhagic disc',
       cards: [
         { title: 'Optic Neuritis — MUA / Infectious / Idiopathic', tag: 'Dog (&gt; Cat) ›', desc: 'Acute bilateral blindness · dilated unresponsive pupils · swollen / haemorrhagic optic disc · both Red AND Blue PLR absent (distinguishes from SARDS) · MRI + CSF mandatory · aggressive immunosuppression (prednisolone 2 mg/kg + cytarabine)', link: { to: 'disease', id: 'DIS-EYE-OPTNEUR' } },
-        { title: 'Enrofloxacin Retinal Toxicity', tag: 'Cat — STOP DRUG', desc: 'Fluoroquinolone use (esp. &gt;5 mg/kg/day) · acute bilateral blindness · mydriasis · retinal degeneration on fundoscopy · <strong>stop drug immediately</strong> · switch antibiotic · some recovery if caught early' },
       ],
     },
 
@@ -120,7 +120,7 @@ const blindEyeAcute: FlowPage = {
       kind: 'cardSection',
       tone: 'indigo',
       gap: 8,
-      title: '🧠 CORTICAL / CENTRAL — Dazzle + PLR intact, absent menace, normal fundus',
+      title: '🧠 CORTEX / FOREBRAIN — Dazzle + PLR intact · absent menace · normal fundus',
       cards: [
         { title: 'Hypertensive Encephalopathy', desc: 'Bilateral cortical blindness · ± seizures, mentation change · SBP usually &gt;200 mmHg · Check BP + renal / thyroid / adrenal panel' },
         { title: 'Hepatic Encephalopathy', desc: 'Post-prandial stupor · intermittent cortical blindness · bile acids elevated · PSS / hepatic mass on ultrasound · treat with lactulose + low-protein diet' },
@@ -186,34 +186,26 @@ const blindEyeChronic: FlowPage = {
 
     {
       kind: 'cardSection',
-      tone: 'warning',
-      gap: 0,
-      title: '🌑 RETINAL DEGENERATION — Tapetal hyperreflectivity, vessel attenuation, absent ERG',
-      cards: [
-        { title: 'Progressive Retinal Atrophy (PRA)', tag: 'Dog &gt;&gt; Cat ›', desc: 'Rod loss first → night blindness → day blindness over months to years · Tapetal hyperreflectivity + vessel attenuation + disc pallor · Labrador, Poodle, Cocker, Irish Setter, Tibetan Terrier, Mini Schnauzer · Genetic testing (prcd, rcd1) available for many breeds · No treatment', link: { to: 'disease', id: 'DIS-EYE-PRA' } },
-        { title: 'Taurine-deficient Central Retinal Degeneration (TCRD)', tag: 'Cat', desc: 'Vegetarian / homemade / taurine-deficient diet · bilateral central hyperreflective ellipse before peripheral involvement · early supplementation may halt progression · test diet history' },
-        { title: 'Chorioretinitis (Infectious)', tag: 'Dog + Cat ›', desc: 'Multifocal grey-white retinal lesions ± haemorrhage · Cat: Toxoplasma, FIP, FeLV/FIV, Cryptococcus · Dog: Ehrlichia, RMSF, Leishmania, Blastomyces, Histoplasma · systemic infectious workup + titres', link: { to: 'disease', id: 'DIS-EYE-RD' } },
-      ],
-    },
-
-    {
-      kind: 'cardSection',
       tone: 'green',
-      gap: 8,
-      title: '👁️ LENS / ANTERIOR SEGMENT — Ocular media opacity blocking visual pathway',
+      gap: 0,
+      title: '👁️ ANTERIOR OPACITY — Ocular media blocking visual pathway',
       cards: [
         { title: 'Mature / Hypermature Cataract', tag: 'Dog &gt;&gt; Cat ›', desc: 'No fundus reflex · white/grey lens opacity · DM is a major cause in dogs (rapid bilateral progression) · chronic uveitis is the main cause in cats · lens-induced uveitis common · phacoemulsification referral if patient is healthy and owner is motivated', link: { to: 'disease', id: 'DIS-EYE-CATARACT' } },
         { title: 'Chronic Glaucoma with Buphthalmos', tag: 'Dog + Cat ›', desc: "Globe enlargement · Haab's striae · corneal oedema · blind + painful · enucleation often the most humane option", link: { to: 'disease', id: 'DIS-OPH-GLAUCOMA' } },
         { title: 'Chronic Uveitis with Posterior Sequelae', tag: 'Dog + Cat ›', desc: '360° posterior synechiae → iris bombé → secondary glaucoma · cataract from nutritional lens deprivation · exudative RD · FIV / FeLV / tick-borne / immune-mediated in background', link: { to: 'disease', id: 'DIS-EYE-UVEITIS-ANT' } },
+        { title: 'Feline Diffuse Iris Melanoma → Secondary Glaucoma', tag: 'Cat ›', desc: 'Progressive flat hyperpigmentation → dyscoria → ↑ IOP → blind painful eye · enucleate early at first stromal infiltration signs · metastatic risk 19–63%', link: { to: 'disease', id: 'DIS-EYE-IRIS-MEL' } },
       ],
     },
 
     {
       kind: 'cardSection',
-      tone: 'indigo',
+      tone: 'warning',
       gap: 8,
-      title: '🧬 CONGENITAL / DEVELOPMENTAL — Present from birth, may not be noticed until older',
+      title: '🌑 RETINA — Tapetal hyperreflectivity · vessel attenuation · absent ERG',
       cards: [
+        { title: 'Progressive Retinal Atrophy (PRA)', tag: 'Dog &gt;&gt; Cat ›', desc: 'Rod loss first → night blindness → day blindness over months to years · Tapetal hyperreflectivity + vessel attenuation + disc pallor · Labrador, Poodle, Cocker, Irish Setter, Tibetan Terrier, Mini Schnauzer · Genetic testing (prcd, rcd1) available for many breeds · No treatment', link: { to: 'disease', id: 'DIS-EYE-PRA' } },
+        { title: 'Taurine-deficient Central Retinal Degeneration (TCRD)', tag: 'Cat', desc: 'Vegetarian / homemade / taurine-deficient diet · bilateral central hyperreflective ellipse before peripheral involvement · early supplementation may halt progression · test diet history' },
+        { title: 'Chorioretinitis (Infectious)', tag: 'Dog + Cat ›', desc: 'Multifocal grey-white retinal lesions ± haemorrhage · Cat: Toxoplasma, FIP, FeLV/FIV, Cryptococcus · Dog: Ehrlichia, RMSF, Leishmania, Blastomyces, Histoplasma · systemic infectious workup + titres', link: { to: 'disease', id: 'DIS-EYE-RD' } },
         { title: 'Collie Eye Anomaly (CEA)', tag: 'Collie / Sheltie', desc: 'Choroidal hypoplasia + ONH coloboma ± retinal detachment / haemorrhage · Fundoscopy: pale area lateral to disc · genetic test available (SLC4A7) · severity varies; many dogs retain vision' },
         { title: 'Retinal Dysplasia', tag: 'CKCS / English Springer', desc: 'Retinal folds / geographic dysplasia / complete RD (young dog) · congenital, bilateral · CKCS and English Springer Spaniel predisposed · no treatment' },
       ],
@@ -223,11 +215,30 @@ const blindEyeChronic: FlowPage = {
       kind: 'cardSection',
       tone: 'purple',
       gap: 8,
-      title: '🔬 NEOPLASIA / CNS — Insidious, may present with other neurological signs',
+      title: '🧬 OPTIC NERVE — Progressive disc pallor · optic atrophy · mass effect',
       cards: [
-        { title: 'Feline Diffuse Iris Melanoma → Secondary Glaucoma', tag: 'Cat ›', desc: 'Progressive flat hyperpigmentation → dyscoria → ↑ IOP → blind painful eye · enucleate early at first stromal infiltration signs · metastatic risk 19–63%', link: { to: 'disease', id: 'DIS-EYE-IRIS-MEL' } },
-        { title: 'Intracranial / Optic Nerve Neoplasia', desc: 'Progressive visual field loss ± other CN deficits ± behavioural change · pituitary macroadenoma (bilateral, + endocrine signs: HAC / DI) · meningioma · MRI brain + CSF' },
+        { title: 'Optic Nerve / Orbital Meningioma', desc: 'Unilateral progressive vision loss ± exophthalmos · disc pallor on fundoscopy · CT/MRI shows orbital mass · debulking or stereotactic radiation · slow progression' },
+      ],
+    },
+
+    {
+      kind: 'cardSection',
+      tone: 'slate',
+      gap: 8,
+      title: '✨ CHIASM / TRACT — Bilateral field loss · endocrine signs · pituitary region',
+      cards: [
+        { title: 'Pituitary Macroadenoma', desc: 'Insidious bilateral vision loss + HAC / diabetes insipidus signs · bitemporal hemianopia pattern (variable per species) · MRI: sellar / suprasellar mass · transphenoidal surgery or radiation' },
+      ],
+    },
+
+    {
+      kind: 'cardSection',
+      tone: 'indigo',
+      gap: 8,
+      title: '🧠 CORTEX / FOREBRAIN — Dazzle + PLR intact · absent menace · normal fundus',
+      cards: [
         { title: 'MUA / GME / NME (Chronic Progression)', tag: 'Dog', desc: 'Inflammatory CNS disease progressing over weeks · optic neuritis component ± other neuro signs · MRI + CSF for diagnosis · immunosuppression (prednisolone + cytarabine / lomustine)' },
+        { title: 'Intracranial Neoplasia', desc: 'Meningioma / glioma causing cortical blindness · progressive behavioural change ± seizures ± lateralising signs · MRI brain · surgery / radiation / palliative steroids' },
       ],
     },
 
