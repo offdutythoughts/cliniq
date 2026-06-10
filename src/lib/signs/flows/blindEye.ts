@@ -65,24 +65,6 @@ const blindEyeAcute: FlowPage = {
     },
 
     {
-      kind: 'table',
-      boxTone: 'purple',
-      gap: 14,
-      title: '🔍 THE LOCALISATION TABLE — Menace · Dazzle · PLR',
-      cols: '1.3fr 0.7fr 0.7fr 0.7fr 1.4fr',
-      headers: ['Lesion site', 'Menace', 'Dazzle', 'PLR', 'Fundus'],
-      rows: [
-        ['Anterior opacity', 'Absent', 'Variable', 'Variable', 'Often not visible'],
-        ['Retinal disease (RD, PRA)', 'Absent', 'Absent', 'Absent / sluggish', 'Abnormal'],
-        [{ text: 'SARDS', tone: 'warning' }, 'Absent', 'Absent', 'Red absent · Blue present', { text: 'NORMAL (key clue)', tone: 'green' }],
-        ['Optic nerve (neuritis)', 'Absent', 'Absent', 'Absent (red AND blue)', 'Swollen disc · haemorrhage'],
-        ['Chiasm / tract', 'Absent (variable)', 'Absent / variable', 'Variable per pattern', 'Normal'],
-        [{ text: 'Cortex / forebrain', tone: 'purple' }, 'Absent', { text: 'PRESENT', tone: 'green' }, { text: 'PRESENT', tone: 'green' }, 'Normal'],
-      ],
-      footnote: '💡 The single most discriminating finding: <strong>preserved dazzle + preserved PLR with absent menace = cortical blindness</strong>. Everything else lies upstream of the lateral geniculate nucleus.',
-    },
-
-    {
       kind: 'cardSection',
       tone: 'danger',
       gap: 0,
@@ -131,6 +113,24 @@ const blindEyeAcute: FlowPage = {
     },
 
     {
+      kind: 'table',
+      boxTone: 'purple',
+      gap: 14,
+      title: '🔍 THE LOCALISATION TABLE — Menace · Dazzle · PLR',
+      cols: '1.3fr 0.7fr 0.7fr 0.7fr 1.4fr',
+      headers: ['Lesion site', 'Menace', 'Dazzle', 'PLR', 'Fundus'],
+      rows: [
+        ['Anterior opacity', 'Absent', 'Variable', 'Variable', 'Often not visible'],
+        ['Retinal disease (RD, PRA)', 'Absent', 'Absent', 'Absent / sluggish', 'Abnormal'],
+        [{ text: 'SARDS', tone: 'warning' }, 'Absent', 'Absent', 'Red absent · Blue present', { text: 'NORMAL (key clue)', tone: 'green' }],
+        ['Optic nerve (neuritis)', 'Absent', 'Absent', 'Absent (red AND blue)', 'Swollen disc · haemorrhage'],
+        ['Chiasm / tract', 'Absent (variable)', 'Absent / variable', 'Variable per pattern', 'Normal'],
+        [{ text: 'Cortex / forebrain', tone: 'purple' }, 'Absent', { text: 'PRESENT', tone: 'green' }, { text: 'PRESENT', tone: 'green' }, 'Normal'],
+      ],
+      footnote: '💡 The single most discriminating finding: <strong>preserved dazzle + preserved PLR with absent menace = cortical blindness</strong>. Everything else lies upstream of the lateral geniculate nucleus.',
+    },
+
+    {
       kind: 'callout',
       tone: 'info',
       gap: 8,
@@ -164,24 +164,6 @@ const blindEyeChronic: FlowPage = {
         { variant: 'insp', tone: 'purple', label: '🧠 Cortex /<br>forebrain', sublabel: 'HE · HT · MUA · CVA · neoplasia', link: { to: 'lesion', loc: 'LOC-BL-CORTEX', name: 'Cortical / forebrain' } },
       ],
       connectAfter: false,
-    },
-
-    {
-      kind: 'table',
-      boxTone: 'purple',
-      gap: 14,
-      title: '🔍 THE LOCALISATION TABLE — Menace · Dazzle · PLR',
-      cols: '1.3fr 0.7fr 0.7fr 0.7fr 1.4fr',
-      headers: ['Lesion site', 'Menace', 'Dazzle', 'PLR', 'Fundus'],
-      rows: [
-        ['Anterior opacity', 'Absent', 'Variable', 'Variable', 'Often not visible'],
-        ['Retinal disease (RD, PRA)', 'Absent', 'Absent', 'Absent / sluggish', 'Abnormal'],
-        [{ text: 'SARDS', tone: 'warning' }, 'Absent', 'Absent', 'Red absent · Blue present', { text: 'NORMAL (key clue)', tone: 'green' }],
-        ['Optic nerve (neuritis)', 'Absent', 'Absent', 'Absent (red AND blue)', 'Swollen disc · haemorrhage'],
-        ['Chiasm / tract', 'Absent (variable)', 'Absent / variable', 'Variable per pattern', 'Normal'],
-        [{ text: 'Cortex / forebrain', tone: 'purple' }, 'Absent', { text: 'PRESENT', tone: 'green' }, { text: 'PRESENT', tone: 'green' }, 'Normal'],
-      ],
-      footnote: '💡 The single most discriminating finding: <strong>preserved dazzle + preserved PLR with absent menace = cortical blindness</strong>. Everything else lies upstream of the lateral geniculate nucleus.',
     },
 
     {
@@ -240,6 +222,24 @@ const blindEyeChronic: FlowPage = {
         { title: 'MUA / GME / NME (Chronic Progression)', tag: 'Dog', desc: 'Inflammatory CNS disease progressing over weeks · optic neuritis component ± other neuro signs · MRI + CSF for diagnosis · immunosuppression (prednisolone + cytarabine / lomustine)' },
         { title: 'Intracranial Neoplasia', desc: 'Meningioma / glioma causing cortical blindness · progressive behavioural change ± seizures ± lateralising signs · MRI brain · surgery / radiation / palliative steroids' },
       ],
+    },
+
+    {
+      kind: 'table',
+      boxTone: 'purple',
+      gap: 14,
+      title: '🔍 THE LOCALISATION TABLE — Menace · Dazzle · PLR',
+      cols: '1.3fr 0.7fr 0.7fr 0.7fr 1.4fr',
+      headers: ['Lesion site', 'Menace', 'Dazzle', 'PLR', 'Fundus'],
+      rows: [
+        ['Anterior opacity', 'Absent', 'Variable', 'Variable', 'Often not visible'],
+        ['Retinal disease (RD, PRA)', 'Absent', 'Absent', 'Absent / sluggish', 'Abnormal'],
+        [{ text: 'SARDS', tone: 'warning' }, 'Absent', 'Absent', 'Red absent · Blue present', { text: 'NORMAL (key clue)', tone: 'green' }],
+        ['Optic nerve (neuritis)', 'Absent', 'Absent', 'Absent (red AND blue)', 'Swollen disc · haemorrhage'],
+        ['Chiasm / tract', 'Absent (variable)', 'Absent / variable', 'Variable per pattern', 'Normal'],
+        [{ text: 'Cortex / forebrain', tone: 'purple' }, 'Absent', { text: 'PRESENT', tone: 'green' }, { text: 'PRESENT', tone: 'green' }, 'Normal'],
+      ],
+      footnote: '💡 The single most discriminating finding: <strong>preserved dazzle + preserved PLR with absent menace = cortical blindness</strong>. Everything else lies upstream of the lateral geniculate nucleus.',
     },
 
     {
