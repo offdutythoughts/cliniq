@@ -20,6 +20,24 @@ const blindEyeEntry: FlowPage = {
         { tone: 'info', label: '🕐 CHRONIC', sublabel: 'Onset weeks → months<br>Progressive vision decline', link: { to: 'flow', id: 'blind-eye-chronic' } },
       ],
     },
+
+    {
+      kind: 'table',
+      boxTone: 'purple',
+      gap: 14,
+      title: '🔍 THE LOCALISATION TABLE — Menace · Dazzle · PLR',
+      cols: '1.3fr 0.7fr 0.7fr 0.7fr 1.4fr',
+      headers: ['Lesion site', 'Menace', 'Dazzle', 'PLR', 'Fundus'],
+      rows: [
+        ['Anterior opacity', 'Absent', 'Variable', 'Variable', 'Often not visible'],
+        ['Retinal disease (RD, PRA)', 'Absent', 'Absent', 'Absent / sluggish', 'Abnormal'],
+        [{ text: 'SARDS', tone: 'warning' }, 'Absent', 'Absent', 'Red absent · Blue present', { text: 'NORMAL (key clue)', tone: 'green' }],
+        ['Optic nerve (neuritis)', 'Absent', 'Absent', 'Absent (red AND blue)', 'Swollen disc · haemorrhage'],
+        ['Chiasm / tract', 'Absent (variable)', 'Absent / variable', 'Variable per pattern', 'Normal'],
+        [{ text: 'Cortex / forebrain', tone: 'purple' }, 'Absent', { text: 'PRESENT', tone: 'green' }, { text: 'PRESENT', tone: 'green' }, 'Normal'],
+      ],
+      footnote: '💡 The single most discriminating finding: <strong>preserved dazzle + preserved PLR with absent menace = cortical blindness</strong>. Everything else lies upstream of the lateral geniculate nucleus.',
+    },
   ],
 }
 
