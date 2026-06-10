@@ -122,7 +122,7 @@ const feverTrue: FlowPage = {
             { label: ' IMMUNE-MEDIATED POLYARTHRITIS', link: { to: 'disease', id: 'DIS-IMPA' } },
             { label: ' SRMA', link: { to: 'disease', id: 'DIS-SRMA' } },
             { label: ' SLE', link: { to: 'disease', id: 'DIS-IM-SLE' } },
-            { label: ' IMHA / IMTP — immune-mediated cytopenias also cause fever' },
+            { label: ' IMHA / IMTP — immune-mediated cytopenias also cause fever', link: { to: 'disease', id: 'DIS-BD-IMHA' } },
           ],
         },
         {

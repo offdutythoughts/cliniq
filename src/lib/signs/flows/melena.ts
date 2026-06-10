@@ -95,7 +95,7 @@ const melenaUpper: FlowPage = {
           tiles: [
             { label: ' NSAID / STEROID ULCER', link: { to: 'disease', id: 'DIS-GI-ULC' } },
             { label: ' MAST-CELL TUMOUR / GASTRINOMA', link: { to: 'disease', id: 'DIS-GI-ULC' } },
-            { label: ' Hepatic / renal disease — portal hypertension / PSS · uraemic gastropathy' },
+            { label: ' Hepatic / renal disease — portal hypertension / PSS · uraemic gastropathy', link: { to: 'disease', id: 'DIS-HEP-CHRONHEP' } },
           ],
         },
         {

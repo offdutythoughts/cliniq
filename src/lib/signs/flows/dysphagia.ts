@@ -98,16 +98,16 @@ const dysphagiaOral: FlowPage = {
           tiles: [
             { label: ' DENTAL / ORONASAL DISEASE', link: { to: 'disease', id: 'DIS-DENT-ORONASAL' } },
             { label: ' SALIVARY MUCOCELE / SIALOCELE', link: { to: 'disease', id: 'DIS-GI-SIALOCELE' } },
-            { label: ' Oral mass / FB / trauma — tumour · stick FB · TMJ / retrobulbar abscess' },
+            { label: ' Oral mass / FB / trauma — tumour · stick FB · TMJ / retrobulbar abscess', link: { to: 'disease', id: 'DIS-DENT-ORAFB' } },
           ],
         },
         {
           cat: 'Neuromuscular (CN / Muscle)',
           tone: 'violet',
           tiles: [
-            { label: ' MASTICATORY MYOSITIS — jaw muscles, 2M antibody' },
-            { label: ' CN V / VII / XII DYSFUNCTION — dropped jaw · facial paresis · tongue paresis' },
-            { label: ' Lingual / polymyositis · trigeminal neuritis' },
+            { label: ' MASTICATORY MYOSITIS — jaw muscles, 2M antibody', link: { to: 'disease', id: 'DIS-NEU-MMM' } },
+            { label: ' CN V / VII / XII DYSFUNCTION — dropped jaw · facial paresis · tongue paresis', link: { to: 'disease', id: 'DIS-NEU-TRIGEMINAL' } },
+            { label: ' Lingual / polymyositis · trigeminal neuritis', link: { to: 'disease', id: 'DIS-NEU-POLYMYOSITIS' } },
           ],
         },
       ],
@@ -128,15 +128,15 @@ const dysphagiaPhary: FlowPage = {
           cat: 'Mechanical (Mass / Obstruction)',
           tone: 'orange',
           tiles: [
-            { label: ' Pharyngeal mass / neoplasia — tonsillar swelling · retropharyngeal LN · abscess' },
-            { label: ' Pharyngeal FB / trauma — nasopharyngeal polyp · hyoid disruption · elongated soft palate' },
+            { label: ' Pharyngeal mass / neoplasia — tonsillar swelling · retropharyngeal LN · abscess', link: { to: 'disease', id: 'DIS-NEO-ORAL-SCC' } },
+            { label: ' Pharyngeal FB / trauma — nasopharyngeal polyp · hyoid disruption · elongated soft palate', link: { to: 'disease', id: 'DIS-DENT-ORAFB' } },
           ],
         },
         {
           cat: 'Neuromuscular',
           tone: 'teal',
           tiles: [
-            { label: ' CRICOPHARYNGEAL ACHALASIA / DYSSYNCHRONY — young dog at weaning · VFSS-defined · myotomy' },
+            { label: ' CRICOPHARYNGEAL ACHALASIA / DYSSYNCHRONY — young dog at weaning · VFSS-defined · myotomy', link: { to: 'disease', id: 'DIS-NEU-CRICOPHARYNGEAL' } },
             { label: ' MYASTHENIA GRAVIS (focal)', link: { to: 'disease', id: 'DIS-WK-MG' } },
             { label: ' POLYRADICULONEURITIS', link: { to: 'disease', id: 'DIS-NEU-POLYRADIC' } },
             { label: ' Brainstem lesion (CN IX/X nucleus)', link: { to: 'disease', id: 'DIS-NEU-BRAINTUM' } },
