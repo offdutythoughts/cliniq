@@ -20,6 +20,14 @@ const blindEyeEntry: FlowPage = {
         { tone: 'info', label: '🕐 CHRONIC', sublabel: 'Onset weeks → months<br>Progressive vision decline', link: { to: 'flow', id: 'blind-eye-chronic' } },
       ],
     },
+  ],
+}
+
+const blindEyeAcute: FlowPage = {
+  id: 'blind-eye-acute',
+  title: 'Acute Vision Loss',
+  blocks: [
+    { kind: 'node', variant: 'entry', tone: 'danger', text: '⚡ ACUTE VISION LOSS', sub: 'Onset minutes → days · Treat as emergency until proven otherwise' },
 
     {
       kind: 'node',
@@ -38,6 +46,21 @@ const blindEyeEntry: FlowPage = {
         { variant: 'rest', label: '🧬 Optic<br>nerve', sublabel: 'neuritis · hypoplasia · neoplasia', link: { to: 'lesion', loc: 'LOC-BL-OPTIC', name: 'Optic nerve' } },
         { variant: 'mixed', label: '✨ Chiasm /<br>tract', sublabel: 'pituitary mass · rare', link: { to: 'lesion', loc: 'LOC-BL-CHIASM', name: 'Chiasm / optic tract' } },
         { variant: 'insp', tone: 'purple', label: '🧠 Cortex /<br>forebrain', sublabel: 'HE · HT · MUA · CVA · neoplasia', link: { to: 'lesion', loc: 'LOC-BL-CORTEX', name: 'Cortical / forebrain' } },
+      ],
+      connectAfter: false,
+    },
+
+    {
+      kind: 'alert',
+      tone: 'danger',
+      title: '⚡ DO NOT MISS',
+      items: [
+        '<strong>Hypertensive retinopathy</strong> — older cat / dog with acute bilateral blindness, bullous retinal detachment, hyphaema, tortuous retinal vessels → measure BP first',
+        '<strong>Optic neuritis (MUA)</strong> — acute bilateral blindness + dilated unresponsive pupils + swollen optic disc → urgent MRI/CSF + immunosuppression',
+        '<strong>Acute glaucoma</strong> — corneal oedema + mid-fixed mydriasis + ↑ IOP → tonometry on every blind eye',
+        '<strong>Head trauma + anisocoria + blindness</strong> — rising ICP / herniation → mannitol + emergent imaging',
+        '<strong>Enrofloxacin in cats</strong> — drug-induced retinal toxicity (avoid &gt;5 mg/kg/day; even therapeutic doses reported)',
+        '<strong>Salt / ivermectin / lead toxicity</strong> — bilateral cortical blindness with seizures and altered mentation',
       ],
     },
 
@@ -58,30 +81,6 @@ const blindEyeEntry: FlowPage = {
       ],
       footnote: '💡 The single most discriminating finding: <strong>preserved dazzle + preserved PLR with absent menace = cortical blindness</strong>. Everything else lies upstream of the lateral geniculate nucleus.',
     },
-
-    {
-      kind: 'alert',
-      tone: 'danger',
-      title: '⚡ DO NOT MISS',
-      items: [
-        '<strong>Hypertensive retinopathy</strong> — older cat / dog with acute bilateral blindness, bullous retinal detachment, hyphaema, tortuous retinal vessels → measure BP first',
-        '<strong>Optic neuritis (MUA)</strong> — acute bilateral blindness + dilated unresponsive pupils + swollen optic disc → urgent MRI/CSF + immunosuppression',
-        '<strong>Acute glaucoma</strong> — corneal oedema + mid-fixed mydriasis + ↑ IOP → tonometry on every blind eye',
-        '<strong>Head trauma + anisocoria + blindness</strong> — rising ICP / herniation → mannitol + emergent imaging',
-        '<strong>Enrofloxacin in cats</strong> — drug-induced retinal toxicity (avoid &gt;5 mg/kg/day; even therapeutic doses reported)',
-        '<strong>Salt / ivermectin / lead toxicity</strong> — bilateral cortical blindness with seizures and altered mentation',
-      ],
-    },
-
-    { kind: 'banner', tone: 'info', html: 'Tap a pathway segment to see specific lesion types' },
-  ],
-}
-
-const blindEyeAcute: FlowPage = {
-  id: 'blind-eye-acute',
-  title: 'Acute Vision Loss',
-  blocks: [
-    { kind: 'node', variant: 'entry', tone: 'danger', text: '⚡ ACUTE VISION LOSS', sub: 'Onset minutes → days · Treat as emergency until proven otherwise' },
 
     {
       kind: 'cardSection',
@@ -145,6 +144,45 @@ const blindEyeChronic: FlowPage = {
   title: 'Chronic Vision Loss',
   blocks: [
     { kind: 'node', variant: 'entry', tone: 'info', text: '🕐 CHRONIC VISION LOSS', sub: 'Onset weeks → months → years · Progressive decline · Often bilateral' },
+
+    {
+      kind: 'node',
+      variant: 'step',
+      text: 'LOCALISE THE LESION ALONG THE VISUAL PATHWAY',
+      sub: 'Cornea → aqueous → lens → vitreous → retina → optic n. → chiasm → optic tract → LGN → cortex',
+    },
+
+    {
+      kind: 'choices',
+      cols: 5,
+      size: 10,
+      items: [
+        { variant: 'insp', label: '👁️ Anterior<br>opacity', sublabel: 'light cannot reach retina', link: { to: 'lesion', loc: 'LOC-BL-OPAQUE', name: 'Anterior segment opacity' } },
+        { variant: 'exp', label: '🌑 Retina', sublabel: 'SARDS · RD · PRA · HT', link: { to: 'lesion', loc: 'LOC-BL-RETINA', name: 'Retinal disease' } },
+        { variant: 'rest', label: '🧬 Optic<br>nerve', sublabel: 'neuritis · hypoplasia · neoplasia', link: { to: 'lesion', loc: 'LOC-BL-OPTIC', name: 'Optic nerve' } },
+        { variant: 'mixed', label: '✨ Chiasm /<br>tract', sublabel: 'pituitary mass · rare', link: { to: 'lesion', loc: 'LOC-BL-CHIASM', name: 'Chiasm / optic tract' } },
+        { variant: 'insp', tone: 'purple', label: '🧠 Cortex /<br>forebrain', sublabel: 'HE · HT · MUA · CVA · neoplasia', link: { to: 'lesion', loc: 'LOC-BL-CORTEX', name: 'Cortical / forebrain' } },
+      ],
+      connectAfter: false,
+    },
+
+    {
+      kind: 'table',
+      boxTone: 'purple',
+      gap: 14,
+      title: '🔍 THE LOCALISATION TABLE — Menace · Dazzle · PLR',
+      cols: '1.3fr 0.7fr 0.7fr 0.7fr 1.4fr',
+      headers: ['Lesion site', 'Menace', 'Dazzle', 'PLR', 'Fundus'],
+      rows: [
+        ['Anterior opacity', 'Absent', 'Variable', 'Variable', 'Often not visible'],
+        ['Retinal disease (RD, PRA)', 'Absent', 'Absent', 'Absent / sluggish', 'Abnormal'],
+        [{ text: 'SARDS', tone: 'warning' }, 'Absent', 'Absent', 'Red absent · Blue present', { text: 'NORMAL (key clue)', tone: 'green' }],
+        ['Optic nerve (neuritis)', 'Absent', 'Absent', 'Absent (red AND blue)', 'Swollen disc · haemorrhage'],
+        ['Chiasm / tract', 'Absent (variable)', 'Absent / variable', 'Variable per pattern', 'Normal'],
+        [{ text: 'Cortex / forebrain', tone: 'purple' }, 'Absent', { text: 'PRESENT', tone: 'green' }, { text: 'PRESENT', tone: 'green' }, 'Normal'],
+      ],
+      footnote: '💡 The single most discriminating finding: <strong>preserved dazzle + preserved PLR with absent menace = cortical blindness</strong>. Everything else lies upstream of the lateral geniculate nucleus.',
+    },
 
     {
       kind: 'cardSection',
