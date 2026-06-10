@@ -169,16 +169,16 @@ const heartMurmurCongenital: FlowPage = {
           cat: 'Left-to-Right Shunt',
           tone: 'violet',
           tiles: [
-            { label: ' PDA — continuous "machinery" murmur · bounding pulses' },
-            { label: ' VENTRICULAR SEPTAL DEFECT (VSD) — right cranial thorax · harsh holosystolic' },
+            { label: ' PDA — continuous "machinery" murmur · bounding pulses', link: { to: 'disease', id: 'DIS-CARD-PDA' } },
+            { label: ' VENTRICULAR SEPTAL DEFECT (VSD) — right cranial thorax · harsh holosystolic', link: { to: 'disease', id: 'DIS-CARD-VSD' } },
           ],
         },
         {
           cat: 'Outflow Obstruction',
           tone: 'indigo',
           tiles: [
-            { label: ' SUBAORTIC STENOSIS (SAS) — left base systolic · radiates to carotids · parvus et tardus pulse' },
-            { label: ' PULMONIC STENOSIS (PS) — left base systolic · does NOT radiate to carotids' },
+            { label: ' SUBAORTIC STENOSIS (SAS) — left base systolic · radiates to carotids · parvus et tardus pulse', link: { to: 'disease', id: 'DIS-CARD-SAS' } },
+            { label: ' PULMONIC STENOSIS (PS) — left base systolic · does NOT radiate to carotids', link: { to: 'disease', id: 'DIS-CARD-PS' } },
           ],
         },
       ],

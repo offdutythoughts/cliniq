@@ -100,7 +100,7 @@ const tremorsToxic: FlowPage = {
             { label: ' PERMETHRIN (CATS)', link: { to: 'protocol', id: 'PROT-TOX-PERM' } },
             { label: ' ORGANOPHOSPHATE / CARBAMATE', link: { to: 'protocol', id: 'PROT-TOX-OP' } },
             { label: ' LEAD', link: { to: 'protocol', id: 'PROT-TOX-LEAD' } },
-            { label: ' Methylxanthines / other — caffeine · theobromine · xylitol · bromethalin · cannabis · macadamia' },
+            { label: ' Methylxanthines / other — caffeine · theobromine · xylitol · bromethalin · cannabis · macadamia', link: { to: 'disease', id: 'DIS-TOXIC-METHYL' } },
           ],
         },
         {
@@ -168,15 +168,15 @@ const tremorsIdiopathic: FlowPage = {
           cat: 'Idiopathic / Steroid-Responsive',
           tone: 'teal',
           tiles: [
-            { label: ' IDIOPATHIC GENERALISED TREMOR (IGTS) — "white-shaker"; steroid-responsive (pred 1–2 mg/kg q12–24h, improves 3–10 days)' },
+            { label: ' IDIOPATHIC GENERALISED TREMOR (IGTS) — "white-shaker"; steroid-responsive (pred 1–2 mg/kg q12–24h, improves 3–10 days)', link: { to: 'disease', id: 'DIS-NEU-IGTS' } },
           ],
         },
         {
           cat: 'Breed-Related / Benign',
           tone: 'neutral',
           tiles: [
-            { label: ' Idiopathic head tremor (IHTS) — "head-bobbing"; Bulldog/Boxer/Doberman/Labrador; benign, AED-unresponsive' },
-            { label: ' Hypomyelination ("shaker pup") — tremor from ~10 days of age when aroused; many recover by 5 months' },
+            { label: ' Idiopathic head tremor (IHTS) — "head-bobbing"; Bulldog/Boxer/Doberman/Labrador; benign, AED-unresponsive', link: { to: 'disease', id: 'DIS-NEU-IHTS' } },
+            { label: ' Hypomyelination ("shaker pup") — tremor from ~10 days of age when aroused; many recover by 5 months', link: { to: 'disease', id: 'DIS-NEU-HYPOMYEL' } },
             { label: ' Orthostatic tremor — limb/trunk tremor only when standing; Great Dane/Deerhound or senile' },
           ],
         },

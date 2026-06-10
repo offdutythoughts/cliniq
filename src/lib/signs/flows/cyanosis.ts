@@ -106,9 +106,9 @@ const cyanosisCardiac: FlowPage = {
           cat: 'Congenital Shunt',
           tone: 'violet',
           tiles: [
-            { label: ' REVERSE (R→L) PDA — caudal blue, cranial pink; worse on exercise' },
-            { label: ' TETRALOGY OF FALLOT — VSD + pulmonic stenosis + overriding aorta + RVH' },
-            { label: ' EISENMENGER / VSD-ASD + PHTN — L→R shunt reverses as pulmonary resistance rises' },
+            { label: ' REVERSE (R→L) PDA — caudal blue, cranial pink; worse on exercise', link: { to: 'disease', id: 'DIS-CARD-PDA' } },
+            { label: ' TETRALOGY OF FALLOT — VSD + pulmonic stenosis + overriding aorta + RVH', link: { to: 'disease', id: 'DIS-CARD-TOF' } },
+            { label: ' EISENMENGER / VSD-ASD + PHTN — L→R shunt reverses as pulmonary resistance rises', link: { to: 'disease', id: 'DIS-CARD-VSD' } },
           ],
         },
         {
@@ -137,7 +137,7 @@ const cyanosisMethb: FlowPage = {
           tone: 'warning',
           tiles: [
             { label: ' OXIDANT TOXICOSIS', link: { to: 'protocol', id: 'PROT-TOX-METHB' } },
-            { label: ' Hereditary metHb — cytochrome-b5 reductase deficiency, mild, chronic' },
+            { label: ' Hereditary metHb — cytochrome-b5 reductase deficiency, mild, chronic', link: { to: 'disease', id: 'DIS-RESP-METHAEM' } },
           ],
         },
         {

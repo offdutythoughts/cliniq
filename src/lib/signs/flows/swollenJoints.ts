@@ -94,8 +94,8 @@ const swollenJointsSeptic: FlowPage = {
           cat: 'Single Joint — Bacterial',
           tone: 'danger',
           tiles: [
-            { label: ' BACTERIAL SEPTIC ARTHRITIS — penetrating wound · post-op · cat bite; lavage' },
-            { label: ' HAEMATOGENOUS SOURCE — endocarditis · pyelonephritis · prostatitis; blood + urine culture' },
+            { label: ' BACTERIAL SEPTIC ARTHRITIS — penetrating wound · post-op · cat bite; lavage', link: { to: 'disease', id: 'DIS-MSK-SA' } },
+            { label: ' HAEMATOGENOUS SOURCE — endocarditis · pyelonephritis · prostatitis; blood + urine culture', link: { to: 'disease', id: 'DIS-CARD-IE' } },
             { label: ' DISCOSPONDYLITIS', link: { to: 'disease', id: 'DIS-DISCO' } },
           ],
         },
@@ -131,15 +131,15 @@ const swollenJointsImmune: FlowPage = {
             { label: ' IDIOPATHIC IMPA', link: { to: 'disease', id: 'DIS-IMPA' } },
             { label: ' SLE', link: { to: 'disease', id: 'DIS-IM-SLE' } },
             { label: ' SRMA + IMPA', link: { to: 'disease', id: 'DIS-SRMA' } },
-            { label: ' Reactive / drug-induced — TMS · penicillins · cephalosporins · post-vaccinal' },
+            { label: ' Reactive / drug-induced — TMS · penicillins · cephalosporins · post-vaccinal', link: { to: 'disease', id: 'DIS-IMPA' } },
           ],
         },
         {
           cat: 'Erosive',
           tone: 'orange',
           tiles: [
-            { label: ' RHEUMATOID ARTHRITIS — rare · RF in ~70%; progressive bone/cartilage lysis' },
-            { label: ' Feline periosteal proliferative — male cats · FeLV-implicated' },
+            { label: ' RHEUMATOID ARTHRITIS — rare · RF in ~70%; progressive bone/cartilage lysis', link: { to: 'disease', id: 'DIS-MSK-RA' } },
+            { label: ' Feline periosteal proliferative — male cats · FeLV-implicated', link: { to: 'disease', id: 'DIS-MSK-RA' } },
           ],
         },
       ],
@@ -160,7 +160,7 @@ const swollenJointsNoninflam: FlowPage = {
           cat: 'Degenerative / Traumatic',
           tone: 'neutral',
           tiles: [
-            { label: ' OSTEOARTHRITIS / DJD — conformational · CCL rupture · patellar luxation · secondary OA' },
+            { label: ' OSTEOARTHRITIS / DJD — conformational · CCL rupture · patellar luxation · secondary OA', link: { to: 'disease', id: 'DIS-MSK-OA' } },
             { label: ' TRAUMA / HAEMARTHROSIS — cruciate injury; haemarthrosis from a bleeding disorder' },
           ],
         },
@@ -168,7 +168,7 @@ const swollenJointsNoninflam: FlowPage = {
           cat: 'Neoplastic',
           tone: 'violet',
           tiles: [
-            { label: ' JOINT / SYNOVIAL NEOPLASIA — synovial cell sarcoma · lymphoma · histiocytic sarcoma' },
+            { label: ' JOINT / SYNOVIAL NEOPLASIA — synovial cell sarcoma · lymphoma · histiocytic sarcoma', link: { to: 'disease', id: 'DIS-NEO-SJOINT' } },
             { label: ' OSTEOSARCOMA (juxta-articular)', link: { to: 'disease', id: 'DIS-NEO-OSA' } },
           ],
         },

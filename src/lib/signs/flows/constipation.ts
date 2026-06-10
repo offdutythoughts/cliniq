@@ -57,7 +57,7 @@ const constipationObstructive: FlowPage = {
           cat: 'Impaction / Dietary',
           tone: 'orange',
           tiles: [
-            { label: 'IMPACTED FAECES / DIETARY — pica (bones, hair, litter) · obstipation → feline megacolon' },
+            { label: 'IMPACTED FAECES / DIETARY — pica (bones, hair, litter) · obstipation → feline megacolon', link: { to: 'disease', id: 'DIS-GI-MEGA' } },
           ],
         },
         {
@@ -72,7 +72,7 @@ const constipationObstructive: FlowPage = {
           cat: 'Neoplastic / Mass',
           tone: 'violet',
           tiles: [
-            { label: 'RECTAL / COLONIC MASS — neoplasia · stricture · diverticulum' },
+            { label: 'RECTAL / COLONIC MASS — neoplasia · stricture · diverticulum', link: { to: 'disease', id: 'DIS-GI-RECTAL' } },
           ],
         },
       ],

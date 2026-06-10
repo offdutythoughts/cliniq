@@ -136,7 +136,7 @@ const melenaLower: FlowPage = {
             { label: ' IDIOPATHIC / IBD COLITIS', link: { to: 'disease', id: 'DIS-GI-COLITIS' } },
             { label: ' WHIPWORM (Trichuris)', link: { to: 'disease', id: 'DIS-GI-WHIP' } },
             { label: ' GRANULOMATOUS COLITIS', link: { to: 'disease', id: 'DIS-GI-GRANCOL' } },
-            { label: ' Clostridial / Campylobacter / Salmonella — faecal PCR/culture' },
+            { label: ' Clostridial / Campylobacter / Salmonella — faecal PCR/culture', link: { to: 'disease', id: 'DIS-INFECT-CAMPYLO' } },
           ],
         },
         {

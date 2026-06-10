@@ -107,7 +107,7 @@ const feverTrue: FlowPage = {
           tiles: [
             { label: ' VECTOR-BORNE DISEASE', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
             { label: ' DISCOSPONDYLITIS', link: { to: 'disease', id: 'DIS-DISCO' } },
-            { label: ' Bacterial endocarditis — new murmur + fever; blood cultures + echo' },
+            { label: ' Bacterial endocarditis — new murmur + fever; blood cultures + echo', link: { to: 'disease', id: 'DIS-CARD-IE' } },
             { label: ' SEPTIC PERITONITIS', link: { to: 'disease', id: 'DIS-GI-SEPTPERIT' } },
             { label: ' PYELONEPHRITIS', link: { to: 'disease', id: 'DIS-URO-PYELO' } },
             { label: ' PROSTATITIS', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
@@ -131,7 +131,7 @@ const feverTrue: FlowPage = {
           tiles: [
             { label: ' LYMPHOMA / LEUKAEMIA', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
             { label: ' PARANEOPLASTIC FEVER', link: { to: 'disease', id: 'DIS-NEO-PARANEO' } },
-            { label: ' Histiocytic disease — Bernese Mountain Dog predisposition' },
+            { label: ' Histiocytic disease — Bernese Mountain Dog predisposition', link: { to: 'disease', id: 'DIS-NEO-HSARC' } },
           ],
         },
       ],
@@ -152,7 +152,7 @@ const feverHyperthermia: FlowPage = {
           cat: 'Environmental / Exertional',
           tone: 'danger',
           tiles: [
-            { label: ' HEATSTROKE — cool to 39.4°C then stop' },
+            { label: ' HEATSTROKE — cool to 39.4°C then stop', link: { to: 'disease', id: 'DIS-HEAT' } },
             { label: ' EXERTIONAL / ENVIRONMENTAL — exercise in heat · overweight · upper-airway compromise' },
           ],
         },
