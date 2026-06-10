@@ -22,7 +22,7 @@ export function Screen({ view }: { view: View }): ReactNode {
     case 'disease': return <DiseasePageView id={view.id} />
     case 'dx': return <DxApproachView sign={view.sign} active={view.tab} />
     case 'flow': return <FlowPageView flowId={view.flowId} />
-    case 'lesionLoc': return <LesionLocView loc={view.loc} name={view.name} />
+    case 'lesionLoc': return <LesionLocView loc={view.loc} name={view.name} filter={view.filter} />
     case 'subTypeDetail': return <SubTypeDetailView id={view.id} />
     case 'lesionDetail': return <LesionDetailView id={view.id} />
     case 'diff': return <DiffDetailView id={view.id} />

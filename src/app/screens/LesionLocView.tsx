@@ -90,9 +90,14 @@ const DX_MAP: Record<string, string> = {
 
 const EM_BADGE = s('font-size:8px;padding:2px 5px;')
 
-export function LesionLocView({ loc, name }: { loc: string; name: string }) {
+export function LesionLocView({ loc, name, filter }: { loc: string; name: string; filter?: 'acute' | 'chronic' }) {
   const nav = useNav()
-  const lesions = DB.lesion_type.filter(l => l.loc === loc)
+  const allLesions = DB.lesion_type.filter(l => l.loc === loc)
+  const lesions = filter === 'acute'
+    ? allLesions.filter(l => l.urg?.toUpperCase() === 'EMERGENCY')
+    : filter === 'chronic'
+      ? allLesions.filter(l => l.urg?.toUpperCase() !== 'EMERGENCY')
+      : allLesions
   if (!lesions.length) return <div className="empty"><p>No lesion types for this location yet.</p></div>
 
   const groups = new Map<string, LesionRow[]>()

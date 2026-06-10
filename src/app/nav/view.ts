@@ -19,7 +19,7 @@ export type View =
   | { kind: 'dx'; sign: string; tab: string }                                    // renderDxId (tab: history|exam|dx|extras)
   | { kind: 'disease'; id: string }                                              // renderDiseasePage
   | { kind: 'protocol'; id: string }                                             // renderProtoDetail
-  | { kind: 'lesionLoc'; loc: string; name: string }                             // goLesionTab
+  | { kind: 'lesionLoc'; loc: string; name: string; filter?: 'acute' | 'chronic' } // goLesionTab
   | { kind: 'subTypeDetail'; id: string }                                        // renderSubTypeDetail
   | { kind: 'lesionDetail'; id: string }                                         // renderLesionDetail
   | { kind: 'diff'; id: string }                                                 // renderDiffDetail
@@ -47,7 +47,7 @@ export function linkToView(link: Link): View {
   switch (link.to) {
     case 'disease': return { kind: 'disease', id: link.id }
     case 'protocol': return { kind: 'protocol', id: link.id }
-    case 'lesion': return { kind: 'lesionLoc', loc: link.loc, name: link.name }
+    case 'lesion': return { kind: 'lesionLoc', loc: link.loc, name: link.name, ...(link.filter ? { filter: link.filter } : {}) }
     case 'flow': return { kind: 'flow', flowId: link.id }
     case 'dx': return { kind: 'dx', sign: link.id, tab: 'history' }
   }

@@ -24,7 +24,7 @@ export type Tone =
 export type Link =
   | { to: 'disease'; id: string }                 // → renderDiseasePage(id)
   | { to: 'protocol'; id: string }                // → renderProtoDetail(id)
-  | { to: 'lesion'; loc: string; name: string }   // → goLesionTab(loc, name)
+  | { to: 'lesion'; loc: string; name: string; filter?: 'acute' | 'chronic' }   // → goLesionTab(loc, name)
   | { to: 'flow'; id: string }                    // → another FlowPage (renderFlowId)
   | { to: 'dx'; id: string }                      // → diagnostic-approach view (renderDx<Id>)
 
