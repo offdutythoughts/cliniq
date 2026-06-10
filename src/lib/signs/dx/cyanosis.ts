@@ -23,24 +23,24 @@ export const cyanosisDx: DxApproach = {
           kind: 'check',
           html: `<strong>Cyanosis</strong> is blue/dark discoloration of skin and mucosa from <strong>≥5 g/dL deoxygenated haemoglobin</strong> (≈3 g/dL arterial). Because it depends on absolute deoxyHb, a <strong>severely anaemic patient may NOT look cyanotic</strong> even when critically hypoxic, while a polycythaemic one cyanoses early — never use mucous-membrane colour as your only oxygenation gauge. (Ettinger Ch 27)`,
         },
-        { kind: 'step', tone: 'danger', text: '🚨 STEP 1 — IS THIS AN EMERGENCY? (it usually is)' },
+        { kind: 'step', tone: 'danger', text: ' STEP 1 — IS THIS AN EMERGENCY? (it usually is)' },
         {
           kind: 'check',
           html: `Central cyanosis + respiratory distress is an emergency — <strong>give oxygen and minimise stress before any history-taking is completed</strong>. Take the history from the owner <em>while</em> the patient is in an oxygen cage. Ask about <strong>speed of onset, exercise tolerance, and any toxin access</strong>.`,
         },
-        { kind: 'step', alt: true, text: '⏱️ STEP 2 — ONSET, COURSE & EXERCISE' },
+        { kind: 'step', alt: true, text: ' STEP 2 — ONSET, COURSE & EXERCISE' },
         {
           kind: 'check',
           html: `<strong>Peracute</strong> → toxin (paracetamol, benzocaine, nitrate — methaemoglobinaemia), pulmonary thromboembolism, aortic thromboembolism, pneumothorax, or airway crisis.<br>
     <strong>Chronic / lifelong, worse on exercise, in a young animal</strong> → cyanotic congenital heart disease (R→L shunt) with secondary erythrocytosis. <strong>Differential cyanosis</strong> (caudal end blue, cranial pink, worse with light exercise) = reverse PDA.<br>
     <strong>Cough, wheeze, stridor or honking</strong> → parenchymal vs lower- vs upper-airway disease.`,
         },
-        { kind: 'step', alt: true, text: '☠️ STEP 3 — TOXIN & DRUG EXPOSURE (methaemoglobinaemia)' },
+        { kind: 'step', alt: true, text: ' STEP 3 — TOXIN & DRUG EXPOSURE (methaemoglobinaemia)' },
         {
           kind: 'check',
           html: `Ask specifically about <strong>paracetamol (acetaminophen)</strong> — highly toxic, especially to cats — <strong>benzocaine / topical local anaesthetics</strong>, <strong>nitrates / nitrites</strong>, hydroxyurea, and <strong>skunk musk</strong>. These oxidant exposures cause <strong>acute cyanosis with a normal PaO2</strong> and often a concurrent Heinz-body haemolytic anaemia. <strong>Hereditary methaemoglobinaemia</strong> (cytochrome-b5 reductase deficiency) gives mild, persistent cyanosis with erythrocytosis.`,
         },
-        { kind: 'step', alt: true, text: '🐾 STEP 4 — SIGNALMENT & BREED' },
+        { kind: 'step', alt: true, text: ' STEP 4 — SIGNALMENT & BREED' },
         {
           kind: 'check',
           html: `<strong>Brachycephalic dog</strong> → BOAS / upper-airway obstruction. <strong>Older large-breed dog with stridor</strong> → laryngeal paralysis. <strong>Toy breed with a honking cough</strong> → tracheal collapse. <strong>Cat with acute distress</strong> → feline asthma, pleural effusion, or congestive heart failure; <strong>cat with painful pulseless hind limbs</strong> → aortic thromboembolism.`,
@@ -50,7 +50,7 @@ export const cyanosisDx: DxApproach = {
         {
           kind: 'callout',
           tone: 'danger',
-          title: '⚠️ RED FLAGS IN THE HISTORY',
+          title: ' RED FLAGS IN THE HISTORY',
           html: `Acute distress + cyanosis = oxygen NOW, history later · Known paracetamol/benzocaine/nitrate access = methaemoglobinaemia until disproven (O2 won't fix it) · Lifelong exercise-limited cyanosis in a young animal = R→L cardiac shunt · Acute hind-limb pain + cyanotic pads in a cat = aortic thromboembolism.`,
         },
         { kind: 'disclaimer' },
@@ -60,26 +60,26 @@ export const cyanosisDx: DxApproach = {
     exam: {
       title: 'Exam: Cyanosis',
       blocks: [
-        { kind: 'step', tone: 'teal', text: '🩺 Stabilise on oxygen first — examine in stages, do not stress a dyspnoeic patient' },
-        { kind: 'step', text: '🔵 STEP 1 — IS THE CYANOSIS GENERALISED OR DISTAL?' },
+        { kind: 'step', tone: 'teal', text: ' Stabilise on oxygen first — examine in stages, do not stress a dyspnoeic patient' },
+        { kind: 'step', text: ' STEP 1 — IS THE CYANOSIS GENERALISED OR DISTAL?' },
         {
           kind: 'check',
           html: `<strong>Central cyanosis</strong> = blue mucous membranes AND skin throughout the body, reflecting low arterial saturation (respiratory disease or R→L shunt).<br>
     <strong>Peripheral cyanosis</strong> = limited to distal extremities with <em>normal</em> SaO2 (poor perfusion — shock, thromboembolism, hypothermia).<br>
     <strong>Differential cyanosis</strong> = caudal mucous membranes/pads blue while cranial (oral) membranes stay pink → reverse PDA — compare oral mucosa with the vulvar/preputial mucosa.`,
         },
-        { kind: 'step', alt: true, text: '🫁 STEP 2 — RESPIRATORY PATTERN & THORACIC AUSCULTATION' },
+        { kind: 'step', alt: true, text: ' STEP 2 — RESPIRATORY PATTERN & THORACIC AUSCULTATION' },
         {
           kind: 'check',
           html: `<strong>Inspiratory effort / stridor</strong> → upper-airway obstruction (BOAS, laryngeal paralysis, tracheal collapse). <strong>Expiratory effort / wheeze</strong> → lower-airway disease (feline asthma).<br>
     <strong>Increased lung sounds / crackles</strong> → parenchymal disease (pneumonia, oedema). <strong>Muffled / absent lung sounds ventrally or dorsally</strong> → pleural space disease (effusion, pneumothorax) — this patient needs a thoracocentesis, not a delay.`,
         },
-        { kind: 'step', alt: true, text: '🫀 STEP 3 — CARDIAC EXAM' },
+        { kind: 'step', alt: true, text: ' STEP 3 — CARDIAC EXAM' },
         {
           kind: 'check',
           html: `Auscultate for a <strong>murmur</strong> (congenital shunt, MVD) and assess for signs of congestive failure. A young cyanotic animal with a murmur, exercise intolerance and a <strong>packed-cell volume that is high (erythrocytosis)</strong> points to a R→L shunt. In a cat with peripheral cyanosis, palpate the <strong>femoral pulses and footpads</strong> — absent pulses + cold cyanotic pads + pain = aortic thromboembolism.`,
         },
-        { kind: 'step', alt: true, text: '🟤 STEP 4 — LOOK AT THE BLOOD ITSELF' },
+        { kind: 'step', alt: true, text: ' STEP 4 — LOOK AT THE BLOOD ITSELF' },
         {
           kind: 'check',
           html: `When you draw blood, <strong>look at its colour</strong>. <strong>Chocolate-brown blood that does NOT brighten on exposure to air</strong> = methaemoglobinaemia. Normal hypoxaemic blood is dark red/violet and turns bright red with O2 exposure. This single observation can redirect the entire work-up at the bedside.`,
@@ -91,7 +91,7 @@ export const cyanosisDx: DxApproach = {
     dx: {
       title: 'Dx: Cyanosis — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: '⚡ STEP 1 — STABILISE: OXYGEN FIRST' },
+        { kind: 'step', tone: 'danger', text: ' STEP 1 — STABILISE: OXYGEN FIRST' },
         {
           kind: 'check',
           html: `<strong>Supplement oxygen immediately</strong> in every cyanotic patient and minimise handling stress.<br>
@@ -132,7 +132,7 @@ export const cyanosisDx: DxApproach = {
       after: [
         {
           kind: 'diseaseGrid',
-          title: '📋 LINKED DISEASE PAGES',
+          title: ' LINKED DISEASE PAGES',
           links: [
             { label: 'BOAS', link: { to: 'disease', id: 'DIS-RESP-BOAS' } },
             { label: 'Laryngeal paralysis', link: { to: 'disease', id: 'DIS-LP' } },
@@ -153,7 +153,7 @@ export const cyanosisDx: DxApproach = {
         {
           kind: 'alert',
           gap: 10,
-          html: `<strong>⚠️ Practical pearls:</strong><br>
+          html: `<strong> Practical pearls:</strong><br>
   • Oxygen first, always — but remember it fixes neither a R→L shunt nor methaemoglobinaemia.<br>
   • Cyanosis needs ≥5 g/dL deoxyHb — a severely anaemic patient can be lethally hypoxic yet still look pink. Trust the ABG, not the gums.<br>
   • A pulse-ox stuck at ~85% in an obviously cyanotic patient = methaemoglobinaemia until proven otherwise — do the brown-blood spot test.<br>

@@ -21,19 +21,19 @@ export const anorexiaDx: DxApproach = {
           kind: 'check',
           html: `<strong>Hyporexia</strong> = consuming inadequate calories to maintain/reach ideal weight; <strong>anorexia</strong> = complete absence of voluntary intake; <strong>dysrexia</strong> = abnormal (cyclic/unpredictable) intake (Ettinger Ch 17). Anorexia is a <strong>non-specific sign of almost any systemic illness</strong>, so the history must be broad. The key first step is to separate an animal that <strong>cannot</strong> eat (pseudo-anorexia) from one that <strong>will not</strong> eat (true anorexia).`,
         },
-        { kind: 'step', tone: 'danger', text: '🐈 STEP 1 — IS THIS AN ANOREXIC CAT? (lipidosis clock)' },
+        { kind: 'step', tone: 'danger', text: 'STEP 1 — IS THIS AN ANOREXIC CAT? (lipidosis clock)' },
         {
           kind: 'check',
           html: `Establish <strong>how long</strong> the patient has not been eating. In the cat, anorexia of <strong>≥2–14 days</strong> drives negative energy balance and <strong>hepatic lipidosis</strong> (especially the overweight cat) — this shortens the work-up timeline and makes <strong>early feeding</strong> a priority, not an afterthought (Ettinger Ch 17 / Ch 274). Quantify intake against <strong>RER</strong>: RER (kcal/day) = (30 × kg) + 70 for 3–25 kg, or 70 × kg^0.75 for any weight.`,
         },
-        { kind: 'step', alt: true, text: '🏠 STEP 2 — ENVIRONMENT, DIET & MEDICATIONS' },
+        { kind: 'step', alt: true, text: 'STEP 2 — ENVIRONMENT, DIET & MEDICATIONS' },
         {
           kind: 'check',
           html: `<strong>Environmental stressors</strong> (new pet/person, moved house, changed routine, noise, lack of hiding/feeding resources in cats) and <strong>diet factors</strong> (spoiled/unbalanced food, change of texture/format, bowl, feeding location) commonly cause reduced intake or food aversion.<br>
     <strong>Medications</strong> that suppress appetite or cause nausea: <strong>chemotherapy, opioids, NSAIDs, antibiotics, antifungals</strong> — review the current drug list.<br>
     A genuinely well animal that simply won't eat a new food behaves very differently from one that is systemically ill.`,
         },
-        { kind: 'step', alt: true, text: '🩺 STEP 3 — OTHER CLINICAL SIGNS (localise the system)' },
+        { kind: 'step', alt: true, text: 'STEP 3 — OTHER CLINICAL SIGNS (localise the system)' },
         {
           kind: 'check',
           html: `Anchor the anorexia to any accompanying signs:<br>
@@ -49,7 +49,7 @@ export const anorexiaDx: DxApproach = {
         {
           kind: 'callout',
           tone: 'danger',
-          title: '⚠️ RED FLAGS IN THE HISTORY',
+          title: 'RED FLAGS IN THE HISTORY',
           html: `An anorexic cat (especially overweight) = hepatic lipidosis risk — feed early · Waxing/waning anorexia ± GI signs / collapse = rule out hypoadrenocorticism · Acute febrile anorexia with rapid deterioration = sepsis/SIRS · Persistent anorexia + weight loss in an older patient = neoplasia until excluded.`,
         },
         { kind: 'disclaimer' },
@@ -59,20 +59,20 @@ export const anorexiaDx: DxApproach = {
     exam: {
       title: 'Exam: Anorexia / Hyporexia',
       blocks: [
-        { kind: 'step', tone: 'teal', text: '🩺 A complete PE is imperative — include ORAL, NASAL, OCULAR + RECTAL exam' },
-        { kind: 'step', text: '🦷 STEP 1 — ORAL / PHARYNGEAL EXAM (rule out pseudo-anorexia)' },
+        { kind: 'step', tone: 'teal', text: 'A complete PE is imperative — include ORAL, NASAL, OCULAR + RECTAL exam' },
+        { kind: 'step', text: 'STEP 1 — ORAL / PHARYNGEAL EXAM (rule out pseudo-anorexia)' },
         {
           kind: 'check',
           html: `Examine the mouth carefully (often needs sedation): <strong>periodontal / periapical disease, fractured teeth, oral masses, ulceration, oronasal fistula, foreign body</strong> (e.g. linear FB under the tongue in cats), and the <strong>pharynx</strong>.<br>
     Assess the <strong>jaw and masticatory muscles</strong> (pain on opening, trismus, masseter/temporal atrophy → masticatory myositis; TMJ disease; mandibular fracture) and <strong>cranial nerves</strong> (trigeminal/facial). Also check the <strong>nose</strong> (fungal/neoplastic disease) and <strong>retrobulbar space</strong> (pain on opening the mouth / globe displacement).`,
         },
-        { kind: 'step', alt: true, text: '👁️ STEP 2 — GENERAL, OCULAR & MUCOUS MEMBRANES' },
+        { kind: 'step', alt: true, text: 'STEP 2 — GENERAL, OCULAR & MUCOUS MEMBRANES' },
         {
           kind: 'check',
           html: `Assess <strong>BCS and muscle condition score</strong> (drives the urgency of nutritional support), hydration, temperature (fever vs hypothermia), and mucous membranes for <strong>icterus</strong> (hepatobiliary / lipidosis), pallor or injection.<br>
     Ocular exam for <strong>uveitis / chorioretinitis</strong> (FIP, infectious, neoplastic disease). Palpate <strong>peripheral lymph nodes</strong> and the thyroid (cat).`,
         },
-        { kind: 'step', alt: true, text: '🫄 STEP 3 — ABDOMINAL PALPATION & RECTAL EXAM' },
+        { kind: 'step', alt: true, text: 'STEP 3 — ABDOMINAL PALPATION & RECTAL EXAM' },
         {
           kind: 'check',
           html: `Palpate for <strong>organomegaly, masses, intestinal foreign body, pain, effusion or thickened bowel loops</strong>. A painful cranial abdomen supports pancreatitis. <strong>Rectal exam</strong> assesses faecal character (melena), masses, and the sublumbar region.<br>
@@ -85,7 +85,7 @@ export const anorexiaDx: DxApproach = {
     dx: {
       title: 'Dx: Anorexia / Hyporexia — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: '🦷 STEP 1 — CONFIRM/EXCLUDE PSEUDO-ANOREXIA' },
+        { kind: 'step', tone: 'danger', text: 'STEP 1 — CONFIRM/EXCLUDE PSEUDO-ANOREXIA' },
         {
           kind: 'check',
           html: `Before an extensive systemic work-up, settle whether the patient <strong>can</strong> eat. A thorough <strong>oral / dental exam under sedation</strong> (± dental radiographs) and assessment of the pharynx, jaw and oesophagus rules in/out a mechanical/painful "can't-eat" cause (oral/dental/oronasal disease, mass, masticatory myositis, megaoesophagus). If swallowing/regurgitation is the issue, divert to the <strong>vomiting vs regurgitation</strong> approach.`,
@@ -126,7 +126,7 @@ export const anorexiaDx: DxApproach = {
       after: [
         {
           kind: 'diseaseGrid',
-          title: '📋 LINKED DISEASE PAGES',
+          title: 'LINKED DISEASE PAGES',
           links: [
             { label: 'Oral / dental / oronasal disease', link: { to: 'disease', id: 'DIS-DENT-ORONASAL' } },
             { label: 'Pancreatitis (cat)', link: { to: 'disease', id: 'DIS-GI-PANCAT' } },
@@ -148,7 +148,7 @@ export const anorexiaDx: DxApproach = {
         {
           kind: 'alert',
           gap: 10,
-          html: `<strong>⚠️ Practical pearls:</strong><br>
+          html: `<strong>Practical pearls:</strong><br>
   • Can't-eat vs won't-eat is the first decision — examine the mouth (under sedation) before chasing systemic disease.<br>
   • An anorexic cat is an emergency — feed early (tube feeding), don't just reach for an appetite stimulant.<br>
   • Pain and nausea are the most commonly missed, easily treated causes — give analgesia and an antiemetic.<br>

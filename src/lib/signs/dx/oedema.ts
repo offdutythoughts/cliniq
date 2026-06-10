@@ -21,7 +21,7 @@ export const oedemaDx: DxApproach = {
           kind: 'check',
           html: `<strong>Peripheral oedema</strong> appears when interstitial-matrix tension and lymphatic uptake are overwhelmed (Starling equation, Ettinger Ch 30). The single most useful first distinction is <strong>generalised / ventral pitting oedema</strong> (a systemic mechanism — go straight to serum albumin) versus a <strong>localised single-limb or regional swelling</strong> (think venous/lymphatic obstruction, hypersensitivity or trauma).`,
         },
-        { kind: 'step', tone: 'teal', text: '📋 STEP 1 — DISTRIBUTION & TIME COURSE' },
+        { kind: 'step', tone: 'teal', text: ' STEP 1 — DISTRIBUTION & TIME COURSE' },
         {
           kind: 'check',
           html: `<strong>Generalised / ventral</strong> → hypoalbuminaemia, right-sided CHF, or increased vascular permeability (sepsis/vasculitis/myxedema).<br>
@@ -29,7 +29,7 @@ export const oedemaDx: DxApproach = {
     <strong>Single hindlimb + ventral caudal abdomen</strong> → caudal vena cava obstruction (caudal abdominal mass, thrombus).<br>
     <strong>Acute onset</strong> after a drug/vaccine/sting/snakebite → hypersensitivity / angioedema / envenomation; <strong>chronic single-limb</strong> → lymphoedema (Ettinger Ch 30).`,
         },
-        { kind: 'step', alt: true, text: '🩺 STEP 2 — SYSTEMIC SIGNS POINTING TO A MECHANISM' },
+        { kind: 'step', alt: true, text: ' STEP 2 — SYSTEMIC SIGNS POINTING TO A MECHANISM' },
         {
           kind: 'check',
           html: `<strong>GI signs (diarrhoea, weight loss)</strong> → protein-losing enteropathy.<br>
@@ -38,7 +38,7 @@ export const oedemaDx: DxApproach = {
     <strong>Cough, exercise intolerance, syncope, abdominal distension (ascites)</strong> → right-sided congestive heart failure.<br>
     <strong>Fever, lethargy, collapse</strong> → SIRS/sepsis or immune-mediated/vector-borne vasculitis.`,
         },
-        { kind: 'step', alt: true, text: '🌍 STEP 3 — EXPOSURE, BREED & PRIOR EVENTS' },
+        { kind: 'step', alt: true, text: ' STEP 3 — EXPOSURE, BREED & PRIOR EVENTS' },
         {
           kind: 'check',
           html: `<strong>Envenomation / vaccination / drugs / toxins / burns / trauma</strong> in the recent history → hypersensitivity or permeability oedema (Ettinger Ch 30, Fig 30.1).<br>
@@ -51,7 +51,7 @@ export const oedemaDx: DxApproach = {
         {
           kind: 'callout',
           tone: 'danger',
-          title: '⚠️ RED FLAGS IN THE HISTORY',
+          title: ' RED FLAGS IN THE HISTORY',
           html: `Acute facial/laryngeal swelling after a drug/vaccine/sting = anaphylaxis/angioedema — airway emergency · Generalised oedema + ascites + exercise intolerance = right-sided CHF · Fever/collapse with warm swelling = sepsis/vasculitis · Known proteinuria or GI loss = hypoalbuminaemia with thromboembolism risk.`,
         },
         { kind: 'disclaimer' },
@@ -61,22 +61,22 @@ export const oedemaDx: DxApproach = {
     exam: {
       title: 'Exam: Peripheral Oedema',
       blocks: [
-        { kind: 'step', tone: 'teal', text: '🩺 A complete PE is imperative — characterise the swelling, then look for the cause' },
-        { kind: 'step', text: '👆 STEP 1 — PITTING vs NON-PITTING & TEMPERATURE' },
+        { kind: 'step', tone: 'teal', text: ' A complete PE is imperative — characterise the swelling, then look for the cause' },
+        { kind: 'step', text: ' STEP 1 — PITTING vs NON-PITTING & TEMPERATURE' },
         {
           kind: 'check',
           html: `<strong>Pitting</strong> (persistent depression after digital pressure) → fluid displaced within the interstitium — most mechanisms (hypoalbuminaemia, hydrostatic, early permeability).<br>
     <strong>Non-pitting</strong> → fluid within cells / clotted fibrinogen — angioedema (deeper subdermal), post-surgical/traumatic, lymphangiosarcoma, myxedema; <strong>chronic lymphoedema becomes non-pitting</strong> (collagen deposition, interstitial fibrosis).<br>
     <strong>Warm, erythematous swelling</strong> → increased vascular permeability / inflammation (vasculitis, cellulitis, AV fistula) — distinct from the cool, non-tender oedema of oncotic/hydrostatic causes (Ettinger Ch 30).`,
         },
-        { kind: 'step', alt: true, text: '🫀 STEP 2 — CARDIOVASCULAR / VENOUS EXAM' },
+        { kind: 'step', alt: true, text: ' STEP 2 — CARDIOVASCULAR / VENOUS EXAM' },
         {
           kind: 'check',
           html: `<strong>Jugular venous distension or positive hepatojugular reflux, a heart murmur, an arrhythmia, ± ascites</strong> → right-sided CHF — go to echocardiography.<br>
     <strong>Muffled heart sounds, weak pulses, pulsus paradoxus</strong> → pericardial effusion / tamponade.<br>
     Palpate for a <strong>warm focal swelling with a bruit</strong> → arteriovenous fistula (test: US, angiogram).`,
         },
-        { kind: 'step', alt: true, text: '🔥 STEP 3 — SIGNS OF PERMEABILITY / INFECTION / ENDOCRINE' },
+        { kind: 'step', alt: true, text: ' STEP 3 — SIGNS OF PERMEABILITY / INFECTION / ENDOCRINE' },
         {
           kind: 'check',
           html: `<strong>Fever, petechiae/ecchymoses, skin necrosis or ulceration</strong> → vasculitis (early signs: petechiae, ecchymoses, oedema → necrosis, pain, systemic signs).<br>
@@ -90,7 +90,7 @@ export const oedemaDx: DxApproach = {
     dx: {
       title: 'Dx: Peripheral Oedema — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: '⚡ STEP 1 — STABILISE / TRIAGE FIRST' },
+        { kind: 'step', tone: 'danger', text: ' STEP 1 — STABILISE / TRIAGE FIRST' },
         {
           kind: 'check',
           html: `Treat <strong>anaphylaxis / angioedema with airway compromise</strong> before any work-up (adrenaline, airway). Tap a <strong>tamponading pericardial effusion</strong>, and resuscitate <strong>SIRS/sepsis</strong>. Severe hypoalbuminaemia (&lt;1.5 g/dL / &lt;15 g/L) carries effusion + thromboembolism risk (Ettinger Ch 60).`,
@@ -129,7 +129,7 @@ export const oedemaDx: DxApproach = {
       after: [
         {
           kind: 'diseaseGrid',
-          title: '📋 LINKED DISEASE PAGES',
+          title: ' LINKED DISEASE PAGES',
           links: [
             { label: 'Protein-losing nephropathy / glomerulonephritis', link: { to: 'disease', id: 'DIS-REN-GN' } },
             { label: 'Protein-losing enteropathy', link: { to: 'disease', id: 'DIS-GI-PLE' } },
@@ -149,7 +149,7 @@ export const oedemaDx: DxApproach = {
         {
           kind: 'alert',
           gap: 10,
-          html: `<strong>⚠️ Practical pearls:</strong><br>
+          html: `<strong> Practical pearls:</strong><br>
   • Localised vs generalised is the first decision; for generalised oedema, <strong>serum albumin is the pivot</strong>.<br>
   • Overt hypoalbuminaemic oedema needs albumin &lt;2.0 g/dL (&lt;20 g/L); effusion + thromboembolism risk appears &lt;1.5 g/dL (&lt;15 g/L).<br>
   • Low albumin → split PLN (↑UPC) vs PLE (↑faecal α₁-PI) vs hepatic (bile acids/ammonia).<br>

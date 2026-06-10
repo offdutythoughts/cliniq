@@ -18,7 +18,7 @@ export const feverDx: DxApproach = {
           kind: 'check',
           html: `<strong>Fever (pyrexia)</strong> = a <strong>regulated</strong>, pyrogen-mediated rise in the hypothalamic set point (exogenous pyrogens → IL-1, IL-6, TNF-α → prostaglandin E2 → ↑set point); the animal does NOT show cooling behaviour. <strong>Hyperthermia</strong> = a rise in core temperature WITHOUT a set-point change (panting, vasodilation, cold-seeking). <strong>FUO</strong> = temp &gt;39.2°C (102.5°F) for ≥3 weeks, no cause after ≥3 visits and/or 3 days hospitalisation (CBC, biochem, UA), often defined as persisting after a 5–10 day antibacterial trial. Normal rectal = 38.0–39.2°C (100.5–102.5°F); healthy dogs/cats reach 39.7°C (103.5°F) in the consulting room.`,
         },
-        { kind: 'step', tone: 'danger', text: '🌡️ STEP 1 — FEVER vs HYPERTHERMIA' },
+        { kind: 'step', tone: 'danger', text: ' STEP 1 — FEVER vs HYPERTHERMIA' },
         {
           kind: 'check',
           html: `<strong>Recent heat exposure / exercise</strong> → hyperthermia (Labradors reach 42.2°C / 108°F; most dogs 41.1°C / 106°F after exercise).<br>
@@ -26,7 +26,7 @@ export const feverDx: DxApproach = {
     <strong>Stress suspected</strong> (clinic, handling) → rest the patient 20 min in a cool room; if temperature normalises or is only mild (≤39.6°C / 103.3°F), further investigation may not be required.<br>
     <strong>Drug history</strong> — opioids, ketamine/phenobarbital (cats), SSRIs (both species) cause non-pyrogenic hyperthermia; sulfonamides/vaccines cause idiosyncratic drug fever.`,
         },
-        { kind: 'step', alt: true, text: '🐾 STEP 2 — SIGNALMENT & EPIDEMIOLOGY' },
+        { kind: 'step', alt: true, text: ' STEP 2 — SIGNALMENT & EPIDEMIOLOGY' },
         {
           kind: 'check',
           html: `<strong>Young cat</strong> → FIP (20.8% of all feline FUO) — FeLV/FIV testing essential; bite abscess is the commonest feline cause.<br>
@@ -35,7 +35,7 @@ export const feverDx: DxApproach = {
     <strong>Entire female</strong> → pyometra/stump pyometra; <strong>entire male</strong> → prostatitis.<br>
     <strong>Tick exposure, geography & travel</strong> → vector-borne (ehrlichiosis, anaplasmosis, Lyme, RMSF, bartonellosis) and regional systemic fungal (blasto, cocci, histo) risk.`,
         },
-        { kind: 'step', alt: true, text: '🔁 STEP 3 — COURSE, PATTERN & PRIOR RESPONSE' },
+        { kind: 'step', alt: true, text: ' STEP 3 — COURSE, PATTERN & PRIOR RESPONSE' },
         {
           kind: 'check',
           html: `<strong>Acute (&lt;5 days), mild, no localising signs</strong> → may monitor; can resolve spontaneously and a mild acute fever may be better left untreated to allow localising signs to develop.<br>
@@ -48,7 +48,7 @@ export const feverDx: DxApproach = {
         {
           kind: 'callout',
           tone: 'danger',
-          title: '⚠️ RED FLAGS IN THE HISTORY',
+          title: ' RED FLAGS IN THE HISTORY',
           html: `Spinal/neck pain + fever = discospondylitis or SRMA until excluded · New murmur + fever = endocarditis (blood cultures + echo) · Entire female + fever + vulvar discharge = pyometra · Failure to respond to antibiotics in an older dog = neoplasia or immune-mediated disease — never reach for steroids before the infectious work-up is complete.`,
         },
         { kind: 'disclaimer' },
@@ -58,15 +58,15 @@ export const feverDx: DxApproach = {
     exam: {
       title: 'Exam: Fever / FUO',
       blocks: [
-        { kind: 'step', tone: 'teal', text: '🩺 A complete PE is imperative — measure temperature correctly, then search every system for a focus' },
-        { kind: 'step', text: '🌡️ STEP 1 — CONFIRM & MEASURE THE TEMPERATURE' },
+        { kind: 'step', tone: 'teal', text: ' A complete PE is imperative — measure temperature correctly, then search every system for a focus' },
+        { kind: 'step', text: ' STEP 1 — CONFIRM & MEASURE THE TEMPERATURE' },
         {
           kind: 'check',
           html: `<strong>Rectal</strong> is the most accurate, preferred method (good agreement with core). Second choice: <strong>tympanic membrane in dogs</strong>, <strong>axillary in cats</strong> (rectal ≈ axillary + 0.9°C / 1.6°F in cats). A difference &gt;0.5°C (0.9°F) between methods is clinically unacceptable.<br>
     <strong>Nose palpation is NOT reliable</strong> (sensitivity 29.4%, specificity 79.5%).<br>
     <strong>&gt;41.1°C (106°F)</strong> risks neurological damage, DIC and metabolic derangement and is more likely with hyperthermia — active cooling is required at this threshold (but NOT for a true fever below it).`,
         },
-        { kind: 'step', alt: true, text: '🔍 STEP 2 — SYSTEMATIC SEARCH FOR A LOCALISING FOCUS' },
+        { kind: 'step', alt: true, text: ' STEP 2 — SYSTEMATIC SEARCH FOR A LOCALISING FOCUS' },
         {
           kind: 'check',
           html: `<strong>Skin / SC:</strong> abscesses (esp. cat bite), cellulitis, panniculitis, juvenile cellulitis, draining tracts.<br>
@@ -76,7 +76,7 @@ export const feverDx: DxApproach = {
     <strong>Abdomen:</strong> organomegaly, pain, masses, painful kidneys (pyelonephritis); palpate for pyometra in entire females.<br>
     <strong>Spine:</strong> palpate the whole vertebral column for focal pain (discospondylitis — radiographs lag 2–6 weeks) and assess for neck pain (SRMA).`,
         },
-        { kind: 'step', alt: true, text: '🦴 STEP 3 — MUSCULOSKELETAL, RECTAL & LYMPHORETICULAR' },
+        { kind: 'step', alt: true, text: ' STEP 3 — MUSCULOSKELETAL, RECTAL & LYMPHORETICULAR' },
         {
           kind: 'check',
           html: `<strong>Joints:</strong> palpate ALL joints for effusion/pain and watch for shifting/stiff gait — immune-mediated polyarthritis is the commonest non-infectious inflammatory cause in dogs and joints can look grossly normal.<br>
@@ -91,7 +91,7 @@ export const feverDx: DxApproach = {
     dx: {
       title: 'Dx: Fever / FUO — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: '⚡ STEP 1 — DON\'T TREAT THE NUMBER; COOL ONLY HYPERTHERMIA' },
+        { kind: 'step', tone: 'danger', text: ' STEP 1 — DON\'T TREAT THE NUMBER; COOL ONLY HYPERTHERMIA' },
         {
           kind: 'check',
           html: `<strong>Active cooling (fans, cool water) ONLY if &gt;41.1°C (106°F)</strong> — obese and upper-respiratory-compromised patients are higher risk. <strong>Do NOT actively cool a true fever</strong> — fever improves the host immune response.<br>
@@ -137,7 +137,7 @@ export const feverDx: DxApproach = {
       after: [
         {
           kind: 'diseaseGrid',
-          title: '📋 LINKED DISEASE PAGES',
+          title: ' LINKED DISEASE PAGES',
           links: [
             { label: 'Ehrlichiosis', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
             { label: 'Anaplasmosis', link: { to: 'disease', id: 'DIS-INFECT-ANAP' } },
@@ -171,7 +171,7 @@ export const feverDx: DxApproach = {
         {
           kind: 'alert',
           gap: 10,
-          html: `<strong>⚠️ Practical pearls:</strong><br>
+          html: `<strong> Practical pearls:</strong><br>
   • First decide true fever vs hyperthermia — you actively cool hyperthermia, NOT a true fever (cool only if &gt;41.1°C / 106°F).<br>
   • Work the fever up systematically (minimum database → targeted Phase 2/3) and <strong>exclude infection before any immunosuppression</strong>.<br>
   • Palpate the whole spine and tap multiple joints — discospondylitis and immune-mediated polyarthritis are easily missed and joints can look normal.<br>

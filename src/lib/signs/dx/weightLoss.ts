@@ -19,20 +19,20 @@ export const weightLossDx: DxApproach = {
           kind: 'check',
           html: `<strong>First confirm this is true weight loss</strong> — compare recorded serial weights rather than relying on owner impression or a single visit. <strong>~5% body weight over &lt;12 months</strong> is a reasonable threshold that warrants investigation. (Ettinger Ch 18)`,
         },
-        { kind: 'step', tone: 'teal', text: '🍽️ STEP 1 — DIETARY HISTORY (adequate vs inadequate)' },
+        { kind: 'step', tone: 'teal', text: ' STEP 1 — DIETARY HISTORY (adequate vs inadequate)' },
         {
           kind: 'check',
           html: `Quantify <strong>what and how much</strong> is actually eaten.<br>
     <strong>Inadequate diet</strong> → underfeeding, poor-quality food, starvation, or environmental factors (competition for food, limited access in a multi-pet household) — correct the diet and re-weigh before an extensive work-up.<br>
     <strong>Adequate diet</strong> with ongoing loss → proceed to a comprehensive diagnostic work-up. (Ettinger Ch 18)`,
         },
-        { kind: 'step', alt: true, text: '😋 STEP 2 — THE APPETITE (the pivot)' },
+        { kind: 'step', alt: true, text: ' STEP 2 — THE APPETITE (the pivot)' },
         {
           kind: 'check',
           html: `<strong>Normal / increased appetite + weight loss</strong> → calories are lost or cannot be used (maldigestion/malabsorption, glucosuria) OR metabolism is high (hyperthyroidism). Think EPI, IBD, GI lymphoma, PLE, parasites, diabetes mellitus, feline hyperthyroidism.<br>
     <strong>Reduced appetite + weight loss</strong> → overlaps anorexia: chronic organ disease (CKD, hepatic, cardiac cachexia), neoplasia / paraneoplastic cachexia, or chronic infection (FIV/FeLV, FIP). (Ettinger Ch 18)`,
         },
-        { kind: 'step', alt: true, text: '🐾 STEP 3 — SIGNALMENT & ASSOCIATED SIGNS' },
+        { kind: 'step', alt: true, text: ' STEP 3 — SIGNALMENT & ASSOCIATED SIGNS' },
         {
           kind: 'check',
           html: `<strong>Older cat, good appetite, ± PU/PD / hyperactivity</strong> → feline hyperthyroidism.<br>
@@ -45,7 +45,7 @@ export const weightLossDx: DxApproach = {
         {
           kind: 'callout',
           tone: 'danger',
-          title: '⚠️ RED FLAGS IN THE HISTORY',
+          title: ' RED FLAGS IN THE HISTORY',
           html: `Older cat losing weight with a ravenous appetite = hyperthyroidism / DM until disproven · PU/PD + polyphagia + weight loss = diabetes — a sick inappetent diabetic may be in ketoacidosis · Marked weight + muscle loss with chronic inflammation or a known tumour = cachexia · Any cat with chronic wasting — check retroviral status (FIV/FeLV).`,
         },
         { kind: 'disclaimer' },
@@ -55,17 +55,17 @@ export const weightLossDx: DxApproach = {
     exam: {
       title: 'Exam: Weight Loss',
       blocks: [
-        { kind: 'step', tone: 'teal', text: '⚖️ STEP 1 — OBJECTIVE BODY ASSESSMENT' },
+        { kind: 'step', tone: 'teal', text: ' STEP 1 — OBJECTIVE BODY ASSESSMENT' },
         {
           kind: 'check',
           html: `<strong>Weigh on calibrated scales</strong> and record a <strong>body condition score (BCS)</strong> and a separate <strong>muscle condition score (MCS)</strong> — generalised muscle wasting out of proportion to fat loss points to <strong>cachexia</strong> (chronic inflammation, cancer, cardiac, end-stage renal disease). (Ettinger Ch 18)`,
         },
-        { kind: 'step', alt: true, text: '👄 STEP 2 — ORAL / DENTAL & SWALLOWING' },
+        { kind: 'step', alt: true, text: ' STEP 2 — ORAL / DENTAL & SWALLOWING' },
         {
           kind: 'check',
           html: `Examine the mouth for <strong>oral / dental disease</strong> (painful eating), masses, and ulceration; uraemic oral ulceration suggests CKD. A history of <strong>regurgitation</strong> points to megaesophagus; difficulty prehending/swallowing suggests a neuromuscular or oropharyngeal cause. (Ettinger Ch 18)`,
         },
-        { kind: 'step', alt: true, text: '🩺 STEP 3 — TARGETED SYSTEM EXAM' },
+        { kind: 'step', alt: true, text: ' STEP 3 — TARGETED SYSTEM EXAM' },
         {
           kind: 'check',
           html: `<strong>Cervical palpation</strong> for a thyroid slip / nodule (older cat → hyperthyroidism).<br>
@@ -124,7 +124,7 @@ export const weightLossDx: DxApproach = {
       after: [
         {
           kind: 'diseaseGrid',
-          title: '📋 LINKED DISEASE PAGES',
+          title: ' LINKED DISEASE PAGES',
           links: [
             { label: 'Feline hyperthyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
             { label: 'Diabetes mellitus', link: { to: 'disease', id: 'DIS-ENDO-DM' } },
@@ -149,7 +149,7 @@ export const weightLossDx: DxApproach = {
         {
           kind: 'alert',
           gap: 10,
-          html: `<strong>⚠️ Practical pearls:</strong><br>
+          html: `<strong> Practical pearls:</strong><br>
   • Confirm true loss (serial weights) and an adequate diet BEFORE an extensive work-up.<br>
   • Appetite is the pivot — normal/↑ appetite points to malassimilation or hypermetabolism; ↓ appetite overlaps the anorexia work-up.<br>
   • Always run a basal TT4 in an older cat, and test every chronically wasting cat for FeLV/FIV.<br>

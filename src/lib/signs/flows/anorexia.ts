@@ -5,11 +5,11 @@ const anorexiaEntry: FlowPage = {
   id: 'anorexia',
   title: 'Anorexia / Hyporexia',
   blocks: [
-    { kind: 'node', variant: 'entry', text: '🍽️ ANOREXIA / HYPOREXIA' },
+    { kind: 'node', variant: 'entry', text: 'ANOREXIA / HYPOREXIA' },
     {
       kind: 'callout',
       tone: 'danger',
-      html: '🐈 <strong>Anorexic CAT = emergency.</strong> Hepatic lipidosis can develop in as few as <strong>2 days</strong> in obese cats (typically within 1–2 weeks). Don\'t rely on appetite stimulants — <strong>feed early</strong> (assisted/tube) once eating &lt;RER for &gt;3–5 days. RER (kcal/day) = (30 × kg) + 70 for 3–25 kg cats, or 70 × kg⁰·⁷⁵ for any weight.',
+      html: '<strong>Anorexic CAT = emergency.</strong> Hepatic lipidosis can develop in as few as <strong>2 days</strong> in obese cats (typically within 1–2 weeks). Don\'t rely on appetite stimulants — <strong>feed early</strong> (assisted/tube) once eating &lt;RER for &gt;3–5 days. RER (kcal/day) = (30 × kg) + 70 for 3–25 kg cats, or 70 × kg⁰·⁷⁵ for any weight.',
     },
     {
       kind: 'node',
@@ -23,13 +23,13 @@ const anorexiaEntry: FlowPage = {
       items: [
         {
           tone: 'orange',
-          label: '🦷 PSEUDO-ANOREXIA — wants to but can\'t',
+          label: 'PSEUDO-ANOREXIA — wants to but can\'t',
           sublabel: 'Drops food · drooling · pain on prehension · pawing at mouth · gags / regurgitates',
           link: { to: 'flow', id: 'anorexia-pseudo' },
         },
         {
           tone: 'info',
-          label: '🩺 TRUE ANOREXIA — won\'t eat (by system)',
+          label: 'TRUE ANOREXIA — won\'t eat (by system)',
           sublabel: 'Systemic illness, pain, or nausea — screen every system',
           link: { to: 'flow', id: 'anorexia-true' },
         },
@@ -42,7 +42,7 @@ const anorexiaPseudo: FlowPage = {
   id: 'anorexia-pseudo',
   title: 'Pseudo-Anorexia',
   blocks: [
-    { kind: 'node', variant: 'entry', text: '🦷 PSEUDO-ANOREXIA — wants to but can\'t', sub: 'Drops food · drooling · pain on prehension · pawing at mouth · gags / regurgitates' },
+    { kind: 'node', variant: 'entry', text: 'PSEUDO-ANOREXIA — wants to but can\'t', sub: 'Drops food · drooling · pain on prehension · pawing at mouth · gags / regurgitates' },
     { kind: 'node', variant: 'step', text: 'IDENTIFY LESION CATEGORY' },
     {
       kind: 'categoryGrid',
@@ -104,7 +104,7 @@ const anorexiaTrue: FlowPage = {
   id: 'anorexia-true',
   title: 'True Anorexia — by system',
   blocks: [
-    { kind: 'node', variant: 'entry', text: '🩺 TRUE ANOREXIA — won\'t eat (by system)', sub: 'Systemic illness, pain, or nausea — screen every system' },
+    { kind: 'node', variant: 'entry', text: 'TRUE ANOREXIA — won\'t eat (by system)', sub: 'Systemic illness, pain, or nausea — screen every system' },
     { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
     {
       kind: 'categoryGrid',

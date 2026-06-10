@@ -19,7 +19,7 @@ export const heartMurmurDx: DxApproach = {
           kind: 'check',
           html: `A murmur is turbulent flow — it tells you something is moving fast, not <em>what</em>. The first job of the history is to sort <strong>pathologic structural disease</strong> (acquired MMVD/HCM/DCM, congenital PDA/SAS/PS/VSD) from a <strong>functional / innocent</strong> murmur (puppy/kitten innocent, anaemia, fever, hyperthyroidism, high-output states). (Ettinger Ch 38)`,
         },
-        { kind: 'step', tone: 'teal', text: '🐾 STEP 1 — SIGNALMENT & AGE' },
+        { kind: 'step', tone: 'teal', text: ' STEP 1 — SIGNALMENT & AGE' },
         {
           kind: 'check',
           html: `<strong>Puppy / kitten with a soft murmur</strong> → innocent murmur is likely, but a LOUD or persisting (beyond ~16 weeks) murmur → congenital disease (PDA, SAS, PS, VSD).<br>
@@ -27,7 +27,7 @@ export const heartMurmurDx: DxApproach = {
     <strong>Large / giant breed</strong> (Doberman, Great Dane, Irish Wolfhound, Boxer) → DCM; the murmur is often soft or absent.<br>
     <strong>Cat of any age</strong> → cardiomyopathy (HCM/RCM), but many feline murmurs are dynamic / physiologic and HCM may have NO murmur.`,
         },
-        { kind: 'step', alt: true, text: '🏃 STEP 2 — CARDIAC SIGNS & FUNCTIONAL STATUS' },
+        { kind: 'step', alt: true, text: ' STEP 2 — CARDIAC SIGNS & FUNCTIONAL STATUS' },
         {
           kind: 'check',
           html: `Ask about <strong>exercise intolerance, cough (dogs — LA enlargement compressing the bronchus), tachypnoea / dyspnoea, syncope or collapse</strong>.<br>
@@ -35,7 +35,7 @@ export const heartMurmurDx: DxApproach = {
     Cats do NOT cough from cardiac disease — feline CHF presents as dyspnoea/tachypnoea, not cough.<br>
     Document the resting / sleeping respiratory rate (a rising RR is an early sign of decompensation).`,
         },
-        { kind: 'step', alt: true, text: '🩸 STEP 3 — IS THERE A NON-CARDIAC EXPLANATION?' },
+        { kind: 'step', alt: true, text: ' STEP 3 — IS THERE A NON-CARDIAC EXPLANATION?' },
         {
           kind: 'check',
           html: `Screen for <strong>high-output / hyperdynamic states</strong> that produce a functional murmur: <strong>anaemia</strong> (pallor, lethargy — HCT &lt;20% dog / &lt;15% cat), <strong>fever / sepsis, pregnancy, hyperthyroidism</strong> (older cat — weight loss, polyphagia, goitre), and high sympathetic tone.<br>
@@ -46,7 +46,7 @@ export const heartMurmurDx: DxApproach = {
         {
           kind: 'callout',
           tone: 'danger',
-          title: '⚠️ RED FLAGS IN THE HISTORY',
+          title: ' RED FLAGS IN THE HISTORY',
           html: `Syncope / collapse on exertion in a young dog = SAS or PS until disproven · New or changing murmur + fever + shifting lameness = endocarditis · Cat with a murmur AND tachypnoea / dyspnoea = treat as CHF until echo says otherwise · A cat with no murmur is NOT a cat with no heart disease.`,
         },
         { kind: 'disclaimer' },
@@ -56,14 +56,14 @@ export const heartMurmurDx: DxApproach = {
     exam: {
       title: 'Exam: Heart Murmur',
       blocks: [
-        { kind: 'step', tone: 'teal', text: '🩺 Auscultate systematically in a QUIET room, both sides, apex to base' },
-        { kind: 'step', text: '🔉 STEP 1 — GRADE THE MURMUR (Levine I–VI/VI)' },
+        { kind: 'step', tone: 'teal', text: ' Auscultate systematically in a QUIET room, both sides, apex to base' },
+        { kind: 'step', text: ' STEP 1 — GRADE THE MURMUR (Levine I–VI/VI)' },
         {
           kind: 'check',
           html: `<strong>I/VI</strong> very soft, heard only after intently listening ≥1 min · <strong>II/VI</strong> soft but easily heard · <strong>III/VI</strong> moderate · <strong>IV/VI</strong> loud, NO thrill · <strong>V/VI</strong> loud WITH a palpable precordial thrill · <strong>VI/VI</strong> very loud, thrill, audible with the stethoscope lifted 1 cm off the chest.<br>
     Grade tracks severity in congenital disease (PS, SAS) and MMVD, but <strong>not</strong> reliably in cats — palpate the precordium for a thrill (≥ grade V). (Ettinger Ch 38)`,
         },
-        { kind: 'step', alt: true, text: '⏱️ STEP 2 — TIMING (systolic / diastolic / continuous)' },
+        { kind: 'step', alt: true, text: ' STEP 2 — TIMING (systolic / diastolic / continuous)' },
         {
           kind: 'check',
           html: `<strong>Systolic</strong> (between S1 and S2) — by far the commonest: MMVD, HCM, SAS, PS, VSD, tricuspid insufficiency, functional murmurs.<br>
@@ -71,7 +71,7 @@ export const heartMurmurDx: DxApproach = {
     <strong>Continuous "machinery"</strong> (throughout the cycle, peaking near S2) — PDA. The diastolic component disappears if pulmonary hypertension develops.<br>
     Also note <strong>gallop sounds (S3/S4)</strong> and systolic clicks — a gallop in a cat strongly suggests cardiomyopathy.`,
         },
-        { kind: 'step', alt: true, text: '📍 STEP 3 — PMI & RADIATION (localise the lesion)' },
+        { kind: 'step', alt: true, text: ' STEP 3 — PMI & RADIATION (localise the lesion)' },
         {
           kind: 'check',
           html: `<strong>Left apex (mitral area), systolic</strong> → mitral insufficiency (MMVD), may radiate dorsally / to the right.<br>
@@ -80,7 +80,7 @@ export const heartMurmurDx: DxApproach = {
     <strong>Left craniodorsal base, continuous</strong> → PDA.<br>
     <strong>Cats</strong> — apical / sternal systolic murmurs are often dynamic RV/LV outflow obstruction and may be physiologic; PMI is a less reliable localiser. (Ettinger Ch 38)`,
         },
-        { kind: 'step', alt: true, text: '💓 STEP 4 — PULSE QUALITY & PRECORDIUM' },
+        { kind: 'step', alt: true, text: ' STEP 4 — PULSE QUALITY & PRECORDIUM' },
         {
           kind: 'check',
           html: `<strong>Hyperkinetic / bounding ("waterhammer") pulse</strong> → PDA (diastolic runoff widens pulse pressure) — also aortic insufficiency, anaemia, hyperthyroidism.<br>
@@ -96,7 +96,7 @@ export const heartMurmurDx: DxApproach = {
     dx: {
       title: 'Dx: Heart Murmur — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'teal', text: '🫀 STEP 1 — ECHOCARDIOGRAPHY (the definitive test)' },
+        { kind: 'step', tone: 'teal', text: ' STEP 1 — ECHOCARDIOGRAPHY (the definitive test)' },
         {
           kind: 'check',
           html: `<strong>Echo is the gold standard</strong> — it confirms the structural lesion (MMVD prolapse/regurgitation, HCM wall thickness + SAM, DCM dilation + poor FS/EF, congenital defects), quantifies severity, measures chamber size (LA:Ao), and estimates pulmonary artery pressure (TR/PI velocity).<br>
@@ -128,14 +128,14 @@ export const heartMurmurDx: DxApproach = {
         {
           kind: 'callout',
           tone: 'green',
-          title: '✅ WHEN AN INNOCENT MURMUR NEEDS NO FURTHER WORK-UP',
+          title: ' WHEN AN INNOCENT MURMUR NEEDS NO FURTHER WORK-UP',
           html: `A <strong>young puppy/kitten</strong> with a <strong>soft (grade ≤ II–III/VI), left-basilar, early-systolic</strong> murmur, normal pulses, normal growth and NO other signs may be reassessed at the next vaccination — innocent murmurs resolve by ~16 weeks. Likewise a soft murmur fully explained by a reversible high-output state (corrected anaemia, fever, hyperthyroidism) needs no cardiac imaging once the cause is treated. <strong>Echo any murmur that is loud (≥ IV/VI), has a thrill, diastolic/continuous timing, or any clinical sign.</strong> (Ettinger Ch 38)`,
         },
       ],
       after: [
         {
           kind: 'diseaseGrid',
-          title: '📋 LINKED DISEASE PAGES',
+          title: ' LINKED DISEASE PAGES',
           links: [
             { label: 'Myxomatous mitral valve disease (MMVD)', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
             { label: 'Hypertrophic cardiomyopathy (HCM)', link: { to: 'disease', id: 'DIS-HCM' } },
@@ -151,7 +151,7 @@ export const heartMurmurDx: DxApproach = {
         {
           kind: 'alert',
           gap: 10,
-          html: `<strong>⚠️ Practical pearls:</strong><br>
+          html: `<strong> Practical pearls:</strong><br>
   • A murmur is a sign, not a diagnosis — grade · timing · PMI narrow it, but echo defines the lesion.<br>
   • Grade does NOT track severity in cats — a quiet (or absent) murmur can hide severe HCM; lean on NT-proBNP + echo.<br>
   • Loud (≥ IV/VI), diastolic, or continuous murmurs are always pathologic — work them up.<br>

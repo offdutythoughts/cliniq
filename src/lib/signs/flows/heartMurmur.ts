@@ -5,16 +5,16 @@ const heartMurmurEntry: FlowPage = {
   id: 'heart-murmur',
   title: 'Heart Murmur',
   blocks: [
-    { kind: 'node', variant: 'entry', text: '🫀 HEART MURMUR' },
+    { kind: 'node', variant: 'entry', text: ' HEART MURMUR' },
     {
       kind: 'callout',
       tone: 'info',
-      html: '🩺 <strong>Characterise every murmur three ways: GRADE · TIMING · POINT OF MAXIMAL INTENSITY (PMI).</strong> Grade I–VI by intensity (Levine scale), timing as systolic / diastolic / continuous, and PMI localises the likely lesion. A murmur is a sign, not a diagnosis — echocardiography defines the lesion. (Ettinger Ch 38)',
+      html: ' <strong>Characterise every murmur three ways: GRADE · TIMING · POINT OF MAXIMAL INTENSITY (PMI).</strong> Grade I–VI by intensity (Levine scale), timing as systolic / diastolic / continuous, and PMI localises the likely lesion. A murmur is a sign, not a diagnosis — echocardiography defines the lesion. (Ettinger Ch 38)',
     },
     {
       kind: 'table',
       boxTone: 'indigo',
-      title: '🔉 MURMUR GRADING — Levine scale I–VI/VI',
+      title: ' MURMUR GRADING — Levine scale I–VI/VI',
       cols: '20% 1fr',
       headers: ['Grade', 'Description'],
       rows: [
@@ -25,12 +25,12 @@ const heartMurmurEntry: FlowPage = {
         [{ text: 'V/VI', tone: 'danger' }, 'Loud WITH a palpable precordial thrill'],
         [{ text: 'VI/VI', tone: 'danger' }, 'Very loud, palpable thrill, still audible with the stethoscope lifted 1 cm off the chest wall'],
       ],
-      footnote: '💡 Grade correlates with severity in congenital disease (PS, SAS) and MMVD, but NOT reliably in cats — a cat with severe HCM may have a quiet murmur or NO murmur at all. (Ettinger Ch 38)',
+      footnote: ' Grade correlates with severity in congenital disease (PS, SAS) and MMVD, but NOT reliably in cats — a cat with severe HCM may have a quiet murmur or NO murmur at all. (Ettinger Ch 38)',
     },
     {
       kind: 'table',
       boxTone: 'teal',
-      title: '📍 POINT OF MAXIMAL INTENSITY → LIKELY LESION',
+      title: ' POINT OF MAXIMAL INTENSITY → LIKELY LESION',
       cols: '34% 1fr',
       headers: ['PMI · timing', 'Likely lesion'],
       rows: [
@@ -55,19 +55,19 @@ const heartMurmurEntry: FlowPage = {
       items: [
         {
           tone: 'danger',
-          label: '🔴 ACQUIRED STRUCTURAL',
+          label: ' ACQUIRED STRUCTURAL',
           sublabel: 'Older patient · grade often rises with severity · ± cough, exercise intolerance, dyspnoea, gallop, arrhythmia',
           link: { to: 'flow', id: 'heart-murmur-acquired' },
         },
         {
           tone: 'violet',
-          label: '🟣 CONGENITAL STRUCTURAL',
+          label: ' CONGENITAL STRUCTURAL',
           sublabel: 'Young / puppy / kitten · loud murmur (often grade ≥III–IV) that PERSISTS beyond ~16 weeks · ± growth retardation, cyanosis',
           link: { to: 'flow', id: 'heart-murmur-congenital' },
         },
         {
           tone: 'green',
-          label: '🟢 FUNCTIONAL / INNOCENT',
+          label: ' FUNCTIONAL / INNOCENT',
           sublabel: 'Soft (grade I–III/VI) · proto-to-mesosystolic · loudest at left base · NO structural disease on echo',
           link: { to: 'flow', id: 'heart-murmur-functional' },
         },
@@ -77,7 +77,7 @@ const heartMurmurEntry: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: '⚡ ALWAYS RULE OUT / DON\'T MISS',
+      title: ' ALWAYS RULE OUT / DON\'T MISS',
       items: [
         '<strong>A cat with HCM and NO murmur</strong> — auscultation is insensitive in cats; a gallop, arrhythmia or normal exam does not exclude cardiomyopathy. Use <strong>NT-proBNP</strong> ± echo before anaesthesia.',
         '<strong onclick="renderDiseasePage(\'DIS-INFECT-BART\')" style="cursor:pointer;text-decoration:underline;">Infective endocarditis</strong> — a NEW or CHANGING murmur with fever, lethargy or shifting lameness; culture and echo, think <em>Bartonella</em>.',
@@ -89,14 +89,14 @@ const heartMurmurEntry: FlowPage = {
     {
       kind: 'dxRow',
       items: [
-        { label: '📋 Full diagnostic approach — History · Exam · Diagnostics', link: { to: 'dx', id: 'heart-murmur' } },
-        { label: '🌬️ Dyspnoea / respiratory distress — is it CHF?', link: { to: 'flow', id: 'dyspnoea' }, accent: true },
+        { label: ' Full diagnostic approach — History · Exam · Diagnostics', link: { to: 'dx', id: 'heart-murmur' } },
+        { label: ' Dyspnoea / respiratory distress — is it CHF?', link: { to: 'flow', id: 'dyspnoea' }, accent: true },
       ],
     },
 
     {
       kind: 'diseaseGrid',
-      title: '📋 DISEASE PAGES',
+      title: ' DISEASE PAGES',
       links: [
         { label: 'Myxomatous mitral valve disease (MMVD)', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
         { label: 'Hypertrophic cardiomyopathy (HCM)', link: { to: 'disease', id: 'DIS-HCM' } },
@@ -116,7 +116,7 @@ const heartMurmurAcquired: FlowPage = {
   id: 'heart-murmur-acquired',
   title: 'Heart Murmur — Acquired Structural',
   blocks: [
-    { kind: 'node', variant: 'entry', text: '🔴 ACQUIRED STRUCTURAL', sub: 'Older patient · grade often rises with severity · ± cough, exercise intolerance, dyspnoea, gallop, arrhythmia' },
+    { kind: 'node', variant: 'entry', text: ' ACQUIRED STRUCTURAL', sub: 'Older patient · grade often rises with severity · ± cough, exercise intolerance, dyspnoea, gallop, arrhythmia' },
     { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
     {
       kind: 'categoryGrid',
@@ -125,30 +125,30 @@ const heartMurmurAcquired: FlowPage = {
           cat: 'Degenerative / Myocardial',
           tone: 'danger',
           tiles: [
-            { label: '💔 MMVD / DEGENERATIVE MITRAL DISEASE', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
-            { label: '🫀 DILATED CARDIOMYOPATHY', link: { to: 'disease', id: 'DIS-CARD-DCM' } },
-            { label: '🧱 RESTRICTIVE CARDIOMYOPATHY', link: { to: 'disease', id: 'DIS-CARD-RCM' } },
+            { label: ' MMVD / DEGENERATIVE MITRAL DISEASE', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
+            { label: ' DILATED CARDIOMYOPATHY', link: { to: 'disease', id: 'DIS-CARD-DCM' } },
+            { label: ' RESTRICTIVE CARDIOMYOPATHY', link: { to: 'disease', id: 'DIS-CARD-RCM' } },
           ],
         },
         {
           cat: 'Feline Cardiomyopathy',
           tone: 'violet',
           tiles: [
-            { label: '🐈 HYPERTROPHIC CARDIOMYOPATHY', link: { to: 'disease', id: 'DIS-HCM' } },
+            { label: ' HYPERTROPHIC CARDIOMYOPATHY', link: { to: 'disease', id: 'DIS-HCM' } },
           ],
         },
         {
           cat: 'Infectious',
           tone: 'danger',
           tiles: [
-            { label: '🦠 INFECTIVE ENDOCARDITIS', link: { to: 'disease', id: 'DIS-INFECT-BART' } },
+            { label: ' INFECTIVE ENDOCARDITIS', link: { to: 'disease', id: 'DIS-INFECT-BART' } },
           ],
         },
         {
           cat: 'Pericardial / Miscellaneous',
           tone: 'neutral',
           tiles: [
-            { label: '🛡️ PERICARDIAL DISEASE', link: { to: 'disease', id: 'DIS-CARD-PERIC' } },
+            { label: ' PERICARDIAL DISEASE', link: { to: 'disease', id: 'DIS-CARD-PERIC' } },
           ],
         },
       ],
@@ -160,7 +160,7 @@ const heartMurmurCongenital: FlowPage = {
   id: 'heart-murmur-congenital',
   title: 'Heart Murmur — Congenital Structural',
   blocks: [
-    { kind: 'node', variant: 'entry', text: '🟣 CONGENITAL STRUCTURAL', sub: 'Young / puppy / kitten · loud murmur (often grade ≥III–IV) that PERSISTS beyond ~16 weeks · ± growth retardation, cyanosis' },
+    { kind: 'node', variant: 'entry', text: ' CONGENITAL STRUCTURAL', sub: 'Young / puppy / kitten · loud murmur (often grade ≥III–IV) that PERSISTS beyond ~16 weeks · ± growth retardation, cyanosis' },
     { kind: 'node', variant: 'step', text: 'IDENTIFY LESION' },
     {
       kind: 'categoryGrid',
@@ -169,16 +169,16 @@ const heartMurmurCongenital: FlowPage = {
           cat: 'Left-to-Right Shunt',
           tone: 'violet',
           tiles: [
-            { label: '⚙️ PDA — continuous "machinery" murmur · bounding pulses' },
-            { label: '🕳️ VENTRICULAR SEPTAL DEFECT (VSD) — right cranial thorax · harsh holosystolic' },
+            { label: ' PDA — continuous "machinery" murmur · bounding pulses' },
+            { label: ' VENTRICULAR SEPTAL DEFECT (VSD) — right cranial thorax · harsh holosystolic' },
           ],
         },
         {
           cat: 'Outflow Obstruction',
           tone: 'indigo',
           tiles: [
-            { label: '🚪 SUBAORTIC STENOSIS (SAS) — left base systolic · radiates to carotids · parvus et tardus pulse' },
-            { label: '🔺 PULMONIC STENOSIS (PS) — left base systolic · does NOT radiate to carotids' },
+            { label: ' SUBAORTIC STENOSIS (SAS) — left base systolic · radiates to carotids · parvus et tardus pulse' },
+            { label: ' PULMONIC STENOSIS (PS) — left base systolic · does NOT radiate to carotids' },
           ],
         },
       ],
@@ -190,7 +190,7 @@ const heartMurmurFunctional: FlowPage = {
   id: 'heart-murmur-functional',
   title: 'Heart Murmur — Functional / Innocent',
   blocks: [
-    { kind: 'node', variant: 'entry', text: '🟢 FUNCTIONAL / INNOCENT', sub: 'Soft (grade I–III/VI) · proto-to-mesosystolic · loudest at left base · NO structural disease on echo' },
+    { kind: 'node', variant: 'entry', text: ' FUNCTIONAL / INNOCENT', sub: 'Soft (grade I–III/VI) · proto-to-mesosystolic · loudest at left base · NO structural disease on echo' },
     { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
     {
       kind: 'categoryGrid',
@@ -199,23 +199,23 @@ const heartMurmurFunctional: FlowPage = {
           cat: 'Physiological / Developmental',
           tone: 'green',
           tiles: [
-            { label: '🐶 INNOCENT PUPPY / KITTEN MURMUR — soft left-base systolic · resolves by ~16 weeks' },
+            { label: ' INNOCENT PUPPY / KITTEN MURMUR — soft left-base systolic · resolves by ~16 weeks' },
           ],
         },
         {
           cat: 'High-Output State',
           tone: 'warning',
           tiles: [
-            { label: '🩸 ANAEMIA', link: { to: 'flow', id: 'weakness' } },
-            { label: '🌡️ FEVER / HIGH-OUTPUT STATE — sepsis · pregnancy · high sympathetic tone' },
-            { label: '🦋 HYPERTHYROIDISM', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
+            { label: ' ANAEMIA', link: { to: 'flow', id: 'weakness' } },
+            { label: ' FEVER / HIGH-OUTPUT STATE — sepsis · pregnancy · high sympathetic tone' },
+            { label: ' HYPERTHYROIDISM', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
           ],
         },
         {
           cat: 'Systemic',
           tone: 'info',
           tiles: [
-            { label: '📈 SYSTEMIC HYPERTENSION', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
+            { label: ' SYSTEMIC HYPERTENSION', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
           ],
         },
       ],

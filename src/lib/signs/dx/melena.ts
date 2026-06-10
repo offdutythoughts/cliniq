@@ -20,21 +20,21 @@ export const melenaDx: DxApproach = {
           kind: 'check',
           html: `<strong>Melena</strong> = black, tarry, digested blood → PROXIMAL / upper GI (stomach, small intestine, or swallowed blood); ≥50–100 mL blood must be ingested before the stool turns melanic. <strong>Haematochezia</strong> = bright-red fresh blood → distal colon, rectum or anus (occasionally small intestine with rapid transit). Surface blood only → anorectal lesion; red-maroon "raspberry-jam" stool throughout → proximal colonic / AHDS. (Ettinger Ch 50)`,
         },
-        { kind: 'step', text: '🍽️ STEP 1 — IS IT REALLY BLOOD? (exclude mimics)' },
+        { kind: 'step', text: ' STEP 1 — IS IT REALLY BLOOD? (exclude mimics)' },
         {
           kind: 'check',
           html: `<strong>Melena mimics:</strong> activated charcoal, iron supplements, bismuth-containing medications, large amounts of blueberries.<br>
     <strong>Haematochezia mimics:</strong> red food colouring, beets; perineal bite wound; anal-sac abscess.<br>
     Confirm with a faecal occult-blood test if uncertain (avoid meat-containing diet 72 h to prevent false positives), and remember <strong>swallowed blood</strong> (epistaxis, oral/pharyngeal or pulmonary lesions, raw diet) can produce melena with no true GI bleed.`,
         },
-        { kind: 'step', alt: true, text: '💊 STEP 2 — DRUGS & TOXIN EXPOSURE' },
+        { kind: 'step', alt: true, text: ' STEP 2 — DRUGS & TOXIN EXPOSURE' },
         {
           kind: 'check',
           html: `<strong>Ulcerogenic drugs:</strong> NSAIDs and corticosteroids (highest risk when combined), anticoagulants, platelet inhibitors, thrombolytics — ask specifically and discontinue.<br>
     <strong>Anticoagulant rodenticide</strong> — assess potential access; treat empirically with Vitamin K1 if suspected.<br>
     Recent surgery (enterotomy, post-GDV, PEG-tube placement) can cause melena.`,
         },
-        { kind: 'step', alt: true, text: '🐾 STEP 3 — SIGNALMENT, COURSE & ASSOCIATED SIGNS' },
+        { kind: 'step', alt: true, text: ' STEP 3 — SIGNALMENT, COURSE & ASSOCIATED SIGNS' },
         {
           kind: 'check',
           html: `<strong>Young / unvaccinated dog</strong> with fever, vomiting, fetid bloody diarrhoea → parvovirus. <strong>Small-breed dog, peracute "raspberry-jam" bloody diarrhoea ± shock</strong> → AHDS.<br>
@@ -47,7 +47,7 @@ export const melenaDx: DxApproach = {
         {
           kind: 'callout',
           tone: 'danger',
-          title: '⚠️ RED FLAGS IN THE HISTORY',
+          title: ' RED FLAGS IN THE HISTORY',
           html: `NSAID + steroid together = high ulcer/perforation risk · Possible rodenticide access = empirical Vitamin K1 now · Waxing-waning collapse + GI bleed = exclude Addison · Peracute bloody diarrhoea + collapse = AHDS, fluid-resuscitate · Melena can equal large-volume blood loss even when the patient looks stable.`,
         },
         { kind: 'disclaimer' },
@@ -57,23 +57,23 @@ export const melenaDx: DxApproach = {
     exam: {
       title: 'Exam: Melena / Haematochezia',
       blocks: [
-        { kind: 'step', tone: 'teal', text: '🩺 A complete PE is imperative — include ORAL, RECTAL + a coagulation-screen mindset' },
-        { kind: 'step', text: '🩸 STEP 1 — PERFUSION & BLOOD-LOSS STATUS' },
+        { kind: 'step', tone: 'teal', text: ' A complete PE is imperative — include ORAL, RECTAL + a coagulation-screen mindset' },
+        { kind: 'step', text: ' STEP 1 — PERFUSION & BLOOD-LOSS STATUS' },
         {
           kind: 'check',
           html: `Mucous-membrane colour (pallor), CRT, pulse quality, heart rate and mentation quantify the haemorrhage. <strong>Bradycardia + waterhammer collapse</strong> in a hypovolaemic patient is classic for an <strong>Addisonian crisis</strong> (a tachycardia would be expected with true hypovolaemia). Estimate acute blood loss and decide whether the patient needs stabilising before any work-up.`,
         },
-        { kind: 'step', alt: true, text: '🦷 STEP 2 — ORAL / NASAL / RESPIRATORY EXAM (swallowed-blood sources)' },
+        { kind: 'step', alt: true, text: ' STEP 2 — ORAL / NASAL / RESPIRATORY EXAM (swallowed-blood sources)' },
         {
           kind: 'check',
           html: `Examine the mouth, pharynx, gingiva and nasal planum for bleeding lesions, and auscultate the chest — <strong>swallowed blood</strong> from sinonasal, oral/pharyngeal or pulmonary disease can produce melena without a primary GI bleed. Note any petechiae / ecchymoses / venepuncture bruising suggesting a <strong>primary haemostatic defect</strong>.`,
         },
-        { kind: 'step', alt: true, text: '🫃 STEP 3 — ABDOMINAL PALPATION' },
+        { kind: 'step', alt: true, text: ' STEP 3 — ABDOMINAL PALPATION' },
         {
           kind: 'check',
           html: `Palpate for a mass (neoplasia, intussusception "sausage"), foreign body, thickened bowel loops, organomegaly, pain or fluid wave. <strong>Marked abdominal pain ± fever</strong> raises perforation / septic peritonitis. Assess hydration and any signs of effusion.`,
         },
-        { kind: 'step', alt: true, text: '👆 STEP 4 — RECTAL EXAMINATION (essential)' },
+        { kind: 'step', alt: true, text: ' STEP 4 — RECTAL EXAMINATION (essential)' },
         {
           kind: 'check',
           html: `A digital rectal exam directly confirms the stool character (melena vs frank blood vs mucus), and detects <strong>rectal / colorectal masses or polyps, strictures, anal-sac disease and pelvic-canal lesions</strong>. Express and palpate the <strong>anal sacs</strong> (abscess = haematochezia mimic; firm/fixed mass ± hypercalcaemia → apocrine anal-sac adenocarcinoma, AGASACA). Always inspect the gloved finger for blood colour.`,
@@ -85,7 +85,7 @@ export const melenaDx: DxApproach = {
     dx: {
       title: 'Dx: Melena / Haematochezia — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: '⚡ STEP 1 — STABILISE SIGNIFICANT HAEMORRHAGE FIRST' },
+        { kind: 'step', tone: 'danger', text: ' STEP 1 — STABILISE SIGNIFICANT HAEMORRHAGE FIRST' },
         {
           kind: 'check',
           html: `Check <strong>PCV/TS</strong>; transfuse (whole blood / pRBC) for symptomatic anaemia and fluid-resuscitate hypovolaemia before GA for endoscopy. <strong>Plasma / Vitamin K1</strong> if a coagulopathy or rodenticide is suspected. For ulcer-related bleeding start gastroprotection — <strong>omeprazole / esomeprazole PO q12h (NSAID ulcer: 3–4 weeks)</strong> and <strong>sucralfate slurry 0.25 g (cats) to 1 g (large dogs) q6–8h</strong>. Discontinue NSAIDs / steroids.`,
@@ -123,7 +123,7 @@ export const melenaDx: DxApproach = {
       after: [
         {
           kind: 'diseaseGrid',
-          title: '📋 LINKED DISEASE PAGES',
+          title: ' LINKED DISEASE PAGES',
           links: [
             { label: 'Gastroduodenal ulceration / erosion', link: { to: 'disease', id: 'DIS-GI-ULC' } },
             { label: 'Acute haemorrhagic diarrhoea syndrome (AHDS)', link: { to: 'disease', id: 'DIS-GI-AHDS' } },
@@ -146,7 +146,7 @@ export const melenaDx: DxApproach = {
         {
           kind: 'alert',
           gap: 10,
-          html: `<strong>⚠️ Practical pearls:</strong><br>
+          html: `<strong> Practical pearls:</strong><br>
   • Characterise the stool first — melena = upper/digested, haematochezia = lower/fresh — then exclude diet/bismuth/iron mimics and swallowed blood.<br>
   • Run a coagulation panel BEFORE scoping or biopsy — never miss a rodenticide / thrombocytopenia / DIC bleed.<br>
   • GI bleed + bradycardia + Na:K &lt;27 = Addison until excluded; whipworm can copy the electrolyte picture.<br>

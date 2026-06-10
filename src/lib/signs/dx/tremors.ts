@@ -21,7 +21,7 @@ export const tremorsDx: DxApproach = {
           kind: 'check',
           html: `A <strong>tremor</strong> is an involuntary, rhythmic, oscillatory movement produced by alternating contractions of reciprocally innervated muscles, with <strong>consciousness preserved</strong> and no post-ictal phase. A <strong>seizure</strong> has impaired consciousness, increased tone and autonomic signs (salivation, incontinence) — if the description fits a seizure, switch to the <strong>seizures</strong> approach. Ask the owner to <strong>video</strong> an episode. (Ettinger Ch 42)`,
         },
-        { kind: 'step', tone: 'danger', text: '🚨 STEP 1 — TOXIN / EXPOSURE HISTORY (ask first)' },
+        { kind: 'step', tone: 'danger', text: ' STEP 1 — TOXIN / EXPOSURE HISTORY (ask first)' },
         {
           kind: 'check',
           html: `An <strong>acute, generalised whole-body tremor</strong>, especially with <strong>hyperthermia</strong>, is toxic until proven otherwise. Ask specifically about:<br>
@@ -30,7 +30,7 @@ export const tremorsDx: DxApproach = {
     <strong>Permethrin in cats</strong> — a dog pyrethroid spot-on applied to (or groomed from) a cat is a classic, lethal mistake.<br>
     Recent <strong>drugs</strong> (metronidazole, 5-HT drugs/SSRIs, macrocyclic lactones) or drug <strong>withdrawal</strong>.`,
         },
-        { kind: 'step', alt: true, text: '🐾 STEP 2 — SIGNALMENT & ONSET PATTERN' },
+        { kind: 'step', alt: true, text: ' STEP 2 — SIGNALMENT & ONSET PATTERN' },
         {
           kind: 'check',
           html: `<strong>Young adult small/white dog, fine whole-body tremor, otherwise well</strong> → idiopathic generalised tremor syndrome (IGTS, "white-shaker") — but it occurs in any breed and is rare in dogs &gt;20 kg.<br>
@@ -39,7 +39,7 @@ export const tremorsDx: DxApproach = {
     <strong>Toy-breed puppy, juvenile, or older dog with fasting/exertional episodes</strong> → hypoglycaemia (incl. insulinoma in an older dog).<br>
     <strong>Tremor confined to standing, gone on walking/lying down</strong> → orthostatic tremor (Great Dane/Deerhound, or senile).`,
         },
-        { kind: 'step', alt: true, text: '🔁 STEP 3 — TRIGGERS, COURSE & WHAT MAKES IT WORSE' },
+        { kind: 'step', alt: true, text: ' STEP 3 — TRIGGERS, COURSE & WHAT MAKES IT WORSE' },
         {
           kind: 'check',
           html: `<strong>Worse with intention / movement toward a target</strong> (eating, sniffing) → cerebellar.<br>
@@ -52,7 +52,7 @@ export const tremorsDx: DxApproach = {
         {
           kind: 'callout',
           tone: 'danger',
-          title: '⚠️ RED FLAGS IN THE HISTORY',
+          title: ' RED FLAGS IN THE HISTORY',
           html: `Acute generalised tremor + hyperthermia = toxic emergency (mycotoxin, metaldehyde, permethrin in a cat) — stabilise before investigating · Lactating bitch tremoring/twitching = eclampsia (ionised calcium) · Fasting/exertional collapse with tremor = hypoglycaemia/insulinoma · Anything suggesting impaired consciousness or autonomic signs = treat as a seizure.`,
         },
         { kind: 'disclaimer' },
@@ -62,25 +62,25 @@ export const tremorsDx: DxApproach = {
     exam: {
       title: 'Exam: Tremors',
       blocks: [
-        { kind: 'step', tone: 'teal', text: '🩺 A complete PE first — TEMPERATURE, heart rate & mucous membranes' },
+        { kind: 'step', tone: 'teal', text: ' A complete PE first — TEMPERATURE, heart rate & mucous membranes' },
         {
           kind: 'check',
           html: `<strong>Hyperthermia</strong> (often non-febrile, from sustained muscle activity) + <strong>tachycardia</strong> + <strong>mydriasis</strong> point to an intoxication (mycotoxin, metaldehyde, permethrin) and are themselves treatment targets — active cooling and muscle relaxation. Note GI signs and hyperaesthesia.`,
         },
-        { kind: 'step', alt: true, text: '〰️ STEP 1 — CHARACTERISE THE TREMOR' },
+        { kind: 'step', alt: true, text: ' STEP 1 — CHARACTERISE THE TREMOR' },
         {
           kind: 'check',
           html: `<strong>Where & when?</strong> Whole-body vs head-only vs limb/trunk; at <strong>rest</strong> (uncommon — toxic/drug) vs <strong>action</strong>.<br>
     <strong>Action tremors:</strong> postural (holding against gravity), kinetic-simple (throughout movement), <strong>kinetic-intention (crescendos toward a target — cerebellar)</strong>, orthostatic (only when standing).<br>
     A <strong>fine whole-body tremor in a small white dog</strong> = idiopathic shaker; an <strong>intention tremor worsening toward a target</strong> = cerebellar.`,
         },
-        { kind: 'step', alt: true, text: '🧠 STEP 2 — FOCUSED NEUROLOGICAL EXAM (localise)' },
+        { kind: 'step', alt: true, text: ' STEP 2 — FOCUSED NEUROLOGICAL EXAM (localise)' },
         {
           kind: 'check',
           html: `Look for the cerebellar triad: <strong>intention tremor</strong> (head/limb crescendo toward a target), <strong>postural head tremor + truncal sway</strong>, <strong>hypermetria/dysmetria</strong> and a wide-based stance — with <strong>NO weakness and NO proprioceptive-positioning deficits</strong>. (Ettinger Ch 42)<br>
     Add menace deficit with intact vision/PLR (cerebellar), and check for vestibular signs (paradoxical = caudal cerebellar). Multifocal/asymmetric signs, mentation change or cervical pain in a young small-breed dog raise <strong>MUO/GME</strong>. A normal neuro exam apart from the tremor fits IGTS.`,
         },
-        { kind: 'step', alt: true, text: '🔬 STEP 3 — SCREEN FOR METABOLIC CLUES' },
+        { kind: 'step', alt: true, text: ' STEP 3 — SCREEN FOR METABOLIC CLUES' },
         {
           kind: 'check',
           html: `Weakness/cervical ventroflexion (hypokalaemia, hypocalcaemia), facial twitching → tetany (hypocalcaemia), obtundation/weakness that waxes and wanes (hypoglycaemia). These steer the first-line bloods on the Diagnostics tab.`,
@@ -92,7 +92,7 @@ export const tremorsDx: DxApproach = {
     dx: {
       title: 'Dx: Tremors — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: '⚡ STEP 1 — IF ACUTE & HYPERTHERMIC, STABILISE FIRST' },
+        { kind: 'step', tone: 'danger', text: ' STEP 1 — IF ACUTE & HYPERTHERMIC, STABILISE FIRST' },
         {
           kind: 'check',
           html: `An acute generalised tremor with hyperthermia is an emergency. <strong>Cool actively</strong>, secure IV access and control the tremors: <strong>methocarbamol 40–50 mg/kg slow IV</strong> to effect (then 8.8–12.2 mg/kg/h CRI; do not exceed 330 mg/kg/day), with dexmedetomidine, phenobarbital/levetiracetam or ketamine as needed. <strong>Decontaminate</strong> (emesis only if conscious — apomorphine 20–40 µg/kg IV; activated charcoal 0.5–4 g/kg; <strong>bathe</strong> for dermal permethrin) and give <strong>intralipid 20%</strong> (1.5 mL/kg IV bolus then 0.25–0.5 mL/kg/min CRI) for lipophilic toxins. See the toxin protocols. (Ettinger Ch 42)`,
@@ -129,7 +129,7 @@ export const tremorsDx: DxApproach = {
       after: [
         {
           kind: 'diseaseGrid',
-          title: '📋 LINKED DISEASE PAGES',
+          title: ' LINKED DISEASE PAGES',
           links: [
             { label: 'Hypoparathyroidism (hypocalcaemia)', link: { to: 'disease', id: 'DIS-ENDO-HYPOPTH' } },
             { label: 'Hypoglycaemia', link: { to: 'disease', id: 'DIS-MET-HYPOGLY' } },
@@ -146,7 +146,7 @@ export const tremorsDx: DxApproach = {
         {
           kind: 'alert',
           gap: 10,
-          html: `<strong>⚠️ Practical pearls:</strong><br>
+          html: `<strong> Practical pearls:</strong><br>
   • Decide tremor vs seizure first — if consciousness is impaired or there are autonomic signs, work it up as a seizure.<br>
   • Acute generalised tremor + hyperthermia = toxic emergency: cool, methocarbamol, decontaminate, ILE — before the diagnostics.<br>
   • Measure <strong>ionised</strong> calcium and glucose in every tremoring patient; total calcium misleads.<br>

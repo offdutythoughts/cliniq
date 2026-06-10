@@ -18,19 +18,19 @@ export const swollenJointsDx: DxApproach = {
           kind: 'check',
           html: `Joint disease presents two ways. <strong>Degenerative (DJD/OA)</strong> = intermittent or shifting lameness in an otherwise healthy animal, few joints, larger proximal joints. <strong>Inflammatory joint disease</strong> is often NOT obviously "lame" — instead lethargy, ↓appetite and <strong>fever</strong>, affecting many joints, with the <strong>distal joints (carpi, tarsi)</strong> favoured in immune-mediated disease. Always count the joints: <strong>monoarthropathy vs polyarthropathy</strong> drives the differential. (Ettinger Ch 32)`,
         },
-        { kind: 'step', tone: 'danger', text: '🚨 STEP 1 — IS A SINGLE HOT JOINT SEPTIC?' },
+        { kind: 'step', tone: 'danger', text: ' STEP 1 — IS A SINGLE HOT JOINT SEPTIC?' },
         {
           kind: 'check',
           html: `A single, swollen, very painful joint — especially after <strong>surgery, trauma or a penetrating wound (cat bite / foreign body)</strong> — is septic arthritis until proven otherwise. Prior surgery greatly increases the likelihood of a bacterial aetiology. This is an emergency: sample/lavage and start antimicrobials. Most common in a large proximal joint (stifle, elbow, shoulder, hip). (Ettinger Ch 32 / Ch 177)`,
         },
-        { kind: 'step', alt: true, text: '🐾 STEP 2 — SIGNALMENT & BREED CLUES' },
+        { kind: 'step', alt: true, text: ' STEP 2 — SIGNALMENT & BREED CLUES' },
         {
           kind: 'check',
           html: `<strong>Young–middle-aged dog (3–7 yr most common, no sex predilection)</strong> with fever + multiple distal joints → idiopathic IMPA (the commonest inflammatory joint disease).<br>
     <strong>Breed-associated syndromes:</strong> Shar-Pei (familial Shar-Pei fever — 12–48 h bouts of fever + swollen hocks; colchicine to reduce amyloidosis risk); Akita (severe juvenile-onset polyarthropathy); erosive disease in Greyhounds and Border Collies.<br>
     <strong>Cats:</strong> infectious arthritis (Mycoplasma, calicivirus) is more common than immune-mediated; FeLV-implicated periosteal proliferative polyarthritis in male cats. (Ettinger Ch 32 / Ch 177)`,
         },
-        { kind: 'step', alt: true, text: '💊 STEP 3 — DRUGS, VACCINES & A DISTANT FOCUS (reactive)' },
+        { kind: 'step', alt: true, text: ' STEP 3 — DRUGS, VACCINES & A DISTANT FOCUS (reactive)' },
         {
           kind: 'check',
           html: `Non-erosive IMPA is frequently <strong>reactive</strong> — driven by an antigenic stimulus elsewhere. Ask about:<br>
@@ -38,7 +38,7 @@ export const swollenJointsDx: DxApproach = {
     <strong>Recent vaccination</strong> — canine distemper, Lyme; typically within 1–2 weeks.<br>
     <strong>A distant inflammatory / infectious / neoplastic focus</strong> — chronic infection (deep mycoses, discospondylitis, endocarditis), GI inflammation (enteropathic polyarthropathy), or distant neoplasia (particularly haemic). (Ettinger Ch 32 / Ch 177)`,
         },
-        { kind: 'step', alt: true, text: '🌍 STEP 4 — TRAVEL, TICKS & GEOGRAPHY' },
+        { kind: 'step', alt: true, text: ' STEP 4 — TRAVEL, TICKS & GEOGRAPHY' },
         {
           kind: 'check',
           html: `Vector-borne polyarthritis is common and treatable — ask about <strong>tick exposure, preventive history, geographic location and travel</strong>. Consider <strong>Lyme (Borrelia), Anaplasma, Ehrlichia, RMSF (Rickettsia)</strong> and <strong>Leishmania</strong> by region, plus systemic mycoses (coccidioidomycosis, blastomycosis) where endemic. <strong>Negative serology in acute disease does not exclude infection.</strong> (Ettinger Ch 32 / Ch 177)`,
@@ -48,7 +48,7 @@ export const swollenJointsDx: DxApproach = {
         {
           kind: 'callout',
           tone: 'danger',
-          title: '⚠️ RED FLAGS IN THE HISTORY',
+          title: ' RED FLAGS IN THE HISTORY',
           html: `Single hot joint after surgery / a wound = septic arthritis (emergency) · Fever of unknown origin + stiff, "walking on eggshells" gait = polyarthritis until excluded · Tick / travel exposure = test (or trial doxycycline) BEFORE steroids · Recent TMS / penicillin / vaccine = consider drug-induced or post-vaccinal reactive IMPA.`,
         },
         { kind: 'disclaimer' },
@@ -58,25 +58,25 @@ export const swollenJointsDx: DxApproach = {
     exam: {
       title: 'Exam: Swollen Joints',
       blocks: [
-        { kind: 'step', tone: 'teal', text: '🩺 Watch the GAIT before you touch — then a full orthopaedic + neuro exam' },
-        { kind: 'step', text: '🦵 STEP 1 — PALPATE EVERY JOINT (not just the swollen one)' },
+        { kind: 'step', tone: 'teal', text: ' Watch the GAIT before you touch — then a full orthopaedic + neuro exam' },
+        { kind: 'step', text: ' STEP 1 — PALPATE EVERY JOINT (not just the swollen one)' },
         {
           kind: 'check',
           html: `Systematically flex/extend and palpate <strong>all</strong> appendicular joints for swelling, effusion, heat, pain, crepitus and instability — a polyarthropathy can hide in joints that look and feel normal. A "walking on eggshells", stilted or shifting-leg lameness with reluctance to move suggests <strong>polyarthritis</strong> rather than a single orthopaedic lesion. (Ettinger Ch 32)`,
         },
-        { kind: 'step', alt: true, text: '🌡️ STEP 2 — SYSTEMIC SIGNS OF INFLAMMATORY DISEASE' },
+        { kind: 'step', alt: true, text: ' STEP 2 — SYSTEMIC SIGNS OF INFLAMMATORY DISEASE' },
         {
           kind: 'check',
           html: `Check for <strong>fever, lethargy and inappetence</strong> — these accompany inflammatory joint disease far more than degenerative disease. Inflammatory joint disease patients are frequently presented for "weakness / won't move" rather than overt lameness. (Ettinger Ch 32)`,
         },
-        { kind: 'step', alt: true, text: '🔎 STEP 3 — HUNT FOR A SOURCE / MULTISYSTEM DISEASE' },
+        { kind: 'step', alt: true, text: ' STEP 3 — HUNT FOR A SOURCE / MULTISYSTEM DISEASE' },
         {
           kind: 'check',
           html: `Look for the inciting focus or a systemic immune disease:<br>
     <strong>Peripheral lymphadenopathy</strong> (aspirate if enlarged); <strong>heart murmur</strong> (endocarditis as a haematogenous source); <strong>spinal pain</strong> (discospondylitis); <strong>skin / mucocutaneous lesions, oral ulcers</strong> (SLE, leishmaniosis).<br>
     <strong>Fundic exam</strong> — chorioretinitis / retinal change with systemic hypertension, fungal or vector-borne disease. (Ettinger Ch 32)`,
         },
-        { kind: 'step', alt: true, text: '☠️ STEP 4 — DON\'T MISTAKE BONE FOR JOINT' },
+        { kind: 'step', alt: true, text: ' STEP 4 — DON\'T MISTAKE BONE FOR JOINT' },
         {
           kind: 'check',
           html: `A firm, painful swelling at a <strong>juxta-articular site</strong> (distal radius, proximal humerus, distal femur, proximal tibia — "away from the elbow, toward the knee") may be <strong>osteosarcoma</strong>, not joint disease. Localise the pain to bone vs joint and image early. Prostatic disease and paw-pad disease can also masquerade as orthopaedic signs. (Ettinger Ch 32)`,
@@ -88,7 +88,7 @@ export const swollenJointsDx: DxApproach = {
     dx: {
       title: 'Dx: Swollen Joints — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'teal', text: '🔑 STEP 1 — ARTHROCENTESIS + SYNOVIAL CYTOLOGY/CULTURE (the cornerstone)' },
+        { kind: 'step', tone: 'teal', text: ' STEP 1 — ARTHROCENTESIS + SYNOVIAL CYTOLOGY/CULTURE (the cornerstone)' },
         {
           kind: 'check',
           html: `<strong>The single most important diagnostic aid.</strong> Tap <strong>multiple distal joints — both carpi + both tarsi (≥4 joints)</strong> under heavy sedation/anaesthesia, aseptically, even if only one looks swollen. Submit <strong>individual slides for cytology per joint</strong> and <strong>pool the remainder for culture</strong> (place synovial fluid in blood-culture medium to boost sensitivity). Volume is small — &lt;0.2 mL is common; slides alone suffice.<br>
@@ -133,7 +133,7 @@ export const swollenJointsDx: DxApproach = {
       after: [
         {
           kind: 'diseaseGrid',
-          title: '📋 LINKED DISEASE PAGES',
+          title: ' LINKED DISEASE PAGES',
           links: [
             { label: 'Immune-mediated polyarthritis (IMPA)', link: { to: 'disease', id: 'DIS-IMPA' } },
             { label: 'Systemic lupus erythematosus (SLE)', link: { to: 'disease', id: 'DIS-IM-SLE' } },
@@ -151,7 +151,7 @@ export const swollenJointsDx: DxApproach = {
         {
           kind: 'alert',
           gap: 10,
-          html: `<strong>⚠️ Practical pearls:</strong><br>
+          html: `<strong> Practical pearls:</strong><br>
   • Arthrocentesis of MULTIPLE joints (carpi + tarsi) is the test — sample even normal-looking joints; one or two taps can miss a polyarthropathy.<br>
   • &gt;10% neutrophils = inflammatory; culture-NEGATIVE neutrophilic inflammation = immune-mediated; degenerate neutrophils ± organisms = septic.<br>
   • Culture is positive in only 44–63% of septic cases — a negative culture does NOT rule out sepsis; use blood-culture medium for synovial fluid.<br>

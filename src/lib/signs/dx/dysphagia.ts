@@ -20,7 +20,7 @@ export const dysphagiaDx: DxApproach = {
           kind: 'check',
           html: `<strong>Dysphagia</strong> = difficulty swallowing (a clinical finding, not a diagnosis); <strong>gagging</strong> = an airway-protective reflex (touch the tongue base/palate/epiglottis → CN V afferent, CN X efferent). Separate these from <strong>regurgitation</strong> (passive expulsion from the pharynx/oesophagus — head down, food falls out, no nausea), <strong>true vomiting</strong> (active, centrally-mediated, with prodromal nausea, retching and abdominal contractions — see the Vomiting approach), and <strong>expectoration</strong> (the "hacking" terminal retch of a coughing paroxysm → respiratory disease). Regurgitation is uncommon in cats — assume vomiting in a cat unless proven otherwise. (Ettinger Ch 47)`,
         },
-        { kind: 'step', text: '🎥 STEP 1 — WATCH THE PATIENT EAT & LOCALISE' },
+        { kind: 'step', text: ' STEP 1 — WATCH THE PATIENT EAT & LOCALISE' },
         {
           kind: 'check',
           html: `Offer food and water and observe.<br>
@@ -28,7 +28,7 @@ export const dysphagiaDx: DxApproach = {
     <strong>Pharyngeal/cricopharyngeal:</strong> repeated swallowing attempts, gagging, coughing or nasal reflux while eating, the bolus won't clear the throat.<br>
     <strong>Oesophageal:</strong> passive regurgitation of undigested food/saliva (variable timing after eating), cervical oesophageal distension, weight loss despite a good appetite. (Ettinger Ch 47)`,
         },
-        { kind: 'step', alt: true, text: '🐾 STEP 2 — SIGNALMENT, AGE & BREED' },
+        { kind: 'step', alt: true, text: ' STEP 2 — SIGNALMENT, AGE & BREED' },
         {
           kind: 'check',
           html: `<strong>Young dog at weaning</strong> → congenital causes: <strong>cricopharyngeal achalasia</strong> (Cocker Spaniel, Golden Retriever), <strong>vascular ring anomaly / PRAA</strong> (German Shepherd, Irish Setter — regurgitation of solids as it starts on solid food), congenital megaoesophagus (Shar-Pei, GSD, Great Dane, Irish Setter, Labrador, Newfoundland).<br>
@@ -36,7 +36,7 @@ export const dysphagiaDx: DxApproach = {
     <strong>MG signalment</strong> is bimodal (&lt;4 yr or &gt;9 yr); Akita, GSP, Chihuahua, GSD, Golden Retriever overrepresented.<br>
     <strong>Masticatory myositis</strong> → painful/swollen then atrophied jaw muscles, inability to open the mouth. (Ettinger Ch 47)`,
         },
-        { kind: 'step', alt: true, text: '🔁 STEP 3 — ONSET, COURSE & EXPOSURES' },
+        { kind: 'step', alt: true, text: ' STEP 3 — ONSET, COURSE & EXPOSURES' },
         {
           kind: 'check',
           html: `<strong>Acute onset</strong> + retching + hypersalivation → suspect <strong>oesophageal foreign body</strong> (emergency).<br>
@@ -49,7 +49,7 @@ export const dysphagiaDx: DxApproach = {
         {
           kind: 'callout',
           tone: 'danger',
-          title: '⚠️ RED FLAGS IN THE HISTORY',
+          title: ' RED FLAGS IN THE HISTORY',
           html: `Acute retching + drooling = oesophageal foreign body until disproven · Acquired megaoesophagus = run an AChR titre for MG · Coughing / fever after regurgitation = aspiration pneumonia · Dysphagia + hypersalivation in an unvaccinated patient = handle as possible rabies.`,
         },
         { kind: 'disclaimer' },
@@ -59,13 +59,13 @@ export const dysphagiaDx: DxApproach = {
     exam: {
       title: 'Exam: Dysphagia / Gagging',
       blocks: [
-        { kind: 'step', tone: 'teal', text: '🩺 A complete PE is imperative — include ORAL, NEURO & THORACIC AUSCULTATION' },
-        { kind: 'step', text: '👄 STEP 1 — ORAL EXAMINATION (often needs sedation)' },
+        { kind: 'step', tone: 'teal', text: ' A complete PE is imperative — include ORAL, NEURO & THORACIC AUSCULTATION' },
+        { kind: 'step', text: ' STEP 1 — ORAL EXAMINATION (often needs sedation)' },
         {
           kind: 'check',
           html: `A conscious oral exam is rarely complete — <strong>examine the oral cavity under sedation/GA</strong> for dental/periodontal disease, oral masses, foreign bodies (e.g. a stick lodged across the palate), stomatitis, cleft palate, TMJ disorder and a retrobulbar abscess (pain on opening + exophthalmos). Assess salivary swellings (mucocele/sialocele) and the tonsils/pharynx. (Ettinger Ch 47)`,
         },
-        { kind: 'step', alt: true, text: '🧠 STEP 2 — NEUROLOGIC EXAM (cranial nerves)' },
+        { kind: 'step', alt: true, text: ' STEP 2 — NEUROLOGIC EXAM (cranial nerves)' },
         {
           kind: 'check',
           html: `Localise functional dysphagia by cranial nerve:<br>
@@ -75,12 +75,12 @@ export const dysphagiaDx: DxApproach = {
     <strong>CN XII</strong> — tongue strength/symmetry (lingual paresis).<br>
     Assess for generalised/exercise-induced weakness (MG), neck ventroflexion, and signs of LMN polyneuropathy (polyradiculoneuritis). (Ettinger Ch 47)`,
         },
-        { kind: 'step', alt: true, text: '😬 STEP 3 — MASTICATORY MUSCLES & JAW' },
+        { kind: 'step', alt: true, text: ' STEP 3 — MASTICATORY MUSCLES & JAW' },
         {
           kind: 'check',
           html: `Palpate the temporal and masseter muscles for pain/swelling (acute) or atrophy (chronic). Assess the range of jaw opening — restricted, painful opening with masticatory muscle atrophy suggests <strong>masticatory myositis</strong> (confirm with the type 2M-fibre antibody). Trismus/inability to open also occurs with retrobulbar disease and tetanus. (Ettinger Ch 47)`,
         },
-        { kind: 'step', alt: true, text: '🫁 STEP 4 — THORACIC AUSCULTATION & GENERAL' },
+        { kind: 'step', alt: true, text: ' STEP 4 — THORACIC AUSCULTATION & GENERAL' },
         {
           kind: 'check',
           html: `Auscult for crackles/increased lung sounds of <strong>aspiration pneumonia</strong> (cranioventral; the major complication). Note body condition/weight loss, cervical oesophageal distension, fever, and any systemic signs pointing to an endocrine (hypothyroid coat changes) or neuromuscular cause. (Ettinger Ch 47)`,
@@ -92,7 +92,7 @@ export const dysphagiaDx: DxApproach = {
     dx: {
       title: 'Dx: Dysphagia / Gagging — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: '⚡ STEP 1 — THORACIC RADIOGRAPHS (every dysphagic patient)' },
+        { kind: 'step', tone: 'danger', text: ' STEP 1 — THORACIC RADIOGRAPHS (every dysphagic patient)' },
         {
           kind: 'check',
           html: `Take <strong>thoracic radiographs (minimum 3 views) in ALL dysphagic patients</strong> to identify <strong>megaoesophagus</strong> and <strong>aspiration pneumonia</strong> (cranioventral alveolar pattern). Aspiration is the leading lethal complication — among aspiration cases, oesophageal disease accounted for ~40% (megaoesophagus = 71% of that group) and neurologic disease ~27%. Stabilise/treat aspiration before invasive work-up. (Ettinger Ch 47, 221)`,
@@ -121,7 +121,7 @@ export const dysphagiaDx: DxApproach = {
       after: [
         {
           kind: 'diseaseGrid',
-          title: '📋 LINKED DISEASE PAGES',
+          title: ' LINKED DISEASE PAGES',
           links: [
             { label: 'Megaoesophagus', link: { to: 'disease', id: 'DIS-OES-MEGA' } },
             { label: 'Oesophageal foreign body', link: { to: 'disease', id: 'DIS-GI-OESFB' } },
@@ -140,7 +140,7 @@ export const dysphagiaDx: DxApproach = {
         {
           kind: 'alert',
           gap: 10,
-          html: `<strong>⚠️ Practical pearls:</strong><br>
+          html: `<strong> Practical pearls:</strong><br>
   • First decide: swallowing problem vs true vomiting — watch the patient eat and look for nausea/abdominal effort.<br>
   • Thoracic radiographs in EVERY dysphagic patient — never miss megaoesophagus or aspiration pneumonia.<br>
   • VFSS (free-feeding) is the criterion standard for functional dysphagia and is the test that separates cricopharyngeal achalasia from dyssynchrony — get it before committing to a myotomy.<br>
