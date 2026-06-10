@@ -94,9 +94,9 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
   const nav = useNav()
   const allLesions = DB.lesion_type.filter(l => l.loc === loc)
   const lesions = filter === 'acute'
-    ? allLesions.filter(l => l.urg?.toUpperCase() === 'EMERGENCY')
+    ? allLesions.filter(l => l.onset === 'acute' || l.onset === 'both')
     : filter === 'chronic'
-      ? allLesions.filter(l => l.urg?.toUpperCase() !== 'EMERGENCY')
+      ? allLesions.filter(l => l.onset === 'chronic' || l.onset === 'both')
       : allLesions
   if (!lesions.length) return <div className="empty"><p>No lesion types for this location yet.</p></div>
 
