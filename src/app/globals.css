@@ -42,16 +42,16 @@
      and the disease-category colours (CAT_STYLE). The `--tone-*` values are rgb
      triplets fed into rgba(var(--tone-x), α); the `-fg`/`-title` are the readable
      foregrounds. Foregrounds are overridable per theme in the dark block below. */
-  --tone-danger: 220,38,38;     --tone-danger-fg: #FCA5A5;   --tone-danger-title: #F87171;
-  --tone-warning: 245,158,11;   --tone-warning-fg: #FCD34D;  --tone-warning-title: var(--amber-text);
-  --tone-info: 37,99,235;       --tone-info-fg: #93C5FD;
-  --tone-teal: 13,148,136;      --tone-teal-fg: #5EEAD4;
-  --tone-green: 16,185,129;     --tone-green-fg: #A7F3D0;
-  --tone-violet: 139,92,246;    --tone-violet-fg: #C4B5FD;
-  --tone-purple: 168,85,247;    --tone-purple-fg: #C4B5FD;
-  --tone-indigo: 99,102,241;    --tone-indigo-fg: #A5B4FC;
-  --tone-orange: 249,115,22;    --tone-orange-fg: #FED7AA;
-  --tone-slate: 100,116,139;    --tone-slate-fg: #CBD5E1;
+  --tone-danger: 220,38,38;     --tone-danger-fg: #991B1B;   --tone-danger-title: #B91C1C;
+  --tone-warning: 245,158,11;   --tone-warning-fg: #92400E;  --tone-warning-title: var(--amber-text);
+  --tone-info: 37,99,235;       --tone-info-fg: #1E40AF;
+  --tone-teal: 13,148,136;      --tone-teal-fg: #115E59;
+  --tone-green: 16,185,129;     --tone-green-fg: #065F46;
+  --tone-violet: 139,92,246;    --tone-violet-fg: #5B21B6;
+  --tone-purple: 168,85,247;    --tone-purple-fg: #6B21A8;
+  --tone-indigo: 99,102,241;    --tone-indigo-fg: #3730A3;
+  --tone-orange: 249,115,22;    --tone-orange-fg: #7C2D12;
+  --tone-slate: 100,116,139;    --tone-slate-fg: #334155;
   --tone-neutral: 255,255,255;  --tone-neutral-fg: var(--gray);
 
   /* Disease-category palette (renderFlow CAT_STYLE): rgb triplet + readable fg. */
@@ -102,6 +102,17 @@ html[data-theme="dark"]{
   --em-bg:rgba(var(--tone-danger),0.12);--hi-bg:rgba(var(--amber-rgb),0.12);
   --mo-bg:rgba(var(--tone-teal),0.12);--lo-bg:rgba(var(--tone-info),0.1);
   --amber-text: #FDE68A;
+  /* Tone foregrounds flip back to bright/pastel for dark backgrounds. */
+  --tone-danger-fg: #FCA5A5;   --tone-danger-title: #F87171;
+  --tone-warning-fg: #FCD34D;
+  --tone-info-fg: #93C5FD;
+  --tone-teal-fg: #5EEAD4;
+  --tone-green-fg: #A7F3D0;
+  --tone-violet-fg: #C4B5FD;
+  --tone-purple-fg: #C4B5FD;
+  --tone-indigo-fg: #A5B4FC;
+  --tone-orange-fg: #FED7AA;
+  --tone-slate-fg: #CBD5E1;
   /* Location foregrounds flip deep→bright; per-class dark rules no longer needed. */
   --fg-blue-deep: var(--fg-blue-bright);     --fg-teal-deep: var(--fg-teal-bright);
   --fg-amber-deep: var(--amber-text);        --fg-red-deep: var(--tone-danger-fg);
