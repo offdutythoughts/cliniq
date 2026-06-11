@@ -468,7 +468,7 @@ const bleedingDic: FlowPage = {
         <div style="font-size:8px;color:var(--gray);opacity:.7;margin-top:5px;font-style:italic;">Haemorrhagic phenotype · ~78 % survive non-overt · ~38 % overt</div>
       </div>
       <div style="padding:9px 11px;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.3);border-radius:9px;">
-        <div style="font-size:9.5px;font-weight:700;color:#D8B4FE;margin-bottom:5px;">🐈 Feline</div>
+        <div style="font-size:9.5px;font-weight:700;color:var(--tone-violet-fg);margin-bottom:5px;">🐈 Feline</div>
         <div style="font-size:9px;color:var(--gray);line-height:1.8;">
           FIP<br>
           Lymphoma<br>
@@ -491,7 +491,7 @@ const bleedingDic: FlowPage = {
       html: `<div class="flow-arrow-v">↓</div>
     <div onclick="renderProtoDetail('PROT-BLEED-DIC')" style="cursor:pointer;width:100%;padding:13px 14px;background:rgba(220,38,38,0.15);border:2px solid rgba(220,38,38,0.5);border-radius:11px;text-align:center;">
       <div style="font-size:12px;font-weight:800;color:var(--tone-danger-fg);letter-spacing:.03em;">⚡ THIS IS AN EMERGENCY</div>
-      <div style="font-size:10px;color:#FECACA;margin-top:4px;font-weight:600;">→ Open DIC Emergency Protocol</div>
+      <div style="font-size:10px;color:var(--tone-danger-fg);margin-top:4px;font-weight:600;">→ Open DIC Emergency Protocol</div>
       <div style="font-size:8.5px;color:var(--gray);margin-top:3px;">FFP · heparin · serial monitoring · treat the cause</div>
     </div>`,
     },

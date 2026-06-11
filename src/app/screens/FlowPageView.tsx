@@ -300,8 +300,8 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
 function DecBox({ question, sub }: { question: string; sub?: string }) {
   return (
     <div style={s('background:rgba(245,158,11,0.13);border:1.5px solid rgba(245,158,11,0.55);border-radius:10px;padding:9px 14px;width:100%;text-align:center;')}>
-      <div style={s('font-size:11.5px;font-weight:700;color:#FCD34D;line-height:1.4;')}>{question}</div>
-      {sub && <div style={s('font-size:9px;color:#FDE68A;opacity:.8;margin-top:3px;')}>{sub}</div>}
+      <div style={s('font-size:11.5px;font-weight:700;color:var(--tone-warning-fg);line-height:1.4;')}>{question}</div>
+      {sub && <div style={s('font-size:9px;color:var(--amber-text);opacity:.8;margin-top:3px;')}>{sub}</div>}
     </div>
   )
 }
@@ -315,19 +315,19 @@ function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
       <>
         <DecBox question={step.question} sub={step.sub} />
         <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;margin-top:4px;')}>
-          <div><div style={s('font-size:9px;font-weight:700;color:#F87171;margin-bottom:4px;')}>{step.noLabel}</div><OutBox o={step.no} onNav={onNav} /></div>
-          <div><div style={s('font-size:9px;font-weight:700;color:#34D399;margin-bottom:4px;')}>{step.yesLabel}</div><OutBox o={step.yes} onNav={onNav} /></div>
+          <div><div style={s('font-size:9px;font-weight:700;color:var(--tone-danger-title);margin-bottom:4px;')}>{step.noLabel}</div><OutBox o={step.no} onNav={onNav} /></div>
+          <div><div style={s('font-size:9px;font-weight:700;color:var(--hl-green);margin-bottom:4px;')}>{step.yesLabel}</div><OutBox o={step.yes} onNav={onNav} /></div>
         </div>
       </>
     )
   }
   if (step.type === 'outcome') {
-    return <div style={s('margin-bottom:8px;')}><div style={s('font-size:9px;font-weight:700;color:#F87171;margin-bottom:4px;')}>{step.label}</div><OutBox o={step.box} onNav={onNav} /></div>
+    return <div style={s('margin-bottom:8px;')}><div style={s('font-size:9px;font-weight:700;color:var(--tone-danger-title);margin-bottom:4px;')}>{step.label}</div><OutBox o={step.box} onNav={onNav} /></div>
   }
   const down = step.continue === 'YES'
-  const contColor = down ? '#34D399' : '#F87171'
+  const contColor = down ? 'var(--hl-green)' : 'var(--tone-danger-title)'
   const arrowColor = down ? 'rgba(52,211,153,0.5)' : 'rgba(248,113,113,0.5)'
-  const exitColor = down ? '#F87171' : '#34D399'
+  const exitColor = down ? 'var(--tone-danger-title)' : 'var(--hl-green)'
   const exitLabel = down ? 'NO →' : 'YES →'
   return (
     <>
@@ -389,9 +389,9 @@ function AlertBlock({ tone, title, items, onNav }: { tone: Tone; title: string; 
 function DiseaseGridBlock({ title, links, onNav }: { title: string; links: LabeledLink[]; onNav: Nav }) {
   return (
     <Box tone="teal" bgA={0.08} bdA={0.25} extra="margin-top:10px;padding:10px 12px;">
-      <div style={s('font-size:11px;font-weight:700;color:#5EEAD4;margin-bottom:6px;')}>{title}</div>
+      <div style={s('font-size:11px;font-weight:700;color:var(--tone-teal-fg);margin-bottom:6px;')}>{title}</div>
       <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;')}>
-        {links.map((l, i) => <div key={i} role="button" onClick={() => onNav(linkToView(l.link))} style={s('cursor:pointer;color:#99F6E4;')}>→ {l.label}</div>)}
+        {links.map((l, i) => <div key={i} role="button" onClick={() => onNav(linkToView(l.link))} style={s('cursor:pointer;color:var(--fg-teal-deep);')}>→ {l.label}</div>)}
       </div>
     </Box>
   )

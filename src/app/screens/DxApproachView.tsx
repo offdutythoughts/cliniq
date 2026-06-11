@@ -89,10 +89,10 @@ function DxCallout({ b, onNav }: { b: Extract<DxBlock, { kind: 'callout' }>; onN
 function DxDiseaseGrid({ b, onNav }: { b: Extract<DxBlock, { kind: 'diseaseGrid' }>; onNav: Nav }) {
   return (
     <div style={s('margin-top:10px;padding:10px 12px;background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.25);border-radius:10px;')}>
-      <div style={s('font-size:11px;font-weight:700;color:#5EEAD4;margin-bottom:6px;')}>{b.title}</div>
+      <div style={s('font-size:11px;font-weight:700;color:var(--tone-teal-fg);margin-bottom:6px;')}>{b.title}</div>
       <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;')}>
         {b.links.map((l, i) => (
-          <div key={i} role="button" style={s('cursor:pointer;color:#99F6E4;')} onClick={() => onNav(linkToView(l.link))}>→ {l.label}</div>
+          <div key={i} role="button" style={s('cursor:pointer;color:var(--fg-teal-deep);')} onClick={() => onNav(linkToView(l.link))}>→ {l.label}</div>
         ))}
       </div>
     </div>
@@ -105,7 +105,7 @@ function DxAccordion({ b, onNav }: { b: Extract<DxBlock, { kind: 'accordion' }>;
     <div style={s(grid)}>
       {b.items.map((item, i) => (
         <details key={i} style={s('background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.2);border-radius:10px;overflow:hidden;')}>
-          <summary style={s('padding:10px 12px;font-size:11px;font-weight:700;color:#5EEAD4;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;')}>
+          <summary style={s('padding:10px 12px;font-size:11px;font-weight:700;color:var(--tone-teal-fg);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;')}>
             {item.title}
             <span style={s('font-size:10px;opacity:.6;flex-shrink:0;margin-left:8px;')}>▸ tap to expand</span>
           </summary>

@@ -104,7 +104,7 @@ const abnormalPupilNeuro: FlowPage = {
     <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
       <div style="font-size:18px;color:rgba(139,92,246,0.5);line-height:1;">↓</div>
       <div class="flow-node" style="width:100%;background:rgba(139,92,246,0.12);border-color:rgba(139,92,246,0.4);color:var(--fg-violet-deep);font-size:11px;font-weight:700;text-align:center;cursor:pointer;" onclick="renderFlowId('anisocoria-mydriasis')">
-        MYDRIASIS<br><span style="font-size:9px;color:#A78BFA;margin-top:4px;display:block;">Tap to localise ›</span>
+        MYDRIASIS<br><span style="font-size:9px;color:var(--tone-violet-fg);margin-top:4px;display:block;">Tap to localise ›</span>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
@@ -117,7 +117,7 @@ const abnormalPupilNeuro: FlowPage = {
 
   <div style="margin-top:10px;padding:9px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:10px;width:100%;">
     <div style="font-size:10px;font-weight:700;color:var(--tone-warning-fg);margin-bottom:4px;">💡 PEARLS</div>
-    <div style="font-size:9.5px;line-height:1.6;color:#FDE68A;">
+    <div style="font-size:9.5px;line-height:1.6;color:var(--amber-text);">
       • Anisocoria + altered mentation = <strong>emergency</strong> — assume herniation until proven otherwise<br>
       • <strong>Absent direct PLR, consensual intact</strong> = pre-chiasmal (retina/optic nerve) — NOT CN III<br>
       • CN III peripheral: mydriasis <em>without</em> ptosis or lateral strabismus = parasympathetic fibres only<br>

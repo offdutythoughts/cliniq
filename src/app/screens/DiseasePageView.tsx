@@ -12,7 +12,7 @@ import { NotFound } from './NotFound'
 
 const TITLE = s('font-size:18px;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.3;')
 const SP_ROW = s('display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;')
-const TOP_ALERT = s('background:rgba(220,38,38,0.18);border:1.5px solid rgba(220,38,38,0.5);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;font-weight:700;color:#FCA5A5;letter-spacing:.01em;')
+const TOP_ALERT = s('background:rgba(220,38,38,0.18);border:1.5px solid rgba(220,38,38,0.5);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;font-weight:700;color:var(--tone-danger-fg);letter-spacing:.01em;')
 const TXT = s('font-size:12px;color:var(--gray);line-height:1.6;')
 const SUB_LABEL = s('font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-top:10px;margin-bottom:4px;padding-top:8px;border-top:1px solid var(--border);')
 const SIG_LABEL = s('font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;')

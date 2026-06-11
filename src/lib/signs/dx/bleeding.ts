@@ -442,11 +442,11 @@ export const bleedingDx: DxApproach = {
         html: `<div style="margin-top:10px;padding:10px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;">
   <div style="font-size:11px;font-weight:700;color:var(--tone-danger-fg);margin-bottom:6px;">⚡ EMERGENCY PROTOCOLS</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;">
-    <div onclick="renderProtoDetail('PROT-BLEED-IMTP')" style="cursor:pointer;color:#FECACA;">→ IMTP / severe thrombocytopenia</div>
-    <div onclick="renderProtoDetail('PROT-BLEED-HEMABD')" style="cursor:pointer;color:#FECACA;">→ Acute haemoabdomen (HSA / rodenticide)</div>
-    <div onclick="renderProtoDetail('PROT-BLEED-DIC')" style="cursor:pointer;color:#FECACA;">→ DIC — diagnosis &amp; supportive care</div>
-    <div onclick="renderProtoDetail('PROT-BLEED-SNAKE')" style="cursor:pointer;color:#FECACA;">→ Snake envenomation</div>
-    <div onclick="renderProtoDetail('PROT-TOX-ACRM')" style="cursor:pointer;color:#FECACA;">→ Anticoagulant rodenticide (existing)</div>
+    <div onclick="renderProtoDetail('PROT-BLEED-IMTP')" style="cursor:pointer;color:var(--tone-danger-fg);">→ IMTP / severe thrombocytopenia</div>
+    <div onclick="renderProtoDetail('PROT-BLEED-HEMABD')" style="cursor:pointer;color:var(--tone-danger-fg);">→ Acute haemoabdomen (HSA / rodenticide)</div>
+    <div onclick="renderProtoDetail('PROT-BLEED-DIC')" style="cursor:pointer;color:var(--tone-danger-fg);">→ DIC — diagnosis &amp; supportive care</div>
+    <div onclick="renderProtoDetail('PROT-BLEED-SNAKE')" style="cursor:pointer;color:var(--tone-danger-fg);">→ Snake envenomation</div>
+    <div onclick="renderProtoDetail('PROT-TOX-ACRM')" style="cursor:pointer;color:var(--tone-danger-fg);">→ Anticoagulant rodenticide (existing)</div>
   </div>
 </div>`,
       },

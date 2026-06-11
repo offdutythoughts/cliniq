@@ -51,19 +51,23 @@
   --tone-purple: 168,85,247;    --tone-purple-fg: #6B21A8;
   --tone-indigo: 99,102,241;    --tone-indigo-fg: #3730A3;
   --tone-orange: 249,115,22;    --tone-orange-fg: #7C2D12;   --hl-orange: #C2410C;  /* dark: #FB923C */
+  --hl-green: #15803D;  /* emerald — dark: #34D399 */
+  --hl-pink: #9D174D;   /* anomalous pink — dark: #F9A8D4 */
+  --hl-lime: #4D7C0F;   /* lime — dark: #A3E635 */
   --tone-slate: 100,116,139;    --tone-slate-fg: #334155;
   --tone-neutral: 255,255,255;  --tone-neutral-fg: var(--gray);
 
-  /* Disease-category palette (renderFlow CAT_STYLE): rgb triplet + readable fg. */
-  --cat-vascular: 220,38,38;       --cat-vascular-fg: #FCA5A5;
-  --cat-inflammatory: 245,158,11;  --cat-inflammatory-fg: #FCD34D;
-  --cat-mass: 139,92,246;          --cat-mass-fg: #C4B5FD;
-  --cat-immune: 59,130,246;        --cat-immune-fg: #93C5FD;
-  --cat-degenerative: 100,116,139; --cat-degenerative-fg: #94A3B8;
-  --cat-metabolic: 20,184,166;     --cat-metabolic-fg: #5EEAD4;
-  --cat-toxic: 249,115,22;         --cat-toxic-fg: #FB923C;
-  --cat-trauma: 107,114,128;       --cat-trauma-fg: #D1D5DB;
-  --cat-anomalous: 236,72,153;     --cat-anomalous-fg: #F9A8D4;
+  /* Disease-category palette (renderFlow CAT_STYLE): rgb triplet + readable fg.
+     Light-mode fgs are dark shades; dark block restores the original pastels. */
+  --cat-vascular: 220,38,38;       --cat-vascular-fg: #991B1B;
+  --cat-inflammatory: 245,158,11;  --cat-inflammatory-fg: #92400E;
+  --cat-mass: 139,92,246;          --cat-mass-fg: #5B21B6;
+  --cat-immune: 59,130,246;        --cat-immune-fg: #1E40AF;
+  --cat-degenerative: 100,116,139; --cat-degenerative-fg: #475569;
+  --cat-metabolic: 20,184,166;     --cat-metabolic-fg: #115E59;
+  --cat-toxic: 249,115,22;         --cat-toxic-fg: #C2410C;
+  --cat-trauma: 107,114,128;       --cat-trauma-fg: #374151;
+  --cat-anomalous: 236,72,153;     --cat-anomalous-fg: #9D174D;
 
   /* Flow-node / flow-endpoint location foregrounds: a deep shade on light that
      flips to a bright shade on dark (overridden in the dark block — no per-class
@@ -111,7 +115,13 @@ html[data-theme="dark"]{
   --tone-violet-fg: #C4B5FD;
   --tone-purple-fg: #C4B5FD;
   --tone-indigo-fg: #A5B4FC;
-  --tone-orange-fg: #FED7AA;  --hl-orange: #FB923C;
+  --tone-orange-fg: #FED7AA;  --hl-orange: #FB923C;  --hl-green: #34D399;  --hl-pink: #F9A8D4;  --hl-lime: #A3E635;
+  /* Category palette — restore pastels for dark backgrounds. */
+  --cat-vascular-fg: #FCA5A5;  --cat-inflammatory-fg: #FCD34D;
+  --cat-mass-fg: #C4B5FD;      --cat-immune-fg: #93C5FD;
+  --cat-degenerative-fg: #94A3B8; --cat-metabolic-fg: #5EEAD4;
+  --cat-toxic-fg: #FB923C;     --cat-trauma-fg: #D1D5DB;
+  --cat-anomalous-fg: #F9A8D4;
   --tone-slate-fg: #CBD5E1;
   /* Location foregrounds flip deep→bright; per-class dark rules no longer needed. */
   --fg-blue-deep: var(--fg-blue-bright);     --fg-teal-deep: var(--fg-teal-bright);
@@ -169,10 +179,10 @@ html[data-theme="dark"]{
 .tag{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:600;padding:3px 8px;border-radius:20px;letter-spacing:.02em;}
 .tag-em{background:var(--em-bg);color:var(--tone-danger-title);border:1px solid rgba(var(--tone-danger),0.25);}
 .tag-hi{background:var(--hi-bg);color:var(--amber-text);border:1px solid rgba(var(--amber-rgb),0.25);}
-.tag-mo{background:var(--mo-bg);color:#2DD4BF;border:1px solid rgba(var(--tone-teal),0.25);}
+.tag-mo{background:var(--mo-bg);color:var(--tone-teal-fg);border:1px solid rgba(var(--tone-teal),0.25);}
 .tag-lo{background:var(--lo-bg);color:var(--tone-info-fg);border:1px solid rgba(var(--tone-info),0.2);}
 .tag-sp-dog{background:rgba(var(--tone-info),0.12);color:var(--tone-info-fg);border:1px solid rgba(var(--tone-info),0.2);}
-.tag-sp-cat{background:rgba(var(--tone-purple),0.12);color:#D8B4FE;border:1px solid rgba(var(--tone-purple),0.2);}
+.tag-sp-cat{background:rgba(var(--tone-purple),0.12);color:var(--tone-purple-fg);border:1px solid rgba(var(--tone-purple),0.2);}
 .tag-sp-all{background:rgba(148,163,184,0.1);color:var(--gray);border:1px solid var(--border);}
 
 /* ── FLOW NODES ── */

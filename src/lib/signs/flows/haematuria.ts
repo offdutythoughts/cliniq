@@ -5,7 +5,7 @@
 // The Dx views (haematuriaDx* / renderDxHaematuria*) are a separate tranche and
 // are NOT migrated here.
 //
-// Several screens use bespoke colour palettes (pink #F9A8D4 genital columns)
+// Several screens use bespoke colour palettes (pink var(--hl-pink) genital columns)
 // and custom multi-column location-card grids with endpoint background opacity
 // 0.06 that have no equivalent standard block; those are reproduced verbatim
 // with `html` blocks (see the FLAGs in the migration report).
@@ -248,7 +248,7 @@ const haematuriaTrueSystemic: FlowPage = {
 // ── Initial stream (start of stream) ────────────────────────────────────────
 // Three location columns (Distal Urethra / Genital Tract / Prostate) each a
 // flow-node header + four flow-endpoint cards (background opacity 0.06, pink
-// #F9A8D4 genital palette) + a teal Pearl box → bespoke layout → `html`.
+// var(--hl-pink) genital palette) + a teal Pearl box → bespoke layout → `html`.
 const haematuriaInitial: FlowPage = {
   id: 'haematuria-initial',
   title: 'Haematuria — Initial Stream',
@@ -293,17 +293,17 @@ const haematuriaInitial: FlowPage = {
 
       <!-- Genital tract -->
       <div style="display:flex;flex-direction:column;gap:4px;">
-        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#F9A8D4;background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);">♀ Genital Tract</div>
-        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--hl-pink);background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);">♀ Genital Tract</div>
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:var(--hl-pink);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
           <strong>Oestrus</strong><br><span style="opacity:.75;">Intact bitch · pro-oestrus / oestrus · confirm with timed vaginal cytology</span>
         </div>
-        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:var(--hl-pink);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
           <strong>Vaginitis</strong><br><span style="opacity:.75;">Juvenile or adult · discharge · vaginoscopy</span>
         </div>
-        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:var(--hl-pink);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
           <strong>Vaginal / vulvar tumour</strong><br><span style="opacity:.75;">Leiomyoma (benign intact), TVT, fibrosarcoma</span>
         </div>
-        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:var(--hl-pink);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
           <strong>Subinvolution of placental sites</strong><br><span style="opacity:.75;">Post-whelp bitch · persistent haemorrhagic discharge</span>
         </div>
       </div>
@@ -535,17 +535,17 @@ const haematuriaIndep: FlowPage = {
 
       <!-- Genital tract -->
       <div style="display:flex;flex-direction:column;gap:4px;">
-        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:#F9A8D4;background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);">♀ Genital</div>
-        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--hl-pink);background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);">♀ Genital</div>
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:var(--hl-pink);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
           <strong>Oestrus</strong><br><span style="opacity:.75;">Intact bitch in pro-oestrus · confirm with vaginal cytology</span>
         </div>
-        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:var(--hl-pink);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
           <strong>Vaginal / vulvar tumour</strong><br><span style="opacity:.75;">Leiomyoma · TVT · vaginoscopy + biopsy</span>
         </div>
-        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:var(--hl-pink);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
           <strong>Subinvolution of placental sites</strong><br><span style="opacity:.75;">Post-whelping bitch · haemorrhagic vulvar discharge</span>
         </div>
-        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:#F9A8D4;font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:var(--hl-pink);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
           <strong>Open pyometra</strong><br><span style="opacity:.75;">Mucopurulent ± bloody discharge · intact bitch · US: uterine distension</span>
         </div>
       </div>

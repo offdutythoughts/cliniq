@@ -261,7 +261,7 @@ export const dyspnoeaDx: DxApproach = {
       • Axial tracheal collapse: increased DV tracheal dimension (may mimic intraluminal FB; CT to differentiate)<br>
       • Bronchiectasis: bronchi visible peripherally lacking normal tapering ("tram lines" and "donuts")<br>
       • Both L and R lateral views increase sensitivity for bronchial collapse (ipsilateral visualisation)<br><br>
-      <strong style="color:#A3E635;">Both species — CXR patterns:</strong><br>
+      <strong style="color:var(--hl-lime);">Both species — CXR patterns:</strong><br>
       • <strong>Alveolar:</strong> 🐕 Perihilar = CHF (MMVD); ventral distribution = CHF (DCM) or aspiration; caudodorsal = NCPE · 🐱 Patchy = CHF, pneumonia<br>
       • <strong>Cranioventral alveolar:</strong> Aspiration pneumonia (both species)<br>
       • <strong>Bronchial ("tram lines/donuts"):</strong> 🐱 Asthma + hyperinflation + air trapping · 🐕🐱 Chronic bronchitis<br>
