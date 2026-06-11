@@ -145,7 +145,7 @@ export const ataxiaDx: DxApproach = {
         fontSize: '9px',
         cols: [
           { label: 'Finding', isLabel: true, width: '26%' },
-          { label: 'Cerebellar', color: '#6EE7B7' },
+          { label: 'Cerebellar', color: 'var(--tone-green-fg)' },
           { label: 'Vestibular', color: '#67E8F9' },
           { label: 'Proprioceptive (spinal)', color: '#C084FC' },
         ],

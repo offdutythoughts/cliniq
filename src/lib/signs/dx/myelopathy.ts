@@ -99,9 +99,9 @@ export const myelopathyDx: DxApproach = {
         fontSize: '8.5px',
         cols: [
           { label: 'Finding', isLabel: true, width: '100px' },
-          { label: 'C1–C5',  color: '#6EE7B7' },
-          { label: 'C6–T2',  color: '#A5B4FC' },
-          { label: 'T3–L3',  color: '#FCD34D' },
+          { label: 'C1–C5',  color: 'var(--tone-green-fg)' },
+          { label: 'C6–T2',  color: 'var(--tone-indigo-fg)' },
+          { label: 'T3–L3',  color: 'var(--tone-warning-fg)' },
           { label: 'L4–S3',  color: '#C084FC' },
           { label: 'S2–Ca5', color: '#F472B6' },
         ],

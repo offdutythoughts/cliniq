@@ -57,13 +57,13 @@ export const diarrhoeaFlow: FlowPage = {
         <div class="flow-arrow-v">↓</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
           <div>
-            <div style="font-size:9px;color:#FCA5A5;text-align:center;margin-bottom:2px;">YES — severe</div>
+            <div style="font-size:9px;color:var(--tone-danger-fg);text-align:center;margin-bottom:2px;">YES — severe</div>
             <div class="flow-endpoint pleural" onclick="goLesionTab('LOC-DI-SI','Small intestine')" style="font-size:9px;">
               Parvovirus / HGE
             </div>
           </div>
           <div>
-            <div style="font-size:9px;color:#A7F3D0;text-align:center;margin-bottom:2px;">NO — mild</div>
+            <div style="font-size:9px;color:var(--tone-green-fg);text-align:center;margin-bottom:2px;">NO — mild</div>
             <div class="flow-node sub-step" style="font-size:9px;padding:6px 8px;">Fast 24h + bland diet ± fenbendazole. Most resolve.</div>
           </div>
         </div>
@@ -102,11 +102,11 @@ export const diarrhoeaFlow: FlowPage = {
       <div style="font-size:10px;font-weight:700;color:var(--white);margin-bottom:6px;">SMALL vs LARGE BOWEL — Key differentiators</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:10px;">
         <div>
-          <div style="color:#A7F3D0;font-weight:600;margin-bottom:3px;">Small bowel</div>
+          <div style="color:var(--tone-green-fg);font-weight:600;margin-bottom:3px;">Small bowel</div>
           <div style="color:var(--gray);line-height:1.6;">Large volume stool<br>Low frequency (3-5x/day)<br>Weight loss if chronic<br>Melaena if blood<br>Vomiting ± present<br>Borborygmus / flatulence</div>
         </div>
         <div>
-          <div style="color:#99F6E4;font-weight:600;margin-bottom:3px;">Large bowel</div>
+          <div style="color:var(--fg-teal-deep);font-weight:600;margin-bottom:3px;">Large bowel</div>
           <div style="color:var(--gray);line-height:1.6;">Small volume frequent (>5x)<br>Tenesmus / urgency<br>Usually no weight loss<br>Fresh blood (haematochezia)<br>Mucus present<br>Appetite usually normal</div>
         </div>
       </div>

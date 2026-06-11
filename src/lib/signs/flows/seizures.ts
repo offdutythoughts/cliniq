@@ -47,7 +47,7 @@
 // pages across the app. Legacy snippet of one box:
 //   <div style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);
 //        border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;
-//        font-weight:600;color:#FCA5A5;line-height:1.3;">
+//        font-weight:600;color:var(--tone-danger-fg);line-height:1.3;">
 //     <span style="font-size:13px;">V</span>ascular
 //     <div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">
 //       CVA / stroke<br>Peracute, non-progressive<br>Cats: ischaemic</div>
@@ -69,13 +69,13 @@ export const seizuresFlow: FlowPage = {
     <!-- Seizure phases -->
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;width:100%;">
       <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 8px;font-size:9px;color:var(--gray);line-height:1.5;text-align:center;">
-        <strong style="color:#C4B5FD;font-size:10px;">Prodrome</strong><br>Hours–days before<br>Restlessness · anxiety<br>Hiding · attention-seeking<br><em>Not always present</em>
+        <strong style="color:var(--tone-violet-fg);font-size:10px;">Prodrome</strong><br>Hours–days before<br>Restlessness · anxiety<br>Hiding · attention-seeking<br><em>Not always present</em>
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 8px;font-size:9px;color:var(--gray);line-height:1.5;text-align:center;">
-        <strong style="color:#FCD34D;font-size:10px;">Ictal</strong><br>Active seizure<br>Tonic-clonic · tonic · atonic<br>Autonomic signs<br>Focal or generalised
+        <strong style="color:var(--tone-warning-fg);font-size:10px;">Ictal</strong><br>Active seizure<br>Tonic-clonic · tonic · atonic<br>Autonomic signs<br>Focal or generalised
       </div>
       <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:8px 8px;font-size:9px;color:var(--gray);line-height:1.5;text-align:center;">
-        <strong style="color:#6EE7B7;font-size:10px;">Postictal</strong><br>After seizure ends<br>Disorientation · blindness<br>Ataxia · hypersalivation<br>Minutes to hours
+        <strong style="color:var(--tone-green-fg);font-size:10px;">Postictal</strong><br>After seizure ends<br>Disorientation · blindness<br>Ataxia · hypersalivation<br>Minutes to hours
       </div>
     </div>
     <div class="flow-arrow-v">↓</div>`,
@@ -107,7 +107,7 @@ export const seizuresFlow: FlowPage = {
       html: `<div class="flow-arrow-v">↓</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;">
       <div class="flow-node insp" style="font-size:11px;">
-        Focal<div class="fn-sub">One body region / side<br>Facial twitching · lip smacking<br>Fly-catching · limb jerking<br>Consciousness may be preserved<br>May secondarily generalise<br><strong style="color:#93C5FD;">→ Strongly favours structural</strong></div>
+        Focal<div class="fn-sub">One body region / side<br>Facial twitching · lip smacking<br>Fly-catching · limb jerking<br>Consciousness may be preserved<br>May secondarily generalise<br><strong style="color:var(--tone-info-fg);">→ Strongly favours structural</strong></div>
       </div>
       <div class="flow-node rest" style="font-size:11px;">
         Generalised<div class="fn-sub">Both sides simultaneously<br>Tonic-clonic · tonic · atonic<br>Loss of consciousness<br>Urination · defaecation<br><strong style="color:var(--amber-text);">→ Any category possible</strong></div>
@@ -150,7 +150,7 @@ export const seizuresFlow: FlowPage = {
         Papilloedema = ↑ ICP
       </div>
     </div>
-    <div style="margin-top:5px;background:rgba(37,99,235,0.1);border:1px solid rgba(37,99,235,0.25);border-radius:10px;padding:8px 10px;font-size:9.5px;color:#93C5FD;line-height:1.5;">
+    <div style="margin-top:5px;background:rgba(37,99,235,0.1);border:1px solid rgba(37,99,235,0.25);border-radius:10px;padding:8px 10px;font-size:9.5px;color:var(--tone-info-fg);line-height:1.5;">
       <strong>Normal interictal exam</strong> → idiopathic epilepsy possible (if 6mo–6yr and normal bloods)<br>
       <strong>Abnormal interictal exam</strong> → structural disease until proven otherwise — proceed to MRI
     </div>
@@ -183,14 +183,14 @@ export const seizuresFlow: FlowPage = {
       html: `<div class="flow-node step" style="background:#1E40AF;font-size:11px;">IDIOPATHIC — BREED PREDISPOSITIONS</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;margin-top:5px;">
       <div style="background:rgba(37,99,235,0.1);border:1px solid rgba(37,99,235,0.25);border-radius:10px;padding:8px 9px;font-size:8.5px;color:var(--gray);line-height:1.6;">
-        <strong style="color:#93C5FD;">🐕 Dog (genetic epilepsy)</strong><br>
+        <strong style="color:var(--tone-info-fg);">🐕 Dog (genetic epilepsy)</strong><br>
         Border Collie · Labrador · GSD<br>
         Golden Retriever · Belgian Shepherd<br>
         Beagle · Keeshond · Vizsla<br>
         Finnish Spitz · Irish Setter
       </div>
       <div style="background:rgba(139,92,246,0.1);border:1px solid rgba(139,92,246,0.25);border-radius:10px;padding:8px 9px;font-size:8.5px;color:var(--gray);line-height:1.6;">
-        <strong style="color:#C4B5FD;">⚠️ Structural mimics</strong><br>
+        <strong style="color:var(--tone-violet-fg);">⚠️ Structural mimics</strong><br>
         <strong>MUO:</strong> Pug · Yorkie · Maltese<br>
         · Chihuahua · French Bulldog<br>
         <strong>Glioma:</strong> brachycephalics (&gt;5yr)<br>
@@ -207,16 +207,16 @@ export const seizuresFlow: FlowPage = {
       html: `<div class="flow-node step" style="background:#D97706;font-size:11px;">STRUCTURAL — VITAMIN D</div>
     <div class="flow-arrow-v">↓</div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:5px;width:100%;">
-      <div style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#FCA5A5;line-height:1.3;">
+      <div style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:var(--tone-danger-fg);line-height:1.3;">
         <span style="font-size:13px;">V</span>ascular<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">CVA / stroke<br>Peracute, non-progressive<br>Cats: ischaemic</div>
       </div>
-      <div style="background:rgba(249,115,22,0.12);border:1.5px solid rgba(249,115,22,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#FED7AA;line-height:1.3;">
+      <div style="background:rgba(249,115,22,0.12);border:1.5px solid rgba(249,115,22,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:var(--tone-orange-fg);line-height:1.3;">
         <span style="font-size:13px;">I</span>nflammatory<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">MUO / GME<br>Encephalitis<br>Multifocal, progressive</div>
       </div>
-      <div style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#FCA5A5;line-height:1.3;">
+      <div style="background:rgba(220,38,38,0.12);border:1.5px solid rgba(220,38,38,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:var(--tone-danger-fg);line-height:1.3;">
         <span style="font-size:13px;">T</span>raumatic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Head trauma<br>History of injury<br>RTA, falls</div>
       </div>
-      <div style="background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#93C5FD;line-height:1.3;">
+      <div style="background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:var(--tone-info-fg);line-height:1.3;">
         <span style="font-size:13px;">A</span>nomalous<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Hydrocephalus<br>Lissencephaly<br>&lt;1yr, toy/brachy breeds</div>
       </div>
     </div>
@@ -225,13 +225,13 @@ export const seizuresFlow: FlowPage = {
       <div style="background:rgba(217,119,6,0.12);border:1.5px solid rgba(217,119,6,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:var(--amber-text);line-height:1.3;">
         <span style="font-size:13px;">M</span>etabolic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Storage diseases<br>NCL (inborn errors)<br>Breed-specific</div>
       </div>
-      <div style="background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#93C5FD;line-height:1.3;">
+      <div style="background:rgba(37,99,235,0.12);border:1.5px solid rgba(37,99,235,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:var(--tone-info-fg);line-height:1.3;">
         <span style="font-size:13px;">I</span>diopathic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">No cause found<br>Dx of exclusion<br>Normal MRI + CSF</div>
       </div>
-      <div style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#DDD6FE;line-height:1.3;">
+      <div style="background:rgba(139,92,246,0.12);border:1.5px solid rgba(139,92,246,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:var(--fg-violet-deep);line-height:1.3;">
         <span style="font-size:13px;">N</span>eoplastic<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Meningioma · Glioma<br>Lymphoma · Met.<br>Older animals</div>
       </div>
-      <div style="background:rgba(100,116,139,0.12);border:1.5px solid rgba(100,116,139,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:#CBD5E1;line-height:1.3;">
+      <div style="background:rgba(100,116,139,0.12);border:1.5px solid rgba(100,116,139,0.4);border-radius:10px;padding:7px 5px;text-align:center;font-size:10px;font-weight:600;color:var(--tone-slate-fg);line-height:1.3;">
         <span style="font-size:13px;">D</span>egenerative<div style="font-weight:400;font-size:8px;margin-top:3px;opacity:.8;">Neuronal degen.<br>NCL / lysosomal<br>Breed-specific</div>
       </div>
     </div>
@@ -244,7 +244,7 @@ export const seizuresFlow: FlowPage = {
       html: `<div class="flow-node step" style="background:#059669;font-size:11px;">REACTIVE CAUSES — METABOLIC &amp; TOXIC</div>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;width:100%;margin-top:5px;">
       <div style="background:rgba(5,150,105,0.1);border:1px solid rgba(5,150,105,0.3);border-radius:10px;padding:8px 9px;font-size:8.5px;color:var(--gray);line-height:1.6;">
-        <strong style="color:#6EE7B7;">Metabolic</strong><br>
+        <strong style="color:var(--tone-green-fg);">Metabolic</strong><br>
         Hypoglycaemia (insulinoma, PSS,<br>Addison's, toy breed pup)<br>
         Hepatic encephalopathy (PSS)<br>
         Hypocalcaemia (eclampsia)<br>
@@ -255,7 +255,7 @@ export const seizuresFlow: FlowPage = {
         Hyperthyroidism (cats — rare)
       </div>
       <div style="background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;padding:8px 9px;font-size:8.5px;color:var(--gray);line-height:1.6;">
-        <strong style="color:#FCA5A5;">Toxins</strong><br>
+        <strong style="color:var(--tone-danger-fg);">Toxins</strong><br>
         Organophosphates / carbamates<br>
         Bromethalin rodenticide<br>
         Metaldehyde (slug bait)<br>
@@ -296,8 +296,8 @@ export const seizuresFlow: FlowPage = {
   </div>
 
   <div style="margin-top:8px;padding:10px 14px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:12px;">
-    <div style="font-size:11px;font-weight:600;color:#F87171;">⚠️ Status epilepticus (&gt;5 min) — treat immediately</div>
-    <div style="font-size:10px;color:#FCA5A5;line-height:1.7;margin-top:4px;">
+    <div style="font-size:11px;font-weight:600;color:var(--tone-danger-title);">⚠️ Status epilepticus (&gt;5 min) — treat immediately</div>
+    <div style="font-size:10px;color:var(--tone-danger-fg);line-height:1.7;margin-top:4px;">
       <strong>1st:</strong> Diazepam 0.5 mg/kg IV (×3, q5min) OR Midazolam 0.2–0.3 mg/kg IM/intranasal<br>
       <strong>2nd:</strong> Levetiracetam 20–60 mg/kg IV over 5–15 min OR Phenobarbital 2–5 mg/kg IV (max 24 mg/kg/24h)<br>
       <strong>3rd:</strong> Propofol 1–3 mg/kg IV → CRI 0.1–0.6 mg/kg/min + intubation<br>
@@ -305,8 +305,8 @@ export const seizuresFlow: FlowPage = {
     </div>
   </div>
   <div style="margin-top:6px;padding:8px 14px;background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.2);border-radius:12px;">
-    <div style="font-size:10px;font-weight:600;color:#93C5FD;">💊 When to start maintenance AEDs</div>
-    <div style="font-size:9.5px;color:#BFDBFE;line-height:1.6;margin-top:3px;">
+    <div style="font-size:10px;font-weight:600;color:var(--tone-info-fg);">💊 When to start maintenance AEDs</div>
+    <div style="font-size:9.5px;color:var(--fg-blue-deep);line-height:1.6;margin-top:3px;">
       Cluster (≥2/24h) · SE occurred · &gt;1 seizure/6 months · Progressive or focal signs · Structural disease confirmed<br>
       <strong>PB</strong> 2–3 mg/kg q12h PO · <strong>KBr</strong> 30–40 mg/kg q24h PO (dogs only ⚠️) · <strong>LEV</strong> 20–30 mg/kg q8h PO
     </div>

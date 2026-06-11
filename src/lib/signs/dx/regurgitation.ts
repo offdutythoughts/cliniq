@@ -17,13 +17,13 @@ export const regurgitationDx: DxApproach = {
       {
         kind: 'check',
         html: `
-    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:5px 8px;font-size:10.5px;line-height:1.4;"><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);">Feature</div><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:#6EE7B7;">Regurgitation</div><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:#FCA5A5;">Vomiting</div><div>Retching?</div><div style="color:#6EE7B7;">Usually absent</div><div style="color:#FCA5A5;">Usually present</div><div>Abdominal effort?</div><div style="color:#6EE7B7;">Passive — none</div><div style="color:#FCA5A5;">Active</div><div>Prodromal nausea?</div><div style="color:#6EE7B7;">Absent</div><div style="color:#FCA5A5;">Lip licking, ptyalism</div><div>Bile present?</div><div style="color:#6EE7B7;">Usually absent</div><div style="color:#FCA5A5;">May be present</div><div>Ingesta digested?</div><div style="color:#6EE7B7;">Typically undigested, tubular</div><div style="color:#FCA5A5;">May be digested</div><div>Timing after eating?</div><div style="color:#6EE7B7;">Any time; soon after ↑ suspicion</div><div style="color:#FCA5A5;">Variable</div><div>White/clear mucus?</div><div style="color:#6EE7B7;">Frothy saliva common</div><div style="color:#FCA5A5;">Less typical</div><div>Frequency?</div><div style="color:#6EE7B7;">Many/day, no systemic signs</div><div style="color:#FCA5A5;">Variable</div><div>Duration?</div><div style="color:#6EE7B7;">Weeks–months (megaoesoph.); acute if obstructive</div><div style="color:#FCA5A5;">Variable</div></div>
+    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:5px 8px;font-size:10.5px;line-height:1.4;"><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);">Feature</div><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:var(--tone-green-fg);">Regurgitation</div><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:var(--tone-danger-fg);">Vomiting</div><div>Retching?</div><div style="color:var(--tone-green-fg);">Usually absent</div><div style="color:var(--tone-danger-fg);">Usually present</div><div>Abdominal effort?</div><div style="color:var(--tone-green-fg);">Passive — none</div><div style="color:var(--tone-danger-fg);">Active</div><div>Prodromal nausea?</div><div style="color:var(--tone-green-fg);">Absent</div><div style="color:var(--tone-danger-fg);">Lip licking, ptyalism</div><div>Bile present?</div><div style="color:var(--tone-green-fg);">Usually absent</div><div style="color:var(--tone-danger-fg);">May be present</div><div>Ingesta digested?</div><div style="color:var(--tone-green-fg);">Typically undigested, tubular</div><div style="color:var(--tone-danger-fg);">May be digested</div><div>Timing after eating?</div><div style="color:var(--tone-green-fg);">Any time; soon after ↑ suspicion</div><div style="color:var(--tone-danger-fg);">Variable</div><div>White/clear mucus?</div><div style="color:var(--tone-green-fg);">Frothy saliva common</div><div style="color:var(--tone-danger-fg);">Less typical</div><div>Frequency?</div><div style="color:var(--tone-green-fg);">Many/day, no systemic signs</div><div style="color:var(--tone-danger-fg);">Variable</div><div>Duration?</div><div style="color:var(--tone-green-fg);">Weeks–months (megaoesoph.); acute if obstructive</div><div style="color:var(--tone-danger-fg);">Variable</div></div>
   `,
       },
       { kind: 'step', alt: true, text: '📖 AETIOLOGICAL CLUES — ONCE CONFIRMED' },
       {
         kind: 'check',
-        html: `<strong style="color:#6EE7B7;">Neuromuscular disease</strong><br>
+        html: `<strong style="color:var(--tone-green-fg);">Neuromuscular disease</strong><br>
     • Difficulty prehension/swallowing → masticatory/pharyngeal muscle involvement<br>
     • Generalised weakness → myasthenia gravis or other neuromuscular disease<br>
     • Stridor (respiratory noise) → laryngeal paralysis or MG-related pharyngeal weakness<br>
@@ -31,7 +31,7 @@ export const regurgitationDx: DxApproach = {
       },
       {
         kind: 'check',
-        html: `<strong style="color:#FCD34D;">Inflammation / Oesophagitis</strong><br>
+        html: `<strong style="color:var(--tone-warning-fg);">Inflammation / Oesophagitis</strong><br>
     • Pain or discomfort during/after eating → oesophagitis, FB, or mass<br>
     • Gagging, retching, gulping, reverse sneezing → nausea component suggestive of oesophagitis<br>
     • Regurgitated blood → oesophageal neoplasia or severe ulceration (oesophagitis/FB)<br>
@@ -40,7 +40,7 @@ export const regurgitationDx: DxApproach = {
       },
       {
         kind: 'check',
-        html: `<strong style="color:#FCA5A5;">Obstructive lesion (FB / Stricture)</strong><br>
+        html: `<strong style="color:var(--tone-danger-fg);">Obstructive lesion (FB / Stricture)</strong><br>
     • History of FB ingestion (bones, rawhide — especially small dogs) → oesophageal FB<br>
     • Unable to pass any food into stomach → obstructive lesion more likely<br>
     • Gags and regurgitates forcefully soon after eating → obstructive<br>
@@ -49,7 +49,7 @@ export const regurgitationDx: DxApproach = {
       },
       {
         kind: 'check',
-        html: `<strong style="color:#93C5FD;">Systemic / Metabolic clues</strong><br>
+        html: `<strong style="color:var(--tone-info-fg);">Systemic / Metabolic clues</strong><br>
     • Inappetence + lethargy → aspiration pneumonia or hypoadrenocorticism<br>
     • Weight gain + lethargy → hypothyroidism<br>
     • Dietary indiscretion → toxin ingestion (lead), botulism, or oesophageal FB<br>
@@ -59,7 +59,7 @@ export const regurgitationDx: DxApproach = {
       },
       {
         kind: 'check',
-        html: `<strong style="color:#C4B5FD;">Travel + Exposure history</strong><br>
+        html: `<strong style="color:var(--tone-violet-fg);">Travel + Exposure history</strong><br>
     • Travel to subtropical/tropical regions → <em>Spirocerca lupi</em><br>
     • Thorough medication history — drug-induced oesophagitis underdiagnosed<br>
     • Recent general anaesthesia — ask specifically; owners may not volunteer`,
@@ -76,32 +76,32 @@ export const regurgitationDx: DxApproach = {
       { kind: 'step', text: '🩺 PHYSICAL EXAMINATION' },
       {
         kind: 'check',
-        html: `<strong style="color:#6EE7B7;">Temperature</strong><br>
+        html: `<strong style="color:var(--tone-green-fg);">Temperature</strong><br>
     • Fever → raises suspicion for aspiration pneumonia<br>
     <span style="font-size:10px;opacity:.75;">⚠️ Absence of fever does not preclude aspiration pneumonia — &lt;50% of affected dogs are febrile.</span>`,
       },
       {
         kind: 'check',
-        html: `<strong style="color:#6EE7B7;">Body + Muscle Condition</strong><br>
+        html: `<strong style="color:var(--tone-green-fg);">Body + Muscle Condition</strong><br>
     • Compare current weight with historical records — assess for malnourishment<br>
     • Poor muscle condition without general body condition loss → polymyositis or other polymyopathy`,
       },
       {
         kind: 'check',
-        html: `<strong style="color:#6EE7B7;">Neck Palpation</strong><br>
+        html: `<strong style="color:var(--tone-green-fg);">Neck Palpation</strong><br>
     • Grossly dilated oesophagus occasionally palpable in left ventral neck (not always detected)<br>
     • Firm structure in left ventral neck → oesophageal foreign material<br>
     • Discomfort or repeated swallowing attempts on palpation → oesophagitis or FB obstruction`,
       },
       {
         kind: 'check',
-        html: `<strong style="color:#6EE7B7;">Oral Examination</strong><br>
+        html: `<strong style="color:var(--tone-green-fg);">Oral Examination</strong><br>
     • Assess oral cavity for FBs, swellings, or masses<br>
     • Ptyalism commonly noted`,
       },
       {
         kind: 'check',
-        html: `<strong style="color:#FCD34D;">Upper Airway Noise</strong><br>
+        html: `<strong style="color:var(--tone-warning-fg);">Upper Airway Noise</strong><br>
     • Megaoesophagus → subtle bubbling/fluid noise from oesophageal fluid<br>
     • <strong>Stridor</strong> → laryngeal paralysis / GOLPP<br>
     • Brachycephalic breeds: assess visible airway conformation + degree of stertor — severity of noise correlates with GI signs<br>
@@ -109,20 +109,20 @@ export const regurgitationDx: DxApproach = {
       },
       {
         kind: 'check',
-        html: `<strong style="color:#FCD34D;">Thoracic Auscultation</strong><br>
+        html: `<strong style="color:var(--tone-warning-fg);">Thoracic Auscultation</strong><br>
     • Auscultate for crackles, ↑ respiratory rate/effort → aspiration pneumonia<br>
     <span style="font-size:10px;opacity:.75;">⚠️ Normal pulmonary auscultation does not exclude pneumonia. Oesophageal fluid movement can mimic crackles.</span>`,
       },
       {
         kind: 'check',
-        html: `<strong style="color:#C4B5FD;">Neurological Examination</strong><br>
+        html: `<strong style="color:var(--tone-violet-fg);">Neurological Examination</strong><br>
     • Assess for generalised neuromuscular disease<br>
     • Cranial nerve abnormalities (menace, pupillary light) → MG or dysautonomia<br>
     • Weak gag reflex + weak corneal reflex on repeated stimulation → myasthenia gravis`,
       },
       {
         kind: 'check',
-        html: `<strong style="color:#C4B5FD;">Musculoskeletal Examination</strong><br>
+        html: `<strong style="color:var(--tone-violet-fg);">Musculoskeletal Examination</strong><br>
     • Fatigable muscle weakness → myasthenia gravis<br>
     • Walk or jog the patient during exam — weakness may only become apparent with activity`,
       },

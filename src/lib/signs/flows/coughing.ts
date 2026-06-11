@@ -43,7 +43,7 @@ export const coughingFlows: FlowPage[] = [
 
       // Trailing "Key species difference" note card. The legacy uses a neutral
       // var(--card)/var(--border) card with a var(--gray2) uppercase header and
-      // inline var(--white)/#FCA5A5 strongs — none of which the tone-based
+      // inline var(--white)/var(--tone-danger-fg) strongs — none of which the tone-based
       // `callout` block can reproduce — so this is an escape-hatch html block.
       // It carries no links. width:100% keeps it full-width inside .flow-wrap,
       // matching the legacy block (which sat just outside .flow-wrap).
@@ -53,7 +53,7 @@ export const coughingFlows: FlowPage[] = [
     <div style="font-size:11px;font-weight:600;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">💡 Key species difference</div>
     <div style="font-size:12px;color:var(--gray);line-height:1.65;">
       <strong style="color:var(--white);">Dogs</strong> cough from both cardiac and respiratory disease.<br>
-      <strong style="color:var(--white);">Cats</strong> do <strong style="color:#FCA5A5;">NOT</strong> cough from cardiac disease — if a cat is coughing, it is respiratory.
+      <strong style="color:var(--white);">Cats</strong> do <strong style="color:var(--tone-danger-fg);">NOT</strong> cough from cardiac disease — if a cat is coughing, it is respiratory.
     </div>
   </div>`,
       },

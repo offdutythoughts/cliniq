@@ -78,24 +78,24 @@ const abnormalPupilNeuro: FlowPage = {
   blocks: [
     {
       kind: 'html',
-      html: `<div class="flow-node entry" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.4);color:#C4B5FD;">🧠 NEUROLOGICAL ANISOCORIA</div>
+      html: `<div class="flow-node entry" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.4);color:var(--tone-violet-fg);">🧠 NEUROLOGICAL ANISOCORIA</div>
   <div class="flow-node step" style="margin-top:6px;font-size:10.5px;">Identify the ABNORMAL pupil</div>
 
   <div style="margin-top:8px;padding:10px 12px;background:rgba(37,99,235,0.07);border:1px solid rgba(37,99,235,0.25);border-radius:10px;width:100%;">
-    <div style="font-size:11px;font-weight:700;color:#93C5FD;margin-bottom:8px;">💡 WHICH PUPIL IS ABNORMAL? — LIGHT vs DARK ROOM RULE</div>
+    <div style="font-size:11px;font-weight:700;color:var(--tone-info-fg);margin-bottom:8px;">💡 WHICH PUPIL IS ABNORMAL? — LIGHT vs DARK ROOM RULE</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
       <div style="font-size:9.5px;line-height:1.5;background:rgba(37,99,235,0.08);border-radius:7px;padding:7px 9px;">
-        <div style="color:#93C5FD;font-weight:700;margin-bottom:3px;">Abnormally LARGE pupil</div>
+        <div style="color:var(--tone-info-fg);font-weight:700;margin-bottom:3px;">Abnormally LARGE pupil</div>
         Anisocoria <strong>LESS obvious</strong> in the dark<br>
         (normal pupil also dilates, narrowing the gap)<br>
-        <strong style="color:#FCD34D;">⇒ Lesion preventing constriction</strong><br>
+        <strong style="color:var(--tone-warning-fg);">⇒ Lesion preventing constriction</strong><br>
         → CN III · iris atrophy · pharmacological mydriasis · glaucoma
       </div>
       <div style="font-size:9.5px;line-height:1.5;background:rgba(37,99,235,0.08);border-radius:7px;padding:7px 9px;">
-        <div style="color:#93C5FD;font-weight:700;margin-bottom:3px;">Abnormally SMALL pupil</div>
+        <div style="color:var(--tone-info-fg);font-weight:700;margin-bottom:3px;">Abnormally SMALL pupil</div>
         Anisocoria <strong>MORE obvious</strong> in the dark<br>
         (normal pupil dilates; abnormal stays small)<br>
-        <strong style="color:#F87171;">⇒ Lesion preventing dilation</strong><br>
+        <strong style="color:var(--tone-danger-title);">⇒ Lesion preventing dilation</strong><br>
         → Horner's · uveitis · pharmacological miotic · synechiae
       </div>
     </div>
@@ -103,20 +103,20 @@ const abnormalPupilNeuro: FlowPage = {
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;margin-top:2px;">
     <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
       <div style="font-size:18px;color:rgba(139,92,246,0.5);line-height:1;">↓</div>
-      <div class="flow-node" style="width:100%;background:rgba(139,92,246,0.12);border-color:rgba(139,92,246,0.4);color:#DDD6FE;font-size:11px;font-weight:700;text-align:center;cursor:pointer;" onclick="renderFlowId('anisocoria-mydriasis')">
+      <div class="flow-node" style="width:100%;background:rgba(139,92,246,0.12);border-color:rgba(139,92,246,0.4);color:var(--fg-violet-deep);font-size:11px;font-weight:700;text-align:center;cursor:pointer;" onclick="renderFlowId('anisocoria-mydriasis')">
         MYDRIASIS<br><span style="font-size:9px;color:#A78BFA;margin-top:4px;display:block;">Tap to localise ›</span>
       </div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
       <div style="font-size:18px;color:rgba(37,99,235,0.5);line-height:1;">↓</div>
-      <div class="flow-node" style="width:100%;background:rgba(37,99,235,0.12);border-color:rgba(37,99,235,0.4);color:#BFDBFE;font-size:11px;font-weight:700;text-align:center;cursor:pointer;" onclick="renderFlowId('anisocoria-horners')">
-        MIOSIS<br><span style="font-size:9px;color:#60A5FA;margin-top:4px;display:block;">Tap to localise ›</span>
+      <div class="flow-node" style="width:100%;background:rgba(37,99,235,0.12);border-color:rgba(37,99,235,0.4);color:var(--fg-blue-deep);font-size:11px;font-weight:700;text-align:center;cursor:pointer;" onclick="renderFlowId('anisocoria-horners')">
+        MIOSIS<br><span style="font-size:9px;color:var(--tone-info-fg);margin-top:4px;display:block;">Tap to localise ›</span>
       </div>
     </div>
   </div>
 
   <div style="margin-top:10px;padding:9px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:10px;width:100%;">
-    <div style="font-size:10px;font-weight:700;color:#FCD34D;margin-bottom:4px;">💡 PEARLS</div>
+    <div style="font-size:10px;font-weight:700;color:var(--tone-warning-fg);margin-bottom:4px;">💡 PEARLS</div>
     <div style="font-size:9.5px;line-height:1.6;color:#FDE68A;">
       • Anisocoria + altered mentation = <strong>emergency</strong> — assume herniation until proven otherwise<br>
       • <strong>Absent direct PLR, consensual intact</strong> = pre-chiasmal (retina/optic nerve) — NOT CN III<br>

@@ -62,24 +62,24 @@ export const blindEyeDx: DxApproach = {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
       <div>
-        <strong style="color:#60A5FA;font-size:10px;">🐕 DOG</strong><br><br>
-        <strong style="color:#FCA5A5;">Miniature Schnauzer, Brittany, Dachshund, Maltese</strong><br>→ SARDS (sudden bilateral blindness + Cushingoid phenotype)<br><br>
-        <strong style="color:#FCD34D;">Collie, Sheltie</strong><br>→ Collie eye anomaly (choroidal hypoplasia + ONH coloboma + RD) — genetic test available<br><br>
-        <strong style="color:#6EE7B7;">Many breeds (over 20): Labrador, Poodle, Cocker, Irish Setter, Tibetan Terrier, Mini Schnauzer</strong><br>→ PRA (genetic tests for prcd, rcd1 etc.)<br><br>
-        <strong style="color:#C4B5FD;">CKCS, English Springer Spaniel</strong><br>→ Retinal dysplasia (congenital, bilateral)<br><br>
-        <strong style="color:#FCA5A5;">ABCB1/MDR1 breeds</strong> (Collie, Aussie, Long-haired Whippet, Shetland)<br>→ ivermectin / milbemycin neurotoxicity → blindness + ataxia + coma<br><br>
-        <strong style="color:#FCD34D;">Older small breeds with rapidly progressive cataract</strong> → diabetic cataract<br><br>
-        <strong style="color:#93C5FD;">Cocker, Basset, Springer, Chow, Akita</strong> → primary glaucoma → corneal oedema → vision loss
+        <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG</strong><br><br>
+        <strong style="color:var(--tone-danger-fg);">Miniature Schnauzer, Brittany, Dachshund, Maltese</strong><br>→ SARDS (sudden bilateral blindness + Cushingoid phenotype)<br><br>
+        <strong style="color:var(--tone-warning-fg);">Collie, Sheltie</strong><br>→ Collie eye anomaly (choroidal hypoplasia + ONH coloboma + RD) — genetic test available<br><br>
+        <strong style="color:var(--tone-green-fg);">Many breeds (over 20): Labrador, Poodle, Cocker, Irish Setter, Tibetan Terrier, Mini Schnauzer</strong><br>→ PRA (genetic tests for prcd, rcd1 etc.)<br><br>
+        <strong style="color:var(--tone-violet-fg);">CKCS, English Springer Spaniel</strong><br>→ Retinal dysplasia (congenital, bilateral)<br><br>
+        <strong style="color:var(--tone-danger-fg);">ABCB1/MDR1 breeds</strong> (Collie, Aussie, Long-haired Whippet, Shetland)<br>→ ivermectin / milbemycin neurotoxicity → blindness + ataxia + coma<br><br>
+        <strong style="color:var(--tone-warning-fg);">Older small breeds with rapidly progressive cataract</strong> → diabetic cataract<br><br>
+        <strong style="color:var(--tone-info-fg);">Cocker, Basset, Springer, Chow, Akita</strong> → primary glaucoma → corneal oedema → vision loss
       </div>
       <div>
-        <strong style="color:#FB923C;font-size:10px;">🐱 CAT</strong><br><br>
-        <strong style="color:#C4B5FD;">Older cat with acute bilateral blindness</strong><br>→ systemic hypertension (CKD, hyperthyroid, HAC) — BP first<br><br>
-        <strong style="color:#FCD34D;">Any cat on enrofloxacin</strong><br>→ retinal toxicity — stop drug immediately<br><br>
-        <strong style="color:#6EE7B7;">FIV / FeLV positive</strong><br>→ chronic uveitis · intraocular lymphoma · optic neuritis<br><br>
-        <strong style="color:#FCA5A5;">Outdoor / hunting cat</strong><br>→ toxoplasma chorioretinitis · trauma · fungal (Cryptococcus)<br><br>
-        <strong style="color:#93C5FD;">Cat on vegetarian / homemade diet</strong><br>→ taurine-deficient retinal degeneration (central retinal atrophy)<br><br>
-        <strong style="color:#FCD34D;">Multi-cat / FCoV exposure</strong><br>→ FIP — pyogranulomatous uveitis + chorioretinitis<br><br>
-        <strong style="color:#FCA5A5;">Kitten / young cat with adhesions</strong><br>→ FHV-1 symblepharon → corneal opacity → vision blocked
+        <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT</strong><br><br>
+        <strong style="color:var(--tone-violet-fg);">Older cat with acute bilateral blindness</strong><br>→ systemic hypertension (CKD, hyperthyroid, HAC) — BP first<br><br>
+        <strong style="color:var(--tone-warning-fg);">Any cat on enrofloxacin</strong><br>→ retinal toxicity — stop drug immediately<br><br>
+        <strong style="color:var(--tone-green-fg);">FIV / FeLV positive</strong><br>→ chronic uveitis · intraocular lymphoma · optic neuritis<br><br>
+        <strong style="color:var(--tone-danger-fg);">Outdoor / hunting cat</strong><br>→ toxoplasma chorioretinitis · trauma · fungal (Cryptococcus)<br><br>
+        <strong style="color:var(--tone-info-fg);">Cat on vegetarian / homemade diet</strong><br>→ taurine-deficient retinal degeneration (central retinal atrophy)<br><br>
+        <strong style="color:var(--tone-warning-fg);">Multi-cat / FCoV exposure</strong><br>→ FIP — pyogranulomatous uveitis + chorioretinitis<br><br>
+        <strong style="color:var(--tone-danger-fg);">Kitten / young cat with adhesions</strong><br>→ FHV-1 symblepharon → corneal opacity → vision blocked
       </div>
     </div>`,
       },
@@ -122,11 +122,11 @@ export const blindEyeDx: DxApproach = {
       <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.2);">Fundus</div>
       <div>Anterior segment opacity</div><div>Absent</div><div>Variable</div><div>Variable</div><div>Often obscured</div>
       <div>Retina (PRA, RD, hypertensive)</div><div>Absent</div><div>Absent</div><div>Absent / sluggish</div><div>Abnormal</div>
-      <div style="color:#FCD34D;">SARDS</div><div>Absent</div><div>Absent</div><div>Red ⊘ · Blue ✓</div><div style="color:#6EE7B7;">NORMAL</div>
+      <div style="color:var(--tone-warning-fg);">SARDS</div><div>Absent</div><div>Absent</div><div>Red ⊘ · Blue ✓</div><div style="color:var(--tone-green-fg);">NORMAL</div>
       <div>Optic neuritis</div><div>Absent</div><div>Absent</div><div>Red ⊘ · Blue ⊘</div><div>Swollen / haemorrhagic disc</div>
       <div>Optic nerve hypoplasia</div><div>Absent</div><div>Absent</div><div>Absent (1 or both)</div><div>Small / pale disc</div>
       <div>Chiasmal / optic tract</div><div>Variable</div><div>Variable</div><div>Pattern (see Abnormal Pupil)</div><div>Normal</div>
-      <div style="color:#C4B5FD;">Cortex / forebrain</div><div>Absent</div><div style="color:#6EE7B7;">PRESENT</div><div style="color:#6EE7B7;">PRESENT</div><div>Normal</div>
+      <div style="color:var(--tone-violet-fg);">Cortex / forebrain</div><div>Absent</div><div style="color:var(--tone-green-fg);">PRESENT</div><div style="color:var(--tone-green-fg);">PRESENT</div><div>Normal</div>
     </div>
     <span style="font-size:9.5px;opacity:.85;">💡 Cortical blindness is the one pattern where <strong>both subcortical reflexes (dazzle + PLR) are preserved</strong>. SARDS uniquely preserves only <strong>blue chromatic PLR</strong> (melanopsin RGCs spared); optic neuritis abolishes both red and blue.</span>`,
       },
@@ -149,16 +149,16 @@ export const blindEyeDx: DxApproach = {
     <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:5px 8px;font-size:10px;line-height:1.45;">
       <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Fundus appearance</div>
       <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Localisation</div>
-      <div>Tapetal HYPERreflectivity + retinal vessel attenuation</div><div style="color:#FCD34D;">PRA · end-stage retinal degeneration · TCRD (cat — central ellipse)</div>
-      <div>Tapetal HYPOreflectivity + retinal vessels lifted close to lens · "veil" floating in vitreous</div><div style="color:#FCA5A5;">Retinal detachment — bullous (HT) or rhegmatogenous (post-surgical, trauma)</div>
-      <div>Normal fundus + blind + dilated pupils</div><div style="color:#FCD34D;">SARDS · cortical blindness · optic chiasm (early)</div>
-      <div>Pink/haemorrhagic swollen optic disc · peripapillary oedema</div><div style="color:#F87171;">Optic neuritis (MUA, infectious)</div>
-      <div>Small / pale optic disc</div><div style="color:#93C5FD;">Optic nerve hypoplasia (congenital)</div>
-      <div>Multifocal grey-white retinal lesions ± haemorrhage</div><div style="color:#FCA5A5;">Chorioretinitis (toxoplasma, FIP, fungal, tick-borne)</div>
-      <div>Tortuous retinal vessels + retinal haemorrhage + bullous RD</div><div style="color:#F87171;">Systemic hypertension (cat with CKD / hyperthyroidism)</div>
-      <div>Choroidal hypoplasia + ONH coloboma + ± RD/haemorrhage</div><div style="color:#C4B5FD;">Collie eye anomaly</div>
-      <div>Retinal folds / geographic dysplasia / RD (young dog, CKCS / Springer)</div><div style="color:#6EE7B7;">Retinal dysplasia</div>
-      <div>Acute bilateral retinopathy in a cat on fluoroquinolone</div><div style="color:#F87171;">Enrofloxacin retinal toxicity (STOP DRUG)</div>
+      <div>Tapetal HYPERreflectivity + retinal vessel attenuation</div><div style="color:var(--tone-warning-fg);">PRA · end-stage retinal degeneration · TCRD (cat — central ellipse)</div>
+      <div>Tapetal HYPOreflectivity + retinal vessels lifted close to lens · "veil" floating in vitreous</div><div style="color:var(--tone-danger-fg);">Retinal detachment — bullous (HT) or rhegmatogenous (post-surgical, trauma)</div>
+      <div>Normal fundus + blind + dilated pupils</div><div style="color:var(--tone-warning-fg);">SARDS · cortical blindness · optic chiasm (early)</div>
+      <div>Pink/haemorrhagic swollen optic disc · peripapillary oedema</div><div style="color:var(--tone-danger-title);">Optic neuritis (MUA, infectious)</div>
+      <div>Small / pale optic disc</div><div style="color:var(--tone-info-fg);">Optic nerve hypoplasia (congenital)</div>
+      <div>Multifocal grey-white retinal lesions ± haemorrhage</div><div style="color:var(--tone-danger-fg);">Chorioretinitis (toxoplasma, FIP, fungal, tick-borne)</div>
+      <div>Tortuous retinal vessels + retinal haemorrhage + bullous RD</div><div style="color:var(--tone-danger-title);">Systemic hypertension (cat with CKD / hyperthyroidism)</div>
+      <div>Choroidal hypoplasia + ONH coloboma + ± RD/haemorrhage</div><div style="color:var(--tone-violet-fg);">Collie eye anomaly</div>
+      <div>Retinal folds / geographic dysplasia / RD (young dog, CKCS / Springer)</div><div style="color:var(--tone-green-fg);">Retinal dysplasia</div>
+      <div>Acute bilateral retinopathy in a cat on fluoroquinolone</div><div style="color:var(--tone-danger-title);">Enrofloxacin retinal toxicity (STOP DRUG)</div>
     </div>`,
       },
       { kind: 'step', alt: true, text: '🧠 STEP 5 — NEUROLOGICAL EXAM (forebrain vs structural)' },
@@ -207,11 +207,11 @@ export const blindEyeDx: DxApproach = {
         html: `<strong>Chromatic PLR</strong> uses a handheld device or commercial torch with separate red and blue LEDs (e.g. Melan-100, BIOPAC chromatic):<br>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px 6px;font-size:9.5px;margin:4px 0;">
       <div style="font-weight:600;">Condition</div><div style="font-weight:600;">Red PLR</div><div style="font-weight:600;">Blue PLR</div>
-      <div>Normal</div><div style="color:#6EE7B7;">Present</div><div style="color:#6EE7B7;">Present</div>
-      <div>SARDS</div><div style="color:#F87171;">Absent</div><div style="color:#6EE7B7;">Present (melanopsin RGCs spared)</div>
-      <div>Optic neuritis</div><div style="color:#F87171;">Absent</div><div style="color:#F87171;">Absent</div>
-      <div>End-stage PRA / retinal degeneration</div><div style="color:#F87171;">Absent</div><div style="color:#FCD34D;">Reduced / absent</div>
-      <div>Cortical blindness</div><div style="color:#6EE7B7;">Present</div><div style="color:#6EE7B7;">Present</div>
+      <div>Normal</div><div style="color:var(--tone-green-fg);">Present</div><div style="color:var(--tone-green-fg);">Present</div>
+      <div>SARDS</div><div style="color:var(--tone-danger-title);">Absent</div><div style="color:var(--tone-green-fg);">Present (melanopsin RGCs spared)</div>
+      <div>Optic neuritis</div><div style="color:var(--tone-danger-title);">Absent</div><div style="color:var(--tone-danger-title);">Absent</div>
+      <div>End-stage PRA / retinal degeneration</div><div style="color:var(--tone-danger-title);">Absent</div><div style="color:var(--tone-warning-fg);">Reduced / absent</div>
+      <div>Cortical blindness</div><div style="color:var(--tone-green-fg);">Present</div><div style="color:var(--tone-green-fg);">Present</div>
     </div>
     <strong>Electroretinography (ERG)</strong> — gold-standard differentiator. Performed under sedation:<br>
     • Flat ERG + acute blindness + normal fundus + Cushingoid phenotype → <strong>SARDS</strong> (no treatment).<br>

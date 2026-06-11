@@ -82,10 +82,10 @@ export const abnormalPupilDx: DxApproach = {
         kind: 'html',
         noArrowAfter: true,
         html: `<div style="margin-bottom:8px;padding:10px 12px;background:rgba(37,99,235,0.07);border:1px solid rgba(37,99,235,0.2);border-radius:10px;width:100%;">
-    <div style="font-size:10.5px;font-weight:700;color:#93C5FD;margin-bottom:7px;">🔑 CANINE vs FELINE — KEY SPECIES DIFFERENCES</div>
+    <div style="font-size:10.5px;font-weight:700;color:var(--tone-info-fg);margin-bottom:7px;">🔑 CANINE vs FELINE — KEY SPECIES DIFFERENCES</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;font-size:9px;line-height:1.5;">
-      <div style="color:#93C5FD;font-weight:700;padding-bottom:2px;border-bottom:1px solid rgba(148,163,184,.15);">🐕 Dog</div>
-      <div style="color:#FB923C;font-weight:700;padding-bottom:2px;border-bottom:1px solid rgba(148,163,184,.15);">🐱 Cat</div>
+      <div style="color:var(--tone-info-fg);font-weight:700;padding-bottom:2px;border-bottom:1px solid rgba(148,163,184,.15);">🐕 Dog</div>
+      <div style="color:var(--hl-orange);font-weight:700;padding-bottom:2px;border-bottom:1px solid rgba(148,163,184,.15);">🐱 Cat</div>
       <div>Normal pupil: <strong>round</strong></div>
       <div>Normal pupil: <strong>vertical ellipse / slit</strong> (can appear round in dim light)</div>
       <div>Iris atrophy: <strong>common</strong> (senile, small breeds) — most often <em>primary</em> degenerative</div>
@@ -123,28 +123,28 @@ export const abnormalPupilDx: DxApproach = {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
       <div>
-        <strong style="color:#60A5FA;font-size:10px;">🐕 DOG — BREED-SPECIFIC CLUES</strong><br><br>
-        <strong style="color:#FCD34D;">Golden Retriever</strong> → idiopathic Horner's (3rd order — most common breed); pigmentary uveitis (iris cysts → uveitis → 2° glaucoma)<br><br>
-        <strong style="color:#FCA5A5;">Jack Russell, Tibetan Terrier, Border Collie, Sealyham, Manchester Terrier</strong> → primary anterior lens luxation (ADAMTS17 mutation)<br><br>
-        <strong style="color:#6EE7B7;">Cocker, Basset, Springer, Bouvier, Chow, Akita</strong> → primary closed-angle glaucoma → mid-fixed mydriasis<br><br>
-        <strong style="color:#C4B5FD;">Miniature Schnauzer, Toy Poodle, Cocker</strong> → cataract → lens-induced uveitis → posterior synechiae<br><br>
-        <strong style="color:#FCA5A5;">Miniature Schnauzer (especially), Dachshund, Brittany</strong> → SARDS<br><br>
-        <strong style="color:#FCD34D;">Toy and miniature breeds, senior small breeds</strong> → senile iris atrophy (most common in Poodle, Shih Tzu, Yorkshire Terrier — may appear as early as 4–5 yr)<br><br>
-        <strong style="color:#6EE7B7;">Beagle, Norwegian Elkhound</strong> → PRA<br><br>
-        <strong style="color:#C4B5FD;">Any large breed</strong> → mediastinal mass / brachial plexus tumour → 2nd-order Horner's<br><br>
-        <strong style="color:#FCD34D;">Akita, Samoyed, Husky</strong> → uveodermatologic syndrome → bilateral granulomatous uveitis + periocular depigmentation
+        <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG — BREED-SPECIFIC CLUES</strong><br><br>
+        <strong style="color:var(--tone-warning-fg);">Golden Retriever</strong> → idiopathic Horner's (3rd order — most common breed); pigmentary uveitis (iris cysts → uveitis → 2° glaucoma)<br><br>
+        <strong style="color:var(--tone-danger-fg);">Jack Russell, Tibetan Terrier, Border Collie, Sealyham, Manchester Terrier</strong> → primary anterior lens luxation (ADAMTS17 mutation)<br><br>
+        <strong style="color:var(--tone-green-fg);">Cocker, Basset, Springer, Bouvier, Chow, Akita</strong> → primary closed-angle glaucoma → mid-fixed mydriasis<br><br>
+        <strong style="color:var(--tone-violet-fg);">Miniature Schnauzer, Toy Poodle, Cocker</strong> → cataract → lens-induced uveitis → posterior synechiae<br><br>
+        <strong style="color:var(--tone-danger-fg);">Miniature Schnauzer (especially), Dachshund, Brittany</strong> → SARDS<br><br>
+        <strong style="color:var(--tone-warning-fg);">Toy and miniature breeds, senior small breeds</strong> → senile iris atrophy (most common in Poodle, Shih Tzu, Yorkshire Terrier — may appear as early as 4–5 yr)<br><br>
+        <strong style="color:var(--tone-green-fg);">Beagle, Norwegian Elkhound</strong> → PRA<br><br>
+        <strong style="color:var(--tone-violet-fg);">Any large breed</strong> → mediastinal mass / brachial plexus tumour → 2nd-order Horner's<br><br>
+        <strong style="color:var(--tone-warning-fg);">Akita, Samoyed, Husky</strong> → uveodermatologic syndrome → bilateral granulomatous uveitis + periocular depigmentation
       </div>
       <div>
-        <strong style="color:#FB923C;font-size:10px;">🐱 CAT — BREED-SPECIFIC CLUES</strong><br><br>
-        <strong style="color:#C4B5FD;">Older cat (any breed)</strong> → systemic hypertension → bilateral mydriasis + retinal detachment ± intraocular haemorrhage — <em>check BP FIRST</em><br><br>
-        <strong style="color:#FCD34D;">FIV/FeLV positive</strong> → chronic uveitis → dyscoria; diffuse iris melanosis (age-related, progressive)<br><br>
-        <strong style="color:#FCA5A5;">FeLV positive</strong> → spastic pupil syndrome — tonic anisocoria with impaired constriction; one or both eyes<br><br>
-        <strong style="color:#6EE7B7;">Burmese</strong> → corneal sequestrum → reflex uveitis → miosis; uveal cysts (breed-associated); more susceptible to eyelid agenesis<br><br>
-        <strong style="color:#FCA5A5;">Outdoor cat</strong> → trauma → 2nd / 3rd order Horner's; toxoplasma uveitis; proptosis<br><br>
-        <strong style="color:#93C5FD;">Cat with otitis media</strong> → 3rd-order Horner's (postganglionic — middle ear via chorda tympani); ± CN VII deficit<br><br>
-        <strong style="color:#C4B5FD;">Multi-cat household / FIP</strong> → pyogranulomatous uveitis → miosis · hypopyon · aqueous flare<br><br>
-        <strong style="color:#6EE7B7;">Key-Gaskell cat (UK / Australia)</strong> → dysautonomia: bilateral fixed mydriasis + dry mucosae + megaoesophagus<br><br>
-        <strong style="color:#FCD34D;">Bengal, Domestic Shorthair</strong> → PPMs (iris-to-cornea type) — rare but reported
+        <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT — BREED-SPECIFIC CLUES</strong><br><br>
+        <strong style="color:var(--tone-violet-fg);">Older cat (any breed)</strong> → systemic hypertension → bilateral mydriasis + retinal detachment ± intraocular haemorrhage — <em>check BP FIRST</em><br><br>
+        <strong style="color:var(--tone-warning-fg);">FIV/FeLV positive</strong> → chronic uveitis → dyscoria; diffuse iris melanosis (age-related, progressive)<br><br>
+        <strong style="color:var(--tone-danger-fg);">FeLV positive</strong> → spastic pupil syndrome — tonic anisocoria with impaired constriction; one or both eyes<br><br>
+        <strong style="color:var(--tone-green-fg);">Burmese</strong> → corneal sequestrum → reflex uveitis → miosis; uveal cysts (breed-associated); more susceptible to eyelid agenesis<br><br>
+        <strong style="color:var(--tone-danger-fg);">Outdoor cat</strong> → trauma → 2nd / 3rd order Horner's; toxoplasma uveitis; proptosis<br><br>
+        <strong style="color:var(--tone-info-fg);">Cat with otitis media</strong> → 3rd-order Horner's (postganglionic — middle ear via chorda tympani); ± CN VII deficit<br><br>
+        <strong style="color:var(--tone-violet-fg);">Multi-cat household / FIP</strong> → pyogranulomatous uveitis → miosis · hypopyon · aqueous flare<br><br>
+        <strong style="color:var(--tone-green-fg);">Key-Gaskell cat (UK / Australia)</strong> → dysautonomia: bilateral fixed mydriasis + dry mucosae + megaoesophagus<br><br>
+        <strong style="color:var(--tone-warning-fg);">Bengal, Domestic Shorthair</strong> → PPMs (iris-to-cornea type) — rare but reported
       </div>
     </div>`,
       },
@@ -167,12 +167,12 @@ export const abnormalPupilDx: DxApproach = {
         kind: 'html',
         noArrowAfter: true,
         html: `<div style="margin-bottom:10px;padding:9px 12px;background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.25);border-radius:10px;width:100%;">
-    <div style="font-size:10.5px;font-weight:700;color:#FB923C;margin-bottom:6px;">🐾 SPECIES — NORMAL PUPIL SHAPE (confirm before labelling as abnormal)</div>
+    <div style="font-size:10.5px;font-weight:700;color:var(--hl-orange);margin-bottom:6px;">🐾 SPECIES — NORMAL PUPIL SHAPE (confirm before labelling as abnormal)</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;font-size:9.5px;line-height:1.5;">
-      <div><strong style="color:#60A5FA;">🐕 Dog:</strong> <strong>round</strong> at all light levels. Any deviation from round = abnormal.</div>
-      <div><strong style="color:#FB923C;">🐱 Cat:</strong> <strong>vertical slit/ellipse in bright light → round/oval in dim light.</strong> A round pupil in a cat with bright ambient light is normal dilation — not mydriasis. Judge only in standardised lighting.</div>
-      <div><strong style="color:#60A5FA;">Iris atrophy (dog):</strong> very common in senior small breeds — moth-eaten ragged pupil margin, transillumination defects. Can masquerade as neurological mydriasis.</div>
-      <div><strong style="color:#FB923C;">Iris atrophy (cat):</strong> uncommon; usually secondary (chronic uveitis, glaucoma). Blue irises normally thinner and more prone. Always retroilluminate before ascribing to primary degenerative disease in a cat.</div>
+      <div><strong style="color:var(--tone-info-fg);">🐕 Dog:</strong> <strong>round</strong> at all light levels. Any deviation from round = abnormal.</div>
+      <div><strong style="color:var(--hl-orange);">🐱 Cat:</strong> <strong>vertical slit/ellipse in bright light → round/oval in dim light.</strong> A round pupil in a cat with bright ambient light is normal dilation — not mydriasis. Judge only in standardised lighting.</div>
+      <div><strong style="color:var(--tone-info-fg);">Iris atrophy (dog):</strong> very common in senior small breeds — moth-eaten ragged pupil margin, transillumination defects. Can masquerade as neurological mydriasis.</div>
+      <div><strong style="color:var(--hl-orange);">Iris atrophy (cat):</strong> uncommon; usually secondary (chronic uveitis, glaucoma). Blue irises normally thinner and more prone. Always retroilluminate before ascribing to primary degenerative disease in a cat.</div>
     </div>
   </div>`,
       },
@@ -223,16 +223,16 @@ export const abnormalPupilDx: DxApproach = {
         html: `<div style="display:grid;grid-template-columns:1fr 1.2fr;gap:5px 8px;font-size:10px;line-height:1.45;">
       <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Finding</div>
       <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Most likely</div>
-      <div>Dyscoria (D-shape, irregular pupil)</div><div style="color:#FCD34D;">Posterior synechiae · iris atrophy · congenital · iris coloboma</div>
-      <div>Ragged margin, transilluminates</div><div style="color:#93C5FD;">Senile iris atrophy (mistaken for true mydriasis)</div>
-      <div>Iris-to-iris / iris-to-lens / iris-to-cornea strand</div><div style="color:#C4B5FD;">Persistent pupillary membranes (PPMs)</div>
-      <div>Round, free-floating pigmented sphere in AC</div><div style="color:#6EE7B7;">Uveal cyst (transilluminates · benign · Golden Retriever)</div>
-      <div>Solid pigmented iris mass</div><div style="color:#F87171;">Iris melanoma / diffuse iris melanoma (cat)</div>
-      <div>Posterior synechiae adherent to lens</div><div style="color:#FCA5A5;">Chronic uveitis · 2° glaucoma risk if 360°</div>
-      <div>Aqueous flare + miosis + ↓ IOP</div><div style="color:#FCA5A5;">Anterior uveitis</div>
-      <div>Mid-fixed mydriasis + corneal oedema + ↑ IOP</div><div style="color:#F87171;">Acute glaucoma</div>
-      <div>Lens visible in AC / aphakic crescent</div><div style="color:#F87171;">Anterior lens luxation</div>
-      <div>Miosis + ptosis + enophthalmos + 3rd eyelid</div><div style="color:#FCD34D;">Horner's syndrome</div>
+      <div>Dyscoria (D-shape, irregular pupil)</div><div style="color:var(--tone-warning-fg);">Posterior synechiae · iris atrophy · congenital · iris coloboma</div>
+      <div>Ragged margin, transilluminates</div><div style="color:var(--tone-info-fg);">Senile iris atrophy (mistaken for true mydriasis)</div>
+      <div>Iris-to-iris / iris-to-lens / iris-to-cornea strand</div><div style="color:var(--tone-violet-fg);">Persistent pupillary membranes (PPMs)</div>
+      <div>Round, free-floating pigmented sphere in AC</div><div style="color:var(--tone-green-fg);">Uveal cyst (transilluminates · benign · Golden Retriever)</div>
+      <div>Solid pigmented iris mass</div><div style="color:var(--tone-danger-title);">Iris melanoma / diffuse iris melanoma (cat)</div>
+      <div>Posterior synechiae adherent to lens</div><div style="color:var(--tone-danger-fg);">Chronic uveitis · 2° glaucoma risk if 360°</div>
+      <div>Aqueous flare + miosis + ↓ IOP</div><div style="color:var(--tone-danger-fg);">Anterior uveitis</div>
+      <div>Mid-fixed mydriasis + corneal oedema + ↑ IOP</div><div style="color:var(--tone-danger-title);">Acute glaucoma</div>
+      <div>Lens visible in AC / aphakic crescent</div><div style="color:var(--tone-danger-title);">Anterior lens luxation</div>
+      <div>Miosis + ptosis + enophthalmos + 3rd eyelid</div><div style="color:var(--tone-warning-fg);">Horner's syndrome</div>
     </div>`,
       },
       { kind: 'step', alt: true, text: "🧠 STEP 5 — HORNER'S? LOCALISE 1st / 2nd / 3rd ORDER" },
@@ -241,15 +241,15 @@ export const abnormalPupilDx: DxApproach = {
         html: `<strong>1st order (central / brainstem / cervical cord T1):</strong> Rare. Concurrent neurological deficits — ataxia, paresis, hemineglect, vestibular signs. Lesions: cervical IVDD, fibrocartilaginous embolism, cerebrovascular accident, neoplasia. <strong>MRI</strong> + CSF.<br>
     <strong>2nd order (preganglionic, T1–T3 → cervical sympathetic chain):</strong> Look in the chest and neck — thoracic radiographs (mediastinal mass, thymoma, lymphoma), trauma (brachial plexus avulsion), cervical neoplasia, head/neck surgery history.<br>
     <strong>3rd order (postganglionic, after cranial cervical ganglion):</strong> Middle / inner ear disease, retrobulbar mass, idiopathic (most common — particularly <strong>Golden Retriever idiopathic Horner's</strong>, typically resolves spontaneously over weeks to months; published median ~15 weeks, range 11–20 weeks, up to 6 months). Otoscopy + CT/MRI bullae and orbit.<br>
-    <strong style="color:#FB923C;">Cat-specific:</strong> middle ear disease is the most common 3rd-order cause in cats (otitis media, nasopharyngeal polyp extending to bulla). Check CN VII concurrently (facial nerve travels through petrous temporal bone — CN VII deficit + Horner's = middle ear). Also consider thoracic causes in outdoor or trauma-exposed cats (rib fracture, thoracic mass). FeLV screen in cats with unexplained anisocoria — spastic pupil syndrome can mimic Horner's.<br><br>
+    <strong style="color:var(--hl-orange);">Cat-specific:</strong> middle ear disease is the most common 3rd-order cause in cats (otitis media, nasopharyngeal polyp extending to bulla). Check CN VII concurrently (facial nerve travels through petrous temporal bone — CN VII deficit + Horner's = middle ear). Also consider thoracic causes in outdoor or trauma-exposed cats (rib fracture, thoracic mass). FeLV screen in cats with unexplained anisocoria — spastic pupil syndrome can mimic Horner's.<br><br>
     <strong>Pharmacological localisation — two-step phenylephrine protocol:</strong>
     <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:3px 6px;font-size:9.5px;margin:4px 0;">
       <div style="font-weight:600;">Step / Order</div><div style="font-weight:600;">Expected response</div>
       <div>Step 1 — 1% phenylephrine, both eyes</div><div>Time to dilation of the affected pupil</div>
-      <div>3rd order (postganglionic — denervation hypersensitivity)</div><div style="color:#6EE7B7;">Dilates in ≤ 20 min with 1% (normal eye does not)</div>
+      <div>3rd order (postganglionic — denervation hypersensitivity)</div><div style="color:var(--tone-green-fg);">Dilates in ≤ 20 min with 1% (normal eye does not)</div>
       <div>Step 2 — if no 1% response → switch to 10% phenylephrine</div><div>Time to bilateral dilation</div>
-      <div>2nd order (preganglionic)</div><div style="color:#FCD34D;">10% dilates both pupils in 20–40 min</div>
-      <div>1st order (central)</div><div style="color:#FCA5A5;">10% &gt; 40 min (slow / minimal)</div>
+      <div>2nd order (preganglionic)</div><div style="color:var(--tone-warning-fg);">10% dilates both pupils in 20–40 min</div>
+      <div>1st order (central)</div><div style="color:var(--tone-danger-fg);">10% &gt; 40 min (slow / minimal)</div>
     </div>
     <span style="font-size:9.5px;opacity:.75;">Apply identical drop to contralateral eye and time both — interpret only the time difference, not absolute values. Note: if Horner's has been present &gt;3 weeks, postganglionic axonal degeneration can still develop hypersensitivity in 2nd-order lesions, blurring the test. Always document concurrent neurological exam.</span>`,
       },
@@ -295,7 +295,7 @@ export const abnormalPupilDx: DxApproach = {
         html: `<strong>1% phenylephrine — Horner's localisation</strong> (as in Exam step 5): rapid response (≤20 min) = 3rd order; intermediate = 2nd order; slow = 1st order. Always run a contralateral control.<br><br>
     <strong>Dilute pilocarpine (0.05–0.1%) — dysautonomia / denervation hypersensitivity:</strong> dilute pilocarpine causes constriction within 30 min in a parasympathetically denervated pupil (dysautonomia, CN III parasympathetic nucleus lesion) but no constriction in a normal pupil.<br>
     <div style="margin:6px 0;padding:7px 10px;background:rgba(251,146,60,0.08);border:1px solid rgba(251,146,60,0.2);border-radius:7px;font-size:9px;line-height:1.55;">
-      <strong style="color:#FB923C;">🐱 CAT — Pilocarpine Testing Cautions:</strong><br>
+      <strong style="color:var(--hl-orange);">🐱 CAT — Pilocarpine Testing Cautions:</strong><br>
       • Pilocarpine is irritating to feline eyes — use 0.05–0.1% only for testing.<br>
       • Concentrations ≥1% may cause <strong>salivation, vomiting, anorexia, and diarrhoea</strong> from systemic absorption — do NOT use 1–2% pilocarpine in cats (unlike dogs).<br>
       • Pharmacological testing is <strong>rarely needed in cats</strong> — most iris atrophy is secondary and diagnosable by clinical examination under magnification. Reserve for cases where efferent CN III dysfunction cannot be excluded clinically.<br>
@@ -310,11 +310,11 @@ export const abnormalPupilDx: DxApproach = {
         html: `<strong>Chromatic PLR</strong> (handheld melanopsin-targeted device): differentiates retinal vs optic nerve vs cortical blindness when both eyes are blind with dilated pupils.<br>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px 6px;font-size:9.5px;margin:4px 0;">
       <div style="font-weight:600;">Condition</div><div style="font-weight:600;">Red PLR</div><div style="font-weight:600;">Blue PLR</div>
-      <div>Normal</div><div style="color:#6EE7B7;">Present</div><div style="color:#6EE7B7;">Present</div>
-      <div>SARDS</div><div style="color:#F87171;">Absent</div><div style="color:#6EE7B7;">Present</div>
-      <div>Optic neuritis</div><div style="color:#F87171;">Absent</div><div style="color:#F87171;">Absent</div>
-      <div>End-stage retinal degeneration</div><div style="color:#F87171;">Absent</div><div style="color:#FCD34D;">Reduced / absent</div>
-      <div>Cortical blindness</div><div style="color:#6EE7B7;">Present</div><div style="color:#6EE7B7;">Present</div>
+      <div>Normal</div><div style="color:var(--tone-green-fg);">Present</div><div style="color:var(--tone-green-fg);">Present</div>
+      <div>SARDS</div><div style="color:var(--tone-danger-title);">Absent</div><div style="color:var(--tone-green-fg);">Present</div>
+      <div>Optic neuritis</div><div style="color:var(--tone-danger-title);">Absent</div><div style="color:var(--tone-danger-title);">Absent</div>
+      <div>End-stage retinal degeneration</div><div style="color:var(--tone-danger-title);">Absent</div><div style="color:var(--tone-warning-fg);">Reduced / absent</div>
+      <div>Cortical blindness</div><div style="color:var(--tone-green-fg);">Present</div><div style="color:var(--tone-green-fg);">Present</div>
     </div>
     <strong>Electroretinography (ERG)</strong> — gold standard for SARDS (flat ERG) vs optic neuritis (preserved ERG, abnormal MRI). Referral.<br>
     <strong>Visual evoked potentials</strong> — central / cortical vs post-retinal. Referral.`,

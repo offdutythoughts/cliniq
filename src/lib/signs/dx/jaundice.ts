@@ -68,12 +68,12 @@ export const jaundiceDx: DxApproach = {
         html: `<div style="display:grid;grid-template-columns:1fr 1.2fr;gap:5px 8px;font-size:10px;line-height:1.45;">
         <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Finding</div>
         <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Most likely</div>
-        <div>Pallor + icterus (± tachycardia, weakness)</div><div style="color:#F87171;">Pre-hepatic haemolysis</div>
-        <div>Pyrexia</div><div style="color:#FCD34D;">FIP, neutrophilic cholangitis, sepsis</div>
-        <div>Hepatomegaly</div><div style="color:#A7F3D0;">Lipidosis, lymphocytic cholangitis, neoplasia</div>
-        <div>Cranial abdominal pain</div><div style="color:#FCA5A5;">Pancreatitis, acute cholangitis, cholecystitis</div>
-        <div>Ascites</div><div style="color:#93C5FD;">Lymphocytic cholangitis, FIP, neoplasia</div>
-        <div>Respiratory compromise (pleural effusion)</div><div style="color:#93C5FD;">FIP, neoplasia</div>
+        <div>Pallor + icterus (± tachycardia, weakness)</div><div style="color:var(--tone-danger-title);">Pre-hepatic haemolysis</div>
+        <div>Pyrexia</div><div style="color:var(--tone-warning-fg);">FIP, neutrophilic cholangitis, sepsis</div>
+        <div>Hepatomegaly</div><div style="color:var(--tone-green-fg);">Lipidosis, lymphocytic cholangitis, neoplasia</div>
+        <div>Cranial abdominal pain</div><div style="color:var(--tone-danger-fg);">Pancreatitis, acute cholangitis, cholecystitis</div>
+        <div>Ascites</div><div style="color:var(--tone-info-fg);">Lymphocytic cholangitis, FIP, neoplasia</div>
+        <div>Respiratory compromise (pleural effusion)</div><div style="color:var(--tone-info-fg);">FIP, neoplasia</div>
       </div>`,
       },
       { kind: 'step', alt: true, text: '🧠 STEP 3 — DON\'T MISS' },

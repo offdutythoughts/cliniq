@@ -152,9 +152,9 @@ const dyspnoeaEntry: FlowPage = {
           Nasopharyngeal stenosis`,
         },
       ],
-      footnote: `⚠️ <strong style="color:#C4B5FD;">Open-mouth breathing in a cat = SEVERE</strong> — cats are obligate nasal breathers. Any open-mouth breathing → immediate O₂ + minimal handling.<br>
-        ⚠️ <strong style="color:#C4B5FD;">Pleural effusion in cats is usually bilateral.</strong> Non-compressible cranial mediastinum = mass until proven otherwise.<br>
-        ⚠️ <strong style="color:#C4B5FD;">ATE:</strong> Acute limb paresis/pain + cold limbs + respiratory distress → HCM + aortic thromboembolism.`,
+      footnote: `⚠️ <strong style="color:var(--tone-violet-fg);">Open-mouth breathing in a cat = SEVERE</strong> — cats are obligate nasal breathers. Any open-mouth breathing → immediate O₂ + minimal handling.<br>
+        ⚠️ <strong style="color:var(--tone-violet-fg);">Pleural effusion in cats is usually bilateral.</strong> Non-compressible cranial mediastinum = mass until proven otherwise.<br>
+        ⚠️ <strong style="color:var(--tone-violet-fg);">ATE:</strong> Acute limb paresis/pain + cold limbs + respiratory distress → HCM + aortic thromboembolism.`,
     },
 
     {
@@ -162,7 +162,7 @@ const dyspnoeaEntry: FlowPage = {
       kind: 'callout',
       tone: 'danger',
       gap: 10,
-      html: '<strong style="color:#F87171;">⚡ EMERGENCY PRIORITY:</strong> O₂ → minimal restraint → POCUS (pleural effusion?) → thoracocentesis if indicated → <em>then</em> radiographs. Do NOT delay thoracocentesis to get CXR in a severely dyspnoeic cat.',
+      html: '<strong style="color:var(--tone-danger-title);">⚡ EMERGENCY PRIORITY:</strong> O₂ → minimal restraint → POCUS (pleural effusion?) → thoracocentesis if indicated → <em>then</em> radiographs. Do NOT delay thoracocentesis to get CXR in a severely dyspnoeic cat.',
     },
   ],
 }

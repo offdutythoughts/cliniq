@@ -22,7 +22,7 @@ export const pupdDx: DxApproach = {
       { kind: 'step', text: '📋 CONFIRM PU/PD — OWNER HISTORY' },
       {
         kind: 'check',
-        html: `<strong style="color:#FCD34D;">Is it truly PU/PD?</strong><br>
+        html: `<strong style="color:var(--tone-warning-fg);">Is it truly PU/PD?</strong><br>
       • <strong>Pollakiuria</strong> — small frequent voids, urgency, straining → lower urinary tract disease (UTI, urolithiasis, FLUTD). Not polyuria.<br>
       • <strong>Urinary incontinence</strong> — involuntary leakage during sleep/rest → hormonal, neurological, anatomical. Not polydipsia.<br>
       • <strong>True PU/PD</strong> — large volume voiding, increased frequency with large volumes, owner reports drinking excessively<br>
@@ -31,7 +31,7 @@ export const pupdDx: DxApproach = {
       { kind: 'step', alt: true, text: '📖 CHRONICITY + ONSET' },
       {
         kind: 'check',
-        html: `<strong style="color:#6EE7B7;">Acute onset (&lt;1–2 weeks)</strong><br>
+        html: `<strong style="color:var(--tone-green-fg);">Acute onset (&lt;1–2 weeks)</strong><br>
       • AKI (toxin, leptospirosis, lily, NSAID) — severe azotaemia possible<br>
       • Pyometra — intact female, post-oestrus; may present in shock<br>
       • DKA — diabetic ketoacidosis (existing or newly diagnosed DM)<br>
@@ -41,7 +41,7 @@ export const pupdDx: DxApproach = {
       },
       {
         kind: 'check',
-        html: `<strong style="color:#FCD34D;">Chronic / insidious onset</strong><br>
+        html: `<strong style="color:var(--tone-warning-fg);">Chronic / insidious onset</strong><br>
       • CKD — gradual progression; owners notice weight loss and water bowl refilling<br>
       • Hyperadrenocorticism — pot-belly, panting, polyphagia, hair loss — months-years<br>
       • DM — weight loss despite polyphagia; cataracts in dogs; hind-limb weakness in cats<br>
@@ -51,50 +51,50 @@ export const pupdDx: DxApproach = {
       { kind: 'step', alt: true, text: '📖 KEY SIGNALMENT CLUES' },
       {
         kind: 'check',
-        html: `<strong style="color:#6EE7B7;">Age</strong><br>
+        html: `<strong style="color:var(--tone-green-fg);">Age</strong><br>
       • Young (&lt;2 yr): CDI, primary NDI (rare), PSS, congenital DM — consider heritable cause<br>
       • Middle-aged dog: HAC (typical 7–12 yr), DM<br>
       • Older cat (&gt;8 yr): hyperthyroidism, CKD, DM — always check T4<br>
-      <strong style="color:#FCD34D;">Breed</strong><br>
+      <strong style="color:var(--tone-warning-fg);">Breed</strong><br>
       • Poodle, Dachshund, Boxer, Beagle, Boston Terrier → HAC<br>
       • WHWT, Nova Scotia Duck Tolling Retriever, Gr. Dane → Addison's<br>
       • Young large breed dog → Primary polydipsia (psychogenic)<br>
       • Siamese, Burmese → DM (cat)<br>
-      <strong style="color:#FCA5A5;">Sex / reproductive status</strong><br>
+      <strong style="color:var(--tone-danger-fg);">Sex / reproductive status</strong><br>
       • Intact female dog (mid-cycle or 4–8 wks post-oestrus) → <strong>Pyometra — emergency</strong><br>
       • Female dog 4–8 yr → HAC slightly overrepresented in females`,
       },
       { kind: 'step', alt: true, text: '📖 MEDICATION + EXPOSURE HISTORY' },
       {
         kind: 'check',
-        html: `<strong style="color:#FCA5A5;">Iatrogenic causes — common and easily missed</strong><br>
+        html: `<strong style="color:var(--tone-danger-fg);">Iatrogenic causes — common and easily missed</strong><br>
       • <strong>Glucocorticoids</strong> (oral, injectable, topical, ear drops) → secondary NDI; most common iatrogenic cause<br>
       • <strong>Phenobarbitone / primidone</strong> (dogs) → hepatotoxicity + secondary PU/PD<br>
       • <strong>Diuretics</strong> (frusemide, spironolactone) → obligatory diuresis<br>
       • <strong>Lithium</strong> → primary NDI<br>
       • Recent megestrol acetate (cat) → DM induction<br>
-      <strong style="color:#FCD34D;">Toxin / environmental</strong><br>
+      <strong style="color:var(--tone-warning-fg);">Toxin / environmental</strong><br>
       • Ethylene glycol → AKI (acute, severe), crystalluria<br>
       • Lily ingestion (cats) → AKI<br>
       • Jerky treats, copper hepatopathy → Fanconi / glucosuria with normoglycaemia<br>
       • Grapes / raisins (dogs) → AKI<br>
-      <strong style="color:#93C5FD;">Vaccination + outdoor access</strong><br>
+      <strong style="color:var(--tone-info-fg);">Vaccination + outdoor access</strong><br>
       • Unvaccinated, outdoor, water access → <strong>Leptospirosis</strong> (zoonotic — PPE!)`,
       },
       { kind: 'step', alt: true, text: '📖 CONCURRENT SIGNS — NARROW THE DIFFERENTIAL' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;font-size:10px;line-height:1.5;">
-        <div><strong style="color:#FCA5A5;">Polyphagia + PU/PD</strong><br>HAC (dog) · DM · Hyperthyroidism (cat)</div>
-        <div><strong style="color:#FCA5A5;">Weight loss + polyphagia</strong><br>DM · Hyperthyroidism (cat) · Acromegaly (cat)</div>
-        <div><strong style="color:#FCD34D;">Pot-belly + panting</strong><br>HAC — high suspicion</div>
-        <div><strong style="color:#FCD34D;">Waxing/waning illness</strong><br>Hypoadrenocorticism · CKD · PSS</div>
-        <div><strong style="color:#6EE7B7;">Intact female + systemic signs</strong><br>Pyometra — rule out immediately</div>
-        <div><strong style="color:#6EE7B7;">Young + stunted + neurological</strong><br>PSS (portosystemic shunt)</div>
-        <div><strong style="color:#93C5FD;">Constipation + weakness</strong><br>Hypercalcaemia</div>
-        <div><strong style="color:#93C5FD;">Hind-limb weakness (cat)</strong><br>Hypokalemia · Acromegaly (DM)</div>
-        <div><strong style="color:#C4B5FD;">Profound PU/PD — otherwise well</strong><br>CDI · Primary polydipsia</div>
-        <div><strong style="color:#C4B5FD;">Nocturia preference for cold water</strong><br>CDI — high suspicion</div>
+        <div><strong style="color:var(--tone-danger-fg);">Polyphagia + PU/PD</strong><br>HAC (dog) · DM · Hyperthyroidism (cat)</div>
+        <div><strong style="color:var(--tone-danger-fg);">Weight loss + polyphagia</strong><br>DM · Hyperthyroidism (cat) · Acromegaly (cat)</div>
+        <div><strong style="color:var(--tone-warning-fg);">Pot-belly + panting</strong><br>HAC — high suspicion</div>
+        <div><strong style="color:var(--tone-warning-fg);">Waxing/waning illness</strong><br>Hypoadrenocorticism · CKD · PSS</div>
+        <div><strong style="color:var(--tone-green-fg);">Intact female + systemic signs</strong><br>Pyometra — rule out immediately</div>
+        <div><strong style="color:var(--tone-green-fg);">Young + stunted + neurological</strong><br>PSS (portosystemic shunt)</div>
+        <div><strong style="color:var(--tone-info-fg);">Constipation + weakness</strong><br>Hypercalcaemia</div>
+        <div><strong style="color:var(--tone-info-fg);">Hind-limb weakness (cat)</strong><br>Hypokalemia · Acromegaly (DM)</div>
+        <div><strong style="color:var(--tone-violet-fg);">Profound PU/PD — otherwise well</strong><br>CDI · Primary polydipsia</div>
+        <div><strong style="color:var(--tone-violet-fg);">Nocturia preference for cold water</strong><br>CDI — high suspicion</div>
       </div>`,
       },
     ],
@@ -109,7 +109,7 @@ export const pupdDx: DxApproach = {
       { kind: 'step', text: '🩺 PHYSICAL EXAMINATION' },
       {
         kind: 'check',
-        html: `<strong style="color:#6EE7B7;">Hydration + Cardiovascular</strong><br>
+        html: `<strong style="color:var(--tone-green-fg);">Hydration + Cardiovascular</strong><br>
       • Dehydration (skin tent, dry MM, sunken eyes) → obligate losses (DM, CKD, HAC)<br>
       • Tachycardia + weak pulses → septic shock (pyometra), haemorrhage, Addisonian crisis<br>
       • <strong>Bradycardia</strong> → hyperkalaemia → classical Addison's disease (Na:K &lt;27)<br>
@@ -117,7 +117,7 @@ export const pupdDx: DxApproach = {
       },
       {
         kind: 'check',
-        html: `<strong style="color:#FCD34D;">Body Condition + Weight</strong><br>
+        html: `<strong style="color:var(--tone-warning-fg);">Body Condition + Weight</strong><br>
       • <strong>Pot-belly + muscle wasting + overweight</strong> → HAC — classic presentation<br>
       • <strong>Weight loss + muscle wasting</strong> → DM, CKD, hyperthyroidism (cat), lymphoma, acromegaly<br>
       • <strong>Large body frame (cat)</strong> → Acromegaly — broad head, large paws, prognathia<br>
@@ -125,7 +125,7 @@ export const pupdDx: DxApproach = {
       },
       {
         kind: 'check',
-        html: `<strong style="color:#FCA5A5;">Skin + Coat</strong><br>
+        html: `<strong style="color:var(--tone-danger-fg);">Skin + Coat</strong><br>
       • <strong>Truncal alopecia (symmetrical, non-pruritic)</strong> → HAC<br>
       • <strong>Calcinosis cutis</strong> (white/yellow firm plaques, neck/groin) → HAC — specific but not sensitive<br>
       • <strong>Thin, inelastic skin</strong> → HAC (collagen loss from cortisol excess)<br>
@@ -133,7 +133,7 @@ export const pupdDx: DxApproach = {
       },
       {
         kind: 'check',
-        html: `<strong style="color:#FCD34D;">Abdominal Palpation</strong><br>
+        html: `<strong style="color:var(--tone-warning-fg);">Abdominal Palpation</strong><br>
       • <strong>Hepatomegaly</strong> → HAC (vacuolar hepatopathy), DM, hyperthyroidism, PSS<br>
       • <strong>Renomegaly / irregular kidneys</strong> → CKD (end-stage: small kidneys), lymphoma, PKD (cats)<br>
       • <strong>Painful kidneys</strong> → AKI (toxin, leptospirosis), pyelonephritis<br>
@@ -143,7 +143,7 @@ export const pupdDx: DxApproach = {
       },
       {
         kind: 'check',
-        html: `<strong style="color:#93C5FD;">Eyes</strong><br>
+        html: `<strong style="color:var(--tone-info-fg);">Eyes</strong><br>
       • <strong>Cataracts</strong> (dog) → DM — bilateral, rapidly progressive in dogs with poorly regulated DM<br>
       • <strong>Retinal haemorrhage / detachment</strong> → systemic hypertension (CKD, HAC, DM, hyperthyroidism)<br>
       • <strong>Uveitis</strong> → leptospirosis, lymphoma (paraneoplastic), hypertension, DM<br>
@@ -151,20 +151,20 @@ export const pupdDx: DxApproach = {
       },
       {
         kind: 'check',
-        html: `<strong style="color:#6EE7B7;">Neck — Thyroid</strong><br>
+        html: `<strong style="color:var(--tone-green-fg);">Neck — Thyroid</strong><br>
       • <strong>Palpable thyroid nodule(s)</strong> (ventral neck, cat) → Hyperthyroidism — most cats &gt;8 yr<br>
       • Bilateral = toxic multinodular goitre (most common); unilateral = adenoma or carcinoma`,
       },
       {
         kind: 'check',
-        html: `<strong style="color:#FCA5A5;">Rectal Examination — mandatory in all PU/PD dogs</strong><br>
+        html: `<strong style="color:var(--tone-danger-fg);">Rectal Examination — mandatory in all PU/PD dogs</strong><br>
       • <strong>Anal sac mass</strong> → AGASACA — 27–53% cause paraneoplastic hypercalcaemia → secondary NDI<br>
       • Examine even without perineal swelling — small masses easily missed<br>
       • Peripheral lymphadenopathy → lymphoma (T-cell with hypercalcaemia most common)`,
       },
       {
         kind: 'check',
-        html: `<strong style="color:#C4B5FD;">Neurological</strong><br>
+        html: `<strong style="color:var(--tone-violet-fg);">Neurological</strong><br>
       • <strong>Altered mentation / hepatic encephalopathy signs</strong> → PSS, hepatic failure<br>
       • <strong>Generalised muscle weakness</strong> → hypokalaemia (cat: ventroflexion), hypoadrenocorticism<br>
       • Plantigrade stance (cat) → diabetic neuropathy<br>
@@ -182,28 +182,28 @@ export const pupdDx: DxApproach = {
       { kind: 'step', text: '🔬 STEP 1 — URINALYSIS (first, before IV fluids)' },
       {
         kind: 'check',
-        html: `<strong style="color:#FCD34D;">Serial USG — 3–5 samples on different days/times</strong><br><br>
+        html: `<strong style="color:var(--tone-warning-fg);">Serial USG — 3–5 samples on different days/times</strong><br><br>
       <div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:5px 8px;font-size:10px;line-height:1.4;">
         <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">USG</div>
         <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Interpretation</div>
         <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Consider</div>
-        <div style="color:#6EE7B7;white-space:nowrap;">&gt;1.030 dog<br>&gt;1.035 cat</div>
+        <div style="color:var(--tone-green-fg);white-space:nowrap;">&gt;1.030 dog<br>&gt;1.035 cat</div>
         <div>Concentrated — not obligate PU/PD</div>
         <div style="font-size:9.5px;">Glucosuria? → DM can raise USG artificially. ≥1 concentrated sample → Primary polydipsia possible.</div>
-        <div style="color:#FCD34D;">1.013–1.029</div>
+        <div style="color:var(--tone-warning-fg);">1.013–1.029</div>
         <div>Partially concentrated</div>
         <div style="font-size:9.5px;">HAC · early CKD · primary polydipsia</div>
-        <div style="color:#FB923C;">1.008–1.012</div>
+        <div style="color:var(--hl-orange);">1.008–1.012</div>
         <div>Isosthenuric</div>
         <div style="font-size:9.5px;">CKD · HAC · Addison's medullary washout · pyelonephritis</div>
-        <div style="color:#F87171;">&lt;1.008</div>
+        <div style="color:var(--tone-danger-title);">&lt;1.008</div>
         <div>Hyposthenuric</div>
         <div style="font-size:9.5px;">CDI · NDI · primary polydipsia · severe HAC</div>
       </div>`,
       },
       {
         kind: 'check',
-        html: `<strong style="color:#FCD34D;">Dipstick + sediment</strong><br>
+        html: `<strong style="color:var(--tone-warning-fg);">Dipstick + sediment</strong><br>
       • Glucosuria + <em>hyperglycaemia</em> → DM (osmotic diuresis; glucose &gt;180 mg/dL dog, &gt;270 cat)<br>
       • Glucosuria + <em>normoglycaemia</em> → renal glucosuria / Fanconi (jerky treats, copper hepatopathy)<br>
       • Active sediment (WBC casts, bacteriuria) → pyelonephritis — culture regardless<br>
@@ -212,23 +212,23 @@ export const pupdDx: DxApproach = {
       { kind: 'step', alt: true, text: 'STEP 2 — MINIMUM DATABASE + IMAGING' },
       {
         kind: 'check',
-        html: `<strong style="color:#FCD34D;">Biochemistry:</strong> BUN · Cr · SDMA · phosphate · Ca²⁺ · K⁺ · Na⁺ · glucose · ALP · ALT · albumin · cholesterol<br>
-      <strong style="color:#FCD34D;">Haematology:</strong> CBC — absent stress leukogram in sick dog → Addison's. Leucocytosis + left shift → infectious.<br>
-      <strong style="color:#FCD34D;">T4:</strong> ALL cats &gt;7 yr. Free T4 by equilibrium dialysis if total T4 equivocal.<br>
-      <strong style="color:#FCD34D;">BP:</strong> Indirect measurement — all PU/PD patients.<br>
-      <strong style="color:#FCD34D;">Urine culture:</strong> All PU/PD patients (pyelonephritis often presents without localising signs).<br>
-      <strong style="color:#FCD34D;">Abdominal US:</strong> Adrenal size · uterus (closed pyometra) · kidney architecture · hepatic pattern · lymph nodes`,
+        html: `<strong style="color:var(--tone-warning-fg);">Biochemistry:</strong> BUN · Cr · SDMA · phosphate · Ca²⁺ · K⁺ · Na⁺ · glucose · ALP · ALT · albumin · cholesterol<br>
+      <strong style="color:var(--tone-warning-fg);">Haematology:</strong> CBC — absent stress leukogram in sick dog → Addison's. Leucocytosis + left shift → infectious.<br>
+      <strong style="color:var(--tone-warning-fg);">T4:</strong> ALL cats &gt;7 yr. Free T4 by equilibrium dialysis if total T4 equivocal.<br>
+      <strong style="color:var(--tone-warning-fg);">BP:</strong> Indirect measurement — all PU/PD patients.<br>
+      <strong style="color:var(--tone-warning-fg);">Urine culture:</strong> All PU/PD patients (pyelonephritis often presents without localising signs).<br>
+      <strong style="color:var(--tone-warning-fg);">Abdominal US:</strong> Adrenal size · uterus (closed pyometra) · kidney architecture · hepatic pattern · lymph nodes`,
       },
       {
         kind: 'html',
         html: `<!-- CLASSIFY -->
-    <div class="dx-step" style="background:rgba(99,102,241,0.2);border-color:rgba(99,102,241,0.45);color:#C7D2FE;">CLASSIFY — PRIMARY POLYURIA vs PRIMARY POLYDIPSIA</div>`,
+    <div class="dx-step" style="background:rgba(99,102,241,0.2);border-color:rgba(99,102,241,0.45);color:var(--fg-indigo-deep);">CLASSIFY — PRIMARY POLYURIA vs PRIMARY POLYDIPSIA</div>`,
       },
       {
         kind: 'html',
         html: `<!-- Primary Polydipsia block -->
     <div style="border:1.5px solid rgba(16,185,129,0.4);border-radius:12px;padding:12px 14px;background:rgba(16,185,129,0.06);">
-      <div style="font-size:12px;font-weight:700;color:#6EE7B7;margin-bottom:8px;">💧 PRIMARY POLYDIPSIA <span style="font-weight:400;font-size:10px;color:var(--gray);">— excessive drinking drives secondary polyuria</span></div>
+      <div style="font-size:12px;font-weight:700;color:var(--tone-green-fg);margin-bottom:8px;">💧 PRIMARY POLYDIPSIA <span style="font-weight:400;font-size:10px;color:var(--gray);">— excessive drinking drives secondary polyuria</span></div>
 
       <div style="font-size:10px;color:var(--gray);margin-bottom:8px;line-height:1.5;">
         <strong style="color:var(--white);">USG clue:</strong> At least 1 sample concentrated (&gt;1.030 dog / &gt;1.035 cat) · Plasma Na⁺ low-normal or low (dilutional)
@@ -250,14 +250,14 @@ export const pupdDx: DxApproach = {
         kind: 'html',
         html: `<!-- Primary Polyuria block -->
     <div style="border:1.5px solid rgba(99,102,241,0.4);border-radius:12px;padding:12px 14px;background:rgba(99,102,241,0.06);">
-      <div style="font-size:12px;font-weight:700;color:#C7D2FE;margin-bottom:8px;">🚰 PRIMARY POLYURIA <span style="font-weight:400;font-size:10px;color:var(--gray);">— kidney produces excess urine → compensatory thirst</span></div>
+      <div style="font-size:12px;font-weight:700;color:var(--fg-indigo-deep);margin-bottom:8px;">🚰 PRIMARY POLYURIA <span style="font-weight:400;font-size:10px;color:var(--gray);">— kidney produces excess urine → compensatory thirst</span></div>
 
       <div style="font-size:10px;color:var(--gray);margin-bottom:10px;line-height:1.5;">
         <strong style="color:var(--white);">USG clue:</strong> Consistently dilute or isosthenuric · Plasma Na⁺ high-normal or elevated (free water loss)
       </div>
 
       <!-- Primary causes -->
-      <div style="font-size:10.5px;font-weight:700;color:#C7D2FE;margin-bottom:6px;padding:4px 8px;background:rgba(99,102,241,0.15);border-radius:6px;">PRIMARY causes <span style="font-weight:400;font-size:9.5px;color:var(--gray);">— intrinsic ADH pathway failure</span></div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--fg-indigo-deep);margin-bottom:6px;padding:4px 8px;background:rgba(99,102,241,0.15);border-radius:6px;">PRIMARY causes <span style="font-weight:400;font-size:9.5px;color:var(--gray);">— intrinsic ADH pathway failure</span></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px;">
         <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-CDI','Central DI')" style="font-size:10px;background:rgba(99,102,241,0.12);border-color:rgba(99,102,241,0.4);cursor:pointer;">
           <strong>Central DI (CDI)</strong><br>
@@ -270,11 +270,11 @@ export const pupdDx: DxApproach = {
       </div>
 
       <!-- Secondary causes -->
-      <div style="font-size:10.5px;font-weight:700;color:#FCD34D;margin-bottom:8px;padding:4px 8px;background:rgba(217,119,6,0.15);border-radius:6px;">SECONDARY causes <span style="font-weight:400;font-size:9.5px;color:var(--gray);">— underlying disease drives polyuria</span></div>
+      <div style="font-size:10.5px;font-weight:700;color:var(--tone-warning-fg);margin-bottom:8px;padding:4px 8px;background:rgba(217,119,6,0.15);border-radius:6px;">SECONDARY causes <span style="font-weight:400;font-size:9.5px;color:var(--gray);">— underlying disease drives polyuria</span></div>
 
       <!-- Endocrine -->
       <div style="margin-bottom:6px;">
-        <div style="font-size:10px;font-weight:700;color:#C4B5FD;margin-bottom:4px;">⚗️ Endocrine</div>
+        <div style="font-size:10px;font-weight:700;color:var(--tone-violet-fg);margin-bottom:4px;">⚗️ Endocrine</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
           <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-ENDO','Endocrine')" style="font-size:9.5px;background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.35);cursor:pointer;">
             <strong>HAC (Cushing's)</strong> <span style="font-size:8.5px;color:var(--gray);">Dog · most common secondary NDI</span><br>
@@ -305,7 +305,7 @@ export const pupdDx: DxApproach = {
 
       <!-- Renal -->
       <div style="margin-bottom:6px;">
-        <div style="font-size:10px;font-weight:700;color:#93C5FD;margin-bottom:4px;">🫘 Renal</div>
+        <div style="font-size:10px;font-weight:700;color:var(--tone-info-fg);margin-bottom:4px;">🫘 Renal</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
           <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-RENAL','Renal / Urinary')" style="font-size:9.5px;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.35);cursor:pointer;">
             <strong>CKD</strong> <span style="font-size:8.5px;color:var(--gray);">Dog + Cat · lost concentrating ability</span><br>
@@ -328,10 +328,10 @@ export const pupdDx: DxApproach = {
 
       <!-- Systemic -->
       <div>
-        <div style="font-size:10px;font-weight:700;color:#FED7AA;margin-bottom:4px;">🏥 Systemic / Hepatic</div>
+        <div style="font-size:10px;font-weight:700;color:var(--tone-orange-fg);margin-bottom:4px;">🏥 Systemic / Hepatic</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
           <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')" style="font-size:9.5px;background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.35);cursor:pointer;">
-            <strong>Pyometra</strong> <span style="font-size:8.5px;color:#F87171;">⚠️ EMERGENCY · Intact ♀</span><br>
+            <strong>Pyometra</strong> <span style="font-size:8.5px;color:var(--tone-danger-title);">⚠️ EMERGENCY · Intact ♀</span><br>
             <span style="font-weight:400;">E. coli endotoxin → secondary NDI. 4–8 wk post-oestrus. May lack discharge (closed). → US abdomen immediately.</span>
           </div>
           <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')" style="font-size:9.5px;background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.35);cursor:pointer;">
@@ -339,7 +339,7 @@ export const pupdDx: DxApproach = {
             <span style="font-weight:400;">Low BUN · low albumin · ammonium biurate. Young dog · stunted · HE signs. → Bile acids · US · CT angio.</span>
           </div>
           <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')" style="font-size:9.5px;background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.35);cursor:pointer;">
-            <strong>Leptospirosis</strong> <span style="font-size:8.5px;color:#F87171;">⚠️ ZOONOTIC — PPE</span><br>
+            <strong>Leptospirosis</strong> <span style="font-size:8.5px;color:var(--tone-danger-title);">⚠️ ZOONOTIC — PPE</span><br>
             <span style="font-weight:400;">Unvaccinated outdoor dog. Acute AKI/hepatic injury · fever · jaundice · uveitis. → MAT titres + urine PCR.</span>
           </div>
           <div class="dx-dx" onclick="goLesionTab('LOC-PUPD-MED','Systemic / Hepatic')" style="font-size:9.5px;background:rgba(249,115,22,0.1);border-color:rgba(249,115,22,0.35);cursor:pointer;">
@@ -364,8 +364,8 @@ export const pupdDx: DxApproach = {
       {
         kind: 'html',
         html: `<div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-radius:10px;">
-    <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:4px;">⚠️ RED FLAGS</div>
-    <div style="font-size:10px;color:#FCA5A5;line-height:1.6;">
+    <div style="font-size:10px;font-weight:700;color:var(--tone-danger-title);margin-bottom:4px;">⚠️ RED FLAGS</div>
+    <div style="font-size:10px;color:var(--tone-danger-fg);line-height:1.6;">
       Intact female + systemic signs (pyometra) · Severe azotaemia + oliguria (AKI) · Addisonian crisis / DKA / sepsis · Hyponatraemia &lt;125 mEq/L · Acute blindness (hypertensive retinal detachment) · Leptospirosis (PPE + isolate)
     </div>
   </div>`,
@@ -390,11 +390,11 @@ export const pupdDx: DxApproach = {
     blocks: [
       {
         kind: 'html',
-        html: `<div class="dx-step" style="background:rgba(99,102,241,0.2);border-color:rgba(99,102,241,0.45);color:#C7D2FE;">💉 DESMOPRESSIN (DDAVP) RESPONSE TRIAL</div>`,
+        html: `<div class="dx-step" style="background:rgba(99,102,241,0.2);border-color:rgba(99,102,241,0.45);color:var(--fg-indigo-deep);">💉 DESMOPRESSIN (DDAVP) RESPONSE TRIAL</div>`,
       },
       {
         kind: 'check',
-        html: `<strong style="color:#FCA5A5;">⚠️ BEFORE STARTING — absolute prerequisites</strong><br>
+        html: `<strong style="color:var(--tone-danger-fg);">⚠️ BEFORE STARTING — absolute prerequisites</strong><br>
       • Minimum database complete (biochemistry, haematology, urinalysis)<br>
       • <strong>Hyperadrenocorticism excluded</strong> — some HAC dogs partially respond to DDAVP → false CDI diagnosis<br>
       • <strong>Pyometra excluded</strong> (ultrasound or confirmed spayed)<br>
@@ -415,11 +415,11 @@ export const pupdDx: DxApproach = {
       { kind: 'step', alt: true, text: 'DESMOPRESSIN ADMINISTRATION' },
       {
         kind: 'check',
-        html: `<strong style="color:#FCD34D;">Dog:</strong><br>
+        html: `<strong style="color:var(--tone-warning-fg);">Dog:</strong><br>
       • <strong>Oral DDAVP tablets:</strong> 0.05–0.1 mg (50–100 µg) PO q8–12h<br>
       • <strong>Conjunctival drops (ophthalmic):</strong> 1–2 drops into conjunctival sac q12–24h (0.01% solution = 10 µg/drop)<br>
       • <strong>Intranasal solution used conjunctivally:</strong> 1–2 drops q12h (if ophthalmic not available)<br><br>
-      <strong style="color:#FCD34D;">Cat:</strong><br>
+      <strong style="color:var(--tone-warning-fg);">Cat:</strong><br>
       • <strong>Conjunctival drops:</strong> 1–2 drops q12–24h<br>
       • Oral DDAVP less predictable in cats — conjunctival route preferred<br><br>
       <span style="font-size:10px;opacity:.8;">Duration: <strong>5–7 days</strong> for full response assessment. USG checked Days 3–4 then Day 7.</span>`,
@@ -431,17 +431,17 @@ export const pupdDx: DxApproach = {
         <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">USG response</div>
         <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Water intake</div>
         <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Interpretation</div>
-        <div style="color:#6EE7B7;">USG increases to &gt;1.015<br>(ideally &gt;1.025)</div>
-        <div style="color:#6EE7B7;">↓ significantly (&gt;50%)</div>
+        <div style="color:var(--tone-green-fg);">USG increases to &gt;1.015<br>(ideally &gt;1.025)</div>
+        <div style="color:var(--tone-green-fg);">↓ significantly (&gt;50%)</div>
         <div><strong>CDI confirmed</strong><br>ADH-responsive collecting duct → commence long-term DDAVP</div>
-        <div style="color:#FCA5A5;">USG remains &lt;1.007<br>No change</div>
-        <div style="color:#FCA5A5;">No change</div>
+        <div style="color:var(--tone-danger-fg);">USG remains &lt;1.007<br>No change</div>
+        <div style="color:var(--tone-danger-fg);">No change</div>
         <div><strong>Primary NDI</strong><br>Collecting duct unresponsive to ADH — treat underlying cause</div>
-        <div style="color:#FCD34D;">USG already &gt;1.030 (dog)<br>/ &gt;1.035 (cat)</div>
-        <div style="color:#FCD34D;">↓ or unchanged</div>
+        <div style="color:var(--tone-warning-fg);">USG already &gt;1.030 (dog)<br>/ &gt;1.035 (cat)</div>
+        <div style="color:var(--tone-warning-fg);">↓ or unchanged</div>
         <div><strong>Primary polydipsia</strong><br>Patient was concentrating urine all along — medullary washout may blur earlier readings</div>
-        <div style="color:#C4B5FD;">Partial response<br>(USG 1.008–1.015)</div>
-        <div style="color:#C4B5FD;">Mild ↓</div>
+        <div style="color:var(--tone-violet-fg);">Partial response<br>(USG 1.008–1.015)</div>
+        <div style="color:var(--tone-violet-fg);">Mild ↓</div>
         <div><strong>Partial CDI</strong> or secondary NDI<br>Rule out HAC (most common secondary NDI) — treat underlying cause and retest</div>
       </div>`,
       },
@@ -451,8 +451,8 @@ export const pupdDx: DxApproach = {
         html: `• <strong>Bodyweight daily</strong> — weight gain &gt;5% → water retention → reduce dose or discontinue<br>
       • <strong>Plasma sodium Day 5–7</strong> — hyponatraemia developing → primary polydipsia (overdrinking + ADH effect) → stop immediately<br>
       • <strong>Oedema / ascites</strong> — rare with physiological DDAVP doses; more likely if primary polydipsia misclassified<br>
-      <div style="margin-top:8px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-left:3px solid #F87171;border-radius:8px;padding:8px 10px;font-size:10.5px;">
-        <span style="font-weight:700;color:#F87171;">⚠️ STOP IMMEDIATELY IF:</span> Plasma Na falls &lt;140 mEq/L · Bodyweight gain &gt;5% · Oedema develops · Owner stops measuring water and patient appears more depressed
+      <div style="margin-top:8px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-left:3px solid var(--tone-danger-title);border-radius:8px;padding:8px 10px;font-size:10.5px;">
+        <span style="font-weight:700;color:var(--tone-danger-title);">⚠️ STOP IMMEDIATELY IF:</span> Plasma Na falls &lt;140 mEq/L · Bodyweight gain &gt;5% · Oedema develops · Owner stops measuring water and patient appears more depressed
       </div>`,
       },
       { kind: 'step', alt: true, text: 'CDI CONFIRMED — LONG-TERM MANAGEMENT' },

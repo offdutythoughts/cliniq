@@ -152,7 +152,7 @@ const weaknessPersistent: FlowPage = {
             </div>
           </div>
           <div>
-            <div style="font-size:9px;color:#A7F3D0;text-align:center;margin-bottom:2px;">NO — paresis only</div>
+            <div style="font-size:9px;color:var(--tone-green-fg);text-align:center;margin-bottom:2px;">NO — paresis only</div>
             <div class="flow-endpoint bronchi" onclick="goLesionTab('LOC-WK-PERSISTENT','Junctionopathy / Myopathy')" style="font-size:9px;">
               MG / Myopathy
             </div>
@@ -205,28 +205,28 @@ const weaknessCollapse: FlowPage = {
     <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:10px 12px;width:100%;margin-bottom:8px;">
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:10px;">
         <div style="font-weight:700;color:var(--white);">Feature</div>
-        <div style="font-weight:700;color:#BFDBFE;">Syncope</div>
-        <div style="font-weight:700;color:#FCA5A5;">Seizure</div>
+        <div style="font-weight:700;color:var(--fg-blue-deep);">Syncope</div>
+        <div style="font-weight:700;color:var(--tone-danger-fg);">Seizure</div>
 
         <div style="color:var(--gray);">Tone during</div>
-        <div style="color:#BFDBFE;">Flaccid</div>
-        <div style="color:#FCA5A5;">Tonic-clonic</div>
+        <div style="color:var(--fg-blue-deep);">Flaccid</div>
+        <div style="color:var(--tone-danger-fg);">Tonic-clonic</div>
 
         <div style="color:var(--gray);">Trigger</div>
-        <div style="color:#BFDBFE;">Exercise / excitement</div>
-        <div style="color:#FCA5A5;">Often at rest / sleep</div>
+        <div style="color:var(--fg-blue-deep);">Exercise / excitement</div>
+        <div style="color:var(--tone-danger-fg);">Often at rest / sleep</div>
 
         <div style="color:var(--gray);">Recovery</div>
-        <div style="color:#BFDBFE;">Seconds, instant</div>
-        <div style="color:#FCA5A5;">Minutes-hours (post-ictal)</div>
+        <div style="color:var(--fg-blue-deep);">Seconds, instant</div>
+        <div style="color:var(--tone-danger-fg);">Minutes-hours (post-ictal)</div>
 
         <div style="color:var(--gray);">Post-episode</div>
-        <div style="color:#BFDBFE;">Normal immediately</div>
-        <div style="color:#FCA5A5;">Confused, blind, hungry</div>
+        <div style="color:var(--fg-blue-deep);">Normal immediately</div>
+        <div style="color:var(--tone-danger-fg);">Confused, blind, hungry</div>
 
         <div style="color:var(--gray);">AEDs</div>
-        <div style="color:#F87171;font-weight:600;">May WORSEN</div>
-        <div style="color:#A7F3D0;">Help</div>
+        <div style="color:var(--tone-danger-title);font-weight:600;">May WORSEN</div>
+        <div style="color:var(--tone-green-fg);">Help</div>
       </div>
     </div>
 
@@ -242,7 +242,7 @@ const weaknessCollapse: FlowPage = {
       </div>
     </div>
 
-    <div style="margin-top:10px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;padding:9px 12px;font-size:10px;color:#FCA5A5;width:100%;">
+    <div style="margin-top:10px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;padding:9px 12px;font-size:10px;color:var(--tone-danger-fg);width:100%;">
       ⚠️ Status epilepticus (>5 min): IV diazepam 0.5mg/kg OR midazolam 0.2mg/kg. Check blood glucose immediately. Do NOT give phenobarbitone IV rapidly — respiratory depression risk.
     </div>`,
     },

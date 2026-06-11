@@ -17,12 +17,12 @@ export const seizuresDx: DxApproach = {
       {
         kind: 'check',
         html: `<strong>Ask owners to video future episodes.</strong> The description is the most important diagnostic tool — ask open questions, then clarify each phase:<br><br>
-    <strong style="color:#93C5FD;">Prodrome</strong> (hours–days before): behaviour change? Restlessness, anxiety, hiding, attention-seeking, vocalisation. Not universal.<br><br>
-    <strong style="color:#FCD34D;">Ictal phase</strong> — characterise carefully:<br>
+    <strong style="color:var(--tone-info-fg);">Prodrome</strong> (hours–days before): behaviour change? Restlessness, anxiety, hiding, attention-seeking, vocalisation. Not universal.<br><br>
+    <strong style="color:var(--tone-warning-fg);">Ictal phase</strong> — characterise carefully:<br>
     • <strong>Focal:</strong> one body region or one side. Facial twitching, lip smacking, fly-catching, rhythmic blinking, one limb jerking. Consciousness may be preserved (simple focal) or impaired (complex focal). Focal → structural lesion until proven otherwise.<br>
     • <strong>Focal-to-bilateral:</strong> began focal then generalised → still favours structural.<br>
     • <strong>Generalised:</strong> both sides simultaneously. Tonic-clonic (rigid → paddling), tonic (rigid, no clonic), atonic (sudden drop). Loss of consciousness, autonomic signs (urination, defaecation, hypersalivation).<br><br>
-    <strong style="color:#6EE7B7;">Postictal phase</strong>: disorientation, transient blindness, ataxia, aggression, polyphagia, hypersalivation. Normal duration: minutes to several hours. <strong>Prolonged postictal (&gt;24h) = structural cause until proven otherwise.</strong>`,
+    <strong style="color:var(--tone-green-fg);">Postictal phase</strong>: disorientation, transient blindness, ataxia, aggression, polyphagia, hypersalivation. Normal duration: minutes to several hours. <strong>Prolonged postictal (&gt;24h) = structural cause until proven otherwise.</strong>`,
       },
       { kind: 'step', alt: true, text: '⏱ DURATION, FREQUENCY AND PROGRESSION' },
       {
@@ -41,7 +41,7 @@ export const seizuresDx: DxApproach = {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
       <div>
-        <strong style="color:#FCA5A5;">Seizurogenic toxins</strong><br>
+        <strong style="color:var(--tone-danger-fg);">Seizurogenic toxins</strong><br>
         Organophosphates / carbamates — SLUDGE + tremors<br>
         Bromethalin rodenticide — delayed 12h–5 days<br>
         Metaldehyde (slug bait) — acute tremors + hyperthermia<br>
@@ -54,7 +54,7 @@ export const seizuresDx: DxApproach = {
         Strychnine — severe muscle rigidity + opisthotonus
       </div>
       <div>
-        <strong style="color:#FCD34D;">Seizurogenic medications</strong><br>
+        <strong style="color:var(--tone-warning-fg);">Seizurogenic medications</strong><br>
         5-FU cream — any cat exposure = emergency<br>
         SSRIs / SNRIs — serotonin syndrome<br>
         Tramadol (cats) — lowers seizure threshold<br>
@@ -63,7 +63,7 @@ export const seizuresDx: DxApproach = {
         Lidocaine (cats — narrow therapeutic margin)<br>
         Amphetamines / stimulants<br>
         Pyrethrins / pyrethroids (cats especially)<br><br>
-        <strong style="color:#FCA5A5;">⚠️ AED withdrawal</strong><br>
+        <strong style="color:var(--tone-danger-fg);">⚠️ AED withdrawal</strong><br>
         Abrupt phenobarbitone or KBr cessation — major cause of breakthrough seizures and SE. Always ask about missed doses.
       </div>
     </div>`,
@@ -73,40 +73,40 @@ export const seizuresDx: DxApproach = {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
       <div>
-        <strong style="color:#60A5FA;font-size:10px;">🐕 DOG</strong><br><br>
-        <strong style="color:#93C5FD;">Idiopathic epilepsy (genetic):</strong><br>
+        <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG</strong><br><br>
+        <strong style="color:var(--tone-info-fg);">Idiopathic epilepsy (genetic):</strong><br>
         Border Collie · Labrador · GSD · Golden Retriever · Belgian Shepherd (Tervuren, Malinois) · Beagle · Keeshond · Vizsla · Finnish Spitz<br><br>
-        <strong style="color:#FCD34D;">PSS → reactive seizures:</strong><br>
+        <strong style="color:var(--tone-warning-fg);">PSS → reactive seizures:</strong><br>
         Yorkshire Terrier · Maltese · Pomeranian · Miniature Schnauzer · Shih Tzu — onset &lt;1yr, post-prandial, small/toy breeds<br><br>
-        <strong style="color:#C4B5FD;">MUO / meningoencephalitis:</strong><br>
+        <strong style="color:var(--tone-violet-fg);">MUO / meningoencephalitis:</strong><br>
         Pug · Yorkshire Terrier · Maltese · Chihuahua · French Bulldog<br><br>
-        <strong style="color:#FCA5A5;">Glioma (brachycephalics):</strong><br>
+        <strong style="color:var(--tone-danger-fg);">Glioma (brachycephalics):</strong><br>
         Boston Terrier · French Bulldog · Pug · Boxer — older dogs, progressive focal signs<br><br>
-        <strong style="color:#6EE7B7;">Meningioma (dolichocephalics):</strong><br>
+        <strong style="color:var(--tone-green-fg);">Meningioma (dolichocephalics):</strong><br>
         Golden Retriever · Greyhound · Collie — extra-axial, slow progression<br><br>
-        <strong style="color:#FCD34D;">MDR1 / ABCB1 mutation:</strong><br>
+        <strong style="color:var(--tone-warning-fg);">MDR1 / ABCB1 mutation:</strong><br>
         Collie · Rough Collie · Shetland Sheepdog · Australian Shepherd · Border Collie — ivermectin / macrocyclic lactone toxicity risk<br><br>
-        <strong style="color:#FCA5A5;">Storage diseases (NCL):</strong><br>
+        <strong style="color:var(--tone-danger-fg);">Storage diseases (NCL):</strong><br>
         Dalmatian · Poodle · Tibetan Terrier · English Setter — progressive, juvenile onset
       </div>
       <div>
-        <strong style="color:#FB923C;font-size:10px;">🐱 CAT</strong><br><br>
-        <strong style="color:#93C5FD;">Meningioma:</strong><br>
+        <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT</strong><br><br>
+        <strong style="color:var(--tone-info-fg);">Meningioma:</strong><br>
         Siamese · older domestic shorthair cats — slow focal signs, extra-axial on MRI<br><br>
-        <strong style="color:#FCA5A5;">CNS lymphoma:</strong><br>
+        <strong style="color:var(--tone-danger-fg);">CNS lymphoma:</strong><br>
         FeLV-positive · older cats — multifocal signs, progressive<br><br>
-        <strong style="color:#C4B5FD;">Infectious encephalitis:</strong><br>
+        <strong style="color:var(--tone-violet-fg);">Infectious encephalitis:</strong><br>
         Outdoor / unvaccinated cats — FIP (coronavirus), Toxoplasma, Cryptococcus<br><br>
-        <strong style="color:#FCD34D;">Ischaemic encephalopathy:</strong><br>
+        <strong style="color:var(--tone-warning-fg);">Ischaemic encephalopathy:</strong><br>
         Older cats — peracute onset, focal signs, often resolves<br><br>
-        <strong style="color:#6EE7B7;">Idiopathic epilepsy:</strong><br>
+        <strong style="color:var(--tone-green-fg);">Idiopathic epilepsy:</strong><br>
         Less common than dogs; diagnosis of exclusion; any breed<br><br>
-        <strong style="color:#FCA5A5;">Drug sensitivity:</strong><br>
+        <strong style="color:var(--tone-danger-fg);">Drug sensitivity:</strong><br>
         All cats — extreme sensitivity to 5-FU, permethrin, metronidazole, fluoroquinolones, lidocaine
       </div>
     </div>
     <div style="margin-top:8px;font-size:9.5px;">
-      <strong style="color:#FCA5A5;">Vaccination + travel history:</strong> CDV (dogs) — polioencephalitis or old dog encephalitis; rabies (endemic areas); travel → Neospora, Toxoplasma, Cryptococcus, Coccidioides (North America), Blastomyces, Ehrlichia, Babesia, Leishmania (Europe/Asia)
+      <strong style="color:var(--tone-danger-fg);">Vaccination + travel history:</strong> CDV (dogs) — polioencephalitis or old dog encephalitis; rabies (endemic areas); travel → Neospora, Toxoplasma, Cryptococcus, Coccidioides (North America), Blastomyces, Ehrlichia, Babesia, Leishmania (Europe/Asia)
     </div>`,
       },
     ],
@@ -114,8 +114,8 @@ export const seizuresDx: DxApproach = {
       {
         kind: 'html',
         html: `<div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:12px;">
-  <div style="font-size:10px;font-weight:700;color:#F87171;margin-bottom:4px;">⚠️ RED FLAGS — EMERGENCY</div>
-  <div style="font-size:10px;color:#FCA5A5;line-height:1.6;">
+  <div style="font-size:10px;font-weight:700;color:var(--tone-danger-title);margin-bottom:4px;">⚠️ RED FLAGS — EMERGENCY</div>
+  <div style="font-size:10px;color:var(--tone-danger-fg);line-height:1.6;">
     Seizure &gt;5 min = SE — treat immediately · Cluster ≥2/24h = emergency · Cat with any 5-FU cream exposure = immediate emergency · Metaldehyde/organophosphate exposure + tremors — decontaminate + treat now · Post-ictal obtundation not improving after 4–6h → structural disease / raised ICP
   </div>
 </div>`,
@@ -145,7 +145,7 @@ export const seizuresDx: DxApproach = {
         items: [
           {
             style: 'font-size:9px;',
-            html: `<strong style="color:#FCD34D;">Postictal</strong><br>
+            html: `<strong style="color:var(--tone-warning-fg);">Postictal</strong><br>
       Immediately after seizure<br>
       Disoriented, ataxic, transiently blind<br>
       Hypersalivating, polyphagic<br>
@@ -155,7 +155,7 @@ export const seizuresDx: DxApproach = {
           },
           {
             style: 'font-size:9px;',
-            html: `<strong style="color:#6EE7B7;">Interictal</strong><br>
+            html: `<strong style="color:var(--tone-green-fg);">Interictal</strong><br>
       Well between episodes<br>
       Should be neurologically normal<br>in idiopathic epilepsy<br>
       Any persistent deficit = structural<br>
@@ -167,51 +167,51 @@ export const seizuresDx: DxApproach = {
       { kind: 'step', alt: true, text: '🩺 NEUROLOGICAL EXAMINATION' },
       {
         kind: 'check',
-        html: `<strong style="color:#93C5FD;">Mentation:</strong> Alert (normal) / Obtunded (dull, slow responses) / Stuporous (minimal response to strong stimuli) / Comatose (no response). Head pressing suggests increased ICP. Compulsive circling (ipsilateral to lesion).<br><br>
-    <strong style="color:#FCD34D;">Cranial nerves:</strong><br>
+        html: `<strong style="color:var(--tone-info-fg);">Mentation:</strong> Alert (normal) / Obtunded (dull, slow responses) / Stuporous (minimal response to strong stimuli) / Comatose (no response). Head pressing suggests increased ICP. Compulsive circling (ipsilateral to lesion).<br><br>
+    <strong style="color:var(--tone-warning-fg);">Cranial nerves:</strong><br>
     • CN II: Menace response (hand gesture → blink; tests vision + CN VII), visual placing (paw placement on table edge)<br>
     • CN II + III: Direct and consensual PLR — fixed/dilated pupil = CN III compression or brainstem herniation (emergency)<br>
     • CN III/IV/VI: Physiological nystagmus (normal moving head = normal vestibulo-ocular reflex)<br>
     • CN V: Jaw tone, masticatory muscle bulk (atrophy → MMM or CN V lesion)<br>
     • CN VII: Facial symmetry, palpebral reflex, lip and nose deviation<br>
     • CN IX/X: Gag reflex, dysphagia<br><br>
-    <strong style="color:#6EE7B7;">Postural reactions (most sensitive for cortical lesions):</strong><br>
+    <strong style="color:var(--tone-green-fg);">Postural reactions (most sensitive for cortical lesions):</strong><br>
     • Conscious proprioception (CP) positioning — knuckle paw on floor; delayed/absent = UMN deficit<br>
     • Hopping (front and hindlimbs separately) — asymmetry localises lesion<br>
     • Hemi-walking — ipsilateral front + hindlimb together<br>
     • Wheelbarrowing (blindfolded) — cranial nerve lesion check<br><br>
-    <strong style="color:#C4B5FD;">Gait + posture:</strong> Ataxia (cerebellar = hypermetric/intention tremor; vestibular = swaying/head tilt; proprioceptive = crossing limbs, stumbling). Paresis = UMN vs LMN? Circling?<br><br>
-    <strong style="color:#FCA5A5;">Fundoscopy:</strong> Papilloedema (raised ICP — blurred disc margins, haemorrhage), chorioretinitis (infectious/immune-mediated → Toxoplasma, CDV, FIP), retinal detachment or haemorrhage (hypertension)`,
+    <strong style="color:var(--tone-violet-fg);">Gait + posture:</strong> Ataxia (cerebellar = hypermetric/intention tremor; vestibular = swaying/head tilt; proprioceptive = crossing limbs, stumbling). Paresis = UMN vs LMN? Circling?<br><br>
+    <strong style="color:var(--tone-danger-fg);">Fundoscopy:</strong> Papilloedema (raised ICP — blurred disc margins, haemorrhage), chorioretinitis (infectious/immune-mediated → Toxoplasma, CDV, FIP), retinal detachment or haemorrhage (hypertension)`,
       },
       { kind: 'step', alt: true, text: '🔍 PHYSICAL EXAMINATION' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
       <div>
-        <strong style="color:#93C5FD;">Cardiovascular</strong><br>
+        <strong style="color:var(--tone-info-fg);">Cardiovascular</strong><br>
         HR, rhythm, pulse quality<br>
         Murmurs, muffled sounds<br>
         Arrhythmia → syncope vs seizure<br>
         Weak pulses → cardiac output ↓<br><br>
-        <strong style="color:#FCD34D;">Lymph nodes</strong><br>
+        <strong style="color:var(--tone-warning-fg);">Lymph nodes</strong><br>
         Generalised lymphadenopathy<br>
         → infectious (Ehrlichia, Leishmania)<br>
         → neoplastic (lymphoma → CNS)<br><br>
-        <strong style="color:#6EE7B7;">Liver</strong><br>
+        <strong style="color:var(--tone-green-fg);">Liver</strong><br>
         Hepatomegaly (HAC, neoplasia)<br>
         Jaundice (hepatic/haemolytic)<br>
         Small liver (PSS, chronic hepatopathy)
       </div>
       <div>
-        <strong style="color:#C4B5FD;">Mucous membranes</strong><br>
+        <strong style="color:var(--tone-violet-fg);">Mucous membranes</strong><br>
         Pale → anaemia / blood loss<br>
         Icteric → liver disease / haemolysis<br>
         Congested/brick-red → polycythaemia, sepsis<br><br>
-        <strong style="color:#FCA5A5;">Body condition + skin</strong><br>
+        <strong style="color:var(--tone-danger-fg);">Body condition + skin</strong><br>
         Cachexia → neoplasia, chronic disease<br>
         Pot belly + alopecia → HAC<br>
         (cortisol excess → hypertension)<br><br>
-        <strong style="color:#FCD34D;">Eyes</strong><br>
+        <strong style="color:var(--tone-warning-fg);">Eyes</strong><br>
         Retinal haemorrhage / detachment<br>
         → hypertension (check BP)<br>
         Uveitis → systemic infection
@@ -223,8 +223,8 @@ export const seizuresDx: DxApproach = {
       {
         kind: 'html',
         html: `<div style="margin-top:12px;padding:10px 14px;background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.25);border-radius:12px;">
-  <div style="font-size:10px;font-weight:700;color:#93C5FD;margin-bottom:4px;">💡 LATERALISING SIGNS — STRUCTURAL LESION</div>
-  <div style="font-size:10px;color:#BFDBFE;line-height:1.6;">
+  <div style="font-size:10px;font-weight:700;color:var(--tone-info-fg);margin-bottom:4px;">💡 LATERALISING SIGNS — STRUCTURAL LESION</div>
+  <div style="font-size:10px;color:var(--fg-blue-deep);line-height:1.6;">
     Unilateral CP deficits · Unilateral menace loss · Fixed / dilated pupil · Head turn / circling · Asymmetric hopping · Hemi-paresis — All indicate a focal lesion. Lesion is typically ipsilateral to the side of circling / CP deficits (forebrain) or contralateral (cerebellum). → Proceed to MRI.
   </div>
 </div>`,
@@ -296,7 +296,7 @@ export const seizuresDx: DxApproach = {
       <div class="dx-note" style="width:100%;font-size:9px;">Normal metabolic database → structural or idiopathic.<br>Proceed to advanced imaging.</div>
       <div style="height:6px;"></div>
       <div class="dx-note" style="width:100%;font-size:9px;background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);">
-        <strong style="color:#93C5FD;">When to image (any of):</strong><br>
+        <strong style="color:var(--tone-info-fg);">When to image (any of):</strong><br>
         • First seizure &lt;6mo or &gt;6yr<br>
         • Abnormal interictal neuro exam<br>
         • Cluster seizures / SE<br>
@@ -354,8 +354,8 @@ export const seizuresDx: DxApproach = {
       {
         kind: 'html',
         html: `<div style="margin-top:10px;padding:10px 14px;background:rgba(37,99,235,0.08);border:1px solid rgba(37,99,235,0.25);border-radius:12px;">
-  <div style="font-size:10px;font-weight:700;color:#93C5FD;margin-bottom:4px;">💡 MAINTENANCE AED — WHEN TO START</div>
-  <div style="font-size:10px;color:#BFDBFE;line-height:1.6;">
+  <div style="font-size:10px;font-weight:700;color:var(--tone-info-fg);margin-bottom:4px;">💡 MAINTENANCE AED — WHEN TO START</div>
+  <div style="font-size:10px;color:var(--fg-blue-deep);line-height:1.6;">
     Start if ANY: cluster (≥2/24h) · SE has occurred · &gt;1 seizure/6 months · Increasing frequency or severity · Prolonged postictal (&gt;24h) · Structural disease confirmed<br>
     <strong>First-line:</strong> Phenobarbital 2–3 mg/kg q12h PO (dogs + cats) · KBr 30–40 mg/kg q24h PO (dogs ONLY — ⚠️ never cats) · Levetiracetam 20–30 mg/kg q8h PO (dogs + cats)<br>
     <strong>Monitor:</strong> Phenobarb serum level at 2–3 weeks; target 65–170 μmol/L (dogs), 65–130 μmol/L (cats); liver enzymes + fasted bile acids q6 months

@@ -67,24 +67,24 @@ export const haematuriaDx: DxApproach = {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
       <div>
-        <strong style="color:#60A5FA;font-size:10px;">🐕 DOG</strong><br><br>
-        <strong style="color:#FCA5A5;">Older bitch (especially Scottie, WHWT, Beagle, Shetland Sheepdog)</strong><br>→ <strong>Urothelial carcinoma (TCC)</strong> — persistent haematuria refractory to antibiotic, trigonal location, CADET BRAF positive in ~80% (specificity &gt;99%).<br><br>
-        <strong style="color:#FCD34D;">Intact male middle-aged–older dog</strong><br>→ BPH · bacterial prostatitis · prostatic abscess · prostatic adenocarcinoma (also in neutered males).<br><br>
-        <strong style="color:#6EE7B7;">Bitches of any age</strong><br>→ Bacterial cystitis is the most common LUT cause (E. coli predominates). Recurrent → consider underlying disease (HAC, DM, structural anomaly).<br><br>
-        <strong style="color:#C4B5FD;">Dalmatian, English Bulldog</strong> → urate uroliths (Dalmatian SLC2A9 mutation; uroliths can also be from PSS).<br><br>
-        <strong style="color:#FCA5A5;">Miniature Schnauzer, Bichon, Yorkie, Lhasa Apso, Pug</strong> → calcium oxalate uroliths.<br><br>
-        <strong style="color:#FCD34D;">German Shepherd</strong> → renal cystadenocarcinoma + nodular dermatofibrosis (RCND, autosomal-dominant FLCN mutation).<br><br>
-        <strong style="color:#93C5FD;">Boxer, GSD, Scottie</strong> → idiopathic renal haematuria reported.<br><br>
-        <strong style="color:#FCA5A5;">Sighthounds, Greyhounds</strong> → idiopathic cutaneous and renal glomerular vasculopathy ("Alabama rot" / CRGV) — haematuria + skin lesions + AKI.
+        <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG</strong><br><br>
+        <strong style="color:var(--tone-danger-fg);">Older bitch (especially Scottie, WHWT, Beagle, Shetland Sheepdog)</strong><br>→ <strong>Urothelial carcinoma (TCC)</strong> — persistent haematuria refractory to antibiotic, trigonal location, CADET BRAF positive in ~80% (specificity &gt;99%).<br><br>
+        <strong style="color:var(--tone-warning-fg);">Intact male middle-aged–older dog</strong><br>→ BPH · bacterial prostatitis · prostatic abscess · prostatic adenocarcinoma (also in neutered males).<br><br>
+        <strong style="color:var(--tone-green-fg);">Bitches of any age</strong><br>→ Bacterial cystitis is the most common LUT cause (E. coli predominates). Recurrent → consider underlying disease (HAC, DM, structural anomaly).<br><br>
+        <strong style="color:var(--tone-violet-fg);">Dalmatian, English Bulldog</strong> → urate uroliths (Dalmatian SLC2A9 mutation; uroliths can also be from PSS).<br><br>
+        <strong style="color:var(--tone-danger-fg);">Miniature Schnauzer, Bichon, Yorkie, Lhasa Apso, Pug</strong> → calcium oxalate uroliths.<br><br>
+        <strong style="color:var(--tone-warning-fg);">German Shepherd</strong> → renal cystadenocarcinoma + nodular dermatofibrosis (RCND, autosomal-dominant FLCN mutation).<br><br>
+        <strong style="color:var(--tone-info-fg);">Boxer, GSD, Scottie</strong> → idiopathic renal haematuria reported.<br><br>
+        <strong style="color:var(--tone-danger-fg);">Sighthounds, Greyhounds</strong> → idiopathic cutaneous and renal glomerular vasculopathy ("Alabama rot" / CRGV) — haematuria + skin lesions + AKI.
       </div>
       <div>
-        <strong style="color:#FB923C;font-size:10px;">🐱 CAT</strong><br><br>
-        <strong style="color:#C4B5FD;">Young–middle-aged cat with LUTS</strong><br>→ <strong>Feline idiopathic cystitis (FIC)</strong> — most common cause of LUTS in cats &lt;10 yr. Stress-related; recurrent episodes.<br><br>
-        <strong style="color:#FCD34D;">Cat with LUTS + urolithiasis</strong><br>→ Struvite (commercial diet — declining) or calcium oxalate (more common now in some populations).<br><br>
-        <strong style="color:#FCA5A5;">Male cat with stranguria + collapse + abdominal pain</strong><br>→ Urethral obstruction (struvite plug, calcium oxalate, FIC-related) — life-threatening hyperkalaemia.<br><br>
-        <strong style="color:#6EE7B7;">Older cat with persistent haematuria</strong><br>→ Bladder TCC / lymphoma (rare in cats) — ultrasound + cytology + CADET BRAF (rare positivity in cats).<br><br>
-        <strong style="color:#93C5FD;">Outdoor cat with anaemia + haemoglobinuria</strong><br>→ Mycoplasma haemofelis, FeLV, oxidative haemolytic anaemia (onion, garlic, paracetamol — DO NOT give to cats), zinc.<br><br>
-        <strong style="color:#FCD34D;">CKD cat with concurrent UTI</strong> — often subclinical, found on culture.
+        <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT</strong><br><br>
+        <strong style="color:var(--tone-violet-fg);">Young–middle-aged cat with LUTS</strong><br>→ <strong>Feline idiopathic cystitis (FIC)</strong> — most common cause of LUTS in cats &lt;10 yr. Stress-related; recurrent episodes.<br><br>
+        <strong style="color:var(--tone-warning-fg);">Cat with LUTS + urolithiasis</strong><br>→ Struvite (commercial diet — declining) or calcium oxalate (more common now in some populations).<br><br>
+        <strong style="color:var(--tone-danger-fg);">Male cat with stranguria + collapse + abdominal pain</strong><br>→ Urethral obstruction (struvite plug, calcium oxalate, FIC-related) — life-threatening hyperkalaemia.<br><br>
+        <strong style="color:var(--tone-green-fg);">Older cat with persistent haematuria</strong><br>→ Bladder TCC / lymphoma (rare in cats) — ultrasound + cytology + CADET BRAF (rare positivity in cats).<br><br>
+        <strong style="color:var(--tone-info-fg);">Outdoor cat with anaemia + haemoglobinuria</strong><br>→ Mycoplasma haemofelis, FeLV, oxidative haemolytic anaemia (onion, garlic, paracetamol — DO NOT give to cats), zinc.<br><br>
+        <strong style="color:var(--tone-warning-fg);">CKD cat with concurrent UTI</strong> — often subclinical, found on culture.
       </div>
     </div>`,
       },
@@ -138,19 +138,19 @@ export const haematuriaDx: DxApproach = {
         html: `<div style="display:grid;grid-template-columns:1fr 1.2fr;gap:5px 8px;font-size:10px;line-height:1.45;">
       <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Finding</div>
       <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Most likely</div>
-      <div>Female dog · pollakiuria + stranguria · culture-positive</div><div style="color:#FCD34D;">Bacterial cystitis (E. coli)</div>
-      <div>Female dog · persistent haematuria · refractory to antibiotic · trigonal mass on US</div><div style="color:#F87171;">Bladder TCC (CADET BRAF)</div>
-      <div>Cat &lt;10 yr · stress-related episodic LUTS · sterile urine</div><div style="color:#6EE7B7;">Feline idiopathic cystitis (FIC)</div>
-      <div>Male cat · stranguria + abdominal pain + collapse + firm bladder</div><div style="color:#F87171;">Urethral obstruction (plug / urolith)</div>
-      <div>Intact male dog · tenesmus / dyschezia · asymmetric prostate</div><div style="color:#FCA5A5;">Prostatic adenocarcinoma</div>
-      <div>Intact male dog · pyrexia + painful prostate + reflux from preputial</div><div style="color:#FCA5A5;">Bacterial prostatitis / abscess</div>
-      <div>Older intact male · symmetric mildly enlarged prostate · preputial blood</div><div style="color:#FCD34D;">BPH</div>
-      <div>Bitch · vulvar mucopurulent / sanguineous discharge · pyrexia · 4–8 wks post-oestrus</div><div style="color:#F87171;">Pyometra</div>
-      <div>Bitch in season · sanguineous vulvar discharge · clinically well</div><div style="color:#93C5FD;">Oestrus (physiological)</div>
-      <div>Young dog with persistent unilateral renal haematuria</div><div style="color:#C4B5FD;">Idiopathic renal haematuria</div>
-      <div>Pale gums + petechiae + haematuria</div><div style="color:#F87171;">Thrombocytopenia / IMTP / DIC</div>
-      <div>Pale gums + jaundice + haemoglobinuria</div><div style="color:#FCA5A5;">IMHA / Babesia / oxidative haemolysis</div>
-      <div>Severe trauma + myalgia + dark urine + ↑↑ CK</div><div style="color:#FCA5A5;">Myoglobinuria (rhabdomyolysis)</div>
+      <div>Female dog · pollakiuria + stranguria · culture-positive</div><div style="color:var(--tone-warning-fg);">Bacterial cystitis (E. coli)</div>
+      <div>Female dog · persistent haematuria · refractory to antibiotic · trigonal mass on US</div><div style="color:var(--tone-danger-title);">Bladder TCC (CADET BRAF)</div>
+      <div>Cat &lt;10 yr · stress-related episodic LUTS · sterile urine</div><div style="color:var(--tone-green-fg);">Feline idiopathic cystitis (FIC)</div>
+      <div>Male cat · stranguria + abdominal pain + collapse + firm bladder</div><div style="color:var(--tone-danger-title);">Urethral obstruction (plug / urolith)</div>
+      <div>Intact male dog · tenesmus / dyschezia · asymmetric prostate</div><div style="color:var(--tone-danger-fg);">Prostatic adenocarcinoma</div>
+      <div>Intact male dog · pyrexia + painful prostate + reflux from preputial</div><div style="color:var(--tone-danger-fg);">Bacterial prostatitis / abscess</div>
+      <div>Older intact male · symmetric mildly enlarged prostate · preputial blood</div><div style="color:var(--tone-warning-fg);">BPH</div>
+      <div>Bitch · vulvar mucopurulent / sanguineous discharge · pyrexia · 4–8 wks post-oestrus</div><div style="color:var(--tone-danger-title);">Pyometra</div>
+      <div>Bitch in season · sanguineous vulvar discharge · clinically well</div><div style="color:var(--tone-info-fg);">Oestrus (physiological)</div>
+      <div>Young dog with persistent unilateral renal haematuria</div><div style="color:var(--tone-violet-fg);">Idiopathic renal haematuria</div>
+      <div>Pale gums + petechiae + haematuria</div><div style="color:var(--tone-danger-title);">Thrombocytopenia / IMTP / DIC</div>
+      <div>Pale gums + jaundice + haemoglobinuria</div><div style="color:var(--tone-danger-fg);">IMHA / Babesia / oxidative haemolysis</div>
+      <div>Severe trauma + myalgia + dark urine + ↑↑ CK</div><div style="color:var(--tone-danger-fg);">Myoglobinuria (rhabdomyolysis)</div>
     </div>`,
       },
     ],

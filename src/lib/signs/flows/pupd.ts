@@ -40,7 +40,7 @@ const pupdEntry: FlowPage = {
       </div>
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div style="font-size:9.5px;color:var(--gray);text-align:center;padding-top:8px;">NO →</div>
-        <div class="flow-endpoint" style="background:rgba(100,116,139,0.12);border:1.5px solid rgba(100,116,139,0.35);color:#CBD5E1;font-size:9.5px;text-align:center;">
+        <div class="flow-endpoint" style="background:rgba(100,116,139,0.12);border:1.5px solid rgba(100,116,139,0.35);color:var(--tone-slate-fg);font-size:9.5px;text-align:center;">
           <strong>Pollakiuria / Incontinence</strong><br>
           <span style="opacity:.8;">Small frequent voids · dysuria · straining · passive leakage → LUTD workup</span>
         </div>
@@ -67,7 +67,7 @@ const pupdEntry: FlowPage = {
 
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div class="flow-node" style="flex:1;background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.35);font-size:9.5px;text-align:center;">
-          <div style="font-weight:700;color:#6EE7B7;margin-bottom:4px;">PRIMARY PD<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">Brain drives drinking</span></div>
+          <div style="font-weight:700;color:var(--tone-green-fg);margin-bottom:4px;">PRIMARY PD<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">Brain drives drinking</span></div>
           <div style="text-align:left;color:var(--gray);line-height:1.6;">
             • ≥1 USG &gt;1.030<br>
             &nbsp;&nbsp;documented<br>
@@ -79,12 +79,12 @@ const pupdEntry: FlowPage = {
           </div>
         </div>
         <div class="flow-arrow-v">↓</div>
-        <div class="flow-endpoint" style="background:rgba(16,185,129,0.15);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9.5px;text-align:center;cursor:pointer;" onclick="renderFlowId('pupd-prim-pd')">Primary PD →<br><span style="font-size:8.5px;opacity:.8;">Psychogenic · hyperthyroid · HE</span></div>
+        <div class="flow-endpoint" style="background:rgba(16,185,129,0.15);border:1.5px solid rgba(16,185,129,0.4);color:var(--tone-green-fg);font-size:9.5px;text-align:center;cursor:pointer;" onclick="renderFlowId('pupd-prim-pd')">Primary PD →<br><span style="font-size:8.5px;opacity:.8;">Psychogenic · hyperthyroid · HE</span></div>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:5px;">
-        <div class="flow-node" style="flex:1;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.35);color:#C7D2FE;font-size:9.5px;text-align:center;">
-          <div style="font-weight:700;color:#A5B4FC;margin-bottom:4px;">PRIMARY PU<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">Kidney can't concentrate</span></div>
+        <div class="flow-node" style="flex:1;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.35);color:var(--fg-indigo-deep);font-size:9.5px;text-align:center;">
+          <div style="font-weight:700;color:var(--tone-indigo-fg);margin-bottom:4px;">PRIMARY PU<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">Kidney can't concentrate</span></div>
           <div style="text-align:left;color:var(--gray);line-height:1.6;">
             • USG consistently<br>
             &nbsp;&nbsp;dilute (&lt;1.030)<br>
@@ -96,12 +96,12 @@ const pupdEntry: FlowPage = {
           </div>
         </div>
         <div class="flow-arrow-v">↓</div>
-        <div class="flow-endpoint" style="background:rgba(99,102,241,0.15);border:1.5px solid rgba(99,102,241,0.4);color:#A5B4FC;font-size:9.5px;text-align:center;cursor:pointer;" onclick="renderFlowId('pupd-prim-pu')">Primary PU →<br><span style="font-size:8.5px;opacity:.8;">CDI · NDI · DM · CKD</span></div>
+        <div class="flow-endpoint" style="background:rgba(99,102,241,0.15);border:1.5px solid rgba(99,102,241,0.4);color:var(--tone-indigo-fg);font-size:9.5px;text-align:center;cursor:pointer;" onclick="renderFlowId('pupd-prim-pu')">Primary PU →<br><span style="font-size:8.5px;opacity:.8;">CDI · NDI · DM · CKD</span></div>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:5px;">
         <div class="flow-node" style="flex:1;background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.4);font-size:9.5px;text-align:center;">
-          <div style="font-weight:700;color:#FCD34D;margin-bottom:4px;">SECONDARY PU<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">Systemic disease → NDI</span></div>
+          <div style="font-weight:700;color:var(--tone-warning-fg);margin-bottom:4px;">SECONDARY PU<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">Systemic disease → NDI</span></div>
           <div style="text-align:left;color:var(--gray);line-height:1.6;">
             • Systemic signs<br>
             &nbsp;&nbsp;present<br>
@@ -113,7 +113,7 @@ const pupdEntry: FlowPage = {
           </div>
         </div>
         <div class="flow-arrow-v">↓</div>
-        <div class="flow-endpoint" style="background:rgba(245,158,11,0.12);border:1.5px solid rgba(245,158,11,0.4);color:#FCD34D;font-size:9.5px;text-align:center;cursor:pointer;" onclick="renderFlowId('pupd-sec-pu')">Secondary PU →<br><span style="font-size:8.5px;opacity:.8;">HAC · hypercalcaemia · more</span></div>
+        <div class="flow-endpoint" style="background:rgba(245,158,11,0.12);border:1.5px solid rgba(245,158,11,0.4);color:var(--tone-warning-fg);font-size:9.5px;text-align:center;cursor:pointer;" onclick="renderFlowId('pupd-sec-pu')">Secondary PU →<br><span style="font-size:8.5px;opacity:.8;">HAC · hypercalcaemia · more</span></div>
       </div>
 
     </div>`,
@@ -123,7 +123,7 @@ const pupdEntry: FlowPage = {
     {
       kind: 'html',
       html: `<div style="margin-top:10px;padding:9px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
-      <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:4px;">🔬 CLINICAL PEARLS</div>
+      <div style="font-size:10px;font-weight:700;color:var(--tone-indigo-fg);margin-bottom:4px;">🔬 CLINICAL PEARLS</div>
       <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
         <strong style="color:var(--white);">Na⁺ high-normal</strong> → free water being lost → primary PU (kidney not retaining water)<br>
         <strong style="color:var(--white);">Na⁺ low-normal</strong> → excessive water intake diluting plasma → primary PD<br>
@@ -137,8 +137,8 @@ const pupdEntry: FlowPage = {
     {
       kind: 'html',
       html: `<div style="margin-top:8px;padding:9px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;font-size:9.5px;width:100%;">
-      <span style="color:#F87171;font-weight:700;">⚠️ SAFETY: </span>
-      <span style="color:#FCA5A5;">NEVER restrict water · NEVER desmopressin if hyponatraemic (Na &lt;145) · Rule out HAC before desmopressin · Rectal exam mandatory (anal sac carcinoma → hypercalcaemia)</span>
+      <span style="color:var(--tone-danger-title);font-weight:700;">⚠️ SAFETY: </span>
+      <span style="color:var(--tone-danger-fg);">NEVER restrict water · NEVER desmopressin if hyponatraemic (Na &lt;145) · Rule out HAC before desmopressin · Rectal exam mandatory (anal sac carcinoma → hypercalcaemia)</span>
     </div>`,
     },
 
@@ -168,7 +168,7 @@ const pupdPrimPD: FlowPage = {
       html: `<div class="flow-arrow-v">↓</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;">
       <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:#F9A8D4;text-align:center;line-height:1.3;">Anomalous</div><div style="color:#F9A8D4;text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#F9A8D4;text-align:center;line-height:1.35;">Psychogenic / behavioural</div></div>
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:#5EEAD4;text-align:center;line-height:1.3;">Metabolic / Endocrine</div><div style="color:#5EEAD4;text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#5EEAD4;text-align:center;line-height:1.35;">Hyperthyroidism (cat)</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#5EEAD4;text-align:center;line-height:1.35;">Hepatic encephalopathy / PSS</div></div>
+      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--tone-teal-fg);text-align:center;line-height:1.3;">Metabolic / Endocrine</div><div style="color:var(--tone-teal-fg);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Hyperthyroidism (cat)</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Hepatic encephalopathy / PSS</div></div>
       <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(100,116,139,0.15);border:1.5px solid rgba(100,116,139,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:#94A3B8;text-align:center;line-height:1.3;">Degenerative</div><div style="color:#94A3B8;text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(100,116,139,0.15);border:1.5px solid rgba(100,116,139,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#94A3B8;text-align:center;line-height:1.35;">Medullary washout</div></div>
     </div>`,
     },
@@ -176,7 +176,7 @@ const pupdPrimPD: FlowPage = {
     {
       kind: 'html',
       html: `<div style="margin-top:10px;padding:9px 12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:10px;width:100%;">
-      <div style="font-size:10px;font-weight:700;color:#6EE7B7;margin-bottom:4px;">🔬 DIAGNOSTIC APPROACH — Primary PD</div>
+      <div style="font-size:10px;font-weight:700;color:var(--tone-green-fg);margin-bottom:4px;">🔬 DIAGNOSTIC APPROACH — Primary PD</div>
       <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
         <strong style="color:var(--white);">All:</strong> CBC · biochemistry (low BUN suggests PSS) · urinalysis (dipstick glucose, sediment) · serial USG (3–5 samples) · plasma Na⁺ · BP<br>
         <strong style="color:var(--white);">Cat &gt;7 yr:</strong> T4 first — hyperthyroidism is most common cause in older cats<br>
@@ -213,7 +213,7 @@ const pupdPrimPU: FlowPage = {
       connectAfter: false,
       html: `<div class="flow-arrow-v">↓</div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;">
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:#5EEAD4;text-align:center;line-height:1.3;">Metabolic / Endocrine</div><div style="color:#5EEAD4;text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#5EEAD4;text-align:center;line-height:1.35;cursor:pointer;" onclick="renderDxId('pupd','desmopressin')">Central DI (CDI)</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#5EEAD4;text-align:center;line-height:1.35;">Diabetes mellitus</div></div>
+      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--tone-teal-fg);text-align:center;line-height:1.3;">Metabolic / Endocrine</div><div style="color:var(--tone-teal-fg);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;cursor:pointer;" onclick="renderDxId('pupd','desmopressin')">Central DI (CDI)</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Diabetes mellitus</div></div>
       <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:#F9A8D4;text-align:center;line-height:1.3;">Anomalous</div><div style="color:#F9A8D4;text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#F9A8D4;text-align:center;line-height:1.35;">Primary nephrogenic DI</div><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#F9A8D4;text-align:center;line-height:1.35;">Renal glucosuria / Fanconi</div></div>
       <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(100,116,139,0.15);border:1.5px solid rgba(100,116,139,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:#94A3B8;text-align:center;line-height:1.3;">Degenerative</div><div style="color:#94A3B8;text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(100,116,139,0.15);border:1.5px solid rgba(100,116,139,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#94A3B8;text-align:center;line-height:1.35;">CKD / AKI</div></div>
     </div>`,
@@ -222,7 +222,7 @@ const pupdPrimPU: FlowPage = {
     {
       kind: 'html',
       html: `<div style="margin-top:10px;padding:9px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
-      <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:5px;">💉 DESMOPRESSIN TRIAL — distinguishes CDI from NDI</div>
+      <div style="font-size:10px;font-weight:700;color:var(--tone-indigo-fg);margin-bottom:5px;">💉 DESMOPRESSIN TRIAL — distinguishes CDI from NDI</div>
       <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
         <strong style="color:var(--white);">Prerequisites:</strong> HAC excluded · pyometra excluded · Ca²⁺ normal · Na⁺ ≥145 · free water access always<br>
         <strong style="color:var(--white);">CDI response:</strong> USG increases to &gt;1.015 + water intake ↓ &gt;50% within 5–7 days<br>
@@ -258,15 +258,15 @@ const pupdSecPU: FlowPage = {
       connectAfter: false,
       html: `<div class="flow-arrow-v">↓</div>
     <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;width:100%;">
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(245,158,11,0.15);border:1.5px solid rgba(245,158,11,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:#FCD34D;text-align:center;line-height:1.3;">Inflammatory</div><div style="color:#FCD34D;text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(245,158,11,0.15);border:1.5px solid rgba(245,158,11,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#FCD34D;text-align:center;line-height:1.35;">Pyometra ⚠️</div><div style="background:rgba(245,158,11,0.15);border:1.5px solid rgba(245,158,11,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#FCD34D;text-align:center;line-height:1.35;">Pyelonephritis / Leptospirosis</div></div>
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:#5EEAD4;text-align:center;line-height:1.3;">Metabolic / Endocrine</div><div style="color:#5EEAD4;text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#5EEAD4;text-align:center;line-height:1.35;">HAC / Cushing's ⭐</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#5EEAD4;text-align:center;line-height:1.35;">Hypercalcaemia</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#5EEAD4;text-align:center;line-height:1.35;">Hypoadrenocorticism</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#5EEAD4;text-align:center;line-height:1.35;">Hypokalemia</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#5EEAD4;text-align:center;line-height:1.35;">PSS / liver failure</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#5EEAD4;text-align:center;line-height:1.35;">Acromegaly (cat)</div></div>
+      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(245,158,11,0.15);border:1.5px solid rgba(245,158,11,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--tone-warning-fg);text-align:center;line-height:1.3;">Inflammatory</div><div style="color:var(--tone-warning-fg);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(245,158,11,0.15);border:1.5px solid rgba(245,158,11,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-warning-fg);text-align:center;line-height:1.35;">Pyometra ⚠️</div><div style="background:rgba(245,158,11,0.15);border:1.5px solid rgba(245,158,11,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-warning-fg);text-align:center;line-height:1.35;">Pyelonephritis / Leptospirosis</div></div>
+      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--tone-teal-fg);text-align:center;line-height:1.3;">Metabolic / Endocrine</div><div style="color:var(--tone-teal-fg);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">HAC / Cushing's ⭐</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Hypercalcaemia</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Hypoadrenocorticism</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Hypokalemia</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">PSS / liver failure</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Acromegaly (cat)</div></div>
     </div>`,
     },
 
     {
       kind: 'html',
       html: `<div style="margin-top:10px;padding:9px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:10px;width:100%;">
-      <div style="font-size:10px;font-weight:700;color:#FCD34D;margin-bottom:4px;">🔬 DIAGNOSTIC APPROACH — Secondary PU</div>
+      <div style="font-size:10px;font-weight:700;color:var(--tone-warning-fg);margin-bottom:4px;">🔬 DIAGNOSTIC APPROACH — Secondary PU</div>
       <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
         <strong style="color:var(--white);">All cases:</strong> CBC · biochemistry (BUN · Cr · SDMA · ALP · ALT · Na · K · Ca²⁺ · glucose · albumin · cholesterol) · urinalysis + culture · BP<br>
         <strong style="color:var(--white);">Dog:</strong> UCCR (HAC screen — sensitive, run first) → LDDST or ACTH stim if elevated · rectal exam (anal sac)<br>

@@ -99,7 +99,7 @@ export const sneezingDx: DxApproach = {
         cols: [
           { label: 'Feature', isLabel: true, width: '30%' },
           { label: 'Unilateral', color: '#E8713A', width: '35%' },
-          { label: 'Bilateral', color: '#6EE7B7' },
+          { label: 'Bilateral', color: 'var(--tone-green-fg)' },
         ],
         rows: [
           { kind: 'row', cells: ['First thought', 'Structural (FB, neoplasia, fungal, fistula)', 'Infectious / inflammatory'] },

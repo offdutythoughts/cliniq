@@ -88,23 +88,23 @@ export const dyspnoeaDx: DxApproach = {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
         <div>
-          <strong style="color:#60A5FA;font-size:10px;">🐕 DOG</strong><br><br>
-          <strong style="color:#FCD34D;">Brachycephalic</strong> (Bulldog, French Bulldog, Pug, Boston, Shih Tzu)<br>→ BOAS · secondary lower airway disease · post-obstructive NCPE<br><br>
-          <strong style="color:#6EE7B7;">Large/Giant breeds</strong> (Labrador, Golden, Great Dane, Irish Wolfhound)<br>→ Laryngeal paralysis (GOLPP) · DCM<br><br>
-          <strong style="color:#FCA5A5;">Toy/Small breeds</strong> (Yorkshire, Chihuahua, Pomeranian, Toy Poodle, Maltese)<br>→ Tracheal collapse · MMVD<br><br>
-          <strong style="color:#C4B5FD;">CKCS, Dachshund</strong> → MMVD (early onset)<br><br>
-          <strong style="color:#C4B5FD;">Dobermann, Irish Wolfhound, Great Dane</strong> → DCM → CHF<br><br>
-          <strong style="color:#FCD34D;">Husky, Malamute</strong> → Eosinophilic bronchopneumopathy<br><br>
-          <strong style="color:#FCA5A5;">Cocker Spaniel</strong> → Bronchiectasis · PLN → PTE risk
+          <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG</strong><br><br>
+          <strong style="color:var(--tone-warning-fg);">Brachycephalic</strong> (Bulldog, French Bulldog, Pug, Boston, Shih Tzu)<br>→ BOAS · secondary lower airway disease · post-obstructive NCPE<br><br>
+          <strong style="color:var(--tone-green-fg);">Large/Giant breeds</strong> (Labrador, Golden, Great Dane, Irish Wolfhound)<br>→ Laryngeal paralysis (GOLPP) · DCM<br><br>
+          <strong style="color:var(--tone-danger-fg);">Toy/Small breeds</strong> (Yorkshire, Chihuahua, Pomeranian, Toy Poodle, Maltese)<br>→ Tracheal collapse · MMVD<br><br>
+          <strong style="color:var(--tone-violet-fg);">CKCS, Dachshund</strong> → MMVD (early onset)<br><br>
+          <strong style="color:var(--tone-violet-fg);">Dobermann, Irish Wolfhound, Great Dane</strong> → DCM → CHF<br><br>
+          <strong style="color:var(--tone-warning-fg);">Husky, Malamute</strong> → Eosinophilic bronchopneumopathy<br><br>
+          <strong style="color:var(--tone-danger-fg);">Cocker Spaniel</strong> → Bronchiectasis · PLN → PTE risk
         </div>
         <div>
-          <strong style="color:#FB923C;font-size:10px;">🐱 CAT</strong><br><br>
-          <strong style="color:#C4B5FD;">Maine Coon, Ragdoll, BSH, Persian</strong><br>→ HCM (high risk; can present young)<br><br>
-          <strong style="color:#6EE7B7;">Young cat (1–5 yr)</strong><br>→ Feline asthma · viral URTI · pyothorax (outdoor) · lymphoma<br><br>
-          <strong style="color:#FCD34D;">Middle-aged–older cat</strong><br>→ HCM · pleural neoplasia · cranial mediastinal mass · hyperthyroidism<br><br>
-          <strong style="color:#FCA5A5;">Male cat</strong><br>→ HCM more common (esp Maine Coon)<br><br>
-          <strong style="color:#93C5FD;">Outdoor/hunting cat</strong><br>→ Pyothorax · lungworm · trauma<br><br>
-          <strong style="color:#FCD34D;">FIV/FeLV positive</strong><br>→ Secondary infections · lymphoma · FIP
+          <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT</strong><br><br>
+          <strong style="color:var(--tone-violet-fg);">Maine Coon, Ragdoll, BSH, Persian</strong><br>→ HCM (high risk; can present young)<br><br>
+          <strong style="color:var(--tone-green-fg);">Young cat (1–5 yr)</strong><br>→ Feline asthma · viral URTI · pyothorax (outdoor) · lymphoma<br><br>
+          <strong style="color:var(--tone-warning-fg);">Middle-aged–older cat</strong><br>→ HCM · pleural neoplasia · cranial mediastinal mass · hyperthyroidism<br><br>
+          <strong style="color:var(--tone-danger-fg);">Male cat</strong><br>→ HCM more common (esp Maine Coon)<br><br>
+          <strong style="color:var(--tone-info-fg);">Outdoor/hunting cat</strong><br>→ Pyothorax · lungworm · trauma<br><br>
+          <strong style="color:var(--tone-warning-fg);">FIV/FeLV positive</strong><br>→ Secondary infections · lymphoma · FIP
         </div>
       </div>`,
       },
@@ -128,7 +128,7 @@ export const dyspnoeaDx: DxApproach = {
       { kind: 'step', text: '🩺 OBSERVE BEFORE YOU TOUCH' },
       {
         kind: 'check',
-        html: `<strong style="color:#F87171;">Minimise stress — especially cats.</strong> Observe from distance first with supplemental O₂:<br>
+        html: `<strong style="color:var(--tone-danger-title);">Minimise stress — especially cats.</strong> Observe from distance first with supplemental O₂:<br>
       • <strong>Posture:</strong> Head/neck extended + elbows abducted = orthopnoea (severe dyspnoea; cannot lie down)<br>
       • <strong>Respiratory rate:</strong> Count from distance; &gt;40/min at rest (dog or cat) = clinically significant<br>
       • <strong>Abdominal effort:</strong> Paradoxical chest/abdominal movement → pleural disease or chest wall pathology<br>
@@ -138,7 +138,7 @@ export const dyspnoeaDx: DxApproach = {
       },
       {
         kind: 'check',
-        html: `<strong style="color:#6EE7B7;">Vital Signs</strong><br>
+        html: `<strong style="color:var(--tone-green-fg);">Vital Signs</strong><br>
       • <strong>HR:</strong> Tachycardia = most common; 🐕 sinus bradycardia/arrhythmia unlikely with CHF; bradycardia + hypothermia = severe decompensation<br>
       • <strong>Temperature (🐕):</strong> Fever → pneumonia, ARDS; upper airway obstruction (BOAS, laryngeal paralysis) → <strong>hyperthermia</strong> (impaired evaporative cooling via panting) — treat urgently<br>
       • <strong>Temperature (🐱):</strong> Fever → pyothorax, pneumonia; hypothermia + bradycardia → decompensated HCM<br>
@@ -153,33 +153,33 @@ export const dyspnoeaDx: DxApproach = {
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;font-size:10px;line-height:1.45;">
         <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Finding</div>
         <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Suggests</div>
-        <div>Muffled sounds ventrally</div><div style="color:#FCD34D;">Pleural effusion (bilateral common in 🐱)</div>
-        <div>Muffled sounds dorsally</div><div style="color:#FCD34D;">Pneumothorax (air rises dorsally)</div>
-        <div>Crackles (inspiratory)</div><div style="color:#FCA5A5;">Pulmonary oedema, pneumonia, fibrosis</div>
-        <div>Wheeze / expiratory effort</div><div style="color:#6EE7B7;">🐱 Asthma · 🐕 Bronchitis/collapse</div>
-        <div>Goose-honk (expiratory)</div><div style="color:#60A5FA;">🐕 Intrathoracic tracheal/bronchial collapse</div>
-        <div>Stridor (inspiratory)</div><div style="color:#93C5FD;">🐕 Laryngeal paralysis/collapse/BOAS · cervical tracheal</div>
-        <div>Stertor (snoring)</div><div style="color:#93C5FD;">🐕 BOAS, pharyngeal disease · 🐱 NP polyp, URTI</div>
-        <div>Murmur (L apex systolic)</div><div style="color:#C4B5FD;">🐕 MMVD · 🐱 HCM — grade ≠ severity</div>
-        <div>Absence of murmur</div><div style="color:#FCD34D;">Makes CHF less likely — but NOT excluded in 🐕 DCM or 🐱 HCM</div>
-        <div>Gallop rhythm (S3/S4)</div><div style="color:#F87171;">Decompensated cardiac — significant in both species</div>
-        <div>Atrial fibrillation</div><div style="color:#F87171;">🐕 DCM or advanced MMVD — increased CHF risk</div>
+        <div>Muffled sounds ventrally</div><div style="color:var(--tone-warning-fg);">Pleural effusion (bilateral common in 🐱)</div>
+        <div>Muffled sounds dorsally</div><div style="color:var(--tone-warning-fg);">Pneumothorax (air rises dorsally)</div>
+        <div>Crackles (inspiratory)</div><div style="color:var(--tone-danger-fg);">Pulmonary oedema, pneumonia, fibrosis</div>
+        <div>Wheeze / expiratory effort</div><div style="color:var(--tone-green-fg);">🐱 Asthma · 🐕 Bronchitis/collapse</div>
+        <div>Goose-honk (expiratory)</div><div style="color:var(--tone-info-fg);">🐕 Intrathoracic tracheal/bronchial collapse</div>
+        <div>Stridor (inspiratory)</div><div style="color:var(--tone-info-fg);">🐕 Laryngeal paralysis/collapse/BOAS · cervical tracheal</div>
+        <div>Stertor (snoring)</div><div style="color:var(--tone-info-fg);">🐕 BOAS, pharyngeal disease · 🐱 NP polyp, URTI</div>
+        <div>Murmur (L apex systolic)</div><div style="color:var(--tone-violet-fg);">🐕 MMVD · 🐱 HCM — grade ≠ severity</div>
+        <div>Absence of murmur</div><div style="color:var(--tone-warning-fg);">Makes CHF less likely — but NOT excluded in 🐕 DCM or 🐱 HCM</div>
+        <div>Gallop rhythm (S3/S4)</div><div style="color:var(--tone-danger-title);">Decompensated cardiac — significant in both species</div>
+        <div>Atrial fibrillation</div><div style="color:var(--tone-danger-title);">🐕 DCM or advanced MMVD — increased CHF risk</div>
       </div>`,
       },
       { kind: 'step', alt: true, text: '🐕 DOG-SPECIFIC EXAM FINDINGS' },
       {
         kind: 'check',
-        html: `<strong style="color:#60A5FA;">Tracheal palpation:</strong><br>
+        html: `<strong style="color:var(--tone-info-fg);">Tracheal palpation:</strong><br>
       • Gentle palpation → easy cough elicitation = tracheal sensitivity (tracheitis, bronchitis)<br>
       • Lateral cervical compression → induces goose-honk = cervical tracheal collapse<br>
       • 🐕 BOAS: stenotic nares visible externally; palpate larynx for mass or deformity<br><br>
-      <strong style="color:#60A5FA;">Laryngeal/upper airway evaluation:</strong><br>
+      <strong style="color:var(--tone-info-fg);">Laryngeal/upper airway evaluation:</strong><br>
       • Change in bark → laryngeal paralysis; exam under sedation to visualise arytenoid abductor function (MUST observe under light sedation only — deep anaesthesia masks paralysis)<br>
       • Stridor character: inspiratory = laryngeal/cervical tracheal; biphasic = severe bilateral obstruction<br><br>
-      <strong style="color:#60A5FA;">Nasal airflow:</strong><br>
+      <strong style="color:var(--tone-info-fg);">Nasal airflow:</strong><br>
       • Cotton ball or glass slide beneath nostrils — observe symmetry<br>
       • Unilateral reduced airflow → FB, neoplasia, mass; bilateral reduced → bilateral disease, NP stenosis, BOAS<br><br>
-      <strong style="color:#60A5FA;">Abdominal assessment:</strong><br>
+      <strong style="color:var(--tone-info-fg);">Abdominal assessment:</strong><br>
       • Distension + fluid wave → ascites (right-sided CHF, portal hypertension, peritoneal effusion)<br>
       • Hepatomegaly → right CHF, hepatic disease<br>
       • Organomegaly / abdominal mass → primary disease with pulmonary metastasis or functional compression limiting diaphragm excursion`,
@@ -187,16 +187,16 @@ export const dyspnoeaDx: DxApproach = {
       { kind: 'step', alt: true, text: '🐱 CAT-SPECIFIC EXAM FINDINGS' },
       {
         kind: 'check',
-        html: `<strong style="color:#C4B5FD;">Cranial mediastinal compressibility:</strong><br>
+        html: `<strong style="color:var(--tone-violet-fg);">Cranial mediastinal compressibility:</strong><br>
       • <strong>Non-compressible</strong> → cranial mediastinal mass (lymphoma, thymoma, carcinoma) until proven otherwise<br>
       • Compressible (normal): rules out significant cranial mass<br><br>
-      <strong style="color:#FCA5A5;">Limb assessment:</strong><br>
+      <strong style="color:var(--tone-danger-fg);">Limb assessment:</strong><br>
       • Cold, painful, cyanotic hindlimbs → ATE — femoral pulse absent/weakened<br>
       • Muscle rigidity / paralysis → ATE emergency; also check radial pulse<br><br>
-      <strong style="color:#6EE7B7;">Percussion:</strong><br>
+      <strong style="color:var(--tone-green-fg);">Percussion:</strong><br>
       • Dullness ventrally → pleural effusion (often bilateral in cats)<br>
       • Hyper-resonance → pneumothorax<br><br>
-      <strong style="color:#FCD34D;">Neck + nasal exam:</strong><br>
+      <strong style="color:var(--tone-warning-fg);">Neck + nasal exam:</strong><br>
       • Ipsilateral Horner's + stertor → nasopharyngeal polyp (young cat)<br>
       • Nasal discharge: mucopurulent → URTI, fungal; serous → viral`,
       },
@@ -241,9 +241,9 @@ export const dyspnoeaDx: DxApproach = {
         html: `<strong>SpO₂ interpretation (standard conditions):</strong><br>
       <div style="display:grid;grid-template-columns:1fr 1.2fr 1.2fr;gap:3px 6px;font-size:9px;margin:4px 0;">
         <div style="font-weight:600;">SpO₂</div><div style="font-weight:600;">~PaO₂ (mmHg)</div><div style="font-weight:600;">Action</div>
-        <div>95–100%</div><div>≥80</div><div style="color:#6EE7B7;">Normal</div>
-        <div>90–94%</div><div>60–70</div><div style="color:#FCD34D;">Hypoxaemia — supplement O₂</div>
-        <div>&lt;90%</div><div>&lt;60</div><div style="color:#F87171;">Severe — escalate immediately</div>
+        <div>95–100%</div><div>≥80</div><div style="color:var(--tone-green-fg);">Normal</div>
+        <div>90–94%</div><div>60–70</div><div style="color:var(--tone-warning-fg);">Hypoxaemia — supplement O₂</div>
+        <div>&lt;90%</div><div>&lt;60</div><div style="color:var(--tone-danger-title);">Severe — escalate immediately</div>
         <div>&lt;65%</div><div>&lt;30</div><div style="color:#EF4444;font-weight:700;">Life-threatening</div>
       </div>
       <strong>S/F ratio (SpO₂:FiO₂):</strong> Quantifies oxygenation efficiency independent of supplemental O₂<br>
@@ -256,7 +256,7 @@ export const dyspnoeaDx: DxApproach = {
       {
         kind: 'check',
         html: `<strong>3 views (as allowed by stability):</strong> R lateral + L lateral + DV; DV less stressful than VD if unstable<br><br>
-      <strong style="color:#60A5FA;">🐕 Trachea + airway assessment:</strong><br>
+      <strong style="color:var(--tone-info-fg);">🐕 Trachea + airway assessment:</strong><br>
       • Tracheal diameter ≥30% change between phases = tracheal collapse (paired insp + exp views essential — sensitivity as low as 45% with single view; normal dogs show up to 24% change)<br>
       • Axial tracheal collapse: increased DV tracheal dimension (may mimic intraluminal FB; CT to differentiate)<br>
       • Bronchiectasis: bronchi visible peripherally lacking normal tapering ("tram lines" and "donuts")<br>
@@ -272,7 +272,7 @@ export const dyspnoeaDx: DxApproach = {
       • <strong>Pleural effusion:</strong> Blunted costophrenic angles, retracted lung margins; post-tap CXR for full assessment<br>
       • <strong>Pneumothorax:</strong> Radiolucent zone, no lung markings to chest wall; heart elevated dorsally on lateral<br>
       • <strong>🐱 Cranial mediastinal opacity:</strong> Mass (lymphoma, thymoma, carcinoma)<br><br>
-      <strong style="color:#60A5FA;">🐕 Objective cardiac measures:</strong><br>
+      <strong style="color:var(--tone-info-fg);">🐕 Objective cardiac measures:</strong><br>
       • <strong>VHS &gt;11.5:</strong> Cardiomegaly (breed-specific norms: Yorkshire, Pomeranian, Pug, Boston Terrier)<br>
       • <strong>VLAS ≥2.3–2.5 × 4th thoracic vertebra:</strong> LA enlargement — better CHF predictor than VHS<br>
       • Pulmonary venous distension (cranial + caudal lobar veins) = cardiogenic — NOT seen with NCPE<br>
@@ -336,9 +336,9 @@ export const dyspnoeaDx: DxApproach = {
         <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.2);">TP / Cells</div>
         <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.2);">Key causes</div>
         <div>Pure transudate</div><div>&lt;25g/L · &lt;1000/μL</div><div>Hypoalbuminaemia, right CHF</div>
-        <div>Modified transudate</div><div>25–35g/L · mixed</div><div style="color:#FCD34D;">🐕 MMVD/DCM · 🐱 HCM · neoplasia · chylothorax</div>
-        <div>Exudate</div><div>&gt;30g/L · ↑↑ cells</div><div style="color:#FCA5A5;">Pyothorax · 🐱 FIP · neoplasia</div>
-        <div>Chylous</div><div>Milky · lymphocytes · TG &gt; serum</div><div style="color:#6EE7B7;">Lymphoma · cardiac · idiopathic</div>
+        <div>Modified transudate</div><div>25–35g/L · mixed</div><div style="color:var(--tone-warning-fg);">🐕 MMVD/DCM · 🐱 HCM · neoplasia · chylothorax</div>
+        <div>Exudate</div><div>&gt;30g/L · ↑↑ cells</div><div style="color:var(--tone-danger-fg);">Pyothorax · 🐱 FIP · neoplasia</div>
+        <div>Chylous</div><div>Milky · lymphocytes · TG &gt; serum</div><div style="color:var(--tone-green-fg);">Lymphoma · cardiac · idiopathic</div>
         <div>Haemorrhagic</div><div>PCV measurable · no clot</div><div>Trauma · neoplasia (HSA) · coagulopathy</div>
       </div>
       <div style="margin-top:6px;font-size:10px;opacity:.8;">Always send cytology. Degenerate neutrophils + intracellular bacteria = pyothorax → culture + sensitivity essential. Post-tap CXR for full parenchymal assessment.</div>`,
@@ -352,16 +352,16 @@ export const dyspnoeaDx: DxApproach = {
       • Granulomatous → 🐕 fungal (Histoplasma, Blastomyces)<br>
       • 🐕 BAL preferred over TTW for culture in suspected bacterial pneumonia<br>
       • 🐕 Tracheobronchoscopy: gold standard for tracheal/bronchial collapse grade; required before stent planning<br><br>
-      <strong style="color:#FCD34D;">🐕 Heartworm Ag test:</strong> Endemic region + cough + prominent pulmonary vasculature + eosinophilia + right cardiomegaly → Ag test (adult female HW, highly sensitive/specific). Also suspect in caval syndrome (hepatomegaly, ascites, haemoglobinuria).<br><br>
-      <strong style="color:#6EE7B7;">🐕 Respiratory PCR panel:</strong> Young dog + recent kennel/shelter + CIRDC signs → Bordetella, Mycoplasma, canine influenza, CDV, coronavirus, <em>Streptococcus zooepidemicus</em>. Obtain before antimicrobial therapy.<br><br>
-      <strong style="color:#93C5FD;">🐕🐱 Fecal + Baermann:</strong> Cough + eosinophilia + bronchial CXR + endemic region<br>
+      <strong style="color:var(--tone-warning-fg);">🐕 Heartworm Ag test:</strong> Endemic region + cough + prominent pulmonary vasculature + eosinophilia + right cardiomegaly → Ag test (adult female HW, highly sensitive/specific). Also suspect in caval syndrome (hepatomegaly, ascites, haemoglobinuria).<br><br>
+      <strong style="color:var(--tone-green-fg);">🐕 Respiratory PCR panel:</strong> Young dog + recent kennel/shelter + CIRDC signs → Bordetella, Mycoplasma, canine influenza, CDV, coronavirus, <em>Streptococcus zooepidemicus</em>. Obtain before antimicrobial therapy.<br><br>
+      <strong style="color:var(--tone-info-fg);">🐕🐱 Fecal + Baermann:</strong> Cough + eosinophilia + bronchial CXR + endemic region<br>
       • 🐕 Oslerus osleri, Angiostrongylus vasorum (UK/Europe; check coagulation), Paragonimus kellicotti (NA), Eucoleus aerophilus<br>
       • 🐱 Aelurostrongylus abstrusus<br><br>
-      <strong style="color:#FCA5A5;">🐕 Fungal testing (endemic regions):</strong><br>
+      <strong style="color:var(--tone-danger-fg);">🐕 Fungal testing (endemic regions):</strong><br>
       • Histoplasma (OH/MS valleys, midwest/SE USA): urine antigen ELISA (preferred); cytology BAL/rectal scraping (2–5 μm oval yeasts in macrophages)<br>
       • Blastomyces (midwest/SE USA, Great Lakes, Canada): urine antigen ELISA (cross-reacts with Histoplasma); cytology (large 8–20 μm yeast, broad-based budding)<br>
       • Coccidioides (SW USA, Mexico, CA): AGID serology (IgM = early; IgG = established)<br><br>
-      <strong style="color:#C4B5FD;">🐕 Fluoroscopy:</strong> Real-time tracheal assessment without GA; dynamic tracheal collapse, tracheal kinking, cervical lung herniation. Cannot assess bronchial collapse (use bronchoscopy). Preferred when GA is high-risk.<br><br>
+      <strong style="color:var(--tone-violet-fg);">🐕 Fluoroscopy:</strong> Real-time tracheal assessment without GA; dynamic tracheal collapse, tracheal kinking, cervical lung herniation. Cannot assess bronchial collapse (use bronchoscopy). Preferred when GA is high-risk.<br><br>
       <strong>🐕🐱 Thoracic CT:</strong> When standard diagnostics non-diagnostic. Best for interstitial/vascular/nodular disease; CT pulmonary angiography = gold standard for PTE. More sensitive than CXR for pulmonary nodules. Requires GA + breath-hold technique.`,
       },
       { kind: 'step', text: '🔑 KEY BRANCH DECISIONS' },

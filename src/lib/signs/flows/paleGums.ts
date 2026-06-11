@@ -38,13 +38,13 @@ const paleGumsEntry: FlowPage = {
         <div class="flow-node insp" style="width:100%;font-size:11px;font-weight:700;">Anaemia<div class="fn-sub" style="font-weight:400;">Low PCV · check reticulocytes + smear</div></div>
         <div class="flow-arrow-v">↓</div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;width:100%;">
-          <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9px;cursor:pointer;text-align:center;" onclick="renderFlowId('pale-mm-regen')">
+          <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:var(--tone-green-fg);font-size:9px;cursor:pointer;text-align:center;" onclick="renderFlowId('pale-mm-regen')">
             Regenerative anaemia ⚠️
           </div>
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderFlowId('pale-mm-non-regen')">
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:9px;cursor:pointer;text-align:center;" onclick="renderFlowId('pale-mm-non-regen')">
             Non-regenerative anaemia
           </div>
-          <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:#FCD34D;font-size:9px;cursor:pointer;text-align:center;" onclick="renderFlowId('pale-mm-pre-regen')">
+          <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.35);color:var(--tone-warning-fg);font-size:9px;cursor:pointer;text-align:center;" onclick="renderFlowId('pale-mm-pre-regen')">
             Pre-regenerative anaemia (&lt;3–5 days)
           </div>
         </div>
@@ -55,10 +55,10 @@ const paleGumsEntry: FlowPage = {
         <div class="flow-node mixed" style="width:100%;font-size:11px;font-weight:700;">Poor perfusion<div class="fn-sub" style="font-weight:400;">Normal PCV · prolonged CRT · weak pulses</div></div>
         <div class="flow-arrow-v">↓</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;">
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderFlowId('pale-mm-shock')">
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:9px;cursor:pointer;text-align:center;" onclick="renderFlowId('pale-mm-shock')">
             Hypovolaemic / distributive / cardiogenic shock ⚠️
           </div>
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="renderFlowId('pale-mm-cardiac')">
+          <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:9px;cursor:pointer;text-align:center;" onclick="renderFlowId('pale-mm-cardiac')">
             Acute cardiac failure / pericardial effusion ⚠️
           </div>
         </div>
@@ -72,7 +72,7 @@ const paleGumsEntry: FlowPage = {
       gap: 12,
       title: '⚠️ Transfusion thresholds',
       html:
-        '<div style="font-size:11px;color:#FCA5A5;line-height:1.65;">' +
+        '<div style="font-size:11px;color:var(--tone-danger-fg);line-height:1.65;">' +
         '<strong>Dog:</strong> PCV &lt;20% · <strong>Cat:</strong> PCV &lt;15%' +
         '</div>',
     },
@@ -122,7 +122,7 @@ const paleGumsRegen: FlowPage = {
       kind: 'callout',
       tone: 'green',
       gap: 10,
-      html: '<strong style="color:#6EE7B7;">Pearl:</strong> Low PCV + normal TS = haemolysis; Low PCV + low TS = haemorrhage',
+      html: '<strong style="color:var(--tone-green-fg);">Pearl:</strong> Low PCV + normal TS = haemolysis; Low PCV + low TS = haemorrhage',
     },
     { kind: 'disclaimer' },
   ],
@@ -192,7 +192,7 @@ const paleGumsPreRegen: FlowPage = {
       kind: 'callout',
       tone: 'warning',
       gap: 10,
-      html: '<strong style="color:#FCD34D;">Key point:</strong> Any cause of regenerative anaemia may appear non-regenerative in the first 3–5 days. Always repeat CBC at 5–7 days before concluding non-regenerative.',
+      html: '<strong style="color:var(--tone-warning-fg);">Key point:</strong> Any cause of regenerative anaemia may appear non-regenerative in the first 3–5 days. Always repeat CBC at 5–7 days before concluding non-regenerative.',
     },
     { kind: 'disclaimer' },
   ],

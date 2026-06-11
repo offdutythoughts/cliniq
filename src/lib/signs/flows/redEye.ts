@@ -74,7 +74,7 @@ const redEyeCoats: FlowPage = {
       • Superficial — MOVES with conjunctiva on cotton-tip<br>
       • Most evident in the <strong>fornixes</strong><br>
       • Blanches rapidly with topical phenylephrine 2.5%<br>
-      <strong style="color:#FCD34D;">⇒ Ocular surface disease</strong>`,
+      <strong style="color:var(--tone-warning-fg);">⇒ Ocular surface disease</strong>`,
         },
         {
           header: 'Episcleral hyperaemia',
@@ -82,11 +82,11 @@ const redEyeCoats: FlowPage = {
       • Deeper — does <strong>NOT move</strong> with the conjunctiva<br>
       • Most evident close to the <strong>limbus</strong><br>
       • Blanches with phenylephrine 2.5% (slower / less complete than conjunctival — scleritis vessels do NOT blanch)<br>
-      <strong style="color:#F87171;">⇒ Deeper / intraocular disease (uveitis, glaucoma, scleritis)</strong>`,
+      <strong style="color:var(--tone-danger-title);">⇒ Deeper / intraocular disease (uveitis, glaucoma, scleritis)</strong>`,
         },
       ],
-      footnote: `💡 <strong style="color:#C4B5FD;">Superficial corneal vascularisation</strong> = long, branching ("trees") → surface disease.<br>
-    💡 <strong style="color:#C4B5FD;">Deep corneal vascularisation</strong> = short, straight, deep red ("brush") → uveitis or glaucoma.`,
+      footnote: `💡 <strong style="color:var(--tone-violet-fg);">Superficial corneal vascularisation</strong> = long, branching ("trees") → surface disease.<br>
+    💡 <strong style="color:var(--tone-violet-fg);">Deep corneal vascularisation</strong> = short, straight, deep red ("brush") → uveitis or glaucoma.`,
     },
   ],
 }

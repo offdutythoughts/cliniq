@@ -80,13 +80,13 @@ const vestibularEntry: FlowPage = {
     {
       kind: 'html',
       html: `<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;margin-top:10px;">
-      <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:#6EE7B7;font-size:9px;cursor:pointer;text-align:center;" onclick="goLesionTab('LOC-VE-PERIPH','Peripheral vestibular')">
+      <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:var(--tone-green-fg);font-size:9px;cursor:pointer;text-align:center;" onclick="goLesionTab('LOC-VE-PERIPH','Peripheral vestibular')">
         Peripheral<br>causes ›
       </div>
-      <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.4);color:#FCA5A5;font-size:9px;cursor:pointer;text-align:center;" onclick="goLesionTab('LOC-VE-CENTRAL','Central vestibular')">
+      <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.4);color:var(--tone-danger-fg);font-size:9px;cursor:pointer;text-align:center;" onclick="goLesionTab('LOC-VE-CENTRAL','Central vestibular')">
         Central<br>causes ›
       </div>
-      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.4);color:#FCD34D;font-size:9px;cursor:pointer;text-align:center;" onclick="goLesionTab('LOC-VE-BILAT','Bilateral vestibular')">
+      <div class="flow-endpoint" style="background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.4);color:var(--tone-warning-fg);font-size:9px;cursor:pointer;text-align:center;" onclick="goLesionTab('LOC-VE-BILAT','Bilateral vestibular')">
         Bilateral<br>causes ›
       </div>
     </div>`,
@@ -108,7 +108,7 @@ const vestibularEntry: FlowPage = {
       kind: 'callout',
       tone: 'danger',
       gap: 8,
-      html: '<strong style="color:#F87171;">🚨 EMERGENCY signs → urgent MRI + stabilise:</strong> obtunded/stuporous · vertical or direction-changing nystagmus · CP deficits · multiple CN deficits · progressive deterioration',
+      html: '<strong style="color:var(--tone-danger-title);">🚨 EMERGENCY signs → urgent MRI + stabilise:</strong> obtunded/stuporous · vertical or direction-changing nystagmus · CP deficits · multiple CN deficits · progressive deterioration',
     },
 
     { kind: 'disclaimer' },

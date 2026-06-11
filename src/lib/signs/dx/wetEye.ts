@@ -52,22 +52,22 @@ export const wetEyeDx: DxApproach = {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
       <div>
-        <strong style="color:#60A5FA;font-size:10px;">🐕 DOG</strong><br><br>
-        <strong style="color:#FCD34D;">Brachycephalic</strong> (Pug, Bulldog, Pekingese, Shih Tzu, Persian-cross)<br>→ Multi-factorial: lower NLS opening into oropharynx, exposure keratopathy, macroblepharon, entropion, distichiasis. Tear staining classical.<br><br>
-        <strong style="color:#6EE7B7;">Toy / Mini breeds</strong> (Maltese, Toy Poodle, Bichon, Yorkie)<br>→ Cosmetic tear-stain (chronic, non-painful) and chronic KCS or distichiasis.<br><br>
-        <strong style="color:#FCA5A5;">Cocker Spaniel</strong> → ectropion + cherry eye + KCS + chronic dacryocystitis.<br><br>
-        <strong style="color:#FCD34D;">Cavalier King Charles Spaniel, Westie, Yorkie, Bichon</strong> → KCS — paradoxical reflex tearing.<br><br>
-        <strong style="color:#C4B5FD;">Young dog (&lt;1 yr) with bilateral lifelong wet eyes</strong> → puncta atresia / micropuncta — examine puncta under sedation.<br><br>
-        <strong style="color:#FCA5A5;">German Shepherd, Greyhound, Husky</strong> → pannus / plasmoma.<br><br>
-        <strong style="color:#93C5FD;">Older dog, unilateral epiphora ± epistaxis ± facial deformity</strong> → orbital or nasal neoplasia.
+        <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG</strong><br><br>
+        <strong style="color:var(--tone-warning-fg);">Brachycephalic</strong> (Pug, Bulldog, Pekingese, Shih Tzu, Persian-cross)<br>→ Multi-factorial: lower NLS opening into oropharynx, exposure keratopathy, macroblepharon, entropion, distichiasis. Tear staining classical.<br><br>
+        <strong style="color:var(--tone-green-fg);">Toy / Mini breeds</strong> (Maltese, Toy Poodle, Bichon, Yorkie)<br>→ Cosmetic tear-stain (chronic, non-painful) and chronic KCS or distichiasis.<br><br>
+        <strong style="color:var(--tone-danger-fg);">Cocker Spaniel</strong> → ectropion + cherry eye + KCS + chronic dacryocystitis.<br><br>
+        <strong style="color:var(--tone-warning-fg);">Cavalier King Charles Spaniel, Westie, Yorkie, Bichon</strong> → KCS — paradoxical reflex tearing.<br><br>
+        <strong style="color:var(--tone-violet-fg);">Young dog (&lt;1 yr) with bilateral lifelong wet eyes</strong> → puncta atresia / micropuncta — examine puncta under sedation.<br><br>
+        <strong style="color:var(--tone-danger-fg);">German Shepherd, Greyhound, Husky</strong> → pannus / plasmoma.<br><br>
+        <strong style="color:var(--tone-info-fg);">Older dog, unilateral epiphora ± epistaxis ± facial deformity</strong> → orbital or nasal neoplasia.
       </div>
       <div>
-        <strong style="color:#FB923C;font-size:10px;">🐱 CAT</strong><br><br>
-        <strong style="color:#C4B5FD;">Persian / Himalayan / Exotic SH</strong><br>→ Brachycephalic ocular surface disease, lower-punctum malposition, entropion, corneal sequestrum, KCS.<br><br>
-        <strong style="color:#FCD34D;">Young cat with bilateral mucopurulent epiphora + sneezing</strong> → feline URTI (FHV-1, FCV, Chlamydia, Mycoplasma).<br><br>
-        <strong style="color:#FCA5A5;">Outdoor / hunting cat</strong> → trauma, FB (grass awn), bite-wound dacryocystitis.<br><br>
-        <strong style="color:#6EE7B7;">Senior cat with chronic unilateral epiphora ± facial swelling ± nasal discharge</strong> → nasal SCC, lymphoma, fungal rhinitis with NLS obstruction.<br><br>
-        <strong style="color:#93C5FD;">Kitten with concurrent symblepharon</strong> → severe neonatal FHV-1 with destroyed NLS punctum or canaliculus.
+        <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT</strong><br><br>
+        <strong style="color:var(--tone-violet-fg);">Persian / Himalayan / Exotic SH</strong><br>→ Brachycephalic ocular surface disease, lower-punctum malposition, entropion, corneal sequestrum, KCS.<br><br>
+        <strong style="color:var(--tone-warning-fg);">Young cat with bilateral mucopurulent epiphora + sneezing</strong> → feline URTI (FHV-1, FCV, Chlamydia, Mycoplasma).<br><br>
+        <strong style="color:var(--tone-danger-fg);">Outdoor / hunting cat</strong> → trauma, FB (grass awn), bite-wound dacryocystitis.<br><br>
+        <strong style="color:var(--tone-green-fg);">Senior cat with chronic unilateral epiphora ± facial swelling ± nasal discharge</strong> → nasal SCC, lymphoma, fungal rhinitis with NLS obstruction.<br><br>
+        <strong style="color:var(--tone-info-fg);">Kitten with concurrent symblepharon</strong> → severe neonatal FHV-1 with destroyed NLS punctum or canaliculus.
       </div>
     </div>`,
       },
@@ -123,16 +123,16 @@ export const wetEyeDx: DxApproach = {
         html: `<div style="display:grid;grid-template-columns:1fr 1.2fr;gap:5px 8px;font-size:10px;line-height:1.45;">
       <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Finding</div>
       <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Most likely</div>
-      <div>Unilateral acute serous epiphora + blepharospasm + FB visible</div><div style="color:#FCA5A5;">Conjunctival / corneal FB · ectopic cilia</div>
-      <div>Unilateral acute + fluorescein-positive defect + reflex miosis</div><div style="color:#FCA5A5;">Ulcerative keratitis (with reflex uveitis)</div>
-      <div>Bilateral mucopurulent + lower STT + dull cornea</div><div style="color:#FCD34D;">Keratoconjunctivitis sicca (KCS)</div>
-      <div>Bilateral serous + chemosis + atopic dermatitis</div><div style="color:#6EE7B7;">Allergic conjunctivitis</div>
-      <div>Bilateral serous + sneezing + nasal discharge + young cat</div><div style="color:#6EE7B7;">Feline URTI (FHV-1, FCV, Chlamydia)</div>
-      <div>Unilateral chronic mucopurulent + medial canthal swelling + reflux on lacrimal sac press</div><div style="color:#FCD34D;">Dacryocystitis</div>
-      <div>Chronic bilateral wet eye in young dog + no discomfort + small/absent puncta</div><div style="color:#93C5FD;">Congenital puncta atresia / micropuncta</div>
-      <div>Chronic unilateral wet eye + epistaxis ± facial deformity + older animal</div><div style="color:#F87171;">Nasal / orbital neoplasia</div>
-      <div>Concurrent entropion + ectropion + macroblepharon (large eyelid opening)</div><div style="color:#FCD34D;">Diamond eye conformation</div>
-      <div>Photophobia + blepharospasm but no surface lesion identified</div><div style="color:#FCA5A5;">Anterior uveitis (rule out flare + IOP)</div>
+      <div>Unilateral acute serous epiphora + blepharospasm + FB visible</div><div style="color:var(--tone-danger-fg);">Conjunctival / corneal FB · ectopic cilia</div>
+      <div>Unilateral acute + fluorescein-positive defect + reflex miosis</div><div style="color:var(--tone-danger-fg);">Ulcerative keratitis (with reflex uveitis)</div>
+      <div>Bilateral mucopurulent + lower STT + dull cornea</div><div style="color:var(--tone-warning-fg);">Keratoconjunctivitis sicca (KCS)</div>
+      <div>Bilateral serous + chemosis + atopic dermatitis</div><div style="color:var(--tone-green-fg);">Allergic conjunctivitis</div>
+      <div>Bilateral serous + sneezing + nasal discharge + young cat</div><div style="color:var(--tone-green-fg);">Feline URTI (FHV-1, FCV, Chlamydia)</div>
+      <div>Unilateral chronic mucopurulent + medial canthal swelling + reflux on lacrimal sac press</div><div style="color:var(--tone-warning-fg);">Dacryocystitis</div>
+      <div>Chronic bilateral wet eye in young dog + no discomfort + small/absent puncta</div><div style="color:var(--tone-info-fg);">Congenital puncta atresia / micropuncta</div>
+      <div>Chronic unilateral wet eye + epistaxis ± facial deformity + older animal</div><div style="color:var(--tone-danger-title);">Nasal / orbital neoplasia</div>
+      <div>Concurrent entropion + ectropion + macroblepharon (large eyelid opening)</div><div style="color:var(--tone-warning-fg);">Diamond eye conformation</div>
+      <div>Photophobia + blepharospasm but no surface lesion identified</div><div style="color:var(--tone-danger-fg);">Anterior uveitis (rule out flare + IOP)</div>
     </div>`,
       },
       { kind: 'step', alt: true, text: '🧪 STEP 4 — PROXYMETACAINE / PROPARACAINE TEST FOR PAIN' },

@@ -94,23 +94,23 @@ export const redEyeDx: DxApproach = {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
       <div>
-        <strong style="color:#60A5FA;font-size:10px;">🐕 DOG</strong><br><br>
-        <strong style="color:#FCD34D;">Brachycephalic</strong> (Pug, Boston, French Bulldog, Pekingese, Shih Tzu)<br>→ Exposure keratopathy · ulcers · pigmentary keratitis · proptosis risk<br><br>
-        <strong style="color:#6EE7B7;">Cocker Spaniel · CKCS · Lhasa Apso · Bichon · Westie · Yorkie</strong><br>→ KCS (immune-mediated) · primary closed-angle glaucoma (Cocker, Basset, Springer)<br><br>
-        <strong style="color:#FCA5A5;">German Shepherd</strong><br>→ Chronic superficial keratitis (pannus) · plasmoma · pigmentary uveitis<br><br>
-        <strong style="color:#C4B5FD;">Golden Retriever</strong><br>→ Pigmentary uveitis · primary uveitic glaucoma · uveal cysts<br><br>
-        <strong style="color:#FCD34D;">Collie / Sheltie</strong><br>→ Nodular granulomatous episcleritis (NGE) · Collie eye anomaly<br><br>
-        <strong style="color:#FCA5A5;">Boxer · Dane · Shar-Pei</strong><br>→ Entropion · ulcers · indolent erosion (Boxer ulcer)<br><br>
-        <strong style="color:#6EE7B7;">Akita · Samoyed · Husky</strong><br>→ Uveodermatologic syndrome (VKH-like)
+        <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG</strong><br><br>
+        <strong style="color:var(--tone-warning-fg);">Brachycephalic</strong> (Pug, Boston, French Bulldog, Pekingese, Shih Tzu)<br>→ Exposure keratopathy · ulcers · pigmentary keratitis · proptosis risk<br><br>
+        <strong style="color:var(--tone-green-fg);">Cocker Spaniel · CKCS · Lhasa Apso · Bichon · Westie · Yorkie</strong><br>→ KCS (immune-mediated) · primary closed-angle glaucoma (Cocker, Basset, Springer)<br><br>
+        <strong style="color:var(--tone-danger-fg);">German Shepherd</strong><br>→ Chronic superficial keratitis (pannus) · plasmoma · pigmentary uveitis<br><br>
+        <strong style="color:var(--tone-violet-fg);">Golden Retriever</strong><br>→ Pigmentary uveitis · primary uveitic glaucoma · uveal cysts<br><br>
+        <strong style="color:var(--tone-warning-fg);">Collie / Sheltie</strong><br>→ Nodular granulomatous episcleritis (NGE) · Collie eye anomaly<br><br>
+        <strong style="color:var(--tone-danger-fg);">Boxer · Dane · Shar-Pei</strong><br>→ Entropion · ulcers · indolent erosion (Boxer ulcer)<br><br>
+        <strong style="color:var(--tone-green-fg);">Akita · Samoyed · Husky</strong><br>→ Uveodermatologic syndrome (VKH-like)
       </div>
       <div>
-        <strong style="color:#FB923C;font-size:10px;">🐱 CAT</strong><br><br>
-        <strong style="color:#C4B5FD;">Young cat</strong><br>→ FHV-1 keratitis · eosinophilic keratitis · symblepharon · viral URTI conjunctivitis<br><br>
-        <strong style="color:#6EE7B7;">Persian / Himalayan / Exotic SH</strong><br>→ Brachycephalic ocular surface disease · corneal sequestrum · entropion<br><br>
-        <strong style="color:#FCD34D;">Middle-aged–older cat</strong><br>→ Uveitis (FIV/FeLV/FIP/toxoplasma) · iris melanoma · hypertensive retinopathy<br><br>
-        <strong style="color:#FCA5A5;">Outdoor cat</strong><br>→ Trauma · proptosis · uveitis (FIV, toxoplasma)<br><br>
-        <strong style="color:#93C5FD;">Burmese</strong><br>→ Corneal sequestrum predisposed<br><br>
-        <strong style="color:#FCD34D;">FIV/FeLV positive</strong><br>→ Anterior uveitis · lymphoma (orbital, intraocular)
+        <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT</strong><br><br>
+        <strong style="color:var(--tone-violet-fg);">Young cat</strong><br>→ FHV-1 keratitis · eosinophilic keratitis · symblepharon · viral URTI conjunctivitis<br><br>
+        <strong style="color:var(--tone-green-fg);">Persian / Himalayan / Exotic SH</strong><br>→ Brachycephalic ocular surface disease · corneal sequestrum · entropion<br><br>
+        <strong style="color:var(--tone-warning-fg);">Middle-aged–older cat</strong><br>→ Uveitis (FIV/FeLV/FIP/toxoplasma) · iris melanoma · hypertensive retinopathy<br><br>
+        <strong style="color:var(--tone-danger-fg);">Outdoor cat</strong><br>→ Trauma · proptosis · uveitis (FIV, toxoplasma)<br><br>
+        <strong style="color:var(--tone-info-fg);">Burmese</strong><br>→ Corneal sequestrum predisposed<br><br>
+        <strong style="color:var(--tone-warning-fg);">FIV/FeLV positive</strong><br>→ Anterior uveitis · lymphoma (orbital, intraocular)
       </div>
     </div>`,
       },
@@ -193,19 +193,19 @@ export const redEyeDx: DxApproach = {
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;font-size:10px;line-height:1.45;">
       <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Finding</div>
       <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Most likely</div>
-      <div>Conjunctival redness · normal cornea/pupil · ↑ tearing</div><div style="color:#6EE7B7;">Conjunctivitis (allergic · bacterial · viral)</div>
-      <div>Conjunctival redness · mucoid discharge · dull cornea · low STT</div><div style="color:#FCD34D;">Keratoconjunctivitis sicca (KCS)</div>
-      <div>Fluorescein +ve corneal defect · pain · neovasc.</div><div style="color:#FCA5A5;">Ulcerative keratitis</div>
-      <div>Fluorescein +ve + stromal melt / mucopurulent</div><div style="color:#F87171;">Infected / melting ulcer — emergency</div>
-      <div>Episcleral injection · miosis · aqueous flare · ↓ IOP</div><div style="color:#FCA5A5;">Anterior uveitis</div>
-      <div>Episcleral injection · mydriasis · diffuse oedema · ↑ IOP &gt;25</div><div style="color:#F87171;">Acute glaucoma — emergency</div>
-      <div>Painful exophthalmos + pain on opening mouth</div><div style="color:#FCA5A5;">Orbital cellulitis / abscess</div>
-      <div>Chronic non-painful exophthalmos</div><div style="color:#FCD34D;">Orbital neoplasia until proven otherwise</div>
-      <div>Hyphaema + bilateral · retinal detachment</div><div style="color:#F87171;">Systemic hypertension</div>
-      <div>Pigmented iris lesion · ↑ IOP · raised + transilluminating?</div><div style="color:#FCD34D;">Iris cyst (benign) vs melanoma (solid)</div>
-      <div>Black corneal plaque · cat</div><div style="color:#C4B5FD;">Corneal sequestrum</div>
-      <div>Conjunctival follicles + nasal/oral lesions + young cat</div><div style="color:#6EE7B7;">FHV-1 / FCV viral conjunctivitis</div>
-      <div>GSD + bilateral lateral pigmented corneal vasc.</div><div style="color:#93C5FD;">Pannus (chronic superficial keratitis)</div>
+      <div>Conjunctival redness · normal cornea/pupil · ↑ tearing</div><div style="color:var(--tone-green-fg);">Conjunctivitis (allergic · bacterial · viral)</div>
+      <div>Conjunctival redness · mucoid discharge · dull cornea · low STT</div><div style="color:var(--tone-warning-fg);">Keratoconjunctivitis sicca (KCS)</div>
+      <div>Fluorescein +ve corneal defect · pain · neovasc.</div><div style="color:var(--tone-danger-fg);">Ulcerative keratitis</div>
+      <div>Fluorescein +ve + stromal melt / mucopurulent</div><div style="color:var(--tone-danger-title);">Infected / melting ulcer — emergency</div>
+      <div>Episcleral injection · miosis · aqueous flare · ↓ IOP</div><div style="color:var(--tone-danger-fg);">Anterior uveitis</div>
+      <div>Episcleral injection · mydriasis · diffuse oedema · ↑ IOP &gt;25</div><div style="color:var(--tone-danger-title);">Acute glaucoma — emergency</div>
+      <div>Painful exophthalmos + pain on opening mouth</div><div style="color:var(--tone-danger-fg);">Orbital cellulitis / abscess</div>
+      <div>Chronic non-painful exophthalmos</div><div style="color:var(--tone-warning-fg);">Orbital neoplasia until proven otherwise</div>
+      <div>Hyphaema + bilateral · retinal detachment</div><div style="color:var(--tone-danger-title);">Systemic hypertension</div>
+      <div>Pigmented iris lesion · ↑ IOP · raised + transilluminating?</div><div style="color:var(--tone-warning-fg);">Iris cyst (benign) vs melanoma (solid)</div>
+      <div>Black corneal plaque · cat</div><div style="color:var(--tone-violet-fg);">Corneal sequestrum</div>
+      <div>Conjunctival follicles + nasal/oral lesions + young cat</div><div style="color:var(--tone-green-fg);">FHV-1 / FCV viral conjunctivitis</div>
+      <div>GSD + bilateral lateral pigmented corneal vasc.</div><div style="color:var(--tone-info-fg);">Pannus (chronic superficial keratitis)</div>
     </div>`,
       },
     ],
@@ -258,11 +258,11 @@ export const redEyeDx: DxApproach = {
     <strong>Normal IOP:</strong> 10–25 mmHg both species. Inter-eye difference of &gt;8 mmHg is generally considered clinically significant.<br>
     <div style="display:grid;grid-template-columns:1fr 1.2fr;gap:3px 6px;font-size:9.5px;margin:4px 0;">
       <div style="font-weight:600;">IOP</div><div style="font-weight:600;">Interpretation</div>
-      <div>&gt;25 mmHg + clinical signs</div><div style="color:#F87171;">Glaucoma (primary or secondary)</div>
+      <div>&gt;25 mmHg + clinical signs</div><div style="color:var(--tone-danger-title);">Glaucoma (primary or secondary)</div>
       <div>&gt;40 mmHg</div><div style="color:#EF4444;font-weight:700;">Acute glaucoma — emergency · vision-threatening</div>
-      <div>10–25</div><div style="color:#6EE7B7;">Normal</div>
-      <div>&lt;10 mmHg</div><div style="color:#FCD34D;">Uveitis (most common) · phthisis bulbi · scleral rupture</div>
-      <div>Inter-eye difference &gt;8 mmHg</div><div style="color:#FCD34D;">Clinically significant — investigate the abnormal eye</div>
+      <div>10–25</div><div style="color:var(--tone-green-fg);">Normal</div>
+      <div>&lt;10 mmHg</div><div style="color:var(--tone-warning-fg);">Uveitis (most common) · phthisis bulbi · scleral rupture</div>
+      <div>Inter-eye difference &gt;8 mmHg</div><div style="color:var(--tone-warning-fg);">Clinically significant — investigate the abnormal eye</div>
     </div>
     <strong>Pitfalls:</strong> Squeezing eyelids · jugular compression · head position · poor calibration → falsely high readings. Take 3+ readings and use the mean.`,
       },

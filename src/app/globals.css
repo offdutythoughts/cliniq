@@ -50,7 +50,7 @@
   --tone-violet: 139,92,246;    --tone-violet-fg: #5B21B6;
   --tone-purple: 168,85,247;    --tone-purple-fg: #6B21A8;
   --tone-indigo: 99,102,241;    --tone-indigo-fg: #3730A3;
-  --tone-orange: 249,115,22;    --tone-orange-fg: #7C2D12;
+  --tone-orange: 249,115,22;    --tone-orange-fg: #7C2D12;   --hl-orange: #C2410C;  /* dark: #FB923C */
   --tone-slate: 100,116,139;    --tone-slate-fg: #334155;
   --tone-neutral: 255,255,255;  --tone-neutral-fg: var(--gray);
 
@@ -111,7 +111,7 @@ html[data-theme="dark"]{
   --tone-violet-fg: #C4B5FD;
   --tone-purple-fg: #C4B5FD;
   --tone-indigo-fg: #A5B4FC;
-  --tone-orange-fg: #FED7AA;
+  --tone-orange-fg: #FED7AA;  --hl-orange: #FB923C;
   --tone-slate-fg: #CBD5E1;
   /* Location foregrounds flip deep→bright; per-class dark rules no longer needed. */
   --fg-blue-deep: var(--fg-blue-bright);     --fg-teal-deep: var(--fg-teal-bright);

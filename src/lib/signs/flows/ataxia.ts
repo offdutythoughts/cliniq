@@ -31,7 +31,7 @@ const ataxiaEntry: FlowPage = {
         {
           variant: 'insp',
           label: 'Cerebellar',
-          sublabel: 'Hypermetria (dysmetria)<br>Intention tremor<br>Truncal sway<br>Wide-based stance<br><strong style="color:#93C5FD;">No paresis</strong><br>Normal mentation',
+          sublabel: 'Hypermetria (dysmetria)<br>Intention tremor<br>Truncal sway<br>Wide-based stance<br><strong style="color:var(--tone-info-fg);">No paresis</strong><br>Normal mentation',
           link: { to: 'lesion', loc: 'LOC-AT-CEREB', name: 'Cerebellar ataxia' },
         },
         {
@@ -43,7 +43,7 @@ const ataxiaEntry: FlowPage = {
         {
           variant: 'mixed',
           label: 'Proprioceptive',
-          sublabel: 'Knuckling<br>Crossing over<br>Scuffing toes<br>Delayed CP placing<br><strong style="color:#FCA5A5;">Paresis present</strong><br>Spinal cord / brainstem',
+          sublabel: 'Knuckling<br>Crossing over<br>Scuffing toes<br>Delayed CP placing<br><strong style="color:var(--tone-danger-fg);">Paresis present</strong><br>Spinal cord / brainstem',
           link: { to: 'flow', id: 'myelopathy' },
         },
       ],

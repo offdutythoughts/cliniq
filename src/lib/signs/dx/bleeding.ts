@@ -81,28 +81,28 @@ export const bleedingDx: DxApproach = {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
       <div>
-        <strong style="color:#60A5FA;font-size:10px;">🐕 DOG</strong><br><br>
-        <strong style="color:#FCA5A5;">Cocker Spaniel, Poodle, OES, Lhasa Apso, Maltese</strong><br>→ Idiopathic IMTP.<br><br>
-        <strong style="color:#FCD34D;">Doberman</strong> → vWD type I (mild–moderate). Pre-op test essential before any surgery.<br><br>
-        <strong style="color:#6EE7B7;">Scottish Terrier, Shetland</strong> → vWD type III (most severe; spontaneous bleeding).<br><br>
-        <strong style="color:#C4B5FD;">GSD</strong> → haemophilia A (factor VIII, X-linked).<br><br>
-        <strong style="color:#FCA5A5;">Splenic / hepatic HSA in middle-aged–older large breed</strong> (GSD, Goldie, Lab, Pointer) → acute haemoperitoneum + collapse + pale gums.<br><br>
-        <strong style="color:#FCD34D;">Older intact male</strong> → Sertoli cell tumour with hyperestrogenism → bone marrow suppression → pancytopenia + bleeding.<br><br>
-        <strong style="color:#93C5FD;">Cocker, Springer</strong> → familial vasculopathy (idiopathic cutaneous vasculitis).<br><br>
-        <strong style="color:#FCA5A5;">Greyhound</strong> → post-operative fibrinolysis tendency (aminocaproic acid prophylaxis).<br><br>
-        <strong style="color:#6EE7B7;">Cavalier King Charles Spaniel</strong> → macrothrombocytopenia (mild, asymptomatic — beware misinterpretation).<br><br>
-        <strong style="color:#C4B5FD;">Norfolk Terrier, Otterhound</strong> → Glanzmann thrombasthenia.<br><br>
-        <strong style="color:#FCD34D;">Sighthound, Greyhound</strong> → CRGV / "Alabama rot" — skin ulcers + AKI + thrombocytopenia.
+        <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG</strong><br><br>
+        <strong style="color:var(--tone-danger-fg);">Cocker Spaniel, Poodle, OES, Lhasa Apso, Maltese</strong><br>→ Idiopathic IMTP.<br><br>
+        <strong style="color:var(--tone-warning-fg);">Doberman</strong> → vWD type I (mild–moderate). Pre-op test essential before any surgery.<br><br>
+        <strong style="color:var(--tone-green-fg);">Scottish Terrier, Shetland</strong> → vWD type III (most severe; spontaneous bleeding).<br><br>
+        <strong style="color:var(--tone-violet-fg);">GSD</strong> → haemophilia A (factor VIII, X-linked).<br><br>
+        <strong style="color:var(--tone-danger-fg);">Splenic / hepatic HSA in middle-aged–older large breed</strong> (GSD, Goldie, Lab, Pointer) → acute haemoperitoneum + collapse + pale gums.<br><br>
+        <strong style="color:var(--tone-warning-fg);">Older intact male</strong> → Sertoli cell tumour with hyperestrogenism → bone marrow suppression → pancytopenia + bleeding.<br><br>
+        <strong style="color:var(--tone-info-fg);">Cocker, Springer</strong> → familial vasculopathy (idiopathic cutaneous vasculitis).<br><br>
+        <strong style="color:var(--tone-danger-fg);">Greyhound</strong> → post-operative fibrinolysis tendency (aminocaproic acid prophylaxis).<br><br>
+        <strong style="color:var(--tone-green-fg);">Cavalier King Charles Spaniel</strong> → macrothrombocytopenia (mild, asymptomatic — beware misinterpretation).<br><br>
+        <strong style="color:var(--tone-violet-fg);">Norfolk Terrier, Otterhound</strong> → Glanzmann thrombasthenia.<br><br>
+        <strong style="color:var(--tone-warning-fg);">Sighthound, Greyhound</strong> → CRGV / "Alabama rot" — skin ulcers + AKI + thrombocytopenia.
       </div>
       <div>
-        <strong style="color:#FB923C;font-size:10px;">🐱 CAT</strong><br><br>
-        <strong style="color:#C4B5FD;">FeLV / FIV positive</strong><br>→ Bone marrow suppression → thrombocytopenia + anaemia + bleeding tendency.<br><br>
-        <strong style="color:#FCD34D;">Cat with sepsis, pancreatitis, severe pyrexia</strong><br>→ DIC.<br><br>
-        <strong style="color:#FCA5A5;">Mycoplasma haemofelis + concurrent infection</strong><br>→ Haemolytic anaemia + thrombocytopenia.<br><br>
-        <strong style="color:#6EE7B7;">DSH young to middle-aged cat with epistaxis + petechiae</strong><br>→ Tick-borne (in endemic areas), FIP-associated vasculitis, idiopathic IMTP (less common than dog).<br><br>
-        <strong style="color:#93C5FD;">Birman</strong> → reported hereditary deficiency of factor XII (asymptomatic — prolonged aPTT incidentally).<br><br>
-        <strong style="color:#FCA5A5;">Outdoor cat with envenomation history</strong><br>→ Snake / spider bite — combined primary + secondary defect.<br><br>
-        <strong style="color:#FCD34D;">Cat on long-term anticoagulant for cardiomyopathy</strong><br>→ Iatrogenic — clopidogrel + ATE prevention complications.
+        <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT</strong><br><br>
+        <strong style="color:var(--tone-violet-fg);">FeLV / FIV positive</strong><br>→ Bone marrow suppression → thrombocytopenia + anaemia + bleeding tendency.<br><br>
+        <strong style="color:var(--tone-warning-fg);">Cat with sepsis, pancreatitis, severe pyrexia</strong><br>→ DIC.<br><br>
+        <strong style="color:var(--tone-danger-fg);">Mycoplasma haemofelis + concurrent infection</strong><br>→ Haemolytic anaemia + thrombocytopenia.<br><br>
+        <strong style="color:var(--tone-green-fg);">DSH young to middle-aged cat with epistaxis + petechiae</strong><br>→ Tick-borne (in endemic areas), FIP-associated vasculitis, idiopathic IMTP (less common than dog).<br><br>
+        <strong style="color:var(--tone-info-fg);">Birman</strong> → reported hereditary deficiency of factor XII (asymptomatic — prolonged aPTT incidentally).<br><br>
+        <strong style="color:var(--tone-danger-fg);">Outdoor cat with envenomation history</strong><br>→ Snake / spider bite — combined primary + secondary defect.<br><br>
+        <strong style="color:var(--tone-warning-fg);">Cat on long-term anticoagulant for cardiomyopathy</strong><br>→ Iatrogenic — clopidogrel + ATE prevention complications.
       </div>
     </div>`,
       },
@@ -152,20 +152,20 @@ export const bleedingDx: DxApproach = {
         html: `<div style="display:grid;grid-template-columns:1fr 1.2fr;gap:5px 8px;font-size:10px;line-height:1.45;">
       <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Finding</div>
       <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Most likely</div>
-      <div>Generalised petechiae + ecchymoses + mucosal bleeds + platelet count &lt;30 ×10⁹/L</div><div style="color:#F87171;">IMTP (primary or 2°)</div>
-      <div>Doberman or Sheltie with epistaxis + prolonged BMBT + normal platelet count</div><div style="color:#FCD34D;">von Willebrand disease</div>
-      <div>Acute haemoperitoneum + collapse + pale gums + older large breed dog</div><div style="color:#F87171;">Splenic / hepatic HSA rupture</div>
-      <div>Haemothorax + cough / dyspnoea + history of access to bait</div><div style="color:#FCA5A5;">Anticoagulant rodenticide</div>
-      <div>Haemarthrosis + young male dog + family history</div><div style="color:#C4B5FD;">Haemophilia A / B (X-linked)</div>
-      <div>Petechiae + cavity bleed + sepsis / neoplasia / pancreatitis / IMHA</div><div style="color:#F87171;">DIC</div>
-      <div>Intact male dog + feminisation + bilateral alopecia + pancytopenia</div><div style="color:#FCA5A5;">Sertoli cell tumour with hyperestrogenism</div>
-      <div>Ear-tip / footpad necrosis + crusting + cutaneous ulcers</div><div style="color:#C4B5FD;">Cutaneous vasculitis</div>
-      <div>Bleeding + acute renal failure + skin ulcers + sighthound</div><div style="color:#FCA5A5;">CRGV / "Alabama rot"</div>
-      <div>Concurrent anaemia + thrombocytopenia + tick exposure</div><div style="color:#6EE7B7;">Tick-borne (Ehrlichia, Anaplasma, Babesia)</div>
-      <div>Jaundice + ascites + bleeding</div><div style="color:#FCA5A5;">Hepatic failure</div>
-      <div>🐱 Cat with FIP / lymphoma / cytauxzoon and thromboembolic signs (acute hindlimb paresis, pulmonary signs) — minimal external bleeding</div><div style="color:#A5B4FC;">Feline DIC (thrombotic phenotype) — grave</div>
-      <div>🐱 Birman / Siamese / DSH with isolated aPTT prolongation pre-op, no bleeding</div><div style="color:#A5B4FC;">Factor XII deficiency — clinically silent</div>
-      <div>Mediterranean / African origin cat with regenerative anaemia + FeLV positive</div><div style="color:#A5B4FC;">Babesia felis</div>
+      <div>Generalised petechiae + ecchymoses + mucosal bleeds + platelet count &lt;30 ×10⁹/L</div><div style="color:var(--tone-danger-title);">IMTP (primary or 2°)</div>
+      <div>Doberman or Sheltie with epistaxis + prolonged BMBT + normal platelet count</div><div style="color:var(--tone-warning-fg);">von Willebrand disease</div>
+      <div>Acute haemoperitoneum + collapse + pale gums + older large breed dog</div><div style="color:var(--tone-danger-title);">Splenic / hepatic HSA rupture</div>
+      <div>Haemothorax + cough / dyspnoea + history of access to bait</div><div style="color:var(--tone-danger-fg);">Anticoagulant rodenticide</div>
+      <div>Haemarthrosis + young male dog + family history</div><div style="color:var(--tone-violet-fg);">Haemophilia A / B (X-linked)</div>
+      <div>Petechiae + cavity bleed + sepsis / neoplasia / pancreatitis / IMHA</div><div style="color:var(--tone-danger-title);">DIC</div>
+      <div>Intact male dog + feminisation + bilateral alopecia + pancytopenia</div><div style="color:var(--tone-danger-fg);">Sertoli cell tumour with hyperestrogenism</div>
+      <div>Ear-tip / footpad necrosis + crusting + cutaneous ulcers</div><div style="color:var(--tone-violet-fg);">Cutaneous vasculitis</div>
+      <div>Bleeding + acute renal failure + skin ulcers + sighthound</div><div style="color:var(--tone-danger-fg);">CRGV / "Alabama rot"</div>
+      <div>Concurrent anaemia + thrombocytopenia + tick exposure</div><div style="color:var(--tone-green-fg);">Tick-borne (Ehrlichia, Anaplasma, Babesia)</div>
+      <div>Jaundice + ascites + bleeding</div><div style="color:var(--tone-danger-fg);">Hepatic failure</div>
+      <div>🐱 Cat with FIP / lymphoma / cytauxzoon and thromboembolic signs (acute hindlimb paresis, pulmonary signs) — minimal external bleeding</div><div style="color:var(--tone-indigo-fg);">Feline DIC (thrombotic phenotype) — grave</div>
+      <div>🐱 Birman / Siamese / DSH with isolated aPTT prolongation pre-op, no bleeding</div><div style="color:var(--tone-indigo-fg);">Factor XII deficiency — clinically silent</div>
+      <div>Mediterranean / African origin cat with regenerative anaemia + FeLV positive</div><div style="color:var(--tone-indigo-fg);">Babesia felis</div>
     </div>`,
       },
     ],
@@ -222,19 +222,19 @@ export const bleedingDx: DxApproach = {
     <table style="width:100%;border-collapse:collapse;font-size:9px;">
       <thead>
         <tr style="border-bottom:1.5px solid rgba(148,163,184,0.3);">
-          <th style="padding:4px 6px;text-align:left;color:#FCD34D;font-weight:700;width:14%;">Test</th>
+          <th style="padding:4px 6px;text-align:left;color:var(--tone-warning-fg);font-weight:700;width:14%;">Test</th>
           <th style="padding:4px 6px;text-align:left;color:var(--gray);font-weight:700;width:42%;">Pathway (factors measured)</th>
           <th style="padding:4px 6px;text-align:left;color:var(--gray);font-weight:700;">Key point</th>
         </tr>
       </thead>
       <tbody>
         <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
-          <td style="padding:4px 6px;color:#FCD34D;font-weight:700;">PT</td>
+          <td style="padding:4px 6px;color:var(--tone-warning-fg);font-weight:700;">PT</td>
           <td style="padding:4px 6px;color:var(--gray);">Extrinsic + common: VII, X, V, II, fibrinogen</td>
           <td style="padding:4px 6px;color:var(--gray);">Prolongs first with vit K antagonists (VII shortest half-life)</td>
         </tr>
         <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
-          <td style="padding:4px 6px;color:#A5B4FC;font-weight:700;">aPTT</td>
+          <td style="padding:4px 6px;color:var(--tone-indigo-fg);font-weight:700;">aPTT</td>
           <td style="padding:4px 6px;color:var(--gray);">Intrinsic + common: XII, XI, IX, VIII, X, V, II, fibrinogen</td>
           <td style="padding:4px 6px;color:var(--gray);">Haemophilia A (VIII), B (IX), XII deficiency; intrinsic defects</td>
         </tr>
@@ -252,7 +252,7 @@ export const bleedingDx: DxApproach = {
       {
         kind: 'html',
         html: `<div style="margin-top:8px;padding:10px 12px;background:rgba(99,102,241,0.07);border:1px solid rgba(99,102,241,0.22);border-radius:10px;">
-  <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:6px;">📊 Coag Pattern Interpretation + Workup</div>
+  <div style="font-size:10px;font-weight:700;color:var(--tone-indigo-fg);margin-bottom:6px;">📊 Coag Pattern Interpretation + Workup</div>
   <table style="width:100%;border-collapse:collapse;font-size:9px;">
     <thead>
       <tr style="border-bottom:1.5px solid rgba(148,163,184,0.3);">
@@ -263,29 +263,29 @@ export const bleedingDx: DxApproach = {
     </thead>
     <tbody>
       <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
-        <td style="padding:5px 6px;vertical-align:top;"><span style="color:#FCA5A5;font-weight:700;">Plt ↓ &lt;50k</span><br><span style="color:var(--gray);font-size:8px;">PT + aPTT normal</span></td>
-        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:#FCA5A5;">IMTP</span> — primary or secondary (SLE, neoplasia)<br><span style="color:#FCA5A5;">Tick-borne</span> — Ehrlichia, Anaplasma, Babesia, Rickettsia<br><span style="color:#FCA5A5;">Evans syndrome</span> — IMHA + IMTP concurrent<br><span style="color:#FCA5A5;">BM suppression</span> — neoplasia, drugs, oestrogen</td>
-        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">4Dx tick panel · Coombs / saline agglutination · ANA · abdominal imaging · bone marrow aspirate + core if unexplained · drug review<br><span style="color:#FCA5A5;font-weight:600;">Prednisolone 2 mg/kg/day</span> + doxycycline 5–10 mg/kg BID pending serology · IMTP confirmed by exclusion + response</td>
+        <td style="padding:5px 6px;vertical-align:top;"><span style="color:var(--tone-danger-fg);font-weight:700;">Plt ↓ &lt;50k</span><br><span style="color:var(--gray);font-size:8px;">PT + aPTT normal</span></td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:var(--tone-danger-fg);">IMTP</span> — primary or secondary (SLE, neoplasia)<br><span style="color:var(--tone-danger-fg);">Tick-borne</span> — Ehrlichia, Anaplasma, Babesia, Rickettsia<br><span style="color:var(--tone-danger-fg);">Evans syndrome</span> — IMHA + IMTP concurrent<br><span style="color:var(--tone-danger-fg);">BM suppression</span> — neoplasia, drugs, oestrogen</td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">4Dx tick panel · Coombs / saline agglutination · ANA · abdominal imaging · bone marrow aspirate + core if unexplained · drug review<br><span style="color:var(--tone-danger-fg);font-weight:600;">Prednisolone 2 mg/kg/day</span> + doxycycline 5–10 mg/kg BID pending serology · IMTP confirmed by exclusion + response</td>
       </tr>
       <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
-        <td style="padding:5px 6px;vertical-align:top;"><span style="color:#FCD34D;font-weight:700;">PT ↑ only</span><br><span style="color:var(--gray);font-size:8px;">aPTT normal</span></td>
-        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:#FCD34D;">Anticoagulant rodenticide</span> — early (factor VII depletes first)<br><span style="color:#FCD34D;">Factor VII deficiency</span> — congenital; Beagle, Malamute<br><span style="color:#FCD34D;">Early hepatic disease</span> — FVII shortest hepatic half-life</td>
-        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">PIVKAs (more sensitive than PT for rodenticide) · factor VII assay · bile acids<br><span style="color:#FCD34D;font-weight:600;">Vit K1 2.5–5 mg/kg SC</span> empirically; recheck PT 48–72 h after last dose</td>
+        <td style="padding:5px 6px;vertical-align:top;"><span style="color:var(--tone-warning-fg);font-weight:700;">PT ↑ only</span><br><span style="color:var(--gray);font-size:8px;">aPTT normal</span></td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:var(--tone-warning-fg);">Anticoagulant rodenticide</span> — early (factor VII depletes first)<br><span style="color:var(--tone-warning-fg);">Factor VII deficiency</span> — congenital; Beagle, Malamute<br><span style="color:var(--tone-warning-fg);">Early hepatic disease</span> — FVII shortest hepatic half-life</td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">PIVKAs (more sensitive than PT for rodenticide) · factor VII assay · bile acids<br><span style="color:var(--tone-warning-fg);font-weight:600;">Vit K1 2.5–5 mg/kg SC</span> empirically; recheck PT 48–72 h after last dose</td>
       </tr>
       <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
-        <td style="padding:5px 6px;vertical-align:top;"><span style="color:#A5B4FC;font-weight:700;">aPTT ↑ only</span><br><span style="color:var(--gray);font-size:8px;">PT normal</span></td>
-        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:#C4B5FD;">Haemophilia A</span> — factor VIII; X-linked; males<br><span style="color:#C4B5FD;">Haemophilia B</span> — factor IX; Cairn terrier<br><span style="color:#C4B5FD;">Factor XII deficiency</span> — cats; non-bleeding phenotype</td>
-        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">Specific factor assays (VIII, IX, XI, XII) · mixing studies (correction = factor deficiency; no correction = inhibitor)<br><span style="color:#C4B5FD;font-weight:600;">FFP</span> if active bleeding · cage rest · avoid IM injections</td>
+        <td style="padding:5px 6px;vertical-align:top;"><span style="color:var(--tone-indigo-fg);font-weight:700;">aPTT ↑ only</span><br><span style="color:var(--gray);font-size:8px;">PT normal</span></td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:var(--tone-violet-fg);">Haemophilia A</span> — factor VIII; X-linked; males<br><span style="color:var(--tone-violet-fg);">Haemophilia B</span> — factor IX; Cairn terrier<br><span style="color:var(--tone-violet-fg);">Factor XII deficiency</span> — cats; non-bleeding phenotype</td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">Specific factor assays (VIII, IX, XI, XII) · mixing studies (correction = factor deficiency; no correction = inhibitor)<br><span style="color:var(--tone-violet-fg);font-weight:600;">FFP</span> if active bleeding · cage rest · avoid IM injections</td>
       </tr>
       <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
-        <td style="padding:5px 6px;vertical-align:top;"><span style="color:#FCA5A5;font-weight:700;">PT ↑ + aPTT ↑</span><br><span style="color:var(--gray);font-size:8px;">Both prolonged</span></td>
-        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:#FCA5A5;">Rodenticide (advanced)</span> — multiple factors depleted<br><span style="color:#FCA5A5;">Hepatic failure</span> — check ALT · bilirubin · albumin<br><span style="color:#FCA5A5;">DIC</span> — thrombocytopenia concurrent; &gt;3/5 DIC criteria = overt<br><span style="color:#FCA5A5;">Multi-factor deficiency</span> — congenital; rare</td>
-        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">Fibrinogen · D-dimer / FDPs · antithrombin · bile acids + ammonia · mixing studies<br><span style="color:#FCA5A5;font-weight:600;">Vit K1 SC urgently</span> · FFP if active cavity bleed · treat underlying cause (DIC) · cryoprecipitate if hypofibrinogenaemic</td>
+        <td style="padding:5px 6px;vertical-align:top;"><span style="color:var(--tone-danger-fg);font-weight:700;">PT ↑ + aPTT ↑</span><br><span style="color:var(--gray);font-size:8px;">Both prolonged</span></td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:var(--tone-danger-fg);">Rodenticide (advanced)</span> — multiple factors depleted<br><span style="color:var(--tone-danger-fg);">Hepatic failure</span> — check ALT · bilirubin · albumin<br><span style="color:var(--tone-danger-fg);">DIC</span> — thrombocytopenia concurrent; &gt;3/5 DIC criteria = overt<br><span style="color:var(--tone-danger-fg);">Multi-factor deficiency</span> — congenital; rare</td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">Fibrinogen · D-dimer / FDPs · antithrombin · bile acids + ammonia · mixing studies<br><span style="color:var(--tone-danger-fg);font-weight:600;">Vit K1 SC urgently</span> · FFP if active cavity bleed · treat underlying cause (DIC) · cryoprecipitate if hypofibrinogenaemic</td>
       </tr>
       <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
-        <td style="padding:5px 6px;vertical-align:top;"><span style="color:#6EE7B7;font-weight:700;">Plt + coags normal</span><br><span style="color:var(--gray);font-size:8px;">BMBT ↑ · mucosal bleed</span></td>
-        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:#6EE7B7;">von Willebrand disease</span> — Doberman, Sheltie, Scottie<br><span style="color:#6EE7B7;">Thrombocytopathia</span> — uraemia, hyperglobulinaemia, NSAIDs<br><span style="color:#6EE7B7;">Glanzmann / Scott syndrome</span> — rare; referral</td>
-        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">vWF antigen assay · PFA-100 closure time · platelet aggregometry (referral) · renal panel · drug review<br><span style="color:#6EE7B7;font-weight:600;">Cryoprecipitate or FFP</span> · DDAVP 1 µg/kg SC 30 min pre-op (type I vWD only) · avoid platelet inhibitors</td>
+        <td style="padding:5px 6px;vertical-align:top;"><span style="color:var(--tone-green-fg);font-weight:700;">Plt + coags normal</span><br><span style="color:var(--gray);font-size:8px;">BMBT ↑ · mucosal bleed</span></td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);"><span style="color:var(--tone-green-fg);">von Willebrand disease</span> — Doberman, Sheltie, Scottie<br><span style="color:var(--tone-green-fg);">Thrombocytopathia</span> — uraemia, hyperglobulinaemia, NSAIDs<br><span style="color:var(--tone-green-fg);">Glanzmann / Scott syndrome</span> — rare; referral</td>
+        <td style="padding:5px 6px;vertical-align:top;color:var(--gray);">vWF antigen assay · PFA-100 closure time · platelet aggregometry (referral) · renal panel · drug review<br><span style="color:var(--tone-green-fg);font-weight:600;">Cryoprecipitate or FFP</span> · DDAVP 1 µg/kg SC 30 min pre-op (type I vWD only) · avoid platelet inhibitors</td>
       </tr>
       <tr>
         <td style="padding:5px 6px;vertical-align:top;"><span style="color:#94A3B8;font-weight:700;">All normal</span><br><span style="color:var(--gray);font-size:8px;">Coags + Plt intact</span></td>
@@ -330,7 +330,7 @@ export const bleedingDx: DxApproach = {
       {
         kind: 'html',
         html: `<div style="margin-top:10px;padding:10px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;">
-  <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-bottom:5px;">🔬 MINIMUM DATABASE — Primary Haemostasis</div>
+  <div style="font-size:10px;font-weight:700;color:var(--tone-indigo-fg);margin-bottom:5px;">🔬 MINIMUM DATABASE — Primary Haemostasis</div>
   <div style="font-size:9.5px;line-height:1.6;color:var(--gray);">
     <strong style="color:var(--white);">1st line:</strong> CBC with platelet count · Blood smear (clumping, morphology, intracellular organisms) · PT · aPTT · biochemistry (total protein, liver function)<br>
     <strong style="color:var(--white);">2nd line (plt normal + bleeding):</strong> BMBT · vWF activity assay · infectious disease titres / PCR (Ehrlichia canis, Anaplasma phagocytophilum, A. platys, R. rickettsii)<br>
@@ -338,59 +338,59 @@ export const bleedingDx: DxApproach = {
     <strong style="color:var(--white);">Threshold:</strong> Spontaneous bleed risk at &lt;50,000/µL · life-threatening at &lt;10 ×10⁹/L<br>
     <strong style="color:var(--white);">Inherited red flag:</strong> Repeated bleeding from puppyhood (teething, vaccination, elective surgery) → inherited coagulopathy likely
   </div>
-  <div style="font-size:10px;font-weight:700;color:#A5B4FC;margin-top:10px;margin-bottom:5px;">📊 COAG TEST PATTERN — identify defect type</div>
+  <div style="font-size:10px;font-weight:700;color:var(--tone-indigo-fg);margin-top:10px;margin-bottom:5px;">📊 COAG TEST PATTERN — identify defect type</div>
   <table style="width:100%;border-collapse:collapse;font-size:8.5px;">
     <thead>
       <tr style="border-bottom:1.5px solid rgba(148,163,184,0.3);">
         <th style="padding:5px 6px;text-align:left;color:var(--gray);font-weight:700;width:30%;"></th>
-        <th style="padding:5px 6px;text-align:center;color:#FCA5A5;font-weight:700;">Plt &lt;50k</th>
-        <th style="padding:5px 6px;text-align:center;color:#FCD34D;font-weight:700;">PT</th>
-        <th style="padding:5px 6px;text-align:center;color:#A5B4FC;font-weight:700;">aPTT</th>
+        <th style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);font-weight:700;">Plt &lt;50k</th>
+        <th style="padding:5px 6px;text-align:center;color:var(--tone-warning-fg);font-weight:700;">PT</th>
+        <th style="padding:5px 6px;text-align:center;color:var(--tone-indigo-fg);font-weight:700;">aPTT</th>
         <th style="padding:5px 6px;text-align:left;color:var(--gray);font-weight:700;">Other</th>
       </tr>
     </thead>
     <tbody>
       <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
         <td style="padding:5px 6px;color:var(--white);font-weight:600;">Thrombocytopenia</td>
-        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">Yes</td>
-        <td style="padding:5px 6px;text-align:center;color:#6EE7B7;">Normal</td>
-        <td style="padding:5px 6px;text-align:center;color:#6EE7B7;">Normal</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">Yes</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-green-fg);">Normal</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-green-fg);">Normal</td>
         <td style="padding:5px 6px;color:var(--gray);"></td>
       </tr>
       <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
         <td style="padding:5px 6px;color:var(--white);font-weight:600;">Thrombocytopathia</td>
-        <td style="padding:5px 6px;text-align:center;color:#6EE7B7;">No</td>
-        <td style="padding:5px 6px;text-align:center;color:#6EE7B7;">Normal</td>
-        <td style="padding:5px 6px;text-align:center;color:#6EE7B7;">Normal</td>
-        <td style="padding:5px 6px;color:#FCD34D;">↑ BMBT</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-green-fg);">No</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-green-fg);">Normal</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-green-fg);">Normal</td>
+        <td style="padding:5px 6px;color:var(--tone-warning-fg);">↑ BMBT</td>
       </tr>
       <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
         <td style="padding:5px 6px;color:var(--white);font-weight:600;">Rodenticide</td>
         <td style="padding:5px 6px;text-align:center;color:var(--gray);font-size:8px;">No*</td>
-        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">↑</td>
-        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">↑</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">↑</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">↑</td>
         <td style="padding:5px 6px;color:var(--gray);"></td>
       </tr>
       <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
         <td style="padding:5px 6px;color:var(--white);font-weight:600;">Hepatic failure</td>
         <td style="padding:5px 6px;text-align:center;color:var(--gray);font-size:8px;">No*</td>
-        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">↑</td>
-        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">↑</td>
-        <td style="padding:5px 6px;color:#FCD34D;">Abnormal LFTs</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">↑</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">↑</td>
+        <td style="padding:5px 6px;color:var(--tone-warning-fg);">Abnormal LFTs</td>
       </tr>
       <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
         <td style="padding:5px 6px;color:var(--white);font-weight:600;">DIC</td>
-        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">Typically</td>
-        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">↑</td>
-        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">↑</td>
-        <td style="padding:5px 6px;color:#FCD34D;">↑ D-dimers</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">Typically</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">↑</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">↑</td>
+        <td style="padding:5px 6px;color:var(--tone-warning-fg);">↑ D-dimers</td>
       </tr>
       <tr>
         <td style="padding:5px 6px;color:var(--white);font-weight:600;">Haemophilia A+B</td>
         <td style="padding:5px 6px;text-align:center;color:var(--gray);font-size:8px;">No*</td>
-        <td style="padding:5px 6px;text-align:center;color:#6EE7B7;">Normal</td>
-        <td style="padding:5px 6px;text-align:center;color:#FCA5A5;">↑</td>
-        <td style="padding:5px 6px;color:#FCD34D;">Factor assays</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-green-fg);">Normal</td>
+        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">↑</td>
+        <td style="padding:5px 6px;color:var(--tone-warning-fg);">Factor assays</td>
       </tr>
     </tbody>
   </table>
@@ -400,7 +400,7 @@ export const bleedingDx: DxApproach = {
       {
         kind: 'html',
         html: `<div style="margin-top:10px;padding:10px 12px;background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.25);border-radius:10px;">
-  <div style="font-size:10px;font-weight:700;color:#5EEAD4;margin-bottom:5px;">💊 TREATMENT POINTERS — Primary Haemostasis</div>
+  <div style="font-size:10px;font-weight:700;color:var(--tone-teal-fg);margin-bottom:5px;">💊 TREATMENT POINTERS — Primary Haemostasis</div>
   <div style="font-size:9.5px;line-height:1.6;color:var(--gray);">
     <strong style="color:var(--white);">IMTP:</strong> Prednisolone 2 mg/kg/day ± mycophenolate / cyclosporine / azathioprine (dog only). Vincristine 0.02 mg/kg IV once to stimulate platelet release. Doxycycline 5–10 mg/kg PO BID while tick serology pending.<br>
     <strong style="color:var(--white);">vWD:</strong> Cryoprecipitate (richest vWF source) or FFP. DDAVP 1 µg/kg SC 30 min pre-op (type I only — not type III). Avoid platelet inhibitors.<br>
@@ -440,7 +440,7 @@ export const bleedingDx: DxApproach = {
       {
         kind: 'html',
         html: `<div style="margin-top:10px;padding:10px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:10px;">
-  <div style="font-size:11px;font-weight:700;color:#FCA5A5;margin-bottom:6px;">⚡ EMERGENCY PROTOCOLS</div>
+  <div style="font-size:11px;font-weight:700;color:var(--tone-danger-fg);margin-bottom:6px;">⚡ EMERGENCY PROTOCOLS</div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;">
     <div onclick="renderProtoDetail('PROT-BLEED-IMTP')" style="cursor:pointer;color:#FECACA;">→ IMTP / severe thrombocytopenia</div>
     <div onclick="renderProtoDetail('PROT-BLEED-HEMABD')" style="cursor:pointer;color:#FECACA;">→ Acute haemoabdomen (HSA / rodenticide)</div>

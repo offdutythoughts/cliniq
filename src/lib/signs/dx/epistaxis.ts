@@ -126,14 +126,14 @@ export const epistaxisDx: DxApproach = {
         html: `<div style="display:grid;grid-template-columns:1fr 1.1fr;gap:5px 8px;font-size:10px;line-height:1.45;">
       <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Finding</div>
       <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Most likely</div>
-      <div>Chronic unilateral signs + facial deformity + ↓ retropulsion + submandibular LN</div><div style="color:#DDD6FE;">Nasal neoplasia</div>
-      <div>Nasal planum depigmentation/ulceration + marked nasal pain + fungal plaques</div><div style="color:#A7F3D0;">Aspergillosis</div>
-      <div>Peracute violent sneezing + pawing at nose, outdoor dog</div><div style="color:#FED7AA;">Nasal foreign body</div>
-      <div>Petechiae + ecchymoses + multiple-site mucosal bleeding</div><div style="color:#F87171;">Thrombocytopenia / IMTP</div>
-      <div>Mucosal bleeding + normal platelet count (predisposed breed)</div><div style="color:#FCD34D;">vWD / thrombocytopathia</div>
-      <div>Cavity bleed / haematoma + access to bait</div><div style="color:#93C5FD;">Anticoagulant rodenticide</div>
-      <div>Hyperglobulinaemia + hyperviscosity signs (retinal, neuro)</div><div style="color:#C4B5FD;">Myeloma / hyperviscosity</div>
-      <div>Retinal haemorrhage + thrombocytopenia + tick exposure</div><div style="color:#C4B5FD;">Vector-borne disease</div>
+      <div>Chronic unilateral signs + facial deformity + ↓ retropulsion + submandibular LN</div><div style="color:var(--fg-violet-deep);">Nasal neoplasia</div>
+      <div>Nasal planum depigmentation/ulceration + marked nasal pain + fungal plaques</div><div style="color:var(--tone-green-fg);">Aspergillosis</div>
+      <div>Peracute violent sneezing + pawing at nose, outdoor dog</div><div style="color:var(--tone-orange-fg);">Nasal foreign body</div>
+      <div>Petechiae + ecchymoses + multiple-site mucosal bleeding</div><div style="color:var(--tone-danger-title);">Thrombocytopenia / IMTP</div>
+      <div>Mucosal bleeding + normal platelet count (predisposed breed)</div><div style="color:var(--tone-warning-fg);">vWD / thrombocytopathia</div>
+      <div>Cavity bleed / haematoma + access to bait</div><div style="color:var(--tone-info-fg);">Anticoagulant rodenticide</div>
+      <div>Hyperglobulinaemia + hyperviscosity signs (retinal, neuro)</div><div style="color:var(--tone-violet-fg);">Myeloma / hyperviscosity</div>
+      <div>Retinal haemorrhage + thrombocytopenia + tick exposure</div><div style="color:var(--tone-violet-fg);">Vector-borne disease</div>
     </div>`,
       },
     ],
