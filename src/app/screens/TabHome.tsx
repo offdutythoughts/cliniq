@@ -125,9 +125,15 @@ function DiseaseHome() {
 
 // ── Tab 3: Protocols ──────────────────────────────────────────────────────────
 const protoIcon = (p: ProtocolRow): string =>
-  p.id.startsWith('PROT-TOX') ? '☠️'
-    : p.id.startsWith('PROT-SEIZ') || p.id.startsWith('PROT-NEURO') || p.id === 'PROT-ATAXIA' ? '🧠'
-      : p.id.startsWith('PROT-EYE') ? '👁️' : '⚡'
+  p.id.startsWith('PROT-TOX')                                                        ? '☠️'
+  : p.id.startsWith('PROT-SEIZ') || p.id.startsWith('PROT-NEU') || p.id === 'PROT-ATAXIA' ? '🧠'
+  : p.id.startsWith('PROT-EYE')                                                      ? '👁️'
+  : p.id.startsWith('PROT-GI')                                                       ? '🫁'
+  : p.id.startsWith('PROT-BLEED')                                                    ? '🩸'
+  : p.id.startsWith('PROT-URO') || p.id.startsWith('PROT-REPRO') || p.id.startsWith('PROT-REN') ? '🫘'
+  : p.id.startsWith('PROT-PERICARDIO') || p.id.startsWith('PROT-VASC')              ? '🫀'
+  : p.id.startsWith('PROT-ENDO')                                                     ? '🔬'
+  : '⚡'
 
 function ProtoCard({ p }: { p: ProtocolRow }) {
   const nav = useNav()
@@ -148,17 +154,27 @@ function ProtoCard({ p }: { p: ProtocolRow }) {
 }
 function ProtoList() {
   const P = DB.protocols
-  const emergency = P.filter(p => p.id === 'PROT-CPR' || p.id === 'PROT-RESP' || p.id === 'PROT-SHOCK' || p.id === 'PROT-THOR')
-  const neuro = P.filter(p => p.id.startsWith('PROT-SEIZ') || p.id.startsWith('PROT-NEURO') || p.id === 'PROT-ATAXIA')
-  const tox = P.filter(p => p.id === 'PROT-TOX' || p.id.startsWith('PROT-TOX-'))
-  const eye = P.filter(p => p.id.startsWith('PROT-EYE'))
+  const emergency = P.filter(p => ['PROT-CPR','PROT-RESP','PROT-SHOCK','PROT-THOR','PROT-ANAPHYLAXIS','PROT-SEPSIS'].includes(p.id))
+  const gi       = P.filter(p => p.id.startsWith('PROT-GI'))
+  const neuro    = P.filter(p => p.id.startsWith('PROT-SEIZ') || p.id.startsWith('PROT-NEU') || p.id === 'PROT-ATAXIA')
+  const cardiac  = P.filter(p => p.id.startsWith('PROT-PERICARDIO') || p.id.startsWith('PROT-VASC'))
+  const uro      = P.filter(p => p.id.startsWith('PROT-URO') || p.id.startsWith('PROT-REPRO') || p.id.startsWith('PROT-REN'))
+  const bleed    = P.filter(p => p.id.startsWith('PROT-BLEED'))
+  const endo     = P.filter(p => p.id.startsWith('PROT-ENDO'))
+  const eye      = P.filter(p => p.id.startsWith('PROT-EYE'))
+  const tox      = P.filter(p => p.id === 'PROT-TOX' || p.id.startsWith('PROT-TOX-'))
   const group = (rows: ProtocolRow[]) => rows.map(p => <ProtoCard key={p.id} p={p} />)
   return (
     <>
-      {emergency.length > 0 && <><div className="stitle">Emergency Protocols</div>{group(emergency)}</>}
-      {neuro.length > 0 && <><div className="stitle">Neurology</div>{group(neuro)}</>}
-      {tox.length > 0 && <><div className="stitle">Toxicology</div>{group(tox)}</>}
-      {eye.length > 0 && <><div className="stitle">Ophthalmology</div>{group(eye)}</>}
+      {emergency.length > 0 && <><div className="stitle">Emergency Stabilisation</div>{group(emergency)}</>}
+      {gi.length       > 0 && <><div className="stitle">Gastrointestinal</div>{group(gi)}</>}
+      {neuro.length    > 0 && <><div className="stitle">Neurology</div>{group(neuro)}</>}
+      {cardiac.length  > 0 && <><div className="stitle">Cardiac / Vascular</div>{group(cardiac)}</>}
+      {uro.length      > 0 && <><div className="stitle">Urology / Reproductive</div>{group(uro)}</>}
+      {bleed.length    > 0 && <><div className="stitle">Haematology / Bleeding</div>{group(bleed)}</>}
+      {endo.length     > 0 && <><div className="stitle">Metabolic / Endocrine</div>{group(endo)}</>}
+      {eye.length      > 0 && <><div className="stitle">Ophthalmology</div>{group(eye)}</>}
+      {tox.length      > 0 && <><div className="stitle">Toxicology</div>{group(tox)}</>}
       <div className="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
     </>
   )
