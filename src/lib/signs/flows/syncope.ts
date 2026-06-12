@@ -5,17 +5,17 @@ const syncopeEntry: FlowPage = {
   id: 'syncope',
   title: 'Syncope',
   blocks: [
-    { kind: 'node', variant: 'entry', text: ' SYNCOPE' },
+    { kind: 'node', variant: 'entry', text: ' SYNCOPE — confirmed transient LOC' },
     {
       kind: 'callout',
-      tone: 'warning',
-      html: ' <strong>Is it syncope or a SEIZURE?</strong> Syncope is triggered by exertion/excitement, the animal is <strong>flaccid</strong> ("sleep-like") with <strong>no aura and no post-ictal phase</strong>, and recovers within seconds to ~1 minute. A seizure usually starts at rest, has a prodrome, <strong>increased tone</strong> with rhythmic paddling/jaw-chopping, and a post-ictal period of confusion lasting minutes to hours. (Ettinger Ch 40)',
+      tone: 'info',
+      html: '<strong>Syncope is confirmed.</strong> You\'ve already separated it from seizure (flaccid, no aura, instant recovery) using the <strong>Weakness / Collapse</strong> triage flow. Now localise the cause: <strong>Cardiogenic</strong> (arrhythmia / structural outflow / pulmonary hypertension) or <strong>Non-cardiogenic</strong> (reflex / metabolic mimic). Exclude cheap metabolic mimics — glucose, Na:K ± ACTH stim — before an expensive cardiac work-up. (Ettinger Ch 40)',
     },
     {
       kind: 'node',
       variant: 'step',
-      text: 'CONFIRM TRUE SYNCOPE, THEN LOCALISE',
-      sub: 'Syncope = TLOC from cerebral hypoperfusion; BP must fall ~50% before unconsciousness. An arrhythmia must last ~10–30 s to cause syncope. Exclude metabolic mimics (hypoglycaemia, Addisonian crisis) early. (Ettinger Ch 40)',
+      text: 'LOCALISE THE CAUSE — CARDIOGENIC vs NON-CARDIOGENIC',
+      sub: 'Syncope = TLOC from cerebral hypoperfusion; BP must fall ~50% before unconsciousness; an arrhythmia must last ~10–30 s to trigger it. (Ettinger Ch 40)',
     },
     {
       kind: 'choices',

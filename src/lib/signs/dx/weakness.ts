@@ -146,6 +146,30 @@ export const weaknessDx: DxApproach = {
       <strong>Respiratory:</strong> SpO₂ and respiratory effort — hypoxaemia from any cause produces generalised weakness.<br>
       <strong>Anaemia:</strong> PCV/TS — cerebral and muscle hypoxia from anaemia presents as generalised weakness or collapse.`,
       },
+      { kind: 'step', tone: 'warning', text: 'IF COLLAPSE ± LOC — CARDIOGENIC vs NON-CARDIOGENIC SYNCOPE?' },
+      {
+        kind: 'comparisonTable',
+        cols: [
+          { label: 'Feature', isLabel: true, width: '25%' },
+          { label: '⚡ Cardiogenic', color: '#ef4444', width: '37%' },
+          { label: '🔄 Non-cardiogenic', color: '#38bdf8' },
+        ],
+        rows: [
+          { kind: 'row', cells: ['<strong>Trigger</strong>', 'Exertion / excitement; ± no trigger', 'Clear reflex trigger (cough, micturition, swallowing, pain) or fasting'] },
+          { kind: 'row', cells: ['<strong>Cardiac exam</strong>', 'Murmur, gallop, arrhythmia, pulse deficits, jugular distension', 'Structurally normal heart on PE; normal rhythm in-clinic'] },
+          { kind: 'row', cells: ['<strong>History clues</strong>', 'Prior heart disease; sudden-death in breed (Boxer ARVC, Dobermann DCM)', 'GI signs or fasting (Addison / hypoglycaemia); young Boxer excitement syncope (vasovagal)'] },
+          { kind: 'row', cells: ['<strong>Key tests</strong>', 'ECG → Holter/event recorder → Echo; NT-proBNP', 'Blood glucose · Na:K ratio · ACTH stim; rule out airway disease (tussive syncope)'] },
+          { kind: 'row', cells: ['<strong>Urgent risk</strong>', 'Sudden cardiac death — treat as cardiac until proven otherwise if exertional + murmur', 'Addisonian crisis · hypoglycaemia — both rapidly reversible if caught early'] },
+        ],
+        fontSize: '11px',
+        scrollable: false,
+      },
+      {
+        kind: 'callout',
+        tone: 'info',
+        title: 'Cardiogenic syncope workup',
+        html: `If the comparison table points cardiogenic, follow the full <strong>Syncope</strong> diagnostic approach (linked below) — it covers ECG interpretation, ambulatory monitoring strategy (Holter vs event recorder vs ILR), echocardiography, and biomarkers in detail. A normal resting ECG does <em>not</em> exclude an intermittent arrhythmia.`,
+      },
       ...stepPair(1, 'MINIMUM DATABASE — URGENT IN-CLINIC', `<strong>Blood glucose:</strong> hypoglycaemia → insulinoma, PSS, Addison's, hepatic failure — all cause episodic or progressive weakness.<br>
       <strong>PCV/TS:</strong> anaemia → cerebral and muscle hypoxia; TS drop suggests protein-losing disease or haemorrhage.<br>
       <strong>ECG:</strong> arrhythmia — AV block, sick sinus syndrome, WPW → episodic collapse and weakness; must be excluded before any neurological diagnosis is assigned.<br>
@@ -183,6 +207,14 @@ export const weaknessDx: DxApproach = {
         kind: 'alert',
         gap: 8,
         html: `<strong>CK</strong> is the single best screening test for primary muscle disease — if normal, myopathy is unlikely. <strong>AChR titre</strong> is the definitive test for MG — do not diagnose MG on clinical grounds alone. <strong>ECG first</strong> in every episodic collapsing animal — a missed arrhythmia treated as epilepsy worsens outcome. <strong>Tick search</strong> requires parting all coat — remove tick with a rocking motion (not twisting). <strong>Tensilon (edrophonium) test:</strong> 0.1–0.2 mg/kg IV slowly — have atropine 0.02–0.04 mg/kg drawn up and ready; transient improvement confirms MG.`,
+      },
+      {
+        kind: 'diseaseGrid',
+        title: ' RELATED APPROACHES',
+        links: [
+          { label: 'Syncope — full cardiac workup (History · Exam · Diagnostics)', link: { to: 'dx', id: 'syncope' } },
+          { label: 'Seizures — diagnostic approach', link: { to: 'dx', id: 'seizures' } },
+        ],
       },
       { kind: 'disclaimer' },
     ],

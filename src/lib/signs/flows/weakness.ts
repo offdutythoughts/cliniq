@@ -231,7 +231,7 @@ const weaknessCollapse: FlowPage = {
     </div>
 
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
-      <div class="flow-endpoint pleural" onclick="goLesionTab('LOC-WK-COLLAPSE','Syncope')" style="font-size:10px;">
+      <div class="flow-endpoint pleural" onclick="renderFlowId('syncope')" style="font-size:10px;cursor:pointer;">
         SYNCOPE<br>→ ECG, Echo
       </div>
       <div class="flow-endpoint parench" onclick="goLesionTab('LOC-WK-COLLAPSE','Seizure')" style="font-size:10px;">
@@ -242,8 +242,26 @@ const weaknessCollapse: FlowPage = {
       </div>
     </div>
 
-    <div style="margin-top:10px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;padding:9px 12px;font-size:10px;color:var(--tone-danger-fg);width:100%;">
-      ⚠️ Status epilepticus (>5 min): IV diazepam 0.5mg/kg OR midazolam 0.2mg/kg. Check blood glucose immediately. Do NOT give phenobarbitone IV rapidly — respiratory depression risk.
+    <!-- Syncope sub-branch: cardiogenic vs non-cardiogenic -->
+    <div style="margin-top:8px;background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.18);border-radius:10px;padding:9px 12px;width:100%;">
+      <div style="font-size:10px;font-weight:700;color:var(--tone-danger-title);margin-bottom:6px;">If SYNCOPE confirmed — Cardiogenic vs Non-Cardiogenic?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:9px;">
+        <div style="background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-radius:8px;padding:7px 9px;">
+          <div style="font-weight:700;color:var(--tone-danger-fg);margin-bottom:3px;">⚡ CARDIOGENIC</div>
+          <div style="color:var(--gray);">Exertional trigger · murmur / gallop · arrhythmia · pulse deficits · jugular distension · prior heart disease</div>
+          <div style="margin-top:4px;color:var(--tone-danger-fg);">→ ECG + Holter · Echo · NT-proBNP</div>
+        </div>
+        <div style="background:rgba(14,165,233,0.08);border:1px solid rgba(14,165,233,0.22);border-radius:8px;padding:7px 9px;">
+          <div style="font-weight:700;color:var(--fg-blue-deep);margin-bottom:3px;">🔄 NON-CARDIOGENIC</div>
+          <div style="color:var(--gray);">Clear reflex trigger (cough/excitement/micturition) · structurally normal heart · metabolic clues (GI signs, fasting, PU/PD)</div>
+          <div style="margin-top:4px;color:var(--fg-blue-deep);">→ Glucose · Na:K · ACTH stim · vasovagal</div>
+        </div>
+      </div>
+      <div style="margin-top:5px;font-size:9px;color:var(--gray);">Tap <em>SYNCOPE</em> above for the full cardiogenic / reflex workup flowchart.</div>
+    </div>
+
+    <div style="margin-top:8px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;padding:9px 12px;font-size:10px;color:var(--tone-danger-fg);width:100%;">
+      ⚠️ Status epilepticus (&gt;5 min): IV diazepam 0.5 mg/kg OR midazolam 0.2 mg/kg. Check blood glucose immediately. Do NOT give phenobarbitone IV rapidly — respiratory depression risk.
     </div>`,
     },
   ],

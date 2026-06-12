@@ -14,19 +14,13 @@ export const syncopeDx: DxApproach = {
     history: {
       title: 'History: Syncope',
       blocks: [
-        { kind: 'branch', text: 'GOAL: IS IT SYNCOPE — AND IS IT CARDIAC?' },
+        { kind: 'branch', text: 'GOAL: CONFIRM SYNCOPE IS CARDIAC OR NON-CARDIOGENIC?' },
         {
           kind: 'check',
-          html: `<strong>Syncope</strong> = transient loss of consciousness from cerebral hypoperfusion; the blood pressure must fall ~50% before unconsciousness, and an arrhythmia must last ~10–30 s to trigger it. <strong>Pre-syncope</strong> = partial LOC with brief ataxia/stumbling. The whole approach hinges on first separating syncope from a <strong>seizure</strong>, then deciding whether the cause is <strong>cardiac</strong> (arrhythmia or structural) or a <strong>reflex / non-cardiac mimic</strong>. (Ettinger Ch 40)`,
+          html: `<strong>Syncope</strong> = transient loss of consciousness from cerebral hypoperfusion; BP must fall ~50% and an arrhythmia must last ~10–30 s before unconsciousness results. <strong>Pre-syncope</strong> = partial LOC with brief ataxia/stumbling.<br>
+    <strong>Syncope vs seizure triage:</strong> use the <em>Weakness / Collapse</em> flow first if still unsure — that screen has the full feature comparison table (tone, trigger, recovery, AEDs). This workup assumes syncope is confirmed and focuses on whether the cause is <strong>cardiogenic</strong> (arrhythmia / structural) or <strong>non-cardiogenic</strong> (reflex / metabolic mimic). (Ettinger Ch 40)`,
         },
-        { kind: 'step', tone: 'warning', text: ' STEP 1 — SYNCOPE vs SEIZURE (the pivotal split)' },
-        {
-          kind: 'check',
-          html: `<strong>Favours SYNCOPE:</strong> triggered by exercise/excitement (or none); initially motionless and <strong>flaccid</strong> ("sleep-like"); may have leg-flailing (not rhythmic paddling); eyes often open; <strong>no aura, no post-ictal phase</strong>; returns to normal within seconds to ~1 minute.<br>
-    <strong>Favours SEIZURE:</strong> often at rest/from sleep; pre-ictal anxiety / odd behaviour (aura); jaw-chopping/chattering, salivation, repetitive <strong>paddling</strong>, increased tone; post-ictal confusion/disorientation/transient blindness lasting minutes to hours.<br>
-    Get a witnessed description (or a phone video) — it is the single most useful piece of history. (Ettinger Ch 40)`,
-        },
-        { kind: 'step', alt: true, text: ' STEP 2 — TRIGGER, POSTURE & RECOVERY' },
+        { kind: 'step', alt: true, text: ' STEP 1 — TRIGGER, POSTURE & RECOVERY' },
         {
           kind: 'check',
           html: `<strong>Exertional / excitement-induced collapse</strong> → structural heart disease with limited output (HCM, DCM, pulmonary hypertension, heartworm) or a tachyarrhythmia.<br>
