@@ -145,7 +145,9 @@ export type CategoryGridBlock = Connectable & { kind: 'categoryGrid'; columns: C
  *  Metabolic / Endocrine / Toxic / Trauma / Anomalous), which carries its own
  *  exact colour. Used by the jaundice / pale / pupd `col()` grids. */
 export type CatColumnTile = { label: string; link?: Link }
-export type CatColumn = { cat: string; tiles: CatColumnTile[] }
+/** `tone` overrides the CAT_STYLE palette lookup — use for custom-coloured columns
+ *  that don't correspond to a shared category label (e.g. "Haemoglobinuria"). */
+export type CatColumn = { cat: string; tone?: Tone; tiles: CatColumnTile[] }
 export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; cols?: number; columns: CatColumn[] }
 
 /** A YES/NO localisation decision tree. Each `step` is a decision box with a
@@ -180,6 +182,23 @@ export type CompareBoxBlock = Connectable & {
 
 // Typed now for model completeness; renderer support added when first used.
 export type SpeciesCompareBlock = Connectable & { kind: 'speciesCompare'; dog: string[]; cat: string[] }
+
+/** A tinted info panel with an optional icon + title header and body text.
+ *  Replaces the ~20 raw `html` blocks of the form:
+ *    <div style="margin-top:Xpx;padding:9px 12px;background:rgba(…,0.07-0.12);…">
+ *      <div style="font-size:10px;font-weight:700;color:…">🔬 TITLE</div>
+ *      <div style="font-size:9.5px;…">content</div>
+ *    </div>
+ *  Not in the SPINE set — no connector arrow is drawn after it. */
+export type InfoBoxBlock = Connectable & {
+  kind: 'infoBox'
+  tone: Tone
+  icon?: string
+  title?: string
+  html: string
+  gap?: number
+}
+
 export type HtmlBlock = Connectable & { kind: 'html'; html: string } // escape hatch — last resort
 
 export type Block =
@@ -202,6 +221,7 @@ export type Block =
   | DisclaimerBlock
   | CompareBoxBlock
   | SpeciesCompareBlock
+  | InfoBoxBlock
   | HtmlBlock
 
 /** One screen of a flowchart. A sign has an entry page + 0..n sub-flow pages.

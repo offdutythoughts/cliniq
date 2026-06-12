@@ -118,9 +118,12 @@ const weaknessEpisodic: FlowPage = {
       </div>
     </div>
 
-    <div style="margin-top:10px;background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:10px;padding:9px 12px;font-size:10px;color:var(--gray);width:100%;">
-      <b style="color:var(--white);">Minimum database for episodic weakness:</b> Haematology + biochemistry (electrolytes, glucose) + ECG + blood pressure + urinalysis
-    </div>`,
+`,
+    },
+    {
+      kind: 'infoBox',
+      tone: 'neutral',
+      html: '<strong style="color:var(--white);">Minimum database for episodic weakness:</strong> Haematology + biochemistry (electrolytes, glucose) + ECG + blood pressure + urinalysis',
     },
   ],
 }
@@ -189,80 +192,43 @@ const weaknessCollapse: FlowPage = {
   id: 'weakness-collapse',
   title: 'Collapse / LOC',
   blocks: [
+    // The em-alert banner has no dedicated typed block — use callout with connectAfter:false
+    // so the entry node below does NOT get a spurious connector arrow from the callout.
+    { kind: 'callout', tone: 'danger', html: '⚠️ Collapse with loss of consciousness — always get ECG immediately', connectAfter: false },
+    { kind: 'node', variant: 'entry', text: 'COLLAPSE ± LOSS OF CONSCIOUSNESS' },
+    { kind: 'node', variant: 'step', text: 'KEY QUESTION: Syncope, Seizure, or other?' },
     {
-      // Legacy opens with an `.em-alert` banner (no typed block) BEFORE the entry
-      // node, then the entry node, step, a bespoke syncope/seizure comparison
-      // grid and a 3-col anat-classed endpoint row (one via renderDiffDetail).
-      // The whole screen is kept as byte-identical html.
-      kind: 'html',
-      html: `<div class="em-alert">⚠️ Collapse with loss of consciousness — always get ECG immediately</div>
-    <div class="flow-node entry" style="font-size:11px;">COLLAPSE ± LOSS OF CONSCIOUSNESS</div>
-    <div class="flow-arrow-v">↓</div>
-    <div class="flow-node step" style="font-size:11px;">KEY QUESTION: Syncope, Seizure, or other?</div>
-    <div class="flow-arrow-v">↓</div>
-
-    <!-- Comparison table -->
-    <div style="background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:12px;padding:10px 12px;width:100%;margin-bottom:8px;">
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;font-size:10px;">
-        <div style="font-weight:700;color:var(--white);">Feature</div>
-        <div style="font-weight:700;color:var(--fg-blue-deep);">Syncope</div>
-        <div style="font-weight:700;color:var(--tone-danger-fg);">Seizure</div>
-
-        <div style="color:var(--gray);">Tone during</div>
-        <div style="color:var(--fg-blue-deep);">Flaccid</div>
-        <div style="color:var(--tone-danger-fg);">Tonic-clonic</div>
-
-        <div style="color:var(--gray);">Trigger</div>
-        <div style="color:var(--fg-blue-deep);">Exercise / excitement</div>
-        <div style="color:var(--tone-danger-fg);">Often at rest / sleep</div>
-
-        <div style="color:var(--gray);">Recovery</div>
-        <div style="color:var(--fg-blue-deep);">Seconds, instant</div>
-        <div style="color:var(--tone-danger-fg);">Minutes-hours (post-ictal)</div>
-
-        <div style="color:var(--gray);">Post-episode</div>
-        <div style="color:var(--fg-blue-deep);">Normal immediately</div>
-        <div style="color:var(--tone-danger-fg);">Confused, blind, hungry</div>
-
-        <div style="color:var(--gray);">AEDs</div>
-        <div style="color:var(--tone-danger-title);font-weight:600;">May WORSEN</div>
-        <div style="color:var(--tone-green-fg);">Help</div>
-      </div>
-    </div>
-
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
-      <div class="flow-endpoint pleural" onclick="renderFlowId('syncope')" style="font-size:10px;cursor:pointer;">
-        SYNCOPE<br>→ ECG, Echo
-      </div>
-      <div class="flow-endpoint parench" onclick="goLesionTab('LOC-WK-COLLAPSE','Seizure')" style="font-size:10px;">
-        SEIZURE<br>→ MRI, CSF
-      </div>
-      <div class="flow-endpoint mechanic" onclick="renderDiffDetail('D-WK013')" style="font-size:10px;">
-        NARCOLEPSY<br>→ trigger by food
-      </div>
-    </div>
-
-    <!-- Syncope sub-branch: cardiogenic vs non-cardiogenic -->
-    <div style="margin-top:8px;background:rgba(220,38,38,0.06);border:1px solid rgba(220,38,38,0.18);border-radius:10px;padding:9px 12px;width:100%;">
-      <div style="font-size:10px;font-weight:700;color:var(--tone-danger-title);margin-bottom:6px;">If SYNCOPE confirmed — Cardiogenic vs Non-Cardiogenic?</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:9px;">
-        <div style="background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-radius:8px;padding:7px 9px;">
-          <div style="font-weight:700;color:var(--tone-danger-fg);margin-bottom:3px;">⚡ CARDIOGENIC</div>
-          <div style="color:var(--gray);">Exertional trigger · murmur / gallop · arrhythmia · pulse deficits · jugular distension · prior heart disease</div>
-          <div style="margin-top:4px;color:var(--tone-danger-fg);">→ ECG + Holter · Echo · NT-proBNP</div>
-        </div>
-        <div style="background:rgba(14,165,233,0.08);border:1px solid rgba(14,165,233,0.22);border-radius:8px;padding:7px 9px;">
-          <div style="font-weight:700;color:var(--fg-blue-deep);margin-bottom:3px;">🔄 NON-CARDIOGENIC</div>
-          <div style="color:var(--gray);">Clear reflex trigger (cough/excitement/micturition) · structurally normal heart · metabolic clues (GI signs, fasting, PU/PD)</div>
-          <div style="margin-top:4px;color:var(--fg-blue-deep);">→ Glucose · Na:K · ACTH stim · vasovagal</div>
-        </div>
-      </div>
-      <div style="margin-top:5px;font-size:9px;color:var(--gray);">Tap <em>SYNCOPE</em> above for the full cardiogenic / reflex workup flowchart.</div>
-    </div>
-
-    <div style="margin-top:8px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;padding:9px 12px;font-size:10px;color:var(--tone-danger-fg);width:100%;">
-      ⚠️ Status epilepticus (&gt;5 min): IV diazepam 0.5 mg/kg OR midazolam 0.2 mg/kg. Check blood glucose immediately. Do NOT give phenobarbitone IV rapidly — respiratory depression risk.
-    </div>`,
+      kind: 'table',
+      cols: '22% 1fr 1fr 1fr',
+      headers: [
+        'Feature',
+        { text: 'Syncope', tone: 'info' },
+        { text: 'Seizure', tone: 'danger' },
+        { text: 'Narcolepsy', tone: 'slate' },
+      ],
+      rows: [
+        [{ text: 'Tone during', tone: 'slate' }, 'Flaccid, limp', { text: 'Tonic-clonic', tone: 'danger' }, { text: 'Sudden loss of tone (cataplexy) or normal (sleep attack)', tone: 'slate' }],
+        [{ text: 'Trigger', tone: 'slate' }, 'Exercise / excitement', { text: 'Often at rest / sleep', tone: 'danger' }, { text: 'Food, excitement (cataplexy); spontaneous (sleep attack)', tone: 'slate' }],
+        [{ text: 'Recovery', tone: 'slate' }, 'Seconds, instant', { text: 'Minutes–hours (post-ictal)', tone: 'danger' }, { text: 'Seconds–minutes; arousable during episode', tone: 'slate' }],
+        [{ text: 'Post-episode', tone: 'slate' }, 'Normal immediately', { text: 'Confused, blind, hungry', tone: 'danger' }, { text: 'Normal immediately', tone: 'slate' }],
+        [{ text: 'AEDs', tone: 'slate' }, { text: 'May WORSEN', tone: 'warning' }, { text: 'Help', tone: 'green' }, { text: 'No effect', tone: 'slate' }],
+      ],
+    },
+    {
+      kind: 'choices',
+      cols: 3,
+      items: [
+        { tone: 'danger', label: 'SYNCOPE', sublabel: '→ ECG, Echo', link: { to: 'flow', id: 'syncope' } },
+        { tone: 'orange', label: 'SEIZURE', sublabel: '→ MRI, CSF', link: { to: 'lesion', loc: 'LOC-WK-COLLAPSE', name: 'Seizure' } },
+        // renderDiffDetail has no typed Link equivalent — non-clickable for now
+        { tone: 'slate', label: 'NARCOLEPSY', sublabel: '→ trigger by food' },
+      ],
+    },
+    {
+      kind: 'callout',
+      tone: 'danger',
+      gap: 8,
+      html: '⚠️ Status epilepticus (&gt;5 min): IV diazepam 0.5 mg/kg OR midazolam 0.2 mg/kg. Check blood glucose immediately. Do NOT give phenobarbitone IV rapidly — respiratory depression risk.',
     },
   ],
 }

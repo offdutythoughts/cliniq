@@ -140,28 +140,51 @@ const haematuriaPseudo: FlowPage = {
       sub: 'Haemoglobin or myoglobin in filtrate · or non-haem pigment (dipstick −ve)',
     },
 
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE', connectAfter: false },
+    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE' },
 
+    // Formerly a raw html block — now typed: categoryColumns (with tone override)
+    // eliminates ~20 lines of repeated inline RGBA/flex markup.
     {
-      kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
-
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;">
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(220,38,38,0.15);border:1.5px solid rgba(220,38,38,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--tone-danger-fg);text-align:center;line-height:1.3;">Haemoglobinuria</div><div style="color:var(--tone-danger-fg);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(220,38,38,0.15);border:1.5px solid rgba(220,38,38,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-danger-fg);text-align:center;line-height:1.35;cursor:pointer;" onclick="renderDiseasePage('DIS-BD-IMHA')">IMHA</div><div style="background:rgba(220,38,38,0.15);border:1.5px solid rgba(220,38,38,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-danger-fg);text-align:center;line-height:1.35;cursor:pointer;" onclick="renderDiseasePage('DIS-BD-BABS')">Babesia</div><div style="background:rgba(220,38,38,0.15);border:1.5px solid rgba(220,38,38,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-danger-fg);text-align:center;line-height:1.35;cursor:pointer;" onclick="renderDiseasePage('DIS-TOX-ZN')">Zinc toxicity</div><div style="background:rgba(220,38,38,0.15);border:1.5px solid rgba(220,38,38,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-danger-fg);text-align:center;line-height:1.35;cursor:pointer;" onclick="renderDiseasePage('DIS-TOX-ALLIUM')">Allium (onion / garlic)</div><div style="background:rgba(220,38,38,0.15);border:1.5px solid rgba(220,38,38,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-danger-fg);text-align:center;line-height:1.35;cursor:pointer;" onclick="renderDiseasePage('DIS-ENV-BURN')">Severe thermal injury</div></div>
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(249,115,22,0.15);border:1.5px solid rgba(249,115,22,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--hl-orange);text-align:center;line-height:1.3;">Myoglobinuria</div><div style="color:var(--hl-orange);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(249,115,22,0.15);border:1.5px solid rgba(249,115,22,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--hl-orange);text-align:center;line-height:1.35;cursor:pointer;" onclick="renderDiseasePage('DIS-MUSC-RHAB')">Rhabdomyolysis — trauma</div><div style="background:rgba(249,115,22,0.15);border:1.5px solid rgba(249,115,22,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--hl-orange);text-align:center;line-height:1.35;cursor:pointer;" onclick="renderDiseasePage('DIS-ENV-HEAT')">Heatstroke</div><div style="background:rgba(249,115,22,0.15);border:1.5px solid rgba(249,115,22,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--hl-orange);text-align:center;line-height:1.35;cursor:pointer;" onclick="renderDiseasePage('DIS-MUSC-RHAB')">Envenomation → rhabdomyolysis</div><div style="background:rgba(249,115,22,0.15);border:1.5px solid rgba(249,115,22,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--hl-orange);text-align:center;line-height:1.35;cursor:pointer;" onclick="renderDiseasePage('DIS-MUSC-RHAB')">Exertional myopathy</div></div>
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--tone-teal-fg);text-align:center;line-height:1.3;">Pigmenturia</div><div style="color:var(--tone-teal-fg);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Dietary (beetroot · food dye)</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Drugs (rifampin · phenazopyridine)</div></div>
-    </div>
-
-    <div style="margin-top:10px;padding:9px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
-      <div style="font-size:10px;font-weight:700;color:var(--tone-indigo-fg);margin-bottom:4px;">🔬 KEY WORKUP</div>
-      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
-        <strong style="color:var(--white);">Centrifuge urine</strong> — red supernatant + clear sediment confirms pseudo-haematuria<br>
-        <strong style="color:var(--white);">Dipstick</strong> — negative for blood rules out Hb/Mb; positive with red supernatant = Hb or Mb<br>
-        <strong style="color:var(--white);">CK</strong> — markedly ↑ = myoglobinuria<br>
-        <strong style="color:var(--white);">Plasma colour</strong> — pink/red = haemoglobinaemia (intravascular haemolysis)<br>
-        <strong style="color:var(--white);">CBC + smear</strong> — spherocytes · agglutination · ↓ PCV → haemolysis screen
-      </div>
-    </div>`,
+      kind: 'categoryColumns',
+      cols: 3,
+      columns: [
+        {
+          cat: 'Haemoglobinuria',
+          tone: 'danger',
+          tiles: [
+            { label: 'IMHA', link: { to: 'disease', id: 'DIS-BD-IMHA' } },
+            { label: 'Babesia', link: { to: 'disease', id: 'DIS-BD-BABS' } },
+            { label: 'Zinc toxicity', link: { to: 'disease', id: 'DIS-TOX-ZN' } },
+            { label: 'Allium (onion / garlic)', link: { to: 'disease', id: 'DIS-TOX-ALLIUM' } },
+            { label: 'Severe thermal injury', link: { to: 'disease', id: 'DIS-ENV-BURN' } },
+          ],
+        },
+        {
+          cat: 'Myoglobinuria',
+          tone: 'orange',
+          tiles: [
+            { label: 'Rhabdomyolysis — trauma', link: { to: 'disease', id: 'DIS-MUSC-RHAB' } },
+            { label: 'Heatstroke', link: { to: 'disease', id: 'DIS-ENV-HEAT' } },
+            { label: 'Envenomation → rhabdomyolysis', link: { to: 'disease', id: 'DIS-MUSC-RHAB' } },
+            { label: 'Exertional myopathy', link: { to: 'disease', id: 'DIS-MUSC-RHAB' } },
+          ],
+        },
+        {
+          cat: 'Pigmenturia',
+          tone: 'teal',
+          tiles: [
+            { label: 'Dietary (beetroot · food dye)' },
+            { label: 'Drugs (rifampin · phenazopyridine)' },
+          ],
+        },
+      ],
+    },
+    {
+      kind: 'infoBox',
+      tone: 'indigo',
+      icon: '🔬',
+      title: 'KEY WORKUP',
+      html: '<strong style="color:var(--white);">Centrifuge urine</strong> — red supernatant + clear sediment confirms pseudo-haematuria<br><strong style="color:var(--white);">Dipstick</strong> — negative for blood rules out Hb/Mb; positive with red supernatant = Hb or Mb<br><strong style="color:var(--white);">CK</strong> — markedly ↑ = myoglobinuria<br><strong style="color:var(--white);">Plasma colour</strong> — pink/red = haemoglobinaemia (intravascular haemolysis)<br><strong style="color:var(--white);">CBC + smear</strong> — spherocytes · agglutination · ↓ PCV → haemolysis screen',
     },
 
     { kind: 'disclaimer' },
@@ -326,9 +349,12 @@ const haematuriaInitial: FlowPage = {
       </div>
     </div>
 
-    <div style="margin-top:12px;padding:9px 12px;background:rgba(16,185,129,0.07);border:1px solid rgba(16,185,129,0.2);border-radius:10px;font-size:9.5px;color:var(--gray);width:100%;">
-      <strong style="color:var(--tone-green-fg);">Pearl:</strong> Blood dripping independently between voids (not associated with urination) also localises to the distal urethra, genital tract, or prostate — same anatomy as initial stream haematuria.
-    </div>`,
+`,
+    },
+    {
+      kind: 'infoBox',
+      tone: 'green',
+      html: '<strong style="color:var(--tone-green-fg);">Pearl:</strong> Blood dripping independently between voids (not associated with urination) also localises to the distal urethra, genital tract, or prostate — same anatomy as initial stream haematuria.',
     },
 
     { kind: 'disclaimer' },
@@ -579,9 +605,12 @@ const haematuriaIndep: FlowPage = {
       </div>
     </div>
 
-    <div style="margin-top:12px;padding:9px 12px;background:rgba(139,92,246,0.07);border:1px solid rgba(139,92,246,0.2);border-radius:10px;font-size:9.5px;color:var(--gray);width:100%;">
-      <strong style="color:var(--tone-violet-fg);">Key step:</strong> Observe whether blood is present on the coat/bedding between urination attempts — true independent drip distinguishes from initial stream haematuria. In intact bitches, always check vaginal cytology and progesterone to time oestrus.
-    </div>`,
+`,
+    },
+    {
+      kind: 'infoBox',
+      tone: 'violet',
+      html: '<strong style="color:var(--tone-violet-fg);">Key step:</strong> Observe whether blood is present on the coat/bedding between urination attempts — true independent drip distinguishes from initial stream haematuria. In intact bitches, always check vaginal cytology and progesterone to time oestrus.',
     },
 
     { kind: 'disclaimer' },

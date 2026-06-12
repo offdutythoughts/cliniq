@@ -49,8 +49,9 @@ describe('FLOWS registry', () => {
       if (page.layout === 'fn') {
         expect(first, page.id).toBe('fnHeader')
       } else {
-        // flow pages open with an entry node, or an html block for bespoke pages
-        expect(['node', 'html'], page.id).toContain(first)
+        // flow pages open with an entry node, an html block for bespoke pages,
+        // or a callout (pre-entry warning banner, e.g. weakness-collapse)
+        expect(['node', 'html', 'callout'], page.id).toContain(first)
         if (first === 'node') expect(page.blocks[0], page.id).toMatchObject({ variant: 'entry' })
       }
       expect(page.blocks.length, page.id).toBeGreaterThan(0)

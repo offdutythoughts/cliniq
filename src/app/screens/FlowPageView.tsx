@@ -8,7 +8,7 @@
 import { Fragment, type ReactNode } from 'react'
 import type {
   Block, Column, Endpoint, ChoiceItem, CardTile, CategoryColumn, CatColumn, DecisionStep,
-  DecisionOutcome, TableCell, TableRow, LabeledLink, Tone,
+  DecisionOutcome, TableCell, TableRow, LabeledLink, Tone, InfoBoxBlock as InfoBoxBlockType,
 } from '../../lib/signs/flowTypes'
 import { HUE, TITLE } from '../../lib/signs/tone'
 import { FLOWS } from '../../lib/signs/flows'
@@ -278,7 +278,10 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
   return (
     <div style={s(`display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;`)}>
       {columns.map((c, i) => {
-        const st = CAT_STYLE[c.cat] ?? { bg: 'rgba(255,255,255,0.04)', border: 'var(--border2)', col: 'var(--gray)' }
+        const h = c.tone ? HUE[c.tone] : null
+        const st = h
+          ? { bg: `rgba(${h.rgb},0.12)`, border: `rgba(${h.rgb},0.4)`, col: h.color }
+          : CAT_STYLE[c.cat] ?? { bg: 'rgba(255,255,255,0.04)', border: 'var(--border2)', col: 'var(--gray)' }
         return (
           <div key={i} style={s('display:flex;flex-direction:column;align-items:stretch;gap:4px;')}>
             <div style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:${st.col};text-align:center;line-height:1.3;`)}>{c.cat}</div>
@@ -343,6 +346,24 @@ function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
         </div>
       </div>
     </>
+  )
+}
+
+// ── Info box ─────────────────────────────────────────────────────────────────
+/** Tinted panel with optional icon + title header. Not in SPINE — no arrow. */
+function InfoBoxBlock({ b, onNav }: { b: InfoBoxBlockType; onNav: Nav }) {
+  const h = HUE[b.tone]
+  return (
+    <div style={s(`margin-top:${b.gap ?? 10}px;padding:9px 12px;background:rgba(${h.rgb},0.07);border:1px solid rgba(${h.rgb},0.2);border-radius:10px;width:100%;`)}>
+      {(b.icon || b.title) && (
+        <div style={s(`font-size:10px;font-weight:700;color:${h.color};margin-bottom:4px;`)}>
+          {b.icon}{b.icon && b.title ? ' ' : ''}{b.title ?? ''}
+        </div>
+      )}
+      <div style={s('font-size:9.5px;line-height:1.65;color:var(--gray);')}>
+        <Raw html={b.html} onNav={onNav} />
+      </div>
+    </div>
   )
 }
 
@@ -424,6 +445,7 @@ function BlockView({ b, onNav }: { b: Block; onNav: Nav }): ReactNode {
     case 'categoryColumns': return <CategoryColumnsBlock cols={b.cols ?? 3} columns={b.columns} onNav={onNav} />
     case 'decisionTree': return <>{b.steps.map((step, i) => <DecisionStepView key={i} step={step} onNav={onNav} />)}</>
     case 'compareBox': return <CompareBoxBlock b={b} onNav={onNav} />
+    case 'infoBox': return <InfoBoxBlock b={b} onNav={onNav} />
     case 'disclaimer': return DISCLAIMER
     case 'html': return <Raw html={b.html} onNav={onNav} />
     default: throw new Error(`FlowPageView: block kind '${(b as Block).kind}' not implemented`)
