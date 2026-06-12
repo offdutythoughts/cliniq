@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "vitest run"
+    "test": "vitest run",
+    "lint:protocols": "npx tsx scripts/lint-protocol-actions.ts"
   },
   "dependencies": {
     "@auth/core": "^0.37.4",
