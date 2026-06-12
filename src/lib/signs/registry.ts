@@ -50,10 +50,10 @@ export const SIGNS: SignEntry[] = [
   { id: 'seizures', icon: '🧠', title: 'Seizures', sub: 'Idiopathic vs structural vs reactive', flowId: 'seizures' },
   { id: 'sneezing', icon: '🤧', title: 'Sneezing', sub: 'Unilateral vs bilateral', flowId: 'sneezing' },
   { id: 'swollen-joints', icon: '🦵', title: 'Swollen Joints', sub: 'Dog + Cat · Arthrocentesis-led · septic vs immune-mediated vs degenerative', flowId: 'swollen-joints' },
-  { id: 'syncope', icon: '😵', title: 'Syncope', sub: 'Dog + Cat · Cardiac (arrhythmia/structural) vs reflex vs seizure-mimic', flowId: 'syncope' },
+  { id: 'syncope', icon: '😵', title: 'Syncope', sub: 'Dog + Cat · Post-triage workup · Cardiogenic vs reflex/non-cardiogenic', flowId: 'syncope' },
   { id: 'tremors', icon: '〰️', title: 'Tremors', sub: 'Dog + Cat · Toxic/metabolic vs cerebellar vs idiopathic shaker', flowId: 'tremors' },
   { id: 'vomiting', icon: '🤢', title: 'Vomiting', sub: 'Dog + Cat · True vomit vs regurgitation → primary or secondary GI', flowId: 'vomiting' },
-  { id: 'weakness', icon: '⚡', title: 'Weakness / Collapse', sub: 'Dog + Cat · Episodic, persistent, syncope vs seizure', flowId: 'weakness' },
+  { id: 'weakness', icon: '⚡', title: 'Weakness / Collapse', sub: 'Dog + Cat · Triage hub · Episodic · persistent · collapse ± LOC · cardiogenic vs non-cardiogenic', flowId: 'weakness' },
   { id: 'weight-loss', icon: '📉', title: 'Weight Loss', sub: 'Dog + Cat · Appetite pivot — malassimilation/hypermetabolism vs reduced intake', flowId: 'weight-loss' },
   { id: 'wet-eye', icon: '💧', title: 'Wet Eye / Epiphora', sub: 'Dog + Cat · Increased production vs reduced drainage · Jones test · NLS flush', flowId: 'wet-eye' },
 ]
