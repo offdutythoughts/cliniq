@@ -117,10 +117,10 @@ export const epistaxisFlow: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: '⚡ ALWAYS RULE OUT / DON\'T MISS',
+      title: "ALWAYS RULE OUT / DON'T MISS",
       items: [
         '<strong>Severe thrombocytopenia</strong> (platelet &lt;30–50 ×10⁹/L) — confirm on a fresh smear before anything invasive',
-        '<strong onclick="renderDiseasePage(\'DIS-BD-ROD\')" style="cursor:pointer;text-decoration:underline;">Anticoagulant rodenticide</strong> — give Vitamin K1 SC empirically; FFP for active bleeding',
+        { bold: 'Anticoagulant rodenticide', link: { to: 'disease', id: 'DIS-BD-ROD' }, html: ' — give Vitamin K1 SC empirically; FFP for active bleeding' },
         '<strong>Hypovolaemia / anaemia from severe haemorrhage</strong> — rare but needs transfusion + fluid resuscitation, especially before GA for CT/rhinoscopy',
         '<strong>Swallowed blood → melena</strong> can falsely suggest a GI/systemic bleed — interpret melena cautiously in epistaxis',
       ],

@@ -39,11 +39,11 @@ const feverEntry: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: ' ALWAYS RULE OUT / DON\'T MISS',
+      title: "ALWAYS RULE OUT / DON'T MISS",
       items: [
         '<strong>Do NOT immunosuppress before excluding infection</strong> — steroids only once an immune-mediated diagnosis is established; complete the systematic fever work-up first (Ettinger Ch 16)',
         '<strong>Occult septic focus</strong> — abscess (subcutaneous, liver, prostate, lung, tooth root, CNS), pyometra/stump, pyothorax, septic peritonitis — search systematically before calling it FUO',
-        '<strong onclick="renderDiseasePage(\'DIS-DISCO\')" style="cursor:pointer;text-decoration:underline;">Discospondylitis</strong> — palpate the whole spine; only ~30% are febrile and radiographs lag 2–6 weeks behind clinical onset',
+        { bold: 'Discospondylitis', link: { to: 'disease', id: 'DIS-DISCO' }, html: ' — palpate the whole spine; only ~30% are febrile and radiographs lag 2–6 weeks behind clinical onset' },
         '<strong>Endocarditis</strong> — a new/changing murmur with fever needs blood cultures + echocardiography (only 40–43% are febrile)',
         '<strong>Do NOT actively cool a true fever</strong> — reserve cooling for temperature &gt;41.1°C (106°F), almost always hyperthermia',
       ],

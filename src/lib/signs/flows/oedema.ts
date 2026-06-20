@@ -45,7 +45,7 @@ const oedemaEntry: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: ' ALWAYS RULE OUT / DON\'T MISS',
+      title: "ALWAYS RULE OUT / DON'T MISS",
       items: [
         '<strong>Anaphylaxis / angioedema</strong> — acute facial/laryngeal swelling can obstruct the airway; treat first (adrenaline), then investigate',
         '<strong>Right-sided CHF / pericardial tamponade</strong> — jugular distension + ascites/ventral oedema; echocardiography urgently, and tap a tamponading pericardial effusion',

@@ -39,11 +39,11 @@ const weightLossEntry: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: ' ALWAYS RULE OUT / DON\'T MISS',
+      title: "ALWAYS RULE OUT / DON'T MISS",
       items: [
-        '<strong onclick="renderDiseasePage(\'DIS-ENDO-HYPERTHY\')" style="cursor:pointer;text-decoration:underline;">Feline hyperthyroidism</strong> — older cat losing weight WITH a good appetite; always run a basal TT4',
+        { bold: 'Feline hyperthyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' }, html: ' — older cat losing weight WITH a good appetite; always run a basal TT4' },
         '<strong>Diabetes mellitus / DKA</strong> — PU/PD + polyphagia + weight loss; a sick inappetent diabetic may be in ketoacidosis (emergency)',
-        '<strong onclick="renderDiseasePage(\'DIS-GI-LYMP\')" style="cursor:pointer;text-decoration:underline;">GI / alimentary lymphoma</strong> — infiltrative weight loss, especially in the older cat with normal-to-poor appetite',
+        { bold: 'GI / alimentary lymphoma', link: { to: 'disease', id: 'DIS-GI-LYMP' }, html: ' — infiltrative weight loss, especially in the older cat with normal-to-poor appetite' },
         '<strong>Cardiac cachexia</strong> — weight + muscle loss in a patient with underlying heart disease (DCM / CHF) is a marker of poor prognosis',
         '<strong>FIV / FeLV</strong> — retroviral status changes the differential and prognosis in any cat with chronic wasting',
       ],

@@ -45,7 +45,7 @@ const tremorsEntry: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: ' ALWAYS RULE OUT / DON\'T MISS',
+      title: "ALWAYS RULE OUT / DON'T MISS",
       items: [
         '<strong>Tremorgenic mycotoxin / metaldehyde toxicosis</strong> — acute generalised tremor with <strong>hyperthermia</strong> is an emergency; cool actively, decontaminate, and control tremors (methocarbamol 40–50 mg/kg slow IV; ILE for lipophilic toxins) BEFORE the work-up',
         '<strong>Permethrin in a cat</strong> — misapplied dog pyrethroid spot-on; tremors → seizures + hyperthermia; bathe, methocarbamol, ILE',

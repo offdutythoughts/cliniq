@@ -45,11 +45,11 @@ const swollenJointsEntry: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: ' ALWAYS RULE OUT / DON\'T MISS',
+      title: "ALWAYS RULE OUT / DON'T MISS",
       items: [
-        '<strong onclick="renderDiseasePage(\'DIS-DISCO\')" style="cursor:pointer;text-decoration:underline;">Septic arthritis</strong> — a hot, painful single joint is an emergency; sample/lavage and start antimicrobials; degenerate neutrophils + intracellular organisms confirm it (culture is only 44–63% sensitive)',
+        { bold: 'Septic arthritis', link: { to: 'disease', id: 'DIS-DISCO' }, html: ' — a hot, painful single joint is an emergency; sample/lavage and start antimicrobials; degenerate neutrophils + intracellular organisms confirm it (culture is only 44–63% sensitive)' },
         '<strong>Vector-borne polyarthritis BEFORE steroids</strong> — test (or empirically trial doxycycline; rickettsial cases respond within 72 h); immunosuppressing an undiagnosed infection is dangerous',
-        '<strong onclick="renderDiseasePage(\'DIS-NEO-OSA\')" style="cursor:pointer;text-decoration:underline;">Osteosarcoma at a juxta-articular site</strong> — a bone tumour next to a joint can masquerade as joint disease; radiograph before committing to an arthropathy diagnosis',
+        { bold: 'Osteosarcoma at a juxta-articular site', link: { to: 'disease', id: 'DIS-NEO-OSA' }, html: ' — a bone tumour next to a joint can masquerade as joint disease; radiograph before committing to an arthropathy diagnosis' },
         '<strong>Discospondylitis & other haematogenous foci</strong> — spinal pain + fever, or endocarditis / pyelonephritis / prostatitis, can seed a joint; screen blood + urine cultures and image the spine',
       ],
     },

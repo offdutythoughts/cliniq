@@ -9,6 +9,7 @@ import { Fragment, type ReactNode } from 'react'
 import type {
   Block, Column, Endpoint, ChoiceItem, CardTile, CategoryColumn, CatColumn, DecisionStep,
   DecisionOutcome, TableCell, TableRow, LabeledLink, Tone, InfoBoxBlock as InfoBoxBlockType,
+  AlertItem,
 } from '../../lib/signs/flowTypes'
 import { HUE, TITLE } from '../../lib/signs/tone'
 import { FLOWS } from '../../lib/signs/flows'
@@ -397,12 +398,25 @@ function CalloutBlock({ b, onNav }: { b: Extract<Block, { kind: 'callout' }>; on
     </Box>
   )
 }
-function AlertBlock({ tone, title, items, onNav }: { tone: Tone; title: string; items: string[]; onNav: Nav }) {
+function AlertItemView({ it, onNav }: { it: AlertItem; onNav: Nav }) {
+  if (typeof it === 'string') return <Raw html={it} onNav={onNav} />
+  return (
+    <>
+      <span
+        role="button"
+        style={{ fontWeight: 700, cursor: 'pointer', textDecoration: 'underline' }}
+        onClick={() => onNav(linkToView(it.link))}
+      >{it.bold}</span>
+      {it.html && <Raw html={it.html} onNav={onNav} />}
+    </>
+  )
+}
+function AlertBlock({ tone, title, items, onNav }: { tone: Tone; title: string; items: AlertItem[]; onNav: Nav }) {
   return (
     <Box tone={tone} bgA={0.08} bdA={0.25} extra="margin-top:12px;padding:10px 12px;">
-      <div style={s(`font-size:10px;font-weight:700;color:${TITLE[tone] ?? HUE[tone].color};margin-bottom:5px;`)}><Raw html={title} onNav={onNav} /></div>
+      <div style={s(`font-size:10px;font-weight:700;color:${TITLE[tone] ?? HUE[tone].color};margin-bottom:5px;`)}>{title}</div>
       <div style={s(`font-size:9.5px;line-height:1.55;color:${HUE[tone].color};`)}>
-        {items.map((it, i) => <Fragment key={i}>{i > 0 && <br />}• <Raw html={it} onNav={onNav} /></Fragment>)}
+        {items.map((it, i) => <Fragment key={i}>{i > 0 && <br />}{'• '}<AlertItemView it={it} onNav={onNav} /></Fragment>)}
       </div>
     </Box>
   )

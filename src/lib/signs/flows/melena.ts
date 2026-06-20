@@ -39,11 +39,11 @@ const melenaEntry: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: ' ALWAYS RULE OUT / DON\'T MISS',
+      title: "ALWAYS RULE OUT / DON'T MISS",
       items: [
-        '<strong onclick="renderDiseasePage(\'DIS-BD-ROD\')" style="cursor:pointer;text-decoration:underline;">Anticoagulant rodenticide / coagulopathy</strong> — thrombocytopenia, DIC, factor deficiency; run a coagulation panel before scoping/biopsy; give Vitamin K1 empirically if access suspected',
-        '<strong onclick="renderDiseasePage(\'DIS-SEC-HYPO\')" style="cursor:pointer;text-decoration:underline;">Hypoadrenocorticism (Addison)</strong> — GI bleed + bradycardia / waterhammer collapse + Na:K abnormalities; whipworm can mimic the same electrolyte picture',
-        '<strong onclick="renderDiseasePage(\'DIS-GI-SEPTPERIT\')" style="cursor:pointer;text-decoration:underline;">GI perforation / septic peritonitis</strong> — perforated ulcer or tumour; abdominal pain, fever, septic abdominal effusion = surgical emergency',
+        { bold: 'Anticoagulant rodenticide / coagulopathy', link: { to: 'disease', id: 'DIS-BD-ROD' }, html: ' — thrombocytopenia, DIC, factor deficiency; run a coagulation panel before scoping/biopsy; give Vitamin K1 empirically if access suspected' },
+        { bold: 'Hypoadrenocorticism (Addison)', link: { to: 'disease', id: 'DIS-SEC-HYPO' }, html: ' — GI bleed + bradycardia / waterhammer collapse + Na:K abnormalities; whipworm can mimic the same electrolyte picture' },
+        { bold: 'GI perforation / septic peritonitis', link: { to: 'disease', id: 'DIS-GI-SEPTPERIT' }, html: ' — perforated ulcer or tumour; abdominal pain, fever, septic abdominal effusion = surgical emergency' },
         '<strong>Significant blood-loss anaemia</strong> — melena alone can equal major haemorrhage; quantify with PCV/TS and transfuse symptomatic patients before GA for endoscopy',
       ],
     },

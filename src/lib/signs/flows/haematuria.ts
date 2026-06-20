@@ -107,10 +107,10 @@ const haematuriaEntry: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: '⚡ DO NOT MISS',
+      title: "ALWAYS RULE OUT / DON'T MISS",
       items: [
         '<strong>Urethral obstruction</strong> — male cat (FIC + plug), male dog (urolith) → hyperkalaemia within hours',
-        '<strong onclick="renderDiseasePage(\'DIS-BD-ROD\')" style="cursor:pointer;text-decoration:underline;">Anticoagulant rodenticide</strong> — haematuria can be the presenting sign before generalised bleed',
+        { bold: 'Anticoagulant rodenticide', link: { to: 'disease', id: 'DIS-BD-ROD' }, html: ' — haematuria can be the presenting sign before generalised bleed' },
         '<strong>Older Scottie / WHWT / Beagle bitch + persistent HU</strong> → TCC (CADET BRAF ~85% sensitive)',
         '<strong>HU + ARF + pyrexia</strong> → leptospirosis (PPE — zoonotic) or septic pyelonephritis',
       ],

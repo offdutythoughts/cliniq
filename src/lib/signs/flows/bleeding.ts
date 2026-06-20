@@ -142,12 +142,12 @@ const bleedingEntry: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: '⚡ ALWAYS RULE OUT FIRST',
+      title: "ALWAYS RULE OUT / DON'T MISS",
       items: [
-        '<strong onclick="renderDiseasePage(\'DIS-BD-ROD\')" style="cursor:pointer;text-decoration:underline;">Anticoagulant rodenticide</strong> — PT prolongs first; Vit K1 SC now, confirm later (acts in 6–12 h — transfuse for active bleeds)',
-        '<strong onclick="renderDiseasePage(\'DIS-BD-DIC\')" style="cursor:pointer;text-decoration:underline;">DIC</strong> — petechiae + cavity bleed + systemic illness → ≥ 3 of 5 abnormal; treat cause urgently. <em>Dogs bleed (haemorrhagic phenotype); cats clot (thrombotic phenotype, ~7 % survival).</em>',
+        { bold: 'Anticoagulant rodenticide', link: { to: 'disease', id: 'DIS-BD-ROD' }, html: ' — PT prolongs first; Vit K1 SC now, confirm later (acts in 6–12 h — transfuse for active bleeds)' },
+        { bold: 'DIC', link: { to: 'disease', id: 'DIS-BD-DIC' }, html: ' — petechiae + cavity bleed + systemic illness → ≥ 3 of 5 abnormal; treat cause urgently. <em>Dogs bleed (haemorrhagic phenotype); cats clot (thrombotic phenotype, ~7 % survival).</em>' },
         '<strong>Haemoperitoneum</strong> (HSA rupture) — collapse + pale gums → emergency surgery',
-        '<strong onclick="renderDiseasePage(\'DIS-BD-IMTP\')" style="cursor:pointer;text-decoration:underline;">IMTP</strong> platelet &lt;30 ×10⁹/L — start immunosuppression urgently',
+        { bold: 'IMTP', link: { to: 'disease', id: 'DIS-BD-IMTP' }, html: ' platelet &lt;30 ×10⁹/L — start immunosuppression urgently' },
       ],
     },
 

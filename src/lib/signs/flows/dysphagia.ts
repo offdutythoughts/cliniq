@@ -45,11 +45,11 @@ const dysphagiaEntry: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: ' ALWAYS RULE OUT / DON\'T MISS',
+      title: "ALWAYS RULE OUT / DON'T MISS",
       items: [
-        '<strong onclick="renderDiseasePage(\'DIS-WK-MG\')" style="cursor:pointer;text-decoration:underline;">MG-associated megaoesophagus</strong> — megaoesophagus in 84% of dogs / 40% of cats with generalised MG; aspiration pneumonia is the leading cause of death. Run an AChR antibody titre in any acquired megaoesophagus',
-        '<strong onclick="renderDiseasePage(\'DIS-INFECT-RABIES\')" style="cursor:pointer;text-decoration:underline;">Rabies</strong> — pharyngeal dysphagia / inability to swallow with hypersalivation in an unvaccinated or potentially exposed patient is a zoonotic emergency: isolate and handle as a notifiable disease',
-        '<strong onclick="renderDiseasePage(\'DIS-GI-OESFB\')" style="cursor:pointer;text-decoration:underline;">Oesophageal foreign body</strong> — acute onset, retching, hypersalivation; needs prompt endoscopic removal before perforation, stricture or aspiration',
+        { bold: 'MG-associated megaoesophagus', link: { to: 'disease', id: 'DIS-WK-MG' }, html: ' — megaoesophagus in 84% of dogs / 40% of cats with generalised MG; aspiration pneumonia is the leading cause of death. Run an AChR antibody titre in any acquired megaoesophagus' },
+        { bold: 'Rabies', link: { to: 'disease', id: 'DIS-INFECT-RABIES' }, html: ' — pharyngeal dysphagia / inability to swallow with hypersalivation in an unvaccinated or potentially exposed patient is a zoonotic emergency: isolate and handle as a notifiable disease' },
+        { bold: 'Oesophageal foreign body', link: { to: 'disease', id: 'DIS-GI-OESFB' }, html: ' — acute onset, retching, hypersalivation; needs prompt endoscopic removal before perforation, stricture or aspiration' },
         '<strong>Aspiration pneumonia</strong> — thoracic radiographs (minimum 3 views) in EVERY dysphagic patient to catch megaoesophagus and aspiration; protect the airway and withhold oral feeding in severe pharyngeal/oesophageal dysfunction',
       ],
     },

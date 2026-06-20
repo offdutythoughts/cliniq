@@ -94,7 +94,12 @@ export type ChoicesBlock = Connectable & { kind: 'choices'; cols?: number; size?
 /** A centered, full-width info strip (e.g. "Tap a branch to drill down"). */
 export type BannerBlock = Connectable & { kind: 'banner'; tone: Tone; html: string }
 
-export type AlertBlock = Connectable & { kind: 'alert'; tone: Tone; title: string; items: string[] }
+/** A structured alert bullet: bold linked label + optional HTML tail (everything
+ *  after the bold text, including any separator like ' — '). Use `string` for
+ *  items with no link or with multiple links in one bullet. */
+export type AlertItem = string | { bold: string; link: Link; html: string }
+export const DONT_MISS_TITLE = "ALWAYS RULE OUT / DON'T MISS"
+export type AlertBlock = Connectable & { kind: 'alert'; tone: Tone; title: string; items: AlertItem[] }
 /** `gap` adds margin-top (px) when the callout is a trailing reference box
  *  rather than part of the arrow-connected spine. `center` centres the text. */
 export type CalloutBlock = Connectable & { kind: 'callout'; tone: Tone; title?: string; html: string; gap?: number; center?: boolean }

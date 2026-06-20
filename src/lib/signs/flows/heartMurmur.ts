@@ -77,10 +77,10 @@ const heartMurmurEntry: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: ' ALWAYS RULE OUT / DON\'T MISS',
+      title: "ALWAYS RULE OUT / DON'T MISS",
       items: [
         '<strong>A cat with HCM and NO murmur</strong> — auscultation is insensitive in cats; a gallop, arrhythmia or normal exam does not exclude cardiomyopathy. Use <strong>NT-proBNP</strong> ± echo before anaesthesia.',
-        '<strong onclick="renderDiseasePage(\'DIS-INFECT-BART\')" style="cursor:pointer;text-decoration:underline;">Infective endocarditis</strong> — a NEW or CHANGING murmur with fever, lethargy or shifting lameness; culture and echo, think <em>Bartonella</em>.',
+        { bold: 'Infective endocarditis', link: { to: 'disease', id: 'DIS-INFECT-BART' }, html: ' — a NEW or CHANGING murmur with fever, lethargy or shifting lameness; culture and echo, think <em>Bartonella</em>.' },
         '<strong>Pulmonary hypertension</strong> — a continuous PDA murmur or VSD murmur that becomes softer/absent may signal Eisenmenger physiology with reversed shunting and cyanosis. (Ettinger Ch 38)',
         '<strong>Loud congenital murmur in a young animal</strong> (SAS, PS) — grade often tracks severity; pulsus parvus et tardus (SAS) or syncope warrants urgent referral before exercise / anaesthesia.',
       ],

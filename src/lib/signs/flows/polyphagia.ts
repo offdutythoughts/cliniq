@@ -39,10 +39,10 @@ const polyphagiaEntry: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: ' ALWAYS RULE OUT / DON\'T MISS',
+      title: "ALWAYS RULE OUT / DON'T MISS",
       items: [
-        '<strong onclick="renderDiseasePage(\'DIS-ENDO-DKA\')" style="cursor:pointer;text-decoration:underline;">Undiagnosed diabetes / DKA</strong> — polyphagia + PU/PD + weight loss; check BG + glucosuria + ketones before it decompensates',
-        '<strong onclick="renderDiseasePage(\'DIS-NEO-INSULINOMA\')" style="cursor:pointer;text-decoration:underline;">Insulinoma</strong> — fasting hypoglycaemia drives the appetite; seizures/collapse on fasting — never starve the patient for testing',
+        { bold: 'Undiagnosed diabetes / DKA', link: { to: 'disease', id: 'DIS-ENDO-DKA' }, html: ' — polyphagia + PU/PD + weight loss; check BG + glucosuria + ketones before it decompensates' },
+        { bold: 'Insulinoma', link: { to: 'disease', id: 'DIS-NEO-INSULINOMA' }, html: ' — fasting hypoglycaemia drives the appetite; seizures/collapse on fasting — never starve the patient for testing' },
         '<strong>Feline hyperthyroidism</strong> — senior cat losing weight despite eating well; palpate the cervical region and run a TT4',
         '<strong>Rule out drugs first</strong> — glucocorticoids, phenobarbital/KBr, benzodiazepines, progestins all cause polyphagia; review every medication before working up',
       ],

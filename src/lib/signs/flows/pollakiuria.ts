@@ -89,10 +89,10 @@ export const pollakiuriaFlow: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: '⚡ ALWAYS RULE OUT / DON\'T MISS',
+      title: "ALWAYS RULE OUT / DON'T MISS",
       items: [
         '<strong>Urethral obstruction</strong> — palpate a large turgid bladder; ECG + serum potassium FIRST; treat hyperkalaemia before sedation/decompression',
-        '<strong onclick="renderDiseasePage(\'DIS-URO-PYELO\')" style="cursor:pointer;text-decoration:underline;">Ascending pyelonephritis</strong> — LUTS + fever/azotaemia/PU-PD means the upper tract is involved',
+        { bold: 'Ascending pyelonephritis', link: { to: 'disease', id: 'DIS-URO-PYELO' }, html: ' — LUTS + fever/azotaemia/PU-PD means the upper tract is involved' },
         '<strong>Urothelial / prostatic carcinoma</strong> — older patient with persistent LUTS unresponsive to antibiotics; do NOT biopsy via the abdominal wall (seeding)',
         '<strong>Do not over-treat with antibiotics</strong> — most feline LUTS is sterile FIC (ISCAID: culture only with active sediment + signs)',
       ],

@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "lint:protocols": "npx tsx scripts/lint-protocol-actions.ts"
+    "lint:protocols": "npx tsx scripts/lint-protocol-actions.ts",
+    "lint:flows": "npx tsx scripts/lint-flows.ts"
   },
   "dependencies": {
     "@auth/core": "^0.37.4",
