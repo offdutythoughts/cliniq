@@ -282,7 +282,7 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
         const h = c.tone ? HUE[c.tone] : null
         const st = h
           ? { bg: `rgba(${h.rgb},0.12)`, border: `rgba(${h.rgb},0.4)`, col: h.color }
-          : CAT_STYLE[c.cat] ?? { bg: 'rgba(255,255,255,0.04)', border: 'var(--border2)', col: 'var(--gray)' }
+          : CAT_STYLE[c.cat] ?? { bg: 'rgba(var(--tone-slate),0.12)', border: 'rgba(var(--tone-slate),0.35)', col: 'var(--tone-slate-fg)' }
         return (
           <div key={i} style={s('display:flex;flex-direction:column;align-items:stretch;gap:4px;')}>
             <div style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:${st.col};text-align:center;line-height:1.3;`)}>{c.cat}</div>
