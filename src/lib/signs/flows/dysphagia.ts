@@ -54,32 +54,6 @@ const dysphagiaEntry: FlowPage = {
       ],
     },
 
-    {
-      kind: 'dxRow',
-      items: [
-        { label: ' Full diagnostic approach — History · Exam · Diagnostics', link: { to: 'dx', id: 'dysphagia' } },
-        { label: ' Vomiting — is it actually vomiting? localisation flowchart', link: { to: 'flow', id: 'vomiting' }, accent: true },
-      ],
-    },
-
-    {
-      kind: 'diseaseGrid',
-      title: ' DISEASE PAGES',
-      links: [
-        { label: 'Megaoesophagus', link: { to: 'disease', id: 'DIS-OES-MEGA' } },
-        { label: 'Oesophageal foreign body', link: { to: 'disease', id: 'DIS-GI-OESFB' } },
-        { label: 'Oesophagitis', link: { to: 'disease', id: 'DIS-GI-ESOPHAGITIS' } },
-        { label: 'Oesophageal stricture', link: { to: 'disease', id: 'DIS-GI-STRICTURE' } },
-        { label: 'Vascular ring anomaly (PRAA)', link: { to: 'disease', id: 'DIS-GI-PRAA' } },
-        { label: 'Salivary mucocele / sialocele', link: { to: 'disease', id: 'DIS-GI-SIALOCELE' } },
-        { label: 'Dental / oronasal disease', link: { to: 'disease', id: 'DIS-DENT-ORONASAL' } },
-        { label: 'Myasthenia gravis', link: { to: 'disease', id: 'DIS-WK-MG' } },
-        { label: 'Dysautonomia', link: { to: 'disease', id: 'DIS-NEU-DYSAUTO' } },
-        { label: 'Polyradiculoneuritis', link: { to: 'disease', id: 'DIS-NEU-POLYRADIC' } },
-        { label: 'Brain tumour (brainstem CN nuclei)', link: { to: 'disease', id: 'DIS-NEU-BRAINTUM' } },
-        { label: 'Rabies', link: { to: 'disease', id: 'DIS-INFECT-RABIES' } },
-      ],
-    },
   ],
 }
 

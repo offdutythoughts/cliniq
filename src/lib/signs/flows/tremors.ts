@@ -55,30 +55,6 @@ const tremorsEntry: FlowPage = {
       ],
     },
 
-    {
-      kind: 'dxRow',
-      items: [
-        { label: ' Full diagnostic approach — History · Exam · Diagnostics', link: { to: 'dx', id: 'tremors' } },
-        { label: ' Tremor or seizure? — Seizures flowchart', link: { to: 'flow', id: 'seizures' }, accent: true },
-      ],
-    },
-
-    {
-      kind: 'diseaseGrid',
-      title: ' DISEASE PAGES',
-      links: [
-        { label: 'Hypoparathyroidism (hypocalcaemia)', link: { to: 'disease', id: 'DIS-ENDO-HYPOPTH' } },
-        { label: 'Hypoglycaemia', link: { to: 'disease', id: 'DIS-MET-HYPOGLY' } },
-        { label: 'Insulinoma', link: { to: 'disease', id: 'DIS-NEO-INSULINOMA' } },
-        { label: 'Hypokalaemia', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },
-        { label: 'Cerebellar hypoplasia', link: { to: 'disease', id: 'DIS-NEU-CEREHYPO' } },
-        { label: 'Cerebellar abiotrophy', link: { to: 'disease', id: 'DIS-NEU-ABIOTROPHY' } },
-        { label: 'Meningoencephalitis of unknown origin (MUO)', link: { to: 'disease', id: 'DIS-NEU-MUE' } },
-        { label: 'Granulomatous meningoencephalitis (GME)', link: { to: 'disease', id: 'DIS-GME' } },
-        { label: 'Metronidazole toxicity', link: { to: 'disease', id: 'DIS-NEU-METRO' } },
-        { label: 'Idiopathic epilepsy', link: { to: 'disease', id: 'DIS-WK-EPILEPSY' } },
-      ],
-    },
   ],
 }
 

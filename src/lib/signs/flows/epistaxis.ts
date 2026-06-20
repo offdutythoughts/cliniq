@@ -126,32 +126,5 @@ export const epistaxisFlow: FlowPage = {
       ],
     },
 
-    {
-      kind: 'dxRow',
-      items: [
-        { label: '📋 Full diagnostic approach — History · Exam · Diagnostics', link: { to: 'dx', id: 'epistaxis' } },
-        { label: '🔗 Bleeding / haemostasis workup', link: { to: 'dx', id: 'bleeding' }, accent: true },
-      ],
-    },
-
-    {
-      kind: 'diseaseGrid',
-      title: '📋 DISEASE PAGES',
-      links: [
-        { label: 'Nasal / paranasal neoplasia', link: { to: 'disease', id: 'DIS-NASAL-NEO' } },
-        { label: 'Sinonasal aspergillosis', link: { to: 'disease', id: 'DIS-NASAL-ASP' } },
-        { label: 'Lymphoplasmacytic rhinitis', link: { to: 'disease', id: 'DIS-NASAL-LPR' } },
-        { label: 'Nasal foreign body', link: { to: 'disease', id: 'DIS-NASAL-FB' } },
-        { label: 'Nasal trauma', link: { to: 'disease', id: 'DIS-NASAL-TRAUMA' } },
-        { label: 'Immune-mediated thrombocytopenia', link: { to: 'disease', id: 'DIS-BD-IMTP' } },
-        { label: 'Thrombocytopathia / vWD', link: { to: 'disease', id: 'DIS-BD-TPATH' } },
-        { label: 'Anticoagulant rodenticide', link: { to: 'disease', id: 'DIS-BD-ROD' } },
-        { label: 'DIC', link: { to: 'disease', id: 'DIS-BD-DIC' } },
-        { label: 'Ehrlichiosis', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
-        { label: 'Leishmaniosis', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
-        { label: 'Hyperviscosity syndrome', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
-        { label: 'Systemic hypertension', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
-      ],
-    },
   ],
 }

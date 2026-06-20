@@ -98,31 +98,5 @@ export const pollakiuriaFlow: FlowPage = {
       ],
     },
 
-    {
-      kind: 'dxRow',
-      items: [
-        { label: '📋 Full diagnostic approach — History · Exam · Diagnostics', link: { to: 'dx', id: 'pollakiuria' } },
-        { label: '🩸 Haematuria — localisation flowchart', link: { to: 'flow', id: 'haematuria' }, accent: true },
-      ],
-    },
-
-    {
-      kind: 'diseaseGrid',
-      title: '📋 DISEASE PAGES',
-      links: [
-        { label: 'Urethral obstruction / feline plug', link: { to: 'disease', id: 'DIS-URO-URETHRAL-OBS' } },
-        { label: 'Bacterial cystitis / UTI (ISCAID)', link: { to: 'disease', id: 'DIS-URO-UTI' } },
-        { label: 'Feline idiopathic cystitis', link: { to: 'disease', id: 'DIS-URO-FIC' } },
-        { label: 'Struvite urolithiasis', link: { to: 'disease', id: 'DIS-URO-UROLITH-STRUV' } },
-        { label: 'Calcium oxalate urolithiasis', link: { to: 'disease', id: 'DIS-URO-UROLITH-OXAL' } },
-        { label: 'Urate urolithiasis', link: { to: 'disease', id: 'DIS-URO-UROLITH-URATE' } },
-        { label: 'Cystine urolithiasis', link: { to: 'disease', id: 'DIS-URO-UROLITH-CYST' } },
-        { label: 'Bacterial prostatitis', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
-        { label: 'Benign prostatic hyperplasia', link: { to: 'disease', id: 'DIS-URO-BPH' } },
-        { label: 'Prostatic carcinoma', link: { to: 'disease', id: 'DIS-URO-PROST-NEO' } },
-        { label: 'Urothelial carcinoma (TCC)', link: { to: 'disease', id: 'DIS-NEO-TCC' } },
-        { label: 'Pyelonephritis', link: { to: 'disease', id: 'DIS-URO-PYELO' } },
-      ],
-    },
   ],
 }

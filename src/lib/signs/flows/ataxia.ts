@@ -65,14 +65,6 @@ const ataxiaEntry: FlowPage = {
       title: '🐱 vs 🐕 — Species differences',
       html: '🐱 <strong>Kitten with non-progressive tremor from first ambulation:</strong> almost always FPV cerebellar hypoplasia — reassure owners.<br>🐱 <strong>Cervical ventroflexion + ataxia + dilated pupils:</strong> think THIAMINE deficiency (fish/homemade diet) — treat on suspicion (IM thiamine, NOT IV).<br>🐱 <strong>Young cat from multi-cat household with multifocal CNS signs:</strong> exclude neurological FIP — high globulins, low A:G, periventricular MRI lesions.<br>🐕 <strong>Unvaccinated dog with myoclonus (chewing-gum fits) + multifocal CNS signs:</strong> CDV until proven otherwise — RT-PCR + isolate.<br>🐕 <strong>Young purebred terrier with progressive cerebellar signs ± myokymia (skin rippling):</strong> spinocerebellar ataxia (SAM/SDCA) — breed-specific DNA test.<br>🐕 <strong>Young pup with rigid pelvic-limb hyperextension:</strong> Neospora caninum — serology + clindamycin.<br>🐱 + 🐕 <strong>Currently on metronidazole:</strong> vertical/positional nystagmus = toxicity until proven otherwise — STOP the drug. Cats more susceptible.<br>🐕 <strong>Idiopathic vestibular:</strong> classic in geriatric dogs. 🐱 <strong>Idiopathic vestibular:</strong> all ages, often seasonal (summer) in outdoor cats.',
     },
-    {
-      kind: 'dxRow',
-      items: [
-        { label: '🔬 Diagnostic Approach', link: { to: 'dx', id: 'ataxia' } },
-        { label: '⚡ Emergency Ataxia Protocol', link: { to: 'protocol', id: 'PROT-ATAXIA' } },
-      ],
-    },
-
     { kind: 'disclaimer' },
   ],
 }

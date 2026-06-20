@@ -49,46 +49,6 @@ const feverEntry: FlowPage = {
       ],
     },
 
-    {
-      kind: 'dxRow',
-      items: [
-        { label: ' Full diagnostic approach — History · Exam · Diagnostics', link: { to: 'dx', id: 'fever' } },
-        { label: ' Swollen joints — polyarthritis localisation', link: { to: 'dx', id: 'swollen-joints' }, accent: true },
-      ],
-    },
-
-    {
-      kind: 'diseaseGrid',
-      title: ' DISEASE PAGES',
-      links: [
-        { label: 'Ehrlichiosis', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
-        { label: 'Anaplasmosis', link: { to: 'disease', id: 'DIS-INFECT-ANAP' } },
-        { label: 'Lyme disease / borreliosis', link: { to: 'disease', id: 'DIS-INFECT-LYME' } },
-        { label: 'Rocky Mountain spotted fever', link: { to: 'disease', id: 'DIS-INFECT-RMSF' } },
-        { label: 'Bartonellosis', link: { to: 'disease', id: 'DIS-INFECT-BART' } },
-        { label: 'Leptospirosis', link: { to: 'disease', id: 'DIS-INFECT-LEPTO' } },
-        { label: 'Toxoplasmosis', link: { to: 'disease', id: 'DIS-INFECT-TOXO' } },
-        { label: 'Leishmaniosis', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
-        { label: 'Brucellosis', link: { to: 'disease', id: 'DIS-INFECT-BRUC' } },
-        { label: 'Coccidioidomycosis', link: { to: 'disease', id: 'DIS-INFECT-COCCI' } },
-        { label: 'Blastomycosis', link: { to: 'disease', id: 'DIS-INFECT-BLASTO' } },
-        { label: 'Histoplasmosis', link: { to: 'disease', id: 'DIS-INFECT-HISTO' } },
-        { label: 'Feline infectious peritonitis (FIP)', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
-        { label: 'Feline leukaemia virus (FeLV)', link: { to: 'disease', id: 'DIS-INFECT-FELV' } },
-        { label: 'Feline immunodeficiency virus (FIV)', link: { to: 'disease', id: 'DIS-INFECT-FIV' } },
-        { label: 'Cytauxzoonosis', link: { to: 'disease', id: 'DIS-INFECT-CYTAUX' } },
-        { label: 'Discospondylitis', link: { to: 'disease', id: 'DIS-DISCO' } },
-        { label: 'Septic peritonitis', link: { to: 'disease', id: 'DIS-GI-SEPTPERIT' } },
-        { label: 'Cholangitis / cholangiohepatitis', link: { to: 'disease', id: 'DIS-HEP-CHOLANGITIS' } },
-        { label: 'Pyelonephritis', link: { to: 'disease', id: 'DIS-URO-PYELO' } },
-        { label: 'Prostatitis', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
-        { label: 'Immune-mediated polyarthritis', link: { to: 'disease', id: 'DIS-IMPA' } },
-        { label: 'Steroid-responsive meningitis-arteritis (SRMA)', link: { to: 'disease', id: 'DIS-SRMA' } },
-        { label: 'Systemic lupus erythematosus (SLE)', link: { to: 'disease', id: 'DIS-IM-SLE' } },
-        { label: 'Lymphoma / leukaemia', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
-        { label: 'Paraneoplastic syndromes', link: { to: 'disease', id: 'DIS-NEO-PARANEO' } },
-      ],
-    },
   ],
 }
 

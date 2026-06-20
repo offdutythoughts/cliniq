@@ -54,33 +54,6 @@ const oedemaEntry: FlowPage = {
       ],
     },
 
-    {
-      kind: 'dxRow',
-      items: [
-        { label: ' Full diagnostic approach — History · Exam · Diagnostics', link: { to: 'dx', id: 'oedema' } },
-        { label: ' Dyspnoea / respiratory distress — is it CHF?', link: { to: 'flow', id: 'dyspnoea' }, accent: true },
-      ],
-    },
-
-    {
-      kind: 'diseaseGrid',
-      title: ' DISEASE PAGES',
-      links: [
-        { label: 'Protein-losing nephropathy / glomerulonephritis', link: { to: 'disease', id: 'DIS-REN-GN' } },
-        { label: 'Protein-losing enteropathy', link: { to: 'disease', id: 'DIS-GI-PLE' } },
-        { label: 'Chronic hepatitis / hepatic failure', link: { to: 'disease', id: 'DIS-HEP-CHRONHEP' } },
-        { label: 'Portosystemic shunt', link: { to: 'disease', id: 'DIS-HEP-PSS' } },
-        { label: 'Myxomatous mitral valve disease', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
-        { label: 'Dilated cardiomyopathy', link: { to: 'disease', id: 'DIS-CARD-DCM' } },
-        { label: 'Restrictive cardiomyopathy', link: { to: 'disease', id: 'DIS-CARD-RCM' } },
-        { label: 'Pericardial disease / tamponade', link: { to: 'disease', id: 'DIS-CARD-PERIC' } },
-        { label: 'Heartworm disease / caval syndrome', link: { to: 'disease', id: 'DIS-CARD-HW' } },
-        { label: 'Vasculitis', link: { to: 'disease', id: 'DIS-BD-VASC' } },
-        { label: 'Systemic lupus erythematosus', link: { to: 'disease', id: 'DIS-IM-SLE' } },
-        { label: 'Ehrlichiosis', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
-        { label: 'Hypercoagulable / thromboembolic disease', link: { to: 'disease', id: 'DIS-BD-HYPERCOAG' } },
-      ],
-    },
   ],
 }
 

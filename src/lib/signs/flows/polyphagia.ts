@@ -48,31 +48,6 @@ const polyphagiaEntry: FlowPage = {
       ],
     },
 
-    {
-      kind: 'dxRow',
-      items: [
-        { label: ' Full diagnostic approach — History · Exam · Diagnostics', link: { to: 'dx', id: 'polyphagia' } },
-        { label: ' PU/PD — frequently co-occurs (DM · HAC · hyperthyroid)', link: { to: 'flow', id: 'pupd' }, accent: true },
-      ],
-    },
-
-    {
-      kind: 'diseaseGrid',
-      title: ' DISEASE PAGES',
-      links: [
-        { label: 'Diabetes mellitus', link: { to: 'disease', id: 'DIS-ENDO-DM' } },
-        { label: 'Diabetic ketoacidosis', link: { to: 'disease', id: 'DIS-ENDO-DKA' } },
-        { label: 'Feline hyperthyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
-        { label: 'Acromegaly / feline hypersomatotropism', link: { to: 'disease', id: 'DIS-ENDO-ACRO' } },
-        { label: 'Exocrine pancreatic insufficiency', link: { to: 'disease', id: 'DIS-GI-EPI' } },
-        { label: 'Inflammatory bowel disease', link: { to: 'disease', id: 'DIS-GI-IBD' } },
-        { label: 'Alimentary lymphoma', link: { to: 'disease', id: 'DIS-GI-LYMP' } },
-        { label: 'Hyperadrenocorticism (dog)', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
-        { label: 'Feline hyperadrenocorticism', link: { to: 'disease', id: 'DIS-ENDO-HAC-CAT' } },
-        { label: 'Insulinoma', link: { to: 'disease', id: 'DIS-NEO-INSULINOMA' } },
-        { label: 'Hypoglycaemia', link: { to: 'disease', id: 'DIS-MET-HYPOGLY' } },
-      ],
-    },
   ],
 }
 

@@ -49,37 +49,6 @@ const weightLossEntry: FlowPage = {
       ],
     },
 
-    {
-      kind: 'dxRow',
-      items: [
-        { label: ' Full diagnostic approach — History · Exam · Diagnostics', link: { to: 'dx', id: 'weight-loss' } },
-        { label: ' PU/PD — overlapping endocrine approach', link: { to: 'flow', id: 'pupd' }, accent: true },
-      ],
-    },
-
-    {
-      kind: 'diseaseGrid',
-      title: ' DISEASE PAGES',
-      links: [
-        { label: 'Feline hyperthyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
-        { label: 'Diabetes mellitus', link: { to: 'disease', id: 'DIS-ENDO-DM' } },
-        { label: 'Diabetic ketoacidosis', link: { to: 'disease', id: 'DIS-ENDO-DKA' } },
-        { label: 'Exocrine pancreatic insufficiency', link: { to: 'disease', id: 'DIS-GI-EPI' } },
-        { label: 'Inflammatory bowel disease', link: { to: 'disease', id: 'DIS-GI-IBD' } },
-        { label: 'GI / alimentary lymphoma', link: { to: 'disease', id: 'DIS-GI-LYMP' } },
-        { label: 'Protein-losing enteropathy', link: { to: 'disease', id: 'DIS-GI-PLE' } },
-        { label: 'Pancreatitis (cat)', link: { to: 'disease', id: 'DIS-GI-PANCAT' } },
-        { label: 'Chronic kidney disease', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
-        { label: 'Chronic hepatitis', link: { to: 'disease', id: 'DIS-HEP-CHRONHEP' } },
-        { label: 'Dilated cardiomyopathy', link: { to: 'disease', id: 'DIS-CARD-DCM' } },
-        { label: 'Heartworm disease', link: { to: 'disease', id: 'DIS-CARD-HW' } },
-        { label: 'Lymphoma', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
-        { label: 'Paraneoplastic cachexia', link: { to: 'disease', id: 'DIS-NEO-PARANEO' } },
-        { label: 'FIV', link: { to: 'disease', id: 'DIS-INFECT-FIV' } },
-        { label: 'FeLV', link: { to: 'disease', id: 'DIS-INFECT-FELV' } },
-        { label: 'FIP', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
-      ],
-    },
   ],
 }
 

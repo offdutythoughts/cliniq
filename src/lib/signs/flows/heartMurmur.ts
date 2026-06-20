@@ -86,29 +86,6 @@ const heartMurmurEntry: FlowPage = {
       ],
     },
 
-    {
-      kind: 'dxRow',
-      items: [
-        { label: ' Full diagnostic approach — History · Exam · Diagnostics', link: { to: 'dx', id: 'heart-murmur' } },
-        { label: ' Dyspnoea / respiratory distress — is it CHF?', link: { to: 'flow', id: 'dyspnoea' }, accent: true },
-      ],
-    },
-
-    {
-      kind: 'diseaseGrid',
-      title: ' DISEASE PAGES',
-      links: [
-        { label: 'Myxomatous mitral valve disease (MMVD)', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
-        { label: 'Hypertrophic cardiomyopathy (HCM)', link: { to: 'disease', id: 'DIS-HCM' } },
-        { label: 'Dilated cardiomyopathy (DCM)', link: { to: 'disease', id: 'DIS-CARD-DCM' } },
-        { label: 'Restrictive cardiomyopathy (RCM)', link: { to: 'disease', id: 'DIS-CARD-RCM' } },
-        { label: 'Pericardial disease / effusion', link: { to: 'disease', id: 'DIS-CARD-PERIC' } },
-        { label: 'Bartonellosis / infective endocarditis', link: { to: 'disease', id: 'DIS-INFECT-BART' } },
-        { label: 'Systemic hypertension', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
-        { label: 'Pulmonary hypertension', link: { to: 'disease', id: 'DIS-RESP-PHTN' } },
-        { label: 'Hyperthyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
-      ],
-    },
   ],
 }
 

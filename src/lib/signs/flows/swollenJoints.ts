@@ -54,30 +54,6 @@ const swollenJointsEntry: FlowPage = {
       ],
     },
 
-    {
-      kind: 'dxRow',
-      items: [
-        { label: ' Full diagnostic approach — History · Exam · Diagnostics', link: { to: 'dx', id: 'swollen-joints' } },
-        { label: ' Fever / pyrexia of unknown origin workup', link: { to: 'dx', id: 'fever' }, accent: true },
-      ],
-    },
-
-    {
-      kind: 'diseaseGrid',
-      title: ' DISEASE PAGES',
-      links: [
-        { label: 'Immune-mediated polyarthritis (IMPA)', link: { to: 'disease', id: 'DIS-IMPA' } },
-        { label: 'Systemic lupus erythematosus (SLE)', link: { to: 'disease', id: 'DIS-IM-SLE' } },
-        { label: 'Steroid-responsive meningitis-arteritis (SRMA)', link: { to: 'disease', id: 'DIS-SRMA' } },
-        { label: 'Lyme disease (Borrelia)', link: { to: 'disease', id: 'DIS-INFECT-LYME' } },
-        { label: 'Anaplasmosis', link: { to: 'disease', id: 'DIS-INFECT-ANAP' } },
-        { label: 'Ehrlichiosis', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
-        { label: 'Rocky Mountain spotted fever (RMSF)', link: { to: 'disease', id: 'DIS-INFECT-RMSF' } },
-        { label: 'Leishmaniosis', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
-        { label: 'Osteosarcoma', link: { to: 'disease', id: 'DIS-NEO-OSA' } },
-        { label: 'Discospondylitis', link: { to: 'disease', id: 'DIS-DISCO' } },
-      ],
-    },
   ],
 }
 

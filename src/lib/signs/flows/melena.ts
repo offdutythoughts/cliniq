@@ -48,35 +48,6 @@ const melenaEntry: FlowPage = {
       ],
     },
 
-    {
-      kind: 'dxRow',
-      items: [
-        { label: ' Full diagnostic approach — History · Exam · Diagnostics', link: { to: 'dx', id: 'melena' } },
-        { label: ' Vomiting / haematemesis flowchart', link: { to: 'flow', id: 'vomiting' }, accent: true },
-      ],
-    },
-
-    {
-      kind: 'diseaseGrid',
-      title: ' DISEASE PAGES',
-      links: [
-        { label: 'Gastroduodenal ulceration / erosion', link: { to: 'disease', id: 'DIS-GI-ULC' } },
-        { label: 'Acute haemorrhagic diarrhoea syndrome (AHDS)', link: { to: 'disease', id: 'DIS-GI-AHDS' } },
-        { label: 'Parvoviral enteritis', link: { to: 'disease', id: 'DIS-GI-PARVO' } },
-        { label: 'Helicobacter-associated gastritis', link: { to: 'disease', id: 'DIS-GI-HELICO' } },
-        { label: 'Inflammatory bowel disease / chronic enteropathy', link: { to: 'disease', id: 'DIS-GI-IBD' } },
-        { label: 'Alimentary lymphoma', link: { to: 'disease', id: 'DIS-GI-LYMP' } },
-        { label: 'Idiopathic / IBD colitis', link: { to: 'disease', id: 'DIS-GI-COLITIS' } },
-        { label: 'Whipworm (Trichuris vulpis)', link: { to: 'disease', id: 'DIS-GI-WHIP' } },
-        { label: 'Granulomatous (histiocytic ulcerative) colitis', link: { to: 'disease', id: 'DIS-GI-GRANCOL' } },
-        { label: 'Colorectal neoplasia / polyp', link: { to: 'disease', id: 'DIS-GI-CRC' } },
-        { label: 'Anal-sac adenocarcinoma (AGASACA)', link: { to: 'disease', id: 'DIS-NEO-AGASACA' } },
-        { label: 'Anticoagulant rodenticide', link: { to: 'disease', id: 'DIS-BD-ROD' } },
-        { label: 'Hypoadrenocorticism (Addison)', link: { to: 'disease', id: 'DIS-SEC-HYPO' } },
-        { label: 'DIC', link: { to: 'disease', id: 'DIS-BD-DIC' } },
-        { label: 'GI perforation / septic peritonitis', link: { to: 'disease', id: 'DIS-GI-SEPTPERIT' } },
-      ],
-    },
   ],
 }
 

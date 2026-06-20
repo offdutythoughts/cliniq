@@ -173,33 +173,6 @@ const bleedingEntry: FlowPage = {
   </div>`,
     },
 
-    {
-      kind: 'diseaseGrid',
-      title: '📋 DISEASE PAGES',
-      links: [
-        { label: 'DIC', link: { to: 'disease', id: 'DIS-BD-DIC' } },
-        { label: 'Anticoagulant rodenticide', link: { to: 'disease', id: 'DIS-BD-ROD' } },
-        { label: 'Vitamin K deficiency (broad)', link: { to: 'disease', id: 'DIS-BD-VITK' } },
-        { label: 'Immune-mediated thrombocytopenia', link: { to: 'disease', id: 'DIS-BD-IMTP' } },
-        { label: 'Thrombocytopenia (broad)', link: { to: 'disease', id: 'DIS-BD-TCP' } },
-        { label: 'Thrombocytopathia', link: { to: 'disease', id: 'DIS-BD-TPATH' } },
-        { label: 'Infectious cyclic thrombocytopenia', link: { to: 'disease', id: 'DIS-BD-ICT' } },
-        { label: 'Ehrlichiosis (CME)', link: { to: 'disease', id: 'DIS-BD-EHRL' } },
-        { label: 'Babesiosis', link: { to: 'disease', id: 'DIS-BD-BABS' } },
-        { label: 'Immune-mediated haemolytic anaemia', link: { to: 'disease', id: 'DIS-BD-IMHA' } },
-        { label: 'von Willebrand disease', link: { to: 'disease', id: 'DIS-BD-VWD' } },
-        { label: 'Haemophilia A (FVIII)', link: { to: 'disease', id: 'DIS-BD-HEMA' } },
-        { label: 'Haemophilia B (FIX)', link: { to: 'disease', id: 'DIS-BD-HEMB' } },
-        { label: 'Haemophilia C (FXI)', link: { to: 'disease', id: 'DIS-BD-HEMC' } },
-        { label: 'Factor X deficiency', link: { to: 'disease', id: 'DIS-BD-FX' } },
-        { label: 'Factor II deficiency', link: { to: 'disease', id: 'DIS-BD-FII' } },
-        { label: 'Factor VII deficiency', link: { to: 'disease', id: 'DIS-BD-FVII' } },
-        { label: 'Factor XII deficiency (feline)', link: { to: 'disease', id: 'DIS-BD-FXII' } },
-        { label: 'Snake / spider envenomation', link: { to: 'disease', id: 'DIS-BD-ENV' } },
-        { label: 'Cutaneous vasculitis', link: { to: 'disease', id: 'DIS-BD-VASC' } },
-        { label: 'CRGV / Alabama rot', link: { to: 'disease', id: 'DIS-BD-CRGV' } },
-      ],
-    },
   ],
 }
 
