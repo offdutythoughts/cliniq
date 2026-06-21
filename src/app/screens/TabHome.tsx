@@ -8,12 +8,12 @@ import { useState } from 'react'
 import type { Tab } from '../../types'
 import type { DiseaseRow, ProtocolRow } from '../../data/db'
 import { DB } from '../../data/db'
-import { SIGNS } from '../../lib/signs/registry'
+import { FLOW_SIGNS, DX_HOME_CARDS } from '../../lib/signs/registry'
+import { MixMatchScreen } from './MixMatchScreen'
 import { useNav } from '../nav/NavContext'
 import { useSearch } from '../search/SearchContext'
 import { styleStringToObject as s } from './style'
 import { SpTag } from './tags'
-import { DX_HOME_CARDS } from './diagnosticHomeCards'
 
 /** Search all string fields of a DiseaseRow for the given lowercase query */
 function diseaseMatchesFull(d: DiseaseRow, lower: string): boolean {
@@ -46,7 +46,7 @@ function LocaliseHome() {
   return (
     <>
       <div className="stitle">Select a clinical sign</div>
-      {SIGNS.map(sign => (
+      {FLOW_SIGNS.map(sign => (
         <div key={sign.flowId} className="card" role="button" onClick={() => nav.navigate({ kind: 'flow', flowId: sign.flowId })}>
           <div className="card-row">
             <div className="card-icon">{sign.icon}</div>
@@ -218,5 +218,6 @@ export function TabHome({ tab }: { tab: Tab }) {
     case 2: return <DiseaseHome />
     case 3: return <ProtoList />
     case 4: return <SettingsHome />
+    case 5: return <MixMatchScreen />
   }
 }

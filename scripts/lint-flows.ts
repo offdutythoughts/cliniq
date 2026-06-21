@@ -26,7 +26,7 @@ function fail(msg: string) {
 }
 
 // Only check the top-level entry pages (registered sign flowIds)
-const entryIds = new Set(SIGNS.map(s => s.flowId))
+const entryIds = new Set(SIGNS.map(s => s.flowId).filter((id): id is string => !!id))
 
 for (const id of entryIds) {
   const page = FLOWS[id]

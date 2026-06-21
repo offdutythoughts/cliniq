@@ -4,8 +4,7 @@ import React from 'react'
 import { useSearch } from './SearchContext'
 import { useNav } from '../nav/NavContext'
 import { DB } from '../../data/db'
-import { SIGNS } from '../../lib/signs/registry'
-import { DX_HOME_CARDS } from '../screens/diagnosticHomeCards'
+import { FLOW_SIGNS, DX_HOME_CARDS } from '../../lib/signs/registry'
 import type { View } from '../nav/view'
 
 type Result = { label: string; sub: string; snippet?: string; icon?: string; view: View }
@@ -56,7 +55,7 @@ function buildGroups(lower: string): Group[] {
   const groups: Group[] = []
 
   // ── Clinical sign flows ───────────────────────────────────────────────────
-  const flows = SIGNS
+  const flows = FLOW_SIGNS
     .filter(s => s.title.toLowerCase().includes(lower) || s.sub.toLowerCase().includes(lower))
     .map(s => ({ label: s.title, sub: s.sub, icon: s.icon, view: { kind: 'flow' as const, flowId: s.flowId } }))
   if (flows.length) groups.push({ title: 'Clinical Signs', results: flows.slice(0, 5) })
