@@ -5,68 +5,20 @@
 // Investigation (or a fallback test list), Treatment, Differential Diagnosis,
 // Notes, and a disease-page card. directDis sub-types redirect to the disease.
 
-import { Fragment, type ReactNode } from 'react'
 import { DB } from '../../data/db'
-import { useNav, type Nav } from '../nav/NavContext'
+import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s } from './style'
 import { UrgTag, SpTag } from './tags'
 import { DiseasePageView } from './DiseasePageView'
-import { NavCard, Card, str } from './markup'
+import { NavCard, Card, Bul, str } from './markup'
 
 const TAG_ROW = s('display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;')
 const ETI_NAME = s('font-size:12px;color:var(--white);line-height:1.6;')
 const ETI_BOX = s('margin-top:10px;padding-top:10px;border-top:1px solid var(--border);')
 const VAL_GRAY = s('font-size:12px;color:var(--gray);line-height:1.6;')
 const NOTE_VAL = s('font-size:11px;color:var(--gray);line-height:1.6;')
-const HEADER = s('font-size:10px;font-weight:700;color:var(--teal-light);margin-top:8px;margin-bottom:2px;')
-const SUB = s('display:flex;align-items:baseline;gap:4px;font-size:11px;color:var(--gray);line-height:1.5;padding-left:14px;margin-bottom:1px;')
-const SUB_DASH = s('flex-shrink:0;opacity:.5;')
-const BULLET_MB = s('display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;margin-bottom:2px;')
 const BULLET = s('display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;')
 const DOT = s('color:var(--teal-light);flex-shrink:0;')
-const LINK = s('color:var(--teal-light);text-decoration:underline;cursor:pointer;')
-
-
-/** Etiology bullet inner: a whole `@DIS-…:label` segment → disease link, else text. */
-function etiInner(inner: string, nav: Nav): ReactNode {
-  if (inner.startsWith('@')) {
-    const ci = inner.indexOf(':')
-    const did = ci > 0 ? inner.slice(1, ci) : inner.slice(1)
-    const lbl = ci > 0 ? inner.slice(ci + 1) : did
-    return <span style={LINK} role="button" onClick={() => nav.navigate({ kind: 'disease', id: did })}>{lbl}</span>
-  }
-  return inner
-}
-
-/** Etiology pipe-markup: #→header, -→sub (with @-link), else bullet (with @-link). */
-function Etiology({ text, nav }: { text: string; nav: Nav }) {
-  return (
-    <>
-      {text.split('|').map((seg, i) => {
-        const t = seg.trim()
-        if (t.startsWith('#')) return <div key={i} style={HEADER}>▸ {t.slice(1).trim()}</div>
-        const isInd = t.startsWith('-')
-        const inner = isInd ? t.slice(1).trim() : t
-        if (isInd) return <div key={i} style={SUB}><span style={SUB_DASH}>–</span>{etiInner(inner, nav)}</div>
-        return <div key={i} style={BULLET}><span style={DOT}>•</span>{etiInner(inner, nav)}</div>
-      })}
-    </>
-  )
-}
-
-/** Generic section markup: #→header; '-'→sub (when allowDash); else bullet (mb). */
-function Section({ text, allowDash }: { text: string; allowDash: boolean }) {
-  return (
-    <>
-      {text.split('|').map((seg, i) => {
-        const t = seg.trim()
-        if (t.startsWith('#')) return <div key={i} style={HEADER}>▸ {t.slice(1).trim()}</div>
-        if (allowDash && t.startsWith('-')) return <div key={i} style={SUB}><span style={SUB_DASH}>–</span>{t.slice(1).trim()}</div>
-        return <div key={i} style={BULLET_MB}><span style={DOT}>•</span>{t}</div>
-      })}
-    </>
-  )
-}
 
 export function SubTypeDetailView({ id }: { id: string }) {
   const nav = useNav()
@@ -106,7 +58,7 @@ export function SubTypeDetailView({ id }: { id: string }) {
         {(etiology || diffs.length > 0) && (
           <div style={ETI_BOX}>
             {etiology
-              ? <Etiology text={etiology} nav={nav} />
+              ? <Bul text={etiology} />
               : diffs.map(d => <div key={d.id} style={BULLET}><span style={DOT}>•</span>{d.name}</div>)}
           </div>
         )}
@@ -118,21 +70,21 @@ export function SubTypeDetailView({ id }: { id: string }) {
 
       {patho && (
         <Card title="Pathophysiology">
-          {patho.split('|').map((p, i) => <div key={i} style={BULLET_MB}><span style={DOT}>•</span>{p.trim()}</div>)}
+          <Bul text={patho} />
         </Card>
       )}
 
       {(diag || dxTests.size > 0) && (
         <Card title="Diagnostic Investigation">
-          {diag && <Section text={diag} allowDash={false} />}
+          {diag && <Bul text={diag} allowDash={false} />}
           {!diag && dxTests.size > 0 && (
-            <div>{[...dxTests].map((t, i) => <div key={i} style={BULLET_MB}><span style={DOT}>•</span>{t}</div>)}</div>
+            <div>{[...dxTests].map((t, i) => <div key={i} style={BULLET}><span style={DOT}>•</span>{t}</div>)}</div>
           )}
         </Card>
       )}
 
-      {treat && <Card title="General Treatment"><Section text={treat} allowDash /></Card>}
-      {ddx && <Card title="Differential Diagnosis"><Section text={ddx} allowDash /></Card>}
+      {treat && <Card title="General Treatment"><Bul text={treat} /></Card>}
+      {ddx && <Card title="Differential Diagnosis"><Bul text={ddx} /></Card>}
 
       {note && (
         <Card title="Notes"><div style={NOTE_VAL}>{note}</div></Card>
