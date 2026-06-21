@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react'
 import Topbar from '../components/Topbar'
 import BottomNav from '../components/BottomNav'
 import NotesPanel from '../components/NotesPanel'
@@ -51,9 +51,9 @@ function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
       v.kind === 'tab' ? nav.navTo(v.tab) : nav.navigate(v)
   }, [nav])
 
-  // Reset the scroll container to the top on every view change. (The slide
-  // animation replays because .screen-inner remounts via key={vk}.)
-  useEffect(() => {
+  // Reset the scroll container to the top on every view change. useLayoutEffect
+  // runs before paint so the browser never shows a stale scroll position.
+  useLayoutEffect(() => {
     if (screenRef.current) screenRef.current.scrollTop = 0
   }, [vk])
 
