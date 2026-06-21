@@ -275,14 +275,16 @@ const CAT_STYLE: Record<string, { bg: string; border: string; col: string }> = {
   'Trauma': { bg: 'rgba(var(--cat-trauma),0.15)', border: 'rgba(var(--cat-trauma),0.4)', col: 'var(--cat-trauma-fg)' },
   'Anomalous': { bg: 'rgba(var(--cat-anomalous),0.15)', border: 'rgba(var(--cat-anomalous),0.4)', col: 'var(--cat-anomalous-fg)' },
 }
+const FALLBACK_TONES: Tone[] = ['slate', 'indigo', 'violet', 'teal', 'orange', 'green']
 function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns: CatColumn[]; onNav: Nav }) {
   return (
     <div style={s(`display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;`)}>
       {columns.map((c, i) => {
         const h = c.tone ? HUE[c.tone] : null
+        const fb = HUE[FALLBACK_TONES[i % FALLBACK_TONES.length]]
         const st = h
           ? { bg: `rgba(${h.rgb},0.12)`, border: `rgba(${h.rgb},0.4)`, col: h.color }
-          : CAT_STYLE[c.cat] ?? { bg: 'rgba(var(--tone-slate),0.12)', border: 'rgba(var(--tone-slate),0.35)', col: 'var(--tone-slate-fg)' }
+          : CAT_STYLE[c.cat] ?? { bg: `rgba(${fb.rgb},0.12)`, border: `rgba(${fb.rgb},0.35)`, col: fb.color }
         return (
           <div key={i} style={s('display:flex;flex-direction:column;align-items:stretch;gap:4px;')}>
             <div style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:${st.col};text-align:center;line-height:1.3;`)}>{c.cat}</div>
