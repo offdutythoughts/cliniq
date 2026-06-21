@@ -12,7 +12,7 @@ import { DX } from '../../lib/signs/dx'
 import { RichText } from '../../components/RichText'
 import { useNav } from '../nav/NavContext'
 import { linkToView, type View } from '../nav/view'
-import { styleStringToObject as s } from './style'
+import { styleStringToObject as s, toneBox } from './style'
 import { NotFound } from './NotFound'
 
 const STD_NAV: DxNavItem[] = [
@@ -56,7 +56,7 @@ function DxStep({ b, onNav }: { b: Extract<DxBlock, { kind: 'step' }>; onNav: Na
   if (b.tone) {
     const h = HUE[b.tone]
     return (
-      <div className="dx-step" style={s(`background:rgba(${h.rgb},0.15);border-color:rgba(${h.rgb},0.4);color:${TITLE[b.tone] ?? h.color};`)}>
+      <div className="dx-step" style={s(`${toneBox(h.rgb,h.color,0.15).bg}border-color:rgba(${h.rgb},0.4);color:${TITLE[b.tone] ?? h.color};`)}>
         <Raw html={b.text} onNav={onNav} />
       </div>
     )
@@ -88,7 +88,7 @@ function DxCallout({ b, onNav }: { b: Extract<DxBlock, { kind: 'callout' }>; onN
 
 function DxDiseaseGrid({ b, onNav }: { b: Extract<DxBlock, { kind: 'diseaseGrid' }>; onNav: Nav }) {
   return (
-    <div style={s('margin-top:10px;padding:10px 12px;background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.25);border-radius:10px;')}>
+    <div style={s('margin-top:10px;padding:10px 12px;background:rgba(var(--tone-teal),0.08);border:1px solid rgba(var(--tone-teal),0.25);border-radius:10px;')}>
       <div style={s('font-size:11px;font-weight:700;color:var(--tone-teal-fg);margin-bottom:6px;')}>{b.title}</div>
       <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;')}>
         {b.links.map((l, i) => (
@@ -104,12 +104,12 @@ function DxAccordion({ b, onNav }: { b: Extract<DxBlock, { kind: 'accordion' }>;
   return (
     <div style={s(grid)}>
       {b.items.map((item, i) => (
-        <details key={i} style={s('background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.2);border-radius:10px;overflow:hidden;')}>
+        <details key={i} style={s('background:rgba(var(--tone-teal),0.08);border:1px solid rgba(var(--tone-teal),0.2);border-radius:10px;overflow:hidden;')}>
           <summary style={s('padding:10px 12px;font-size:11px;font-weight:700;color:var(--tone-teal-fg);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;')}>
             {item.title}
             <span style={s('font-size:10px;opacity:.6;flex-shrink:0;margin-left:8px;')}>▸ tap to expand</span>
           </summary>
-          <div style={s('padding:8px 12px 10px;font-size:10.5px;line-height:1.6;color:var(--gray);border-top:1px solid rgba(13,148,136,0.15);')}>
+          <div style={s('padding:8px 12px 10px;font-size:10.5px;line-height:1.6;color:var(--gray);border-top:1px solid rgba(var(--tone-teal),0.15);')}>
             <Raw html={item.html} onNav={onNav} />
           </div>
         </details>
@@ -121,10 +121,10 @@ function DxAccordion({ b, onNav }: { b: Extract<DxBlock, { kind: 'accordion' }>;
 function DxComparisonTable({ b }: { b: Extract<DxBlock, { kind: 'comparisonTable' }> }) {
   const fs = b.fontSize ?? '10px'
   const cellPad = '10px 8px'
-  const borderRow = '1px solid rgba(148,163,184,0.1)'
+  const borderRow = '1px solid rgba(var(--slate-muted),0.1)'
 
   function cellColor(col: typeof b.cols[number], cell: CompTableCell): string {
-    if (typeof cell !== 'string' && cell.dim) return 'rgba(148,163,184,0.45)'
+    if (typeof cell !== 'string' && cell.dim) return 'rgba(var(--slate-muted),0.45)'
     if (col.isLabel) return 'var(--white)'
     return col.color ?? 'var(--white)'
   }
@@ -138,10 +138,10 @@ function DxComparisonTable({ b }: { b: Extract<DxBlock, { kind: 'comparisonTable
       <thead>
         <tr>
           {b.cols.map((col, ci) => {
-            const headerColor = col.isLabel ? 'rgba(148,163,184,0.8)' : (col.color ?? 'var(--white)')
+            const headerColor = col.isLabel ? 'rgba(var(--slate-muted),0.8)' : (col.color ?? 'var(--white)')
             const borderB = col.isLabel
-              ? '2px solid rgba(148,163,184,0.3)'
-              : col.color ? `2px solid ${col.color}` : '2px solid rgba(148,163,184,0.3)'
+              ? '2px solid rgba(var(--slate-muted),0.3)'
+              : col.color ? `2px solid ${col.color}` : '2px solid rgba(var(--slate-muted),0.3)'
             return (
               <th key={ci} style={s(`padding:${cellPad};font-size:${fs};font-weight:700;color:${headerColor};border-bottom:${borderB};text-align:${ci === 0 ? 'left' : 'center'};white-space:nowrap;${col.width ? `width:${col.width};` : ''}`)}>
                 {col.label}
@@ -155,7 +155,7 @@ function DxComparisonTable({ b }: { b: Extract<DxBlock, { kind: 'comparisonTable
           if (row.kind === 'section') {
             return (
               <tr key={ri}>
-                <td colSpan={colCount} style={s(`padding:14px 8px 4px;font-size:8px;font-weight:700;color:rgba(148,163,184,0.6);letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,0.15);`)}>
+                <td colSpan={colCount} style={s(`padding:14px 8px 4px;font-size:8px;font-weight:700;color:rgba(var(--slate-muted),0.6);letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid rgba(var(--slate-muted),0.15);`)}>
                   {row.label}
                 </td>
               </tr>
@@ -208,7 +208,7 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
     case 'accordion': return <DxAccordion b={b} onNav={onNav} />
     case 'lesionLink': {
       const bg = b.tone === 'secondary'
-        ? 'background:rgba(13,148,136,0.2);border-color:rgba(13,148,136,0.5);'
+        ? 'background:rgba(var(--tone-teal),0.2);border-color:rgba(var(--tone-teal),0.5);'
         : ''
       return (
         <div className="dx-dx" role="button" style={bg ? s(bg) : undefined}

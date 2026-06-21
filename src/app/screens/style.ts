@@ -1,5 +1,15 @@
 import type { CSSProperties } from 'react'
 
+// Returns style string fragments for a tone-tinted element so the common
+// bg/border/color triple can be composed without repeating rgba(rgb,α) twice.
+// bgA = background alpha (default 0.12), bdA = border alpha (default 0.4).
+export const toneBox = (rgb: string, color: string, bgA = 0.12, bdA = 0.4) => ({
+  bg:  `background:rgba(${rgb},${bgA});`,
+  bd:  `border:1.5px solid rgba(${rgb},${bdA});`,
+  col: `color:${color};`,
+  all: `background:rgba(${rgb},${bgA});border:1.5px solid rgba(${rgb},${bdA});color:${color};`,
+})
+
 // Convert a legacy inline-style string ("font-size:10px;color:var(--white)") to
 // a React style object. camelCases standard kebab properties, leaves custom
 // props (--x) and all values (var(...), rgba(...), repeat(...)) verbatim. The

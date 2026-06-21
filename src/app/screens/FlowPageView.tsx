@@ -16,13 +16,18 @@ import { FLOWS } from '../../lib/signs/flows'
 import { RichText } from '../../components/RichText'
 import { useNav } from '../nav/NavContext'
 import { linkToView, type View } from '../nav/view'
-import { styleStringToObject as s } from './style'
+import { styleStringToObject as s, toneBox } from './style'
 import { NotFound } from './NotFound'
 
 type Nav = (v: View) => void
 const Raw = ({ html, onNav }: { html: string; onNav: Nav }) => <RichText html={html} onNavigate={onNav} />
 
 const DISCLAIMER = <div className="disclaimer">For qualified veterinary professionals only.</div>
+
+// ── Shared static style constants ─────────────────────────────────────────────
+const ST_SECTION_LABEL = s('grid-column:1/-1;padding:4px 0 2px;font-size:8px;font-weight:700;color:var(--gray2);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(var(--slate-muted),.08);margin-top:2px;')
+const ST_BLOCK_TITLE   = s('font-size:11px;font-weight:700;margin-bottom:6px;')
+const ST_COL_FLEX      = s('display:flex;flex-direction:column;gap:4px;')
 
 // ── Arrow / spine logic (joinBlocks) ─────────────────────────────────────────
 const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout', 'fnHeader', 'cardGrid', 'categoryGrid', 'categoryColumns', 'decisionTree'])
@@ -43,7 +48,7 @@ function BlockList({ blocks, fn, onNav }: { blocks: Block[]; fn?: boolean; onNav
   )
 }
 
-// ── Tinted box (boxOpen) ──────────────────────────────────────────────────────
+// ── Tinted box ────────────────────────────────────────────────────────────────
 function Box({ tone, bgA, bdA, extra = '', children }: { tone: Tone; bgA: number; bdA: number; extra?: string; children: ReactNode }) {
   const h = HUE[tone]
   return <div style={s(`background:rgba(${h.rgb},${bgA});border:1px solid rgba(${h.rgb},${bdA});border-radius:10px;width:100%;${extra}`)}>{children}</div>
@@ -124,7 +129,7 @@ function Cell({ c, header, onNav }: { c: TableCell; header?: boolean; onNav: Nav
   const head = header
     ? tone
       ? `font-weight:700;padding-bottom:4px;border-bottom:2px solid ${HUE[tone].color};white-space:nowrap;${color}`
-      : 'font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);'
+      : 'font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(var(--slate-muted),.25);'
     : color
   return <div style={s(head)}><Raw html={text} onNav={onNav} /></div>
 }
@@ -135,7 +140,7 @@ function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav:
       {b.rows.map((row, ri) =>
         Array.isArray(row)
           ? row.map((c, ci) => <Cell key={`${ri}-${ci}`} c={c} onNav={onNav} />)
-          : <div key={`s${ri}`} style={s('grid-column:1/-1;padding:4px 0 2px;font-size:8px;font-weight:700;color:var(--gray2);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(148,163,184,.08);margin-top:2px;')}>{row.section}</div>
+          : <div key={`s${ri}`} style={ST_SECTION_LABEL}>{row.section}</div>
       )}
     </div>
   )
@@ -158,7 +163,7 @@ function CardSectionBlock({ b, onNav }: { b: Extract<Block, { kind: 'cardSection
   const h = HUE[b.tone]
   return (
     <Box tone={b.tone} bgA={0.08} bdA={0.28} extra={`padding:10px 12px;margin-top:${b.gap ?? 10}px;`}>
-      <div style={s(`font-size:11px;font-weight:700;color:${TITLE[b.tone] ?? h.color};margin-bottom:6px;`)}><Raw html={b.title} onNav={onNav} /></div>
+      <div style={{ ...ST_BLOCK_TITLE, color: TITLE[b.tone] ?? h.color }}><Raw html={b.title} onNav={onNav} /></div>
       <div style={s('display:flex;flex-direction:column;gap:5px;')}>
         {b.cards.map((c, i) => (
           <div key={i} style={s(`background:rgba(${h.rgb},0.08);border-radius:7px;padding:7px 10px;${c.link ? 'cursor:pointer;' : ''}`)}
@@ -240,7 +245,8 @@ function CategoryGridBlock({ columns, onNav }: { columns: CategoryColumn[]; onNa
       <div style={gridStyle}>
         {columns.map((c, i) => {
           const h = HUE[c.tone]
-          return <div key={i} className="flow-node" style={s(`background:rgba(${h.rgb},0.12);border-color:rgba(${h.rgb},0.4);color:${h.color};font-size:11px;cursor:default;min-width:0;`)}>{c.cat}</div>
+          const tb = toneBox(h.rgb, h.color)
+          return <div key={i} className="flow-node" style={s(`${tb.bg}border-color:rgba(${h.rgb},0.4);${tb.col}font-size:11px;cursor:default;min-width:0;`)}>{c.cat}</div>
         })}
       </div>
       <div style={gridStyle}>{columns.map((_, i) => <div key={i} className="flow-arrow-v">↓</div>)}</div>
@@ -248,9 +254,9 @@ function CategoryGridBlock({ columns, onNav }: { columns: CategoryColumn[]; onNa
         {columns.map((c, i) => {
           const h = HUE[c.tone]
           return (
-            <div key={i} style={s('display:flex;flex-direction:column;gap:4px;')}>
+            <div key={i} style={ST_COL_FLEX}>
               {c.tiles.map((t, j) => (
-                <div key={j} style={s(`border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;border:1.5px solid rgba(${h.rgb},0.4);background:rgba(${h.rgb},0.12);color:${h.color};${t.link ? 'cursor:pointer;' : 'cursor:default;'}line-height:1.3;word-break:break-word;`)}
+                <div key={j} style={s(`border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;${toneBox(h.rgb,h.color).all}${t.link ? 'cursor:pointer;' : 'cursor:default;'}line-height:1.3;word-break:break-word;`)}
                   {...(t.link ? { role: 'button', onClick: () => onNav(linkToView(t.link!)), onMouseOver: (ev: React.MouseEvent<HTMLDivElement>) => { ev.currentTarget.style.filter = 'brightness(1.2)' }, onMouseOut: (ev: React.MouseEvent<HTMLDivElement>) => { ev.currentTarget.style.filter = '' } } : {})}>
                   {t.label}
                 </div>
@@ -264,16 +270,17 @@ function CategoryGridBlock({ columns, onNav }: { columns: CategoryColumn[]; onNa
 }
 
 // ── Category columns (CAT_STYLE) ──────────────────────────────────────────────
+const catStyle = (v: string) => ({ bg: `rgba(var(--cat-${v}),0.15)`, border: `rgba(var(--cat-${v}),0.4)`, col: `var(--cat-${v}-fg)` })
 const CAT_STYLE: Record<string, { bg: string; border: string; col: string }> = {
-  'Vascular': { bg: 'rgba(var(--cat-vascular),0.15)', border: 'rgba(var(--cat-vascular),0.4)', col: 'var(--cat-vascular-fg)' },
-  'Inflammatory': { bg: 'rgba(var(--cat-inflammatory),0.15)', border: 'rgba(var(--cat-inflammatory),0.4)', col: 'var(--cat-inflammatory-fg)' },
-  'Mass': { bg: 'rgba(var(--cat-mass),0.15)', border: 'rgba(var(--cat-mass),0.4)', col: 'var(--cat-mass-fg)' },
-  'Immune-mediated': { bg: 'rgba(var(--cat-immune),0.15)', border: 'rgba(var(--cat-immune),0.4)', col: 'var(--cat-immune-fg)' },
-  'Degenerative': { bg: 'rgba(var(--cat-degenerative),0.15)', border: 'rgba(var(--cat-degenerative),0.4)', col: 'var(--cat-degenerative-fg)' },
-  'Metabolic / Endocrine': { bg: 'rgba(var(--cat-metabolic),0.15)', border: 'rgba(var(--cat-metabolic),0.4)', col: 'var(--cat-metabolic-fg)' },
-  'Toxic': { bg: 'rgba(var(--cat-toxic),0.15)', border: 'rgba(var(--cat-toxic),0.4)', col: 'var(--cat-toxic-fg)' },
-  'Trauma': { bg: 'rgba(var(--cat-trauma),0.15)', border: 'rgba(var(--cat-trauma),0.4)', col: 'var(--cat-trauma-fg)' },
-  'Anomalous': { bg: 'rgba(var(--cat-anomalous),0.15)', border: 'rgba(var(--cat-anomalous),0.4)', col: 'var(--cat-anomalous-fg)' },
+  'Vascular': catStyle('vascular'),
+  'Inflammatory': catStyle('inflammatory'),
+  'Mass': catStyle('mass'),
+  'Immune-mediated': catStyle('immune'),
+  'Degenerative': catStyle('degenerative'),
+  'Metabolic / Endocrine': catStyle('metabolic'),
+  'Toxic': catStyle('toxic'),
+  'Trauma': catStyle('trauma'),
+  'Anomalous': catStyle('anomalous'),
 }
 const FALLBACK_TONES: Tone[] = ['slate', 'indigo', 'violet', 'teal', 'orange', 'green']
 function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns: CatColumn[]; onNav: Nav }) {
@@ -313,7 +320,7 @@ function DecBox({ question, sub }: { question: string; sub?: string }) {
 }
 function OutBox({ o, onNav }: { o: DecisionOutcome; onNav: Nav }) {
   const h = HUE[o.tone]
-  return <div style={s(`background:rgba(${h.rgb},0.12);border:1.5px solid rgba(${h.rgb},0.5);border-radius:9px;padding:9px 10px;font-size:9px;line-height:1.55;color:${h.color};`)}><Raw html={o.html} onNav={onNav} /></div>
+  return <div style={s(`${toneBox(h.rgb,h.color,0.12,0.5).all}border-radius:9px;padding:9px 10px;font-size:9px;line-height:1.55;`)}><Raw html={o.html} onNav={onNav} /></div>
 }
 function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
   if (step.type === 'split') {
@@ -376,7 +383,7 @@ function CompareBoxBlock({ b, onNav }: { b: Extract<Block, { kind: 'compareBox' 
   const grid = Array(b.cols ?? 2).fill('1fr').join(' ')
   return (
     <div style={s(`margin-top:${b.gap ?? 14}px;padding:10px 12px;background:rgba(${h.rgb},0.07);border:1px solid rgba(${h.rgb},0.25);border-radius:10px;width:100%;`)}>
-      {b.title && <div style={s(`font-size:11px;font-weight:700;color:${h.color};margin-bottom:8px;`)}><Raw html={b.title} onNav={onNav} /></div>}
+      {b.title && <div style={{ ...ST_BLOCK_TITLE, color: h.color, marginBottom: '8px' }}><Raw html={b.title} onNav={onNav} /></div>}
       <div style={s(`display:grid;grid-template-columns:${grid};gap:6px;`)}>
         {b.cards.map((c, i) => (
           <div key={i} style={s(`font-size:9.5px;line-height:1.5;background:rgba(${h.rgb},0.08);border-radius:7px;padding:7px 9px;`)}>
@@ -395,7 +402,7 @@ function CalloutBlock({ b, onNav }: { b: Extract<Block, { kind: 'callout' }>; on
   const extra = `padding:9px 12px;font-size:9.5px;color:${HUE[b.tone].color};line-height:1.5;${b.gap ? `margin-top:${b.gap}px;` : ''}${b.center ? 'text-align:center;' : ''}`
   return (
     <Box tone={b.tone} bgA={0.1} bdA={0.3} extra={extra}>
-      {b.title && <div style={s(`font-size:11px;font-weight:700;color:${TITLE[b.tone] ?? HUE[b.tone].color};margin-bottom:6px;`)}><Raw html={b.title} onNav={onNav} /></div>}
+      {b.title && <div style={{ ...ST_BLOCK_TITLE, color: TITLE[b.tone] ?? HUE[b.tone].color }}><Raw html={b.title} onNav={onNav} /></div>}
       <Raw html={b.html} onNav={onNav} />
     </Box>
   )
@@ -426,7 +433,7 @@ function AlertBlock({ tone, title, items, onNav }: { tone: Tone; title: string; 
 function DiseaseGridBlock({ title, links, onNav }: { title: string; links: LabeledLink[]; onNav: Nav }) {
   return (
     <Box tone="teal" bgA={0.08} bdA={0.25} extra="margin-top:10px;padding:10px 12px;">
-      <div style={s('font-size:11px;font-weight:700;color:var(--tone-teal-fg);margin-bottom:6px;')}>{title}</div>
+      <div style={{ ...ST_BLOCK_TITLE, color: 'var(--tone-teal-fg)' }}>{title}</div>
       <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;')}>
         {links.map((l, i) => <div key={i} role="button" onClick={() => onNav(linkToView(l.link))} style={s('cursor:pointer;color:var(--fg-teal-deep);')}>→ {l.label}</div>)}
       </div>

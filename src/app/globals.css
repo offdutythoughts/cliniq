@@ -56,6 +56,8 @@
   --hl-lime: #4D7C0F;   /* lime — dark: #A3E635 */
   --tone-slate: 100,116,139;    --tone-slate-fg: #334155;
   --tone-neutral: 255,255,255;  --tone-neutral-fg: var(--gray);
+  /* Slate-400 rgb triplet — used for table/grid divider lines and muted text in both themes */
+  --slate-muted: 148,163,184;
 
   /* Disease-category palette (renderFlow CAT_STYLE): rgb triplet + readable fg.
      Light-mode fgs are dark shades; dark block restores the original pastels. */
