@@ -51,9 +51,12 @@ export function NavProvider({ children }: { children: ReactNode }) {
     history.replaceState({ cliniqDepth: 0 }, '')
   }, [])
 
-  // Browser back/forward button handler — mirrors the event into ClinIQ state.
+  // Browser back/forward button handler — registered in the capture phase so
+  // it runs before Next.js's router listener and can stop propagation.
   useEffect(() => {
-    const onPopState = () => {
+    const onPopState = (e: PopStateEvent) => {
+      // Always intercept: prevent Next.js from treating this as a route change.
+      e.stopImmediatePropagation()
       if (suppressPopRef.current) {
         suppressPopRef.current = false
         return
@@ -67,8 +70,8 @@ export function NavProvider({ children }: { children: ReactNode }) {
         return { ...s, stack: s.stack.slice(0, -1), slideDir: 'left' }
       })
     }
-    window.addEventListener('popstate', onPopState)
-    return () => window.removeEventListener('popstate', onPopState)
+    window.addEventListener('popstate', onPopState, { capture: true })
+    return () => window.removeEventListener('popstate', onPopState, { capture: true })
   }, [])
 
   const navigate = useCallback((v: View) => {
