@@ -165,9 +165,23 @@ export interface MixMatchCategory {
   items: MixMatchResultItem[]
 }
 
+export type AgeCategory = 'neonate' | 'young' | 'middleaged' | 'geriatric'
+
 export interface Signalement {
   species: 'all' | 'dog' | 'cat'
   breedQuery?: string
+  ageCategory?: AgeCategory
+}
+
+// Keywords that signal each life-stage in a disease's age field.
+// A disease matches if its age text contains ANY of the stage's keywords,
+// OR if the age field is absent / says "any age" (permissive — don't exclude
+// diseases that simply lack an age annotation).
+const AGE_KEYWORDS: Record<AgeCategory, RegExp> = {
+  neonate:    /neonate|neonatal|newborn|puppy|kitten|pediatric|paediatric|\bcongenital/i,
+  young:      /\byoung(?!\s+to\s+old|\s+adult\s+to\s+old)|juvenile|adolescent|\b[6-9]\s*[-–]?\s*month/i,
+  middleaged: /middle[- ]aged|middle\s*age|\bmature\b|\badult\b|\bany\s*age\b|\ball\s*age/i,
+  geriatric:  /geriatric|senior|\bolder\b|\bold\b|\baged\b/i,
 }
 
 export function searchMixMatch(
@@ -219,6 +233,14 @@ export function searchMixMatch(
       const q = signalement.breedQuery.toLowerCase()
       const breedText = ((disease.breed as string) ?? (disease.signs as string) ?? '').toLowerCase()
       if (!breedText.includes(q)) continue
+    }
+
+    // Signalment filter — age category
+    if (signalement.ageCategory) {
+      const ageText = (disease.age as string | undefined) ?? ''
+      if (ageText && !/any\s*age|all\s*age/i.test(ageText)) {
+        if (!AGE_KEYWORDS[signalement.ageCategory].test(ageText)) continue
+      }
     }
 
     const matchedSignIds = [...signIdxSet].map(i => selectedSignIds[i])

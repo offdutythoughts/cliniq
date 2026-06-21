@@ -6,7 +6,7 @@
 
 import { useState, useMemo } from 'react'
 import { SIGNS } from '../../lib/signs/registry'
-import { searchMixMatch, type Signalement, type MixMatchCategory } from '../../lib/mixmatch/engine'
+import { searchMixMatch, type Signalement, type MixMatchCategory, type AgeCategory } from '../../lib/mixmatch/engine'
 import { useNav } from '../nav/NavContext'
 import { SpTag } from './tags'
 import { styleStringToObject as s } from './style'
@@ -103,6 +103,7 @@ export function MixMatchScreen() {
   const [selectedIds, setSelectedIds] = useState<string[]>([])
   const [species, setSpecies] = useState<Signalement['species']>('all')
   const [breedQuery, setBreedQuery] = useState('')
+  const [ageCategory, setAgeCategory] = useState<AgeCategory | undefined>(undefined)
   const [showPicker, setShowPicker] = useState(false)
 
   const selectedSet = useMemo(() => new Set(selectedIds), [selectedIds])
@@ -121,12 +122,12 @@ export function MixMatchScreen() {
     setSelectedIds(prev => prev.filter(x => x !== id))
   }
 
-  const signalement: Signalement = { species, breedQuery: breedQuery.trim() || undefined }
+  const signalement: Signalement = { species, breedQuery: breedQuery.trim() || undefined, ageCategory }
 
   const results: MixMatchCategory[] = useMemo(
     () => searchMixMatch(selectedIds, signalement),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedIds, species, breedQuery],
+    [selectedIds, species, breedQuery, ageCategory],
   )
 
   const totalCount = results.reduce((n, g) => n + g.items.length, 0)
@@ -192,9 +193,35 @@ export function MixMatchScreen() {
           ))}
         </div>
 
-        {/* Breed / signalment text */}
+        {/* Age */}
+        <div style={s('margin-bottom:8px;')}>
+          <div style={s('font-size:10px;color:var(--gray2);margin-bottom:5px;')}>Age</div>
+          <div style={s('display:flex;gap:5px;flex-wrap:wrap;')}>
+            {([
+              ['neonate',    '🍼', 'Neonate',     'puppy / kitten'],
+              ['young',      '🐾', 'Young',        'juvenile'],
+              ['middleaged', '🐕', 'Middle-aged',  'adult'],
+              ['geriatric',  '🦴', 'Geriatric',    'senior / old'],
+            ] as [AgeCategory, string, string, string][]).map(([id, icon, label, sub]) => {
+              const active = ageCategory === id
+              return (
+                <button
+                  key={id}
+                  onClick={() => setAgeCategory(active ? undefined : id)}
+                  style={s(`display:flex;flex-direction:column;align-items:center;flex:1;min-width:60px;padding:5px 4px;border-radius:8px;border:1px solid ${active ? 'var(--teal)' : 'var(--border)'};background:${active ? 'rgba(0,180,180,0.12)' : 'transparent'};cursor:pointer;gap:1px;`)}
+                >
+                  <span style={s('font-size:14px;')}>{icon}</span>
+                  <span style={s(`font-size:10px;font-weight:700;color:${active ? 'var(--teal)' : 'var(--white)'};`)}>{label}</span>
+                  <span style={s('font-size:9px;color:var(--gray2);')}>{sub}</span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+
+        {/* Breed keyword */}
         <input
-          placeholder="Breed or signalment keyword (optional)"
+          placeholder="Breed keyword (optional)"
           value={breedQuery}
           onChange={e => setBreedQuery(e.target.value)}
           style={s('width:100%;background:var(--navy3);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:12px;color:var(--white);outline:none;box-sizing:border-box;')}
