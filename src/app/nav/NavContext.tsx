@@ -5,7 +5,7 @@
 // `View` (data); the back stack is `View[]`; re-rendering a screen is just
 // <Screen view={...}/>. No window globals, no HMR callback plumbing.
 
-import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, useMemo, useEffect, useRef, type ReactNode } from 'react'
 import type { View } from './view'
 import type { Tab } from '../../types'
 import { track } from '../../lib/analytics'
@@ -41,6 +41,35 @@ const NavCtx = createContext<Nav | null>(null)
 
 export function NavProvider({ children }: { children: ReactNode }) {
   const [st, setSt] = useState<NavState>({ tab: 0, stack: [], slideDir: 'right', tick: 0 })
+  // Set when ClinIQ's own back button calls history.back(), so the resulting
+  // popstate event doesn't trigger a second pop.
+  const suppressPopRef = useRef(false)
+
+  // Seed browser history with a depth-0 entry so there is always a ClinIQ
+  // entry to absorb a browser back press before leaving the page.
+  useEffect(() => {
+    history.replaceState({ cliniqDepth: 0 }, '')
+  }, [])
+
+  // Browser back/forward button handler — mirrors the event into ClinIQ state.
+  useEffect(() => {
+    const onPopState = () => {
+      if (suppressPopRef.current) {
+        suppressPopRef.current = false
+        return
+      }
+      setSt(s => {
+        if (s.stack.length === 0) {
+          // Nothing left to pop — re-push so the browser can't navigate away.
+          history.pushState({ cliniqDepth: 0 }, '')
+          return s
+        }
+        return { ...s, stack: s.stack.slice(0, -1), slideDir: 'left' }
+      })
+    }
+    window.addEventListener('popstate', onPopState)
+    return () => window.removeEventListener('popstate', onPopState)
+  }, [])
 
   const navigate = useCallback((v: View) => {
     const props: Record<string, unknown> = { content_type: v.kind }
@@ -48,16 +77,32 @@ export function NavProvider({ children }: { children: ReactNode }) {
     if ('flowId' in v) props.content_id = v.flowId
     if ('sign' in v) props.content_id = v.sign
     track('content_navigated', props)
-    setSt(s => ({ ...s, stack: [...s.stack, v], slideDir: 'right' }))
+    setSt(s => {
+      const newStack = [...s.stack, v]
+      history.pushState({ cliniqDepth: newStack.length }, '')
+      return { ...s, stack: newStack, slideDir: 'right' }
+    })
   }, [])
   const replace = useCallback((v: View) => {
-    setSt(s => ({ ...s, stack: s.stack.length ? [...s.stack.slice(0, -1), v] : [v], slideDir: 'right' }))
+    setSt(s => {
+      const newStack = s.stack.length ? [...s.stack.slice(0, -1), v] : [v]
+      history.replaceState({ cliniqDepth: newStack.length }, '')
+      return { ...s, stack: newStack, slideDir: 'right' }
+    })
   }, [])
   const goBack = useCallback(() => {
-    setSt(s => ({ ...s, stack: s.stack.slice(0, -1), slideDir: 'left' }))
+    setSt(s => {
+      if (s.stack.length === 0) return s
+      suppressPopRef.current = true
+      history.back()
+      return { ...s, stack: s.stack.slice(0, -1), slideDir: 'left' }
+    })
   }, [])
   const navTo = useCallback((tab: Tab) => {
-    setSt(s => ({ ...s, tab, stack: [], slideDir: 'right' }))
+    setSt(s => {
+      history.replaceState({ cliniqDepth: 0 }, '')
+      return { ...s, tab, stack: [], slideDir: 'right' }
+    })
   }, [])
   const refresh = useCallback(() => {
     setSt(s => ({ ...s, tick: s.tick + 1 }))
