@@ -83,7 +83,7 @@ export interface BodySystem {
   locs: string[]
 }
 
-export type Tab = 0 | 1 | 2 | 3 | 4
+export type Tab = 0 | 1 | 2 | 3 | 4 | 5
 
 export interface PageDescriptor {
   view: string

@@ -8,6 +8,7 @@ const NAV_ITEMS: { icon: string; label: string }[] = [
   { icon: '📋', label: 'Disease' },
   { icon: '⚡', label: 'Protocols' },
   { icon: '⚙️', label: 'Settings' },
+  { icon: '🔀', label: 'Mix & Match' },
 ]
 
 interface Props {

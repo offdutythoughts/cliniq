@@ -185,6 +185,80 @@ const BTN_BASE = 'padding:7px 18px;border-radius:6px;border:none;font-size:13px;
 const BTN_ACTIVE = s(BTN_BASE + 'background:var(--teal);color:#fff;')
 const BTN_INACTIVE = s(BTN_BASE + 'background:transparent;color:var(--gray);')
 
+const HOW_TO_ITEMS: { icon: string; title: string; body: string }[] = [
+  {
+    icon: '🔗',
+    title: 'Underlined words are links',
+    body: 'Any underlined term in a flow or disease page is tappable — it navigates to that disease, lesion type, or protocol. Use these to drill down without searching.',
+  },
+  {
+    icon: '📦',
+    title: 'Tapping a lesion box opens differentials',
+    body: 'On a Clinical Sign flow, each coloured box represents a lesion category. Tap it to open the differential list for that category, ranked by likelihood and filterable by species.',
+  },
+  {
+    icon: '📝',
+    title: 'Notes are per-page and persistent',
+    body: 'The pencil icon (top right) opens a scratchpad tied to whatever page you are on — flow, disease, or protocol. Notes are saved locally on this device and persist between sessions.',
+  },
+  {
+    icon: '🚨',
+    title: 'IMMEDIATE vs URGENT',
+    body: 'IMMEDIATE (red tag) = act within minutes; a delay risks the patient\'s life. URGENT (amber tag) = act within the same shift; the condition is serious but does not require instant intervention.',
+  },
+  {
+    icon: '💡',
+    title: 'Clinical Pearls',
+    body: 'Highlighted pearl sections contain practical tips, breed predispositions, or exam tricks not covered in standard differentials. Read them even when the diagnosis seems obvious.',
+  },
+  {
+    icon: '🌿',
+    title: 'Diagnostic Approaches tab',
+    body: 'The Diagnostic tab organises workups by presenting complaint (e.g. PU/PD, weight loss). Each approach walks through history, physical exam, and confirmatory tests in sequence.',
+  },
+  {
+    icon: '🔀',
+    title: 'Mix & Match',
+    body: 'Select multiple clinical signs to generate a combined differential list — useful when a patient has overlapping presentations that don\'t map to a single flow.',
+  },
+  {
+    icon: '🔍',
+    title: 'Global search',
+    body: 'The search bar at the top searches across all disease pages, including synonyms and clinical content. On the Disease tab it also filters the full content of each entry, not just the title.',
+  },
+]
+
+function HowToSection() {
+  const [open, setOpen] = useState(false)
+  return (
+    <div style={s('margin-top:24px;')}>
+      <div style={s('font-size:11px;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;')}>How to use</div>
+      <div style={s('background:var(--navy2);border:1px solid var(--border);border-radius:14px;overflow:hidden;')}>
+        {HOW_TO_ITEMS.slice(0, open ? undefined : 4).map((item, i, arr) => (
+          <div
+            key={item.title}
+            style={s(`padding:14px 16px;${i < arr.length - 1 ? 'border-bottom:1px solid var(--border);' : ''}`)}
+          >
+            <div style={s('display:flex;align-items:flex-start;gap:12px;')}>
+              <div style={s('font-size:20px;line-height:1;flex-shrink:0;margin-top:1px;')}>{item.icon}</div>
+              <div>
+                <div style={s('font-size:13px;font-weight:600;color:var(--white);margin-bottom:4px;')}>{item.title}</div>
+                <div style={s('font-size:12px;color:var(--gray);line-height:1.5;')}>{item.body}</div>
+              </div>
+            </div>
+          </div>
+        ))}
+        <button
+          onClick={() => setOpen(o => !o)}
+          style={s('width:100%;padding:12px 16px;background:transparent;border:none;border-top:1px solid var(--border);font-size:12px;font-weight:600;color:var(--teal);cursor:pointer;text-align:center;')}
+        >
+          {open ? 'Show less ↑' : `Show ${HOW_TO_ITEMS.length - 4} more ↓`}
+        </button>
+      </div>
+    </div>
+  )
+}
+
 function SettingsHome() {
   const [dark, setDark] = useState(() => typeof document !== 'undefined' && document.documentElement.getAttribute('data-theme') === 'dark')
   const setTheme = (t: 'light' | 'dark') => {
@@ -207,6 +281,7 @@ function SettingsHome() {
           </div>
         </div>
       </div>
+      <HowToSection />
     </div>
   )
 }

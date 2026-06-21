@@ -77,7 +77,7 @@ export function parseLegacyOnclick(js: string): View | null {
 // ── Screen metadata (topbar title + notes key/title) ──────────────────────────
 // Derived from data, reproducing the exact legacy push()/replace() scheme so
 // saved notes carry over. `showBack` is NOT here — it comes from nav stack depth.
-const TAB_NAMES = ['Clinical', 'Diagnostic', 'Disease', 'Protocols', 'Settings']
+const TAB_NAMES = ['Clinical', 'Diagnostic', 'Disease', 'Protocols', 'Settings', 'Mix & Match']
 
 const byId = <T extends { id: string }>(rows: T[]) => {
   const m = new Map<string, T>()
