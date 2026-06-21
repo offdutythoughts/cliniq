@@ -1,0 +1,11 @@
+# Large reference PDFs — local only, not needed for build
+references/*.pdf
+
+# Dev/test artefacts
+node_modules
+.next
+coverage
+test-results
+playwright-report
+blob-report
+playwright/.cache
