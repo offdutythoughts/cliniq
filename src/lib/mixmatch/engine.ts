@@ -44,10 +44,16 @@ function visitBlock(block: Block, locs: Set<string>, visited: Set<string>) {
       for (const ll of block.items) visitLink(ll.link, locs, visited)
       break
     case 'categoryGrid':
-      for (const col of block.columns) for (const tile of col.tiles) if (tile.link) visitLink(tile.link, locs, visited)
+      for (const col of block.columns) for (const tile of col.tiles) {
+        if (tile.link) visitLink(tile.link, locs, visited)
+        if (tile.links) for (const ll of tile.links) visitLink(ll.link, locs, visited)
+      }
       break
     case 'categoryColumns':
-      for (const col of block.columns) for (const tile of col.tiles) if (tile.link) visitLink(tile.link, locs, visited)
+      for (const col of block.columns) for (const tile of col.tiles) {
+        if (tile.link) visitLink(tile.link, locs, visited)
+        if (tile.links) for (const ll of tile.links) visitLink(ll.link, locs, visited)
+      }
       break
     case 'alert':
       for (const item of block.items) if (typeof item === 'object' && 'link' in item) visitLink(item.link, locs, visited)

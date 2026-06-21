@@ -255,12 +255,29 @@ function CategoryGridBlock({ columns, onNav }: { columns: CategoryColumn[]; onNa
           const h = HUE[c.tone]
           return (
             <div key={i} style={ST_COL_FLEX}>
-              {c.tiles.map((t, j) => (
-                <div key={j} style={s(`border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;${toneBox(h.rgb,h.color).all}${t.link ? 'cursor:pointer;' : 'cursor:default;'}line-height:1.3;word-break:break-word;`)}
-                  {...(t.link ? { role: 'button', onClick: () => onNav(linkToView(t.link!)), onMouseOver: (ev: React.MouseEvent<HTMLDivElement>) => { ev.currentTarget.style.filter = 'brightness(1.2)' }, onMouseOut: (ev: React.MouseEvent<HTMLDivElement>) => { ev.currentTarget.style.filter = '' } } : {})}>
-                  {t.label}
-                </div>
-              ))}
+              {c.tiles.map((t, j) => {
+                if (t.links && t.links.length > 0) {
+                  return (
+                    <div key={j} style={s(`border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;${toneBox(h.rgb,h.color).all}cursor:default;line-height:1.3;word-break:break-word;`)}>
+                      {t.label && <div style={s('margin-bottom:4px;')}>{t.label}</div>}
+                      {t.links.map((ll, k) => (
+                        <div key={k} role="button" onClick={() => onNav(linkToView(ll.link))}
+                          style={s('cursor:pointer;text-align:left;padding:2px 0;font-size:9.5px;')}
+                          onMouseOver={(ev) => { ev.currentTarget.style.filter = 'brightness(1.2)' }}
+                          onMouseOut={(ev) => { ev.currentTarget.style.filter = '' }}>
+                          → {ll.label}
+                        </div>
+                      ))}
+                    </div>
+                  )
+                }
+                return (
+                  <div key={j} style={s(`border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;${toneBox(h.rgb,h.color).all}${t.link ? 'cursor:pointer;' : 'cursor:default;'}line-height:1.3;word-break:break-word;`)}
+                    {...(t.link ? { role: 'button', onClick: () => onNav(linkToView(t.link!)), onMouseOver: (ev: React.MouseEvent<HTMLDivElement>) => { ev.currentTarget.style.filter = 'brightness(1.2)' }, onMouseOut: (ev: React.MouseEvent<HTMLDivElement>) => { ev.currentTarget.style.filter = '' } } : {})}>
+                    {t.label}
+                  </div>
+                )
+              })}
             </div>
           )
         })}
@@ -296,12 +313,29 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
           <div key={i} style={s('display:flex;flex-direction:column;align-items:stretch;gap:4px;')}>
             <div style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:${st.col};text-align:center;line-height:1.3;`)}>{c.cat}</div>
             <div style={s(`color:${st.col};text-align:center;font-size:11px;line-height:1;`)}>↓</div>
-            {c.tiles.map((t, j) => (
-              <div key={j} style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:${st.col};text-align:center;line-height:1.35;${t.link ? 'cursor:pointer;' : ''}`)}
-                {...(t.link ? { role: 'button', onClick: () => onNav(linkToView(t.link!)) } : {})}>
-                {t.label}
-              </div>
-            ))}
+            {c.tiles.map((t, j) => {
+              if (t.links && t.links.length > 0) {
+                return (
+                  <div key={j} style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:${st.col};text-align:center;line-height:1.35;cursor:default;`)}>
+                    {t.label && <div style={s('margin-bottom:3px;')}>{t.label}</div>}
+                    {t.links.map((ll, k) => (
+                      <div key={k} role="button" onClick={() => onNav(linkToView(ll.link))}
+                        style={s('cursor:pointer;text-align:left;padding:1px 0;font-size:8.5px;')}
+                        onMouseOver={(ev) => { ev.currentTarget.style.filter = 'brightness(1.2)' }}
+                        onMouseOut={(ev) => { ev.currentTarget.style.filter = '' }}>
+                        → {ll.label}
+                      </div>
+                    ))}
+                  </div>
+                )
+              }
+              return (
+                <div key={j} style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:${st.col};text-align:center;line-height:1.35;${t.link ? 'cursor:pointer;' : ''}`)}
+                  {...(t.link ? { role: 'button', onClick: () => onNav(linkToView(t.link!)) } : {})}>
+                  {t.label}
+                </div>
+              )
+            })}
           </div>
         )
       })}

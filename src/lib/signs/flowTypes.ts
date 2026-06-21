@@ -139,8 +139,10 @@ export type CardSectionBlock = Connectable & {
 
 /** A 4-(or N-)column category grid: a row of category headers, a row of
  *  connector arrows, then a row of tile-columns (each column 1+ clickable
- *  tiles). The mydriasis/miosis cause pages; later jaundice/pale/seizures. */
-export type CategoryTile = { label: string; link?: Link }
+ *  tiles). The mydriasis/miosis cause pages; later jaundice/pale/seizures.
+ *  Use `links` (plural) when a tile represents multiple distinct diseases —
+ *  the renderer shows sub-bullets for each. Use `link` for a single target. */
+export type CategoryTile = { label: string; link?: Link; links?: LabeledLink[] }
 export type CategoryColumn = { cat: string; tone: Tone; tiles: CategoryTile[] }
 export type CategoryGridBlock = Connectable & { kind: 'categoryGrid'; columns: CategoryColumn[] }
 
@@ -149,7 +151,7 @@ export type CategoryGridBlock = Connectable & { kind: 'categoryGrid'; columns: C
  *  (Vascular / Inflammatory / Mass / Immune-mediated / Degenerative /
  *  Metabolic / Endocrine / Toxic / Trauma / Anomalous), which carries its own
  *  exact colour. Used by the jaundice / pale / pupd `col()` grids. */
-export type CatColumnTile = { label: string; link?: Link }
+export type CatColumnTile = { label: string; link?: Link; links?: LabeledLink[] }
 /** `tone` overrides the CAT_STYLE palette lookup — use for custom-coloured columns
  *  that don't correspond to a shared category label (e.g. "Haemoglobinuria"). */
 export type CatColumn = { cat: string; tone?: Tone; tiles: CatColumnTile[] }
