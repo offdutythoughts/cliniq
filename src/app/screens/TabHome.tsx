@@ -291,8 +291,8 @@ export function TabHome({ tab }: { tab: Tab }) {
     case 0: return <LocaliseHome />
     case 1: return <DiagnosticHome />
     case 2: return <DiseaseHome />
-    case 3: return <ProtoList />
-    case 4: return <SettingsHome />
-    case 5: return <MixMatchScreen />
+    case 3: return <MixMatchScreen />
+    case 4: return <ProtoList />
+    case 5: return <SettingsHome />
   }
 }
