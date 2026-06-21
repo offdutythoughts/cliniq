@@ -11,14 +11,11 @@ import { styleStringToObject as s } from './style'
 import { UrgTag, SpTag } from './tags'
 import { DiseasePageView } from './DiseasePageView'
 import { NavCard, Card, Bul, str } from './markup'
+import { TAG_ROW, BODY_TEXT, DOT, BULLET } from './styles'
 
-const TAG_ROW = s('display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;')
 const ETI_NAME = s('font-size:12px;color:var(--white);line-height:1.6;')
 const ETI_BOX = s('margin-top:10px;padding-top:10px;border-top:1px solid var(--border);')
-const VAL_GRAY = s('font-size:12px;color:var(--gray);line-height:1.6;')
 const NOTE_VAL = s('font-size:11px;color:var(--gray);line-height:1.6;')
-const BULLET = s('display:flex;align-items:baseline;gap:6px;font-size:11px;color:var(--gray);line-height:1.6;')
-const DOT = s('color:var(--teal-light);flex-shrink:0;')
 
 export function SubTypeDetailView({ id }: { id: string }) {
   const nav = useNav()
@@ -65,7 +62,7 @@ export function SubTypeDetailView({ id }: { id: string }) {
       </Card>
 
       <Card title="Clinical Signs">
-        <div style={VAL_GRAY}>{l.signs}</div>
+        <div style={BODY_TEXT}>{l.signs}</div>
       </Card>
 
       {patho && (
