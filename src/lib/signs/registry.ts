@@ -45,8 +45,6 @@ export const SIGNS: SignEntry[] = [
   { id: 'fever', icon: '🌡️', title: 'Fever / FUO', sub: 'Dog + Cat · True fever vs hyperthermia · infectious / immune / neoplastic', flowId: 'fever' },
   { id: 'haematuria', icon: '🩸', title: 'Haematuria', sub: 'Dog + Cat · Upper tract · bladder · urethra · prostate · genital · systemic', flowId: 'haematuria' },
   { id: 'heart-murmur', icon: '🫀', title: 'Heart Murmur', sub: 'Dog + Cat · Grade I–VI · PMI → lesion · acquired vs congenital vs functional', flowId: 'heart-murmur' },
-  { id: 'hypotension', icon: '🩺', title: 'Hypotension', sub: "Dog + Cat · Shock · sepsis · Addison's · envenomation · spinal" },
-  { id: 'hypothermia', icon: '🥶', title: 'Hypothermia', sub: 'Dog + Cat · Myxoedema · neonates · ATE · sepsis · toxins' },
   { id: 'jaundice', icon: '🟡', title: 'Jaundice', sub: 'Dog + Cat · Pre-hepatic, hepatic, post-hepatic', flowId: 'jaundice' },
   { id: 'melena', icon: '⬛', title: 'Melena / Haematochezia', sub: 'Dog + Cat · Upper (digested) vs lower (fresh) GI bleeding', flowId: 'melena' },
   { id: 'oedema', icon: '🫧', title: 'Peripheral Oedema', sub: 'Dog + Cat · Hypoalbuminaemia vs hydrostatic/cardiac vs vasculitis', flowId: 'oedema' },

@@ -12,7 +12,6 @@ import type { DiseaseRow } from '../../data/db'
 import { FLOWS } from '../signs/flows'
 import { FLOW_SIGNS } from '../signs/registry'
 import { DB } from '../../data/db'
-import { DIRECT_SIGN_DISEASES } from './signalMap'
 
 // ── 1. Flow traversal ────────────────────────────────────────────────────────
 
@@ -153,13 +152,6 @@ function normCat(raw: string): string {
   return 'Other'
 }
 
-// ── 3b. Direct sign→disease secondary index ──────────────────────────────────
-
-/** sign id → [{diseaseId, cat}] for signs without flow pages */
-const directSignItems: Map<string, Array<{ diseaseId: string; cat: string }>> = new Map(
-  Object.entries(DIRECT_SIGN_DISEASES),
-)
-
 // ── 4. Public API ────────────────────────────────────────────────────────────
 
 export interface MixMatchResultItem {
@@ -205,22 +197,15 @@ export function searchMixMatch(
   const diseaseSignIdx = new Map<string, Set<number>>()
   const diseaseCat = new Map<string, string>()
 
-  selectedSignIds.forEach((signId, si) => {
-    // Flow-based index
+  selectedSignIds.forEach((_, si) => {
     for (const loc of signLocs[si]) {
       for (const item of locToItems.get(loc) ?? []) {
         let set = diseaseSignIdx.get(item.diseaseId)
         if (!set) { set = new Set(); diseaseSignIdx.set(item.diseaseId, set) }
         set.add(si)
+        // First cat encountered wins
         if (!diseaseCat.has(item.diseaseId)) diseaseCat.set(item.diseaseId, item.cat)
       }
-    }
-    // Direct sign→disease index (for signs without flow pages)
-    for (const item of directSignItems.get(signId) ?? []) {
-      let set = diseaseSignIdx.get(item.diseaseId)
-      if (!set) { set = new Set(); diseaseSignIdx.set(item.diseaseId, set) }
-      set.add(si)
-      if (!diseaseCat.has(item.diseaseId)) diseaseCat.set(item.diseaseId, item.cat)
     }
   })
 
