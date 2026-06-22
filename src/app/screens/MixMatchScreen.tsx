@@ -38,7 +38,14 @@ function SignPickerModal({
   onClose: () => void
 }) {
   const [q, setQ] = useState('')
-  const filtered = q ? SIGNS.filter(s => s.title.toLowerCase().includes(q.toLowerCase())) : SIGNS
+  const ql = q.toLowerCase()
+  const filtered = q
+    ? SIGNS.filter(s =>
+        s.title.toLowerCase().includes(ql) ||
+        s.sub.toLowerCase().includes(ql) ||
+        s.keywords?.some(k => k.toLowerCase().includes(ql))
+      )
+    : SIGNS
   const atMax = selected.size >= 4
 
   return (
