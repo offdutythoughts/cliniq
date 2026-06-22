@@ -4,7 +4,7 @@
 // cross-references its internal data to build a differential list grouped by
 // lesion category (Inflammatory, Infectious, Immune-mediated, etc.).
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef } from 'react'
 import { SIGNS } from '../../lib/signs/registry'
 import { searchMixMatch, type Signalement, type MixMatchCategory, type AgeCategory } from '../../lib/mixmatch/engine'
 import { useNav } from '../nav/NavContext'
@@ -104,6 +104,88 @@ function SignPickerModal({
   )
 }
 
+// ── Inline keyword search ─────────────────────────────────────────────────────
+function InlineSignSearch({
+  selected,
+  onAdd,
+  onOpenBrowse,
+}: {
+  selected: Set<string>
+  onAdd: (id: string) => void
+  onOpenBrowse: () => void
+}) {
+  const [q, setQ] = useState('')
+  const [focused, setFocused] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null)
+  const atMax = selected.size >= 4
+
+  const ql = q.toLowerCase()
+  const suggestions = useMemo(() => {
+    if (!ql) return []
+    return SIGNS.filter(s =>
+      !selected.has(s.id) &&
+      (
+        s.title.toLowerCase().includes(ql) ||
+        s.sub.toLowerCase().includes(ql) ||
+        s.keywords?.some(k => k.toLowerCase().includes(ql))
+      )
+    ).slice(0, 6)
+  }, [ql, selected])
+
+  const showDropdown = focused && q.length > 0
+
+  function pick(id: string) {
+    onAdd(id)
+    setQ('')
+    inputRef.current?.focus()
+  }
+
+  if (atMax) return null
+
+  return (
+    <div style={s('position:relative;flex:1;min-width:160px;')}>
+      <input
+        ref={inputRef}
+        placeholder={`Search signs… (${selected.size}/4)`}
+        value={q}
+        onChange={e => setQ(e.target.value)}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setTimeout(() => setFocused(false), 150)}
+        style={s('width:100%;background:transparent;border:1px dashed var(--border);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:600;color:var(--white);outline:none;box-sizing:border-box;')}
+      />
+      {showDropdown && (
+        <div style={s('position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--navy2);border:1px solid var(--border);border-radius:12px;z-index:50;overflow:hidden;')}>
+          {suggestions.length === 0 ? (
+            <div style={s('padding:10px 12px;font-size:12px;color:var(--gray2);')}>
+              No match —{' '}
+              <span
+                role="button"
+                onClick={onOpenBrowse}
+                style={s('color:var(--teal);cursor:pointer;')}
+              >browse all signs</span>
+            </div>
+          ) : (
+            suggestions.map(sign => (
+              <div
+                key={sign.id}
+                role="button"
+                onMouseDown={() => pick(sign.id)}
+                style={s('display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;border-bottom:1px solid var(--border);')}
+              >
+                <span style={s('font-size:16px;flex-shrink:0;')}>{sign.icon}</span>
+                <div style={s('flex:1;min-width:0;')}>
+                  <div style={s('font-size:12px;font-weight:600;color:var(--white);')}>{sign.title}</div>
+                  <div style={s('font-size:10px;color:var(--gray2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;')}>{sign.sub}</div>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // ── Main screen ───────────────────────────────────────────────────────────────
 export function MixMatchScreen() {
   const nav = useNav()
@@ -152,7 +234,7 @@ export function MixMatchScreen() {
       </div>
 
       {/* ── Selected sign chips ── */}
-      <div style={s('display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;')}>
+      <div style={s('display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;align-items:center;')}>
         {selectedIds.map(id => {
           const sign = signById.get(id)
           if (!sign) return null
@@ -171,13 +253,17 @@ export function MixMatchScreen() {
           )
         })}
 
+        <InlineSignSearch
+          selected={selectedSet}
+          onAdd={id => toggleSign(id)}
+          onOpenBrowse={() => setShowPicker(true)}
+        />
+
         {selectedIds.length < 4 && (
           <button
             onClick={() => setShowPicker(true)}
-            style={s('display:flex;align-items:center;gap:5px;background:transparent;border:1px dashed var(--border);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:600;color:var(--gray2);cursor:pointer;')}
-          >
-            + Add sign {selectedIds.length > 0 ? `(${selectedIds.length}/4)` : ''}
-          </button>
+            style={s('background:none;border:none;color:var(--gray2);font-size:11px;cursor:pointer;padding:0;text-decoration:underline;flex-shrink:0;')}
+          >browse all</button>
         )}
       </div>
 
