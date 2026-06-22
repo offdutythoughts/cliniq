@@ -29,7 +29,7 @@ export type SignEntry = {
 }
 
 export const SIGNS: SignEntry[] = [
-  { id: 'encephalopathy', icon: '🧬', title: 'Acute Encephalopathy', sub: 'Encephalitis, neoplasia, CVA, metabolic', flowId: 'encephalopathy',
+  { id: 'encephalopathy', icon: '🧬', title: 'Disorientation', sub: 'Encephalitis, neoplasia, CVA, metabolic', flowId: 'encephalopathy',
     keywords: ['brain', 'confusion', 'disorientation', 'altered consciousness', 'stupor', 'coma', 'stroke', 'CVA', 'cerebrovascular', 'encephalitis', 'hepatic encephalopathy', 'metabolic brain', 'head pressing', 'circling', 'mental dullness'] },
   { id: 'myelopathy', icon: '🦴', title: 'Acute Myelopathy', sub: 'Spinal cord localisation', flowId: 'myelopathy',
     keywords: ['spinal cord', 'spine', 'back pain', 'paralysis', 'paraplegia', 'paresis', 'IVDD', 'disc disease', 'intervertebral disc', 'hind limb weakness', 'hindlimb', 'proprioception', 'FCE', 'fibrocartilaginous embolism', 'degenerative myelopathy', 'DM'] },

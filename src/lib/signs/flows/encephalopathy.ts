@@ -1,4 +1,4 @@
-// ── Acute Encephalopathy flowchart (data) ───────────────────────────────────
+// ── Disorientation flowchart (data) ─────────────────────────────────────────
 // Migration of renderEncephalopathyFlow (inline in src/lib/cliniqApp.ts) to the
 // FlowPage model. Self-contained: the four pattern-nodes link to lesion tabs;
 // no sub-flows or dx links.

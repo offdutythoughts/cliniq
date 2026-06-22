@@ -6,7 +6,7 @@
 import type { DxApproach } from '../dxTypes'
 
 export const encephalopathyDx: DxApproach = {
-  title: 'Encephalopathy',
+  title: 'Disorientation',
   tabs: {
 
   history: {
