@@ -120,6 +120,205 @@ function inferCat(disease: DiseaseRow): string {
   return 'Other'
 }
 
+// ── Synonym expansion ─────────────────────────────────────────────────────────
+// Each entry is a group of equivalent terms. Any keyword that matches one term
+// in a group is expanded to all terms in that group before text matching.
+
+const SYNONYM_GROUPS: string[][] = [
+  // ── Spelling variants (US/UK) ─────────────────────────────────────────────
+  ['diarrhea', 'diarrhoea'],
+  ['anemia', 'anaemia'],
+  ['dyspnea', 'dyspnoea'],
+  ['edema', 'oedema'],
+  ['esophagus', 'oesophagus'],
+  ['feces', 'faeces'],
+  ['fecal', 'faecal'],
+  ['hematuria', 'haematuria'],
+  ['hemorrhage', 'haemorrhage'],
+  ['hematemesis', 'haematemesis'],
+  ['hematochezia', 'haematochezia'],
+  ['hemolytic', 'haemolytic'],
+  ['leukemia', 'leukaemia'],
+  ['leukocytosis', 'leucocytosis'],
+  ['leukopenia', 'leucopenia'],
+  ['color', 'colour'],
+  ['tumor', 'tumour'],
+  ['fiber', 'fibre'],
+  ['gray', 'grey'],
+
+  // ── GI signs ─────────────────────────────────────────────────────────────
+  ['diarrhea', 'diarrhoea', 'loose stools', 'loose stool', 'soft stool', 'soft stools', 'runny stool', 'watery stool', 'liquid stool'],
+  ['vomiting', 'vomit', 'throwing up', 'emesis', 'regurgitation', 'regurgitating'],
+  ['blood in stool', 'melena', 'melaena', 'hematochezia', 'haematochezia', 'bloody stool', 'bloody diarrhea', 'bloody diarrhoea', 'rectal bleeding'],
+  ['vomiting blood', 'hematemesis', 'haematemesis', 'bloody vomit'],
+  ['not eating', 'anorexia', 'hyporexia', 'inappetence', 'reduced appetite', 'loss of appetite', 'off food'],
+  ['straining to defecate', 'tenesmus', 'constipation', 'straining', 'difficulty defecating'],
+  ['difficulty swallowing', 'dysphagia', 'trouble swallowing', 'gagging', 'choking'],
+  ['bloating', 'distension', 'abdominal distension', 'bloat', 'swollen belly', 'pot belly'],
+  ['increased appetite', 'polyphagia', 'excessive hunger', 'ravenous'],
+  ['weight loss', 'cachexia', 'muscle wasting', 'losing weight', 'thin', 'emaciation', 'emaciated'],
+  ['weight gain', 'obesity', 'overweight'],
+
+  // ── Respiratory signs ─────────────────────────────────────────────────────
+  ['difficulty breathing', 'dyspnea', 'dyspnoea', 'respiratory distress', 'laboured breathing', 'labored breathing', 'shortness of breath', 'breathlessness', 'open mouth breathing'],
+  ['coughing', 'cough', 'chronic cough', 'productive cough'],
+  ['noisy breathing', 'stertor', 'stridor', 'snoring', 'stertor/stridor'],
+  ['nasal discharge', 'runny nose', 'rhinorrhea', 'rhinorrhoea', 'nasal drip'],
+  ['sneezing', 'reverse sneeze', 'reverse sneezing'],
+
+  // ── Cardiovascular / circulatory ──────────────────────────────────────────
+  ['fast heart rate', 'tachycardia', 'rapid heart rate', 'racing heart'],
+  ['slow heart rate', 'bradycardia', 'low heart rate'],
+  ['heart murmur', 'murmur', 'cardiac murmur'],
+  ['irregular heartbeat', 'arrhythmia', 'dysrhythmia', 'irregular pulse'],
+  ['pale gums', 'pallor', 'pale mucous membranes', 'white gums', 'muddy gums', 'pale mm'],
+  ['blue gums', 'cyanosis', 'cyanotic', 'purple gums'],
+  ['yellow gums', 'jaundice', 'icterus', 'icteric', 'yellow skin', 'yellow eyes', 'yellow mucous membranes', 'yellowing'],
+  ['collapse', 'syncope', 'fainting', 'faint', 'collapsed'],
+
+  // ── Urinary signs ─────────────────────────────────────────────────────────
+  ['blood in urine', 'hematuria', 'haematuria', 'bloody urine', 'pink urine', 'red urine'],
+  ['excessive urination', 'polyuria', 'frequent urination', 'urinating a lot', 'pu', 'increased urine output'],
+  ['excessive thirst', 'polydipsia', 'drinking a lot', 'increased thirst', 'pd', 'pu/pd'],
+  ['straining to urinate', 'dysuria', 'stranguria', 'difficulty urinating', 'trouble urinating'],
+  ['not urinating', 'anuria', 'oliguria', 'reduced urine', 'no urine'],
+  ['urinary incontinence', 'leaking urine', 'incontinence'],
+
+  // ── Neurological signs ────────────────────────────────────────────────────
+
+  // Consciousness / mentation
+  ['confusion', 'disorientation', 'disorientated', 'disoriented', 'mental dullness', 'obtunded', 'obtundation', 'dull', 'altered mentation', 'ams', 'altered mental status', 'decreased consciousness', 'depressed mentation', 'dull mentation'],
+  ['stupor', 'semi-conscious', 'barely responsive', 'semi conscious'],
+  ['coma', 'unconscious', 'loss of consciousness', 'unresponsive', 'comatose'],
+  ['dementia', 'cognitive dysfunction', 'cds', 'cognitive decline', 'confusion in old age', 'senility', 'disoriented at night', 'memory loss', 'forgetfulness', 'night time waking', 'vocalising at night', 'vocalizing at night'],
+
+  // Seizures
+  ['seizure', 'seizures', 'epilepsy', 'convulsion', 'convulsions', 'fitting', 'fit', 'twitching', 'jerking', 'paddling', 'tonic clonic', 'grand mal', 'absence seizure', 'focal seizure', 'partial seizure', 'cluster seizures', 'status epilepticus', 'post ictal', 'postictal', 'lost consciousness', 'fell over and shook', 'shaking episode'],
+
+  // Episodic / fluctuating
+  ['waxing and waning', 'waxing/waning', 'wax and wane', 'episodic', 'intermittent', 'comes and goes', 'fluctuating', 'fluctuates', 'episodic weakness', 'episodic collapse', 'good days and bad days'],
+
+  // Tremors / involuntary movements
+  ['tremor', 'tremors', 'trembling', 'shaking', 'intention tremor', 'muscle tremor', 'whole body tremor', 'head tremor', 'intention tremors', 'myoclonus', 'muscle twitching', 'twitching', 'fasciculations', 'spasms', 'muscle spasm', 'rhythmic shaking', 'constant shaking', 'shaker dog', 'generalized tremor syndrome'],
+
+  // Ataxia / incoordination
+  ['wobbly', 'ataxia', 'ataxic', 'incoordination', 'incoordinate', 'unsteady', 'stumbling', 'staggering', 'loss of balance', 'hypermetria', 'dysmetria', 'goose stepping', 'cerebellar ataxia', 'vestibular ataxia', 'proprioceptive ataxia', 'drunk walking', 'falls over', 'falling over', 'cant balance', 'balance problems'],
+
+  // Weakness / paresis
+  ['weakness', 'paresis', 'weak', 'limb weakness', 'muscle weakness', 'tires easily', 'fatigues quickly', 'exercise intolerance'],
+  ['hind limb weakness', 'hindlimb weakness', 'rear limb weakness', 'back leg weakness', 'paraparesis', 'pelvic limb weakness', 'weak back legs', 'wobbly back legs', 'back end weakness', 'weak hindquarters', 'dragging back end'],
+  ['front limb weakness', 'forelimb weakness', 'thoracic limb weakness', 'weak front legs', 'monoparesis', 'tetraparesis', 'tetraparesis', 'all limb weakness', 'all four legs weak'],
+  ['one sided weakness', 'hemiparesis', 'hemiplegia', 'one side weak', 'weak on one side', 'right side weak', 'left side weak'],
+
+  // Paralysis / plegia
+  ['paralysis', 'unable to walk', 'cant walk', 'knuckling', 'knuckling over', 'dragging legs', 'dragging paw'],
+  ['hind limb paralysis', 'paraplegia', 'paralysed back legs', 'paralyzed back legs', 'unable to use back legs', 'pelvic limb paralysis', 'back end paralysis'],
+  ['tetraplegia', 'all four legs paralysed', 'all four legs paralyzed', 'quadriplegia', 'unable to move legs'],
+  ['monoplegia', 'one leg paralysed', 'one leg paralyzed', 'one limb affected'],
+
+  // Vestibular / head tilt / nystagmus
+  ['head tilt', 'vestibular', 'leaning', 'rolling', 'falling to one side', 'tilting head', 'head turn'],
+  ['nystagmus', 'eye flicking', 'rapid eye movement', 'eyes moving rapidly', 'eye flickering', 'uncontrolled eye movement'],
+  ['circling', 'circles', 'walking in circles', 'turning in circles', 'spinning', 'circling one direction'],
+  ['peripheral vestibular', 'central vestibular', 'old dog vestibular', 'idiopathic vestibular', 'vestibular episode', 'geriatric vestibular'],
+
+  // Spinal / neck / back pain
+  ['neck pain', 'cervical pain', 'cervical hyperesthesia', 'reluctant to lower head', 'stiff neck', 'painful neck', 'crying when touched on neck', 'neck sensitivity', 'yelping when touching neck', 'holds head low'],
+  ['back pain', 'spinal pain', 'thoracolumbar pain', 'lumbosacral pain', 'painful spine', 'hyperesthesia', 'allodynia', 'pain on spinal palpation', 'arched back', 'kyphosis', 'hunched back', 'sore back', 'yelping when touched on back', 'sensitive back', 'back sensitivity'],
+  ['disc disease', 'ivdd', 'intervertebral disc', 'slipped disc', 'herniated disc', 'disc herniation', 'myelopathy', 'spinal cord compression', 'spinal cord disease', 'degenerative myelopathy', 'dm'],
+
+  // Cranial nerve signs
+  ['facial paralysis', 'facial nerve palsy', 'facial asymmetry', 'dropped lip', 'drooping lip', 'ear droop', 'unable to blink', 'lagophthalmos', 'crooked face', 'face drooping'],
+  ['jaw drop', 'dropped jaw', 'unable to close mouth', 'trigeminal neuropathy', 'trigeminal neuritis', 'cant close mouth', 'open mouth'],
+  ['tongue weakness', 'tongue atrophy', 'difficulty with tongue', 'hypoglossal', 'tongue hanging out'],
+  ['laryngeal paralysis', 'laryngeal paresis', 'voice change', 'changed bark', 'hoarse bark', 'weak bark', 'roaring', 'lar par'],
+  ['horner syndrome', 'horners syndrome', 'miosis', 'ptosis', 'enophthalmos', 'sunken eye', 'droopy eyelid', 'small pupil', 'third eyelid elevation', 'third eyelid showing horner'],
+
+  // Proprioception
+  ['knuckling', 'paw knuckling', 'dragging paw', 'slow placing', 'reduced proprioception', 'proprioceptive deficit', 'proprioception loss', 'upper motor neuron', 'umn signs', 'lower motor neuron', 'lmn signs', 'postural reaction deficit'],
+
+  // Neuropathy
+  ['neuropathy', 'neuropathic', 'peripheral neuropathy', 'polyneuropathy', 'nerve damage', 'nerve dysfunction', 'nerve pain', 'neuromuscular disease', 'polyneuritis'],
+
+  // Raised ICP / brain signs
+  ['increased intracranial pressure', 'icp', 'raised icp', 'brain swelling', 'papilloedema', 'papilledema', 'bradycardia and hypertension', 'cushing reflex'],
+  ['encephalitis', 'brain inflammation', 'meningoencephalitis', 'meningitis', 'encephalopathy', 'hepatic encephalopathy', 'metabolic encephalopathy', 'brain disease'],
+
+  // Blindness
+  ['blindness', 'vision loss', 'blind', 'cannot see', 'cant see', 'loss of vision', 'sudden blindness', 'acute vision loss', 'navigating poorly', 'bumping into things', 'bumping into walls', 'visual deficit'],
+
+  // ── Dermatological signs ──────────────────────────────────────────────────
+  ['itchy', 'pruritus', 'pruritic', 'itching', 'scratching', 'rubbing'],
+  ['hair loss', 'alopecia', 'bald patches', 'losing hair', 'thinning coat'],
+  ['skin thickening', 'lichenification', 'hyperkeratosis', 'thickened skin'],
+  ['skin redness', 'erythema', 'erythematous', 'red skin', 'inflamed skin'],
+  ['lumps', 'nodules', 'mass', 'swelling', 'bumps', 'lump'],
+  ['crusting', 'crusts', 'scabs', 'scaling', 'scales', 'flaky skin'],
+  ['bruising', 'ecchymosis', 'ecchymoses', 'petechiae', 'bruises', 'purple spots', 'red spots'],
+
+  // ── Musculoskeletal signs ─────────────────────────────────────────────────
+  ['limping', 'lameness', 'lame', 'limping', 'favouring leg', 'favoring leg', 'not bearing weight'],
+  ['joint swelling', 'arthritis', 'swollen joints', 'painful joints'],
+  ['muscle wasting', 'atrophy', 'muscle loss', 'muscle atrophy'],
+  ['stiff', 'stiffness', 'reluctant to move', 'difficulty rising', 'trouble getting up'],
+
+  // ── Ophthalmic signs ─────────────────────────────────────────────────────
+  ['red eye', 'conjunctivitis', 'conjunctival hyperemia', 'bloodshot eye', 'inflamed eye'],
+  ['cloudy eye', 'opacity', 'cataract', 'corneal opacity', 'white eye', 'hazy eye'],
+  ['discharge from eye', 'ocular discharge', 'eye discharge', 'weepy eye', 'watery eye', 'mucoid discharge'],
+  ['unequal pupils', 'anisocoria', 'different pupil sizes', 'uneven pupils'],
+  ['third eyelid', 'prolapsed nictitans', 'cherry eye', 'nictitating membrane'],
+
+  // ── General / systemic signs ──────────────────────────────────────────────
+  ['fever', 'pyrexia', 'high temperature', 'pyrexic', 'febrile', 'hyperthermia'],
+  ['low body temperature', 'hypothermia', 'cold', 'temperature low'],
+  ['lethargy', 'lethargic', 'tired', 'fatigue', 'exercise intolerance', 'weakness', 'low energy', 'dull'],
+  ['fluid in abdomen', 'ascites', 'abdominal effusion', 'belly fluid', 'pot belly'],
+  ['fluid in chest', 'pleural effusion', 'chest fluid', 'fluid around lungs'],
+  ['nose bleed', 'epistaxis', 'nasal bleeding', 'bleeding from nose'],
+  ['lymph node enlargement', 'lymphadenopathy', 'swollen lymph nodes', 'swollen glands'],
+  ['liver enlargement', 'hepatomegaly', 'enlarged liver', 'big liver'],
+  ['spleen enlargement', 'splenomegaly', 'enlarged spleen'],
+  ['kidney failure', 'renal failure', 'renal insufficiency', 'ckd', 'aki', 'renal disease'],
+
+  // ── Blood pressure / electrolytes ────────────────────────────────────────
+  ['low blood pressure', 'hypotension', 'hypotensive'],
+  ['high blood pressure', 'hypertension', 'hypertensive'],
+  ['low potassium', 'hypokalemia', 'hypokalaemia', 'potassium low'],
+  ['high potassium', 'hyperkalemia', 'hyperkalaemia', 'potassium high'],
+  ['low sodium', 'hyponatremia', 'hyponatraemia', 'sodium low'],
+  ['high sodium', 'hypernatremia', 'hypernatraemia', 'sodium high'],
+  ['low calcium', 'hypocalcemia', 'hypocalcaemia', 'calcium low'],
+  ['high calcium', 'hypercalcemia', 'hypercalcaemia', 'calcium high'],
+  ['low blood sugar', 'hypoglycemia', 'hypoglycaemia', 'glucose low', 'low glucose'],
+  ['high blood sugar', 'hyperglycemia', 'hyperglycaemia', 'glucose high', 'high glucose'],
+  ['low albumin', 'hypoalbuminemia', 'hypoalbuminaemia', 'albumin low'],
+  ['low protein', 'hypoproteinemia', 'hypoproteinaemia', 'protein losing'],
+  ['low phosphorus', 'hypophosphatemia', 'hypophosphataemia', 'phosphorus low'],
+  ['high phosphorus', 'hyperphosphatemia', 'hyperphosphataemia', 'phosphorus high'],
+
+  // ── Haematology ───────────────────────────────────────────────────────────
+  ['low red blood cells', 'anemia', 'anaemia', 'low pcv', 'low hematocrit', 'low haematocrit', 'low haemoglobin', 'low hemoglobin'],
+  ['low platelets', 'thrombocytopenia', 'platelet low', 'low platelet count'],
+  ['high white blood cells', 'leukocytosis', 'leucocytosis', 'wbc high', 'elevated wbc'],
+  ['low white blood cells', 'leukopenia', 'leucopenia', 'wbc low', 'neutropenia'],
+  ['clotting problem', 'coagulopathy', 'bleeding disorder', 'dic', 'prolonged clotting'],
+]
+
+// Build a map: normalised term → all synonyms in its group
+const synonymMap = new Map<string, string[]>()
+for (const group of SYNONYM_GROUPS) {
+  for (const term of group) {
+    synonymMap.set(term.toLowerCase(), group.map(t => t.toLowerCase()))
+  }
+}
+
+/** Expand a keyword to include all its synonyms (including itself). */
+function expandKeyword(kw: string): string[] {
+  const k = kw.toLowerCase()
+  return synonymMap.get(k) ?? [k]
+}
+
 // ── Text matching helper ──────────────────────────────────────────────────────
 
 function fieldText(d: DiseaseRow, ...keys: string[]): string {
@@ -127,7 +326,13 @@ function fieldText(d: DiseaseRow, ...keys: string[]): string {
 }
 
 function keywordHits(text: string, keywords: string[]): string[] {
-  return keywords.filter(kw => kw.length >= 2 && text.includes(kw.toLowerCase()))
+  const matched: string[] = []
+  for (const kw of keywords) {
+    if (kw.length < 2) continue
+    const expanded = expandKeyword(kw)
+    if (expanded.some(term => text.includes(term))) matched.push(kw)
+  }
+  return matched
 }
 
 // ── Public API ────────────────────────────────────────────────────────────────

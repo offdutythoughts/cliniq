@@ -82,21 +82,36 @@ function KeywordInput({
   )
 }
 
+// ── Persistent form state (survives unmount when navigating to a disease page) ──
+const _saved = {
+  species: 'all' as Species,
+  breedQuery: '',
+  ageCategory: undefined as AgeCategory | undefined,
+  sex: undefined as SexFilter | undefined,
+  signKeywords: [] as string[],
+  diagKeywords: [] as string[],
+}
+
 // ── Main screen ───────────────────────────────────────────────────────────────
 export function MixMatchScreen() {
   const nav = useNav()
 
-  const [species, setSpecies] = useState<Species>('all')
-  const [breedQuery, setBreedQuery] = useState('')
-  const [ageCategory, setAgeCategory] = useState<AgeCategory | undefined>()
-  const [sex, setSex] = useState<SexFilter | undefined>()
-  const [signKeywords, setSignKeywords] = useState<string[]>([])
-  const [diagKeywords, setDiagKeywords] = useState<string[]>([])
+  const [species, _setSpecies] = useState<Species>(_saved.species)
+  const [breedQuery, _setBreedQuery] = useState(_saved.breedQuery)
+  const [ageCategory, _setAgeCategory] = useState<AgeCategory | undefined>(_saved.ageCategory)
+  const [sex, _setSex] = useState<SexFilter | undefined>(_saved.sex)
+  const [signKeywords, _setSignKeywords] = useState<string[]>(_saved.signKeywords)
+  const [diagKeywords, _setDiagKeywords] = useState<string[]>(_saved.diagKeywords)
 
-  const addSign = useCallback((t: string) => setSignKeywords(p => [...p, t]), [])
-  const removeSign = useCallback((t: string) => setSignKeywords(p => p.filter(x => x !== t)), [])
-  const addDiag = useCallback((t: string) => setDiagKeywords(p => [...p, t]), [])
-  const removeDiag = useCallback((t: string) => setDiagKeywords(p => p.filter(x => x !== t)), [])
+  const setSpecies = useCallback((v: Species) => { _saved.species = v; _setSpecies(v) }, [])
+  const setBreedQuery = useCallback((v: string) => { _saved.breedQuery = v; _setBreedQuery(v) }, [])
+  const setAgeCategory = useCallback((v: AgeCategory | undefined) => { _saved.ageCategory = v; _setAgeCategory(v) }, [])
+  const setSex = useCallback((v: SexFilter | undefined) => { _saved.sex = v; _setSex(v) }, [])
+
+  const addSign = useCallback((t: string) => _setSignKeywords(p => { const n = [...p, t]; _saved.signKeywords = n; return n }), [])
+  const removeSign = useCallback((t: string) => _setSignKeywords(p => { const n = p.filter(x => x !== t); _saved.signKeywords = n; return n }), [])
+  const addDiag = useCallback((t: string) => _setDiagKeywords(p => { const n = [...p, t]; _saved.diagKeywords = n; return n }), [])
+  const removeDiag = useCallback((t: string) => _setDiagKeywords(p => { const n = p.filter(x => x !== t); _saved.diagKeywords = n; return n }), [])
 
   const inputs: SearchInputs = {
     species,

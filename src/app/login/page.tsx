@@ -31,7 +31,7 @@ function LoginForm() {
           try {
             await signIn('password', form)
             track('login_succeeded', { flow })
-            router.push('/')
+            router.replace('/')
           } catch (err) {
             const errorMsg = friendlyAuthError(err, flow)
             track('login_failed', { flow, error: errorMsg })
