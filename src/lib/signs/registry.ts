@@ -29,8 +29,6 @@ export type SignEntry = {
 }
 
 export const SIGNS: SignEntry[] = [
-  { id: 'encephalopathy', icon: '🧬', title: 'Disorientation', sub: 'Encephalitis, neoplasia, CVA, metabolic', flowId: 'encephalopathy',
-    keywords: ['brain', 'confusion', 'disorientation', 'altered consciousness', 'stupor', 'coma', 'stroke', 'CVA', 'cerebrovascular', 'encephalitis', 'hepatic encephalopathy', 'metabolic brain', 'head pressing', 'circling', 'mental dullness'] },
   { id: 'myelopathy', icon: '🦴', title: 'Acute Myelopathy', sub: 'Spinal cord localisation', flowId: 'myelopathy',
     keywords: ['spinal cord', 'spine', 'back pain', 'paralysis', 'paraplegia', 'paresis', 'IVDD', 'disc disease', 'intervertebral disc', 'hind limb weakness', 'hindlimb', 'proprioception', 'FCE', 'fibrocartilaginous embolism', 'degenerative myelopathy', 'DM'] },
   { id: 'vestibular', icon: '🌀', title: 'Acute Vestibular', sub: 'Peripheral vs central', flowId: 'vestibular',
@@ -53,6 +51,8 @@ export const SIGNS: SignEntry[] = [
     keywords: ['blue gums', 'blue mucous membranes', 'blue tongue', 'low oxygen', 'hypoxia', 'methaemoglobinaemia', 'methaemoglobin', 'shunt', 'right to left shunt', 'low SpO2', 'desaturation', 'purple gums'] },
   { id: 'diarrhoea', icon: '💦', title: 'Diarrhoea', sub: 'Dog + Cat · Small bowel vs large bowel diagnostic approach', flowId: 'diarrhoea',
     keywords: ['diarrhea', 'loose stool', 'watery stool', 'soft faeces', 'small bowel diarrhoea', 'large bowel diarrhoea', 'haemorrhagic gastroenteritis', 'HGE', 'AHDS', 'colitis', 'bloody diarrhoea', 'mucus in stool', 'frequent defecation'] },
+  { id: 'encephalopathy', icon: '🧬', title: 'Disorientation', sub: 'Encephalitis, neoplasia, CVA, metabolic', flowId: 'encephalopathy',
+    keywords: ['brain', 'confusion', 'disorientation', 'altered consciousness', 'stupor', 'coma', 'stroke', 'CVA', 'cerebrovascular', 'encephalitis', 'hepatic encephalopathy', 'metabolic brain', 'head pressing', 'circling', 'mental dullness'] },
   { id: 'dysphagia', icon: '😮', title: 'Dysphagia / Gagging', sub: 'Dog + Cat · Oral · pharyngeal · oesophageal localisation', flowId: 'dysphagia',
     keywords: ['difficulty swallowing', 'trouble swallowing', 'gagging', 'choking', 'oral pain', 'pharyngeal', 'oesophageal', 'esophageal', 'drooling', 'ptyalism', 'food dropping', 'cricopharyngeal', 'tongue'] },
   { id: 'dyspnoea', icon: '🌬️', title: 'Dyspnoea', sub: 'Dog + Cat · Respiratory pattern → anatomical location', flowId: 'dyspnoea',
@@ -69,10 +69,10 @@ export const SIGNS: SignEntry[] = [
     keywords: ['icterus', 'yellow', 'yellow skin', 'yellow gums', 'yellow eyes', 'scleral icterus', 'hyperbilirubinaemia', 'bilirubin', 'liver failure', 'biliary', 'bile duct obstruction', 'haemolytic anaemia', 'IMHA', 'cholestasis'] },
   { id: 'melena', icon: '⬛', title: 'Melena / Haematochezia', sub: 'Dog + Cat · Upper (digested) vs lower (fresh) GI bleeding', flowId: 'melena',
     keywords: ['black stool', 'tarry stool', 'blood in stool', 'GI bleeding', 'gastrointestinal bleeding', 'upper GI bleed', 'lower GI bleed', 'haematochezia', 'hematochezia', 'fresh blood in faeces', 'rectal bleeding', 'ulcer', 'gastric ulcer'] },
-  { id: 'oedema', icon: '🫧', title: 'Peripheral Oedema', sub: 'Dog + Cat · Hypoalbuminaemia vs hydrostatic/cardiac vs vasculitis', flowId: 'oedema',
-    keywords: ['swelling', 'swollen legs', 'pitting oedema', 'edema', 'fluid retention', 'hypoalbuminaemia', 'low albumin', 'ascites', 'pleural effusion', 'anasarca', 'lymphoedema', 'dependent oedema', 'paw swelling', 'limb swelling'] },
   { id: 'pale-mm', icon: '🫥', title: 'Pale Mucous Membranes', sub: 'Anaemia vs poor perfusion', flowId: 'pale-mm', dxId: 'pale-gums',
     keywords: ['pale gums', 'white gums', 'anaemia', 'anemia', 'poor perfusion', 'hypoperfusion', 'shock', 'low blood pressure', 'hypotension', 'haemorrhage', 'blood loss', 'low PCV', 'low haematocrit', 'IMHA', 'blood transfusion'] },
+  { id: 'oedema', icon: '🫧', title: 'Peripheral Oedema', sub: 'Dog + Cat · Hypoalbuminaemia vs hydrostatic/cardiac vs vasculitis', flowId: 'oedema',
+    keywords: ['swelling', 'swollen legs', 'pitting oedema', 'edema', 'fluid retention', 'hypoalbuminaemia', 'low albumin', 'ascites', 'pleural effusion', 'anasarca', 'lymphoedema', 'dependent oedema', 'paw swelling', 'limb swelling'] },
   { id: 'pollakiuria', icon: '🚽', title: 'Pollakiuria / Stranguria', sub: 'Dog + Cat · Obstruction first → bladder vs urethra vs prostate · LUT', flowId: 'pollakiuria',
     keywords: ['frequent urination', 'straining to urinate', 'can\'t urinate', 'urinary obstruction', 'blocked bladder', 'FLUTD', 'FIC', 'feline idiopathic cystitis', 'urethral obstruction', 'dysuria', 'LUT', 'lower urinary tract', 'bladder pain', 'urinary urgency'] },
   { id: 'polyphagia', icon: '🍖', title: 'Polyphagia', sub: 'Dog + Cat · With weight loss vs weight gain/drug-induced', flowId: 'polyphagia',
