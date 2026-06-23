@@ -1,12 +1,11 @@
 'use client'
-// ── Mix & Match screen ───────────────────────────────────────────────────────
-// Users select up to 4 clinical signs + optional signalment filters and ClinIQ
-// cross-references its internal data to build a differential list grouped by
-// lesion category (Inflammatory, Infectious, Immune-mediated, etc.).
+// ── Differential Search screen ────────────────────────────────────────────────
+// Users enter signalment (species, breed, age, sex) + free-text clinical sign
+// and diagnostic keywords. The engine scores all disease pages and returns a
+// ranked differential list grouped by aetiology.
 
-import { useState, useMemo, useRef } from 'react'
-import { SIGNS } from '../../lib/signs/registry'
-import { searchMixMatch, type Signalement, type MixMatchCategory, type AgeCategory } from '../../lib/mixmatch/engine'
+import { useState, useMemo, useRef, useCallback } from 'react'
+import { searchDiseases, type SearchInputs, type SearchCategory, type AgeCategory, type SexFilter, type Species } from '../../lib/search/diseaseSearch'
 import { useNav } from '../nav/NavContext'
 import { SpTag } from './tags'
 import { styleStringToObject as s } from './style'
@@ -27,161 +26,58 @@ const CAT_EMOJI: Record<string, string> = {
   'Other':               '📋',
 }
 
-// ── Sign picker modal ─────────────────────────────────────────────────────────
-function SignPickerModal({
-  selected,
-  onToggle,
-  onClose,
+// ── Keyword tag input ─────────────────────────────────────────────────────────
+function KeywordInput({
+  tags,
+  onAdd,
+  onRemove,
+  placeholder,
 }: {
-  selected: Set<string>
-  onToggle: (id: string) => void
-  onClose: () => void
+  tags: string[]
+  onAdd: (t: string) => void
+  onRemove: (t: string) => void
+  placeholder: string
 }) {
-  const [q, setQ] = useState('')
-  const ql = q.toLowerCase()
-  const filtered = q
-    ? SIGNS.filter(s =>
-        s.title.toLowerCase().includes(ql) ||
-        s.sub.toLowerCase().includes(ql) ||
-        s.keywords?.some(k => k.toLowerCase().includes(ql))
-      )
-    : SIGNS
-  const atMax = selected.size >= 4
+  const [draft, setDraft] = useState('')
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  function commit() {
+    const v = draft.trim()
+    if (v && !tags.includes(v.toLowerCase())) onAdd(v.toLowerCase())
+    setDraft('')
+  }
+
+  function onKey(e: React.KeyboardEvent) {
+    if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); commit() }
+    if (e.key === 'Backspace' && draft === '' && tags.length > 0) onRemove(tags[tags.length - 1])
+  }
 
   return (
     <div
-      style={s('position:fixed;inset:0;z-index:100;display:flex;flex-direction:column;')}
-      onClick={e => { if (e.target === e.currentTarget) onClose() }}
+      onClick={() => inputRef.current?.focus()}
+      style={s('display:flex;flex-wrap:wrap;gap:5px;align-items:center;background:var(--navy3);border:1px solid var(--border);border-radius:10px;padding:6px 10px;min-height:36px;cursor:text;')}
     >
-      {/* backdrop */}
-      <div style={s('position:absolute;inset:0;background:rgba(0,0,0,0.55);')} onClick={onClose} />
-      {/* sheet */}
-      <div style={s('position:absolute;bottom:0;left:0;right:0;background:var(--navy2);border-radius:18px 18px 0 0;display:flex;flex-direction:column;max-height:82vh;')}>
-        <div style={s('padding:16px 16px 8px;flex-shrink:0;')}>
-          <div style={s('display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;')}>
-            <div style={s('font-size:15px;font-weight:700;color:var(--white);')}>Add a clinical sign</div>
-            <button
-              onClick={onClose}
-              style={s('background:none;border:none;color:var(--gray);font-size:20px;cursor:pointer;padding:0 4px;line-height:1;')}
-            >×</button>
-          </div>
-          <input
-            autoFocus
-            placeholder="Search signs…"
-            value={q}
-            onChange={e => setQ(e.target.value)}
-            style={s('width:100%;background:var(--navy3);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:13px;color:var(--white);outline:none;box-sizing:border-box;')}
-          />
-          {atMax && (
-            <div style={s('margin-top:7px;font-size:11px;color:var(--amber,#f59e0b);')}>
-              Maximum 4 signs selected — deselect one to swap.
-            </div>
-          )}
-        </div>
-        <div style={s('overflow-y:auto;padding:0 12px 24px;')}>
-          {filtered.map(sign => {
-            const sel = selected.has(sign.id)
-            const disabled = atMax && !sel
-            return (
-              <div
-                key={sign.id}
-                role="button"
-                onClick={() => { if (!disabled) onToggle(sign.id) }}
-                style={s(`display:flex;align-items:center;gap:12px;padding:10px 8px;border-radius:10px;margin-bottom:2px;cursor:${disabled ? 'default' : 'pointer'};opacity:${disabled ? '0.4' : '1'};background:${sel ? 'rgba(var(--accent-rgb,0,200,200),0.12)' : 'transparent'};`)}
-              >
-                <div style={s('font-size:20px;width:28px;text-align:center;flex-shrink:0;')}>{sign.icon}</div>
-                <div style={s('flex:1;min-width:0;')}>
-                  <div style={s(`font-size:13px;font-weight:600;color:${sel ? 'var(--accent,var(--teal))' : 'var(--white)'};`)}>{sign.title}</div>
-                  <div style={s('font-size:11px;color:var(--gray2);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;')}>{sign.sub}</div>
-                </div>
-                {sel && <div style={s('color:var(--accent,var(--teal));font-size:16px;flex-shrink:0;')}>✓</div>}
-              </div>
-            )
-          })}
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ── Inline keyword search ─────────────────────────────────────────────────────
-function InlineSignSearch({
-  selected,
-  onAdd,
-  onOpenBrowse,
-}: {
-  selected: Set<string>
-  onAdd: (id: string) => void
-  onOpenBrowse: () => void
-}) {
-  const [q, setQ] = useState('')
-  const [focused, setFocused] = useState(false)
-  const inputRef = useRef<HTMLInputElement>(null)
-  const atMax = selected.size >= 4
-
-  const ql = q.toLowerCase()
-  const suggestions = useMemo(() => {
-    if (!ql) return []
-    return SIGNS.filter(s =>
-      !selected.has(s.id) &&
-      (
-        s.title.toLowerCase().includes(ql) ||
-        s.sub.toLowerCase().includes(ql) ||
-        s.keywords?.some(k => k.toLowerCase().includes(ql))
-      )
-    ).slice(0, 6)
-  }, [ql, selected])
-
-  const showDropdown = focused && q.length > 0
-
-  function pick(id: string) {
-    onAdd(id)
-    setQ('')
-    inputRef.current?.focus()
-  }
-
-  if (atMax) return null
-
-  return (
-    <div style={s('position:relative;flex:1;min-width:160px;')}>
+      {tags.map(t => (
+        <span
+          key={t}
+          style={s('display:inline-flex;align-items:center;gap:4px;background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:2px 8px;font-size:11px;color:var(--white);')}
+        >
+          {t}
+          <button
+            onMouseDown={e => { e.preventDefault(); onRemove(t) }}
+            style={s('background:none;border:none;color:var(--gray2);cursor:pointer;padding:0;font-size:13px;line-height:1;')}
+          >×</button>
+        </span>
+      ))}
       <input
         ref={inputRef}
-        placeholder={`Search signs… (${selected.size}/4)`}
-        value={q}
-        onChange={e => setQ(e.target.value)}
-        onFocus={() => setFocused(true)}
-        onBlur={() => setTimeout(() => setFocused(false), 150)}
-        style={s('width:100%;background:transparent;border:1px dashed var(--border);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:600;color:var(--white);outline:none;box-sizing:border-box;')}
+        value={draft}
+        onChange={e => setDraft(e.target.value)}
+        onKeyDown={onKey}
+        onBlur={commit}
+        placeholder={tags.length === 0 ? placeholder : ''}
+        style={s('flex:1;min-width:80px;background:transparent;border:none;outline:none;font-size:12px;color:var(--white);padding:0;')}
       />
-      {showDropdown && (
-        <div style={s('position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--navy2);border:1px solid var(--border);border-radius:12px;z-index:50;overflow:hidden;')}>
-          {suggestions.length === 0 ? (
-            <div style={s('padding:10px 12px;font-size:12px;color:var(--gray2);')}>
-              No match —{' '}
-              <span
-                role="button"
-                onClick={onOpenBrowse}
-                style={s('color:var(--teal);cursor:pointer;')}
-              >browse all signs</span>
-            </div>
-          ) : (
-            suggestions.map(sign => (
-              <div
-                key={sign.id}
-                role="button"
-                onMouseDown={() => pick(sign.id)}
-                style={s('display:flex;align-items:center;gap:10px;padding:8px 12px;cursor:pointer;border-bottom:1px solid var(--border);')}
-              >
-                <span style={s('font-size:16px;flex-shrink:0;')}>{sign.icon}</span>
-                <div style={s('flex:1;min-width:0;')}>
-                  <div style={s('font-size:12px;font-weight:600;color:var(--white);')}>{sign.title}</div>
-                  <div style={s('font-size:10px;color:var(--gray2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;')}>{sign.sub}</div>
-                </div>
-              </div>
-            ))
-          )}
-        </div>
-      )}
     </div>
   )
 }
@@ -189,93 +85,58 @@ function InlineSignSearch({
 // ── Main screen ───────────────────────────────────────────────────────────────
 export function MixMatchScreen() {
   const nav = useNav()
-  const [selectedIds, setSelectedIds] = useState<string[]>([])
-  const [species, setSpecies] = useState<Signalement['species']>('all')
+
+  const [species, setSpecies] = useState<Species>('all')
   const [breedQuery, setBreedQuery] = useState('')
-  const [ageCategory, setAgeCategory] = useState<AgeCategory | undefined>(undefined)
-  const [showPicker, setShowPicker] = useState(false)
+  const [ageCategory, setAgeCategory] = useState<AgeCategory | undefined>()
+  const [sex, setSex] = useState<SexFilter | undefined>()
+  const [signKeywords, setSignKeywords] = useState<string[]>([])
+  const [diagKeywords, setDiagKeywords] = useState<string[]>([])
 
-  const selectedSet = useMemo(() => new Set(selectedIds), [selectedIds])
+  const addSign = useCallback((t: string) => setSignKeywords(p => [...p, t]), [])
+  const removeSign = useCallback((t: string) => setSignKeywords(p => p.filter(x => x !== t)), [])
+  const addDiag = useCallback((t: string) => setDiagKeywords(p => [...p, t]), [])
+  const removeDiag = useCallback((t: string) => setDiagKeywords(p => p.filter(x => x !== t)), [])
 
-  const signById = useMemo(() => new Map(SIGNS.map(s => [s.id, s])), [])
-
-  function toggleSign(id: string) {
-    setSelectedIds(prev => {
-      if (prev.includes(id)) return prev.filter(x => x !== id)
-      if (prev.length >= 4) return prev
-      return [...prev, id]
-    })
+  const inputs: SearchInputs = {
+    species,
+    breedQuery: breedQuery.trim(),
+    ageCategory,
+    sex,
+    signKeywords,
+    diagKeywords,
   }
 
-  function removeSign(id: string) {
-    setSelectedIds(prev => prev.filter(x => x !== id))
-  }
-
-  const signalement: Signalement = { species, breedQuery: breedQuery.trim() || undefined, ageCategory }
-
-  const results: MixMatchCategory[] = useMemo(
-    () => searchMixMatch(selectedIds, signalement),
+  const results: SearchCategory[] = useMemo(
+    () => searchDiseases(inputs),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [selectedIds, species, breedQuery, ageCategory],
+    [species, breedQuery, ageCategory, sex, signKeywords, diagKeywords],
   )
 
   const totalCount = results.reduce((n, g) => n + g.items.length, 0)
+  const hasAnyInput = breedQuery.trim() || ageCategory || sex || signKeywords.length > 0 || diagKeywords.length > 0
 
   return (
     <div style={s('padding-bottom:24px;')}>
       {/* ── Header ── */}
-      <div style={s('margin-bottom:12px;')}>
+      <div style={s('margin-bottom:14px;')}>
         <div style={s('font-size:11px;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;')}>
-          Mix &amp; Match
+          Differential Search
         </div>
         <div style={s('font-size:12px;color:var(--gray);line-height:1.5;')}>
-          Select up to 4 clinical signs to generate a cross-referenced differential list grouped by aetiology.
+          Enter signalment, clinical signs, and diagnostics to generate a scored differential list.
         </div>
       </div>
 
-      {/* ── Selected sign chips ── */}
-      <div style={s('display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;align-items:center;')}>
-        {selectedIds.map(id => {
-          const sign = signById.get(id)
-          if (!sign) return null
-          return (
-            <div
-              key={id}
-              style={s('display:flex;align-items:center;gap:5px;background:var(--navy3);border:1px solid var(--border);border-radius:20px;padding:5px 10px 5px 8px;')}
-            >
-              <span style={s('font-size:14px;')}>{sign.icon}</span>
-              <span style={s('font-size:12px;font-weight:600;color:var(--white);')}>{sign.title}</span>
-              <button
-                onClick={() => removeSign(id)}
-                style={s('background:none;border:none;color:var(--gray2);font-size:14px;cursor:pointer;padding:0 0 0 2px;line-height:1;')}
-              >×</button>
-            </div>
-          )
-        })}
-
-        <InlineSignSearch
-          selected={selectedSet}
-          onAdd={id => toggleSign(id)}
-          onOpenBrowse={() => setShowPicker(true)}
-        />
-
-        {selectedIds.length < 4 && (
-          <button
-            onClick={() => setShowPicker(true)}
-            style={s('background:none;border:none;color:var(--gray2);font-size:11px;cursor:pointer;padding:0;text-decoration:underline;flex-shrink:0;')}
-          >browse all</button>
-        )}
-      </div>
-
-      {/* ── Signalment filters ── */}
-      <div style={s('background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:14px;')}>
+      {/* ── Signalment ── */}
+      <div style={s('background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px;')}>
         <div style={s('font-size:10px;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;')}>
           Signalment
         </div>
 
         {/* Species */}
         <div style={s('display:flex;gap:6px;margin-bottom:8px;')}>
-          {(['all', 'dog', 'cat'] as const).map(sp => (
+          {(['all', 'dog', 'cat'] as Species[]).map(sp => (
             <button
               key={sp}
               onClick={() => setSpecies(sp)}
@@ -286,56 +147,106 @@ export function MixMatchScreen() {
           ))}
         </div>
 
+        {/* Breed */}
+        <input
+          placeholder="Breed (e.g. Maine Coon, Cavalier)"
+          value={breedQuery}
+          onChange={e => setBreedQuery(e.target.value)}
+          style={s('width:100%;background:var(--navy3);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:12px;color:var(--white);outline:none;box-sizing:border-box;margin-bottom:8px;')}
+        />
+
         {/* Age */}
         <div style={s('margin-bottom:8px;')}>
           <div style={s('font-size:10px;color:var(--gray2);margin-bottom:5px;')}>Age</div>
-          <div style={s('display:flex;gap:5px;flex-wrap:wrap;')}>
+          <div style={s('display:flex;gap:5px;')}>
             {([
-              ['neonate',    '🍼', 'Neonate',     'puppy / kitten'],
-              ['young',      '🐾', 'Young',        'juvenile'],
-              ['middleaged', '🐕', 'Middle-aged',  'adult'],
-              ['geriatric',  '🦴', 'Geriatric',    'senior / old'],
-            ] as [AgeCategory, string, string, string][]).map(([id, icon, label, sub]) => {
+              ['neonate',    '🍼', 'Neonate'],
+              ['young',      '🐾', 'Young'],
+              ['middleaged', '🐕', 'Adult'],
+              ['geriatric',  '🦴', 'Geriatric'],
+            ] as [AgeCategory, string, string][]).map(([id, icon, label]) => {
               const active = ageCategory === id
               return (
                 <button
                   key={id}
                   onClick={() => setAgeCategory(active ? undefined : id)}
-                  style={s(`display:flex;flex-direction:column;align-items:center;flex:1;min-width:60px;padding:5px 4px;border-radius:8px;border:1px solid ${active ? 'var(--teal)' : 'var(--border)'};background:${active ? 'rgba(0,180,180,0.12)' : 'transparent'};cursor:pointer;gap:1px;`)}
+                  style={s(`flex:1;padding:5px 4px;border-radius:8px;border:1px solid ${active ? 'var(--teal)' : 'var(--border)'};background:${active ? 'rgba(0,180,180,0.12)' : 'transparent'};cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;`)}
                 >
                   <span style={s('font-size:14px;')}>{icon}</span>
                   <span style={s(`font-size:10px;font-weight:700;color:${active ? 'var(--teal)' : 'var(--white)'};`)}>{label}</span>
-                  <span style={s('font-size:9px;color:var(--gray2);')}>{sub}</span>
                 </button>
               )
             })}
           </div>
         </div>
 
-        {/* Breed keyword */}
-        <input
-          placeholder="Breed keyword (optional)"
-          value={breedQuery}
-          onChange={e => setBreedQuery(e.target.value)}
-          style={s('width:100%;background:var(--navy3);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:12px;color:var(--white);outline:none;box-sizing:border-box;')}
+        {/* Sex */}
+        <div>
+          <div style={s('font-size:10px;color:var(--gray2);margin-bottom:5px;')}>Sex</div>
+          <div style={s('display:flex;gap:5px;')}>
+            {([
+              ['male',    '♂', 'Male'],
+              ['female',  '♀', 'Female'],
+              ['intact',  '●', 'Intact'],
+              ['neutered','○', 'Neutered'],
+            ] as [SexFilter, string, string][]).map(([id, icon, label]) => {
+              const active = sex === id
+              return (
+                <button
+                  key={id}
+                  onClick={() => setSex(active ? undefined : id)}
+                  style={s(`flex:1;padding:5px 4px;border-radius:8px;border:1px solid ${active ? 'var(--teal)' : 'var(--border)'};background:${active ? 'rgba(0,180,180,0.12)' : 'transparent'};cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;`)}
+                >
+                  <span style={s(`font-size:13px;color:${active ? 'var(--teal)' : 'var(--gray2)'};`)}>{icon}</span>
+                  <span style={s(`font-size:10px;font-weight:700;color:${active ? 'var(--teal)' : 'var(--white)'};`)}>{label}</span>
+                </button>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* ── Clinical signs ── */}
+      <div style={s('margin-bottom:10px;')}>
+        <div style={s('font-size:10px;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;')}>
+          Clinical Signs
+        </div>
+        <KeywordInput
+          tags={signKeywords}
+          onAdd={addSign}
+          onRemove={removeSign}
+          placeholder="Type a sign and press Enter (e.g. vomiting, weight loss)"
+        />
+        <div style={s('font-size:10px;color:var(--gray2);margin-top:4px;')}>Press Enter or comma to add each term</div>
+      </div>
+
+      {/* ── Diagnostics ── */}
+      <div style={s('margin-bottom:14px;')}>
+        <div style={s('font-size:10px;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;')}>
+          Diagnostics
+        </div>
+        <KeywordInput
+          tags={diagKeywords}
+          onAdd={addDiag}
+          onRemove={removeDiag}
+          placeholder="Type a finding and press Enter (e.g. elevated ALP, thrombocytopenia)"
         />
       </div>
 
       {/* ── Results ── */}
-      {selectedIds.length === 0 ? (
+      {!hasAnyInput ? (
         <div style={s('text-align:center;padding:32px 16px;')}>
-          <div style={s('font-size:32px;margin-bottom:10px;')}>🔀</div>
-          <div style={s('font-size:13px;color:var(--gray);')}>Select at least one clinical sign above to generate differentials.</div>
+          <div style={s('font-size:32px;margin-bottom:10px;')}>🔍</div>
+          <div style={s('font-size:13px;color:var(--gray);')}>Enter signalment, clinical signs, or diagnostic findings above to generate differentials.</div>
         </div>
       ) : results.length === 0 ? (
         <div style={s('text-align:center;padding:32px 16px;')}>
-          <div style={s('font-size:13px;color:var(--gray);')}>No matching diseases found for this combination.</div>
+          <div style={s('font-size:13px;color:var(--gray);')}>No matching diseases found. Try broader terms.</div>
         </div>
       ) : (
         <>
           <div style={s('font-size:11px;color:var(--gray2);margin-bottom:12px;')}>
-            {totalCount} {totalCount === 1 ? 'disease' : 'diseases'} found across {results.length} {results.length === 1 ? 'category' : 'categories'}
-            {selectedIds.length > 1 && ' — sorted by sign overlap'}
+            {totalCount} {totalCount === 1 ? 'disease' : 'diseases'} across {results.length} {results.length === 1 ? 'category' : 'categories'} — sorted by relevance
           </div>
 
           {results.map(group => (
@@ -346,34 +257,31 @@ export function MixMatchScreen() {
 
               {group.items.map(item => {
                 const d = item.disease
-                const matchCount = item.matchedSignIds.length
-                const showBadge = selectedIds.length > 1
+                const allMatched = [...item.matchedSignTerms, ...item.matchedDiagTerms]
 
                 return (
                   <div
-                    key={d.id}
+                    key={d.id as string}
                     className="card"
                     role="button"
-                    onClick={() => nav.navigate({ kind: 'disease', id: d.id })}
+                    onClick={() => nav.navigate({ kind: 'disease', id: d.id as string })}
                   >
                     <div className="card-row">
                       <div style={s('flex:1;min-width:0;')}>
                         <div style={s('display:flex;align-items:center;gap:6px;flex-wrap:wrap;')}>
                           <div className="card-title">{d.name as string}</div>
-                          {showBadge && (
-                            <span style={s(`font-size:9px;font-weight:700;padding:1px 5px;border-radius:6px;background:${matchCount >= selectedIds.length ? 'var(--teal)' : 'var(--navy3)'};color:${matchCount >= selectedIds.length ? '#fff' : 'var(--gray2)'};flex-shrink:0;`)}>
-                              {matchCount}/{selectedIds.length} signs
-                            </span>
-                          )}
+                          <span style={s(`font-size:9px;font-weight:700;padding:1px 6px;border-radius:6px;background:${item.score >= 6 ? 'var(--teal)' : item.score >= 3 ? 'var(--navy3)' : 'var(--navy3)'};color:${item.score >= 6 ? '#fff' : 'var(--gray2)'};border:1px solid ${item.score >= 6 ? 'transparent' : 'var(--border)'};flex-shrink:0;`)}>
+                            {item.score}pt
+                          </span>
                         </div>
-                        <div style={s('margin-top:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;')}>
+                        <div style={s('margin-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;')}>
                           <SpTag sp={d.sp as string} />
-                          {item.matchedSignIds.map(sid => {
-                            const sg = signById.get(sid)
-                            return sg ? (
-                              <span key={sid} style={s('font-size:10px;color:var(--gray2);')}>{sg.icon} {sg.title}</span>
-                            ) : null
-                          })}
+                          {allMatched.slice(0, 4).map(t => (
+                            <span key={t} style={s('font-size:10px;color:var(--gray2);background:var(--navy3);border-radius:4px;padding:1px 5px;')}>{t}</span>
+                          ))}
+                          {allMatched.length > 4 && (
+                            <span style={s('font-size:10px;color:var(--gray2);')}>+{allMatched.length - 4} more</span>
+                          )}
                         </div>
                       </div>
                       <div className="card-arrow">›</div>
@@ -384,15 +292,6 @@ export function MixMatchScreen() {
             </div>
           ))}
         </>
-      )}
-
-      {/* Sign picker modal */}
-      {showPicker && (
-        <SignPickerModal
-          selected={selectedSet}
-          onToggle={id => { toggleSign(id); if (selectedIds.length + (selectedSet.has(id) ? -1 : 1) >= 4) setShowPicker(false) }}
-          onClose={() => setShowPicker(false)}
-        />
       )}
     </div>
   )
