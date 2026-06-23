@@ -1,7 +1,7 @@
 import type { ProtocolRow } from '../db'
 
 export const protocols_endo_uro_repro: ProtocolRow[] = [
-    {id:'PROT-ENDO-DKA',name:'Diabetic Ketoacidosis (DKA) — Management Protocol',sp:'Dog + Cat',trigger:'Known or suspected diabetic patient with vomiting, anorexia, lethargy, acetone/fruity breath, ketonuria or ketonaemia, metabolic acidosis on blood gas, and hyperglycaemia',priority:'URGENT',
+    {id:'PROT-ENDO-DKA',name:'Diabetic Ketoacidosis (DKA) — Management Protocol',sp:'Dog + Cat',trigger:'Known or suspected diabetic patient with vomiting, anorexia, lethargy, acetone/fruity breath, ketonuria or ketonaemia, metabolic acidosis on blood gas, and hyperglycaemia',priority:'IMMEDIATE',
      steps:[
        {n:1,action:'#Confirm DKA and collect baseline labs.|Confirm: BGL >11 mmol/L + ketonuria ≥2+ (dipstick) or blood BHB >3 mmol/L + pH <7.3 / HCO₃ <15 mEq/L|Baseline labs: K⁺, PO₄, Na⁺, Mg²⁺, BUN, creatinine, albumin, CBC, UA + culture, lipase',note:'HHS is the non-ketotic variant — BGL >25–30 mmol/L without significant ketonaemia; manage similarly but introduce insulin even more cautiously',branch:'',flag:'⚠️ Check K⁺ BEFORE starting insulin — hypokalaemia + insulin = fatal cardiac arrhythmia'},
        {n:2,action:'IV fluids — start immediately BEFORE insulin. Correct dehydration over 12–24h.',doses:'Dog: 0.9% NaCl at 60–100 mL/kg/day (shock bolus 10–20 mL/kg over 30–60 min if compromised)|Cat: 0.45% NaCl at 60–100 mL/kg/day (avoids hypernatraemia)',note:'0.9% NaCl preferred — K⁺ will be added and balanced fluids already contain K⁺.',branch:'',flag:''},

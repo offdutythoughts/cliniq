@@ -1,7 +1,7 @@
 import type { ProtocolRow } from '../db'
 
 export const protocols_tox: ProtocolRow[] = [
-    {id:'PROT-TOX',name:'Toxin Ingestion — Initial Management',sp:'Dog + Cat',trigger:'Known or suspected ingestion of a toxic substance',priority:'URGENT',
+    {id:'PROT-TOX',name:'Toxin Ingestion — Initial Management',sp:'Dog + Cat',trigger:'Known or suspected ingestion of a toxic substance',priority:'IMMEDIATE',
      steps:[
        {n:1,action:'#Assess patient stability. Stabilise before decontamination — never induce emesis in a collapsed, seizing, or dyspnoeic patient.|Check: mentation, HR, RR, MM colour, temperature',note:'Some toxins cause rapid neurological deterioration (permethrin in cats, metaldehyde, tremorgenic mycotoxins) — be prepared to manage seizures',branch:'Signs of shock or collapse → IV access, fluids, supportive care immediately',flag:'⚠️ Never induce emesis if: corrosives/caustics ingested, patient unconscious/seizing, dyspnoeic, species contraindicated (e.g. rabbits, rodents)'},
        {n:2,action:'#Determine ingestion timeline and substance. Calculate mg/kg dose if possible.|Confirm product name, amount, and time elapsed with owner|Dose-dependent toxins: xylitol, ibuprofen, paracetamol — dose changes risk stratification',note:'',branch:'',flag:''},
@@ -12,7 +12,7 @@ export const protocols_tox: ProtocolRow[] = [
        {n:7,action:'#Monitor organ function: baseline and serial labs. Frequency depends on toxin.|Biochemistry: renal, hepatic|CBC + electrolytes + blood glucose + urinalysis|Anticoagulant rodenticide: PT/aPTT at 48–72h — not immediately|Paracetamol: liver enzymes at 24–48h',note:'',branch:'',flag:''},
        {n:8,action:'#Contact poison control for guidance on specific toxins|Provide: species, weight, product name, quantity ingested, time elapsed',note:'VPIS (UK) · ASPCA Poison Control: +1-888-426-4435 (US)',branch:'',flag:''},
      ]},
-    {id:'PROT-TOX-ALLIUM',name:'Allium (Garlic / Onion / Leek / Chive)',sp:'Dog + Cat',trigger:'Ingestion of garlic, onion, leek, chive or products containing them; cats more sensitive',priority:'URGENT',
+    {id:'PROT-TOX-ALLIUM',name:'Allium (Garlic / Onion / Leek / Chive)',sp:'Dog + Cat',trigger:'Ingestion of garlic, onion, leek, chive or products containing them; cats more sensitive',priority:'IMMEDIATE',
      steps:[
        {n:1,action:'#Assess stability. Patients often appear well at presentation — haemolysis is delayed 1–5 days.|Check MM colour, HR, CRT, and PCV if available|Acute GI signs (vomiting, hypersalivation) occur early then resolve|Haemolytic crisis peaks 7–10 days post-ingestion',note:'',branch:'',flag:''},
        {n:2,action:'#Confirm dose and form — all forms are toxic.|Toxic threshold: onion >0.5% bodyweight; garlic ~5× more toxic per gram|All forms toxic: raw, cooked, dried, powdered (garlic powder in baby food, onion powder in gravies)|Cats more sensitive than dogs|Japanese breeds (Akita, Shiba Inu) may be more susceptible',note:'',branch:'',flag:''},
@@ -21,7 +21,7 @@ export const protocols_tox: ProtocolRow[] = [
        {n:5,action:'#Recheck PCV + smear q24–48h for 7–10 days|Watch for haemoglobinaemia (pink serum), jaundice, pallor, tachycardia',note:'Transfusion threshold: PCV <20% dog / <15% cat with clinical signs (tachycardia, weakness, collapse).',branch:'PCV falling rapidly → pRBC transfusion 10–20 mL/kg over 4h',flag:''},
        {n:6,action:'#IV crystalloids at maintenance + antioxidant therapy',doses:'N-acetylcysteine: 140 mg/kg IV load → 70 mg/kg IV q6h × 4 doses|SAMe: Dog 20 mg/kg PO q24h · Cat 90 mg PO q24h',note:'Full recovery expected with appropriate management. Residual haemolysis may persist 1–2 weeks — recheck PCV 2 weeks post-discharge.',branch:'',flag:''},
      ]},
-    {id:'PROT-TOX-CHOC',name:'Chocolate / Theobromine',sp:'Dog',trigger:'Chocolate or cocoa ingestion; dose-dependent from mild GI to fatal cardiac arrhythmias',priority:'URGENT',
+    {id:'PROT-TOX-CHOC',name:'Chocolate / Theobromine',sp:'Dog',trigger:'Chocolate or cocoa ingestion; dose-dependent from mild GI to fatal cardiac arrhythmias',priority:'IMMEDIATE',
      steps:[
        {n:1,action:'#Calculate theobromine dose. Thresholds (mg/kg): mild >20 · moderate >40 · arrhythmias >60 · lethal >100–200.|Caffeine co-present and adds to toxicity|Theobromine half-life ~17h — signs persist 24–72h',doses:"Baker's/unsweetened: ~390–450 mg/30g|Dark (70%): ~200 mg/30g|Milk chocolate: ~44–60 mg/30g|White chocolate: ~0.25 mg/30g",note:'',branch:'',flag:''},
        {n:2,action:'#Assess current clinical signs — onset typically 2–4h post-ingestion',note:'Vomiting · diarrhoea · restlessness · tachycardia · tremors · hyperthermia · arrhythmias · seizures',branch:'',flag:''},
@@ -31,7 +31,7 @@ export const protocols_tox: ProtocolRow[] = [
        {n:6,action:'#Neurological and temperature management.|Tremors/hyperactivity → diazepam|Seizures → diazepam × 3; refractory → phenobarbitone|Hyperthermia >39.5°C → active cool to 38.5–39°C',doses:'Diazepam: 0.5 mg/kg IV (up to × 3 for seizures)|Phenobarbitone (refractory): 2–4 mg/kg IV slow',note:'',branch:'',flag:''},
        {n:7,action:'#IV fluids 2–3× maintenance — promotes urinary theobromine excretion|Support 24–72h; recheck ECG before discharge',note:'Prognosis excellent with prompt treatment except very large dark/baking chocolate ingestions in small dogs.',branch:'',flag:''},
      ]},
-    {id:'PROT-TOX-XYLITOL',name:'Xylitol (Sugar-Free Products)',sp:'Dog',trigger:'Ingestion of xylitol-containing products — sugar-free gum, sweets, peanut butter, mouthwash, medications',priority:'URGENT',
+    {id:'PROT-TOX-XYLITOL',name:'Xylitol (Sugar-Free Products)',sp:'Dog',trigger:'Ingestion of xylitol-containing products — sugar-free gum, sweets, peanut butter, mouthwash, medications',priority:'IMMEDIATE',
      steps:[
        {n:1,action:'#Calculate dose — toxic thresholds: hypoglycaemia >0.1 g/kg · hepatic failure >0.5 g/kg.|Gum typically contains 0.2–1.0 g xylitol/piece — a single piece can cause hypoglycaemia in a small dog|Cats appear less sensitive — rare reports only',note:'',branch:'',flag:'⚠️ ANY dose in dogs warrants monitoring — there is no established safe dose'},
        {n:2,action:'#Decontaminate if ingestion <30–60 min and not yet hypoglycaemic|Do NOT induce if already hypoglycaemic or showing hepatic signs',doses:'Apomorphine: 0.03–0.04 mg/kg IV/SC or conjunctival sac (rinse eye after vomiting)',note:'Xylitol stimulates insulin secretion within 30–60 min. Hepatotoxicity at higher doses develops 12–72h later.',branch:'',flag:''},
@@ -40,7 +40,7 @@ export const protocols_tox: ProtocolRow[] = [
        {n:5,action:'#Hepatoprotective therapy — any dose >0.1 g/kg',doses:'N-acetylcysteine: 140 mg/kg IV load → 70 mg/kg IV q6h × 7 doses|SAMe: 20 mg/kg PO q24h|Silymarin (milk thistle): 50–200 mg PO q24h',note:'',branch:'',flag:''},
        {n:6,action:'#Recheck bloods at 12h, 24h, 48h, 72h — escalate if enzymes rising|BG, ALT, ALP, bilirubin, albumin, PT/aPTT',note:'Prognosis good for mild hypoglycaemia without hepatotoxicity. Acute hepatic failure carries poor prognosis.',branch:'Coagulopathy + rising bilirubin + hepatic encephalopathy → FFP + specialist referral',flag:''},
      ]},
-    {id:'PROT-TOX-GRAPE',name:'Grapes / Raisins / Sultanas / Currants',sp:'Dog',trigger:'Ingestion of grapes, raisins, sultanas, currants or products containing them (fruit cake, mince pies, trail mix)',priority:'URGENT',
+    {id:'PROT-TOX-GRAPE',name:'Grapes / Raisins / Sultanas / Currants',sp:'Dog',trigger:'Ingestion of grapes, raisins, sultanas, currants or products containing them (fruit cake, mince pies, trail mix)',priority:'IMMEDIATE',
      steps:[
        {n:1,action:'#Toxicity is idiosyncratic — no established safe dose. All exposures warrant decontamination and monitoring.|Mechanism: tartaric acid → proximal tubular injury via OAT transporter → AKI|Raisins/sultanas have higher tartaric acid concentration than fresh grapes|Only ~1% of exposed dogs develop AKI (Downs 2024) — but dose does not predict risk',note:'',branch:'',flag:'⚠️ No established safe dose — all exposures warrant decontamination and monitoring'},
        {n:2,action:'#Induce emesis while patient is stable. Extended emesis window: up to 8h for grapes, 13h for raisins.|Large raisin ingestion + incomplete emesis → gastric lavage under GA|Activated charcoal only if >450 g ingested AND emesis recovery appears poor — routine charcoal adds aspiration risk without clear benefit',doses:'Apomorphine: 0.03–0.04 mg/kg IV/SC or conjunctival sac (rinse eye after vomiting)',note:'',branch:'',flag:''},
@@ -60,7 +60,7 @@ export const protocols_tox: ProtocolRow[] = [
        {n:6,action:'#Antidote — CAT: high-dose fomepizole preferred; ethanol as alternative.|Monitor closely for CNS depression, hypothermia, hypoglycaemia with ethanol|High-dose fomepizole now preferred if given very early',doses:'Fomepizole — Cat (high dose): 125 mg/kg IV over 15–30 min → 31.25 mg/kg at 12h + 24h + 36h|Ethanol 20% (alt): 5.5 mL/kg IV load → 1.5 mL/kg/h CRI × 48h',note:'',branch:'',flag:''},
        {n:7,action:'#IV crystalloids + monitor acid-base, electrolytes, renal function q4–6h|Treat hypocalcaemia if present|Target UO >2 mL/kg/h',doses:'IV crystalloids: 2–3× maintenance|Ca gluconate 10% (if hypocalcaemia): 0.5–1.5 mL/kg IV slowly',note:'Haemodialysis required if antidote window missed and AKI established — refer to specialist centre.',branch:'',flag:''},
      ]},
-    {id:'PROT-TOX-PARA',name:'Paracetamol (Acetaminophen)',sp:'Dog + Cat',trigger:'Paracetamol exposure; cats are hypersensitive — any dose is potentially fatal',priority:'URGENT',
+    {id:'PROT-TOX-PARA',name:'Paracetamol (Acetaminophen)',sp:'Dog + Cat',trigger:'Paracetamol exposure; cats are hypersensitive — any dose is potentially fatal',priority:'IMMEDIATE',
      steps:[
        {n:1,action:'#CATS: ANY exposure is a life-threatening emergency — treat immediately. Dogs: hepatotoxicity at >100 mg/kg.|Cats lack glucuronosyltransferase → NAPQI accumulates → methaemoglobinaemia + hepatotoxicity|Cat signs: brown/chocolate MM, cyanosis despite O₂, facial/paw oedema, Heinz body anaemia|Dog signs: vomiting, jaundice, hepatic failure at 12–48h',note:'',branch:'',flag:'⚠️ Cats: 10 mg/kg is toxic — treat before signs appear'},
        {n:2,action:'#Decontaminate — ingestion <2h and stable|Induce emesis then activated charcoal|Withhold if MetHb signs already present',doses:'Dog — apomorphine: 0.03–0.04 mg/kg IV/SC or conjunctival sac (rinse eye after vomiting)|Cat — dexmedetomidine: 7–10 mcg/kg IM|Activated charcoal: 1–2 g/kg PO',note:'',branch:'',flag:''},
@@ -69,7 +69,7 @@ export const protocols_tox: ProtocolRow[] = [
        {n:5,action:'#Hepatoprotective therapy — especially dogs|Monitor liver enzymes at 12h, 24h, 48h, 72h',doses:'SAMe: 20 mg/kg PO q24h|Silymarin (milk thistle): 50–200 mg q24h|Cimetidine: 5–10 mg/kg PO/IV q6–8h',note:'Cimetidine inhibits CYP2E1 — reduces NAPQI formation.',branch:'',flag:''},
        {n:6,action:'#Supportive care and discharge criteria.|pRBC transfusion if PCV drops from haemolysis (cats)|IV fluids 1.5–2× maintenance|Discharge when MetHb resolved and liver enzymes stable or decreasing',note:'Prognosis: cats with severe MetHb → guarded|Dogs treated early → good|Established hepatic failure → guarded to poor',branch:'',flag:''},
      ]},
-    {id:'PROT-TOX-NSAID',name:'NSAIDs (Ibuprofen / Naproxen)',sp:'Dog + Cat',trigger:'Human NSAID ingestion; ibuprofen most common OTC exposure; cats sensitive to any NSAID',priority:'URGENT',
+    {id:'PROT-TOX-NSAID',name:'NSAIDs (Ibuprofen / Naproxen)',sp:'Dog + Cat',trigger:'Human NSAID ingestion; ibuprofen most common OTC exposure; cats sensitive to any NSAID',priority:'IMMEDIATE',
      steps:[
        {n:1,action:'#Risk-stratify by dose. Cats: any human NSAID dose warrants treatment.|Ibuprofen (dog) thresholds: GI signs >25 mg/kg · Renal >100 mg/kg · CNS >300 mg/kg|Naproxen (dog): toxic >2.5 mg/kg|Mechanism: COX-1/2 inhibition → GI mucosal disruption, renal vasoconstriction, platelet inhibition',doses:'',note:'',branch:'',flag:''},
        {n:2,action:'Decontaminate if ingestion <2h and no GI signs: induce emesis then activated charcoal.',doses:'Dog — apomorphine: 0.03–0.04 mg/kg IV/SC or conjunctival sac (rinse eye after vomiting)|Cat — dexmedetomidine: 7–10 mcg/kg IM|Activated charcoal: 1–2 g/kg PO — repeat q4–6h',note:'NSAIDs delay gastric emptying — emesis may be productive beyond 2h',branch:'',flag:''},
@@ -78,7 +78,7 @@ export const protocols_tox: ProtocolRow[] = [
        {n:5,action:'#IV crystalloids 2× maintenance for minimum 48–72h|Target UO >1–2 mL/kg/h · recheck renal panel at 24h, 48h, 72h',note:'Risk highest in dehydrated, hypovolaemic, or pre-existing renal disease patients.',branch:'',flag:''},
        {n:6,action:'#CNS signs (tremors/seizures at high dose) — benzodiazepine first, escalate if refractory|Monitor minimum 48–72h before discharge',doses:'Diazepam: 0.5 mg/kg IV|Phenobarbitone (refractory): 2–4 mg/kg IV slow',note:'',branch:'',flag:''},
      ]},
-    {id:'PROT-TOX-ACRM',name:'Rodenticide: Anticoagulant',sp:'Dog + Cat',trigger:'Known or suspected rodenticide ingestion; unexplained coagulopathy or haemorrhage',priority:'URGENT',
+    {id:'PROT-TOX-ACRM',name:'Rodenticide: Anticoagulant',sp:'Dog + Cat',trigger:'Known or suspected rodenticide ingestion; unexplained coagulopathy or haemorrhage',priority:'IMMEDIATE',
      steps:[
        {n:1,action:'#Identify rodenticide generation. Coagulopathy develops 36–72h after ingestion — not at presentation.|Mechanism: inhibits Vit K epoxide reductase → depletes factors II, VII, IX, X|Factor VII shortest half-life (~6h) — PT prolongs first',doses:'Second-generation (UK common: bromadiolone, brodifacoum, difethialone): 4–6 weeks Vit K1|First-generation (warfarin): 2–3 weeks Vit K1',note:'',branch:'',flag:''},
        {n:2,action:'#Decontaminate if recent ingestion (<4h, no bleeding)|Already bleeding → do NOT induce emesis, go to step 4',doses:'Apomorphine: 0.03–0.04 mg/kg IV/SC or conjunctival sac (rinse eye after vomiting)|Activated charcoal: 1–2 g/kg PO',note:'',branch:'',flag:'⚠️ Do NOT check PT/aPTT at presentation — values are normal for 36–72h; recheck at 48–72h'},
@@ -132,7 +132,7 @@ export const protocols_tox: ProtocolRow[] = [
        {n:5,action:'Seizure control: escalate from diazepam → phenobarbitone → propofol CRI.',doses:'Diazepam: 0.5 mg/kg IV × up to 3|Phenobarbitone (refractory): 2–4 mg/kg IV slow|Propofol (status, if ventilation available): 1–4 mg/kg IV + CRI',note:'',branch:'',flag:''},
        {n:6,action:'#IV crystalloids 2× maintenance + gastric protection|Recheck liver enzymes + renal panel at 48–72h',doses:'Omeprazole: 1 mg/kg IV q24h',note:'Most patients recover in 24–72h. Poor prognosis with prolonged hyperthermia >41°C, refractory seizures, or respiratory failure.',branch:'',flag:''},
      ]},
-    {id:'PROT-TOX-ZINC',name:'Zinc (Coins / Supplements / Hardware)',sp:'Dog + Cat',trigger:'Ingestion of zinc-containing objects or products; haemolytic anaemia with GI signs',priority:'URGENT',
+    {id:'PROT-TOX-ZINC',name:'Zinc (Coins / Supplements / Hardware)',sp:'Dog + Cat',trigger:'Ingestion of zinc-containing objects or products; haemolytic anaemia with GI signs',priority:'IMMEDIATE',
      steps:[
        {n:1,action:'#Identify zinc source. All forms toxic — zinc dissolves in gastric acid → haemolytic anaemia + hepatotoxicity + AKI.|Sources: pre-1992 UK 1p/2p coins, post-1982 US pennies, galvanised metal, zinc nuts/bolts, zinc oxide cream, zinc supplements|Dogs more commonly affected than cats due to pica and coin ingestion',note:'',branch:'',flag:''},
        {n:2,action:'#Lateral abdominal radiograph + baseline diagnostics.|Zinc objects are radiodense and visible|CBC: haemolytic anaemia, Heinz bodies on smear|Biochemistry: ALT, ALP, BUN, creatinine, bilirubin|Urinalysis: haemoglobinuria|Serum zinc if available',note:'PCV may be dramatically low (10–15%) with haemoglobin-coloured serum',branch:'',flag:''},
@@ -140,7 +140,7 @@ export const protocols_tox: ProtocolRow[] = [
        {n:4,action:'#Supportive care — monitor q12h|IV crystalloids 2× maintenance · gastric protectants · PCV, TP, biochemistry, urinalysis',note:'',branch:'PCV <20% dog / <15% cat with clinical signs → pRBC transfusion 10–20 mL/kg over 4h',flag:''},
        {n:5,action:'#Chelation if significant absorption|Elevated serum zinc or ongoing haemolysis after source removal',doses:'Calcium EDTA: 25–35 mg/kg SC in saline q6h × 5 days|D-penicillamine (alt): 10–15 mg/kg PO q12h × 7 days|N-acetylcysteine: antioxidant support at standard dose',note:'Monitor renal function during chelation.',branch:'',flag:''},
      ]},
-    {id:'PROT-TOX-VITD',name:'Rodenticide: Cholecalciferol (VitD3)',sp:'Dog + Cat',trigger:'Rodenticide ingestion; hypercalcaemia; signs develop 12–36h post-ingestion',priority:'URGENT',
+    {id:'PROT-TOX-VITD',name:'Rodenticide: Cholecalciferol (VitD3)',sp:'Dog + Cat',trigger:'Rodenticide ingestion; hypercalcaemia; signs develop 12–36h post-ingestion',priority:'IMMEDIATE',
      steps:[
        {n:1,action:'#Toxic dose >0.5 mg/kg cholecalciferol (dogs); cats more sensitive. Signs delayed 12–36h.|Mechanism: cholecalciferol → calcitriol → maximally stimulates intestinal Ca²⁺ absorption + bone resorption → severe hypercalcaemia → renal mineralisation + AKI',note:'',branch:'',flag:''},
        {n:2,action:'#Decontaminate aggressively if ingestion <4h|Induce emesis then activated charcoal 1–2 g/kg PO|Repeat activated charcoal q8h × 2–3 additional doses (enterohepatic recirculation is significant)',note:'',branch:'',flag:''},
@@ -149,7 +149,7 @@ export const protocols_tox: ProtocolRow[] = [
        {n:5,action:'#Pamidronate (bisphosphonate) — single dose IV|Reduces calcium over 24–72h by inhibiting osteoclast resorption',doses:'Pamidronate: 1.3–2 mg/kg in 250 mL 0.9% NaCl IV over 2–4h (may repeat if hypercalcaemia persists)',note:'Avoid in severe AKI.',branch:'',flag:''},
        {n:6,action:'#Prednisolone — reduces intestinal calcium absorption + increases calciuria|Treatment may be required 2–4 weeks|Monitor calcium, phosphate, BUN, creatinine daily',doses:'Prednisolone: 1–2 mg/kg PO/IV q12–24h',note:'Prognosis depends on dose and speed of treatment. Severe AKI with mineralisation — guarded to poor.',branch:'',flag:''},
      ]},
-    {id:'PROT-TOX-CANNABIS',name:'Cannabis / Marijuana / THC Edibles',sp:'Dog + Cat',trigger:'Recreational cannabis ingestion or smoke exposure; ataxia, disorientation, urinary incontinence',priority:'URGENT',
+    {id:'PROT-TOX-CANNABIS',name:'Cannabis / Marijuana / THC Edibles',sp:'Dog + Cat',trigger:'Recreational cannabis ingestion or smoke exposure; ataxia, disorientation, urinary incontinence',priority:'IMMEDIATE',
      steps:[
        {n:1,action:'#Recognise signs. Onset 30 min–3h; duration 12–24h (longer with edibles/butter).|Ataxia, disorientation, hypersalivation, urinary incontinence, bradycardia, hypothermia, nystagmus, mydriasis|Severe: hyperaesthesia, tremors, seizures|THC edibles often contain xylitol, chocolate, raisins, or macadamia nuts — rule out co-exposures immediately',note:'',branch:'',flag:''},
        {n:2,action:'#Check blood glucose immediately (xylitol co-ingestion)|Decontaminate if ingestion <30–60 min and gag reflex intact|Aspiration risk in ataxic patients — only induce if airway protected',note:'Ask owner for exact product details.',branch:'Blood glucose <3.5 mmol/L → IV dextrose (xylitol protocol)',flag:''},
@@ -185,7 +185,7 @@ export const protocols_tox: ProtocolRow[] = [
        {n:5,action:'#Supportive care — active cooling + IV fluids',note:'',branch:'',flag:''},
        {n:6,action:'#ILE 20% for significant exposures — only if no longer lipaemic before repeat',doses:'ILE 20%: 1.5 mL/kg IV bolus → 0.25 mL/kg/min over 30–60 min; repeat q4–6h if still symptomatic',note:'',branch:'',flag:''},
      ]},
-    {id:'PROT-TOX-LEAD',name:'Lead Toxicosis',sp:'Dog + Cat',trigger:'GI plus neurologic signs (vomiting, ataxia, tremors, agitation, seizures, behaviour change) with a possible lead source; supportive smear changes',priority:'URGENT',
+    {id:'PROT-TOX-LEAD',name:'Lead Toxicosis',sp:'Dog + Cat',trigger:'GI plus neurologic signs (vomiting, ataxia, tremors, agitation, seizures, behaviour change) with a possible lead source; supportive smear changes',priority:'IMMEDIATE',
      steps:[
        {n:1,action:'#Recognise acute vs chronic presentation|Acute: GI upset, ataxia, tremors, agitation, seizures|Chronic: GI signs, behaviour change, intermittent seizures, anaemia, megaoesophagus',note:'Mechanism: competes with zinc → disrupts GABA and synaptic transmission.',branch:'',flag:''},
        {n:2,action:'#Confirm — blood lead level + CBC smear|Nucleated RBCs · basophilic stippling ± microcytic hypochromic anaemia',note:'',branch:'',flag:''},
@@ -194,7 +194,7 @@ export const protocols_tox: ProtocolRow[] = [
        {n:5,action:'#Seizures — diazepam first; escalate if refractory',doses:'Diazepam: 0.5–1 mg/kg IV|Levetiracetam (alt): 20–60 mg/kg IV|Phenobarbitone: 2–4 mg/kg IV slow',note:'',branch:'',flag:''},
        {n:6,action:'#Tremors + supportive care — monitor neurology + haematology|Methocarbamol for tremors · IV fluids',doses:'Methocarbamol: 55–220 mg/kg IV slowly to effect',note:'',branch:'',flag:''},
      ]},
-    {id:'PROT-TOX-METHB',name:'Methaemoglobinaemia',sp:'Dog + Cat',trigger:'Chocolate-brown blood with cyanosis unresponsive to oxygen and muddy/chocolate mucous membranes after paracetamol, local anaesthetics, naphthalene mothballs, nitrates, or phenazopyridine exposure',priority:'URGENT',
+    {id:'PROT-TOX-METHB',name:'Methaemoglobinaemia',sp:'Dog + Cat',trigger:'Chocolate-brown blood with cyanosis unresponsive to oxygen and muddy/chocolate mucous membranes after paracetamol, local anaesthetics, naphthalene mothballs, nitrates, or phenazopyridine exposure',priority:'IMMEDIATE',
      steps:[
        {n:1,action:'#Recognise — dark-brown blood, chocolate/muddy MM, cyanosis unresponsive to O₂|Causative agents: paracetamol, benzocaine, lidocaine, naphthalene mothballs, phenazopyridine, propylene glycol|Cats more sensitive (8 vs 4 free sulfhydryl groups on haemoglobin)',note:'',branch:'',flag:'⚠️ Pulse oximetry is unreliable — reads ~85% regardless of true saturation'},
        {n:2,action:'#O₂ supplementation (flow-by or mask) + IV access',note:'',branch:'',flag:''},

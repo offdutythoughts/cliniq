@@ -11,7 +11,7 @@ export function ProtocolDetailView({ id }: { id: string }) {
   if (!p) return <NotFound />
   return (
     <>
-      <div className="em-alert">{p.priority === 'IMMEDIATE' ? '🚨' : '⚡'} {p.priority} — {p.trigger}</div>
+      <div className="em-alert">🚨 {p.priority} — {p.trigger}</div>
       {p.steps.map((step, i) => <ProtocolStep key={i} step={step} />)}
       <div className="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>
     </>

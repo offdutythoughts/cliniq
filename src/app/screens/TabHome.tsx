@@ -143,7 +143,7 @@ function ProtoCard({ p }: { p: ProtocolRow }) {
         <div style={FLEX1}>
           <div className="card-title">{protoIcon(p)} {p.name}</div>
           <div className="card-sub" style={s('margin-top:3px;')}>
-            <span className={`tag ${p.priority === 'IMMEDIATE' ? 'tag-em' : 'tag-hi'}`}>{p.priority}</span>
+            <span className="tag tag-em">{p.priority}</span>
             <span style={s('font-size:11px;color:var(--gray2);margin-left:6px;')}>{p.sp}</span>
           </div>
         </div>
@@ -154,7 +154,7 @@ function ProtoCard({ p }: { p: ProtocolRow }) {
 }
 function ProtoList() {
   const P = DB.protocols
-  const emergency = P.filter(p => ['PROT-CPR','PROT-RESP','PROT-SHOCK','PROT-THOR','PROT-ANAPHYLAXIS','PROT-SEPSIS'].includes(p.id))
+  const emergency = P.filter(p => ['PROT-CPR','PROT-RESP','PROT-SHOCK','PROT-THOR','PROT-ANAPHYLAXIS','PROT-SEPSIS','PROT-HEATSTROKE'].includes(p.id))
   const gi       = P.filter(p => p.id.startsWith('PROT-GI'))
   const neuro    = P.filter(p => p.id.startsWith('PROT-SEIZ') || p.id.startsWith('PROT-NEU') || p.id === 'PROT-ATAXIA')
   const cardiac  = P.filter(p => p.id.startsWith('PROT-PERICARDIO') || p.id.startsWith('PROT-VASC'))
@@ -200,11 +200,6 @@ const HOW_TO_ITEMS: { icon: string; title: string; body: string }[] = [
     icon: '📝',
     title: 'Notes are per-page and persistent',
     body: 'The pencil icon (top right) opens a scratchpad tied to whatever page you are on — flow, disease, or protocol. Notes are saved locally on this device and persist between sessions.',
-  },
-  {
-    icon: '🚨',
-    title: 'IMMEDIATE vs URGENT',
-    body: 'IMMEDIATE (red tag) = act within minutes; a delay risks the patient\'s life. URGENT (amber tag) = act within the same shift; the condition is serious but does not require instant intervention.',
   },
   {
     icon: '💡',
