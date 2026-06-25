@@ -148,30 +148,15 @@ Post-prandial worsening<br>
           {
             variant: 'mixed',
             label: 'Metabolic / Systemic',
-            sublabel: `Diffuse signs<br>
-Normal interictal exam<br>
-Waxing-waning course<br>
-Bloods abnormal<br>
-<strong style="color:var(--tone-green-fg);">→ Bloods + bile acids</strong>`,
             link: { to: 'lesion', loc: 'LOC-EN-METAB', name: 'Metabolic encephalopathy' },
           },
           {
             variant: 'rest',
             label: 'Structural',
-            sublabel: `Focal / lateralising signs<br>
-Progressive course<br>
-Abnormal neuro exam<br>
-MRI ± CSF required<br>
-<strong style="color:var(--amber-text);">VITAMIN D →</strong>`,
           },
           {
             variant: 'insp',
             label: 'Toxic / Drug',
-            sublabel: `Exposure history<br>
-Acute / peracute onset<br>
-Species-specific agents<br>
-Rapid reversal possible<br>
-<strong style="color:var(--tone-info-fg);">→ Decontaminate + antidote</strong>`,
           },
         ],
       },
