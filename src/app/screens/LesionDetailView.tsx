@@ -5,11 +5,10 @@
 import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s } from './style'
-import { NavCard } from './markup'
+import { NavCard, Bul, str } from './markup'
 import { UrgTag, SpTag } from './tags'
 
 const TAG_ROW = s('display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;')
-const str = (v: unknown): string => (typeof v === 'string' ? v : '')
 
 export function LesionDetailView({ id }: { id: string }) {
   const nav = useNav()
@@ -22,10 +21,31 @@ export function LesionDetailView({ id }: { id: string }) {
       <div style={TAG_ROW}><UrgTag urg={l.urg} /><SpTag sp={l.sp} /><span className="tag tag-sp-all">{l.cat}</span></div>
       <div className="detail-label">Key clinical signs</div>
       <div className="detail-val highlight">{l.signs}</div>
+      {str(l.etiology) && (
+        <>
+          <hr className="sep" />
+          <div className="detail-label">Etiology</div>
+          <Bul text={str(l.etiology)} />
+        </>
+      )}
+      {str(l.diag) && (
+        <>
+          <hr className="sep" />
+          <div className="detail-label">Diagnostics</div>
+          <Bul text={str(l.diag)} />
+        </>
+      )}
+      {str(l.treat) && (
+        <>
+          <hr className="sep" />
+          <div className="detail-label">Treatment</div>
+          <Bul text={str(l.treat)} />
+        </>
+      )}
       {str(l.note) && (
         <>
-          <div className="detail-label">Clinical notes</div>
-          <div className="detail-val">{str(l.note)}</div>
+          <hr className="sep" />
+          <div className="pearl">{str(l.note)}</div>
         </>
       )}
       {proto && (

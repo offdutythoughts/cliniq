@@ -199,11 +199,6 @@ const bleedingPrimary: FlowPage = {
       connectAfter: false,
     },
 
-    // FLAGGED html: the two-pathway split. LEFT = thrombocytopenic (LOW <50)
-    // with a 3-column platelet-mechanism sub-grid (↓ Production / Consumption &
-    // Sequestration / Destruction) carrying per-column arrows + labels; RIGHT =
-    // normal-count BMBT branch. The asymmetric 3fr:2fr top grid + nested
-    // 3-col / mini-label structure has no typed-block equivalent. Verbatim.
     {
       kind: 'html',
       html: `<div class="flow-arrow-v">↓</div>
@@ -220,48 +215,19 @@ const bleedingPrimary: FlowPage = {
         <div class="flow-node sub-step" style="width:100%;font-size:10px;text-align:center;">IDENTIFY MECHANISM</div>
         <div class="flow-arrow-v">↓</div>
 
-        <!-- 3-way branch labels -->
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;width:100%;">
-          <div style="font-size:8px;font-weight:700;color:var(--tone-danger-title);text-align:center;">↓ PRODUCTION</div>
-          <div style="font-size:8px;font-weight:700;color:var(--tone-danger-fg);text-align:center;">CONSUMPTION &amp; SEQUESTRATION</div>
-          <div style="font-size:8px;font-weight:700;color:var(--tone-danger-fg);text-align:center;">DESTRUCTION</div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;width:100%;">
-          <div style="font-size:9px;text-align:center;color:var(--tone-danger-title);">↓</div>
-          <div style="font-size:9px;text-align:center;color:var(--tone-danger-fg);">↓</div>
-          <div style="font-size:9px;text-align:center;color:var(--tone-danger-fg);">↓</div>
-        </div>
-
-        <!-- 3 endpoint columns -->
+        <!-- 3 clickable endpoint cards -->
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;width:100%;align-items:start;">
 
-          <!-- ↓ Production -->
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:8.5px;">
-            <em style="opacity:.85;">Primary:</em><br>
-            Neoplasia · immune-mediated · fibrosis · myelophthisis<br><br>
-            <em style="opacity:.85;">Drug-induced:</em><br>
-            Chloramphenicol · oestrogen · bleomycin · lomustine · cytarabine · melphalan · methotrexate · platinum · doxorubicin · actinomycin D<br><br>
-            <em style="opacity:.85;">Secondary:</em><br>
-            FeLV · ehrlichiosis · hypothyroidism<br><br>
-            <span style="opacity:.6;">→ BM aspirate + core if other cell lines also affected</span>
+          <div class="flow-endpoint" onclick="renderFlowId('bleeding-prod')" style="cursor:pointer;background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:9px;text-align:center;">
+            <div style="font-weight:700;">↓ Production</div>
           </div>
 
-          <!-- Consumption & Sequestration -->
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:8.5px;">
-            Significant haemorrhage · splenomegaly · sepsis · vasculitis · DIC<br><br>
-            <span style="opacity:.6;">DIC: early thrombosis → late haemorrhage; PT + aPTT both prolonged</span>
+          <div class="flow-endpoint" onclick="renderFlowId('bleeding-consump')" style="cursor:pointer;background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:9px;text-align:center;">
+            <div style="font-weight:700;">Consumption &amp; Sequestration</div>
           </div>
 
-          <!-- Destruction -->
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:8.5px;">
-            <em style="opacity:.85;">Drug-induced:</em><br>
-            Furosemide · H2 antagonists · cephalosporins · penicillins · TMP-SMX · quinines · phenylbutazone · cardiac medications<br><br>
-            <em style="opacity:.85;">Primary (IMTP):</em><br>
-            Antibodies vs platelet antigens — #1 cause dog<br>Cocker · Poodle · OES · Lhasa · Maltese<br><br>
-            <em style="opacity:.85;">Secondary:</em><br>
-            Inflammation · neoplasia<br><br>
-            <em style="opacity:.85;">Infectious:</em><br>
-            Distemper · parvovirus · adenovirus · herpesvirus · FeLV · panleukopenia · FIV · FIP · ehrlichiosis · babesiosis · haemobartonellosis · rickettsiosis · leishmaniasis · cytauxzoonosis · borreliosis · dirofilariasis · histoplasmosis · candidiasis · leptospirosis · septicaemia
+          <div class="flow-endpoint" onclick="renderFlowId('bleeding-dest')" style="cursor:pointer;background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:9px;text-align:center;">
+            <div style="font-weight:700;">Destruction</div>
           </div>
 
         </div>
@@ -271,7 +237,7 @@ const bleedingPrimary: FlowPage = {
       <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
         <div class="flow-node" style="width:100%;background:rgba(16,185,129,0.12);border-color:rgba(16,185,129,0.4);font-size:10.5px;font-weight:700;color:var(--tone-green-fg);text-align:center;">
           NORMAL COUNT<br>
-          <span style="font-size:9px;font-weight:400;color:var(--gray);">Thrombocytopathy / vWD</span>
+          <span style="font-size:9px;font-weight:400;color:var(--gray);">Platelet function defect</span>
         </div>
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node sub-step" style="width:100%;font-size:10px;">Check BMBT<br>(buccal mucosal bleed time)</div>
@@ -283,21 +249,20 @@ const bleedingPrimary: FlowPage = {
         <div class="flow-arrow-v">↓</div>
 
         <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
-          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:var(--tone-green-fg);font-size:9px;">
-            <strong>von Willebrand Disease</strong><br>
-            <span style="opacity:.75;">Dobermann (type I) · Scottie (type III) · Shetland · GSD · cats rarely<br>Send vWF activity assay<br>Pre-op: DDAVP 1 µg/kg SC 30 min before (type I only)</span>
+          <div class="flow-endpoint" onclick="renderFlowId('bleeding-thrombopathia')" style="cursor:pointer;background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:var(--tone-green-fg);font-size:9px;text-align:center;">
+            <div style="font-weight:700;margin-bottom:3px;">Thrombopathia</div>
+            <div style="font-size:8px;opacity:.75;">vWD · drugs · Glanzmann's · uraemia</div>
+            <div style="font-size:8px;opacity:.5;margin-top:4px;">Tap to explore ›</div>
           </div>
-          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:var(--tone-green-fg);font-size:9px;">
-            <strong>Uraemia</strong><br>
-            <span style="opacity:.75;">Acquired platelet dysfunction — reversible with dialysis / desmopressin</span>
+          <div class="flow-endpoint" onclick="renderFlowId('bleeding-vasc')" style="cursor:pointer;background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:var(--tone-violet-fg);font-size:9px;text-align:center;">
+            <div style="font-weight:700;margin-bottom:3px;">Vasculitis</div>
+            <div style="font-size:8px;opacity:.75;">CRGV · ehrlichiosis · RMSF · hypertension</div>
+            <div style="font-size:8px;opacity:.5;margin-top:4px;">Tap to explore ›</div>
           </div>
-          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:var(--tone-green-fg);font-size:9px;">
-            <strong>Drug-induced</strong><br>
-            <span style="opacity:.75;">Aspirin · NSAIDs · clopidogrel</span>
-          </div>
-          <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:var(--tone-green-fg);font-size:9px;">
-            <strong>Glanzmann's Thrombasthenia</strong><br>
-            <span style="opacity:.75;">GRT · Otterhound — breed-linked<br>No platelet aggregation</span>
+          <div class="flow-endpoint" onclick="renderFlowId('bleeding-immune-plt')" style="cursor:pointer;background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:var(--tone-warning-fg);font-size:9px;text-align:center;">
+            <div style="font-weight:700;margin-bottom:3px;">Immune-mediated</div>
+            <div style="font-size:8px;opacity:.75;">Evans · SLE · antiphospholipid</div>
+            <div style="font-size:8px;opacity:.5;margin-top:4px;">Tap to explore ›</div>
           </div>
         </div>
       </div>
@@ -584,10 +549,234 @@ const bleedingVasc: FlowPage = {
   ],
 }
 
+// ── ↓ Production ─────────────────────────────────────────────────────────────
+const bleedingProd: FlowPage = {
+  id: 'bleeding-prod',
+  title: 'Bleeding — ↓ Platelet Production',
+  blocks: [
+    { kind: 'node', variant: 'entry', tone: 'danger', text: '↓ PLATELET PRODUCTION' },
+    {
+      kind: 'callout',
+      tone: 'warning',
+      html: '<strong>Key test:</strong> BM aspirate + core biopsy if other cell lines (RBC, WBC) also affected — rules out primary marrow disease vs isolated megakaryocyte suppression',
+    },
+    {
+      kind: 'branch',
+      columns: [
+        {
+          header: 'Primary Marrow Disease',
+          tone: 'danger',
+          blocks: [{ kind: 'endpoints', items: [
+            { label: 'Lymphoma', sublabel: 'Marrow infiltration → megakaryocyte suppression', tone: 'danger', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
+            { label: 'Leukaemia', sublabel: 'Neoplastic cell replacement of marrow', tone: 'danger' },
+            { label: 'Multiple myeloma', sublabel: 'Plasma cell neoplasia infiltrating marrow', tone: 'danger', link: { to: 'disease', id: 'DIS-NEO-MM' } },
+            { label: 'Immune-mediated aplasia', sublabel: 'Immune destruction of megakaryocytes', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-NRA' } },
+            { label: 'Myelofibrosis / myelophthisis', sublabel: 'Replacement of marrow architecture', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-NRA' } },
+          ]}],
+        },
+        {
+          header: 'Drug-induced',
+          tone: 'warning',
+          blocks: [{ kind: 'endpoints', items: [
+            { label: 'Cytotoxic chemotherapy', sublabel: 'Lomustine · cytarabine · melphalan · methotrexate · platinum · doxorubicin · actinomycin D · bleomycin', tone: 'warning' },
+            { label: 'Other drugs', sublabel: 'Chloramphenicol · oestrogen', tone: 'warning' },
+          ]}],
+        },
+        {
+          header: 'Secondary / Infectious',
+          tone: 'neutral',
+          blocks: [{ kind: 'endpoints', items: [
+            { label: 'FeLV', sublabel: 'Direct myelosuppression — cats', tone: 'neutral', link: { to: 'disease', id: 'DIS-INFECT-FELV' } },
+            { label: 'Ehrlichiosis', sublabel: 'Tick-borne; also causes destruction', tone: 'orange', link: { to: 'disease', id: 'DIS-BD-EHRL' } },
+            { label: 'Hypothyroidism', sublabel: 'Reduced thrombopoietin sensitivity', tone: 'neutral', link: { to: 'disease', id: 'DIS-ENDO-HYPOTHY' } },
+          ]}],
+        },
+      ],
+    },
+    { kind: 'disclaimer' },
+  ],
+}
+
+// ── Consumption & Sequestration ───────────────────────────────────────────────
+const bleedingConsump: FlowPage = {
+  id: 'bleeding-consump',
+  title: 'Bleeding — Consumption & Sequestration',
+  blocks: [
+    { kind: 'node', variant: 'entry', tone: 'danger', text: 'CONSUMPTION & SEQUESTRATION' },
+    {
+      kind: 'callout',
+      tone: 'info',
+      html: '<strong>Mechanism:</strong> Platelets are produced normally but consumed faster than they can be replaced, or pooled in an enlarged spleen',
+    },
+    {
+      kind: 'branch',
+      columns: [
+        {
+          header: 'Consumption',
+          tone: 'danger',
+          blocks: [{ kind: 'endpoints', items: [
+            { label: 'Significant haemorrhage', sublabel: 'Platelets lost with bleeding; secondary thrombocytopenia', tone: 'danger' },
+            { label: 'Sepsis', sublabel: 'Platelet activation + consumption in microthrombi', tone: 'danger' },
+            { label: 'Vasculitis', sublabel: 'Endothelial damage → continuous platelet activation', tone: 'danger' },
+            { label: 'DIC', link: { to: 'disease', id: 'DIS-BD-DIC' }, sublabel: 'Early thrombosis → late haemorrhage; PT + aPTT both prolonged', tone: 'danger' },
+          ]}],
+        },
+        {
+          header: 'Sequestration',
+          tone: 'warning',
+          blocks: [{ kind: 'endpoints', items: [
+            { label: 'Splenomegaly', sublabel: 'Up to 90 % of platelet pool can pool in markedly enlarged spleen — counts often 50–100 ×10⁹/L', tone: 'warning' },
+          ]}],
+        },
+      ],
+    },
+    {
+      kind: 'callout',
+      tone: 'warning',
+      gap: 14,
+      title: '⚠️ DIC PEARL',
+      html: 'Early DIC → thrombosis (cold extremities, organ ischaemia); Late DIC → haemorrhage (petechiae, oozing from sites). Always check PT + aPTT — both prolonged in established DIC.',
+    },
+    { kind: 'disclaimer' },
+  ],
+}
+
+// ── Destruction ───────────────────────────────────────────────────────────────
+const bleedingDest: FlowPage = {
+  id: 'bleeding-dest',
+  title: 'Bleeding — Platelet Destruction',
+  blocks: [
+    { kind: 'node', variant: 'entry', tone: 'danger', text: 'PLATELET DESTRUCTION' },
+    {
+      kind: 'callout',
+      tone: 'info',
+      html: '<strong>Mechanism:</strong> Normal or increased megakaryocytes in marrow — platelets are destroyed peripherally faster than production can compensate',
+    },
+    {
+      kind: 'branch',
+      columns: [
+        {
+          header: 'Immune-mediated (IMTP)',
+          tone: 'danger',
+          blocks: [{ kind: 'endpoints', items: [
+            { label: 'Primary IMTP', link: { to: 'disease', id: 'DIS-BD-IMTP' }, sublabel: '#1 cause dog · antibodies vs platelet antigens · Cocker · Poodle · OES · Lhasa · Maltese · start immunosuppression urgently if < 30 ×10⁹/L', tone: 'danger' },
+            { label: 'Secondary immune-mediated', sublabel: 'Triggered by inflammation · neoplasia · infection', tone: 'warning' },
+          ]}],
+        },
+        {
+          header: 'Drug-induced',
+          tone: 'warning',
+          blocks: [{ kind: 'endpoints', items: [
+            { label: 'Drug-induced thrombocytopenia', sublabel: 'Furosemide · H2 antagonists · cephalosporins · penicillins · TMP-SMX · quinines · phenylbutazone · cardiac medications', tone: 'warning' },
+          ]}],
+        },
+        {
+          header: 'Infectious',
+          tone: 'orange',
+          blocks: [{ kind: 'endpoints', items: [
+            { label: 'Tick-borne', sublabel: 'Ehrlichiosis · babesiosis · rickettsiosis · anaplasmosis · borreliosis', tone: 'orange' },
+            { label: 'Viral', sublabel: 'Distemper · parvovirus · adenovirus · herpesvirus · FeLV · panleukopenia · FIV · FIP', tone: 'neutral' },
+            { label: 'Protozoal / fungal', sublabel: 'Leishmaniasis · cytauxzoonosis · histoplasmosis · candidiasis · haemobartonellosis', tone: 'neutral' },
+            { label: 'Other', sublabel: 'Dirofilariasis · leptospirosis · septicaemia', tone: 'neutral' },
+          ]}],
+        },
+      ],
+    },
+    { kind: 'disclaimer' },
+  ],
+}
+
+// ── Thrombopathia (normal count) ──────────────────────────────────────────────
+const bleedingThrombopathia: FlowPage = {
+  id: 'bleeding-thrombopathia',
+  title: 'Bleeding — Thrombopathia',
+  blocks: [
+    { kind: 'node', variant: 'entry', tone: 'green', text: 'THROMBOPATHIA — PLATELET FUNCTION DEFECT' },
+    {
+      kind: 'callout',
+      tone: 'info',
+      html: '<strong>Pattern:</strong> Normal platelet count · BMBT prolonged · PT and aPTT normal. Platelets are present but cannot aggregate or adhere normally.',
+    },
+    {
+      kind: 'branch',
+      columns: [
+        {
+          header: 'Inherited',
+          tone: 'green',
+          blocks: [{ kind: 'endpoints', items: [
+            { label: 'von Willebrand Disease', sublabel: 'Dobermann (type I) · Scottie (type III) · Shetland · GSD · cats rarely — send vWF activity assay · DDAVP 1 µg/kg SC 30 min pre-op (type I only)', tone: 'green' },
+            { label: "Glanzmann's Thrombasthenia", sublabel: 'GRT · Otterhound — breed-linked · absent GPIIb/IIIa · no platelet aggregation on aggregometry', tone: 'green' },
+          ]}],
+        },
+        {
+          header: 'Acquired',
+          tone: 'warning',
+          blocks: [{ kind: 'endpoints', items: [
+            { label: 'Drug-induced', sublabel: 'Aspirin · NSAIDs (COX-1 inhibition) · clopidogrel (ADP receptor block) · ask for all medications', tone: 'warning' },
+            { label: 'Uraemia', sublabel: 'Guanidinosuccinic acid inhibits platelet GP1b — reversible with dialysis or desmopressin · check creatinine + SDMA', tone: 'warning' },
+            { label: 'Dysproteinaemia', sublabel: 'Myeloma · hyperglobulinaemia — paraprotein coats platelets; serum protein electrophoresis', tone: 'warning' },
+            { label: 'Hepatic failure', sublabel: 'Reduced thromboxane synthesis + dysfibrinogenaemia', tone: 'warning' },
+          ]}],
+        },
+      ],
+    },
+    { kind: 'disclaimer' },
+  ],
+}
+
+// ── Immune-mediated platelet dysfunction (normal count) ───────────────────────
+const bleedingImmunePlt: FlowPage = {
+  id: 'bleeding-immune-plt',
+  title: 'Bleeding — Immune-mediated (Normal Count)',
+  blocks: [
+    { kind: 'node', variant: 'entry', tone: 'warning', text: 'IMMUNE-MEDIATED — NORMAL PLATELET COUNT' },
+    {
+      kind: 'callout',
+      tone: 'info',
+      html: '<strong>Mechanism:</strong> Immune complexes or autoantibodies impair platelet function without sufficient destruction to cause thrombocytopenia — platelet count may be low-normal or borderline.',
+    },
+    {
+      kind: 'branch',
+      columns: [
+        {
+          header: 'Multi-system immune disease',
+          tone: 'warning',
+          blocks: [{ kind: 'endpoints', items: [
+            { label: 'Evans Syndrome', sublabel: 'Concurrent IMHA + IMTP — check PCV and platelet count together · Coombs + · respond to immunosuppression', tone: 'warning' },
+            { label: 'SLE', sublabel: 'Systemic lupus — ANA positive · polyarthritis · skin lesions · immune complex deposition on vessel walls and platelets', tone: 'warning' },
+            { label: 'Antiphospholipid syndrome', sublabel: 'Thrombosis + thrombocytopenia — paradoxical bleeding from thrombocytopenia despite prothrombotic state', tone: 'warning' },
+          ]}],
+        },
+        {
+          header: 'Secondary immune activation',
+          tone: 'orange',
+          blocks: [{ kind: 'endpoints', items: [
+            { label: 'Infectious trigger', sublabel: 'Ehrlichiosis · FIP · Mycoplasma haemofelis in cats — immune complex deposition → platelet dysfunction', tone: 'orange' },
+            { label: 'Neoplasia-associated', sublabel: 'Lymphoma · HSA — tumour antigens trigger immune complex formation', tone: 'orange' },
+          ]}],
+        },
+      ],
+    },
+    {
+      kind: 'callout',
+      tone: 'warning',
+      gap: 14,
+      title: 'DIAGNOSTICS',
+      html: '<strong style="color:var(--white);">ANA titre</strong> — SLE screen<br><strong style="color:var(--white);">Coombs test</strong> — Evans syndrome<br><strong style="color:var(--white);">Tick-borne titres</strong> — Ehrlichia, Anaplasma, Rickettsia<br><strong style="color:var(--white);">Serum protein electrophoresis</strong> — paraprotein<br><strong style="color:var(--white);">Bone marrow</strong> — if count borderline and cause unclear',
+    },
+    { kind: 'disclaimer' },
+  ],
+}
+
 export const bleedingFlows: FlowPage[] = [
   bleedingEntry,
   bleedingPrimary,
   bleedingSecondary,
   bleedingDic,
   bleedingVasc,
+  bleedingProd,
+  bleedingConsump,
+  bleedingDest,
+  bleedingThrombopathia,
+  bleedingImmunePlt,
 ]
