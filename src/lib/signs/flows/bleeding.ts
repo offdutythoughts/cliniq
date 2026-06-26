@@ -115,16 +115,22 @@ const bleedingEntry: FlowPage = {
       <div class="flow-arrow-v">↓</div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
-        <!-- YES → PRIMARY -->
+        <!-- YES → PRIMARY / VASCULOPATHY -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
           <div style="font-size:9px;font-weight:600;color:var(--tone-danger-fg);">YES</div>
           <div class="flow-arrow-v" style="font-size:11px;">↓</div>
-          <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderFlowId('bleeding-primary')">
-            🧱 PRIMARY<br>
-            <span style="opacity:.75;font-size:8px;">Platelet · vWF ›</span>
+          <div style="display:flex;flex-direction:column;gap:3px;width:100%;">
+            <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderFlowId('bleeding-primary')">
+              🧱 PRIMARY<br>
+              <span style="opacity:.75;font-size:8px;">Platelet · vWF ›</span>
+            </div>
+            <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:var(--tone-violet-fg);font-size:8.5px;cursor:pointer;width:100%;text-align:center;" onclick="renderFlowId('bleeding-vasc')">
+              🌐 VASCULO-<br>PATHY<br>
+              <span style="opacity:.65;font-size:7.5px;">If plt + coags normal ›</span>
+            </div>
           </div>
         </div>
-        <!-- NO → VASCULOPATHY -->
+        <!-- NO → VASCULOPATHY (no petechiae — e.g. skin ulcers, retinal, systemic) -->
         <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
           <div style="font-size:9px;font-weight:600;color:var(--gray2);">NO</div>
           <div class="flow-arrow-v" style="font-size:11px;">↓</div>
