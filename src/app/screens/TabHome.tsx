@@ -185,6 +185,48 @@ const BTN_BASE = 'padding:7px 18px;border-radius:6px;border:none;font-size:13px;
 const BTN_ACTIVE = s(BTN_BASE + 'background:var(--teal);color:#fff;')
 const BTN_INACTIVE = s(BTN_BASE + 'background:transparent;color:var(--gray);')
 
+type FontSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+const FONT_SIZES: { value: FontSize; label: string }[] = [
+  { value: 'xs', label: 'XS' },
+  { value: 'sm', label: 'S' },
+  { value: 'md', label: 'M' },
+  { value: 'lg', label: 'L' },
+  { value: 'xl', label: 'XL' },
+]
+function getInitialFontSize(): FontSize {
+  if (typeof document === 'undefined') return 'md'
+  return (document.documentElement.dataset.fontSize as FontSize) || 'md'
+}
+function FontSizePicker() {
+  const [size, setSize] = useState<FontSize>(getInitialFontSize)
+  const applySize = (v: FontSize) => {
+    if (v === 'md') {
+      delete document.documentElement.dataset.fontSize
+    } else {
+      document.documentElement.dataset.fontSize = v
+    }
+    try { localStorage.setItem('cliniq-font-size', v) } catch { /* private mode */ }
+    setSize(v)
+  }
+  return (
+    <div style={s('padding:14px 16px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;')}>
+      <div>
+        <div style={s('font-size:14px;font-weight:500;color:var(--white);')}>Text size</div>
+        <div style={s('font-size:12px;color:var(--gray);margin-top:2px;')}>{FONT_SIZES.find(f => f.value === size)?.label ?? 'M'} — {size === 'xs' ? 'Smallest' : size === 'sm' ? 'Small' : size === 'md' ? 'Default' : size === 'lg' ? 'Large' : 'Largest'}</div>
+      </div>
+      <div style={s('display:flex;background:var(--navy3);border-radius:8px;padding:3px;gap:2px;flex-shrink:0;')}>
+        {FONT_SIZES.map(f => (
+          <button
+            key={f.value}
+            onClick={() => applySize(f.value)}
+            style={size === f.value ? BTN_ACTIVE : BTN_INACTIVE}
+          >{f.label}</button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 const HOW_TO_ITEMS: { icon: string; title: string; body: string }[] = [
   {
     icon: '🔗',
@@ -275,6 +317,7 @@ function SettingsHome() {
             <button onClick={() => setTheme('dark')} style={dark ? BTN_ACTIVE : BTN_INACTIVE}>🌙 Dark</button>
           </div>
         </div>
+        <FontSizePicker />
       </div>
       <HowToSection />
     </div>
