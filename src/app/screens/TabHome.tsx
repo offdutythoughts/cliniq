@@ -186,13 +186,14 @@ const BTN_ACTIVE = s(BTN_BASE + 'background:var(--teal);color:#fff;')
 const BTN_INACTIVE = s(BTN_BASE + 'background:transparent;color:var(--gray);')
 
 type FontSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
-const FONT_SIZES: { value: FontSize; label: string }[] = [
-  { value: 'xs', label: 'XS' },
-  { value: 'sm', label: 'S' },
-  { value: 'md', label: 'M' },
-  { value: 'lg', label: 'L' },
-  { value: 'xl', label: 'XL' },
+const FONT_SIZES: { value: FontSize; aSize: number; name: string }[] = [
+  { value: 'xs', aSize: 10, name: 'Smallest' },
+  { value: 'sm', aSize: 13, name: 'Small' },
+  { value: 'md', aSize: 16, name: 'Default' },
+  { value: 'lg', aSize: 19, name: 'Large' },
+  { value: 'xl', aSize: 22, name: 'Largest' },
 ]
+const BTN_A_BASE = 'width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:6px;border:none;font-weight:600;cursor:pointer;transition:all .2s;flex-shrink:0;'
 function getInitialFontSize(): FontSize {
   if (typeof document === 'undefined') return 'md'
   return (document.documentElement.dataset.fontSize as FontSize) || 'md'
@@ -208,19 +209,23 @@ function FontSizePicker() {
     try { localStorage.setItem('cliniq-font-size', v) } catch { /* private mode */ }
     setSize(v)
   }
+  const current = FONT_SIZES.find(f => f.value === size)
   return (
     <div style={s('padding:14px 16px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px;')}>
       <div>
         <div style={s('font-size:14px;font-weight:500;color:var(--white);')}>Text size</div>
-        <div style={s('font-size:12px;color:var(--gray);margin-top:2px;')}>{FONT_SIZES.find(f => f.value === size)?.label ?? 'M'} — {size === 'xs' ? 'Smallest' : size === 'sm' ? 'Small' : size === 'md' ? 'Default' : size === 'lg' ? 'Large' : 'Largest'}</div>
+        <div style={s('font-size:12px;color:var(--gray);margin-top:2px;')}>{current?.name ?? 'Default'}</div>
       </div>
-      <div style={s('display:flex;background:var(--navy3);border-radius:8px;padding:3px;gap:2px;flex-shrink:0;')}>
+      <div style={s('display:flex;background:var(--navy3);border-radius:8px;padding:3px;gap:1px;flex-shrink:0;')}>
         {FONT_SIZES.map(f => (
           <button
             key={f.value}
             onClick={() => applySize(f.value)}
-            style={size === f.value ? BTN_ACTIVE : BTN_INACTIVE}
-          >{f.label}</button>
+            style={{
+              ...s(BTN_A_BASE + (size === f.value ? 'background:var(--teal);color:#fff;' : 'background:transparent;color:var(--gray);')),
+              fontSize: `${f.aSize}px`,
+            }}
+          >A</button>
         ))}
       </div>
     </div>

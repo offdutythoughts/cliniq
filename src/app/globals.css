@@ -82,6 +82,18 @@
   --fg-indigo-deep: #3730A3;   --fg-violet-deep: #5B21B6;
   --fg-green-deep: #065F46;    --fg-slate-deep: #334155;
   --fg-orange-deep: #7C2D12;
+
+  /* ── Tinted-element alpha tokens ────────────────────────────────────────────
+     Never hardcode rgba alpha values in components. Use these vars instead so
+     the opacity automatically adjusts per theme. Light mode needs higher alpha
+     because the white background dilutes colour; dark mode needs lower alpha
+     because the dark background amplifies it.
+
+     tile-*  : navigational tiles, category boxes, flow nodes, endpoint chips —
+               elements where the background colour is the primary visual signal.
+     panel-* : callout/info panels where background colour is secondary to text. */
+  --tile-bg-a: 0.15;  --tile-bd-a: 0.50;
+  --panel-bg-a: 0.09; --panel-bd-a: 0.28;
 }
 
 /* Semantic tokens for Tailwind utilities (Phase 4 consumes bg-surface, text-fg,
@@ -131,6 +143,9 @@ html[data-theme="dark"]{
   --fg-indigo-deep: var(--fg-indigo-bright); --fg-violet-deep: var(--fg-violet-bright);
   --fg-green-deep: var(--tone-green-fg);     --fg-slate-deep: var(--tone-slate-fg);
   --fg-orange-deep: var(--tone-orange-fg);
+  /* Alpha tokens — lower in dark mode because dark backgrounds amplify tints */
+  --tile-bg-a: 0.10; --tile-bd-a: 0.38;
+  --panel-bg-a: 0.07; --panel-bd-a: 0.22;
 }
 /* Reset + base element styles — in @layer base so layered components (and the
    utilities layer) win over them by layer order rather than specificity.
