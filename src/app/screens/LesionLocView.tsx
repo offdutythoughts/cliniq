@@ -9,56 +9,56 @@ import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s } from './style'
 import { NavCard } from './markup'
+import type { Tone } from '../../lib/signs/flowTypes'
+import { HUE } from '../../lib/signs/tone'
 
-// Category → rgba colour prefix.
-const CC: Record<string, string> = {
-  'Mass': 'rgba(139,92,246,', 'Mass/Neoplasia': 'rgba(139,92,246,',
-  'Fluid': 'rgba(37,99,235,', 'Fluid/Oedema': 'rgba(37,99,235,',
-  'Gas': 'rgba(217,119,6,', 'Infection': 'rgba(220,38,38,',
-  'Infection/Inflammation': 'rgba(220,38,38,', 'Inflammation': 'rgba(249,115,22,',
-  'Structural': 'rgba(100,116,139,', 'Cardiac': 'rgba(220,38,38,',
-  'Infectious': 'rgba(220,38,38,', 'Inflammatory': 'rgba(249,115,22,',
-  'Neuromuscular': 'rgba(99,102,241,', 'Dynamic collapse': 'rgba(100,116,139,',
-  'Obstruction': 'rgba(220,38,38,', 'Ulceration': 'rgba(220,38,38,',
-  'Dysmotility': 'rgba(139,92,246,', 'Haemolytic': 'rgba(220,38,38,',
-  'Hepatocellular': 'rgba(217,119,6,', 'Biliary obstruction': 'rgba(13,148,136,',
-  'Compressive': 'rgba(37,99,235,', 'Vascular': 'rgba(220,38,38,',
-  'Non-compressive': 'rgba(13,148,136,', 'Traumatic': 'rgba(220,38,38,',
-  'Peripheral': 'rgba(13,148,136,', 'Central': 'rgba(220,38,38,',
-  'Bilateral': 'rgba(217,119,6,', 'Neoplastic': 'rgba(139,92,246,',
-  'Immune-mediated': 'rgba(249,115,22,', 'Metabolic': 'rgba(217,119,6,',
-  'Idiopathic': 'rgba(37,99,235,', 'Reactive': 'rgba(220,38,38,',
-  'Regenerative': 'rgba(13,148,136,', 'Non-regenerative': 'rgba(220,38,38,',
-  'Pre-regenerative': 'rgba(217,119,6,', 'Shock': 'rgba(220,38,38,',
-  'Foreign body': 'rgba(100,116,139,', 'Dental': 'rgba(217,119,6,',
-  'Parasitic': 'rgba(217,119,6,', 'Toxic': 'rgba(220,38,38,',
-  'Inherited': 'rgba(139,92,246,', 'Endocrine': 'rgba(217,119,6,',
-  'Endocrine/Metabolic': 'rgba(217,119,6,',
-  'Cardiovascular': 'rgba(220,38,38,', 'Junctionopathy': 'rgba(99,102,241,',
-  'Neuropathy': 'rgba(139,92,246,', 'Myopathy': 'rgba(249,115,22,',
-  'Syncope': 'rgba(220,38,38,', 'Seizure': 'rgba(220,38,38,',
-  'Sleep disorder': 'rgba(99,102,241,', 'Stress': 'rgba(100,116,139,',
-  'Dietary': 'rgba(13,148,136,', 'Antibiotic-responsive': 'rgba(37,99,235,',
-  'Infiltrative': 'rgba(249,115,22,', 'Maldigestion': 'rgba(139,92,246,',
-  'Protein-losing': 'rgba(220,38,38,', 'Secondary GI': 'rgba(217,119,6,',
-  'Neoplasia': 'rgba(249,115,22,', 'Obstruction/Dysmotility': 'rgba(220,38,38,',
-  'Behavioural/Neurological': 'rgba(99,102,241,',
-  'Renal failure': 'rgba(220,38,38,', 'Osmotic diuresis': 'rgba(37,99,235,',
-  'Adrenal': 'rgba(217,119,6,', 'Pancreatic': 'rgba(139,92,246,',
-  'Thyroid': 'rgba(13,148,136,', 'Calcium': 'rgba(249,115,22,',
-  'Pituitary': 'rgba(99,102,241,', 'Hepatic': 'rgba(217,119,6,',
-  'Uterine': 'rgba(220,38,38,', 'Electrolyte': 'rgba(37,99,235,',
-  'Neurological': 'rgba(139,92,246,', 'Renal tubular': 'rgba(220,38,38,',
+// Category → Tone. Drives bg/border/text via the shared HUE table (CSS vars),
+// so colours are automatically theme-aware instead of hardcoded pastel hex.
+const CT: Record<string, Tone> = {
+  'Mass': 'violet',         'Mass/Neoplasia': 'violet',
+  'Fluid': 'info',          'Fluid/Oedema': 'info',
+  'Gas': 'warning',         'Infection': 'danger',
+  'Infection/Inflammation': 'danger',  'Inflammation': 'orange',
+  'Structural': 'slate',    'Cardiac': 'danger',
+  'Infectious': 'danger',   'Inflammatory': 'orange',
+  'Neuromuscular': 'indigo','Dynamic collapse': 'slate',
+  'Obstruction': 'danger',  'Ulceration': 'danger',
+  'Dysmotility': 'violet',  'Haemolytic': 'danger',
+  'Hepatocellular': 'warning', 'Biliary obstruction': 'teal',
+  'Compressive': 'info',    'Vascular': 'danger',
+  'Non-compressive': 'teal','Traumatic': 'danger',
+  'Peripheral': 'teal',     'Central': 'danger',
+  'Bilateral': 'warning',   'Neoplastic': 'violet',
+  'Immune-mediated': 'orange', 'Metabolic': 'warning',
+  'Idiopathic': 'info',     'Reactive': 'danger',
+  'Regenerative': 'teal',   'Non-regenerative': 'danger',
+  'Pre-regenerative': 'warning', 'Shock': 'danger',
+  'Foreign body': 'slate',  'Dental': 'warning',
+  'Parasitic': 'warning',   'Toxic': 'danger',
+  'Inherited': 'violet',    'Endocrine': 'warning',
+  'Endocrine/Metabolic': 'warning',
+  'Cardiovascular': 'danger','Junctionopathy': 'indigo',
+  'Neuropathy': 'violet',   'Myopathy': 'orange',
+  'Syncope': 'danger',      'Seizure': 'danger',
+  'Sleep disorder': 'indigo','Stress': 'slate',
+  'Dietary': 'teal',        'Antibiotic-responsive': 'info',
+  'Infiltrative': 'orange', 'Maldigestion': 'violet',
+  'Protein-losing': 'danger','Secondary GI': 'warning',
+  'Neoplasia': 'orange',    'Obstruction/Dysmotility': 'danger',
+  'Behavioural/Neurological': 'indigo',
+  'Renal failure': 'danger','Osmotic diuresis': 'info',
+  'Adrenal': 'warning',     'Pancreatic': 'violet',
+  'Thyroid': 'teal',        'Calcium': 'orange',
+  'Pituitary': 'indigo',    'Hepatic': 'warning',
+  'Uterine': 'danger',      'Electrolyte': 'info',
+  'Neurological': 'violet', 'Renal tubular': 'danger',
+  'Nutritional': 'teal',
 }
-const DEF = 'rgba(148,163,184,'
-const TX: Record<string, string> = {
-  'rgba(37,99,235,': '#93C5FD', 'rgba(139,92,246,': '#DDD6FE', 'rgba(220,38,38,': '#FCA5A5',
-  'rgba(217,119,6,': 'var(--amber-text)', 'rgba(13,148,136,': '#99F6E4', 'rgba(249,115,22,': '#FED7AA',
-  'rgba(99,102,241,': '#C7D2FE', 'rgba(100,116,139,': '#CBD5E1', 'rgba(148,163,184,': '#CBD5E1',
-}
-const cBg = (c: string) => (CC[c] || DEF) + '0.12)'
-const cBd = (c: string) => (CC[c] || DEF) + '0.4)'
-const cTx = (c: string) => TX[CC[c] || DEF] || '#CBD5E1'
+const DEF_TONE: Tone = 'slate'
+const cHue = (cat: string) => HUE[CT[cat] ?? DEF_TONE]
+const cBg  = (cat: string) => `rgba(${cHue(cat).rgb},var(--tile-bg-a))`
+const cBd  = (cat: string) => `rgba(${cHue(cat).rgb},var(--tile-bd-a))`
+const cTx  = (cat: string) => cHue(cat).color
 const isEM = (u?: string) => !!u && u.toUpperCase() === 'EMERGENCY'
 
 // Location → diagnostic-approach sign id (the bottom "Diagnostic Approach" card).

@@ -115,7 +115,7 @@ const oedemaHydrostatic: FlowPage = {
         },
         {
           cat: 'Venous / Lymphatic (Localised)',
-          tone: 'neutral',
+          tone: 'info',
           tiles: [
             { label: ' Cranial vena cava syndrome — mediastinal mass / thrombus / pacing lead' },
             { label: ' Caudal vena cava / venous thrombosis', link: { to: 'disease', id: 'DIS-BD-HYPERCOAG' } },
@@ -155,7 +155,7 @@ const oedemaPermeability: FlowPage = {
           cat: 'Acute / Allergic',
           tone: 'warning',
           tiles: [
-            { label: ' Angioedema / anaphylaxis / envenomation — acute facial/limb swelling after drug/vaccine/sting/snakebite' },
+            { label: ' Angioedema / anaphylaxis / envenomation — acute facial/limb swelling after drug/vaccine/sting/snakebite', link: { to: 'protocol', id: 'PROT-ANAPHYLAXIS' } },
           ],
         },
       ],

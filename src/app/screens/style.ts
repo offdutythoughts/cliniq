@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react'
 // Returns style string fragments for a tone-tinted element so the common
 // bg/border/color triple can be composed without repeating rgba(rgb,α) twice.
 // bgA = background alpha (default 0.12), bdA = border alpha (default 0.4).
-export const toneBox = (rgb: string, color: string, bgA = 0.12, bdA = 0.4) => ({
+export const toneBox = (rgb: string, color: string, bgA: string | number = 'var(--tile-bg-a)', bdA: string | number = 'var(--tile-bd-a)') => ({
   bg:  `background:rgba(${rgb},${bgA});`,
   bd:  `border:1.5px solid rgba(${rgb},${bdA});`,
   col: `color:${color};`,

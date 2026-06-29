@@ -11,20 +11,16 @@ import { HUE, TITLE } from '../../lib/signs/tone'
 import { DX } from '../../lib/signs/dx'
 import { RichText } from '../../components/RichText'
 import { useNav } from '../nav/NavContext'
-import { linkToView, type View } from '../nav/view'
+import { linkToView } from '../nav/view'
 import { styleStringToObject as s, toneBox } from './style'
 import { NotFound } from './NotFound'
+import { type Nav, Raw, ToneBox } from './flowHelpers'
 
 const STD_NAV: DxNavItem[] = [
   { key: 'history', label: '📋 History' },
   { key: 'exam', label: '🩺 Exam' },
   { key: 'dx', label: '🔬 Diagnostics' },
 ]
-
-type Nav = (v: View) => void
-
-// Raw authored-HTML field → audited React elements.
-const Raw = ({ html, onNav }: { html: string; onNav: Nav }) => <RichText html={html} onNavigate={onNav} />
 
 function DxTabs({ sign, nav, active, variant = 'std' }: { sign: string; nav: DxNavItem[]; active: string; variant?: string }) {
   const router = useNav()
@@ -56,7 +52,7 @@ function DxStep({ b, onNav }: { b: Extract<DxBlock, { kind: 'step' }>; onNav: Na
   if (b.tone) {
     const h = HUE[b.tone]
     return (
-      <div className="dx-step" style={s(`${toneBox(h.rgb,h.color,0.15).bg}border-color:rgba(${h.rgb},0.4);color:${TITLE[b.tone] ?? h.color};`)}>
+      <div className="dx-step" style={s(`${toneBox(h.rgb,h.color).bg}border-color:rgba(${h.rgb},var(--tile-bd-a));color:${TITLE[b.tone] ?? h.color};`)}>
         <Raw html={b.text} onNav={onNav} />
       </div>
     )
@@ -79,23 +75,23 @@ function DxRow({ b, onNav }: { b: Extract<DxBlock, { kind: 'row' }>; onNav: Nav 
 function DxCallout({ b, onNav }: { b: Extract<DxBlock, { kind: 'callout' }>; onNav: Nav }) {
   const h = HUE[b.tone]
   return (
-    <div style={s(`margin-top:${b.gap ?? 12}px;padding:10px 14px;background:rgba(${h.rgb},0.1);border:1px solid rgba(${h.rgb},0.25);border-radius:10px;`)}>
+    <ToneBox tone={b.tone} extra={`margin-top:${b.gap ?? 12}px;padding:10px 14px;`}>
       <div style={s(`font-size:10px;font-weight:700;color:${TITLE[b.tone] ?? h.color};margin-bottom:4px;`)}>{b.title}</div>
       <div style={s(`font-size:10px;color:${h.color};line-height:1.6;`)}><Raw html={b.html} onNav={onNav} /></div>
-    </div>
+    </ToneBox>
   )
 }
 
 function DxDiseaseGrid({ b, onNav }: { b: Extract<DxBlock, { kind: 'diseaseGrid' }>; onNav: Nav }) {
   return (
-    <div style={s('margin-top:10px;padding:10px 12px;background:rgba(var(--tone-teal),0.08);border:1px solid rgba(var(--tone-teal),0.25);border-radius:10px;')}>
+    <ToneBox tone="teal" extra="margin-top:10px;padding:10px 12px;">
       <div style={s('font-size:11px;font-weight:700;color:var(--tone-teal-fg);margin-bottom:6px;')}>{b.title}</div>
       <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;')}>
         {b.links.map((l, i) => (
           <div key={i} role="button" style={s('cursor:pointer;color:var(--fg-teal-deep);')} onClick={() => onNav(linkToView(l.link))}>→ {l.label}</div>
         ))}
       </div>
-    </div>
+    </ToneBox>
   )
 }
 
@@ -104,21 +100,23 @@ function DxAccordion({ b, onNav }: { b: Extract<DxBlock, { kind: 'accordion' }>;
   return (
     <div style={s(grid)}>
       {b.items.map((item, i) => (
-        <details key={i} style={s('background:rgba(var(--tone-teal),0.08);border:1px solid rgba(var(--tone-teal),0.2);border-radius:10px;overflow:hidden;')}>
-          <summary style={s('padding:10px 12px;font-size:11px;font-weight:700;color:var(--tone-teal-fg);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;')}>
-            {item.title}
-            <span style={s('font-size:10px;opacity:.6;flex-shrink:0;margin-left:8px;')}>▸ tap to expand</span>
-          </summary>
-          <div style={s('padding:8px 12px 10px;font-size:10.5px;line-height:1.6;color:var(--gray);border-top:1px solid rgba(var(--tone-teal),0.15);')}>
-            <Raw html={item.html} onNav={onNav} />
-          </div>
-        </details>
+        <ToneBox key={i} tone="teal" extra="overflow:hidden;">
+          <details>
+            <summary style={s('padding:10px 12px;font-size:11px;font-weight:700;color:var(--tone-teal-fg);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;')}>
+              {item.title}
+              <span style={s('font-size:10px;opacity:.6;flex-shrink:0;margin-left:8px;')}>▸ tap to expand</span>
+            </summary>
+            <div style={s('padding:8px 12px 10px;font-size:10.5px;line-height:1.6;color:var(--gray);border-top:1px solid rgba(var(--tone-teal),0.15);')}>
+              <Raw html={item.html} onNav={onNav} />
+            </div>
+          </details>
+        </ToneBox>
       ))}
     </div>
   )
 }
 
-function DxComparisonTable({ b }: { b: Extract<DxBlock, { kind: 'comparisonTable' }> }) {
+function DxComparisonTable({ b, onNav }: { b: Extract<DxBlock, { kind: 'comparisonTable' }>; onNav: Nav }) {
   const fs = b.fontSize ?? '10px'
   const cellPad = '10px 8px'
   const borderRow = '1px solid rgba(var(--slate-muted),0.1)'
@@ -169,9 +167,9 @@ function DxComparisonTable({ b }: { b: Extract<DxBlock, { kind: 'comparisonTable
                 const fw = col.isLabel ? '600' : undefined
                 const align = ci === 0 ? 'left' : 'center'
                 return (
-                  <td key={ci} style={s(`padding:${cellPad};font-size:${fs};color:${color};${fw ? `font-weight:${fw};` : ''}text-align:${align};border-bottom:${borderRow};line-height:1.4;`)}
-                    dangerouslySetInnerHTML={{ __html: cellHtml(cell) }}
-                  />
+                  <td key={ci} style={s(`padding:${cellPad};font-size:${fs};color:${color};${fw ? `font-weight:${fw};` : ''}text-align:${align};border-bottom:${borderRow};line-height:1.4;`)}>
+                    <RichText html={cellHtml(cell)} onNavigate={onNav} />
+                  </td>
                 )
               })}
             </tr>
@@ -217,7 +215,7 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
         </div>
       )
     }
-    case 'comparisonTable': return <DxComparisonTable b={b} />
+    case 'comparisonTable': return <DxComparisonTable b={b} onNav={onNav} />
     case 'html': return <Raw html={b.html} onNav={onNav} />
     case 'disclaimer': return <div className="disclaimer">For qualified veterinary professionals only.</div>
   }

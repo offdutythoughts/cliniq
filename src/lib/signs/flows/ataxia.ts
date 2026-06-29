@@ -51,7 +51,7 @@ const ataxiaEntry: FlowPage = {
 
     {
       kind: 'callout',
-      tone: 'neutral',
+      tone: 'slate',
       gap: 12,
       connectAfter: false,
       title: '💡 Key distinctions',

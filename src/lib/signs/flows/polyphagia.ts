@@ -67,7 +67,7 @@ const polyphagiaWeightLoss: FlowPage = {
             { label: ' DIABETES MELLITUS', link: { to: 'disease', id: 'DIS-ENDO-DM' } },
             { label: ' FELINE HYPERTHYROIDISM', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
             { label: ' ACROMEGALY (cat)', link: { to: 'disease', id: 'DIS-ENDO-ACRO' } },
-            { label: ' DIABETIC KETOACIDOSIS', link: { to: 'disease', id: 'DIS-ENDO-DKA' } },
+            { label: ' DIABETIC KETOACIDOSIS', link: { to: 'protocol', id: 'PROT-ENDO-DKA' } },
           ],
         },
         {
@@ -114,7 +114,7 @@ const polyphagiaWeightGain: FlowPage = {
         },
         {
           cat: 'Behavioural',
-          tone: 'neutral',
+          tone: 'slate',
           tiles: [
             { label: ' Overfeeding / palatable diet — most common' },
             { label: ' Psychogenic / behavioural — stress, food competition, learned begging' },

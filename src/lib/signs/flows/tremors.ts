@@ -1,5 +1,6 @@
 // ── Tremors flowchart ───────────────────────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
+import { DONT_MISS_TITLE, IDENTIFY_CAUSE_STEP } from '../flowTypes'
 
 const tremorsEntry: FlowPage = {
   id: 'tremors',
@@ -20,6 +21,7 @@ const tremorsEntry: FlowPage = {
     {
       kind: 'choices',
       cols: 3,
+      connectAfter: false,
       items: [
         {
           tone: 'danger',
@@ -42,10 +44,76 @@ const tremorsEntry: FlowPage = {
       ],
     },
 
+    { kind: 'node', variant: 'step', text: 'DIFFERENTIAL DIAGNOSIS — CLASSIFY BY CAUSE' },
+    {
+      kind: 'dxRow',
+      items: [
+        { label: 'Diagnostic Approach', link: { to: 'dx', id: 'tremors' }, accent: true },
+      ],
+    },
+    {
+      kind: 'categoryColumns',
+      cols: 3,
+      columns: [
+        {
+          cat: 'Toxic',
+          tiles: [
+            { label: 'Tremorgenic mycotoxins' },
+            { label: 'Metaldehyde (slug bait)' },
+            { label: 'Permethrin (cats)' },
+            { label: 'Organophosphate / carbamate' },
+            { label: 'Lead' },
+            { label: 'Methylxanthines / caffeine / theobromine', link: { to: 'disease', id: 'DIS-TOXIC-METHYL' } },
+            { label: 'Cannabis / cannabinoids' },
+            { label: 'Metronidazole (esp. cats)', link: { to: 'disease', id: 'DIS-NEU-METRO' } },
+            { label: 'Ivermectin / macrocyclic lactones (MDR1 breeds)' },
+          ],
+        },
+        {
+          cat: 'Metabolic / Endocrine',
+          tiles: [
+            { label: 'Hypocalcaemia — eclampsia, hypoparathyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPOPTH' } },
+            { label: 'Hypoglycaemia — insulinoma, PSS, toy-breed/neonate', link: { to: 'disease', id: 'DIS-MET-HYPOGLY' } },
+            { label: 'Insulinoma', link: { to: 'disease', id: 'DIS-NEO-INSULINOMA' } },
+            { label: 'Hypokalaemia', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },
+          ],
+        },
+        {
+          cat: 'Inflammatory',
+          tiles: [
+            { label: 'MUO / meningoencephalitis', link: { to: 'disease', id: 'DIS-NEU-MUE' } },
+            { label: 'GME', link: { to: 'disease', id: 'DIS-GME' } },
+            { label: 'Infectious encephalitis (CDV, Neospora, Toxoplasma)' },
+          ],
+        },
+        {
+          cat: 'Immune-mediated',
+          tiles: [
+            { label: 'Idiopathic generalised tremor syndrome (IGTS) — "white-shaker"; steroid-responsive', link: { to: 'disease', id: 'DIS-NEU-IGTS' } },
+          ],
+        },
+        {
+          cat: 'Degenerative',
+          tiles: [
+            { label: 'Cerebellar abiotrophy', link: { to: 'disease', id: 'DIS-NEU-ABIOTROPHY' } },
+            { label: 'Idiopathic head tremor (IHTS) — head bobbing; Bulldog/Boxer/Labrador', link: { to: 'disease', id: 'DIS-NEU-IHTS' } },
+            { label: 'Orthostatic tremor — standing only; Great Dane/Deerhound or senile' },
+          ],
+        },
+        {
+          cat: 'Anomalous',
+          tiles: [
+            { label: 'Cerebellar hypoplasia (FPV in kittens; congenital)', link: { to: 'disease', id: 'DIS-NEU-CEREHYPO' } },
+            { label: 'Hypomyelination — "shaker pup"; tremor from ~10 days; many recover by 5 months', link: { to: 'disease', id: 'DIS-NEU-HYPOMYEL' } },
+          ],
+        },
+      ],
+    },
+
     {
       kind: 'alert',
       tone: 'danger',
-      title: "ALWAYS RULE OUT / DON'T MISS",
+      title: DONT_MISS_TITLE,
       items: [
         '<strong>Tremorgenic mycotoxin / metaldehyde toxicosis</strong> — acute generalised tremor with <strong>hyperthermia</strong> is an emergency; cool actively, decontaminate, and control tremors (methocarbamol 40–50 mg/kg slow IV; ILE for lipophilic toxins) BEFORE the work-up',
         '<strong>Permethrin in a cat</strong> — misapplied dog pyrethroid spot-on; tremors → seizures + hyperthermia; bathe, methocarbamol, ILE',
@@ -99,7 +167,7 @@ const tremorsCerebellar: FlowPage = {
   title: 'Tremors — Cerebellar',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' CEREBELLAR', sub: 'INTENTION tremor — crescendos as the head/limb approaches a target (eating, sniffing) + postural head tremor + truncal sway; NO weakness, NO proprioceptive deficits (Ettinger Ch 42)' },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryGrid',
       columns: [
@@ -136,7 +204,7 @@ const tremorsIdiopathic: FlowPage = {
   title: 'Tremors — Idiopathic / Other',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' IDIOPATHIC / OTHER', sub: 'Whole-body fine tremor in a young dog with a normal neuro exam — worse with anxiety; classic "white-shaker", but ANY breed (rare in dogs >20 kg) (Ettinger Ch 42)' },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryGrid',
       columns: [
@@ -149,7 +217,7 @@ const tremorsIdiopathic: FlowPage = {
         },
         {
           cat: 'Breed-Related / Benign',
-          tone: 'neutral',
+          tone: 'info',
           tiles: [
             { label: ' Idiopathic head tremor (IHTS) — "head-bobbing"; Bulldog/Boxer/Doberman/Labrador; benign, AED-unresponsive', link: { to: 'disease', id: 'DIS-NEU-IHTS' } },
             { label: ' Hypomyelination ("shaker pup") — tremor from ~10 days of age when aroused; many recover by 5 months', link: { to: 'disease', id: 'DIS-NEU-HYPOMYEL' } },

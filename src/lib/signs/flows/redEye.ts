@@ -157,7 +157,7 @@ const redEyeOrbit: FlowPage = {
       // Legacy uses a `.dx-check` box here, sitting between two .fn-arrow
       // connectors → must be a spine block, so a neutral callout (not html).
       kind: 'callout',
-      tone: 'neutral',
+      tone: 'slate',
       html: '• Exophthalmos · third eyelid protrusion · resistance on retropulsion<br>' +
         '• Pain on opening mouth (zygomatic abscess/cellulitis) — typical of acute orbital inflammation<br>' +
         '• Strabismus (extraocular muscle involvement)<br>' +

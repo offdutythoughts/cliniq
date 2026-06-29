@@ -91,7 +91,7 @@ const constipationPelvic: FlowPage = {
       columns: [
         {
           cat: 'Structural / Mechanical',
-          tone: 'neutral',
+          tone: 'slate',
           tiles: [
             { label: 'HEALED PELVIC-FRACTURE NARROWING', link: { to: 'disease', id: 'DIS-NEU-SPFX' } },
             { label: 'PROSTATOMEGALY — BPH', link: { to: 'disease', id: 'DIS-URO-BPH' } },

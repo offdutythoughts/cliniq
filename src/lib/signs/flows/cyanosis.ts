@@ -113,7 +113,7 @@ const cyanosisCardiac: FlowPage = {
         },
         {
           cat: 'Underlying Heart Failure',
-          tone: 'neutral',
+          tone: 'danger',
           tiles: [
             { label: ' MVD (MMVD) → pulmonary oedema', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
             { label: ' DCM → pulmonary oedema', link: { to: 'disease', id: 'DIS-CARD-DCM' } },

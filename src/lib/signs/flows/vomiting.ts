@@ -49,7 +49,7 @@ const vomitingEntry: FlowPage = {
                 },
                 {
                   header: 'NOT related to eating',
-                  tone: 'neutral',
+                  tone: 'slate',
                   blocks: [
                     { kind: 'node', variant: 'step', text: 'Other systemic signs?\nPU/PD, jaundice, malaise' },
                     {

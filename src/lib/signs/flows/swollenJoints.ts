@@ -34,7 +34,7 @@ const swollenJointsEntry: FlowPage = {
           link: { to: 'flow', id: 'swollen-joints-immune' },
         },
         {
-          tone: 'neutral',
+          tone: 'slate',
           label: ' NON-INFLAMMATORY / DEGENERATIVE',
           sublabel: 'Mononuclear synovial fluid · <10% neutrophils · intermittent / shifting lameness in an otherwise well animal',
           link: { to: 'flow', id: 'swollen-joints-noninflam' },
@@ -134,7 +134,7 @@ const swollenJointsNoninflam: FlowPage = {
       columns: [
         {
           cat: 'Degenerative / Traumatic',
-          tone: 'neutral',
+          tone: 'slate',
           tiles: [
             { label: ' OSTEOARTHRITIS / DJD — conformational · CCL rupture · patellar luxation · secondary OA', link: { to: 'disease', id: 'DIS-MSK-OA' } },
             { label: ' TRAUMA / HAEMARTHROSIS — cruciate injury; haemarthrosis from a bleeding disorder' },

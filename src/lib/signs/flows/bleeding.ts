@@ -110,34 +110,14 @@ const bleedingEntry: FlowPage = {
       <div style="font-size:9px;font-weight:600;color:var(--gray2);">NO cavity / deep bleed</div>
       <div class="flow-arrow-v">↓</div>
 
-      <!-- Q2b -->
-      <div class="flow-node sub-step" style="width:100%;font-size:10px;">Petechiae /<br>ecchymoses?</div>
-      <div class="flow-arrow-v">↓</div>
-
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
-        <!-- YES → PRIMARY / VASCULOPATHY -->
-        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-          <div style="font-size:9px;font-weight:600;color:var(--tone-danger-fg);">YES</div>
-          <div class="flow-arrow-v" style="font-size:11px;">↓</div>
-          <div style="display:flex;flex-direction:column;gap:3px;width:100%;">
-            <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderFlowId('bleeding-primary')">
-              🧱 PRIMARY<br>
-              <span style="opacity:.75;font-size:8px;">Platelet · vWF ›</span>
-            </div>
-            <div class="flow-endpoint" style="background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:var(--tone-violet-fg);font-size:8.5px;cursor:pointer;width:100%;text-align:center;" onclick="renderFlowId('bleeding-vasc')">
-              🌐 VASCULO-<br>PATHY<br>
-              <span style="opacity:.65;font-size:7.5px;">If plt + coags normal ›</span>
-            </div>
-          </div>
+        <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderFlowId('bleeding-primary')">
+          🧱 PRIMARY<br>
+          <span style="opacity:.75;font-size:8px;">Platelet · vWF ›</span>
         </div>
-        <!-- NO → VASCULOPATHY (no petechiae — e.g. skin ulcers, retinal, systemic) -->
-        <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
-          <div style="font-size:9px;font-weight:600;color:var(--gray2);">NO</div>
-          <div class="flow-arrow-v" style="font-size:11px;">↓</div>
-          <div class="flow-endpoint" style="background:rgba(139,92,246,0.1);border:1.5px solid rgba(139,92,246,0.35);color:var(--tone-violet-fg);font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderFlowId('bleeding-vasc')">
-            🌐 VASCULO-<br>PATHY<br>
-            <span style="opacity:.75;font-size:8px;">Vessel wall ›</span>
-          </div>
+        <div class="flow-endpoint" style="background:rgba(139,92,246,0.1);border:1.5px solid rgba(139,92,246,0.35);color:var(--tone-violet-fg);font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderFlowId('bleeding-vasc')">
+          🌐 VASCULO-<br>PATHY<br>
+          <span style="opacity:.75;font-size:8px;">Vessel wall ›</span>
         </div>
       </div>
     </div>
@@ -246,28 +226,20 @@ const bleedingPrimary: FlowPage = {
           <span style="font-size:9px;font-weight:400;color:var(--gray);">Platelet function defect</span>
         </div>
         <div class="flow-arrow-v">↓</div>
-        <div class="flow-node sub-step" style="width:100%;font-size:10px;">Check BMBT<br>(buccal mucosal bleed time)</div>
-        <div class="flow-arrow-v">↓</div>
-        <div class="flow-node" style="width:100%;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.3);font-size:9.5px;color:var(--amber-text);">
-          <strong>BMBT prolonged &gt; 4 min</strong><br>
-          <span style="opacity:.8;">Abnormal platelet function, vWD, or vasculitis</span>
-        </div>
+        <div class="flow-node sub-step" style="width:100%;font-size:10px;">BMBT prolonged &gt; 4 min</div>
         <div class="flow-arrow-v">↓</div>
 
         <div style="display:flex;flex-direction:column;gap:5px;width:100%;">
           <div class="flow-endpoint" onclick="renderFlowId('bleeding-thrombopathia')" style="cursor:pointer;background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:var(--tone-green-fg);font-size:9px;text-align:center;">
-            <div style="font-weight:700;margin-bottom:3px;">Thrombopathia</div>
-            <div style="font-size:8px;opacity:.75;">vWD · drugs · Glanzmann's · uraemia</div>
+            <div style="font-weight:700;">Thrombopathia</div>
             <div style="font-size:8px;opacity:.5;margin-top:4px;">Tap to explore ›</div>
           </div>
           <div class="flow-endpoint" onclick="renderFlowId('bleeding-vasc')" style="cursor:pointer;background:rgba(139,92,246,0.08);border:1.5px solid rgba(139,92,246,0.3);color:var(--tone-violet-fg);font-size:9px;text-align:center;">
-            <div style="font-weight:700;margin-bottom:3px;">Vasculitis</div>
-            <div style="font-size:8px;opacity:.75;">CRGV · ehrlichiosis · RMSF · hypertension</div>
+            <div style="font-weight:700;">Vasculitis</div>
             <div style="font-size:8px;opacity:.5;margin-top:4px;">Tap to explore ›</div>
           </div>
           <div class="flow-endpoint" onclick="renderFlowId('bleeding-immune-plt')" style="cursor:pointer;background:rgba(245,158,11,0.08);border:1.5px solid rgba(245,158,11,0.3);color:var(--tone-warning-fg);font-size:9px;text-align:center;">
-            <div style="font-weight:700;margin-bottom:3px;">Immune-mediated</div>
-            <div style="font-size:8px;opacity:.75;">Evans · SLE · antiphospholipid</div>
+            <div style="font-weight:700;">Immune-mediated</div>
             <div style="font-size:8px;opacity:.5;margin-top:4px;">Tap to explore ›</div>
           </div>
         </div>
@@ -469,62 +441,49 @@ const bleedingVasc: FlowPage = {
       kind: 'branch',
       columns: [
         {
-          header: '🩸 CUTANEOUS / SKIN',
+          header: '🩸 CUTANEOUS',
           tone: 'violet',
-          sub: 'Distal limb / ear pinna / paw pad ulcers · necrosis · skin purpura',
+          sub: 'Skin · paw pads · ear tips',
           blocks: [
             {
               kind: 'endpoints',
               items: [
-                { icon: '🦺', label: 'CRGV / ALABAMA ROT', sublabel: 'Distal limb ulcers → AKI in 1–10 days', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-CRGV' } },
-                { icon: '🩸', label: 'CUTANEOUS VASCULITIS', sublabel: 'Ear pinna · paws · skin plaques', tone: 'violet', link: { to: 'disease', id: 'DIS-BD-VASC' } },
-                { icon: '🦟', label: 'EHRLICHIOSIS', sublabel: 'Tick-borne · distal extremities', tone: 'orange', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
-                { icon: '🔴', label: 'RMSF', sublabel: 'Tick-borne · petechiae · skin', tone: 'danger', link: { to: 'disease', id: 'DIS-INFECT-RMSF' } },
+                { icon: '🦺', label: 'CRGV / ALABAMA ROT', sublabel: '→ AKI in 1–10 days', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-CRGV' } },
+                { icon: '🩸', label: 'CUTANEOUS VASCULITIS', tone: 'violet', link: { to: 'disease', id: 'DIS-BD-VASC' } },
+                { label: 'Lhasa Apso vasculopathy', sublabel: 'ear tips', tone: 'neutral' },
               ],
             },
           ],
         },
         {
-          header: '🩸 CUTANEOUS / SKIN (cont.)',
-          tone: 'violet',
-          sub: 'Infectious · breed-specific · zoonotic',
+          header: '🦟 INFECTIOUS',
+          tone: 'orange',
+          sub: 'Tick-borne · zoonotic · endemic',
           blocks: [
             {
               kind: 'endpoints',
               items: [
-                { icon: '🌍', label: 'LEISHMANIASIS', sublabel: 'Paw pad ulcers · endemic regions', tone: 'green', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
-                { icon: '🦠', label: 'LEPTOSPIROSIS', sublabel: 'Skin + renal · purpura · zoonotic', tone: 'warning', link: { to: 'disease', id: 'DIS-INFECT-LEPTO' } },
-                { icon: '🐱', label: 'FIP', sublabel: 'Cats · skin vasculitis', tone: 'neutral', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
-                { label: 'Lhasa Apso vasculopathy', sublabel: 'Breed-specific · ear tips', tone: 'neutral' },
+                { icon: '🦟', label: 'EHRLICHIOSIS', sublabel: 'tick-borne', tone: 'orange', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
+                { icon: '🔴', label: 'RMSF', sublabel: 'tick-borne · petechiae', tone: 'danger', link: { to: 'disease', id: 'DIS-INFECT-RMSF' } },
+                { icon: '🌍', label: 'LEISHMANIASIS', sublabel: 'endemic regions', tone: 'green', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
+                { icon: '🦠', label: 'LEPTOSPIROSIS', sublabel: 'zoonotic · renal', tone: 'warning', link: { to: 'disease', id: 'DIS-INFECT-LEPTO' } },
+                { icon: '🐱', label: 'FIP', sublabel: 'cats', tone: 'neutral', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
               ],
             },
           ],
         },
         {
-          header: '👁 SYSTEMIC / OPHTHALMIC',
+          header: '👁 SYSTEMIC / METABOLIC',
           tone: 'danger',
-          sub: 'Retinal haemorrhage · detachment · hypertension',
+          sub: 'Retinal · multi-organ · iatrogenic',
           blocks: [
             {
               kind: 'endpoints',
               items: [
-                { icon: '📈', label: 'HYPERTENSION', sublabel: 'Most common — retinal detachment', tone: 'danger', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
-                { icon: '🩸', label: 'HYPERVISCOSITY', sublabel: 'Myeloma · hyperglobulinaemia', tone: 'violet', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
-              ],
-            },
-          ],
-        },
-        {
-          header: '👁 SYSTEMIC / OPHTHALMIC (cont.)',
-          tone: 'danger',
-          sub: 'Easy bruising · metabolic · multi-system',
-          blocks: [
-            {
-              kind: 'endpoints',
-              items: [
-                { icon: '🦟', label: 'EHRLICHIOSIS', sublabel: 'Retinal haemorrhage + systemic', tone: 'orange', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
-                { icon: '💊', label: 'HAC / STEROIDS', sublabel: 'Easy bruising · venepuncture · GI', tone: 'warning', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
-                { icon: '🫘', label: 'URAEMIC VASCULOPATHY', sublabel: 'CKD end-stage · widespread', tone: 'neutral', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
+                { icon: '📈', label: 'HYPERTENSION', sublabel: 'retinal detachment', tone: 'danger', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
+                { icon: '🩸', label: 'HYPERVISCOSITY', sublabel: 'myeloma · globulinaemia', tone: 'violet', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
+                { icon: '💊', label: 'HAC / STEROIDS', sublabel: 'easy bruising', tone: 'warning', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
+                { icon: '🫘', label: 'URAEMIC VASCULOPATHY', sublabel: 'CKD end-stage', tone: 'neutral', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
               ],
             },
           ],
@@ -590,7 +549,7 @@ const bleedingProd: FlowPage = {
         },
         {
           header: 'Secondary / Infectious',
-          tone: 'neutral',
+          tone: 'danger',
           blocks: [{ kind: 'endpoints', items: [
             { label: 'FeLV', sublabel: 'Direct myelosuppression — cats', tone: 'neutral', link: { to: 'disease', id: 'DIS-INFECT-FELV' } },
             { label: 'Ehrlichiosis', sublabel: 'Tick-borne; also causes destruction', tone: 'orange', link: { to: 'disease', id: 'DIS-BD-EHRL' } },
@@ -622,9 +581,9 @@ const bleedingConsump: FlowPage = {
           tone: 'danger',
           blocks: [{ kind: 'endpoints', items: [
             { label: 'Significant haemorrhage', sublabel: 'Platelets lost with bleeding; secondary thrombocytopenia', tone: 'danger' },
-            { label: 'Sepsis', sublabel: 'Platelet activation + consumption in microthrombi', tone: 'danger' },
+            { label: 'Sepsis', sublabel: 'Platelet activation + consumption in microthrombi', tone: 'danger', link: { to: 'protocol', id: 'PROT-SEPSIS' } },
             { label: 'Vasculitis', sublabel: 'Endothelial damage → continuous platelet activation', tone: 'danger' },
-            { label: 'DIC', link: { to: 'disease', id: 'DIS-BD-DIC' }, sublabel: 'Early thrombosis → late haemorrhage; PT + aPTT both prolonged', tone: 'danger' },
+            { label: 'DIC', link: { to: 'protocol', id: 'PROT-BLEED-DIC' }, sublabel: 'Early thrombosis → late haemorrhage; PT + aPTT both prolonged', tone: 'danger' },
           ]}],
         },
         {
@@ -710,18 +669,18 @@ const bleedingThrombopathia: FlowPage = {
           header: 'Inherited',
           tone: 'green',
           blocks: [{ kind: 'endpoints', items: [
-            { label: 'von Willebrand Disease', sublabel: 'Dobermann (type I) · Scottie (type III) · Shetland · GSD · cats rarely — send vWF activity assay · DDAVP 1 µg/kg SC 30 min pre-op (type I only)', tone: 'green' },
-            { label: "Glanzmann's Thrombasthenia", sublabel: 'GRT · Otterhound — breed-linked · absent GPIIb/IIIa · no platelet aggregation on aggregometry', tone: 'green' },
+            { label: 'von Willebrand Disease', tone: 'green', link: { to: 'disease', id: 'DIS-BD-VWD' } },
+            { label: "Glanzmann's Thrombasthenia", tone: 'green', link: { to: 'disease', id: 'DIS-BD-TPATH' } },
           ]}],
         },
         {
           header: 'Acquired',
           tone: 'warning',
           blocks: [{ kind: 'endpoints', items: [
-            { label: 'Drug-induced', sublabel: 'Aspirin · NSAIDs (COX-1 inhibition) · clopidogrel (ADP receptor block) · ask for all medications', tone: 'warning' },
-            { label: 'Uraemia', sublabel: 'Guanidinosuccinic acid inhibits platelet GP1b — reversible with dialysis or desmopressin · check creatinine + SDMA', tone: 'warning' },
-            { label: 'Dysproteinaemia', sublabel: 'Myeloma · hyperglobulinaemia — paraprotein coats platelets; serum protein electrophoresis', tone: 'warning' },
-            { label: 'Hepatic failure', sublabel: 'Reduced thromboxane synthesis + dysfibrinogenaemia', tone: 'warning' },
+            { label: 'Drug-induced', tone: 'warning', link: { to: 'disease', id: 'DIS-BD-TPATH' } },
+            { label: 'Uraemia', tone: 'warning', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
+            { label: 'Dysproteinaemia', tone: 'warning', link: { to: 'disease', id: 'DIS-NEO-MM' } },
+            { label: 'Hepatic failure', tone: 'warning', link: { to: 'disease', id: 'DIS-HEP-CHRONHEP' } },
           ]}],
         },
       ],

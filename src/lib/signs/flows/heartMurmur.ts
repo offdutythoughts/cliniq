@@ -123,7 +123,7 @@ const heartMurmurAcquired: FlowPage = {
         },
         {
           cat: 'Pericardial / Miscellaneous',
-          tone: 'neutral',
+          tone: 'slate',
           tiles: [
             { label: ' PERICARDIAL DISEASE', link: { to: 'disease', id: 'DIS-CARD-PERIC' } },
           ],

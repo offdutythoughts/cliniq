@@ -122,7 +122,7 @@ const weaknessEpisodic: FlowPage = {
     },
     {
       kind: 'infoBox',
-      tone: 'neutral',
+      tone: 'slate',
       html: '<strong style="color:var(--white);">Minimum database for episodic weakness:</strong> Haematology + biochemistry (electrolytes, glucose) + ECG + blood pressure + urinalysis',
     },
   ],

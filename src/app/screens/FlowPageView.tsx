@@ -15,12 +15,10 @@ import { HUE, TITLE } from '../../lib/signs/tone'
 import { FLOWS } from '../../lib/signs/flows'
 import { RichText } from '../../components/RichText'
 import { useNav } from '../nav/NavContext'
-import { linkToView, type View } from '../nav/view'
+import { linkToView } from '../nav/view'
 import { styleStringToObject as s, toneBox } from './style'
 import { NotFound } from './NotFound'
-
-type Nav = (v: View) => void
-const Raw = ({ html, onNav }: { html: string; onNav: Nav }) => <RichText html={html} onNavigate={onNav} />
+import { type Nav, Raw, ToneBox } from './flowHelpers'
 
 const DISCLAIMER = <div className="disclaimer">For qualified veterinary professionals only.</div>
 
@@ -48,16 +46,13 @@ function BlockList({ blocks, fn, onNav }: { blocks: Block[]; fn?: boolean; onNav
   )
 }
 
-// ── Tinted box ────────────────────────────────────────────────────────────────
-function Box({ tone, bgA, bdA, extra = '', children }: { tone: Tone; bgA: number; bdA: number; extra?: string; children: ReactNode }) {
-  const h = HUE[tone]
-  return <div style={s(`background:rgba(${h.rgb},${bgA});border:1px solid rgba(${h.rgb},${bdA});border-radius:10px;width:100%;${extra}`)}>{children}</div>
-}
+// ToneBox is the shared tinted-panel abstraction (imported from flowHelpers).
+const Box = ToneBox
 
 // ── Node ──────────────────────────────────────────────────────────────────────
 function NodeBlock({ b }: { b: Extract<Block, { kind: 'node' }> }) {
   if (b.variant === 'entry') {
-    const tone = b.tone ? s(`background:rgba(${HUE[b.tone].rgb},0.15);border-color:rgba(${HUE[b.tone].rgb},0.4);color:${HUE[b.tone].color};`) : undefined
+    const tone = b.tone ? s(`background:rgba(${HUE[b.tone].rgb},var(--tile-bg-a));border-color:rgba(${HUE[b.tone].rgb},var(--tile-bd-a));color:${HUE[b.tone].color};`) : undefined
     return (
       <>
         <div className="flow-node entry" style={tone}>{b.text}</div>
@@ -76,9 +71,9 @@ function NodeBlock({ b }: { b: Extract<Block, { kind: 'node' }> }) {
 
 // ── Endpoints ─────────────────────────────────────────────────────────────────
 function endpointStyle(tone: Tone): string {
-  if (tone === 'neutral') return 'background:rgba(255,255,255,0.04);border:1.5px solid var(--border2);color:var(--gray);'
+  if (tone === 'neutral') return 'background:var(--card);border:1.5px solid var(--border2);color:var(--gray);'
   const h = HUE[tone]
-  return `background:rgba(${h.rgb},0.09);border:1.5px solid rgba(${h.rgb},0.32);color:${h.color};`
+  return `background:rgba(${h.rgb},var(--panel-bg-a));border:1.5px solid rgba(${h.rgb},var(--panel-bd-a));color:${h.color};`
 }
 function EndpointView({ e, onNav }: { e: Endpoint; onNav: Nav }) {
   const tone = e.tone ?? 'neutral'
@@ -107,7 +102,7 @@ function ChoicesBlock({ cols, size, items, onNav }: { cols: number; size: number
     <div style={s(`display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;`)}>
       {items.map((it, i) => {
         const cls = it.variant ? ` ${it.variant}` : ''
-        const toneStyle = it.tone ? `background:rgba(${HUE[it.tone].rgb},0.12);border-color:rgba(${HUE[it.tone].rgb},0.4);color:${HUE[it.tone].color};` : ''
+        const toneStyle = it.tone ? `background:rgba(${HUE[it.tone].rgb},var(--tile-bg-a));border-color:rgba(${HUE[it.tone].rgb},var(--tile-bd-a));color:${HUE[it.tone].color};` : ''
         const cursor = it.link ? 'cursor:pointer;' : ''
         return (
           <div key={i} className={`flow-node${cls}`} style={s(`${toneStyle}${cursor}font-size:${size}px;font-weight:700;`)}
@@ -150,7 +145,7 @@ function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav:
   if (!b.boxTone && !b.title) return b.gap ? <div style={s(`margin-top:${b.gap}px;width:100%;`)}>{wrapped}{foot}</div> : <>{wrapped}{foot}</>
   const tone = b.boxTone ?? 'neutral'
   return (
-    <Box tone={tone} bgA={0.07} bdA={0.25} extra={`padding:10px 12px;${b.gap ? `margin-top:${b.gap}px;` : ''}`}>
+    <Box tone={tone} extra={`padding:10px 12px;${b.gap ? `margin-top:${b.gap}px;` : ''}`}>
       {b.title && <div style={s(`font-size:10px;font-weight:700;color:${TITLE[tone] ?? HUE[tone].color};text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;`)}><Raw html={b.title} onNav={onNav} /></div>}
       {wrapped}
       {foot}
@@ -162,7 +157,7 @@ function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav:
 function CardSectionBlock({ b, onNav }: { b: Extract<Block, { kind: 'cardSection' }>; onNav: Nav }) {
   const h = HUE[b.tone]
   return (
-    <Box tone={b.tone} bgA={0.08} bdA={0.28} extra={`padding:10px 12px;margin-top:${b.gap ?? 10}px;`}>
+    <Box tone={b.tone} extra={`padding:10px 12px;margin-top:${b.gap ?? 10}px;`}>
       <div style={{ ...ST_BLOCK_TITLE, color: TITLE[b.tone] ?? h.color }}><Raw html={b.title} onNav={onNav} /></div>
       <div style={s('display:flex;flex-direction:column;gap:5px;')}>
         {b.cards.map((c, i) => (
@@ -180,7 +175,7 @@ function CardSectionBlock({ b, onNav }: { b: Extract<Block, { kind: 'cardSection
 // ── Banner ──────────────────────────────────────────────────────────────────
 function BannerBlock({ tone, html, onNav }: { tone: Tone; html: string; onNav: Nav }) {
   const h = HUE[tone]
-  return <div style={s(`margin-top:10px;padding:9px 12px;background:rgba(${h.rgb},0.07);border:1px solid rgba(${h.rgb},0.15);border-radius:10px;font-size:11px;color:${h.color};text-align:center;width:100%;`)}><Raw html={html} onNav={onNav} /></div>
+  return <div style={s(`margin-top:10px;padding:9px 12px;background:rgba(${h.rgb},var(--panel-bg-a));border:1px solid rgba(${h.rgb},var(--panel-bd-a));border-radius:10px;font-size:11px;color:${h.color};text-align:center;width:100%;`)}><Raw html={html} onNav={onNav} /></div>
 }
 
 // ── Branch + columns ──────────────────────────────────────────────────────────
@@ -189,7 +184,7 @@ function ColumnView({ col, onNav }: { col: Column; onNav: Nav }) {
   return (
     <div style={s('display:flex;flex-direction:column;align-items:center;gap:4px;')}>
       {h ? (
-        <div className="flow-node" style={s(`width:100%;background:rgba(${h.rgb},0.12);border-color:rgba(${h.rgb},0.4);font-size:10px;font-weight:700;color:${h.color};`)}>
+        <div className="flow-node" style={s(`width:100%;background:rgba(${h.rgb},var(--tile-bg-a));border-color:rgba(${h.rgb},var(--tile-bd-a));font-size:10px;font-weight:700;color:${h.color};`)}>
           {col.header}
           {col.sub && <div style={s('font-size:8.5px;font-weight:400;opacity:.85;margin-top:2px;')}>{col.sub}</div>}
         </div>
@@ -287,7 +282,7 @@ function CategoryGridBlock({ columns, onNav }: { columns: CategoryColumn[]; onNa
 }
 
 // ── Category columns (CAT_STYLE) ──────────────────────────────────────────────
-const catStyle = (v: string) => ({ bg: `rgba(var(--cat-${v}),0.15)`, border: `rgba(var(--cat-${v}),0.4)`, col: `var(--cat-${v}-fg)` })
+const catStyle = (v: string) => ({ bg: `rgba(var(--cat-${v}),var(--tile-bg-a))`, border: `rgba(var(--cat-${v}),var(--tile-bd-a))`, col: `var(--cat-${v}-fg)` })
 const CAT_STYLE: Record<string, { bg: string; border: string; col: string }> = {
   'Vascular': catStyle('vascular'),
   'Inflammatory': catStyle('inflammatory'),
@@ -307,8 +302,8 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
         const h = c.tone ? HUE[c.tone] : null
         const fb = HUE[FALLBACK_TONES[i % FALLBACK_TONES.length]]
         const st = h
-          ? { bg: `rgba(${h.rgb},0.12)`, border: `rgba(${h.rgb},0.4)`, col: h.color }
-          : CAT_STYLE[c.cat] ?? { bg: `rgba(${fb.rgb},0.12)`, border: `rgba(${fb.rgb},0.35)`, col: fb.color }
+          ? { bg: `rgba(${h.rgb},var(--tile-bg-a))`, border: `rgba(${h.rgb},var(--tile-bd-a))`, col: h.color }
+          : CAT_STYLE[c.cat] ?? { bg: `rgba(${fb.rgb},var(--tile-bg-a))`, border: `rgba(${fb.rgb},var(--tile-bd-a))`, col: fb.color }
         return (
           <div key={i} style={s('display:flex;flex-direction:column;align-items:stretch;gap:4px;')}>
             <div style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:${st.col};text-align:center;line-height:1.3;`)}>{c.cat}</div>
@@ -346,7 +341,7 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
 // ── Decision tree ─────────────────────────────────────────────────────────────
 function DecBox({ question, sub }: { question: string; sub?: string }) {
   return (
-    <div style={s('background:rgba(245,158,11,0.13);border:1.5px solid rgba(245,158,11,0.55);border-radius:10px;padding:9px 14px;width:100%;text-align:center;')}>
+    <div style={s('background:rgba(var(--tone-warning),0.13);border:1.5px solid rgba(var(--tone-warning),0.55);border-radius:10px;padding:9px 14px;width:100%;text-align:center;')}>
       <div style={s('font-size:11.5px;font-weight:700;color:var(--tone-warning-fg);line-height:1.4;')}>{question}</div>
       {sub && <div style={s('font-size:9px;color:var(--amber-text);opacity:.8;margin-top:3px;')}>{sub}</div>}
     </div>
@@ -354,7 +349,7 @@ function DecBox({ question, sub }: { question: string; sub?: string }) {
 }
 function OutBox({ o, onNav }: { o: DecisionOutcome; onNav: Nav }) {
   const h = HUE[o.tone]
-  return <div style={s(`${toneBox(h.rgb,h.color,0.12,0.5).all}border-radius:9px;padding:9px 10px;font-size:9px;line-height:1.55;`)}><Raw html={o.html} onNav={onNav} /></div>
+  return <div style={s(`${toneBox(h.rgb,h.color).all}border-radius:9px;padding:9px 10px;font-size:9px;line-height:1.55;`)}><Raw html={o.html} onNav={onNav} /></div>
 }
 function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
   if (step.type === 'split') {
@@ -373,7 +368,7 @@ function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
   }
   const down = step.continue === 'YES'
   const contColor = down ? 'var(--hl-green)' : 'var(--tone-danger-title)'
-  const arrowColor = down ? 'rgba(52,211,153,0.5)' : 'rgba(248,113,113,0.5)'
+  const arrowColor = down ? 'rgba(var(--tone-green),0.5)' : 'rgba(var(--tone-danger),0.5)'
   const exitColor = down ? 'var(--tone-danger-title)' : 'var(--hl-green)'
   const exitLabel = down ? 'NO →' : 'YES →'
   return (
@@ -398,7 +393,7 @@ function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
 function InfoBoxBlock({ b, onNav }: { b: InfoBoxBlockType; onNav: Nav }) {
   const h = HUE[b.tone]
   return (
-    <div style={s(`margin-top:${b.gap ?? 10}px;padding:9px 12px;background:rgba(${h.rgb},0.07);border:1px solid rgba(${h.rgb},0.2);border-radius:10px;width:100%;`)}>
+    <div style={s(`margin-top:${b.gap ?? 10}px;padding:9px 12px;background:rgba(${h.rgb},var(--panel-bg-a));border:1px solid rgba(${h.rgb},var(--panel-bd-a));border-radius:10px;width:100%;`)}>
       {(b.icon || b.title) && (
         <div style={s(`font-size:10px;font-weight:700;color:${h.color};margin-bottom:4px;`)}>
           {b.icon}{b.icon && b.title ? ' ' : ''}{b.title ?? ''}
@@ -416,7 +411,7 @@ function CompareBoxBlock({ b, onNav }: { b: Extract<Block, { kind: 'compareBox' 
   const h = HUE[b.tone]
   const grid = Array(b.cols ?? 2).fill('1fr').join(' ')
   return (
-    <div style={s(`margin-top:${b.gap ?? 14}px;padding:10px 12px;background:rgba(${h.rgb},0.07);border:1px solid rgba(${h.rgb},0.25);border-radius:10px;width:100%;`)}>
+    <div style={s(`margin-top:${b.gap ?? 14}px;padding:10px 12px;background:rgba(${h.rgb},var(--panel-bg-a));border:1px solid rgba(${h.rgb},var(--panel-bd-a));border-radius:10px;width:100%;`)}>
       {b.title && <div style={{ ...ST_BLOCK_TITLE, color: h.color, marginBottom: '8px' }}><Raw html={b.title} onNav={onNav} /></div>}
       <div style={s(`display:grid;grid-template-columns:${grid};gap:6px;`)}>
         {b.cards.map((c, i) => (
@@ -435,7 +430,7 @@ function CompareBoxBlock({ b, onNav }: { b: Extract<Block, { kind: 'compareBox' 
 function CalloutBlock({ b, onNav }: { b: Extract<Block, { kind: 'callout' }>; onNav: Nav }) {
   const extra = `padding:9px 12px;font-size:9.5px;color:${HUE[b.tone].color};line-height:1.5;${b.gap ? `margin-top:${b.gap}px;` : ''}${b.center ? 'text-align:center;' : ''}`
   return (
-    <Box tone={b.tone} bgA={0.1} bdA={0.3} extra={extra}>
+    <Box tone={b.tone} extra={extra}>
       {b.title && <div style={{ ...ST_BLOCK_TITLE, color: TITLE[b.tone] ?? HUE[b.tone].color }}><Raw html={b.title} onNav={onNav} /></div>}
       <Raw html={b.html} onNav={onNav} />
     </Box>
@@ -456,7 +451,7 @@ function AlertItemView({ it, onNav }: { it: AlertItem; onNav: Nav }) {
 }
 function AlertBlock({ tone, title, items, onNav }: { tone: Tone; title: string; items: AlertItem[]; onNav: Nav }) {
   return (
-    <Box tone={tone} bgA={0.08} bdA={0.25} extra="margin-top:12px;padding:10px 12px;">
+    <Box tone={tone} extra="margin-top:12px;padding:10px 12px;">
       <div style={s(`font-size:10px;font-weight:700;color:${TITLE[tone] ?? HUE[tone].color};margin-bottom:5px;`)}>{title}</div>
       <div style={s(`font-size:9.5px;line-height:1.55;color:${HUE[tone].color};`)}>
         {items.map((it, i) => <Fragment key={i}>{i > 0 && <br />}{'• '}<AlertItemView it={it} onNav={onNav} /></Fragment>)}
@@ -466,7 +461,7 @@ function AlertBlock({ tone, title, items, onNav }: { tone: Tone; title: string; 
 }
 function DiseaseGridBlock({ title, links, onNav }: { title: string; links: LabeledLink[]; onNav: Nav }) {
   return (
-    <Box tone="teal" bgA={0.08} bdA={0.25} extra="margin-top:10px;padding:10px 12px;">
+    <Box tone="teal" extra="margin-top:10px;padding:10px 12px;">
       <div style={{ ...ST_BLOCK_TITLE, color: 'var(--tone-teal-fg)' }}>{title}</div>
       <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;')}>
         {links.map((l, i) => <div key={i} role="button" onClick={() => onNav(linkToView(l.link))} style={s('cursor:pointer;color:var(--fg-teal-deep);')}>→ {l.label}</div>)}
@@ -477,7 +472,7 @@ function DiseaseGridBlock({ title, links, onNav }: { title: string; links: Label
 function DxRowBlock({ items, onNav }: { items: LabeledLink[]; onNav: Nav }) {
   return (
     <div className="dx-row c2" style={s('margin-top:10px;')}>
-      {items.map((i2, i) => <div key={i} className="dx-test" style={s(`cursor:pointer;font-size:9.5px;${i2.accent ? 'background:#0D7377;' : ''}`)} role="button" onClick={() => onNav(linkToView(i2.link))}>{i2.label} ›</div>)}
+      {items.map((i2, i) => <div key={i} className="dx-test" style={s(`cursor:pointer;font-size:9.5px;${i2.accent ? 'background:rgba(var(--tone-teal),0.4);' : ''}`)} role="button" onClick={() => onNav(linkToView(i2.link))}>{i2.label} ›</div>)}
     </div>
   )
 }
