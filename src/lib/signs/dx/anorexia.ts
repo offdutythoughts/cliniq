@@ -19,7 +19,7 @@ export const anorexiaDx: DxApproach = {
         { kind: 'branch', text: 'GOAL: CAN\'T EAT vs WON\'T EAT, THEN FIND THE CAUSE' },
         {
           kind: 'check',
-          html: `<strong>Hyporexia</strong> = consuming inadequate calories to maintain/reach ideal weight; <strong>anorexia</strong> = complete absence of voluntary intake; <strong>dysrexia</strong> = abnormal (cyclic/unpredictable) intake (Ettinger Ch 17). Anorexia is a <strong>non-specific sign of almost any systemic illness</strong>, so the history must be broad. The key first step is to separate an animal that <strong>cannot</strong> eat (pseudo-anorexia) from one that <strong>will not</strong> eat (true anorexia).`,
+          html: `• <strong>Hyporexia</strong> = consuming inadequate calories to maintain/reach ideal weight<br>• <strong>Anorexia</strong> = complete absence of voluntary intake<br>• <strong>Dysrexia</strong> = abnormal (cyclic/unpredictable) intake<br><span style="opacity:.7">(Ettinger Ch 17)</span><br>Anorexia is a <strong>non-specific sign of almost any systemic illness</strong>. The key first step is to separate an animal that <strong>cannot</strong> eat (pseudo-anorexia) from one that <strong>will not</strong> eat (true anorexia).`,
         },
         { kind: 'step', tone: 'danger', text: 'STEP 1 — IS THIS AN ANOREXIC CAT? (lipidosis clock)' },
         {
@@ -124,11 +124,7 @@ export const anorexiaDx: DxApproach = {
         },
       ],
       after: [
-        {
-          kind: 'diseaseGrid',
-          title: 'LINKED DISEASE PAGES',
-          links: [
-            { label: 'Oral / dental / oronasal disease', link: { to: 'disease', id: 'DIS-DENT-ORONASAL' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
             { label: 'Pancreatitis (cat)', link: { to: 'disease', id: 'DIS-GI-PANCAT' } },
             { label: 'Pancreatitis (dog)', link: { to: 'disease', id: 'DIS-SEC-PAN-DOG' } },
             { label: 'GI foreign body', link: { to: 'disease', id: 'DIS-GI-FB' } },

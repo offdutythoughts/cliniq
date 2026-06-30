@@ -18,7 +18,7 @@ export const constipationDx: DxApproach = {
         { kind: 'branch', text: 'GOAL: DEFECATION vs URINARY STRAINING, THEN MECHANISM' },
         {
           kind: 'check',
-          html: `<strong>Constipation</strong> = reduced/absent defecation with retained hard dry faeces; <strong>obstipation</strong> = cannot defecate without intervention; recurrent obstipation in cats → <strong>idiopathic megacolon</strong>. <strong>Tenesmus</strong> = repeated nonproductive straining (precedes defecation in obstructive disease, follows it in inflammatory disease); <strong>dyschezia</strong> = painful defecation (usually anorectal, not colonic). Distinguish all of these from <strong>stranguria</strong> (urinary straining — see the Pollakiuria / Stranguria approach). (Ettinger Ch 51)`,
+          html: `• <strong>Constipation</strong> = reduced/absent defecation with retained hard dry faeces<br>• <strong>Obstipation</strong> = cannot defecate without intervention — recurrent obstipation in cats → <strong>idiopathic megacolon</strong><br>• <strong>Tenesmus</strong> = repeated nonproductive straining (precedes defecation in obstructive disease, follows it in inflammatory disease)<br>• <strong>Dyschezia</strong> = painful defecation (usually anorectal, not colonic)<br>• <strong>Stranguria</strong> = urinary straining — see the Pollakiuria / Stranguria approach<br><span style="opacity:.7">(Ettinger Ch 51)</span>`,
         },
         { kind: 'step', tone: 'danger', text: '🚨 STEP 1 — IS IT DEFECATION OR URINATION?' },
         {
@@ -116,28 +116,6 @@ export const constipationDx: DxApproach = {
         },
       ],
       after: [
-        {
-          kind: 'diseaseGrid',
-          title: '📋 LINKED DISEASE PAGES',
-          links: [
-            { label: 'Perianal fistula', link: { to: 'disease', id: 'DIS-GI-PERIANAL' } },
-            { label: 'Anal sacculitis / anal-sac disease', link: { to: 'disease', id: 'DIS-GI-ANALSAC' } },
-            { label: 'Apocrine anal-sac carcinoma (AGASACA)', link: { to: 'disease', id: 'DIS-NEO-AGASACA' } },
-            { label: 'Benign prostatic hyperplasia', link: { to: 'disease', id: 'DIS-URO-BPH' } },
-            { label: 'Bacterial prostatitis', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
-            { label: 'Prostatic carcinoma', link: { to: 'disease', id: 'DIS-URO-PROST-NEO' } },
-            { label: 'Healed pelvic / sacral fracture', link: { to: 'disease', id: 'DIS-NEU-SPFX' } },
-            { label: 'Degenerative lumbosacral stenosis (cauda equina)', link: { to: 'disease', id: 'DIS-NEU-DLSS' } },
-            { label: 'Intervertebral disc disease', link: { to: 'disease', id: 'DIS-NEU-IVDD' } },
-            { label: 'Dysautonomia', link: { to: 'disease', id: 'DIS-NEU-DYSAUTO' } },
-            { label: 'Hypokalaemia', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },
-            { label: 'Hypercalcaemia', link: { to: 'disease', id: 'DIS-ENDO-HCALC' } },
-            { label: 'Hypothyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPOTHY' } },
-            { label: 'Chronic kidney disease (dehydration)', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
-            { label: 'Urethral obstruction (mimics tenesmus)', link: { to: 'disease', id: 'DIS-URO-URETHRAL-OBS' } },
-            { label: 'Pollakiuria / Stranguria — urinary straining', link: { to: 'flow', id: 'pollakiuria' } },
-          ],
-        },
         {
           kind: 'alert',
           gap: 10,

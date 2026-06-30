@@ -18,7 +18,7 @@ export const dysphagiaDx: DxApproach = {
         { kind: 'branch', text: 'GOAL: SWALLOWING PROBLEM vs VOMITING, THEN LOCALISE' },
         {
           kind: 'check',
-          html: `<strong>Dysphagia</strong> = difficulty swallowing (a clinical finding, not a diagnosis); <strong>gagging</strong> = an airway-protective reflex (touch the tongue base/palate/epiglottis → CN V afferent, CN X efferent). Separate these from <strong>regurgitation</strong> (passive expulsion from the pharynx/oesophagus — head down, food falls out, no nausea), <strong>true vomiting</strong> (active, centrally-mediated, with prodromal nausea, retching and abdominal contractions — see the Vomiting approach), and <strong>expectoration</strong> (the "hacking" terminal retch of a coughing paroxysm → respiratory disease). Regurgitation is uncommon in cats — assume vomiting in a cat unless proven otherwise. (Ettinger Ch 47)`,
+          html: `• <strong>Dysphagia</strong> = difficulty swallowing (a clinical finding, not a diagnosis)<br>• <strong>Gagging</strong> = airway-protective reflex (tongue base/palate/epiglottis → CN V afferent, CN X efferent)<br>Distinguish from:<br>• <strong>Regurgitation</strong> = passive expulsion from pharynx/oesophagus — head down, food falls out, no nausea<br>• <strong>True vomiting</strong> = active, centrally-mediated, with prodromal nausea, retching and abdominal contractions — see the Vomiting approach<br>• <strong>Expectoration</strong> = "hacking" terminal retch of a coughing paroxysm → respiratory disease<br>Regurgitation is uncommon in cats — assume vomiting in a cat unless proven otherwise. <span style="opacity:.7">(Ettinger Ch 47)</span>`,
         },
         { kind: 'step', text: ' STEP 1 — WATCH THE PATIENT EAT & LOCALISE' },
         {
@@ -119,11 +119,7 @@ export const dysphagiaDx: DxApproach = {
         },
       ],
       after: [
-        {
-          kind: 'diseaseGrid',
-          title: ' LINKED DISEASE PAGES',
-          links: [
-            { label: 'Megaoesophagus', link: { to: 'disease', id: 'DIS-OES-MEGA' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
             { label: 'Oesophageal foreign body', link: { to: 'disease', id: 'DIS-GI-OESFB' } },
             { label: 'Oesophagitis', link: { to: 'disease', id: 'DIS-GI-ESOPHAGITIS' } },
             { label: 'Oesophageal stricture', link: { to: 'disease', id: 'DIS-GI-STRICTURE' } },

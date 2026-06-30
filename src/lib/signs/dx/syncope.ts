@@ -17,7 +17,7 @@ export const syncopeDx: DxApproach = {
         { kind: 'branch', text: 'GOAL: CONFIRM SYNCOPE IS CARDIAC OR NON-CARDIOGENIC?' },
         {
           kind: 'check',
-          html: `<strong>Syncope</strong> = transient loss of consciousness from cerebral hypoperfusion; BP must fall ~50% and an arrhythmia must last ~10–30 s before unconsciousness results. <strong>Pre-syncope</strong> = partial LOC with brief ataxia/stumbling.<br>
+          html: `• <strong>Syncope</strong> = transient loss of consciousness from cerebral hypoperfusion — BP must fall ~50% and an arrhythmia must last ~10–30 s before unconsciousness results<br>• <strong>Pre-syncope</strong> = partial LOC with brief ataxia/stumbling<br>
     <strong>Syncope vs seizure triage:</strong> use the <em>Weakness / Collapse</em> flow first if still unsure — that screen has the full feature comparison table (tone, trigger, recovery, AEDs). This workup assumes syncope is confirmed and focuses on whether the cause is <strong>cardiogenic</strong> (arrhythmia / structural) or <strong>non-cardiogenic</strong> (reflex / metabolic mimic). (Ettinger Ch 40)`,
         },
         { kind: 'step', alt: true, text: ' STEP 1 — TRIGGER, POSTURE & RECOVERY' },
@@ -115,11 +115,7 @@ export const syncopeDx: DxApproach = {
         },
       ],
       after: [
-        {
-          kind: 'diseaseGrid',
-          title: ' LINKED DISEASE PAGES',
-          links: [
-            { label: 'Cardiac arrhythmias (brady & tachy)', link: { to: 'disease', id: 'DIS-CARD-ARRHYTHMIA' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
             { label: 'Myxomatous mitral valve disease', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
             { label: 'Hypertrophic cardiomyopathy', link: { to: 'disease', id: 'DIS-HCM' } },
             { label: 'Dilated cardiomyopathy', link: { to: 'disease', id: 'DIS-CARD-DCM' } },

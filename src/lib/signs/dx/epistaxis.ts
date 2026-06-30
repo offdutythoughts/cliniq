@@ -26,7 +26,7 @@ export const epistaxisDx: DxApproach = {
       No history of bleeding elsewhere`,
           },
           {
-            style: 'text-align:left;background:#0D7377;font-size:9px;',
+            style: 'text-align:left;background:rgba(var(--tone-teal),var(--tile-bg-a));border:1px solid rgba(var(--tone-teal),var(--tile-bd-a));color:var(--tone-teal-fg);font-size:9px;',
             html: `<strong style="font-size:10px;">🩸 Points to SYSTEMIC</strong><br>
       Bleeding at extra-nasal sites<br>
       Lethargy · inappetence · weight loss<br>
@@ -203,11 +203,7 @@ export const epistaxisDx: DxApproach = {
       },
     ],
     after: [
-      {
-        kind: 'diseaseGrid',
-        title: '📋 LINKED DISEASE PAGES',
-        links: [
-          { label: 'Nasal / paranasal neoplasia', link: { to: 'disease', id: 'DIS-NASAL-NEO' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
           { label: 'Sinonasal aspergillosis', link: { to: 'disease', id: 'DIS-NASAL-ASP' } },
           { label: 'Lymphoplasmacytic rhinitis', link: { to: 'disease', id: 'DIS-NASAL-LPR' } },
           { label: 'Nasal foreign body', link: { to: 'disease', id: 'DIS-NASAL-FB' } },

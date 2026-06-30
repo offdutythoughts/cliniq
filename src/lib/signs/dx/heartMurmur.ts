@@ -133,11 +133,7 @@ export const heartMurmurDx: DxApproach = {
         },
       ],
       after: [
-        {
-          kind: 'diseaseGrid',
-          title: ' LINKED DISEASE PAGES',
-          links: [
-            { label: 'Myxomatous mitral valve disease (MMVD)', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
             { label: 'Hypertrophic cardiomyopathy (HCM)', link: { to: 'disease', id: 'DIS-HCM' } },
             { label: 'Dilated cardiomyopathy (DCM)', link: { to: 'disease', id: 'DIS-CARD-DCM' } },
             { label: 'Restrictive cardiomyopathy (RCM)', link: { to: 'disease', id: 'DIS-CARD-RCM' } },

@@ -25,7 +25,7 @@ export const bleedingDx: DxApproach = {
       <span style="opacity:.75;">→ Platelets, vWF, vessels</span>`,
           },
           {
-            style: 'text-align:left;background:#0D7377;font-size:9px;',
+            style: 'text-align:left;background:rgba(var(--tone-teal),var(--tile-bg-a));border:1px solid rgba(var(--tone-teal),var(--tile-bd-a));color:var(--tone-teal-fg);font-size:9px;',
             html: `<strong style="font-size:10px;">🔗 Secondary haemostasis pattern</strong><br>
       Cavity bleeds (haemothorax, haemoperitoneum, haemarthrosis)<br>
       Deep haematomas after minor trauma<br>
@@ -327,93 +327,7 @@ export const bleedingDx: DxApproach = {
       },
     ],
     after: [
-      {
-        kind: 'html',
-        html: `<div style="margin-top:10px;padding:10px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;">
-  <div style="font-size:10px;font-weight:700;color:var(--tone-indigo-fg);margin-bottom:5px;">🔬 MINIMUM DATABASE — Primary Haemostasis</div>
-  <div style="font-size:9.5px;line-height:1.6;color:var(--gray);">
-    <strong style="color:var(--white);">1st line:</strong> CBC with platelet count · Blood smear (clumping, morphology, intracellular organisms) · PT · aPTT · biochemistry (total protein, liver function)<br>
-    <strong style="color:var(--white);">2nd line (plt normal + bleeding):</strong> BMBT · vWF activity assay · infectious disease titres / PCR (Ehrlichia canis, Anaplasma phagocytophilum, A. platys, R. rickettsii)<br>
-    <strong style="color:var(--white);">3rd line:</strong> BM aspirate + core (if other cell lines ↑ or ↓ unexpectedly) · individual factor assays<br>
-    <strong style="color:var(--white);">Threshold:</strong> Spontaneous bleed risk at &lt;50,000/µL · life-threatening at &lt;10 ×10⁹/L<br>
-    <strong style="color:var(--white);">Inherited red flag:</strong> Repeated bleeding from puppyhood (teething, vaccination, elective surgery) → inherited coagulopathy likely
-  </div>
-  <div style="font-size:10px;font-weight:700;color:var(--tone-indigo-fg);margin-top:10px;margin-bottom:5px;">📊 COAG TEST PATTERN — identify defect type</div>
-  <table style="width:100%;border-collapse:collapse;font-size:8.5px;">
-    <thead>
-      <tr style="border-bottom:1.5px solid rgba(148,163,184,0.3);">
-        <th style="padding:5px 6px;text-align:left;color:var(--gray);font-weight:700;width:30%;"></th>
-        <th style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);font-weight:700;">Plt &lt;50k</th>
-        <th style="padding:5px 6px;text-align:center;color:var(--tone-warning-fg);font-weight:700;">PT</th>
-        <th style="padding:5px 6px;text-align:center;color:var(--tone-indigo-fg);font-weight:700;">aPTT</th>
-        <th style="padding:5px 6px;text-align:left;color:var(--gray);font-weight:700;">Other</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
-        <td style="padding:5px 6px;color:var(--white);font-weight:600;">Thrombocytopenia</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">Yes</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-green-fg);">Normal</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-green-fg);">Normal</td>
-        <td style="padding:5px 6px;color:var(--gray);"></td>
-      </tr>
-      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
-        <td style="padding:5px 6px;color:var(--white);font-weight:600;">Thrombocytopathia</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-green-fg);">No</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-green-fg);">Normal</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-green-fg);">Normal</td>
-        <td style="padding:5px 6px;color:var(--tone-warning-fg);">↑ BMBT</td>
-      </tr>
-      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
-        <td style="padding:5px 6px;color:var(--white);font-weight:600;">Rodenticide</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--gray);font-size:8px;">No*</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">↑</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">↑</td>
-        <td style="padding:5px 6px;color:var(--gray);"></td>
-      </tr>
-      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
-        <td style="padding:5px 6px;color:var(--white);font-weight:600;">Hepatic failure</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--gray);font-size:8px;">No*</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">↑</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">↑</td>
-        <td style="padding:5px 6px;color:var(--tone-warning-fg);">Abnormal LFTs</td>
-      </tr>
-      <tr style="border-bottom:1px solid rgba(148,163,184,0.1);">
-        <td style="padding:5px 6px;color:var(--white);font-weight:600;">DIC</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">Typically</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">↑</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">↑</td>
-        <td style="padding:5px 6px;color:var(--tone-warning-fg);">↑ D-dimers</td>
-      </tr>
-      <tr>
-        <td style="padding:5px 6px;color:var(--white);font-weight:600;">Haemophilia A+B</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--gray);font-size:8px;">No*</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-green-fg);">Normal</td>
-        <td style="padding:5px 6px;text-align:center;color:var(--tone-danger-fg);">↑</td>
-        <td style="padding:5px 6px;color:var(--tone-warning-fg);">Factor assays</td>
-      </tr>
-    </tbody>
-  </table>
-  <div style="font-size:8px;color:var(--gray);margin-top:4px;">* No unless haemorrhage is extreme</div>
-</div>`,
-      },
-      {
-        kind: 'html',
-        html: `<div style="margin-top:10px;padding:10px 12px;background:rgba(13,148,136,0.08);border:1px solid rgba(13,148,136,0.25);border-radius:10px;">
-  <div style="font-size:10px;font-weight:700;color:var(--tone-teal-fg);margin-bottom:5px;">💊 TREATMENT POINTERS — Primary Haemostasis</div>
-  <div style="font-size:9.5px;line-height:1.6;color:var(--gray);">
-    <strong style="color:var(--white);">IMTP:</strong> Prednisolone 2 mg/kg/day ± mycophenolate / cyclosporine / azathioprine (dog only). Vincristine 0.02 mg/kg IV once to stimulate platelet release. Doxycycline 5–10 mg/kg PO BID while tick serology pending.<br>
-    <strong style="color:var(--white);">vWD:</strong> Cryoprecipitate (richest vWF source) or FFP. DDAVP 1 µg/kg SC 30 min pre-op (type I only — not type III). Avoid platelet inhibitors.<br>
-    <strong style="color:var(--white);">Transfusion:</strong> PCV &lt;20 % after acute blood loss → packed RBC or fresh whole blood (provides RBCs + clotting factors). Type and cross-match; cats must be blood-typed before any transfusion.<br>
-    <strong style="color:var(--white);">Cage rest:</strong> Strict cage rest for all actively thrombocytopenic patients. Avoid IM injections and cystocentesis.
-  </div>
-</div>`,
-      },
-      {
-        kind: 'diseaseGrid',
-        title: '📋 LINKED DISEASE PAGES',
-        links: [
-          { label: 'DIC', link: { to: 'disease', id: 'DIS-BD-DIC' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
           { label: 'Anticoagulant rodenticide', link: { to: 'disease', id: 'DIS-BD-ROD' } },
           { label: 'Vitamin K deficiency (broad)', link: { to: 'disease', id: 'DIS-BD-VITK' } },
           { label: 'Immune-mediated thrombocytopenia', link: { to: 'disease', id: 'DIS-BD-IMTP' } },

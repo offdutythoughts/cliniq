@@ -127,11 +127,7 @@ export const oedemaDx: DxApproach = {
         },
       ],
       after: [
-        {
-          kind: 'diseaseGrid',
-          title: ' LINKED DISEASE PAGES',
-          links: [
-            { label: 'Protein-losing nephropathy / glomerulonephritis', link: { to: 'disease', id: 'DIS-REN-GN' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
             { label: 'Protein-losing enteropathy', link: { to: 'disease', id: 'DIS-GI-PLE' } },
             { label: 'Chronic hepatitis / hepatic failure', link: { to: 'disease', id: 'DIS-HEP-CHRONHEP' } },
             { label: 'Portosystemic shunt', link: { to: 'disease', id: 'DIS-HEP-PSS' } },

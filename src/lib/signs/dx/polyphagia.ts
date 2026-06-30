@@ -119,11 +119,7 @@ export const polyphagiaDx: DxApproach = {
         },
       ],
       after: [
-        {
-          kind: 'diseaseGrid',
-          title: ' LINKED DISEASE PAGES',
-          links: [
-            { label: 'Diabetes mellitus', link: { to: 'disease', id: 'DIS-ENDO-DM' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
             { label: 'Diabetic ketoacidosis', link: { to: 'disease', id: 'DIS-ENDO-DKA' } },
             { label: 'Feline hyperthyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
             { label: 'Acromegaly / hypersomatotropism', link: { to: 'disease', id: 'DIS-ENDO-ACRO' } },

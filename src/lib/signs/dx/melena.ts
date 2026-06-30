@@ -18,7 +18,7 @@ export const melenaDx: DxApproach = {
         { kind: 'branch', text: 'GOAL: CONFIRM BLOOD · LOCALISE UPPER vs LOWER · EXCLUDE COAGULOPATHY' },
         {
           kind: 'check',
-          html: `<strong>Melena</strong> = black, tarry, digested blood → PROXIMAL / upper GI (stomach, small intestine, or swallowed blood); ≥50–100 mL blood must be ingested before the stool turns melanic. <strong>Haematochezia</strong> = bright-red fresh blood → distal colon, rectum or anus (occasionally small intestine with rapid transit). Surface blood only → anorectal lesion; red-maroon "raspberry-jam" stool throughout → proximal colonic / AHDS. (Ettinger Ch 50)`,
+          html: `• <strong>Melena</strong> = black, tarry, digested blood → PROXIMAL / upper GI (stomach, small intestine, or swallowed blood) — ≥50–100 mL blood must be ingested before stool turns melanic<br>• <strong>Haematochezia</strong> = bright-red fresh blood → distal colon, rectum or anus (occasionally small intestine with rapid transit)<br>  · Surface blood only → anorectal lesion<br>  · Red-maroon "raspberry-jam" stool throughout → proximal colonic / AHDS<br><span style="opacity:.7">(Ettinger Ch 50)</span>`,
         },
         { kind: 'step', text: ' STEP 1 — IS IT REALLY BLOOD? (exclude mimics)' },
         {
@@ -121,11 +121,7 @@ export const melenaDx: DxApproach = {
         },
       ],
       after: [
-        {
-          kind: 'diseaseGrid',
-          title: ' LINKED DISEASE PAGES',
-          links: [
-            { label: 'Gastroduodenal ulceration / erosion', link: { to: 'disease', id: 'DIS-GI-ULC' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
             { label: 'Acute haemorrhagic diarrhoea syndrome (AHDS)', link: { to: 'disease', id: 'DIS-GI-AHDS' } },
             { label: 'Parvoviral enteritis', link: { to: 'disease', id: 'DIS-GI-PARVO' } },
             { label: 'Helicobacter-associated gastritis', link: { to: 'disease', id: 'DIS-GI-HELICO' } },

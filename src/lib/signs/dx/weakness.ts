@@ -111,7 +111,7 @@ export const weaknessDx: DxApproach = {
             html: `<strong>Neuropathy</strong><br>↓/absent reflexes<br>Atrophy<br>± Ataxia (sensory)`,
           },
           {
-            style: 'text-align:center;font-size:9px;background:#0D7377;',
+            style: 'text-align:center;font-size:9px;background:rgba(var(--tone-teal),var(--tile-bg-a));border:1px solid rgba(var(--tone-teal),var(--tile-bd-a));color:var(--tone-teal-fg);',
             html: `<strong>Junctionopathy</strong><br>Normal reflexes<br>Fatigability<br>Normal at rest`,
           },
           {
@@ -208,11 +208,7 @@ export const weaknessDx: DxApproach = {
         gap: 8,
         html: `<strong>CK</strong> is the single best screening test for primary muscle disease — if normal, myopathy is unlikely. <strong>AChR titre</strong> is the definitive test for MG — do not diagnose MG on clinical grounds alone. <strong>ECG first</strong> in every episodic collapsing animal — a missed arrhythmia treated as epilepsy worsens outcome. <strong>Tick search</strong> requires parting all coat — remove tick with a rocking motion (not twisting). <strong>Tensilon (edrophonium) test:</strong> 0.1–0.2 mg/kg IV slowly — have atropine 0.02–0.04 mg/kg drawn up and ready; transient improvement confirms MG.`,
       },
-      {
-        kind: 'diseaseGrid',
-        title: ' RELATED APPROACHES',
-        links: [
-          { label: 'Syncope — full cardiac workup (History · Exam · Diagnostics)', link: { to: 'dx', id: 'syncope' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
           { label: 'Seizures — diagnostic approach', link: { to: 'dx', id: 'seizures' } },
         ],
       },

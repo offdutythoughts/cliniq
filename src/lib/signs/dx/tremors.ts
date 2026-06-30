@@ -127,11 +127,7 @@ export const tremorsDx: DxApproach = {
         },
       ],
       after: [
-        {
-          kind: 'diseaseGrid',
-          title: ' LINKED DISEASE PAGES',
-          links: [
-            { label: 'Hypoparathyroidism (hypocalcaemia)', link: { to: 'disease', id: 'DIS-ENDO-HYPOPTH' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
             { label: 'Hypoglycaemia', link: { to: 'disease', id: 'DIS-MET-HYPOGLY' } },
             { label: 'Insulinoma', link: { to: 'disease', id: 'DIS-NEO-INSULINOMA' } },
             { label: 'Hypokalaemia', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },

@@ -132,11 +132,7 @@ export const paleGumsDx: DxApproach = {
         gap: 8,
         html: `<strong>⚠️ Transfusion:</strong> Dog PCV &lt; 20% · Cat PCV &lt; 15% — or clinical signs (tachycardia, weakness) at higher PCVs. Blood-type cats before any transfusion.`,
       },
-      {
-        kind: 'diseaseGrid',
-        title: '📋 LINKED DISEASE PAGES',
-        links: [
-          { label: 'Immune-mediated haemolytic anaemia', link: { to: 'disease', id: 'DIS-BD-IMHA' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
           { label: 'Immune-mediated neutropenia', link: { to: 'disease', id: 'DIS-IMNP' } },
           { label: 'Zinc toxicosis', link: { to: 'disease', id: 'DIS-TOX-ZN' } },
           { label: 'Allium (onion/garlic) toxicosis', link: { to: 'disease', id: 'DIS-TOX-ALLIUM' } },

@@ -130,11 +130,7 @@ export const cyanosisDx: DxApproach = {
         },
       ],
       after: [
-        {
-          kind: 'diseaseGrid',
-          title: ' LINKED DISEASE PAGES',
-          links: [
-            { label: 'BOAS', link: { to: 'disease', id: 'DIS-RESP-BOAS' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
             { label: 'Laryngeal paralysis', link: { to: 'disease', id: 'DIS-LP' } },
             { label: 'Tracheal collapse', link: { to: 'disease', id: 'DIS-RESP-TRACOLL' } },
             { label: 'Feline asthma', link: { to: 'disease', id: 'DIS-RESP-ASTHMA' } },

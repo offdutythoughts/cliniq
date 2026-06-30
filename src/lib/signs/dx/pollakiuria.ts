@@ -15,7 +15,7 @@ export const pollakiuriaDx: DxApproach = {
         { kind: 'branch', text: 'GOAL: CONFIRM LUT SIGNS & EXCLUDE OBSTRUCTION' },
         {
           kind: 'check',
-          html: `<strong>Pollakiuria</strong> = frequent small-volume voiding; <strong>stranguria</strong> = slow/painful straining; <strong>dysuria</strong> = difficult/painful urination. These are LOWER urinary tract signs — distinguish from <strong>polyuria</strong> (large volumes — see the PU/PD approach) and from <strong>tenesmus</strong> (straining to defecate).`,
+          html: `• <strong>Pollakiuria</strong> = frequent small-volume voiding<br>• <strong>Stranguria</strong> = slow/painful straining<br>• <strong>Dysuria</strong> = difficult/painful urination<br>These are LOWER urinary tract signs — distinguish from <strong>polyuria</strong> (large volumes — see the PU/PD approach) and from <strong>tenesmus</strong> (straining to defecate).`,
         },
         { kind: 'step', tone: 'danger', text: '🚨 STEP 1 — IS THE PATIENT BLOCKED?' },
         {
@@ -103,11 +103,7 @@ export const pollakiuriaDx: DxApproach = {
         },
       ],
       after: [
-        {
-          kind: 'diseaseGrid',
-          title: '📋 LINKED DISEASE PAGES',
-          links: [
-            { label: 'Urethral obstruction / feline plug', link: { to: 'disease', id: 'DIS-URO-URETHRAL-OBS' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
             { label: 'Bacterial cystitis / UTI', link: { to: 'disease', id: 'DIS-URO-UTI' } },
             { label: 'Feline idiopathic cystitis', link: { to: 'disease', id: 'DIS-URO-FIC' } },
             { label: 'Struvite urolithiasis', link: { to: 'disease', id: 'DIS-URO-UROLITH-STRUV' } },

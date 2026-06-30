@@ -16,7 +16,7 @@ export const feverDx: DxApproach = {
         { kind: 'branch', text: 'GOAL: CONFIRM TRUE FEVER, THEN LOCALISE' },
         {
           kind: 'check',
-          html: `<strong>Fever (pyrexia)</strong> = a <strong>regulated</strong>, pyrogen-mediated rise in the hypothalamic set point (exogenous pyrogens → IL-1, IL-6, TNF-α → prostaglandin E2 → ↑set point); the animal does NOT show cooling behaviour. <strong>Hyperthermia</strong> = a rise in core temperature WITHOUT a set-point change (panting, vasodilation, cold-seeking). <strong>FUO</strong> = temp &gt;39.2°C (102.5°F) for ≥3 weeks, no cause after ≥3 visits and/or 3 days hospitalisation (CBC, biochem, UA), often defined as persisting after a 5–10 day antibacterial trial. Normal rectal = 38.0–39.2°C (100.5–102.5°F); healthy dogs/cats reach 39.7°C (103.5°F) in the consulting room.`,
+          html: `• <strong>Fever (pyrexia)</strong> = a <strong>regulated</strong>, pyrogen-mediated rise in the hypothalamic set point (exogenous pyrogens → IL-1, IL-6, TNF-α → prostaglandin E2 → ↑set point) — the animal does NOT show cooling behaviour<br>• <strong>Hyperthermia</strong> = a rise in core temperature WITHOUT a set-point change (panting, vasodilation, cold-seeking)<br>• <strong>FUO</strong> = temp &gt;39.2°C (102.5°F) for ≥3 weeks, no cause after ≥3 visits and/or 3 days hospitalisation (CBC, biochem, UA), often defined as persisting after a 5–10 day antibacterial trial<br>• Normal rectal = 38.0–39.2°C (100.5–102.5°F) — healthy dogs/cats reach 39.7°C (103.5°F) in the consulting room`,
         },
         { kind: 'step', tone: 'danger', text: ' STEP 1 — FEVER vs HYPERTHERMIA' },
         {
@@ -135,11 +135,7 @@ export const feverDx: DxApproach = {
         },
       ],
       after: [
-        {
-          kind: 'diseaseGrid',
-          title: ' LINKED DISEASE PAGES',
-          links: [
-            { label: 'Ehrlichiosis', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
+      { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
             { label: 'Anaplasmosis', link: { to: 'disease', id: 'DIS-INFECT-ANAP' } },
             { label: 'Lyme disease / borreliosis', link: { to: 'disease', id: 'DIS-INFECT-LYME' } },
             { label: 'Rocky Mountain spotted fever', link: { to: 'disease', id: 'DIS-INFECT-RMSF' } },
