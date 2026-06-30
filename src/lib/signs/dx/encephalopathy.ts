@@ -270,7 +270,7 @@ Other ↑ICP signs: obtundation/stupor/coma, bilateral mydriasis with poor PLR, 
             html: `<strong>MRI brain</strong> (1.5T or 3T)<br>FLAIR · T1 · T2 · DWI · T1+contrast<br>Gold standard for structural lesions<br>DWI: acute ischaemic infarct (stroke)<br>FLAIR: oedema, inflammation, lentiform nuclei (HE)<br>Contrast enhancement: neoplasia, inflammation`,
           },
           {
-            style: 'font-size:9px;background:#0D7377;',
+            style: 'font-size:9px;background:rgba(var(--tone-teal),var(--tile-bg-a));border:1px solid rgba(var(--tone-teal),var(--tile-bd-a));color:var(--tone-teal-fg);',
             html: `<strong>CSF analysis</strong> (after MRI, under GA)<br>TNCC (normal &lt;5 cells/µL)<br>Protein (normal &lt;0.25 g/L)<br>Cytology + culture if indicated<br>PCR: CDV, FIP, Toxoplasma, Neospora, Crypto<br>HE: ↑ ammonia, glutamine, tryptophan in CSF`,
           },
         ],

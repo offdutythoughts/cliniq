@@ -25,7 +25,7 @@ export const abnormalPupilDx: DxApproach = {
       <span style="opacity:.75;">Owner notices asymmetry or fixed pupil</span>`,
           },
           {
-            style: 'text-align:left;background:#0D7377;font-size:9px;',
+            style: 'text-align:left;background:rgba(var(--tone-teal),var(--tile-bg-a));border:1px solid rgba(var(--tone-teal),var(--tile-bd-a));color:var(--tone-teal-fg);font-size:9px;',
             html: `<strong style="font-size:10px;">👀 Vision change</strong><br>
       Bumping objects · uncertainty<br>
       Sudden vs gradual onset<br>
@@ -292,7 +292,7 @@ export const abnormalPupilDx: DxApproach = {
       { kind: 'step', alt: true, text: 'STEP 3 — PHARMACOLOGICAL LOCALISATION' },
       {
         kind: 'check',
-        html: `<strong>1% phenylephrine — Horner's localisation</strong> (as in Exam step 5): rapid response (≤20 min) = 3rd order; intermediate = 2nd order; slow = 1st order. Always run a contralateral control.<br><br>
+        html: `<strong>1% phenylephrine — Horner's localisation</strong> (as in Exam step 5):<br>• Rapid response (≤20 min) = 3rd order<br>• Intermediate = 2nd order<br>• Slow = 1st order<br>Always run a contralateral control.<br><br>
     <strong>Dilute pilocarpine (0.05–0.1%) — dysautonomia / denervation hypersensitivity:</strong> dilute pilocarpine causes constriction within 30 min in a parasympathetically denervated pupil (dysautonomia, CN III parasympathetic nucleus lesion) but no constriction in a normal pupil.<br>
     <div style="margin:6px 0;padding:7px 10px;background:rgba(251,146,60,0.08);border:1px solid rgba(251,146,60,0.2);border-radius:7px;font-size:9px;line-height:1.55;">
       <strong style="color:var(--hl-orange);">🐱 CAT — Pilocarpine Testing Cautions:</strong><br>

@@ -146,16 +146,32 @@ export type CategoryTile = { label: string; link?: Link; links?: LabeledLink[] }
 export type CategoryColumn = { cat: string; tone: Tone; tiles: CategoryTile[] }
 export type CategoryGridBlock = Connectable & { kind: 'categoryGrid'; columns: CategoryColumn[] }
 
+/** Shared category labels used by `categoryColumns`. Each maps to a dedicated
+ *  `--cat-*` CSS variable in the renderer (`CAT_STYLE` in FlowPageView). Use
+ *  one of these strings to get the correct colour automatically; set `tone`
+ *  instead for a custom-coloured column that doesn't match a standard category. */
+export type CatLabel =
+  | 'Vascular'
+  | 'Inflammatory'
+  | 'Mass'
+  | 'Immune-mediated'
+  | 'Degenerative'
+  | 'Metabolic / Endocrine'
+  | 'Toxic'
+  | 'Trauma'
+  | 'Anomalous'
+
 /** A wrapping `cols`-column grid of self-contained category units (header +
- *  coloured ↓ + chips). `cat` is one of the shared CAT_STYLE category labels
- *  (Vascular / Inflammatory / Mass / Immune-mediated / Degenerative /
- *  Metabolic / Endocrine / Toxic / Trauma / Anomalous), which carries its own
- *  exact colour. Used by the jaundice / pale / pupd `col()` grids. */
+ *  coloured ↓ + chips). `cat` should be a `CatLabel` for automatic CSS-variable
+ *  colouring; set `tone` to override for a custom column label. */
 export type CatColumnTile = { label: string; link?: Link; links?: LabeledLink[] }
 /** `tone` overrides the CAT_STYLE palette lookup — use for custom-coloured columns
  *  that don't correspond to a shared category label (e.g. "Haemoglobinuria"). */
-export type CatColumn = { cat: string; tone?: Tone; tiles: CatColumnTile[] }
+export type CatColumn = { cat: CatLabel | string; tone?: Tone; tiles: CatColumnTile[] }
 export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; cols?: number; columns: CatColumn[] }
+
+/** Reusable step block for "IDENTIFY CAUSE CATEGORY" — appears in 24+ flows. */
+export const IDENTIFY_CAUSE_STEP = { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' } as const
 
 /** A YES/NO localisation decision tree. Each `step` is a decision box with a
  *  continue-arrow (down) for the `continue` answer and a side exit outcome for

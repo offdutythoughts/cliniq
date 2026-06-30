@@ -94,12 +94,16 @@ export function NavProvider({ children }: { children: ReactNode }) {
     })
   }, [])
   const goBack = useCallback(() => {
+    let canPop = false
     setSt(s => {
       if (s.stack.length === 0) return s
-      suppressPopRef.current = true
-      history.back()
+      canPop = true
       return { ...s, stack: s.stack.slice(0, -1), slideDir: 'left' }
     })
+    if (canPop) {
+      suppressPopRef.current = true
+      history.back()
+    }
   }, [])
   const navTo = useCallback((tab: Tab) => {
     setSt(s => {

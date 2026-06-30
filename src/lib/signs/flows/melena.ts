@@ -43,7 +43,7 @@ const melenaEntry: FlowPage = {
       items: [
         { bold: 'Anticoagulant rodenticide / coagulopathy', link: { to: 'disease', id: 'DIS-BD-ROD' }, html: ' — thrombocytopenia, DIC, factor deficiency; run a coagulation panel before scoping/biopsy; give Vitamin K1 empirically if access suspected' },
         { bold: 'Hypoadrenocorticism (Addison)', link: { to: 'disease', id: 'DIS-SEC-HYPO' }, html: ' — GI bleed + bradycardia / waterhammer collapse + Na:K abnormalities; whipworm can mimic the same electrolyte picture' },
-        { bold: 'GI perforation / septic peritonitis', link: { to: 'disease', id: 'DIS-GI-SEPTPERIT' }, html: ' — perforated ulcer or tumour; abdominal pain, fever, septic abdominal effusion = surgical emergency' },
+        { bold: 'GI perforation / septic peritonitis', link: { to: 'protocol', id: 'PROT-SEPSIS' }, html: ' — perforated ulcer or tumour; abdominal pain, fever, septic abdominal effusion = surgical emergency' },
         '<strong>Significant blood-loss anaemia</strong> — melena alone can equal major haemorrhage; quantify with PCV/TS and transfuse symptomatic patients before GA for endoscopy',
       ],
     },

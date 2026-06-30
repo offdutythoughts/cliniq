@@ -18,7 +18,7 @@ const dmMono = DM_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'ClinIQ — Portable Vet Guide',
+  title: 'Vetic — Portable Vet Guide',
 }
 
 export const viewport: Viewport = {

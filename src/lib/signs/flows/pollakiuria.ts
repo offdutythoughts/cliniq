@@ -36,7 +36,7 @@ export const pollakiuriaFlow: FlowPage = {
             {
               kind: 'endpoints',
               items: [
-                { icon: '🐈', label: 'URETHRAL OBSTRUCTION / PLUG', sublabel: 'Blocked cat · urolith · plug · stricture — treat K⁺ then decompress', tone: 'danger', link: { to: 'disease', id: 'DIS-URO-URETHRAL-OBS' } },
+                { icon: '🐈', label: 'URETHRAL OBSTRUCTION / PLUG', sublabel: 'Blocked cat · urolith · plug · stricture — treat K⁺ then decompress', tone: 'danger', link: { to: 'protocol', id: 'PROT-URO-OBS' } },
                 { icon: '⚙️', label: 'PROSTATIC / URETHRAL MASS', sublabel: 'Older dog · TCC or prostatic carcinoma at the trigone/urethra', tone: 'violet', link: { to: 'disease', id: 'DIS-NEO-TCC' } },
               ],
             },

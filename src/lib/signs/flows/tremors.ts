@@ -46,12 +46,6 @@ const tremorsEntry: FlowPage = {
 
     { kind: 'node', variant: 'step', text: 'DIFFERENTIAL DIAGNOSIS — CLASSIFY BY CAUSE' },
     {
-      kind: 'dxRow',
-      items: [
-        { label: 'Diagnostic Approach', link: { to: 'dx', id: 'tremors' }, accent: true },
-      ],
-    },
-    {
       kind: 'categoryColumns',
       cols: 3,
       columns: [

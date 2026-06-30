@@ -13,6 +13,7 @@ import type {
 } from '../../lib/signs/flowTypes'
 import { HUE, TITLE } from '../../lib/signs/tone'
 import { FLOWS } from '../../lib/signs/flows'
+import { DX } from '../../lib/signs/dx'
 import { RichText } from '../../components/RichText'
 import { useNav } from '../nav/NavContext'
 import { linkToView } from '../nav/view'
@@ -426,6 +427,29 @@ function CompareBoxBlock({ b, onNav }: { b: Extract<Block, { kind: 'compareBox' 
   )
 }
 
+// ── Species compare ───────────────────────────────────────────────────────────
+/** 🐕 vs 🐱 paired-row grid. dog[i] pairs with cat[i]; both may contain inline HTML. */
+function SpeciesCompareBlock({ b, onNav }: { b: Extract<Block, { kind: 'speciesCompare' }>; onNav: Nav }) {
+  const h = HUE.indigo
+  return (
+    <div style={s(`margin-top:10px;padding:10px 12px;background:rgba(${h.rgb},var(--panel-bg-a));border:1px solid rgba(${h.rgb},var(--panel-bd-a));border-radius:10px;width:100%;`)}>
+      <div style={s(`font-size:10px;font-weight:700;color:${h.color};margin-bottom:5px;`)}>🐕 vs 🐱 KEY SPECIES DIFFERENCES</div>
+      <div style={s('font-size:9px;line-height:1.5;color:var(--gray);')}>
+        <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;')}>
+          <div><strong style={{ color: HUE.info.color }}>DOG</strong></div>
+          <div><strong style={{ color: 'var(--hl-orange)' }}>CAT</strong></div>
+          {b.dog.map((d, i) => (
+            <Fragment key={i}>
+              <div><Raw html={d} onNav={onNav} /></div>
+              <div><Raw html={b.cat[i] ?? ''} onNav={onNav} /></div>
+            </Fragment>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ── Callout / alert / diseaseGrid / dxRow ─────────────────────────────────────
 function CalloutBlock({ b, onNav }: { b: Extract<Block, { kind: 'callout' }>; onNav: Nav }) {
   const extra = `padding:9px 12px;font-size:9.5px;color:${HUE[b.tone].color};line-height:1.5;${b.gap ? `margin-top:${b.gap}px;` : ''}${b.center ? 'text-align:center;' : ''}`
@@ -471,8 +495,29 @@ function DiseaseGridBlock({ title, links, onNav }: { title: string; links: Label
 }
 function DxRowBlock({ items, onNav }: { items: LabeledLink[]; onNav: Nav }) {
   return (
-    <div className="dx-row c2" style={s('margin-top:10px;')}>
-      {items.map((i2, i) => <div key={i} className="dx-test" style={s(`cursor:pointer;font-size:9.5px;${i2.accent ? 'background:rgba(var(--tone-teal),0.4);' : ''}`)} role="button" onClick={() => onNav(linkToView(i2.link))}>{i2.label} ›</div>)}
+    <div style={s('display:flex;flex-direction:column;gap:6px;width:100%;margin-top:10px;')}>
+      {items.map((i2, i) => {
+        const isProto = i2.link.to === 'protocol'
+        if (isProto) {
+          return (
+            <div key={i} role="button" onClick={() => onNav(linkToView(i2.link))}
+              style={s('cursor:pointer;background:rgba(var(--tone-danger),var(--panel-bg-a));border:1px solid rgba(var(--tone-danger),var(--panel-bd-a));border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;')}>
+              <span style={s('font-size:11px;font-weight:700;color:var(--tone-danger-fg);')}>{i2.label}</span>
+              <span style={s('color:var(--tone-danger-fg);font-size:14px;opacity:.7;')}>›</span>
+            </div>
+          )
+        }
+        return (
+          <div key={i} className="card" role="button" onClick={() => onNav(linkToView(i2.link))}>
+            <div className="card-row">
+              <div style={{ flex: 1 }}>
+                <div className="card-title">{i2.label}</div>
+              </div>
+              <div className="card-arrow">›</div>
+            </div>
+          </div>
+        )
+      })}
     </div>
   )
 }
@@ -497,6 +542,7 @@ function BlockView({ b, onNav }: { b: Block; onNav: Nav }): ReactNode {
     case 'categoryColumns': return <CategoryColumnsBlock cols={b.cols ?? 3} columns={b.columns} onNav={onNav} />
     case 'decisionTree': return <>{b.steps.map((step, i) => <DecisionStepView key={i} step={step} onNav={onNav} />)}</>
     case 'compareBox': return <CompareBoxBlock b={b} onNav={onNav} />
+    case 'speciesCompare': return <SpeciesCompareBlock b={b} onNav={onNav} />
     case 'infoBox': return <InfoBoxBlock b={b} onNav={onNav} />
     case 'disclaimer': return DISCLAIMER
     case 'html': return <Raw html={b.html} onNav={onNav} />
@@ -508,14 +554,30 @@ export function FlowPageView({ flowId }: { flowId: string }) {
   const router = useNav()
   const onNav: Nav = v => router.navigate(v)
   const page = FLOWS[flowId]
-  if (!page) return <NotFound what={`Flow “${flowId}”`} />
+  if (!page) return <NotFound what={`Flow "${flowId}"`} />
   if (page.layout === 'fn') return <BlockList blocks={page.blocks} fn onNav={onNav} />
   const blocks = page.blocks
   const lastIsDisc = blocks.length > 0 && blocks[blocks.length - 1].kind === 'disclaimer'
   const main = lastIsDisc ? blocks.slice(0, -1) : blocks
+  const hasDx = !!DX[flowId]
   return (
     <>
-      <div className="flow-wrap"><BlockList blocks={main} onNav={onNav} /></div>
+      <div className="flow-wrap">
+        <BlockList blocks={main} onNav={onNav} />
+        {hasDx && (
+          <div className="card" style={{ marginTop: 10 }} role="button"
+            onClick={() => onNav({ kind: 'dx', sign: flowId, tab: 'history' })}>
+            <div className="card-row">
+              <div className="card-icon">🔬</div>
+              <div style={{ flex: 1 }}>
+                <div className="card-title">Diagnostic Approach</div>
+                <div className="card-sub">Stepwise clinical workup flowchart</div>
+              </div>
+              <div className="card-arrow">›</div>
+            </div>
+          </div>
+        )}
+      </div>
       {lastIsDisc && DISCLAIMER}
     </>
   )

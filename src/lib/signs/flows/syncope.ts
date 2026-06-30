@@ -15,7 +15,7 @@ const syncopeEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'LOCALISE THE CAUSE — CARDIOGENIC vs NON-CARDIOGENIC',
-      sub: 'Syncope = TLOC from cerebral hypoperfusion; BP must fall ~50% before unconsciousness; an arrhythmia must last ~10–30 s to trigger it. (Ettinger Ch 40)',
+      sub: 'Syncope = TLOC from cerebral hypoperfusion · BP must fall ~50% before unconsciousness · arrhythmia must last ~10–30 s to trigger it (Ettinger Ch 40)',
     },
     {
       kind: 'choices',

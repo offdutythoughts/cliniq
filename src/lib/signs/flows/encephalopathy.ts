@@ -1,17 +1,11 @@
 // ── Disorientation / Altered Mentation flowchart (data) ─────────────────────
-// Clinical decision flow for disorientation, obtundation, head pressing,
-// circling, stupor, and coma. Primary sources: Ettinger Ch 24 (altered
-// mentation) + Ch 44 (stupor and coma).
+// Primary sources: Ettinger Ch 24 (altered mentation) + Ch 44 (stupor and coma).
 //
-// Block strategy:
-//   - Severity grading          → compareBox (cols:3)
-//   - Metabolic/Toxin/Drug grid → compareBox (cols:3)
-//   - Localise pattern          → choices (3 items, sublabel)
-//   - Classify aetiology        → choices (3 items, sublabel, linked)
-//   - Metabolic key patterns    → compareBox (cols:2)
-//   - Structural VITAMIN D      → categoryColumns (7 CAT_STYLE entries)
-//   - Trailing action cards     → dxRow
-//   - ICP emergency             → callout (danger)
+// Pages:
+//   encephalopathy          Main page — severity table → ICP → localise table → 3 nav tiles
+//   encephalopathy-forebrain   Forebrain causes by category
+//   encephalopathy-brainstem   Brainstem causes by category
+//   encephalopathy-diffuse     Diffuse / bilateral causes by category
 //
 // Lesion links:
 //   LOC-EN-INFLAM  Encephalitis
@@ -21,247 +15,403 @@
 
 import type { FlowPage } from '../flowTypes'
 
+// ── Main page ────────────────────────────────────────────────────────────────
+const encephalopathyMain: FlowPage = {
+  id: 'encephalopathy',
+  title: 'Disorientation',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: '🧠 DISORIENTATION / ALTERED MENTATION' },
+
+    // Severity comparison table
+    {
+      kind: 'table',
+      gap: 12,
+      cols: '1.1fr 1.2fr 1.2fr 1.2fr',
+      headers: [
+        '',
+        'Obtunded',
+        { text: '⚠️ Stupor', tone: 'warning' },
+        { text: '🚨 Coma', tone: 'danger' },
+      ],
+      rows: [
+        [
+          'Consciousness',
+          { text: 'Depressed but present', tone: 'green' },
+          { text: 'Severely depressed', tone: 'warning' },
+          { text: 'Absent', tone: 'danger' },
+        ],
+        [
+          'Response to stimuli',
+          { text: 'Responds to mild stimuli', tone: 'green' },
+          { text: 'Only noxious stimuli', tone: 'warning' },
+          { text: 'No response', tone: 'danger' },
+        ],
+        [
+          'Spontaneous signs',
+          { text: 'Head pressing · circling<br>· behaviour change', tone: 'green' },
+          { text: 'Minimal — lapses back<br>when removed', tone: 'warning' },
+          { text: 'None · limb withdrawal<br>= spinal reflex', tone: 'danger' },
+        ],
+        [
+          'Action',
+          'Investigate urgently',
+          { text: 'Stabilise (ABC) first', tone: 'warning' },
+          { text: 'Stabilise (ABC) first', tone: 'danger' },
+        ],
+      ],
+    },
+
+    // ICP callout
+    {
+      kind: 'callout',
+      tone: 'danger',
+      gap: 8,
+      connectAfter: false,
+      title: '⚠️ Suspect elevated ICP if:',
+      html: `Head pressing · rapidly worsening obtundation or stupor<br>
+Bilateral fixed dilated pupils (mydriasis)<br>
+Cushing reflex: systemic hypertension + bradycardia<br>
+Progressive deterioration despite initial treatment`,
+    },
+
+    // Localisation table
+    { kind: 'node', variant: 'step', text: 'LOCALISE — FOREBRAIN vs BRAINSTEM vs DIFFUSE' },
+    {
+      kind: 'table',
+      gap: 12,
+      cols: '1.1fr 1.2fr 1.2fr 1.2fr',
+      headers: [
+        '',
+        { text: 'Forebrain', tone: 'info' },
+        { text: 'Brainstem', tone: 'warning' },
+        { text: 'Diffuse / Bilateral', tone: 'teal' },
+      ],
+      rows: [
+        [
+          'Mentation',
+          { text: 'Obtunded · behaviour change', tone: 'info' },
+          { text: 'Often severely depressed', tone: 'warning' },
+          { text: 'Waxing-waning · variable', tone: 'teal' },
+        ],
+        [
+          'Lateralisation',
+          { text: 'Asymmetric — toward lesion', tone: 'info' },
+          { text: 'Asymmetric ± paradoxical', tone: 'warning' },
+          { text: 'Symmetric — no lateralisation', tone: 'teal' },
+        ],
+        [
+          'Pupils / vision',
+          { text: 'Contralateral menace loss<br>· PLR intact', tone: 'info' },
+          { text: 'Abnormal pupils<br>· multiple CN deficits', tone: 'warning' },
+          { text: 'Small reactive · normal<br>PLR bilateral', tone: 'teal' },
+        ],
+        [
+          'CP deficits',
+          { text: 'May be present', tone: 'info' },
+          { text: '✓ Present', tone: 'warning' },
+          { text: '✗ Absent', tone: 'teal' },
+        ],
+        [
+          'Other signs',
+          { text: 'Circling · seizures<br>· cortical blindness', tone: 'info' },
+          { text: 'Abnormal resp. pattern<br>· vestibular signs', tone: 'warning' },
+          { text: 'Post-prandial worsening<br>→ metabolic', tone: 'teal' },
+        ],
+      ],
+    },
+
+    // 3 nav tiles → sub-flow pages
+    {
+      kind: 'choices',
+      cols: 3,
+      size: 11,
+      connectAfter: false,
+      items: [
+        {
+          variant: 'insp',
+          label: 'Forebrain',
+          sublabel: `Tap for causes ›`,
+          link: { to: 'flow', id: 'encephalopathy-forebrain' },
+        },
+        {
+          variant: 'rest',
+          label: 'Brainstem',
+          sublabel: `Tap for causes ›`,
+          link: { to: 'flow', id: 'encephalopathy-brainstem' },
+        },
+        {
+          variant: 'mixed',
+          label: 'Diffuse / Bilateral',
+          sublabel: `Tap for causes ›`,
+          link: { to: 'flow', id: 'encephalopathy-diffuse' },
+        },
+      ],
+    },
+
+    // Dementia callout
+    {
+      kind: 'callout',
+      tone: 'info',
+      gap: 8,
+      connectAfter: false,
+      title: '💭 Also consider: Cognitive Dysfunction Syndrome (Dementia)',
+      html: `Geriatric dog or cat · gradual, progressive onset · no focal neurological signs<br>
+Disorientation · night waking · altered social interactions · house soiling (DISHA)<br>
+Normal neurological exam, bloodwork, and MRI — diagnosis of exclusion`,
+    },
+
+    { kind: 'disclaimer' },
+  ],
+}
+
+// ── Forebrain sub-flow ────────────────────────────────────────────────────────
+const encephalopathyForebrain: FlowPage = {
+  id: 'encephalopathy-forebrain',
+  title: 'Forebrain — causes',
+  blocks: [
+    { kind: 'node', variant: 'entry', tone: 'info', text: '🔵 FOREBRAIN LESIONS' },
+
+    {
+      kind: 'branch',
+      columns: [
+        {
+          header: 'Metabolic',
+          tone: 'teal',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'Hypertensive encephalopathy', tone: 'teal', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
+                { label: 'HAC — pituitary macroadenoma', tone: 'teal', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
+                { label: 'PSS / hepatic encephalopathy', tone: 'teal', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
+                { label: 'Hypoglycaemia (severe)', tone: 'teal', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
+              ],
+            },
+          ],
+        },
+        {
+          header: 'Structural',
+          tone: 'info',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'CVA / stroke', tone: 'info', link: { to: 'disease', id: 'DIS-NEU-CVA' } },
+                { label: 'MUO / GME / encephalitis', tone: 'info', link: { to: 'disease', id: 'DIS-NEU-MUE' } },
+                { label: 'Meningioma · glioma · pituitary', tone: 'info', link: { to: 'disease', id: 'DIS-NEU-BRAINTUM' } },
+                { label: 'TBI / head trauma', tone: 'info', link: { to: 'disease', id: 'DIS-NEU-HEADTRAUMA' } },
+                { label: 'Hydrocephalus', tone: 'info', link: { to: 'disease', id: 'DIS-NEU-HYDRO' } },
+                { label: 'Lissencephaly', tone: 'info', link: { to: 'disease', id: 'DIS-NEU-BRAINMAL' } },
+              ],
+            },
+          ],
+        },
+        {
+          header: 'Toxic / Drug',
+          tone: 'warning',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'Lead toxicity', tone: 'warning' },
+                { label: 'Organophosphates', tone: 'warning' },
+                { label: 'Bromethalin', tone: 'warning' },
+                { label: 'Ethylene glycol', tone: 'warning' },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
+    {
+      kind: 'html',
+      html: `<div class="card" onclick="renderDxId('encephalopathy')" style="margin-top:12px;cursor:pointer;width:100%;">
+  <div class="card-row">
+    <div class="card-icon">🔬</div>
+    <div style="flex:1">
+      <div class="card-title">Diagnostic Approach</div>
+      <div class="card-sub">Stepwise clinical workup flowchart</div>
+    </div>
+    <div class="card-arrow">›</div>
+  </div>
+</div>`,
+    },
+
+    { kind: 'disclaimer' },
+  ],
+}
+
+// ── Brainstem sub-flow ────────────────────────────────────────────────────────
+const encephalopathyBrainstem: FlowPage = {
+  id: 'encephalopathy-brainstem',
+  title: 'Brainstem — causes',
+  blocks: [
+    { kind: 'node', variant: 'entry', tone: 'warning', text: '🟡 BRAINSTEM LESIONS' },
+
+    {
+      kind: 'callout',
+      tone: 'danger',
+      gap: 8,
+      connectAfter: false,
+      title: '🚨 Brainstem involvement — consider ICU',
+      html: `Multiple CN deficits · abnormal respiratory pattern · rapidly depressed mentation<br>
+Vertical or direction-changing nystagmus · progression despite treatment`,
+    },
+
+    {
+      kind: 'branch',
+      columns: [
+        {
+          header: 'Metabolic',
+          tone: 'teal',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'Thiamine deficiency', tone: 'teal', sublabel: '🐱 Raw fish / sulphite diet', link: { to: 'disease', id: 'DIS-NEU-THIAMINE' } },
+                { label: 'Hepatic encephalopathy (severe)', tone: 'teal', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
+                { label: 'Hyperosmolar states', tone: 'teal' },
+              ],
+            },
+          ],
+        },
+        {
+          header: 'Structural',
+          tone: 'warning',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'CVA / stroke', tone: 'warning', link: { to: 'disease', id: 'DIS-NEU-CVA' } },
+                { label: 'MUO / GME / encephalitis', tone: 'warning', link: { to: 'disease', id: 'DIS-NEU-MUE' } },
+                { label: 'Intracranial neoplasia', tone: 'warning', link: { to: 'disease', id: 'DIS-NEU-BRAINTUM' } },
+                { label: 'TBI / head trauma', tone: 'warning', link: { to: 'disease', id: 'DIS-NEU-HEADTRAUMA' } },
+              ],
+            },
+          ],
+        },
+        {
+          header: 'Toxic / Drug',
+          tone: 'danger',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'Metronidazole toxicity', tone: 'danger', link: { to: 'disease', id: 'DIS-NEU-METRO' } },
+                { label: 'Bromethalin', tone: 'danger' },
+                { label: 'Ivermectin (MDR1 breeds)', tone: 'danger' },
+                { label: 'Organophosphates', tone: 'danger' },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
+    {
+      kind: 'html',
+      html: `<div class="card" onclick="renderDxId('encephalopathy')" style="margin-top:12px;cursor:pointer;width:100%;">
+  <div class="card-row">
+    <div class="card-icon">🔬</div>
+    <div style="flex:1">
+      <div class="card-title">Diagnostic Approach</div>
+      <div class="card-sub">Stepwise clinical workup flowchart</div>
+    </div>
+    <div class="card-arrow">›</div>
+  </div>
+</div>`,
+    },
+
+    { kind: 'disclaimer' },
+  ],
+}
+
+// ── Diffuse / Bilateral sub-flow ─────────────────────────────────────────────
+const encephalopathyDiffuse: FlowPage = {
+  id: 'encephalopathy-diffuse',
+  title: 'Diffuse / Bilateral — causes',
+  blocks: [
+    { kind: 'node', variant: 'entry', tone: 'teal', text: '🟢 DIFFUSE / BILATERAL — METABOLIC FIRST' },
+
+    {
+      kind: 'branch',
+      columns: [
+        {
+          header: 'Metabolic',
+          tone: 'teal',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'Hypoglycaemia', tone: 'teal', sublabel: 'Insulinoma · PSS · Addison\'s · toy breeds', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
+                { label: 'Hepatic encephalopathy', tone: 'teal', sublabel: 'PSS · liver failure — post-prandial', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
+                { label: 'Uraemic encephalopathy', tone: 'teal', sublabel: 'CKD / AKI', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
+                { label: 'Electrolyte extremes', tone: 'teal', sublabel: 'Na >170 or <120 mmol/L — correct slowly' },
+                { label: 'Hypocalcaemia', tone: 'teal', sublabel: 'Eclampsia · HypoPTH' },
+                { label: 'Hypertensive encephalopathy', tone: 'teal' },
+                { label: 'Sepsis / shock', tone: 'teal', link: { to: 'protocol', id: 'PROT-SEPSIS' } },
+                { label: 'Hyperthyroidism', tone: 'teal', sublabel: '🐱 Cats' },
+              ],
+            },
+          ],
+        },
+        {
+          header: 'Structural',
+          tone: 'info',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'Storage diseases (NCL)', tone: 'info', sublabel: 'Lysosomal storage — breed-specific', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
+                { label: 'CDS / dementia', tone: 'info', sublabel: 'Geriatric · gradual · dx of exclusion' },
+              ],
+            },
+          ],
+        },
+        {
+          header: 'Toxic / Drug',
+          tone: 'warning',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'Opioids · BZDs · cannabinoids', tone: 'warning' },
+                { label: 'Ethylene glycol', tone: 'warning' },
+                { label: 'Bromethalin · metaldehyde', tone: 'warning' },
+                { label: 'Ivermectin (MDR1 breeds)', tone: 'warning' },
+                { label: 'Permethrin', tone: 'warning', sublabel: '🐱 Cats' },
+                { label: 'Heavy metals (lead, mercury)', tone: 'warning' },
+                { label: 'Thiamine deficiency', tone: 'warning', sublabel: '🐱 Raw fish / sulphite diet', link: { to: 'disease', id: 'DIS-NEU-THIAMINE' } },
+                { label: 'Metronidazole toxicity', tone: 'warning', link: { to: 'disease', id: 'DIS-NEU-METRO' } },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
+    {
+      kind: 'html',
+      html: `<div class="card" onclick="renderDxId('encephalopathy')" style="margin-top:12px;cursor:pointer;width:100%;">
+  <div class="card-row">
+    <div class="card-icon">🔬</div>
+    <div style="flex:1">
+      <div class="card-title">Diagnostic Approach</div>
+      <div class="card-sub">Stepwise clinical workup flowchart</div>
+    </div>
+    <div class="card-arrow">›</div>
+  </div>
+</div>`,
+    },
+
+    { kind: 'disclaimer' },
+  ],
+}
+
 export const encephalopathyFlows: FlowPage[] = [
-  {
-    id: 'encephalopathy',
-    title: 'Disorientation',
-    blocks: [
-      { kind: 'node', variant: 'entry', text: '🧠 DISORIENTATION / ALTERED MENTATION' },
-
-      // Severity grading — 3 pattern-nodes (choices handles 3-col on mobile)
-      {
-        kind: 'choices',
-        cols: 3,
-        size: 11,
-        connectAfter: false,
-        items: [
-          {
-            variant: 'mixed',
-            label: 'Obtunded',
-            sublabel: `Dull · slow responses<br>
-Responds to stimuli<br>
-Head pressing · circling<br>
-Behaviour change`,
-          },
-          {
-            variant: 'rest',
-            label: '⚠️ Stupor',
-            sublabel: `Rousable by noxious stimulus<br>
-Lapses back when removed<br>
-ARAS / cortex lesion<br>
-mGCS &lt;15`,
-          },
-          {
-            variant: 'insp',
-            label: '🚨 Coma',
-            sublabel: `Unrousable — even noxious<br>
-No behavioural response<br>
-Limb withdrawal = spinal<br>
-reflex, NOT consciousness`,
-          },
-        ],
-      },
-
-      // Stabilise step
-      { kind: 'node', variant: 'step', text: '⚡ STABILISE (ABC) — THEN RULE OUT METABOLIC & TOXIC' },
-
-      // 2-col causes grid (cols:3 clips on mobile — merge toxins + drugs)
-      {
-        kind: 'compareBox',
-        tone: 'neutral',
-        cols: 2,
-        gap: 8,
-        cards: [
-          {
-            header: '🟢 Metabolic',
-            html: `Hypoglycaemia (insulinoma, PSS, Addison's, toy breed)<br>
-Hepatic encephalopathy (PSS)<br>
-Uraemic encephalopathy (CKD/AKI)<br>
-Hypocalcaemia (eclampsia, HypoPTH)<br>
-Hypo/hypernatraemia · Hypo/hyperthermia<br>
-Hypertensive encephalopathy<br>
-Sepsis / shock · Hyperthyroidism (cats)`,
-          },
-          {
-            header: '🔴 Toxic / Drug / Nutritional',
-            html: `CNS depressants: opioids, BZDs, cannabinoids<br>
-Opioid toxidrome: miosis + depression → <strong>naloxone</strong><br>
-Ethylene glycol · Bromethalin · Metaldehyde<br>
-Heavy metals (lead, mercury) · Organophosphates<br>
-Ivermectin (MDR1 breeds) · Permethrin (cats)<br>
-Anticholinergics: mydriasis + disorientation<br>
-Thiamine deficiency (cats on fish/sulphite diet)<br>
-Metronidazole toxicity (esp. cats)`,
-          },
-        ],
-      },
-
-      // Localise
-      { kind: 'node', variant: 'step', text: 'LOCALISE — FOREBRAIN vs BRAINSTEM vs DIFFUSE' },
-      {
-        kind: 'choices',
-        cols: 3,
-        size: 11,
-        connectAfter: false,
-        items: [
-          {
-            variant: 'insp',
-            label: 'Forebrain',
-            sublabel: `Circling toward lesion<br>
-Contralateral menace loss<br>
-with normal PLR<br>
-Cortical blindness<br>
-Behaviour change · Seizures<br>
-<strong style="color:var(--tone-info-fg);">→ Unilateral cortical lesion</strong>`,
-          },
-          {
-            variant: 'rest',
-            label: 'Brainstem',
-            sublabel: `Multiple CN deficits<br>
-Abnormal respiratory pattern<br>
-Vestibular signs<br>
-Severely depressed consciousness<br>
-Abnormal pupils<br>
-<strong style="color:var(--tone-danger-fg);">→ Needs ICU</strong>`,
-          },
-          {
-            variant: 'mixed',
-            label: 'Diffuse / Bilateral',
-            sublabel: `Symmetric, no lateralisation<br>
-Small reactive pupils<br>
-Normal PLR bilateral<br>
-Waxing-waning signs<br>
-Post-prandial worsening<br>
-<strong style="color:var(--tone-green-fg);">→ Metabolic first</strong>`,
-          },
-        ],
-      },
-
-      // Classify aetiology
-      { kind: 'node', variant: 'step', text: 'CLASSIFY AETIOLOGY' },
-      {
-        kind: 'choices',
-        cols: 3,
-        size: 11,
-        connectAfter: false,
-        items: [
-          {
-            variant: 'mixed',
-            label: 'Metabolic / Systemic',
-            link: { to: 'lesion', loc: 'LOC-EN-METAB', name: 'Metabolic encephalopathy' },
-          },
-          {
-            variant: 'rest',
-            label: 'Structural',
-          },
-          {
-            variant: 'insp',
-            label: 'Toxic / Drug',
-          },
-        ],
-      },
-
-      // Metabolic key patterns callout
-      {
-        kind: 'callout',
-        tone: 'green',
-        gap: 8,
-        connectAfter: false,
-        title: '💡 Metabolic — Key Signalment Patterns',
-        html: `<strong>Young + stunted + post-prandial signs:</strong> Congenital PSS / hepatic encephalopathy — ↓BUN, ↓albumin, ↓glucose, ammonium biurate crystals; note chemistry may be normal until 7–12yr.<br>
-<strong>Middle-aged dog with HAC + pituitary macroadenoma:</strong> Early (&lt;1.5cm) → obtundation, disorientation, pacing; severe (&gt;1.5cm) → circling, tetraparesis, seizures.<br>
-<strong>Electrolyte extremes:</strong> Na &gt;170 or &lt;120 mmol/L (or rapid change) → ataxia, disorientation, seizures — correct SLOWLY (max 0.5 mmol/L/h; overcorrection → central pontine myelinolysis).<br>
-<strong>Geriatric dog or cat, gradual onset, no other signs:</strong> Cognitive dysfunction syndrome (CDS) — diagnosis of exclusion after normal MRI + bloods.`,
-      },
-
-      // Structural VITAMIN D — categoryColumns (CAT_STYLE labels)
-      { kind: 'node', variant: 'step', text: 'STRUCTURAL — VITAMIN D' },
-      {
-        kind: 'categoryColumns',
-        cols: 3,
-        columns: [
-          {
-            cat: 'Vascular',
-            tiles: [
-              { label: 'CVA / stroke', link: { to: 'lesion', loc: 'LOC-EN-CVA', name: 'CVA' } },
-              { label: 'Peracute, non-progressive' },
-              { label: 'Cats: ischaemic infarct' },
-            ],
-          },
-          {
-            cat: 'Inflammatory',
-            tiles: [
-              { label: 'MUO / GME', link: { to: 'lesion', loc: 'LOC-EN-INFLAM', name: 'Encephalitis' } },
-              { label: 'Infectious encephalitis', link: { to: 'lesion', loc: 'LOC-EN-INFLAM', name: 'Encephalitis' } },
-              { label: 'Multifocal, progressive' },
-            ],
-          },
-          {
-            cat: 'Trauma',
-            tiles: [
-              { label: 'TBI / head trauma' },
-              { label: 'RTA · falls · bite wounds' },
-              { label: 'History of injury' },
-            ],
-          },
-          {
-            cat: 'Anomalous',
-            tiles: [
-              { label: 'Hydrocephalus' },
-              { label: 'Lissencephaly' },
-              { label: '<1yr, toy/brachy breeds' },
-            ],
-          },
-          {
-            cat: 'Metabolic',
-            tiles: [
-              { label: 'Storage diseases (NCL)', link: { to: 'lesion', loc: 'LOC-EN-METAB', name: 'Metabolic encephalopathy' } },
-              { label: 'Lysosomal storage' },
-              { label: 'Breed-specific' },
-            ],
-          },
-          {
-            cat: 'Degenerative',
-            tiles: [
-              { label: 'Cognitive dysfunction (CDS)' },
-              { label: 'Neuronal degeneration' },
-              { label: 'Idiopathic — MRI + bloods normal' },
-            ],
-          },
-          {
-            cat: 'Mass',
-            tiles: [
-              { label: 'Meningioma', link: { to: 'lesion', loc: 'LOC-EN-NEO', name: 'Intracranial neoplasia' } },
-              { label: 'Glioma (brachycephalics)', link: { to: 'lesion', loc: 'LOC-EN-NEO', name: 'Intracranial neoplasia' } },
-              { label: 'Pituitary macroadenoma' },
-            ],
-          },
-        ],
-      },
-
-      // Trailing action cards
-      {
-        kind: 'dxRow',
-        items: [
-          { label: 'Diagnostic Approach', link: { to: 'dx', id: 'encephalopathy' }, accent: true },
-          { label: 'Metabolic Encephalopathy', link: { to: 'lesion', loc: 'LOC-EN-METAB', name: 'Metabolic encephalopathy' } },
-        ],
-      },
-
-      // ICP emergency callout
-      {
-        kind: 'callout',
-        tone: 'danger',
-        gap: 8,
-        connectAfter: false,
-        title: '⚠️ Elevated ICP — treat immediately',
-        html: `Head pressing · obtundation · bilateral mydriasis · Cushing reflex (hypertension + bradycardia)<br>
-<strong>Mannitol</strong> 0.25–0.5 g/kg IV over 15 min · Head elevation 30° · Avoid jugular compression<br>
-<strong>Hypertonic saline</strong> 7.2% NaCl 2–4 mL/kg IV (alternative — do NOT use both)<br>
-Do NOT use corticosteroids in traumatic brain injury`,
-      },
-
-      { kind: 'disclaimer' },
-    ],
-  },
+  encephalopathyMain,
+  encephalopathyForebrain,
+  encephalopathyBrainstem,
+  encephalopathyDiffuse,
 ]

@@ -29,7 +29,7 @@ export const dyspnoeaDx: DxApproach = {
         <span style="opacity:.75;">Structural / obstructive / space-occupying</span>`,
           },
           {
-            style: 'text-align:left;background:#0D7377;font-size:9px;',
+            style: 'text-align:left;background:rgba(var(--tone-teal),var(--tile-bg-a));border:1px solid rgba(var(--tone-teal),var(--tile-bd-a));color:var(--tone-teal-fg);font-size:9px;',
             html: `<strong style="font-size:10px;">💨 Tachypnoea</strong><br>
         Increased respiratory <strong>rate</strong> only<br>
         Effort may be minimal<br>
@@ -46,14 +46,13 @@ export const dyspnoeaDx: DxApproach = {
       • Subacute (days): pneumonia, progressive effusion, cardiac decompensation<br>
       • Chronic + waxing/waning: 🐱 asthma, 🐕 tracheal collapse / airway collapse, neoplasia<br><br>
       <strong>Cough character:</strong><br>
-      • 🐕 Goose-honking: cervical tracheal collapse — worsens with excitement, lead pulling, eating<br>
-      • 🐕 Harsh hacking: laryngeal, tracheal, or bronchial disease<br>
-      • 🐕🐱 Soft, productive: alveolar/interstitial disease (pneumonia, oedema)<br>
-      • 🐱 Dry, paroxysmal, expiratory: feline asthma/bronchitis<br>
+      • Soft, productive: alveolar/interstitial disease (pneumonia, oedema) — both species<br>
+      • Canine — Goose-honking: cervical tracheal collapse (worsens with excitement, lead pulling, eating) · Harsh hacking: laryngeal, tracheal, or bronchial disease<br>
+      • Feline — Dry, paroxysmal, expiratory: feline asthma/bronchitis<br>
       • Owners often confuse coughing with retching — confirm by description<br><br>
       <strong>Prior episodes?</strong><br>
-      • 🐱 Episodic → asthma; recurrent decompensation → HCM<br>
-      • 🐕 Episodic with exertion/heat → tracheal collapse; exertional syncope → pulmonary hypertension<br><br>
+      • Feline — Episodic → asthma; recurrent decompensation → HCM<br>
+      • Canine — Episodic with exertion/heat → tracheal collapse; exertional syncope → pulmonary hypertension<br><br>
       <strong>Response to previous treatment?</strong><br>
       • Bronchodilators + steroids → lower airway disease (both species)<br>
       • Diuretics → CHF (both species)<br>
@@ -114,9 +113,9 @@ export const dyspnoeaDx: DxApproach = {
         kind: 'callout',
         tone: 'danger',
         title: '⚠️ RED FLAGS',
-        html: `🐕🐱 Open-mouth breathing · Cyanosis · Orthopnoea (cannot lie down) · Rapid deterioration despite O₂<br>
-      🐱 Open-mouth breathing = SEVERE (obligate nasal breather) · Cold paralysed hindlimbs + resp distress = ATE<br>
-      🐕 Exertional syncope → pulmonary hypertension · Goose-honk + cyanosis → severe collapse · Haemoptysis → PTE/coagulopathy/HW`,
+        html: `<strong>Both:</strong> Open-mouth breathing · Cyanosis · Orthopnoea (cannot lie down) · Rapid deterioration despite O₂<br>
+      <strong>Feline:</strong> Open-mouth breathing = SEVERE (obligate nasal breather) · Cold paralysed hindlimbs + resp distress = ATE<br>
+      <strong>Canine:</strong> Exertional syncope → pulmonary hypertension · Goose-honk + cyanosis → severe collapse · Haemoptysis → PTE/coagulopathy/HW`,
       },
       { kind: 'disclaimer' },
     ],
@@ -139,13 +138,13 @@ export const dyspnoeaDx: DxApproach = {
       {
         kind: 'check',
         html: `<strong style="color:var(--tone-green-fg);">Vital Signs</strong><br>
-      • <strong>HR:</strong> Tachycardia = most common; 🐕 sinus bradycardia/arrhythmia unlikely with CHF; bradycardia + hypothermia = severe decompensation<br>
-      • <strong>Temperature (🐕):</strong> Fever → pneumonia, ARDS; upper airway obstruction (BOAS, laryngeal paralysis) → <strong>hyperthermia</strong> (impaired evaporative cooling via panting) — treat urgently<br>
-      • <strong>Temperature (🐱):</strong> Fever → pyothorax, pneumonia; hypothermia + bradycardia → decompensated HCM<br>
+      • <strong>HR:</strong> Tachycardia = most common; bradycardia + hypothermia = severe decompensation<br>
       • <strong>MM colour:</strong> Cyanosis → severe hypoxaemia; pale → anaemia/shock; normal MMs do NOT exclude significant hypoxaemia<br>
       • <strong>SpO₂:</strong> &lt;95% = clinically significant; &lt;90% = severe → start O₂ immediately<br>
-      • <strong>🐕 Pulse quality + rhythm:</strong> Weak/rapid → shock; irregular pulse with deficits → atrial fibrillation (DCM, advanced MMVD)<br>
-      • <strong>🐕 Jugular distension:</strong> → Right-sided CHF, pulmonary hypertension, pericardial effusion`,
+      • <strong>Temperature (canine):</strong> Fever → pneumonia, ARDS; upper airway obstruction (BOAS, laryngeal paralysis) → <strong>hyperthermia</strong> (impaired evaporative cooling via panting) — treat urgently<br>
+      • <strong>Temperature (feline):</strong> Fever → pyothorax, pneumonia; hypothermia + bradycardia → decompensated HCM<br>
+      • <strong>Canine — Pulse quality + rhythm:</strong> Weak/rapid → shock; irregular pulse with deficits → atrial fibrillation (DCM, advanced MMVD)<br>
+      • <strong>Canine — Jugular distension:</strong> → Right-sided CHF, pulmonary hypertension, pericardial effusion`,
       },
       { kind: 'step', alt: true, text: '🔊 AUSCULTATION + SOUND LOCALISATION' },
       {
@@ -283,20 +282,20 @@ export const dyspnoeaDx: DxApproach = {
         kind: 'check',
         html: `<strong>CBC:</strong><br>
       • Leukocytosis + left shift → infection/inflammation (pneumonia, pyothorax, ARDS trigger)<br>
-      • 🐕🐱 Eosinophilia → parasitic (lungworm, heartworm), allergic (EBP, asthma); normal count does NOT exclude<br>
+      • Eosinophilia → parasitic (lungworm, heartworm), allergic (EBP, asthma); normal count does NOT exclude — both species<br>
       • Anaemia (PCV &lt;20% dog / &lt;12–15% cat) → compensatory tachypnoea; check reticulocytes<br>
-      • 🐕 Polycythaemia (PCV &gt;65%) → right-to-left shunt; mild (55–65%) = chronic hypoxaemia<br>
+      • Polycythaemia (PCV &gt;65%) → right-to-left shunt; mild (55–65%) = chronic hypoxaemia — canine<br>
       • Leukopenia → parvovirus, sepsis, overwhelming infection<br><br>
       <strong>Serum biochemistry:</strong><br>
-      • 🐕 Azotaemia → uremic pneumonitis risk; check for PLN (PTE risk); endocrinopathies (hyperadrenocorticism → PTE)<br>
-      • 🐱 Serum T4 (ALL cats) → hyperthyroidism: cardiac changes, tachypnoea, weight loss<br>
+      • Azotaemia → uremic pneumonitis risk; check for PLN (PTE risk); endocrinopathies (hyperadrenocorticism → PTE) — canine<br>
+      • Serum T4 (ALL cats) → hyperthyroidism: cardiac changes, tachypnoea, weight loss<br>
       • Hypoalbuminaemia (&lt;15 g/L) → non-cardiogenic effusion, protein-losing disease, reduced oncotic pressure<br><br>
       <strong>Urinalysis:</strong><br>
-      • 🐕 Proteinuria (UPC &gt;0.5) → PLN → PTE risk; also screen renal function (USG, creatinine)<br><br>
+      • Proteinuria (UPC &gt;0.5) → PLN → PTE risk; also screen renal function (USG, creatinine) — canine<br><br>
       <strong>Cardiac biomarkers:</strong><br>
-      • <strong>🐕 NT-proBNP:</strong> &lt;900 pmol/L = L-CHF unlikely (primary resp disease more likely); 900–1800 pmol/L = equivocal (correlate with exam + imaging); &gt;1800 pmol/L = L-CHF likely. Elevated in renal disease, sepsis, pulmonary hypertension. 🐕 Healthy Labradors may have NT-proBNP up to 2100 pmol/L.<br>
-      • <strong>🐱 NT-proBNP:</strong> &gt;100 pmol/L = elevated; &gt;265 pmol/L = high specificity for CHF. Normal does NOT fully exclude cardiac disease.<br>
-      • <strong>🐕 cTnI:</strong> Marker of myocardial injury — NOT specific for CHF; elevated in myocarditis, arrhythmias, cardiomyopathy, systemic disease (sepsis, heatstroke). Less useful than NT-proBNP for distinguishing CHF from primary respiratory disease.`,
+      • <strong>NT-proBNP (canine):</strong> &lt;900 pmol/L = L-CHF unlikely (primary resp disease more likely); 900–1800 pmol/L = equivocal (correlate with exam + imaging); &gt;1800 pmol/L = L-CHF likely. Elevated in renal disease, sepsis, pulmonary hypertension. Healthy Labradors may have NT-proBNP up to 2100 pmol/L.<br>
+      • <strong>NT-proBNP (feline):</strong> &gt;100 pmol/L = elevated; &gt;265 pmol/L = high specificity for CHF. Normal does NOT fully exclude cardiac disease.<br>
+      • <strong>cTnI (canine):</strong> Marker of myocardial injury — NOT specific for CHF; elevated in myocarditis, arrhythmias, cardiomyopathy, systemic disease (sepsis, heatstroke). Less useful than NT-proBNP for distinguishing CHF from primary respiratory disease.`,
       },
       { kind: 'step', alt: true, text: 'STEP 6 — ARTERIAL BLOOD GAS (when available)' },
       {

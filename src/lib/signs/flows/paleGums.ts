@@ -216,9 +216,9 @@ const paleGumsShock: FlowPage = {
       cols: 3,
       connectAfter: false,
       columns: [
-        { cat: 'Vascular', tiles: [{ label: 'Hypovolaemic shock' }] },
-        { cat: 'Inflammatory', tiles: [{ label: 'Distributive / septic shock' }] },
-        { cat: 'Trauma', tiles: [{ label: 'Traumatic shock' }] },
+        { cat: 'Vascular', tiles: [{ label: 'Hypovolaemic shock', link: { to: 'protocol', id: 'PROT-SHOCK' } }] },
+        { cat: 'Inflammatory', tiles: [{ label: 'Distributive / septic shock', link: { to: 'protocol', id: 'PROT-SEPSIS' } }] },
+        { cat: 'Trauma', tiles: [{ label: 'Traumatic shock', link: { to: 'protocol', id: 'PROT-SHOCK' } }] },
       ],
     },
     { kind: 'disclaimer' },
@@ -244,7 +244,7 @@ const paleGumsCardiac: FlowPage = {
       connectAfter: false,
       columns: [
         { cat: 'Degenerative', tiles: [{ label: 'DCM (dog)' }, { label: 'HCM (cat)' }] },
-        { cat: 'Vascular', tiles: [{ label: 'Pericardial effusion / tamponade' }] },
+        { cat: 'Vascular', tiles: [{ label: 'Pericardial effusion / tamponade', link: { to: 'protocol', id: 'PROT-PERICARDIO' } }] },
         { cat: 'Anomalous', tiles: [{ label: 'Congenital defects' }] },
         { cat: 'Mass', tiles: [{ label: 'Cardiac neoplasia' }] },
       ],

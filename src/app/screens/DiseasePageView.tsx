@@ -12,7 +12,7 @@ import { NotFound } from './NotFound'
 import { TAG_ROW, BODY_TEXT } from './styles'
 
 const TITLE = s('font-size:18px;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.3;')
-const TOP_ALERT = s('background:rgba(220,38,38,0.18);border:1.5px solid rgba(220,38,38,0.5);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;font-weight:700;color:var(--tone-danger-fg);letter-spacing:.01em;')
+const TOP_ALERT = s('background:rgba(var(--tone-danger),0.18);border:1.5px solid rgba(var(--tone-danger),0.5);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;font-weight:700;color:var(--tone-danger-fg);letter-spacing:.01em;')
 const SUB_LABEL = s('font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-top:10px;margin-bottom:4px;padding-top:8px;border-top:1px solid var(--border);')
 const SIG_LABEL = s('font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;')
 const SIG_VALUE = s('font-size:12px;color:var(--gray);line-height:1.6;margin-bottom:8px;')

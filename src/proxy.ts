@@ -1,11 +1,12 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-// When Convex is not configured locally, skip auth middleware entirely
+// When Convex is not configured locally, or in dev mode, skip auth middleware entirely
 const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
+const isDev = process.env.NODE_ENV === 'development'
 
-// Dynamically import the real middleware only when Convex is configured
-const convexMiddleware = hasConvex
+// Dynamically import the real middleware only when Convex is configured and not in dev mode
+const convexMiddleware = hasConvex && !isDev
   ? (() => {
       const {
         convexAuthNextjsMiddleware,

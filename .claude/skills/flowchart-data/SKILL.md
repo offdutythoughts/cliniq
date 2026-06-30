@@ -74,11 +74,13 @@ registry `flowId`) plus 0..n **sub-flow** pages (`id` like `'<sign>-coats'`). `l
 | `categoryGrid` | N-col category-tile grid (headers → arrow row → tile columns); no wrap | `columns: { cat, tone, tiles: { label, link? }[] }[]` |
 | `categoryColumns` | wrapping `cols`-col grid of units (header + coloured ↓ + chips); `cat` must be a CAT_STYLE label (Vascular/Inflammatory/Mass/Immune-mediated/Degenerative/Metabolic / Endocrine/Toxic/Trauma/Anomalous) | `cols?`, `columns: { cat, tiles: { label, link? }[] }[]` |
 | `decisionTree` | YES/NO localisation tree | `steps: ({type:'step'} \| {type:'split'} \| {type:'outcome'})[]` |
+| `speciesCompare` | indigo 🐕 vs 🐱 KEY SPECIES DIFFERENCES paired-row grid | `dog: string[]`, `cat: string[]` — `dog[i]` pairs with `cat[i]`; both may contain inline HTML |
 | `disclaimer` | "For qualified veterinary professionals only." footer (outside `.flow-wrap`) | — |
 | `html` | **escape hatch** — raw HTML (rendered via `RichText`); last resort for genuine one-offs | `html` |
 
-`speciesCompare` is typed in `flowTypes.ts` but **not yet rendered** — add its case to `BlockView` in
-`FlowPageView.tsx` the first time a sign needs it.
+`speciesCompare` renders an indigo 🐕 vs 🐱 KEY SPECIES DIFFERENCES panel. `dog[i]` pairs with
+`cat[i]`; both may contain inline HTML (`<strong>`, `<em>`, `&gt;`, etc.) rendered via `RichText`.
+First used in the bleeding entry page.
 
 ### Two layouts
 - **`layout:'flow'` (default):** wraps in `.flow-wrap`; connectors are `.flow-arrow-v`. Entry pages + most flows.

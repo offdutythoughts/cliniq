@@ -10,7 +10,20 @@ import type { Block, Column, Link } from './flowTypes'
 // disease/protocol/lesion id a flow Link (or a raw html-block onclick) targets
 // actually exists. Records use mixed quoting, so accept either.
 const dbSrc = readFileSync(fileURLToPath(new URL('../../data/db.ts', import.meta.url)), 'utf8')
-const idInDb = (id: string) => dbSrc.includes(`'${id}'`) || dbSrc.includes(`"${id}"`)
+// Protocols live in separate files under src/data/protocols/ — scan those too.
+import { readdirSync } from 'node:fs'
+import { join, dirname } from 'node:path'
+const protocolsDir = fileURLToPath(new URL('../../data/protocols', import.meta.url))
+const protocolsSrc = readdirSync(protocolsDir)
+  .filter(f => f.endsWith('.ts'))
+  .map(f => readFileSync(join(protocolsDir, f), 'utf8'))
+  .join('\n')
+const idInDb = (id: string) => {
+  const single = `'${id}'`
+  const double = `"${id}"`
+  return dbSrc.includes(single) || dbSrc.includes(double) ||
+    protocolsSrc.includes(single) || protocolsSrc.includes(double)
+}
 
 // Recursively collect every typed Link in a flow page.
 function collectLinks(blocks: Block[]): Link[] {

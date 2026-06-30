@@ -9,13 +9,13 @@ const constipationEntry: FlowPage = {
     {
       kind: 'callout',
       tone: 'danger',
-      html: '<strong>FIRST: straining to DEFECATE or URINATE?</strong> Tenesmus and <strong>stranguria</strong> look identical to an owner. Palpate the bladder — a blocked male cat straining unproductively is a <strong>hyperkalaemic emergency</strong>, not constipation. <strong>Obstipation</strong> = cannot defecate without intervention; recurrent → <strong>idiopathic megacolon</strong>. (Ettinger Ch 51)',
+      html: '<strong>FIRST: straining to DEFECATE or URINATE?</strong> Tenesmus and <strong>stranguria</strong> look identical to an owner. Palpate the bladder — a blocked male cat straining unproductively is a <strong>hyperkalaemic emergency</strong>, not constipation.<br>• <strong>Obstipation</strong> = cannot defecate without intervention<br>• Recurrent obstipation → <strong>idiopathic megacolon</strong><br>(Ettinger Ch 51)',
     },
     {
       kind: 'node',
       variant: 'step',
       text: 'CONFIRMED DEFECATION STRAINING — WHAT IS THE MECHANISM?',
-      sub: 'Tenesmus precedes defecation in obstructive disease, follows it in inflammatory disease; rectal exam is key — pelvic canal, prostate, masses, stricture, anal sacs',
+      sub: 'Tenesmus precedes defecation in obstructive disease · follows it in inflammatory disease · rectal exam is key — pelvic canal, prostate, masses, stricture, anal sacs',
     },
     {
       kind: 'choices',
@@ -72,7 +72,9 @@ const constipationObstructive: FlowPage = {
           cat: 'Neoplastic / Mass',
           tone: 'violet',
           tiles: [
-            { label: 'RECTAL / COLONIC MASS — neoplasia · stricture · diverticulum', link: { to: 'disease', id: 'DIS-GI-RECTAL' } },
+            { label: 'RECTAL / COLONIC NEOPLASIA', link: { to: 'disease', id: 'DIS-GI-RECTAL' } },
+            { label: 'RECTAL / COLONIC STRICTURE', link: { to: 'disease', id: 'DIS-GI-RECTALSTRICT' } },
+            { label: 'COLONIC DIVERTICULUM', link: { to: 'disease', id: 'DIS-GI-DIVERTICULUM' } },
           ],
         },
       ],

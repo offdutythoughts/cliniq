@@ -52,7 +52,7 @@ function LoginForm() {
         }}
       >
         <div style={{ fontSize: 20, fontWeight: 600, color: 'var(--white)', marginBottom: 4 }}>
-          {flow === 'signIn' ? 'Sign in to ClinIQ' : 'Create your ClinIQ account'}
+          {flow === 'signIn' ? 'Sign in to Vetic' : 'Create your Vetic account'}
         </div>
 
         <label style={{ fontSize: 12, color: 'var(--gray)' }}>Email</label>

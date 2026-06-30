@@ -17,7 +17,7 @@ import parse, { domToReact, type DOMNode, type HTMLReactParserOptions } from 'ht
 import { styleStringToObject } from '../app/screens/style'
 import { parseLegacyOnclick, type View } from '../app/nav/view'
 
-const ALLOWED = new Set(['div', 'span', 'strong', 'b', 'em', 'br', 'table', 'thead', 'tbody', 'tr', 'th', 'td'])
+const ALLOWED = new Set(['div', 'span', 'strong', 'b', 'em', 'br', 'table', 'thead', 'tbody', 'tr', 'th', 'td', 'ul', 'ol', 'li'])
 const VOID = new Set(['br'])
 
 interface ElementNode { type: string; name: string; attribs: Record<string, string>; children: DOMNode[] }

@@ -78,7 +78,7 @@ const weightLossAppetite: FlowPage = {
           tiles: [
             { label: ' FELINE HYPERTHYROIDISM', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
             { label: ' DIABETES MELLITUS', link: { to: 'disease', id: 'DIS-ENDO-DM' } },
-            { label: ' DIABETIC KETOACIDOSIS', link: { to: 'disease', id: 'DIS-ENDO-DKA' } },
+            { label: ' DIABETIC KETOACIDOSIS', link: { to: 'protocol', id: 'PROT-ENDO-DKA' } },
           ],
         },
       ],

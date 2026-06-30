@@ -164,7 +164,7 @@ const haematuriaPseudo: FlowPage = {
           tone: 'orange',
           tiles: [
             { label: 'Rhabdomyolysis — trauma', link: { to: 'disease', id: 'DIS-MUSC-RHAB' } },
-            { label: 'Heatstroke', link: { to: 'disease', id: 'DIS-ENV-HEAT' } },
+            { label: 'Heatstroke', link: { to: 'protocol', id: 'PROT-HEATSTROKE' } },
             { label: 'Envenomation → rhabdomyolysis', link: { to: 'disease', id: 'DIS-MUSC-RHAB' } },
             { label: 'Exertional myopathy', link: { to: 'disease', id: 'DIS-MUSC-RHAB' } },
           ],

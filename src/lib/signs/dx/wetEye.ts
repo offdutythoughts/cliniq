@@ -24,7 +24,7 @@ export const wetEyeDx: DxApproach = {
       <span style="opacity:.75;">→ Production: surface disease / CN V irritation</span>`,
           },
           {
-            style: 'text-align:left;background:#0D7377;font-size:9px;',
+            style: 'text-align:left;background:rgba(var(--tone-teal),var(--tile-bg-a));border:1px solid rgba(var(--tone-teal),var(--tile-bd-a));color:var(--tone-teal-fg);font-size:9px;',
             html: `<strong style="font-size:10px;">😐 Non-painful?</strong><br>
       Wet face, tear staining only<br>
       No squint, no rubbing<br>

@@ -5,8 +5,8 @@
 import { Fragment } from 'react'
 import { styleStringToObject as s } from './style'
 
-const T3 = '#FCD34D'
-const C1 = '#6EE7B7'
+const T3 = 'var(--tone-warning-fg)'   // grade 3 / thoracolumbar column — dark amber on light, bright on dark
+const C1 = 'var(--tone-green-fg)'     // cervical column — dark green on light, bright on dark
 
 const WRAP_LABEL = s('font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;margin-top:8px;')
 const SCROLL = s('overflow-x:auto;width:100%;margin-bottom:8px;')
@@ -14,7 +14,7 @@ const TABLE = s('width:100%;border-collapse:collapse;font-size:8.5px;min-width:3
 const TH_GRADE = s('padding:5px 5px;font-size:8.5px;font-weight:700;color:var(--gray2);border-bottom:1.5px solid rgba(148,163,184,0.3);text-align:center;width:28px;')
 const TH_DESC = s('padding:5px 5px;font-size:8.5px;font-weight:700;color:var(--gray2);border-bottom:1.5px solid rgba(148,163,184,0.3);text-align:left;min-width:120px;')
 const th = (color: string) => s(`padding:5px 5px;font-size:8.5px;font-weight:700;color:${color};border-bottom:1.5px solid ${color};text-align:center;white-space:nowrap;`)
-const ROW_ALT = s('background:rgba(255,255,255,0.02);')
+const ROW_ALT = s('background:var(--card);')
 const tdGrade = (color: string) => s(`padding:5px 5px;text-align:center;font-weight:700;color:${color};border-bottom:1px solid rgba(148,163,184,0.1);`)
 const tdCell = (color: string) => s(`padding:5px 5px;font-size:8.5px;color:${color};border-bottom:1px solid rgba(148,163,184,0.1);line-height:1.4;`)
 
@@ -24,8 +24,8 @@ const ROWS: Row[] = [
   { g: 1, gc: 'var(--white)', desc: 'Pain only; neurologically intact', tl: 'Spinal pain; normal neurologic function', cerv: 'Spinal pain; normal neurologic function', alt: false },
   { g: 2, gc: 'var(--white)', desc: 'Ambulatory paresis; CP deficits ± ataxia', tl: 'Ambulatory paraparesis + HL ataxia', cerv: 'Ambulatory tetraparesis + tetra-ataxia', alt: true },
   { g: 3, gc: T3, desc: 'Non-ambulatory paresis; voluntary movement present', tl: 'Non-ambulatory paraparesis', tlc: T3, cerv: 'Non-ambulatory tetraparesis', cervc: T3, alt: false },
-  { g: 4, gc: '#FB923C', desc: 'Paralysis; DPP intact', tl: 'Paraplegia; intact pain perception', tlc: '#FB923C', cerv: 'Tetraplegia; normal ventilation', cervc: '#FB923C', alt: true },
-  { g: 5, gc: '#F87171', desc: <>Paralysis; DPP <strong>absent</strong></>, tl: <>Paraplegia; <strong>absent</strong> DPP in HLs + tail</>, tlc: '#F87171', cerv: <>Tetraplegia; <strong>hypoventilation</strong></>, cervc: '#F87171', alt: false },
+  { g: 4, gc: 'var(--hl-orange)', desc: 'Paralysis; DPP intact', tl: 'Paraplegia; intact pain perception', tlc: 'var(--hl-orange)', cerv: 'Tetraplegia; normal ventilation', cervc: 'var(--hl-orange)', alt: true },
+  { g: 5, gc: 'var(--tone-danger-fg)', desc: <>Paralysis; DPP <strong>absent</strong></>, tl: <>Paraplegia; <strong>absent</strong> DPP in HLs + tail</>, tlc: 'var(--tone-danger-fg)', cerv: <>Tetraplegia; <strong>hypoventilation</strong></>, cervc: 'var(--tone-danger-fg)', alt: false },
 ]
 
 export function InjuryGradingTable() {

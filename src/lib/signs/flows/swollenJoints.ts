@@ -15,7 +15,7 @@ const swollenJointsEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'INFLAMMATORY vs NON-INFLAMMATORY?',
-      sub: 'Synovial TNCC >5 ×10⁹/L with >10% neutrophils = inflammatory joint disease; mononuclear, <10% neutrophils = degenerative / non-inflammatory. Inflammatory cases are often NOT overtly "lame" — they show lethargy, ↓appetite and fever. (Ettinger Ch 32 / Ch 71)',
+      sub: 'Synovial TNCC >5 ×10⁹/L with >10% neutrophils = inflammatory · mononuclear <10% neutrophils = degenerative / non-inflammatory · Inflammatory cases often show lethargy, ↓appetite and fever — not always overt lameness (Ettinger Ch 32 / Ch 71)',
     },
     {
       kind: 'choices',

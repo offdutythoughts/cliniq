@@ -25,7 +25,7 @@ export const redEyeDx: DxApproach = {
       <span style="opacity:.75;">"WHERE is the redness?"</span>`,
           },
           {
-            style: 'text-align:left;background:#0D7377;font-size:9px;',
+            style: 'text-align:left;background:rgba(var(--tone-teal),var(--tile-bg-a));border:1px solid rgba(var(--tone-teal),var(--tile-bd-a));color:var(--tone-teal-fg);font-size:9px;',
             html: `<strong style="font-size:10px;">😣 Painful eye</strong><br>
       Blepharospasm · rubbing<br>
       Photophobia<br>

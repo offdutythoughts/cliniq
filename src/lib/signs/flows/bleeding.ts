@@ -137,26 +137,26 @@ const bleedingEntry: FlowPage = {
       ],
     },
 
-    // FLAGGED html: the 🐕 vs 🐱 dog/cat species-difference matrix. A typed
-    // speciesCompare block exists but is NOT yet rendered (per the task), so
-    // this 2-column DOG/CAT grid stays as a raw-html escape hatch. Verbatim.
     {
-      kind: 'html',
-      html: `<div style="margin-top:10px;padding:10px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
-    <div style="font-size:10px;font-weight:700;color:var(--tone-indigo-fg);margin-bottom:5px;">🐕 vs 🐱 KEY SPECIES DIFFERENCES</div>
-    <div style="font-size:9px;line-height:1.5;color:var(--fg-indigo-deep);">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;">
-        <div><strong style="color:var(--tone-info-fg);">DOG</strong></div><div><strong style="color:var(--hl-orange);">CAT</strong></div>
-        <div>DIC: haemorrhagic; ~78 % survive nonovert · ~38 % survive overt</div><div>DIC: <strong>thrombotic phenotype</strong> dominates; bleeding rare; ~7 % survival</div>
-        <div>IMTP: common; primary form predominates; F &gt; M 2:1</div><div>IMTP: rare (~3 % of feline thrombocytopenia) — almost always secondary (FeLV/FIV, lymphoma, FIP, Mycoplasma haemofelis)</div>
-        <div>Babesia: <em>B. canis</em> (large) → imidocarb; <em>B. gibsoni</em> (small) → atovaquone + azithromycin</div><div>Babesia: <em>B. felis</em> (Africa); FeLV/FIV co-infection in ~46 %; <strong>primaquine ≤0.5 mg/kg</strong> (toxic ≥1 mg/kg)</div>
-        <div>Snake envenomation: rapid presentation; pigmenturia common</div><div>Snake envenomation: <strong>delayed</strong> (cats hide); pulmonary pooling of killing fraction; pigmenturia less common</div>
-        <div>Inherited coagulopathy: vWD, haemophilia A/B, factor VII (Beagle)</div><div>Inherited coagulopathy: <strong>Factor XII (Hageman) deficiency</strong> — most common feline; Birman, Siamese, DSH — <strong>asymptomatic</strong>; isolated prolonged aPTT</div>
-        <div>Drug list: azathioprine OK</div><div>Drug list: <strong>NEVER azathioprine</strong> (myelotoxic); methimazole can cause thrombocytopenia</div>
-        <div>D-dimer 75–100 % sensitive for DIC</div><div>D-dimer ~67 % sens / 56 % spec; <strong>ATIII unreliable</strong></div>
-      </div>
-    </div>
-  </div>`,
+      kind: 'speciesCompare',
+      dog: [
+        'DIC: haemorrhagic; ~78 % survive nonovert · ~38 % survive overt',
+        'IMTP: common; primary form predominates; F &gt; M 2:1',
+        'Babesia: <em>B. canis</em> (large) → imidocarb; <em>B. gibsoni</em> (small) → atovaquone + azithromycin',
+        'Snake envenomation: rapid presentation; pigmenturia common',
+        'Inherited coagulopathy: vWD, haemophilia A/B, factor VII (Beagle)',
+        'Drug list: azathioprine OK',
+        'D-dimer 75–100 % sensitive for DIC',
+      ],
+      cat: [
+        'DIC: <strong>thrombotic phenotype</strong> dominates; bleeding rare; ~7 % survival',
+        'IMTP: rare (~3 % of feline thrombocytopenia) — almost always secondary (FeLV/FIV, lymphoma, FIP, Mycoplasma haemofelis)',
+        'Babesia: <em>B. felis</em> (Africa); FeLV/FIV co-infection in ~46 %; <strong>primaquine ≤0.5 mg/kg</strong> (toxic ≥1 mg/kg)',
+        'Snake envenomation: <strong>delayed</strong> (cats hide); pulmonary pooling of killing fraction; pigmenturia less common',
+        'Inherited coagulopathy: <strong>Factor XII (Hageman) deficiency</strong> — most common feline; Birman, Siamese, DSH — <strong>asymptomatic</strong>; isolated prolonged aPTT',
+        'Drug list: <strong>NEVER azathioprine</strong> (myelotoxic); methimazole can cause thrombocytopenia',
+        'D-dimer ~67 % sens / 56 % spec; <strong>ATIII unreliable</strong>',
+      ],
     },
 
   ],
@@ -502,14 +502,6 @@ const bleedingVasc: FlowPage = {
       ],
     },
 
-    {
-      kind: 'callout',
-      tone: 'violet',
-      gap: 14,
-      title: '🔬 DIAGNOSTICS — Vasculopathy',
-      html: '<strong style="color:var(--white);">Blood pressure</strong> — mandatory; Doppler or oscillometric<br><strong style="color:var(--white);">Tick-borne titres</strong> — Ehrlichia, Rickettsia, Anaplasma<br><strong style="color:var(--white);">Leptospira MAT</strong> — paired titres; PCR urine if acute<br><strong style="color:var(--white);">Serum protein electrophoresis</strong> — if hyperglobulinaemia<br><strong style="color:var(--white);">Skin biopsy</strong> — deep wedge from leading edge of lesion; neutrophilic / lymphocytic vasculitis pattern confirms<br><strong style="color:var(--white);">CBC + chem + UA</strong> — CKD, inflammatory pattern',
-    },
-
     { kind: 'disclaimer' },
   ],
 }
@@ -600,7 +592,7 @@ const bleedingConsump: FlowPage = {
       tone: 'warning',
       gap: 14,
       title: '⚠️ DIC PEARL',
-      html: 'Early DIC → thrombosis (cold extremities, organ ischaemia); Late DIC → haemorrhage (petechiae, oozing from sites). Always check PT + aPTT — both prolonged in established DIC.',
+      html: '• Early DIC → thrombosis (cold extremities, organ ischaemia)<br>• Late DIC → haemorrhage (petechiae, oozing from sites)<br>Always check PT + aPTT — both prolonged in established DIC.',
     },
     { kind: 'disclaimer' },
   ],
