@@ -17,6 +17,7 @@ export default function Topbar({ title, showBack, onBack, onToggleNotes }: Props
   const notesBtn = (
     <button
       data-notes-btn
+      data-tutorial="notes-btn"
       className="text-[11px] font-semibold py-[5px] px-2.5 bg-[var(--teal)] text-white border-0 rounded-lg cursor-pointer transition-[filter] duration-150 shrink-0 ml-auto hover:brightness-[1.15]"
       onClick={onToggleNotes}
     >

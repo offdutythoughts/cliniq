@@ -162,7 +162,7 @@ export default function SearchBar() {
   }
 
   return (
-    <div className="global-search-wrap">
+    <div data-tutorial="search" className="global-search-wrap">
       <span className="search-icon">🔍</span>
       <input
         ref={inputRef}

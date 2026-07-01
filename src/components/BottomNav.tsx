@@ -18,10 +18,11 @@ interface Props {
 
 export default function BottomNav({ activeTab, onNavTo }: Props) {
   return (
-    <div className="flex bg-(--color-surface-2) border-t border-(--color-line) shrink-0 pb-[env(safe-area-inset-bottom)]">
+    <div data-tutorial="bottom-nav" className="flex bg-(--color-surface-2) border-t border-(--color-line) shrink-0 pb-[env(safe-area-inset-bottom)]">
       {NAV_ITEMS.map((item, i) => (
         <div
           key={i}
+          {...(item.label === 'Settings' ? { 'data-tutorial': 'settings-tab' } : {})}
           className={`flex-1 flex flex-col items-center pt-2 px-1 pb-1.5 cursor-pointer gap-[3px] transition-colors duration-150 text-[10px] font-medium tracking-[.01em] ${activeTab === i ? 'text-(--color-accent)' : 'text-[var(--gray2)] hover:text-(--color-muted)'}`}
           onClick={() => { track('tab_changed', { tab_name: item.label, tab_index: i }); onNavTo(i as Tab) }}
         >
