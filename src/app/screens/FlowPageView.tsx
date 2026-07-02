@@ -20,6 +20,7 @@ import { linkToView } from '../nav/view'
 import { styleStringToObject as s, toneBox } from './style'
 import { NotFound } from './NotFound'
 import { type Nav, Raw, ToneBox } from './flowHelpers'
+import { NavCard } from './markup'
 
 const DISCLAIMER = <div className="disclaimer">For qualified veterinary professionals only.</div>
 
@@ -550,6 +551,25 @@ function BlockView({ b, onNav }: { b: Block; onNav: Nav }): ReactNode {
   }
 }
 
+function hasOutboundFlowLinks(blocks: Block[]): boolean {
+  for (const b of blocks) {
+    if (b.kind === 'choices' && b.items.some(i => i.link?.to === 'flow')) return true
+    if (b.kind === 'branch') {
+      for (const col of b.columns) {
+        if (hasOutboundFlowLinks(col.blocks)) return true
+      }
+    }
+  }
+  return false
+}
+
+function getDxSign(flowId: string): string | undefined {
+  if (DX[flowId]) return flowId
+  const root = flowId.replace(/-[^-]+$/, '')
+  if (root !== flowId && DX[root]) return root
+  return undefined
+}
+
 export function FlowPageView({ flowId }: { flowId: string }) {
   const router = useNav()
   const onNav: Nav = v => router.navigate(v)
@@ -559,23 +579,16 @@ export function FlowPageView({ flowId }: { flowId: string }) {
   const blocks = page.blocks
   const lastIsDisc = blocks.length > 0 && blocks[blocks.length - 1].kind === 'disclaimer'
   const main = lastIsDisc ? blocks.slice(0, -1) : blocks
-  const hasDx = !!DX[flowId]
+  const isLeaf = !hasOutboundFlowLinks(main)
+  const dxSign = isLeaf ? getDxSign(flowId) : undefined
   return (
     <>
       <div className="flow-wrap">
         <BlockList blocks={main} onNav={onNav} />
-        {hasDx && (
-          <div className="card" style={{ marginTop: 10 }} role="button"
-            onClick={() => onNav({ kind: 'dx', sign: flowId, tab: 'history' })}>
-            <div className="card-row">
-              <div className="card-icon">🔬</div>
-              <div style={{ flex: 1 }}>
-                <div className="card-title">Diagnostic Approach</div>
-                <div className="card-sub">Stepwise clinical workup flowchart</div>
-              </div>
-              <div className="card-arrow">›</div>
-            </div>
-          </div>
+        {dxSign && (
+          <NavCard icon="🔬" title="Diagnostic Approach" sub="Stepwise clinical workup flowchart"
+            onClick={() => onNav({ kind: 'dx', sign: dxSign, tab: 'history' })}
+            style={{ marginTop: 10 }} />
         )}
       </div>
       {lastIsDisc && DISCLAIMER}

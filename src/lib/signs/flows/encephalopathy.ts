@@ -224,20 +224,6 @@ const encephalopathyForebrain: FlowPage = {
       ],
     },
 
-    {
-      kind: 'html',
-      html: `<div class="card" onclick="renderDxId('encephalopathy')" style="margin-top:12px;cursor:pointer;width:100%;">
-  <div class="card-row">
-    <div class="card-icon">🔬</div>
-    <div style="flex:1">
-      <div class="card-title">Diagnostic Approach</div>
-      <div class="card-sub">Stepwise clinical workup flowchart</div>
-    </div>
-    <div class="card-arrow">›</div>
-  </div>
-</div>`,
-    },
-
     { kind: 'disclaimer' },
   ],
 }
@@ -309,20 +295,6 @@ Vertical or direction-changing nystagmus · progression despite treatment`,
       ],
     },
 
-    {
-      kind: 'html',
-      html: `<div class="card" onclick="renderDxId('encephalopathy')" style="margin-top:12px;cursor:pointer;width:100%;">
-  <div class="card-row">
-    <div class="card-icon">🔬</div>
-    <div style="flex:1">
-      <div class="card-title">Diagnostic Approach</div>
-      <div class="card-sub">Stepwise clinical workup flowchart</div>
-    </div>
-    <div class="card-arrow">›</div>
-  </div>
-</div>`,
-    },
-
     { kind: 'disclaimer' },
   ],
 }
@@ -389,20 +361,6 @@ const encephalopathyDiffuse: FlowPage = {
           ],
         },
       ],
-    },
-
-    {
-      kind: 'html',
-      html: `<div class="card" onclick="renderDxId('encephalopathy')" style="margin-top:12px;cursor:pointer;width:100%;">
-  <div class="card-row">
-    <div class="card-icon">🔬</div>
-    <div style="flex:1">
-      <div class="card-title">Diagnostic Approach</div>
-      <div class="card-sub">Stepwise clinical workup flowchart</div>
-    </div>
-    <div class="card-arrow">›</div>
-  </div>
-</div>`,
     },
 
     { kind: 'disclaimer' },

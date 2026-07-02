@@ -44,66 +44,6 @@ const tremorsEntry: FlowPage = {
       ],
     },
 
-    { kind: 'node', variant: 'step', text: 'DIFFERENTIAL DIAGNOSIS — CLASSIFY BY CAUSE' },
-    {
-      kind: 'categoryColumns',
-      cols: 3,
-      columns: [
-        {
-          cat: 'Toxic',
-          tiles: [
-            { label: 'Tremorgenic mycotoxins' },
-            { label: 'Metaldehyde (slug bait)' },
-            { label: 'Permethrin (cats)' },
-            { label: 'Organophosphate / carbamate' },
-            { label: 'Lead' },
-            { label: 'Methylxanthines / caffeine / theobromine', link: { to: 'disease', id: 'DIS-TOXIC-METHYL' } },
-            { label: 'Cannabis / cannabinoids' },
-            { label: 'Metronidazole (esp. cats)', link: { to: 'disease', id: 'DIS-NEU-METRO' } },
-            { label: 'Ivermectin / macrocyclic lactones (MDR1 breeds)' },
-          ],
-        },
-        {
-          cat: 'Metabolic / Endocrine',
-          tiles: [
-            { label: 'Hypocalcaemia — eclampsia, hypoparathyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPOPTH' } },
-            { label: 'Hypoglycaemia — insulinoma, PSS, toy-breed/neonate', link: { to: 'disease', id: 'DIS-MET-HYPOGLY' } },
-            { label: 'Insulinoma', link: { to: 'disease', id: 'DIS-NEO-INSULINOMA' } },
-            { label: 'Hypokalaemia', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },
-          ],
-        },
-        {
-          cat: 'Inflammatory',
-          tiles: [
-            { label: 'MUO / meningoencephalitis', link: { to: 'disease', id: 'DIS-NEU-MUE' } },
-            { label: 'GME', link: { to: 'disease', id: 'DIS-GME' } },
-            { label: 'Infectious encephalitis (CDV, Neospora, Toxoplasma)' },
-          ],
-        },
-        {
-          cat: 'Immune-mediated',
-          tiles: [
-            { label: 'Idiopathic generalised tremor syndrome (IGTS) — "white-shaker"; steroid-responsive', link: { to: 'disease', id: 'DIS-NEU-IGTS' } },
-          ],
-        },
-        {
-          cat: 'Degenerative',
-          tiles: [
-            { label: 'Cerebellar abiotrophy', link: { to: 'disease', id: 'DIS-NEU-ABIOTROPHY' } },
-            { label: 'Idiopathic head tremor (IHTS) — head bobbing; Bulldog/Boxer/Labrador', link: { to: 'disease', id: 'DIS-NEU-IHTS' } },
-            { label: 'Orthostatic tremor — standing only; Great Dane/Deerhound or senile' },
-          ],
-        },
-        {
-          cat: 'Anomalous',
-          tiles: [
-            { label: 'Cerebellar hypoplasia (FPV in kittens; congenital)', link: { to: 'disease', id: 'DIS-NEU-CEREHYPO' } },
-            { label: 'Hypomyelination — "shaker pup"; tremor from ~10 days; many recover by 5 months', link: { to: 'disease', id: 'DIS-NEU-HYPOMYEL' } },
-          ],
-        },
-      ],
-    },
-
     {
       kind: 'alert',
       tone: 'danger',
@@ -139,6 +79,7 @@ const tremorsToxic: FlowPage = {
             { label: ' ORGANOPHOSPHATE / CARBAMATE', link: { to: 'protocol', id: 'PROT-TOX-OP' } },
             { label: ' LEAD', link: { to: 'protocol', id: 'PROT-TOX-LEAD' } },
             { label: ' Methylxanthines / other — caffeine · theobromine · xylitol · bromethalin · cannabis · macadamia', link: { to: 'disease', id: 'DIS-TOXIC-METHYL' } },
+            { label: ' Ivermectin / macrocyclic lactones (MDR1 breeds)' },
           ],
         },
         {
@@ -179,6 +120,7 @@ const tremorsCerebellar: FlowPage = {
           tiles: [
             { label: ' MUO / MENINGOENCEPHALITIS', link: { to: 'disease', id: 'DIS-NEU-MUE' } },
             { label: ' GME', link: { to: 'disease', id: 'DIS-GME' } },
+            { label: ' Infectious encephalitis (CDV, Neospora, Toxoplasma)' },
           ],
         },
         {
