@@ -2,11 +2,13 @@
 import { useState, useEffect } from 'react'
 import { HOW_TO_ITEMS } from '../app/screens/howToItems'
 import { styleStringToObject as s } from '../app/screens/style'
+import { useTutorial } from '../app/tutorial/TutorialContext'
 
 const STORAGE_KEY = 'cliniq-onboarding-seen'
 
 export function OnboardingModal() {
   const [visible, setVisible] = useState(false)
+  const { start: startTutorial } = useTutorial()
 
   useEffect(() => {
     try {
@@ -17,6 +19,11 @@ export function OnboardingModal() {
   const dismiss = () => {
     try { localStorage.setItem(STORAGE_KEY, '1') } catch { /* private mode */ }
     setVisible(false)
+  }
+
+  const startTour = () => {
+    dismiss()
+    startTutorial()
   }
 
   if (!visible) return null
@@ -56,13 +63,19 @@ export function OnboardingModal() {
         {/* Footer */}
         <div style={s('padding:16px 20px;flex-shrink:0;border-top:1px solid var(--border);')}>
           <button
-            onClick={dismiss}
+            onClick={startTour}
             style={s('width:100%;padding:14px;background:var(--teal);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:.01em;')}
           >
-            Get started
+            Take the interactive tour
           </button>
-          <div style={s('font-size:11px;color:var(--gray2);text-align:center;margin-top:10px;')}>
-            You can revisit this guide any time in Settings.
+          <button
+            onClick={dismiss}
+            style={s('width:100%;padding:12px;background:transparent;color:var(--gray);border:none;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;margin-top:6px;')}
+          >
+            Skip for now
+          </button>
+          <div style={s('font-size:11px;color:var(--gray2);text-align:center;margin-top:8px;')}>
+            You can revisit the tour and this guide any time in Settings.
           </div>
         </div>
       </div>
