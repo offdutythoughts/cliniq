@@ -112,4 +112,5 @@ export const DX_HOME_CARDS = SIGNS.map(s => ({
   icon: s.icon,
   title: s.title,
   sub: s.sub,
+  keywords: s.keywords,
 }))

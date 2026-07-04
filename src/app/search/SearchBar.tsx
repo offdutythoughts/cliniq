@@ -47,8 +47,12 @@ function matchesAny(obj: Record<string, unknown>, lower: string): boolean {
   return Object.values(obj).some(v => typeof v === 'string' && v.toLowerCase().includes(lower))
 }
 
+/** True if any of the sign's keyword synonyms contains lower. */
+function kwHit(kws: readonly string[] | undefined, lower: string): boolean {
+  return !!kws && kws.some(k => k.toLowerCase().includes(lower))
+}
+
 const DISEASE_SKIP = new Set(['id', 'sp', 'name', 'synonyms'])
-const LESION_SKIP  = new Set(['id', 'loc', 'loc_name', 'sp', 'cat', 'sub', 'filter', 'urg'])
 const PROTO_SKIP   = new Set(['id', 'sp', 'name', 'priority'])
 
 function buildGroups(lower: string): Group[] {
@@ -56,15 +60,15 @@ function buildGroups(lower: string): Group[] {
 
   // ── Clinical sign flows ───────────────────────────────────────────────────
   const flows = FLOW_SIGNS
-    .filter(s => s.title.toLowerCase().includes(lower) || s.sub.toLowerCase().includes(lower))
+    .filter(s => s.title.toLowerCase().includes(lower) || s.sub.toLowerCase().includes(lower) || kwHit(s.keywords, lower))
     .map(s => ({ label: s.title, sub: s.sub, icon: s.icon, view: { kind: 'flow' as const, flowId: s.flowId } }))
-  if (flows.length) groups.push({ title: 'Clinical Signs', results: flows.slice(0, 5) })
+  if (flows.length) groups.push({ title: 'Clinical Signs', results: flows })
 
   // ── Diagnostic approaches ─────────────────────────────────────────────────
   const dx = DX_HOME_CARDS
-    .filter(c => c.title.toLowerCase().includes(lower) || c.sub.toLowerCase().includes(lower))
+    .filter(c => c.title.toLowerCase().includes(lower) || c.sub.toLowerCase().includes(lower) || kwHit(c.keywords, lower))
     .map(c => ({ label: c.title, sub: c.sub, icon: c.icon, view: { kind: 'dx' as const, sign: c.sign as string, tab: 'history' } }))
-  if (dx.length) groups.push({ title: 'Diagnostic Approaches', results: dx.slice(0, 5) })
+  if (dx.length) groups.push({ title: 'Diagnostic Approaches', results: dx })
 
   // ── Disease pages — full content search ───────────────────────────────────
   const nameMatchDiseases: Result[] = []
@@ -86,8 +90,9 @@ function buildGroups(lower: string): Group[] {
     else contentMatchDiseases.push(result)
   }
 
-  // Name/synonym matches first, then content matches; cap at 10 total
-  const allDiseases = [...nameMatchDiseases, ...contentMatchDiseases].slice(0, 10)
+  // Name/synonym matches first, then content matches — all matches surfaced
+  // (the dropdown scrolls), so nothing relevant is hidden behind a cap.
+  const allDiseases = [...nameMatchDiseases, ...contentMatchDiseases]
   if (allDiseases.length) groups.push({ title: 'Disease Pages', results: allDiseases })
 
   // ── Protocols — full content search (name + trigger + steps) ─────────────
@@ -125,21 +130,6 @@ function buildGroups(lower: string): Group[] {
     if (protocols.length >= 6) break
   }
   if (protocols.length) groups.push({ title: 'Protocols', results: protocols })
-
-  // ── Lesion types — full content search ───────────────────────────────────
-  const lesions: Result[] = []
-  for (const l of DB.lesion_type) {
-    const headerHit = l.sub.toLowerCase().includes(lower) ||
-                      l.loc_name.toLowerCase().includes(lower) ||
-                      l.cat.toLowerCase().includes(lower)
-    const bodyHit   = !headerHit && matchesAny(l as Record<string, unknown>, lower)
-    if (!headerHit && !bodyHit) continue
-
-    const snip = headerHit ? '' : snippet(l as Record<string, unknown>, lower, LESION_SKIP)
-    lesions.push({ label: l.sub, sub: l.loc_name, snippet: snip || undefined, view: { kind: 'lesionDetail' as const, id: l.id } })
-    if (lesions.length >= 8) break
-  }
-  if (lesions.length) groups.push({ title: 'Lesion Types', results: lesions })
 
   return groups
 }
