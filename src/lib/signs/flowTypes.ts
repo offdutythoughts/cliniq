@@ -255,5 +255,7 @@ export type FlowPage = {
   id: string
   title: string
   layout?: 'flow' | 'fn'
+  /** Override the DX sign key for leaf pages whose id doesn't derive from the DX key by prefix-stripping. */
+  dxSign?: string
   blocks: Block[]
 }

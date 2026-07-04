@@ -154,6 +154,7 @@ const anisocoriaMydriasis: FlowPage = {
 const anisocoriaMydriasisLocalise: FlowPage = {
   id: 'anisocoria-mydriasis-localise',
   title: 'Mydriasis — Localisation',
+  dxSign: 'abnormal-pupil',
   blocks: [
     { kind: 'node', variant: 'entry', tone: 'violet', text: '🔵 NEUROLOGICAL MYDRIASIS — Localisation' },
     {

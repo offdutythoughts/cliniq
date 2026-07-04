@@ -554,6 +554,9 @@ function BlockView({ b, onNav }: { b: Block; onNav: Nav }): ReactNode {
 function hasOutboundFlowLinks(blocks: Block[]): boolean {
   for (const b of blocks) {
     if (b.kind === 'choices' && b.items.some(i => i.link?.to === 'flow')) return true
+    if (b.kind === 'categoryGrid' && b.columns.some(col =>
+      col.tiles.some(t => t.link?.to === 'flow' || t.links?.some(ll => ll.link.to === 'flow'))
+    )) return true
     if (b.kind === 'branch') {
       for (const col of b.columns) {
         if (hasOutboundFlowLinks(col.blocks)) return true
@@ -563,10 +566,11 @@ function hasOutboundFlowLinks(blocks: Block[]): boolean {
   return false
 }
 
-function getDxSign(flowId: string): string | undefined {
-  if (DX[flowId]) return flowId
-  const root = flowId.replace(/-[^-]+$/, '')
-  if (root !== flowId && DX[root]) return root
+function getDxSign(page: { id: string; dxSign?: string }): string | undefined {
+  if (page.dxSign) return page.dxSign
+  if (DX[page.id]) return page.id
+  const root = page.id.replace(/-[^-]+$/, '')
+  if (root !== page.id && DX[root]) return root
   return undefined
 }
 
@@ -580,17 +584,15 @@ export function FlowPageView({ flowId }: { flowId: string }) {
   const lastIsDisc = blocks.length > 0 && blocks[blocks.length - 1].kind === 'disclaimer'
   const main = lastIsDisc ? blocks.slice(0, -1) : blocks
   const isLeaf = !hasOutboundFlowLinks(main)
-  const dxSign = isLeaf ? getDxSign(flowId) : undefined
+  const dxSign = isLeaf ? getDxSign(page) : undefined
   return (
     <>
-      <div className="flow-wrap">
-        <BlockList blocks={main} onNav={onNav} />
-        {dxSign && (
-          <NavCard icon="🔬" title="Diagnostic Approach" sub="Stepwise clinical workup flowchart"
-            onClick={() => onNav({ kind: 'dx', sign: dxSign, tab: 'history' })}
-            style={{ marginTop: 10 }} />
-        )}
-      </div>
+      <div className="flow-wrap"><BlockList blocks={main} onNav={onNav} /></div>
+      {dxSign && (
+        <NavCard icon="🔬" title="Diagnostic Approach" sub="Stepwise clinical workup flowchart"
+          onClick={() => onNav({ kind: 'dx', sign: dxSign, tab: 'history' })}
+          style={{ marginTop: 10 }} />
+      )}
       {lastIsDisc && DISCLAIMER}
     </>
   )
