@@ -1,15 +1,22 @@
 // ── Acute Myelopathy / Spinal-cord-localisation flowchart (data) ────────────
 import type { FlowPage } from '../flowTypes'
 
+// Inline state colouring for the localisation table: deficient / reduced /
+// absent findings read red, increased / spastic findings read green. Whole-cell
+// states use the cell `tone`; these spans colour a single token in a mixed cell.
+const red = (t: string) => `<span style="color:var(--tone-danger-fg)">${t}</span>`
+const grn = (t: string) => `<span style="color:var(--tone-green-fg)">${t}</span>`
+
 const myelopathyEntry: FlowPage = {
   id: 'myelopathy',
   title: 'Acute Myelopathy',
+  noCard: true,
   blocks: [
     { kind: 'node', variant: 'entry', text: '🦴 ACUTE MYELOPATHY — NEUROLOGICAL LOCALISATION' },
     {
       kind: 'node',
       variant: 'step',
-      text: 'Perform head-to-tail neurological examination — compare findings to table below to localise lesion',
+      text: 'Perform head-to-tail neurological examination',
       sub: 'Assess in order: mentation → pain on palpation → gait → postural reactions → spinal reflexes → special tests',
     },
     {
@@ -30,25 +37,25 @@ const myelopathyEntry: FlowPage = {
       rows: [
         { section: 'General & Gait' },
         ['Pain', 'Cervical low head · stiff neck', 'Caudal cervical / thoracic inlet', 'Thoracolumbar kyphosis', 'Lumbosacral pain', 'Lumbosacral / perineal pain'],
-        ['Gait', 'Tetraparesis (all 4 limbs)', 'Tetraparesis (FL worse)', 'Paraparesis (HL; FL normal)', 'Paraparesis / monoparesis (HL)', 'Paraparesis (HL + tail)'],
+        ['Gait', 'Tetraparesis (all 4 limbs)', 'Tetraparesis (FL worse)', 'HL paraparesis', 'Paraparesis / monoparesis (HL)', 'Paraparesis (HL + tail)'],
         { section: 'CP & Muscle Tone' },
-        ['Forelimb CP', 'Deficient', 'Deficient', 'Normal', 'Normal', 'Normal'],
-        ['Hindlimb CP', 'Deficient', 'Deficient', 'Deficient', 'Deficient', 'Deficient'],
-        ['FL tone', 'UMN spastic / ↑', 'LMN flaccid · atrophy', 'Normal', 'Normal', 'Normal'],
-        ['HL tone', 'UMN spastic / ↑', 'UMN spastic / ↑', 'UMN spastic / ↑', 'LMN flaccid / ↓', 'LMN flaccid / ↓'],
+        ['Forelimb CP', { text: 'Deficient', tone: 'danger' }, { text: 'Deficient', tone: 'danger' }, 'Normal', 'Normal', 'Normal'],
+        ['Hindlimb CP', { text: 'Deficient', tone: 'danger' }, { text: 'Deficient', tone: 'danger' }, { text: 'Deficient', tone: 'danger' }, { text: 'Deficient', tone: 'danger' }, { text: 'Deficient', tone: 'danger' }],
+        ['FL tone', { text: 'UMN spastic / ↑', tone: 'green' }, { text: 'LMN flaccid · atrophy', tone: 'danger' }, 'Normal', 'Normal', 'Normal'],
+        ['HL tone', { text: 'UMN spastic / ↑', tone: 'green' }, { text: 'UMN spastic / ↑', tone: 'green' }, { text: 'UMN spastic / ↑', tone: 'green' }, { text: 'LMN flaccid / ↓', tone: 'danger' }, { text: 'LMN flaccid / ↓', tone: 'danger' }],
         { section: 'Spinal Reflexes' },
-        ['Biceps (C6–C8)', '↑ / Normal', '↓ / Absent', 'Normal', 'Normal', 'Normal'],
-        ['Triceps (C7–T1)', '↑ / Normal', '↓ / Absent', 'Normal', 'Normal', 'Normal'],
-        ['FL withdrawal', '↑ / Normal', '↓ / Absent', 'Normal', 'Normal', 'Normal'],
-        ['Patellar (L3–L4)', '↑ / Normal', '↑ / Normal', '↑ / Normal', '↓ / Absent', 'Normal'],
-        ['HL withdrawal', '↑ / Normal', '↑ / Normal', '↑ / Normal', '↓ / Absent', 'Absent'],
-        ['Perineal / anal', 'Normal', 'Normal', 'Normal', '↓ / Absent', 'Absent'],
+        ['Biceps (C6–C8)', `${grn('↑')} / Normal`, { text: '↓ / Absent', tone: 'danger' }, 'Normal', 'Normal', 'Normal'],
+        ['Triceps (C7–T1)', `${grn('↑')} / Normal`, { text: '↓ / Absent', tone: 'danger' }, 'Normal', 'Normal', 'Normal'],
+        ['FL withdrawal', `${grn('↑')} / Normal`, { text: '↓ / Absent', tone: 'danger' }, 'Normal', 'Normal', 'Normal'],
+        ['Patellar (L3–L4)', `${grn('↑')} / Normal`, `${grn('↑')} / Normal`, `${grn('↑')} / Normal`, { text: '↓ / Absent', tone: 'danger' }, 'Normal'],
+        ['HL withdrawal', `${grn('↑')} / Normal`, `${grn('↑')} / Normal`, `${grn('↑')} / Normal`, { text: '↓ / Absent', tone: 'danger' }, { text: 'Absent', tone: 'danger' }],
+        ['Perineal / anal', 'Normal', 'Normal', 'Normal', { text: '↓ / Absent', tone: 'danger' }, { text: 'Absent', tone: 'danger' }],
         { section: 'Special Tests' },
-        ['Cutaneous trunci', 'Present bilateral', '↓/absent if C8–T1', 'Absent caudal (cutoff ≈1–2 segs)', 'Normal', 'Normal'],
+        ['Cutaneous trunci', 'Present bilateral', `${red('↓/absent')} if C8–T1`, `${red('Absent')} caudal (cutoff ≈1–2 segs)`, 'Normal', 'Normal'],
         ["Horner's", 'Normal', 'Present (T1–T3)', 'Normal', 'Normal', 'Normal'],
         ['Schiff-Sherrington', 'Normal', 'Normal', '± FL ext · HL paralysis (severe)', 'Normal', 'Normal'],
-        ['Bladder', 'UMN spastic · large', 'UMN spastic', 'UMN spastic · reflexic', 'LMN flaccid · easy', 'LMN flaccid · easy'],
-        ['Tail tone', 'Normal', 'Normal', 'Normal', '↓ reduced', 'Flaccid'],
+        ['Bladder', `UMN ${grn('spastic')} · large`, `UMN ${grn('spastic')}`, `UMN ${grn('spastic')} · reflexic`, `LMN ${red('flaccid')} · easy`, `LMN ${red('flaccid')} · easy`],
+        ['Tail tone', 'Normal', 'Normal', 'Normal', { text: '↓ reduced', tone: 'danger' }, { text: 'Flaccid', tone: 'danger' }],
       ],
     },
     {
@@ -56,6 +63,7 @@ const myelopathyEntry: FlowPage = {
       scroll: true,
       minWidth: 360,
       gap: 8,
+      dividers: true,
       title: 'Injury Grading',
       cols: 'auto auto 1fr 1fr',
       headers: [
@@ -66,8 +74,8 @@ const myelopathyEntry: FlowPage = {
       ],
       rows: [
         ['1', 'Pain only; neurologically intact', 'Spinal pain; normal neurologic function', 'Spinal pain; normal neurologic function'],
-        ['2', 'Ambulatory paresis; CP deficits ± ataxia', 'Ambulatory paraparesis + HL ataxia', 'Ambulatory tetraparesis + tetra-ataxia'],
-        [{ text: '3', tone: 'warning' }, 'Non-ambulatory paresis; voluntary movement present', 'Non-ambulatory paraparesis', 'Non-ambulatory tetraparesis'],
+        ['2', 'Ambulatory paresis;<br>CP deficits ± ataxia', 'Ambulatory paraparesis + HL ataxia', 'Ambulatory tetraparesis + tetra-ataxia'],
+        [{ text: '3', tone: 'warning' }, 'Non-ambulatory paresis;<br>voluntary movement present', 'Non-ambulatory paraparesis', 'Non-ambulatory tetraparesis'],
         [{ text: '4', tone: 'orange' }, 'Paralysis; DPP intact', 'Paraplegia; intact pain perception', 'Tetraplegia; normal ventilation'],
         [{ text: '5', tone: 'danger' }, 'Paralysis; DPP <strong>absent</strong>', 'Paraplegia; <strong>absent</strong> DPP in HLs + tail', 'Tetraplegia; <strong>hypoventilation</strong>'],
       ],

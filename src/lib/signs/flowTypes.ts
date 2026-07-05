@@ -124,6 +124,9 @@ export type TableBlock = Connectable & {
   gap?: number
   scroll?: boolean
   minWidth?: number
+  /** Widen the row gap and draw a soft full-width divider between data rows —
+   *  for reference tables (e.g. injury grading) that read better as spaced bands. */
+  dividers?: boolean
 }
 
 /** A tinted section containing a title and a stack of disease cards (the
@@ -257,5 +260,7 @@ export type FlowPage = {
   layout?: 'flow' | 'fn'
   /** Override the DX sign key for leaf pages whose id doesn't derive from the DX key by prefix-stripping. */
   dxSign?: string
+  /** Explicitly suppress the auto-appended Diagnostic Approach card (e.g. routing/lesion-nav pages). */
+  noCard?: boolean
   blocks: Block[]
 }

@@ -26,6 +26,7 @@ const DISCLAIMER = <div className="disclaimer">For qualified veterinary professi
 
 // ── Shared static style constants ─────────────────────────────────────────────
 const ST_SECTION_LABEL = s('grid-column:1/-1;padding:4px 0 2px;font-size:8px;font-weight:700;color:var(--gray2);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(var(--slate-muted),.08);margin-top:2px;')
+const ST_ROW_DIVIDER   = s('grid-column:1/-1;height:1px;background:rgba(var(--slate-muted),.2);')
 const ST_BLOCK_TITLE   = s('font-size:11px;font-weight:700;margin-bottom:6px;')
 const ST_COL_FLEX      = s('display:flex;flex-direction:column;gap:4px;')
 
@@ -131,12 +132,18 @@ function Cell({ c, header, onNav }: { c: TableCell; header?: boolean; onNav: Nav
   return <div style={s(head)}><Raw html={text} onNav={onNav} /></div>
 }
 function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav: Nav }) {
+  const lastIdx = b.rows.length - 1
   const grid = (
-    <div style={s(`display:grid;grid-template-columns:${b.cols};gap:3px 6px;font-size:9.5px;line-height:1.4;${b.minWidth ? `min-width:${b.minWidth}px;` : ''}`)}>
+    <div style={s(`display:grid;grid-template-columns:${b.cols};gap:${b.dividers ? 9 : 3}px 6px;font-size:9.5px;line-height:1.4;${b.minWidth ? `min-width:${b.minWidth}px;` : ''}`)}>
       {b.headers.map((h, i) => <Cell key={`h${i}`} c={h} header onNav={onNav} />)}
       {b.rows.map((row, ri) =>
         Array.isArray(row)
-          ? row.map((c, ci) => <Cell key={`${ri}-${ci}`} c={c} onNav={onNav} />)
+          ? (
+            <Fragment key={ri}>
+              {row.map((c, ci) => <Cell key={`${ri}-${ci}`} c={c} onNav={onNav} />)}
+              {b.dividers && ri !== lastIdx && <div style={ST_ROW_DIVIDER} />}
+            </Fragment>
+          )
           : <div key={`s${ri}`} style={ST_SECTION_LABEL}>{row.section}</div>
       )}
     </div>
@@ -588,7 +595,7 @@ export function FlowPageView({ flowId }: { flowId: string }) {
   const lastIsDisc = blocks.length > 0 && blocks[blocks.length - 1].kind === 'disclaimer'
   const main = lastIsDisc ? blocks.slice(0, -1) : blocks
   const isLeaf = !hasOutboundFlowLinks(main)
-  const dxSign = isLeaf ? getDxSign(page) : undefined
+  const dxSign = isLeaf && !page.noCard ? getDxSign(page) : undefined
   return (
     <>
       <div className="flow-wrap"><BlockList blocks={main} onNav={onNav} /></div>
