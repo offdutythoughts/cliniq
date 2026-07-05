@@ -568,9 +568,13 @@ function hasOutboundFlowLinks(blocks: Block[]): boolean {
 
 function getDxSign(page: { id: string; dxSign?: string }): string | undefined {
   if (page.dxSign) return page.dxSign
-  if (DX[page.id]) return page.id
-  const root = page.id.replace(/-[^-]+$/, '')
-  if (root !== page.id && DX[root]) return root
+  let id = page.id
+  while (id) {
+    if (DX[id]) return id
+    const next = id.replace(/-[^-]+$/, '')
+    if (next === id) break
+    id = next
+  }
   return undefined
 }
 

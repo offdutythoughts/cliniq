@@ -213,6 +213,7 @@ const anisocoriaMydriasisLocalise: FlowPage = {
 const anisocoriaHorners: FlowPage = {
   id: 'anisocoria-horners',
   title: 'Miosis — Causes',
+  dxSign: 'abnormal-pupil',
   blocks: [
     { kind: 'node', variant: 'entry', text: '🔵 MIOSIS — POSSIBLE CAUSES' },
     { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE' },
@@ -232,6 +233,7 @@ const anisocoriaHorners: FlowPage = {
 const anisocoriaHornersLocalise: FlowPage = {
   id: 'anisocoria-horners-localise',
   title: "Horner's Syndrome — Localisation",
+  dxSign: 'abnormal-pupil',
   blocks: [
     { kind: 'node', variant: 'entry', tone: 'info', text: "🔵 HORNER'S SYNDROME — Localisation" },
     {
