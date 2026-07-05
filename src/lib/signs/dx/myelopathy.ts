@@ -119,7 +119,7 @@ export const myelopathyDx: DxApproach = {
             'Gait',
             'Tetraparesis<br>(all 4 limbs)',
             'Tetraparesis<br>(FL worse)',
-            'Paraparesis<br>(HL; FL normal)',
+            'HL paraparesis',
             'Paraparesis /<br>monoparesis (HL)',
             'Paraparesis<br>(HL + tail)',
           ]},

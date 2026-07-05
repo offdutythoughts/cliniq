@@ -15,15 +15,15 @@ const TH_GRADE = s('padding:5px 5px;font-size:8.5px;font-weight:700;color:var(--
 const TH_DESC = s('padding:5px 5px;font-size:8.5px;font-weight:700;color:var(--gray2);border-bottom:1.5px solid rgba(148,163,184,0.3);text-align:left;min-width:120px;')
 const th = (color: string) => s(`padding:5px 5px;font-size:8.5px;font-weight:700;color:${color};border-bottom:1.5px solid ${color};text-align:center;white-space:nowrap;`)
 const ROW_ALT = s('background:var(--card);')
-const tdGrade = (color: string) => s(`padding:5px 5px;text-align:center;font-weight:700;color:${color};border-bottom:1px solid rgba(148,163,184,0.1);`)
-const tdCell = (color: string) => s(`padding:5px 5px;font-size:8.5px;color:${color};border-bottom:1px solid rgba(148,163,184,0.1);line-height:1.4;`)
+const tdGrade = (color: string) => s(`padding:9px 5px;text-align:center;font-weight:700;color:${color};border-bottom:1px solid rgba(148,163,184,0.2);`)
+const tdCell = (color: string) => s(`padding:9px 5px;font-size:8.5px;color:${color};border-bottom:1px solid rgba(148,163,184,0.2);line-height:1.4;`)
 
 type Row = { g: number; gc: string; desc: React.ReactNode; tl: React.ReactNode; tlc?: string; cerv: React.ReactNode; cervc?: string; alt: boolean }
 
 const ROWS: Row[] = [
   { g: 1, gc: 'var(--white)', desc: 'Pain only; neurologically intact', tl: 'Spinal pain; normal neurologic function', cerv: 'Spinal pain; normal neurologic function', alt: false },
-  { g: 2, gc: 'var(--white)', desc: 'Ambulatory paresis; CP deficits ± ataxia', tl: 'Ambulatory paraparesis + HL ataxia', cerv: 'Ambulatory tetraparesis + tetra-ataxia', alt: true },
-  { g: 3, gc: T3, desc: 'Non-ambulatory paresis; voluntary movement present', tl: 'Non-ambulatory paraparesis', tlc: T3, cerv: 'Non-ambulatory tetraparesis', cervc: T3, alt: false },
+  { g: 2, gc: 'var(--white)', desc: <>Ambulatory paresis;<br />CP deficits ± ataxia</>, tl: 'Ambulatory paraparesis + HL ataxia', cerv: 'Ambulatory tetraparesis + tetra-ataxia', alt: true },
+  { g: 3, gc: T3, desc: <>Non-ambulatory paresis;<br />voluntary movement present</>, tl: 'Non-ambulatory paraparesis', tlc: T3, cerv: 'Non-ambulatory tetraparesis', cervc: T3, alt: false },
   { g: 4, gc: 'var(--hl-orange)', desc: 'Paralysis; DPP intact', tl: 'Paraplegia; intact pain perception', tlc: 'var(--hl-orange)', cerv: 'Tetraplegia; normal ventilation', cervc: 'var(--hl-orange)', alt: true },
   { g: 5, gc: 'var(--tone-danger-fg)', desc: <>Paralysis; DPP <strong>absent</strong></>, tl: <>Paraplegia; <strong>absent</strong> DPP in HLs + tail</>, tlc: 'var(--tone-danger-fg)', cerv: <>Tetraplegia; <strong>hypoventilation</strong></>, cervc: 'var(--tone-danger-fg)', alt: false },
 ]
