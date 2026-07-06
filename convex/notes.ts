@@ -48,15 +48,24 @@ export const get = query({
   args: { pageKey: v.string() },
   handler: async (ctx, { pageKey }) => {
     const userId = await getAuthUserId(ctx);
-    if (!userId) return null;
+    // `authenticated` lets the client tell "no note exists" apart from
+    // "signed out" — the latter must fall back to the local offline copy.
+    if (!userId) return { authenticated: false as const, note: null };
     const note = await ctx.db
       .query("notes")
       .withIndex("by_user_and_page", (q) =>
         q.eq("userId", userId).eq("pageKey", pageKey),
       )
       .unique();
-    if (!note) return null;
-    return { html: note.html, updatedAt: note.updatedAt };
+    if (!note) return { authenticated: true as const, note: null };
+    return {
+      authenticated: true as const,
+      note: { html: note.html, updatedAt: note.updatedAt },
+      // Legacy top-level fields so clients built before the offline-notes
+      // change keep working during a rolling deploy; drop after release.
+      html: note.html,
+      updatedAt: note.updatedAt,
+    };
   },
 });
 
@@ -65,8 +74,13 @@ export const upsert = mutation({
     pageKey: v.string(),
     pageTitle: v.string(),
     html: v.string(),
+    // Client edit timestamp, used for offline sync: an edit made offline
+    // must not overwrite a newer edit that reached the server from another
+    // device. When provided it also becomes the stored updatedAt, so
+    // comparisons stay within one device's clock for normal editing.
+    editedAt: v.optional(v.number()),
   },
-  handler: async (ctx, { pageKey, pageTitle, html }) => {
+  handler: async (ctx, { pageKey, pageTitle, html, editedAt }) => {
     const userId = await getAuthUserId(ctx);
     if (!userId) throw new ConvexError("Not authenticated");
     const existing = await ctx.db
@@ -75,7 +89,15 @@ export const upsert = mutation({
         q.eq("userId", userId).eq("pageKey", pageKey),
       )
       .unique();
-    const now = Date.now();
+    // Cap client timestamps slightly above server time so a badly wrong
+    // clock can't lock out all future edits.
+    const now =
+      editedAt === undefined
+        ? Date.now()
+        : Math.min(editedAt, Date.now() + 60_000);
+    if (existing && editedAt !== undefined && existing.updatedAt > now) {
+      return { applied: false, updatedAt: existing.updatedAt };
+    }
     if (existing) {
       if (existing.html !== html) await snapshotNote(ctx, existing, false);
       await ctx.db.patch(existing._id, { pageTitle, html, updatedAt: now });
@@ -88,6 +110,7 @@ export const upsert = mutation({
         updatedAt: now,
       });
     }
+    return { applied: true, updatedAt: now };
   },
 });
 
