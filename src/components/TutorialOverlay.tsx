@@ -81,7 +81,7 @@ export function TutorialOverlay() {
     const prevNeedsNav = prevStep >= 0 && STEPS[prevStep]?.navTab !== undefined
 
     if (needsNavChange || prevNeedsNav) {
-      if (def.navTab !== undefined) nav.navTo(def.navTab as 0|1|2|3|4|5)
+      if (needsNavChange) nav.navTo(def.navTab as 0|1|2|3|4|5)
       // Wait for the tab switch + render
       const id = setTimeout(() => measure(def.selector), 200)
       return () => clearTimeout(id)

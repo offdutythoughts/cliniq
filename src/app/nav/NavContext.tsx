@@ -107,6 +107,9 @@ export function NavProvider({ children }: { children: ReactNode }) {
   }, [])
   const navTo = useCallback((tab: Tab) => {
     setSt(s => {
+      // No-op guard: a fresh state object here changes the memoized nav
+      // identity, which can re-fire effects that depend on nav (render loop).
+      if (s.tab === tab && s.stack.length === 0) return s
       history.replaceState({ cliniqDepth: 0 }, '')
       return { ...s, tab, stack: [], slideDir: 'right' }
     })
