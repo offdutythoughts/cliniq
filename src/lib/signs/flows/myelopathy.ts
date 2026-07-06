@@ -116,7 +116,7 @@ const myelopathyEntry: FlowPage = {
       columns: [
         { cat: 'Cervical (C1–T2)', tone: 'green', tiles: [{ label: 'Tetraparesis', link: { to: 'lesion', loc: 'LOC-MY-CERV', name: 'Cervical' } }] },
         { cat: 'Thoracolumbar (T3–L3)', tone: 'warning', tiles: [{ label: 'Paraparesis', link: { to: 'lesion', loc: 'LOC-MY-TL', name: 'Thoracolumbar' } }] },
-        { cat: 'L4–S3', tone: 'violet', tiles: [{ label: 'LMN paraparesis', link: { to: 'lesion', loc: 'LOC-MY-L4S3', name: 'L4–S3' } }] },
+        { cat: 'Lumbosacral (L4–S3)', tone: 'violet', tiles: [{ label: 'LMN paraparesis', link: { to: 'lesion', loc: 'LOC-MY-L4S3', name: 'L4–S3' } }] },
         { cat: 'S2–Ca5 (conus)', tone: 'purple', tiles: [{ label: 'Cauda equina', link: { to: 'lesion', loc: 'LOC-MY-CONUS', name: 'S2–Ca5' } }] },
       ],
     },
