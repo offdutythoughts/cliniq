@@ -9,6 +9,7 @@ import type { FlowPage } from '../flowTypes'
 const vestibularEntry: FlowPage = {
   id: 'vestibular',
   title: 'Vestibular',
+  noCard: true,
   blocks: [
     { kind: 'node', variant: 'entry', text: '🌀 ACUTE VESTIBULAR — Peripheral vs Central' },
 
