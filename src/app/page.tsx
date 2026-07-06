@@ -14,7 +14,7 @@ import { SearchProvider } from './search/SearchContext'
 import SearchBar from './search/SearchBar'
 import { useSearchHighlight } from './search/useSearchHighlight'
 import { OnboardingModal } from '../components/OnboardingModal'
-import { TutorialProvider, useTutorial } from './tutorial/TutorialContext'
+import { TutorialProvider } from './tutorial/TutorialContext'
 import { TutorialOverlay } from '../components/TutorialOverlay'
 
 // Use Convex-backed notes when a deployment URL is configured, otherwise localStorage
@@ -39,22 +39,10 @@ type NotesHook = (key: string, title: string, open: boolean) => {
   isReady: boolean
 }
 
-const NOTES_TUTORIAL_STEP = 4  // 0-indexed step index for "Per-page notes"
-
 function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
   const nav = useNav()
-  const { step: tutorialStep } = useTutorial()
   const [notesOpen, setNotesOpen] = useState(false)
   const screenRef = useRef<HTMLDivElement>(null)
-
-  // Open notes panel when the tutorial reaches the notes step; close when it leaves
-  useEffect(() => {
-    if (tutorialStep === NOTES_TUTORIAL_STEP) {
-      setNotesOpen(true)
-    } else if (tutorialStep !== -1) {
-      setNotesOpen(false)
-    }
-  }, [tutorialStep])
 
   const meta = screenMeta(nav.view)
   const notes = useNotesHook(meta.noteKey, meta.noteTitle, notesOpen)

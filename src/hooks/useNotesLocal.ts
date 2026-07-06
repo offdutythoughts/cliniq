@@ -10,13 +10,24 @@ export function useNotesLocal(pageKey: string, _pageTitle: string, isOpen: boole
     if (!isOpen) return
     const el = editorRef.current
     if (!el) return
-    el.innerHTML = localStorage.getItem('cliniq-note-' + pageKey) || ''
+    try {
+      el.innerHTML = localStorage.getItem('cliniq-note-' + pageKey) || ''
+    } catch {
+      el.innerHTML = ''
+    }
   }, [isOpen, pageKey])
 
   const save = useCallback(() => {
     const el = editorRef.current
     if (!el) return
-    try { localStorage.setItem('cliniq-note-' + pageKey, el.innerHTML) } catch {}
+    // Tell the user the truth when storage is unavailable (private mode,
+    // quota, blocked cookies) — a false "Saved locally" loses their notes.
+    try {
+      localStorage.setItem('cliniq-note-' + pageKey, el.innerHTML)
+      setStatus('Saved locally')
+    } catch {
+      setStatus('Not saved — browser storage unavailable')
+    }
   }, [pageKey])
 
   const onInput = useCallback(() => { save() }, [save])

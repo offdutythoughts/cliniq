@@ -161,26 +161,20 @@ export const ataxiaDx: DxApproach = {
           { kind: 'row', cells: ['Key hereditary/breed', 'Abiotrophy/SCA → DNA test (breed)', 'Idiopathic (excl. by elimination)', 'DM (GSD, older); CCSM (Dobermann)'] },
         ],
       },
-      ...stepPair(2, 'CEREBELLAR BRANCH — MRI BRAIN + CSF', `MRI brain (focus on cerebellum, brainstem).<br>CSF patterns:
-<ul>
-<li>Mononuclear pleocytosis → MUO/cerebellitis (🐕)</li>
-<li>Periventricular enhancement + high globulins → FIP (🐱)</li>
-<li>Bilateral symmetric brainstem T2/FLAIR → thiamine deficiency</li>
-<li>Cerebellar atrophy + young breed-predisposed animal → abiotrophy/SCA → DNA test</li>
-<li>CDV PCR on CSF if myoclonus / unvaccinated dog</li>
-</ul>`),
-      ...stepPair(3, 'VESTIBULAR BRANCH — OTOSCOPY + CT/MRI BULLAE or MRI BRAIN', `<ul>
-<li><strong>Peripheral signs</strong> (no CP deficits) → otoscopy + CT bullae (fluid, thickening, lysis, polyp)</li>
-<li><strong>Central signs</strong> (CP deficits / vertical nystagmus / ↓ mentation) → MRI brain + CSF</li>
-<li>Hypothyroid T4 — dog with vestibular + CN VII palsy</li>
-<li>🐱 Retroflex pharynx for nasopharyngeal polyp under GA</li>
-</ul>`),
-      ...stepPair(4, 'PROPRIOCEPTIVE (SPINAL) BRANCH — SPINAL IMAGING', `<ul>
-<li>Localise spinal level by neurological exam (see Myelopathy approach for full localisation table)</li>
-<li>Spinal radiographs first → CT for bony IVDD/fracture/lysis → MRI for soft-tissue cord lesions (FCE, ANNPE, neoplasia, DM)</li>
-<li>CK — elevated = polymyositis/myopathy mimic</li>
-<li>Protozoal serology (Toxoplasma/Neospora) — young dog with stiff hyperextended hindlimbs</li>
-</ul>`),
+      ...stepPair(2, 'CEREBELLAR BRANCH — MRI BRAIN + CSF', `MRI brain (focus on cerebellum, brainstem).<br>CSF patterns:<br>
+• Mononuclear pleocytosis → MUO/cerebellitis (🐕)<br>
+• Periventricular enhancement + high globulins → FIP (🐱)<br>
+• Bilateral symmetric brainstem T2/FLAIR → thiamine deficiency<br>
+• Cerebellar atrophy + young breed-predisposed animal → abiotrophy/SCA → DNA test<br>
+• CDV PCR on CSF if myoclonus / unvaccinated dog`),
+      ...stepPair(3, 'VESTIBULAR BRANCH — OTOSCOPY + CT/MRI BULLAE or MRI BRAIN', `• <strong>Peripheral signs</strong> (no CP deficits) → otoscopy + CT bullae (fluid, thickening, lysis, polyp)<br>
+• <strong>Central signs</strong> (CP deficits / vertical nystagmus / ↓ mentation) → MRI brain + CSF<br>
+• Hypothyroid T4 — dog with vestibular + CN VII palsy<br>
+• 🐱 Retroflex pharynx for nasopharyngeal polyp under GA`),
+      ...stepPair(4, 'PROPRIOCEPTIVE (SPINAL) BRANCH — SPINAL IMAGING', `• Localise spinal level by neurological exam (see Myelopathy approach for full localisation table)<br>
+• Spinal radiographs first → CT for bony IVDD/fracture/lysis → MRI for soft-tissue cord lesions (FCE, ANNPE, neoplasia, DM)<br>
+• CK — elevated = polymyositis/myopathy mimic<br>
+• Protozoal serology (Toxoplasma/Neospora) — young dog with stiff hyperextended hindlimbs`),
     ],
     after: [
       {

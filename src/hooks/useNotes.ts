@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { api } from '../../convex/_generated/api'
 
 const SAVE_DEBOUNCE_MS = 500
+const RETRY_MS = 2000
+const RETRY_MAX_MS = 30000
 
 export function useNotes(pageKey: string, pageTitle: string, isOpen: boolean) {
   const editorRef = useRef<HTMLDivElement>(null)
@@ -13,6 +15,7 @@ export function useNotes(pageKey: string, pageTitle: string, isOpen: boolean) {
   const remove = useMutation(api.notes.remove)
 
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const retryDelay = useRef(RETRY_MS)
   const pendingHtml = useRef<string | null>(null)
   const pendingKey = useRef<{ pageKey: string; pageTitle: string } | null>(null)
   const lastSyncedHtml = useRef<string | null>(null)
@@ -25,12 +28,18 @@ export function useNotes(pageKey: string, pageTitle: string, isOpen: boolean) {
     const el = editorRef.current
     if (!el) return
     if (document.activeElement === el) return
+    // A pending (unsaved or failed) edit for this page is newer than anything
+    // the server can echo back — never overwrite it.
+    if (pendingHtml.current !== null && pendingKey.current?.pageKey === pageKey) return
     const html = note?.html ?? ''
     el.innerHTML = html
     lastSyncedHtml.current = html
   }, [note, isOpen, pageKey])
 
   // Flush any pending save when the pageKey changes or the panel closes.
+  // On failure the pending content is kept and retried, so edits survive
+  // transient network or auth hiccups.
+  const flushRef = useRef<() => Promise<void>>(async () => {})
   const flush = useCallback(async () => {
     if (saveTimer.current) {
       clearTimeout(saveTimer.current)
@@ -38,17 +47,46 @@ export function useNotes(pageKey: string, pageTitle: string, isOpen: boolean) {
     }
     const html = pendingHtml.current
     const target = pendingKey.current
-    pendingHtml.current = null
-    pendingKey.current = null
     if (html === null || !target) return
     try {
       await upsert({ pageKey: target.pageKey, pageTitle: target.pageTitle, html })
+      // Only clear if no newer edit arrived while the save was in flight.
+      if (pendingHtml.current === html && pendingKey.current?.pageKey === target.pageKey) {
+        pendingHtml.current = null
+        pendingKey.current = null
+      }
       lastSyncedHtml.current = html
+      retryDelay.current = RETRY_MS
       setStatus('Saved')
     } catch {
-      setStatus('Save failed')
+      setStatus('Save failed — retrying…')
+      if (!saveTimer.current) {
+        saveTimer.current = setTimeout(() => {
+          saveTimer.current = null
+          void flushRef.current()
+        }, retryDelay.current)
+        retryDelay.current = Math.min(retryDelay.current * 2, RETRY_MAX_MS)
+      }
     }
   }, [upsert])
+  useEffect(() => {
+    flushRef.current = flush
+  }, [flush])
+
+  // Best-effort flush when the tab is hidden or being unloaded, so edits made
+  // within the debounce window aren't lost on tab close / navigation.
+  useEffect(() => {
+    const flushNow = () => void flush()
+    const onVisibility = () => {
+      if (document.visibilityState === 'hidden') void flush()
+    }
+    window.addEventListener('pagehide', flushNow)
+    document.addEventListener('visibilitychange', onVisibility)
+    return () => {
+      window.removeEventListener('pagehide', flushNow)
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
+  }, [flush])
 
   useEffect(() => {
     return () => {
