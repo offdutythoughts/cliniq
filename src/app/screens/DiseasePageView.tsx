@@ -6,7 +6,8 @@
 import { DB } from '../../data/db'
 import { styleStringToObject as s } from './style'
 import { SpTag } from './tags'
-import { Bul, NavCard, Card, str } from './markup'
+import { Bul, NavCard, Card, Linkify, str } from './markup'
+import { splitPearl } from './pearlSplit'
 import { InjuryGradingTable } from './InjuryGradingTable'
 import { NotFound } from './NotFound'
 import { TAG_ROW, BODY_TEXT } from './styles'
@@ -20,9 +21,28 @@ const TX_LABEL = s('font-size:10px;color:var(--gray2);text-transform:uppercase;l
 const LOC_WRAP = s('margin-top:10px;')
 const LOC_CARD = s('cursor:pointer;padding:10px 14px;')
 
+const PEARL_LABEL = s('font-weight:700;margin-bottom:6px;')
+const PEARL_ITEM = s('display:flex;align-items:baseline;gap:6px;margin-bottom:4px;')
+const PEARL_DOT = s('flex-shrink:0;opacity:.7;')
+
 const pip = (v: unknown): boolean => typeof v === 'string' && v.includes('|')
 function Txt({ text }: { text: string }) {
   return <div style={BODY_TEXT}>{text}</div>
+}
+/** Clinical pearls box. Splits into bullets (per splitPearl — explicit `|`
+ *  wins, else sentence boundaries), keeping the amber pearl colour via inherit.
+ *  A single-sentence pearl stays an inline paragraph. */
+function Pearl({ text }: { text: string }) {
+  const items = splitPearl(text)
+  if (items.length <= 1) return <div className="pearl">💡 Clinical pearls: {items[0] ?? ''}</div>
+  return (
+    <div className="pearl">
+      <div style={PEARL_LABEL}>💡 Clinical pearls</div>
+      {items.map((t, i) => (
+        <div key={i} style={PEARL_ITEM}><span style={PEARL_DOT}>•</span><Linkify text={t} /></div>
+      ))}
+    </div>
+  )
 }
 /** pip → <Bul>, else <Txt> (the `pip(x)?bul:txt` cards). */
 function Body({ text }: { text: string }) {
@@ -111,7 +131,7 @@ export function DiseasePageView({ id }: { id: string }) {
 
       {str(d.ddx) && <Card title="Differential Diagnosis"><Bul text={str(d.ddx)} /></Card>}
 
-      <div className="pearl">💡 Clinical pearls: {str(d.pearl)}</div>
+      <Pearl text={str(d.pearl)} />
       <div className="disclaimer">For qualified veterinary professionals only.</div>
     </>
   )
