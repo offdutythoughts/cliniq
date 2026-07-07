@@ -10,6 +10,8 @@ import { Bul, Card, Linkify, str } from './markup'
 import { splitPearl } from './pearlSplit'
 import { InjuryGradingTable } from './InjuryGradingTable'
 import { PhenylephrineLocaliseTable } from './PhenylephrineLocaliseTable'
+import { IrisCkdStagingTable } from './IrisCkdStagingTable'
+import { IrisAkiGradingTable } from './IrisAkiGradingTable'
 import { NotFound } from './NotFound'
 import { TAG_ROW, BODY_TEXT, PAGE_TITLE, FIELD_LABEL, SUB_LABEL } from './styles'
 
@@ -44,18 +46,24 @@ function Body({ text }: { text: string }) {
   return pip(text) ? <Bul text={text} /> : <Txt text={text} />
 }
 
-/** Marker in a `conf` field where the phenylephrine localisation table is
- *  spliced in — the table can't be expressed in pipe-markup (Horner's only). */
-const PHEN_TABLE_MARK = '{{PHEN_LOCALISE_TABLE}}'
-/** Diagnostic-Investigation body: renders `conf`, replacing the table marker
- *  with <PhenylephrineLocaliseTable /> in place. Falls back to plain <Body>. */
+/** Markers in a `conf` field where a rich table is spliced in — content that
+ *  can't be expressed in pipe-markup. Each disease uses at most one marker. */
+const CONF_TABLES: { mark: string; Comp: () => React.ReactNode }[] = [
+  { mark: '{{PHEN_LOCALISE_TABLE}}', Comp: PhenylephrineLocaliseTable },
+  { mark: '{{IRIS_CKD_TABLE}}', Comp: IrisCkdStagingTable },
+  { mark: '{{IRIS_AKI_TABLE}}', Comp: IrisAkiGradingTable },
+]
+/** Diagnostic-Investigation body: renders `conf`, replacing a table marker with
+ *  its component in place. Falls back to plain <Body> when no marker present. */
 function ConfBody({ text }: { text: string }) {
-  if (!text.includes(PHEN_TABLE_MARK)) return <Body text={text} />
-  const [before, after] = text.split(PHEN_TABLE_MARK)
+  const hit = CONF_TABLES.find(t => text.includes(t.mark))
+  if (!hit) return <Body text={text} />
+  const [before, after] = text.split(hit.mark)
+  const Comp = hit.Comp
   return (
     <>
       {before.replace(/\|\s*$/, '').trim() && <Body text={before.replace(/\|\s*$/, '')} />}
-      <PhenylephrineLocaliseTable />
+      <Comp />
       {after.replace(/^\s*\|/, '').trim() && <Body text={after.replace(/^\s*\|/, '')} />}
     </>
   )
