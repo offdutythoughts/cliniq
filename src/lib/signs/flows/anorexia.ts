@@ -113,7 +113,8 @@ const anorexiaTrue: FlowPage = {
           cat: 'GI · Pancreas',
           tone: 'orange',
           tiles: [
-            { label: 'Pancreatitis', link: { to: 'disease', id: 'DIS-GI-PANCAT' } },
+            { label: 'Pancreatitis — cat', link: { to: 'disease', id: 'DIS-GI-PANCAT' } },
+            { label: 'Pancreatitis — dog', link: { to: 'disease', id: 'DIS-SEC-PAN-DOG' } },
             { label: 'GI Foreign Body', link: { to: 'disease', id: 'DIS-GI-FB' } },
             { label: 'IBD / Chronic Enteropathy', link: { to: 'disease', id: 'DIS-GI-IBD' } },
           ],

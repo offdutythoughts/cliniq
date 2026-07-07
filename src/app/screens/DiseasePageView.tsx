@@ -6,20 +6,14 @@
 import { DB } from '../../data/db'
 import { styleStringToObject as s } from './style'
 import { SpTag } from './tags'
-import { Bul, NavCard, Card, Linkify, str } from './markup'
+import { Bul, Card, Linkify, str } from './markup'
 import { splitPearl } from './pearlSplit'
 import { InjuryGradingTable } from './InjuryGradingTable'
 import { NotFound } from './NotFound'
-import { TAG_ROW, BODY_TEXT } from './styles'
+import { TAG_ROW, BODY_TEXT, PAGE_TITLE, FIELD_LABEL, SUB_LABEL } from './styles'
 
-const TITLE = s('font-size:18px;font-weight:700;color:var(--white);margin-bottom:10px;line-height:1.3;')
-const TOP_ALERT = s('background:rgba(var(--tone-danger),0.18);border:1.5px solid rgba(var(--tone-danger),0.5);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:13px;font-weight:700;color:var(--tone-danger-fg);letter-spacing:.01em;')
-const SUB_LABEL = s('font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-top:10px;margin-bottom:4px;padding-top:8px;border-top:1px solid var(--border);')
-const SIG_LABEL = s('font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px;')
-const SIG_VALUE = s('font-size:12px;color:var(--gray);line-height:1.6;margin-bottom:8px;')
-const TX_LABEL = s('font-size:10px;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;')
-const LOC_WRAP = s('margin-top:10px;')
-const LOC_CARD = s('cursor:pointer;padding:10px 14px;')
+const TOP_ALERT = s('background:rgba(var(--tone-danger),0.18);border:1.5px solid rgba(var(--tone-danger),0.5);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:var(--fs-body);font-weight:700;color:var(--tone-danger-fg);letter-spacing:.01em;')
+const SIG_VALUE = s('font-size:var(--fs-body);color:var(--gray);line-height:var(--lh-body);margin-bottom:8px;')
 
 const PEARL_LABEL = s('font-weight:700;margin-bottom:6px;')
 const PEARL_ITEM = s('display:flex;align-items:baseline;gap:6px;margin-bottom:4px;')
@@ -53,13 +47,12 @@ export function DiseasePageView({ id }: { id: string }) {
   const d = DB.disease_page.find(x => x.id === id)
   if (!d) return <NotFound what="Disease page" />
 
-  const locFunc = str(d.locFunc)
   const breed = str(d.breed)
   const age = str(d.age)
 
   return (
     <>
-      <div style={TITLE}>{d.name}</div>
+      <div style={PAGE_TITLE}>{d.name}</div>
       <div style={TAG_ROW}><SpTag sp={d.sp} /></div>
 
       {str(d.topAlert) && <div style={TOP_ALERT}>🚨 {str(d.topAlert)}</div>}
@@ -68,13 +61,13 @@ export function DiseasePageView({ id }: { id: string }) {
       {str(d.etiology) && <Card title="Etiology"><Bul text={str(d.etiology)} /></Card>}
 
       <Card title="Signalment">
-        <div style={SIG_LABEL}>Breed</div>
+        <div style={FIELD_LABEL}>Breed</div>
         <div style={SIG_VALUE}>{pip(breed) ? <Bul text={breed} /> : breed}</div>
-        <div style={SIG_LABEL}>Age</div>
+        <div style={FIELD_LABEL}>Age</div>
         <div style={SIG_VALUE}>{pip(age) ? <Bul text={age} /> : age}</div>
         {str(d.sex) && (
           <>
-            <div style={SIG_LABEL}>Sex</div>
+            <div style={FIELD_LABEL}>Sex</div>
             <div style={BODY_TEXT}>{str(d.sex)}</div>
           </>
         )}
@@ -97,24 +90,10 @@ export function DiseasePageView({ id }: { id: string }) {
             <Body text={str(d.supp)} />
           </>
         )}
-        {locFunc && (
-          <div style={LOC_WRAP}>
-            <NavCard
-              icon="🔬"
-              title="Localise lesion"
-              sub="Phenylephrine test — interactive decision tree"
-              onClick={() => {
-                const fn = (window as unknown as Record<string, (() => void) | undefined>)[locFunc]
-                if (typeof fn === 'function') fn()
-              }}
-              style={LOC_CARD}
-            />
-          </div>
-        )}
       </Card>
 
       <Card title="Treatment">
-        <div style={TX_LABEL}>First-line</div>
+        <div style={FIELD_LABEL}>First-line</div>
         <Body text={str(d.tx1)} />
         {str(d.tx2) && (
           <>

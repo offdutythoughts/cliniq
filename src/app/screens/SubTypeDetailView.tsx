@@ -13,9 +13,8 @@ import { DiseasePageView } from './DiseasePageView'
 import { NavCard, Card, Bul, str } from './markup'
 import { TAG_ROW, BODY_TEXT, DOT, BULLET } from './styles'
 
-const ETI_NAME = s('font-size:12px;color:var(--white);line-height:1.6;')
+const ETI_NAME = s('font-size:var(--fs-body);color:var(--white);line-height:var(--lh-body);')
 const ETI_BOX = s('margin-top:10px;padding-top:10px;border-top:1px solid var(--border);')
-const NOTE_VAL = s('font-size:11px;color:var(--gray);line-height:1.6;')
 
 export function SubTypeDetailView({ id }: { id: string }) {
   const nav = useNav()
@@ -84,7 +83,7 @@ export function SubTypeDetailView({ id }: { id: string }) {
       {ddx && <Card title="Differential Diagnosis"><Bul text={ddx} /></Card>}
 
       {note && (
-        <Card title="Notes"><div style={NOTE_VAL}>{note}</div></Card>
+        <Card title="Notes"><div style={BODY_TEXT}>{note}</div></Card>
       )}
 
       {dis && (

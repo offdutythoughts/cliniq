@@ -3,11 +3,9 @@
 
 import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
-import { styleStringToObject as s } from './style'
 import { NavCard, str } from './markup'
 import { SpTag } from './tags'
-
-const SP_ROW = s('display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;')
+import { TAG_ROW } from './styles'
 
 export function DiffDetailView({ id }: { id: string }) {
   const nav = useNav()
@@ -17,7 +15,7 @@ export function DiffDetailView({ id }: { id: string }) {
   const dis = disId ? DB.disease_page.find(x => x.id === disId) : null
   return (
     <>
-      <div style={SP_ROW}><SpTag sp={d.sp} /></div>
+      <div style={TAG_ROW}><SpTag sp={d.sp} /></div>
       <div className="detail-label">Key distinguishing feature</div>
       <div className="detail-val highlight">{d.feat}</div>
       <div className="detail-label">Minimum diagnostics</div>

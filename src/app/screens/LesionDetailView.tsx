@@ -4,11 +4,9 @@
 
 import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
-import { styleStringToObject as s } from './style'
 import { NavCard, Bul, str } from './markup'
 import { UrgTag, SpTag } from './tags'
-
-const TAG_ROW = s('display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;')
+import { TAG_ROW } from './styles'
 
 export function LesionDetailView({ id }: { id: string }) {
   const nav = useNav()
