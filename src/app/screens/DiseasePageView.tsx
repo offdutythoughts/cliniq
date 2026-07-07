@@ -9,6 +9,7 @@ import { SpTag } from './tags'
 import { Bul, Card, Linkify, str } from './markup'
 import { splitPearl } from './pearlSplit'
 import { InjuryGradingTable } from './InjuryGradingTable'
+import { PhenylephrineLocaliseTable } from './PhenylephrineLocaliseTable'
 import { NotFound } from './NotFound'
 import { TAG_ROW, BODY_TEXT, PAGE_TITLE, FIELD_LABEL, SUB_LABEL } from './styles'
 
@@ -41,6 +42,23 @@ function Pearl({ text }: { text: string }) {
 /** pip → <Bul>, else <Txt> (the `pip(x)?bul:txt` cards). */
 function Body({ text }: { text: string }) {
   return pip(text) ? <Bul text={text} /> : <Txt text={text} />
+}
+
+/** Marker in a `conf` field where the phenylephrine localisation table is
+ *  spliced in — the table can't be expressed in pipe-markup (Horner's only). */
+const PHEN_TABLE_MARK = '{{PHEN_LOCALISE_TABLE}}'
+/** Diagnostic-Investigation body: renders `conf`, replacing the table marker
+ *  with <PhenylephrineLocaliseTable /> in place. Falls back to plain <Body>. */
+function ConfBody({ text }: { text: string }) {
+  if (!text.includes(PHEN_TABLE_MARK)) return <Body text={text} />
+  const [before, after] = text.split(PHEN_TABLE_MARK)
+  return (
+    <>
+      {before.replace(/\|\s*$/, '').trim() && <Body text={before.replace(/\|\s*$/, '')} />}
+      <PhenylephrineLocaliseTable />
+      {after.replace(/^\s*\|/, '').trim() && <Body text={after.replace(/^\s*\|/, '')} />}
+    </>
+  )
 }
 
 export function DiseasePageView({ id }: { id: string }) {
@@ -83,7 +101,7 @@ export function DiseasePageView({ id }: { id: string }) {
       </Card>
 
       <Card title="Diagnostic Investigation">
-        <Body text={str(d.conf)} />
+        <ConfBody text={str(d.conf)} />
         {str(d.supp) && (
           <>
             <div style={SUB_LABEL}>Supportive Diagnostics</div>
