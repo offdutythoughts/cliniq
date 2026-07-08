@@ -348,17 +348,25 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
 }
 
 // ── Decision tree ─────────────────────────────────────────────────────────────
+// Solid, darkened tone fills for the decision tree (bold "card" look): the tone
+// triplet mixed toward near-black for the fill, a stronger mix for the border,
+// and the triplet mixed toward white for readable light text. Tone triplets are
+// mode-stable, so these boxes render identically in light and dark mode.
+const solidFill   = (rgb: string) => `color-mix(in srgb, rgb(${rgb}) 58%, #121212)`
+const solidBorder = (rgb: string) => `color-mix(in srgb, rgb(${rgb}) 64%, #000)`
+const solidText   = (rgb: string) => `color-mix(in srgb, rgb(${rgb}) 24%, #fff)`
+
 function DecBox({ question, sub }: { question: string; sub?: string }) {
   return (
-    <div style={s('background:rgba(var(--tone-warning),0.13);border:1.5px solid rgba(var(--tone-warning),0.55);border-radius:10px;padding:9px 14px;width:100%;text-align:center;')}>
-      <div style={s('font-size:11.5px;font-weight:700;color:var(--tone-warning-fg);line-height:1.4;')}>{question}</div>
-      {sub && <div style={s('font-size:9px;color:var(--amber-text);opacity:.8;margin-top:3px;')}>{sub}</div>}
+    <div style={s(`background:${solidFill('var(--tone-warning)')};border:1px solid ${solidBorder('var(--tone-warning)')};border-radius:10px;padding:9px 14px;width:100%;text-align:center;`)}>
+      <div style={s('font-size:11.5px;font-weight:700;color:#F8FAFC;line-height:1.4;')}>{question}</div>
+      {sub && <div style={s(`font-size:9px;color:${solidText('var(--tone-warning)')};margin-top:3px;`)}>{sub}</div>}
     </div>
   )
 }
 function OutBox({ o, onNav }: { o: DecisionOutcome; onNav: Nav }) {
   const h = HUE[o.tone]
-  return <div style={s(`${toneBox(h.rgb,h.color).all}border-radius:9px;padding:9px 10px;font-size:9px;line-height:1.55;`)}><Raw html={o.html} onNav={onNav} /></div>
+  return <div style={s(`background:${solidFill(h.rgb)};border:1px solid ${solidBorder(h.rgb)};color:${solidText(h.rgb)};border-radius:9px;padding:9px 11px;font-size:9px;line-height:1.6;`)}><Raw html={o.html} onNav={onNav} /></div>
 }
 function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
   if (step.type === 'split') {
@@ -366,8 +374,8 @@ function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
       <>
         <DecBox question={step.question} sub={step.sub} />
         <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;margin-top:4px;')}>
-          <div><div style={s('font-size:9px;font-weight:700;color:var(--tone-danger-title);margin-bottom:4px;')}>{step.noLabel}</div><OutBox o={step.no} onNav={onNav} /></div>
-          <div><div style={s('font-size:9px;font-weight:700;color:var(--hl-green);margin-bottom:4px;')}>{step.yesLabel}</div><OutBox o={step.yes} onNav={onNav} /></div>
+          <div><div style={s('font-size:9px;font-weight:700;color:var(--gray);margin-bottom:4px;')}>{step.noLabel}</div><OutBox o={step.no} onNav={onNav} /></div>
+          <div><div style={s('font-size:9px;font-weight:700;color:var(--gray);margin-bottom:4px;')}>{step.yesLabel}</div><OutBox o={step.yes} onNav={onNav} /></div>
         </div>
       </>
     )
@@ -376,9 +384,9 @@ function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
     return <div style={s('margin-bottom:8px;')}><div style={s('font-size:9px;font-weight:700;color:var(--tone-danger-title);margin-bottom:4px;')}>{step.label}</div><OutBox o={step.box} onNav={onNav} /></div>
   }
   const down = step.continue === 'YES'
-  const contColor = down ? 'var(--hl-green)' : 'var(--tone-danger-title)'
-  const arrowColor = down ? 'rgba(var(--tone-green),0.5)' : 'rgba(var(--tone-danger),0.5)'
-  const exitColor = down ? 'var(--tone-danger-title)' : 'var(--hl-green)'
+  const contColor = 'var(--gray)'
+  const arrowColor = 'var(--gray)'
+  const exitColor = 'var(--gray)'
   const exitLabel = down ? 'NO →' : 'YES →'
   return (
     <>
