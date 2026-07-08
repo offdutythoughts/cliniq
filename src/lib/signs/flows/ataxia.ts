@@ -55,7 +55,7 @@ const ataxiaEntry: FlowPage = {
       gap: 12,
       connectAfter: false,
       title: '💡 Key distinctions',
-      html: '<strong>Cerebellar:</strong> No paresis, no proprioceptive deficits — the cerebellum coordinates movement, doesn\'t initiate it. Hypermetria is the hallmark.<br><strong>Vestibular:</strong> Asymmetric — falls/leans to one side. Head tilt + nystagmus = vestibular until proven otherwise.<br><strong>Proprioceptive (GP):</strong> Always has paresis — weakness + incoordination together. Spinal cord lesion.',
+      html: '<strong>Cerebellar:</strong> No paresis, no proprioceptive deficits — the cerebellum coordinates movement, doesn\'t initiate it. Hypermetria is the hallmark.<br><strong>Vestibular:</strong> Asymmetric — falls/leans to one side. Head tilt + nystagmus = vestibular until proven otherwise.<br><strong>Proprioceptive (general proprioception):</strong> Always has paresis — weakness + incoordination together. Spinal cord lesion.',
     },
     {
       kind: 'callout',
