@@ -7,6 +7,16 @@
 
 import type { FlowPage } from '../flowTypes'
 
+/** A "DIFFERENTIALS" sub-box for a decision-tree exit. Sits on the exit's solid
+ *  (darkened) tone fill, so it reads as a darker inset of the same tone with a
+ *  lighter label. Colours are derived from the tone triplet via color-mix (no
+ *  hardcoded per-tone hexes; triplets are mode-stable). `items` are • -separated. */
+const DIFF = (tone: string, items: string) =>
+  `<div style="margin-top:6px;padding:5px 8px;background:color-mix(in srgb, rgb(var(--tone-${tone})) 42%, #000);` +
+  `border:1px solid color-mix(in srgb, rgb(var(--tone-${tone})) 60%, #000);border-radius:6px;">` +
+  `<span style="display:block;font-size:7.5px;font-weight:700;letter-spacing:.06em;color:color-mix(in srgb, rgb(var(--tone-${tone})) 30%, #fff);margin-bottom:2px;">DIFFERENTIALS</span>` +
+  `<span style="color:color-mix(in srgb, rgb(var(--tone-${tone})) 22%, #fff);">${items}</span></div>`
+
 // ── 1. Entry ────────────────────────────────────────────────────────────────
 const abnormalPupilEntry: FlowPage = {
   id: 'abnormal-pupil',
@@ -169,27 +179,27 @@ const anisocoriaMydriasisLocalise: FlowPage = {
           type: 'step', continue: 'YES',
           question: 'Normal mentation, posture & gait?',
           sub: 'No altered consciousness · no hemiparesis · no vestibular or other CN deficits',
-          exit: { tone: 'danger', html: '<strong>🚨 BRAINSTEM EMERGENCY</strong><br>Fixed dilated pupil + altered mentation<br>Transtentorial herniation (↑ ICP)<br>Brainstem neoplasia · Head trauma<br>⚠️ Cushing\'s reflex: bradycardia + HTN + irregular breathing<br>→ Mannitol 0.5–1 g/kg IV over 15 min<br>→ Urgent MRI · neurosurgical referral' },
+          exit: { tone: 'danger', html: `<strong>🚨 BRAINSTEM EMERGENCY</strong><br>Fixed dilated pupil + altered mentation<br>⚠️ Cushing's reflex: bradycardia + HTN + irregular breathing<br>→ Mannitol 0.5–1 g/kg IV over 15 min<br>→ Urgent MRI · neurosurgical referral${DIFF('danger', 'Transtentorial herniation (↑ ICP) • Brainstem neoplasia • Head trauma')}` },
         },
         {
           type: 'step', continue: 'YES',
           question: 'Visual tracking intact?',
           sub: 'Menace response + cotton ball tracking + dazzle reflex — all three present',
-          exit: { tone: 'info', html: '<strong>Pre-chiasmal — Afferent lesion</strong><br>Retina or optic nerve (amaurotic mydriasis)<br>Absent direct PLR · consensual (indirect) PLR intact<br>SARDS · PRA · Optic neuritis · Retinal detachment<br>→ Chromatic PLR + ERG + fundoscopy<br>→ MRI optic nerve/chiasm if ERG inconclusive' },
+          exit: { tone: 'info', html: `<strong>Pre-chiasmal — Afferent lesion</strong><br>Retina or optic nerve (amaurotic mydriasis)<br>Absent direct PLR · consensual (indirect) PLR intact<br>→ Chromatic PLR + ERG + fundoscopy<br>→ MRI optic nerve/chiasm if ERG inconclusive${DIFF('info', 'SARDS • PRA • Optic neuritis • Retinal detachment')}` },
         },
         {
           type: 'step', continue: 'NO',
           question: 'Direct PLR present in the mydriatic eye?',
-          exit: { tone: 'slate', html: '<strong>Not truly neurological / Cortical</strong><br>Physiological anisocoria (±1 mm) · Pharmacological<br>Iris atrophy (retroilluminate again!)<br>Cortical blindness: absent menace, intact PLR + dazzle<br>→ Drug history · repeat exam<br>→ MRI forebrain if cortical cause suspected' },
+          exit: { tone: 'slate', html: `<strong>Not truly neurological / Cortical</strong><br>Cortical blindness: absent menace, intact PLR + dazzle<br>→ Drug history · repeat exam<br>→ MRI forebrain if cortical cause suspected${DIFF('slate', 'Physiological anisocoria (±1 mm) • Pharmacological • Iris atrophy (retroilluminate again!) • Cortical blindness')}` },
         },
         {
           type: 'split',
           question: 'Ptosis or lateral strabismus present?',
           sub: 'Somatic branch of CN III also affected?',
           noLabel: 'NO →',
-          no: { tone: 'green', html: '<strong>CN III — Parasympathetic only</strong><br>Somatic CN III intact; PS fibres compressed<br>Orbital mass · retrobulbar disease<br>Cavernous sinus lesion · CN III NST<br>→ MRI fat-sat + contrast:<br>orbit + cavernous sinus' },
+          no: { tone: 'green', html: `<strong>CN III — Parasympathetic only</strong><br>Somatic CN III intact; PS fibres compressed<br>→ MRI fat-sat + contrast:<br>orbit + cavernous sinus${DIFF('green', 'Orbital mass • Retrobulbar disease • Cavernous sinus lesion • CN III NST')}` },
           yesLabel: 'YES →',
-          yes: { tone: 'violet', html: '<strong>Full CN III Palsy</strong><br>Mydriasis + ptosis + lateral strabismus<br>Pituitary/hypothalamic mass<br>Cavernous sinus syndrome<br>Transtentorial herniation (↑ ICP)<br>→ MRI brain + post-contrast<br>→ Assess ICP' },
+          yes: { tone: 'violet', html: `<strong>Full CN III Palsy</strong><br>Mydriasis + ptosis + lateral strabismus<br>→ MRI brain + post-contrast<br>→ Assess ICP${DIFF('violet', 'Pituitary/hypothalamic mass • Cavernous sinus syndrome • Transtentorial herniation (↑ ICP)')}` },
         },
       ],
     },
