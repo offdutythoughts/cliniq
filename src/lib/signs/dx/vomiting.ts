@@ -193,6 +193,7 @@ export const vomitingDx: DxApproach = {
     • ↑ BUN/Cr + low USG → CKD / AKI<br>
     • ↑ ALT/ALP/GGT → hepatobiliary disease<br>
     • Na:K ratio &lt;27 → hypoadrenocorticism (confirm with ACTH stimulation)<br>
+    • Persistent hyperglycaemia + glucosuria (no ketones) → diabetes mellitus<br>
     • Hyperglycaemia + ketonuria → DKA<br>
     • ↑ Total Ca²⁺ → neoplasia, hypoadrenocorticism, hypervitaminosis D<br>
     • Hypoalbuminaemia → protein-losing enteropathy, hepatic failure<br><br>
@@ -227,6 +228,7 @@ export const vomitingDx: DxApproach = {
     • ↑ ALT/ALP/GGT → <strong>Hepatobiliary disease</strong> — bile acids, abdominal US, liver biopsy<br>
     • Na:K &lt;27, absent stress leukogram, or eosinophilia in sick dog → <strong>Hypoadrenocorticism</strong> — check basal cortisol; if low or suspicion remains → ACTH stimulation test<br>
     &nbsp;&nbsp;<span style="font-size:10px;opacity:.75;">Atypical Addison's: Na:K ratio normal — do not exclude on electrolytes alone</span><br>
+    • Persistent hyperglycaemia + glucosuria (no ketones) → <strong>Diabetes mellitus</strong> — fructosamine, urinalysis + culture, start insulin + diet<br>
     • Hyperglycaemia + ketonuria → <strong>DKA</strong> — blood gas, fluid therapy, insulin protocol<br>
     • ↑ Total Ca²⁺ → <strong>Hypercalcaemia workup</strong> — PTH, PTHrP, vitamin D metabolites, thoracic imaging<br>
     • Cat ↑ T4 → <strong>Hyperthyroidism</strong> — confirm, recheck in 3 weeks if equivocal<br>
