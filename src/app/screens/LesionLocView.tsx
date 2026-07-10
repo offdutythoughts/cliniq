@@ -113,9 +113,12 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
   const cardPadding = cols <= 4 ? '6px 8px' : cols === 5 ? '5px 6px' : '3px 4px'
   // Minimum column width so text always fits; scroll horizontally when needed.
   const minColPx = cols <= 4 ? 80 : cols <= 6 ? 72 : 68
+  // Cap each column so few-category layouts don't stretch boxes full-width on
+  // wide screens; centre the (narrower-than-container) grid instead.
+  const maxColPx = 240
   const totalMinPx = cols * minColPx + (cols - 1) * 6
-  const gridCols = `repeat(${cols},minmax(${minColPx}px,1fr))`
-  const gridStyle = s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;`)
+  const gridCols = `repeat(${cols},minmax(${minColPx}px,${maxColPx}px))`
+  const gridStyle = s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;justify-content:center;`)
   const dxSign = DX_MAP[loc]
 
   return (
@@ -131,10 +134,10 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
               <div key={cat} className="flow-node" style={s(`background:${cBg(cat)};border-color:${cBd(cat)};color:${cTx(cat)};font-size:${catFontSize}px;cursor:default;`)}>{cat}</div>
             ))}
           </div>
-          <div style={s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;`)}>
+          <div style={s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;justify-content:center;`)}>
             {cats.map(cat => <div key={cat} className="flow-arrow-v">↓</div>)}
           </div>
-          <div style={s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;align-items:start;`)}>
+          <div style={s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;justify-content:center;align-items:start;`)}>
             {cats.map(cat => (
               <div key={cat} style={s('display:flex;flex-direction:column;gap:4px;')}>
                 {groups.get(cat)!.map(l => (

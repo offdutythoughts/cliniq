@@ -55,11 +55,11 @@
      and the disease-category colours (CAT_STYLE). The `--tone-*` values are rgb
      triplets fed into rgba(var(--tone-x), α); the `-fg`/`-title` are the readable
      foregrounds. Foregrounds are overridable per theme in the dark block below. */
-  --tone-danger: 220,38,38;     --tone-danger-fg: #991B1B;   --tone-danger-title: #B91C1C;
-  --tone-warning: 245,158,11;   --tone-warning-fg: #92400E;  --tone-warning-title: var(--amber-text);
+  --tone-danger: 220,38,38;     --tone-danger-fg: #7F1D1D;   --tone-danger-title: #B91C1C;
+  --tone-warning: 245,158,11;   --tone-warning-fg: #78350F;  --tone-warning-title: var(--amber-text);
   --tone-info: 37,99,235;       --tone-info-fg: #1E40AF;
   --tone-teal: 13,148,136;      --tone-teal-fg: #115E59;
-  --tone-green: 16,185,129;     --tone-green-fg: #047857;
+  --tone-green: 16,185,129;     --tone-green-fg: #065F46;
   --tone-violet: 139,92,246;    --tone-violet-fg: #5B21B6;
   --tone-purple: 168,85,247;    --tone-purple-fg: #6B21A8;
   --tone-indigo: 99,102,241;    --tone-indigo-fg: #3730A3;
