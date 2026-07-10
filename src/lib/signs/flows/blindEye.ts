@@ -59,10 +59,10 @@ const blindEyeAcute: FlowPage = {
       cols: 4,
       size: 10,
       items: [
-        { variant: 'insp', label: '👁️ Anterior<br>opacity', sublabel: 'acute glaucoma · lens luxation', link: { to: 'lesion', loc: 'LOC-BL-OPAQUE', name: 'Anterior segment opacity', filter: 'acute' } },
-        { variant: 'exp', label: '🌑 Retina', sublabel: 'SARDS · HT detachment · toxic', link: { to: 'lesion', loc: 'LOC-BL-RETINA', name: 'Retinal disease', filter: 'acute' } },
-        { variant: 'rest', label: '🧬 Optic<br>nerve', sublabel: 'optic neuritis · MUA', link: { to: 'lesion', loc: 'LOC-BL-OPTIC', name: 'Optic nerve', filter: 'acute' } },
-        { variant: 'insp', tone: 'purple', label: '🧠 Cortex /<br>forebrain', sublabel: 'HE · HT · toxins · CVA · trauma', link: { to: 'lesion', loc: 'LOC-BL-CORTEX', name: 'Cortical / forebrain', filter: 'acute' } },
+        { variant: 'insp', label: 'Anterior<br>opacity', link: { to: 'lesion', loc: 'LOC-BL-OPAQUE', name: 'Anterior segment opacity', filter: 'acute' } },
+        { variant: 'exp', label: 'Retina', link: { to: 'lesion', loc: 'LOC-BL-RETINA', name: 'Retinal disease', filter: 'acute' } },
+        { variant: 'rest', label: 'Optic<br>nerve', link: { to: 'lesion', loc: 'LOC-BL-OPTIC', name: 'Optic nerve', filter: 'acute' } },
+        { variant: 'insp', tone: 'purple', label: 'Cortex /<br>forebrain', link: { to: 'lesion', loc: 'LOC-BL-CORTEX', name: 'Cortical / forebrain', filter: 'acute' } },
       ],
       connectAfter: false,
     },
@@ -72,12 +72,12 @@ const blindEyeAcute: FlowPage = {
       tone: 'danger',
       title: '⚡ DO NOT MISS',
       items: [
-        '<strong>Hypertensive retinopathy</strong> — older cat / dog with acute bilateral blindness, bullous retinal detachment, hyphaema, tortuous retinal vessels → measure BP first',
-        '<strong>Optic neuritis (MUA)</strong> — acute bilateral blindness + dilated unresponsive pupils + swollen optic disc → urgent MRI/CSF + immunosuppression',
-        '<strong>Acute glaucoma</strong> — corneal oedema + mid-fixed mydriasis + ↑ IOP → tonometry on every blind eye',
-        '<strong>Head trauma + anisocoria + blindness</strong> — rising ICP / herniation → mannitol + emergent imaging',
-        '<strong>Enrofloxacin in cats</strong> — drug-induced retinal toxicity (avoid &gt;5 mg/kg/day; even therapeutic doses reported)',
-        '<strong>Salt / ivermectin / lead toxicity</strong> — bilateral cortical blindness with seizures and altered mentation',
+        { bold: 'Hypertensive retinopathy', link: { to: 'disease', id: 'DIS-EYE-RD' }, html: ' — older cat / dog with acute bilateral blindness, bullous retinal detachment, hyphaema, tortuous retinal vessels → measure BP first' },
+        { bold: 'Optic neuritis (MUA)', link: { to: 'disease', id: 'DIS-EYE-OPTNEUR' }, html: ' — acute bilateral blindness + dilated unresponsive pupils + swollen optic disc → urgent MRI/CSF + immunosuppression' },
+        { bold: 'Acute glaucoma', link: { to: 'disease', id: 'DIS-OPH-GLAUCOMA' }, html: ' — corneal oedema + mid-fixed mydriasis + ↑ IOP → tonometry on every blind eye' },
+        { bold: 'Head trauma + anisocoria + blindness', link: { to: 'disease', id: 'DIS-NEU-HEADTRAUMA' }, html: ' — rising ICP / herniation → mannitol + emergent imaging' },
+        { bold: 'Enrofloxacin in cats', link: { to: 'disease', id: 'DIS-EYE-ENRO' }, html: ' — drug-induced retinal toxicity (avoid &gt;5 mg/kg/day; even therapeutic doses reported)' },
+        { bold: 'Salt / ivermectin / lead toxicity', link: { to: 'disease', id: 'DIS-TOX-CORTBLIND' }, html: ' — bilateral cortical blindness with seizures and altered mentation' },
       ],
     },
 
@@ -85,7 +85,11 @@ const blindEyeAcute: FlowPage = {
       kind: 'callout',
       tone: 'info',
       gap: 8,
-      html: '💡 <strong>Key discriminator:</strong> Dazzle + PLR intact + absent menace = <strong>cortical</strong> · Absent dazzle + absent PLR + normal fundus = <strong>SARDS</strong> (red PLR absent, blue present) or <strong>optic neuritis</strong> (both absent) · Check BP on every acute bilateral blind animal.',
+      html:
+        '💡 <strong>Key discriminator</strong><br>' +
+        '• Dazzle + PLR intact + absent menace = <strong>cortical</strong><br>' +
+        '• Absent dazzle + absent PLR + normal fundus = <strong>SARDS</strong> (red PLR absent, blue present) or <strong>optic neuritis</strong> (both absent)<br>' +
+        '• Check BP on every acute bilateral blind animal',
     },
   ],
 }
@@ -108,11 +112,11 @@ const blindEyeChronic: FlowPage = {
       cols: 5,
       size: 10,
       items: [
-        { variant: 'insp', label: '👁️ Anterior<br>opacity', sublabel: 'cataract · chronic glaucoma · uveitis', link: { to: 'lesion', loc: 'LOC-BL-OPAQUE', name: 'Anterior segment opacity', filter: 'chronic' } },
-        { variant: 'exp', label: '🌑 Retina', sublabel: 'PRA · TCRD · chorioretinitis', link: { to: 'lesion', loc: 'LOC-BL-RETINA', name: 'Retinal disease', filter: 'chronic' } },
-        { variant: 'rest', label: '🧬 Optic<br>nerve', sublabel: 'hypoplasia · meningioma', link: { to: 'lesion', loc: 'LOC-BL-OPTIC', name: 'Optic nerve', filter: 'chronic' } },
-        { variant: 'mixed', label: '✨ Chiasm /<br>tract', sublabel: 'pituitary macroadenoma', link: { to: 'lesion', loc: 'LOC-BL-CHIASM', name: 'Chiasm / optic tract', filter: 'chronic' } },
-        { variant: 'insp', tone: 'purple', label: '🧠 Cortex /<br>forebrain', sublabel: 'MUA · GME · neoplasia', link: { to: 'lesion', loc: 'LOC-BL-CORTEX', name: 'Cortical / forebrain', filter: 'chronic' } },
+        { variant: 'insp', label: 'Anterior<br>opacity', link: { to: 'lesion', loc: 'LOC-BL-OPAQUE', name: 'Anterior segment opacity', filter: 'chronic' } },
+        { variant: 'exp', label: 'Retina', link: { to: 'lesion', loc: 'LOC-BL-RETINA', name: 'Retinal disease', filter: 'chronic' } },
+        { variant: 'rest', label: 'Optic<br>nerve', link: { to: 'lesion', loc: 'LOC-BL-OPTIC', name: 'Optic nerve', filter: 'chronic' } },
+        { variant: 'mixed', label: 'Chiasm /<br>tract', link: { to: 'lesion', loc: 'LOC-BL-CHIASM', name: 'Chiasm / optic tract', filter: 'chronic' } },
+        { variant: 'insp', tone: 'purple', label: 'Cortex /<br>forebrain', link: { to: 'lesion', loc: 'LOC-BL-CORTEX', name: 'Cortical / forebrain', filter: 'chronic' } },
       ],
       connectAfter: false,
     },
@@ -121,7 +125,13 @@ const blindEyeChronic: FlowPage = {
       kind: 'callout',
       tone: 'info',
       gap: 8,
-      html: '💡 <strong>Key discriminator:</strong> Night blindness first = PRA (rods before cones) · No fundus reflex = cataract · Tapetal hyperreflectivity + vessel attenuation = end-stage retinal disease · Buphthalmos = chronic glaucoma · Young dog with coloboma = CEA.',
+      html:
+        '💡 <strong>Key discriminator</strong><br>' +
+        '• Night blindness first = PRA (rods before cones)<br>' +
+        '• No fundus reflex = cataract<br>' +
+        '• Tapetal hyperreflectivity + vessel attenuation = end-stage retinal disease<br>' +
+        '• Buphthalmos = chronic glaucoma<br>' +
+        '• Young dog with coloboma = CEA',
     },
   ],
 }
