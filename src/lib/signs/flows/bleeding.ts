@@ -313,103 +313,104 @@ const bleedingDic: FlowPage = {
   id: 'bleeding-dic',
   title: 'Bleeding — DIC',
   blocks: [
-    { kind: 'node', variant: 'entry', tone: 'danger', text: '⚡ DIC — DISSEMINATED INTRAVASCULAR COAGULATION', connectAfter: false },
+    { kind: 'node', variant: 'entry', tone: 'danger', text: '⚡ DIC — DISSEMINATED INTRAVASCULAR COAGULATION' },
 
-    // FLAGGED html: the "ALWAYS SECONDARY" banner is a custom 2px-border centred
-    // box (font-weight:800), NOT a standard `banner` strip — kept as html so the
-    // exact box styling is preserved. Includes its own surrounding arrows.
     {
-      kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
-
-    <div style="width:100%;padding:11px 13px;background:rgba(220,38,38,0.12);border:2px solid rgba(220,38,38,0.45);border-radius:10px;text-align:center;">
-      <div style="font-size:11px;font-weight:800;color:var(--tone-danger-fg);letter-spacing:.03em;">DIC IS ALWAYS SECONDARY TO SEVERE UNDERLYING DISEASE</div>
-      <div style="font-size:9px;color:var(--gray);margin-top:3px;">Finding the trigger is the priority — DIC will not resolve without treating the cause</div>
-    </div>
-    <div class="flow-arrow-v">↓</div>`,
+      kind: 'callout',
+      tone: 'danger',
+      center: true,
+      title: 'DIC IS ALWAYS SECONDARY TO SEVERE UNDERLYING DISEASE',
+      html: 'Finding the trigger is the priority — DIC will not resolve without treating the cause',
     },
 
-    { kind: 'node', variant: 'step', text: 'CLINICAL SIGNS', connectAfter: false },
+    { kind: 'node', variant: 'step', text: 'CLINICAL SIGNS' },
 
-    // Two-column Haemorrhagic | Systemic/thrombotic clinical-signs panel. No
-    // typed two-column callout-pair block exists; kept as html (no links).
     {
-      kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
-      <div style="padding:9px 11px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.3);border-radius:9px;">
-        <div style="font-size:9.5px;font-weight:700;color:var(--tone-danger-fg);margin-bottom:5px;">🩸 Haemorrhagic</div>
-        <div style="font-size:9px;color:var(--gray);line-height:1.8;">
-          Petechiae / ecchymoses<br>
-          Epistaxis · haematuria<br>
-          Melaena<br>
-          Cavity bleeding (haemoabdomen · haemothorax)<br>
-          Oozing from venepuncture sites
-        </div>
-      </div>
-      <div style="padding:9px 11px;background:rgba(139,92,246,0.08);border:1px solid rgba(139,92,246,0.3);border-radius:9px;">
-        <div style="font-size:9.5px;font-weight:700;color:var(--tone-violet-fg);margin-bottom:5px;">🫀 Systemic / thrombotic</div>
-        <div style="font-size:9px;color:var(--gray);line-height:1.8;">
-          Collapse · profound weakness<br>
-          Pale / white / grey MMs<br>
-          Tachycardia · weak pulses<br>
-          Hypothermia (severe shock)<br>
-          Acute hindlimb paresis (feline ATE)<br>
-          Dyspnoea (PTE)
-        </div>
-      </div>
-    </div>
-    <div class="flow-arrow-v">↓</div>`,
+      kind: 'callout',
+      tone: 'slate',
+      html: '<strong style="color:var(--tone-danger-fg);">🩸 Haemorrhagic</strong><br>• Petechiae / ecchymoses<br>• Epistaxis · haematuria<br>• Melaena<br>• Cavity bleeding (haemoabdomen · haemothorax)<br>• Oozing from venepuncture sites<br><br><strong style="color:var(--tone-purple-fg);">🫀 Systemic / thrombotic</strong><br>• Collapse · profound weakness<br>• Pale / white / grey MMs<br>• Tachycardia · weak pulses<br>• Hypothermia (severe shock)<br>• Acute hindlimb paresis (feline ATE)<br>• Dyspnoea (PTE)',
     },
 
-    { kind: 'node', variant: 'step', text: 'TOP CAUSES', connectAfter: false },
+    { kind: 'node', variant: 'step', text: 'TOP CAUSES' },
 
-    // Two-column 🐕 Canine | 🐈 Feline causes panel (each with an italic
-    // phenotype footer). No typed equivalent; kept as html (no links).
     {
-      kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
-      <div style="padding:9px 11px;background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.3);border-radius:9px;">
-        <div style="font-size:9.5px;font-weight:700;color:var(--tone-info-fg);margin-bottom:5px;">🐕 Canine</div>
-        <div style="font-size:9px;color:var(--gray);line-height:1.8;">
-          Haemangiosarcoma (splenic / hepatic)<br>
-          Sepsis — pyometra · GDV · peritonitis<br>
-          IMHA<br>
-          Severe pancreatitis<br>
-          Heat stroke<br>
-          Snake envenomation<br>
-          Major trauma
-        </div>
-        <div style="font-size:8px;color:var(--gray);opacity:.7;margin-top:5px;font-style:italic;">Haemorrhagic phenotype · ~78 % survive non-overt · ~38 % overt</div>
-      </div>
-      <div style="padding:9px 11px;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.3);border-radius:9px;">
-        <div style="font-size:9.5px;font-weight:700;color:var(--tone-violet-fg);margin-bottom:5px;">🐈 Feline</div>
-        <div style="font-size:9px;color:var(--gray);line-height:1.8;">
-          FIP<br>
-          Lymphoma<br>
-          Sepsis — pyothorax · urinary sepsis<br>
-          Cytauxzoonosis<br>
-          Severe pancreatitis / triaditis<br>
-          Cardiomyopathy<br>
-          Neoplasia (various)
-        </div>
-        <div style="font-size:8px;color:var(--gray);opacity:.7;margin-top:5px;font-style:italic;">Thrombotic phenotype · minimal external bleeding · ~7 % survival</div>
-      </div>
-    </div>`,
+      kind: 'callout',
+      tone: 'info',
+      title: '🐕 Canine',
+      html: 'Haemorrhagic phenotype · ~78 % survive non-overt · ~38 % overt',
     },
 
-    // Emergency protocol button → renderProtoDetail('PROT-BLEED-DIC'). The
-    // legacy is a custom large clickable banner, not a dxRow/diseaseGrid; kept
-    // as html with the onclick preserved verbatim.
     {
-      kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
-    <div onclick="renderProtoDetail('PROT-BLEED-DIC')" style="cursor:pointer;width:100%;padding:13px 14px;background:rgba(220,38,38,0.15);border:2px solid rgba(220,38,38,0.5);border-radius:11px;text-align:center;">
-      <div style="font-size:12px;font-weight:800;color:var(--tone-danger-fg);letter-spacing:.03em;">⚡ THIS IS AN EMERGENCY</div>
-      <div style="font-size:10px;color:var(--tone-danger-fg);margin-top:4px;font-weight:600;">→ Open DIC Emergency Protocol</div>
-      <div style="font-size:8.5px;color:var(--gray);margin-top:3px;">FFP · heparin · serial monitoring · treat the cause</div>
-    </div>`,
+      kind: 'categoryColumns',
+      cols: 3,
+      connectAfter: false,
+      columns: [
+        { cat: 'Neoplastic', tone: 'violet', tiles: [
+          { label: 'Haemangiosarcoma (splenic / hepatic)' },
+        ]},
+        { cat: 'Sepsis / SIRS', tone: 'danger', tiles: [
+          { label: 'Sepsis — pyometra · GDV · peritonitis' },
+        ]},
+        { cat: 'Immune-mediated', tone: 'purple', tiles: [
+          { label: 'IMHA' },
+        ]},
+        { cat: 'Inflammatory', tone: 'warning', tiles: [
+          { label: 'Severe pancreatitis' },
+        ]},
+        { cat: 'Toxic / environmental', tone: 'orange', tiles: [
+          { label: 'Snake envenomation' },
+          { label: 'Heat stroke' },
+        ]},
+        { cat: 'Trauma', tone: 'slate', tiles: [
+          { label: 'Major trauma' },
+        ]},
+      ],
+    },
+
+    {
+      kind: 'callout',
+      tone: 'violet',
+      gap: 14,
+      title: '🐈 Feline',
+      html: 'Thrombotic phenotype · minimal external bleeding · ~7 % survival',
+    },
+
+    {
+      kind: 'categoryColumns',
+      cols: 3,
+      columns: [
+        { cat: 'Infectious', tone: 'teal', tiles: [
+          { label: 'FIP' },
+          { label: 'Sepsis — pyothorax · urinary sepsis' },
+          { label: 'Cytauxzoonosis' },
+        ]},
+        { cat: 'Neoplastic', tone: 'violet', tiles: [
+          { label: 'Lymphoma' },
+          { label: 'Neoplasia (various)' },
+        ]},
+        { cat: 'Inflammatory', tone: 'warning', tiles: [
+          { label: 'Severe pancreatitis / triaditis' },
+        ]},
+        { cat: 'Cardiac', tone: 'indigo', tiles: [
+          { label: 'Cardiomyopathy' },
+        ]},
+      ],
+    },
+
+    {
+      kind: 'callout',
+      tone: 'danger',
+      center: true,
+      gap: 14,
+      title: '⚡ THIS IS AN EMERGENCY',
+      html: 'FFP · heparin · serial monitoring · treat the cause',
+    },
+
+    {
+      kind: 'dxRow',
+      items: [
+        { label: '⚡ Open DIC Emergency Protocol', link: { to: 'protocol', id: 'PROT-BLEED-DIC' } },
+      ],
     },
 
     { kind: 'disclaimer' },
@@ -421,7 +422,7 @@ const bleedingVasc: FlowPage = {
   id: 'bleeding-vasc',
   title: 'Bleeding — Vasculopathy',
   blocks: [
-    { kind: 'node', variant: 'entry', tone: 'violet', text: '🌐 VASCULOPATHY / VASCULITIS' },
+    { kind: 'node', variant: 'entry', tone: 'violet', text: 'VASCULOPATHY / VASCULITIS' },
 
     {
       // html needed to preserve <em>normal</em> italic
@@ -441,49 +442,49 @@ const bleedingVasc: FlowPage = {
       kind: 'branch',
       columns: [
         {
-          header: '🩸 CUTANEOUS',
+          header: 'CUTANEOUS',
           tone: 'violet',
           sub: 'Skin · paw pads · ear tips',
           blocks: [
             {
               kind: 'endpoints',
               items: [
-                { icon: '🦺', label: 'CRGV / ALABAMA ROT', sublabel: '→ AKI in 1–10 days', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-CRGV' } },
-                { icon: '🩸', label: 'CUTANEOUS VASCULITIS', tone: 'violet', link: { to: 'disease', id: 'DIS-BD-VASC' } },
+                { label: 'CRGV / ALABAMA ROT', sublabel: '→ AKI in 1–10 days', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-CRGV' } },
+                { label: 'CUTANEOUS VASCULITIS', tone: 'violet', link: { to: 'disease', id: 'DIS-BD-VASC' } },
                 { label: 'Lhasa Apso vasculopathy', sublabel: 'ear tips', tone: 'neutral' },
               ],
             },
           ],
         },
         {
-          header: '🦟 INFECTIOUS',
+          header: 'INFECTIOUS',
           tone: 'orange',
           sub: 'Tick-borne · zoonotic · endemic',
           blocks: [
             {
               kind: 'endpoints',
               items: [
-                { icon: '🦟', label: 'EHRLICHIOSIS', sublabel: 'tick-borne', tone: 'orange', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
-                { icon: '🔴', label: 'RMSF', sublabel: 'tick-borne · petechiae', tone: 'danger', link: { to: 'disease', id: 'DIS-INFECT-RMSF' } },
-                { icon: '🌍', label: 'LEISHMANIASIS', sublabel: 'endemic regions', tone: 'green', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
-                { icon: '🦠', label: 'LEPTOSPIROSIS', sublabel: 'zoonotic · renal', tone: 'warning', link: { to: 'disease', id: 'DIS-INFECT-LEPTO' } },
-                { icon: '🐱', label: 'FIP', sublabel: 'cats', tone: 'neutral', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
+                { label: 'EHRLICHIOSIS', sublabel: 'tick-borne', tone: 'orange', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
+                { label: 'RMSF', sublabel: 'tick-borne · petechiae', tone: 'danger', link: { to: 'disease', id: 'DIS-INFECT-RMSF' } },
+                { label: 'LEISHMANIASIS', sublabel: 'endemic regions', tone: 'green', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
+                { label: 'LEPTOSPIROSIS', sublabel: 'zoonotic · renal', tone: 'warning', link: { to: 'disease', id: 'DIS-INFECT-LEPTO' } },
+                { label: 'FIP', sublabel: 'cats', tone: 'neutral', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
               ],
             },
           ],
         },
         {
-          header: '👁 SYSTEMIC / METABOLIC',
+          header: 'SYSTEMIC / METABOLIC',
           tone: 'danger',
           sub: 'Retinal · multi-organ · iatrogenic',
           blocks: [
             {
               kind: 'endpoints',
               items: [
-                { icon: '📈', label: 'HYPERTENSION', sublabel: 'retinal detachment', tone: 'danger', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
-                { icon: '🩸', label: 'HYPERVISCOSITY', sublabel: 'myeloma · globulinaemia', tone: 'violet', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
-                { icon: '💊', label: 'HAC / STEROIDS', sublabel: 'easy bruising', tone: 'warning', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
-                { icon: '🫘', label: 'URAEMIC VASCULOPATHY', sublabel: 'CKD end-stage', tone: 'neutral', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
+                { label: 'HYPERTENSION', sublabel: 'retinal detachment', tone: 'danger', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
+                { label: 'HYPERVISCOSITY', sublabel: 'myeloma · globulinaemia', tone: 'violet', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
+                { label: 'HAC / STEROIDS', sublabel: 'easy bruising', tone: 'warning', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
+                { label: 'URAEMIC VASCULOPATHY', sublabel: 'CKD end-stage', tone: 'neutral', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
               ],
             },
           ],
@@ -494,7 +495,7 @@ const bleedingVasc: FlowPage = {
     {
       kind: 'alert',
       tone: 'danger',
-      title: '⚡ DON\'T MISS — CRGV / ALABAMA ROT',
+      title: 'DON\'T MISS — CRGV / ALABAMA ROT',
       items: [
         '<strong>Skin ulcers on distal limbs + AKI developing 1–10 days later</strong> — mortality &gt;80 % once AKI establishes; act at the skin lesion stage',
         'Baseline <strong>creatinine, platelet count, and urinalysis</strong> at first presentation — warn owner to return urgently for vomiting, lethargy, or inappetence within 14 days',

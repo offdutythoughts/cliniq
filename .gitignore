@@ -16,6 +16,9 @@
 # next.js
 /.next/
 /.next-pw/
+/.next-preview/
+/.next-dev/
+/.next-verify/
 /out/
 
 # playwright (the tests/visual/__screenshots__ baselines ARE committed)
