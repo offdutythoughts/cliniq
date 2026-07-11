@@ -10,7 +10,8 @@
     "test": "vitest run",
     "lint:protocols": "npx tsx scripts/lint-protocol-actions.ts",
     "lint:flows": "npx tsx scripts/lint-flows.ts",
-    "lint:blocks": "npx tsx scripts/lint-disease-blocks.ts"
+    "lint:blocks": "npx tsx scripts/lint-disease-blocks.ts",
+    "lint:lesions": "npx tsx scripts/lint-lesions.ts"
   },
   "dependencies": {
     "@auth/core": "^0.37.4",
