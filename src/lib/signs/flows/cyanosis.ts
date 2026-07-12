@@ -106,17 +106,17 @@ const cyanosisCardiac: FlowPage = {
           cat: 'Congenital Shunt',
           tone: 'violet',
           tiles: [
-            { label: ' REVERSE (R→L) PDA — caudal blue, cranial pink; worse on exercise', link: { to: 'disease', id: 'DIS-CARD-PDA' } },
-            { label: ' TETRALOGY OF FALLOT — VSD + pulmonic stenosis + overriding aorta + RVH', link: { to: 'disease', id: 'DIS-CARD-TOF' } },
-            { label: ' EISENMENGER / VSD-ASD + PHTN — L→R shunt reverses as pulmonary resistance rises', link: { to: 'disease', id: 'DIS-CARD-VSD' } },
+            { label: ' REVERSE (R→L) PDA', link: { to: 'disease', id: 'DIS-CARD-PDA' } },
+            { label: ' TETRALOGY OF FALLOT', link: { to: 'disease', id: 'DIS-CARD-TOF' } },
+            { label: ' EISENMENGER / REVERSE VSD-ASD', link: { to: 'disease', id: 'DIS-CARD-VSD' } },
           ],
         },
         {
           cat: 'Underlying Heart Failure',
           tone: 'danger',
           tiles: [
-            { label: ' MVD (MMVD) → pulmonary oedema', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
-            { label: ' DCM → pulmonary oedema', link: { to: 'disease', id: 'DIS-CARD-DCM' } },
+            { label: ' MMVD', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
+            { label: ' DCM', link: { to: 'disease', id: 'DIS-CARD-DCM' } },
           ],
         },
       ],
@@ -137,7 +137,7 @@ const cyanosisMethb: FlowPage = {
           cat: 'Methaemoglobinaemia',
           tone: 'warning',
           tiles: [
-            { label: ' OXIDANT TOXICOSIS', link: { to: 'protocol', id: 'PROT-TOX-METHB' } },
+            { label: ' OXIDANT TOXICOSIS', link: { to: 'disease', id: 'DIS-TOX-METHB' } },
             { label: ' Hereditary metHb — cytochrome-b5 reductase deficiency, mild, chronic', link: { to: 'disease', id: 'DIS-RESP-METHAEM' } },
           ],
         },
