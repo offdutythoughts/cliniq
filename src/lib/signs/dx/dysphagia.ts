@@ -121,9 +121,9 @@ export const dysphagiaDx: DxApproach = {
       after: [
       { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [
             { label: 'Oesophageal foreign body', link: { to: 'disease', id: 'DIS-GI-OESFB' } },
-            { label: 'Oesophagitis', link: { to: 'disease', id: 'DIS-GI-ESOPHAGITIS' } },
-            { label: 'Oesophageal stricture', link: { to: 'disease', id: 'DIS-GI-STRICTURE' } },
-            { label: 'Vascular ring anomaly (PRAA)', link: { to: 'disease', id: 'DIS-GI-PRAA' } },
+            { label: 'Oesophagitis', link: { to: 'disease', id: 'DIS-OES-ITIS' } },
+            { label: 'Oesophageal stricture', link: { to: 'disease', id: 'DIS-OES-STRICT' } },
+            { label: 'Vascular ring anomaly (PRAA)', link: { to: 'disease', id: 'DIS-OES-VRA' } },
             { label: 'Salivary mucocele / sialocele', link: { to: 'disease', id: 'DIS-GI-SIALOCELE' } },
             { label: 'Dental / oronasal disease', link: { to: 'disease', id: 'DIS-DENT-ORONASAL' } },
             { label: 'Myasthenia gravis', link: { to: 'disease', id: 'DIS-WK-MG' } },

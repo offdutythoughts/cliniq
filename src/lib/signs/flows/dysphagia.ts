@@ -135,8 +135,8 @@ const dysphagiaOeso: FlowPage = {
           tone: 'orange',
           tiles: [
             { label: ' OESOPHAGEAL FOREIGN BODY', link: { to: 'disease', id: 'DIS-GI-OESFB' } },
-            { label: ' STRICTURE', link: { to: 'disease', id: 'DIS-GI-STRICTURE' } },
-            { label: ' VASCULAR RING ANOMALY (PRAA)', link: { to: 'disease', id: 'DIS-GI-PRAA' } },
+            { label: ' STRICTURE', link: { to: 'disease', id: 'DIS-OES-STRICT' } },
+            { label: ' VASCULAR RING ANOMALY (PRAA)', link: { to: 'disease', id: 'DIS-OES-VRA' } },
           ],
         },
         {
@@ -144,7 +144,7 @@ const dysphagiaOeso: FlowPage = {
           tone: 'teal',
           tiles: [
             { label: ' MEGAOESOPHAGUS', link: { to: 'disease', id: 'DIS-OES-MEGA' } },
-            { label: ' OESOPHAGITIS', link: { to: 'disease', id: 'DIS-GI-ESOPHAGITIS' } },
+            { label: ' OESOPHAGITIS', link: { to: 'disease', id: 'DIS-OES-ITIS' } },
             { label: ' MYASTHENIA GRAVIS', link: { to: 'disease', id: 'DIS-WK-MG' } },
             { label: ' DYSAUTONOMIA', link: { to: 'disease', id: 'DIS-NEU-DYSAUTO' } },
           ],
