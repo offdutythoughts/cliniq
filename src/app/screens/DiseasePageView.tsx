@@ -17,6 +17,7 @@ import { TAG_ROW, BODY_TEXT, PAGE_TITLE, FIELD_LABEL, SUB_LABEL } from './styles
 
 const TOP_ALERT = s('background:rgba(var(--tone-danger),0.18);border:1.5px solid rgba(var(--tone-danger),0.5);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:var(--fs-body);font-weight:700;color:var(--tone-danger-fg);letter-spacing:.01em;')
 const SIG_VALUE = s('font-size:var(--fs-body);color:var(--gray);line-height:var(--lh-body);margin-bottom:8px;')
+const EM_ALERT_HEAD = s('font-weight:700;margin-bottom:6px;')
 
 const PEARL_LABEL = s('font-weight:700;margin-bottom:6px;')
 const PEARL_ITEM = s('display:flex;align-items:baseline;gap:6px;margin-bottom:4px;')
@@ -82,7 +83,13 @@ export function DiseasePageView({ id }: { id: string }) {
       <div style={TAG_ROW}><SpTag sp={d.sp} /></div>
 
       {str(d.topAlert) && <div style={TOP_ALERT}>🚨 {str(d.topAlert)}</div>}
-      {str(d.severe) && <div className="em-alert">⚠️ {str(d.severe)}</div>}
+      {str(d.severe) && (
+        <div className="em-alert">
+          {pip(str(d.severe))
+            ? <><div style={EM_ALERT_HEAD}>⚠️ Severe / life-threatening</div><Bul text={str(d.severe)} /></>
+            : <>⚠️ {str(d.severe)}</>}
+        </div>
+      )}
 
       {str(d.etiology) && <Card title="Etiology"><Bul text={str(d.etiology)} /></Card>}
 
