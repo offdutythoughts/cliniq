@@ -28,7 +28,7 @@ function fail(msg: string) {
   errors++
 }
 
-for (const l of DB.lesion_type as Lesion[]) {
+for (const l of DB.lesion_type as unknown as Lesion[]) {
   const redirects = !!(l.directDis && l.dis)
   if (redirects) continue // goes straight to the disease page — no intermediate leaf rendered
 
@@ -51,5 +51,5 @@ if (errors > 0) {
   console.error(`\n${errors} lesion lint error(s) found.`)
   process.exit(1)
 } else {
-  console.log(`✓ All lesion sub-type pages pass lint (${(DB.lesion_type as Lesion[]).length} lesions checked).`)
+  console.log(`✓ All lesion sub-type pages pass lint (${(DB.lesion_type as unknown as Lesion[]).length} lesions checked).`)
 }
