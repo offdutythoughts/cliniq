@@ -65,6 +65,9 @@ export const diarrhoeaFlow: FlowPage = {
               <div class="flow-endpoint pleural" onclick="renderDiseasePage('DIS-GI-AHDS')" style="font-size:9px;">
                 HGE / AHDS
               </div>
+              <div class="flow-endpoint pleural" onclick="renderDiseasePage('DIS-GI-FPV')" style="font-size:9px;">
+                FPV (kitten) 🐱
+              </div>
             </div>
           </div>
           <div>
