@@ -42,7 +42,7 @@ export function SubTypeDetailView({ id }: { id: string }) {
 
   return (
     <>
-      {isEM && <div className="em-alert">⚠️ EMERGENCY — initiate stabilisation before full diagnostic workup</div>}
+      {isEM && <div className="em-alert">🚨 EMERGENCY — initiate stabilisation before full diagnostic workup</div>}
       <div style={TAG_ROW}><UrgTag urg={l.urg} /><SpTag sp={l.sp} /><span className="tag tag-sp-all">{l.cat}</span></div>
 
       {proto && (

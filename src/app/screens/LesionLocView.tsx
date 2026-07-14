@@ -59,7 +59,13 @@ const cHue = (cat: string) => HUE[CT[cat] ?? DEF_TONE]
 const cBg  = (cat: string) => `rgba(${cHue(cat).rgb},var(--tile-bg-a))`
 const cBd  = (cat: string) => `rgba(${cHue(cat).rgb},var(--tile-bd-a))`
 const cTx  = (cat: string) => cHue(cat).color
-const isEM = (u?: string) => !!u && u.toUpperCase() === 'EMERGENCY'
+function isEM(urgency?: string): boolean {
+  return !!urgency && urgency.toUpperCase() === 'EMERGENCY'
+}
+
+function isHigh(urgency?: string): boolean {
+  return !!urgency && urgency.toUpperCase() === 'HIGH'
+}
 
 // Location → diagnostic-approach sign id (the bottom "Diagnostic Approach" card).
 const DX_MAP: Record<string, string> = {
@@ -88,7 +94,8 @@ const DX_MAP: Record<string, string> = {
   'LOC-BD-PRIM': 'bleeding', 'LOC-BD-SEC': 'bleeding', 'LOC-BD-MIX': 'bleeding', 'LOC-BD-VASC': 'bleeding',
 }
 
-const EM_BADGE = s('font-size:8px;padding:2px 5px;')
+const URG_BADGE = s('font-size:8px;padding:2px 5px;')
+const PROTOCOL_BADGE = s('font-size:8px;padding:2px 5px;cursor:pointer;font-family:inherit;line-height:inherit;')
 
 export function LesionLocView({ loc, name, filter }: { loc: string; name: string; filter?: 'acute' | 'chronic' }) {
   const nav = useNav()
@@ -140,15 +147,35 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
           <div style={s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;justify-content:center;align-items:start;`)}>
             {cats.map(cat => (
               <div key={cat} style={s('display:flex;flex-direction:column;gap:4px;')}>
-                {groups.get(cat)!.map(l => (
-                  <div key={l.id} role="button"
-                    style={s(`border-radius:8px;padding:${cardPadding};font-size:${cardFontSize}px;font-weight:600;text-align:center;border:1.5px solid ${cBd(cat)};background:${cBg(cat)};color:${cTx(cat)};cursor:pointer;transition:all .2s;line-height:1.3;word-break:break-word;`)}
-                    onClick={() => nav.navigate({ kind: 'subTypeDetail', id: l.id })}
-                    onMouseOver={e => { e.currentTarget.style.filter = 'brightness(1.2)' }}
-                    onMouseOut={e => { e.currentTarget.style.filter = '' }}>
-                    {l.sub}{isEM(l.urg) && <>{' '}<span className="tag tag-em" style={EM_BADGE}>⚠️</span></>}
-                  </div>
-                ))}
+                {groups.get(cat)!.map(l => {
+                  const protocol = typeof l.proto === 'string' ? DB.protocols.find(p => p.id === l.proto) : undefined
+                  return (
+                    <div key={l.id} role="button"
+                      style={s(`border-radius:8px;padding:${cardPadding};font-size:${cardFontSize}px;font-weight:600;text-align:center;border:1.5px solid ${cBd(cat)};background:${cBg(cat)};color:${cTx(cat)};cursor:pointer;transition:all .2s;line-height:1.3;word-break:break-word;`)}
+                      onClick={() => nav.navigate({ kind: 'subTypeDetail', id: l.id })}
+                      onMouseOver={e => { e.currentTarget.style.filter = 'brightness(1.2)' }}
+                      onMouseOut={e => { e.currentTarget.style.filter = '' }}>
+                      {l.sub}
+                      {isEM(l.urg) && protocol ? (
+                        <>{' '}<button
+                          type="button"
+                          className="tag tag-em"
+                          style={PROTOCOL_BADGE}
+                          aria-label={`Open emergency protocol: ${protocol.name}`}
+                          title={`Open emergency protocol: ${protocol.name}`}
+                          onClick={event => {
+                            event.stopPropagation()
+                            nav.navigate({ kind: 'protocol', id: protocol.id })
+                          }}
+                        >🚨</button></>
+                      ) : isEM(l.urg) ? (
+                        <>{' '}<span className="tag tag-em" style={URG_BADGE} title="Emergency">🚨</span></>
+                      ) : isHigh(l.urg) ? (
+                        <>{' '}<span className="tag tag-hi" style={URG_BADGE} title="High urgency">⚠️</span></>
+                      ) : null}
+                    </div>
+                  )
+                })}
               </div>
             ))}
           </div>

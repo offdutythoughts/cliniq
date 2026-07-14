@@ -11,8 +11,8 @@ export function SpTag({ sp }: { sp?: string }) {
 export function UrgTag({ urg }: { urg?: string }) {
   if (!urg) return null
   const u = urg.toUpperCase()
-  if (u === 'EMERGENCY') return <span className="tag tag-em">⚠️ EMERGENCY</span>
-  if (u === 'HIGH') return <span className="tag tag-hi">↑ High</span>
+  if (u === 'EMERGENCY') return <span className="tag tag-em">🚨 Emergency</span>
+  if (u === 'HIGH') return <span className="tag tag-hi">⚠️ High</span>
   if (urg === 'Moderate' || urg === 'Moderate–High' || urg === 'Low–Moderate') return <span className="tag tag-mo">Moderate</span>
   return <span className="tag tag-lo">Low</span>
 }

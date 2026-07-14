@@ -145,7 +145,7 @@ function ProtoCard({ p }: { p: ProtocolRow }) {
         <div style={FLEX1}>
           <div className="card-title">{protoIcon(p)} {p.name}</div>
           <div className="card-sub" style={s('margin-top:3px;')}>
-            <span className="tag tag-em">{p.priority}</span>
+            <span className="tag tag-em">🚨 {p.priority}</span>
             <span style={s('font-size:11px;color:var(--gray2);margin-left:6px;')}>{p.sp}</span>
           </div>
         </div>
@@ -204,9 +204,9 @@ function FontSizePicker() {
   const [size, setSize] = useState<FontSize>(getInitialFontSize)
   const applySize = (v: FontSize) => {
     if (v === 'md') {
-      delete document.documentElement.dataset.fontSize
+      document.documentElement.removeAttribute('data-font-size')
     } else {
-      document.documentElement.dataset.fontSize = v
+      document.documentElement.setAttribute('data-font-size', v)
     }
     try { localStorage.setItem('cliniq-font-size', v) } catch { /* private mode */ }
     setSize(v)

@@ -29,6 +29,7 @@ const ST_SECTION_LABEL = s('grid-column:1/-1;padding:4px 0 2px;font-size:8px;fon
 const ST_ROW_DIVIDER   = s('grid-column:1/-1;height:1px;background:rgba(var(--slate-muted),.2);')
 const ST_BLOCK_TITLE   = s('font-size:11px;font-weight:700;margin-bottom:6px;')
 const ST_COL_FLEX      = s('display:flex;flex-direction:column;gap:4px;')
+const ST_UNLINKED_TILE = 'background:var(--card);border:1.5px solid var(--border);color:var(--gray2);opacity:.72;filter:saturate(.2);cursor:default;'
 
 // ── Arrow / spine logic (joinBlocks) ─────────────────────────────────────────
 const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout', 'fnHeader', 'cardGrid', 'categoryGrid', 'categoryColumns', 'decisionTree'])
@@ -170,8 +171,8 @@ function CardSectionBlock({ b, onNav }: { b: Extract<Block, { kind: 'cardSection
       <div style={{ ...ST_BLOCK_TITLE, color: TITLE[b.tone] ?? h.color }}><Raw html={b.title} onNav={onNav} /></div>
       <div style={s('display:flex;flex-direction:column;gap:5px;')}>
         {b.cards.map((c, i) => (
-          <div key={i} style={s(`background:rgba(${h.rgb},0.08);border-radius:7px;padding:7px 10px;${c.link ? 'cursor:pointer;' : ''}`)}
-            {...(c.link ? { role: 'button', onClick: () => onNav(linkToView(c.link!)) } : {})}>
+          <div key={i} style={s(`background:rgba(${h.rgb},0.08);border-radius:7px;padding:7px 10px;${c.link ? 'cursor:pointer;' : ST_UNLINKED_TILE}`)}
+            {...(c.link ? { role: 'button', onClick: () => onNav(linkToView(c.link!)) } : { 'aria-disabled': true, title: 'No linked page available' })}>
             <div style={s(`font-size:10.5px;font-weight:700;color:${h.color};`)}><Raw html={c.title} onNav={onNav} />{c.tag && <>{' '}<span style={s('font-size:9px;font-weight:400;opacity:.8;')}><Raw html={c.tag} onNav={onNav} /></span></>}</div>
             <div style={s(`font-size:9px;color:${h.color};opacity:.8;line-height:1.4;`)}><Raw html={c.desc} onNav={onNav} /></div>
           </div>
@@ -228,7 +229,9 @@ function CardGridBlock({ perRow, tiles, onNav }: { perRow: number; tiles: CardTi
       {rows.map((group, ri) => (
         <div key={ri} className="fn-row" style={rowStyle}>
           {group.map((t, i) => (
-            <div key={i} className={`fn-ep fn-ep-${t.anat}`} {...(t.link ? { role: 'button', onClick: () => onNav(linkToView(t.link!)) } : {})}>
+            <div key={i} className={`fn-ep fn-ep-${t.anat}`}
+              style={t.link ? undefined : s(ST_UNLINKED_TILE)}
+              {...(t.link ? { role: 'button', onClick: () => onNav(linkToView(t.link!)) } : { 'aria-disabled': true, title: 'No linked page available' })}>
               {t.sys && <div className="ep-sys">{t.sys}</div>}
               <div className="ep-loc">{t.loc}</div>
               {t.badge && <div className="ep-badge">{t.badge}</div>}
@@ -276,8 +279,8 @@ function CategoryGridBlock({ columns, onNav }: { columns: CategoryColumn[]; onNa
                   )
                 }
                 return (
-                  <div key={j} style={s(`border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;${toneBox(h.rgb,h.color).all}${t.link ? 'cursor:pointer;' : 'cursor:default;'}line-height:1.3;word-break:break-word;`)}
-                    {...(t.link ? { role: 'button', onClick: () => onNav(linkToView(t.link!)), onMouseOver: (ev: React.MouseEvent<HTMLDivElement>) => { ev.currentTarget.style.filter = 'brightness(1.2)' }, onMouseOut: (ev: React.MouseEvent<HTMLDivElement>) => { ev.currentTarget.style.filter = '' } } : {})}>
+                  <div key={j} style={s(`border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;${t.link ? `${toneBox(h.rgb,h.color).all}cursor:pointer;` : ST_UNLINKED_TILE}line-height:1.3;word-break:break-word;`)}
+                    {...(t.link ? { role: 'button', onClick: () => onNav(linkToView(t.link!)), onMouseOver: (ev: React.MouseEvent<HTMLDivElement>) => { ev.currentTarget.style.filter = 'brightness(1.2)' }, onMouseOut: (ev: React.MouseEvent<HTMLDivElement>) => { ev.currentTarget.style.filter = '' } } : { 'aria-disabled': true, title: 'No linked page available' })}>
                     {t.label}
                   </div>
                 )
@@ -334,8 +337,8 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
                 )
               }
               return (
-                <div key={j} style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:${st.col};text-align:center;line-height:1.35;${t.link ? 'cursor:pointer;' : ''}`)}
-                  {...(t.link ? { role: 'button', onClick: () => onNav(linkToView(t.link!)) } : {})}>
+                <div key={j} style={s(`${t.link ? `background:${st.bg};border:1.5px solid ${st.border};color:${st.col};cursor:pointer;` : ST_UNLINKED_TILE}border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;text-align:center;line-height:1.35;`)}
+                  {...(t.link ? { role: 'button', onClick: () => onNav(linkToView(t.link!)) } : { 'aria-disabled': true, title: 'No linked page available' })}>
                   {t.label}
                 </div>
               )

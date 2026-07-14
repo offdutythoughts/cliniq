@@ -4,10 +4,13 @@
 // the shared <Bul> (with @-link navigation); plain fields via <Txt>.
 
 import { DB } from '../../data/db'
+import type { DiseaseRow, ProtocolRow } from '../../data/db'
+import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s } from './style'
 import { SpTag } from './tags'
-import { Bul, Card, Linkify, str } from './markup'
+import { Bul, Card, Linkify, NavCard, str } from './markup'
 import { splitPearl } from './pearlSplit'
+import { formatHarvardCitations, referencesForDisease } from './diseaseReferences'
 import { InjuryGradingTable } from './InjuryGradingTable'
 import { PhenylephrineLocaliseTable } from './PhenylephrineLocaliseTable'
 import { IrisCkdStagingTable } from './IrisCkdStagingTable'
@@ -21,6 +24,9 @@ const SIG_VALUE = s('font-size:var(--fs-body);color:var(--gray);line-height:var(
 const PEARL_LABEL = s('font-weight:700;margin-bottom:6px;')
 const PEARL_ITEM = s('display:flex;align-items:baseline;gap:6px;margin-bottom:4px;')
 const PEARL_DOT = s('flex-shrink:0;opacity:.7;')
+const REFERENCES = s('margin-top:18px;padding-top:12px;border-top:1px solid var(--border);color:var(--gray2);font-size:var(--fs-label);line-height:1.55;')
+const REFERENCES_TITLE = s('font-size:var(--fs-label);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;')
+const REFERENCE_ITEM = s('margin-left:18px;padding-left:2px;margin-bottom:4px;')
 
 const pip = (v: unknown): boolean => typeof v === 'string' && v.includes('|')
 function Txt({ text }: { text: string }) {
@@ -69,74 +75,128 @@ function ConfBody({ text }: { text: string }) {
   )
 }
 
+function diseaseProtocols(disease: DiseaseRow): ProtocolRow[] {
+  const ids = new Set<string>()
+  for (const lesion of DB.lesion_type) {
+    if (lesion.dis === disease.id && typeof lesion.proto === 'string' && lesion.proto) ids.add(lesion.proto)
+  }
+  for (const value of Object.values(disease)) {
+    if (typeof value !== 'string') continue
+    for (const match of value.matchAll(/@(PROT-[A-Z0-9-]+)/g)) ids.add(match[1])
+  }
+  return DB.protocols.filter(protocol => ids.has(protocol.id))
+}
+
+function isEmergencyDisease(disease: DiseaseRow, topAlert: string): boolean {
+  return /\bemergency\b/i.test(topAlert)
+    || DB.lesion_type.some(lesion => lesion.dis === disease.id && lesion.urg.toUpperCase() === 'EMERGENCY')
+}
+
+function stripAlertPrefix(text: string): string {
+  return text
+    .replace(/^[⚠🚨]\uFE0F?\s*/u, '')
+    .replace(/^EMERGENCY\s*[:—-]?\s*/i, '')
+}
+
+function References({ disease }: { disease: DiseaseRow }) {
+  const references = referencesForDisease({ disease, lesions: DB.lesion_type })
+  return (
+    <section aria-label="References" style={REFERENCES}>
+      <div style={REFERENCES_TITLE}>References</div>
+      <ol>
+        {references.map(reference => <li key={reference.id} style={REFERENCE_ITEM}>{reference.text}</li>)}
+      </ol>
+    </section>
+  )
+}
+
 export function DiseasePageView({ id }: { id: string }) {
+  const nav = useNav()
   const d = DB.disease_page.find(x => x.id === id)
   if (!d) return <NotFound what="Disease page" />
 
-  const breed = str(d.breed)
-  const age = str(d.age)
+  function cite(value: unknown): string {
+    return formatHarvardCitations(str(value))
+  }
+  const breed = cite(d.breed)
+  const age = cite(d.age)
+  const topAlert = cite(d.topAlert)
+  const emergency = isEmergencyDisease(d, topAlert)
+  const protocols = diseaseProtocols(d)
 
   return (
     <>
       <div style={PAGE_TITLE}>{d.name}</div>
       <div style={TAG_ROW}><SpTag sp={d.sp} /></div>
 
-      {str(d.topAlert) && <div style={TOP_ALERT}>🚨 {str(d.topAlert)}</div>}
-      {str(d.severe) && <div className="em-alert">⚠️ {str(d.severe)}</div>}
+      {topAlert && <div style={TOP_ALERT}>{emergency ? '🚨 Emergency: ' : '⚠️ '}{stripAlertPrefix(topAlert)}</div>}
+      {emergency && !topAlert && <div style={TOP_ALERT}>🚨 Emergency — initiate stabilisation before the full diagnostic workup.</div>}
+      {cite(d.severe) && <div className="em-alert">⚠️ {cite(d.severe)}</div>}
 
-      {str(d.etiology) && <Card title="Etiology"><Bul text={str(d.etiology)} /></Card>}
+      {protocols.map(protocol => (
+        <NavCard
+          key={protocol.id}
+          title={`${emergency ? '🚨 Emergency' : '⚡'} protocol: ${protocol.name}`}
+          sub="Open step-by-step protocol"
+          onClick={() => nav.navigate({ kind: 'protocol', id: protocol.id })}
+          style={{ marginBottom: 14 }}
+        />
+      ))}
+
+      {cite(d.etiology) && <Card title="Etiology"><Bul text={cite(d.etiology)} /></Card>}
 
       <Card title="Signalment">
         <div style={FIELD_LABEL}>Breed</div>
         <div style={SIG_VALUE}>{pip(breed) ? <Bul text={breed} /> : breed}</div>
         <div style={FIELD_LABEL}>Age</div>
         <div style={SIG_VALUE}>{pip(age) ? <Bul text={age} /> : age}</div>
-        {str(d.sex) && (
+        {cite(d.sex) && (
           <>
             <div style={FIELD_LABEL}>Sex</div>
-            <div style={BODY_TEXT}>{str(d.sex)}</div>
+            <div style={BODY_TEXT}>{cite(d.sex)}</div>
           </>
         )}
       </Card>
 
-      {str(d.risk) && <Card title="Risk Factors"><Bul text={str(d.risk)} /></Card>}
+      {cite(d.risk) && <Card title="Risk Factors"><Bul text={cite(d.risk)} /></Card>}
 
-      <Card title="Pathophysiology"><Body text={str(d.path)} /></Card>
+      <Card title="Pathophysiology"><Body text={cite(d.path)} /></Card>
 
       <Card title="Clinical Signs">
-        <Body text={str(d.signs)} />
+        <Body text={cite(d.signs)} />
         {d.showGradingTable === true && <InjuryGradingTable />}
       </Card>
 
       <Card title="Diagnostic Investigation">
-        <ConfBody text={str(d.conf)} />
-        {str(d.supp) && (
+        <ConfBody text={cite(d.conf)} />
+        {cite(d.supp) && (
           <>
             <div style={SUB_LABEL}>Supportive Diagnostics</div>
-            <Body text={str(d.supp)} />
+            <Body text={cite(d.supp)} />
           </>
         )}
       </Card>
 
       <Card title="Treatment">
         <div style={FIELD_LABEL}>First-line</div>
-        <Body text={str(d.tx1)} />
-        {str(d.tx2) && (
+        <Body text={cite(d.tx1)} />
+        {cite(d.tx2) && (
           <>
             <div style={SUB_LABEL}>Second-line / Alternatives</div>
-            <Body text={str(d.tx2)} />
+            <Body text={cite(d.tx2)} />
           </>
         )}
       </Card>
 
-      {str(d.outpatient) && <Card title="Outpatient Protocol"><Body text={str(d.outpatient)} /></Card>}
+      {cite(d.outpatient) && <Card title="Outpatient Protocol"><Body text={cite(d.outpatient)} /></Card>}
 
-      <Card title="Monitoring"><Body text={str(d.monitor)} /></Card>
-      <Card title="Prognosis"><Body text={str(d.prog)} /></Card>
+      <Card title="Monitoring"><Body text={cite(d.monitor)} /></Card>
+      <Card title="Prognosis"><Body text={cite(d.prog)} /></Card>
 
-      {str(d.ddx) && <Card title="Differential Diagnosis"><Bul text={str(d.ddx)} /></Card>}
+      {cite(d.ddx) && <Card title="Differential Diagnosis"><Bul text={cite(d.ddx)} /></Card>}
 
-      <Pearl text={str(d.pearl)} />
+      <Pearl text={cite(d.pearl)} />
+      <References disease={d} />
       <div className="disclaimer">For qualified veterinary professionals only.</div>
     </>
   )

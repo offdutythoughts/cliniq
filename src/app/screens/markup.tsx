@@ -4,6 +4,7 @@
 // detail screens. `@DIS-…`/`@PROT-…` tokens become real React navigation.
 
 import { type CSSProperties, type ReactNode } from 'react'
+import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s } from './style'
 import { parseBlocks } from './blocks'
@@ -21,10 +22,20 @@ export function Card({ title, children }: { title: string; children: ReactNode }
 }
 
 const LINK = s('color:var(--teal-light);text-decoration:underline;cursor:pointer;')
+const UNAVAILABLE_LINK = s('color:var(--gray2);background:var(--card2);border:1px solid var(--border);border-radius:4px;padding:1px 4px;cursor:default;')
 
 function LinkSpan({ id, label }: { id: string; label: string }) {
   const nav = useNav()
-  const go = () => nav.navigate(id.startsWith('PROT-') ? { kind: 'protocol', id } : { kind: 'disease', id })
+  const isProtocol = id.startsWith('PROT-')
+  const exists = isProtocol
+    ? DB.protocols.some(protocol => protocol.id === id)
+    : DB.disease_page.some(disease => disease.id === id)
+  if (!exists) {
+    return <span style={UNAVAILABLE_LINK} aria-disabled="true" title="No linked page available">{label}</span>
+  }
+  function go(): void {
+    nav.navigate(isProtocol ? { kind: 'protocol', id } : { kind: 'disease', id })
+  }
   return <span style={LINK} role="button" onClick={go}>{label}</span>
 }
 
