@@ -1,28 +1,80 @@
 'use client'
 import { useState, useEffect } from 'react'
+import { useMutation, useQuery } from 'convex/react'
+import { api } from '../../convex/_generated/api'
 import { HOW_TO_ITEMS } from '../app/screens/howToItems'
 import { styleStringToObject as s } from '../app/screens/style'
 import { useTutorial } from '../app/tutorial/TutorialContext'
 
 const STORAGE_KEY = 'cliniq-onboarding-seen'
 
+// Convex mode persists "seen" per user; the standalone local build has no auth
+// so it falls back to localStorage only.
+const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
+
+function readLocalSeen(): boolean {
+  try { return Boolean(localStorage.getItem(STORAGE_KEY)) } catch { return false }
+}
+function writeLocalSeen() {
+  try { localStorage.setItem(STORAGE_KEY, '1') } catch { /* private mode */ }
+}
+
 export function OnboardingModal() {
+  return hasConvex ? <OnboardingConvex /> : <OnboardingLocal />
+}
+
+// Standalone build (no backend): device-local persistence only.
+function OnboardingLocal() {
   const [visible, setVisible] = useState(false)
-  const { start: startTutorial } = useTutorial()
 
   useEffect(() => {
-    try {
-      if (!localStorage.getItem(STORAGE_KEY)) setVisible(true)
-    } catch { /* private mode */ }
+    if (!readLocalSeen()) setVisible(true)
   }, [])
 
   const dismiss = () => {
-    try { localStorage.setItem(STORAGE_KEY, '1') } catch { /* private mode */ }
+    writeLocalSeen()
     setVisible(false)
   }
 
+  return <OnboardingSheet visible={visible} onDismiss={dismiss} />
+}
+
+// Convex build: the welcome sheet is gated on a server-side per-user flag so it
+// only ever shows to genuinely new accounts — and stays dismissed across
+// re-logins / devices even when mobile Safari evicts localStorage.
+function OnboardingConvex() {
+  const status = useQuery(api.onboarding.status)
+  const markSeen = useMutation(api.onboarding.markSeen)
+  const [dismissed, setDismissed] = useState(false)
+
+  // Migrate legacy users who already dismissed on this device: record it
+  // server-side so we never re-prompt them, without showing the sheet.
+  useEffect(() => {
+    if (status?.authenticated && !status.seen && readLocalSeen()) {
+      void markSeen()
+    }
+  }, [status, markSeen])
+
+  const dismiss = () => {
+    setDismissed(true)
+    writeLocalSeen()
+    void markSeen()
+  }
+
+  const visible =
+    !dismissed &&
+    status?.authenticated === true &&
+    status.seen === false &&
+    !readLocalSeen()
+
+  return <OnboardingSheet visible={visible} onDismiss={dismiss} />
+}
+
+function OnboardingSheet({ visible, onDismiss }: { visible: boolean; onDismiss: () => void }) {
+  const { start: startTutorial } = useTutorial()
+
   const startTour = () => {
-    dismiss()
+    onDismiss()
     startTutorial()
   }
 
@@ -31,7 +83,7 @@ export function OnboardingModal() {
   return (
     <div
       style={s('position:fixed;inset:0;z-index:9999;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,0.6);')}
-      onClick={dismiss}
+      onClick={onDismiss}
     >
       <div
         style={s('background:var(--navy2);border:1px solid var(--border);border-radius:20px 20px 0 0;width:100%;max-width:480px;max-height:90dvh;display:flex;flex-direction:column;overflow:hidden;')}
@@ -69,7 +121,7 @@ export function OnboardingModal() {
             Take the interactive tour
           </button>
           <button
-            onClick={dismiss}
+            onClick={onDismiss}
             style={s('width:100%;padding:12px;background:transparent;color:var(--gray);border:none;border-radius:12px;font-size:13px;font-weight:600;cursor:pointer;margin-top:6px;')}
           >
             Skip for now
