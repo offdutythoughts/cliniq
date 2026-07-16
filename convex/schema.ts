@@ -20,4 +20,12 @@ export default defineSchema({
     html: v.string(),
     savedAt: v.number(),
   }).index("by_user_and_page", ["userId", "pageKey"]),
+  // One row per user once they've seen the onboarding welcome/tour. Server-side
+  // (rather than localStorage) so the "new user only" popup stays dismissed
+  // across re-logins and devices — mobile Safari evicts localStorage, which made
+  // the welcome sheet reappear at every login.
+  onboarding: defineTable({
+    userId: v.id("users"),
+    seenAt: v.number(),
+  }).index("by_user", ["userId"]),
 });

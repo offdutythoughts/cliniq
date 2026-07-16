@@ -58,7 +58,7 @@ interface Rect { top: number; left: number; width: number; height: number }
 const PAD = 10  // spotlight padding around target
 
 export function TutorialOverlay() {
-  const { step, next, skip, total } = useTutorial()
+  const { step, next, back, skip, total } = useTutorial()
   const nav = useNav()
   const [rect, setRect] = useState<Rect | null>(null)
   const prevStepRef = useRef(-1)
@@ -197,12 +197,22 @@ export function TutorialOverlay() {
           >
             Skip tour
           </button>
-          <button
-            onClick={next}
-            style={s('padding:9px 20px;background:var(--teal);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;')}
-          >
-            {step === total - 1 ? 'Done ✓' : 'Next →'}
-          </button>
+          <div style={s('display:flex;align-items:center;gap:8px;')}>
+            {step > 0 && (
+              <button
+                onClick={back}
+                style={s('padding:9px 16px;background:transparent;color:var(--gray);border:1px solid var(--border2);border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;')}
+              >
+                ← Back
+              </button>
+            )}
+            <button
+              onClick={next}
+              style={s('padding:9px 20px;background:var(--teal);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;')}
+            >
+              {step === total - 1 ? 'Done ✓' : 'Next →'}
+            </button>
+          </div>
         </div>
       </div>
     </>

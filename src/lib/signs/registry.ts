@@ -41,7 +41,7 @@ export const SIGNS: SignEntry[] = [
     keywords: ['unsteady', 'wobbly', 'stumbling', 'incoordination', 'drunk walk', 'cerebellar', 'proprioceptive', 'spinal ataxia', 'knuckling', 'crossing legs', 'wide-based stance'] },
   { id: 'bleeding', icon: '🔴', title: 'Bleeding / Petechiae / Ecchymoses', sub: 'Primary vs secondary haemostasis · DIC · vasculopathy', flowId: 'bleeding',
     keywords: ['bruising', 'bruises', 'petechiae', 'ecchymoses', 'spontaneous bleeding', 'coagulopathy', 'DIC', 'thrombocytopenia', 'low platelets', 'haemorrhage', 'hemorrhage', 'clotting', 'coagulation', 'von Willebrand', 'rodenticide', 'rat poison', 'anticoagulant'] },
-  { id: 'blind-eye', icon: '⚫', title: 'Blind Eye / Acute Vision Loss', sub: 'Visual pathway localisation · menace · dazzle · PLR · chromatic PLR · ERG', flowId: 'blind-eye',
+  { id: 'blind-eye', icon: '⚫', title: 'Blind Eye / Vision Loss', sub: 'Visual pathway localisation · menace · dazzle · PLR · chromatic PLR · ERG', flowId: 'blind-eye',
     keywords: ['blind', 'blindness', 'vision loss', 'can\'t see', 'bumping into things', 'SARDS', 'retinal detachment', 'optic nerve', 'cortical blindness', 'glaucoma', 'sudden blindness', 'menace response', 'dazzle reflex'] },
   { id: 'constipation', icon: '💩', title: 'Constipation / Tenesmus', sub: 'Obstructive · pelvic · neuromuscular/metabolic · megacolon', flowId: 'constipation',
     keywords: ['can\'t poo', 'straining to defecate', 'no bowel movement', 'obstipation', 'megacolon', 'pelvic canal', 'perineal hernia', 'hard faeces', 'hard stools', 'tenesmus', 'dystocia', 'rectal'] },

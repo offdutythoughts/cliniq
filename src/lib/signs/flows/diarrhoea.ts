@@ -58,8 +58,16 @@ export const diarrhoeaFlow: FlowPage = {
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
           <div>
             <div style="font-size:9px;color:var(--tone-danger-fg);text-align:center;margin-bottom:2px;">YES — severe</div>
-            <div class="flow-endpoint pleural" onclick="goLesionTab('LOC-DI-SI','Small intestine')" style="font-size:9px;">
-              Parvovirus / HGE
+            <div style="display:flex;flex-direction:column;gap:4px;">
+              <div class="flow-endpoint pleural" onclick="renderDiseasePage('DIS-GI-PARVO')" style="font-size:9px;">
+                Parvovirus
+              </div>
+              <div class="flow-endpoint pleural" onclick="renderDiseasePage('DIS-GI-AHDS')" style="font-size:9px;">
+                HGE / AHDS
+              </div>
+              <div class="flow-endpoint pleural" onclick="renderDiseasePage('DIS-GI-FPV')" style="font-size:9px;">
+                FPV (kitten) 🐱
+              </div>
             </div>
           </div>
           <div>

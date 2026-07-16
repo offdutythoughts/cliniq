@@ -5,7 +5,7 @@
 import type { DxApproach } from '../dxTypes'
 
 export const blindEyeDx: DxApproach = {
-  title: 'Blind Eye / Acute Vision Loss',
+  title: 'Blind Eye / Vision Loss',
   tabs: {
 
   history: {

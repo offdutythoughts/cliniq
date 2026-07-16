@@ -20,6 +20,7 @@ import { TAG_ROW, BODY_TEXT, PAGE_TITLE, FIELD_LABEL, SUB_LABEL } from './styles
 
 const TOP_ALERT = s('background:rgba(var(--tone-danger),0.18);border:1.5px solid rgba(var(--tone-danger),0.5);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:var(--fs-body);font-weight:700;color:var(--tone-danger-fg);letter-spacing:.01em;')
 const SIG_VALUE = s('font-size:var(--fs-body);color:var(--gray);line-height:var(--lh-body);margin-bottom:8px;')
+const EM_ALERT_HEAD = s('font-weight:700;margin-bottom:6px;')
 
 const PEARL_LABEL = s('font-weight:700;margin-bottom:6px;')
 const PEARL_ITEM = s('display:flex;align-items:baseline;gap:6px;margin-bottom:4px;')
@@ -131,7 +132,13 @@ export function DiseasePageView({ id }: { id: string }) {
 
       {topAlert && <div style={TOP_ALERT}>{emergency ? '🚨 Emergency: ' : '⚠️ '}{stripAlertPrefix(topAlert)}</div>}
       {emergency && !topAlert && <div style={TOP_ALERT}>🚨 Emergency — initiate stabilisation before the full diagnostic workup.</div>}
-      {cite(d.severe) && <div className="em-alert">⚠️ {cite(d.severe)}</div>}
+      {cite(d.severe) && (
+        <div className="em-alert">
+          {pip(cite(d.severe))
+            ? <><div style={EM_ALERT_HEAD}>⚠️ Severe / life-threatening</div><Bul text={cite(d.severe)} /></>
+            : <>⚠️ {cite(d.severe)}</>}
+        </div>
+      )}
 
       {protocols.map(protocol => (
         <NavCard

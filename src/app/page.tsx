@@ -16,6 +16,7 @@ import { useSearchHighlight } from './search/useSearchHighlight'
 import { OnboardingModal } from '../components/OnboardingModal'
 import { TutorialProvider } from './tutorial/TutorialContext'
 import { TutorialOverlay } from '../components/TutorialOverlay'
+import SilentBoundary from './SilentBoundary'
 
 // Use Convex-backed notes when a deployment URL is configured, otherwise localStorage
 const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
@@ -103,7 +104,11 @@ function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
         onExport={notes.onExport}
       />
 
-      <OnboardingModal />
+      {/* The welcome sheet runs a Convex query; isolate it so a query failure
+          hides the popup instead of crashing the whole app. */}
+      <SilentBoundary>
+        <OnboardingModal />
+      </SilentBoundary>
       <TutorialOverlay />
     </div>
   )
