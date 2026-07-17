@@ -1,31 +1,51 @@
 import { describe, expect, it } from 'vitest'
 import { DB } from '../../data/db'
-import { formatHarvardCitations, referencesForDisease } from './diseaseReferences'
+import { parseSources, buildDiseaseCitations } from './diseaseReferences'
 
-describe('formatHarvardCitations', () => {
-  it('converts chapter shorthand to Harvard author-date form', () => {
-    expect(formatHarvardCitations('Threshold (Ettinger Ch 127).')).toBe(
-      'Threshold (Ettinger, Feldman and Côté, 2024, Ch. 127).',
-    )
-    expect(formatHarvardCitations('Source: Ettinger 9e.')).toBe(
-      'Source: Ettinger, Feldman and Côté, 2024.',
-    )
+describe('parseSources', () => {
+  it('yields one per-chapter Ettinger entry, in order', () => {
+    expect(parseSources('Ettinger Ch 127, 311').map(s => s.id))
+      .toEqual(['ettinger-ch127', 'ettinger-ch311'])
+    expect(parseSources('Ettinger Ch 314')[0].text).toContain('Ch. 314.')
+  })
+
+  it('treats "Ettinger 9e" (no chapter) as the book-level source', () => {
+    expect(parseSources('Ettinger 9e').map(s => s.id)).toEqual(['ettinger'])
+  })
+
+  it('treats Gelatt as a single ophthalmology source', () => {
+    expect(parseSources('Gelatt 6th edn Table 17.3').map(s => s.id)).toEqual(['gelatt'])
   })
 })
 
-describe('referencesForDisease', () => {
-  it('adds the ophthalmology source to eye disease pages', () => {
-    const disease = DB.disease_page.find(row => row.id === 'DIS-EYE-GLAU')
-      ?? DB.disease_page.find(row => DB.lesion_type.some(lesion => lesion.dis === row.id && lesion.loc.startsWith('LOC-RE-')))
-
-    expect(disease).toBeDefined()
-    expect(referencesForDisease({ disease: disease!, lesions: DB.lesion_type }).map(reference => reference.id))
-      .toContain('gelatt-2021')
+describe('buildDiseaseCitations', () => {
+  it('numbers distinct chapters by first appearance across fields', () => {
+    const { numberOf, entries } = buildDiseaseCitations([
+      'Threshold (Ettinger Ch 127).',
+      'More (Ettinger Ch 311, 127).',
+      'Also (Ettinger Ch 300).',
+    ])
+    expect(entries.map(e => e.id)).toEqual(['ettinger-ch127', 'ettinger-ch311', 'ettinger-ch300'])
+    expect(numberOf.get('ettinger-ch127')).toBe(1)
+    expect(numberOf.get('ettinger-ch311')).toBe(2)
+    expect(numberOf.get('ettinger-ch300')).toBe(3)
+    expect(entries.map(e => e.n)).toEqual([1, 2, 3])
   })
 
-  it('keeps the general internal-medicine source on every page', () => {
-    const disease = DB.disease_page[0]
-    expect(referencesForDisease({ disease, lesions: DB.lesion_type }).map(reference => reference.id))
-      .toContain('ettinger-2024')
+  it('ignores non-source parentheticals', () => {
+    const { entries } = buildDiseaseCitations(['Large breeds (as for most cases). (Ettinger Ch 314)'])
+    expect(entries.map(e => e.id)).toEqual(['ettinger-ch314'])
+  })
+
+  it('numbers the real prostatitis page as a single Ettinger chapter', () => {
+    const d = DB.disease_page.find(x => x.id === 'DIS-URO-PROSTATITIS')!
+    const str = (v: unknown): string => (typeof v === 'string' ? v : '')
+    const { entries } = buildDiseaseCitations([
+      str(d.topAlert), str(d.severe), str(d.etiology), str(d.breed), str(d.age),
+      str(d.sex), str(d.risk), str(d.path), str(d.signs), str(d.conf), str(d.supp),
+      str(d.tx1), str(d.tx2), str(d.outpatient), str(d.monitor), str(d.prog), str(d.ddx), str(d.pearl),
+    ])
+    expect(entries.map(e => e.id)).toEqual(['ettinger-ch314'])
+    expect(entries[0].text).toContain('Ch. 314.')
   })
 })

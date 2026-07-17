@@ -419,6 +419,15 @@ mark.search-highlight{
 /* Disease content-match snippet */
 .dis-snippet{margin-top:5px;font-size:11px;color:var(--gray2);line-height:1.5;font-style:italic;}
 
+/* ── CITATIONS ── */
+/* AMA superscript marker inline in disease-page content; each number points at
+   the numbered reference list at the foot of the page. */
+.cite-ref{
+  font-size:.7em;line-height:0;vertical-align:super;
+  font-weight:600;color:var(--color-accent);margin-left:1px;
+}
+.cite-ref + .cite-ref{margin-left:0;}
+
 /* ── DISCLAIMER ── */
 .disclaimer{
   text-align:center;font-size:var(--fs-label);color:var(--gray2);

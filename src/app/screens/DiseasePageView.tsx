@@ -10,7 +10,7 @@ import { styleStringToObject as s } from './style'
 import { SpTag } from './tags'
 import { Bul, Card, Linkify, NavCard, str } from './markup'
 import { splitPearl } from './pearlSplit'
-import { formatHarvardCitations, referencesForDisease } from './diseaseReferences'
+import { buildDiseaseCitations, CitationContext, type RefEntry } from './diseaseReferences'
 import { InjuryGradingTable } from './InjuryGradingTable'
 import { PhenylephrineLocaliseTable } from './PhenylephrineLocaliseTable'
 import { IrisCkdStagingTable } from './IrisCkdStagingTable'
@@ -31,14 +31,14 @@ const REFERENCE_ITEM = s('margin-left:18px;padding-left:2px;margin-bottom:4px;')
 
 const pip = (v: unknown): boolean => typeof v === 'string' && v.includes('|')
 function Txt({ text }: { text: string }) {
-  return <div style={BODY_TEXT}>{text}</div>
+  return <div style={BODY_TEXT}><Linkify text={text} /></div>
 }
 /** Clinical pearls box. Splits into bullets (per splitPearl — explicit `|`
  *  wins, else sentence boundaries), keeping the amber pearl colour via inherit.
  *  A single-sentence pearl stays an inline paragraph. */
 function Pearl({ text }: { text: string }) {
   const items = splitPearl(text)
-  if (items.length <= 1) return <div className="pearl">💡 Clinical pearls: {items[0] ?? ''}</div>
+  if (items.length <= 1) return <div className="pearl">💡 Clinical pearls: <Linkify text={items[0] ?? ''} /></div>
   return (
     <div className="pearl">
       <div style={PEARL_LABEL}>💡 Clinical pearls</div>
@@ -99,13 +99,13 @@ function stripAlertPrefix(text: string): string {
     .replace(/^EMERGENCY\s*[:—-]?\s*/i, '')
 }
 
-function References({ disease }: { disease: DiseaseRow }) {
-  const references = referencesForDisease({ disease, lesions: DB.lesion_type })
+function References({ entries }: { entries: RefEntry[] }) {
+  if (entries.length === 0) return null
   return (
     <section aria-label="References" style={REFERENCES}>
       <div style={REFERENCES_TITLE}>References</div>
       <ol>
-        {references.map(reference => <li key={reference.id} style={REFERENCE_ITEM}>{reference.text}</li>)}
+        {entries.map(entry => <li key={entry.id} id={`ref-${entry.n}`} style={REFERENCE_ITEM}>{entry.text}</li>)}
       </ol>
     </section>
   )
@@ -116,27 +116,33 @@ export function DiseasePageView({ id }: { id: string }) {
   const d = DB.disease_page.find(x => x.id === id)
   if (!d) return <NotFound what="Disease page" />
 
-  function cite(value: unknown): string {
-    return formatHarvardCitations(str(value))
-  }
-  const breed = cite(d.breed)
-  const age = cite(d.age)
-  const topAlert = cite(d.topAlert)
+  const breed = str(d.breed)
+  const age = str(d.age)
+  const topAlert = str(d.topAlert)
   const emergency = isEmergencyDisease(d, topAlert)
   const protocols = diseaseProtocols(d)
 
+  // AMA numbering — collect citations in the order the fields render below.
+  const { numberOf, entries } = buildDiseaseCitations([
+    topAlert, str(d.severe), str(d.etiology),
+    breed, age, str(d.sex), str(d.risk),
+    str(d.path), str(d.signs), str(d.conf), str(d.supp),
+    str(d.tx1), str(d.tx2), str(d.outpatient),
+    str(d.monitor), str(d.prog), str(d.ddx), str(d.pearl),
+  ])
+
   return (
-    <>
+    <CitationContext.Provider value={numberOf}>
       <div style={PAGE_TITLE}>{d.name}</div>
       <div style={TAG_ROW}><SpTag sp={d.sp} /></div>
 
-      {topAlert && <div style={TOP_ALERT}>{emergency ? '🚨 Emergency: ' : '⚠️ '}{stripAlertPrefix(topAlert)}</div>}
+      {topAlert && <div style={TOP_ALERT}>{emergency ? '🚨 Emergency: ' : '⚠️ '}<Linkify text={stripAlertPrefix(topAlert)} /></div>}
       {emergency && !topAlert && <div style={TOP_ALERT}>🚨 Emergency — initiate stabilisation before the full diagnostic workup.</div>}
-      {cite(d.severe) && (
+      {str(d.severe) && (
         <div className="em-alert">
-          {pip(cite(d.severe))
-            ? <><div style={EM_ALERT_HEAD}>⚠️ Severe / life-threatening</div><Bul text={cite(d.severe)} /></>
-            : <>⚠️ {cite(d.severe)}</>}
+          {pip(str(d.severe))
+            ? <><div style={EM_ALERT_HEAD}>⚠️ Severe / life-threatening</div><Bul text={str(d.severe)} /></>
+            : <>⚠️ <Linkify text={str(d.severe)} /></>}
         </div>
       )}
 
@@ -150,61 +156,61 @@ export function DiseasePageView({ id }: { id: string }) {
         />
       ))}
 
-      {cite(d.etiology) && <Card title="Etiology"><Bul text={cite(d.etiology)} /></Card>}
+      {str(d.etiology) && <Card title="Etiology"><Bul text={str(d.etiology)} /></Card>}
 
       <Card title="Signalment">
         <div style={FIELD_LABEL}>Breed</div>
-        <div style={SIG_VALUE}>{pip(breed) ? <Bul text={breed} /> : breed}</div>
+        <div style={SIG_VALUE}>{pip(breed) ? <Bul text={breed} /> : <Linkify text={breed} />}</div>
         <div style={FIELD_LABEL}>Age</div>
-        <div style={SIG_VALUE}>{pip(age) ? <Bul text={age} /> : age}</div>
-        {cite(d.sex) && (
+        <div style={SIG_VALUE}>{pip(age) ? <Bul text={age} /> : <Linkify text={age} />}</div>
+        {str(d.sex) && (
           <>
             <div style={FIELD_LABEL}>Sex</div>
-            <div style={BODY_TEXT}>{cite(d.sex)}</div>
+            <div style={BODY_TEXT}><Linkify text={str(d.sex)} /></div>
           </>
         )}
       </Card>
 
-      {cite(d.risk) && <Card title="Risk Factors"><Bul text={cite(d.risk)} /></Card>}
+      {str(d.risk) && <Card title="Risk Factors"><Bul text={str(d.risk)} /></Card>}
 
-      <Card title="Pathophysiology"><Body text={cite(d.path)} /></Card>
+      <Card title="Pathophysiology"><Body text={str(d.path)} /></Card>
 
       <Card title="Clinical Signs">
-        <Body text={cite(d.signs)} />
+        <Body text={str(d.signs)} />
         {d.showGradingTable === true && <InjuryGradingTable />}
       </Card>
 
       <Card title="Diagnostic Investigation">
-        <ConfBody text={cite(d.conf)} />
-        {cite(d.supp) && (
+        <ConfBody text={str(d.conf)} />
+        {str(d.supp) && (
           <>
             <div style={SUB_LABEL}>Supportive Diagnostics</div>
-            <Body text={cite(d.supp)} />
+            <Body text={str(d.supp)} />
           </>
         )}
       </Card>
 
       <Card title="Treatment">
         <div style={FIELD_LABEL}>First-line</div>
-        <Body text={cite(d.tx1)} />
-        {cite(d.tx2) && (
+        <Body text={str(d.tx1)} />
+        {str(d.tx2) && (
           <>
             <div style={SUB_LABEL}>Second-line / Alternatives</div>
-            <Body text={cite(d.tx2)} />
+            <Body text={str(d.tx2)} />
           </>
         )}
       </Card>
 
-      {cite(d.outpatient) && <Card title="Outpatient Protocol"><Body text={cite(d.outpatient)} /></Card>}
+      {str(d.outpatient) && <Card title="Outpatient Protocol"><Body text={str(d.outpatient)} /></Card>}
 
-      <Card title="Monitoring"><Body text={cite(d.monitor)} /></Card>
-      <Card title="Prognosis"><Body text={cite(d.prog)} /></Card>
+      <Card title="Monitoring"><Body text={str(d.monitor)} /></Card>
+      <Card title="Prognosis"><Body text={str(d.prog)} /></Card>
 
-      {cite(d.ddx) && <Card title="Differential Diagnosis"><Bul text={cite(d.ddx)} /></Card>}
+      {str(d.ddx) && <Card title="Differential Diagnosis"><Bul text={str(d.ddx)} /></Card>}
 
-      <Pearl text={cite(d.pearl)} />
-      <References disease={d} />
+      <Pearl text={str(d.pearl)} />
+      <References entries={entries} />
       <div className="disclaimer">For qualified veterinary professionals only.</div>
-    </>
+    </CitationContext.Provider>
   )
 }

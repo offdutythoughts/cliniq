@@ -52,6 +52,8 @@ const SCREENS: { name: string; nav: Nav }[] = [
   { name: 'disease-aa', nav: { fn: 'renderDiseasePage', args: ['DIS-AA'] } },
   // disease-dic carries @DIS-/@PROT- link tokens — guards the linkify() path.
   { name: 'disease-dic', nav: { fn: 'renderDiseasePage', args: ['DIS-BD-DIC'] } },
+  // disease-prostatitis exercises numbered citations — inline markers + footnote.
+  { name: 'disease-prostatitis', nav: { fn: 'renderDiseasePage', args: ['DIS-URO-PROSTATITIS'] } },
   { name: 'protocol-cpr', nav: { fn: 'renderProtoDetail', args: ['PROT-CPR'] } },
   { name: 'protocol-ataxia', nav: { fn: 'renderProtoDetail', args: ['PROT-ATAXIA'] } },
   { name: 'lesion-hepatic', nav: { fn: 'goLesionTab', args: ['LOC-JD-HEP', 'Hepatic'] } },
@@ -93,6 +95,12 @@ function toView(nav: Nav): unknown {
 }
 
 async function boot(page: Page, theme: string) {
+  // Suppress the first-run onboarding welcome sheet — in the no-Convex build it
+  // gates on this localStorage flag (OnboardingLocal), and would otherwise cover
+  // every screen. Must be set before the app mounts.
+  await page.addInitScript(() => {
+    try { localStorage.setItem('cliniq-onboarding-seen', '1') } catch { /* private mode */ }
+  })
   await page.goto('/')
   // Wait for the SPA to mount, expose its nav hook, and render the initial view.
   await page.waitForFunction(

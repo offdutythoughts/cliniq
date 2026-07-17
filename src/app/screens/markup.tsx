@@ -6,6 +6,7 @@
 import { type CSSProperties, type ReactNode } from 'react'
 import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
+import { Cite, hasCitation, splitCitations } from './diseaseReferences'
 import { styleStringToObject as s } from './style'
 import { parseBlocks } from './blocks'
 import { BULLET, DOT } from './styles'
@@ -61,9 +62,11 @@ export function NavCard({ icon, title, sub, onClick, style }: {
   )
 }
 
-/** @TOKEN(:label) → clickable span(s) interleaved with plain text. */
+/** @TOKEN(:label) → clickable span(s) and "(Ettinger Ch N)" citations → numbered markers, interleaved with plain text. */
 export function Linkify({ text }: { text: string }) {
-  if (text.startsWith('@')) {
+  // Whole-string @token shortcut (its label may contain characters outside the
+  // inline regex class) — only when there's no citation to interleave.
+  if (text.startsWith('@') && !hasCitation(text)) {
     const ci = text.indexOf(':')
     const did = ci > 0 ? text.slice(1, ci) : text.slice(1)
     const lbl = ci > 0 ? text.slice(ci + 1) : did
@@ -71,18 +74,20 @@ export function Linkify({ text }: { text: string }) {
   }
   const re = /@([A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+)(?::([A-Za-z0-9 /\-.]+))?/g
   const parts: ReactNode[] = []
-  let last = 0
   let k = 0
-  let m: RegExpExecArray | null
-  while ((m = re.exec(text)) !== null) {
-    if (m.index > last) parts.push(text.slice(last, m.index))
-    const id = m[1]
-    const lbl = (m[2] || id).trim()
-    parts.push(<LinkSpan key={k++} id={id} label={lbl} />)
-    last = m.index + m[0].length
+  // Split off citations first, then resolve @-links within the plain segments.
+  for (const seg of splitCitations(text)) {
+    if (seg.citeIds) { parts.push(<Cite key={k++} ids={seg.citeIds} fallback={seg.raw} />); continue }
+    re.lastIndex = 0
+    let last = 0
+    let m: RegExpExecArray | null
+    while ((m = re.exec(seg.text)) !== null) {
+      if (m.index > last) parts.push(seg.text.slice(last, m.index))
+      parts.push(<LinkSpan key={k++} id={m[1]} label={(m[2] || m[1]).trim()} />)
+      last = m.index + m[0].length
+    }
+    parts.push(last < seg.text.length ? seg.text.slice(last) : '')
   }
-  if (last === 0) return <>{text}</>
-  parts.push(text.slice(last))
   return <>{parts}</>
 }
 
