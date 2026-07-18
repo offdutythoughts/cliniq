@@ -11,7 +11,8 @@
     "lint:protocols": "npx tsx scripts/lint-protocol-actions.ts",
     "lint:flows": "npx tsx scripts/lint-flows.ts",
     "lint:blocks": "npx tsx scripts/lint-disease-blocks.ts",
-    "lint:lesions": "npx tsx scripts/lint-lesions.ts"
+    "lint:lesions": "npx tsx scripts/lint-lesions.ts",
+    "lint:chips": "npx tsx scripts/lint-chips.ts"
   },
   "dependencies": {
     "@auth/core": "^0.37.4",

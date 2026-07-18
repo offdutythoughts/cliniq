@@ -36,8 +36,8 @@ export const pollakiuriaFlow: FlowPage = {
             {
               kind: 'endpoints',
               items: [
-                { icon: '🐈', label: 'URETHRAL OBSTRUCTION / PLUG', sublabel: 'Blocked cat · urolith · plug · stricture — treat K⁺ then decompress', tone: 'danger', link: { to: 'protocol', id: 'PROT-URO-OBS' } },
-                { icon: '⚙️', label: 'PROSTATIC / URETHRAL MASS', sublabel: 'Older dog · TCC or prostatic carcinoma at the trigone/urethra', tone: 'violet', link: { to: 'disease', id: 'DIS-NEO-TCC' } },
+                { label: 'URETHRAL OBSTRUCTION / PLUG', tone: 'danger', link: { to: 'protocol', id: 'PROT-URO-OBS' } },
+                { label: 'PROSTATIC / URETHRAL MASS', tone: 'violet', link: { to: 'disease', id: 'DIS-NEO-TCC' } },
               ],
             },
           ],
@@ -57,10 +57,10 @@ export const pollakiuriaFlow: FlowPage = {
                     {
                       kind: 'endpoints',
                       items: [
-                        { icon: '🦠', label: 'BACTERIAL CYSTITIS / UTI', sublabel: 'Commonest in dogs · ISCAID; uncommon in young cats', tone: 'orange', link: { to: 'disease', id: 'DIS-URO-UTI' } },
-                        { icon: '😿', label: 'FELINE IDIOPATHIC CYSTITIS', sublabel: 'Commonest cause of feline LUTS · Pandora / MEMO', tone: 'teal', link: { to: 'disease', id: 'DIS-URO-FIC' } },
-                        { icon: '🪨', label: 'UROLITHIASIS', sublabel: 'Struvite · oxalate · urate · cystine', tone: 'info', link: { to: 'disease', id: 'DIS-URO-UROLITH-STRUV' } },
-                        { icon: '🧬', label: 'UROTHELIAL CARCINOMA (TCC)', sublabel: 'Older dog · trigone · BRAF', tone: 'violet', link: { to: 'disease', id: 'DIS-NEO-TCC' } },
+                        { label: 'BACTERIAL CYSTITIS / UTI', sublabel: 'Most common canine cause', tone: 'orange', link: { to: 'disease', id: 'DIS-URO-UTI' } },
+                        { label: 'FELINE IDIOPATHIC CYSTITIS', sublabel: 'Most common feline cause', tone: 'teal', link: { to: 'disease', id: 'DIS-URO-FIC' } },
+                        { label: 'UROLITHIASIS', tone: 'info', link: { to: 'disease', id: 'DIS-URO-UROLITH-STRUV' } },
+                        { label: 'UROTHELIAL CARCINOMA (TCC)', tone: 'violet', link: { to: 'disease', id: 'DIS-NEO-TCC' } },
                       ],
                     },
                   ],
@@ -71,10 +71,10 @@ export const pollakiuriaFlow: FlowPage = {
                     {
                       kind: 'endpoints',
                       items: [
-                        { icon: '🔴', label: 'BACTERIAL PROSTATITIS', sublabel: 'Entire male · fever · painful DRE', tone: 'danger', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
-                        { icon: '⚙️', label: 'BENIGN PROSTATIC HYPERPLASIA', sublabel: 'Older entire male · symmetric · bloody drip', tone: 'neutral', link: { to: 'disease', id: 'DIS-URO-BPH' } },
-                        { icon: '🧬', label: 'PROSTATIC CARCINOMA', sublabel: 'Intact OR neutered · fixed · sublumbar LN', tone: 'violet', link: { to: 'disease', id: 'DIS-URO-PROST-NEO' } },
-                        { icon: '🪨', label: 'URETHRAL UROLITH', sublabel: 'Lodges at os penis (dog) — obstruction risk', tone: 'warning', link: { to: 'disease', id: 'DIS-URO-URETHRAL-OBS' } },
+                        { label: 'BACTERIAL PROSTATITIS', tone: 'danger', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
+                        { label: 'BENIGN PROSTATIC HYPERPLASIA', tone: 'neutral', link: { to: 'disease', id: 'DIS-URO-BPH' } },
+                        { label: 'PROSTATIC CARCINOMA', tone: 'violet', link: { to: 'disease', id: 'DIS-URO-PROST-NEO' } },
+                        { label: 'URETHRAL UROLITH', tone: 'warning', link: { to: 'disease', id: 'DIS-URO-URETHRAL-OBS' } },
                       ],
                     },
                   ],

@@ -44,8 +44,8 @@ export const epistaxisFlow: FlowPage = {
                     {
                       kind: 'endpoints',
                       items: [
-                        { icon: '🤕', label: 'TRAUMA', sublabel: 'RTA · head strike', tone: 'danger', link: { to: 'disease', id: 'DIS-NASAL-TRAUMA' } },
-                        { icon: '🌾', label: 'FOREIGN BODY', sublabel: 'Acute violent sneezing → chronic', tone: 'orange', link: { to: 'disease', id: 'DIS-NASAL-FB' } },
+                        { label: 'TRAUMA', tone: 'danger', link: { to: 'disease', id: 'DIS-NASAL-TRAUMA' } },
+                        { label: 'FOREIGN BODY', tone: 'orange', link: { to: 'disease', id: 'DIS-NASAL-FB' } },
                       ],
                     },
                   ],
@@ -57,10 +57,10 @@ export const epistaxisFlow: FlowPage = {
                     {
                       kind: 'endpoints',
                       items: [
-                        { icon: '🧬', label: 'NEOPLASIA', sublabel: 'Most common local cause (30–66%)', tone: 'violet', link: { to: 'disease', id: 'DIS-NASAL-NEO' } },
-                        { icon: '🍄', label: 'FUNGAL RHINITIS', sublabel: 'Aspergillus — depigmentation + pain', tone: 'green', link: { to: 'disease', id: 'DIS-NASAL-ASP' } },
-                        { icon: '🔥', label: 'IDIOPATHIC RHINITIS', sublabel: 'Lymphoplasmacytic — Dx of exclusion', tone: 'green', link: { to: 'disease', id: 'DIS-NASAL-LPR' } },
-                        { icon: '🦷', label: 'Dental / oronasal disease', sublabel: 'periapical abscess · oronasal fistula', tone: 'neutral' },
+                        { label: 'NEOPLASIA', sublabel: 'Most common local cause (30–66%)', tone: 'violet', link: { to: 'disease', id: 'DIS-NASAL-NEO' } },
+                        { label: 'FUNGAL RHINITIS', tone: 'green', link: { to: 'disease', id: 'DIS-NASAL-ASP' } },
+                        { label: 'IDIOPATHIC RHINITIS', tone: 'green', link: { to: 'disease', id: 'DIS-NASAL-LPR' } },
+                        { label: 'Dental / oronasal disease', tone: 'neutral' },
                       ],
                     },
                   ],
@@ -85,9 +85,9 @@ export const epistaxisFlow: FlowPage = {
                     {
                       kind: 'endpoints',
                       items: [
-                        { icon: '🧱', label: 'THROMBOCYTOPENIA / IMTP', sublabel: 'Commonest systemic cause', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-IMTP' } },
-                        { icon: '🩹', label: 'THROMBOCYTOPATHIA / vWD', sublabel: 'Normal count, mucosal bleed', tone: 'warning', link: { to: 'disease', id: 'DIS-BD-TPATH' } },
-                        { icon: '🦟', label: 'VECTOR-BORNE DISEASE', sublabel: 'Ehrlichia · Leishmania · Babesia', tone: 'violet', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
+                        { label: 'THROMBOCYTOPENIA / IMTP', sublabel: 'Most common systemic cause', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-IMTP' } },
+                        { label: 'THROMBOCYTOPATHIA / vWD', tone: 'warning', link: { to: 'disease', id: 'DIS-BD-TPATH' } },
+                        { label: 'VECTOR-BORNE DISEASE', tone: 'violet', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
                       ],
                     },
                   ],
@@ -99,10 +99,10 @@ export const epistaxisFlow: FlowPage = {
                     {
                       kind: 'endpoints',
                       items: [
-                        { icon: '☠️', label: 'ANTICOAGULANT RODENTICIDE', sublabel: 'PT prolongs first — give Vit K1', tone: 'info', link: { to: 'disease', id: 'DIS-BD-ROD' } },
-                        { icon: '🩸', label: 'HYPERVISCOSITY', sublabel: 'Myeloma · hyperglobulinaemia', tone: 'violet', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
-                        { icon: '📈', label: 'HYPERTENSION', sublabel: 'Exacerbates rather than causes', tone: 'warning', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
-                        { icon: '🔗', label: 'PRIMARY vs SECONDARY HAEMOSTASIS', sublabel: 'Open full bleeding flowchart', tone: 'danger', link: { to: 'flow', id: 'bleeding' } },
+                        { label: 'ANTICOAGULANT RODENTICIDE', tone: 'info', link: { to: 'disease', id: 'DIS-BD-ROD' } },
+                        { label: 'HYPERVISCOSITY', tone: 'violet', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
+                        { label: 'HYPERTENSION', tone: 'warning', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
+                        { label: 'PRIMARY vs SECONDARY HAEMOSTASIS', tone: 'danger', link: { to: 'flow', id: 'bleeding' } },
                       ],
                     },
                   ],
