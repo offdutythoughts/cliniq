@@ -99,14 +99,28 @@ function stripAlertPrefix(text: string): string {
     .replace(/^EMERGENCY\s*[:—-]?\s*/i, '')
 }
 
+/** Pages citing more than this many sources collapse the footnote behind a toggle. */
+const REF_COLLAPSE_THRESHOLD = 4
+
 function References({ entries }: { entries: RefEntry[] }) {
   if (entries.length === 0) return null
+  const list = (
+    <ol>
+      {entries.map(entry => <li key={entry.id} id={`ref-${entry.n}`} style={REFERENCE_ITEM}>{entry.text}</li>)}
+    </ol>
+  )
+  if (entries.length > REF_COLLAPSE_THRESHOLD) {
+    return (
+      <details className="ref-fold" style={REFERENCES}>
+        <summary style={REFERENCES_TITLE}>References ({entries.length})</summary>
+        {list}
+      </details>
+    )
+  }
   return (
     <section aria-label="References" style={REFERENCES}>
       <div style={REFERENCES_TITLE}>References</div>
-      <ol>
-        {entries.map(entry => <li key={entry.id} id={`ref-${entry.n}`} style={REFERENCE_ITEM}>{entry.text}</li>)}
-      </ol>
+      {list}
     </section>
   )
 }

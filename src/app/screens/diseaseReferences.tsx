@@ -9,10 +9,12 @@
 
 import { createContext, useContext } from 'react'
 
+// AMA book form: Editors, eds. Title. Edition. Publisher; year(: chap N).
+// Chapter authors/titles aren't tracked, so the editor-led chapter form is used.
 const ETTINGER_BOOK =
-  'Ettinger, S.J., Feldman, E.C. and Côté, E. (eds.) (2024) Ettinger’s Textbook of Veterinary Internal Medicine. 9th edn. Elsevier.'
+  'Ettinger SJ, Feldman EC, Côté E, eds. Ettinger’s Textbook of Veterinary Internal Medicine. 9th ed. Elsevier; 2024'
 const GELATT_BOOK =
-  'Gelatt, K.N., Ben-Shlomo, G., Gilger, B.C., Hendrix, D.V.H., Kern, T.J. and Plummer, C.E. (eds.) (2021) Veterinary Ophthalmology. 6th edn. Wiley-Blackwell.'
+  'Gelatt KN, Ben-Shlomo G, Gilger BC, Hendrix DVH, Kern TJ, Plummer CE, eds. Veterinary Ophthalmology. 6th ed. Wiley-Blackwell; 2021'
 
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
@@ -27,11 +29,11 @@ const CITE = /\s?\((Ettinger[^)]*|Gelatt[^)]*)\)/g
  *  citation with chapters yields one entry per chapter (per-chapter numbering);
  *  "Ettinger 9e" with no chapter, or Gelatt, yields a single book-level entry. */
 export function parseSources(inner: string): { id: string; text: string }[] {
-  if (/^Gelatt/.test(inner)) return [{ id: 'gelatt', text: GELATT_BOOK }]
+  if (/^Gelatt/.test(inner)) return [{ id: 'gelatt', text: `${GELATT_BOOK}.` }]
   const chapters = inner.match(/Ch(?:apter|\.)?\s*([\d,\s]+)/)
-  if (!chapters) return [{ id: 'ettinger', text: ETTINGER_BOOK }]
+  if (!chapters) return [{ id: 'ettinger', text: `${ETTINGER_BOOK}.` }]
   const nums = chapters[1].match(/\d+/g) ?? []
-  return nums.map(n => ({ id: `ettinger-ch${n}`, text: `${ETTINGER_BOOK} Ch. ${n}.` }))
+  return nums.map(n => ({ id: `ettinger-ch${n}`, text: `${ETTINGER_BOOK}: chap ${n}.` }))
 }
 
 /** Walk the page's fields (in render order), numbering each distinct cited

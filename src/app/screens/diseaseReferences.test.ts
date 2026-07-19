@@ -6,7 +6,7 @@ describe('parseSources', () => {
   it('yields one per-chapter Ettinger entry, in order', () => {
     expect(parseSources('Ettinger Ch 127, 311').map(s => s.id))
       .toEqual(['ettinger-ch127', 'ettinger-ch311'])
-    expect(parseSources('Ettinger Ch 314')[0].text).toContain('Ch. 314.')
+    expect(parseSources('Ettinger Ch 314')[0].text).toContain(': chap 314.')
   })
 
   it('treats "Ettinger 9e" (no chapter) as the book-level source', () => {
@@ -46,6 +46,6 @@ describe('buildDiseaseCitations', () => {
       str(d.tx1), str(d.tx2), str(d.outpatient), str(d.monitor), str(d.prog), str(d.ddx), str(d.pearl),
     ])
     expect(entries.map(e => e.id)).toEqual(['ettinger-ch314'])
-    expect(entries[0].text).toContain('Ch. 314.')
+    expect(entries[0].text).toContain(': chap 314.')
   })
 })

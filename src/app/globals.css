@@ -427,6 +427,12 @@ mark.search-highlight{
   font-weight:600;color:var(--color-accent);margin-left:1px;
 }
 .cite-ref + .cite-ref{margin-left:0;}
+/* Collapsible reference footnote (pages citing >4 sources render a <details>).
+   The summary reuses the References title styling; marker is a trailing chevron. */
+details.ref-fold > summary{cursor:pointer;list-style:none;}
+details.ref-fold > summary::-webkit-details-marker{display:none;}
+details.ref-fold > summary::after{content:" ▸";}
+details.ref-fold[open] > summary::after{content:" ▾";}
 
 /* ── DISCLAIMER ── */
 .disclaimer{
