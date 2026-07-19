@@ -74,41 +74,8 @@ export const epistaxisFlow: FlowPage = {
           tone: 'danger',
           sub: 'Bleeding at other sites · petechiae / ecchymoses · melena · gingival bleed · venepuncture bruising · lethargy · weight loss · hyphema / retinal haemorrhage',
           blocks: [
-            { kind: 'node', variant: 'sub-step', text: 'PRIMARY vs SECONDARY HAEMOSTASIS?', connectAfter: false },
-            {
-              kind: 'branch',
-              columns: [
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'PRIMARY — petechiae · mucosal bleed · low/normal platelets',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { label: 'THROMBOCYTOPENIA / IMTP', sublabel: 'Most common systemic cause', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-IMTP' } },
-                        { label: 'THROMBOCYTOPATHIA / vWD', tone: 'warning', link: { to: 'disease', id: 'DIS-BD-TPATH' } },
-                        { label: 'VECTOR-BORNE DISEASE', tone: 'violet', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  // no tone → plain grey text label (no box)
-                  header: 'SECONDARY — cavity / deep bleed · PT prolongs first',
-                  blocks: [
-                    {
-                      kind: 'endpoints',
-                      items: [
-                        { label: 'ANTICOAGULANT RODENTICIDE', tone: 'info', link: { to: 'disease', id: 'DIS-BD-ROD' } },
-                        { label: 'HYPERVISCOSITY', tone: 'violet', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
-                        { label: 'HYPERTENSION', tone: 'warning', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
-                      ],
-                    },
-                  ],
-                },
-              ],
-            },
-            // The whole haemostasis pathway converges on the full bleeding work-up.
+            // A haemostatic defect hands off to the full bleeding work-up — the
+            // primary/secondary haemostasis split and every cause lives there.
             {
               kind: 'endpoints',
               items: [
