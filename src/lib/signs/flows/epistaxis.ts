@@ -102,11 +102,17 @@ export const epistaxisFlow: FlowPage = {
                         { label: 'ANTICOAGULANT RODENTICIDE', tone: 'info', link: { to: 'disease', id: 'DIS-BD-ROD' } },
                         { label: 'HYPERVISCOSITY', tone: 'violet', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
                         { label: 'HYPERTENSION', tone: 'warning', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
-                        { label: 'PRIMARY vs SECONDARY HAEMOSTASIS', tone: 'danger', link: { to: 'flow', id: 'bleeding' } },
                       ],
                     },
                   ],
                 },
+              ],
+            },
+            // The whole haemostasis pathway converges on the full bleeding work-up.
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'BLEEDING / PETECHIAE / ECCHYMOSES', tone: 'danger', link: { to: 'flow', id: 'bleeding' } },
               ],
             },
           ],
