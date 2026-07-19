@@ -209,6 +209,18 @@ export type CompareBoxBlock = Connectable & {
 // Typed now for model completeness; renderer support added when first used.
 export type SpeciesCompareBlock = Connectable & { kind: 'speciesCompare'; dog: string[]; cat: string[] }
 
+/** An interactive 🐕/🐈 species toggle: the reader picks a species and only that
+ *  species' phenotype note + VITAMIN-D cause categories (a `categoryColumns`
+ *  grid) render. Used for pages whose differentials differ by species (DIC). */
+export type SpeciesPanel = { note: string; cols?: number; columns: CatColumn[] }
+export type SpeciesChooserBlock = Connectable & {
+  kind: 'speciesChooser'
+  dog: SpeciesPanel
+  cat: SpeciesPanel
+  /** Which panel is shown first (default 'dog'). */
+  default?: 'dog' | 'cat'
+}
+
 /** A tinted info panel with an optional icon + title header and body text.
  *  Replaces the ~20 raw `html` blocks of the form:
  *    <div style="margin-top:Xpx;padding:9px 12px;background:rgba(…,0.07-0.12);…">
@@ -247,6 +259,7 @@ export type Block =
   | DisclaimerBlock
   | CompareBoxBlock
   | SpeciesCompareBlock
+  | SpeciesChooserBlock
   | InfoBoxBlock
   | HtmlBlock
 

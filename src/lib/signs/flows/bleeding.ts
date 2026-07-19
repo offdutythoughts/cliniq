@@ -326,75 +326,98 @@ const bleedingDic: FlowPage = {
     { kind: 'node', variant: 'step', text: 'CLINICAL SIGNS' },
 
     {
-      kind: 'callout',
-      tone: 'slate',
-      html: '<strong style="color:var(--tone-danger-fg);">🩸 Haemorrhagic</strong><br>• Petechiae / ecchymoses<br>• Epistaxis · haematuria<br>• Melaena<br>• Cavity bleeding (haemoabdomen · haemothorax)<br>• Oozing from venepuncture sites<br><br><strong style="color:var(--tone-purple-fg);">🫀 Systemic / thrombotic</strong><br>• Collapse · profound weakness<br>• Pale / white / grey MMs<br>• Tachycardia · weak pulses<br>• Hypothermia (severe shock)<br>• Acute hindlimb paresis (feline ATE)<br>• Dyspnoea (PTE)',
-    },
-
-    { kind: 'node', variant: 'step', text: 'TOP CAUSES' },
-
-    {
-      kind: 'callout',
-      tone: 'info',
-      title: '🐕 Canine',
-      html: 'Haemorrhagic phenotype · ~78 % survive non-overt · ~38 % overt',
-    },
-
-    {
-      kind: 'categoryColumns',
-      cols: 3,
-      connectAfter: false,
-      columns: [
-        { cat: 'Neoplastic', tone: 'violet', tiles: [
-          { label: 'Haemangiosarcoma (splenic / hepatic)' },
-        ]},
-        { cat: 'Sepsis / SIRS', tone: 'danger', tiles: [
-          { label: 'Sepsis — pyometra · GDV · peritonitis' },
-        ]},
-        { cat: 'Immune-mediated', tone: 'purple', tiles: [
-          { label: 'IMHA' },
-        ]},
-        { cat: 'Inflammatory', tone: 'warning', tiles: [
-          { label: 'Severe pancreatitis' },
-        ]},
-        { cat: 'Toxic / environmental', tone: 'orange', tiles: [
-          { label: 'Snake envenomation' },
-          { label: 'Heat stroke' },
-        ]},
-        { cat: 'Trauma', tone: 'slate', tiles: [
-          { label: 'Major trauma' },
-        ]},
+      kind: 'table',
+      gap: 12,
+      cols: '1fr 1fr',
+      headers: [
+        { text: '🩸 Haemorrhagic', tone: 'danger' },
+        { text: '🫀 Systemic / thrombotic', tone: 'purple' },
+      ],
+      rows: [
+        [
+          { text: 'Petechiae / ecchymoses', tone: 'danger' },
+          { text: 'Collapse · profound weakness', tone: 'purple' },
+        ],
+        [
+          { text: 'Epistaxis · haematuria', tone: 'danger' },
+          { text: 'Pale / white / grey MMs', tone: 'purple' },
+        ],
+        [
+          { text: 'Melaena', tone: 'danger' },
+          { text: 'Tachycardia · weak pulses', tone: 'purple' },
+        ],
+        [
+          { text: 'Cavity bleeding (haemoabdomen · haemothorax)', tone: 'danger' },
+          { text: 'Hypothermia (severe shock)', tone: 'purple' },
+        ],
+        [
+          { text: 'Oozing from venepuncture sites', tone: 'danger' },
+          { text: 'Acute hindlimb paresis (feline ATE)', tone: 'purple' },
+        ],
+        [
+          '',
+          { text: 'Dyspnoea (PTE)', tone: 'purple' },
+        ],
       ],
     },
 
-    {
-      kind: 'callout',
-      tone: 'violet',
-      gap: 14,
-      title: '🐈 Feline',
-      html: 'Thrombotic phenotype · minimal external bleeding · ~7 % survival',
-    },
+    { kind: 'node', variant: 'step', text: 'TOP CAUSES — CHOOSE SPECIES' },
 
     {
-      kind: 'categoryColumns',
-      cols: 3,
-      columns: [
-        { cat: 'Infectious', tone: 'teal', tiles: [
-          { label: 'FIP' },
-          { label: 'Sepsis — pyothorax · urinary sepsis' },
-          { label: 'Cytauxzoonosis' },
-        ]},
-        { cat: 'Neoplastic', tone: 'violet', tiles: [
-          { label: 'Lymphoma' },
-          { label: 'Neoplasia (various)' },
-        ]},
-        { cat: 'Inflammatory', tone: 'warning', tiles: [
-          { label: 'Severe pancreatitis / triaditis' },
-        ]},
-        { cat: 'Cardiac', tone: 'indigo', tiles: [
-          { label: 'Cardiomyopathy' },
-        ]},
-      ],
+      kind: 'speciesChooser',
+      dog: {
+        note: '🐕 <strong>Canine</strong> — haemorrhagic phenotype · ~78 % survive non-overt · ~38 % overt',
+        cols: 3,
+        columns: [
+          { cat: 'Neoplastic', tone: 'violet', tiles: [
+            { label: 'Haemangiosarcoma', link: { to: 'disease', id: 'DIS-NEO-HSA' } },
+            { label: 'Lymphoma', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
+          ]},
+          { cat: 'Infectious', tone: 'teal', tiles: [
+            { label: 'Sepsis — pyometra', link: { to: 'disease', id: 'DIS-REPRO-PYO' } },
+            { label: 'Septic peritonitis', link: { to: 'disease', id: 'DIS-GI-SEPTPERIT' } },
+          ]},
+          { cat: 'Inflammatory', tiles: [
+            { label: 'Severe pancreatitis', link: { to: 'disease', id: 'DIS-SEC-PAN-DOG' } },
+          ]},
+          { cat: 'Immune-mediated', tiles: [
+            { label: 'IMHA', link: { to: 'disease', id: 'DIS-BD-IMHA' } },
+            { label: 'IMTP', link: { to: 'disease', id: 'DIS-BD-IMTP' } },
+          ]},
+          { cat: 'Toxic', tiles: [
+            { label: 'Snake envenomation', link: { to: 'disease', id: 'DIS-BD-ENV' } },
+            { label: 'Heatstroke', link: { to: 'disease', id: 'DIS-ENV-HEAT' } },
+          ]},
+          { cat: 'Vascular / Trauma', tone: 'slate', tiles: [
+            { label: 'GDV', link: { to: 'disease', id: 'DIS-GI-GDV' } },
+            { label: 'Major trauma' },
+          ]},
+        ],
+      },
+      cat: {
+        note: '🐈 <strong>Feline</strong> — thrombotic phenotype · minimal external bleeding · ~7 % survival',
+        cols: 3,
+        columns: [
+          { cat: 'Neoplastic', tone: 'violet', tiles: [
+            { label: 'Lymphoma', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
+          ]},
+          { cat: 'Infectious', tone: 'teal', tiles: [
+            { label: 'FIP', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
+            { label: 'Cytauxzoonosis', link: { to: 'disease', id: 'DIS-INFECT-CYTAUX' } },
+            { label: 'Sepsis — pyothorax', link: { to: 'disease', id: 'DIS-PYOTHORAX' } },
+          ]},
+          { cat: 'Inflammatory', tiles: [
+            { label: 'Pancreatitis / triaditis', link: { to: 'disease', id: 'DIS-GI-PANCAT' } },
+          ]},
+          { cat: 'Immune-mediated', tiles: [
+            { label: 'IMHA', link: { to: 'disease', id: 'DIS-BD-IMHA' } },
+          ]},
+          { cat: 'Cardiac', tone: 'indigo', tiles: [
+            { label: 'Cardiomyopathy', link: { to: 'disease', id: 'DIS-HCM' } },
+            { label: 'Arterial thromboembolism', link: { to: 'disease', id: 'DIS-CARD-ATE' } },
+          ]},
+        ],
+      },
     },
 
     {

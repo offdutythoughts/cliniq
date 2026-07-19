@@ -5,7 +5,7 @@
 // (choice labels, callout/banner/compareBox/table/decision html) go through the
 // audited <RichText> boundary; links route via linkToView.
 
-import { Fragment, type ReactNode } from 'react'
+import { Fragment, useState, type ReactNode } from 'react'
 import type {
   Block, Column, Endpoint, ChoiceItem, CardTile, CategoryColumn, CatColumn, DecisionStep,
   DecisionOutcome, TableCell, TableRow, LabeledLink, Tone, InfoBoxBlock as InfoBoxBlockType,
@@ -32,7 +32,7 @@ const ST_COL_FLEX      = s('display:flex;flex-direction:column;gap:4px;')
 const ST_UNLINKED_TILE = 'background:var(--card);border:1.5px solid var(--border);color:var(--gray2);opacity:.72;filter:saturate(.2);cursor:default;'
 
 // ── Arrow / spine logic (joinBlocks) ─────────────────────────────────────────
-const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout', 'fnHeader', 'cardGrid', 'categoryGrid', 'categoryColumns', 'decisionTree'])
+const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout', 'fnHeader', 'cardGrid', 'categoryGrid', 'categoryColumns', 'decisionTree', 'speciesChooser'])
 const connectsAfter = (b: Block): boolean => b.connectAfter ?? SPINE.has(b.kind)
 const connectsBefore = (b: Block): boolean => SPINE.has(b.kind)
 
@@ -469,6 +469,37 @@ function SpeciesCompareBlock({ b, onNav }: { b: Extract<Block, { kind: 'speciesC
   )
 }
 
+// ── Species chooser (interactive 🐕/🐈 toggle) ────────────────────────────────
+/** A segmented 🐕/🐈 toggle: picking a species reveals only that species'
+ *  phenotype note + VITAMIN-D cause columns. Dog = info (blue), cat = violet. */
+function SpeciesChooserBlock({ b, onNav }: { b: Extract<Block, { kind: 'speciesChooser' }>; onNav: Nav }) {
+  const [sp, setSp] = useState<'dog' | 'cat'>(b.default ?? 'dog')
+  const panel = sp === 'dog' ? b.dog : b.cat
+  const tone: Tone = sp === 'dog' ? 'info' : 'violet'
+  const btn = (id: 'dog' | 'cat', label: string) => {
+    const on = sp === id
+    const h = HUE[id === 'dog' ? 'info' : 'violet']
+    return (
+      <button type="button" onClick={() => setSp(id)} aria-pressed={on}
+        style={s(`flex:1;padding:8px 10px;border-radius:9px;font-size:11px;font-weight:700;cursor:pointer;line-height:1;border:1.5px solid ${on ? `rgba(${h.rgb},var(--tile-bd-a))` : 'var(--border)'};background:${on ? `rgba(${h.rgb},var(--tile-bg-a))` : 'transparent'};color:${on ? h.color : 'var(--gray2)'};`)}>
+        {label}
+      </button>
+    )
+  }
+  return (
+    <div style={s('width:100%;display:flex;flex-direction:column;gap:8px;')}>
+      <div style={s('display:flex;gap:6px;width:100%;')}>
+        {btn('dog', '🐕 Canine')}
+        {btn('cat', '🐈 Feline')}
+      </div>
+      <Box tone={tone} extra={`padding:9px 12px;font-size:9.5px;line-height:1.5;color:${HUE[tone].color};`}>
+        <Raw html={panel.note} onNav={onNav} />
+      </Box>
+      <CategoryColumnsBlock cols={panel.cols ?? 3} columns={panel.columns} onNav={onNav} />
+    </div>
+  )
+}
+
 // ── Callout / alert / diseaseGrid / dxRow ─────────────────────────────────────
 function CalloutBlock({ b, onNav }: { b: Extract<Block, { kind: 'callout' }>; onNav: Nav }) {
   const extra = `padding:9px 12px;font-size:9.5px;color:${HUE[b.tone].color};line-height:1.5;${b.gap ? `margin-top:${b.gap}px;` : ''}${b.center ? 'text-align:center;' : ''}`
@@ -562,6 +593,7 @@ function BlockView({ b, onNav }: { b: Block; onNav: Nav }): ReactNode {
     case 'decisionTree': return <>{b.steps.map((step, i) => <DecisionStepView key={i} step={step} onNav={onNav} />)}</>
     case 'compareBox': return <CompareBoxBlock b={b} onNav={onNav} />
     case 'speciesCompare': return <SpeciesCompareBlock b={b} onNav={onNav} />
+    case 'speciesChooser': return <SpeciesChooserBlock b={b} onNav={onNav} />
     case 'infoBox': return <InfoBoxBlock b={b} onNav={onNav} />
     case 'disclaimer': return DISCLAIMER
     case 'html': return <Raw html={b.html} onNav={onNav} />
