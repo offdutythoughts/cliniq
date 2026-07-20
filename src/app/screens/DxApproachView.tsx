@@ -12,7 +12,7 @@ import { DX } from '../../lib/signs/dx'
 import { RichText } from '../../components/RichText'
 import { useNav } from '../nav/NavContext'
 import { linkToView } from '../nav/view'
-import { styleStringToObject as s, toneBox } from './style'
+import { styleStringToObject as s, toneBox, SCROLL_X } from './style'
 import { NotFound } from './NotFound'
 import { type Nav, Raw, ToneBox } from './flowHelpers'
 
@@ -187,7 +187,7 @@ function DxComparisonTable({ b, onNav }: { b: Extract<DxBlock, { kind: 'comparis
         </div>
       )}
       {b.scrollable !== false ? (
-        <div style={s('overflow-x:auto;width:100%;')}>{table}</div>
+        <div style={s(SCROLL_X)}>{table}</div>
       ) : table}
     </div>
   )

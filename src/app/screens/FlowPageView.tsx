@@ -17,7 +17,7 @@ import { DX } from '../../lib/signs/dx'
 import { RichText } from '../../components/RichText'
 import { useNav } from '../nav/NavContext'
 import { linkToView } from '../nav/view'
-import { styleStringToObject as s, toneBox } from './style'
+import { styleStringToObject as s, toneBox, SCROLL_X, colTier } from './style'
 import { NotFound } from './NotFound'
 import { type Nav, Raw, ToneBox } from './flowHelpers'
 import { NavCard } from './markup'
@@ -149,7 +149,7 @@ function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav:
       )}
     </div>
   )
-  const wrapped = b.scroll ? <div style={s('overflow-x:auto;width:100%;')}>{grid}</div> : grid
+  const wrapped = b.scroll ? <div style={s(SCROLL_X)}>{grid}</div> : grid
   const footColor = b.boxTone ? `color:${HUE[b.boxTone].color};opacity:.85;` : 'opacity:.9;'
   const foot = b.footnote ? <div style={s(`margin-top:7px;font-size:9.5px;line-height:1.55;${footColor}`)}><Raw html={b.footnote} onNav={onNav} /></div> : null
   if (!b.boxTone && !b.title) return b.gap ? <div style={s(`margin-top:${b.gap}px;width:100%;`)}>{wrapped}{foot}</div> : <>{wrapped}{foot}</>
@@ -313,12 +313,13 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
   // clamp each column to a min width and let the row scroll horizontally
   // instead — plus step the type down a touch. <=4 columns are unchanged
   // (repeat(cols,1fr), full width, original type sizes).
-  const wide = cols >= 5
-  const headerFs = !wide ? 9.5 : cols === 5 ? 9 : 8.5
-  const chipFs = !wide ? 9 : cols === 5 ? 8.5 : 8
-  const headerPad = wide ? '7px 4px' : '7px 5px'
-  const chipPad = !wide ? '6px 4px' : cols === 5 ? '6px 3px' : '5px 3px'
-  const minCol = cols === 5 ? 76 : 70
+  const t = colTier(cols)
+  const wide = t >= 1
+  const headerFs = [9.5, 9, 8.5][t]
+  const chipFs = [9, 8.5, 8][t]
+  const headerPad = ['7px 5px', '7px 4px', '7px 4px'][t]
+  const chipPad = ['6px 4px', '6px 3px', '5px 3px'][t]
+  const minCol = [70, 76, 70][t]
   const totalMin = cols * minCol + (cols - 1) * 6
   const gridStyle = wide
     ? s(`display:grid;grid-template-columns:repeat(${cols},minmax(${minCol}px,1fr));gap:6px;min-width:${totalMin}px;justify-content:center;`)
@@ -363,7 +364,7 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
       })}
     </div>
   )
-  return wide ? <div style={s('overflow-x:auto;width:100%;')}>{grid}</div> : grid
+  return wide ? <div style={s(SCROLL_X)}>{grid}</div> : grid
 }
 
 // ── Decision tree ─────────────────────────────────────────────────────────────

@@ -3,13 +3,13 @@
 // showGradingTable. Row 5 carries <strong> emphasis, rendered as real <strong>.
 
 import { Fragment } from 'react'
-import { styleStringToObject as s } from './style'
+import { styleStringToObject as s, SCROLL_X } from './style'
 
 const T3 = 'var(--tone-warning-fg)'   // grade 3 / thoracolumbar column — dark amber on light, bright on dark
 const C1 = 'var(--tone-green-fg)'     // cervical column — dark green on light, bright on dark
 
 const WRAP_LABEL = s('font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;margin-top:8px;')
-const SCROLL = s('overflow-x:auto;width:100%;margin-bottom:8px;')
+const SCROLL = s(SCROLL_X + 'margin-bottom:8px;')
 const TABLE = s('width:100%;border-collapse:collapse;font-size:8.5px;min-width:360px;')
 const TH_GRADE = s('padding:5px 5px;font-size:8.5px;font-weight:700;color:var(--gray2);border-bottom:1.5px solid rgba(148,163,184,0.3);text-align:center;width:28px;')
 const TH_DESC = s('padding:5px 5px;font-size:8.5px;font-weight:700;color:var(--gray2);border-bottom:1.5px solid rgba(148,163,184,0.3);text-align:left;min-width:120px;')

@@ -7,7 +7,7 @@ import { Fragment } from 'react'
 import type { LesionRow } from '../../data/db'
 import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
-import { styleStringToObject as s } from './style'
+import { styleStringToObject as s, SCROLL_X, colTier } from './style'
 import { NavCard } from './markup'
 import type { Tone } from '../../lib/signs/flowTypes'
 import { HUE } from '../../lib/signs/tone'
@@ -115,10 +115,13 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
   }
   const cats = [...groups.keys()]
   const cols = cats.length
-  const catFontSize = cols <= 4 ? 11 : cols === 5 ? 10 : 9
-  const cardFontSize = cols <= 4 ? 10 : cols === 5 ? 9 : 8
-  const cardPadding = cols <= 4 ? '6px 8px' : cols === 5 ? '5px 6px' : '3px 4px'
+  const t = colTier(cols)
+  const catFontSize = [11, 10, 9][t]
+  const cardFontSize = [10, 9, 8][t]
+  const cardPadding = ['6px 8px', '5px 6px', '3px 4px'][t]
   // Minimum column width so text always fits; scroll horizontally when needed.
+  // (Its own breakpoint — the floor eases only past 6 cols, not at the tier
+  // boundary — so it stays inline rather than keying off `t`.)
   const minColPx = cols <= 4 ? 80 : cols <= 6 ? 72 : 68
   // Cap each column so few-category layouts don't stretch boxes full-width on
   // wide screens; centre the (narrower-than-container) grid instead.
@@ -135,7 +138,7 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
         <div className="flow-arrow-v">↓</div>
         <div className="flow-node step">IDENTIFY LESION CATEGORY</div>
         <div className="flow-arrow-v">↓</div>
-        <div style={s('overflow-x:auto;width:100%;')}>
+        <div style={s(SCROLL_X)}>
           <div style={gridStyle}>
             {cats.map(cat => (
               <div key={cat} className="flow-node" style={s(`background:${cBg(cat)};border-color:${cBd(cat)};color:${cTx(cat)};font-size:${catFontSize}px;cursor:default;`)}>{cat}</div>

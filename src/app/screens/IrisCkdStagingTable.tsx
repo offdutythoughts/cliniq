@@ -7,7 +7,7 @@
 // µg/dL per project convention. Styling mirrors <InjuryGradingTable>.
 
 import { Fragment } from 'react'
-import { styleStringToObject as s } from './style'
+import { styleStringToObject as s, SCROLL_X } from './style'
 
 const GREEN = 'var(--tone-green-fg)'
 const AMBER = 'var(--tone-warning-fg)'
@@ -17,7 +17,7 @@ const BORDER = 'rgba(var(--slate-muted),0.2)'
 const HEAD_BORDER = 'rgba(var(--slate-muted),0.35)'
 
 const LABEL = s('font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;margin-top:10px;')
-const SCROLL = s('overflow-x:auto;width:100%;margin-bottom:4px;')
+const SCROLL = s(SCROLL_X + 'margin-bottom:4px;')
 const TABLE = s('width:100%;border-collapse:collapse;font-size:8.5px;min-width:340px;')
 const FOOT = s('font-size:8.5px;opacity:.75;line-height:1.5;margin-top:2px;')
 const DIM = s('opacity:.6;')
