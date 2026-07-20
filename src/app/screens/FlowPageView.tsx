@@ -308,8 +308,23 @@ const CAT_STYLE: Record<string, { bg: string; border: string; col: string }> = {
 }
 const FALLBACK_TONES: Tone[] = ['slate', 'indigo', 'violet', 'teal', 'orange', 'green']
 function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns: CatColumn[]; onNav: Nav }) {
-  return (
-    <div style={s(`display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;`)}>
+  // Crowded layouts (>=5 categories) borrow the lesion-location page's spill
+  // handling: never let a `1fr` column crush its label below a legible floor —
+  // clamp each column to a min width and let the row scroll horizontally
+  // instead — plus step the type down a touch. <=4 columns are unchanged
+  // (repeat(cols,1fr), full width, original type sizes).
+  const wide = cols >= 5
+  const headerFs = !wide ? 9.5 : cols === 5 ? 9 : 8.5
+  const chipFs = !wide ? 9 : cols === 5 ? 8.5 : 8
+  const headerPad = wide ? '7px 4px' : '7px 5px'
+  const chipPad = !wide ? '6px 4px' : cols === 5 ? '6px 3px' : '5px 3px'
+  const minCol = cols === 5 ? 76 : 70
+  const totalMin = cols * minCol + (cols - 1) * 6
+  const gridStyle = wide
+    ? s(`display:grid;grid-template-columns:repeat(${cols},minmax(${minCol}px,1fr));gap:6px;min-width:${totalMin}px;justify-content:center;`)
+    : s(`display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;`)
+  const grid = (
+    <div style={gridStyle}>
       {columns.map((c, i) => {
         const h = c.tone ? HUE[c.tone] : null
         const fb = HUE[FALLBACK_TONES[i % FALLBACK_TONES.length]]
@@ -318,7 +333,7 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
           : CAT_STYLE[c.cat] ?? { bg: `rgba(${fb.rgb},var(--tile-bg-a))`, border: `rgba(${fb.rgb},var(--tile-bd-a))`, col: fb.color }
         return (
           <div key={i} style={s('display:flex;flex-direction:column;align-items:stretch;gap:4px;')}>
-            <div style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:${st.col};text-align:center;line-height:1.3;`)}>{c.cat}</div>
+            <div style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:10px;padding:${headerPad};font-size:${headerFs}px;font-weight:700;color:${st.col};text-align:center;line-height:1.3;`)}>{c.cat}</div>
             <div style={s(`color:${st.col};text-align:center;font-size:11px;line-height:1;`)}>↓</div>
             {c.tiles.map((t, j) => {
               if (t.links && t.links.length > 0) {
@@ -337,7 +352,7 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
                 )
               }
               return (
-                <div key={j} style={s(`${t.link ? `background:${st.bg};border:1.5px solid ${st.border};color:${st.col};cursor:pointer;` : ST_UNLINKED_TILE}border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;text-align:center;line-height:1.35;`)}
+                <div key={j} style={s(`${t.link ? `background:${st.bg};border:1.5px solid ${st.border};color:${st.col};cursor:pointer;` : ST_UNLINKED_TILE}border-radius:8px;padding:${chipPad};font-size:${chipFs}px;font-weight:600;text-align:center;line-height:1.35;`)}
                   {...(t.link ? { role: 'button', onClick: () => onNav(linkToView(t.link!)) } : { 'aria-disabled': true, title: 'No linked page available' })}>
                   {t.label}
                 </div>
@@ -348,6 +363,7 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
       })}
     </div>
   )
+  return wide ? <div style={s('overflow-x:auto;width:100%;')}>{grid}</div> : grid
 }
 
 // ── Decision tree ─────────────────────────────────────────────────────────────
