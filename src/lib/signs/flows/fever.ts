@@ -113,7 +113,6 @@ const feverHyperthermia: FlowPage = {
           tone: 'danger',
           tiles: [
             { label: 'Heatstroke', link: { to: 'disease', id: 'DIS-ENV-HEAT' } },
-            { label: 'Exertional / environmental', link: { to: 'disease', id: 'DIS-ENV-HEAT' } },
           ],
         },
         {
