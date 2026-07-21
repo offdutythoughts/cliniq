@@ -213,10 +213,9 @@ const haematuriaTrueSystemic: FlowPage = {
     },
 
     {
-      kind: 'diseaseGrid',
-      title: 'RELATED FLOWCHART',
-      links: [
-        { label: 'Bleeding / Petechiae / Ecchymoses — primary vs secondary haemostasis', link: { to: 'flow', id: 'bleeding' } },
+      kind: 'dxRow',
+      items: [
+        { label: 'Bleeding / Petechiae / Ecchymoses flowchart', link: { to: 'flow', id: 'bleeding' } },
       ],
     },
 
