@@ -146,7 +146,6 @@ const haematuriaPseudo: FlowPage = {
     // eliminates ~20 lines of repeated inline RGBA/flex markup.
     {
       kind: 'categoryColumns',
-      cols: 3,
       columns: [
         {
           cat: 'Haemoglobinuria',

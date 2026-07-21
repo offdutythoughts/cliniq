@@ -168,14 +168,16 @@ export type CatLabel =
   | 'Trauma'
   | 'Anomalous'
 
-/** A wrapping `cols`-column grid of self-contained category units (header +
- *  coloured ↓ + chips). `cat` should be a `CatLabel` for automatic CSS-variable
- *  colouring; set `tone` to override for a custom column label. */
+/** A single row of self-contained category units (header + coloured ↓ + chips),
+ *  one column per category — matching the lesion-location pages. Crowded rows
+ *  (≥5 columns) clamp to a min width and scroll horizontally rather than crush.
+ *  `cat` should be a `CatLabel` for automatic CSS-variable colouring; set `tone`
+ *  to override for a custom column label. */
 export type CatColumnTile = { label: string; link?: Link; links?: LabeledLink[]; terminal?: boolean }
 /** `tone` overrides the CAT_STYLE palette lookup — use for custom-coloured columns
  *  that don't correspond to a shared category label (e.g. "Haemoglobinuria"). */
 export type CatColumn = { cat: CatLabel | string; tone?: Tone; tiles: CatColumnTile[] }
-export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; cols?: number; columns: CatColumn[] }
+export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; columns: CatColumn[] }
 
 /** Reusable step block for "IDENTIFY CAUSE CATEGORY" — appears in 24+ flows. */
 export const IDENTIFY_CAUSE_STEP = { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' } as const
@@ -216,7 +218,7 @@ export type SpeciesCompareBlock = Connectable & { kind: 'speciesCompare'; dog: s
 /** An interactive 🐕/🐈 species toggle: the reader picks a species and only that
  *  species' phenotype note + VITAMIN-D cause categories (a `categoryColumns`
  *  grid) render. Used for pages whose differentials differ by species (DIC). */
-export type SpeciesPanel = { note: string; cols?: number; columns: CatColumn[] }
+export type SpeciesPanel = { note: string; columns: CatColumn[] }
 export type SpeciesChooserBlock = Connectable & {
   kind: 'speciesChooser'
   dog: SpeciesPanel

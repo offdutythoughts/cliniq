@@ -128,7 +128,6 @@ const jaundiceHep: FlowPage = {
     { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
     {
       kind: 'categoryColumns',
-      cols: 3,
       columns: [
         {
           cat: 'Inflammatory', tiles: [
@@ -184,7 +183,6 @@ const jaundicePostHep: FlowPage = {
     { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
     {
       kind: 'categoryColumns',
-      cols: 3,
       columns: [
         {
           cat: 'Degenerative', tiles: [

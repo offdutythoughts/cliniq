@@ -544,7 +544,7 @@ function SpeciesChooserBlock({ b, onNav }: { b: Extract<Block, { kind: 'speciesC
       <Box tone={tone} extra={`padding:9px 12px;font-size:9.5px;line-height:1.5;color:${HUE[tone].color};`}>
         <Raw html={panel.note} onNav={onNav} />
       </Box>
-      <CategoryColumnsBlock cols={panel.cols ?? 3} columns={panel.columns} onNav={onNav} />
+      <CategoryColumnsBlock cols={panel.columns.length} columns={panel.columns} onNav={onNav} />
     </div>
   )
 }
@@ -638,7 +638,7 @@ function BlockView({ b, onNav }: { b: Block; onNav: Nav }): ReactNode {
     case 'table': return <TableBlock b={b} onNav={onNav} />
     case 'cardSection': return <CardSectionBlock b={b} onNav={onNav} />
     case 'categoryGrid': return <CategoryGridBlock columns={b.columns} onNav={onNav} />
-    case 'categoryColumns': return <CategoryColumnsBlock cols={b.cols ?? 3} columns={b.columns} onNav={onNav} />
+    case 'categoryColumns': return <CategoryColumnsBlock cols={b.columns.length} columns={b.columns} onNav={onNav} />
     case 'decisionTree': return <>{b.steps.map((step, i) => <DecisionStepView key={i} step={step} onNav={onNav} />)}</>
     case 'compareBox': return <CompareBoxBlock b={b} onNav={onNav} />
     case 'speciesCompare': return <SpeciesCompareBlock b={b} onNav={onNav} />

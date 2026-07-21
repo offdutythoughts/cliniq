@@ -151,7 +151,6 @@ const seizuresStructural: FlowPage = {
 
     {
       kind: 'categoryColumns',
-      cols: 4,
       columns: [
         { cat: 'Vascular', tiles: [
           { label: 'CVA / stroke', link: { to: 'disease', id: 'DIS-NEU-CVA' } },

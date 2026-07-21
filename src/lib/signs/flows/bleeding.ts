@@ -367,7 +367,6 @@ const bleedingDic: FlowPage = {
       kind: 'speciesChooser',
       dog: {
         note: '🐕 <strong>Canine</strong> — haemorrhagic phenotype · ~78 % survive non-overt · ~38 % overt',
-        cols: 6,
         columns: [
           { cat: 'Neoplastic', tone: 'violet', tiles: [
             { label: 'Haemangiosarcoma', link: { to: 'disease', id: 'DIS-NEO-HSA' } },
@@ -396,7 +395,6 @@ const bleedingDic: FlowPage = {
       },
       cat: {
         note: '🐈 <strong>Feline</strong> — thrombotic phenotype · minimal external bleeding · ~7 % survival',
-        cols: 5,
         columns: [
           { cat: 'Neoplastic', tone: 'violet', tiles: [
             { label: 'Lymphoma', link: { to: 'disease', id: 'DIS-NEO-LSA' } },

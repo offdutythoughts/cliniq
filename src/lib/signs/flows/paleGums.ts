@@ -107,7 +107,6 @@ const paleGumsRegen: FlowPage = {
     { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
     {
       kind: 'categoryColumns',
-      cols: 3,
       connectAfter: false,
       columns: [
         { cat: 'Immune-mediated', tiles: [{ label: 'IMHA', link: { to: 'disease', id: 'DIS-BD-IMHA' } }] },
@@ -150,7 +149,6 @@ const paleGumsNonRegen: FlowPage = {
     { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
     {
       kind: 'categoryColumns',
-      cols: 3,
       connectAfter: false,
       columns: [
         {
@@ -186,7 +184,6 @@ const paleGumsPreRegen: FlowPage = {
     { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
     {
       kind: 'categoryColumns',
-      cols: 3,
       connectAfter: false,
       columns: [
         { cat: 'Immune-mediated', tiles: [{ label: 'Acute IMHA (early)', link: { to: 'disease', id: 'DIS-BD-IMHA' } }] },
@@ -220,7 +217,6 @@ const paleGumsShock: FlowPage = {
     { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
     {
       kind: 'categoryColumns',
-      cols: 3,
       connectAfter: false,
       columns: [
         { cat: 'Vascular', tiles: [{ label: 'Hypovolaemic shock', link: { to: 'protocol', id: 'PROT-SHOCK' } }] },
@@ -247,7 +243,6 @@ const paleGumsCardiac: FlowPage = {
     { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
     {
       kind: 'categoryColumns',
-      cols: 3,
       connectAfter: false,
       columns: [
         { cat: 'Degenerative', tiles: [{ label: 'DCM (dog)', link: { to: 'disease', id: 'DIS-CARD-DCM' } }, { label: 'HCM (cat)', link: { to: 'disease', id: 'DIS-HCM' } }] },
