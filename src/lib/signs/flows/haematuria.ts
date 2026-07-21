@@ -191,8 +191,12 @@ const haematuriaPseudo: FlowPage = {
 }
 
 // ── True haematuria — systemic cause ────────────────────────────────────────
-// A stack of four red disease boxes (Anticoagulant rodenticide / IMTP / DIC /
-// Leptospirosis) + a MINIMUM DATABASE box, all in a bespoke layout → `html`.
+// Mirrors how epistaxis processes systemic disease: a haemostatic defect hands
+// off to the full bleeding work-up rather than re-enumerating causes. The
+// primary/secondary split and every cause (rodenticide / IMTP / DIC /
+// leptospirosis) lives in the bleeding flowchart, so this page is just the
+// intro + a single BLEEDING / PETECHIAE / ECCHYMOSES handoff endpoint + the
+// haematuria-specific MINIMUM DATABASE.
 const haematuriaTrueSystemic: FlowPage = {
   id: 'haematuria-true-systemic',
   title: 'Haematuria — Systemic Cause',
@@ -209,65 +213,24 @@ const haematuriaTrueSystemic: FlowPage = {
       variant: 'step',
       text: 'Haemostatic failure or systemic disease → RBCs leak into urine throughout the tract',
       sub: 'Dipstick +ve · sediment shows intact RBCs · concurrent mucosal bleeding, petechiae, or ecchymoses common',
-      connectAfter: false,
     },
 
+    // A haemostatic defect hands off to the full bleeding work-up — the
+    // primary/secondary haemostasis split and every cause (rodenticide · IMTP ·
+    // DIC · leptospirosis) lives there.
     {
-      kind: 'dxRow',
+      kind: 'endpoints',
       items: [
-        { label: 'Bleeding / Petechiae / Ecchymoses flowchart', link: { to: 'flow', id: 'bleeding' } },
+        { label: 'BLEEDING / PETECHIAE / ECCHYMOSES', tone: 'danger', link: { to: 'flow', id: 'bleeding' } },
       ],
     },
 
     {
-      kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
-
-    <div style="display:flex;flex-direction:column;gap:6px;width:100%;">
-
-      <div style="padding:8px 10px;background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);border-radius:10px;">
-        <div style="font-size:10px;font-weight:700;color:var(--tone-danger-fg);margin-bottom:4px;">Anticoagulant rodenticide</div>
-        <div style="font-size:9.5px;color:var(--gray);line-height:1.6;">
-          PT prolongs first — factor VII has the shortest half-life<br>
-          <strong style="color:var(--white);">Tx:</strong> Vit K1 2.5 mg/kg SC now · continue 3–4 weeks (brodifacoum) · confirm with PIVKAs
-        </div>
-      </div>
-
-      <div style="padding:8px 10px;background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);border-radius:10px;">
-        <div style="font-size:10px;font-weight:700;color:var(--tone-danger-fg);margin-bottom:4px;">IMTP</div>
-        <div style="font-size:9.5px;color:var(--gray);line-height:1.6;">
-          Platelet &lt;50 ×10⁹/L · mucosal bleeds (gums, epistaxis) · coags normal<br>
-          <strong style="color:var(--white);">Tx:</strong> Prednisolone 2 mg/kg/day + adjunct immunosuppression · strict cage rest
-        </div>
-      </div>
-
-      <div style="padding:8px 10px;background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);border-radius:10px;">
-        <div style="font-size:10px;font-weight:700;color:var(--tone-danger-fg);margin-bottom:4px;">DIC</div>
-        <div style="font-size:9.5px;color:var(--gray);line-height:1.6;">
-          Platelets ↓ + PT ↑ + aPTT ↑ + fibrinogen ↓ + D-dimer ↑<br>
-          <strong style="color:var(--white);">Tx:</strong> Treat the underlying cause (sepsis · HSA · IMHA) · FFP if active haemorrhage
-        </div>
-      </div>
-
-      <div style="padding:8px 10px;background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.3);border-radius:10px;">
-        <div style="font-size:10px;font-weight:700;color:var(--tone-danger-fg);margin-bottom:4px;">Leptospirosis</div>
-        <div style="font-size:9.5px;color:var(--gray);line-height:1.6;">
-          AKI + hepatopathy + pyrexia + haematuria · zoonotic — use PPE<br>
-          <strong style="color:var(--white);">Dx:</strong> MAT serology + urine PCR · <strong style="color:var(--white);">Tx:</strong> Penicillin (acute) → doxycycline (carrier phase)
-        </div>
-      </div>
-
-    </div>
-
-    <div style="margin-top:10px;padding:9px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
-      <div style="font-size:10px;font-weight:700;color:var(--tone-indigo-fg);margin-bottom:4px;">🔬 MINIMUM DATABASE — Systemic</div>
-      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
-        <strong style="color:var(--white);">CBC + smear</strong> — platelets · spherocytes · agglutination · ghost cells<br>
-        <strong style="color:var(--white);">PT + aPTT</strong> — rodenticide (PT first) · hepatic failure · DIC<br>
-        <strong style="color:var(--white);">Biochemistry</strong> — renal panel · ALT · bilirubin (leptospirosis, DIC)<br>
-        <strong style="color:var(--white);">Leptospira MAT / urine PCR</strong> — if AKI + pyrexia
-      </div>
-    </div>`,
+      kind: 'infoBox',
+      tone: 'indigo',
+      icon: '🔬',
+      title: 'MINIMUM DATABASE — Systemic',
+      html: '<strong style="color:var(--white);">CBC + smear</strong> — platelets · spherocytes · agglutination · ghost cells<br><strong style="color:var(--white);">PT + aPTT</strong> — rodenticide (PT first) · hepatic failure · DIC<br><strong style="color:var(--white);">Biochemistry</strong> — renal panel · ALT · bilirubin (leptospirosis, DIC)<br><strong style="color:var(--white);">Leptospira MAT / urine PCR</strong> — if AKI + pyrexia',
     },
 
     { kind: 'disclaimer' },
