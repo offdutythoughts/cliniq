@@ -18,11 +18,14 @@ jobs:
           node-version: 20
           cache: npm
 
-      # Use `npm install`, not `npm ci`: `npm ci` skips platform-specific
-      # optional native deps on the Linux runner (npm/cli#4828), which breaks
-      # vitest's rolldown binding. The lockfile is complete, so install honours
-      # it and additionally pulls the correct @rolldown/binding-linux-x64-gnu.
       - run: npm install --no-audit --no-fund
+
+      # npm skips this one platform-specific optional native dep on the Linux
+      # runner (npm/cli#4828), so vitest's rolldown engine can't find its
+      # binding. Install it explicitly at the exact version of the resolved
+      # rolldown (derived at runtime so it never drifts from the lockfile).
+      - name: Ensure Linux rolldown binding (npm/cli#4828 workaround)
+        run: npm install --no-save "@rolldown/binding-linux-x64-gnu@$(node -p "require('rolldown/package.json').version")"
 
       # Gating checks — a red here blocks the branch.
       - name: Type-check
