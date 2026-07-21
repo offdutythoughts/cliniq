@@ -137,8 +137,8 @@ const cyanosisMethb: FlowPage = {
           cat: 'Methaemoglobinaemia',
           tone: 'warning',
           tiles: [
-            { label: ' OXIDANT TOXICOSIS', link: { to: 'disease', id: 'DIS-TOX-METHB' } },
-            { label: ' Hereditary metHb — cytochrome-b5 reductase deficiency, mild, chronic', link: { to: 'disease', id: 'DIS-RESP-METHAEM' } },
+            { label: ' ACQUIRED — OXIDANT TOXICOSIS (most common)', link: { to: 'disease', id: 'DIS-TOX-METHB' } },
+            { label: ' HEREDITARY METHAEMOGLOBINAEMIA', link: { to: 'disease', id: 'DIS-RESP-METHAEM' } },
           ],
         },
         {
