@@ -213,6 +213,14 @@ const haematuriaTrueSystemic: FlowPage = {
     },
 
     {
+      kind: 'diseaseGrid',
+      title: 'RELATED FLOWCHART',
+      links: [
+        { label: 'Bleeding / Petechiae / Ecchymoses — primary vs secondary haemostasis', link: { to: 'flow', id: 'bleeding' } },
+      ],
+    },
+
+    {
       kind: 'html',
       html: `<div class="flow-arrow-v">↓</div>
 
@@ -261,14 +269,6 @@ const haematuriaTrueSystemic: FlowPage = {
         <strong style="color:var(--white);">Leptospira MAT / urine PCR</strong> — if AKI + pyrexia
       </div>
     </div>`,
-    },
-
-    {
-      kind: 'diseaseGrid',
-      title: 'RELATED FLOWCHART',
-      links: [
-        { label: 'Bleeding / Petechiae / Ecchymoses — primary vs secondary haemostasis', link: { to: 'flow', id: 'bleeding' } },
-      ],
     },
 
     { kind: 'disclaimer' },
