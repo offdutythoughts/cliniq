@@ -19,6 +19,20 @@
 // fine; one label → many targets fails. This catches the divergence class that
 // `resolve`-only checks miss without false-flagging intentional protocol links
 // (they stay consistent across pages).
+//
+// CHECK 3 — name-only tile labels (mirrors lint-chips Rule 2 for endpoints).
+// A LINKED tile (`link`) taps through to a disease/protocol/flow page that already
+// carries the clinical detail, so a descriptive clause appended to the label
+// ("NAME — murmur character · radiation · workup") is redundant clutter — strip it
+// to the name. The ONLY post-dash text worth keeping on a linked tile is a terse
+// species / ranking triage qualifier ("— dog", "— cat (#1), dog (#2)") — context
+// the destination page does not surface at a glance. TERMINAL tiles (no link) are
+// exempt: their label is the sole home of that content, so stripping would delete
+// it. Parenthetical abbreviations / subtypes ("(VSD)", "(SAS)", '("shaker pup")')
+// are part of the name and never tripped (this only looks past an em-dash).
+//
+// KEPT_TILE_DETAIL lists the few reviewed linked tiles whose post-dash text is the
+// essential diagnosis/triage, not a strippable description, keyed `pageId::label`.
 
 import { FLOWS } from '../src/lib/signs/flows/index'
 import type { Block } from '../src/lib/signs/flowTypes'
@@ -30,6 +44,17 @@ type TileLike = { label?: string; link?: unknown; links?: unknown[]; terminal?: 
 
 const isGap = (t: TileLike) =>
   !t.link && !(Array.isArray(t.links) && t.links.length > 0) && t.terminal !== true
+
+// Post-em-dash text that is a pure species / ranking qualifier — kept on linked
+// tiles (e.g. "dog", "cat", "dog (#1)", "cat (#1), dog (#2)", "dog (#3)").
+const SPECIES_RANK = /^(dog|cat)(\s*\(#\d+\))?(\s*,\s*(dog|cat)(\s*\(#\d+\))?)*$/i
+
+// Reviewed linked tiles whose post-dash text is load-bearing (the specific linked
+// diagnosis / triage), not a strippable description. Keyed `pageId::label`.
+const KEPT_TILE_DETAIL = new Set<string>([
+  'cyanosis-methb::ACQUIRED — OXIDANT TOXICOSIS (most common)',
+  'constipation-pelvic::PROSTATOMEGALY — BPH',
+])
 
 // Normalise a label for grouping: strip emoji / arrows / symbols and leading
 // junk, collapse whitespace, lowercase. Keeps internal punctuation so
@@ -72,6 +97,13 @@ function checkBlocks(pageId: string, blocks: Block[]) {
           if (isGap(tile)) {
             fail(`[${pageId}] ${b.kind} · ${col.cat} · "${label || '(no label)'}" — no link/links/terminal`)
           }
+          // CHECK 3: a LINKED tile must be name-only past any em-dash (species /
+          // ranking qualifiers and reviewed KEPT exceptions excepted).
+          const dash = label.match(/\s—\s(.+)$/)
+          if (tile.link && dash && !SPECIES_RANK.test(dash[1].trim()) &&
+              !KEPT_TILE_DETAIL.has(`${pageId}::${label}`)) {
+            fail(`[${pageId}] ${col.cat} · "${label}" — linked tile carries a description the tap-through page already gives; strip to the name (keep only a species/ranking qualifier).`)
+          }
           const where = `${pageId} · ${col.cat}`
           if (tile.link) record(label, tile.link, where)
           for (const ll of (tile.links ?? []) as any[]) record(String(ll.label ?? label), ll.link, where)
@@ -96,8 +128,8 @@ for (const [norm, byTarget] of seen) {
 }
 
 if (errors > 0) {
-  console.error(`\n${errors} category-tile issue(s) found. Link a page / set terminal:true / make the label's target consistent.`)
+  console.error(`\n${errors} category-tile issue(s) found. Link a page / set terminal:true / make the label's target consistent / strip the linked tile to its name.`)
   process.exit(1)
 } else {
-  console.log(`✓ All category tiles resolve and every label maps to one target, across ${Object.keys(FLOWS).length} flow pages.`)
+  console.log(`✓ All category tiles resolve, map to one target, and linked tiles are name-only, across ${Object.keys(FLOWS).length} flow pages.`)
 }

@@ -1,0 +1,39 @@
+name: CI
+
+# Verifies the clinical content data + type-safety on every push to the deploy
+# branches (main = Vercel previews, production = Vercel prod) and on every PR.
+on:
+  push:
+    branches: [main, production]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # Gating checks — a red here blocks the branch.
+      - name: Type-check
+        run: npx tsc --noEmit
+
+      - name: Content lints (flows · blocks · lesions · chips · tiles)
+        run: npm run lint:content
+
+      - name: Tests (link-integrity · registry · allowlist)
+        run: npm test
+
+      # Non-gating: protocol action-length lint has pre-existing violations
+      # (15 action strings > 130 chars) that need their own reformatting pass.
+      # Surfaced here for visibility without wedging deploys. Remove
+      # continue-on-error once the protocol text is brought under the limit.
+      - name: Protocol action-length lint (non-blocking)
+        run: npm run lint:protocols
+        continue-on-error: true

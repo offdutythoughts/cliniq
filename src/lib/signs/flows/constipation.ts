@@ -57,7 +57,7 @@ const constipationObstructive: FlowPage = {
           cat: 'Impaction / Dietary',
           tone: 'orange',
           tiles: [
-            { label: 'IMPACTED FAECES / DIETARY — pica (bones, hair, litter) · obstipation → feline megacolon', link: { to: 'disease', id: 'DIS-GI-MEGA' } },
+            { label: 'IMPACTED FAECES / DIETARY', link: { to: 'disease', id: 'DIS-GI-MEGA' } },
           ],
         },
         {

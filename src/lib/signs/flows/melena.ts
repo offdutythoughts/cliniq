@@ -66,7 +66,7 @@ const melenaUpper: FlowPage = {
           tiles: [
             { label: ' NSAID / STEROID ULCER', link: { to: 'disease', id: 'DIS-GI-ULC' } },
             { label: ' MAST-CELL TUMOUR / GASTRINOMA', link: { to: 'disease', id: 'DIS-GI-ULC' } },
-            { label: ' Hepatic / renal disease — portal hypertension / PSS · uraemic gastropathy', link: { to: 'disease', id: 'DIS-HEP-CHRONHEP' } },
+            { label: 'Hepatic / renal disease', link: { to: 'disease', id: 'DIS-HEP-CHRONHEP' } },
           ],
         },
         {
@@ -75,7 +75,7 @@ const melenaUpper: FlowPage = {
           tiles: [
             { label: ' AHDS (raspberry-jam)', link: { to: 'disease', id: 'DIS-GI-AHDS' } },
             { label: ' PARVOVIRUS', link: { to: 'disease', id: 'DIS-GI-PARVO' } },
-            { label: ' PARASITES — hookworm, Spirocerca, Physaloptera', link: { to: 'disease', id: 'DIS-GI-WHIP' } },
+            { label: 'PARASITES', link: { to: 'disease', id: 'DIS-GI-WHIP' } },
             { label: ' Helicobacter gastritis', link: { to: 'disease', id: 'DIS-GI-HELICO' } },
           ],
         },
@@ -83,7 +83,7 @@ const melenaUpper: FlowPage = {
           cat: 'Neoplastic / Inflammatory',
           tone: 'violet',
           tiles: [
-            { label: ' NEOPLASIA / IBD — adenocarcinoma · GIST · alimentary lymphoma · chronic enteropathy', link: { to: 'disease', id: 'DIS-GI-LYMP' } },
+            { label: 'NEOPLASIA / IBD', link: { to: 'disease', id: 'DIS-GI-LYMP' } },
           ],
         },
       ],
@@ -107,7 +107,7 @@ const melenaLower: FlowPage = {
             { label: ' IDIOPATHIC / IBD COLITIS', link: { to: 'disease', id: 'DIS-GI-COLITIS' } },
             { label: ' WHIPWORM (Trichuris)', link: { to: 'disease', id: 'DIS-GI-WHIP' } },
             { label: ' GRANULOMATOUS COLITIS', link: { to: 'disease', id: 'DIS-GI-GRANCOL' } },
-            { label: ' Clostridial / Campylobacter / Salmonella — faecal PCR/culture', link: { to: 'disease', id: 'DIS-INFECT-CAMPYLO' } },
+            { label: 'Clostridial / Campylobacter / Salmonella', link: { to: 'disease', id: 'DIS-INFECT-CAMPYLO' } },
           ],
         },
         {

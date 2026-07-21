@@ -64,8 +64,8 @@ const syncopeCardiac: FlowPage = {
           cat: 'Arrhythmia (Brady or Tachy)',
           tone: 'danger',
           tiles: [
-            { label: ' BRADYARRHYTHMIA — high-grade/3rd-degree AV block · sinus arrest · sick sinus', link: { to: 'disease', id: 'DIS-CARD-ARRHYTHMIA' } },
-            { label: ' TACHYARRHYTHMIA — rapid ventricular tachycardia · SVT', link: { to: 'disease', id: 'DIS-CARD-ARRHYTHMIA' } },
+            { label: 'BRADYARRHYTHMIA', link: { to: 'disease', id: 'DIS-CARD-ARRHYTHMIA' } },
+            { label: 'TACHYARRHYTHMIA', link: { to: 'disease', id: 'DIS-CARD-ARRHYTHMIA' } },
           ],
         },
         {

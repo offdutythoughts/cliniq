@@ -155,7 +155,7 @@ const oedemaPermeability: FlowPage = {
           cat: 'Acute / Allergic',
           tone: 'warning',
           tiles: [
-            { label: ' Angioedema / anaphylaxis / envenomation — acute facial/limb swelling after drug/vaccine/sting/snakebite', link: { to: 'protocol', id: 'PROT-ANAPHYLAXIS' } },
+            { label: 'Angioedema / anaphylaxis / envenomation', link: { to: 'protocol', id: 'PROT-ANAPHYLAXIS' } },
           ],
         },
       ],

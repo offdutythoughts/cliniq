@@ -77,7 +77,7 @@ const polyphagiaWeightLoss: FlowPage = {
             { label: ' EXOCRINE PANCREATIC INSUFFICIENCY', link: { to: 'disease', id: 'DIS-GI-EPI' } },
             { label: ' INFLAMMATORY BOWEL DISEASE', link: { to: 'disease', id: 'DIS-GI-IBD' } },
             { label: ' ALIMENTARY LYMPHOMA', link: { to: 'disease', id: 'DIS-GI-LYMP' } },
-            { label: ' Intestinal parasites — young / unknown deworming', link: { to: 'disease', id: 'DIS-GI-GIARDIA' } },
+            { label: 'Intestinal parasites', link: { to: 'disease', id: 'DIS-GI-GIARDIA' } },
           ],
         },
       ],

@@ -67,7 +67,7 @@ const feverTrue: FlowPage = {
           tiles: [
             { label: ' VECTOR-BORNE DISEASE', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
             { label: ' DISCOSPONDYLITIS', link: { to: 'disease', id: 'DIS-DISCO' } },
-            { label: ' Bacterial endocarditis — new murmur + fever; blood cultures + echo', link: { to: 'disease', id: 'DIS-CARD-IE' } },
+            { label: 'Bacterial endocarditis', link: { to: 'disease', id: 'DIS-CARD-IE' } },
             { label: ' SEPTIC PERITONITIS', link: { to: 'protocol', id: 'PROT-SEPSIS' } },
             { label: ' PYELONEPHRITIS', link: { to: 'disease', id: 'DIS-URO-PYELO' } },
             { label: ' PROSTATITIS', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
@@ -82,7 +82,7 @@ const feverTrue: FlowPage = {
             { label: ' IMMUNE-MEDIATED POLYARTHRITIS', link: { to: 'disease', id: 'DIS-IMPA' } },
             { label: ' SRMA', link: { to: 'disease', id: 'DIS-SRMA' } },
             { label: ' SLE', link: { to: 'disease', id: 'DIS-IM-SLE' } },
-            { label: ' IMHA / IMTP — immune-mediated cytopenias also cause fever', link: { to: 'disease', id: 'DIS-BD-IMHA' } },
+            { label: 'IMHA / IMTP', link: { to: 'disease', id: 'DIS-BD-IMHA' } },
           ],
         },
         {
@@ -91,7 +91,7 @@ const feverTrue: FlowPage = {
           tiles: [
             { label: ' LYMPHOMA / LEUKAEMIA', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
             { label: ' PARANEOPLASTIC FEVER', link: { to: 'disease', id: 'DIS-NEO-PARANEO' } },
-            { label: ' Histiocytic disease — Bernese Mountain Dog predisposition', link: { to: 'disease', id: 'DIS-NEO-HSARC' } },
+            { label: 'Histiocytic disease', link: { to: 'disease', id: 'DIS-NEO-HSARC' } },
           ],
         },
       ],
