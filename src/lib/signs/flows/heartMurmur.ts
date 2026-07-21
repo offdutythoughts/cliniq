@@ -183,7 +183,7 @@ const heartMurmurFunctional: FlowPage = {
           cat: 'High-Output State',
           tone: 'warning',
           tiles: [
-            { label: ' ANAEMIA', link: { to: 'flow', id: 'weakness' } },
+            { label: ' ANAEMIA', link: { to: 'flow', id: 'pale-mm' } },
             { label: ' FEVER / HIGH-OUTPUT STATE — sepsis · pregnancy · high sympathetic tone', terminal: true },
             { label: ' HYPERTHYROIDISM', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
           ],
