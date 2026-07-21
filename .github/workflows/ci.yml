@@ -15,7 +15,7 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - run: npm install --no-audit --no-fund
@@ -31,16 +31,8 @@ jobs:
       - name: Type-check
         run: npx tsc --noEmit
 
-      - name: Content lints (flows · blocks · lesions · chips · tiles)
+      - name: Content lints (protocols · flows · blocks · lesions · chips · tiles)
         run: npm run lint:content
 
       - name: Tests (link-integrity · registry · allowlist)
         run: npm test
-
-      # Non-gating: protocol action-length lint has pre-existing violations
-      # (15 action strings > 130 chars) that need their own reformatting pass.
-      # Surfaced here for visibility without wedging deploys. Remove
-      # continue-on-error once the protocol text is brought under the limit.
-      - name: Protocol action-length lint (non-blocking)
-        run: npm run lint:protocols
-        continue-on-error: true
