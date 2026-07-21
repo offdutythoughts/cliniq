@@ -269,19 +269,16 @@ const haematuriaInitial: FlowPage = {
       <!-- Distal urethra -->
       <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--tone-green-fg);background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3);cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
         🩻 Distal Urethra ›
-        <div style="font-weight:400;font-size:8.5px;margin-top:3px;opacity:.8;">Urolithiasis · TCC / SCC · Granulomatous urethritis · Trauma</div>
       </div>
 
       <!-- Genital tract -->
       <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--hl-pink);background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
         ♀ Genital Tract ›
-        <div style="font-weight:400;font-size:8.5px;margin-top:3px;opacity:.8;">Oestrus · Vaginitis · Vaginal / vulvar tumour · Subinvolution of placental sites</div>
       </div>
 
       <!-- Prostate -->
       <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--tone-info-fg);background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
         ⚙️ Prostate ›
-        <div style="font-weight:400;font-size:8.5px;margin-top:3px;opacity:.8;">BPH · Bacterial prostatitis · Prostatic cyst / abscess · Prostatic carcinoma</div>
       </div>
     </div>
 
