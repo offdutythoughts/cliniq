@@ -18,7 +18,11 @@ jobs:
           node-version: 20
           cache: npm
 
-      - run: npm ci
+      # Use `npm install`, not `npm ci`: `npm ci` skips platform-specific
+      # optional native deps on the Linux runner (npm/cli#4828), which breaks
+      # vitest's rolldown binding. The lockfile is complete, so install honours
+      # it and additionally pulls the correct @rolldown/binding-linux-x64-gnu.
+      - run: npm install --no-audit --no-fund
 
       # Gating checks — a red here blocks the branch.
       - name: Type-check
