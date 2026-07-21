@@ -7,7 +7,7 @@
 
 import { Fragment, useState, type ReactNode } from 'react'
 import type {
-  Block, Column, Endpoint, ChoiceItem, CardTile, CategoryColumn, CatColumn, DecisionStep,
+  Block, Column, Endpoint, ChoiceItem, CardTile, CategoryColumn, CategoryTile, CatColumn, DecisionStep,
   DecisionOutcome, TableCell, TableRow, LabeledLink, Tone, InfoBoxBlock as InfoBoxBlockType,
   AlertItem,
 } from '../../lib/signs/flowTypes'
@@ -30,6 +30,16 @@ const ST_ROW_DIVIDER   = s('grid-column:1/-1;height:1px;background:rgba(var(--sl
 const ST_BLOCK_TITLE   = s('font-size:11px;font-weight:700;margin-bottom:6px;')
 const ST_COL_FLEX      = s('display:flex;flex-direction:column;gap:4px;')
 const ST_UNLINKED_TILE = 'background:var(--card);border:1.5px solid var(--border);color:var(--gray2);opacity:.72;filter:saturate(.2);cursor:default;'
+const ST_TILE_BASE     = 'border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;line-height:1.3;word-break:break-word;'
+// Muted (intentional leaf note): keeps the category hue but visibly de-emphasised
+// — distinct from ST_UNLINKED_TILE (desaturated grey = authoring gap / lint error).
+const ST_TILE_MUTED    = 'opacity:.6;cursor:default;'
+
+// Shared hover-brighten handlers (spread onto any clickable tinted element).
+const hoverBrighten = {
+  onMouseOver: (ev: React.MouseEvent<HTMLElement>) => { ev.currentTarget.style.filter = 'brightness(1.2)' },
+  onMouseOut:  (ev: React.MouseEvent<HTMLElement>) => { ev.currentTarget.style.filter = '' },
+}
 
 // ── Arrow / spine logic (joinBlocks) ─────────────────────────────────────────
 const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout', 'fnHeader', 'cardGrid', 'categoryGrid', 'categoryColumns', 'decisionTree', 'speciesChooser'])
@@ -244,6 +254,45 @@ function CardGridBlock({ perRow, tiles, onNav }: { perRow: number; tiles: CardTi
 }
 
 // ── Category grid (header row → arrow row → tile-column row) ───────────────────
+// One tile inside a categoryGrid column. Four variants:
+//  • `links` (plural) → in-tone header + clickable sub-bullets
+//  • `link`  (single) → clickable in-tone tile
+//  • `terminal`       → in-tone plain info leaf (no page to link to)
+//  • otherwise        → greyed + aria-disabled = authoring gap (missing link)
+function CategoryTileView({ tile, tone, onNav }: { tile: CategoryTile; tone: Tone; onNav: Nav }) {
+  const h = HUE[tone]
+  const tinted = toneBox(h.rgb, h.color).all
+  if (tile.links && tile.links.length > 0) {
+    return (
+      <div style={s(`${ST_TILE_BASE}${tinted}cursor:default;`)}>
+        {tile.label && <div style={s('margin-bottom:4px;')}>{tile.label}</div>}
+        {tile.links.map((ll, k) => (
+          <div key={k} role="button" onClick={() => onNav(linkToView(ll.link))}
+            style={s('cursor:pointer;text-align:left;padding:2px 0;font-size:9.5px;')} {...hoverBrighten}>
+            → {ll.label}
+          </div>
+        ))}
+      </div>
+    )
+  }
+  if (tile.link) {
+    return (
+      <div role="button" onClick={() => onNav(linkToView(tile.link!))} {...hoverBrighten}
+        style={s(`${ST_TILE_BASE}${tinted}cursor:pointer;`)}>
+        {tile.label}
+      </div>
+    )
+  }
+  if (tile.terminal) {
+    return <div style={s(`${ST_TILE_BASE}${tinted}${ST_TILE_MUTED}`)}>{tile.label}</div>
+  }
+  return (
+    <div aria-disabled title="No linked page available" style={s(`${ST_TILE_BASE}${ST_UNLINKED_TILE}`)}>
+      {tile.label}
+    </div>
+  )
+}
+
 function CategoryGridBlock({ columns, onNav }: { columns: CategoryColumn[]; onNav: Nav }) {
   const n = columns.length
   const gridStyle = s(`display:grid;grid-template-columns:repeat(${n},1fr);gap:6px;width:100%;`)
@@ -258,36 +307,11 @@ function CategoryGridBlock({ columns, onNav }: { columns: CategoryColumn[]; onNa
       </div>
       <div style={gridStyle}>{columns.map((_, i) => <div key={i} className="flow-arrow-v">↓</div>)}</div>
       <div style={gridStyle}>
-        {columns.map((c, i) => {
-          const h = HUE[c.tone]
-          return (
-            <div key={i} style={ST_COL_FLEX}>
-              {c.tiles.map((t, j) => {
-                if (t.links && t.links.length > 0) {
-                  return (
-                    <div key={j} style={s(`border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;${toneBox(h.rgb,h.color).all}cursor:default;line-height:1.3;word-break:break-word;`)}>
-                      {t.label && <div style={s('margin-bottom:4px;')}>{t.label}</div>}
-                      {t.links.map((ll, k) => (
-                        <div key={k} role="button" onClick={() => onNav(linkToView(ll.link))}
-                          style={s('cursor:pointer;text-align:left;padding:2px 0;font-size:9.5px;')}
-                          onMouseOver={(ev) => { ev.currentTarget.style.filter = 'brightness(1.2)' }}
-                          onMouseOut={(ev) => { ev.currentTarget.style.filter = '' }}>
-                          → {ll.label}
-                        </div>
-                      ))}
-                    </div>
-                  )
-                }
-                return (
-                  <div key={j} style={s(`border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;${t.link ? `${toneBox(h.rgb,h.color).all}cursor:pointer;` : ST_UNLINKED_TILE}line-height:1.3;word-break:break-word;`)}
-                    {...(t.link ? { role: 'button', onClick: () => onNav(linkToView(t.link!)), onMouseOver: (ev: React.MouseEvent<HTMLDivElement>) => { ev.currentTarget.style.filter = 'brightness(1.2)' }, onMouseOut: (ev: React.MouseEvent<HTMLDivElement>) => { ev.currentTarget.style.filter = '' } } : { 'aria-disabled': true, title: 'No linked page available' })}>
-                    {t.label}
-                  </div>
-                )
-              })}
-            </div>
-          )
-        })}
+        {columns.map((c, i) => (
+          <div key={i} style={ST_COL_FLEX}>
+            {c.tiles.map((t, j) => <CategoryTileView key={j} tile={t} tone={c.tone} onNav={onNav} />)}
+          </div>
+        ))}
       </div>
     </>
   )
@@ -343,18 +367,26 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
                     {t.label && <div style={s('margin-bottom:3px;')}>{t.label}</div>}
                     {t.links.map((ll, k) => (
                       <div key={k} role="button" onClick={() => onNav(linkToView(ll.link))}
-                        style={s('cursor:pointer;text-align:left;padding:1px 0;font-size:8.5px;')}
-                        onMouseOver={(ev) => { ev.currentTarget.style.filter = 'brightness(1.2)' }}
-                        onMouseOut={(ev) => { ev.currentTarget.style.filter = '' }}>
+                        style={s('cursor:pointer;text-align:left;padding:1px 0;font-size:8.5px;')} {...hoverBrighten}>
                         → {ll.label}
                       </div>
                     ))}
                   </div>
                 )
               }
+              const tinted = `background:${st.bg};border:1.5px solid ${st.border};color:${st.col};`
+              const chip = (extra: string) => s(`${extra}border-radius:8px;padding:${chipPad};font-size:${chipFs}px;font-weight:600;text-align:center;line-height:1.35;`)
+              if (t.link) {
+                return (
+                  <div key={j} role="button" onClick={() => onNav(linkToView(t.link!))} {...hoverBrighten}
+                    style={chip(`${tinted}cursor:pointer;`)}>{t.label}</div>
+                )
+              }
+              if (t.terminal) {
+                return <div key={j} style={chip(`${tinted}${ST_TILE_MUTED}`)}>{t.label}</div>
+              }
               return (
-                <div key={j} style={s(`${t.link ? `background:${st.bg};border:1.5px solid ${st.border};color:${st.col};cursor:pointer;` : ST_UNLINKED_TILE}border-radius:8px;padding:${chipPad};font-size:${chipFs}px;font-weight:600;text-align:center;line-height:1.35;`)}
-                  {...(t.link ? { role: 'button', onClick: () => onNav(linkToView(t.link!)) } : { 'aria-disabled': true, title: 'No linked page available' })}>
+                <div key={j} aria-disabled title="No linked page available" style={chip(ST_UNLINKED_TILE)}>
                   {t.label}
                 </div>
               )

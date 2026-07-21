@@ -79,7 +79,7 @@ const tremorsToxic: FlowPage = {
             { label: ' ORGANOPHOSPHATE / CARBAMATE', link: { to: 'protocol', id: 'PROT-TOX-OP' } },
             { label: ' LEAD', link: { to: 'protocol', id: 'PROT-TOX-LEAD' } },
             { label: ' Methylxanthines / other — caffeine · theobromine · xylitol · bromethalin · cannabis · macadamia', link: { to: 'disease', id: 'DIS-TOXIC-METHYL' } },
-            { label: ' Ivermectin / macrocyclic lactones (MDR1 breeds)' },
+            { label: ' Ivermectin / macrocyclic lactones (MDR1 breeds)', terminal: true },
           ],
         },
         {
@@ -120,7 +120,10 @@ const tremorsCerebellar: FlowPage = {
           tiles: [
             { label: ' MUO / MENINGOENCEPHALITIS', link: { to: 'disease', id: 'DIS-NEU-MUE' } },
             { label: ' GME', link: { to: 'disease', id: 'DIS-GME' } },
-            { label: ' Infectious encephalitis (CDV, Neospora, Toxoplasma)' },
+            { label: ' Infectious encephalitis (CDV, Neospora, Toxoplasma)', links: [
+              { label: 'CDV encephalitis', link: { to: 'disease', id: 'DIS-INFECT-CDV' } },
+              { label: 'Toxoplasma / Neospora', link: { to: 'disease', id: 'DIS-INFECT-TOXO' } },
+            ] },
           ],
         },
         {
@@ -157,7 +160,7 @@ const tremorsIdiopathic: FlowPage = {
           tiles: [
             { label: ' Idiopathic head tremor (IHTS) — "head-bobbing"; Bulldog/Boxer/Doberman/Labrador; benign, AED-unresponsive', link: { to: 'disease', id: 'DIS-NEU-IHTS' } },
             { label: ' Hypomyelination ("shaker pup") — tremor from ~10 days of age when aroused; many recover by 5 months', link: { to: 'disease', id: 'DIS-NEU-HYPOMYEL' } },
-            { label: ' Orthostatic tremor — limb/trunk tremor only when standing; Great Dane/Deerhound or senile' },
+            { label: ' Orthostatic tremor — limb/trunk tremor only when standing; Great Dane/Deerhound or senile', terminal: true },
           ],
         },
       ],

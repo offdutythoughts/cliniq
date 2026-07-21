@@ -150,7 +150,7 @@ const anisocoriaMydriasis: FlowPage = {
       columns: [
         { cat: 'Neurological', tone: 'violet', tiles: [{ label: 'CN III / Brainstem', link: { to: 'flow', id: 'anisocoria-mydriasis-localise' } }] },
         { cat: 'Afferent', tone: 'info', tiles: [{ label: 'Retina / Optic nerve', link: { to: 'lesion', loc: 'LOC-AP-RETINA', name: 'Retina / Optic nerve' } }] },
-        { cat: 'Drug-induced', tone: 'teal', tiles: [{ label: 'Pharmacological mydriasis' }] },
+        { cat: 'Drug-induced', tone: 'teal', tiles: [{ label: 'Pharmacological mydriasis', terminal: true }] },
         { cat: 'Iris / Ocular', tone: 'warning', tiles: [
           { label: 'Iris atrophy', link: { to: 'lesion', loc: 'LOC-AP-IRIS', name: 'Iris' } },
           { label: 'Glaucoma', link: { to: 'lesion', loc: 'LOC-RE-GLAUCOMA', name: 'Glaucoma' } },
@@ -232,8 +232,8 @@ const anisocoriaHorners: FlowPage = {
       columns: [
         { cat: 'Sympathetic', tone: 'info', tiles: [{ label: "Horner's syndrome", link: { to: 'disease', id: 'DIS-NEU-HORNERS' } }] },
         { cat: 'Uveal', tone: 'danger', tiles: [{ label: 'Anterior uveitis', link: { to: 'lesion', loc: 'LOC-RE-UVEA', name: 'Anterior uvea' } }] },
-        { cat: 'Drug-induced', tone: 'teal', tiles: [{ label: 'Pharmacological miosis' }] },
-        { cat: 'Structural', tone: 'slate', tiles: [{ label: 'Iris sphincter damage' }] },
+        { cat: 'Drug-induced', tone: 'teal', tiles: [{ label: 'Pharmacological miosis', terminal: true }] },
+        { cat: 'Structural', tone: 'slate', tiles: [{ label: 'Iris sphincter damage', terminal: true }] },
       ],
     },
   ],

@@ -107,7 +107,7 @@ const syncopeReflex: FlowPage = {
           tone: 'teal',
           tiles: [
             { label: ' VASOVAGAL SYNCOPE', link: { to: 'disease', id: 'DIS-CARD-ARRHYTHMIA' } },
-            { label: ' Tussive / situational syncope — cough, vomiting, micturition, defecation, swallowing' },
+            { label: ' Tussive / situational syncope — cough, vomiting, micturition, defecation, swallowing', terminal: true },
           ],
         },
         {

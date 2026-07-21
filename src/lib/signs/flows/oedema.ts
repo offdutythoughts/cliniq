@@ -117,9 +117,9 @@ const oedemaHydrostatic: FlowPage = {
           cat: 'Venous / Lymphatic (Localised)',
           tone: 'info',
           tiles: [
-            { label: ' Cranial vena cava syndrome — mediastinal mass / thrombus / pacing lead' },
+            { label: ' Cranial vena cava syndrome — mediastinal mass / thrombus / pacing lead', terminal: true },
             { label: ' Caudal vena cava / venous thrombosis', link: { to: 'disease', id: 'DIS-BD-HYPERCOAG' } },
-            { label: ' Lymphoedema (congenital or acquired) — non-pitting single-limb swelling' },
+            { label: ' Lymphoedema (congenital or acquired) — non-pitting single-limb swelling', terminal: true },
           ],
         },
       ],

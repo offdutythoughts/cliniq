@@ -176,7 +176,7 @@ const heartMurmurFunctional: FlowPage = {
           cat: 'Physiological / Developmental',
           tone: 'green',
           tiles: [
-            { label: ' INNOCENT PUPPY / KITTEN MURMUR — soft left-base systolic · resolves by ~16 weeks' },
+            { label: ' INNOCENT PUPPY / KITTEN MURMUR — soft left-base systolic · resolves by ~16 weeks', terminal: true },
           ],
         },
         {
@@ -184,7 +184,7 @@ const heartMurmurFunctional: FlowPage = {
           tone: 'warning',
           tiles: [
             { label: ' ANAEMIA', link: { to: 'flow', id: 'weakness' } },
-            { label: ' FEVER / HIGH-OUTPUT STATE — sepsis · pregnancy · high sympathetic tone' },
+            { label: ' FEVER / HIGH-OUTPUT STATE — sepsis · pregnancy · high sympathetic tone', terminal: true },
             { label: ' HYPERTHYROIDISM', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
           ],
         },

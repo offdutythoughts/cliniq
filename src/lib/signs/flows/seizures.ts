@@ -159,10 +159,10 @@ const seizuresStructural: FlowPage = {
         ]},
         { cat: 'Inflammatory', tiles: [
           { label: 'MUO / GME', link: { to: 'disease', id: 'DIS-NEU-MUE' } },
-          { label: 'CDV encephalitis (dog)' },
-          { label: 'FIP (cat)' },
-          { label: 'Toxoplasma / Neospora' },
-          { label: 'Cryptococcus' },
+          { label: 'CDV encephalitis (dog)', link: { to: 'disease', id: 'DIS-INFECT-CDV' } },
+          { label: 'FIP (cat)', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
+          { label: 'Toxoplasma / Neospora', link: { to: 'disease', id: 'DIS-INFECT-TOXO' } },
+          { label: 'Cryptococcus', link: { to: 'disease', id: 'DIS-RESP-CRYPTO' } },
         ]},
         { cat: 'Trauma', tiles: [
           { label: 'Head trauma', link: { to: 'disease', id: 'DIS-NEU-HEADTRAUMA' } },
@@ -174,18 +174,18 @@ const seizuresStructural: FlowPage = {
         { cat: 'Mass', tiles: [
           { label: 'Meningioma', link: { to: 'disease', id: 'DIS-NEU-BRAINTUM' } },
           { label: 'Glioma', link: { to: 'disease', id: 'DIS-NEU-BRAINTUM' } },
-          { label: 'CNS lymphoma' },
-          { label: 'Metastatic' },
+          { label: 'CNS lymphoma', link: { to: 'disease', id: 'DIS-NEU-BRAINTUM' } },
+          { label: 'Metastatic', link: { to: 'disease', id: 'DIS-NEU-BRAINTUM' } },
         ]},
         { cat: 'Metabolic / Endocrine', tiles: [
-          { label: 'NCL / lysosomal storage' },
+          { label: 'NCL / lysosomal storage', terminal: true },
         ]},
         { cat: 'Immune-mediated', tiles: [
           { label: 'MUO (NME / NLE / MUA)', link: { to: 'disease', id: 'DIS-NEU-MUE' } },
         ]},
         { cat: 'Degenerative', tiles: [
-          { label: 'Neuronal degeneration' },
-          { label: 'Breed-specific degen.' },
+          { label: 'Neuronal degeneration', terminal: true },
+          { label: 'Breed-specific degen.', terminal: true },
         ]},
       ],
     },

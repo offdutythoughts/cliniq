@@ -147,7 +147,7 @@ const cyanosisMethb: FlowPage = {
           tiles: [
             { label: ' AORTIC THROMBOEMBOLISM', link: { to: 'disease', id: 'DIS-CARD-ATE' } },
             { label: ' SHOCK / HYPOTENSION', link: { to: 'flow', id: 'pale-mm' } },
-            { label: ' Hypothermia / vasoconstriction — distal extremities, normal SaO2' },
+            { label: ' Hypothermia / vasoconstriction — distal extremities, normal SaO2', terminal: true },
           ],
         },
       ],

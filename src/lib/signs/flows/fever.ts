@@ -113,21 +113,34 @@ const feverHyperthermia: FlowPage = {
           tone: 'danger',
           tiles: [
             { label: ' HEATSTROKE — cool to 39.4°C then stop', link: { to: 'protocol', id: 'PROT-HEATSTROKE' } },
-            { label: ' EXERTIONAL / ENVIRONMENTAL — exercise in heat · overweight · upper-airway compromise' },
+            { label: ' EXERTIONAL / ENVIRONMENTAL — exercise in heat · overweight · upper-airway compromise', link: { to: 'protocol', id: 'PROT-HEATSTROKE' } },
           ],
         },
         {
           cat: 'Neurological / Metabolic',
           tone: 'warning',
           tiles: [
-            { label: ' SEIZURES / TREMORS — sustained muscle activity → temperature rise' },
+            {
+              label: ' SEIZURES / TREMORS — sustained muscle activity → temperature rise',
+              links: [
+                { label: 'Seizures', link: { to: 'flow', id: 'seizures' } },
+                { label: 'Tremors', link: { to: 'flow', id: 'tremors' } },
+              ],
+            },
+            {
+              label: ' HYPERMETABOLIC — hyperthyroid · hypocalcaemia',
+              links: [
+                { label: 'Hyperthyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
+                { label: 'Hypocalcaemia (tremors)', link: { to: 'flow', id: 'tremors' } },
+              ],
+            },
           ],
         },
         {
           cat: 'Miscellaneous',
           tone: 'slate',
           tiles: [
-            { label: ' STRESS HYPERTHERMIA — clinic/handling; rest 20 min, re-measure' },
+            { label: ' STRESS HYPERTHERMIA — clinic/handling; rest 20 min, re-measure', terminal: true },
           ],
         },
       ],

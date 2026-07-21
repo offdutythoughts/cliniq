@@ -116,7 +116,7 @@ const melenaLower: FlowPage = {
           tiles: [
             { label: ' COLORECTAL NEOPLASIA / POLYP', link: { to: 'disease', id: 'DIS-GI-CRC' } },
             { label: ' ANAL-SAC DISEASE / AGASACA', link: { to: 'disease', id: 'DIS-NEO-AGASACA' } },
-            { label: ' Perineal / anorectal lesion — surface blood only; bite wound · stricture' },
+            { label: ' Perineal / anorectal lesion — surface blood only; bite wound · stricture', terminal: true },
           ],
         },
       ],

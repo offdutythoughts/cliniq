@@ -99,7 +99,7 @@ const polyphagiaWeightGain: FlowPage = {
           tone: 'warning',
           tiles: [
             { label: ' GLUCOCORTICOIDS / iatrogenic', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
-            { label: ' ANTICONVULSANTS — phenobarbital, KBr' },
+            { label: ' ANTICONVULSANTS — phenobarbital, KBr', terminal: true },
             { label: ' HYPERADRENOCORTICISM (dog)', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
             { label: ' FELINE HYPERADRENOCORTICISM', link: { to: 'disease', id: 'DIS-ENDO-HAC-CAT' } },
           ],
@@ -116,8 +116,8 @@ const polyphagiaWeightGain: FlowPage = {
           cat: 'Behavioural',
           tone: 'slate',
           tiles: [
-            { label: ' Overfeeding / palatable diet — most common' },
-            { label: ' Psychogenic / behavioural — stress, food competition, learned begging' },
+            { label: ' Overfeeding / palatable diet — most common', terminal: true },
+            { label: ' Psychogenic / behavioural — stress, food competition, learned begging', terminal: true },
           ],
         },
       ],

@@ -173,8 +173,8 @@ const haematuriaPseudo: FlowPage = {
           cat: 'Pigmenturia',
           tone: 'teal',
           tiles: [
-            { label: 'Dietary (beetroot · food dye)' },
-            { label: 'Drugs (rifampin · phenazopyridine)' },
+            { label: 'Dietary (beetroot · food dye)', terminal: true },
+            { label: 'Drugs (rifampin · phenazopyridine)', terminal: true },
           ],
         },
       ],

@@ -157,7 +157,7 @@ const anorexiaTrue: FlowPage = {
           cat: 'Pain · CNS',
           tone: 'slate',
           tiles: [
-            { label: 'Occult pain · nausea · CNS' },
+            { label: 'Occult pain · nausea · CNS', terminal: true },
           ],
         },
       ],

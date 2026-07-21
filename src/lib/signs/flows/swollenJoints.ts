@@ -137,7 +137,7 @@ const swollenJointsNoninflam: FlowPage = {
           tone: 'slate',
           tiles: [
             { label: ' OSTEOARTHRITIS / DJD — conformational · CCL rupture · patellar luxation · secondary OA', link: { to: 'disease', id: 'DIS-MSK-OA' } },
-            { label: ' TRAUMA / HAEMARTHROSIS — cruciate injury; haemarthrosis from a bleeding disorder' },
+            { label: ' TRAUMA / HAEMARTHROSIS — cruciate injury; haemarthrosis from a bleeding disorder', terminal: true },
           ],
         },
         {

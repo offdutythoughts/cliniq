@@ -144,8 +144,12 @@ export type CardSectionBlock = Connectable & {
  *  connector arrows, then a row of tile-columns (each column 1+ clickable
  *  tiles). The mydriasis/miosis cause pages; later jaundice/pale/seizures.
  *  Use `links` (plural) when a tile represents multiple distinct diseases —
- *  the renderer shows sub-bullets for each. Use `link` for a single target. */
-export type CategoryTile = { label: string; link?: Link; links?: LabeledLink[] }
+ *  the renderer shows sub-bullets for each. Use `link` for a single target.
+ *  Set `terminal:true` for an intentional leaf note that has no page to link
+ *  to (renders in-tone as plain info, NOT greyed). A tile with neither a
+ *  link nor `terminal` renders greyed + aria-disabled and is treated as an
+ *  authoring gap (a forgotten link). */
+export type CategoryTile = { label: string; link?: Link; links?: LabeledLink[]; terminal?: boolean }
 export type CategoryColumn = { cat: string; tone: Tone; tiles: CategoryTile[] }
 export type CategoryGridBlock = Connectable & { kind: 'categoryGrid'; columns: CategoryColumn[] }
 
@@ -167,7 +171,7 @@ export type CatLabel =
 /** A wrapping `cols`-column grid of self-contained category units (header +
  *  coloured ↓ + chips). `cat` should be a `CatLabel` for automatic CSS-variable
  *  colouring; set `tone` to override for a custom column label. */
-export type CatColumnTile = { label: string; link?: Link; links?: LabeledLink[] }
+export type CatColumnTile = { label: string; link?: Link; links?: LabeledLink[]; terminal?: boolean }
 /** `tone` overrides the CAT_STYLE palette lookup — use for custom-coloured columns
  *  that don't correspond to a shared category label (e.g. "Haemoglobinuria"). */
 export type CatColumn = { cat: CatLabel | string; tone?: Tone; tiles: CatColumnTile[] }
