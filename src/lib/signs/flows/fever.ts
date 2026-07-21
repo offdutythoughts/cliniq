@@ -106,41 +106,37 @@ const feverHyperthermia: FlowPage = {
     { kind: 'node', variant: 'entry', text: ' HYPERTHERMIA — non-pyrogenic', sub: 'Heatstroke · exercise (Labradors reach 42.2°C / 108°F) · seizures · hypermetabolic (hyperthyroid, hypocalcaemia) · drugs (opioids, ketamine/phenobarbital in cats, SSRIs) · stress. ACTIVELY COOL if >41.1°C (106°F).' },
     { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
     {
-      kind: 'categoryGrid',
+      kind: 'categoryColumns',
       columns: [
         {
           cat: 'Environmental / Exertional',
           tone: 'danger',
           tiles: [
-            { label: ' HEATSTROKE — cool to 39.4°C then stop', link: { to: 'protocol', id: 'PROT-HEATSTROKE' } },
-            { label: ' EXERTIONAL / ENVIRONMENTAL — exercise in heat · overweight · upper-airway compromise', link: { to: 'protocol', id: 'PROT-HEATSTROKE' } },
+            { label: 'Heatstroke', link: { to: 'disease', id: 'DIS-ENV-HEAT' } },
+            { label: 'Exertional / environmental', link: { to: 'disease', id: 'DIS-ENV-HEAT' } },
           ],
         },
         {
-          cat: 'Neurological / Metabolic',
+          cat: 'Neurological',
           tone: 'warning',
           tiles: [
-            {
-              label: ' SEIZURES / TREMORS — sustained muscle activity → temperature rise',
-              links: [
-                { label: 'Seizures', link: { to: 'flow', id: 'seizures' } },
-                { label: 'Tremors', link: { to: 'flow', id: 'tremors' } },
-              ],
-            },
-            {
-              label: ' HYPERMETABOLIC — hyperthyroid · hypocalcaemia',
-              links: [
-                { label: 'Hyperthyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
-                { label: 'Hypocalcaemia (tremors)', link: { to: 'flow', id: 'tremors' } },
-              ],
-            },
+            { label: 'Seizures', link: { to: 'flow', id: 'seizures' } },
+            { label: 'Tremors', link: { to: 'flow', id: 'tremors' } },
+          ],
+        },
+        {
+          // No `tone` → picks up the shared CAT_STYLE "Metabolic / Endocrine" colour.
+          cat: 'Metabolic / Endocrine',
+          tiles: [
+            { label: 'Hyperthyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
+            { label: 'Hypocalcaemia', link: { to: 'disease', id: 'DIS-ENDO-HYPOPTH' } },
           ],
         },
         {
           cat: 'Miscellaneous',
           tone: 'slate',
           tiles: [
-            { label: ' STRESS HYPERTHERMIA — clinic/handling; rest 20 min, re-measure', terminal: true },
+            { label: 'Stress hyperthermia', terminal: true },
           ],
         },
       ],

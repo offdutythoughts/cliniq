@@ -246,7 +246,7 @@ const paleGumsCardiac: FlowPage = {
       connectAfter: false,
       columns: [
         { cat: 'Degenerative', tiles: [{ label: 'DCM (dog)', link: { to: 'disease', id: 'DIS-CARD-DCM' } }, { label: 'HCM (cat)', link: { to: 'disease', id: 'DIS-HCM' } }] },
-        { cat: 'Vascular', tiles: [{ label: 'Pericardial effusion / tamponade', link: { to: 'protocol', id: 'PROT-PERICARDIO' } }] },
+        { cat: 'Vascular', tiles: [{ label: 'Pericardial effusion / tamponade', link: { to: 'disease', id: 'DIS-CARD-PERIC' } }] },
         { cat: 'Anomalous', tiles: [{ label: 'Congenital defects', terminal: true }] },
         { cat: 'Mass', tiles: [{ label: 'Cardiac neoplasia', terminal: true }] },
       ],

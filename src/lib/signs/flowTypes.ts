@@ -173,7 +173,11 @@ export type CatLabel =
  *  (≥5 columns) clamp to a min width and scroll horizontally rather than crush.
  *  `cat` should be a `CatLabel` for automatic CSS-variable colouring; set `tone`
  *  to override for a custom column label. */
-export type CatColumnTile = { label: string; link?: Link; links?: LabeledLink[]; terminal?: boolean }
+// `categoryColumns` tiles are structurally identical to `categoryGrid` tiles —
+// same variants (link / links / terminal / authoring-gap). Keep ONE tile type so
+// a new tile field (e.g. a future `sublabel`) is added once and both blocks + the
+// shared renderer pick it up. Alias retained for call-site readability.
+export type CatColumnTile = CategoryTile
 /** `tone` overrides the CAT_STYLE palette lookup — use for custom-coloured columns
  *  that don't correspond to a shared category label (e.g. "Haemoglobinuria"). */
 export type CatColumn = { cat: CatLabel | string; tone?: Tone; tiles: CatColumnTile[] }
