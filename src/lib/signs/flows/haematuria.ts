@@ -263,6 +263,14 @@ const haematuriaTrueSystemic: FlowPage = {
     </div>`,
     },
 
+    {
+      kind: 'diseaseGrid',
+      title: 'RELATED FLOWCHART',
+      links: [
+        { label: 'Bleeding / Petechiae / Ecchymoses — primary vs secondary haemostasis', link: { to: 'flow', id: 'bleeding' } },
+      ],
+    },
+
     { kind: 'disclaimer' },
   ],
 }
@@ -297,54 +305,21 @@ const haematuriaInitial: FlowPage = {
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
 
       <!-- Distal urethra -->
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--tone-green-fg);background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3);">🩻 Distal Urethra</div>
-        <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:var(--tone-green-fg);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          <strong>Urolithiasis</strong><br><span style="opacity:.75;">Urethral stone · stranguria · obstruction risk</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:var(--tone-green-fg);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          <strong>TCC / SCC</strong><br><span style="opacity:.75;">Older dog · palpable mass · CADET BRAF</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:var(--tone-green-fg);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          <strong>Granulomatous urethritis</strong><br><span style="opacity:.75;">Bitch · mimics TCC · CADET BRAF negative</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(16,185,129,0.06);border:1.5px solid rgba(16,185,129,0.25);color:var(--tone-green-fg);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
-          <strong>Trauma</strong><br><span style="opacity:.75;">Pelvic fracture · catheter injury · retrograde urethrogram</span>
-        </div>
+      <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--tone-green-fg);background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3);cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
+        🩻 Distal Urethra ›
+        <div style="font-weight:400;font-size:8.5px;margin-top:3px;opacity:.8;">Urolithiasis · TCC / SCC · Granulomatous urethritis · Trauma</div>
       </div>
 
       <!-- Genital tract -->
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--hl-pink);background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);">♀ Genital Tract</div>
-        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:var(--hl-pink);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          <strong>Oestrus</strong><br><span style="opacity:.75;">Intact bitch · pro-oestrus / oestrus · confirm with timed vaginal cytology</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:var(--hl-pink);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          <strong>Vaginitis</strong><br><span style="opacity:.75;">Juvenile or adult · discharge · vaginoscopy</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:var(--hl-pink);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          <strong>Vaginal / vulvar tumour</strong><br><span style="opacity:.75;">Leiomyoma (benign intact), TVT, fibrosarcoma</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(236,72,153,0.06);border:1.5px solid rgba(236,72,153,0.25);color:var(--hl-pink);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
-          <strong>Subinvolution of placental sites</strong><br><span style="opacity:.75;">Post-whelp bitch · persistent haemorrhagic discharge</span>
-        </div>
+      <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--hl-pink);background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
+        ♀ Genital Tract ›
+        <div style="font-weight:400;font-size:8.5px;margin-top:3px;opacity:.8;">Oestrus · Vaginitis · Vaginal / vulvar tumour · Subinvolution of placental sites</div>
       </div>
 
       <!-- Prostate -->
-      <div style="display:flex;flex-direction:column;gap:4px;">
-        <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--tone-info-fg);background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);">⚙️ Prostate</div>
-        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:var(--tone-info-fg);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          <strong>BPH</strong><br><span style="opacity:.75;">Intact male · symmetric enlargement · drip of clear-bloody fluid</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:var(--tone-info-fg);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          <strong>Bacterial prostatitis</strong><br><span style="opacity:.75;">Pyrexia · painful DRE · E. coli most common</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:var(--tone-info-fg);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          <strong>Prostatic cyst / abscess</strong><br><span style="opacity:.75;">Fluctuant on US · surgical drainage</span>
-        </div>
-        <div class="flow-endpoint" style="background:rgba(37,99,235,0.06);border:1.5px solid rgba(37,99,235,0.25);color:var(--tone-info-fg);font-size:9px;cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
-          <strong>Prostatic carcinoma</strong><br><span style="opacity:.75;">Intact OR neutered · asymmetric · fixed · sublumbar LN</span>
-        </div>
+      <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--tone-info-fg);background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
+        ⚙️ Prostate ›
+        <div style="font-weight:400;font-size:8.5px;margin-top:3px;opacity:.8;">BPH · Bacterial prostatitis · Prostatic cyst / abscess · Prostatic carcinoma</div>
       </div>
     </div>
 
