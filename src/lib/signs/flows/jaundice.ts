@@ -101,15 +101,15 @@ const jaundicePreHep: FlowPage = {
       kind: 'categoryColumns',
       columns: [
         { cat: 'Immune-mediated', tiles: [{ label: 'IMHA', link: { to: 'disease', id: 'DIS-BD-IMHA' } }] },
-        { cat: 'Inflammatory', tiles: [{ label: 'Babesia / Mycoplasma', links: [
+        { cat: 'Inflammatory', tiles: [
           { label: 'Babesiosis', link: { to: 'disease', id: 'DIS-BD-BABS' } },
           { label: 'Haemotropic Mycoplasma', link: { to: 'disease', id: 'DIS-INFECT-HMYCO' } },
-        ] }] },
-        { cat: 'Toxic', tiles: [{ label: 'Zinc · Allium · Paracetamol', links: [
+        ] },
+        { cat: 'Toxic', tiles: [
           { label: 'Zinc toxicosis', link: { to: 'disease', id: 'DIS-TOX-ZN' } },
           { label: 'Allium toxicosis', link: { to: 'disease', id: 'DIS-TOX-ALLIUM' } },
           { label: 'Paracetamol toxicosis', link: { to: 'disease', id: 'DIS-TOX-APAP' } },
-        ] }] },
+        ] },
         { cat: 'Vascular', tiles: [{ label: 'Body cavity haemorrhage', terminal: true }] },
         { cat: 'Anomalous', tiles: [
           { label: 'PK deficiency', terminal: true },
