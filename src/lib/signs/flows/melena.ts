@@ -56,21 +56,33 @@ const melenaUpper: FlowPage = {
   title: 'Melena — Upper GI / Small Intestine',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' MELENA — UPPER GI / small intestine', sub: 'Black tarry digested stool · ± vomiting / haematemesis · BUN:Cr >30 (>27:1 well-hydrated) supports upper GI bleed' },
-    { kind: 'node', variant: 'step', text: 'GASTRODUODENAL ULCER vs OTHER UPPER-GI CAUSE?' },
+    { kind: 'node', variant: 'step', text: 'CATEGORISE THE UPPER-GI CAUSE' },
     {
       kind: 'categoryGrid',
+      connectAfter: false,
       columns: [
         {
-          cat: 'Gastroduodenal Ulceration',
-          tone: 'orange',
+          cat: 'Inflammatory',
+          tone: 'warning',
           tiles: [
-            { label: ' NSAID / STEROID ULCER', link: { to: 'disease', id: 'DIS-GI-ULC' } },
-            { label: 'MAST-CELL TUMOUR', link: { to: 'disease', id: 'DIS-NEO-MCT' } },
-            { label: 'GASTRINOMA', link: { to: 'disease', id: 'DIS-ENDO-GASTRINOMA' } },
+            { label: 'Gastric ulceration', link: { to: 'disease', id: 'DIS-GI-ULC' } },
+            { label: 'Chronic enteropathy (IBD)', link: { to: 'disease', id: 'DIS-GI-IBD' } },
+            { label: ' Helicobacter gastritis', link: { to: 'disease', id: 'DIS-GI-HELICO' } },
+          ],
+        },
+        {
+          cat: 'Metabolic',
+          tone: 'teal',
+          tiles: [
             { label: 'Hepatic disease (PSS / portal hypertension)', link: { to: 'disease', id: 'DIS-HEP-PSS' } },
             { label: 'Renal disease (uraemic gastropathy)', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
           ],
         },
+      ],
+    },
+    {
+      kind: 'categoryGrid',
+      columns: [
         {
           cat: 'Infectious / Parasitic',
           tone: 'danger',
@@ -78,17 +90,17 @@ const melenaUpper: FlowPage = {
             { label: ' AHDS (raspberry-jam)', link: { to: 'disease', id: 'DIS-GI-AHDS' } },
             { label: ' PARVOVIRUS', link: { to: 'disease', id: 'DIS-GI-PARVO' } },
             { label: 'PARASITES', link: { to: 'flow', id: 'gi-parasites' } },
-            { label: ' Helicobacter gastritis', link: { to: 'disease', id: 'DIS-GI-HELICO' } },
           ],
         },
         {
-          cat: 'Neoplastic / Inflammatory',
+          cat: 'Neoplastic',
           tone: 'violet',
           tiles: [
             { label: 'Adenocarcinoma', link: { to: 'disease', id: 'DIS-GI-ADENO' } },
             { label: 'GIST / leiomyosarcoma', link: { to: 'disease', id: 'DIS-GI-GIST' } },
             { label: 'Alimentary lymphoma', link: { to: 'disease', id: 'DIS-GI-LYMP' } },
-            { label: 'Chronic enteropathy (IBD)', link: { to: 'disease', id: 'DIS-GI-IBD' } },
+            { label: 'Mast cell tumour', link: { to: 'disease', id: 'DIS-NEO-MCT' } },
+            { label: 'Gastrinoma', link: { to: 'disease', id: 'DIS-ENDO-GASTRINOMA' } },
           ],
         },
       ],
