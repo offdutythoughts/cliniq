@@ -293,10 +293,27 @@ function CategoryTileView({ tile, tone, onNav }: { tile: CategoryTile; tone: Ton
   )
 }
 
+// A categoryGrid renders three column-aligned rows (category headers → arrows →
+// tile stacks). ≤3 columns fill the width (repeat(n,1fr)). With 4+ columns,
+// squeezing every category into a 1fr track crushes the labels (mid-word
+// breaks) — and splitting them across stacked blocks staggers the rows (the
+// "boxes not on one line" bug). So clamp each column to a legible min-width and
+// let the whole grid scroll horizontally as ONE unit, keeping every category on
+// a single aligned line. All three rows share `gridStyle` (identical template +
+// min-width) so their columns stay locked together while scrolling — this is the
+// same spill principle CategoryColumnsBlock uses for crowded lesion layouts.
+// Tuned so four categories fit the app's ~568px flow column without scrolling on
+// tablet/desktop (4×130 + gaps ≈ 538 < 568), while narrower phones scroll the
+// single line rather than crush it. Wide enough that the longest single-word
+// labels ("Adenocarcinoma") never break mid-word.
+const CAT_GRID_MIN_COL = 130
 function CategoryGridBlock({ columns, onNav }: { columns: CategoryColumn[]; onNav: Nav }) {
   const n = columns.length
-  const gridStyle = s(`display:grid;grid-template-columns:repeat(${n},1fr);gap:6px;width:100%;`)
-  return (
+  const wide = n >= 4
+  const gridStyle = wide
+    ? s(`display:grid;grid-template-columns:repeat(${n},minmax(${CAT_GRID_MIN_COL}px,1fr));gap:6px;`)
+    : s(`display:grid;grid-template-columns:repeat(${n},1fr);gap:6px;width:100%;`)
+  const rows = (
     <>
       <div style={gridStyle}>
         {columns.map((c, i) => {
@@ -315,6 +332,10 @@ function CategoryGridBlock({ columns, onNav }: { columns: CategoryColumn[]; onNa
       </div>
     </>
   )
+  // Wrap wide grids so the horizontal overflow scrolls inside this block (a
+  // `.flow-wrap > *` child, capped at max-width:100%) rather than the page. The
+  // inner flex column reinstates the 8px row gap the fragment got from flow-wrap.
+  return wide ? <div style={s(`${SCROLL_X}display:flex;flex-direction:column;gap:8px;`)}>{rows}</div> : rows
 }
 
 // ── Category columns (CAT_STYLE) ──────────────────────────────────────────────

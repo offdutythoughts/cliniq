@@ -59,7 +59,6 @@ const melenaUpper: FlowPage = {
     { kind: 'node', variant: 'step', text: 'CATEGORISE THE UPPER-GI CAUSE' },
     {
       kind: 'categoryGrid',
-      connectAfter: false,
       columns: [
         {
           cat: 'Inflammatory',
@@ -78,11 +77,6 @@ const melenaUpper: FlowPage = {
             { label: 'Renal disease (uraemic gastropathy)', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
           ],
         },
-      ],
-    },
-    {
-      kind: 'categoryGrid',
-      columns: [
         {
           cat: 'Infectious / Parasitic',
           tone: 'danger',
