@@ -311,12 +311,23 @@ function CatTile({ tile, st, theme, onNav }: { tile: CategoryTile; st: { bg: str
 // single line rather than crush it. Wide enough that the longest single-word
 // labels ("Adenocarcinoma") never break mid-word.
 const CAT_GRID_MIN_COL = 130
+// Shared column-spill policy for both category blocks. Below `wideAt` columns,
+// stretch to full width (repeat(n,1fr)). At/above it, clamp each track to a
+// legible `minCol` floor and report the intrinsic `minWidth`, so the row scrolls
+// horizontally as ONE unit rather than crushing labels or wrapping — the fix that
+// keeps every category on a single line. Callers wrap the wide grid in SCROLL_X.
+function spillGrid(n: number, minCol: number, wideAt: number): { wide: boolean; cols: string; minWidth: number } {
+  const wide = n >= wideAt
+  return {
+    wide,
+    cols: wide ? `repeat(${n},minmax(${minCol}px,1fr))` : `repeat(${n},1fr)`,
+    minWidth: n * minCol + (n - 1) * 6,
+  }
+}
 function CategoryGridBlock({ columns, onNav }: { columns: CategoryColumn[]; onNav: Nav }) {
-  const n = columns.length
-  const wide = n >= 4
-  const gridStyle = wide
-    ? s(`display:grid;grid-template-columns:repeat(${n},minmax(${CAT_GRID_MIN_COL}px,1fr));gap:6px;`)
-    : s(`display:grid;grid-template-columns:repeat(${n},1fr);gap:6px;width:100%;`)
+  const sp = spillGrid(columns.length, CAT_GRID_MIN_COL, 4)
+  const wide = sp.wide
+  const gridStyle = s(`display:grid;grid-template-columns:${sp.cols};gap:6px;${wide ? '' : 'width:100%;'}`)
   const rows = (
     <>
       <div style={gridStyle}>
@@ -376,13 +387,12 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
   // instead — plus step the type down a touch. <=4 columns are unchanged
   // (repeat(cols,1fr), full width, original type sizes).
   const t = colTier(cols)
-  const wide = t >= 1
   const headerFs = [9.5, 9, 8.5][t]
   const chipFs = [9, 8.5, 8][t]
   const headerPad = ['7px 5px', '7px 4px', '7px 4px'][t]
   const chipPad = ['6px 4px', '6px 3px', '5px 3px'][t]
-  const minCol = [70, 76, 70][t]
-  const totalMin = cols * minCol + (cols - 1) * 6
+  const sp = spillGrid(cols, [70, 76, 70][t], 5)
+  const wide = sp.wide
   // Denser tile preset than the grid block: tiered chip type, and a fixed (not
   // tiered) links box, matching this block's crowded-lesion layout.
   const theme: TileTheme = {
@@ -391,8 +401,8 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
     linksLabelMb: '3px', subFs: '8.5px', subPad: '1px 0',
   }
   const gridStyle = wide
-    ? s(`display:grid;grid-template-columns:repeat(${cols},minmax(${minCol}px,1fr));gap:6px;min-width:${totalMin}px;justify-content:center;`)
-    : s(`display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;`)
+    ? s(`display:grid;grid-template-columns:${sp.cols};gap:6px;min-width:${sp.minWidth}px;justify-content:center;`)
+    : s(`display:grid;grid-template-columns:${sp.cols};gap:6px;width:100%;`)
   const grid = (
     <div style={gridStyle}>
       {columns.map((c, i) => {
