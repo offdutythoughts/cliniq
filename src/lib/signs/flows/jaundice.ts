@@ -80,9 +80,11 @@ const jaundiceEntry: FlowPage = {
 }
 
 // ── 2. Pre-hepatic (haemolytic) ─────────────────────────────────────────────
-// Category grid as `html`: the two clickable chips use renderLesionDetail(),
-// which has no typed Link kind (see flag in REPORT). Header labels / chip text
-// / arrows / colours are transcribed verbatim from the legacy `col()` output.
+// Same haemolysis differential as the paleGums regenerative-anaemia page →
+// authored as a typed `categoryColumns` (was a broken `html` grid that crammed
+// 5 categories into repeat(3,1fr) and pointed clickable chips at the wrong
+// lesion detail `LES-PM-REGEN`). Chips now link to their own disease pages;
+// multi-disease chips use `links`; causes with no page are `terminal` (muted).
 const jaundicePreHep: FlowPage = {
   id: 'jaundice-pre-hep',
   title: 'Jaundice — Pre-hepatic',
@@ -94,26 +96,36 @@ const jaundicePreHep: FlowPage = {
       text: 'Excess bilirubin from RBC destruction overwhelms hepatic conjugation capacity',
       sub: 'Significant anaemia · regenerative · bilirubinuria · haemoglobinaemia',
     },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY', connectAfter: false },
+    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
     {
-      kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
-
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;">
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(59,130,246,0.15);border:1.5px solid rgba(59,130,246,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--tone-info-fg);text-align:center;line-height:1.3;">Immune-mediated</div><div style="color:var(--tone-info-fg);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(59,130,246,0.15);border:1.5px solid rgba(59,130,246,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-info-fg);text-align:center;line-height:1.35;cursor:pointer;" onclick="renderLesionDetail('LES-PM-REGEN')">IMHA</div></div>
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(245,158,11,0.15);border:1.5px solid rgba(245,158,11,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--tone-warning-fg);text-align:center;line-height:1.3;">Inflammatory</div><div style="color:var(--tone-warning-fg);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(245,158,11,0.15);border:1.5px solid rgba(245,158,11,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-warning-fg);text-align:center;line-height:1.35;cursor:pointer;" onclick="renderLesionDetail('LES-PM-REGEN')">Babesia / Mycoplasma</div></div>
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(249,115,22,0.15);border:1.5px solid rgba(249,115,22,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--hl-orange);text-align:center;line-height:1.3;">Toxic</div><div style="color:var(--hl-orange);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(249,115,22,0.15);border:1.5px solid rgba(249,115,22,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--hl-orange);text-align:center;line-height:1.35;">Zinc · Allium · Paracetamol</div></div>
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(220,38,38,0.15);border:1.5px solid rgba(220,38,38,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--tone-danger-fg);text-align:center;line-height:1.3;">Vascular</div><div style="color:var(--tone-danger-fg);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(220,38,38,0.15);border:1.5px solid rgba(220,38,38,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-danger-fg);text-align:center;line-height:1.35;">Body cavity haemorrhage</div></div>
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--hl-pink);text-align:center;line-height:1.3;">Anomalous</div><div style="color:var(--hl-pink);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--hl-pink);text-align:center;line-height:1.35;">PK deficiency · Neonatal isoerythrolysis</div></div>
-    </div>`,
+      kind: 'categoryColumns',
+      columns: [
+        { cat: 'Immune-mediated', tiles: [{ label: 'IMHA', link: { to: 'disease', id: 'DIS-BD-IMHA' } }] },
+        { cat: 'Inflammatory', tiles: [{ label: 'Babesia / Mycoplasma', links: [
+          { label: 'Babesiosis', link: { to: 'disease', id: 'DIS-BD-BABS' } },
+          { label: 'Haemotropic Mycoplasma', link: { to: 'disease', id: 'DIS-INFECT-HMYCO' } },
+        ] }] },
+        { cat: 'Toxic', tiles: [{ label: 'Zinc · Allium · Paracetamol', links: [
+          { label: 'Zinc toxicosis', link: { to: 'disease', id: 'DIS-TOX-ZN' } },
+          { label: 'Allium toxicosis', link: { to: 'disease', id: 'DIS-TOX-ALLIUM' } },
+          { label: 'Paracetamol toxicosis', link: { to: 'disease', id: 'DIS-TOX-APAP' } },
+        ] }] },
+        { cat: 'Vascular', tiles: [{ label: 'Body cavity haemorrhage', terminal: true }] },
+        { cat: 'Anomalous', tiles: [
+          { label: 'PK deficiency', terminal: true },
+          { label: 'Neonatal isoerythrolysis', terminal: true },
+        ] },
+      ],
     },
     { kind: 'disclaimer' },
   ],
 }
 
 // ── 3. Hepatic ──────────────────────────────────────────────────────────────
-// CAT_STYLE → tone: I→warning, ME→teal, M→violet, D→slate, Tx→orange.
-// All chips link goLesionTab('LOC-JD-HEP','Hepatic') → typed `lesion` links.
+// Each chip links to its own disease page (was all pointing at the single
+// generic `LOC-JD-HEP` lesion list). Immune-mediated hepatitis, copper
+// hepatopathy and end-stage cirrhosis all resolve to the Chronic Hepatitis
+// page (DIS-HEP-CHRONHEP explicitly bundles copper-associated + chronic-active).
 const jaundiceHep: FlowPage = {
   id: 'jaundice-hep',
   title: 'Jaundice — Hepatic',
@@ -131,32 +143,32 @@ const jaundiceHep: FlowPage = {
       columns: [
         {
           cat: 'Inflammatory', tiles: [
-            { label: 'Acute hepatitis (infectious)', link: { to: 'lesion', loc: 'LOC-JD-HEP', name: 'Hepatic' } },
-            { label: 'Immune-mediated hepatitis', link: { to: 'lesion', loc: 'LOC-JD-HEP', name: 'Hepatic' } },
-            { label: 'Cholangitis / cholangiohepatitis', link: { to: 'lesion', loc: 'LOC-JD-HEP', name: 'Hepatic' } },
+            { label: 'Cholangitis / cholangiohepatitis', link: { to: 'disease', id: 'DIS-HEP-CHOLANGITIS' } },
+            { label: 'Chronic / immune-mediated hepatitis', link: { to: 'disease', id: 'DIS-HEP-CHRONHEP' } },
+            { label: 'Leptospirosis', link: { to: 'disease', id: 'DIS-INFECT-LEPTO' } },
           ],
         },
         {
           cat: 'Metabolic / Endocrine', tiles: [
-            { label: 'Hepatic lipidosis', link: { to: 'lesion', loc: 'LOC-JD-HEP', name: 'Hepatic' } },
-            { label: 'Steroid hepatopathy', link: { to: 'lesion', loc: 'LOC-JD-HEP', name: 'Hepatic' } },
-            { label: 'Copper hepatopathy', link: { to: 'lesion', loc: 'LOC-JD-HEP', name: 'Hepatic' } },
+            { label: 'Hepatic lipidosis', link: { to: 'disease', id: 'DIS-HEP-LIPIDOSIS' } },
+            { label: 'Steroid / vacuolar hepatopathy', link: { to: 'disease', id: 'DIS-HEP-VACUOLAR' } },
+            { label: 'Copper hepatopathy', link: { to: 'disease', id: 'DIS-HEP-CHRONHEP' } },
           ],
         },
         {
           cat: 'Mass', tiles: [
-            { label: 'HCC / biliary carcinoma', link: { to: 'lesion', loc: 'LOC-JD-HEP', name: 'Hepatic' } },
-            { label: 'Metastasis / lymphoma', link: { to: 'lesion', loc: 'LOC-JD-HEP', name: 'Hepatic' } },
+            { label: 'HCC / biliary carcinoma', link: { to: 'disease', id: 'DIS-HEP-NEO' } },
+            { label: 'Metastasis / lymphoma', link: { to: 'disease', id: 'DIS-HEP-NEO' } },
           ],
         },
         {
           cat: 'Degenerative', tiles: [
-            { label: 'Cirrhosis / end-stage fibrosis', link: { to: 'lesion', loc: 'LOC-JD-HEP', name: 'Hepatic' } },
+            { label: 'Cirrhosis / end-stage fibrosis', link: { to: 'disease', id: 'DIS-HEP-CHRONHEP' } },
           ],
         },
         {
           cat: 'Toxic', tiles: [
-            { label: 'Drug hepatotoxicity', link: { to: 'lesion', loc: 'LOC-JD-HEP', name: 'Hepatic' } },
+            { label: 'Drug hepatotoxicity', link: { to: 'disease', id: 'DIS-HEP-TOXIC' } },
           ],
         },
       ],
@@ -166,9 +178,12 @@ const jaundiceHep: FlowPage = {
 }
 
 // ── 4. Post-hepatic (biliary obstruction) ───────────────────────────────────
-// CAT_STYLE → tone: D→slate, I→warning, M→violet, Tr→slate, A→(pink→purple,
-// FLAGGED), Tx→orange. All chips link
-// goLesionTab('LOC-JD-POSTHEP','Post-hepatic (biliary obstruction)').
+// Each chip links to its own disease page where one exists (was all pointing at
+// the single generic `LOC-JD-POSTHEP` lesion list). Pancreatitis fans out to the
+// dog + cat pages via `links`. Causes with no dedicated page (pancreatic /
+// duodenal neoplasia, bile-duct rupture, choledochal cyst) are `terminal`
+// (tinted but muted). The legacy 'Toxic → Cholecalciferol' entry is dropped:
+// cholecalciferol causes hypercalcaemic renal injury, not biliary obstruction.
 const jaundicePostHep: FlowPage = {
   id: 'jaundice-post-hep',
   title: 'Jaundice — Post-hepatic',
@@ -186,37 +201,34 @@ const jaundicePostHep: FlowPage = {
       columns: [
         {
           cat: 'Degenerative', tiles: [
-            { label: 'Biliary mucocele ⚠️', link: { to: 'lesion', loc: 'LOC-JD-POSTHEP', name: 'Post-hepatic (biliary obstruction)' } },
+            { label: 'Biliary mucocele ⚠️', link: { to: 'disease', id: 'DIS-HEP-MUCOCELE' } },
+            { label: 'Cholelithiasis', link: { to: 'disease', id: 'DIS-HEP-CHOLELITH' } },
           ],
         },
         {
           cat: 'Inflammatory', tiles: [
-            { label: 'Pancreatitis', link: { to: 'lesion', loc: 'LOC-JD-POSTHEP', name: 'Post-hepatic (biliary obstruction)' } },
-            { label: 'Ascending cholangitis', link: { to: 'lesion', loc: 'LOC-JD-POSTHEP', name: 'Post-hepatic (biliary obstruction)' } },
+            { label: 'Pancreatitis', links: [
+              { label: 'Acute pancreatitis (dog)', link: { to: 'disease', id: 'DIS-SEC-PAN-DOG' } },
+              { label: 'Feline pancreatitis', link: { to: 'disease', id: 'DIS-GI-PANCAT' } },
+            ] },
+            { label: 'Ascending cholangitis', link: { to: 'disease', id: 'DIS-HEP-CHOLANGITIS' } },
           ],
         },
         {
           cat: 'Mass', tiles: [
-            { label: 'Biliary / GB carcinoma', link: { to: 'lesion', loc: 'LOC-JD-POSTHEP', name: 'Post-hepatic (biliary obstruction)' } },
-            { label: 'Pancreatic adenocarcinoma', link: { to: 'lesion', loc: 'LOC-JD-POSTHEP', name: 'Post-hepatic (biliary obstruction)' } },
-            { label: 'Duodenal neoplasia', link: { to: 'lesion', loc: 'LOC-JD-POSTHEP', name: 'Post-hepatic (biliary obstruction)' } },
+            { label: 'Biliary / GB carcinoma', link: { to: 'disease', id: 'DIS-HEP-NEO' } },
+            { label: 'Pancreatic adenocarcinoma', terminal: true },
+            { label: 'Duodenal neoplasia', terminal: true },
           ],
         },
         {
           cat: 'Trauma', tiles: [
-            { label: 'Bile duct rupture ⚠️', link: { to: 'lesion', loc: 'LOC-JD-POSTHEP', name: 'Post-hepatic (biliary obstruction)' } },
+            { label: 'Bile duct rupture ⚠️', terminal: true },
           ],
         },
         {
-          // FLAG: legacy 'Anomalous' (A) is pink rgba(236,72,153)/var(--hl-pink) — no
-          // pink tone exists in the closed Tone enum; 'purple' is the closest.
           cat: 'Anomalous', tiles: [
-            { label: 'Choledochal cyst', link: { to: 'lesion', loc: 'LOC-JD-POSTHEP', name: 'Post-hepatic (biliary obstruction)' } },
-          ],
-        },
-        {
-          cat: 'Toxic', tiles: [
-            { label: 'Cholecalciferol toxicosis', link: { to: 'lesion', loc: 'LOC-JD-POSTHEP', name: 'Post-hepatic (biliary obstruction)' } },
+            { label: 'Choledochal cyst', terminal: true },
           ],
         },
       ],
