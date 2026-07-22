@@ -66,7 +66,6 @@ const melenaUpper: FlowPage = {
           tiles: [
             { label: 'Gastric ulceration', link: { to: 'disease', id: 'DIS-GI-ULC' } },
             { label: 'Chronic enteropathy (IBD)', link: { to: 'disease', id: 'DIS-GI-IBD' } },
-            { label: ' Helicobacter gastritis', link: { to: 'disease', id: 'DIS-GI-HELICO' } },
           ],
         },
         {
@@ -83,6 +82,7 @@ const melenaUpper: FlowPage = {
           tiles: [
             { label: ' AHDS (raspberry-jam)', link: { to: 'disease', id: 'DIS-GI-AHDS' } },
             { label: ' PARVOVIRUS', link: { to: 'disease', id: 'DIS-GI-PARVO' } },
+            { label: ' Helicobacter gastritis', link: { to: 'disease', id: 'DIS-GI-HELICO' } },
             { label: 'PARASITES', link: { to: 'flow', id: 'gi-parasites' } },
           ],
         },
