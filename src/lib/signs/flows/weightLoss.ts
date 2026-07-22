@@ -69,7 +69,7 @@ const weightLossAppetite: FlowPage = {
             { label: ' INFLAMMATORY BOWEL DISEASE', link: { to: 'disease', id: 'DIS-GI-IBD' } },
             { label: ' GI / ALIMENTARY LYMPHOMA', link: { to: 'disease', id: 'DIS-GI-LYMP' } },
             { label: ' PROTEIN-LOSING ENTEROPATHY', link: { to: 'disease', id: 'DIS-GI-PLE' } },
-            { label: 'GI parasites', link: { to: 'disease', id: 'DIS-GI-GIARDIA' } },
+            { label: 'GI parasites', link: { to: 'flow', id: 'gi-parasites' } },
           ],
         },
         {

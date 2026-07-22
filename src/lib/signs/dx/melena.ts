@@ -128,7 +128,7 @@ export const melenaDx: DxApproach = {
             { label: 'Inflammatory bowel disease / chronic enteropathy', link: { to: 'disease', id: 'DIS-GI-IBD' } },
             { label: 'Alimentary lymphoma', link: { to: 'disease', id: 'DIS-GI-LYMP' } },
             { label: 'Idiopathic / IBD colitis', link: { to: 'disease', id: 'DIS-GI-COLITIS' } },
-            { label: 'Whipworm (Trichuris vulpis)', link: { to: 'disease', id: 'DIS-GI-WHIP' } },
+            { label: 'GI parasites — by location', link: { to: 'flow', id: 'gi-parasites' } },
             { label: 'Granulomatous colitis', link: { to: 'disease', id: 'DIS-GI-GRANCOL' } },
             { label: 'Colorectal neoplasia / polyp', link: { to: 'disease', id: 'DIS-GI-CRC' } },
             { label: 'Anal-sac adenocarcinoma (AGASACA)', link: { to: 'disease', id: 'DIS-NEO-AGASACA' } },

@@ -65,8 +65,10 @@ const melenaUpper: FlowPage = {
           tone: 'orange',
           tiles: [
             { label: ' NSAID / STEROID ULCER', link: { to: 'disease', id: 'DIS-GI-ULC' } },
-            { label: ' MAST-CELL TUMOUR / GASTRINOMA', link: { to: 'disease', id: 'DIS-GI-ULC' } },
-            { label: 'Hepatic / renal disease', link: { to: 'disease', id: 'DIS-HEP-CHRONHEP' } },
+            { label: 'MAST-CELL TUMOUR', link: { to: 'disease', id: 'DIS-NEO-MCT' } },
+            { label: 'GASTRINOMA', link: { to: 'disease', id: 'DIS-ENDO-GASTRINOMA' } },
+            { label: 'Hepatic disease (PSS / portal hypertension)', link: { to: 'disease', id: 'DIS-HEP-PSS' } },
+            { label: 'Renal disease (uraemic gastropathy)', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
           ],
         },
         {
@@ -75,7 +77,7 @@ const melenaUpper: FlowPage = {
           tiles: [
             { label: ' AHDS (raspberry-jam)', link: { to: 'disease', id: 'DIS-GI-AHDS' } },
             { label: ' PARVOVIRUS', link: { to: 'disease', id: 'DIS-GI-PARVO' } },
-            { label: 'PARASITES', link: { to: 'disease', id: 'DIS-GI-WHIP' } },
+            { label: 'PARASITES', link: { to: 'flow', id: 'gi-parasites' } },
             { label: ' Helicobacter gastritis', link: { to: 'disease', id: 'DIS-GI-HELICO' } },
           ],
         },
@@ -83,7 +85,10 @@ const melenaUpper: FlowPage = {
           cat: 'Neoplastic / Inflammatory',
           tone: 'violet',
           tiles: [
-            { label: 'NEOPLASIA / IBD', link: { to: 'disease', id: 'DIS-GI-LYMP' } },
+            { label: 'Adenocarcinoma', link: { to: 'disease', id: 'DIS-GI-ADENO' } },
+            { label: 'GIST / leiomyosarcoma', link: { to: 'disease', id: 'DIS-GI-GIST' } },
+            { label: 'Alimentary lymphoma', link: { to: 'disease', id: 'DIS-GI-LYMP' } },
+            { label: 'Chronic enteropathy (IBD)', link: { to: 'disease', id: 'DIS-GI-IBD' } },
           ],
         },
       ],
@@ -105,7 +110,7 @@ const melenaLower: FlowPage = {
           tone: 'danger',
           tiles: [
             { label: ' IDIOPATHIC / IBD COLITIS', link: { to: 'disease', id: 'DIS-GI-COLITIS' } },
-            { label: ' WHIPWORM (Trichuris)', link: { to: 'disease', id: 'DIS-GI-WHIP' } },
+            { label: 'PARASITES', link: { to: 'flow', id: 'gi-parasites' } },
             { label: ' GRANULOMATOUS COLITIS', link: { to: 'disease', id: 'DIS-GI-GRANCOL' } },
             { label: 'Clostridial / Campylobacter / Salmonella', link: { to: 'disease', id: 'DIS-INFECT-CAMPYLO' } },
           ],

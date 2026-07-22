@@ -36,6 +36,8 @@ import { weightLossFlows } from './weightLoss'
 import { polyphagiaFlows } from './polyphagia'
 import { cyanosisFlows } from './cyanosis'
 import { tremorsFlows } from './tremors'
+// Shared reference hubs (not tied to a single sign)
+import { giParasitesFlow } from './giParasites'
 
 export const FLOWS: Record<string, FlowPage> = Object.fromEntries(
   [
@@ -51,5 +53,7 @@ export const FLOWS: Record<string, FlowPage> = Object.fromEntries(
     ...syncopeFlows, ...heartMurmurFlows, ...feverFlows, ...dysphagiaFlows,
     ...melenaFlows, ...constipationFlows, ...oedemaFlows, ...swollenJointsFlows,
     ...anorexiaFlows, ...weightLossFlows, ...polyphagiaFlows, ...cyanosisFlows, ...tremorsFlows,
+    // Shared reference hubs
+    giParasitesFlow,
   ].map(p => [p.id, p]),
 )
