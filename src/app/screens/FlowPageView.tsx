@@ -317,9 +317,8 @@ function CategoryGridBlock({ columns, onNav }: { columns: CategoryColumn[]; onNa
     <>
       <div style={gridStyle}>
         {columns.map((c, i) => {
-          const h = HUE[c.tone]
-          const tb = toneBox(h.rgb, h.color)
-          return <div key={i} className="flow-node" style={s(`${tb.bg}border-color:rgba(${h.rgb},0.4);${tb.col}font-size:11px;cursor:default;min-width:0;`)}>{c.cat}</div>
+          const st = resolveCatStyle(c.cat, c.tone)
+          return <div key={i} className="flow-node" style={s(`background:${st.bg};border-color:${st.border};color:${st.col};font-size:11px;cursor:default;min-width:0;`)}>{c.cat}</div>
         })}
       </div>
       <div style={gridStyle}>{columns.map((_, i) => <div key={i} className="flow-arrow-v">↓</div>)}</div>
@@ -352,6 +351,17 @@ const CAT_STYLE: Record<string, { bg: string; border: string; col: string }> = {
   'Anomalous': catStyle('anomalous'),
 }
 const FALLBACK_TONES: Tone[] = ['slate', 'indigo', 'violet', 'teal', 'orange', 'green']
+// Single source of truth for a category's tinted style triple, shared by both
+// category blocks so headers/tiles can never diverge: an explicit `tone` (HUE)
+// wins, else a CAT_STYLE label, else an index-cycled fallback tone. Alphas are
+// always tokenised (--tile-bg-a / --tile-bd-a) so light mode stays legible.
+function resolveCatStyle(cat: string, tone?: Tone, i = 0): { bg: string; border: string; col: string } {
+  const h = tone ? HUE[tone] : null
+  if (h) return { bg: `rgba(${h.rgb},var(--tile-bg-a))`, border: `rgba(${h.rgb},var(--tile-bd-a))`, col: h.color }
+  if (CAT_STYLE[cat]) return CAT_STYLE[cat]
+  const fb = HUE[FALLBACK_TONES[i % FALLBACK_TONES.length]]
+  return { bg: `rgba(${fb.rgb},var(--tile-bg-a))`, border: `rgba(${fb.rgb},var(--tile-bd-a))`, col: fb.color }
+}
 function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns: CatColumn[]; onNav: Nav }) {
   // Crowded layouts (>=5 categories) borrow the lesion-location page's spill
   // handling: never let a `1fr` column crush its label below a legible floor —
@@ -372,11 +382,7 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
   const grid = (
     <div style={gridStyle}>
       {columns.map((c, i) => {
-        const h = c.tone ? HUE[c.tone] : null
-        const fb = HUE[FALLBACK_TONES[i % FALLBACK_TONES.length]]
-        const st = h
-          ? { bg: `rgba(${h.rgb},var(--tile-bg-a))`, border: `rgba(${h.rgb},var(--tile-bd-a))`, col: h.color }
-          : CAT_STYLE[c.cat] ?? { bg: `rgba(${fb.rgb},var(--tile-bg-a))`, border: `rgba(${fb.rgb},var(--tile-bd-a))`, col: fb.color }
+        const st = resolveCatStyle(c.cat, c.tone, i)
         return (
           <div key={i} style={s('display:flex;flex-direction:column;align-items:stretch;gap:4px;')}>
             <div style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:10px;padding:${headerPad};font-size:${headerFs}px;font-weight:700;color:${st.col};text-align:center;line-height:1.3;`)}>{c.cat}</div>
