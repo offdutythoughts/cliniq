@@ -181,7 +181,7 @@ function CardSectionBlock({ b, onNav }: { b: Extract<Block, { kind: 'cardSection
       <div style={{ ...ST_BLOCK_TITLE, color: TITLE[b.tone] ?? h.color }}><Raw html={b.title} onNav={onNav} /></div>
       <div style={s('display:flex;flex-direction:column;gap:5px;')}>
         {b.cards.map((c, i) => (
-          <div key={i} style={s(`background:rgba(${h.rgb},0.08);border-radius:7px;padding:7px 10px;${c.link ? 'cursor:pointer;' : ST_UNLINKED_TILE}`)}
+          <div key={i} style={s(`background:rgba(${h.rgb},var(--tile-bg-a));border-radius:7px;padding:7px 10px;${c.link ? 'cursor:pointer;' : ST_UNLINKED_TILE}`)}
             {...(c.link ? { role: 'button', onClick: () => onNav(linkToView(c.link!)) } : { 'aria-disabled': true, title: 'No linked page available' })}>
             <div style={s(`font-size:10.5px;font-weight:700;color:${h.color};`)}><Raw html={c.title} onNav={onNav} />{c.tag && <>{' '}<span style={s('font-size:9px;font-weight:400;opacity:.8;')}><Raw html={c.tag} onNav={onNav} /></span></>}</div>
             <div style={s(`font-size:9px;color:${h.color};opacity:.8;line-height:1.4;`)}><Raw html={c.desc} onNav={onNav} /></div>
@@ -505,7 +505,7 @@ function CompareBoxBlock({ b, onNav }: { b: Extract<Block, { kind: 'compareBox' 
       {b.title && <div style={{ ...ST_BLOCK_TITLE, color: h.color, marginBottom: '8px' }}><Raw html={b.title} onNav={onNav} /></div>}
       <div style={s(`display:grid;grid-template-columns:${grid};gap:6px;`)}>
         {b.cards.map((c, i) => (
-          <div key={i} style={s(`font-size:9.5px;line-height:1.5;background:rgba(${h.rgb},0.08);border-radius:7px;padding:7px 9px;`)}>
+          <div key={i} style={s(`font-size:9.5px;line-height:1.5;background:rgba(${h.rgb},var(--tile-bg-a));border-radius:7px;padding:7px 9px;`)}>
             <div style={s(`color:${h.color};font-weight:700;margin-bottom:3px;`)}><Raw html={c.header} onNav={onNav} /></div>
             <Raw html={c.html} onNav={onNav} />
           </div>
