@@ -253,22 +253,28 @@ function CardGridBlock({ perRow, tiles, onNav }: { perRow: number; tiles: CardTi
   )
 }
 
-// ── Category grid (header row → arrow row → tile-column row) ───────────────────
-// One tile inside a categoryGrid column. Four variants:
-//  • `links` (plural) → in-tone header + clickable sub-bullets
-//  • `link`  (single) → clickable in-tone tile
+// ── Category tiles ────────────────────────────────────────────────────────────
+// A category tile has four render variants, shared by BOTH category blocks
+// (categoryGrid + categoryColumns) so their behaviour — variant dispatch, click,
+// hover, aria — can never diverge. A change here (new variant, hover, a11y) lands
+// on every category page at once:
+//  • `links` (plural) → in-tone box + clickable sub-bullets
+//  • `link`  (single) → clickable in-tone chip
 //  • `terminal`       → in-tone plain info leaf (no page to link to)
 //  • otherwise        → greyed + aria-disabled = authoring gap (missing link)
-function CategoryTileView({ tile, tone, onNav }: { tile: CategoryTile; tone: Tone; onNav: Nav }) {
-  const h = HUE[tone]
-  const tinted = toneBox(h.rgb, h.color).all
+// Only the size tokens differ per block; they live in a TileTheme preset so the
+// markup/logic stays in one place.
+type TileTheme = { chip: string; linksBox: string; linksLabelMb: string; subFs: string; subPad: string }
+const TILE_GRID: TileTheme = { chip: ST_TILE_BASE, linksBox: ST_TILE_BASE, linksLabelMb: '4px', subFs: '9.5px', subPad: '2px 0' }
+function CatTile({ tile, st, theme, onNav }: { tile: CategoryTile; st: { bg: string; border: string; col: string }; theme: TileTheme; onNav: Nav }) {
+  const tint = `background:${st.bg};border:1.5px solid ${st.border};color:${st.col};`
   if (tile.links && tile.links.length > 0) {
     return (
-      <div style={s(`${ST_TILE_BASE}${tinted}cursor:default;`)}>
-        {tile.label && <div style={s('margin-bottom:4px;')}>{tile.label}</div>}
+      <div style={s(`${tint}${theme.linksBox}cursor:default;`)}>
+        {tile.label && <div style={s(`margin-bottom:${theme.linksLabelMb};`)}>{tile.label}</div>}
         {tile.links.map((ll, k) => (
           <div key={k} role="button" onClick={() => onNav(linkToView(ll.link))}
-            style={s('cursor:pointer;text-align:left;padding:2px 0;font-size:9.5px;')} {...hoverBrighten}>
+            style={s(`cursor:pointer;text-align:left;padding:${theme.subPad};font-size:${theme.subFs};`)} {...hoverBrighten}>
             → {ll.label}
           </div>
         ))}
@@ -278,16 +284,14 @@ function CategoryTileView({ tile, tone, onNav }: { tile: CategoryTile; tone: Ton
   if (tile.link) {
     return (
       <div role="button" onClick={() => onNav(linkToView(tile.link!))} {...hoverBrighten}
-        style={s(`${ST_TILE_BASE}${tinted}cursor:pointer;`)}>
+        style={s(`${tint}${theme.chip}cursor:pointer;`)}>
         {tile.label}
       </div>
     )
   }
-  if (tile.terminal) {
-    return <div style={s(`${ST_TILE_BASE}${tinted}${ST_TILE_MUTED}`)}>{tile.label}</div>
-  }
+  if (tile.terminal) return <div style={s(`${tint}${theme.chip}${ST_TILE_MUTED}`)}>{tile.label}</div>
   return (
-    <div aria-disabled title="No linked page available" style={s(`${ST_TILE_BASE}${ST_UNLINKED_TILE}`)}>
+    <div aria-disabled title="No linked page available" style={s(`${ST_UNLINKED_TILE}${theme.chip}`)}>
       {tile.label}
     </div>
   )
@@ -323,11 +327,14 @@ function CategoryGridBlock({ columns, onNav }: { columns: CategoryColumn[]; onNa
       </div>
       <div style={gridStyle}>{columns.map((_, i) => <div key={i} className="flow-arrow-v">↓</div>)}</div>
       <div style={gridStyle}>
-        {columns.map((c, i) => (
-          <div key={i} style={ST_COL_FLEX}>
-            {c.tiles.map((t, j) => <CategoryTileView key={j} tile={t} tone={c.tone} onNav={onNav} />)}
-          </div>
-        ))}
+        {columns.map((c, i) => {
+          const st = resolveCatStyle(c.cat, c.tone)
+          return (
+            <div key={i} style={ST_COL_FLEX}>
+              {c.tiles.map((t, j) => <CatTile key={j} tile={t} st={st} theme={TILE_GRID} onNav={onNav} />)}
+            </div>
+          )
+        })}
       </div>
     </>
   )
@@ -376,6 +383,13 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
   const chipPad = ['6px 4px', '6px 3px', '5px 3px'][t]
   const minCol = [70, 76, 70][t]
   const totalMin = cols * minCol + (cols - 1) * 6
+  // Denser tile preset than the grid block: tiered chip type, and a fixed (not
+  // tiered) links box, matching this block's crowded-lesion layout.
+  const theme: TileTheme = {
+    chip: `border-radius:8px;padding:${chipPad};font-size:${chipFs}px;font-weight:600;text-align:center;line-height:1.35;`,
+    linksBox: 'border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;text-align:center;line-height:1.35;',
+    linksLabelMb: '3px', subFs: '8.5px', subPad: '1px 0',
+  }
   const gridStyle = wide
     ? s(`display:grid;grid-template-columns:repeat(${cols},minmax(${minCol}px,1fr));gap:6px;min-width:${totalMin}px;justify-content:center;`)
     : s(`display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;`)
@@ -387,37 +401,7 @@ function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns:
           <div key={i} style={s('display:flex;flex-direction:column;align-items:stretch;gap:4px;')}>
             <div style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:10px;padding:${headerPad};font-size:${headerFs}px;font-weight:700;color:${st.col};text-align:center;line-height:1.3;`)}>{c.cat}</div>
             <div style={s(`color:${st.col};text-align:center;font-size:11px;line-height:1;`)}>↓</div>
-            {c.tiles.map((t, j) => {
-              if (t.links && t.links.length > 0) {
-                return (
-                  <div key={j} style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:${st.col};text-align:center;line-height:1.35;cursor:default;`)}>
-                    {t.label && <div style={s('margin-bottom:3px;')}>{t.label}</div>}
-                    {t.links.map((ll, k) => (
-                      <div key={k} role="button" onClick={() => onNav(linkToView(ll.link))}
-                        style={s('cursor:pointer;text-align:left;padding:1px 0;font-size:8.5px;')} {...hoverBrighten}>
-                        → {ll.label}
-                      </div>
-                    ))}
-                  </div>
-                )
-              }
-              const tinted = `background:${st.bg};border:1.5px solid ${st.border};color:${st.col};`
-              const chip = (extra: string) => s(`${extra}border-radius:8px;padding:${chipPad};font-size:${chipFs}px;font-weight:600;text-align:center;line-height:1.35;`)
-              if (t.link) {
-                return (
-                  <div key={j} role="button" onClick={() => onNav(linkToView(t.link!))} {...hoverBrighten}
-                    style={chip(`${tinted}cursor:pointer;`)}>{t.label}</div>
-                )
-              }
-              if (t.terminal) {
-                return <div key={j} style={chip(`${tinted}${ST_TILE_MUTED}`)}>{t.label}</div>
-              }
-              return (
-                <div key={j} aria-disabled title="No linked page available" style={chip(ST_UNLINKED_TILE)}>
-                  {t.label}
-                </div>
-              )
-            })}
+            {c.tiles.map((t, j) => <CatTile key={j} tile={t} st={st} theme={theme} onNav={onNav} />)}
           </div>
         )
       })}
