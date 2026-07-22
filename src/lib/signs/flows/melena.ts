@@ -112,13 +112,19 @@ const melenaLower: FlowPage = {
       kind: 'categoryGrid',
       columns: [
         {
-          cat: 'Infectious / Inflammatory',
-          tone: 'danger',
+          cat: 'Inflammatory',
+          tone: 'warning',
           tiles: [
             { label: ' IDIOPATHIC / IBD COLITIS', link: { to: 'disease', id: 'DIS-GI-COLITIS' } },
-            { label: 'PARASITES', link: { to: 'flow', id: 'gi-parasites' } },
             { label: ' GRANULOMATOUS COLITIS', link: { to: 'disease', id: 'DIS-GI-GRANCOL' } },
+          ],
+        },
+        {
+          cat: 'Infectious / Parasitic',
+          tone: 'danger',
+          tiles: [
             { label: 'Clostridial / Campylobacter / Salmonella', link: { to: 'disease', id: 'DIS-INFECT-CAMPYLO' } },
+            { label: 'PARASITES', link: { to: 'flow', id: 'gi-parasites' } },
           ],
         },
         {
