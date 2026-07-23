@@ -181,7 +181,11 @@ export type CatColumnTile = CategoryTile
 /** `tone` overrides the CAT_STYLE palette lookup — use for custom-coloured columns
  *  that don't correspond to a shared category label (e.g. "Haemoglobinuria"). */
 export type CatColumn = { cat: CatLabel | string; tone?: Tone; tiles: CatColumnTile[] }
-export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; columns: CatColumn[] }
+/** `cols` overrides the per-row column count (default: one row of every
+ *  category). Set it lower than `columns.length` to wrap the categories into an
+ *  N-per-row grid — e.g. `cols: 2` lays four categories out 2×2 — which reads
+ *  better than one cramped/scrolling row on narrow flow columns. */
+export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; cols?: number; columns: CatColumn[] }
 
 /** Reusable step block for "IDENTIFY CAUSE CATEGORY" — appears in 24+ flows. */
 export const IDENTIFY_CAUSE_STEP = { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' } as const

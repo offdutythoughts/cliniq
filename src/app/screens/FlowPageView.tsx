@@ -659,7 +659,7 @@ function BlockView({ b, onNav }: { b: Block; onNav: Nav }): ReactNode {
     case 'table': return <TableBlock b={b} onNav={onNav} />
     case 'cardSection': return <CardSectionBlock b={b} onNav={onNav} />
     case 'categoryGrid': return <CategoryGridBlock columns={b.columns} onNav={onNav} />
-    case 'categoryColumns': return <CategoryColumnsBlock cols={b.columns.length} columns={b.columns} onNav={onNav} />
+    case 'categoryColumns': return <CategoryColumnsBlock cols={b.cols ?? b.columns.length} columns={b.columns} onNav={onNav} />
     case 'decisionTree': return <>{b.steps.map((step, i) => <DecisionStepView key={i} step={step} onNav={onNav} />)}</>
     case 'compareBox': return <CompareBoxBlock b={b} onNav={onNav} />
     case 'speciesCompare': return <SpeciesCompareBlock b={b} onNav={onNav} />
