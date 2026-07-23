@@ -191,16 +191,18 @@ export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; cols
 export const IDENTIFY_CAUSE_STEP = { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' } as const
 
 /** One arm of a mechanism split: a coloured header + discriminator `sub` over a
- *  linear (single-column) stack of cause categories. */
-export type MechanismArm = { header: string; tone: Tone; sub?: string; categories: CatColumn[] }
+ *  single linear stack of leaf differentials (endpoints). Each `Endpoint` carries
+ *  its own `tone` (its lesion-category colour) so the flat list still reads as
+ *  colour-grouped, and a `link` to its disease page. */
+export type MechanismArm = { header: string; tone: Tone; sub?: string; items: Endpoint[] }
 
-/** Build a `branch` that divides a differential by mechanism BEFORE the cause
- *  categories — each arm carries its own linear (`cols: 1`) categoryColumns, so
- *  the cause categories read top-to-bottom under their mechanism header rather
- *  than wrapping into a cramped grid. Shared by the pale-MM regenerative
- *  (haemolysis vs haemorrhage) and non-regenerative (primary vs secondary)
- *  pages; reach for it whenever a page splits one differential two (or more)
- *  ways by mechanism. */
+/** Build a `branch` that divides a differential by mechanism BEFORE listing the
+ *  causes — each arm carries ONE linear `endpoints` stack, so the causes read as
+ *  a single clean top-to-bottom column of leaf boxes under their mechanism
+ *  header (uniform spacing, no nested category grid or broken connectors).
+ *  Shared by the pale-MM regenerative (haemolysis vs haemorrhage) and
+ *  non-regenerative (primary vs secondary) pages; reach for it whenever a page
+ *  splits one differential two (or more) ways by mechanism. */
 export function mechanismSplit(arms: MechanismArm[]): BranchBlock {
   return {
     kind: 'branch',
@@ -209,7 +211,7 @@ export function mechanismSplit(arms: MechanismArm[]): BranchBlock {
       header: a.header,
       tone: a.tone,
       sub: a.sub,
-      blocks: [{ kind: 'categoryColumns', cols: 1, connectAfter: false, columns: a.categories }],
+      blocks: [{ kind: 'endpoints', items: a.items }],
     })),
   }
 }
