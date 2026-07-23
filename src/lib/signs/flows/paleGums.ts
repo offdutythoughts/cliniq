@@ -12,6 +12,7 @@
 // `callout`.
 
 import type { FlowPage } from '../flowTypes'
+import { mechanismSplit } from '../flowTypes'
 
 // ── Entry ───────────────────────────────────────────────────────────────────
 const paleGumsEntry: FlowPage = {
@@ -110,57 +111,38 @@ const paleGumsRegen: FlowPage = {
       text: 'DISTINGUISH MECHANISM — Haemolysis vs Haemorrhage?',
       sub: 'Low PCV + normal TS = haemolysis · Low PCV + low TS = haemorrhage (TS drop takes hours)',
     },
-    {
-      // Divide the regenerative differential by mechanism BEFORE the cause
-      // categories: haemolytic causes (immune / infection / toxic / hereditary)
-      // vs haemorrhagic causes (vascular / trauma). Each arm carries its own
-      // wrapping categoryColumns (cols:2) so the half-width columns stay legible.
-      kind: 'branch',
-      connectAfter: false,
-      columns: [
-        {
-          header: 'HAEMOLYSIS',
-          tone: 'orange',
-          sub: 'Low PCV · normal TS · ± icterus / haemoglobinuria',
-          blocks: [
-            {
-              kind: 'categoryColumns',
-              cols: 2,
-              connectAfter: false,
-              columns: [
-                { cat: 'Immune-mediated', tiles: [{ label: 'IMHA', link: { to: 'disease', id: 'DIS-BD-IMHA' } }] },
-                { cat: 'Infection', tone: 'danger', tiles: [
-                  { label: 'Babesiosis', link: { to: 'disease', id: 'DIS-BD-BABS' } },
-                  { label: 'Haemotropic Mycoplasma', link: { to: 'disease', id: 'DIS-INFECT-HMYCO' } },
-                ] },
-                { cat: 'Toxic', tiles: [
-                  { label: 'Zinc toxicosis', link: { to: 'disease', id: 'DIS-TOX-ZN' } },
-                  { label: 'Allium toxicosis', link: { to: 'disease', id: 'DIS-TOX-ALLIUM' } },
-                  { label: 'Paracetamol toxicosis', link: { to: 'disease', id: 'DIS-TOX-APAP' } },
-                ] },
-                { cat: 'Anomalous', tiles: [{ label: 'PK def / PFK def', terminal: true }] },
-              ],
-            },
-          ],
-        },
-        {
-          header: 'HAEMORRHAGE',
-          tone: 'info',
-          sub: 'Low PCV · low TS · blood loss',
-          blocks: [
-            {
-              kind: 'categoryColumns',
-              cols: 2,
-              connectAfter: false,
-              columns: [
-                { cat: 'Vascular', tiles: [{ label: 'Acute haemorrhage', terminal: true }] },
-                { cat: 'Trauma', tiles: [{ label: 'Traumatic haemorrhage', terminal: true }] },
-              ],
-            },
-          ],
-        },
-      ],
-    },
+    // Divide the regenerative differential by mechanism BEFORE the cause
+    // categories: haemolytic (immune / infection / toxic / hereditary) vs
+    // haemorrhagic (vascular / trauma). See mechanismSplit in flowTypes.
+    mechanismSplit([
+      {
+        header: 'HAEMOLYSIS',
+        tone: 'orange',
+        sub: 'Low PCV · normal TS · ± icterus / haemoglobinuria',
+        categories: [
+          { cat: 'Immune-mediated', tiles: [{ label: 'IMHA', link: { to: 'disease', id: 'DIS-BD-IMHA' } }] },
+          { cat: 'Infection', tone: 'danger', tiles: [
+            { label: 'Babesiosis', link: { to: 'disease', id: 'DIS-BD-BABS' } },
+            { label: 'Haemotropic Mycoplasma', link: { to: 'disease', id: 'DIS-INFECT-HMYCO' } },
+          ] },
+          { cat: 'Toxic', tiles: [
+            { label: 'Zinc toxicosis', link: { to: 'disease', id: 'DIS-TOX-ZN' } },
+            { label: 'Allium toxicosis', link: { to: 'disease', id: 'DIS-TOX-ALLIUM' } },
+            { label: 'Paracetamol toxicosis', link: { to: 'disease', id: 'DIS-TOX-APAP' } },
+          ] },
+          { cat: 'Anomalous', tiles: [{ label: 'PK def / PFK def', terminal: true }] },
+        ],
+      },
+      {
+        header: 'HAEMORRHAGE',
+        tone: 'info',
+        sub: 'Low PCV · low TS · blood loss',
+        categories: [
+          { cat: 'Vascular', tiles: [{ label: 'Acute haemorrhage', terminal: true }] },
+          { cat: 'Trauma', tiles: [{ label: 'Traumatic haemorrhage', terminal: true }] },
+        ],
+      },
+    ]),
     { kind: 'disclaimer' },
   ],
 }
@@ -180,59 +162,41 @@ const paleGumsNonRegen: FlowPage = {
     {
       kind: 'node',
       variant: 'step',
-      text: 'DISTINGUISH MECHANISM — Secondary (systemic) vs Primary (marrow) disease?',
+      text: 'DISTINGUISH MECHANISM — Primary (marrow) vs Secondary (systemic) disease?',
       sub: 'Rule out extra-marrow causes (renal · endocrine · inflammatory) first · bone marrow aspirate / core biopsy if none found',
     },
-    {
-      // Divide the non-regenerative differential by mechanism BEFORE the cause
-      // categories, per Ettinger9: secondary/extra-marrow (systemic disease
-      // suppressing erythropoiesis) vs primary bone-marrow disease. Each arm
-      // carries its own wrapping categoryColumns (cols:2) to stay legible.
-      kind: 'branch',
-      connectAfter: false,
-      columns: [
-        {
-          header: 'SECONDARY (extra-marrow)',
-          tone: 'info',
-          sub: 'Systemic disease suppresses erythropoiesis · marrow itself normal',
-          blocks: [
-            {
-              kind: 'categoryColumns',
-              cols: 2,
-              connectAfter: false,
-              columns: [
-                {
-                  cat: 'Metabolic / Endocrine', tiles: [
-                    { label: 'CKD (↓ EPO)', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
-                    { label: 'Hypothyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPOTHY' } },
-                    { label: 'Hypoadrenocorticism', link: { to: 'disease', id: 'DIS-SEC-HYPO' } },
-                  ],
-                },
-                { cat: 'Inflammatory', tiles: [{ label: 'Anaemia of chronic disease', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
-              ],
-            },
-          ],
-        },
-        {
-          header: 'PRIMARY (bone marrow)',
-          tone: 'orange',
-          sub: 'Intrinsic marrow failure · needs aspirate / core biopsy',
-          blocks: [
-            {
-              kind: 'categoryColumns',
-              cols: 2,
-              connectAfter: false,
-              columns: [
-                { cat: 'Immune-mediated', tiles: [{ label: 'PRCA / immune-mediated', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
-                { cat: 'Mass', tiles: [{ label: 'BM infiltration', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
-                { cat: 'Toxic', tiles: [{ label: 'Drug / oestrogen aplasia', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
-                { cat: 'Anomalous', tiles: [{ label: 'Aplastic anaemia', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
-              ],
-            },
-          ],
-        },
-      ],
-    },
+    // Divide the non-regenerative differential by mechanism BEFORE the cause
+    // categories, per Ettinger9: primary bone-marrow disease vs secondary/
+    // extra-marrow (systemic disease suppressing erythropoiesis). See
+    // mechanismSplit in flowTypes.
+    mechanismSplit([
+      {
+        header: 'PRIMARY (bone marrow)',
+        tone: 'orange',
+        sub: 'Intrinsic marrow failure · needs aspirate / core biopsy',
+        categories: [
+          { cat: 'Immune-mediated', tiles: [{ label: 'PRCA / immune-mediated', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
+          { cat: 'Mass', tiles: [{ label: 'BM infiltration', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
+          { cat: 'Toxic', tiles: [{ label: 'Drug / oestrogen aplasia', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
+          { cat: 'Anomalous', tiles: [{ label: 'Aplastic anaemia', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
+        ],
+      },
+      {
+        header: 'SECONDARY (extra-marrow)',
+        tone: 'info',
+        sub: 'Systemic disease suppresses erythropoiesis · marrow itself normal',
+        categories: [
+          {
+            cat: 'Metabolic / Endocrine', tiles: [
+              { label: 'CKD (↓ EPO)', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
+              { label: 'Hypothyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPOTHY' } },
+              { label: 'Hypoadrenocorticism', link: { to: 'disease', id: 'DIS-SEC-HYPO' } },
+            ],
+          },
+          { cat: 'Inflammatory', tiles: [{ label: 'Anaemia of chronic disease', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
+        ],
+      },
+    ]),
     { kind: 'disclaimer' },
   ],
 }

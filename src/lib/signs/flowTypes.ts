@@ -190,6 +190,30 @@ export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; cols
 /** Reusable step block for "IDENTIFY CAUSE CATEGORY" — appears in 24+ flows. */
 export const IDENTIFY_CAUSE_STEP = { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' } as const
 
+/** One arm of a mechanism split: a coloured header + discriminator `sub` over a
+ *  linear (single-column) stack of cause categories. */
+export type MechanismArm = { header: string; tone: Tone; sub?: string; categories: CatColumn[] }
+
+/** Build a `branch` that divides a differential by mechanism BEFORE the cause
+ *  categories — each arm carries its own linear (`cols: 1`) categoryColumns, so
+ *  the cause categories read top-to-bottom under their mechanism header rather
+ *  than wrapping into a cramped grid. Shared by the pale-MM regenerative
+ *  (haemolysis vs haemorrhage) and non-regenerative (primary vs secondary)
+ *  pages; reach for it whenever a page splits one differential two (or more)
+ *  ways by mechanism. */
+export function mechanismSplit(arms: MechanismArm[]): BranchBlock {
+  return {
+    kind: 'branch',
+    connectAfter: false,
+    columns: arms.map(a => ({
+      header: a.header,
+      tone: a.tone,
+      sub: a.sub,
+      blocks: [{ kind: 'categoryColumns', cols: 1, connectAfter: false, columns: a.categories }],
+    })),
+  }
+}
+
 /** A YES/NO localisation decision tree. Each `step` is a decision box with a
  *  continue-arrow (down) for the `continue` answer and a side exit outcome for
  *  the other; `split` ends with two side-by-side outcomes; `outcome` is a
