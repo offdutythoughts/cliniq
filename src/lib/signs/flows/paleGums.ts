@@ -177,23 +177,60 @@ const paleGumsNonRegen: FlowPage = {
       text: 'Bone marrow failure to respond — reticulocytes absent or low',
       sub: 'Normocytic normochromic · reticulocytes <60,000/µL · bone marrow aspirate often required',
     },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
     {
-      kind: 'categoryColumns',
+      kind: 'node',
+      variant: 'step',
+      text: 'DISTINGUISH MECHANISM — Secondary (systemic) vs Primary (marrow) disease?',
+      sub: 'Rule out extra-marrow causes (renal · endocrine · inflammatory) first · bone marrow aspirate / core biopsy if none found',
+    },
+    {
+      // Divide the non-regenerative differential by mechanism BEFORE the cause
+      // categories, per Ettinger9: secondary/extra-marrow (systemic disease
+      // suppressing erythropoiesis) vs primary bone-marrow disease. Each arm
+      // carries its own wrapping categoryColumns (cols:2) to stay legible.
+      kind: 'branch',
       connectAfter: false,
       columns: [
         {
-          cat: 'Metabolic / Endocrine', tiles: [
-            { label: 'CKD (↓ EPO)', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
-            { label: 'Hypothyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPOTHY' } },
-            { label: 'Hypoadrenocorticism', link: { to: 'disease', id: 'DIS-SEC-HYPO' } },
+          header: 'SECONDARY (extra-marrow)',
+          tone: 'info',
+          sub: 'Systemic disease suppresses erythropoiesis · marrow itself normal',
+          blocks: [
+            {
+              kind: 'categoryColumns',
+              cols: 2,
+              connectAfter: false,
+              columns: [
+                {
+                  cat: 'Metabolic / Endocrine', tiles: [
+                    { label: 'CKD (↓ EPO)', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
+                    { label: 'Hypothyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPOTHY' } },
+                    { label: 'Hypoadrenocorticism', link: { to: 'disease', id: 'DIS-SEC-HYPO' } },
+                  ],
+                },
+                { cat: 'Inflammatory', tiles: [{ label: 'Anaemia of chronic disease', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
+              ],
+            },
           ],
         },
-        { cat: 'Inflammatory', tiles: [{ label: 'Anaemia of chronic disease', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
-        { cat: 'Immune-mediated', tiles: [{ label: 'PRCA / immune-mediated', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
-        { cat: 'Mass', tiles: [{ label: 'BM infiltration', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
-        { cat: 'Toxic', tiles: [{ label: 'Drug / oestrogen aplasia', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
-        { cat: 'Anomalous', tiles: [{ label: 'Aplastic anaemia', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
+        {
+          header: 'PRIMARY (bone marrow)',
+          tone: 'orange',
+          sub: 'Intrinsic marrow failure · needs aspirate / core biopsy',
+          blocks: [
+            {
+              kind: 'categoryColumns',
+              cols: 2,
+              connectAfter: false,
+              columns: [
+                { cat: 'Immune-mediated', tiles: [{ label: 'PRCA / immune-mediated', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
+                { cat: 'Mass', tiles: [{ label: 'BM infiltration', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
+                { cat: 'Toxic', tiles: [{ label: 'Drug / oestrogen aplasia', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
+                { cat: 'Anomalous', tiles: [{ label: 'Aplastic anaemia', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
+              ],
+            },
+          ],
+        },
       ],
     },
     { kind: 'disclaimer' },
