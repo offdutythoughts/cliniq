@@ -104,31 +104,62 @@ const paleGumsRegen: FlowPage = {
       text: 'Active bone marrow response — reticulocytosis present',
       sub: 'Reticulocytes >60,000/µL (dog) / >50,000/µL (cat) · macrocytosis · polychromasia',
     },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
     {
-      kind: 'categoryColumns',
-      connectAfter: false,
-      columns: [
-        { cat: 'Immune-mediated', tiles: [{ label: 'IMHA', link: { to: 'disease', id: 'DIS-BD-IMHA' } }] },
-        { cat: 'Inflammatory', tiles: [{ label: 'Babesia / Mycoplasma / Haemobartonella', links: [
-          { label: 'Babesiosis', link: { to: 'disease', id: 'DIS-BD-BABS' } },
-          { label: 'Haemotropic Mycoplasma', link: { to: 'disease', id: 'DIS-INFECT-HMYCO' } },
-        ] }] },
-        { cat: 'Toxic', tiles: [{ label: 'Zinc · Allium · Paracetamol', links: [
-          { label: 'Zinc toxicosis', link: { to: 'disease', id: 'DIS-TOX-ZN' } },
-          { label: 'Allium toxicosis', link: { to: 'disease', id: 'DIS-TOX-ALLIUM' } },
-          { label: 'Paracetamol toxicosis', link: { to: 'disease', id: 'DIS-TOX-APAP' } },
-        ] }] },
-        { cat: 'Vascular', tiles: [{ label: 'Acute haemorrhage', terminal: true }] },
-        { cat: 'Trauma', tiles: [{ label: 'Traumatic haemorrhage', terminal: true }] },
-        { cat: 'Anomalous', tiles: [{ label: 'PK def / PFK def', terminal: true }] },
-      ],
+      kind: 'node',
+      variant: 'step',
+      text: 'DISTINGUISH MECHANISM — Haemolysis vs Haemorrhage?',
+      sub: 'Low PCV + normal TS = haemolysis · Low PCV + low TS = haemorrhage (TS drop takes hours)',
     },
     {
-      kind: 'callout',
-      tone: 'green',
-      gap: 10,
-      html: '<strong style="color:var(--tone-green-fg);">Pearl:</strong> Low PCV + normal TS = haemolysis; Low PCV + low TS = haemorrhage',
+      // Divide the regenerative differential by mechanism BEFORE the cause
+      // categories: haemolytic causes (immune / infection / toxic / hereditary)
+      // vs haemorrhagic causes (vascular / trauma). Each arm carries its own
+      // wrapping categoryColumns (cols:2) so the half-width columns stay legible.
+      kind: 'branch',
+      connectAfter: false,
+      columns: [
+        {
+          header: 'HAEMOLYSIS',
+          tone: 'orange',
+          sub: 'Low PCV · normal TS · ± icterus / haemoglobinuria',
+          blocks: [
+            {
+              kind: 'categoryColumns',
+              cols: 2,
+              connectAfter: false,
+              columns: [
+                { cat: 'Immune-mediated', tiles: [{ label: 'IMHA', link: { to: 'disease', id: 'DIS-BD-IMHA' } }] },
+                { cat: 'Infection', tone: 'danger', tiles: [
+                  { label: 'Babesiosis', link: { to: 'disease', id: 'DIS-BD-BABS' } },
+                  { label: 'Haemotropic Mycoplasma', link: { to: 'disease', id: 'DIS-INFECT-HMYCO' } },
+                ] },
+                { cat: 'Toxic', tiles: [
+                  { label: 'Zinc toxicosis', link: { to: 'disease', id: 'DIS-TOX-ZN' } },
+                  { label: 'Allium toxicosis', link: { to: 'disease', id: 'DIS-TOX-ALLIUM' } },
+                  { label: 'Paracetamol toxicosis', link: { to: 'disease', id: 'DIS-TOX-APAP' } },
+                ] },
+                { cat: 'Anomalous', tiles: [{ label: 'PK def / PFK def', terminal: true }] },
+              ],
+            },
+          ],
+        },
+        {
+          header: 'HAEMORRHAGE',
+          tone: 'info',
+          sub: 'Low PCV · low TS · blood loss',
+          blocks: [
+            {
+              kind: 'categoryColumns',
+              cols: 2,
+              connectAfter: false,
+              columns: [
+                { cat: 'Vascular', tiles: [{ label: 'Acute haemorrhage', terminal: true }] },
+                { cat: 'Trauma', tiles: [{ label: 'Traumatic haemorrhage', terminal: true }] },
+              ],
+            },
+          ],
+        },
+      ],
     },
     { kind: 'disclaimer' },
   ],
