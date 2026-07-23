@@ -297,19 +297,11 @@ function CatTile({ tile, st, theme, onNav }: { tile: CategoryTile; st: { bg: str
   )
 }
 
-// A categoryGrid renders three column-aligned rows (category headers → arrows →
-// tile stacks). ≤3 columns fill the width (repeat(n,1fr)). With 4+ columns,
-// squeezing every category into a 1fr track crushes the labels (mid-word
-// breaks) — and splitting them across stacked blocks staggers the rows (the
-// "boxes not on one line" bug). So clamp each column to a legible min-width and
-// let the whole grid scroll horizontally as ONE unit, keeping every category on
-// a single aligned line. All three rows share `gridStyle` (identical template +
-// min-width) so their columns stay locked together while scrolling — this is the
-// same spill principle CategoryColumnsBlock uses for crowded lesion layouts.
-// Tuned so four categories fit the app's ~568px flow column without scrolling on
-// tablet/desktop (4×130 + gaps ≈ 538 < 568), while narrower phones scroll the
-// single line rather than crush it. Wide enough that the longest single-word
-// labels ("Adenocarcinoma") never break mid-word.
+// Min column width for the 'grid' preset — tuned so four categories fit the
+// app's ~568px flow column without scrolling on tablet/desktop (4×130 + gaps ≈
+// 538 < 568), while narrower phones scroll the single line rather than crush it.
+// Wide enough that the longest single-word labels ("Adenocarcinoma") never break
+// mid-word.
 const CAT_GRID_MIN_COL = 130
 // Shared column-spill policy for both category blocks. Below `wideAt` columns,
 // stretch to full width (repeat(n,1fr)). At/above it, clamp each track to a
@@ -324,35 +316,66 @@ function spillGrid(n: number, minCol: number, wideAt: number): { wide: boolean; 
     minWidth: n * minCol + (n - 1) * 6,
   }
 }
-function CategoryGridBlock({ columns, onNav }: { columns: CategoryColumn[]; onNav: Nav }) {
-  const sp = spillGrid(columns.length, CAT_GRID_MIN_COL, 4)
+type CatPreset = 'grid' | 'dense'
+function chunk<T>(arr: T[], size: number): T[][] {
+  if (size >= arr.length) return [arr]
+  const out: T[][] = []
+  for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size))
+  return out
+}
+// The single category-layout renderer behind BOTH `categoryGrid` and
+// `categoryColumns`. Columns are chunked into rows of `cols` (default: one row
+// of every category); each row is three column-aligned sub-grids — headers →
+// arrows → tile stacks — so headers stay locked in a line while the row spills
+// (scrolls) or wraps. Two presets carry the only real differences:
+//   • 'grid'  — roomy sign-flow look: flow-node headers, styled arrows, 10px
+//               tiles, min-col 130, spill at 4 cols, 8px row gap.
+//   • 'dense' — crowded lesion look: tiered small headers/tiles, plain ↓ arrows,
+//               tiered min-col, spill at 5 cols, 4px row gap.
+function CategoryBlock({ columns, cols, preset, onNav }: { columns: CatColumn[]; cols: number; preset: CatPreset; onNav: Nav }) {
+  const dense = preset === 'dense'
+  const t = dense ? colTier(cols) : 0
+  const sp = spillGrid(cols, dense ? [70, 76, 70][t] : CAT_GRID_MIN_COL, dense ? 5 : 4)
   const wide = sp.wide
-  const gridStyle = s(`display:grid;grid-template-columns:${sp.cols};gap:6px;${wide ? '' : 'width:100%;'}`)
-  const rows = (
-    <>
-      <div style={gridStyle}>
-        {columns.map((c, i) => {
-          const st = resolveCatStyle(c.cat, c.tone)
-          return <div key={i} className="flow-node" style={s(`background:${st.bg};border-color:${st.border};color:${st.col};font-size:11px;cursor:default;min-width:0;`)}>{c.cat}</div>
-        })}
-      </div>
-      <div style={gridStyle}>{columns.map((_, i) => <div key={i} className="flow-arrow-v">↓</div>)}</div>
-      <div style={gridStyle}>
-        {columns.map((c, i) => {
-          const st = resolveCatStyle(c.cat, c.tone)
-          return (
-            <div key={i} style={ST_COL_FLEX}>
-              {c.tiles.map((t, j) => <CatTile key={j} tile={t} st={st} theme={TILE_GRID} onNav={onNav} />)}
+  const gridStyle = !wide
+    ? s(`display:grid;grid-template-columns:${sp.cols};gap:6px;width:100%;`)
+    : dense
+      ? s(`display:grid;grid-template-columns:${sp.cols};gap:6px;min-width:${sp.minWidth}px;justify-content:center;`)
+      : s(`display:grid;grid-template-columns:${sp.cols};gap:6px;`)
+  const headerFs = dense ? [9.5, 9, 8.5][t] : 11
+  const theme: TileTheme = dense
+    ? {
+        chip: `border-radius:8px;padding:${['6px 4px', '6px 3px', '5px 3px'][t]};font-size:${[9, 8.5, 8][t]}px;font-weight:600;text-align:center;line-height:1.35;`,
+        linksBox: 'border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;text-align:center;line-height:1.35;',
+        linksLabelMb: '3px', subFs: '8.5px', subPad: '1px 0',
+      }
+    : TILE_GRID
+  const st = (i: number) => resolveCatStyle(columns[i].cat, columns[i].tone, i)
+  const header = (c: CatColumn, i: number) => dense
+    ? <div key={i} style={s(`background:${st(i).bg};border:1.5px solid ${st(i).border};border-radius:10px;padding:${['7px 5px', '7px 4px', '7px 4px'][t]};font-size:${headerFs}px;font-weight:700;color:${st(i).col};text-align:center;line-height:1.3;`)}>{c.cat}</div>
+    : <div key={i} className="flow-node" style={s(`background:${st(i).bg};border-color:${st(i).border};color:${st(i).col};font-size:11px;cursor:default;min-width:0;`)}>{c.cat}</div>
+  const arrow = (i: number) => dense
+    ? <div key={i} style={s(`color:${st(i).col};text-align:center;font-size:11px;line-height:1;`)}>↓</div>
+    : <div key={i} className="flow-arrow-v">↓</div>
+  const body = chunk(columns, cols).map((row, r) => {
+    const base = r * cols
+    return (
+      <Fragment key={r}>
+        <div style={gridStyle}>{row.map((c, i) => header(c, base + i))}</div>
+        <div style={gridStyle}>{row.map((_, i) => arrow(base + i))}</div>
+        <div style={gridStyle}>
+          {row.map((c, i) => (
+            <div key={base + i} style={ST_COL_FLEX}>
+              {c.tiles.map((tile, j) => <CatTile key={j} tile={tile} st={st(base + i)} theme={theme} onNav={onNav} />)}
             </div>
-          )
-        })}
-      </div>
-    </>
-  )
-  // Wrap wide grids so the horizontal overflow scrolls inside this block (a
-  // `.flow-wrap > *` child, capped at max-width:100%) rather than the page. The
-  // inner flex column reinstates the 8px row gap the fragment got from flow-wrap.
-  return wide ? <div style={s(`${SCROLL_X}display:flex;flex-direction:column;gap:8px;`)}>{rows}</div> : rows
+          ))}
+        </div>
+      </Fragment>
+    )
+  })
+  // One flow-wrap child: the sub-grids scroll together when wide (spill) and are
+  // spaced by the preset's row gap (grid 8px / dense 4px).
+  return <div style={s(`width:100%;display:flex;flex-direction:column;gap:${dense ? 4 : 8}px;${wide ? 'overflow-x:auto;' : ''}`)}>{body}</div>
 }
 
 // ── Category columns (CAT_STYLE) ──────────────────────────────────────────────
@@ -379,45 +402,6 @@ function resolveCatStyle(cat: string, tone?: Tone, i = 0): { bg: string; border:
   if (CAT_STYLE[cat]) return CAT_STYLE[cat]
   const fb = HUE[FALLBACK_TONES[i % FALLBACK_TONES.length]]
   return { bg: `rgba(${fb.rgb},var(--tile-bg-a))`, border: `rgba(${fb.rgb},var(--tile-bd-a))`, col: fb.color }
-}
-function CategoryColumnsBlock({ cols, columns, onNav }: { cols: number; columns: CatColumn[]; onNav: Nav }) {
-  // Crowded layouts (>=5 categories) borrow the lesion-location page's spill
-  // handling: never let a `1fr` column crush its label below a legible floor —
-  // clamp each column to a min width and let the row scroll horizontally
-  // instead — plus step the type down a touch. <=4 columns are unchanged
-  // (repeat(cols,1fr), full width, original type sizes).
-  const t = colTier(cols)
-  const headerFs = [9.5, 9, 8.5][t]
-  const chipFs = [9, 8.5, 8][t]
-  const headerPad = ['7px 5px', '7px 4px', '7px 4px'][t]
-  const chipPad = ['6px 4px', '6px 3px', '5px 3px'][t]
-  const sp = spillGrid(cols, [70, 76, 70][t], 5)
-  const wide = sp.wide
-  // Denser tile preset than the grid block: tiered chip type, and a fixed (not
-  // tiered) links box, matching this block's crowded-lesion layout.
-  const theme: TileTheme = {
-    chip: `border-radius:8px;padding:${chipPad};font-size:${chipFs}px;font-weight:600;text-align:center;line-height:1.35;`,
-    linksBox: 'border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;text-align:center;line-height:1.35;',
-    linksLabelMb: '3px', subFs: '8.5px', subPad: '1px 0',
-  }
-  const gridStyle = wide
-    ? s(`display:grid;grid-template-columns:${sp.cols};gap:6px;min-width:${sp.minWidth}px;justify-content:center;`)
-    : s(`display:grid;grid-template-columns:${sp.cols};gap:6px;width:100%;`)
-  const grid = (
-    <div style={gridStyle}>
-      {columns.map((c, i) => {
-        const st = resolveCatStyle(c.cat, c.tone, i)
-        return (
-          <div key={i} style={s('display:flex;flex-direction:column;align-items:stretch;gap:4px;')}>
-            <div style={s(`background:${st.bg};border:1.5px solid ${st.border};border-radius:10px;padding:${headerPad};font-size:${headerFs}px;font-weight:700;color:${st.col};text-align:center;line-height:1.3;`)}>{c.cat}</div>
-            <div style={s(`color:${st.col};text-align:center;font-size:11px;line-height:1;`)}>↓</div>
-            {c.tiles.map((t, j) => <CatTile key={j} tile={t} st={st} theme={theme} onNav={onNav} />)}
-          </div>
-        )
-      })}
-    </div>
-  )
-  return wide ? <div style={s(SCROLL_X)}>{grid}</div> : grid
 }
 
 // ── Decision tree ─────────────────────────────────────────────────────────────
@@ -565,7 +549,7 @@ function SpeciesChooserBlock({ b, onNav }: { b: Extract<Block, { kind: 'speciesC
       <Box tone={tone} extra={`padding:9px 12px;font-size:9.5px;line-height:1.5;color:${HUE[tone].color};`}>
         <Raw html={panel.note} onNav={onNav} />
       </Box>
-      <CategoryColumnsBlock cols={panel.columns.length} columns={panel.columns} onNav={onNav} />
+      <CategoryBlock cols={panel.columns.length} columns={panel.columns} preset="dense" onNav={onNav} />
     </div>
   )
 }
@@ -658,8 +642,8 @@ function BlockView({ b, onNav }: { b: Block; onNav: Nav }): ReactNode {
     case 'dxRow': return <DxRowBlock items={b.items} onNav={onNav} />
     case 'table': return <TableBlock b={b} onNav={onNav} />
     case 'cardSection': return <CardSectionBlock b={b} onNav={onNav} />
-    case 'categoryGrid': return <CategoryGridBlock columns={b.columns} onNav={onNav} />
-    case 'categoryColumns': return <CategoryColumnsBlock cols={b.cols ?? b.columns.length} columns={b.columns} onNav={onNav} />
+    case 'categoryGrid': return <CategoryBlock columns={b.columns} cols={b.columns.length} preset="grid" onNav={onNav} />
+    case 'categoryColumns': return <CategoryBlock columns={b.columns} cols={b.cols ?? b.columns.length} preset="dense" onNav={onNav} />
     case 'decisionTree': return <>{b.steps.map((step, i) => <DecisionStepView key={i} step={step} onNav={onNav} />)}</>
     case 'compareBox': return <CompareBoxBlock b={b} onNav={onNav} />
     case 'speciesCompare': return <SpeciesCompareBlock b={b} onNav={onNav} />
