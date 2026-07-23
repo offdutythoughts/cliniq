@@ -8,7 +8,14 @@ import { defineConfig } from '@playwright/test'
  * unset (no auth, localStorage notes) into an isolated .next-pw dir so it never
  * fights a running `next dev` server, then serves it with `next start`.
  *
- * Regenerate baselines intentionally with:  npx playwright test --update-snapshots
+ * These PNGs are pixel baselines tied to the machine/font environment that
+ * produced them — there is no CI that owns them, and the filenames are
+ * OS-agnostic. Font-metric differences between machines shift text height and
+ * fail every page by a near-uniform amount: that is environment drift, not a
+ * regression. After moving to a new machine or toolchain, regenerate on yours so
+ * the guardrail compares like-for-like:
+ *
+ *   npx playwright test --update-snapshots
  */
 const PORT = Number(process.env.PW_PORT ?? 3456)
 
