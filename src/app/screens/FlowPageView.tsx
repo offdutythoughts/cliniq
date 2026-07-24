@@ -202,7 +202,7 @@ function BannerBlock({ tone, html, onNav }: { tone: Tone; html: string; onNav: N
 function ColumnView({ col, onNav }: { col: Column; onNav: Nav }) {
   const h = col.tone ? HUE[col.tone] : null
   return (
-    <div style={s('display:flex;flex-direction:column;align-items:center;gap:4px;')}>
+    <div style={s('display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;')}>
       {h ? (
         <div className="flow-node" style={s(`width:100%;background:rgba(${h.rgb},var(--tile-bg-a));border-color:rgba(${h.rgb},var(--tile-bd-a));font-size:10px;font-weight:700;color:${h.color};`)}>
           {col.header}
@@ -332,10 +332,15 @@ function chunk<T>(arr: T[], size: number): T[][] {
 //               tiles, min-col 130, spill at 4 cols, 8px row gap.
 //   • 'dense' — crowded lesion look: tiered small headers/tiles, plain ↓ arrows,
 //               tiered min-col, spill at 5 cols, 4px row gap.
-function CategoryBlock({ columns, cols, preset, onNav }: { columns: CatColumn[]; cols: number; preset: CatPreset; onNav: Nav }) {
+function CategoryBlock({ columns, cols, preset, scroll, onNav }: { columns: CatColumn[]; cols: number; preset: CatPreset; scroll?: boolean; onNav: Nav }) {
   const dense = preset === 'dense'
   const t = dense ? colTier(cols) : 0
-  const sp = spillGrid(cols, dense ? [70, 76, 70][t] : CAT_GRID_MIN_COL, dense ? 5 : 4)
+  // `scroll` opts a narrower row into horizontal-scroll (used by side-by-side
+  // mechanism arms): force the spill (wideAt 1 ⇒ always "wide") and hold each
+  // column at a legible min so the row overflows — and slides within — its narrow
+  // parent instead of crushing labels to fit.
+  const minCol = scroll ? (dense ? 104 : CAT_GRID_MIN_COL) : dense ? [70, 76, 70][t] : CAT_GRID_MIN_COL
+  const sp = spillGrid(cols, minCol, scroll ? 1 : dense ? 5 : 4)
   const wide = sp.wide
   const gridStyle = !wide
     ? s(`display:grid;grid-template-columns:${sp.cols};gap:6px;width:100%;`)
@@ -643,7 +648,7 @@ function BlockView({ b, onNav }: { b: Block; onNav: Nav }): ReactNode {
     case 'table': return <TableBlock b={b} onNav={onNav} />
     case 'cardSection': return <CardSectionBlock b={b} onNav={onNav} />
     case 'categoryGrid': return <CategoryBlock columns={b.columns} cols={b.columns.length} preset="grid" onNav={onNav} />
-    case 'categoryColumns': return <CategoryBlock columns={b.columns} cols={b.cols ?? b.columns.length} preset="dense" onNav={onNav} />
+    case 'categoryColumns': return <CategoryBlock columns={b.columns} cols={b.cols ?? b.columns.length} preset="dense" scroll={b.scroll} onNav={onNav} />
     case 'decisionTree': return <>{b.steps.map((step, i) => <DecisionStepView key={i} step={step} onNav={onNav} />)}</>
     case 'compareBox': return <CompareBoxBlock b={b} onNav={onNav} />
     case 'speciesCompare': return <SpeciesCompareBlock b={b} onNav={onNav} />

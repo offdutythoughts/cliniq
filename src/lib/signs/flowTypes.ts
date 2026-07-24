@@ -185,21 +185,27 @@ export type CatColumn = { cat: CatLabel | string; tone?: Tone; tiles: CatColumnT
  *  category). Set it lower than `columns.length` to wrap the categories into an
  *  N-per-row grid — e.g. `cols: 2` lays four categories out 2×2 — which reads
  *  better than one cramped/scrolling row on narrow flow columns. */
-export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; cols?: number; columns: CatColumn[] }
+/** `scroll` forces the category row to keep each column at a legible minimum
+ *  width and scroll horizontally when it overflows its container — use for a row
+ *  nested inside a narrow column (e.g. a side-by-side mechanism arm) where the
+ *  default full-width fit would crush the labels. Wide rows (≥5 dense cols)
+ *  already scroll on their own; this opts a narrower row into the same behaviour. */
+export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; cols?: number; scroll?: boolean; columns: CatColumn[] }
 
 /** Reusable step block for "IDENTIFY CAUSE CATEGORY" — appears in 24+ flows. */
 export const IDENTIFY_CAUSE_STEP = { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' } as const
 
 /** One arm of a mechanism split: a coloured header + discriminator `sub` over a
- *  single linear stack of leaf differentials (endpoints). Each `Endpoint` carries
- *  its own `tone` (its lesion-category colour) so the flat list still reads as
- *  colour-grouped, and a `link` to its disease page. */
-export type MechanismArm = { header: string; tone: Tone; sub?: string; items: Endpoint[] }
+ *  horizontal row of cause categories (`categoryColumns`), one column per
+ *  category. */
+export type MechanismArm = { header: string; tone: Tone; sub?: string; categories: CatColumn[] }
 
-/** Build a `branch` that divides a differential by mechanism BEFORE listing the
- *  causes — each arm carries ONE linear `endpoints` stack, so the causes read as
- *  a single clean top-to-bottom column of leaf boxes under their mechanism
- *  header (uniform spacing, no nested category grid or broken connectors).
+/** Build a `branch` that divides a differential by mechanism BEFORE the cause
+ *  categories — the arms sit SIDE BY SIDE (one branch column each), and inside
+ *  every arm the cause categories lay out horizontally: a uniform linear row of
+ *  category headers with their disease chips beneath, matching the
+ *  lesion-location pages. A crowded arm's category row scrolls horizontally
+ *  (`scroll: true`) rather than crush its labels into the half-width column.
  *  Shared by the pale-MM regenerative (haemolysis vs haemorrhage) and
  *  non-regenerative (primary vs secondary) pages; reach for it whenever a page
  *  splits one differential two (or more) ways by mechanism. */
@@ -211,7 +217,9 @@ export function mechanismSplit(arms: MechanismArm[]): BranchBlock {
       header: a.header,
       tone: a.tone,
       sub: a.sub,
-      blocks: [{ kind: 'endpoints', items: a.items }],
+      // ≥3 categories can't sit legibly across a half-width branch column →
+      // let that arm scroll horizontally; roomy arms (≤2) stay static.
+      blocks: [{ kind: 'categoryColumns', scroll: a.categories.length >= 3, columns: a.categories }],
     })),
   }
 }
