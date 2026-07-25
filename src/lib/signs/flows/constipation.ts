@@ -1,5 +1,6 @@
 // ── Constipation / Tenesmus flowchart ────────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
+import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
 
 const constipationEntry: FlowPage = {
   id: 'constipation',
@@ -49,7 +50,7 @@ const constipationObstructive: FlowPage = {
   title: 'Constipation — Obstructive / Intraluminal',
   blocks: [
     { kind: 'node', variant: 'entry', text: 'OBSTRUCTIVE / INTRALUMINAL', sub: 'Impacted faeces · foreign material · intraluminal mass · stricture' },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryGrid',
       columns: [
@@ -87,7 +88,7 @@ const constipationPelvic: FlowPage = {
   title: 'Constipation — Pelvic / Extraluminal',
   blocks: [
     { kind: 'node', variant: 'entry', text: 'PELVIC / EXTRALUMINAL', sub: 'Narrowed pelvic canal or compressive mass outside the bowel wall' },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryGrid',
       columns: [
@@ -124,7 +125,7 @@ const constipationNeuromet: FlowPage = {
   title: 'Constipation — Neuromuscular / Metabolic',
   blocks: [
     { kind: 'node', variant: 'entry', text: 'NEUROMUSCULAR / METABOLIC', sub: 'Failure of colonic propulsion: nerve disease, electrolyte/endocrine derangement, or dehydration' },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryGrid',
       columns: [

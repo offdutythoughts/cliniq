@@ -1,5 +1,6 @@
 // ── Peripheral Oedema flowchart ──────────────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
+import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
 
 const oedemaEntry: FlowPage = {
   id: 'oedema',
@@ -62,7 +63,7 @@ const oedemaHypoalbumin: FlowPage = {
   title: 'Oedema — Hypoalbuminaemia',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' HYPOALBUMINAEMIA (↓ oncotic)', sub: 'Generalised/ventral pitting oedema ± effusions · albumin <2.0 g/dL (overt at <1.5 g/dL) · check UPC, faecal α₁-PI, bile acids to localise PLN vs PLE vs hepatic (Ettinger Ch 30)' },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryGrid',
       columns: [
@@ -132,7 +133,7 @@ const oedemaPermeability: FlowPage = {
   title: 'Oedema — Vascular Permeability / Vasculitis',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' VASCULAR PERMEABILITY / VASCULITIS', sub: 'Albumin normal · ↑ permeability · oedematous swelling is erythematous/warm (unlike oncotic oedema) · fever/shock → SIRS/sepsis or immune-mediated/vector-borne vasculitis (Ettinger Ch 30)' },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryGrid',
       columns: [

@@ -1,5 +1,6 @@
 // ── Cyanosis flowchart ───────────────────────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
+import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
 
 const cyanosisEntry: FlowPage = {
   id: 'cyanosis',
@@ -98,7 +99,7 @@ const cyanosisCardiac: FlowPage = {
   title: 'Cyanosis — Cardiac R→L Shunt',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' CARDIAC R→L SHUNT', sub: 'Cyanosis does NOT improve with O2 · secondary erythrocytosis · differential cyanosis (caudal blue, cranial pink) = reverse PDA' },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryGrid',
       columns: [

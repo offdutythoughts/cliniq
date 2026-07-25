@@ -12,7 +12,7 @@
 // `callout`.
 
 import type { FlowPage } from '../flowTypes'
-import { mechanismSplit } from '../flowTypes'
+import { mechanismSplit, IDENTIFY_CAUSE_STEP } from '../flowTypes'
 
 // ── Entry ───────────────────────────────────────────────────────────────────
 const paleGumsEntry: FlowPage = {
@@ -212,7 +212,7 @@ const paleGumsPreRegen: FlowPage = {
       text: 'Acute onset — reticulocyte response not yet detectable',
       sub: 'Reticulocyte response takes 3–5 days (dog) / 4–7 days (cat) · repeat CBC at 5–7 days to reassess',
     },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryColumns',
       connectAfter: false,
@@ -245,7 +245,7 @@ const paleGumsShock: FlowPage = {
       text: 'Normal PCV · prolonged CRT · weak rapid pulses · cold extremities',
       sub: 'Emergency — IV access immediately · crystalloid bolus 10–20 mL/kg over 15 min · reassess',
     },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryColumns',
       connectAfter: false,
@@ -271,7 +271,7 @@ const paleGumsCardiac: FlowPage = {
       text: 'Reduced cardiac output → poor peripheral perfusion',
       sub: 'Normal PCV · muffled heart sounds · arrhythmia · coughing / respiratory distress',
     },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryColumns',
       connectAfter: false,

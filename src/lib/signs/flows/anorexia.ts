@@ -1,5 +1,6 @@
 // ── Anorexia / Hyporexia flowchart ───────────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
+import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
 
 const anorexiaEntry: FlowPage = {
   id: 'anorexia',
@@ -105,7 +106,7 @@ const anorexiaTrue: FlowPage = {
   title: 'True Anorexia — by system',
   blocks: [
     { kind: 'node', variant: 'entry', text: 'TRUE ANOREXIA — won\'t eat (by system)', sub: 'Systemic illness, pain, or nausea — screen every system' },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryGrid',
       columns: [

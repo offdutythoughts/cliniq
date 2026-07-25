@@ -1,5 +1,6 @@
 // ── Fever / Fever of Unknown Origin (FUO) flowchart ──────────────────────────
 import type { FlowPage } from '../flowTypes'
+import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
 
 const feverEntry: FlowPage = {
   id: 'fever',
@@ -104,7 +105,7 @@ const feverHyperthermia: FlowPage = {
   title: 'Hyperthermia — non-pyrogenic',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' HYPERTHERMIA — non-pyrogenic', sub: 'Heatstroke · exercise (Labradors reach 42.2°C / 108°F) · seizures · hypermetabolic (hyperthyroid, hypocalcaemia) · drugs (opioids, ketamine/phenobarbital in cats, SSRIs) · stress. ACTIVELY COOL if >41.1°C (106°F).' },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryColumns',
       columns: [

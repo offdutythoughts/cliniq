@@ -1,5 +1,6 @@
 // ── Heart Murmur flowchart ───────────────────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
+import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
 
 const heartMurmurEntry: FlowPage = {
   id: 'heart-murmur',
@@ -94,7 +95,7 @@ const heartMurmurAcquired: FlowPage = {
   title: 'Heart Murmur — Acquired Structural',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' ACQUIRED STRUCTURAL', sub: 'Older patient · grade often rises with severity · ± cough, exercise intolerance, dyspnoea, gallop, arrhythmia' },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryGrid',
       columns: [
@@ -168,7 +169,7 @@ const heartMurmurFunctional: FlowPage = {
   title: 'Heart Murmur — Functional / Innocent',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' FUNCTIONAL / INNOCENT', sub: 'Soft (grade I–III/VI) · proto-to-mesosystolic · loudest at left base · NO structural disease on echo' },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryGrid',
       columns: [

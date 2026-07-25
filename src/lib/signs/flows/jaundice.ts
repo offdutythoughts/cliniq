@@ -14,6 +14,7 @@
 // Dx views (renderDxJaundice*) are out of scope.
 
 import type { FlowPage } from '../flowTypes'
+import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
 
 // ── 1. Entry ────────────────────────────────────────────────────────────────
 const jaundiceEntry: FlowPage = {
@@ -96,7 +97,7 @@ const jaundicePreHep: FlowPage = {
       text: 'Excess bilirubin from RBC destruction overwhelms hepatic conjugation capacity',
       sub: 'Significant anaemia · regenerative · bilirubinuria · haemoglobinaemia',
     },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryColumns',
       columns: [
@@ -137,7 +138,7 @@ const jaundiceHep: FlowPage = {
       text: 'Hepatocyte dysfunction → impaired bilirubin uptake, conjugation, and/or excretion',
       sub: 'Normal to mildly dilated bile ducts on US · elevated ALT + ALP · ± coagulopathy',
     },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryColumns',
       columns: [
@@ -195,7 +196,7 @@ const jaundicePostHep: FlowPage = {
       text: 'Obstruction to bile flow → conjugated bilirubin reflux into circulation',
       sub: 'Dilated bile ducts on US · marked ALP elevation · bilirubinuria · pale faeces',
     },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryColumns',
       columns: [

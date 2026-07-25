@@ -16,6 +16,7 @@
 // renderDxId('pupd','desmopressin') and are preserved inline in html (Dx tranche).
 
 import type { FlowPage } from '../flowTypes'
+import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
 
 // ── 1. Entry ────────────────────────────────────────────────────────────────
 const pupdEntry: FlowPage = {
@@ -158,7 +159,7 @@ const pupdPrimPD: FlowPage = {
       text: 'Brain drives excessive drinking → urine is secondarily dilute',
       sub: '≥1 USG >1.030 documented · Na⁺ low-normal (dilutional) · diagnose only after excluding all other causes',
     },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
 
     // Category grid (legacy `col()` per-column stacks → bespoke html).
     // Leading `↓` reproduces the legacy step→grid connector (html breaks the spine).
@@ -203,7 +204,7 @@ const pupdPrimPU: FlowPage = {
       text: 'Kidney produces excess urine → drinking compensates',
       sub: 'USG consistently dilute (<1.030) · Na⁺ high-normal (free water loss drives thirst)',
     },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
 
     // Category grid (legacy `col()` per-column stacks → bespoke html; CDI chip
     // links to the desmopressin Dx view, preserved inline — Dx tranche).
@@ -249,7 +250,7 @@ const pupdSecPU: FlowPage = {
       text: 'KEY: Systemic disease → secondary NDI or osmotic mechanism',
       sub: 'Concurrent systemic signs + abnormal biochemistry expected · USG variable · treat underlying disease → PU/PD resolves',
     },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
 
     // 2-column category grid (legacy `col()` per-column stacks → bespoke html).
     // Leading `↓` reproduces the legacy step→grid connector (html breaks the spine).

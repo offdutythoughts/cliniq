@@ -1,5 +1,6 @@
 // ── Swollen Joints / Joint Pain flowchart ────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
+import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
 
 const swollenJointsEntry: FlowPage = {
   id: 'swollen-joints',
@@ -128,7 +129,7 @@ const swollenJointsNoninflam: FlowPage = {
   title: 'Swollen Joints — Non-Inflammatory / Degenerative',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' NON-INFLAMMATORY / DEGENERATIVE', sub: 'Mononuclear synovial fluid · <10% neutrophils · intermittent / shifting lameness in an otherwise well animal · fewer, larger proximal joints' },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' },
+    IDENTIFY_CAUSE_STEP,
     {
       kind: 'categoryGrid',
       columns: [
