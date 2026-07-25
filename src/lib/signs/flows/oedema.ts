@@ -10,7 +10,10 @@ const oedemaEntry: FlowPage = {
     {
       kind: 'callout',
       tone: 'info',
-      html: ' <strong>First split: localised vs generalised.</strong> A single-limb or regional swelling points to local venous/lymphatic obstruction, hypersensitivity or trauma. <strong>Generalised / ventral pitting oedema</strong> reflects a systemic mechanism — <strong>check serum albumin first</strong>: hypoalbuminaemia needs albumin &lt;2.0 g/dL (&lt;20 g/L) to cause overt oedema alone, with effusion/thromboembolism risk once &lt;1.5 g/dL (&lt;15 g/L) (Ettinger Ch 30 · Ch 60).',
+      html:
+        ' <strong>First split: localised vs generalised.</strong><br>' +
+        '• <strong>Localised</strong> — a single-limb or regional swelling points to local venous/lymphatic obstruction, hypersensitivity or trauma.<br>' +
+        '• <strong>Generalised / ventral pitting oedema</strong> — reflects a systemic mechanism; <strong>check serum albumin first</strong>: hypoalbuminaemia needs albumin &lt;2.0 g/dL (&lt;20 g/L) to cause overt oedema alone, with effusion/thromboembolism risk once &lt;1.5 g/dL (&lt;15 g/L) (Ettinger Ch 30 · Ch 60).',
     },
     {
       kind: 'node',

@@ -19,7 +19,9 @@ export const oedemaDx: DxApproach = {
         { kind: 'branch', text: 'GOAL: LOCALISED vs GENERALISED — THEN MECHANISM' },
         {
           kind: 'check',
-          html: `<strong>Peripheral oedema</strong> appears when interstitial-matrix tension and lymphatic uptake are overwhelmed (Starling equation, Ettinger Ch 30). The single most useful first distinction is <strong>generalised / ventral pitting oedema</strong> (a systemic mechanism — go straight to serum albumin) versus a <strong>localised single-limb or regional swelling</strong> (think venous/lymphatic obstruction, hypersensitivity or trauma).`,
+          html: `<strong>Peripheral oedema</strong> appears when interstitial-matrix tension and lymphatic uptake are overwhelmed (Starling equation, Ettinger Ch 30). The single most useful first distinction:<br>
+    • <strong>Generalised / ventral pitting oedema</strong> — a systemic mechanism (go straight to serum albumin).<br>
+    • <strong>Localised single-limb or regional swelling</strong> — think venous/lymphatic obstruction, hypersensitivity or trauma.`,
         },
         { kind: 'step', tone: 'teal', text: ' STEP 1 — DISTRIBUTION & TIME COURSE' },
         {
