@@ -222,7 +222,29 @@ function ColumnView({ col, onNav }: { col: Column; onNav: Nav }) {
     </div>
   )
 }
-function BranchBlock({ columns, onNav }: { columns: Column[]; onNav: Nav }) {
+// Locked-scroll branch: each column keeps an intrinsic width sized to its nested
+// category row (n dense columns at a legible width + gaps), the tracks sum to a
+// `max-content` grid, and ONE overflow-x wrapper scrolls the whole split as a
+// unit. `LOCK_CAT_GAP` matches the categoryColumns internal column gap so each
+// 1fr category inside resolves back to `LOCK_CAT_W`.
+const LOCK_CAT_W = 104
+const LOCK_CAT_GAP = 6
+function armTrackWidth(col: Column): string {
+  const cc = col.blocks.find(b => b.kind === 'categoryColumns')
+  if (!cc || cc.kind !== 'categoryColumns') return 'max-content'
+  const n = cc.cols ?? cc.columns.length
+  return `${n * LOCK_CAT_W + (n - 1) * LOCK_CAT_GAP}px`
+}
+function BranchBlock({ columns, scroll, onNav }: { columns: Column[]; scroll?: boolean; onNav: Nav }) {
+  if (scroll) {
+    return (
+      <div style={s('width:100%;overflow-x:auto;')}>
+        <div style={s(`display:grid;grid-template-columns:${columns.map(armTrackWidth).join(' ')};gap:8px;width:max-content;`)}>
+          {columns.map((c, i) => <ColumnView key={i} col={c} onNav={onNav} />)}
+        </div>
+      </div>
+    )
+  }
   return <div style={s(`display:grid;grid-template-columns:repeat(${columns.length},1fr);gap:8px;width:100%;`)}>{columns.map((c, i) => <ColumnView key={i} col={c} onNav={onNav} />)}</div>
 }
 
@@ -332,15 +354,10 @@ function chunk<T>(arr: T[], size: number): T[][] {
 //               tiles, min-col 130, spill at 4 cols, 8px row gap.
 //   • 'dense' — crowded lesion look: tiered small headers/tiles, plain ↓ arrows,
 //               tiered min-col, spill at 5 cols, 4px row gap.
-function CategoryBlock({ columns, cols, preset, scroll, onNav }: { columns: CatColumn[]; cols: number; preset: CatPreset; scroll?: boolean; onNav: Nav }) {
+function CategoryBlock({ columns, cols, preset, onNav }: { columns: CatColumn[]; cols: number; preset: CatPreset; onNav: Nav }) {
   const dense = preset === 'dense'
   const t = dense ? colTier(cols) : 0
-  // `scroll` opts a narrower row into horizontal-scroll (used by side-by-side
-  // mechanism arms): force the spill (wideAt 1 ⇒ always "wide") and hold each
-  // column at a legible min so the row overflows — and slides within — its narrow
-  // parent instead of crushing labels to fit.
-  const minCol = scroll ? (dense ? 104 : CAT_GRID_MIN_COL) : dense ? [70, 76, 70][t] : CAT_GRID_MIN_COL
-  const sp = spillGrid(cols, minCol, scroll ? 1 : dense ? 5 : 4)
+  const sp = spillGrid(cols, dense ? [70, 76, 70][t] : CAT_GRID_MIN_COL, dense ? 5 : 4)
   const wide = sp.wide
   const gridStyle = !wide
     ? s(`display:grid;grid-template-columns:${sp.cols};gap:6px;width:100%;`)
@@ -635,7 +652,7 @@ function DxRowBlock({ items, onNav }: { items: LabeledLink[]; onNav: Nav }) {
 function BlockView({ b, onNav }: { b: Block; onNav: Nav }): ReactNode {
   switch (b.kind) {
     case 'node': return <NodeBlock b={b} />
-    case 'branch': return <BranchBlock columns={b.columns} onNav={onNav} />
+    case 'branch': return <BranchBlock columns={b.columns} scroll={b.scroll} onNav={onNav} />
     case 'endpoints': return <div style={s('display:flex;flex-direction:column;gap:4px;width:100%;')}>{b.items.map((e, i) => <EndpointView key={i} e={e} onNav={onNav} />)}</div>
     case 'fnHeader': return <FnHeaderBlock b={b} />
     case 'cardGrid': return <CardGridBlock perRow={b.perRow ?? 2} tiles={b.tiles} onNav={onNav} />
@@ -648,7 +665,7 @@ function BlockView({ b, onNav }: { b: Block; onNav: Nav }): ReactNode {
     case 'table': return <TableBlock b={b} onNav={onNav} />
     case 'cardSection': return <CardSectionBlock b={b} onNav={onNav} />
     case 'categoryGrid': return <CategoryBlock columns={b.columns} cols={b.columns.length} preset="grid" onNav={onNav} />
-    case 'categoryColumns': return <CategoryBlock columns={b.columns} cols={b.cols ?? b.columns.length} preset="dense" scroll={b.scroll} onNav={onNav} />
+    case 'categoryColumns': return <CategoryBlock columns={b.columns} cols={b.cols ?? b.columns.length} preset="dense" onNav={onNav} />
     case 'decisionTree': return <>{b.steps.map((step, i) => <DecisionStepView key={i} step={step} onNav={onNav} />)}</>
     case 'compareBox': return <CompareBoxBlock b={b} onNav={onNav} />
     case 'speciesCompare': return <SpeciesCompareBlock b={b} onNav={onNav} />

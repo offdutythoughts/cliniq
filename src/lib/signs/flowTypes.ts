@@ -61,7 +61,11 @@ export type NodeBlock = Connectable & {
   /** Recolour an entry node (e.g. red acute / blue chronic pathway headers). */
   tone?: Tone
 }
-export type BranchBlock = Connectable & { kind: 'branch'; columns: Column[] }
+/** `scroll` locks the whole N-column split into ONE horizontally-scrolling unit:
+ *  columns keep their intrinsic width and the entire branch slides under a single
+ *  scrollbar, rather than each column fitting (or scrolling) inside its own share.
+ *  Used by the side-by-side mechanism-split pages so both arms scroll together. */
+export type BranchBlock = Connectable & { kind: 'branch'; scroll?: boolean; columns: Column[] }
 export type EndpointsBlock = Connectable & { kind: 'endpoints'; cols?: number; items: Endpoint[] }
 
 /** An `.fn`-layout header box (the legacy `.fn .fn-insp/.fn-exp/.fn-rest/
@@ -185,12 +189,7 @@ export type CatColumn = { cat: CatLabel | string; tone?: Tone; tiles: CatColumnT
  *  category). Set it lower than `columns.length` to wrap the categories into an
  *  N-per-row grid — e.g. `cols: 2` lays four categories out 2×2 — which reads
  *  better than one cramped/scrolling row on narrow flow columns. */
-/** `scroll` forces the category row to keep each column at a legible minimum
- *  width and scroll horizontally when it overflows its container — use for a row
- *  nested inside a narrow column (e.g. a side-by-side mechanism arm) where the
- *  default full-width fit would crush the labels. Wide rows (≥5 dense cols)
- *  already scroll on their own; this opts a narrower row into the same behaviour. */
-export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; cols?: number; scroll?: boolean; columns: CatColumn[] }
+export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; cols?: number; columns: CatColumn[] }
 
 /** Reusable step block for "IDENTIFY CAUSE CATEGORY" — appears in 24+ flows. */
 export const IDENTIFY_CAUSE_STEP = { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' } as const
@@ -204,22 +203,22 @@ export type MechanismArm = { header: string; tone: Tone; sub?: string; categorie
  *  categories — the arms sit SIDE BY SIDE (one branch column each), and inside
  *  every arm the cause categories lay out horizontally: a uniform linear row of
  *  category headers with their disease chips beneath, matching the
- *  lesion-location pages. A crowded arm's category row scrolls horizontally
- *  (`scroll: true`) rather than crush its labels into the half-width column.
- *  Shared by the pale-MM regenerative (haemolysis vs haemorrhage) and
+ *  lesion-location pages. The whole split is one locked, horizontally-scrolling
+ *  block (`scroll: true`): both arms keep their intrinsic width and slide
+ *  together under a single scrollbar rather than each cramming into a half-width
+ *  column. Shared by the pale-MM regenerative (haemolysis vs haemorrhage) and
  *  non-regenerative (primary vs secondary) pages; reach for it whenever a page
  *  splits one differential two (or more) ways by mechanism. */
 export function mechanismSplit(arms: MechanismArm[]): BranchBlock {
   return {
     kind: 'branch',
     connectAfter: false,
+    scroll: true,
     columns: arms.map(a => ({
       header: a.header,
       tone: a.tone,
       sub: a.sub,
-      // ≥3 categories can't sit legibly across a half-width branch column →
-      // let that arm scroll horizontally; roomy arms (≤2) stay static.
-      blocks: [{ kind: 'categoryColumns', scroll: a.categories.length >= 3, columns: a.categories }],
+      blocks: [{ kind: 'categoryColumns', columns: a.categories }],
     })),
   }
 }
