@@ -15,6 +15,9 @@ const ETTINGER_BOOK =
   'Ettinger SJ, Feldman EC, Côté E, eds. Ettinger’s Textbook of Veterinary Internal Medicine. 9th ed. Elsevier; 2024'
 const GELATT_BOOK =
   'Gelatt KN, Ben-Shlomo G, Gilger BC, Hendrix DVH, Kern TJ, Plummer CE, eds. Veterinary Ophthalmology. 6th ed. Wiley-Blackwell; 2021'
+// Web-published clinical guideline — organisation-as-author AMA form with URL.
+const AHS_GUIDELINES =
+  'American Heartworm Society. Current Canine Guidelines for the Prevention, Diagnosis, and Management of Heartworm (Dirofilaria immitis) Infection in Dogs. American Heartworm Society; 2024. https://www.heartwormsociety.org/veterinary-resources/american-heartworm-society-guidelines'
 
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
@@ -23,17 +26,25 @@ export interface RefEntry { n: number; id: string; text: string }
  *  known source: "(Ettinger …)" / "(Gelatt …)". A leading space is consumed so
  *  the marker sits flush against the preceding punctuation. Non-source
  *  parentheticals (e.g. "(as for most cases)") are left untouched. */
-const CITE = /\s?\((Ettinger[^)]*|Gelatt[^)]*)\)/g
+const CITE = /\s?\(((?:Ettinger|Gelatt|AHS)[^)]*)\)/g
 
-/** Parse a citation's inner text into one source per cited chapter. An Ettinger
- *  citation with chapters yields one entry per chapter (per-chapter numbering);
- *  "Ettinger 9e" with no chapter, or Gelatt, yields a single book-level entry. */
+/** Parse a citation's inner text into one source per cited chapter/work. A single
+ *  parenthetical may carry several sources separated by ";" (e.g.
+ *  "(Ettinger Ch 237; AHS 2024)"). An Ettinger citation with chapters yields one
+ *  entry per chapter (per-chapter numbering); "Ettinger 9e" with no chapter,
+ *  Gelatt, or AHS yields a single book/guideline-level entry. */
 export function parseSources(inner: string): { id: string; text: string }[] {
-  if (/^Gelatt/.test(inner)) return [{ id: 'gelatt', text: `${GELATT_BOOK}.` }]
-  const chapters = inner.match(/Ch(?:apter|\.)?\s*([\d,\s]+)/)
-  if (!chapters) return [{ id: 'ettinger', text: `${ETTINGER_BOOK}.` }]
-  const nums = chapters[1].match(/\d+/g) ?? []
-  return nums.map(n => ({ id: `ettinger-ch${n}`, text: `${ETTINGER_BOOK}: chap ${n}.` }))
+  const out: { id: string; text: string }[] = []
+  for (const raw of inner.split(';')) {
+    const part = raw.trim()
+    if (/^Gelatt/.test(part)) { out.push({ id: 'gelatt', text: `${GELATT_BOOK}.` }); continue }
+    if (/^AHS/.test(part)) { out.push({ id: 'ahs', text: AHS_GUIDELINES }); continue }
+    const chapters = part.match(/Ch(?:apter|\.)?\s*([\d,\s]+)/)
+    if (!chapters) { out.push({ id: 'ettinger', text: `${ETTINGER_BOOK}.` }); continue }
+    const nums = chapters[1].match(/\d+/g) ?? []
+    for (const n of nums) out.push({ id: `ettinger-ch${n}`, text: `${ETTINGER_BOOK}: chap ${n}.` })
+  }
+  return out
 }
 
 /** Walk the page's fields (in render order), numbering each distinct cited
@@ -76,7 +87,7 @@ export function splitCitations(text: string): CiteSegment[] {
 
 /** True if the text contains at least one inline source citation. */
 export function hasCitation(text: string): boolean {
-  return /\((?:Ettinger|Gelatt)/.test(text)
+  return /\((?:Ettinger|Gelatt|AHS)/.test(text)
 }
 
 /** Map of source id → its AMA number on the current page. */
@@ -89,5 +100,5 @@ export function Cite({ ids, fallback }: { ids: string[]; fallback?: string }) {
   const numberOf = useContext(CitationContext)
   const nums = ids.map(id => numberOf.get(id)).filter((n): n is number => n != null)
   if (nums.length === 0) return <>{fallback ?? ''}</>
-  return <sup className="cite-ref">{nums.join(',')}</sup>
+  return <sup className="cite-ref">{nums.sort((a, b) => a - b).join(',')}</sup>
 }
