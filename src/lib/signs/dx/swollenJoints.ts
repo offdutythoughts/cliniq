@@ -16,7 +16,10 @@ export const swollenJointsDx: DxApproach = {
         { kind: 'branch', text: 'GOAL: INFLAMMATORY vs NON-INFLAMMATORY · MONO- vs POLY-' },
         {
           kind: 'check',
-          html: `Joint disease presents two ways. <strong>Degenerative (DJD/OA)</strong> = intermittent or shifting lameness in an otherwise healthy animal, few joints, larger proximal joints. <strong>Inflammatory joint disease</strong> is often NOT obviously "lame" — instead lethargy, ↓appetite and <strong>fever</strong>, affecting many joints, with the <strong>distal joints (carpi, tarsi)</strong> favoured in immune-mediated disease. Always count the joints: <strong>monoarthropathy vs polyarthropathy</strong> drives the differential. (Ettinger Ch 32)`,
+          html: `Joint disease presents two ways:<br>
+    • <strong>Degenerative (DJD/OA)</strong> = intermittent or shifting lameness in an otherwise healthy animal, few joints, larger proximal joints.<br>
+    • <strong>Inflammatory joint disease</strong> is often NOT obviously "lame" — instead lethargy, ↓appetite and <strong>fever</strong>, affecting many joints, with the <strong>distal joints (carpi, tarsi)</strong> favoured in immune-mediated disease.<br>
+    Always count the joints: <strong>monoarthropathy vs polyarthropathy</strong> drives the differential. (Ettinger Ch 32)`,
         },
         { kind: 'step', tone: 'danger', text: ' STEP 1 — IS A SINGLE HOT JOINT SEPTIC?' },
         {

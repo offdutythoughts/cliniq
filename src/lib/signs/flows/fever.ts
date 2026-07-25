@@ -10,7 +10,11 @@ const feverEntry: FlowPage = {
     {
       kind: 'callout',
       tone: 'danger',
-      html: ' <strong>TRUE FEVER vs HYPERTHERMIA — decide first.</strong> Fever (pyrexia) is a <strong>regulated</strong>, pyrogen-mediated rise in the hypothalamic set point — the animal does NOT seek to cool. Hyperthermia (heatstroke, exercise, seizures, stress, drugs) raises core temperature WITHOUT a set-point change — the animal pants, vasodilates and seeks cool. <strong>Do NOT actively cool a true fever</strong> — fever improves the host immune response. Reserve active cooling for temperature &gt;41.1°C (106°F), which is far more likely with hyperthermia (Ettinger Ch 16).',
+      html:
+        ' <strong>TRUE FEVER vs HYPERTHERMIA — decide first.</strong><br>' +
+        '• <strong>Fever (pyrexia)</strong> is a <strong>regulated</strong>, pyrogen-mediated rise in the hypothalamic set point — the animal does NOT seek to cool.<br>' +
+        '• <strong>Hyperthermia</strong> (heatstroke, exercise, seizures, stress, drugs) raises core temperature WITHOUT a set-point change — the animal pants, vasodilates and seeks cool.<br>' +
+        '<strong>Do NOT actively cool a true fever</strong> — fever improves the host immune response. Reserve active cooling for temperature &gt;41.1°C (106°F), which is far more likely with hyperthermia (Ettinger Ch 16).',
     },
     {
       kind: 'node',
