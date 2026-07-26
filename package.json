@@ -15,7 +15,8 @@
     "lint:chips": "npx tsx scripts/lint-chips.ts",
     "lint:tiles": "npx tsx scripts/lint-tiles.ts",
     "lint:alphas": "npx tsx scripts/lint-alphas.ts",
-    "lint:content": "npm run lint:protocols && npm run lint:flows && npm run lint:blocks && npm run lint:lesions && npm run lint:chips && npm run lint:tiles && npm run lint:alphas"
+    "lint:content": "npm run lint:protocols && npm run lint:flows && npm run lint:blocks && npm run lint:lesions && npm run lint:chips && npm run lint:tiles && npm run lint:alphas",
+    "lint:cram": "npx tsx scripts/lint-disease-crams.ts"
   },
   "dependencies": {
     "@auth/core": "^0.37.4",
