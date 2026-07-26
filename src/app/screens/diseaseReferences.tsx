@@ -18,6 +18,13 @@ const GELATT_BOOK =
 // Web-published clinical guideline — organisation-as-author AMA form with URL.
 const AHS_GUIDELINES =
   'American Heartworm Society. Current Canine Guidelines for the Prevention, Diagnosis, and Management of Heartworm (Dirofilaria immitis) Infection in Dogs. American Heartworm Society; 2024. https://www.heartwormsociety.org/veterinary-resources/american-heartworm-society-guidelines'
+// Peer-reviewed journal sources — AMA article form: Authors. Title. Journal. Year;Vol(Issue):Pages.
+// The ACVIM uroliths consensus is the gold-standard urolith reference; Berent's
+// SUB series is the definitive feline ureteral-obstruction outcomes paper.
+const ACVIM_UROLITHS =
+  'Lulich JP, Berent AC, Adams LG, Westropp JL, Bartges JW, Osborne CA. ACVIM small animal consensus recommendations on the treatment and prevention of uroliths in dogs and cats. J Vet Intern Med. 2016;30(5):1564-1574.'
+const BERENT_SUB =
+  'Berent AC, Weisse CW, Bagley DH, Lamb K. Use of a subcutaneous ureteral bypass device for treatment of benign ureteral obstruction in cats: 174 ureters in 134 cats (2009-2015). J Am Vet Med Assoc. 2018;253(10):1309-1327.'
 
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
@@ -26,7 +33,7 @@ export interface RefEntry { n: number; id: string; text: string }
  *  known source: "(Ettinger …)" / "(Gelatt …)". A leading space is consumed so
  *  the marker sits flush against the preceding punctuation. Non-source
  *  parentheticals (e.g. "(as for most cases)") are left untouched. */
-const CITE = /\s?\(((?:Ettinger|Gelatt|AHS)[^)]*)\)/g
+const CITE = /\s?\(((?:Ettinger|Gelatt|AHS|ACVIM|Berent)[^)]*)\)/g
 
 /** Parse a citation's inner text into one source per cited chapter/work. A single
  *  parenthetical may carry several sources separated by ";" (e.g.
@@ -39,6 +46,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     const part = raw.trim()
     if (/^Gelatt/.test(part)) { out.push({ id: 'gelatt', text: `${GELATT_BOOK}.` }); continue }
     if (/^AHS/.test(part)) { out.push({ id: 'ahs', text: AHS_GUIDELINES }); continue }
+    // Journal sources are keyed by author/org marker. If a second ACVIM consensus
+    // is ever cited, disambiguate on the year here (e.g. "ACVIM 2018").
+    if (/^ACVIM/.test(part)) { out.push({ id: 'acvim-uroliths', text: ACVIM_UROLITHS }); continue }
+    if (/^Berent/.test(part)) { out.push({ id: 'berent-sub', text: BERENT_SUB }); continue }
     const chapters = part.match(/Ch(?:apter|\.)?\s*([\d,\s]+)/)
     if (!chapters) { out.push({ id: 'ettinger', text: `${ETTINGER_BOOK}.` }); continue }
     const nums = chapters[1].match(/\d+/g) ?? []

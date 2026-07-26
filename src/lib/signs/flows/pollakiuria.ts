@@ -1,8 +1,13 @@
 // ── Pollakiuria / Stranguria flowchart ───────────────────────────────────────
 // Lower-urinary-tract signs (frequent small-volume voiding, straining, dysuria).
 // First decision: is the bladder large and turgid (OBSTRUCTION — emergency) or
-// not? Then localise: bladder lumen/wall vs urethra/outflow vs prostate (male).
-// Links into the LUT disease pages (DIS-URO-*) and the haematuria flow.
+// not? Then localise anatomically (bladder lumen/wall vs urethra/outflow vs
+// prostate) and, within each site, by pathophysiological category (Infection /
+// Inflammatory / Metabolic / Mass) — mirroring the pale-MM category layout.
+// The emergency arm routes to the DIS-URO-URETHRAL-OBS disease page (which links
+// the ⚡ unblocking protocol internally) rather than jumping straight to it.
+// Upper-tract stones (nephrolith / ureterolith → SUB) are cross-linked but kept
+// distinct from the lower-tract urolithiasis differential.
 
 import type { FlowPage } from '../flowTypes'
 
@@ -36,7 +41,8 @@ export const pollakiuriaFlow: FlowPage = {
             {
               kind: 'endpoints',
               items: [
-                { label: 'URETHRAL OBSTRUCTION / PLUG', tone: 'danger', link: { to: 'protocol', id: 'PROT-URO-OBS' } },
+                { label: 'URETHRAL PLUG (cat)', sublabel: 'Most common blocked-cat cause', tone: 'danger', link: { to: 'disease', id: 'DIS-URO-URETHRAL-OBS' } },
+                { label: 'URETHRAL UROLITH (dog / cat)', tone: 'warning', link: { to: 'disease', id: 'DIS-URO-URETHRAL-OBS' } },
                 { label: 'PROSTATIC / URETHRAL MASS', tone: 'violet', link: { to: 'disease', id: 'DIS-NEO-TCC' } },
               ],
             },
@@ -55,12 +61,14 @@ export const pollakiuriaFlow: FlowPage = {
                   header: 'BLADDER LUMEN / WALL',
                   blocks: [
                     {
-                      kind: 'endpoints',
-                      items: [
-                        { label: 'BACTERIAL CYSTITIS / UTI', sublabel: 'Most common canine cause', tone: 'orange', link: { to: 'disease', id: 'DIS-URO-UTI' } },
-                        { label: 'FELINE IDIOPATHIC CYSTITIS', sublabel: 'Most common feline cause', tone: 'teal', link: { to: 'disease', id: 'DIS-URO-FIC' } },
-                        { label: 'UROLITHIASIS', tone: 'info', link: { to: 'disease', id: 'DIS-URO-UROLITH-STRUV' } },
-                        { label: 'UROTHELIAL CARCINOMA (TCC)', tone: 'violet', link: { to: 'disease', id: 'DIS-NEO-TCC' } },
+                      kind: 'categoryColumns',
+                      cols: 1,
+                      connectAfter: false,
+                      columns: [
+                        { cat: 'Infection', tiles: [{ label: 'Bacterial cystitis / UTI', sublabel: 'Most common canine cause', link: { to: 'disease', id: 'DIS-URO-UTI' } }] },
+                        { cat: 'Inflammatory', tiles: [{ label: 'Feline idiopathic cystitis', sublabel: 'Most common feline cause', link: { to: 'disease', id: 'DIS-URO-FIC' } }] },
+                        { cat: 'Metabolic / Endocrine', tiles: [{ label: 'Urolithiasis', sublabel: 'Lower-tract (cystoliths)', link: { to: 'disease', id: 'DIS-URO-UROLITH-STRUV' } }] },
+                        { cat: 'Mass', tiles: [{ label: 'Urothelial carcinoma (TCC)', link: { to: 'disease', id: 'DIS-NEO-TCC' } }] },
                       ],
                     },
                   ],
@@ -69,12 +77,13 @@ export const pollakiuriaFlow: FlowPage = {
                   header: 'URETHRA / PROSTATE (esp. male)',
                   blocks: [
                     {
-                      kind: 'endpoints',
-                      items: [
-                        { label: 'BACTERIAL PROSTATITIS', tone: 'danger', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
-                        { label: 'BENIGN PROSTATIC HYPERPLASIA', tone: 'neutral', link: { to: 'disease', id: 'DIS-URO-BPH' } },
-                        { label: 'PROSTATIC CARCINOMA', tone: 'violet', link: { to: 'disease', id: 'DIS-URO-PROST-NEO' } },
-                        { label: 'URETHRAL UROLITH', tone: 'warning', link: { to: 'disease', id: 'DIS-URO-URETHRAL-OBS' } },
+                      kind: 'categoryColumns',
+                      cols: 1,
+                      connectAfter: false,
+                      columns: [
+                        { cat: 'Infection', tiles: [{ label: 'Bacterial prostatitis', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } }] },
+                        { cat: 'Metabolic / Endocrine', tiles: [{ label: 'Benign prostatic hyperplasia', link: { to: 'disease', id: 'DIS-URO-BPH' } }] },
+                        { cat: 'Mass', tiles: [{ label: 'Prostatic carcinoma', link: { to: 'disease', id: 'DIS-URO-PROST-NEO' } }] },
                       ],
                     },
                   ],
@@ -87,12 +96,30 @@ export const pollakiuriaFlow: FlowPage = {
     },
 
     {
+      kind: 'callout',
+      tone: 'info',
+      gap: 12,
+      title: '🪨 Urolithiasis — where is the stone?',
+      html: 'This flow covers <strong>lower-tract</strong> stones — <strong>cystoliths</strong> (bladder → pollakiuria, haematuria) and <strong>urethroliths</strong> (→ outflow obstruction, an emergency). <strong>Upper-tract</strong> stones present differently: a <strong>nephrolith</strong> is usually clinically silent (monitor, don’t reflexively remove), whereas an obstructing <strong>ureterolith</strong> causes azotaemia and PU/PD and needs SUB (subcutaneous ureteral bypass) placement rather than medical expulsion.',
+    },
+
+    {
+      kind: 'diseaseGrid',
+      title: 'RELATED — UPPER URINARY TRACT',
+      links: [
+        { label: 'Nephrolithiasis (renolith)', link: { to: 'disease', id: 'DIS-URO-NEPHROLITH' } },
+        { label: 'Ureteral obstruction / ureterolith → SUB', link: { to: 'disease', id: 'DIS-URO-URETER-OBS' } },
+      ],
+    },
+
+    {
       kind: 'alert',
       tone: 'danger',
       title: "ALWAYS RULE OUT / DON'T MISS",
       items: [
         '<strong>Urethral obstruction</strong> — palpate a large turgid bladder; ECG + serum potassium FIRST; treat hyperkalaemia before sedation/decompression',
         { bold: 'Ascending pyelonephritis', link: { to: 'disease', id: 'DIS-URO-PYELO' }, html: ' — LUTS + fever/azotaemia/PU-PD means the upper tract is involved' },
+        { bold: 'Obstructing ureterolith', link: { to: 'disease', id: 'DIS-URO-URETER-OBS' }, html: ' — azotaemia/PU-PD rather than LUTS; moderate–severe obstruction needs SUB placement, not medical expulsion' },
         '<strong>Urothelial / prostatic carcinoma</strong> — older patient with persistent LUTS unresponsive to antibiotics; do NOT biopsy via the abdominal wall (seeding)',
         '<strong>Do not over-treat with antibiotics</strong> — most feline LUTS is sterile FIC (ISCAID: culture only with active sediment + signs)',
       ],

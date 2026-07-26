@@ -16,6 +16,21 @@ describe('parseSources', () => {
   it('treats Gelatt as a single ophthalmology source', () => {
     expect(parseSources('Gelatt 6th edn Table 17.3').map(s => s.id)).toEqual(['gelatt'])
   })
+
+  it('treats ACVIM as the uroliths consensus source', () => {
+    expect(parseSources('ACVIM 2016').map(s => s.id)).toEqual(['acvim-uroliths'])
+    expect(parseSources('ACVIM 2016')[0].text).toContain('J Vet Intern Med. 2016;30(5):1564-1574')
+  })
+
+  it('treats Berent as the SUB journal source', () => {
+    expect(parseSources('Berent 2018').map(s => s.id)).toEqual(['berent-sub'])
+    expect(parseSources('Berent 2018')[0].text).toContain('J Am Vet Med Assoc. 2018;253(10):1309-1327')
+  })
+
+  it('splits a mixed Ettinger + journal parenthetical into separate entries', () => {
+    expect(parseSources('Ettinger Ch 306; ACVIM 2016; Berent 2018').map(s => s.id))
+      .toEqual(['ettinger-ch306', 'acvim-uroliths', 'berent-sub'])
+  })
 })
 
 describe('buildDiseaseCitations', () => {

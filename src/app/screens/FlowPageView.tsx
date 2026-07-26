@@ -303,15 +303,20 @@ function CatTile({ tile, st, theme, onNav }: { tile: CategoryTile; st: { bg: str
       </div>
     )
   }
+  // Optional muted second line (e.g. "Most common canine cause") — mirrors the
+  // endpoint sublabel styling so a tile reads the same in either block.
+  const sub = tile.sublabel
+    ? <div style={s('font-size:8px;font-weight:400;opacity:.75;margin-top:2px;')}>{tile.sublabel}</div>
+    : null
   if (tile.link) {
     return (
       <div role="button" onClick={() => onNav(linkToView(tile.link!))} {...hoverBrighten}
         style={s(`${tint}${theme.chip}cursor:pointer;`)}>
-        {tile.label}
+        {tile.label}{sub}
       </div>
     )
   }
-  if (tile.terminal) return <div style={s(`${tint}${theme.chip}${ST_TILE_MUTED}`)}>{tile.label}</div>
+  if (tile.terminal) return <div style={s(`${tint}${theme.chip}${ST_TILE_MUTED}`)}>{tile.label}{sub}</div>
   return (
     <div aria-disabled title="No linked page available" style={s(`${ST_UNLINKED_TILE}${theme.chip}`)}>
       {tile.label}

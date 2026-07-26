@@ -153,7 +153,7 @@ export type CardSectionBlock = Connectable & {
  *  to (renders in-tone as plain info, NOT greyed). A tile with neither a
  *  link nor `terminal` renders greyed + aria-disabled and is treated as an
  *  authoring gap (a forgotten link). */
-export type CategoryTile = { label: string; link?: Link; links?: LabeledLink[]; terminal?: boolean }
+export type CategoryTile = { label: string; sublabel?: string; link?: Link; links?: LabeledLink[]; terminal?: boolean }
 export type CategoryColumn = { cat: string; tone: Tone; tiles: CategoryTile[] }
 export type CategoryGridBlock = Connectable & { kind: 'categoryGrid'; columns: CategoryColumn[] }
 
