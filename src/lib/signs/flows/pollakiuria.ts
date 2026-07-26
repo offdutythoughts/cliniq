@@ -1,17 +1,18 @@
 // ── Pollakiuria / Stranguria flowchart ───────────────────────────────────────
 // Lower-urinary-tract signs (frequent small-volume voiding, straining, dysuria).
-// First decision: is the bladder large and turgid (OBSTRUCTION — emergency) or
-// not? Then localise anatomically (bladder lumen/wall vs urethra/outflow vs
-// prostate) and, within each site, by pathophysiological category (Infection /
-// Inflammatory / Metabolic / Mass) — mirroring the pale-MM category layout.
-// The emergency arm routes to the DIS-URO-URETHRAL-OBS disease page (which links
-// the ⚡ unblocking protocol internally) rather than jumping straight to it.
-// Upper-tract stones (nephrolith / ureterolith → SUB) are cross-linked but kept
-// distinct from the lower-tract urolithiasis differential.
+// Mirrors the pale-MM architecture: an ENTRY page carries the first fork (is the
+// patient OBSTRUCTED — an emergency — or not?), and the non-obstructed arm drills
+// into a LOCALISATION sub-flow. That sub-flow reuses `mechanismSplit` (the shared
+// pale-MM component) to split the differential by site — BLADDER vs URETHRA /
+// PROSTATE — with each site's cause categories laid out in a horizontal row
+// (Infection / Inflammatory / Metabolic / Mass), exactly like the pale-MM
+// regenerative/non-regenerative pages.
 
 import type { FlowPage } from '../flowTypes'
+import { mechanismSplit } from '../flowTypes'
 
-export const pollakiuriaFlow: FlowPage = {
+// ── Entry ─────────────────────────────────────────────────────────────────────
+const pollakiuriaEntry: FlowPage = {
   id: 'pollakiuria',
   title: 'Pollakiuria / Stranguria',
   blocks: [
@@ -53,47 +54,71 @@ export const pollakiuriaFlow: FlowPage = {
           tone: 'teal',
           sub: 'Small bladder · comfortable to express · frequent small voids ± haematuria',
           blocks: [
-            { kind: 'node', variant: 'sub-step', text: 'BLADDER vs URETHRA vs PROSTATE?', connectAfter: false },
             {
-              kind: 'branch',
-              columns: [
-                {
-                  header: 'BLADDER LUMEN / WALL',
-                  blocks: [
-                    {
-                      kind: 'categoryColumns',
-                      cols: 1,
-                      connectAfter: false,
-                      columns: [
-                        { cat: 'Infection', tiles: [{ label: 'Bacterial cystitis / UTI', sublabel: 'Most common canine cause', link: { to: 'disease', id: 'DIS-URO-UTI' } }] },
-                        { cat: 'Inflammatory', tiles: [{ label: 'Feline idiopathic cystitis', sublabel: 'Most common feline cause', link: { to: 'disease', id: 'DIS-URO-FIC' } }] },
-                        { cat: 'Metabolic / Endocrine', tiles: [{ label: 'Urolithiasis', sublabel: 'Lower-tract (cystoliths)', link: { to: 'disease', id: 'DIS-URO-UROLITH-STRUV' } }] },
-                        { cat: 'Mass', tiles: [{ label: 'Urothelial carcinoma (TCC)', link: { to: 'disease', id: 'DIS-NEO-TCC' } }] },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  header: 'URETHRA / PROSTATE (esp. male)',
-                  blocks: [
-                    {
-                      kind: 'categoryColumns',
-                      cols: 1,
-                      connectAfter: false,
-                      columns: [
-                        { cat: 'Infection', tiles: [{ label: 'Bacterial prostatitis', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } }] },
-                        { cat: 'Metabolic / Endocrine', tiles: [{ label: 'Benign prostatic hyperplasia', link: { to: 'disease', id: 'DIS-URO-BPH' } }] },
-                        { cat: 'Mass', tiles: [{ label: 'Prostatic carcinoma', link: { to: 'disease', id: 'DIS-URO-PROST-NEO' } }] },
-                      ],
-                    },
-                  ],
-                },
+              kind: 'choices',
+              items: [
+                { label: 'LOCALISE BY SITE', sublabel: 'bladder · urethra · prostate', tone: 'teal', link: { to: 'flow', id: 'pollakiuria-localise' } },
               ],
             },
           ],
         },
       ],
     },
+
+    {
+      kind: 'alert',
+      tone: 'danger',
+      title: "ALWAYS RULE OUT / DON'T MISS",
+      items: [
+        '<strong>Urethral obstruction</strong> — palpate a large turgid bladder; ECG + serum potassium FIRST; treat hyperkalaemia before sedation/decompression',
+        { bold: 'Ascending pyelonephritis', link: { to: 'disease', id: 'DIS-URO-PYELO' }, html: ' — LUTS + fever/azotaemia/PU-PD means the upper tract is involved' },
+        { bold: 'Obstructing ureterolith', link: { to: 'disease', id: 'DIS-URO-URETER-OBS' }, html: ' — azotaemia/PU-PD rather than LUTS; moderate–severe obstruction needs SUB placement, not medical expulsion' },
+        '<strong>Urothelial / prostatic carcinoma</strong> — older patient with persistent LUTS unresponsive to antibiotics; do NOT biopsy via the abdominal wall (seeding)',
+        '<strong>Do not over-treat with antibiotics</strong> — most feline LUTS is sterile FIC (ISCAID: culture only with active sediment + signs)',
+      ],
+    },
+
+    { kind: 'disclaimer' },
+  ],
+}
+
+// ── Non-obstructed localisation (sub-flow) ────────────────────────────────────
+// Reuses mechanismSplit: BLADDER vs URETHRA / PROSTATE arms, each with a
+// horizontal row of pathophysiology categories — the pale-MM format.
+const pollakiuriaLocalise: FlowPage = {
+  id: 'pollakiuria-localise',
+  title: 'Pollakiuria — Non-Obstructed Localisation',
+  blocks: [
+    { kind: 'node', variant: 'entry', tone: 'teal', text: '🔵 NON-OBSTRUCTED — LOCALISE' },
+    {
+      kind: 'node',
+      variant: 'step',
+      text: 'BLADDER vs URETHRA vs PROSTATE?',
+      sub: 'Small bladder · comfortable to express · frequent small voids ± haematuria',
+    },
+    mechanismSplit([
+      {
+        header: 'BLADDER LUMEN / WALL',
+        tone: 'teal',
+        sub: 'lumen · mucosa · wall',
+        categories: [
+          { cat: 'Infection', tone: 'orange', tiles: [{ label: 'Bacterial cystitis / UTI', sublabel: 'Most common canine cause', link: { to: 'disease', id: 'DIS-URO-UTI' } }] },
+          { cat: 'Inflammatory', tiles: [{ label: 'Feline idiopathic cystitis', sublabel: 'Most common feline cause', link: { to: 'disease', id: 'DIS-URO-FIC' } }] },
+          { cat: 'Metabolic / Endocrine', tiles: [{ label: 'Urolithiasis', sublabel: 'Lower-tract (cystoliths)', link: { to: 'disease', id: 'DIS-URO-UROLITH-STRUV' } }] },
+          { cat: 'Mass', tiles: [{ label: 'Urothelial carcinoma (TCC)', link: { to: 'disease', id: 'DIS-NEO-TCC' } }] },
+        ],
+      },
+      {
+        header: 'URETHRA / PROSTATE (esp. male)',
+        tone: 'indigo',
+        sub: 'outflow · prostate',
+        categories: [
+          { cat: 'Infection', tone: 'orange', tiles: [{ label: 'Bacterial prostatitis', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } }] },
+          { cat: 'Metabolic / Endocrine', tiles: [{ label: 'Benign prostatic hyperplasia', link: { to: 'disease', id: 'DIS-URO-BPH' } }] },
+          { cat: 'Mass', tiles: [{ label: 'Prostatic carcinoma', link: { to: 'disease', id: 'DIS-URO-PROST-NEO' } }] },
+        ],
+      },
+    ]),
 
     {
       kind: 'callout',
@@ -112,18 +137,8 @@ export const pollakiuriaFlow: FlowPage = {
       ],
     },
 
-    {
-      kind: 'alert',
-      tone: 'danger',
-      title: "ALWAYS RULE OUT / DON'T MISS",
-      items: [
-        '<strong>Urethral obstruction</strong> — palpate a large turgid bladder; ECG + serum potassium FIRST; treat hyperkalaemia before sedation/decompression',
-        { bold: 'Ascending pyelonephritis', link: { to: 'disease', id: 'DIS-URO-PYELO' }, html: ' — LUTS + fever/azotaemia/PU-PD means the upper tract is involved' },
-        { bold: 'Obstructing ureterolith', link: { to: 'disease', id: 'DIS-URO-URETER-OBS' }, html: ' — azotaemia/PU-PD rather than LUTS; moderate–severe obstruction needs SUB placement, not medical expulsion' },
-        '<strong>Urothelial / prostatic carcinoma</strong> — older patient with persistent LUTS unresponsive to antibiotics; do NOT biopsy via the abdominal wall (seeding)',
-        '<strong>Do not over-treat with antibiotics</strong> — most feline LUTS is sterile FIC (ISCAID: culture only with active sediment + signs)',
-      ],
-    },
-
+    { kind: 'disclaimer' },
   ],
 }
+
+export const pollakiuriaFlows: FlowPage[] = [pollakiuriaEntry, pollakiuriaLocalise]

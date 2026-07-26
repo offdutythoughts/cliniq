@@ -22,7 +22,7 @@ import { vestibularFlows } from './vestibular'
 import { ataxiaFlows } from './ataxia'
 import { bleedingFlows } from './bleeding'
 // Phase 3 — new sign screens (gap-analysis remediation)
-import { pollakiuriaFlow } from './pollakiuria'
+import { pollakiuriaFlows } from './pollakiuria'
 import { syncopeFlows } from './syncope'
 import { heartMurmurFlows } from './heartMurmur'
 import { feverFlows } from './fever'
@@ -49,7 +49,7 @@ export const FLOWS: Record<string, FlowPage> = Object.fromEntries(
     // Phase 2
     ...seizuresFlows, ...myelopathyFlows, ...vestibularFlows, ...ataxiaFlows, ...bleedingFlows,
     // Phase 3
-    pollakiuriaFlow,
+    ...pollakiuriaFlows,
     ...syncopeFlows, ...heartMurmurFlows, ...feverFlows, ...dysphagiaFlows,
     ...melenaFlows, ...constipationFlows, ...oedemaFlows, ...swollenJointsFlows,
     ...anorexiaFlows, ...weightLossFlows, ...polyphagiaFlows, ...cyanosisFlows, ...tremorsFlows,
