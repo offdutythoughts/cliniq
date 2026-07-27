@@ -105,7 +105,10 @@ export function Bul({ text, warn, allowDash = true }: { text: string; warn?: boo
     <>
       {parseBlocks(text, { warn, allowDash }).map((b, i) => {
         switch (b.kind) {
-          case 'header': return <div key={i} style={HEADER}>▸ {b.text}</div>
+          // Headers linkify too — a `#Header` may carry an @-link (e.g.
+          // "#Acute crisis (see @PROT-RESP)"), which otherwise rendered as
+          // literal "@PROT-RESP" text instead of a tappable protocol link.
+          case 'header': return <div key={i} style={HEADER}>▸ <Linkify text={b.text} /></div>
           case 'warn': return <div key={i} style={WARN}>⚠️ {b.text}</div>
           case 'sub': return <div key={i} style={SUB}><span style={DASH}>–</span><Linkify text={b.text} /></div>
           default: return <div key={i} style={BULLET}><span style={DOT}>•</span><Linkify text={b.text} /></div>

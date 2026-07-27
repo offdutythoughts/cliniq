@@ -13,6 +13,8 @@ import { parseBlocks, bareHeaderIndices } from '../src/app/screens/blocks'
 const RENDERED_FIELDS = [
   'etiology', 'risk', 'path', 'signs', 'conf', 'supp',
   'tx1', 'tx2', 'outpatient', 'monitor', 'prog', 'breed', 'age',
+  // lesion-only leaf fields (SubTypeDetailView cards)
+  'signalment', 'patho', 'diag', 'treat', 'ddx',
 ] as const
 
 let errors = 0
