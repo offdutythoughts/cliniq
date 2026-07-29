@@ -11,9 +11,12 @@ export interface Lesion {
   filter?: string
   note: string
   etiology?: string
+  signalment?: string
   patho?: string
   diag?: string
   treat?: string
+  monitor?: string
+  prog?: string
   dis?: string
   directDis?: boolean
   noDiffFlow?: boolean

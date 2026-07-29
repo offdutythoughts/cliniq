@@ -127,8 +127,13 @@ export function screenMeta(v: View): ScreenMeta {
     case 'lesionLoc':
       return { topbarTitle: v.name, noteKey: `loc:${v.loc}`, noteTitle: v.name }
     case 'subTypeDetail': {
-      const sub = lesionById.get(v.id)?.sub ?? ''
-      return { topbarTitle: trunc(sub, 30), noteKey: `lesion:${v.id}`, noteTitle: sub }
+      const l = lesionById.get(v.id)
+      const sub = l?.sub ?? ''
+      // directDis sub-types render DiseasePageView, which draws its own page title —
+      // a topbar title on top of that is a duplicated (and often differently-worded)
+      // heading. Match the plain `disease` case and leave the topbar blank.
+      const redirects = !!(l?.directDis && l?.dis)
+      return { topbarTitle: redirects ? '' : trunc(sub, 30), noteKey: `lesion:${v.id}`, noteTitle: sub }
     }
     case 'lesionDetail': {
       const sub = lesionById.get(v.id)?.sub ?? ''

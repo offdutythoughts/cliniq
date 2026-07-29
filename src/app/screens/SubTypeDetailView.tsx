@@ -1,9 +1,15 @@
 'use client'
 // Lesion sub-type detail — React port of renderSubTypeDetail (cliniqApp.ts).
 // The richest leaf: optional EMERGENCY banner, tags, protocol card, then cards
-// for Etiology (with @-link bullets), Clinical Signs, Pathophysiology, Diagnostic
-// Investigation (or a fallback test list), Treatment, Differential Diagnosis,
-// Notes, and a disease-page card. directDis sub-types redirect to the disease.
+// following the same section order as a disease page — Etiology (with @-link
+// bullets), Signalment, Pathophysiology, Clinical Signs, Diagnostic Investigation
+// (or a fallback test list), Treatment, Monitoring, Prognosis, Differential
+// Diagnosis, Notes, and a disease-page card.
+//
+// Sub-types that ARE a single disease set directDis + dis and redirect to the
+// disease page instead of duplicating its content here (see scripts/lint-lesions.ts).
+// The cards below are for genuine *category* sub-types — fluid classes, oedema
+// types, parasite umbrellas — which have no 1:1 disease page to redirect to.
 
 import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
@@ -32,6 +38,12 @@ export function SubTypeDetailView({ id }: { id: string }) {
   const ddx = str(l.ddx)
   const note = str(l.note)
   const dis = str(l.dis)
+  const signalment = str(l.signalment)
+  const monitor = str(l.monitor)
+  const prog = str(l.prog)
+  // `signs` is legacy plain prose on most lesions; authored category pages use
+  // pipe-markup so the sign list renders as bullets like every other card.
+  const signsIsPiped = str(l.signs).includes('|')
 
   const dxTests = new Set<string>()
   diffs.forEach(d => {
@@ -60,15 +72,17 @@ export function SubTypeDetailView({ id }: { id: string }) {
         )}
       </Card>
 
-      <Card title="Clinical Signs">
-        <div style={BODY_TEXT}>{l.signs}</div>
-      </Card>
+      {signalment && <Card title="Signalment"><Bul text={signalment} /></Card>}
 
       {patho && (
         <Card title="Pathophysiology">
           <Bul text={patho} />
         </Card>
       )}
+
+      <Card title="Clinical Signs">
+        {signsIsPiped ? <Bul text={str(l.signs)} /> : <div style={BODY_TEXT}>{l.signs}</div>}
+      </Card>
 
       {(diag || dxTests.size > 0) && (
         <Card title="Diagnostic Investigation">
@@ -79,7 +93,9 @@ export function SubTypeDetailView({ id }: { id: string }) {
         </Card>
       )}
 
-      {treat && <Card title="General Treatment"><Bul text={treat} /></Card>}
+      {treat && <Card title="Treatment"><Bul text={treat} /></Card>}
+      {monitor && <Card title="Monitoring"><Bul text={monitor} /></Card>}
+      {prog && <Card title="Prognosis"><Bul text={prog} /></Card>}
       {ddx && <Card title="Differential Diagnosis"><Bul text={ddx} /></Card>}
 
       {note && (
