@@ -13,14 +13,10 @@
 
 import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
-import { styleStringToObject as s } from './style'
 import { UrgTag, SpTag } from './tags'
 import { DiseasePageView } from './DiseasePageView'
 import { NavCard, Card, Bul, str } from './markup'
-import { TAG_ROW, BODY_TEXT, DOT, BULLET } from './styles'
-
-const ETI_NAME = s('font-size:var(--fs-body);color:var(--white);line-height:var(--lh-body);')
-const ETI_BOX = s('margin-top:10px;padding-top:10px;border-top:1px solid var(--border);')
+import { TAG_ROW, BODY_TEXT, DOT, BULLET, PAGE_TITLE } from './styles'
 
 export function SubTypeDetailView({ id }: { id: string }) {
   const nav = useNav()
@@ -54,23 +50,21 @@ export function SubTypeDetailView({ id }: { id: string }) {
 
   return (
     <>
-      {isEM && <div className="em-alert">🚨 EMERGENCY — initiate stabilisation before full diagnostic workup</div>}
+      <div style={PAGE_TITLE}>{l.sub}</div>
       <div style={TAG_ROW}><UrgTag urg={l.urg} /><SpTag sp={l.sp} /><span className="tag tag-sp-all">{l.cat}</span></div>
+      {isEM && <div className="em-alert">🚨 EMERGENCY — initiate stabilisation before full diagnostic workup</div>}
 
       {proto && (
         <NavCard title={`⚡ Protocol: ${proto}`} sub="Tap to open step-by-step protocol" onClick={() => nav.navigate({ kind: 'protocol', id: proto })} style={{ marginBottom: 14 }} />
       )}
 
-      <Card title="Etiology">
-        <div style={ETI_NAME}>{l.sub}</div>
-        {(etiology || diffs.length > 0) && (
-          <div style={ETI_BOX}>
-            {etiology
-              ? <Bul text={etiology} />
-              : diffs.map(d => <div key={d.id} style={BULLET}><span style={DOT}>•</span>{d.name}</div>)}
-          </div>
-        )}
-      </Card>
+      {(etiology || diffs.length > 0) && (
+        <Card title="Etiology">
+          {etiology
+            ? <Bul text={etiology} />
+            : diffs.map(d => <div key={d.id} style={BULLET}><span style={DOT}>•</span>{d.name}</div>)}
+        </Card>
+      )}
 
       {signalment && <Card title="Signalment"><Bul text={signalment} /></Card>}
 

@@ -25,6 +25,30 @@ const ACVIM_UROLITHS =
   'Lulich JP, Berent AC, Adams LG, Westropp JL, Bartges JW, Osborne CA. ACVIM small animal consensus recommendations on the treatment and prevention of uroliths in dogs and cats. J Vet Intern Med. 2016;30(5):1564-1574.'
 const BERENT_SUB =
   'Berent AC, Weisse CW, Bagley DH, Lamb K. Use of a subcutaneous ureteral bypass device for treatment of benign ureteral obstruction in cats: 174 ureters in 134 cats (2009-2015). J Am Vet Med Assoc. 2018;253(10):1309-1327.'
+// Myasthenia gravis / megaoesophagus evidence base. Shelton is the classic
+// spontaneous-remission cohort; Forgash the modern outcome cohort (the two
+// disagree on remission rate — both are cited so the page can show the range).
+const SHELTON_REMISSION =
+  'Shelton GD, Lindstrom JM. Spontaneous remission in canine myasthenia gravis: implications for assessing human MG therapies. Neurology. 2001;57(11):2139-2141.'
+const FORGASH_MG =
+  'Forgash JT, Chang YM, Mittelman NS, et al. Clinical features and outcome of acquired myasthenia gravis in 94 dogs. J Vet Intern Med. 2021;35(5):2315-2326.'
+const CRIDGE_NEOSTIGMINE =
+  'Cridge H, Little A, José-López R, et al. The clinical utility of neostigmine administration in the diagnosis of acquired myasthenia gravis. J Vet Emerg Crit Care. 2021;31(5):647-655.'
+const DEWEY_MMF =
+  'Dewey CW, Cerda-Gonzalez S, Fletcher DJ, et al. Mycophenolate mofetil treatment in dogs with serologically diagnosed acquired myasthenia gravis: 27 cases (1999-2008). J Am Vet Med Assoc. 2010;236(6):664-668.'
+const QUINTAVALLA_SILDENAFIL =
+  'Quintavalla F, Menozzi A, Pozzoli C, et al. Sildenafil improves clinical signs and radiographic features in dogs with congenital idiopathic megaoesophagus: a randomised controlled trial. Vet Rec. 2017;180(16):404.'
+// Endocrine + urolith guideline sources. AAHA is the single 2023 guideline
+// covering hypoadrenocorticism, hypercortisolism and hypothyroidism, so all
+// three disease pages resolve to one numbered entry.
+const AAHA_ENDOCRINE =
+  'Bugbee A, Rucinsky R, Cazabon S, et al. 2023 AAHA Selected Endocrinopathies of Dogs and Cats Guidelines. J Am Anim Hosp Assoc. 2023;59(3):113-135.'
+// Organisation-as-author guideline form (as for AHS) — FECAVA does not publish
+// per-guideline author/journal metadata on its resource page.
+const FECAVA_HYPOADRENO =
+  'Federation of European Companion Animal Veterinary Associations. FECAVA Endocrinology Guidelines: Canine Hypoadrenocorticism. FECAVA; 2023. https://www.fecava.org/fecava-endocrinology-guidelines'
+const MN_UROLITH =
+  'Minnesota Urolith Center. Annual Report: Canine and Feline Urolith Submissions. University of Minnesota College of Veterinary Medicine; 2020. https://vetmed.umn.edu/centers-programs/minnesota-urolith-center'
 
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
@@ -33,7 +57,7 @@ export interface RefEntry { n: number; id: string; text: string }
  *  known source: "(Ettinger …)" / "(Gelatt …)". A leading space is consumed so
  *  the marker sits flush against the preceding punctuation. Non-source
  *  parentheticals (e.g. "(as for most cases)") are left untouched. */
-const CITE = /\s?\(((?:Ettinger|Gelatt|AHS|ACVIM|Berent)[^)]*)\)/g
+const CITE = /\s?\(((?:Ettinger|Gelatt|AHS|AAHA|FECAVA|Minnesota|ACVIM|Berent|Shelton|Forgash|Cridge|Dewey|Quintavalla)[^)]*)\)/g
 
 /** Parse a citation's inner text into one source per cited chapter/work. A single
  *  parenthetical may carry several sources separated by ";" (e.g.
@@ -46,10 +70,18 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     const part = raw.trim()
     if (/^Gelatt/.test(part)) { out.push({ id: 'gelatt', text: `${GELATT_BOOK}.` }); continue }
     if (/^AHS/.test(part)) { out.push({ id: 'ahs', text: AHS_GUIDELINES }); continue }
+    if (/^AAHA/.test(part)) { out.push({ id: 'aaha-endocrine', text: AAHA_ENDOCRINE }); continue }
+    if (/^FECAVA/.test(part)) { out.push({ id: 'fecava-hypoadreno', text: FECAVA_HYPOADRENO }); continue }
+    if (/^Minnesota/.test(part)) { out.push({ id: 'mn-urolith', text: MN_UROLITH }); continue }
     // Journal sources are keyed by author/org marker. If a second ACVIM consensus
     // is ever cited, disambiguate on the year here (e.g. "ACVIM 2018").
     if (/^ACVIM/.test(part)) { out.push({ id: 'acvim-uroliths', text: ACVIM_UROLITHS }); continue }
     if (/^Berent/.test(part)) { out.push({ id: 'berent-sub', text: BERENT_SUB }); continue }
+    if (/^Shelton/.test(part)) { out.push({ id: 'shelton-remission', text: SHELTON_REMISSION }); continue }
+    if (/^Forgash/.test(part)) { out.push({ id: 'forgash-mg', text: FORGASH_MG }); continue }
+    if (/^Cridge/.test(part)) { out.push({ id: 'cridge-neostigmine', text: CRIDGE_NEOSTIGMINE }); continue }
+    if (/^Dewey/.test(part)) { out.push({ id: 'dewey-mmf', text: DEWEY_MMF }); continue }
+    if (/^Quintavalla/.test(part)) { out.push({ id: 'quintavalla-sildenafil', text: QUINTAVALLA_SILDENAFIL }); continue }
     const chapters = part.match(/Ch(?:apter|\.)?\s*([\d,\s]+)/)
     if (!chapters) { out.push({ id: 'ettinger', text: `${ETTINGER_BOOK}.` }); continue }
     const nums = chapters[1].match(/\d+/g) ?? []
@@ -98,7 +130,7 @@ export function splitCitations(text: string): CiteSegment[] {
 
 /** True if the text contains at least one inline source citation. */
 export function hasCitation(text: string): boolean {
-  return /\((?:Ettinger|Gelatt|AHS)/.test(text)
+  return /\((?:Ettinger|Gelatt|AHS|AAHA|FECAVA|Minnesota|ACVIM|Berent|Shelton|Forgash|Cridge|Dewey|Quintavalla)/.test(text)
 }
 
 /** Map of source id → its AMA number on the current page. */
