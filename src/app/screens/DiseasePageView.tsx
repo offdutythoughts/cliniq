@@ -96,7 +96,9 @@ function isEmergencyDisease(disease: DiseaseRow, topAlert: string): boolean {
 function stripAlertPrefix(text: string): string {
   return text
     .replace(/^[⚠🚨]\uFE0F?\s*/u, '')
-    .replace(/^EMERGENCY\s*[:—-]?\s*/i, '')
+    // "." belongs in the separator class: DIS-CARD-ATE authors the prefix as
+    // "⚠ Emergency. Five Ps…", which otherwise rendered as "🚨 Emergency: . Five Ps…".
+    .replace(/^EMERGENCY\s*[:—.-]?\s*/i, '')
 }
 
 /** Pages citing more than this many sources collapse the footnote behind a toggle. */

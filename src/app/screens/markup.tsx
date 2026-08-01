@@ -77,7 +77,7 @@ export function Linkify({ text }: { text: string }) {
   let k = 0
   // Split off citations first, then resolve @-links within the plain segments.
   for (const seg of splitCitations(text)) {
-    if (seg.citeIds) { parts.push(<Cite key={k++} ids={seg.citeIds} fallback={seg.raw} />); continue }
+    if (seg.citeIds) { parts.push(<Cite key={k++} ids={seg.citeIds} fallback={seg.raw} trail={seg.trail} />); continue }
     re.lastIndex = 0
     let last = 0
     let m: RegExpExecArray | null
@@ -88,7 +88,12 @@ export function Linkify({ text }: { text: string }) {
     }
     parts.push(last < seg.text.length ? seg.text.slice(last) : '')
   }
-  return <>{parts}</>
+  // One wrapper element, not a fragment: several callers render Linkify inside a
+  // `display:flex` row (BULLET, SUB, the pearl items). A fragment's children each
+  // become their own flex item, so a mid-sentence citation marker or @-link is
+  // pushed away from the word it follows and the rest of the sentence wraps
+  // around it. Wrapped, the whole run is a single flex item and flows inline.
+  return <span>{parts}</span>
 }
 
 const HEADER = s('font-size:var(--fs-subhead);font-weight:700;color:var(--teal-light);margin-top:8px;margin-bottom:2px;')

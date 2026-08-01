@@ -49,15 +49,63 @@ const FECAVA_HYPOADRENO =
   'Federation of European Companion Animal Veterinary Associations. FECAVA Endocrinology Guidelines: Canine Hypoadrenocorticism. FECAVA; 2023. https://www.fecava.org/fecava-endocrinology-guidelines'
 const MN_UROLITH =
   'Minnesota Urolith Center. Annual Report: Canine and Feline Urolith Submissions. University of Minnesota College of Veterinary Medicine; 2020. https://vetmed.umn.edu/centers-programs/minnesota-urolith-center'
+// Feline hyperadrenocorticism evidence base. Ettinger Ch 294 (Ramsey & Herrtage)
+// carries the general disease description; these are the primary sources behind
+// the individual figures, cut-offs, doses and outcomes on that page.
+const COOK_CUSHINGOID =
+  'Cook AK, Evans JB. Feline comorbidities: recognition, diagnosis and management of the cushingoid diabetic. J Feline Med Surg. 2021;23(1):4-16.'
+const BOLAND_FHAC =
+  'Boland LA, Barrs VR. Peculiarities of feline hyperadrenocorticism: update on diagnosis and treatment. J Feline Med Surg. 2017;19(9):933-947.'
+const VALENTIN_FHAC =
+  'Valentin SY, Cortright CC, Nelson RW, et al. Clinical findings, diagnostic test results, and treatment outcome in cats with spontaneous hyperadrenocorticism: 30 cases. J Vet Intern Med. 2014;28(2):481-487.'
+const KEITH_TRILOSTANE =
+  'Keith AM, Bruyette D, Stanley S. Trilostane therapy for treatment of spontaneous hyperadrenocorticism in cats: 15 cases (2004-2012). J Vet Intern Med. 2013;27(6):1471-1477.'
+const NEIGER_TRILOSTANE =
+  'Neiger R, Witt AL, Noble A, et al. Trilostane therapy for treatment of pituitary-dependent hyperadrenocorticism in 5 cats. J Vet Intern Med. 2004;18(2):160-164.'
+const MICELI_TRILOSTANE =
+  'Miceli D, Tavares F, Montoya MZ, et al. Trilostane treatment for feline hypercortisolism: Latin America multicenter study, 43 cases (2012-2022). Presented at: European College of Veterinary Internal Medicine — Companion Animals Congress; 2022.'
+const DALEY_METYRAPONE =
+  'Daley CA, Zerbe CA, Schich RO, et al. Use of metyrapone to treat pituitary-dependent hyperadrenocorticism in a cat with large cutaneous wounds. J Am Vet Med Assoc. 1993;202(6):956-960.'
+const MOORE_METYRAPONE =
+  'Moore LE, Biller DS, Olsen DE. Hyperadrenocorticism treated with metyrapone followed by bilateral adrenalectomy in a cat. J Am Vet Med Assoc. 2000;217(5):691-694.'
+const DUESBERG_ADRENALECTOMY =
+  'Duesberg CA, Nelson RW, Feldman EC, et al. Adrenalectomy for treatment of hyperadrenocorticism in cats: 10 cases (1988-1992). J Am Vet Med Assoc. 1995;207(8):1066-1070.'
+const MEIJ_HYPOPHYSECTOMY =
+  'Meij BP, Voorhout G, van den Ingh TS, et al. Transsphenoidal hypophysectomy for treatment of pituitary-dependent hyperadrenocorticism in 7 cats. Vet Surg. 2001;30(1):72-86.'
+const BENCHEKROUN_ACTH =
+  'Benchekroun G, de Fornel-Thibaud P, Dubord M, et al. Plasma ACTH precursors in cats with pituitary-dependent hyperadrenocorticism. J Vet Intern Med. 2012;26(3):575-581.'
+const HARDY_SKIN =
+  'Hardy L, Gil-Morales C, Maunder C, et al. Skin fragility in a cat presenting with pituitary-dependent hyperadrenocorticism. JFMS Open Rep. 2023;9(1):20551169231171245.'
+const YAYOSHI_RADIATION =
+  'Yayoshi N, Hamamoto Y, Oda H, et al. Successful treatment of feline hyperadrenocorticism with pituitary macroadenoma using radiation therapy: a case study. J Vet Med Sci. 2022;84(7):898-904.'
+const MUSCHNER_REMISSION =
+  'Muschner AC, Varela FV, Hazuchova K, et al. Diabetes mellitus remission in a cat with pituitary-dependent hyperadrenocorticism after trilostane treatment. JFMS Open Rep. 2018;4(1):2055116918767708.'
+const LIEN_IATROGENIC =
+  'Lien YH, Huang HP, Chang PH. Iatrogenic hyperadrenocorticism in 12 cats. J Am Anim Hosp Assoc. 2006;42(6):414-423.'
+const CHIRAYATH_IATROGENIC =
+  'Chirayath D, Shaheena S. Iatrogenic hypercortisolism in a Persian kitten after topical application of a skin lotion containing clobetasol. Vet Dermatol. 2020;31(6):486-488.'
 
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
+
+/** Every recognised source marker. A parenthetical counts as a citation only
+ *  when its content STARTS with one of these, so ordinary parentheticals
+ *  ("(as for most cases)") are never swallowed. Single source of truth — both
+ *  CITE and hasCitation are built from it, so they cannot drift apart. */
+const SOURCE_NAMES = [
+  'Ettinger', 'Gelatt', 'AHS', 'AAHA', 'FECAVA', 'Minnesota', 'ACVIM', 'Berent',
+  'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
+  'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
+  'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
+  'Chirayath',
+] as const
+const SOURCE_ALT = SOURCE_NAMES.join('|')
 
 /** Matches an inline source-citation parenthetical whose content starts with a
  *  known source: "(Ettinger …)" / "(Gelatt …)". A leading space is consumed so
  *  the marker sits flush against the preceding punctuation. Non-source
  *  parentheticals (e.g. "(as for most cases)") are left untouched. */
-const CITE = /\s?\(((?:Ettinger|Gelatt|AHS|AAHA|FECAVA|Minnesota|ACVIM|Berent|Shelton|Forgash|Cridge|Dewey|Quintavalla)[^)]*)\)/g
+const CITE = new RegExp(String.raw`\s?\(((?:${SOURCE_ALT})[^)]*)\)`, 'g')
 
 /** Parse a citation's inner text into one source per cited chapter/work. A single
  *  parenthetical may carry several sources separated by ";" (e.g.
@@ -82,6 +130,22 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Cridge/.test(part)) { out.push({ id: 'cridge-neostigmine', text: CRIDGE_NEOSTIGMINE }); continue }
     if (/^Dewey/.test(part)) { out.push({ id: 'dewey-mmf', text: DEWEY_MMF }); continue }
     if (/^Quintavalla/.test(part)) { out.push({ id: 'quintavalla-sildenafil', text: QUINTAVALLA_SILDENAFIL }); continue }
+    if (/^Cook/.test(part)) { out.push({ id: 'cook-cushingoid', text: COOK_CUSHINGOID }); continue }
+    if (/^Boland/.test(part)) { out.push({ id: 'boland-fhac', text: BOLAND_FHAC }); continue }
+    if (/^Valentin/.test(part)) { out.push({ id: 'valentin-fhac', text: VALENTIN_FHAC }); continue }
+    if (/^Keith/.test(part)) { out.push({ id: 'keith-trilostane', text: KEITH_TRILOSTANE }); continue }
+    if (/^Neiger/.test(part)) { out.push({ id: 'neiger-trilostane', text: NEIGER_TRILOSTANE }); continue }
+    if (/^Miceli/.test(part)) { out.push({ id: 'miceli-trilostane', text: MICELI_TRILOSTANE }); continue }
+    if (/^Daley/.test(part)) { out.push({ id: 'daley-metyrapone', text: DALEY_METYRAPONE }); continue }
+    if (/^Moore/.test(part)) { out.push({ id: 'moore-metyrapone', text: MOORE_METYRAPONE }); continue }
+    if (/^Duesberg/.test(part)) { out.push({ id: 'duesberg-adrenalectomy', text: DUESBERG_ADRENALECTOMY }); continue }
+    if (/^Meij/.test(part)) { out.push({ id: 'meij-hypophysectomy', text: MEIJ_HYPOPHYSECTOMY }); continue }
+    if (/^Benchekroun/.test(part)) { out.push({ id: 'benchekroun-acth', text: BENCHEKROUN_ACTH }); continue }
+    if (/^Hardy/.test(part)) { out.push({ id: 'hardy-skin', text: HARDY_SKIN }); continue }
+    if (/^Yayoshi/.test(part)) { out.push({ id: 'yayoshi-radiation', text: YAYOSHI_RADIATION }); continue }
+    if (/^Muschner/.test(part)) { out.push({ id: 'muschner-remission', text: MUSCHNER_REMISSION }); continue }
+    if (/^Lien/.test(part)) { out.push({ id: 'lien-iatrogenic', text: LIEN_IATROGENIC }); continue }
+    if (/^Chirayath/.test(part)) { out.push({ id: 'chirayath-iatrogenic', text: CHIRAYATH_IATROGENIC }); continue }
     const chapters = part.match(/Ch(?:apter|\.)?\s*([\d,\s]+)/)
     if (!chapters) { out.push({ id: 'ettinger', text: `${ETTINGER_BOOK}.` }); continue }
     const nums = chapters[1].match(/\d+/g) ?? []
@@ -114,15 +178,26 @@ export function buildDiseaseCitations(fields: string[]): {
 
 /** Split a run of text on inline citations, returning plain-text segments
  *  interleaved with citation segments (source ids + the raw matched text, which
- *  <Cite> falls back to when no page numbering is in scope). */
-export interface CiteSegment { text: string; citeIds?: string[]; raw?: string }
+ *  <Cite> falls back to when no page numbering is in scope).
+ *
+ *  Content is authored with the citation before the sentence's full stop
+ *  ("…generally poor (Ettinger Ch 238)."), but AMA places the superscript AFTER
+ *  terminal punctuation ("…generally poor.²"). A period or comma trailing the
+ *  parenthetical is therefore captured as `trail` so <Cite> can emit it ahead of
+ *  the marker. Semicolons and colons are left alone — AMA keeps the marker
+ *  before those. */
+export interface CiteSegment { text: string; citeIds?: string[]; raw?: string; trail?: string }
 export function splitCitations(text: string): CiteSegment[] {
   const out: CiteSegment[] = []
   let last = 0
   for (const m of text.matchAll(CITE)) {
+    let end = m.index + m[0].length
+    const next = text[end]
+    const trail = next === '.' || next === ',' ? next : undefined
+    if (trail) end += 1
     if (m.index > last) out.push({ text: text.slice(last, m.index) })
-    out.push({ text: '', citeIds: parseSources(m[1]).map(s => s.id), raw: m[0] })
-    last = m.index + m[0].length
+    out.push({ text: '', citeIds: parseSources(m[1]).map(s => s.id), raw: m[0], trail })
+    last = end
   }
   if (last < text.length) out.push({ text: text.slice(last) })
   return out
@@ -130,7 +205,7 @@ export function splitCitations(text: string): CiteSegment[] {
 
 /** True if the text contains at least one inline source citation. */
 export function hasCitation(text: string): boolean {
-  return /\((?:Ettinger|Gelatt|AHS|AAHA|FECAVA|Minnesota|ACVIM|Berent|Shelton|Forgash|Cridge|Dewey|Quintavalla)/.test(text)
+  return new RegExp(String.raw`\((?:${SOURCE_ALT})`).test(text)
 }
 
 /** Map of source id → its AMA number on the current page. */
@@ -138,10 +213,12 @@ export const CitationContext = createContext<Map<string, number>>(new Map())
 
 /** A superscript citation marker, resolving its source ids to page numbers. When
  *  no numbering is in scope (screens other than the disease page), it renders the
- *  raw citation text unchanged, so those pages look exactly as before. */
-export function Cite({ ids, fallback }: { ids: string[]; fallback?: string }) {
+ *  raw citation text unchanged — trailing punctuation included, in its authored
+ *  position — so those pages look exactly as before. When numbered, `trail` is
+ *  emitted BEFORE the marker to give AMA order ("…poor.²"). */
+export function Cite({ ids, fallback, trail }: { ids: string[]; fallback?: string; trail?: string }) {
   const numberOf = useContext(CitationContext)
   const nums = ids.map(id => numberOf.get(id)).filter((n): n is number => n != null)
-  if (nums.length === 0) return <>{fallback ?? ''}</>
-  return <sup className="cite-ref">{nums.sort((a, b) => a - b).join(',')}</sup>
+  if (nums.length === 0) return <>{(fallback ?? '') + (trail ?? '')}</>
+  return <>{trail}<sup className="cite-ref">{nums.sort((a, b) => a - b).join(',')}</sup></>
 }
