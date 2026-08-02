@@ -101,7 +101,8 @@ async function boot(page: Page, theme: string) {
   await page.addInitScript(() => {
     try { localStorage.setItem('cliniq-onboarding-seen', '1') } catch { /* private mode */ }
   })
-  await page.goto('/')
+  // The clinical app lives at /app — `/` is the public marketing homepage.
+  await page.goto('/app')
   // Wait for the SPA to mount, expose its nav hook, and render the initial view.
   await page.waitForFunction(
     () => typeof (window as unknown as Record<string, unknown>).__nav === 'function' &&

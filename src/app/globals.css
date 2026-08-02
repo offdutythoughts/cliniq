@@ -160,6 +160,27 @@ html[data-theme="dark"]{
   --tile-bg-a: 0.10; --tile-bd-a: 0.38;
   --panel-bg-a: 0.07; --panel-bd-a: 0.22;
 }
+/* ── PUBLIC SITE PALETTE ─────────────────────────────────────────────────────
+   The marketing/account pages (anything wrapped in .site-page) use their own
+   palette: the deep navy and blue tints of the product itself, with the logo's
+   brick red kept back as the one accent and a warm clay panel for contrast.
+   Deliberately NOT theme-switched — the public site is always light, so these
+   stay outside the [data-theme] cascade and never collide with the clinical
+   app's tokens. */
+:root{
+  --v-ink:#0B214B;        /* headings + body text — 14:1 on paper */
+  --v-navy:#0B214B;       /* fills: buttons, marks, focus rings */
+  --v-navy-deep:#071634;  /* pressed/hover state for navy fills */
+  --v-brick:#9C3835;      /* the logo's syringe red — accent only, never a wash */
+  --v-paper:#F2F4F8;      /* page base */
+  --v-clay:#F1E8E0;       /* warm tint panel */
+  --v-mist:#DBE4F8;       /* cool tint panel */
+  --v-slate:#5A6479;      /* muted copy — 5.3:1 on paper */
+  --v-line:#D6DCE8;       /* hairlines */
+  --font-display:var(--font-fraunces),Georgia,'Times New Roman',serif;
+  --font-body:var(--font-inter-tight),system-ui,-apple-system,sans-serif;
+}
+
 /* Reset + base element styles — in @layer base so layered components (and the
    utilities layer) win over them by layer order rather than specificity.
    (An unlayered `*{padding:0}` would otherwise beat a layered `.card{padding}`.) */
@@ -172,12 +193,93 @@ html[data-theme="dark"]{
   /* md = default, no zoom */
   html[data-font-size="lg"] .screen{zoom:1.10;}
   html[data-font-size="xl"] .screen{zoom:1.20;}
+  /* The clinical app is a fixed-height shell that scrolls its own .screen pane,
+     so html/body lock scrolling above. The public pages (homepage, pricing,
+     sign-in, sign-up) are ordinary documents — any page that renders a
+     .site-page wrapper hands scrolling back to the document. Both html and body
+     go back to `height:auto; overflow:visible` so the VIEWPORT scrolls (not the
+     html box): window.scrollY, anchor jumps, scroll restoration and mobile
+     URL-bar behaviour all depend on that propagation. */
+  html:has(.site-page){height:auto;overflow:visible;scroll-behavior:smooth;}
+  body:has(.site-page){height:auto;min-height:100dvh;overflow:visible;display:block;background:var(--v-paper);}
+  @media (prefers-reduced-motion: reduce){html:has(.site-page){scroll-behavior:auto;}}
 }
 
 /* Semantic component classes — in @layer components so Phase 4 utilities (the
    `utilities` layer, declared last) win on conflict. They read tokens via var();
    they are NOT @apply-rewritten and the HTML-string content keeps these classes. */
 @layer components {
+
+/* ── PUBLIC SITE ─────────────────────────────────────────────────────────────
+   Semantic classes for the marketing + account pages. Tailwind utilities still
+   win on conflict (utilities layer is declared last), so per-instance tweaks
+   stay possible without fighting these. */
+.site-page{
+  min-height:100dvh;display:flex;flex-direction:column;
+  background:var(--v-paper);color:var(--v-ink);
+  font-family:var(--font-body);font-size:16px;line-height:1.6;
+  /* The public site is light-only, whatever the app's theme is set to. */
+  color-scheme:light;
+}
+.site-page ::selection{background:rgba(11,33,75,0.16);}
+
+/* Display type: old-style serif, tight, never bolder than semibold. */
+.v-display{font-family:var(--font-display);font-weight:500;letter-spacing:-0.015em;line-height:1.08;}
+.v-display-italic{font-family:var(--font-display);font-style:italic;font-weight:400;letter-spacing:-0.01em;}
+
+/* Section eyebrow — small caps in brick, the site's one recurring accent. */
+.v-eyebrow{
+  font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--v-brick);display:flex;align-items:center;gap:10px;
+}
+.v-eyebrow::after{content:"";flex:1;height:1px;background:var(--v-line);}
+.v-eyebrow-plain{font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--v-brick);}
+
+/* Buttons — rectangles with a small radius, not pills. */
+.v-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:44px;padding:12px 22px;border-radius:8px;border:1px solid transparent;
+  font-family:var(--font-body);font-size:15px;font-weight:500;line-height:1;white-space:nowrap;
+  text-decoration:none;cursor:pointer;transition:background-color .18s ease,border-color .18s ease,color .18s ease;
+}
+.v-btn-primary{background:var(--v-navy);color:#F7F9FC;}
+.v-btn-primary:hover{background:var(--v-navy-deep);}
+.v-btn-secondary{background:transparent;color:var(--v-ink);border-color:var(--v-line);}
+.v-btn-secondary:hover{border-color:var(--v-navy);color:var(--v-navy);}
+.v-btn:disabled{opacity:.45;cursor:default;}
+.v-btn:disabled:hover{background:var(--v-navy);}
+.v-btn-secondary:disabled:hover{background:transparent;border-color:var(--v-line);color:var(--v-ink);}
+
+/* Cards + tinted panels. */
+.v-card{background:#FFFFFF;border:1px solid var(--v-line);border-radius:14px;}
+.v-panel-clay{background:var(--v-clay);}
+.v-panel-mist{background:var(--v-mist);}
+.v-hairline{height:1px;background:var(--v-line);border:0;}
+
+/* Tap ripple in the hero's replayed drill-down (components/site/HeroSequence).
+   The one piece of motion on the page, so it stays short and single-shot. */
+.v-tap-ripple{animation:vTapRipple .6s cubic-bezier(.22,.61,.36,1) forwards;}
+@keyframes vTapRipple{
+  from{opacity:.55;transform:scale(.7);}
+  to{opacity:0;transform:scale(2.1);}
+}
+@media (prefers-reduced-motion: reduce){.v-tap-ripple{animation:none;opacity:0;}}
+
+/* Form fields on the account screens. */
+.v-field{
+  width:100%;min-height:44px;padding:11px 13px;border-radius:8px;
+  background:#FFFFFF;border:1px solid var(--v-line);color:var(--v-ink);
+  font-family:var(--font-body);font-size:15px;line-height:1.4;
+  transition:border-color .16s ease,box-shadow .16s ease;
+}
+.v-field::placeholder{color:#9A9A8C;}
+.v-field:focus{outline:none;border-color:var(--v-navy);box-shadow:0 0 0 3px rgba(11,33,75,0.14);}
+
+/* Visible keyboard focus everywhere on the public site. */
+.site-page a:focus-visible,.site-page button:focus-visible,
+.site-page input:focus-visible,.site-page summary:focus-visible{
+  outline:2px solid var(--v-brick);outline-offset:3px;border-radius:4px;
+}
 
 /* Topbar + BottomNav chrome live as Tailwind utilities in their components now. */
 

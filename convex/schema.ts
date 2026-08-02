@@ -28,4 +28,28 @@ export default defineSchema({
     userId: v.id("users"),
     seenAt: v.number(),
   }).index("by_user", ["userId"]),
+  // One row per user: the entitlement that unlocks the clinical app. A verified
+  // account with no active row here can sign in but only sees the paywall.
+  // Stripe is not wired up yet — the `stripe*` fields are the seams a checkout
+  // session + webhook will fill in, so no schema change is needed then.
+  subscriptions: defineTable({
+    userId: v.id("users"),
+    plan: v.union(v.literal("monthly"), v.literal("annual")),
+    status: v.union(
+      v.literal("trialing"),
+      v.literal("active"),
+      v.literal("past_due"),
+      v.literal("canceled"),
+      v.literal("incomplete"),
+    ),
+    trialEndsAt: v.optional(v.number()),
+    currentPeriodEnd: v.optional(v.number()),
+    cancelAtPeriodEnd: v.optional(v.boolean()),
+    stripeCustomerId: v.optional(v.string()),
+    stripeSubscriptionId: v.optional(v.string()),
+    createdAt: v.number(),
+    updatedAt: v.number(),
+  })
+    .index("by_user", ["userId"])
+    .index("by_stripe_subscription", ["stripeSubscriptionId"]),
 });

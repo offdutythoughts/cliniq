@@ -19,6 +19,7 @@
 /.next-preview/
 /.next-dev/
 /.next-verify/
+/.next-diag/
 /out/
 
 # playwright (the tests/visual/__screenshots__ baselines ARE committed)

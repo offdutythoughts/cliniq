@@ -140,7 +140,7 @@ const CAT_ORDER: string[] = [
 function normCat(raw: string): string {
   const r = raw.trim()
   if (/^inflammat/i.test(r)) return 'Inflammatory'
-  if (/^infect/i.test(r) || r === 'Parasitic' || r === 'Parasitic/Vascular' || r === 'Infection/Fungal') return 'Infectious'
+  if (/^infect/i.test(r) || r === 'Parasitic' || r === 'Parasitic/Vascular' || r === 'Infection/Fungal' || r === 'Fungal') return 'Infectious'
   if (/immune/i.test(r) || /autoimmune/i.test(r)) return 'Immune-mediated'
   if (/neoplas|tumour|tumor|mass|malignan/i.test(r)) return 'Neoplastic'
   if (/vascular|cardiovasc|thromboe/i.test(r)) return 'Vascular'

@@ -9,6 +9,7 @@ import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s, SCROLL_X, colTier } from './style'
 import { NavCard } from './markup'
+import { ForkLines } from './flowHelpers'
 import type { Tone } from '../../lib/signs/flowTypes'
 import { HUE } from '../../lib/signs/tone'
 
@@ -35,6 +36,7 @@ const CT: Record<string, Tone> = {
   'Pre-regenerative': 'warning', 'Shock': 'danger',
   'Foreign body': 'slate',  'Dental': 'warning',
   'Parasitic': 'warning',   'Toxic': 'danger',
+  'Fungal': 'teal',
   'Inherited': 'violet',    'Endocrine': 'warning',
   'Endocrine/Metabolic': 'warning',
   'Cardiovascular': 'danger','Junctionopathy': 'indigo',
@@ -137,8 +139,16 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
         <div className="flow-node entry">{name}</div>
         <div className="flow-arrow-v">↓</div>
         <div className="flow-node step">IDENTIFY LESION CATEGORY</div>
-        <div className="flow-arrow-v">↓</div>
         <div style={s(SCROLL_X)}>
+          {/* The category row is a split, so it gets the shared fork — inside the
+              scroll box and on the row's own tracks, so the drops stay on their
+              headers when a wide row scrolls. A single category isn't a split:
+              it keeps the plain spine arrow. */}
+          {cols >= 2
+            ? <ForkLines n={cols} gap={6} cols={gridCols}
+                extra={`min-width:${totalMinPx}px;justify-content:center;`}
+                rootExtra={`min-width:${totalMinPx}px;`} />
+            : <div className="flow-arrow-v">↓</div>}
           <div style={gridStyle}>
             {cats.map(cat => (
               <div key={cat} className="flow-node" style={s(`background:${cBg(cat)};border-color:${cBd(cat)};color:${cTx(cat)};font-size:${catFontSize}px;cursor:default;`)}>{cat}</div>

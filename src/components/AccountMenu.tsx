@@ -3,6 +3,7 @@
 import { useAuthActions } from '@convex-dev/auth/react'
 import { Authenticated, Unauthenticated, useQuery } from 'convex/react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import { track } from '../lib/analytics'
@@ -29,6 +30,7 @@ export default function AccountMenu() {
 
 function SignedInMenu() {
   const { signOut } = useAuthActions()
+  const router = useRouter()
   const me = useQuery(api.users.me)
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -67,6 +69,9 @@ function SignedInMenu() {
               setOpen(false)
               track('logged_out')
               await signOut()
+              // Leave the gated app for the public homepage rather than sitting
+              // on /app waiting for the middleware to bounce the next request.
+              router.replace('/')
             }}
             style={menuItemStyle}
           >

@@ -33,7 +33,7 @@ export default function Topbar({ title, showBack, onBack, onToggleNotes }: Props
         ←
       </div>
       <div className={`${title ? 'hidden' : ''} text-[18px] font-semibold tracking-[-.02em] text-(--color-fg)`}>
-        Clin<span className="text-(--color-accent)">IQ</span>
+        Vet<span className="text-(--color-accent)">ic</span>
       </div>
       <div
         id="vet-badge"

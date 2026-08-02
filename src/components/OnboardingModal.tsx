@@ -92,7 +92,7 @@ function OnboardingSheet({ visible, onDismiss }: { visible: boolean; onDismiss: 
         {/* Header */}
         <div style={s('padding:20px 20px 0;flex-shrink:0;')}>
           <div style={s('width:36px;height:4px;background:var(--border2);border-radius:2px;margin:0 auto 18px;')} />
-          <div style={s('font-size:20px;font-weight:700;color:var(--white);margin-bottom:4px;')}>Welcome to ClinIQ</div>
+          <div style={s('font-size:20px;font-weight:700;color:var(--white);margin-bottom:4px;')}>Welcome to Vetic</div>
           <div style={s('font-size:13px;color:var(--gray);margin-bottom:16px;')}>A few things to know before you dive in.</div>
         </div>
 

@@ -54,6 +54,7 @@ function kwHit(kws: readonly string[] | undefined, lower: string): boolean {
 
 const DISEASE_SKIP = new Set(['id', 'sp', 'name', 'synonyms'])
 const PROTO_SKIP   = new Set(['id', 'sp', 'name', 'priority'])
+const LESION_SKIP  = new Set(['id', 'sp', 'sub', 'loc', 'loc_name', 'cat', 'urg', 'proto', 'filter', 'dis'])
 
 function buildGroups(lower: string): Group[] {
   const groups: Group[] = []
@@ -94,6 +95,29 @@ function buildGroups(lower: string): Group[] {
   // (the dropdown scrolls), so nothing relevant is hidden behind a cap.
   const allDiseases = [...nameMatchDiseases, ...contentMatchDiseases]
   if (allDiseases.length) groups.push({ title: 'Disease Pages', results: allDiseases })
+
+  // ── Lesion sub-types — full content search ────────────────────────────────
+  // `directDis` sub-types render the disease page itself, which the Disease
+  // Pages group already surfaces — listing them here would duplicate every hit.
+  const nameMatchLesions: Result[] = []
+  const contentMatchLesions: Result[] = []
+
+  for (const l of DB.lesion_type) {
+    if (l.directDis && l.dis) continue
+    const nameHit = l.sub.toLowerCase().includes(lower) || l.loc_name.toLowerCase().includes(lower)
+    const bodyHit = !nameHit && matchesAny(l as Record<string, unknown>, lower)
+    if (!nameHit && !bodyHit) continue
+
+    const sub  = [l.loc_name, l.sp].filter(Boolean).join(' · ')
+    const snip = nameHit ? '' : snippet(l as Record<string, unknown>, lower, LESION_SKIP)
+
+    const result: Result = { label: l.sub, sub, snippet: snip || undefined, view: { kind: 'subTypeDetail' as const, id: l.id } }
+    if (nameHit) nameMatchLesions.push(result)
+    else contentMatchLesions.push(result)
+  }
+
+  const allLesions = [...nameMatchLesions, ...contentMatchLesions]
+  if (allLesions.length) groups.push({ title: 'Lesion Sub-types', results: allLesions })
 
   // ── Protocols — full content search (name + trigger + steps) ─────────────
   const protocols: Result[] = []

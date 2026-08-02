@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { DM_Sans, DM_Mono } from 'next/font/google'
+import { DM_Sans, DM_Mono, Fraunces, Inter_Tight } from 'next/font/google'
 import { ConvexClientProvider } from './ConvexClientProvider'
 import { PostHogIdentify } from './PostHogProvider'
 import './globals.css'
@@ -17,8 +17,26 @@ const dmMono = DM_Mono({
   variable: '--font-dm-mono',
 })
 
+// The public site runs its own type pairing — an old-style serif for display
+// (Fraunces, set crisp: no wonk, no softness) over a neutral grotesque body
+// (Inter Tight). The clinical app keeps DM Sans; the two never mix on a page.
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  variable: '--font-fraunces',
+  display: 'swap',
+})
+
+const interTight = Inter_Tight({
+  subsets: ['latin'],
+  variable: '--font-inter-tight',
+  display: 'swap',
+})
+
 export const metadata: Metadata = {
-  title: 'Vetic — Portable Vet Guide',
+  title: 'Vetic — Clinical support tool for veterinarians',
+  description:
+    'Vetic is a clinical support tool for veterinarians: sign-led flowcharts, diagnostic approaches, disease pages and protocols for dogs and cats.',
 }
 
 export const viewport: Viewport = {
@@ -36,7 +54,11 @@ export const viewport: Viewport = {
 }
 
 const htmlBody = (children: React.ReactNode) => (
-  <html lang="en" className={`${dmSans.variable} ${dmMono.variable}`} suppressHydrationWarning>
+  <html
+    lang="en"
+    className={`${dmSans.variable} ${dmMono.variable} ${fraunces.variable} ${interTight.variable}`}
+    suppressHydrationWarning
+  >
     <head>
       {/* Render-blocking pre-hydration theme init (public/theme-init.js): sets
           data-theme before paint so dark-mode users don't get a light flash.

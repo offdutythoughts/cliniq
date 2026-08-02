@@ -16,7 +16,7 @@ const STEPS: StepDef[] = [
   {
     selector: null,
     title: "Let's take a quick tour",
-    body: "We'll walk you through the 5 key features of ClinIQ. Tap Next to begin, or Skip to dismiss.",
+    body: "We'll walk you through the 5 key features of Vetic. Tap Next to begin, or Skip to dismiss.",
     tipPos: 'center',
   },
   {

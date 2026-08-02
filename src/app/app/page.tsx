@@ -1,0 +1,122 @@
+'use client'
+import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react'
+import Topbar from '../../components/Topbar'
+import BottomNav from '../../components/BottomNav'
+import NotesPanel from '../../components/NotesPanel'
+import { useNotes } from '../../hooks/useNotes'
+import { useNotesLocal } from '../../hooks/useNotesLocal'
+import { NavProvider, useNav } from '../nav/NavContext'
+import { screenMeta, viewKey, type View } from '../nav/view'
+import { Screen } from '../screens/Screen'
+import { track } from '../../lib/analytics'
+import type { Tab } from '../../types'
+import { SearchProvider } from '../search/SearchContext'
+import SearchBar from '../search/SearchBar'
+import { useSearchHighlight } from '../search/useSearchHighlight'
+import { OnboardingModal } from '../../components/OnboardingModal'
+import { TutorialProvider } from '../tutorial/TutorialContext'
+import { TutorialOverlay } from '../../components/TutorialOverlay'
+import SilentBoundary from '../SilentBoundary'
+import { SubscriptionGate } from '../../components/SubscriptionGate'
+
+// Use Convex-backed notes when a deployment URL is configured, otherwise localStorage
+const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
+export default hasConvex ? PageWithConvex : PageWithLocal
+
+function PageWithConvex() {
+  // SubscriptionGate holds the app back until the signed-in user has an active
+  // (or trialing) subscription — see src/components/SubscriptionGate.tsx.
+  return (
+    <SubscriptionGate>
+      <NavProvider><TutorialProvider><SearchProvider><PageBase useNotesHook={useNotes} /></SearchProvider></TutorialProvider></NavProvider>
+    </SubscriptionGate>
+  )
+}
+
+function PageWithLocal() {
+  return <NavProvider><TutorialProvider><SearchProvider><PageBase useNotesHook={useNotesLocal} /></SearchProvider></TutorialProvider></NavProvider>
+}
+
+type NotesHook = (key: string, title: string, open: boolean) => {
+  editorRef: React.RefObject<HTMLDivElement | null>
+  status: string
+  onInput: () => void
+  onCmd: (cmd: string, val?: string) => void
+  onClear: () => void
+  onExport: () => void
+  isReady: boolean
+}
+
+function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
+  const nav = useNav()
+  const [notesOpen, setNotesOpen] = useState(false)
+  const screenRef = useRef<HTMLDivElement>(null)
+
+  const meta = screenMeta(nav.view)
+  const notes = useNotesHook(meta.noteKey, meta.noteTitle, notesOpen)
+  const vk = viewKey(nav.view)
+
+  // Programmatic navigation entry point (deep links + the visual-test driver).
+  useEffect(() => {
+    ;(window as unknown as { __nav?: (v: View) => void }).__nav = (v: View) =>
+      v.kind === 'tab' ? nav.navTo(v.tab) : nav.navigate(v)
+  }, [nav])
+
+  // Reset the scroll container to the top on every view change. useLayoutEffect
+  // runs before paint so the browser never shows a stale scroll position.
+  useLayoutEffect(() => {
+    if (screenRef.current) screenRef.current.scrollTop = 0
+  }, [vk])
+
+  useSearchHighlight(screenRef)
+
+  const slideClass = nav.slideDir === 'left' ? 'slide-in-left' : 'slide-in-right'
+  const handleNavTo = useCallback((tab: Tab) => nav.navTo(tab), [nav])
+  const handleToggleNotes = useCallback(() => {
+    setNotesOpen((v) => {
+      track(v ? 'notes_closed' : 'notes_opened')
+      return !v
+    })
+  }, [])
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <Topbar
+        title={meta.topbarTitle}
+        showBack={nav.stack.length > 0}
+        onBack={nav.goBack}
+        onToggleNotes={handleToggleNotes}
+      />
+
+      <SearchBar />
+
+      <div className="screen" ref={screenRef}>
+        <div key={vk} className={`screen-inner ${slideClass}`}>
+          <Screen view={nav.view} />
+        </div>
+      </div>
+
+      <BottomNav activeTab={nav.tab} onNavTo={handleNavTo} />
+
+      <NotesPanel
+        isOpen={notesOpen}
+        onClose={handleToggleNotes}
+        noteTitle={meta.noteTitle}
+        status={notes.status}
+        isReady={notes.isReady}
+        editorRef={notes.editorRef}
+        onInput={notes.onInput}
+        onCmd={notes.onCmd}
+        onClear={notes.onClear}
+        onExport={notes.onExport}
+      />
+
+      {/* The welcome sheet runs a Convex query; isolate it so a query failure
+          hides the popup instead of crashing the whole app. */}
+      <SilentBoundary>
+        <OnboardingModal />
+      </SilentBoundary>
+      <TutorialOverlay />
+    </div>
+  )
+}
