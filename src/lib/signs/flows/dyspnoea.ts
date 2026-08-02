@@ -19,7 +19,7 @@
 // link). Both are authored in the legacy `.fn` system → 'fn' layout
 // (fnHeader + cardGrid + .fn-arrow).
 
-import type { FlowPage } from '../flowTypes'
+import { forkHtml, type FlowPage } from '../flowTypes'
 
 // ── Entry flowchart (4-pattern split) ───────────────────────────────────────
 const dyspnoeaEntry: FlowPage = {
@@ -35,7 +35,7 @@ const dyspnoeaEntry: FlowPage = {
       // handlers (renderExpFlow/renderRestFlow/renderMixedFlow) — preserved
       // verbatim. The endpoint goLesionTab onclicks all resolve.
       kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
+      html: `${forkHtml(4, 6)}
 
     <!-- 4 pattern columns -->
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;">
@@ -56,6 +56,7 @@ const dyspnoeaEntry: FlowPage = {
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;">
       <div>
         <div class="flow-node sub-step" style="font-size:10px;margin-bottom:3px;">Characterise sound</div>
+        ${forkHtml(2, 4, false)}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
           <div>
             <div style="font-size:9px;color:var(--gray2);text-align:center;margin-bottom:2px;">Stertor</div>
@@ -86,6 +87,7 @@ const dyspnoeaEntry: FlowPage = {
       <!-- Restrictive -->
       <div>
         <div class="flow-node sub-step" style="font-size:10px;margin-bottom:3px;">Auscultation</div>
+        ${forkHtml(2, 4, false)}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;">
           <div>
             <div style="font-size:9px;color:var(--gray2);text-align:center;margin-bottom:2px;">Reduced sounds</div>

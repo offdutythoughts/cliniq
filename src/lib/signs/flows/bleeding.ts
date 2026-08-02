@@ -16,7 +16,7 @@
 //     renderLesionDetail('LES-…'), for which there is NO typed Link (the only
 //     lesion Link is goLesionTab); kept verbatim in html.
 
-import type { FlowPage } from '../flowTypes'
+import { forkHtml, type FlowPage } from '../flowTypes'
 
 // ── Entry ────────────────────────────────────────────────────────────────────
 const bleedingEntry: FlowPage = {
@@ -43,7 +43,7 @@ const bleedingEntry: FlowPage = {
     // renderFlowId('bleeding-primary' / '-secondary' / '-dic' / '-vasc').
     {
       kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
+      html: `${forkHtml('3fr 2fr', 8, false)}
 
   <div style="display:grid;grid-template-columns:3fr 2fr;gap:8px;width:100%;">
 
@@ -59,7 +59,7 @@ const bleedingEntry: FlowPage = {
 
       <!-- Q2a -->
       <div class="flow-node sub-step" style="width:100%;font-size:10px;">Also petechiae / ecchymoses?</div>
-      <div class="flow-arrow-v">↓</div>
+      ${forkHtml(2, 5, false)}
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;">
 
@@ -72,7 +72,7 @@ const bleedingEntry: FlowPage = {
           </div>
           <div class="flow-arrow-v" style="font-size:11px;">↓</div>
           <div class="flow-node sub-step" style="width:100%;font-size:9px;">Severe systemic<br>illness present?</div>
-          <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+          ${forkHtml(2, 3, false)}
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;width:100%;">
             <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
               <div style="font-size:8px;font-weight:600;color:var(--tone-danger-fg);">YES</div>
@@ -108,7 +108,7 @@ const bleedingEntry: FlowPage = {
     <!-- NO branch -->
     <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
       <div style="font-size:9px;font-weight:600;color:var(--gray2);">NO cavity / deep bleed</div>
-      <div class="flow-arrow-v">↓</div>
+      ${forkHtml(2, 4)}
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
         <div class="flow-endpoint" style="background:rgba(220,38,38,0.1);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:9px;cursor:pointer;width:100%;text-align:center;" onclick="renderFlowId('bleeding-primary')">
@@ -187,7 +187,7 @@ const bleedingPrimary: FlowPage = {
 
     {
       kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
+      html: `${forkHtml('3fr 2fr', 8)}
 
     <div style="display:grid;grid-template-columns:3fr 2fr;gap:8px;width:100%;">
 
@@ -199,7 +199,7 @@ const bleedingPrimary: FlowPage = {
         </div>
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node sub-step" style="width:100%;font-size:10px;text-align:center;">IDENTIFY MECHANISM</div>
-        <div class="flow-arrow-v">↓</div>
+        ${forkHtml(3, 4)}
 
         <!-- 3 clickable endpoint cards -->
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;width:100%;align-items:start;">

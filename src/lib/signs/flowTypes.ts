@@ -147,8 +147,11 @@ export type CardSectionBlock = Connectable & {
 /** A 4-(or N-)column category grid: a row of category headers, a row of
  *  connector arrows, then a row of tile-columns (each column 1+ clickable
  *  tiles). The mydriasis/miosis cause pages; later jaundice/pale/seizures.
- *  Use `links` (plural) when a tile represents multiple distinct diseases —
- *  the renderer shows sub-bullets for each. Use `link` for a single target.
+ *  Use `link` — ONE tile, ONE cause, ONE page. `links` (plural) renders nested
+ *  sub-bullets inside a chip and is BANNED as a flowchart format (`npm run
+ *  lint:tiles` fails on it): give each cause its own tile instead, so a reader
+ *  scanning a column sees every differential at the same level. The field is
+ *  kept only so the renderer stays total.
  *  Set `terminal:true` for an intentional leaf note that has no page to link
  *  to (renders in-tone as plain info, NOT greyed). A tile with neither a
  *  link nor `terminal` renders greyed + aria-disabled and is treated as an
@@ -234,6 +237,38 @@ export type DecisionStep =
   | { type: 'outcome'; label: string; box: DecisionOutcome }
 export type DecisionTreeBlock = Connectable & { kind: 'decisionTree'; steps: DecisionStep[] }
 
+/** An explicit, labelled N-way split (YES/NO and friends) drawn with the same
+ *  connected right-angle fork the renderer puts in front of every other split:
+ *  one stem out of the preceding block, a horizontal bar, one labelled leg per
+ *  branch. A leg marked `continue` carries no content — its line runs the full
+ *  height of the fork and arrows into the NEXT spine block, so the main line of
+ *  reasoning stays unbroken while the other legs end on their own outcomes. */
+export type ForkLeg = { label: string; sub?: string; continue?: boolean; blocks?: Block[] }
+export type ForkBlock = Connectable & { kind: 'fork'; legs: ForkLeg[] }
+
+/** The split connector as an authored-HTML string — the exact twin of the
+ *  renderer's `<ForkLines>` (same `.flow-fork*` markup, same CSS). Every `html:`
+ *  escape hatch that lays out its OWN N-column split must feed that split with
+ *  `${forkHtml(...)}` instead of a lone `<div class="flow-arrow-v">↓</div>`, so
+ *  a split is drawn the same way on every page whether it is typed or authored.
+ *
+ *  `cols` is the split grid's own `grid-template-columns` — a count for even 1fr
+ *  tracks (`forkHtml(2)`) or the template string for asymmetric ones
+ *  (`forkHtml('3fr 2fr')`). `gap` MUST match the grid's gap (the legs bridge it).
+ *  Set `arrow: false` when each column opens with its own label + arrow (the
+ *  labelled-leg look of the `fork` block): the drops are then plain lines and the
+ *  arrowheads stay on the per-column arrows below the labels. */
+export function forkHtml(cols: number | string, gap = 8, arrow = true): string {
+  const template = typeof cols === 'number' ? `repeat(${cols},1fr)` : cols
+  const n = typeof cols === 'number' ? cols : cols.trim().split(/\s+/).length
+  const drop = arrow ? '<div class="flow-arrow-v">↓</div>' : '<div class="flow-fork-drop"></div>'
+  const legs = Array.from({ length: n }, () => `<div class="flow-fork-leg">${drop}</div>`).join('')
+  return `<div class="flow-fork" style="--fork-gap:${gap}px;">`
+    + '<div class="flow-fork-stem"></div>'
+    + `<div class="flow-fork-legs" style="grid-template-columns:${template};">${legs}</div>`
+    + '</div>'
+}
+
 /** The "For qualified veterinary professionals only." footer. */
 export type DisclaimerBlock = Connectable & { kind: 'disclaimer' }
 
@@ -303,6 +338,7 @@ export type Block =
   | CategoryGridBlock
   | CategoryColumnsBlock
   | DecisionTreeBlock
+  | ForkBlock
   | DisclaimerBlock
   | CompareBoxBlock
   | SpeciesCompareBlock

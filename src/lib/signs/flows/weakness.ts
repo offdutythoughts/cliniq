@@ -15,7 +15,7 @@
 //    only). Those onclicks are preserved verbatim inside the `html` blocks.
 //    → links inside `html` are NOT validated by flows.test.ts.
 
-import type { FlowPage } from '../flowTypes'
+import { forkHtml, type FlowPage } from '../flowTypes'
 
 // ── 1. Entry — Weakness / Collapse ──────────────────────────────────────────
 const weaknessEntry: FlowPage = {
@@ -81,7 +81,7 @@ const weaknessEpisodic: FlowPage = {
       // Two-column branch with nested arrow-chains, anat-classed endpoints and
       // renderDiffDetail links — kept as byte-identical html (no typed home).
       kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
+      html: `${forkHtml(2, 8)}
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
       <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
@@ -139,14 +139,14 @@ const weaknessPersistent: FlowPage = {
       // Two-column branch: nested YES/NO sub-grid + anat-classed lesion
       // endpoints — kept as byte-identical html.
       kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
+      html: `${forkHtml(2, 8)}
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
       <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
         <div class="flow-node rest" style="width:100%;font-size:10px;">FLACCID paresis<br><span style="font-size:9px;opacity:.7">↓ reflexes, ↓ tone, atrophy</span></div>
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node sub-step" style="width:100%;font-size:10px;">Ataxia present?</div>
-        <div class="flow-arrow-v">↓</div>
+        ${forkHtml(2, 4)}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
           <div>
             <div style="font-size:9px;color:var(--amber-text);text-align:center;margin-bottom:2px;">YES — ataxia</div>

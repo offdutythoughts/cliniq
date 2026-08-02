@@ -474,6 +474,28 @@ details.ref-fold[open] > summary::after{content:" ▾";}
 .flow-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;padding-bottom:20px;width:100%;}
 .flow-arrow-v{margin:0 auto;width:2px;height:16px;background:var(--gray2);position:relative;color:transparent;font-size:0;}
 .flow-arrow-v::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--gray2);}
+
+/* ── Fork connector — the ONE way an N-way split is drawn ──────────────────────
+   Stem → horizontal bar → a drop into every column, never a lone arrow pointing
+   into the gap between columns. Shared markup for BOTH split renderers, so a
+   split looks identical on every page: <ForkLines> (typed blocks) and
+   forkHtml() (the authored `html:` escape hatches) emit exactly these classes.
+   The legs are a grid that MIRRORS the split's own grid-template-columns/gap
+   (both set inline by the caller), so each drop lands on its column's centre for
+   any track template — even asymmetric 3fr:2fr or a scrolling minmax() row.
+   The bar is drawn per leg: it overhangs half a gap on each side to bridge the
+   grid gaps, and stops dead on the centre of the first and last leg. */
+.flow-fork{--fork-gap:8px;width:100%;display:flex;flex-direction:column;align-items:center;}
+.flow-fork-stem{width:2px;height:10px;background:var(--gray2);}
+.flow-fork-legs{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--fork-gap);width:100%;}
+.flow-fork-leg{position:relative;display:flex;justify-content:center;}
+.flow-fork-leg::before{content:'';position:absolute;top:0;left:calc(var(--fork-gap) / -2);right:calc(var(--fork-gap) / -2);height:2px;background:var(--gray2);}
+.flow-fork-leg:first-child::before{left:calc(50% - 1px);}
+.flow-fork-leg:last-child::before{right:calc(50% - 1px);}
+/* The drop itself: an arrowhead when the column starts with its content, a plain
+   line when the column starts with its own YES/NO label + arrow. */
+.flow-fork-leg > .flow-arrow-v{height:14px;}
+.flow-fork-drop{width:2px;height:8px;background:var(--gray2);}
 .flow-node{border-radius:10px;padding:9px 14px;font-size:12px;font-weight:500;text-align:center;border:1px solid;line-height:1.4;white-space:normal;}
 .flow-node.entry{background:rgba(var(--tone-info),var(--tile-bg-a));border-color:rgba(var(--tone-info),var(--tile-bd-a));color:var(--fg-blue-deep);font-size:13px;font-weight:600;min-width:180px;}
 .flow-node.step{background:var(--card);border-color:var(--border2);color:var(--white);min-width:200px;}

@@ -12,7 +12,7 @@
 // `callout`.
 
 import type { FlowPage } from '../flowTypes'
-import { mechanismSplit, IDENTIFY_CAUSE_STEP } from '../flowTypes'
+import { forkHtml, mechanismSplit, IDENTIFY_CAUSE_STEP } from '../flowTypes'
 
 // ── Entry ───────────────────────────────────────────────────────────────────
 const paleGumsEntry: FlowPage = {
@@ -31,13 +31,13 @@ const paleGumsEntry: FlowPage = {
       // horizontal endpoint grids → not reproducible with branch/endpoints.
       kind: 'html',
       connectAfter: false,
-      html: `<div class="flow-arrow-v">↓</div>
+      html: `${forkHtml('3fr 2fr', 10)}
     <div style="display:grid;grid-template-columns:3fr 2fr;gap:10px;width:100%;">
 
       <!-- ANAEMIA branch -->
       <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
         <div class="flow-node insp" style="width:100%;font-size:11px;font-weight:700;">Anaemia<div class="fn-sub" style="font-weight:400;">Low PCV · check reticulocytes + smear</div></div>
-        <div class="flow-arrow-v">↓</div>
+        ${forkHtml(3, 5)}
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;width:100%;">
           <div class="flow-endpoint" style="background:rgba(16,185,129,0.1);border:1.5px solid rgba(16,185,129,0.4);color:var(--tone-green-fg);font-size:9px;cursor:pointer;text-align:center;" onclick="renderFlowId('pale-mm-regen')">
             Regenerative anaemia ⚠️
@@ -54,7 +54,7 @@ const paleGumsEntry: FlowPage = {
       <!-- POOR PERFUSION branch -->
       <div style="display:flex;flex-direction:column;align-items:center;gap:4px;">
         <div class="flow-node mixed" style="width:100%;font-size:11px;font-weight:700;">Poor perfusion<div class="fn-sub" style="font-weight:400;">Normal PCV · prolonged CRT · weak pulses</div></div>
-        <div class="flow-arrow-v">↓</div>
+        ${forkHtml(2, 5)}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;">
           <div class="flow-endpoint" style="background:rgba(220,38,38,0.08);border:1.5px solid rgba(220,38,38,0.35);color:var(--tone-danger-fg);font-size:9px;cursor:pointer;text-align:center;" onclick="renderFlowId('pale-mm-shock')">
             Hypovolaemic / distributive / cardiogenic shock ⚠️

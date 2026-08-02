@@ -14,7 +14,7 @@
 // Dx views (renderDxJaundice*) are out of scope.
 
 import type { FlowPage } from '../flowTypes'
-import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
+import { forkHtml, IDENTIFY_CAUSE_STEP } from '../flowTypes'
 
 // ── 1. Entry ────────────────────────────────────────────────────────────────
 const jaundiceEntry: FlowPage = {
@@ -36,7 +36,7 @@ const jaundiceEntry: FlowPage = {
       // sub-grid maps to branch/endpoints → kept as `html` (cf. paleGums entry).
       // The two sub-flow links use renderFlowId(...) directly in onclick.
       kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
+      html: `${forkHtml(2, 8)}
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
       <!-- Pre-hepatic branch -->
@@ -55,7 +55,7 @@ const jaundiceEntry: FlowPage = {
         <div class="flow-node" style="width:100%;background:rgba(217,119,6,0.12);border-color:rgba(217,119,6,0.35);color:var(--amber-text);font-size:11px;">NO / mild anaemia<div class="fn-sub" style="font-size:9px;opacity:.7">Hepatobiliary cause</div></div>
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node sub-step" style="width:100%;font-size:10px;">HEPATIC or POST-HEPATIC?<br>Ultrasound: dilated bile ducts?</div>
-        <div class="flow-arrow-v">↓</div>
+        ${forkHtml(2, 4)}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
           <div>
             <div style="font-size:8px;color:var(--amber-text);text-align:center;margin-bottom:2px;">Normal bile ducts</div>
@@ -84,8 +84,8 @@ const jaundiceEntry: FlowPage = {
 // Same haemolysis differential as the paleGums regenerative-anaemia page →
 // authored as a typed `categoryColumns` (was a broken `html` grid that crammed
 // 5 categories into repeat(3,1fr) and pointed clickable chips at the wrong
-// lesion detail `LES-PM-REGEN`). Chips now link to their own disease pages;
-// multi-disease chips use `links`; causes with no page are `terminal` (muted).
+// lesion detail `LES-PM-REGEN`). Chips now link to their own disease pages, one
+// cause per chip; causes with no page are `terminal` (muted).
 const jaundicePreHep: FlowPage = {
   id: 'jaundice-pre-hep',
   title: 'Jaundice — Pre-hepatic',
@@ -208,10 +208,8 @@ const jaundicePostHep: FlowPage = {
         },
         {
           cat: 'Inflammatory', tiles: [
-            { label: 'Pancreatitis', links: [
-              { label: 'Acute pancreatitis (dog)', link: { to: 'disease', id: 'DIS-SEC-PAN-DOG' } },
-              { label: 'Feline pancreatitis', link: { to: 'disease', id: 'DIS-GI-PANCAT' } },
-            ] },
+            { label: 'Acute pancreatitis (dog)', link: { to: 'disease', id: 'DIS-SEC-PAN-DOG' } },
+            { label: 'Feline pancreatitis', link: { to: 'disease', id: 'DIS-GI-PANCAT' } },
             { label: 'Ascending cholangitis', link: { to: 'disease', id: 'DIS-HEP-CHOLANGITIS' } },
           ],
         },

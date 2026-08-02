@@ -7,7 +7,7 @@
 
 import { Fragment, useState, type ReactNode } from 'react'
 import type {
-  Block, Column, Endpoint, ChoiceItem, CardTile, CategoryColumn, CategoryTile, CatColumn, DecisionStep,
+  Block, Column, Endpoint, ChoiceItem, CardTile, CategoryColumn, CategoryTile, CatColumn, DecisionStep, ForkLeg,
   DecisionOutcome, TableCell, TableRow, LabeledLink, Tone, InfoBoxBlock as InfoBoxBlockType,
   AlertItem,
 } from '../../lib/signs/flowTypes'
@@ -19,7 +19,7 @@ import { useNav } from '../nav/NavContext'
 import { linkToView } from '../nav/view'
 import { styleStringToObject as s, toneBox, SCROLL_X, colTier } from './style'
 import { NotFound } from './NotFound'
-import { type Nav, Raw, ToneBox } from './flowHelpers'
+import { ForkLines, type Nav, Raw, ToneBox } from './flowHelpers'
 import { NavCard } from './markup'
 
 const DISCLAIMER = <div className="disclaimer">For qualified veterinary professionals only.</div>
@@ -42,21 +42,97 @@ const hoverBrighten = {
 }
 
 // ── Arrow / spine logic (joinBlocks) ─────────────────────────────────────────
-const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout', 'fnHeader', 'cardGrid', 'categoryGrid', 'categoryColumns', 'decisionTree', 'speciesChooser'])
+const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout', 'fnHeader', 'cardGrid', 'categoryGrid', 'categoryColumns', 'decisionTree', 'fork', 'speciesChooser'])
 const connectsAfter = (b: Block): boolean => b.connectAfter ?? SPINE.has(b.kind)
 const connectsBefore = (b: Block): boolean => SPINE.has(b.kind)
 
+// ── Fork connector — how EVERY split is drawn ─────────────────────────────────
+// <ForkLines> (the shared component, in flowHelpers) is the ONE connector in
+// front of a split, on every screen; see its comment there for the geometry.
+// Column count at which each category preset stops being an even 1fr row and
+// spills into a clamped, horizontally scrolling one (see `spillGrid`). Shared so
+// the fork's "which grid template?" test can never drift from the layout's.
+const SPILL_AT = { grid: 4, dense: 5 } as const
+
+// The fork that should precede a block which lays its content out as a row of
+// columns: leg count, the split grid's gap, and (when the tracks aren't even 1fr)
+// its grid-template-columns so the legs line up track-for-track. `null` = not a
+// split, so the spine draws its usual single arrow. `'self'` = the block draws its
+// own leading fork (see `lead` on CategoryBlock): a spilled category row scrolls
+// horizontally, so its fork has to sit INSIDE that scroll box to stay aligned.
+type Fork = { n: number; gap: number; cols?: string; extra?: string; rootExtra?: string }
+function splitCols(b: Block): Fork | 'self' | null {
+  const fork = (n: number, gap: number, cols?: string) => (n >= 2 ? { n, gap, cols } : null)
+  switch (b.kind) {
+    // A `scroll` branch keeps its columns' intrinsic widths inside a scroll box —
+    // there is no track template to mirror, so it keeps the plain spine arrow.
+    case 'branch': return b.scroll ? null : fork(b.columns.length, 8)
+    case 'categoryGrid': return b.columns.length >= SPILL_AT.grid ? 'self' : fork(b.columns.length, 6)
+    case 'categoryColumns': {
+      const n = b.cols ?? b.columns.length
+      return n >= SPILL_AT.dense ? 'self' : fork(n, 6)
+    }
+    case 'choices': return fork(b.cols ?? b.items.length, 6)
+    default: return null
+  }
+}
+
 function BlockList({ blocks, fn, onNav }: { blocks: Block[]; fn?: boolean; onNav: Nav }) {
-  const Arrow = fn ? <div className="fn-arrow">↓</div> : <div className="flow-arrow-v">↓</div>
+  const connector = (b: Block) => {
+    if (fn) return <div className="fn-arrow">↓</div>
+    const split = splitCols(b)
+    if (split === 'self') return null // drawn by the block, inside its scroll box
+    return split ? <ForkLines {...split} /> : <div className="flow-arrow-v">↓</div>
+  }
   return (
     <>
-      {blocks.map((b, i) => (
-        <Fragment key={i}>
-          {i > 0 && connectsAfter(blocks[i - 1]) && connectsBefore(b) && Arrow}
-          <BlockView b={b} onNav={onNav} />
-        </Fragment>
-      ))}
+      {blocks.map((b, i) => {
+        const joined = i > 0 && connectsAfter(blocks[i - 1]) && connectsBefore(b)
+        return (
+          <Fragment key={i}>
+            {joined && connector(b)}
+            <BlockView b={b} lead={joined && !fn && splitCols(b) === 'self'} onNav={onNav} />
+          </Fragment>
+        )
+      })}
     </>
+  )
+}
+
+// ── Fork block (explicit labelled split) ──────────────────────────────────────
+// The same connector, plus a label per leg and each leg's own outcome below it.
+// A `continue` leg draws no outcome: its line stretches to the bottom of the row
+// and arrows into the next spine block, keeping the primary path unbroken.
+function ForkBlockView({ legs, onNav }: { legs: ForkLeg[]; onNav: Nav }) {
+  const n = legs.length
+  const grid = s(`display:grid;grid-template-columns:repeat(${n},1fr);gap:8px;width:100%;`)
+  // One .flow-wrap child: the connector, the leg labels and the leg bodies are a
+  // single unit with its own tight spacing (the wrap's 8px gap would otherwise
+  // push the label off its own line).
+  return (
+    <div style={s('width:100%;display:flex;flex-direction:column;align-items:center;gap:2px;')}>
+      <ForkLines n={n} gap={8} arrow={false} />
+      <div style={grid}>
+        {legs.map((l, i) => (
+          <div key={i} style={s('display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;text-align:center;')}>
+            <div style={s('font-size:10px;font-weight:700;color:var(--gray2);letter-spacing:.04em;')}>{l.label}</div>
+            {l.sub && <div style={s('font-size:8.5px;color:var(--gray2);line-height:1.35;')}>{l.sub}</div>}
+          </div>
+        ))}
+      </div>
+      <div style={grid}>
+        {legs.map((l, i) => (
+          <div key={i} style={s('display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;')}>
+            <div className="flow-arrow-v" style={l.continue ? s('height:auto;flex:1;min-height:16px;') : undefined} />
+            {l.blocks && l.blocks.length > 0 && (
+              <div style={s('display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;')}>
+                <BlockList blocks={l.blocks} onNav={onNav} />
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
 
@@ -280,7 +356,8 @@ function CardGridBlock({ perRow, tiles, onNav }: { perRow: number; tiles: CardTi
 // (categoryGrid + categoryColumns) so their behaviour — variant dispatch, click,
 // hover, aria — can never diverge. A change here (new variant, hover, a11y) lands
 // on every category page at once:
-//  • `links` (plural) → in-tone box + clickable sub-bullets
+//  • `links` (plural) → in-tone box + clickable sub-bullets — BANNED in data
+//                       (lint:tiles); kept so the renderer stays total
 //  • `link`  (single) → clickable in-tone chip
 //  • `terminal`       → in-tone plain info leaf (no page to link to)
 //  • otherwise        → greyed + aria-disabled = authoring gap (missing link)
@@ -359,10 +436,13 @@ function chunk<T>(arr: T[], size: number): T[][] {
 //               tiles, min-col 130, spill at 4 cols, 8px row gap.
 //   • 'dense' — crowded lesion look: tiered small headers/tiles, plain ↓ arrows,
 //               tiered min-col, spill at 5 cols, 4px row gap.
-function CategoryBlock({ columns, cols, preset, onNav }: { columns: CatColumn[]; cols: number; preset: CatPreset; onNav: Nav }) {
+// `lead` = this block follows a connected block AND is a split the spine left to
+// it (a spilled row): draw the fork as the first child of the scroll box, on the
+// row's own tracks, so connector and columns scroll together and stay aligned.
+function CategoryBlock({ columns, cols, preset, lead, onNav }: { columns: CatColumn[]; cols: number; preset: CatPreset; lead?: boolean; onNav: Nav }) {
   const dense = preset === 'dense'
   const t = dense ? colTier(cols) : 0
-  const sp = spillGrid(cols, dense ? [70, 76, 70][t] : CAT_GRID_MIN_COL, dense ? 5 : 4)
+  const sp = spillGrid(cols, dense ? [70, 76, 70][t] : CAT_GRID_MIN_COL, dense ? SPILL_AT.dense : SPILL_AT.grid)
   const wide = sp.wide
   const gridStyle = !wide
     ? s(`display:grid;grid-template-columns:${sp.cols};gap:6px;width:100%;`)
@@ -384,10 +464,17 @@ function CategoryBlock({ columns, cols, preset, onNav }: { columns: CatColumn[];
   const arrow = (i: number) => dense
     ? <div key={i} style={s(`color:${st(i).col};text-align:center;font-size:11px;line-height:1;`)}>↓</div>
     : <div key={i} className="flow-arrow-v">↓</div>
+  // The row's own tracks/centring, reused by the leading fork so its drops land
+  // on the category headers whatever the row does (even 1fr, spilled, centred).
+  const rowExtra = wide && dense ? `min-width:${sp.minWidth}px;justify-content:center;` : ''
   const body = chunk(columns, cols).map((row, r) => {
     const base = r * cols
     return (
       <Fragment key={r}>
+        {r === 0 && lead && (
+          <ForkLines n={row.length} gap={6} cols={sp.cols} extra={rowExtra}
+            rootExtra={wide && dense ? `min-width:${sp.minWidth}px;` : ''} />
+        )}
         <div style={gridStyle}>{row.map((c, i) => header(c, base + i))}</div>
         <div style={gridStyle}>{row.map((_, i) => arrow(base + i))}</div>
         <div style={gridStyle}>
@@ -457,7 +544,9 @@ function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
     return (
       <>
         <DecBox question={step.question} sub={step.sub} />
-        <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;margin-top:4px;')}>
+        {/* Same fork as every other split — the tree's two outcomes are one. */}
+        <ForkLines n={2} gap={6} />
+        <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;')}>
           <div><div style={s('font-size:9px;font-weight:700;color:var(--gray);margin-bottom:4px;')}>{step.noLabel}</div><OutBox o={step.no} onNav={onNav} /></div>
           <div><div style={s('font-size:9px;font-weight:700;color:var(--gray);margin-bottom:4px;')}>{step.yesLabel}</div><OutBox o={step.yes} onNav={onNav} /></div>
         </div>
@@ -654,7 +743,9 @@ function DxRowBlock({ items, onNav }: { items: LabeledLink[]; onNav: Nav }) {
 }
 
 // ── Dispatch ──────────────────────────────────────────────────────────────────
-function BlockView({ b, onNav }: { b: Block; onNav: Nav }): ReactNode {
+// `lead` — the spine left this block's leading fork to the block itself (see
+// `splitCols` → 'self'); only the category blocks take it.
+function BlockView({ b, lead, onNav }: { b: Block; lead?: boolean; onNav: Nav }): ReactNode {
   switch (b.kind) {
     case 'node': return <NodeBlock b={b} />
     case 'branch': return <BranchBlock columns={b.columns} scroll={b.scroll} onNav={onNav} />
@@ -669,9 +760,10 @@ function BlockView({ b, onNav }: { b: Block; onNav: Nav }): ReactNode {
     case 'dxRow': return <DxRowBlock items={b.items} onNav={onNav} />
     case 'table': return <TableBlock b={b} onNav={onNav} />
     case 'cardSection': return <CardSectionBlock b={b} onNav={onNav} />
-    case 'categoryGrid': return <CategoryBlock columns={b.columns} cols={b.columns.length} preset="grid" onNav={onNav} />
-    case 'categoryColumns': return <CategoryBlock columns={b.columns} cols={b.cols ?? b.columns.length} preset="dense" onNav={onNav} />
+    case 'categoryGrid': return <CategoryBlock columns={b.columns} cols={b.columns.length} preset="grid" lead={lead} onNav={onNav} />
+    case 'categoryColumns': return <CategoryBlock columns={b.columns} cols={b.cols ?? b.columns.length} preset="dense" lead={lead} onNav={onNav} />
     case 'decisionTree': return <>{b.steps.map((step, i) => <DecisionStepView key={i} step={step} onNav={onNav} />)}</>
+    case 'fork': return <ForkBlockView legs={b.legs} onNav={onNav} />
     case 'compareBox': return <CompareBoxBlock b={b} onNav={onNav} />
     case 'speciesCompare': return <SpeciesCompareBlock b={b} onNav={onNav} />
     case 'speciesChooser': return <SpeciesChooserBlock b={b} onNav={onNav} />
@@ -691,6 +783,11 @@ function hasOutboundFlowLinks(blocks: Block[]): boolean {
     if (b.kind === 'branch') {
       for (const col of b.columns) {
         if (hasOutboundFlowLinks(col.blocks)) return true
+      }
+    }
+    if (b.kind === 'fork') {
+      for (const leg of b.legs) {
+        if (leg.blocks && hasOutboundFlowLinks(leg.blocks)) return true
       }
     }
   }

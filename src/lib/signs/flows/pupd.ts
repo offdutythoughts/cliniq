@@ -4,16 +4,13 @@
 // legacy const). The Dx views (renderDxPUPD*, renderDxPUPDDesmopressin) are a
 // separate tranche and are NOT migrated here.
 //
-// The entry uses two bespoke grids that have no typed-block equivalent: a 3fr/2fr
-// "true PU/PD?" YES/NO grid and a 3-column classification grid whose columns are
-// multi-line tinted info boxes (not header+body branches or pattern-choices),
-// each feeding a clickable sub-flow endpoint. The 3 sub-flows use a per-column
-// "category → ↓ → chips" stack (legacy `col()` helper) that differs from
-// `categoryGrid`'s header-row→arrow-row→tile-row layout. To keep BYTE-IDENTICAL
-// markup these bespoke parts are authored as `html` blocks (FLAGGED below);
-// clean entry/step headers use typed `node` blocks. Sub-flow cross-links use
-// typed `{to:'flow'}` Links. The CDI/desmopressin onclicks point at the Dx view
-// renderDxId('pupd','desmopressin') and are preserved inline in html (Dx tranche).
+// Every split on these pages is now typed, so it is drawn with the shared
+// connected fork connector: the entry's "true PU/PD?" question is a `fork` block
+// (YES continues down the spine, NO exits to the pollakiuria flow), the three
+// PU/PD classes are a comparison `table` (the acute-vestibular format) feeding
+// three `choices` chips, and each sub-flow's causes are `categoryColumns` whose
+// chips tap through to their disease pages. Only the pearls / desmopressin /
+// safety reference boxes remain `html`.
 
 import type { FlowPage } from '../flowTypes'
 import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
@@ -25,29 +22,30 @@ const pupdEntry: FlowPage = {
   blocks: [
     { kind: 'node', variant: 'entry', text: '💧 POLYURIA / POLYDIPSIA' },
 
-    // Q1: Confirm PU/PD — bespoke 3fr/2fr YES/NO grid (no typed equivalent).
-    // html breaks the renderer's auto-arrow spine, so the legacy `↓` connectors
-    // that bracket this grid (entry→grid and grid→step) are inlined here.
+    // Q1: Confirm PU/PD — a typed YES/NO fork. The YES leg is a `continue` leg:
+    // its line runs the height of the fork and arrows into CLASSIFY, so the main
+    // path stays unbroken; the NO leg ends on the pollakiuria flow (LUTD workup).
     {
-      kind: 'html',
-      connectAfter: false,
-      html: `<div class="flow-arrow-v">↓</div>
-    <div style="display:grid;grid-template-columns:3fr 2fr;gap:8px;width:100%;">
-      <div style="display:flex;flex-direction:column;gap:5px;">
-        <div class="flow-node step" style="width:100%;">IS THIS TRUE PU/PD?
-          <div class="fn-sub">Large-volume conscious voiding · nocturia · owner-witnessed increased drinking</div>
-        </div>
-        <div style="font-size:10px;color:var(--gray);padding-left:4px;">YES ↓</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:5px;">
-        <div style="font-size:9.5px;color:var(--gray);text-align:center;padding-top:8px;">NO →</div>
-        <div class="flow-endpoint" style="background:rgba(100,116,139,0.12);border:1.5px solid rgba(100,116,139,0.35);color:var(--tone-slate-fg);font-size:9.5px;text-align:center;">
-          <strong>Pollakiuria / Incontinence</strong><br>
-          <span style="opacity:.8;">Small frequent voids · dysuria · straining · passive leakage → LUTD workup</span>
-        </div>
-      </div>
-    </div>
-    <div class="flow-arrow-v">↓</div>`,
+      kind: 'node',
+      variant: 'step',
+      text: 'IS THIS TRUE PU/PD?',
+      sub: 'Large-volume conscious voiding · nocturia · owner-witnessed increased drinking',
+    },
+    {
+      kind: 'fork',
+      legs: [
+        { label: 'YES', sub: 'True PU/PD', continue: true },
+        {
+          label: 'NO',
+          sub: 'Small frequent voids · dysuria · straining · passive leakage',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [{ label: 'Pollakiuria', tone: 'slate', link: { to: 'flow', id: 'pollakiuria' } }],
+            },
+          ],
+        },
+      ],
     },
 
     // Q2: Classify PU/PD type
@@ -58,66 +56,66 @@ const pupdEntry: FlowPage = {
       sub: 'Serial USG (3–5 samples) + plasma Na⁺ are the key tests · collect before IV fluids · check dipstick glucose (DM raises USG artificially)',
     },
 
-    // 3-column classification grid (bespoke tinted info boxes + arrow + endpoint).
-    // Leading `↓` reproduces the legacy step→grid connector (html breaks the spine).
+    // The three classes side by side as a comparison table (the acute-vestibular
+    // peripheral/central/bilateral format): every data cell is coloured by its
+    // column — Primary PD→green, Primary PU→indigo, Secondary PU→amber — and the
+    // row-label column is plain text. `connectAfter` puts the fork connector
+    // between the table and the three cause chips it explains.
     {
-      kind: 'html',
-      connectAfter: false,
-      html: `<div class="flow-arrow-v">↓</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;width:100%;">
+      kind: 'table',
+      gap: 12,
+      connectAfter: true,
+      cols: '0.8fr 1.3fr 1.3fr 1.3fr',
+      headers: [
+        '',
+        { text: 'PRIMARY PD', tone: 'green' },
+        { text: 'PRIMARY PU', tone: 'indigo' },
+        { text: 'SECONDARY PU', tone: 'warning' },
+      ],
+      rows: [
+        [
+          'Mechanism',
+          { text: 'Brain drives drinking', tone: 'green' },
+          { text: "Kidney can't concentrate", tone: 'indigo' },
+          { text: 'Systemic disease → NDI', tone: 'warning' },
+        ],
+        [
+          'USG',
+          { text: '<strong>≥1 USG &gt;1.030</strong> documented', tone: 'green' },
+          { text: 'Consistently <strong>dilute (&lt;1.030)</strong>', tone: 'indigo' },
+          { text: 'Variable', tone: 'warning' },
+        ],
+        [
+          'Plasma Na⁺',
+          { text: '<strong>Low-normal</strong> (dilutional)', tone: 'green' },
+          { text: '<strong>High-normal</strong> (free water loss)', tone: 'indigo' },
+          { text: '—', tone: 'warning' },
+        ],
+        [
+          'Systemic signs',
+          { text: 'No systemic illness', tone: 'green' },
+          { text: 'Often systemically well (CDI/NDI)', tone: 'indigo' },
+          { text: 'Present + abnormal biochem', tone: 'warning' },
+        ],
+        [
+          'Typical setting',
+          { text: 'Young dog · anxious · hyperthyroid cat', tone: 'green' },
+          { text: 'Osmotic diuresis (DM)', tone: 'indigo' },
+          { text: 'HAC · Ca²⁺ · pyometra', tone: 'warning' },
+        ],
+      ],
+      footnote: 'Secondary PU: treat the underlying disease → the PU/PD resolves.',
+    },
 
-      <div style="display:flex;flex-direction:column;gap:5px;">
-        <div class="flow-node" style="flex:1;background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.35);font-size:9.5px;text-align:center;">
-          <div style="font-weight:700;color:var(--tone-green-fg);margin-bottom:4px;">PRIMARY PD<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">Brain drives drinking</span></div>
-          <div style="text-align:left;color:var(--gray);line-height:1.6;">
-            • ≥1 USG &gt;1.030<br>
-            &nbsp;&nbsp;documented<br>
-            • Na⁺ low-normal<br>
-            &nbsp;&nbsp;(dilutional)<br>
-            • No systemic illness<br>
-            • Young dog · anxious<br>
-            • Hyperthyroid cat
-          </div>
-        </div>
-        <div class="flow-arrow-v">↓</div>
-        <div class="flow-endpoint" style="background:rgba(16,185,129,0.15);border:1.5px solid rgba(16,185,129,0.4);color:var(--tone-green-fg);font-size:9.5px;text-align:center;cursor:pointer;" onclick="renderFlowId('pupd-prim-pd')">Primary PD →<br><span style="font-size:8.5px;opacity:.8;">Psychogenic · hyperthyroid · HE</span></div>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:5px;">
-        <div class="flow-node" style="flex:1;background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.35);color:var(--fg-indigo-deep);font-size:9.5px;text-align:center;">
-          <div style="font-weight:700;color:var(--tone-indigo-fg);margin-bottom:4px;">PRIMARY PU<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">Kidney can't concentrate</span></div>
-          <div style="text-align:left;color:var(--gray);line-height:1.6;">
-            • USG consistently<br>
-            &nbsp;&nbsp;dilute (&lt;1.030)<br>
-            • Na⁺ high-normal<br>
-            &nbsp;&nbsp;(free water loss)<br>
-            • Often systemically<br>
-            &nbsp;&nbsp;well (CDI/NDI)<br>
-            • Osmotic diuresis (DM)
-          </div>
-        </div>
-        <div class="flow-arrow-v">↓</div>
-        <div class="flow-endpoint" style="background:rgba(99,102,241,0.15);border:1.5px solid rgba(99,102,241,0.4);color:var(--tone-indigo-fg);font-size:9.5px;text-align:center;cursor:pointer;" onclick="renderFlowId('pupd-prim-pu')">Primary PU →<br><span style="font-size:8.5px;opacity:.8;">CDI · NDI · DM · CKD</span></div>
-      </div>
-
-      <div style="display:flex;flex-direction:column;gap:5px;">
-        <div class="flow-node" style="flex:1;background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.4);font-size:9.5px;text-align:center;">
-          <div style="font-weight:700;color:var(--tone-warning-fg);margin-bottom:4px;">SECONDARY PU<br><span style="font-size:8.5px;font-weight:400;opacity:.8;">Systemic disease → NDI</span></div>
-          <div style="text-align:left;color:var(--gray);line-height:1.6;">
-            • Systemic signs<br>
-            &nbsp;&nbsp;present<br>
-            • Abnormal biochem<br>
-            • USG variable<br>
-            • Treat cause →<br>
-            &nbsp;&nbsp;PU/PD resolves<br>
-            • HAC · Ca²⁺ · pyometra
-          </div>
-        </div>
-        <div class="flow-arrow-v">↓</div>
-        <div class="flow-endpoint" style="background:rgba(245,158,11,0.12);border:1.5px solid rgba(245,158,11,0.4);color:var(--tone-warning-fg);font-size:9.5px;text-align:center;cursor:pointer;" onclick="renderFlowId('pupd-sec-pu')">Secondary PU →<br><span style="font-size:8.5px;opacity:.8;">HAC · hypercalcaemia · more</span></div>
-      </div>
-
-    </div>`,
+    // The three classes as cause chips — one per table column, in the same order.
+    {
+      kind: 'choices',
+      size: 10,
+      items: [
+        { tone: 'green', label: 'Primary PD', sublabel: 'Psychogenic · hyperthyroid · HE', link: { to: 'flow', id: 'pupd-prim-pd' } },
+        { tone: 'indigo', label: 'Primary PU', sublabel: 'CDI · NDI · DM · CKD', link: { to: 'flow', id: 'pupd-prim-pu' } },
+        { tone: 'warning', label: 'Secondary PU', sublabel: 'HAC · hypercalcaemia · more', link: { to: 'flow', id: 'pupd-sec-pu' } },
+      ],
     },
 
     // Pearls
@@ -161,17 +159,35 @@ const pupdPrimPD: FlowPage = {
     },
     IDENTIFY_CAUSE_STEP,
 
-    // Category grid (legacy `col()` per-column stacks → bespoke html).
-    // Leading `↓` reproduces the legacy step→grid connector (html breaks the spine).
+    // Cause categories — typed `categoryColumns`, so the split gets the shared
+    // fork connector and every cause chip taps through to its disease page (the
+    // legacy hand-authored grid here was a dead end: no links at all).
     {
-      kind: 'html',
-      connectAfter: false,
-      html: `<div class="flow-arrow-v">↓</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;">
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--hl-pink);text-align:center;line-height:1.3;">Anomalous</div><div style="color:var(--hl-pink);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--hl-pink);text-align:center;line-height:1.35;">Psychogenic / behavioural</div></div>
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--tone-teal-fg);text-align:center;line-height:1.3;">Metabolic / Endocrine</div><div style="color:var(--tone-teal-fg);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Hyperthyroidism (cat)</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Hepatic encephalopathy / PSS</div></div>
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(100,116,139,0.15);border:1.5px solid rgba(100,116,139,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:#94A3B8;text-align:center;line-height:1.3;">Degenerative</div><div style="color:#94A3B8;text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(100,116,139,0.15);border:1.5px solid rgba(100,116,139,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#94A3B8;text-align:center;line-height:1.35;">Medullary washout</div></div>
-    </div>`,
+      kind: 'categoryColumns',
+      columns: [
+        {
+          cat: 'Anomalous',
+          tiles: [{ label: 'Psychogenic / behavioural', link: { to: 'disease', id: 'DIS-PUPD-PRIM' } }],
+        },
+        {
+          cat: 'Metabolic',
+          tone: 'teal',
+          tiles: [
+            { label: 'Hepatic encephalopathy', link: { to: 'disease', id: 'DIS-HEP-HE' } },
+            { label: 'Portosystemic shunt', link: { to: 'disease', id: 'DIS-HEP-PSS' } },
+          ],
+        },
+        {
+          cat: 'Endocrine',
+          tone: 'violet',
+          tiles: [{ label: 'Hyperthyroidism (cat)', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } }],
+        },
+        {
+          // No page for medullary washout — an intentional leaf, not a missing link.
+          cat: 'Degenerative',
+          tiles: [{ label: 'Medullary washout', terminal: true }],
+        },
+      ],
     },
 
     {
@@ -206,18 +222,36 @@ const pupdPrimPU: FlowPage = {
     },
     IDENTIFY_CAUSE_STEP,
 
-    // Category grid (legacy `col()` per-column stacks → bespoke html; CDI chip
-    // links to the desmopressin Dx view, preserved inline — Dx tranche).
-    // Leading `↓` reproduces the legacy step→grid connector (html breaks the spine).
+    // Cause categories — typed `categoryColumns` (fork connector + working links).
+    // The CDI chip now opens the Central DI disease page; the desmopressin trial
+    // Dx view stays one tap away in the callout below.
     {
-      kind: 'html',
-      connectAfter: false,
-      html: `<div class="flow-arrow-v">↓</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;">
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--tone-teal-fg);text-align:center;line-height:1.3;">Metabolic / Endocrine</div><div style="color:var(--tone-teal-fg);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;cursor:pointer;" onclick="renderDxId('pupd','desmopressin')">Central DI (CDI)</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Diabetes mellitus</div></div>
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--hl-pink);text-align:center;line-height:1.3;">Anomalous</div><div style="color:var(--hl-pink);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--hl-pink);text-align:center;line-height:1.35;">Primary nephrogenic DI</div><div style="background:rgba(236,72,153,0.15);border:1.5px solid rgba(236,72,153,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--hl-pink);text-align:center;line-height:1.35;">Renal glucosuria / Fanconi</div></div>
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(100,116,139,0.15);border:1.5px solid rgba(100,116,139,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:#94A3B8;text-align:center;line-height:1.3;">Degenerative</div><div style="color:#94A3B8;text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(100,116,139,0.15);border:1.5px solid rgba(100,116,139,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:#94A3B8;text-align:center;line-height:1.35;">CKD / AKI</div></div>
-    </div>`,
+      kind: 'categoryColumns',
+      columns: [
+        {
+          // Both causes here are endocrine — nothing metabolic to separate out.
+          cat: 'Endocrine',
+          tone: 'violet',
+          tiles: [
+            { label: 'Central DI (CDI)', link: { to: 'disease', id: 'DIS-PUPD-CDI' } },
+            { label: 'Diabetes mellitus', link: { to: 'disease', id: 'DIS-ENDO-DM' } },
+          ],
+        },
+        {
+          cat: 'Anomalous',
+          tiles: [
+            { label: 'Primary nephrogenic DI', link: { to: 'disease', id: 'DIS-PUPD-NDI' } },
+            { label: 'Renal glucosuria / Fanconi', link: { to: 'disease', id: 'DIS-ENDO-RENGLUC' } },
+          ],
+        },
+        {
+          cat: 'Degenerative',
+          tiles: [
+            { label: 'Chronic kidney disease', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
+            { label: 'Acute kidney injury', link: { to: 'disease', id: 'DIS-SEC-AKI' } },
+          ],
+        },
+      ],
     },
 
     {
@@ -252,16 +286,43 @@ const pupdSecPU: FlowPage = {
     },
     IDENTIFY_CAUSE_STEP,
 
-    // 2-column category grid (legacy `col()` per-column stacks → bespoke html).
-    // Leading `↓` reproduces the legacy step→grid connector (html breaks the spine).
+    // Cause categories — typed `categoryColumns` (fork connector + working links).
     {
-      kind: 'html',
-      connectAfter: false,
-      html: `<div class="flow-arrow-v">↓</div>
-    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px;width:100%;">
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(245,158,11,0.15);border:1.5px solid rgba(245,158,11,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--tone-warning-fg);text-align:center;line-height:1.3;">Inflammatory</div><div style="color:var(--tone-warning-fg);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(245,158,11,0.15);border:1.5px solid rgba(245,158,11,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-warning-fg);text-align:center;line-height:1.35;">Pyometra ⚠️</div><div style="background:rgba(245,158,11,0.15);border:1.5px solid rgba(245,158,11,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-warning-fg);text-align:center;line-height:1.35;">Pyelonephritis / Leptospirosis</div></div>
-      <div style="display:flex;flex-direction:column;align-items:stretch;gap:4px;"><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:10px;padding:7px 5px;font-size:9.5px;font-weight:700;color:var(--tone-teal-fg);text-align:center;line-height:1.3;">Metabolic / Endocrine</div><div style="color:var(--tone-teal-fg);text-align:center;font-size:11px;line-height:1;">↓</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">HAC / Cushing's ⭐</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Hypercalcaemia</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Hypoadrenocorticism</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Hypokalemia</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">PSS / liver failure</div><div style="background:rgba(20,184,166,0.15);border:1.5px solid rgba(20,184,166,0.4);border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;color:var(--tone-teal-fg);text-align:center;line-height:1.35;">Acromegaly (cat)</div></div>
-    </div>`,
+      kind: 'categoryColumns',
+      columns: [
+        {
+          cat: 'Inflammatory',
+          tiles: [
+            { label: 'Pyometra ⚠️', link: { to: 'disease', id: 'DIS-REPRO-PYO' } },
+            { label: 'Pyelonephritis', link: { to: 'disease', id: 'DIS-URO-PYELO' } },
+            { label: 'Leptospirosis', link: { to: 'disease', id: 'DIS-INFECT-LEPTO' } },
+          ],
+        },
+        // Metabolic and endocrine split into their own columns — the two are
+        // worked up differently (electrolytes / hepatic function vs adrenal and
+        // pituitary testing). `tone` overrides the palette because neither label
+        // is one of the shared CAT_STYLE categories; teal keeps the metabolic
+        // half its familiar colour.
+        {
+          cat: 'Metabolic',
+          tone: 'teal',
+          tiles: [
+            { label: 'Hypercalcaemia', link: { to: 'disease', id: 'DIS-ENDO-HCALC' } },
+            { label: 'Hypokalaemia', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },
+            { label: 'Portosystemic shunt', link: { to: 'disease', id: 'DIS-HEP-PSS' } },
+            { label: 'Hepatic failure', link: { to: 'disease', id: 'DIS-HEP-CHRONHEP' } },
+          ],
+        },
+        {
+          cat: 'Endocrine',
+          tone: 'violet',
+          tiles: [
+            { label: "HAC / Cushing's ⭐", link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
+            { label: 'Hypoadrenocorticism', link: { to: 'disease', id: 'DIS-SEC-HYPO' } },
+            { label: 'Acromegaly (cat)', link: { to: 'disease', id: 'DIS-ENDO-ACRO' } },
+          ],
+        },
+      ],
     },
 
     {

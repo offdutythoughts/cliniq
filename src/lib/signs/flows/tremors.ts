@@ -120,10 +120,8 @@ const tremorsCerebellar: FlowPage = {
           tiles: [
             { label: ' MUO / MENINGOENCEPHALITIS', link: { to: 'disease', id: 'DIS-NEU-MUE' } },
             { label: ' GME', link: { to: 'disease', id: 'DIS-GME' } },
-            { label: ' Infectious encephalitis (CDV, Neospora, Toxoplasma)', links: [
-              { label: 'CDV encephalitis', link: { to: 'disease', id: 'DIS-INFECT-CDV' } },
-              { label: 'Toxoplasma / Neospora', link: { to: 'disease', id: 'DIS-INFECT-TOXO' } },
-            ] },
+            { label: ' CDV encephalitis', link: { to: 'disease', id: 'DIS-INFECT-CDV' } },
+            { label: ' Toxoplasma / Neospora', link: { to: 'disease', id: 'DIS-INFECT-TOXO' } },
           ],
         },
         {

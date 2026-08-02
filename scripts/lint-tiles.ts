@@ -33,6 +33,14 @@
 //
 // KEPT_TILE_DETAIL lists the few reviewed linked tiles whose post-dash text is the
 // essential diagnosis/triage, not a strippable description, keyed `pageId::label`.
+//
+// CHECK 4 — no nested sub-bullet tiles.
+// A tile must be ONE named cause pointing at ONE page. The `links` (plural) form —
+// a parent label with "→ child" bullets nested inside the chip ("Pyelonephritis /
+// Leptospirosis" → two sub-links) — was rejected as a flowchart format: a reader
+// scanning a category column should see every differential as its own chip, at the
+// same level, not two of them hidden one layer down inside a third. Split such a
+// tile into one tile per cause. This lint fails on any tile that still uses it.
 
 import { FLOWS } from '../src/lib/signs/flows/index'
 import type { Block } from '../src/lib/signs/flowTypes'
@@ -104,14 +112,20 @@ function checkBlocks(pageId: string, blocks: Block[]) {
               !KEPT_TILE_DETAIL.has(`${pageId}::${label}`)) {
             fail(`[${pageId}] ${col.cat} · "${label}" — linked tile carries a description the tap-through page already gives; strip to the name (keep only a species/ranking qualifier).`)
           }
+          // CHECK 4: the nested sub-bullet form is banned — one tile, one cause.
+          if (Array.isArray(tile.links) && tile.links.length > 0) {
+            const kids = (tile.links as any[]).map(ll => `"${String(ll.label ?? '')}"`).join(' + ')
+            fail(`[${pageId}] ${col.cat} · "${label}" — nested sub-bullet tile (links: ${kids}); split it into one tile per cause.`)
+          }
           const where = `${pageId} · ${col.cat}`
           if (tile.link) record(label, tile.link, where)
           for (const ll of (tile.links ?? []) as any[]) record(String(ll.label ?? label), ll.link, where)
         }
       }
     }
-    // Recurse into branch columns (they nest blocks)
+    // Recurse into the block kinds that nest blocks (branch columns, fork legs)
     if (b.kind === 'branch') for (const col of b.columns ?? []) checkBlocks(pageId, col.blocks ?? [])
+    if (b.kind === 'fork') for (const leg of b.legs ?? []) checkBlocks(pageId, leg.blocks ?? [])
   }
 }
 
@@ -128,8 +142,8 @@ for (const [norm, byTarget] of seen) {
 }
 
 if (errors > 0) {
-  console.error(`\n${errors} category-tile issue(s) found. Link a page / set terminal:true / make the label's target consistent / strip the linked tile to its name.`)
+  console.error(`\n${errors} category-tile issue(s) found. Link a page / set terminal:true / make the label's target consistent / strip the linked tile to its name / split a sub-bullet tile into one tile per cause.`)
   process.exit(1)
 } else {
-  console.log(`✓ All category tiles resolve, map to one target, and linked tiles are name-only, across ${Object.keys(FLOWS).length} flow pages.`)
+  console.log(`✓ All category tiles resolve, map to one target, are name-only when linked, and carry no nested sub-bullets, across ${Object.keys(FLOWS).length} flow pages.`)
 }

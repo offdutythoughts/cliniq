@@ -10,7 +10,7 @@
 // 0.06 that have no equivalent standard block; those are reproduced verbatim
 // with `html` blocks (see the FLAGs in the migration report).
 
-import type { FlowPage } from '../flowTypes'
+import { forkHtml, type FlowPage } from '../flowTypes'
 
 // ── Entry ───────────────────────────────────────────────────────────────────
 // The centrifuge step feeds a bespoke 2fr/3fr nested YES/NO split (text labels,
@@ -33,7 +33,7 @@ const haematuriaEntry: FlowPage = {
 
     {
       kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
+      html: `${forkHtml('2fr 3fr', 8, false)}
 
   <div style="display:grid;grid-template-columns:2fr 3fr;gap:8px;width:100%;">
 
@@ -56,7 +56,7 @@ const haematuriaEntry: FlowPage = {
       <div class="flow-node sub-step" style="width:100%;font-size:10px;">Concurrent systemic signs?
         <div style="font-weight:400;font-size:9px;margin-top:2px;opacity:.85;">Generalised bleeding · petechiae · severe anaemia · jaundice · pyrexia</div>
       </div>
-      <div class="flow-arrow-v">↓</div>
+      ${forkHtml('1fr 2fr', 5, false)}
 
       <div style="display:grid;grid-template-columns:1fr 2fr;gap:5px;width:100%;">
 
@@ -77,7 +77,7 @@ const haematuriaEntry: FlowPage = {
 
           <!-- Q3: when in stream? -->
           <div class="flow-node sub-step" style="width:100%;font-size:9.5px;">WHEN in the stream?</div>
-          <div class="flow-arrow-v" style="font-size:11px;">↓</div>
+          ${forkHtml(2, 3)}
 
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:3px;width:100%;">
             <div class="flow-endpoint" style="background:rgba(16,185,129,0.08);border:1.5px solid rgba(16,185,129,0.3);color:var(--tone-green-fg);font-size:8.5px;cursor:pointer;text-align:center;" onclick="renderFlowId('haematuria-initial')">
@@ -262,7 +262,7 @@ const haematuriaInitial: FlowPage = {
 
     {
       kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
+      html: `${forkHtml(3, 6)}
 
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
 
@@ -318,7 +318,7 @@ const haematuriaTerminal: FlowPage = {
 
     {
       kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
+      html: `${forkHtml(3, 6)}
 
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
 
@@ -379,7 +379,7 @@ const haematuriaUniform: FlowPage = {
 
     {
       kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
+      html: `${forkHtml(2, 8)}
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
 
@@ -426,7 +426,7 @@ const haematuriaIndep: FlowPage = {
 
     {
       kind: 'html',
-      html: `<div class="flow-arrow-v">↓</div>
+      html: `${forkHtml(3, 6)}
 
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;width:100%;">
 

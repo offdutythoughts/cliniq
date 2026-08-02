@@ -25,7 +25,7 @@
 // endpoints" block (or an extension to `branch`/`endpoints`) would let these
 // become validated `{ to:'lesion', … }` links.
 
-import type { FlowPage } from '../flowTypes'
+import { forkHtml, type FlowPage } from '../flowTypes'
 
 export const diarrhoeaFlow: FlowPage = {
   id: 'diarrhoea',
@@ -47,14 +47,14 @@ export const diarrhoeaFlow: FlowPage = {
       connectAfter: false,
       // `html` is not a spine block, so the renderer draws no arrow before it —
       // the STEP 1 → branch connector is included here to match the legacy.
-      html: `<div class="flow-arrow-v">↓</div>
+      html: `${forkHtml(2, 8)}
     <!-- Acute vs Chronic -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
       <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
         <div class="flow-node insp" style="width:100%;font-size:11px;">ACUTE diarrhoea<div class="fn-sub" style="font-size:9px;opacity:.7">< 2 weeks</div></div>
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node sub-step" style="width:100%;font-size:10px;">Severe / haemorrhagic?</div>
-        <div class="flow-arrow-v">↓</div>
+        ${forkHtml(2, 4)}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
           <div>
             <div style="font-size:9px;color:var(--tone-danger-fg);text-align:center;margin-bottom:2px;">YES — severe</div>
@@ -81,7 +81,7 @@ export const diarrhoeaFlow: FlowPage = {
         <div class="flow-node exp" style="width:100%;font-size:11px;">CHRONIC diarrhoea<div class="fn-sub" style="font-size:9px;opacity:.7">> 2-3 weeks</div></div>
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node sub-step" style="width:100%;font-size:10px;">STEP 2 — LOCALISE: Small bowel or large bowel?</div>
-        <div class="flow-arrow-v">↓</div>
+        ${forkHtml(2, 4)}
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;width:100%;">
           <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
             <div class="flow-endpoint gi-upper" onclick="goLesionTab('LOC-DI-SI','Small intestine')" style="font-size:10px;">
