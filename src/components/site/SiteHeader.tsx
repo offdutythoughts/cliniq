@@ -43,8 +43,8 @@ export function SiteHeader({ showNav = true }: { showNav?: boolean }) {
           <Link href="/login" className="v-btn v-btn-secondary border-transparent">
             Sign in
           </Link>
-          <Link href="/signup" className="v-btn v-btn-primary">
-            Start free trial
+          <Link href="/login" className="v-btn v-btn-primary">
+            Create account
           </Link>
         </div>
 
@@ -84,8 +84,8 @@ export function SiteHeader({ showNav = true }: { showNav?: boolean }) {
               </Link>
             ))}
             <div className="flex flex-col gap-2 py-4">
-              <Link href="/signup" onClick={() => setOpen(false)} className="v-btn v-btn-primary">
-                Start free trial
+              <Link href="/login" onClick={() => setOpen(false)} className="v-btn v-btn-primary">
+                Create account
               </Link>
               <Link href="/login" onClick={() => setOpen(false)} className="v-btn v-btn-secondary">
                 Sign in
