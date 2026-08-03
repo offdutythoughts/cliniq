@@ -19,9 +19,9 @@ const convexMiddleware = hasConvex
         nextjsMiddlewareRedirect,
         // eslint-disable-next-line @typescript-eslint/no-require-imports
       } = require('@convex-dev/auth/nextjs/server') as typeof import('@convex-dev/auth/nextjs/server')
-      // The marketing site is public; the clinical app at /app is not. Sign-up
-      // spans several steps (account → email code → subscription) and must stay
-      // reachable while the user is only partly authenticated.
+      // The public routes; the clinical app at /app is not one of them. `/` and
+      // /signup are redirects (to /app and /login) but must stay public, or the
+      // middleware would bounce a signed-out visitor before the redirect runs.
       const isPublicRoute = createRouteMatcher(['/', '/login', '/signup', '/pricing'])
       return convexAuthNextjsMiddleware(async (request: NextRequest, { convexAuth }: { convexAuth: { isAuthenticated: () => Promise<boolean> } }) => {
         if (isDev || isPublicRoute(request)) return

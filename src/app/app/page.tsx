@@ -17,19 +17,18 @@ import { OnboardingModal } from '../../components/OnboardingModal'
 import { TutorialProvider } from '../tutorial/TutorialContext'
 import { TutorialOverlay } from '../../components/TutorialOverlay'
 import SilentBoundary from '../SilentBoundary'
-import { SubscriptionGate } from '../../components/SubscriptionGate'
 
 // Use Convex-backed notes when a deployment URL is configured, otherwise localStorage
 const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
 export default hasConvex ? PageWithConvex : PageWithLocal
 
+// Access is decided by sign-in alone: the proxy (src/proxy.ts) sends anyone
+// without a session to /login, and that is the whole gate. There is no
+// entitlement check here — src/components/SubscriptionGate.tsx is written and
+// unmounted, waiting on a subscription backend that is not deployed.
 function PageWithConvex() {
-  // SubscriptionGate holds the app back until the signed-in user has an active
-  // (or trialing) subscription — see src/components/SubscriptionGate.tsx.
   return (
-    <SubscriptionGate>
-      <NavProvider><TutorialProvider><SearchProvider><PageBase useNotesHook={useNotes} /></SearchProvider></TutorialProvider></NavProvider>
-    </SubscriptionGate>
+    <NavProvider><TutorialProvider><SearchProvider><PageBase useNotesHook={useNotes} /></SearchProvider></TutorialProvider></NavProvider>
   )
 }
 

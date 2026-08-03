@@ -1,24 +1,9 @@
-import type { Metadata } from 'next'
-import { Suspense } from 'react'
-import { AuthShell } from '../../components/site/AuthShell'
-import SignupFlow from './SignupFlow'
+import { redirect } from 'next/navigation'
 
-export const metadata: Metadata = {
-  title: 'Create your account — Vetic',
-  description: 'Create a Vetic account: confirm your email, choose a plan, and start your trial.',
-}
-
+// Sign-up happens on /login, which creates the account from email + password in
+// one step. The three-step flow in ./SignupFlow.tsx (account → emailed code →
+// subscription) is left in the tree unmounted: it needs convex/subscriptions.ts
+// and convex/emailVerification.ts deployed, and neither is live.
 export default function SignupPage() {
-  // useSearchParams (for ?plan=) needs a Suspense boundary above it.
-  return (
-    <Suspense
-      fallback={
-        <AuthShell title="Create your Vetic account" subtitle="Loading…">
-          <div />
-        </AuthShell>
-      }
-    >
-      <SignupFlow />
-    </Suspense>
-  )
+  redirect('/login')
 }

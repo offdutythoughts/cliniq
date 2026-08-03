@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { SiteFooter } from './SiteFooter'
 import { SiteHeader } from './SiteHeader'
 
@@ -71,18 +70,11 @@ export function AuthShell({
           <div className="mt-7">{children}</div>
         </div>
 
+        {/* No "back to home" link: `/` redirects to the app, which sends a
+            signed-out visitor straight back here. */}
         {footer && (
           <div className="mt-6 text-center text-[14px] text-[var(--v-slate)]">{footer}</div>
         )}
-
-        <p className="mt-10 text-center text-[13px]">
-          <Link
-            href="/"
-            className="text-[var(--v-slate)] no-underline transition-colors hover:text-[var(--v-ink)]"
-          >
-            ← Back to home
-          </Link>
-        </p>
       </main>
       <SiteFooter />
     </div>
