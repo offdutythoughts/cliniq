@@ -34,11 +34,17 @@ function trackCount(template: string): number {
   return template.trim().split(/\s+(?![^(]*\))/).length
 }
 
-/** The fork markup emitted by forkHtml(), so it can be told apart from a lone arrow. */
-const FORK_RE = /<div class="flow-fork" style="--fork-gap:(\d+)px;">.*?<div class="flow-fork-legs" style="grid-template-columns:([^;"]+);">(.*?)<\/div><\/div>/gs
+/** The exact markup emitted by forkHtml(), so a fork can be told apart from a lone
+ *  arrow — and so the drops inside its legs are never read as lone arrows. */
+const LEG = '<div class="flow-fork-leg"><div class="flow-(?:arrow-v|fork-drop)"[^>]*>[^<]*</div></div>'
+const FORK_RE = new RegExp(
+  '<div class="flow-fork" style="--fork-gap:(\\d+)px;">'
+  + '<div class="flow-fork-stem"></div>'
+  + '<div class="flow-fork-legs" style="grid-template-columns:([^;"]+);">'
+  + `((?:${LEG})+)</div></div>`, 'g')
 /** A connector (fork or lone arrow) directly followed by a grid — with nothing
  *  but whitespace/comments between, which is what "feeds this split" means. */
-const CONNECTED = /(FORK|<div class="flow-arrow-v"[^>]*>[^<]*<\/div>)(?:\s|<!--[^]*?-->)*<div style="display:grid;grid-template-columns:([^;"]+);gap:(\d+)px/g
+const CONNECTED = /(FORK\d+@|<div class="flow-arrow-v"[^>]*>[^<]*<\/div>)(?:\s|<!--[^]*?-->)*<div style="display:grid;grid-template-columns:([^;"]+);gap:(\d+)px/g
 
 function checkHtml(id: string, html: string) {
   // Replace each fork with a marker (keeping its params) so CONNECTED can tell
