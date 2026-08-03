@@ -43,7 +43,12 @@ const hoverBrighten = {
 
 // ── Arrow / spine logic (joinBlocks) ─────────────────────────────────────────
 const SPINE = new Set(['node', 'branch', 'endpoints', 'choices', 'callout', 'fnHeader', 'cardGrid', 'categoryGrid', 'categoryColumns', 'decisionTree', 'fork', 'speciesChooser'])
-const connectsAfter = (b: Block): boolean => b.connectAfter ?? SPINE.has(b.kind)
+// A fork with a `continue` leg already arrows into the next spine block down the
+// continuing leg, so the spine must not add a second, centred arrow — that one
+// would hang under the OTHER leg's terminal outcome and read as if the dead-end
+// carried on into the next step.
+const connectsAfter = (b: Block): boolean =>
+  b.connectAfter ?? (b.kind === 'fork' ? !b.legs.some(l => l.continue) : SPINE.has(b.kind))
 const connectsBefore = (b: Block): boolean => SPINE.has(b.kind)
 
 // ── Fork connector — how EVERY split is drawn ─────────────────────────────────
@@ -65,8 +70,9 @@ function splitCols(b: Block): Fork | 'self' | null {
   const fork = (n: number, gap: number, cols?: string) => (n >= 2 ? { n, gap, cols } : null)
   switch (b.kind) {
     // A `scroll` branch keeps its columns' intrinsic widths inside a scroll box —
-    // there is no track template to mirror, so it keeps the plain spine arrow.
-    case 'branch': return b.scroll ? null : fork(b.columns.length, 8)
+    // there is no track template to mirror, so it keeps the plain spine arrow. A
+    // plain branch draws its own fork: its arms have a floor and scroll past it.
+    case 'branch': return b.scroll ? null : (b.columns.length >= 2 ? 'self' : null)
     case 'categoryGrid': return b.columns.length >= SPILL_AT.grid ? 'self' : fork(b.columns.length, 6)
     case 'categoryColumns': {
       const n = b.cols ?? b.columns.length
@@ -122,7 +128,7 @@ function ForkBlockView({ legs, onNav }: { legs: ForkLeg[]; onNav: Nav }) {
       </div>
       <div style={grid}>
         {legs.map((l, i) => (
-          <div key={i} style={s('display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;')}>
+          <div key={i} className="flow-col" style={s('display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;')}>
             <div className="flow-arrow-v" style={l.continue ? s('height:auto;flex:1;min-height:16px;') : undefined} />
             {l.blocks && l.blocks.length > 0 && (
               <div style={s('display:flex;flex-direction:column;align-items:center;gap:6px;width:100%;')}>
@@ -278,7 +284,10 @@ function BannerBlock({ tone, html, onNav }: { tone: Tone; html: string; onNav: N
 function ColumnView({ col, onNav }: { col: Column; onNav: Nav }) {
   const h = col.tone ? HUE[col.tone] : null
   return (
-    <div style={s('display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;')}>
+    // `min-width:0` lets the column shrink below its content at phone widths;
+    // `.flow-col` is what lets the content shrink WITH it (see globals.css) —
+    // without it a 200px-min step node overflows onto the neighbouring arm.
+    <div className="flow-col" style={s('display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;')}>
       {h ? (
         <div className="flow-node" style={s(`width:100%;background:rgba(${h.rgb},var(--tile-bg-a));border-color:rgba(${h.rgb},var(--tile-bd-a));font-size:10px;font-weight:700;color:${h.color};`)}>
           {col.header}
@@ -311,7 +320,17 @@ function armTrackWidth(col: Column): string {
   const n = cc.cols ?? cc.columns.length
   return `${n * LOCK_CAT_W + (n - 1) * LOCK_CAT_GAP}px`
 }
-function BranchBlock({ columns, scroll, onNav }: { columns: Column[]; scroll?: boolean; onNav: Nav }) {
+// Legible floor for a branch arm. Arms shrink with the viewport (the column is
+// min-width:0 so its boxes shrink with it, see `.flow-col`), but only to here:
+// past this the whole row scrolls sideways as ONE unit — the same spill policy the
+// category rows use — instead of crushing every box to a couple of characters. A
+// page that fits is unaffected: at or above the floor, minmax(FLOOR,1fr) IS 1fr.
+const MIN_ARM = 120
+const branchTracks = (n: number) => ({
+  cols: `repeat(${n},minmax(${MIN_ARM}px,1fr))`,
+  minWidth: n * MIN_ARM + (n - 1) * 8,
+})
+function BranchBlock({ columns, scroll, lead, onNav }: { columns: Column[]; scroll?: boolean; lead?: boolean; onNav: Nav }) {
   if (scroll) {
     return (
       <div style={s('width:100%;overflow-x:auto;')}>
@@ -321,7 +340,18 @@ function BranchBlock({ columns, scroll, onNav }: { columns: Column[]; scroll?: b
       </div>
     )
   }
-  return <div style={s(`display:grid;grid-template-columns:repeat(${columns.length},1fr);gap:8px;width:100%;`)}>{columns.map((c, i) => <ColumnView key={i} col={c} onNav={onNav} />)}</div>
+  const t = branchTracks(columns.length)
+  // The leading fork lives INSIDE the scroll box, on the row's own tracks, so it
+  // stays on the arms when a too-narrow row scrolls. `gap:8px` reproduces the
+  // .flow-wrap spacing the fork had when the spine drew it.
+  return (
+    <div style={s(`${SCROLL_X}display:flex;flex-direction:column;gap:8px;`)}>
+      {lead && <ForkLines n={columns.length} gap={8} cols={t.cols} extra={`min-width:${t.minWidth}px;`} rootExtra={`min-width:${t.minWidth}px;`} />}
+      <div style={s(`display:grid;grid-template-columns:${t.cols};gap:8px;min-width:${t.minWidth}px;`)}>
+        {columns.map((c, i) => <ColumnView key={i} col={c} onNav={onNav} />)}
+      </div>
+    </div>
+  )
 }
 
 // ── fn header + card grid ─────────────────────────────────────────────────────
@@ -748,7 +778,7 @@ function DxRowBlock({ items, onNav }: { items: LabeledLink[]; onNav: Nav }) {
 function BlockView({ b, lead, onNav }: { b: Block; lead?: boolean; onNav: Nav }): ReactNode {
   switch (b.kind) {
     case 'node': return <NodeBlock b={b} />
-    case 'branch': return <BranchBlock columns={b.columns} scroll={b.scroll} onNav={onNav} />
+    case 'branch': return <BranchBlock columns={b.columns} scroll={b.scroll} lead={lead} onNav={onNav} />
     case 'endpoints': return <div style={s('display:flex;flex-direction:column;gap:4px;width:100%;')}>{b.items.map((e, i) => <EndpointView key={i} e={e} onNav={onNav} />)}</div>
     case 'fnHeader': return <FnHeaderBlock b={b} />
     case 'cardGrid': return <CardGridBlock perRow={b.perRow ?? 2} tiles={b.tiles} onNav={onNav} />

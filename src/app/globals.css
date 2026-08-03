@@ -606,6 +606,14 @@ details.ref-fold[open] > summary::after{content:" ▾";}
 .flow-node.rest{background:rgba(var(--amber-rgb),var(--tile-bg-a));border-color:rgba(var(--amber-rgb),var(--tile-bd-a));color:var(--fg-amber-deep);}
 .flow-node.mixed{background:rgba(var(--tone-danger),var(--tile-bg-a));border-color:rgba(var(--tone-danger),var(--tile-bd-a));color:var(--fg-red-deep);}
 .flow-node.sub-step{background:var(--card);border-color:var(--border);color:var(--gray);font-size:11px;min-width:100px;}
+/* Inside a branch arm / fork leg (.flow-col), the column itself is min-width:0 so
+   it can shrink below its content at phone widths. The nodes must be allowed to
+   shrink with it: a step box holding its 200px floor inside a ~170px arm doesn't
+   widen the arm any more — it overflows and lands on the neighbouring arm. Text
+   wraps instead. Must stay AFTER the .flow-node.* rules (equal specificity).
+   (Text can still only wrap so far — the arm itself has a legible floor below
+   which the whole row scrolls sideways instead; see MIN_ARM in FlowPageView.) */
+.flow-col .flow-node{min-width:0;}
 
 /* Location endpoint — tappable words */
 .flow-endpoint{

@@ -139,16 +139,17 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
         <div className="flow-node entry">{name}</div>
         <div className="flow-arrow-v">↓</div>
         <div className="flow-node step">IDENTIFY LESION CATEGORY</div>
+        {/* A single category isn't a split — it keeps the plain spine arrow. */}
+        {cols < 2 && <div className="flow-arrow-v">↓</div>}
         <div style={s(SCROLL_X)}>
           {/* The category row is a split, so it gets the shared fork — inside the
               scroll box and on the row's own tracks, so the drops stay on their
-              headers when a wide row scrolls. A single category isn't a split:
-              it keeps the plain spine arrow. */}
-          {cols >= 2
-            ? <ForkLines n={cols} gap={6} cols={gridCols}
-                extra={`min-width:${totalMinPx}px;justify-content:center;`}
-                rootExtra={`min-width:${totalMinPx}px;`} />
-            : <div className="flow-arrow-v">↓</div>}
+              headers when a wide row scrolls. */}
+          {cols >= 2 && (
+            <ForkLines n={cols} gap={6} cols={gridCols}
+              extra={`min-width:${totalMinPx}px;justify-content:center;`}
+              rootExtra={`min-width:${totalMinPx}px;`} />
+          )}
           <div style={gridStyle}>
             {cats.map(cat => (
               <div key={cat} className="flow-node" style={s(`background:${cBg(cat)};border-color:${cBd(cat)};color:${cTx(cat)};font-size:${catFontSize}px;cursor:default;`)}>{cat}</div>
