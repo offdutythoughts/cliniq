@@ -27,17 +27,51 @@ const seizuresEntry: FlowPage = {
     },
 
     // Confirm
-    { kind: 'node', variant: 'step', text: 'CONFIRM EPILEPTIC SEIZURE' },
     {
-      kind: 'callout',
-      tone: 'slate',
+      kind: 'node',
+      variant: 'step',
+      text: 'CONFIRM EPILEPTIC SEIZURE',
+      sub: 'Paroxysmal · stereotyped · abrupt start and stop · self-limiting (usually <2 min) · ± autonomic signs · followed by a postictal phase',
+    },
+    {
+      kind: 'table',
+      gap: 12,
+      boxTone: 'slate',
       title: 'Rule out mimics',
-      html: `<strong>Syncope</strong> — sudden onset, brief, rapid full recovery; triggered by exertion or Valsalva; no tonic-clonic, no postictal<br>
-<strong>Vestibular episode</strong> — head tilt, rolling, nystagmus; consciousness preserved; no tonic-clonic<br>
-<strong>Dyskinesia / paroxysmal movement disorder</strong> — dystonia, no LOC, breed-specific (Cavalier, Scottish Terrier, Labrador)<br>
-<strong>Narcolepsy / cataplexy</strong> — sudden loss of muscle tone triggered by excitement; rapid recovery; Dobermann, Labrador<br>
-<strong>REM sleep disorder</strong> — occurs during sleep, stops when woken; often mistaken for seizures<br>
-<strong>Neuromuscular collapse</strong> — exercise-induced; Labrador, Border Collie; no LOC`,
+      cols: '0.95fr 1.5fr 1.15fr',
+      headers: ['', 'How it differs from a seizure', 'Trigger / signalment'],
+      rows: [
+        [
+          'Syncope',
+          'Sudden collapse · flaccid, no tonic-clonic · brief · rapid full recovery · no postictal phase',
+          'Exertion · cough · Valsalva · excitement — look for cardiac disease',
+        ],
+        [
+          'Vestibular episode',
+          'Head tilt · rolling · nystagmus · consciousness preserved · no tonic-clonic',
+          'Otitis · geriatric onset (idiopathic)',
+        ],
+        [
+          'Dyskinesia / paroxysmal movement disorder',
+          'Sustained dystonia · no LOC · no autonomic signs · normal between episodes',
+          'Cavalier KCS · Scottish Terrier · Border Terrier · Labrador',
+        ],
+        [
+          'Narcolepsy / cataplexy',
+          'Sudden loss of muscle tone · rousable · instant full recovery · no postictal phase',
+          'Excitement · food · play — Dobermann · Labrador · young onset',
+        ],
+        [
+          'REM sleep disorder',
+          'Occurs only during sleep · stops when woken',
+          'Often mistaken for seizures on owner video',
+        ],
+        [
+          'Neuromuscular collapse',
+          'Exercise-induced weakness / collapse · no LOC · no postictal phase',
+          'Labrador (EIC) · Border Collie (BCC) — after intense exercise',
+        ],
+      ],
     },
 
     // Characterise
@@ -48,21 +82,45 @@ const seizuresEntry: FlowPage = {
       sub: 'Focal → strongly favours structural · Generalised → any category possible',
     },
     {
-      kind: 'choices',
-      cols: 2,
-      size: 11,
-      connectAfter: false,
-      items: [
-        {
-          variant: 'insp',
-          label: 'Focal',
-          sublabel: 'One body region / side<br>Facial twitching · lip smacking<br>Fly-catching · limb jerking<br>Consciousness may be preserved<br>May secondarily generalise',
-        },
-        {
-          variant: 'rest',
-          label: 'Generalised',
-          sublabel: 'Both sides simultaneously<br>Tonic-clonic · tonic · atonic<br>Loss of consciousness<br>Urination · defaecation',
-        },
+      kind: 'table',
+      gap: 12,
+      cols: '0.85fr 1.25fr 1.25fr',
+      headers: [
+        '',
+        { text: 'Focal', tone: 'info' },
+        { text: 'Generalised', tone: 'orange' },
+      ],
+      rows: [
+        [
+          'Distribution',
+          { text: 'One body region or one side', tone: 'info' },
+          { text: 'Both sides simultaneously', tone: 'orange' },
+        ],
+        [
+          'Motor signs',
+          { text: 'Facial twitching · lip smacking<br>· fly-catching · limb jerking', tone: 'info' },
+          { text: 'Tonic-clonic · tonic · clonic<br>· atonic · myoclonic', tone: 'orange' },
+        ],
+        [
+          'Consciousness',
+          { text: 'May be preserved (aware)<br>or impaired', tone: 'info' },
+          { text: 'Always lost', tone: 'orange' },
+        ],
+        [
+          'Autonomic signs',
+          { text: 'Salivation · mydriasis · vomiting<br>— may be the only sign', tone: 'info' },
+          { text: 'Urination · defaecation<br>· hypersalivation', tone: 'orange' },
+        ],
+        [
+          'Course',
+          { text: 'May secondarily generalise', tone: 'info' },
+          { text: 'Generalised from onset', tone: 'orange' },
+        ],
+        [
+          'Implication',
+          { text: '<strong>Strongly favours structural</strong> — image the brain', tone: 'info' },
+          { text: 'Any category possible — idiopathic · structural · reactive', tone: 'orange' },
+        ],
       ],
     },
 
