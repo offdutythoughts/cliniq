@@ -13,13 +13,12 @@
 # testing
 /coverage
 
-# next.js
-/.next/
-/.next-pw/
-/.next-preview/
-/.next-dev/
-/.next-verify/
-/.next-diag/
+# next.js — glob, NOT a per-dir list. Tailwind v4 auto-detects its sources by
+# walking the repo and skipping .gitignore'd paths, so ANY build dir missing from
+# here gets scanned as source: its binary chunks yield garbage utility candidates
+# (e.g. a mangled `pb-[env(safe-area-inset-bottom)]`) that fail CSS parsing and
+# 500 the dev server. Every per-chat NEXT_DIST_DIR must match this pattern.
+/.next*/
 /out/
 
 # playwright (the tests/visual/__screenshots__ baselines ARE committed)

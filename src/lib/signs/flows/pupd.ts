@@ -29,7 +29,7 @@ const pupdEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'IS THIS TRUE PU/PD?',
-      sub: 'Large-volume conscious voiding · nocturia · owner-witnessed increased drinking',
+      sub: 'Large-volume conscious voiding · nocturia · owner-witnessed increased drinking · pathological thresholds if measured: water >100 ml/kg/day (dog) or >50 ml/kg/day (cat) · urine >50 ml/kg/day (both)',
     },
     {
       kind: 'fork',

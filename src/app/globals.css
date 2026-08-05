@@ -318,9 +318,30 @@ html[data-theme="dark"]{
 .tag-hi{background:var(--hi-bg);color:var(--amber-text);border:1px solid rgba(var(--amber-rgb),0.25);}
 .tag-mo{background:var(--mo-bg);color:var(--tone-teal-fg);border:1px solid rgba(var(--tone-teal),0.25);}
 .tag-lo{background:var(--lo-bg);color:var(--tone-info-fg);border:1px solid rgba(var(--tone-info),0.2);}
+/* Zoonosis / isolation — the only badge that carries ⚠️. Shares the amber of
+   .tag-hi but is a separate class so urgency and infection risk can diverge. */
+.tag-zoo{background:var(--hi-bg);color:var(--amber-text);border:1px solid rgba(var(--amber-rgb),0.25);}
 .tag-sp-dog{background:rgba(var(--tone-info),0.12);color:var(--tone-info-fg);border:1px solid rgba(var(--tone-info),0.2);}
 .tag-sp-cat{background:rgba(var(--tone-purple),0.12);color:var(--tone-purple-fg);border:1px solid rgba(var(--tone-purple),0.2);}
 .tag-sp-all{background:rgba(148,163,184,0.1);color:var(--gray);border:1px solid var(--border);}
+
+/* ── SPECIES TOGGLE ── */
+/* Segmented Cat|Dog control at the top of a disease page. Cat sits left, Dog
+   right, in that fixed order on every page so the target never moves. The
+   selected half carries its species tone (purple cat / blue dog) rather than a
+   neutral fill, so the tag colour a reader already associates with the species
+   is what marks the active side. */
+.sp-toggle{display:inline-flex;border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:14px;}
+.sp-toggle button{appearance:none;background:transparent;border:0;border-right:1px solid var(--border);
+  font-size:11px;font-weight:600;letter-spacing:.02em;padding:5px 16px;color:var(--gray);cursor:pointer;
+  display:inline-flex;align-items:center;gap:4px;min-height:28px;}
+.sp-toggle button:last-child{border-right:0;}
+.sp-toggle button:hover:not([aria-current="true"]){background:var(--card2);color:var(--white);}
+.sp-toggle button[aria-current="true"][data-sp="Cat"]{background:rgba(var(--tone-purple),var(--tile-bg-a));color:var(--tone-purple-fg);}
+.sp-toggle button[aria-current="true"][data-sp="Dog"]{background:rgba(var(--tone-info),var(--tile-bg-a));color:var(--tone-info-fg);}
+.sp-toggle button[data-absent="1"]{opacity:.45;}
+/* Why the selected species has no dedicated content — sits under the toggle. */
+.sp-note{font-size:var(--fs-label);color:var(--gray2);line-height:1.5;margin:-6px 0 14px;}
 
 /* ── FLOW NODES ── */
 .fn{

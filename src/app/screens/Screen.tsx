@@ -19,7 +19,7 @@ export function Screen({ view }: { view: View }): ReactNode {
   switch (view.kind) {
     case 'tab': return <TabHome tab={view.tab} />
     case 'protocol': return <ProtocolDetailView id={view.id} />
-    case 'disease': return <DiseasePageView id={view.id} />
+    case 'disease': return <DiseasePageView id={view.id} sp={view.sp} />
     case 'dx': return <DxApproachView sign={view.sign} active={view.tab} />
     case 'flow': return <FlowPageView flowId={view.flowId} />
     case 'lesionLoc': return <LesionLocView loc={view.loc} name={view.name} filter={view.filter} />

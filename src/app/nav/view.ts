@@ -8,6 +8,7 @@
 // bridge and by RichText when raw html-block markup still carries onclick).
 
 import type { Link } from '../../lib/signs/flowTypes'
+import type { Species } from '../../lib/species'
 import type { Tab } from '../../types'
 import { FLOWS } from '../../lib/signs/flows'
 import { DX } from '../../lib/signs/dx'
@@ -17,7 +18,10 @@ export type View =
   | { kind: 'tab'; tab: Tab }                                                    // navTo(0..4)
   | { kind: 'flow'; flowId: string }                                             // renderFlowId
   | { kind: 'dx'; sign: string; tab: string }                                    // renderDxId (tab: history|exam|dx|extras)
-  | { kind: 'disease'; id: string }                                              // renderDiseasePage
+  // `sp` pins which species the page opens on — set when the link that got here
+  // knew the answer (a `sp:'Cat'` differential, the species toggle itself).
+  // Absent means "decide from the page + the reader's last choice".
+  | { kind: 'disease'; id: string; sp?: Species }                                // renderDiseasePage
   | { kind: 'protocol'; id: string }                                             // renderProtoDetail
   | { kind: 'lesionLoc'; loc: string; name: string; filter?: 'acute' | 'chronic' } // goLesionTab
   | { kind: 'subTypeDetail'; id: string }                                        // renderSubTypeDetail
