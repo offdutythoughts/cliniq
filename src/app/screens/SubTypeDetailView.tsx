@@ -12,8 +12,9 @@
 // types, parasite umbrellas — which have no 1:1 disease page to redirect to.
 
 import { DB } from '../../data/db'
+import { spOf } from '../../lib/species'
 import { useNav } from '../nav/NavContext'
-import { UrgTag, SpTag } from './tags'
+import { UrgTag, SpTag, ZooTag } from './tags'
 import { DiseasePageView } from './DiseasePageView'
 import { NavCard, Card, Bul, str } from './markup'
 import { TAG_ROW, BODY_TEXT, DOT, BULLET, PAGE_TITLE } from './styles'
@@ -22,7 +23,7 @@ export function SubTypeDetailView({ id }: { id: string }) {
   const nav = useNav()
   const l = DB.lesion_type.find(x => x.id === id)
   if (!l) return null
-  if (l.directDis && l.dis) return <DiseasePageView id={str(l.dis)} />
+  if (l.directDis && l.dis) return <DiseasePageView id={str(l.dis)} {...spOf(l.sp)} />
 
   const diffs = DB.differentials.filter(d => d.filter === l.filter).sort((a, b) => a.order - b.order)
   const isEM = l.urg === 'EMERGENCY'
@@ -51,8 +52,8 @@ export function SubTypeDetailView({ id }: { id: string }) {
   return (
     <>
       <div style={PAGE_TITLE}>{l.sub}</div>
-      <div style={TAG_ROW}><UrgTag urg={l.urg} /><SpTag sp={l.sp} /><span className="tag tag-sp-all">{l.cat}</span></div>
-      {isEM && <div className="em-alert">🚨 EMERGENCY — initiate stabilisation before full diagnostic workup</div>}
+      <div style={TAG_ROW}><UrgTag urg={l.urg} /><ZooTag zoo={l.zoo === true} /><SpTag sp={l.sp} /><span className="tag tag-sp-all">{l.cat}</span></div>
+      {isEM && <div className="em-alert">EMERGENCY — initiate stabilisation before full diagnostic workup</div>}
 
       {proto && (
         <NavCard title={`⚡ Protocol: ${proto}`} sub="Tap to open step-by-step protocol" onClick={() => nav.navigate({ kind: 'protocol', id: proto })} style={{ marginBottom: 14 }} />

@@ -26,7 +26,7 @@ export const pupdDx: DxApproach = {
       • <strong>Pollakiuria</strong> — small frequent voids, urgency, straining → lower urinary tract disease (UTI, urolithiasis, FLUTD). Not polyuria.<br>
       • <strong>Urinary incontinence</strong> — involuntary leakage during sleep/rest → hormonal, neurological, anatomical. Not polydipsia.<br>
       • <strong>True PU/PD</strong> — large volume voiding, increased frequency with large volumes, owner reports drinking excessively<br>
-      <div style="margin-top:8px;font-size:10px;opacity:.8;">📏 Thresholds (if owners measure): Dog &gt;100 ml/kg/day (urine) or &gt;100 ml/kg/day (water). Cat &gt;45 ml/kg/day urine output.</div>`,
+      <div style="margin-top:8px;font-size:10px;opacity:.8;">📏 Thresholds (if owners measure) • Polydipsia: water intake &gt;100 ml/kg/day (dog; normal usually &lt;80) · &gt;50 ml/kg/day (cat, ≈&gt;200 ml/cat/day) • Polyuria: urine output &gt;50 ml/kg/day (both species)</div>`,
       },
       { kind: 'step', alt: true, text: '📖 CHRONICITY + ONSET' },
       {

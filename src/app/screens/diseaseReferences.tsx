@@ -41,6 +41,9 @@ const QUINTAVALLA_SILDENAFIL =
 // Endocrine + urolith guideline sources. AAHA is the single 2023 guideline
 // covering hypoadrenocorticism, hypercortisolism and hypothyroidism, so all
 // three disease pages resolve to one numbered entry.
+// Organisation-as-author public-health guidance, cited as "(CDC 2026)".
+const CDC_BARTONELLA =
+  'Centers for Disease Control and Prevention. Veterinary Guidance for Bartonellosis. Updated March 23, 2026. https://www.cdc.gov/bartonella/hcp/veterinary-guidance/index.html'
 const AAHA_ENDOCRINE =
   'Bugbee A, Rucinsky R, Cazabon S, et al. 2023 AAHA Selected Endocrinopathies of Dogs and Cats Guidelines. J Am Anim Hosp Assoc. 2023;59(3):113-135.'
 // Organisation-as-author guideline form (as for AHS) — FECAVA does not publish
@@ -93,7 +96,7 @@ export interface RefEntry { n: number; id: string; text: string }
  *  ("(as for most cases)") are never swallowed. Single source of truth — both
  *  CITE and hasCitation are built from it, so they cannot drift apart. */
 const SOURCE_NAMES = [
-  'Ettinger', 'Gelatt', 'AHS', 'AAHA', 'FECAVA', 'Minnesota', 'ACVIM', 'Berent',
+  'Ettinger', 'Gelatt', 'AHS', 'AAHA', 'CDC', 'FECAVA', 'Minnesota', 'ACVIM', 'Berent',
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
@@ -119,6 +122,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Gelatt/.test(part)) { out.push({ id: 'gelatt', text: `${GELATT_BOOK}.` }); continue }
     if (/^AHS/.test(part)) { out.push({ id: 'ahs', text: AHS_GUIDELINES }); continue }
     if (/^AAHA/.test(part)) { out.push({ id: 'aaha-endocrine', text: AAHA_ENDOCRINE }); continue }
+    if (/^CDC/.test(part)) { out.push({ id: 'cdc-bartonella', text: CDC_BARTONELLA }); continue }
     if (/^FECAVA/.test(part)) { out.push({ id: 'fecava-hypoadreno', text: FECAVA_HYPOADRENO }); continue }
     if (/^Minnesota/.test(part)) { out.push({ id: 'mn-urolith', text: MN_UROLITH }); continue }
     // Journal sources are keyed by author/org marker. If a second ACVIM consensus

@@ -5,7 +5,7 @@
 import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
 import { NavCard, Bul, str } from './markup'
-import { UrgTag, SpTag } from './tags'
+import { UrgTag, SpTag, ZooTag } from './tags'
 import { TAG_ROW } from './styles'
 
 export function LesionDetailView({ id }: { id: string }) {
@@ -16,7 +16,7 @@ export function LesionDetailView({ id }: { id: string }) {
   const proto = str(l.proto)
   return (
     <>
-      <div style={TAG_ROW}><UrgTag urg={l.urg} /><SpTag sp={l.sp} /><span className="tag tag-sp-all">{l.cat}</span></div>
+      <div style={TAG_ROW}><UrgTag urg={l.urg} /><ZooTag zoo={l.zoo === true} /><SpTag sp={l.sp} /><span className="tag tag-sp-all">{l.cat}</span></div>
       <div className="detail-label">Key clinical signs</div>
       <div className="detail-val highlight">{l.signs}</div>
       {str(l.etiology) && (
