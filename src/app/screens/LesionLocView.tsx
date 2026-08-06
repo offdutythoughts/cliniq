@@ -58,7 +58,7 @@ const CT: Record<string, Tone> = {
   'Nutritional': 'teal',
   // Previously unmapped — these fell through to DEF_TONE and rendered grey.
   // Toned by family so a category reads the same wherever it appears.
-  'Inflammatory/Allergic': 'purple', 'Immune/Allergic': 'purple',
+  'Inflammatory/Allergic': 'purple',
   'Infection/Fungal': 'teal',        'Parasitic/Vascular': 'warning',
   'Congenital': 'violet',   'Hereditary': 'violet',
   'Conformational': 'teal', 'Degenerative': 'warning',
@@ -162,9 +162,12 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
               extra={`min-width:${totalMinPx}px;justify-content:center;`}
               rootExtra={`min-width:${totalMinPx}px;`} />
           )}
+          {/* Category names come from the data, so a long one must wrap inside
+              its own track rather than spill over the neighbouring column —
+              the same word-break rule the sub-type cards below already use. */}
           <div style={gridStyle}>
             {cats.map(cat => (
-              <div key={cat} className="flow-node" style={s(`background:${cBg(cat)};border-color:${cBd(cat)};color:${cTx(cat)};font-size:${catFontSize}px;cursor:default;`)}>{cat}</div>
+              <div key={cat} className="flow-node" style={s(`background:${cBg(cat)};border-color:${cBd(cat)};color:${cTx(cat)};font-size:${catFontSize}px;cursor:default;word-break:break-word;`)}>{cat}</div>
             ))}
           </div>
           <div style={s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;justify-content:center;`)}>
