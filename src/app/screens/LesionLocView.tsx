@@ -75,6 +75,12 @@ const CT: Record<string, Tone> = {
   'Hormonal': 'warning',    'GI Disease': 'warning',
 }
 const DEF_TONE: Tone = 'slate'
+// Slashed category names ("Fluid/Oedema", "Mass/Neoplasia") are one unbreakable
+// token to a browser, so a narrow column either overflows them or — with
+// word-break — snaps them mid-word ("Fluid/Oedem a"). A zero-width space after
+// each slash offers the break the reader would choose. Display only; the raw
+// `cat` string stays the grouping and colour key.
+const wrappable = (cat: string) => cat.replace(/\//g, '/\u200B')
 const cHue = (cat: string) => HUE[CT[cat] ?? DEF_TONE]
 const cBg  = (cat: string) => `rgba(${cHue(cat).rgb},var(--tile-bg-a))`
 const cBd  = (cat: string) => `rgba(${cHue(cat).rgb},var(--tile-bd-a))`
@@ -167,7 +173,7 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
               the same word-break rule the sub-type cards below already use. */}
           <div style={gridStyle}>
             {cats.map(cat => (
-              <div key={cat} className="flow-node" style={s(`background:${cBg(cat)};border-color:${cBd(cat)};color:${cTx(cat)};font-size:${catFontSize}px;cursor:default;word-break:break-word;`)}>{cat}</div>
+              <div key={cat} className="flow-node" style={s(`background:${cBg(cat)};border-color:${cBd(cat)};color:${cTx(cat)};font-size:${catFontSize}px;cursor:default;word-break:break-word;`)}>{wrappable(cat)}</div>
             ))}
           </div>
           <div style={s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;justify-content:center;`)}>
