@@ -11,6 +11,7 @@
     "lint:protocols": "npx tsx scripts/lint-protocol-actions.ts",
     "lint:flows": "npx tsx scripts/lint-flows.ts",
     "lint:blocks": "npx tsx scripts/lint-disease-blocks.ts",
+    "lint:sections": "npx tsx scripts/lint-disease-sections.ts",
     "lint:lesions": "npx tsx scripts/lint-lesions.ts",
     "lint:chips": "npx tsx scripts/lint-chips.ts",
     "lint:tiles": "npx tsx scripts/lint-tiles.ts",
@@ -18,7 +19,7 @@
     "lint:alphas": "npx tsx scripts/lint-alphas.ts",
     "lint:species": "npx tsx scripts/lint-species.ts",
     "lint:emoji": "npx tsx scripts/lint-emoji.ts",
-    "lint:content": "npm run lint:protocols && npm run lint:flows && npm run lint:blocks && npm run lint:lesions && npm run lint:chips && npm run lint:tiles && npm run lint:forks && npm run lint:alphas && npm run lint:species && npm run lint:emoji",
+    "lint:content": "npm run lint:protocols && npm run lint:flows && npm run lint:blocks && npm run lint:sections && npm run lint:lesions && npm run lint:chips && npm run lint:tiles && npm run lint:forks && npm run lint:alphas && npm run lint:species && npm run lint:emoji",
     "lint:cram": "npx tsx scripts/lint-disease-crams.ts",
     "report:groups": "npx tsx scripts/report-groups.ts"
   },

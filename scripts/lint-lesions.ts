@@ -28,9 +28,31 @@ function fail(msg: string) {
   errors++
 }
 
+const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
+const pageIds = new Set(DB.disease_page.map(d => d.id))
+
+/** The disease page a sub-type is really *about*, inferred from the differential of the same
+ *  name in its own filter group. This is how a sub-type that never authored a `dis` link is
+ *  still recognisable as a single disease. */
+function impliedDisease(l: Lesion): string | undefined {
+  const twin = DB.differentials.find(d => d.filter === l.filter && norm(d.name) === norm(l.sub))
+  const dis = typeof twin?.dis === 'string' ? twin.dis : undefined
+  return dis && pageIds.has(dis) ? dis : undefined
+}
+
 for (const l of DB.lesion_type as unknown as Lesion[]) {
   const redirects = !!(l.directDis && l.dis)
   if (redirects) continue // goes straight to the disease page — no intermediate leaf rendered
+
+  // A sub-type that names one disease is not a category, whatever it has authored: the leaf
+  // it renders is a thinner retelling of a page that already exists, and its Diagnostic
+  // Investigation falls back to the union of EVERY sibling differential's tests — how
+  // "Feline URTI (FHV-1 / FCV)" came to list cryptococcal antigen and FIV testing. Redirect.
+  const implied = impliedDisease(l)
+  if (implied) {
+    fail(`[${l.id}] "${l.sub}" is the same entity as ${implied} but renders its own leaf — the diagnostics fallback lists every sibling differential's tests. Set dis:'${implied}' + directDis:true.`)
+    continue
+  }
 
   const hasRich = RICH_FIELDS.some(f => {
     const v = l[f]
