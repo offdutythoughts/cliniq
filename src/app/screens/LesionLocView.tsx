@@ -15,50 +15,101 @@ import { HUE } from '../../lib/signs/tone'
 
 // Category → Tone. Drives bg/border/text via the shared HUE table (CSS vars),
 // so colours are automatically theme-aware instead of hardcoded pastel hex.
+//
+// The assignment is a graph colouring, not a free choice. Two constraints:
+//
+//  1. Any two categories that appear together on one location page must not
+//     share a tone. The old table broke this badly — LOC-WE-PROD showed three
+//     grey columns and two orange ones.
+//  2. They must not merely differ by NAME. Tiles are rgba(tone, --lesion-bg-a)
+//     over the page background, so near hues collapse together: at the old
+//     --tile-bg-a, teal vs green measured ΔE 4 (and info vs indigo ΔE 1.5 in
+//     dark mode) — different tone, same-looking tile. Hence --lesion-bg-a, and
+//     hence `indigo` is absent below: it sits within ΔE 6 of BOTH info and
+//     violet, so it can't coexist with Compressive or Mass. Its categories
+//     (neuro) moved to violet, and Congenital took cyan.
+//
+// Within those constraints the table keeps its semantic reading — red =
+// infectious/destructive, pink = vascular, orange = inflammatory, amber =
+// metabolic, violet = neoplastic/neuro, teal = immune, slate = structural — and
+// those anchors are fixed across every page. The rest take the nearest free hue
+// in their family.
+//
+// Adding a new `cat` string, or adding a lesion to a page it didn't appear on
+// before, can reintroduce a clash. Recheck the co-occurrence sets and the ΔE
+// between the tones involved; don't eyeball this list.
 const CT: Record<string, Tone> = {
-  'Mass': 'violet',         'Mass/Neoplasia': 'violet',
-  'Fluid': 'info',          'Fluid/Oedema': 'info',
-  'Gas': 'warning',         'Infection': 'danger',
-  'Infection/Inflammation': 'danger',  'Inflammation': 'orange',
-  'Structural': 'slate',    'Cardiac': 'danger',
-  'Infectious': 'danger',   'Inflammatory': 'orange',
-  'Neuromuscular': 'indigo','Dynamic collapse': 'slate',
-  'Obstruction': 'danger',  'Ulceration': 'danger',
-  'Dysmotility': 'violet',  'Haemolytic': 'danger',
-  'Hepatocellular': 'warning', 'Biliary obstruction': 'teal',
-  'Compressive': 'info',    'Vascular': 'danger',
-  'Non-compressive': 'teal','Traumatic': 'danger',
-  'Peripheral': 'teal',     'Central': 'danger',
-  'Bilateral': 'warning',   'Neoplastic': 'violet',
-  'Immune-mediated': 'orange', 'Metabolic': 'warning',
-  'Idiopathic': 'info',     'Reactive': 'danger',
-  'Regenerative': 'teal',   'Non-regenerative': 'danger',
-  'Pre-regenerative': 'warning', 'Shock': 'danger',
-  'Foreign body': 'slate',  'Dental': 'warning',
-  'Parasitic': 'warning',   'Toxic': 'danger',
-  'Fungal': 'teal',
-  'Inherited': 'violet',    'Endocrine': 'warning',
-  'Endocrine/Metabolic': 'warning',
-  'Cardiovascular': 'danger','Junctionopathy': 'indigo',
-  'Neuropathy': 'violet',   'Myopathy': 'orange',
-  'Syncope': 'danger',      'Seizure': 'danger',
-  'Sleep disorder': 'indigo','Stress': 'slate',
-  'Dietary': 'teal',        'Antibiotic-responsive': 'info',
-  'Infiltrative': 'orange', 'Maldigestion': 'violet',
-  'Protein-losing': 'danger','Secondary GI': 'warning',
-  'Neoplasia': 'orange',    'Obstruction/Dysmotility': 'danger',
-  'Behavioural/Neurological': 'indigo',
-  'Renal failure': 'danger','Osmotic diuresis': 'info',
-  'Adrenal': 'warning',     'Pancreatic': 'violet',
-  'Thyroid': 'teal',        'Calcium': 'orange',
-  'Pituitary': 'indigo',    'Hepatic': 'warning',
-  'Uterine': 'danger',      'Electrolyte': 'info',
-  'Neurological': 'violet', 'Renal tubular': 'danger',
-  'Nutritional': 'teal',
+  // ── danger: infectious / destructive / urgent ──
+  'Infection': 'danger', 'Infectious': 'danger',
+  'Traumatic': 'danger', 'Ulceration': 'danger',
+  'Cardiovascular': 'danger', 'Chronic': 'danger',
+  'Coagulopathy': 'danger', 'Consumptive': 'danger',
+  'Haemolytic': 'danger', 'Haemorrhage': 'danger',
+  'Non-regenerative': 'danger', 'Protein-losing': 'danger',
+  'Renal tubular': 'danger', 'Seizure': 'danger',
+  'Shock': 'danger', 'Central': 'danger',
+  'Infection/Inflammation': 'danger', 'Obstruction/Dysmotility': 'danger',
+  // ── pink: vascular / cardiac / obstructive (red is taken by infection) ──
+  'Vascular': 'pink', 'Cardiac': 'pink',
+  'Obstruction': 'pink', 'Cystic': 'pink',
+  'Haemolysis': 'pink',
+  // ── orange: inflammatory ──
+  'Inflammation': 'orange', 'Inflammatory': 'orange',
+  'Infiltrative': 'orange', 'Reactive': 'orange',
+  'Acquired': 'orange', 'Calcium': 'orange',
+  'Infection/Fungal': 'orange', 'Myopathy': 'orange',
+  'Renal failure': 'orange', 'Secondary': 'orange',
+  'Syncope': 'orange', 'Uterine': 'orange',
+  'Secondary GI': 'orange',
+  // ── warning: metabolic / hepatic / parasitic ──
+  'Metabolic': 'warning', 'Parasitic': 'warning',
+  'Trauma': 'warning', 'Hepatic': 'warning',
+  'Hormonal': 'warning', 'Adrenal': 'warning',
+  'Dental': 'warning', 'Endocrine/Metabolic': 'warning',
+  'Gas': 'warning', 'Hepatobiliary': 'warning',
+  'Hepatocellular': 'warning', 'Parasitic/Vascular': 'warning',
+  'Pre-regenerative': 'warning', 'Bilateral': 'warning',
+  // ── lime: degenerative / endocrine ──
+  'Degenerative': 'lime', 'Endocrine': 'lime',
+  'Inflammatory/Allergic': 'lime',
+  // ── green: toxic / positional / physiological ──
+  'Toxic': 'green', 'Prolapse': 'green',
+  'Drug': 'green', 'Pharyngeal': 'green',
+  'Physiological': 'green', 'Sympathetic': 'green',
+  // ── teal: immune-mediated / responsive ──
+  'Immune-mediated': 'teal', 'Idiopathic': 'teal',
+  'Dietary': 'teal', 'Non-compressive': 'teal',
+  'Biliary obstruction': 'teal', 'Fungal': 'teal',
+  'GI Disease': 'teal', 'Pharmacological': 'teal',
+  'Regenerative': 'teal', 'Thyroid': 'teal',
+  'Peripheral': 'teal',
+  // ── cyan: congenital ──
+  'Congenital': 'cyan', 'Dynamic collapse': 'cyan',
+  'Autonomic': 'cyan', 'Junctionopathy': 'cyan',
+  'Pituitary': 'cyan',
+  // ── info: mechanical / fluid / conformational ──
+  'Compressive': 'info', 'Conformational': 'info',
+  'Nutritional': 'info', 'Glaucoma': 'info',
+  'Motility': 'info', 'Antibiotic-responsive': 'info',
+  'Electrolyte': 'info', 'Fluid': 'info',
+  'Fluid/Oedema': 'info', 'Hereditary': 'info',
+  'Osmotic diuresis': 'info', 'Primary': 'info',
+  'Dysmotility': 'info',
+  // ── violet: neoplastic / proliferative / neuro ──
+  'Mass': 'violet', 'Neoplastic': 'violet',
+  'Inherited': 'violet', 'Neoplasia': 'violet',
+  'Neurological': 'violet', 'Neuromuscular': 'violet',
+  'Neuropathy': 'violet', 'Behavioural/Neurological': 'violet',
+  'Maldigestion': 'violet', 'Mass/Neoplasia': 'violet',
+  'Muscle': 'violet', 'Pancreatic': 'violet',
+  'Sleep disorder': 'violet',
+  // ── slate: structural / inert ──
+  'Structural': 'slate', 'Foreign body': 'slate',
+  'Stress': 'slate',
 }
 const DEF_TONE: Tone = 'slate'
 const cHue = (cat: string) => HUE[CT[cat] ?? DEF_TONE]
-const cBg  = (cat: string) => `rgba(${cHue(cat).rgb},var(--tile-bg-a))`
+const cBg  = (cat: string) => `rgba(${cHue(cat).rgb},var(--lesion-bg-a))`
 const cBd  = (cat: string) => `rgba(${cHue(cat).rgb},var(--tile-bd-a))`
 const cTx  = (cat: string) => cHue(cat).color
 
@@ -115,15 +166,37 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
   const catFontSize = [11, 10, 9][t]
   const cardFontSize = [10, 9, 8][t]
   const cardPadding = ['6px 8px', '5px 6px', '3px 4px'][t]
-  // Minimum column width so text always fits; scroll horizontally when needed.
-  // (Its own breakpoint — the floor eases only past 6 cols, not at the tier
-  // boundary — so it stays inline rather than keying off `t`.)
-  const minColPx = cols <= 4 ? 80 : cols <= 6 ? 72 : 68
-  // Cap each column so few-category layouts don't stretch boxes full-width on
-  // wide screens; centre the (narrower-than-container) grid instead.
+  const cardPadX = [8, 6, 4][t]
+  // .flow-node's stock 14px side padding is sized for a full-width box. In a
+  // ~70px category column it ate 28 of the 70px, leaving 40px of text width —
+  // which is why long labels spilled out of their border. Scale it with the tier.
+  const catPadX = [12, 9, 7][t]
+  // Columns are sized to their own label rather than all being equal, so "Mass"
+  // doesn't get the same width as "Immune-mediated". Width is derived from the
+  // longest UNBREAKABLE run of each label (text wraps at spaces, slashes and
+  // after hyphens, so only the longest run has to fit on one line).
+  //   0.58 = px of advance width per character per px of font-size, measured off
+  //   the app font at these sizes. It's an estimate, so `overflow-wrap:anywhere`
+  //   below is the backstop: a slight under-estimate wraps mid-word instead of
+  //   overflowing the border. Being deterministic (no canvas/DOM measurement) it
+  //   also renders identically on the server and the client.
+  const CH = 0.58
+  const runPx = (label: string, fontPx: number) =>
+    Math.max(...label.split(/[\s/]+|(?<=-)/).map(w => w.length)) * fontPx * CH
+  // Floor keeps a too-short label (e.g. "Mass") from collapsing to a sliver; the
+  // cap stops a few-category layout stretching boxes across a wide screen.
+  const minColPx = 60
   const maxColPx = 240
-  const totalMinPx = cols * minColPx + (cols - 1) * 6
-  const gridCols = `repeat(${cols},minmax(${minColPx}px,${maxColPx}px))`
+  const colPx = cats.map(cat => {
+    const head = runPx(cat, catFontSize) + catPadX * 2 + 2
+    const card = Math.max(...groups.get(cat)!.map(l => runPx(l.sub, cardFontSize))) + cardPadX * 2 + 3
+    return Math.round(Math.min(maxColPx, Math.max(minColPx, head, card)))
+  })
+  const totalMinPx = colPx.reduce((a, b) => a + b, 0) + (cols - 1) * 6
+  // One explicit track list, shared by all four rows (fork legs, headers, arrows,
+  // cards) so the columns stay aligned — they can't each size to their own
+  // content independently or the arrows would drift off their headers.
+  const gridCols = colPx.map(w => `${w}px`).join(' ')
   const gridStyle = s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;justify-content:center;`)
   const dxSign = DX_MAP[loc]
 
@@ -146,7 +219,7 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
           )}
           <div style={gridStyle}>
             {cats.map(cat => (
-              <div key={cat} className="flow-node" style={s(`background:${cBg(cat)};border-color:${cBd(cat)};color:${cTx(cat)};font-size:${catFontSize}px;cursor:default;`)}>{cat}</div>
+              <div key={cat} className="flow-node" style={s(`background:${cBg(cat)};border-color:${cBd(cat)};color:${cTx(cat)};font-size:${catFontSize}px;padding-left:${catPadX}px;padding-right:${catPadX}px;overflow-wrap:anywhere;cursor:default;`)}>{cat}</div>
             ))}
           </div>
           <div style={s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;justify-content:center;`)}>
@@ -158,7 +231,7 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
                 {groups.get(cat)!.map(l => {
                   return (
                     <div key={l.id} role="button"
-                      style={s(`border-radius:8px;padding:${cardPadding};font-size:${cardFontSize}px;font-weight:600;text-align:center;border:1.5px solid ${cBd(cat)};background:${cBg(cat)};color:${cTx(cat)};cursor:pointer;transition:all .2s;line-height:1.3;word-break:break-word;`)}
+                      style={s(`border-radius:8px;padding:${cardPadding};font-size:${cardFontSize}px;font-weight:600;text-align:center;border:1.5px solid ${cBd(cat)};background:${cBg(cat)};color:${cTx(cat)};cursor:pointer;transition:all .2s;line-height:1.3;overflow-wrap:anywhere;`)}
                       onClick={() => nav.navigate({ kind: 'subTypeDetail', id: l.id })}
                       onMouseOver={e => { e.currentTarget.style.filter = 'brightness(1.2)' }}
                       onMouseOut={e => { e.currentTarget.style.filter = '' }}>
