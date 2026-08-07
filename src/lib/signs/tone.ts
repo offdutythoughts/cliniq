@@ -18,6 +18,9 @@ export const HUE: Record<Tone, { rgb: string; color: string }> = {
   purple:  { rgb: 'var(--tone-purple)',  color: 'var(--tone-purple-fg)' },
   indigo:  { rgb: 'var(--tone-indigo)',  color: 'var(--tone-indigo-fg)' },
   orange:  { rgb: 'var(--tone-orange)',  color: 'var(--tone-orange-fg)' },
+  pink:    { rgb: 'var(--tone-pink)',    color: 'var(--tone-pink-fg)' },
+  lime:    { rgb: 'var(--tone-lime)',    color: 'var(--tone-lime-fg)' },
+  cyan:    { rgb: 'var(--tone-cyan)',    color: 'var(--tone-cyan-fg)' },
   slate:   { rgb: 'var(--tone-slate)',   color: 'var(--tone-slate-fg)' },
   neutral: { rgb: 'var(--tone-neutral)', color: 'var(--gray)' },
 }
