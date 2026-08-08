@@ -31,12 +31,17 @@
   "dependencies": {
     "@auth/core": "^0.37.4",
     "@convex-dev/auth": "^0.0.92",
+    "@simplewebauthn/server": "^13.3.2",
     "convex": "^1.38.0",
     "html-react-parser": "^6.1.3",
     "next": "16.2.4",
     "posthog-js": "^1.379.0",
     "react": "19.2.4",
     "react-dom": "19.2.4"
+  },
+  "//overrides": "@auth/core declares an optional peer on @simplewebauthn/server ^9, for an Auth.js WebAuthn provider this app never loads — Convex Auth only uses @auth/core's Password/Email types. Pin v13 for everyone so npm install resolves without --legacy-peer-deps; v13 is the release that runs outside Node, which the Convex V8 runtime needs.",
+  "overrides": {
+    "@simplewebauthn/server": "^13.3.2"
   },
   "devDependencies": {
     "@playwright/test": "^1.60.0",

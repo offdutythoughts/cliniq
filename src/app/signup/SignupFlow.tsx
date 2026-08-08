@@ -18,9 +18,10 @@ import {
 import { track } from '../../lib/analytics'
 import { PLANS, TRIAL_DAYS, planById, type PlanId } from '../../lib/plans'
 
-// Sign-up runs in three steps: create the login, confirm the email with a code,
-// then take out a subscription — the app itself stays locked until that last
-// step lands (see convex/subscriptions.ts and components/SubscriptionGate.tsx).
+// Sign-up runs in three steps: create the login, confirm the email by clicking
+// the link we send (which lands on /verify and signs the browser in), then take
+// out a subscription — the app itself stays locked until that last step lands
+// (see convex/subscriptions.ts and components/SubscriptionGate.tsx).
 type Step = 'account' | 'verify' | 'subscribe'
 
 const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
@@ -54,7 +55,6 @@ function Flow() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
-  const [code, setCode] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [notice, setNotice] = useState<string | null>(null)
@@ -92,13 +92,13 @@ function Flow() {
     try {
       const result = await signIn('password', { email: normalised, password, flow: 'signUp' })
       setEmail(normalised)
-      // With email verification enabled, sign-up sends a code instead of
-      // returning a session — `signingIn` is false until the code is confirmed.
+      // With email verification enabled, sign-up sends a link instead of
+      // returning a session — `signingIn` is false until the link is followed.
       if (result.signingIn) {
         setStep('subscribe')
       } else {
         setStep('verify')
-        setNotice(`We’ve emailed a 6-digit code to ${normalised}.`)
+        setNotice(`We’ve emailed a confirmation link to ${normalised}.`)
       }
     } catch (err) {
       setError(signUpError(err))
@@ -107,33 +107,17 @@ function Flow() {
     }
   }
 
-  async function submitCode(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
-    setError(null)
-    setNotice(null)
-    setBusy(true)
-    try {
-      await signIn('password', { email, code: code.trim(), flow: 'email-verification' })
-      track('signup_email_verified')
-      setStep('subscribe')
-    } catch {
-      setError('That code isn’t right, or it has expired. Request a new one below.')
-    } finally {
-      setBusy(false)
-    }
-  }
-
-  async function resendCode() {
+  async function resendLink() {
     setError(null)
     setNotice(null)
     setBusy(true)
     try {
       // Signing in with an unverified email re-triggers the verification email.
       await signIn('password', { email, password, flow: 'signIn' })
-      track('signup_code_resent')
-      setNotice('New code sent — it can take a minute to arrive.')
+      track('signup_link_resent')
+      setNotice('New link sent — it can take a minute to arrive.')
     } catch {
-      setError('We couldn’t send another code. Check the address and try again.')
+      setError('We couldn’t send another link. Check the address and try again.')
     } finally {
       setBusy(false)
     }
@@ -250,47 +234,29 @@ function Flow() {
         title="Confirm your email"
         subtitle={
           <>
-            Enter the 6-digit code we sent to <strong className="text-[var(--v-ink)]">{email}</strong>.
-            It expires in 15 minutes.
+            Open the link we sent to <strong className="text-[var(--v-ink)]">{email}</strong> and
+            you’ll be signed in. It lasts 24 hours.
           </>
         }
         steps={[...steps]}
       >
-        <form onSubmit={submitCode} className="flex flex-col gap-4">
-          <div className="flex flex-col gap-1.5">
-            <label className={labelClass} htmlFor="code">
-              Verification code
-            </label>
-            <input
-              id="code"
-              name="code"
-              inputMode="numeric"
-              autoComplete="one-time-code"
-              pattern="[0-9]*"
-              maxLength={6}
-              required
-              value={code}
-              onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
-              className={`${fieldClass} text-center text-[22px] tracking-[.35em]`}
-            />
-          </div>
+        <div className="flex flex-col gap-4">
+          <p className="text-[13px] leading-relaxed text-[var(--v-slate)]">
+            You can leave this page open — the link opens a new tab and carries on from there.
+            Nothing after a few minutes? Check your spam folder.
+          </p>
 
           {notice && <p className="text-[12px] text-[var(--v-navy)]">{notice}</p>}
           {error && <ErrorNote>{error}</ErrorNote>}
 
-          <button type="submit" disabled={busy || code.length < 6} className={primaryButtonClass}>
-            {busy ? 'Checking…' : 'Verify email'}
-          </button>
-
           <div className="flex items-center justify-between">
-            <button type="button" onClick={resendCode} disabled={busy} className={linkButtonClass}>
-              Send a new code
+            <button type="button" onClick={resendLink} disabled={busy} className={linkButtonClass}>
+              Send a new link
             </button>
             <button
               type="button"
               onClick={() => {
                 setStep('account')
-                setCode('')
                 setError(null)
                 setNotice(null)
               }}
@@ -299,7 +265,7 @@ function Flow() {
               Use a different email
             </button>
           </div>
-        </form>
+        </div>
       </AuthShell>
     )
   }

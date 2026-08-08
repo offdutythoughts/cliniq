@@ -22,7 +22,20 @@ const convexMiddleware = hasConvex
       // The public routes; the clinical app at /app is not one of them. `/` and
       // /signup are redirects (to /app and /login) but must stay public, or the
       // middleware would bounce a signed-out visitor before the redirect runs.
-      const isPublicRoute = createRouteMatcher(['/', '/login', '/signup', '/pricing'])
+      //
+      // /verify, /forgot and /reset are the emailed-link landings. They are
+      // reached with no session by definition — a signed-out person clicking a
+      // link in their inbox — and each one is guarded by the single-use code in
+      // its own query string, not by the middleware.
+      const isPublicRoute = createRouteMatcher([
+        '/',
+        '/login',
+        '/signup',
+        '/pricing',
+        '/verify',
+        '/forgot',
+        '/reset',
+      ])
       return convexAuthNextjsMiddleware(async (request: NextRequest, { convexAuth }: { convexAuth: { isAuthenticated: () => Promise<boolean> } }) => {
         if (isDev || isPublicRoute(request)) return
         if (!(await convexAuth.isAuthenticated())) {

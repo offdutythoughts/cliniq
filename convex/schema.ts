@@ -4,6 +4,41 @@ import { v } from "convex/values";
 
 export default defineSchema({
   ...authTables,
+  // One row per registered passkey (see convex/passkeys.ts). A passkey is a
+  // public key the authenticator — Face ID, Touch ID, Windows Hello, a security
+  // key — signs challenges with; nothing secret is stored here, so a leak of
+  // this table cannot be used to sign in as anyone.
+  passkeys: defineTable({
+    userId: v.id("users"),
+    /** Base64url credential ID, as the browser reports it. Unique per key. */
+    credentialId: v.string(),
+    /** Base64url COSE public key returned at registration. */
+    publicKey: v.string(),
+    /** Authenticator signature counter, for cloned-authenticator detection. */
+    counter: v.number(),
+    /** "usb", "internal", "hybrid", … — hints the browser gives the next prompt. */
+    transports: v.optional(v.array(v.string())),
+    /** "singleDevice" | "multiDevice" — whether the key syncs across devices. */
+    deviceType: v.string(),
+    /** Whether the authenticator says the key is backed up to a keychain. */
+    backedUp: v.boolean(),
+    /** What the user sees in the list, e.g. "iPhone" or "MacBook Pro". */
+    label: v.string(),
+    createdAt: v.number(),
+    lastUsedAt: v.optional(v.number()),
+  })
+    .index("by_user", ["userId"])
+    .index("by_credential", ["credentialId"]),
+  // Short-lived WebAuthn challenges. A challenge is issued, signed by the
+  // authenticator, then deleted as it is redeemed — storing them server-side is
+  // what stops a captured signature being replayed.
+  webauthnChallenges: defineTable({
+    challenge: v.string(),
+    kind: v.union(v.literal("registration"), v.literal("authentication")),
+    /** Set for registration: the signed-in user the new passkey belongs to. */
+    userId: v.optional(v.id("users")),
+    expiresAt: v.number(),
+  }).index("by_challenge", ["challenge"]),
   notes: defineTable({
     userId: v.id("users"),
     pageKey: v.string(),
