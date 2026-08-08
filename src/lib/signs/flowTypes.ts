@@ -16,6 +16,9 @@ export type Tone =
   | 'purple'
   | 'indigo'
   | 'orange'
+  | 'pink'
+  | 'lime'
+  | 'cyan'
   | 'slate'
   | 'neutral'
 
