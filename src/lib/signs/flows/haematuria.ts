@@ -27,7 +27,11 @@ const haematuriaEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'CENTRIFUGE THE URINE — IS THE SUPERNATANT RED?',
-      sub: 'Spin 1500 rpm × 5 min · all three (haemoglobinuria, myoglobinuria, pigment) give dipstick +ve blood · only centrifuge separates them',
+      subItems: [
+        'Spin 1500 rpm × 5 min',
+        'Haemoglobinuria, myoglobinuria and pigment all give a dipstick +ve for blood',
+        'Only centrifugation separates them',
+      ],
       connectAfter: false,
     },
 
@@ -221,7 +225,7 @@ const haematuriaTrueSystemic: FlowPage = {
     {
       kind: 'endpoints',
       items: [
-        { label: 'BLEEDING / PETECHIAE / ECCHYMOSES', tone: 'danger', link: { to: 'flow', id: 'bleeding' } },
+        { label: 'Bleeding / petechiae / ecchymoses', tone: 'danger', link: { to: 'flow', id: 'bleeding' } },
       ],
     },
 

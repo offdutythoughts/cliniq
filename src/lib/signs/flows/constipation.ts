@@ -16,7 +16,11 @@ const constipationEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'CONFIRMED DEFECATION STRAINING — WHAT IS THE MECHANISM?',
-      sub: 'Tenesmus precedes defecation in obstructive disease · follows it in inflammatory disease · rectal exam is key — pelvic canal, prostate, masses, stricture, anal sacs',
+      subItems: [
+        'Tenesmus precedes defecation in obstructive disease',
+        'Tenesmus follows defecation in inflammatory disease',
+        'Rectal exam is key — pelvic canal, prostate, masses, stricture, anal sacs',
+      ],
     },
     {
       kind: 'choices',
@@ -25,7 +29,7 @@ const constipationEntry: FlowPage = {
         {
           tone: 'orange',
           label: 'OBSTRUCTIVE / INTRALUMINAL',
-          sublabel: 'Impacted faeces · foreign material · intraluminal mass · stricture',
+          sublabel: 'Hard faecal mass palpable in the colon · rectal exam finds a lesion or narrowing inside the lumen',
           link: { to: 'flow', id: 'constipation-obstructive' },
         },
         {
@@ -37,7 +41,7 @@ const constipationEntry: FlowPage = {
         {
           tone: 'teal',
           label: 'NEUROMUSCULAR / METABOLIC',
-          sublabel: 'Failure of colonic propulsion: nerve disease, electrolyte/endocrine derangement, or dehydration',
+          sublabel: 'Colon fills but does not propel — soft to doughy faeces and weak, ineffective straining',
           link: { to: 'flow', id: 'constipation-neuromet' },
         },
       ],
@@ -58,24 +62,23 @@ const constipationObstructive: FlowPage = {
           cat: 'Impaction / Dietary',
           tone: 'orange',
           tiles: [
-            { label: 'IMPACTED FAECES / DIETARY', link: { to: 'disease', id: 'DIS-GI-MEGA' } },
+            { label: 'Impacted faeces / dietary', link: { to: 'disease', id: 'DIS-GI-MEGA' } },
           ],
         },
         {
           cat: 'Infectious / Inflammatory',
           tone: 'danger',
           tiles: [
-            { label: 'PERIANAL FISTULA', link: { to: 'disease', id: 'DIS-GI-PERIANAL' } },
-            { label: 'ANAL SACCULITIS', link: { to: 'disease', id: 'DIS-GI-ANALSAC' } },
+            { label: 'Perianal fistula', link: { to: 'disease', id: 'DIS-GI-PERIANAL' } },
+            { label: 'Anal sacculitis', link: { to: 'disease', id: 'DIS-GI-ANALSAC' } },
           ],
         },
         {
-          cat: 'Neoplastic / Mass',
-          tone: 'violet',
+          cat: 'Neoplastic',
           tiles: [
-            { label: 'RECTAL / COLONIC NEOPLASIA', link: { to: 'disease', id: 'DIS-GI-RECTAL' } },
-            { label: 'RECTAL / COLONIC STRICTURE', link: { to: 'disease', id: 'DIS-GI-RECTALSTRICT' } },
-            { label: 'COLONIC DIVERTICULUM', link: { to: 'disease', id: 'DIS-GI-DIVERTICULUM' } },
+            { label: 'Rectal / colonic neoplasia', link: { to: 'disease', id: 'DIS-GI-RECTAL' } },
+            { label: 'Rectal / colonic stricture', link: { to: 'disease', id: 'DIS-GI-RECTALSTRICT' } },
+            { label: 'Colonic diverticulum', link: { to: 'disease', id: 'DIS-GI-DIVERTICULUM' } },
           ],
         },
       ],
@@ -96,23 +99,21 @@ const constipationPelvic: FlowPage = {
           cat: 'Structural / Mechanical',
           tone: 'slate',
           tiles: [
-            { label: 'HEALED PELVIC-FRACTURE NARROWING', link: { to: 'disease', id: 'DIS-NEU-SPFX' } },
-            { label: 'PROSTATOMEGALY — BPH', link: { to: 'disease', id: 'DIS-URO-BPH' } },
+            { label: 'Healed pelvic-fracture narrowing', link: { to: 'disease', id: 'DIS-NEU-SPFX' } },
+            { label: 'Prostatomegaly — BPH', link: { to: 'disease', id: 'DIS-URO-BPH' } },
           ],
         },
         {
           cat: 'Infectious',
-          tone: 'danger',
           tiles: [
-            { label: 'PROSTATITIS', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
+            { label: 'Prostatitis', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
           ],
         },
         {
           cat: 'Neoplastic',
-          tone: 'violet',
           tiles: [
-            { label: 'PROSTATIC CARCINOMA', link: { to: 'disease', id: 'DIS-URO-PROST-NEO' } },
-            { label: 'SUBLUMBAR / AGASACA', link: { to: 'disease', id: 'DIS-NEO-AGASACA' } },
+            { label: 'Prostatic carcinoma', link: { to: 'disease', id: 'DIS-URO-PROST-NEO' } },
+            { label: 'Sublumbar / AGASACA', link: { to: 'disease', id: 'DIS-NEO-AGASACA' } },
           ],
         },
       ],
@@ -131,26 +132,24 @@ const constipationNeuromet: FlowPage = {
       columns: [
         {
           cat: 'Neurological',
-          tone: 'violet',
           tiles: [
-            { label: 'LUMBOSACRAL / CAUDA EQUINA', link: { to: 'disease', id: 'DIS-NEU-DLSS' } },
-            { label: 'DYSAUTONOMIA', link: { to: 'disease', id: 'DIS-NEU-DYSAUTO' } },
+            { label: 'Lumbosacral / cauda equina', link: { to: 'disease', id: 'DIS-NEU-DLSS' } },
+            { label: 'Dysautonomia', link: { to: 'disease', id: 'DIS-NEU-DYSAUTO' } },
           ],
         },
         {
-          cat: 'Endocrine / Metabolic',
-          tone: 'warning',
+          cat: 'Metabolic / Endocrine',
           tiles: [
-            { label: 'HYPOKALAEMIA', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },
-            { label: 'HYPOTHYROIDISM', link: { to: 'disease', id: 'DIS-ENDO-HYPOTHY' } },
-            { label: 'HYPERCALCAEMIA', link: { to: 'disease', id: 'DIS-ENDO-HCALC' } },
+            { label: 'Hypokalaemia', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },
+            { label: 'Hypothyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPOTHY' } },
+            { label: 'Hypercalcaemia', link: { to: 'disease', id: 'DIS-ENDO-HCALC' } },
           ],
         },
         {
           cat: 'Renal / Systemic',
           tone: 'info',
           tiles: [
-            { label: 'CKD / DEHYDRATION', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
+            { label: 'CKD / dehydration', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
           ],
         },
       ],

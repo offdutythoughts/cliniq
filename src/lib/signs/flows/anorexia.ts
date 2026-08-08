@@ -16,7 +16,11 @@ const anorexiaEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'CAN\'T EAT (pseudo-anorexia) vs WON\'T EAT (true anorexia)?',
-      sub: 'Watch approach to food: interested but drops it / paws at mouth / gulps painfully = pseudo; ignores food = true anorexia',
+      subItems: [
+        'Watch the approach to food',
+        'Interested but drops it, paws at the mouth or gulps painfully = pseudo-anorexia',
+        'Ignores food altogether = true anorexia',
+      ],
     },
     {
       kind: 'choices',
@@ -62,7 +66,6 @@ const anorexiaPseudo: FlowPage = {
         },
         {
           cat: 'Neoplastic',
-          tone: 'violet',
           tiles: [
             { label: 'Oral melanoma — dog (#1)', link: { to: 'disease', id: 'DIS-NEO-ORAL-MEL' } },
             { label: 'Squamous cell carcinoma — cat (#1), dog (#2)', link: { to: 'disease', id: 'DIS-NEO-ORAL-SCC' } },
@@ -140,7 +143,6 @@ const anorexiaTrue: FlowPage = {
         },
         {
           cat: 'Infectious',
-          tone: 'danger',
           tiles: [
             { label: 'Sepsis / Septic Peritonitis', link: { to: 'protocol', id: 'PROT-SEPSIS' } },
             { label: 'FIP', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
@@ -148,7 +150,6 @@ const anorexiaTrue: FlowPage = {
         },
         {
           cat: 'Neoplastic',
-          tone: 'violet',
           tiles: [
             { label: 'Neoplasia / Lymphoma', link: { to: 'disease', id: 'DIS-GI-LYMP' } },
             { label: 'Paraneoplastic / Cachexia', link: { to: 'disease', id: 'DIS-NEO-PARANEO' } },

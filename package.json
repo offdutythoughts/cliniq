@@ -14,14 +14,19 @@
     "lint:sections": "npx tsx scripts/lint-disease-sections.ts",
     "lint:lesions": "npx tsx scripts/lint-lesions.ts",
     "lint:chips": "npx tsx scripts/lint-chips.ts",
+    "lint:choices": "npx tsx scripts/lint-choices.ts",
+    "lint:steps": "npx tsx scripts/lint-steps.ts",
+    "lint:cats": "npx tsx scripts/lint-cats.ts",
+    "lint:headers": "npx tsx scripts/lint-headers.ts",
     "lint:tiles": "npx tsx scripts/lint-tiles.ts",
     "lint:forks": "npx tsx scripts/lint-forks.ts",
     "lint:alphas": "npx tsx scripts/lint-alphas.ts",
     "lint:species": "npx tsx scripts/lint-species.ts",
     "lint:emoji": "npx tsx scripts/lint-emoji.ts",
-    "lint:content": "npm run lint:protocols && npm run lint:flows && npm run lint:blocks && npm run lint:sections && npm run lint:lesions && npm run lint:chips && npm run lint:tiles && npm run lint:forks && npm run lint:alphas && npm run lint:species && npm run lint:emoji",
+    "lint:content": "npm run lint:protocols && npm run lint:flows && npm run lint:blocks && npm run lint:sections && npm run lint:lesions && npm run lint:chips && npm run lint:choices && npm run lint:steps && npm run lint:cats && npm run lint:headers && npm run lint:tiles && npm run lint:forks && npm run lint:alphas && npm run lint:species && npm run lint:emoji",
     "lint:cram": "npx tsx scripts/lint-disease-crams.ts",
-    "report:groups": "npx tsx scripts/report-groups.ts"
+    "report:groups": "npx tsx scripts/report-groups.ts",
+    "report:refs": "npx tsx scripts/report-refs.ts"
   },
   "dependencies": {
     "@auth/core": "^0.37.4",

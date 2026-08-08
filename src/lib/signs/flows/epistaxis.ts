@@ -22,7 +22,10 @@ export const epistaxisFlow: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'RULE OUT SYSTEMIC BLEEDING FIRST',
-      sub: 'Intranasal disease ≈ 80% of canine cases — but a haemostatic defect changes everything; never perform invasive diagnostics (rhinoscopy, biopsy, CT under GA) without excluding it first',
+      subItems: [
+        'Intranasal disease accounts for ≈80% of canine cases — but a haemostatic defect changes everything',
+        'Never perform invasive diagnostics (rhinoscopy, biopsy, CT under GA) without excluding a bleeding disorder first',
+      ],
     },
 
     {
@@ -44,8 +47,8 @@ export const epistaxisFlow: FlowPage = {
                     {
                       kind: 'endpoints',
                       items: [
-                        { label: 'TRAUMA', tone: 'danger', link: { to: 'disease', id: 'DIS-NASAL-TRAUMA' } },
-                        { label: 'FOREIGN BODY', tone: 'orange', link: { to: 'disease', id: 'DIS-NASAL-FB' } },
+                        { label: 'Trauma', tone: 'danger', link: { to: 'disease', id: 'DIS-NASAL-TRAUMA' } },
+                        { label: 'Foreign body', tone: 'orange', link: { to: 'disease', id: 'DIS-NASAL-FB' } },
                       ],
                     },
                   ],
@@ -57,9 +60,9 @@ export const epistaxisFlow: FlowPage = {
                     {
                       kind: 'endpoints',
                       items: [
-                        { label: 'NEOPLASIA', sublabel: 'Most common local cause (30–66%)', tone: 'violet', link: { to: 'disease', id: 'DIS-NASAL-NEO' } },
-                        { label: 'FUNGAL RHINITIS', tone: 'green', link: { to: 'disease', id: 'DIS-NASAL-ASP' } },
-                        { label: 'IDIOPATHIC RHINITIS', tone: 'green', link: { to: 'disease', id: 'DIS-NASAL-LPR' } },
+                        { label: 'Neoplasia', sublabel: 'Most common local cause (30–66%)', tone: 'violet', link: { to: 'disease', id: 'DIS-NASAL-NEO' } },
+                        { label: 'Fungal rhinitis', tone: 'green', link: { to: 'disease', id: 'DIS-NASAL-ASP' } },
+                        { label: 'Idiopathic rhinitis', tone: 'green', link: { to: 'disease', id: 'DIS-NASAL-LPR' } },
                         { label: 'Dental / oronasal disease', tone: 'neutral' },
                       ],
                     },
@@ -79,7 +82,7 @@ export const epistaxisFlow: FlowPage = {
             {
               kind: 'endpoints',
               items: [
-                { label: 'BLEEDING / PETECHIAE / ECCHYMOSES', tone: 'danger', link: { to: 'flow', id: 'bleeding' } },
+                { label: 'Bleeding / petechiae / ecchymoses', tone: 'danger', link: { to: 'flow', id: 'bleeding' } },
               ],
             },
           ],

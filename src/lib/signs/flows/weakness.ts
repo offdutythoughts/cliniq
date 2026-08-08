@@ -34,7 +34,7 @@ const weaknessEntry: FlowPage = {
       items: [
         { variant: 'insp', label: 'EPISODIC weakness', sublabel: 'Normal between episodes<br>± exercise triggered', link: { to: 'flow', id: 'weakness-episodic' } },
         { variant: 'exp', label: 'PERSISTENT weakness', sublabel: 'Continuously weak<br>Flaccid or stiff', link: { to: 'flow', id: 'weakness-persistent' } },
-        { variant: 'mixed', label: 'COLLAPSE ± loss of<br>consciousness', sublabel: 'Syncope vs seizure?', link: { to: 'flow', id: 'weakness-collapse' } },
+        { variant: 'mixed', label: 'COLLAPSE ± loss of<br>consciousness', sublabel: 'Sudden loss of postural tone ± altered consciousness<br>Normal between events', link: { to: 'flow', id: 'weakness-collapse' } },
       ],
     },
     {
@@ -75,7 +75,7 @@ const weaknessEpisodic: FlowPage = {
   id: 'weakness-episodic',
   title: 'Episodic weakness',
   blocks: [
-    { kind: 'node', variant: 'entry', text: 'EPISODIC WEAKNESS — normal between episodes' },
+    { kind: 'node', variant: 'entry', text: 'EPISODIC WEAKNESS — normal between episodes' , sub: 'Weak in discrete episodes with a normal exam in between · often exercise- or excitement-triggered' },
     { kind: 'node', variant: 'step', text: 'Is it triggered by exercise / excitement?', connectAfter: false },
     {
       // Two-column branch with nested arrow-chains, anat-classed endpoints and
@@ -133,7 +133,7 @@ const weaknessPersistent: FlowPage = {
   id: 'weakness-persistent',
   title: 'Persistent weakness',
   blocks: [
-    { kind: 'node', variant: 'entry', text: 'PERSISTENT WEAKNESS — continuously weak' },
+    { kind: 'node', variant: 'entry', text: 'PERSISTENT WEAKNESS — continuously weak' , sub: 'Weak at every examination · define whether the limbs are flaccid (LMN) or stiff (UMN) before listing causes' },
     { kind: 'node', variant: 'step', text: 'NEUROLOGICAL EXAMINATION — flaccid or stiff?', connectAfter: false },
     {
       // Two-column branch: nested YES/NO sub-grid + anat-classed lesion

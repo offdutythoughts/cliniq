@@ -42,9 +42,9 @@ const pollakiuriaEntry: FlowPage = {
             {
               kind: 'endpoints',
               items: [
-                { label: 'URETHRAL PLUG (cat)', sublabel: 'Most common blocked-cat cause', tone: 'danger', link: { to: 'disease', id: 'DIS-URO-URETHRAL-OBS' } },
-                { label: 'URETHRAL UROLITH (dog / cat)', tone: 'warning', link: { to: 'disease', id: 'DIS-URO-URETHRAL-OBS' } },
-                { label: 'PROSTATIC / URETHRAL MASS', tone: 'violet', link: { to: 'disease', id: 'DIS-NEO-TCC' } },
+                { label: 'Urethral plug (cat)', sublabel: 'Most common blocked-cat cause', tone: 'danger', link: { to: 'disease', id: 'DIS-URO-URETHRAL-OBS' } },
+                { label: 'Urethral urolith (dog / cat)', tone: 'warning', link: { to: 'disease', id: 'DIS-URO-URETHRAL-OBS' } },
+                { label: 'Prostatic / urethral mass', tone: 'violet', link: { to: 'disease', id: 'DIS-NEO-TCC' } },
               ],
             },
           ],
@@ -57,7 +57,7 @@ const pollakiuriaEntry: FlowPage = {
             {
               kind: 'choices',
               items: [
-                { label: 'LOCALISE BY SITE', sublabel: 'bladder · urethra · prostate', tone: 'teal', link: { to: 'flow', id: 'pollakiuria-localise' } },
+                { label: 'LOCALISE BY SITE', sublabel: 'Time the straining within the void, then rectal-palpate for a mass or narrowing', tone: 'teal', link: { to: 'flow', id: 'pollakiuria-localise' } },
               ],
             },
           ],
@@ -89,7 +89,7 @@ const pollakiuriaLocalise: FlowPage = {
   id: 'pollakiuria-localise',
   title: 'Pollakiuria — Non-Obstructed Localisation',
   blocks: [
-    { kind: 'node', variant: 'entry', tone: 'teal', text: '🔵 NON-OBSTRUCTED — LOCALISE' },
+    { kind: 'node', variant: 'entry', tone: 'teal', text: '🔵 NON-OBSTRUCTED — LOCALISE' , sub: 'Small bladder, comfortable to express, frequent small voids ± haematuria — the bladder is emptying, so localise the irritation' },
     {
       kind: 'node',
       variant: 'step',
@@ -102,10 +102,10 @@ const pollakiuriaLocalise: FlowPage = {
         tone: 'teal',
         sub: 'lumen · mucosa · wall',
         categories: [
-          { cat: 'Infection', tone: 'orange', tiles: [{ label: 'Bacterial cystitis / UTI', sublabel: 'Most common canine cause', link: { to: 'disease', id: 'DIS-URO-UTI' } }] },
+          { cat: 'Infectious', tiles: [{ label: 'Bacterial cystitis / UTI', sublabel: 'Most common canine cause', link: { to: 'disease', id: 'DIS-URO-UTI' } }] },
           { cat: 'Inflammatory', tiles: [{ label: 'Feline idiopathic cystitis', sublabel: 'Most common feline cause', link: { to: 'disease', id: 'DIS-URO-FIC' } }] },
           { cat: 'Metabolic / Endocrine', tiles: [{ label: 'Urolithiasis', sublabel: 'Lower-tract (cystoliths)', link: { to: 'disease', id: 'DIS-URO-UROLITH-STRUV' } }] },
-          { cat: 'Mass', tiles: [{ label: 'Urothelial carcinoma (TCC)', link: { to: 'disease', id: 'DIS-NEO-TCC' } }] },
+          { cat: 'Neoplastic', tiles: [{ label: 'Urothelial carcinoma (TCC)', link: { to: 'disease', id: 'DIS-NEO-TCC' } }] },
         ],
       },
       {
@@ -113,9 +113,9 @@ const pollakiuriaLocalise: FlowPage = {
         tone: 'indigo',
         sub: 'outflow · prostate',
         categories: [
-          { cat: 'Infection', tone: 'orange', tiles: [{ label: 'Bacterial prostatitis', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } }] },
+          { cat: 'Infectious', tiles: [{ label: 'Bacterial prostatitis', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } }] },
           { cat: 'Metabolic / Endocrine', tiles: [{ label: 'Benign prostatic hyperplasia', link: { to: 'disease', id: 'DIS-URO-BPH' } }] },
-          { cat: 'Mass', tiles: [{ label: 'Prostatic carcinoma', link: { to: 'disease', id: 'DIS-URO-PROST-NEO' } }] },
+          { cat: 'Neoplastic', tiles: [{ label: 'Prostatic carcinoma', link: { to: 'disease', id: 'DIS-URO-PROST-NEO' } }] },
         ],
       },
     ]),

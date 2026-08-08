@@ -41,6 +41,13 @@
 // scanning a category column should see every differential as its own chip, at the
 // same level, not two of them hidden one layer down inside a third. Split such a
 // tile into one tile per cause. This lint fails on any tile that still uses it.
+//
+// CHECK 5 — no SHOUTING tile labels.
+// A lesion/disease name on a tile is written in sentence case ("Bacterial septic
+// arthritis"), not block capitals ("BACTERIAL SEPTIC ARTHRITIS"). The category
+// HEADER above the column is the emphasis; shouting every chip underneath flattens
+// the hierarchy and is markedly slower to read at 8–9px. Genuine acronyms keep
+// their capitals (IMHA, MMVD, SRMA, DJD …) — add new ones to ACRONYMS below.
 
 import { FLOWS } from '../src/lib/signs/flows/index'
 import type { Block } from '../src/lib/signs/flowTypes'
@@ -60,9 +67,32 @@ const SPECIES_RANK = /^(dog|cat)(\s*\(#\d+\))?(\s*,\s*(dog|cat)(\s*\(#\d+\))?)*$
 // Reviewed linked tiles whose post-dash text is load-bearing (the specific linked
 // diagnosis / triage), not a strippable description. Keyed `pageId::label`.
 const KEPT_TILE_DETAIL = new Set<string>([
-  'cyanosis-methb::ACQUIRED — OXIDANT TOXICOSIS (most common)',
-  'constipation-pelvic::PROSTATOMEGALY — BPH',
+  'cyanosis-methb::Acquired — oxidant toxicosis (most common)',
+  'constipation-pelvic::Prostatomegaly — BPH',
 ])
+
+// ── CHECK 5 — sentence case ───────────────────────────────────────────────────
+// Words allowed to stay in capitals: clinical acronyms, initialisms and the few
+// all-caps proper nouns. Everything else in a tile label is sentence case.
+const ACRONYMS = new Set<string>([
+  'AGASACA', 'AHDS', 'ARDS', 'ATE', 'BPH', 'CDV', 'CKD', 'CN', 'CRGV', 'DCM', 'DIC', 'DJD',
+  'DKA', 'EPI', 'EPO', 'FCE', 'FeLV', 'FIC', 'FIP', 'FIV', 'GDV', 'GI', 'GME', 'HAC', 'HCM',
+  'IBD', 'IE', 'IMHA', 'IMPA', 'IMTP', 'ITP', 'IVDD', 'KBr', 'LSA', 'MDR1', 'MMVD', 'MUA',
+  'MUO', 'NLE', 'NME', 'OA', 'OCD', 'PDA', 'PLE', 'PLN', 'PRAA', 'PS', 'PSS', 'PTE', 'RA',
+  'RMSF', 'SA', 'SAS', 'SaO2', 'SLE', 'SNRIs', 'SRMA', 'SSRIs', 'TCC', 'URI', 'UTI', 'VSD', 'ASD',
+])
+// The NAME of the diagnosis — the part before any " — " detail clause or " (…)"
+// qualifier. Only the name is checked; the detail clause is prose and already
+// lowercase by convention.
+const tileName = (label: string) => label.split(/\s[—–]\s|\s\(/)[0].trim()
+const isShouting = (label: string) => {
+  const rest = tileName(label)
+    .split(/[\s/·+,]+/)
+    .filter(w => w && !ACRONYMS.has(w))
+    .join('')
+    .replace(/[^A-Za-z]/g, '')
+  return rest.length >= 4 && rest.replace(/[^A-Z]/g, '').length / rest.length > 0.6
+}
 
 // Normalise a label for grouping: strip emoji / arrows / symbols and leading
 // junk, collapse whitespace, lowercase. Keeps internal punctuation so
@@ -112,6 +142,10 @@ function checkBlocks(pageId: string, blocks: Block[]) {
               !KEPT_TILE_DETAIL.has(`${pageId}::${label}`)) {
             fail(`[${pageId}] ${col.cat} · "${label}" — linked tile carries a description the tap-through page already gives; strip to the name (keep only a species/ranking qualifier).`)
           }
+          // CHECK 5: sentence case — the column header carries the emphasis.
+          if (isShouting(label)) {
+            fail(`[${pageId}] ${col.cat} · "${label}" — tile label is in block capitals; write the diagnosis in sentence case (acronyms keep their capitals).`)
+          }
           // CHECK 4: the nested sub-bullet form is banned — one tile, one cause.
           if (Array.isArray(tile.links) && tile.links.length > 0) {
             const kids = (tile.links as any[]).map(ll => `"${String(ll.label ?? '')}"`).join(' + ')
@@ -126,6 +160,10 @@ function checkBlocks(pageId: string, blocks: Block[]) {
     // Recurse into the block kinds that nest blocks (branch columns, fork legs)
     if (b.kind === 'branch') for (const col of b.columns ?? []) checkBlocks(pageId, col.blocks ?? [])
     if (b.kind === 'fork') for (const leg of b.legs ?? []) checkBlocks(pageId, leg.blocks ?? [])
+    // A species chooser holds a categoryColumns grid per species panel.
+    if (b.kind === 'speciesChooser') for (const panel of [b.dog, b.cat]) {
+      checkBlocks(pageId, [{ kind: 'categoryColumns', columns: panel.columns } as Block])
+    }
   }
 }
 
@@ -145,5 +183,5 @@ if (errors > 0) {
   console.error(`\n${errors} category-tile issue(s) found. Link a page / set terminal:true / make the label's target consistent / strip the linked tile to its name / split a sub-bullet tile into one tile per cause.`)
   process.exit(1)
 } else {
-  console.log(`✓ All category tiles resolve, map to one target, are name-only when linked, and carry no nested sub-bullets, across ${Object.keys(FLOWS).length} flow pages.`)
+  console.log(`✓ All category tiles resolve, map to one target, are name-only when linked, are in sentence case, and carry no nested sub-bullets, across ${Object.keys(FLOWS).length} flow pages.`)
 }

@@ -142,6 +142,8 @@ export const swollenJointsDx: DxApproach = {
             { label: 'Ehrlichiosis', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
             { label: 'Rocky Mountain spotted fever (RMSF)', link: { to: 'disease', id: 'DIS-INFECT-RMSF' } },
             { label: 'Leishmaniosis', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
+            { label: 'Cranial cruciate ligament disease', link: { to: 'disease', id: 'DIS-MSK-CCL' } },
+            { label: 'Patellar luxation', link: { to: 'disease', id: 'DIS-MSK-PATLUX' } },
             { label: 'Osteosarcoma', link: { to: 'disease', id: 'DIS-NEO-OSA' } },
             { label: 'Discospondylitis', link: { to: 'disease', id: 'DIS-DISCO' } },
             { label: 'Fever / PUO workup', link: { to: 'dx', id: 'fever' } },

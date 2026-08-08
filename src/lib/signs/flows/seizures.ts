@@ -31,7 +31,12 @@ const seizuresEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'CONFIRM EPILEPTIC SEIZURE',
-      sub: 'Paroxysmal · stereotyped · abrupt start and stop · self-limiting (usually <2 min) · ± autonomic signs · followed by a postictal phase',
+      subItems: [
+        'Paroxysmal, stereotyped, with an abrupt start and stop',
+        'Self-limiting — usually <2 min',
+        '± autonomic signs',
+        'Followed by a postictal phase',
+      ],
     },
     {
       kind: 'table',
@@ -129,7 +134,10 @@ const seizuresEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'INTERICTAL NEUROLOGICAL EXAMINATION',
-      sub: 'Normal exam → idiopathic epilepsy possible (if 6mo–6yr, normal bloods) · Abnormal exam → structural until proven otherwise — proceed to MRI',
+      subItems: [
+        'Normal exam → idiopathic epilepsy possible (if 6 mo–6 yr with normal bloods)',
+        'Abnormal exam → structural until proven otherwise — proceed to MRI',
+      ],
     },
 
     // Classify aetiology → sub-pages
@@ -161,7 +169,7 @@ const seizuresEntry: FlowPage = {
         {
           variant: 'mixed',
           label: 'Reactive',
-          sublabel: 'Abnormal bloods<br>Metabolic / toxic cause<br>Any age<br>⚠️ High SE risk',
+          sublabel: 'Abnormal bloods<br>Any age<br>Signs persist between seizures<br>⚠️ High SE risk',
           link: { to: 'flow', id: 'seizures-reactive' },
         },
       ],
@@ -228,7 +236,7 @@ const seizuresStructural: FlowPage = {
           { label: 'Hydrocephalus', link: { to: 'disease', id: 'DIS-NEU-HYDRO' } },
           { label: 'Lissencephaly', link: { to: 'disease', id: 'DIS-NEU-BRAINMAL' } },
         ]},
-        { cat: 'Mass', tiles: [
+        { cat: 'Neoplastic', tiles: [
           { label: 'Meningioma', link: { to: 'disease', id: 'DIS-NEU-BRAINTUM' } },
           { label: 'Glioma', link: { to: 'disease', id: 'DIS-NEU-BRAINTUM' } },
           { label: 'CNS lymphoma', link: { to: 'disease', id: 'DIS-NEU-BRAINTUM' } },

@@ -14,17 +14,17 @@ const redEyeEntry: FlowPage = {
     { kind: 'node', variant: 'entry', text: '👁️ RED EYE' },
     {
       kind: 'node', variant: 'step', text: 'WHERE IS THE REDNESS?',
-      sub: 'Ocular coats vs iris hyperaemia vs intraocular bleed vs retrobulbar',
+      sub: 'Localise the redness on exam before naming it — surface tissues, the iris face, inside the globe, or behind it',
     },
     {
       kind: 'choices',
       cols: 4,
       connectAfter: false,
       items: [
-        { label: 'Ocular coats', sublabel: 'eyelid · TEL · conj · episcl · cornea', link: { to: 'flow', id: 'red-eye-coats' } },
-        { label: 'Iris hyperaemia', sublabel: 'rubeosis · PIFM · uveal mass', link: { to: 'flow', id: 'red-eye-iris' } },
-        { label: 'Intraocular bleed', sublabel: 'hyphaema · vitreal · retinal', link: { to: 'flow', id: 'red-eye-bleed' } },
-        { label: 'Retrobulbar', sublabel: 'orbital cellulitis · neoplasia', link: { to: 'flow', id: 'red-eye-orbit' } },
+        { label: 'Ocular coats', sublabel: 'Redness in the surface tissues · vessels movable and blanch with topical phenylephrine', link: { to: 'flow', id: 'red-eye-coats' } },
+        { label: 'Iris hyperaemia', sublabel: 'Vessels visible on the iris face itself ± swollen, dull iris', link: { to: 'flow', id: 'red-eye-iris' } },
+        { label: 'Intraocular bleed', sublabel: 'Free blood inside the globe — settles with gravity, obscures the fundus', link: { to: 'flow', id: 'red-eye-bleed' } },
+        { label: 'Retrobulbar', sublabel: 'Globe pushed forward — exophthalmos, ↓retropulsion, pain on opening the mouth', link: { to: 'flow', id: 'red-eye-orbit' } },
       ],
     },
     {

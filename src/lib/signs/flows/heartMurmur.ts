@@ -48,7 +48,11 @@ const heartMurmurEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'IS THE MURMUR PATHOLOGIC OR FUNCTIONAL?',
-      sub: 'Pathologic = structural lesion (acquired or congenital). Functional / innocent = no structural disease. Signalment, grade, timing, PMI and pulse quality point the way — echocardiography decides.',
+      subItems: [
+        'Pathologic = a structural lesion, acquired or congenital',
+        'Functional / innocent = no structural disease',
+        'Signalment, grade, timing, PMI and pulse quality point the way — echocardiography decides',
+      ],
     },
     {
       kind: 'choices',
@@ -103,30 +107,29 @@ const heartMurmurAcquired: FlowPage = {
           cat: 'Degenerative / Myocardial',
           tone: 'danger',
           tiles: [
-            { label: ' MMVD / DEGENERATIVE MITRAL DISEASE', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
-            { label: ' DILATED CARDIOMYOPATHY', link: { to: 'disease', id: 'DIS-CARD-DCM' } },
-            { label: ' RESTRICTIVE CARDIOMYOPATHY', link: { to: 'disease', id: 'DIS-CARD-RCM' } },
+            { label: 'MMVD / degenerative mitral disease', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
+            { label: 'Dilated cardiomyopathy', link: { to: 'disease', id: 'DIS-CARD-DCM' } },
+            { label: 'Restrictive cardiomyopathy', link: { to: 'disease', id: 'DIS-CARD-RCM' } },
           ],
         },
         {
           cat: 'Feline Cardiomyopathy',
           tone: 'violet',
           tiles: [
-            { label: ' HYPERTROPHIC CARDIOMYOPATHY', link: { to: 'disease', id: 'DIS-HCM' } },
+            { label: 'Hypertrophic cardiomyopathy', link: { to: 'disease', id: 'DIS-HCM' } },
           ],
         },
         {
           cat: 'Infectious',
-          tone: 'danger',
           tiles: [
-            { label: ' INFECTIVE ENDOCARDITIS', link: { to: 'disease', id: 'DIS-INFECT-BART' } },
+            { label: 'Infective endocarditis', link: { to: 'disease', id: 'DIS-INFECT-BART' } },
           ],
         },
         {
           cat: 'Pericardial / Miscellaneous',
           tone: 'slate',
           tiles: [
-            { label: ' PERICARDIAL DISEASE', link: { to: 'disease', id: 'DIS-CARD-PERIC' } },
+            { label: 'Pericardial disease', link: { to: 'disease', id: 'DIS-CARD-PERIC' } },
           ],
         },
       ],
@@ -148,15 +151,15 @@ const heartMurmurCongenital: FlowPage = {
           tone: 'violet',
           tiles: [
             { label: 'PDA', link: { to: 'disease', id: 'DIS-CARD-PDA' } },
-            { label: 'VENTRICULAR SEPTAL DEFECT (VSD)', link: { to: 'disease', id: 'DIS-CARD-VSD' } },
+            { label: 'Ventricular septal defect (VSD)', link: { to: 'disease', id: 'DIS-CARD-VSD' } },
           ],
         },
         {
           cat: 'Outflow Obstruction',
           tone: 'indigo',
           tiles: [
-            { label: 'SUBAORTIC STENOSIS (SAS)', link: { to: 'disease', id: 'DIS-CARD-SAS' } },
-            { label: 'PULMONIC STENOSIS (PS)', link: { to: 'disease', id: 'DIS-CARD-PS' } },
+            { label: 'Subaortic stenosis (SAS)', link: { to: 'disease', id: 'DIS-CARD-SAS' } },
+            { label: 'Pulmonic stenosis (PS)', link: { to: 'disease', id: 'DIS-CARD-PS' } },
           ],
         },
       ],
@@ -177,23 +180,23 @@ const heartMurmurFunctional: FlowPage = {
           cat: 'Physiological / Developmental',
           tone: 'green',
           tiles: [
-            { label: ' INNOCENT PUPPY / KITTEN MURMUR — soft left-base systolic · resolves by ~16 weeks', terminal: true },
+            { label: 'Innocent puppy / kitten murmur — soft left-base systolic · resolves by ~16 weeks', terminal: true },
           ],
         },
         {
           cat: 'High-Output State',
           tone: 'warning',
           tiles: [
-            { label: ' ANAEMIA', link: { to: 'flow', id: 'pale-mm' } },
-            { label: ' FEVER / HIGH-OUTPUT STATE — sepsis · pregnancy · high sympathetic tone', terminal: true },
-            { label: ' HYPERTHYROIDISM', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
+            { label: 'Anaemia', link: { to: 'flow', id: 'pale-mm' } },
+            { label: 'Fever / high-output state — sepsis · pregnancy · high sympathetic tone', terminal: true },
+            { label: 'Hyperthyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
           ],
         },
         {
           cat: 'Systemic',
           tone: 'info',
           tiles: [
-            { label: ' SYSTEMIC HYPERTENSION', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
+            { label: 'Systemic hypertension', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
           ],
         },
       ],

@@ -169,7 +169,7 @@ const encephalopathyForebrain: FlowPage = {
   id: 'encephalopathy-forebrain',
   title: 'Forebrain — causes',
   blocks: [
-    { kind: 'node', variant: 'entry', tone: 'info', text: '🔵 FOREBRAIN LESIONS' },
+    { kind: 'node', variant: 'entry', tone: 'info', text: '🔵 FOREBRAIN LESIONS' , sub: 'Behaviour change, circling toward the lesion, contralateral menace and postural deficits, seizures — with normal gait strength' },
 
     {
       kind: 'branch',
@@ -304,7 +304,7 @@ const encephalopathyDiffuse: FlowPage = {
   id: 'encephalopathy-diffuse',
   title: 'Diffuse / Bilateral — causes',
   blocks: [
-    { kind: 'node', variant: 'entry', tone: 'teal', text: '🟢 DIFFUSE / BILATERAL — METABOLIC FIRST' },
+    { kind: 'node', variant: 'entry', tone: 'teal', text: '🟢 DIFFUSE / BILATERAL — METABOLIC FIRST' , sub: 'Symmetrical signs with no lateralising deficit — screen glucose, electrolytes, ammonia and toxins before imaging' },
 
     {
       kind: 'branch',

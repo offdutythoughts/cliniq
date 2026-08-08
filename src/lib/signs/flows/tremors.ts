@@ -16,7 +16,11 @@ const tremorsEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'ACUTE & SICK, OR CHRONIC & WELL?',
-      sub: 'Acute generalised tremor ± hyperthermia / tachycardia / mydriasis = toxic or metabolic until proven otherwise — check glucose, ionised calcium and potassium and take a toxin history FIRST. A slowly progressive tremor in an otherwise bright dog points cerebellar or idiopathic.',
+      subItems: [
+        'Acute generalised tremor ± hyperthermia / tachycardia / mydriasis = toxic or metabolic until proven otherwise',
+        'Check glucose, ionised calcium and potassium and take a toxin history FIRST',
+        'A slowly progressive tremor in an otherwise bright dog points cerebellar or idiopathic',
+      ],
     },
     {
       kind: 'choices',
@@ -38,7 +42,7 @@ const tremorsEntry: FlowPage = {
         {
           tone: 'teal',
           label: ' IDIOPATHIC / OTHER',
-          sublabel: 'Whole-body fine tremor in a young dog with a normal neuro exam — worse with anxiety; classic "white-shaker", but ANY breed',
+          sublabel: 'Whole-body fine tremor in a young dog with a normal neuro exam — worse with anxiety or excitement, absent when asleep',
           link: { to: 'flow', id: 'tremors-idiopathic' },
         },
       ],
@@ -73,11 +77,11 @@ const tremorsToxic: FlowPage = {
           cat: 'Toxins — Acute / Hyperthermic',
           tone: 'danger',
           tiles: [
-            { label: ' TREMORGENIC MYCOTOXINS', link: { to: 'protocol', id: 'PROT-TOX-MYCOTOX' } },
-            { label: ' METALDEHYDE', link: { to: 'protocol', id: 'PROT-TOX-METALD' } },
-            { label: ' PERMETHRIN (CATS)', link: { to: 'protocol', id: 'PROT-TOX-PERM' } },
-            { label: ' ORGANOPHOSPHATE / CARBAMATE', link: { to: 'protocol', id: 'PROT-TOX-OP' } },
-            { label: ' LEAD', link: { to: 'protocol', id: 'PROT-TOX-LEAD' } },
+            { label: 'Tremorgenic mycotoxins', link: { to: 'protocol', id: 'PROT-TOX-MYCOTOX' } },
+            { label: 'Metaldehyde', link: { to: 'protocol', id: 'PROT-TOX-METALD' } },
+            { label: 'Permethrin (cats)', link: { to: 'protocol', id: 'PROT-TOX-PERM' } },
+            { label: 'Organophosphate / carbamate', link: { to: 'protocol', id: 'PROT-TOX-OP' } },
+            { label: 'Lead', link: { to: 'protocol', id: 'PROT-TOX-LEAD' } },
             { label: 'Methylxanthines / other', link: { to: 'disease', id: 'DIS-TOXIC-METHYL' } },
             { label: ' Ivermectin / macrocyclic lactones (MDR1 breeds)', terminal: true },
           ],
@@ -86,10 +90,10 @@ const tremorsToxic: FlowPage = {
           cat: 'Metabolic — Check the Bloods',
           tone: 'warning',
           tiles: [
-            { label: ' HYPOCALCAEMIA', link: { to: 'disease', id: 'DIS-ENDO-HYPOPTH' } },
-            { label: ' HYPOGLYCAEMIA', link: { to: 'disease', id: 'DIS-MET-HYPOGLY' } },
-            { label: ' INSULINOMA', link: { to: 'disease', id: 'DIS-NEO-INSULINOMA' } },
-            { label: ' HYPOKALAEMIA', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },
+            { label: 'Hypocalcaemia', link: { to: 'disease', id: 'DIS-ENDO-HYPOPTH' } },
+            { label: 'Hypoglycaemia', link: { to: 'disease', id: 'DIS-MET-HYPOGLY' } },
+            { label: 'Insulinoma', link: { to: 'disease', id: 'DIS-NEO-INSULINOMA' } },
+            { label: 'Hypokalaemia', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },
           ],
         },
       ],
@@ -110,25 +114,24 @@ const tremorsCerebellar: FlowPage = {
           cat: 'Developmental / Degenerative',
           tone: 'teal',
           tiles: [
-            { label: ' CEREBELLAR HYPOPLASIA', link: { to: 'disease', id: 'DIS-NEU-CEREHYPO' } },
-            { label: ' CEREBELLAR ABIOTROPHY', link: { to: 'disease', id: 'DIS-NEU-ABIOTROPHY' } },
+            { label: 'Cerebellar hypoplasia', link: { to: 'disease', id: 'DIS-NEU-CEREHYPO' } },
+            { label: 'Cerebellar abiotrophy', link: { to: 'disease', id: 'DIS-NEU-ABIOTROPHY' } },
           ],
         },
         {
           cat: 'Inflammatory / Infectious',
           tone: 'danger',
           tiles: [
-            { label: ' MUO / MENINGOENCEPHALITIS', link: { to: 'disease', id: 'DIS-NEU-MUE' } },
+            { label: 'MUO / meningoencephalitis', link: { to: 'disease', id: 'DIS-NEU-MUE' } },
             { label: ' GME', link: { to: 'disease', id: 'DIS-GME' } },
             { label: ' CDV encephalitis', link: { to: 'disease', id: 'DIS-INFECT-CDV' } },
             { label: ' Toxoplasma / Neospora', link: { to: 'disease', id: 'DIS-INFECT-TOXO' } },
           ],
         },
         {
-          cat: 'Drug-Induced',
-          tone: 'warning',
+          cat: 'Drug-induced',
           tiles: [
-            { label: ' METRONIDAZOLE TOXICITY', link: { to: 'disease', id: 'DIS-NEU-METRO' } },
+            { label: 'Metronidazole toxicity', link: { to: 'disease', id: 'DIS-NEU-METRO' } },
           ],
         },
       ],
@@ -149,7 +152,7 @@ const tremorsIdiopathic: FlowPage = {
           cat: 'Idiopathic / Steroid-Responsive',
           tone: 'teal',
           tiles: [
-            { label: 'IDIOPATHIC GENERALISED TREMOR (IGTS)', link: { to: 'disease', id: 'DIS-NEU-IGTS' } },
+            { label: 'Idiopathic generalised tremor (IGTS)', link: { to: 'disease', id: 'DIS-NEU-IGTS' } },
           ],
         },
         {

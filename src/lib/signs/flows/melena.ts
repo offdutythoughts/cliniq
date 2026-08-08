@@ -15,7 +15,11 @@ const melenaEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'IS THIS BLOOD — AND FROM WHERE?',
-      sub: 'Confirm it is blood (not charcoal / iron / bismuth / blueberries → melena mimic; or beets / red dye → haematochezia mimic), exclude swallowed blood + coagulopathy, then localise by the stool appearance',
+      subItems: [
+        'Confirm it is blood — charcoal, iron, bismuth and blueberries mimic melena; beets and red dye mimic haematochezia',
+        'Exclude swallowed blood and coagulopathy',
+        'Then localise by the stool appearance',
+      ],
     },
     {
       kind: 'choices',
@@ -62,7 +66,6 @@ const melenaUpper: FlowPage = {
       columns: [
         {
           cat: 'Inflammatory',
-          tone: 'warning',
           tiles: [
             { label: 'Gastric ulceration', link: { to: 'disease', id: 'DIS-GI-ULC' } },
             { label: 'Chronic enteropathy (IBD)', link: { to: 'disease', id: 'DIS-GI-IBD' } },
@@ -70,7 +73,6 @@ const melenaUpper: FlowPage = {
         },
         {
           cat: 'Metabolic',
-          tone: 'teal',
           tiles: [
             { label: 'Hepatic disease (PSS / portal hypertension)', link: { to: 'disease', id: 'DIS-HEP-PSS' } },
             { label: 'Renal disease (uraemic gastropathy)', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
@@ -80,15 +82,14 @@ const melenaUpper: FlowPage = {
           cat: 'Infectious / Parasitic',
           tone: 'danger',
           tiles: [
-            { label: ' AHDS (raspberry-jam)', link: { to: 'disease', id: 'DIS-GI-AHDS' } },
-            { label: ' PARVOVIRUS', link: { to: 'disease', id: 'DIS-GI-PARVO' } },
+            { label: 'AHDS (raspberry-jam)', link: { to: 'disease', id: 'DIS-GI-AHDS' } },
+            { label: 'Parvovirus', link: { to: 'disease', id: 'DIS-GI-PARVO' } },
             { label: ' Helicobacter gastritis', link: { to: 'disease', id: 'DIS-GI-HELICO' } },
-            { label: 'PARASITES', link: { to: 'flow', id: 'gi-parasites' } },
+            { label: 'Parasites', link: { to: 'flow', id: 'gi-parasites' } },
           ],
         },
         {
           cat: 'Neoplastic',
-          tone: 'violet',
           tiles: [
             { label: 'Adenocarcinoma', link: { to: 'disease', id: 'DIS-GI-ADENO' } },
             { label: 'GIST / leiomyosarcoma', link: { to: 'disease', id: 'DIS-GI-GIST' } },
@@ -113,10 +114,9 @@ const melenaLower: FlowPage = {
       columns: [
         {
           cat: 'Inflammatory',
-          tone: 'warning',
           tiles: [
-            { label: ' IDIOPATHIC / IBD COLITIS', link: { to: 'disease', id: 'DIS-GI-COLITIS' } },
-            { label: ' GRANULOMATOUS COLITIS', link: { to: 'disease', id: 'DIS-GI-GRANCOL' } },
+            { label: 'Idiopathic / IBD colitis', link: { to: 'disease', id: 'DIS-GI-COLITIS' } },
+            { label: 'Granulomatous colitis', link: { to: 'disease', id: 'DIS-GI-GRANCOL' } },
           ],
         },
         {
@@ -124,15 +124,14 @@ const melenaLower: FlowPage = {
           tone: 'danger',
           tiles: [
             { label: 'Clostridial / Campylobacter / Salmonella', link: { to: 'disease', id: 'DIS-INFECT-CAMPYLO' } },
-            { label: 'PARASITES', link: { to: 'flow', id: 'gi-parasites' } },
+            { label: 'Parasites', link: { to: 'flow', id: 'gi-parasites' } },
           ],
         },
         {
-          cat: 'Neoplastic / Mass',
-          tone: 'violet',
+          cat: 'Neoplastic',
           tiles: [
-            { label: ' COLORECTAL NEOPLASIA / POLYP', link: { to: 'disease', id: 'DIS-GI-CRC' } },
-            { label: ' ANAL-SAC DISEASE / AGASACA', link: { to: 'disease', id: 'DIS-NEO-AGASACA' } },
+            { label: 'Colorectal neoplasia / polyp', link: { to: 'disease', id: 'DIS-GI-CRC' } },
+            { label: 'Anal-sac disease / AGASACA', link: { to: 'disease', id: 'DIS-NEO-AGASACA' } },
             { label: ' Perineal / anorectal lesion — surface blood only; bite wound · stricture', terminal: true },
           ],
         },

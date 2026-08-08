@@ -29,33 +29,27 @@ export const coughingFlows: FlowPage[] = [
           {
             variant: 'insp',
             label: '🔵 Dry / Unproductive',
-            sublabel: 'Harsh, honking, hacking<br>No sputum produced<br>Tracheal, cardiac, infectious',
+            sublabel: 'Harsh, honking, hacking<br>No sputum produced<br>Ends in a retch or gag, not a swallow',
             link: { to: 'lesion', loc: 'LOC-CO-DRY', name: 'Dry / Unproductive cough' },
           },
           {
             variant: 'rest',
             label: '🟡 Wet / Productive',
-            sublabel: 'Moist, rattling<br>Sputum / discharge produced<br>Pneumonia, oedema, lungworm',
+            sublabel: 'Moist, rattling<br>Sputum / discharge produced<br>Swallows or licks the lips after coughing',
             link: { to: 'lesion', loc: 'LOC-CO-WET', name: 'Wet / Productive cough' },
           },
         ],
       },
 
-      // Trailing "Key species difference" note card. The legacy uses a neutral
-      // var(--card)/var(--border) card with a var(--gray2) uppercase header and
-      // inline var(--white)/var(--tone-danger-fg) strongs — none of which the tone-based
-      // `callout` block can reproduce — so this is an escape-hatch html block.
-      // It carries no links. width:100% keeps it full-width inside .flow-wrap,
-      // matching the legacy block (which sat just outside .flow-wrap).
+      // Trailing "Key species difference" note card — a neutral-tone infoBox.
       {
-        kind: 'html',
-        html: `<div style="margin-top:12px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;width:100%;">
-    <div style="font-size:11px;font-weight:600;color:var(--gray2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">💡 Key species difference</div>
-    <div style="font-size:12px;color:var(--gray);line-height:1.65;">
-      <strong style="color:var(--white);">Dogs</strong> cough from both cardiac and respiratory disease.<br>
-      <strong style="color:var(--white);">Cats</strong> do <strong style="color:var(--tone-danger-fg);">NOT</strong> cough from cardiac disease — if a cat is coughing, it is respiratory.
-    </div>
-  </div>`,
+        kind: 'infoBox',
+        tone: 'neutral',
+        gap: 12,
+        icon: '💡',
+        title: 'KEY SPECIES DIFFERENCE',
+        html: `<strong style="color:var(--white);">Dogs</strong> cough from both cardiac and respiratory disease.<br>
+      <strong style="color:var(--white);">Cats</strong> do <strong style="color:var(--tone-danger-fg);">NOT</strong> cough from cardiac disease — if a cat is coughing, it is respiratory.`,
       },
 
       { kind: 'disclaimer' },

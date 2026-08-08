@@ -76,12 +76,17 @@
      Light-mode fgs are dark shades; dark block restores the original pastels. */
   --cat-vascular: 220,38,38;       --cat-vascular-fg: #991B1B;
   --cat-inflammatory: 245,158,11;  --cat-inflammatory-fg: #92400E;
-  --cat-mass: 139,92,246;          --cat-mass-fg: #5B21B6;
+  --cat-infectious: 190,18,60;     --cat-infectious-fg: #9F1239;
+  --cat-neoplastic: 139,92,246;    --cat-neoplastic-fg: #5B21B6;
   --cat-immune: 59,130,246;        --cat-immune-fg: #1E40AF;
   --cat-degenerative: 100,116,139; --cat-degenerative-fg: #475569;
   --cat-metabolic: 20,184,166;     --cat-metabolic-fg: #115E59;
+  --cat-endocrine: 5,150,105;      --cat-endocrine-fg: #065F46;
+  --cat-neurological: 79,70,229;   --cat-neurological-fg: #3730A3;
   --cat-toxic: 249,115,22;         --cat-toxic-fg: #C2410C;
-  --cat-trauma: 107,114,128;       --cat-trauma-fg: #374151;
+  /* Trauma is a warm brown, NOT a second grey: it sits beside Degenerative
+     (slate) on the mono-arthropathy grids, and two neutrals read as one column. */
+  --cat-trauma: 146,64,14;         --cat-trauma-fg: #7C2D12;
   --cat-anomalous: 236,72,153;     --cat-anomalous-fg: #9D174D;
 
   /* Flow-node / flow-endpoint location foregrounds: a deep shade on light that
@@ -145,9 +150,11 @@ html[data-theme="dark"]{
   --tone-orange-fg: #FED7AA;  --hl-orange: #FB923C;  --hl-green: #34D399;  --hl-pink: #F9A8D4;  --hl-lime: #A3E635;
   /* Category palette — restore pastels for dark backgrounds. */
   --cat-vascular-fg: #FCA5A5;  --cat-inflammatory-fg: #FCD34D;
-  --cat-mass-fg: #C4B5FD;      --cat-immune-fg: #93C5FD;
+  --cat-infectious-fg: #FDA4AF; --cat-neoplastic-fg: #C4B5FD;
+  --cat-immune-fg: #93C5FD;
   --cat-degenerative-fg: #94A3B8; --cat-metabolic-fg: #5EEAD4;
-  --cat-toxic-fg: #FB923C;     --cat-trauma-fg: #D1D5DB;
+  --cat-endocrine-fg: #6EE7B7; --cat-neurological-fg: #A5B4FC;
+  --cat-toxic-fg: #FB923C;     --cat-trauma-fg: #E7B48A;
   --cat-anomalous-fg: #F9A8D4;
   --tone-slate-fg: #CBD5E1;
   /* Location foregrounds flip deep→bright; per-class dark rules no longer needed. */

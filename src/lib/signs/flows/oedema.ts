@@ -19,7 +19,10 @@ const oedemaEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'GENERALISED / VENTRAL? → CHECK ALBUMIN. LOCALISED? → THINK OBSTRUCTION / PERMEABILITY',
-      sub: 'Starling: oedema = imbalance of hydrostatic vs oncotic pressure, permeability, or lymphatic drainage — overwhelming interstitial tension + lymphatic uptake (Ettinger Ch 30)',
+      subItems: [
+        'Starling: oedema = an imbalance of hydrostatic vs oncotic pressure, permeability, or lymphatic drainage',
+        'It appears once interstitial tension and lymphatic uptake are overwhelmed (Ettinger Ch 30)',
+      ],
     },
     {
       kind: 'choices',
@@ -74,22 +77,22 @@ const oedemaHypoalbumin: FlowPage = {
           cat: 'Renal (Protein Loss)',
           tone: 'info',
           tiles: [
-            { label: ' PROTEIN-LOSING NEPHROPATHY', link: { to: 'disease', id: 'DIS-REN-GN' } },
+            { label: 'Protein-losing nephropathy', link: { to: 'disease', id: 'DIS-REN-GN' } },
           ],
         },
         {
           cat: 'GI (Protein Loss)',
           tone: 'orange',
           tiles: [
-            { label: ' PROTEIN-LOSING ENTEROPATHY', link: { to: 'disease', id: 'DIS-GI-PLE' } },
+            { label: 'Protein-losing enteropathy', link: { to: 'disease', id: 'DIS-GI-PLE' } },
           ],
         },
         {
           cat: 'Hepatobiliary (↓ Synthesis)',
           tone: 'warning',
           tiles: [
-            { label: ' HEPATIC FAILURE', link: { to: 'disease', id: 'DIS-HEP-CHRONHEP' } },
-            { label: ' PORTOSYSTEMIC SHUNT', link: { to: 'disease', id: 'DIS-HEP-PSS' } },
+            { label: 'Hepatic failure', link: { to: 'disease', id: 'DIS-HEP-CHRONHEP' } },
+            { label: 'Portosystemic shunt', link: { to: 'disease', id: 'DIS-HEP-PSS' } },
           ],
         },
       ],
@@ -110,11 +113,11 @@ const oedemaHydrostatic: FlowPage = {
           cat: 'Right-Sided / Congestive',
           tone: 'danger',
           tiles: [
-            { label: ' MYXOMATOUS MITRAL VALVE DISEASE', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
-            { label: ' DILATED CARDIOMYOPATHY', link: { to: 'disease', id: 'DIS-CARD-DCM' } },
-            { label: ' RESTRICTIVE CARDIOMYOPATHY', link: { to: 'disease', id: 'DIS-CARD-RCM' } },
-            { label: ' PERICARDIAL DISEASE / TAMPONADE', link: { to: 'disease', id: 'DIS-CARD-PERIC' } },
-            { label: ' HEARTWORM / CAVAL SYNDROME', link: { to: 'disease', id: 'DIS-CARD-HW' } },
+            { label: 'Myxomatous mitral valve disease', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
+            { label: 'Dilated cardiomyopathy', link: { to: 'disease', id: 'DIS-CARD-DCM' } },
+            { label: 'Restrictive cardiomyopathy', link: { to: 'disease', id: 'DIS-CARD-RCM' } },
+            { label: 'Pericardial disease / tamponade', link: { to: 'disease', id: 'DIS-CARD-PERIC' } },
+            { label: 'Heartworm / caval syndrome', link: { to: 'disease', id: 'DIS-CARD-HW' } },
           ],
         },
         {
@@ -144,15 +147,14 @@ const oedemaPermeability: FlowPage = {
           cat: 'Infectious / Septic',
           tone: 'danger',
           tiles: [
-            { label: ' VASCULITIS (immune / vector-borne / sepsis)', link: { to: 'disease', id: 'DIS-BD-VASC' } },
-            { label: ' EHRLICHIOSIS / VECTOR-BORNE', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
+            { label: 'Vasculitis (immune / vector-borne / sepsis)', link: { to: 'disease', id: 'DIS-BD-VASC' } },
+            { label: 'Ehrlichiosis / vector-borne', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
           ],
         },
         {
-          cat: 'Immune-Mediated',
-          tone: 'violet',
+          cat: 'Immune-mediated',
           tiles: [
-            { label: ' SLE / IMMUNE-MEDIATED', link: { to: 'disease', id: 'DIS-IM-SLE' } },
+            { label: 'SLE / immune-mediated', link: { to: 'disease', id: 'DIS-IM-SLE' } },
           ],
         },
         {

@@ -78,16 +78,14 @@ const paleGumsEntry: FlowPage = {
         '</div>',
     },
     {
-      // Neutral box uses --card/--border/--gray2/--gray, not a tone rgba → html.
-      kind: 'html',
-      html: `<div style="margin-top:8px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:12px;">
-    <div style="font-size:11px;font-weight:600;color:var(--gray2);margin-bottom:4px;">💡 PCV/TS quick guide</div>
-    <div style="font-size:11px;color:var(--gray);line-height:1.65;">
-      <strong style="color:var(--white);">Low PCV + Normal TS</strong> = haemolysis<br>
+      kind: 'infoBox',
+      tone: 'neutral',
+      gap: 8,
+      icon: '💡',
+      title: 'PCV/TS QUICK GUIDE',
+      html: `<strong style="color:var(--white);">Low PCV + Normal TS</strong> = haemolysis<br>
       <strong style="color:var(--white);">Low PCV + Low TS</strong> = haemorrhage (TS drop takes hours)<br>
-      <strong style="color:var(--white);">Normal PCV + Pale</strong> = poor perfusion / shock
-    </div>
-  </div>`,
+      <strong style="color:var(--white);">Normal PCV + Pale</strong> = poor perfusion / shock`,
     },
     { kind: 'disclaimer' },
   ],
@@ -122,7 +120,7 @@ const paleGumsRegen: FlowPage = {
         sub: 'Low PCV · normal TS · ± icterus / haemoglobinuria',
         categories: [
           { cat: 'Immune-mediated', tiles: [{ label: 'IMHA', link: { to: 'disease', id: 'DIS-BD-IMHA' } }] },
-          { cat: 'Infection', tone: 'danger', tiles: [
+          { cat: 'Infectious', tiles: [
             { label: 'Babesiosis', link: { to: 'disease', id: 'DIS-BD-BABS' } },
             { label: 'Haemotropic Mycoplasma', link: { to: 'disease', id: 'DIS-INFECT-HMYCO' } },
           ] },
@@ -164,7 +162,10 @@ const paleGumsNonRegen: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'DISTINGUISH MECHANISM — Primary (marrow) vs Secondary (systemic) disease?',
-      sub: 'Rule out extra-marrow causes (renal · endocrine · inflammatory) first · bone marrow aspirate / core biopsy if none found',
+      subItems: [
+        'Rule out extra-marrow causes first — renal, endocrine, inflammatory',
+        'Bone marrow aspirate / core biopsy if none is found',
+      ],
     },
     // Divide the non-regenerative differential by mechanism BEFORE the cause
     // categories, per Ettinger9: primary bone-marrow disease vs secondary/
@@ -177,7 +178,7 @@ const paleGumsNonRegen: FlowPage = {
         sub: 'Intrinsic marrow failure · needs aspirate / core biopsy',
         categories: [
           { cat: 'Immune-mediated', tiles: [{ label: 'PRCA / immune-mediated', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
-          { cat: 'Mass', tiles: [{ label: 'BM infiltration', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
+          { cat: 'Neoplastic', tiles: [{ label: 'BM infiltration', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
           { cat: 'Toxic', tiles: [{ label: 'Drug / oestrogen aplasia', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
           { cat: 'Anomalous', tiles: [{ label: 'Aplastic anaemia', link: { to: 'disease', id: 'DIS-BD-NRA' } }] },
         ],
@@ -279,7 +280,7 @@ const paleGumsCardiac: FlowPage = {
         { cat: 'Degenerative', tiles: [{ label: 'DCM (dog)', link: { to: 'disease', id: 'DIS-CARD-DCM' } }, { label: 'HCM (cat)', link: { to: 'disease', id: 'DIS-HCM' } }] },
         { cat: 'Vascular', tiles: [{ label: 'Pericardial effusion / tamponade', link: { to: 'disease', id: 'DIS-CARD-PERIC' } }] },
         { cat: 'Anomalous', tiles: [{ label: 'Congenital defects', terminal: true }] },
-        { cat: 'Mass', tiles: [
+        { cat: 'Neoplastic', tiles: [
           { label: 'Chemodectoma', link: { to: 'disease', id: 'DIS-NEO-CHEMO' } },
           { label: 'Haemangiosarcoma', link: { to: 'disease', id: 'DIS-NEO-HSA' } },
           { label: 'Ectopic thyroid carcinoma', link: { to: 'disease', id: 'DIS-NEO-ETC' } },
