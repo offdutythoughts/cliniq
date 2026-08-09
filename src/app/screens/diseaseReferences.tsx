@@ -100,6 +100,11 @@ const ACVIM_SE =
 const ACVIM_FCE =
   'Marsilio S, Freiche V, Johnson E, et al. ACVIM consensus statement guidelines on diagnosing and distinguishing low-grade neoplastic from inflammatory lymphocytic chronic enteropathies in cats. J Vet Intern Med. 2023;37(3):794. doi:10.1111/jvim.16690'
 
+// Toxicology eBook — organisation-as-author form. Password-protected FlippingBook,
+// so no URL is given; page numbers refer to the eBook's own pagination.
+const VETGIRL_TOX =
+  'Lee J, ed. The Ultimate Guide to Toxicology. VETgirl / ASPCA Animal Poison Control Center; 2023'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -112,7 +117,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'VETgirl',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -161,6 +166,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Yayoshi/.test(part)) { out.push({ id: 'yayoshi-radiation', text: YAYOSHI_RADIATION }); continue }
     if (/^Muschner/.test(part)) { out.push({ id: 'muschner-remission', text: MUSCHNER_REMISSION }); continue }
     if (/^Lien/.test(part)) { out.push({ id: 'lien-iatrogenic', text: LIEN_IATROGENIC }); continue }
+    if (/^VETgirl/.test(part)) { out.push({ id: 'vetgirl-tox', text: VETGIRL_TOX + '.' }); continue }
     if (/^LeVine/.test(part)) { out.push({ id: part.includes('treatment') ? 'acvim-itp-tx' : 'acvim-itp-dx', text: part.includes('treatment') ? ACVIM_ITP_TX : ACVIM_ITP_DX }); continue }
     if (/^Charalambous/.test(part)) { out.push({ id: 'acvim-se', text: ACVIM_SE }); continue }
     if (/^Marsilio/.test(part)) { out.push({ id: 'acvim-fce', text: ACVIM_FCE }); continue }
