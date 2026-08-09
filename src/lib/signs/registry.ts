@@ -87,7 +87,7 @@ export const SIGNS: SignEntry[] = [
     keywords: ['epilepsy', 'fitting', 'fits', 'convulsions', 'tonic clonic', 'grand mal', 'focal seizure', 'partial seizure', 'status epilepticus', 'postictal', 'idiopathic epilepsy', 'reactive seizure', 'toxin', 'hypoglycaemia', 'low glucose', 'electrolyte'] },
   { id: 'sneezing', icon: '🤧', title: 'Sneezing', sub: 'Unilateral vs bilateral', flowId: 'sneezing',
     keywords: ['nasal discharge', 'runny nose', 'nasal', 'rhinitis', 'sinusitis', 'sneezing fits', 'reverse sneeze', 'nasal foreign body', 'aspergillosis', 'crypto', 'cryptosporidiosis', 'nasal tumour', 'cat flu', 'herpesvirus', 'calicivirus', 'discharge'] },
-  { id: 'swollen-joints', icon: '🦵', title: 'Swollen Joints', sub: 'Arthrocentesis-led · septic vs immune-mediated vs degenerative', flowId: 'swollen-joints',
+  { id: 'swollen-joints', icon: '🦵', title: 'Swollen Joints', sub: 'Mono- vs polyarthropathy · septic vs immune-mediated vs degenerative', flowId: 'swollen-joints',
     keywords: ['joint swelling', 'lameness', 'arthritis', 'polyarthritis', 'septic arthritis', 'IMPA', 'immune-mediated polyarthritis', 'joint pain', 'effusion', 'synovitis', 'hot joint', 'stiff joints', 'reluctant to walk', 'Lyme'] },
   { id: 'syncope', icon: '😵', title: 'Syncope', sub: 'Post-triage workup · Cardiogenic vs reflex/non-cardiogenic', flowId: 'syncope',
     keywords: ['fainting', 'collapse', 'passing out', 'loss of consciousness', 'LOC', 'vasovagal', 'cardiogenic syncope', 'arrhythmia', 'bradycardia', 'heart block', 'low blood pressure', 'hypotension', 'episodic collapse', 'exercise intolerance'] },

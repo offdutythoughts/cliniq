@@ -368,12 +368,12 @@ const bleedingDic: FlowPage = {
       dog: {
         note: '🐕 <strong>Canine</strong> — haemorrhagic phenotype · ~78 % survive non-overt · ~38 % overt',
         columns: [
-          { cat: 'Neoplastic', tone: 'violet', tiles: [
+          { cat: 'Neoplastic', tiles: [
             { label: 'Haemangiosarcoma', link: { to: 'disease', id: 'DIS-NEO-HSA' } },
             { label: 'Lymphoma', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
           ]},
-          { cat: 'Infectious', tone: 'teal', tiles: [
-            { label: 'Sepsis — pyometra', link: { to: 'disease', id: 'DIS-REPRO-PYO' } },
+          { cat: 'Infectious', tiles: [
+            { label: 'Pyometra', link: { to: 'disease', id: 'DIS-REPRO-PYO' } },
             { label: 'Septic peritonitis', link: { to: 'disease', id: 'DIS-GI-SEPTPERIT' } },
           ]},
           { cat: 'Inflammatory', tiles: [
@@ -389,20 +389,20 @@ const bleedingDic: FlowPage = {
           ]},
           { cat: 'Vascular / Trauma', tone: 'slate', tiles: [
             { label: 'GDV', link: { to: 'disease', id: 'DIS-GI-GDV' } },
-            { label: 'Major trauma' },
+            { label: 'Major trauma', terminal: true },
           ]},
         ],
       },
       cat: {
         note: '🐈 <strong>Feline</strong> — thrombotic phenotype · minimal external bleeding · ~7 % survival',
         columns: [
-          { cat: 'Neoplastic', tone: 'violet', tiles: [
+          { cat: 'Neoplastic', tiles: [
             { label: 'Lymphoma', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
           ]},
-          { cat: 'Infectious', tone: 'teal', tiles: [
+          { cat: 'Infectious', tiles: [
             { label: 'FIP', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
             { label: 'Cytauxzoonosis', link: { to: 'disease', id: 'DIS-INFECT-CYTAUX' } },
-            { label: 'Sepsis — pyothorax', link: { to: 'disease', id: 'DIS-PYOTHORAX' } },
+            { label: 'Pyothorax', link: { to: 'disease', id: 'DIS-PYOTHORAX' } },
           ]},
           { cat: 'Inflammatory', tiles: [
             { label: 'Pancreatitis / triaditis', link: { to: 'disease', id: 'DIS-GI-PANCAT' } },
@@ -470,8 +470,8 @@ const bleedingVasc: FlowPage = {
             {
               kind: 'endpoints',
               items: [
-                { label: 'CRGV / ALABAMA ROT', sublabel: '→ AKI in 1–10 days', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-CRGV' } },
-                { label: 'CUTANEOUS VASCULITIS', tone: 'violet', link: { to: 'disease', id: 'DIS-BD-VASC' } },
+                { label: 'CRGV / Alabama rot', sublabel: '→ AKI in 1–10 days', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-CRGV' } },
+                { label: 'Cutaneous vasculitis', tone: 'violet', link: { to: 'disease', id: 'DIS-BD-VASC' } },
                 { label: 'Lhasa Apso vasculopathy', sublabel: 'ear tips', tone: 'neutral' },
               ],
             },
@@ -485,10 +485,10 @@ const bleedingVasc: FlowPage = {
             {
               kind: 'endpoints',
               items: [
-                { label: 'EHRLICHIOSIS', sublabel: 'tick-borne', tone: 'orange', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
+                { label: 'Ehrlichiosis', sublabel: 'tick-borne', tone: 'orange', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
                 { label: 'RMSF', sublabel: 'tick-borne · petechiae', tone: 'danger', link: { to: 'disease', id: 'DIS-INFECT-RMSF' } },
-                { label: 'LEISHMANIASIS', sublabel: 'endemic regions', tone: 'green', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
-                { label: 'LEPTOSPIROSIS', sublabel: 'zoonotic · renal', tone: 'warning', link: { to: 'disease', id: 'DIS-INFECT-LEPTO' } },
+                { label: 'Leishmaniasis', sublabel: 'endemic regions', tone: 'green', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
+                { label: 'Leptospirosis', sublabel: 'zoonotic · renal', tone: 'warning', link: { to: 'disease', id: 'DIS-INFECT-LEPTO' } },
                 { label: 'FIP', sublabel: 'cats', tone: 'neutral', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
               ],
             },
@@ -502,10 +502,10 @@ const bleedingVasc: FlowPage = {
             {
               kind: 'endpoints',
               items: [
-                { label: 'HYPERTENSION', sublabel: 'retinal detachment', tone: 'danger', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
-                { label: 'HYPERVISCOSITY', sublabel: 'myeloma · globulinaemia', tone: 'violet', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
-                { label: 'HAC / STEROIDS', sublabel: 'easy bruising', tone: 'warning', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
-                { label: 'URAEMIC VASCULOPATHY', sublabel: 'CKD end-stage', tone: 'neutral', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
+                { label: 'Hypertension', sublabel: 'retinal detachment', tone: 'danger', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
+                { label: 'Hyperviscosity', sublabel: 'myeloma · globulinaemia', tone: 'violet', link: { to: 'disease', id: 'DIS-VASC-HYPERVSC' } },
+                { label: 'HAC / steroids', sublabel: 'easy bruising', tone: 'warning', link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
+                { label: 'Uraemic vasculopathy', sublabel: 'CKD end-stage', tone: 'neutral', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
               ],
             },
           ],

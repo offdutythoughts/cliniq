@@ -8,37 +8,31 @@ const swollenJointsEntry: FlowPage = {
   blocks: [
     { kind: 'node', variant: 'entry', text: ' SWOLLEN JOINTS / JOINT PAIN' },
     {
-      kind: 'callout',
-      tone: 'teal',
-      html: ' <strong>Arthrocentesis of MULTIPLE joints is the pivotal test</strong> — sample both carpi + both tarsi (≥4 joints) even if only one looks swollen. A polyarthropathy can hide in joints that feel normal, and synovial cytology + culture is what separates inflammatory from non-inflammatory and septic from immune-mediated. (Ettinger Ch 32 / Ch 177)',
-    },
-    {
       kind: 'node',
       variant: 'step',
-      text: 'INFLAMMATORY vs NON-INFLAMMATORY?',
-      sub: 'Synovial TNCC >5 ×10⁹/L with >10% neutrophils = inflammatory · mononuclear <10% neutrophils = degenerative / non-inflammatory · Inflammatory cases often show lethargy, ↓appetite and fever — not always overt lameness (Ettinger Ch 32 / Ch 71)',
+      text: 'HOW MANY JOINTS? SINGLE vs MULTIPLE',
+      subItems: [
+        'Flex, extend and palpate EVERY appendicular joint before deciding — a polyarthropathy can hide in joints that look and feel normal',
+        'SINGLE joint (monoarthropathy) = local joint disease — degenerative, traumatic, neoplastic, or a septic joint',
+        'MULTIPLE joints (polyarthropathy) = systemic disease until proven otherwise — lethargy, ↓appetite and fever are commoner than overt lameness',
+        'Localise pain to the joint, not the adjacent bone — a juxta-articular osteosarcoma mimics monoarthropathy (Ettinger Ch 32)',
+      ],
     },
     {
       kind: 'choices',
-      cols: 3,
+      cols: 2,
       items: [
         {
-          tone: 'danger',
-          label: ' SEPTIC / INFECTIOUS',
-          sublabel: 'Degenerate neutrophils ± intracellular organisms · single proximal joint OR vector-borne polyarthritis',
-          link: { to: 'flow', id: 'swollen-joints-septic' },
+          tone: 'slate',
+          label: ' SINGLE JOINT (MONOARTHROPATHY)',
+          sublabel: 'Every other joint normal on palpation · localise the pain to the joint, not the adjacent bone',
+          link: { to: 'flow', id: 'swollen-joints-single' },
         },
         {
           tone: 'info',
-          label: ' IMMUNE-MEDIATED',
-          sublabel: 'Culture-negative neutrophilic inflammation · multiple DISTAL joints (carpi + tarsi) · young–middle-aged',
-          link: { to: 'flow', id: 'swollen-joints-immune' },
-        },
-        {
-          tone: 'slate',
-          label: ' NON-INFLAMMATORY / DEGENERATIVE',
-          sublabel: 'Mononuclear synovial fluid · <10% neutrophils · intermittent / shifting lameness in an otherwise well animal',
-          link: { to: 'flow', id: 'swollen-joints-noninflam' },
+          label: ' MULTIPLE JOINTS (POLYARTHROPATHY)',
+          sublabel: 'Two or more joints ± shifting / stilted "walking on eggshells" gait · often febrile and lethargic rather than lame',
+          link: { to: 'flow', id: 'swollen-joints-poly' },
         },
       ],
     },
@@ -58,6 +52,112 @@ const swollenJointsEntry: FlowPage = {
   ],
 }
 
+const swollenJointsSingle: FlowPage = {
+  id: 'swollen-joints-single',
+  title: 'Swollen Joints — Single Joint',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: ' SINGLE JOINT (MONOARTHROPATHY)', sub: 'One swollen / painful joint with every other joint normal on palpation · usually local joint disease rather than systemic illness' },
+    {
+      kind: 'node',
+      variant: 'step',
+      text: 'IS IT HOT, ACUTE AND VERY PAINFUL?',
+      subItems: [
+        'YES + fever / recent surgery / bite or penetrating wound → tap the joint NOW: septic arthritis is an emergency',
+        'NO, chronic and progressive with crepitus and reduced range of motion → degenerative',
+        'Acute onset after a known event, ± instability on stress → traumatic',
+        'Firm swelling that does not localise cleanly to the joint line → radiograph for bone tumour before calling it arthropathy (Ettinger Ch 32 / Ch 177)',
+      ],
+    },
+    IDENTIFY_CAUSE_STEP,
+    {
+      kind: 'categoryColumns',
+      columns: [
+        {
+          cat: 'Degenerative',
+          tiles: [
+            { label: 'Osteoarthritis / DJD', link: { to: 'disease', id: 'DIS-MSK-OA' } },
+            { label: 'Cranial cruciate ligament disease', link: { to: 'disease', id: 'DIS-MSK-CCL' } },
+            { label: 'Patellar luxation', link: { to: 'disease', id: 'DIS-MSK-PATLUX' } },
+            { label: 'Hip / elbow dysplasia · OCD — young large-breed dog, secondary OA', terminal: true },
+          ],
+        },
+        {
+          cat: 'Trauma',
+          tiles: [
+            { label: 'Acute trauma — sprain / strain, joint capsule or collateral ligament injury', terminal: true },
+            { label: 'Luxation / subluxation — hip, elbow, shoulder, carpus/tarsus; radiograph both views', terminal: true },
+            { label: 'Intra-articular fracture', terminal: true },
+            { label: 'Haemarthrosis — bleeding disorder or anticoagulant rodenticide; check coagulation', terminal: true },
+          ],
+        },
+        {
+          cat: 'Neoplastic',
+          tiles: [
+            { label: 'Joint / synovial neoplasia', link: { to: 'disease', id: 'DIS-NEO-SJOINT' } },
+            { label: 'Osteosarcoma (juxta-articular)', link: { to: 'disease', id: 'DIS-NEO-OSA' } },
+          ],
+        },
+        {
+          cat: 'Inflammatory',
+          tiles: [
+            { label: 'Bacterial septic arthritis', link: { to: 'disease', id: 'DIS-MSK-SA' } },
+            { label: 'Haematogenous source (endocarditis)', link: { to: 'disease', id: 'DIS-CARD-IE' } },
+            { label: 'Discospondylitis', link: { to: 'disease', id: 'DIS-DISCO' } },
+          ],
+        },
+      ],
+    },
+  ],
+}
+
+const swollenJointsPoly: FlowPage = {
+  id: 'swollen-joints-poly',
+  title: 'Swollen Joints — Polyarthropathy',
+  blocks: [
+    { kind: 'node', variant: 'entry', text: ' MULTIPLE JOINTS (POLYARTHROPATHY)', sub: 'Two or more joints involved · often presented as lethargy, ↓appetite and fever rather than lameness' },
+    {
+      kind: 'callout',
+      tone: 'teal',
+      html: ' <strong>Arthrocentesis of MULTIPLE joints is the pivotal test</strong> — sample both carpi + both tarsi (≥4 joints) even if only one looks swollen. Synovial cytology + culture is what separates inflammatory from non-inflammatory and septic from immune-mediated. (Ettinger Ch 32 / Ch 177)',
+    },
+    {
+      kind: 'node',
+      variant: 'step',
+      text: 'INFLAMMATORY vs NON-INFLAMMATORY?',
+      subItems: [
+        'Synovial TNCC >5 ×10⁹/L with >10% neutrophils = INFLAMMATORY',
+        'Mononuclear fluid with <10% neutrophils = degenerative / NON-INFLAMMATORY',
+        'Inflammatory cases often show lethargy, ↓appetite and fever — not always overt lameness',
+        'Degenerate neutrophils ± intracellular organisms = septic; culture-negative non-degenerate neutrophils = immune-mediated (Ettinger Ch 32 / Ch 71)',
+      ],
+    },
+    {
+      kind: 'choices',
+      cols: 3,
+      items: [
+        {
+          tone: 'danger',
+          label: ' SEPTIC / INFECTIOUS',
+          sublabel: 'Degenerate neutrophils ± intracellular organisms on cytology · febrile · tick exposure or a penetrating wound in the history',
+          link: { to: 'flow', id: 'swollen-joints-septic' },
+        },
+        {
+          tone: 'info',
+          label: ' IMMUNE-MEDIATED',
+          sublabel: 'Culture-negative neutrophilic inflammation · multiple DISTAL joints (carpi + tarsi) · young–middle-aged',
+          link: { to: 'flow', id: 'swollen-joints-immune' },
+        },
+        {
+          tone: 'slate',
+          label: ' NON-INFLAMMATORY / DEGENERATIVE',
+          sublabel: 'Mononuclear synovial fluid · <10% neutrophils · intermittent / shifting lameness in an otherwise well animal',
+          link: { to: 'flow', id: 'swollen-joints-noninflam' },
+        },
+      ],
+    },
+  ],
+}
+
 const swollenJointsSeptic: FlowPage = {
   id: 'swollen-joints-septic',
   title: 'Swollen Joints — Septic / Infectious',
@@ -71,20 +171,20 @@ const swollenJointsSeptic: FlowPage = {
           cat: 'Single Joint — Bacterial',
           tone: 'danger',
           tiles: [
-            { label: 'BACTERIAL SEPTIC ARTHRITIS', link: { to: 'disease', id: 'DIS-MSK-SA' } },
-            { label: 'HAEMATOGENOUS SOURCE', link: { to: 'disease', id: 'DIS-CARD-IE' } },
-            { label: ' DISCOSPONDYLITIS', link: { to: 'disease', id: 'DIS-DISCO' } },
+            { label: 'Bacterial septic arthritis', link: { to: 'disease', id: 'DIS-MSK-SA' } },
+            { label: 'Haematogenous source', link: { to: 'disease', id: 'DIS-CARD-IE' } },
+            { label: 'Discospondylitis', link: { to: 'disease', id: 'DIS-DISCO' } },
           ],
         },
         {
           cat: 'Vector-Borne Polyarthritis',
           tone: 'violet',
           tiles: [
-            { label: ' LYME (Borrelia)', link: { to: 'disease', id: 'DIS-INFECT-LYME' } },
-            { label: ' ANAPLASMOSIS', link: { to: 'disease', id: 'DIS-INFECT-ANAP' } },
-            { label: ' EHRLICHIOSIS', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
-            { label: ' RMSF (Rickettsia)', link: { to: 'disease', id: 'DIS-INFECT-RMSF' } },
-            { label: ' LEISHMANIOSIS', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
+            { label: 'Lyme (Borrelia)', link: { to: 'disease', id: 'DIS-INFECT-LYME' } },
+            { label: 'Anaplasmosis', link: { to: 'disease', id: 'DIS-INFECT-ANAP' } },
+            { label: 'Ehrlichiosis', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
+            { label: 'RMSF (Rickettsia)', link: { to: 'disease', id: 'DIS-INFECT-RMSF' } },
+            { label: 'Leishmaniosis', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
           ],
         },
       ],
@@ -105,9 +205,9 @@ const swollenJointsImmune: FlowPage = {
           cat: 'Non-Erosive (Commonest)',
           tone: 'info',
           tiles: [
-            { label: ' IDIOPATHIC IMPA', link: { to: 'disease', id: 'DIS-IMPA' } },
+            { label: 'Idiopathic IMPA', link: { to: 'disease', id: 'DIS-IMPA' } },
             { label: ' SLE', link: { to: 'disease', id: 'DIS-IM-SLE' } },
-            { label: ' SRMA + IMPA', link: { to: 'disease', id: 'DIS-SRMA' } },
+            { label: 'SRMA + IMPA', link: { to: 'disease', id: 'DIS-SRMA' } },
             { label: 'Reactive / drug-induced', link: { to: 'disease', id: 'DIS-IMPA' } },
           ],
         },
@@ -115,7 +215,7 @@ const swollenJointsImmune: FlowPage = {
           cat: 'Erosive',
           tone: 'orange',
           tiles: [
-            { label: 'RHEUMATOID ARTHRITIS', link: { to: 'disease', id: 'DIS-MSK-RA' } },
+            { label: 'Rheumatoid arthritis', link: { to: 'disease', id: 'DIS-MSK-RA' } },
             { label: 'Feline periosteal proliferative', link: { to: 'disease', id: 'DIS-MSK-RA' } },
           ],
         },
@@ -137,16 +237,17 @@ const swollenJointsNoninflam: FlowPage = {
           cat: 'Degenerative / Traumatic',
           tone: 'slate',
           tiles: [
-            { label: 'OSTEOARTHRITIS / DJD', link: { to: 'disease', id: 'DIS-MSK-OA' } },
-            { label: ' TRAUMA / HAEMARTHROSIS — cruciate injury; haemarthrosis from a bleeding disorder', terminal: true },
+            { label: 'Osteoarthritis / DJD', link: { to: 'disease', id: 'DIS-MSK-OA' } },
+            { label: 'Cranial cruciate ligament disease', link: { to: 'disease', id: 'DIS-MSK-CCL' } },
+            { label: 'Patellar luxation', link: { to: 'disease', id: 'DIS-MSK-PATLUX' } },
+            { label: 'Haemarthrosis — bleeding disorder or anticoagulant rodenticide; check coagulation', terminal: true },
           ],
         },
         {
           cat: 'Neoplastic',
-          tone: 'violet',
           tiles: [
-            { label: 'JOINT / SYNOVIAL NEOPLASIA', link: { to: 'disease', id: 'DIS-NEO-SJOINT' } },
-            { label: ' OSTEOSARCOMA (juxta-articular)', link: { to: 'disease', id: 'DIS-NEO-OSA' } },
+            { label: 'Joint / synovial neoplasia', link: { to: 'disease', id: 'DIS-NEO-SJOINT' } },
+            { label: 'Osteosarcoma (juxta-articular)', link: { to: 'disease', id: 'DIS-NEO-OSA' } },
           ],
         },
       ],
@@ -156,6 +257,8 @@ const swollenJointsNoninflam: FlowPage = {
 
 export const swollenJointsFlows: FlowPage[] = [
   swollenJointsEntry,
+  swollenJointsSingle,
+  swollenJointsPoly,
   swollenJointsSeptic,
   swollenJointsImmune,
   swollenJointsNoninflam,

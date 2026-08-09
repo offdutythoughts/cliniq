@@ -5,7 +5,7 @@
 // <ClinicalSections> stack (diseaseSections.tsx), so this page and a disease
 // page render the same sections, in the same order, in the same bullet form.
 // This file owns only the lesion-specific shell: tags, the EMERGENCY banner,
-// a protocol card, Notes, and the link out to a disease page.
+// a protocol card and the link out to a disease page.
 //
 // Sub-types that ARE a single disease set directDis + dis and redirect to the
 // disease page instead of duplicating its content here — enforced by
@@ -20,8 +20,8 @@ import { useNav } from '../nav/NavContext'
 import { UrgTag, SpTag, ZooTag } from './tags'
 import { DiseasePageView } from './DiseasePageView'
 import { ClinicalSections } from './diseaseSections'
-import { NavCard, Card, Bul, str } from './markup'
-import { TAG_ROW, BODY_TEXT, PAGE_TITLE } from './styles'
+import { NavCard, Bul, str } from './markup'
+import { TAG_ROW, PAGE_TITLE } from './styles'
 
 /** Fallback Etiology for a broad symptom sub-type with nothing authored: the
  *  sibling differentials ARE the aetiology list (e.g. "Syncope" → its causes).
@@ -59,7 +59,6 @@ export function SubTypeDetailView({ id }: { id: string }) {
 
   const isEM = l.urg === 'EMERGENCY'
   const proto = str(l.proto)
-  const note = str(l.note)
   const dis = str(l.dis)
   const filter = str(l.filter)
   const signalment = str(l.signalment)
@@ -94,7 +93,6 @@ export function SubTypeDetailView({ id }: { id: string }) {
         }}
       />
 
-      {note && <Card title="Notes"><div style={BODY_TEXT}>{note}</div></Card>}
 
       {dis && (
         <NavCard title="📋 Disease Page" sub="Tap to view full disease profile" onClick={() => nav.navigate({ kind: 'disease', id: dis })} style={{ marginBottom: 14 }} />

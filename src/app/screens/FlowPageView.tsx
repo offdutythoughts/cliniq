@@ -75,7 +75,7 @@ function splitCols(b: Block): Fork | 'self' | null {
     case 'branch': return b.scroll ? null : (b.columns.length >= 2 ? 'self' : null)
     case 'categoryGrid': return b.columns.length >= SPILL_AT.grid ? 'self' : fork(b.columns.length, 6)
     case 'categoryColumns': {
-      const n = b.cols ?? b.columns.length
+      const n = b.columns.length
       return n >= SPILL_AT.dense ? 'self' : fork(n, 6)
     }
     case 'choices': return fork(b.cols ?? b.items.length, 6)
@@ -161,6 +161,15 @@ function NodeBlock({ b }: { b: Extract<Block, { kind: 'node' }> }) {
     <div className="flow-node step">
       {b.text}
       {b.sub && <div className="fn-sub" style={s('font-weight:400;margin-top:3px;')}>{b.sub}</div>}
+      {b.subItems && (
+        <div className="fn-sub" style={s('font-weight:400;margin-top:4px;text-align:left;line-height:1.55;')}>
+          {b.subItems.map((it, i) => (
+            <div key={i} style={s('display:flex;gap:5px;align-items:flex-start;')}>
+              <span aria-hidden="true">•</span><span style={s('min-width:0;')}>{it}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
@@ -317,7 +326,7 @@ const LOCK_CAT_GAP = 6
 function armTrackWidth(col: Column): string {
   const cc = col.blocks.find(b => b.kind === 'categoryColumns')
   if (!cc || cc.kind !== 'categoryColumns') return 'max-content'
-  const n = cc.cols ?? cc.columns.length
+  const n = cc.columns.length
   return `${n * LOCK_CAT_W + (n - 1) * LOCK_CAT_GAP}px`
 }
 // Legible floor for a branch arm. Arms shrink with the viewport (the column is
@@ -524,14 +533,23 @@ function CategoryBlock({ columns, cols, preset, lead, onNav }: { columns: CatCol
 
 // ── Category columns (CAT_STYLE) ──────────────────────────────────────────────
 const catStyle = (v: string) => ({ bg: `rgba(var(--cat-${v}),var(--tile-bg-a))`, border: `rgba(var(--cat-${v}),var(--tile-bd-a))`, col: `var(--cat-${v}-fg)` })
+// One lesion category → one colour, everywhere. Keys are the `CatLabel` union in
+// flowTypes; `lint:cats` fails any category column whose label is neither a key
+// here nor a reviewed page-specific (anatomical / mechanism) column.
 const CAT_STYLE: Record<string, { bg: string; border: string; col: string }> = {
   'Vascular': catStyle('vascular'),
   'Inflammatory': catStyle('inflammatory'),
-  'Mass': catStyle('mass'),
+  'Infectious': catStyle('infectious'),
+  'Neoplastic': catStyle('neoplastic'),
   'Immune-mediated': catStyle('immune'),
   'Degenerative': catStyle('degenerative'),
   'Metabolic / Endocrine': catStyle('metabolic'),
+  'Metabolic': catStyle('metabolic'),
+  'Endocrine': catStyle('endocrine'),
+  'Neurological': catStyle('neurological'),
   'Toxic': catStyle('toxic'),
+  // Drug-induced disease is iatrogenic toxicity — same palette, distinct label.
+  'Drug-induced': catStyle('toxic'),
   'Trauma': catStyle('trauma'),
   'Anomalous': catStyle('anomalous'),
 }
@@ -791,7 +809,7 @@ function BlockView({ b, lead, onNav }: { b: Block; lead?: boolean; onNav: Nav })
     case 'table': return <TableBlock b={b} onNav={onNav} />
     case 'cardSection': return <CardSectionBlock b={b} onNav={onNav} />
     case 'categoryGrid': return <CategoryBlock columns={b.columns} cols={b.columns.length} preset="grid" lead={lead} onNav={onNav} />
-    case 'categoryColumns': return <CategoryBlock columns={b.columns} cols={b.cols ?? b.columns.length} preset="dense" lead={lead} onNav={onNav} />
+    case 'categoryColumns': return <CategoryBlock columns={b.columns} cols={b.columns.length} preset="dense" lead={lead} onNav={onNav} />
     case 'decisionTree': return <>{b.steps.map((step, i) => <DecisionStepView key={i} step={step} onNav={onNav} />)}</>
     case 'fork': return <ForkBlockView legs={b.legs} onNav={onNav} />
     case 'compareBox': return <CompareBoxBlock b={b} onNav={onNav} />

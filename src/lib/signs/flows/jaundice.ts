@@ -157,7 +157,7 @@ const jaundiceHep: FlowPage = {
           ],
         },
         {
-          cat: 'Mass', tiles: [
+          cat: 'Neoplastic', tiles: [
             { label: 'HCC / biliary carcinoma', link: { to: 'disease', id: 'DIS-HEP-NEO' } },
             { label: 'Metastasis / lymphoma', link: { to: 'disease', id: 'DIS-HEP-NEO' } },
           ],
@@ -214,7 +214,7 @@ const jaundicePostHep: FlowPage = {
           ],
         },
         {
-          cat: 'Mass', tiles: [
+          cat: 'Neoplastic', tiles: [
             { label: 'Biliary / GB carcinoma', link: { to: 'disease', id: 'DIS-HEP-NEO' } },
             { label: 'Pancreatic adenocarcinoma', terminal: true },
             { label: 'Duodenal neoplasia', terminal: true },

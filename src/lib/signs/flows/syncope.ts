@@ -5,17 +5,71 @@ const syncopeEntry: FlowPage = {
   id: 'syncope',
   title: 'Syncope',
   blocks: [
-    { kind: 'node', variant: 'entry', text: ' SYNCOPE — confirmed transient LOC' },
+    { kind: 'node', variant: 'entry', text: ' SYNCOPE — TRANSIENT LOSS OF CONSCIOUSNESS' },
+
+    // Q1: Confirm it IS syncope. Drawn as a typed fork rather than prose so the
+    // seizure / narcolepsy mimics sit ON the flowchart — the SYNCOPE leg is a
+    // `continue` leg, so the main spine runs unbroken into the localisation step.
+    {
+      kind: 'node',
+      variant: 'step',
+      text: 'IS THIS REALLY SYNCOPE?',
+      // subItems are PLAIN TEXT (rendered as React children, not HTML) — no tags.
+      subItems: [
+        'Syncope = TLOC from cerebral hypoperfusion · BP must fall ~50%, or an arrhythmia last ~10–30 s, before consciousness is lost',
+        'Pre-syncope = partial LOC with brief ataxia / stumbling — work it up the same way',
+        'Getting this wrong is not neutral: anti-epileptic drugs can WORSEN syncope, and a missed malignant arrhythmia carries a sudden-death risk',
+      ],
+    },
+    {
+      kind: 'fork',
+      legs: [
+        {
+          label: 'SEIZURE',
+          sub: 'Aura / pre-ictal change · tonic-clonic or paddling · often at rest or from sleep · salivation, urination, defecation · post-ictal confusion, blindness, hunger for minutes–hours',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'Collapse / LOC triage', sublabel: 'Full syncope vs seizure vs narcolepsy table', tone: 'orange', link: { to: 'flow', id: 'weakness-collapse' } },
+                { label: 'Epilepsy / seizures', tone: 'violet', link: { to: 'disease', id: 'DIS-WK-EPILEPSY' } },
+              ],
+            },
+          ],
+        },
+        {
+          label: 'SYNCOPE',
+          sub: 'Flaccid, limp tone · no aura · exertion / excitement / cough / micturition trigger · seconds long · INSTANT and complete recovery, normal immediately after',
+          continue: true,
+        },
+        {
+          label: 'NARCOLEPSY / CATAPLEXY',
+          sub: 'Sudden loss of tone triggered by food or excitement, or a sleep attack · arousable during the episode · normal immediately after · AEDs have no effect',
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'Narcolepsy / cataplexy', sublabel: 'Provoke with a food-trigger test — not a hypoperfusion event', tone: 'slate' },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
     {
       kind: 'callout',
       tone: 'info',
-      html: '<strong>Syncope is confirmed.</strong> You\'ve already separated it from seizure (flaccid, no aura, instant recovery) using the <strong>Weakness / Collapse</strong> triage flow. Now localise the cause: <strong>Cardiogenic</strong> (arrhythmia / structural outflow / pulmonary hypertension) or <strong>Non-cardiogenic</strong> (reflex / metabolic mimic). Exclude cheap metabolic mimics — glucose, Na:K ± ACTH stim — before an expensive cardiac work-up. (Ettinger Ch 40)',
+      html: '<strong>Syncope confirmed.</strong> Now localise the cause: <strong>Cardiogenic</strong> (arrhythmia / structural outflow / pulmonary hypertension) or <strong>Non-cardiogenic</strong> (reflex / metabolic mimic). Exclude the cheap metabolic mimics — glucose, Na:K ± ACTH stim — before an expensive cardiac work-up. (Ettinger Ch 40)',
     },
     {
       kind: 'node',
       variant: 'step',
       text: 'LOCALISE THE CAUSE — CARDIOGENIC vs NON-CARDIOGENIC',
-      sub: 'Syncope = TLOC from cerebral hypoperfusion · BP must fall ~50% before unconsciousness · arrhythmia must last ~10–30 s to trigger it (Ettinger Ch 40)',
+      subItems: [
+        'Exertional trigger, murmur / gallop, arrhythmia or known heart disease pushes cardiac',
+        'A clear situational trigger with a structurally normal heart pushes reflex (Ettinger Ch 40)',
+      ],
     },
     {
       kind: 'choices',
@@ -64,28 +118,28 @@ const syncopeCardiac: FlowPage = {
           cat: 'Arrhythmia (Brady or Tachy)',
           tone: 'danger',
           tiles: [
-            { label: 'BRADYARRHYTHMIA', link: { to: 'disease', id: 'DIS-CARD-ARRHYTHMIA' } },
-            { label: 'TACHYARRHYTHMIA', link: { to: 'disease', id: 'DIS-CARD-ARRHYTHMIA' } },
+            { label: 'Bradyarrhythmia', link: { to: 'disease', id: 'DIS-CARD-ARRHYTHMIA' } },
+            { label: 'Tachyarrhythmia', link: { to: 'disease', id: 'DIS-CARD-ARRHYTHMIA' } },
           ],
         },
         {
           cat: 'Structural / Outflow',
           tone: 'violet',
           tiles: [
-            { label: ' HYPERTROPHIC CARDIOMYOPATHY', link: { to: 'disease', id: 'DIS-HCM' } },
-            { label: ' DILATED CARDIOMYOPATHY', link: { to: 'disease', id: 'DIS-CARD-DCM' } },
-            { label: ' RESTRICTIVE CARDIOMYOPATHY', link: { to: 'disease', id: 'DIS-CARD-RCM' } },
-            { label: ' PERICARDIAL EFFUSION / TAMPONADE', link: { to: 'disease', id: 'DIS-CARD-PERIC' } },
-            { label: ' MYXOMATOUS MITRAL VALVE DISEASE', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
+            { label: 'Hypertrophic cardiomyopathy', link: { to: 'disease', id: 'DIS-HCM' } },
+            { label: 'Dilated cardiomyopathy', link: { to: 'disease', id: 'DIS-CARD-DCM' } },
+            { label: 'Restrictive cardiomyopathy', link: { to: 'disease', id: 'DIS-CARD-RCM' } },
+            { label: 'Pericardial effusion / tamponade', link: { to: 'disease', id: 'DIS-CARD-PERIC' } },
+            { label: 'Myxomatous mitral valve disease', link: { to: 'disease', id: 'DIS-CARD-MVD' } },
           ],
         },
         {
           cat: 'Pulmonary Hypertension / R-Sided',
           tone: 'orange',
           tiles: [
-            { label: ' PULMONARY HYPERTENSION', link: { to: 'disease', id: 'DIS-RESP-PHTN' } },
-            { label: ' HEARTWORM DISEASE', link: { to: 'disease', id: 'DIS-CARD-HW' } },
-            { label: ' ARTERIAL THROMBOEMBOLISM', link: { to: 'disease', id: 'DIS-CARD-ATE' } },
+            { label: 'Pulmonary hypertension', link: { to: 'disease', id: 'DIS-RESP-PHTN' } },
+            { label: 'Heartworm disease', link: { to: 'disease', id: 'DIS-CARD-HW' } },
+            { label: 'Arterial thromboembolism', link: { to: 'disease', id: 'DIS-CARD-ATE' } },
           ],
         },
       ],
@@ -106,7 +160,7 @@ const syncopeReflex: FlowPage = {
           cat: 'Neurocardiogenic / Reflex',
           tone: 'teal',
           tiles: [
-            { label: ' VASOVAGAL SYNCOPE', link: { to: 'disease', id: 'DIS-CARD-ARRHYTHMIA' } },
+            { label: 'Vasovagal syncope', link: { to: 'disease', id: 'DIS-CARD-ARRHYTHMIA' } },
             { label: ' Tussive / situational syncope — cough, vomiting, micturition, defecation, swallowing', terminal: true },
           ],
         },
@@ -114,8 +168,8 @@ const syncopeReflex: FlowPage = {
           cat: 'Metabolic Mimic',
           tone: 'warning',
           tiles: [
-            { label: ' HYPOGLYCAEMIA', link: { to: 'disease', id: 'DIS-MET-HYPOGLY' } },
-            { label: ' HYPOADRENOCORTICISM (ADDISON)', link: { to: 'disease', id: 'DIS-SEC-HYPO' } },
+            { label: 'Hypoglycaemia', link: { to: 'disease', id: 'DIS-MET-HYPOGLY' } },
+            { label: 'Hypoadrenocorticism (Addison)', link: { to: 'disease', id: 'DIS-SEC-HYPO' } },
             { label: ' Severe systemic hypertension', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
           ],
         },
@@ -123,7 +177,7 @@ const syncopeReflex: FlowPage = {
           cat: 'Not Syncope — Seizure',
           tone: 'violet',
           tiles: [
-            { label: ' EPILEPSY / SEIZURE', link: { to: 'disease', id: 'DIS-WK-EPILEPSY' } },
+            { label: 'Epilepsy / seizure', link: { to: 'disease', id: 'DIS-WK-EPILEPSY' } },
           ],
         },
       ],

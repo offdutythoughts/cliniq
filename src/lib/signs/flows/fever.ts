@@ -20,7 +20,11 @@ const feverEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'IS THIS REGULATED FEVER OR HYPERTHERMIA?',
-      sub: 'No cooling behaviour + lethargy / anorexia / stiffness / hyperpnea = fever · recent heat / exercise + panting / cold-seeking = hyperthermia · stressed clinic patient: rest 20 min in a cool room (healthy dogs/cats reach 39.7°C / 103.5°F in consult)',
+      subItems: [
+        'No cooling behaviour + lethargy / anorexia / stiffness / hyperpnea = fever',
+        'Recent heat or exercise + panting / cold-seeking = hyperthermia',
+        'Stressed clinic patient: rest 20 min in a cool room — healthy dogs and cats reach 39.7°C / 103.5°F in consult',
+      ],
     },
     {
       kind: 'choices',
@@ -29,13 +33,13 @@ const feverEntry: FlowPage = {
         {
           tone: 'danger',
           label: ' TRUE FEVER — find the cause',
-          sublabel: 'FUO = temp >39.2°C for ≥3 weeks, no cause after ≥3 visits; screen INFECTIOUS · IMMUNE-MEDIATED · NEOPLASTIC',
+          sublabel: 'Regulated rise — shivers, seeks warmth, responds to NSAIDs · FUO = >39.2°C for ≥3 weeks with no cause after ≥3 visits',
           link: { to: 'flow', id: 'fever-true' },
         },
         {
           tone: 'warning',
           label: ' HYPERTHERMIA — non-pyrogenic',
-          sublabel: 'Heatstroke · exercise · seizures · stress · drugs — ACTIVELY COOL if >41.1°C (106°F)',
+          sublabel: 'Unregulated rise — pants, seeks cooling, does NOT respond to NSAIDs · ACTIVELY COOL if >41.1°C (106°F)',
           link: { to: 'flow', id: 'fever-hyperthermia' },
         },
       ],
@@ -68,34 +72,31 @@ const feverTrue: FlowPage = {
       columns: [
         {
           cat: 'Infectious',
-          tone: 'danger',
           tiles: [
-            { label: ' VECTOR-BORNE DISEASE', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
-            { label: ' DISCOSPONDYLITIS', link: { to: 'disease', id: 'DIS-DISCO' } },
+            { label: 'Vector-borne disease', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
+            { label: 'Discospondylitis', link: { to: 'disease', id: 'DIS-DISCO' } },
             { label: 'Bacterial endocarditis', link: { to: 'disease', id: 'DIS-CARD-IE' } },
-            { label: ' SEPTIC PERITONITIS', link: { to: 'protocol', id: 'PROT-SEPSIS' } },
-            { label: ' PYELONEPHRITIS', link: { to: 'disease', id: 'DIS-URO-PYELO' } },
-            { label: ' PROSTATITIS', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
+            { label: 'Septic peritonitis', link: { to: 'disease', id: 'DIS-GI-SEPTPERIT' } },
+            { label: 'Pyelonephritis', link: { to: 'disease', id: 'DIS-URO-PYELO' } },
+            { label: 'Prostatitis', link: { to: 'disease', id: 'DIS-URO-PROSTATITIS' } },
             { label: ' FIP (young cat)', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
-            { label: ' SYSTEMIC FUNGAL', link: { to: 'disease', id: 'DIS-INFECT-BLASTO' } },
+            { label: 'Systemic fungal', link: { to: 'disease', id: 'DIS-INFECT-BLASTO' } },
           ],
         },
         {
-          cat: 'Immune-Mediated',
-          tone: 'info',
+          cat: 'Immune-mediated',
           tiles: [
-            { label: ' IMMUNE-MEDIATED POLYARTHRITIS', link: { to: 'disease', id: 'DIS-IMPA' } },
-            { label: ' SRMA', link: { to: 'disease', id: 'DIS-SRMA' } },
+            { label: 'Immune-mediated polyarthritis', link: { to: 'disease', id: 'DIS-IMPA' } },
+            { label: 'SRMA', link: { to: 'disease', id: 'DIS-SRMA' } },
             { label: ' SLE', link: { to: 'disease', id: 'DIS-IM-SLE' } },
             { label: 'IMHA / IMTP', link: { to: 'disease', id: 'DIS-BD-IMHA' } },
           ],
         },
         {
           cat: 'Neoplastic',
-          tone: 'violet',
           tiles: [
-            { label: ' LYMPHOMA / LEUKAEMIA', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
-            { label: ' PARANEOPLASTIC FEVER', link: { to: 'disease', id: 'DIS-NEO-PARANEO' } },
+            { label: 'Lymphoma / leukaemia', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
+            { label: 'Paraneoplastic fever', link: { to: 'disease', id: 'DIS-NEO-PARANEO' } },
             { label: 'Histiocytic disease', link: { to: 'disease', id: 'DIS-NEO-HSARC' } },
           ],
         },
@@ -122,7 +123,6 @@ const feverHyperthermia: FlowPage = {
         },
         {
           cat: 'Neurological',
-          tone: 'warning',
           tiles: [
             { label: 'Seizures', link: { to: 'flow', id: 'seizures' } },
             { label: 'Tremors', link: { to: 'flow', id: 'tremors' } },

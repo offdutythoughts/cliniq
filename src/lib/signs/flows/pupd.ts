@@ -29,7 +29,11 @@ const pupdEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'IS THIS TRUE PU/PD?',
-      sub: 'Large-volume conscious voiding · nocturia · owner-witnessed increased drinking · pathological thresholds if measured: water >100 ml/kg/day (dog) or >50 ml/kg/day (cat) · urine >50 ml/kg/day (both)',
+      subItems: [
+        'Large-volume conscious voiding · nocturia · owner-witnessed increased drinking',
+        'Pathological thresholds if measured: water >100 ml/kg/day (dog) or >50 ml/kg/day (cat)',
+        'Urine >50 ml/kg/day in both species',
+      ],
     },
     {
       kind: 'fork',
@@ -53,7 +57,11 @@ const pupdEntry: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'CLASSIFY — PRIMARY PD · PRIMARY PU · SECONDARY PU',
-      sub: 'Serial USG (3–5 samples) + plasma Na⁺ are the key tests · collect before IV fluids · check dipstick glucose (DM raises USG artificially)',
+      subItems: [
+        'Serial USG (3–5 samples) + plasma Na⁺ are the key tests',
+        'Collect before IV fluids',
+        'Check dipstick glucose — DM raises USG artificially',
+      ],
     },
 
     // The three classes side by side as a comparison table (the acute-vestibular
@@ -112,33 +120,32 @@ const pupdEntry: FlowPage = {
       kind: 'choices',
       size: 10,
       items: [
-        { tone: 'green', label: 'Primary PD', sublabel: 'Psychogenic · hyperthyroid · HE', link: { to: 'flow', id: 'pupd-prim-pd' } },
-        { tone: 'indigo', label: 'Primary PU', sublabel: 'CDI · NDI · DM · CKD', link: { to: 'flow', id: 'pupd-prim-pu' } },
-        { tone: 'warning', label: 'Secondary PU', sublabel: 'HAC · hypercalcaemia · more', link: { to: 'flow', id: 'pupd-sec-pu' } },
+        { tone: 'green', label: 'Primary PD', sublabel: 'Drinking is the primary event · systemically well · Na⁺ low-normal', link: { to: 'flow', id: 'pupd-prim-pd' } },
+        { tone: 'indigo', label: 'Primary PU', sublabel: 'Urination is the primary event · thirst is compensatory · Na⁺ high-normal', link: { to: 'flow', id: 'pupd-prim-pu' } },
+        { tone: 'warning', label: 'Secondary PU', sublabel: 'PU/PD alongside other systemic signs + abnormal biochemistry', link: { to: 'flow', id: 'pupd-sec-pu' } },
       ],
     },
 
     // Pearls
     {
-      kind: 'html',
-      html: `<div style="margin-top:10px;padding:9px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
-      <div style="font-size:10px;font-weight:700;color:var(--tone-indigo-fg);margin-bottom:4px;">🔬 CLINICAL PEARLS</div>
-      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
-        <strong style="color:var(--white);">Na⁺ high-normal</strong> → free water being lost → primary PU (kidney not retaining water)<br>
+      kind: 'infoBox',
+      tone: 'indigo',
+      icon: '🔬',
+      title: 'CLINICAL PEARLS',
+      html: `<strong style="color:var(--white);">Na⁺ high-normal</strong> → free water being lost → primary PU (kidney not retaining water)<br>
         <strong style="color:var(--white);">Na⁺ low-normal</strong> → excessive water intake diluting plasma → primary PD<br>
         <strong style="color:var(--white);">Absent stress leukogram</strong> in a sick dog → Addison's (cortisol abolishes stress response)<br>
-        <strong style="color:var(--white);">↑ ALP + polyphagia + pot belly</strong> → HAC until proven otherwise (secondary PU via NDI)
-      </div>
-    </div>`,
+        <strong style="color:var(--white);">↑ ALP + polyphagia + pot belly</strong> → HAC until proven otherwise (secondary PU via NDI)`,
     },
 
     // Safety
     {
-      kind: 'html',
-      html: `<div style="margin-top:8px;padding:9px 12px;background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.2);border-radius:10px;font-size:9.5px;width:100%;">
-      <span style="color:var(--tone-danger-title);font-weight:700;">⚠️ SAFETY: </span>
-      <span style="color:var(--tone-danger-fg);">NEVER restrict water · NEVER desmopressin if hyponatraemic (Na &lt;145) · Rule out HAC before desmopressin · Rectal exam mandatory (anal sac carcinoma → hypercalcaemia)</span>
-    </div>`,
+      kind: 'infoBox',
+      tone: 'danger',
+      gap: 8,
+      icon: '⚠️',
+      title: 'SAFETY',
+      html: 'NEVER restrict water · NEVER desmopressin if hyponatraemic (Na &lt;145) · Rule out HAC before desmopressin · Rectal exam mandatory (anal sac carcinoma → hypercalcaemia)',
     },
 
     { kind: 'disclaimer' },
@@ -171,7 +178,6 @@ const pupdPrimPD: FlowPage = {
         },
         {
           cat: 'Metabolic',
-          tone: 'teal',
           tiles: [
             { label: 'Hepatic encephalopathy', link: { to: 'disease', id: 'DIS-HEP-HE' } },
             { label: 'Portosystemic shunt', link: { to: 'disease', id: 'DIS-HEP-PSS' } },
@@ -179,7 +185,6 @@ const pupdPrimPD: FlowPage = {
         },
         {
           cat: 'Endocrine',
-          tone: 'violet',
           tiles: [{ label: 'Hyperthyroidism (cat)', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } }],
         },
         {
@@ -191,17 +196,15 @@ const pupdPrimPD: FlowPage = {
     },
 
     {
-      kind: 'html',
-      html: `<div style="margin-top:10px;padding:9px 12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:10px;width:100%;">
-      <div style="font-size:10px;font-weight:700;color:var(--tone-green-fg);margin-bottom:4px;">🔬 DIAGNOSTIC APPROACH — Primary PD</div>
-      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
-        <strong style="color:var(--white);">All:</strong> CBC · biochemistry (low BUN suggests PSS) · urinalysis (dipstick glucose, sediment) · serial USG (3–5 samples) · plasma Na⁺ · BP<br>
+      kind: 'infoBox',
+      tone: 'green',
+      icon: '🔬',
+      title: 'DIAGNOSTIC APPROACH — PRIMARY PD',
+      html: `<strong style="color:var(--white);">All:</strong> CBC · biochemistry (low BUN suggests PSS) · urinalysis (dipstick glucose, sediment) · serial USG (3–5 samples) · plasma Na⁺ · BP<br>
         <strong style="color:var(--white);">Cat &gt;7 yr:</strong> T4 first — hyperthyroidism is most common cause in older cats<br>
         <strong style="color:var(--white);">Young dog + stunted:</strong> Pre/post-prandial bile acids · ammonia · abdominal US for PSS<br>
         <strong style="color:var(--white);">Psychogenic suspected:</strong> Document ≥1 USG &gt;1.030 · Na⁺ low-normal · all other causes excluded<br>
-        <strong style="color:var(--white);">NEVER</strong> restrict water or perform WDT before full workup · NEVER desmopressin if hyponatraemic
-      </div>
-    </div>`,
+        <strong style="color:var(--white);">NEVER</strong> restrict water or perform WDT before full workup · NEVER desmopressin if hyponatraemic`,
     },
 
     { kind: 'disclaimer' },
@@ -231,7 +234,6 @@ const pupdPrimPU: FlowPage = {
         {
           // Both causes here are endocrine — nothing metabolic to separate out.
           cat: 'Endocrine',
-          tone: 'violet',
           tiles: [
             { label: 'Central DI (CDI)', link: { to: 'disease', id: 'DIS-PUPD-CDI' } },
             { label: 'Diabetes mellitus', link: { to: 'disease', id: 'DIS-ENDO-DM' } },
@@ -255,17 +257,15 @@ const pupdPrimPU: FlowPage = {
     },
 
     {
-      kind: 'html',
-      html: `<div style="margin-top:10px;padding:9px 12px;background:rgba(99,102,241,0.08);border:1px solid rgba(99,102,241,0.25);border-radius:10px;width:100%;">
-      <div style="font-size:10px;font-weight:700;color:var(--tone-indigo-fg);margin-bottom:5px;">💉 DESMOPRESSIN TRIAL — distinguishes CDI from NDI</div>
-      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
-        <strong style="color:var(--white);">Prerequisites:</strong> HAC excluded · pyometra excluded · Ca²⁺ normal · Na⁺ ≥145 · free water access always<br>
+      kind: 'infoBox',
+      tone: 'indigo',
+      icon: '💉',
+      title: 'DESMOPRESSIN TRIAL — DISTINGUISHES CDI FROM NDI',
+      html: `<strong style="color:var(--white);">Prerequisites:</strong> HAC excluded · pyometra excluded · Ca²⁺ normal · Na⁺ ≥145 · free water access always<br>
         <strong style="color:var(--white);">CDI response:</strong> USG increases to &gt;1.015 + water intake ↓ &gt;50% within 5–7 days<br>
         <strong style="color:var(--white);">NDI:</strong> No USG response to desmopressin<br>
         <strong style="color:var(--white);">Partial response:</strong> Partial CDI · or secondary NDI (review for missed underlying cause)
-      </div>
-      <div style="margin-top:6px;font-size:9.5px;cursor:pointer;color:var(--tone-indigo-fg);text-decoration:underline;" onclick="renderDxId('pupd','desmopressin')">→ Full desmopressin trial protocol (diagnostics)</div>
-    </div>`,
+      <div style="margin-top:6px;font-size:9.5px;cursor:pointer;color:var(--tone-indigo-fg);text-decoration:underline;" onclick="renderDxId('pupd','desmopressin')">→ Full desmopressin trial protocol (diagnostics)</div>`,
     },
 
     { kind: 'disclaimer' },
@@ -282,7 +282,11 @@ const pupdSecPU: FlowPage = {
       kind: 'node',
       variant: 'step',
       text: 'KEY: Systemic disease → secondary NDI or osmotic mechanism',
-      sub: 'Concurrent systemic signs + abnormal biochemistry expected · USG variable · treat underlying disease → PU/PD resolves',
+      subItems: [
+        'Concurrent systemic signs + abnormal biochemistry expected',
+        'USG variable',
+        'Treat the underlying disease → the PU/PD resolves',
+      ],
     },
     IDENTIFY_CAUSE_STEP,
 
@@ -305,7 +309,6 @@ const pupdSecPU: FlowPage = {
         // half its familiar colour.
         {
           cat: 'Metabolic',
-          tone: 'teal',
           tiles: [
             { label: 'Hypercalcaemia', link: { to: 'disease', id: 'DIS-ENDO-HCALC' } },
             { label: 'Hypokalaemia', link: { to: 'disease', id: 'DIS-MET-HYPOK' } },
@@ -315,7 +318,6 @@ const pupdSecPU: FlowPage = {
         },
         {
           cat: 'Endocrine',
-          tone: 'violet',
           tiles: [
             { label: "HAC / Cushing's ⭐", link: { to: 'disease', id: 'DIS-PUPD-HAC' } },
             { label: 'Hypoadrenocorticism', link: { to: 'disease', id: 'DIS-SEC-HYPO' } },
@@ -326,17 +328,15 @@ const pupdSecPU: FlowPage = {
     },
 
     {
-      kind: 'html',
-      html: `<div style="margin-top:10px;padding:9px 12px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:10px;width:100%;">
-      <div style="font-size:10px;font-weight:700;color:var(--tone-warning-fg);margin-bottom:4px;">🔬 DIAGNOSTIC APPROACH — Secondary PU</div>
-      <div style="font-size:9.5px;line-height:1.65;color:var(--gray);">
-        <strong style="color:var(--white);">All cases:</strong> CBC · biochemistry (BUN · Cr · SDMA · ALP · ALT · Na · K · Ca²⁺ · glucose · albumin · cholesterol) · urinalysis + culture · BP<br>
+      kind: 'infoBox',
+      tone: 'warning',
+      icon: '🔬',
+      title: 'DIAGNOSTIC APPROACH — SECONDARY PU',
+      html: `<strong style="color:var(--white);">All cases:</strong> CBC · biochemistry (BUN · Cr · SDMA · ALP · ALT · Na · K · Ca²⁺ · glucose · albumin · cholesterol) · urinalysis + culture · BP<br>
         <strong style="color:var(--white);">Dog:</strong> UCCR (HAC screen — sensitive, run first) → LDDST or ACTH stim if elevated · rectal exam (anal sac)<br>
         <strong style="color:var(--white);">↑ Ca²⁺:</strong> Ionised Ca²⁺ + PTHrP + PTH → chest radiograph + lymph node palpation + abdominal US<br>
         <strong style="color:var(--white);">Intact ♀:</strong> Abdominal US (pyometra) before endocrine workup<br>
-        <strong style="color:var(--white);">RULE OUT secondary causes</strong> before performing desmopressin trial — HAC and pyometra partially respond → false CDI
-      </div>
-    </div>`,
+        <strong style="color:var(--white);">RULE OUT secondary causes</strong> before performing desmopressin trial — HAC and pyometra partially respond → false CDI`,
     },
 
     { kind: 'disclaimer' },

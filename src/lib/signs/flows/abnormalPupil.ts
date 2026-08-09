@@ -148,9 +148,9 @@ const anisocoriaMydriasis: FlowPage = {
     {
       kind: 'categoryGrid',
       columns: [
-        { cat: 'Neurological', tone: 'violet', tiles: [{ label: 'CN III / Brainstem', link: { to: 'flow', id: 'anisocoria-mydriasis-localise' } }] },
+        { cat: 'Neurological', tiles: [{ label: 'CN III / Brainstem', link: { to: 'flow', id: 'anisocoria-mydriasis-localise' } }] },
         { cat: 'Afferent', tone: 'info', tiles: [{ label: 'Retina / Optic nerve', link: { to: 'lesion', loc: 'LOC-AP-RETINA', name: 'Retina / Optic nerve' } }] },
-        { cat: 'Drug-induced', tone: 'teal', tiles: [{ label: 'Pharmacological mydriasis', terminal: true }] },
+        { cat: 'Drug-induced', tiles: [{ label: 'Pharmacological mydriasis', terminal: true }] },
         { cat: 'Iris / Ocular', tone: 'warning', tiles: [
           { label: 'Iris atrophy', link: { to: 'lesion', loc: 'LOC-AP-IRIS', name: 'Iris' } },
           { label: 'Glaucoma', link: { to: 'lesion', loc: 'LOC-RE-GLAUCOMA', name: 'Glaucoma' } },
@@ -166,7 +166,7 @@ const anisocoriaMydriasisLocalise: FlowPage = {
   title: 'Mydriasis — Localisation',
   dxSign: 'abnormal-pupil',
   blocks: [
-    { kind: 'node', variant: 'entry', tone: 'violet', text: '🔵 NEUROLOGICAL MYDRIASIS — Localisation' },
+    { kind: 'node', variant: 'entry', tone: 'violet', text: '🔵 NEUROLOGICAL MYDRIASIS — Localisation', sub: 'The large pupil is the abnormal one — it fails to constrict to light; localise the efferent lesion before naming a cause' },
     {
       kind: 'html',
       html: '<div class="flow-node step" style="margin-top:6px;font-size:9.5px;text-align:left;"><strong>Exclude first:</strong> iris atrophy (retroilluminate) · pharmacological mydriasis (drug history) · fear/stress (re-examine calm)</div><div class="flow-arrow-v">↓</div>',
@@ -232,7 +232,7 @@ const anisocoriaHorners: FlowPage = {
       columns: [
         { cat: 'Sympathetic', tone: 'info', tiles: [{ label: "Horner's syndrome", link: { to: 'disease', id: 'DIS-NEU-HORNERS' } }] },
         { cat: 'Uveal', tone: 'danger', tiles: [{ label: 'Anterior uveitis', link: { to: 'lesion', loc: 'LOC-RE-UVEA', name: 'Anterior uvea' } }] },
-        { cat: 'Drug-induced', tone: 'teal', tiles: [{ label: 'Pharmacological miosis', terminal: true }] },
+        { cat: 'Drug-induced', tiles: [{ label: 'Pharmacological miosis', terminal: true }] },
         { cat: 'Structural', tone: 'slate', tiles: [{ label: 'Iris sphincter damage', terminal: true }] },
       ],
     },
@@ -245,7 +245,7 @@ const anisocoriaHornersLocalise: FlowPage = {
   title: "Horner's Syndrome — Localisation",
   dxSign: 'abnormal-pupil',
   blocks: [
-    { kind: 'node', variant: 'entry', tone: 'info', text: "🔵 HORNER'S SYNDROME — Localisation" },
+    { kind: 'node', variant: 'entry', tone: 'info', text: "🔵 HORNER'S SYNDROME — Localisation", sub: 'Miosis + ptosis + enophthalmos + third-eyelid protrusion on one side; localise along the three-neuron sympathetic path' },
     {
       kind: 'html',
       html: '<div class="flow-node step" style="margin-top:6px;font-size:9.5px;text-align:left;">Confirm signs: miosis + ptosis + enophthalmos + 3rd eyelid elevation<br><strong>⚠️ Exclude uveitis first</strong> — aqueous flare + IOP; uveitic miosis requires very different management</div><div class="flow-arrow-v">↓</div>',

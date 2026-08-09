@@ -29,6 +29,26 @@ import type { Block, Endpoint } from '../src/lib/signs/flowTypes'
 // A sublabel is allowed only if it is a "most common cause" qualifier.
 const ALLOWED_SUBLABEL = /most common .*cause/i
 
+// Rule 3 — sentence case. A chip carries a lesion/disease NAME, written the way it
+// reads in a sentence ("Bacterial septic arthritis"), not in block capitals. Mirrors
+// lint-tiles CHECK 5; see that file's header for the rationale and the shared
+// acronym allow-list convention.
+const ACRONYMS = new Set<string>([
+  'AGASACA', 'AHDS', 'ARDS', 'ATE', 'BPH', 'CDV', 'CKD', 'CN', 'CRGV', 'DCM', 'DIC', 'DJD',
+  'DKA', 'EPI', 'EPO', 'FCE', 'FeLV', 'FIC', 'FIP', 'FIV', 'GDV', 'GI', 'GME', 'HAC', 'HCM',
+  'IBD', 'IE', 'IMHA', 'IMPA', 'IMTP', 'ITP', 'IVDD', 'KBr', 'LSA', 'MDR1', 'MMVD', 'MUA',
+  'MUO', 'NLE', 'NME', 'OA', 'OCD', 'PDA', 'PLE', 'PLN', 'PRAA', 'PS', 'PSS', 'PTE', 'RA',
+  'RMSF', 'SA', 'SAS', 'SaO2', 'SLE', 'SNRIs', 'SRMA', 'SSRIs', 'TCC', 'URI', 'UTI', 'VSD', 'ASD',
+])
+const isShouting = (label: string) => {
+  const rest = label.split(/\s[—–]\s|\s\(/)[0].trim()
+    .split(/[\s/·+,]+/)
+    .filter(w => w && !ACRONYMS.has(w))
+    .join('')
+    .replace(/[^A-Za-z]/g, '')
+  return rest.length >= 4 && rest.replace(/[^A-Z]/g, '').length / rest.length > 0.6
+}
+
 // Dense differential sub-flows whose LINKED sublabels were reviewed and intentionally kept
 // (disambiguation of same-destination chips / triage pearls — see header). Rule 1 (no
 // emoji) still applies to them. Only add a page here after confirming its linked sublabels
@@ -65,6 +85,10 @@ for (const [id, page] of Object.entries(FLOWS)) {
     // page, so its sublabel is the sole home of that content — keep it.
     if (checkSublabel && e.link && e.sublabel && !ALLOWED_SUBLABEL.test(e.sublabel)) {
       fail(`[${id}] chip "${e.label}" sublabel "${e.sublabel}" duplicates the tap-through page — strip it (keep only a "most common cause" qualifier).`)
+    }
+    // Rule 3: sentence case — block capitals are for acronyms only.
+    if (isShouting(e.label)) {
+      fail(`[${id}] chip "${e.label}" is in block capitals — write the name in sentence case (acronyms keep their capitals).`)
     }
   })
 }

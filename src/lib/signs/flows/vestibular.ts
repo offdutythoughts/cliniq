@@ -11,7 +11,19 @@ const vestibularEntry: FlowPage = {
   title: 'Vestibular',
   noCard: true,
   blocks: [
-    { kind: 'node', variant: 'entry', text: '🌀 ACUTE VESTIBULAR — Peripheral vs Central' },
+    { kind: 'node', variant: 'entry', text: '🌀 ACUTE VESTIBULAR — Peripheral vs Central' , sub: 'Head tilt, nystagmus, falling or rolling and tight circling — decide peripheral vs central before listing causes' },
+
+    {
+      kind: 'node',
+      variant: 'step',
+      text: 'PERIPHERAL vs CENTRAL?',
+      subItems: [
+        'Nystagmus that is horizontal or rotary and never changes direction with head position = peripheral',
+        'Vertical or direction-changing nystagmus = central',
+        'Postural-reaction deficits, ↓mentation or deficits in other cranial nerves (except VII) = central',
+        'Horner syndrome or facial paresis with an otherwise normal exam = peripheral (middle/inner ear)',
+      ],
+    },
 
     // Peripheral vs Central vs Bilateral comparison table. The legacy colours
     // every data cell by its column (Peripheral→green, Central→red/danger,

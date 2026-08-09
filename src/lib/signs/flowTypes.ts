@@ -61,6 +61,11 @@ export type NodeBlock = Connectable & {
   variant: 'entry' | 'step' | 'sub-step'
   text: string
   sub?: string
+  /** Discriminator detail as separate bullets — one idea per line. Use instead
+   *  of `sub` when a step carries several distinct criteria (a run-on `sub` is
+   *  hard to scan). Rendered left-aligned under `text`; `sub` still renders
+   *  first if both are given. */
+  subItems?: string[]
   /** Recolour an entry node (e.g. red acute / blue chronic pathway headers). */
   tone?: Tone
 }
@@ -160,21 +165,38 @@ export type CardSectionBlock = Connectable & {
  *  link nor `terminal` renders greyed + aria-disabled and is treated as an
  *  authoring gap (a forgotten link). */
 export type CategoryTile = { label: string; sublabel?: string; link?: Link; links?: LabeledLink[]; terminal?: boolean }
-export type CategoryColumn = { cat: string; tone: Tone; tiles: CategoryTile[] }
+/** `tone` is an OVERRIDE for page-specific (anatomical / mechanism) columns only.
+ *  A column whose `cat` is a `CatLabel` leaves it unset and takes the shared
+ *  category colour — see `CatLabel` and `lint:cats`. */
+export type CategoryColumn = { cat: string; tone?: Tone; tiles: CategoryTile[] }
 export type CategoryGridBlock = Connectable & { kind: 'categoryGrid'; columns: CategoryColumn[] }
 
-/** Shared category labels used by `categoryColumns`. Each maps to a dedicated
- *  `--cat-*` CSS variable in the renderer (`CAT_STYLE` in FlowPageView). Use
- *  one of these strings to get the correct colour automatically; set `tone`
- *  instead for a custom-coloured column that doesn't match a standard category. */
+/** Shared category labels used by `categoryColumns` and `categoryGrid`. Each maps
+ *  to a dedicated `--cat-*` CSS variable in the renderer (`CAT_STYLE` in
+ *  FlowPageView), so ONE lesion category is ONE colour on every flow. Use one of
+ *  these strings and leave `tone` unset to get that colour automatically; set
+ *  `tone` only for a page-specific column that is not a lesion category at all
+ *  (an anatomical or mechanism split — "Cervical (C1–T2)", "Left-to-Right
+ *  Shunt"). `lint:cats` enforces both halves of that rule.
+ *
+ *  Spelling is canonical, not free text: "Infectious" (never "Infection"),
+ *  "Neoplastic" (never "Mass" / "Neoplastic / Mass"), "Immune-mediated" and
+ *  "Drug-induced" (lowercase second word), "Metabolic / Endocrine" in that order
+ *  when combined — `Metabolic` and `Endocrine` stay separate labels for the
+ *  pages that split them. */
 export type CatLabel =
   | 'Vascular'
   | 'Inflammatory'
-  | 'Mass'
+  | 'Infectious'
+  | 'Neoplastic'
   | 'Immune-mediated'
   | 'Degenerative'
   | 'Metabolic / Endocrine'
+  | 'Metabolic'
+  | 'Endocrine'
+  | 'Neurological'
   | 'Toxic'
+  | 'Drug-induced'
   | 'Trauma'
   | 'Anomalous'
 
@@ -191,11 +213,14 @@ export type CatColumnTile = CategoryTile
 /** `tone` overrides the CAT_STYLE palette lookup — use for custom-coloured columns
  *  that don't correspond to a shared category label (e.g. "Haemoglobinuria"). */
 export type CatColumn = { cat: CatLabel | string; tone?: Tone; tiles: CatColumnTile[] }
-/** `cols` overrides the per-row column count (default: one row of every
- *  category). Set it lower than `columns.length` to wrap the categories into an
- *  N-per-row grid — e.g. `cols: 2` lays four categories out 2×2 — which reads
- *  better than one cramped/scrolling row on narrow flow columns. */
-export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; cols?: number; columns: CatColumn[] }
+/** Cause categories ALWAYS lay out LINEAR — ONE row, one column per category,
+ *  never wrapped into a 2×2 (or N-per-row) grid. A reader scanning the row has to
+ *  see every category at the same level; a stacked grid reads as two separate
+ *  splits and buries the lower row. There is deliberately no `cols` override: a
+ *  row that outgrows its width clamps to a minimum column and scrolls sideways as
+ *  ONE unit (see `spillGrid` in FlowPageView) rather than wrapping. Split the
+ *  differential into two pages if a row genuinely carries too many categories. */
+export type CategoryColumnsBlock = Connectable & { kind: 'categoryColumns'; columns: CatColumn[] }
 
 /** Reusable step block for "IDENTIFY CAUSE CATEGORY" — appears in 24+ flows. */
 export const IDENTIFY_CAUSE_STEP = { kind: 'node', variant: 'step', text: 'IDENTIFY CAUSE CATEGORY' } as const

@@ -63,6 +63,14 @@ function SignedInMenu() {
           <div style={{ padding: '8px 12px', fontSize: 12, color: 'var(--gray)', borderBottom: '1px solid var(--border)' }}>
             {label}
           </div>
+          <Link
+            role="menuitem"
+            href="/account"
+            onClick={() => setOpen(false)}
+            style={{ ...menuItemStyle, textDecoration: 'none' }}
+          >
+            Account &amp; passkeys
+          </Link>
           <button
             role="menuitem"
             onClick={async () => {
