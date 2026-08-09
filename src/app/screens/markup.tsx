@@ -101,11 +101,22 @@ const SUB = s('display:flex;align-items:baseline;gap:4px;font-size:var(--fs-body
 const DASH = s('flex-shrink:0;opacity:.5;')
 const WARN = s('font-size:var(--fs-body);font-weight:700;color:var(--tone-danger-title);margin:4px 0 2px;background:rgba(var(--tone-danger),0.12);padding:3px 7px;border-radius:4px;')
 
+/** Indent applied to every block that sits UNDER a `#Header`, so the hierarchy
+ *  is visible: the header's ▸ stays at the left edge and its bullets step in
+ *  beneath it. Sub-bullets (`-`) keep their own 14px offset ON TOP of this, so
+ *  a `-` under a header reads as a third level. */
+const HEADER_INDENT = 12
+const BULLET_UNDER = { ...BULLET, paddingLeft: `${HEADER_INDENT}px` }
+const SUB_UNDER = { ...SUB, paddingLeft: `${HEADER_INDENT + 14}px` }
+
 /** Pipe-markup with @-links: `#`→header, `-`→sub-bullet (when allowDash,
  *  default true), else bullet. Pass `warn` to also handle `!`→red warning
  *  box (used by protocol steps). Empty segments render an empty bullet,
  *  matching the legacy bul() (no filtering). */
 export function Bul({ text, warn, allowDash = true }: { text: string; warn?: boolean; allowDash?: boolean }) {
+  // Once a header has been seen, everything after it belongs to that section
+  // (a later header just opens a new section — the depth is unchanged).
+  let underHeader = false
   return (
     <>
       {parseBlocks(text, { warn, allowDash }).map((b, i) => {
@@ -113,10 +124,12 @@ export function Bul({ text, warn, allowDash = true }: { text: string; warn?: boo
           // Headers linkify too — a `#Header` may carry an @-link (e.g.
           // "#Acute crisis (see @PROT-RESP)"), which otherwise rendered as
           // literal "@PROT-RESP" text instead of a tappable protocol link.
-          case 'header': return <div key={i} style={HEADER}>▸ <Linkify text={b.text} /></div>
+          case 'header':
+            underHeader = true
+            return <div key={i} style={HEADER}>▸ <Linkify text={b.text} /></div>
           case 'warn': return <div key={i} style={WARN}>⚠️ {b.text}</div>
-          case 'sub': return <div key={i} style={SUB}><span style={DASH}>–</span><Linkify text={b.text} /></div>
-          default: return <div key={i} style={BULLET}><span style={DOT}>•</span><Linkify text={b.text} /></div>
+          case 'sub': return <div key={i} style={underHeader ? SUB_UNDER : SUB}><span style={DASH}>–</span><Linkify text={b.text} /></div>
+          default: return <div key={i} style={underHeader ? BULLET_UNDER : BULLET}><span style={DOT}>•</span><Linkify text={b.text} /></div>
         }
       })}
     </>
