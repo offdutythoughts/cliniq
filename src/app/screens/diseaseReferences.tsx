@@ -88,6 +88,18 @@ const LIEN_IATROGENIC =
 const CHIRAYATH_IATROGENIC =
   'Chirayath D, Shaheena S. Iatrogenic hypercortisolism in a Persian kitten after topical application of a skin lotion containing clobetasol. Vet Dermatol. 2020;31(6):486-488.'
 
+// ACVIM consensus statements — the college's own evidence-based guidelines,
+// published in JVIM. Cited in preference to a textbook chapter where one exists
+// for the topic, because they are the profession's agreed position.
+const ACVIM_ITP_DX =
+  'LeVine DN, Goggs R, Kohn B, et al. ACVIM consensus statement on the diagnosis of immune thrombocytopenia in dogs and cats. J Vet Intern Med. 2024;38(4):1958. doi:10.1111/jvim.16996'
+const ACVIM_ITP_TX =
+  'LeVine DN, Goggs R, Kohn B, et al. ACVIM consensus statement on the treatment of immune thrombocytopenia in dogs and cats. J Vet Intern Med. 2024;38(4). doi:10.1111/jvim.17079'
+const ACVIM_SE =
+  'Charalambous M, Fischer A, Potschka H, et al. ACVIM consensus statement on the management of status epilepticus and cluster seizures in dogs and cats. J Vet Intern Med. 2024;38(1):19. doi:10.1111/jvim.16928'
+const ACVIM_FCE =
+  'Marsilio S, Freiche V, Johnson E, et al. ACVIM consensus statement guidelines on diagnosing and distinguishing low-grade neoplastic from inflammatory lymphocytic chronic enteropathies in cats. J Vet Intern Med. 2023;37(3):794. doi:10.1111/jvim.16690'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -100,7 +112,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -149,6 +161,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Yayoshi/.test(part)) { out.push({ id: 'yayoshi-radiation', text: YAYOSHI_RADIATION }); continue }
     if (/^Muschner/.test(part)) { out.push({ id: 'muschner-remission', text: MUSCHNER_REMISSION }); continue }
     if (/^Lien/.test(part)) { out.push({ id: 'lien-iatrogenic', text: LIEN_IATROGENIC }); continue }
+    if (/^LeVine/.test(part)) { out.push({ id: part.includes('treatment') ? 'acvim-itp-tx' : 'acvim-itp-dx', text: part.includes('treatment') ? ACVIM_ITP_TX : ACVIM_ITP_DX }); continue }
+    if (/^Charalambous/.test(part)) { out.push({ id: 'acvim-se', text: ACVIM_SE }); continue }
+    if (/^Marsilio/.test(part)) { out.push({ id: 'acvim-fce', text: ACVIM_FCE }); continue }
     if (/^Chirayath/.test(part)) { out.push({ id: 'chirayath-iatrogenic', text: CHIRAYATH_IATROGENIC }); continue }
     const chapters = part.match(/Ch(?:apter|\.)?\s*([\d,\s]+)/)
     if (!chapters) { out.push({ id: 'ettinger', text: `${ETTINGER_BOOK}.` }); continue }
