@@ -23,10 +23,11 @@
     "lint:alphas": "npx tsx scripts/lint-alphas.ts",
     "lint:species": "npx tsx scripts/lint-species.ts",
     "lint:emoji": "npx tsx scripts/lint-emoji.ts",
-    "lint:content": "npm run lint:protocols && npm run lint:flows && npm run lint:blocks && npm run lint:sections && npm run lint:lesions && npm run lint:chips && npm run lint:choices && npm run lint:steps && npm run lint:cats && npm run lint:headers && npm run lint:tiles && npm run lint:forks && npm run lint:alphas && npm run lint:species && npm run lint:emoji",
+    "lint:content": "npm run lint:schema && npm run lint:protocols && npm run lint:flows && npm run lint:blocks && npm run lint:sections && npm run lint:lesions && npm run lint:chips && npm run lint:choices && npm run lint:steps && npm run lint:cats && npm run lint:headers && npm run lint:tiles && npm run lint:forks && npm run lint:alphas && npm run lint:species && npm run lint:emoji",
     "lint:cram": "npx tsx scripts/lint-disease-crams.ts",
     "report:groups": "npx tsx scripts/report-groups.ts",
-    "report:refs": "npx tsx scripts/report-refs.ts"
+    "report:refs": "npx tsx scripts/report-refs.ts",
+    "lint:schema": "npx tsx scripts/lint-schema.ts"
   },
   "dependencies": {
     "@auth/core": "^0.37.4",
