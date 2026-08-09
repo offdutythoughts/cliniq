@@ -31,6 +31,22 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 
 ## Deploy on Vercel
 
+Two branches deploy: **`main`** builds Vercel previews, **`production`** builds prod.
+
+To ship to production, use the script — do not merge into `production` by hand:
+
+```bash
+npm run promote              # verify, merge main into production, push
+npm run promote -- --dry-run # show what would be promoted, change nothing
+```
+
+It resets local `production` to `origin/production` before merging, rather than
+merging into whatever the local branch happened to hold. Doing that by hand once
+left the repo mid-merge with conflict markers in the working tree, because local
+`production` had quietly drifted nine commits from the remote. The script also
+refuses to run on a dirty tree or when `main` has unpushed commits, and passes an
+explicit `-m` so the merge message can never capture the editor's comment template.
+
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

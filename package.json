@@ -20,16 +20,17 @@
     "lint:headers": "tsx scripts/lint-headers.ts",
     "lint:lesions": "tsx scripts/lint-lesions.ts",
     "lint:protocols": "tsx scripts/lint-protocol-actions.ts",
+    "lint:refs": "tsx scripts/report-refs.ts",
     "lint:schema": "tsx scripts/lint-schema.ts",
     "lint:sections": "tsx scripts/lint-disease-sections.ts",
     "lint:species": "tsx scripts/lint-species.ts",
     "lint:steps": "tsx scripts/lint-steps.ts",
     "lint:tiles": "tsx scripts/lint-tiles.ts",
+    "promote": "bash scripts/promote.sh",
     "report:groups": "tsx scripts/report-groups.ts",
     "report:refs": "tsx scripts/report-refs.ts",
     "start": "next start",
-    "test": "vitest run",
-    "lint:refs": "tsx scripts/report-refs.ts"
+    "test": "vitest run"
   },
   "dependencies": {
     "@auth/core": "^0.37.4",
