@@ -49,11 +49,10 @@
 // the hierarchy and is markedly slower to read at 8–9px. Genuine acronyms keep
 // their capitals (IMHA, MMVD, SRMA, DJD …) — add new ones to ACRONYMS below.
 
-import { FLOWS } from '../src/lib/signs/flows/index'
-import type { Block } from '../src/lib/signs/flowTypes'
+import { eachTile, pageCount } from './lib/walk'
+import { lint } from './lib/lint'
 
-let errors = 0
-const fail = (msg: string) => { console.error(`  ✗ ${msg}`); errors++ }
+const { fail, done } = lint('category-tile')
 
 type TileLike = { label?: string; link?: unknown; links?: unknown[]; terminal?: boolean }
 
@@ -126,48 +125,32 @@ const record = (label: string, link: unknown, where: string) => {
   seen.set(norm, byTarget)
 }
 
-function checkBlocks(pageId: string, blocks: Block[]) {
-  for (const b of blocks as any[]) {
-    if (b.kind === 'categoryGrid' || b.kind === 'categoryColumns') {
-      for (const col of b.columns ?? []) {
-        for (const tile of col.tiles ?? []) {
-          const label = String(tile.label ?? '').trim()
-          if (isGap(tile)) {
-            fail(`[${pageId}] ${b.kind} · ${col.cat} · "${label || '(no label)'}" — no link/links/terminal`)
-          }
-          // CHECK 3: a LINKED tile must be name-only past any em-dash (species /
-          // ranking qualifiers and reviewed KEPT exceptions excepted).
-          const dash = label.match(/\s—\s(.+)$/)
-          if (tile.link && dash && !SPECIES_RANK.test(dash[1].trim()) &&
-              !KEPT_TILE_DETAIL.has(`${pageId}::${label}`)) {
-            fail(`[${pageId}] ${col.cat} · "${label}" — linked tile carries a description the tap-through page already gives; strip to the name (keep only a species/ranking qualifier).`)
-          }
-          // CHECK 5: sentence case — the column header carries the emphasis.
-          if (isShouting(label)) {
-            fail(`[${pageId}] ${col.cat} · "${label}" — tile label is in block capitals; write the diagnosis in sentence case (acronyms keep their capitals).`)
-          }
-          // CHECK 4: the nested sub-bullet form is banned — one tile, one cause.
-          if (Array.isArray(tile.links) && tile.links.length > 0) {
-            const kids = (tile.links as any[]).map(ll => `"${String(ll.label ?? '')}"`).join(' + ')
-            fail(`[${pageId}] ${col.cat} · "${label}" — nested sub-bullet tile (links: ${kids}); split it into one tile per cause.`)
-          }
-          const where = `${pageId} · ${col.cat}`
-          if (tile.link) record(label, tile.link, where)
-          for (const ll of (tile.links ?? []) as any[]) record(String(ll.label ?? label), ll.link, where)
-        }
-      }
-    }
-    // Recurse into the block kinds that nest blocks (branch columns, fork legs)
-    if (b.kind === 'branch') for (const col of b.columns ?? []) checkBlocks(pageId, col.blocks ?? [])
-    if (b.kind === 'fork') for (const leg of b.legs ?? []) checkBlocks(pageId, leg.blocks ?? [])
-    // A species chooser holds a categoryColumns grid per species panel.
-    if (b.kind === 'speciesChooser') for (const panel of [b.dog, b.cat]) {
-      checkBlocks(pageId, [{ kind: 'categoryColumns', columns: panel.columns } as Block])
-    }
+// One shared, exhaustive walk (scripts/lib/walk.ts) — it recurses into branch
+// columns, fork legs AND speciesChooser panels, so no block kind is silently skipped.
+for (const { pageId, kind, cat, tile } of eachTile()) {
+  const label = String(tile.label ?? '').trim()
+  if (isGap(tile)) {
+    fail(`[${pageId}] ${kind} · ${cat} · "${label || '(no label)'}" — no link/links/terminal`)
   }
+  // CHECK 3: a LINKED tile must be name-only past any em-dash.
+  const dash = label.match(/\s—\s(.+)$/)
+  if (tile.link && dash && !SPECIES_RANK.test(dash[1].trim()) &&
+      !KEPT_TILE_DETAIL.has(`${pageId}::${label}`)) {
+    fail(`[${pageId}] ${cat} · "${label}" — linked tile carries a description the tap-through page already gives; strip to the name (keep only a species/ranking qualifier).`)
+  }
+  // CHECK 5: sentence case — the column header carries the emphasis.
+  if (isShouting(label)) {
+    fail(`[${pageId}] ${cat} · "${label}" — tile label is in block capitals; write the diagnosis in sentence case (acronyms keep their capitals).`)
+  }
+  // CHECK 4: the nested sub-bullet form is banned — one tile, one cause.
+  if (Array.isArray(tile.links) && tile.links.length > 0) {
+    const kids = (tile.links as { label?: string }[]).map(ll => `"${String(ll.label ?? '')}"`).join(' + ')
+    fail(`[${pageId}] ${cat} · "${label}" — nested sub-bullet tile (links: ${kids}); split it into one tile per cause.`)
+  }
+  const where = `${pageId} · ${cat}`
+  if (tile.link) record(label, tile.link, where)
+  for (const ll of (tile.links ?? []) as { label?: string; link?: unknown }[]) record(String(ll.label ?? label), ll.link, where)
 }
-
-for (const [id, page] of Object.entries(FLOWS)) checkBlocks(id, page.blocks)
 
 // CHECK 2: any label that resolves to more than one distinct target.
 for (const [norm, byTarget] of seen) {
@@ -179,9 +162,7 @@ for (const [norm, byTarget] of seen) {
   }
 }
 
-if (errors > 0) {
-  console.error(`\n${errors} category-tile issue(s) found. Link a page / set terminal:true / make the label's target consistent / strip the linked tile to its name / split a sub-bullet tile into one tile per cause.`)
-  process.exit(1)
-} else {
-  console.log(`✓ All category tiles resolve, map to one target, are name-only when linked, are in sentence case, and carry no nested sub-bullets, across ${Object.keys(FLOWS).length} flow pages.`)
-}
+done(
+  `All category tiles resolve, map to one target, are name-only when linked, are in sentence case, and carry no nested sub-bullets, across ${pageCount()} flow pages.`,
+  "Link a page / set terminal:true / make the label's target consistent / strip the linked tile to its name / split a sub-bullet tile into one tile per cause.",
+)
