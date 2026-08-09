@@ -18,7 +18,7 @@ import * as path from 'path'
 
 // Order is the report order, not the execution order — group by what they check.
 const LINTS = [
-  'lint-schema', 'lint-deadcontent',
+  'lint-schema', 'lint-deadcontent', 'report-refs',
   'lint-protocol-actions', 'lint-flows', 'lint-disease-blocks', 'lint-disease-sections',
   'lint-lesions', 'lint-chips', 'lint-choices', 'lint-steps', 'lint-cats', 'lint-headers',
   'lint-tiles', 'lint-forks', 'lint-alphas', 'lint-species', 'lint-emoji',

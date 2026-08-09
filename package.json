@@ -28,7 +28,8 @@
     "report:groups": "tsx scripts/report-groups.ts",
     "report:refs": "tsx scripts/report-refs.ts",
     "start": "next start",
-    "test": "vitest run"
+    "test": "vitest run",
+    "lint:refs": "tsx scripts/report-refs.ts"
   },
   "dependencies": {
     "@auth/core": "^0.37.4",
