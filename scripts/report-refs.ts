@@ -18,6 +18,7 @@
 
 import { DB } from '../src/data/db'
 import { hasCitation } from '../src/app/screens/diseaseReferences'
+import { ratchet, setBaseline } from './lib/ratchet'
 
 // Every field the disease section stack renders (mirrors lint-disease-sections).
 const FIELDS = [
@@ -80,5 +81,19 @@ if (listPartial) {
   for (const r of [...partial].sort((a, b) => a.cited / a.populated - b.cited / b.populated)) {
     console.log(`  ${String(r.cited).padStart(2)}/${String(r.populated).padEnd(2)}  ${r.id.padEnd(24)} ${r.name}`)
   }
+}
+
+// ── Ratchet ───────────────────────────────────────────────────────────────────
+// Coverage improved from 198 uncited to 166 in one sitting, and nothing stopped it
+// sliding back — a new page ships uncited and no one notices. The count is now a
+// high-water mark: adding an uncited page fails, and citing pages prompts you to
+// lock the gain in. Same mechanism as lint:deadcontent.
+if (process.argv.includes('--write')) {
+  setBaseline('uncited-disease-pages', none.length)
+  console.log(`\nbaseline written: uncited-disease-pages = ${none.length}`)
+} else {
+  const r = ratchet('uncited-disease-pages', none.length, 'disease pages carry no citation')
+  console.log(`\n${r.ok ? 'ℹ' : '✗'} ${r.message}`)
+  if (!r.ok) process.exit(1)
 }
 console.log()
