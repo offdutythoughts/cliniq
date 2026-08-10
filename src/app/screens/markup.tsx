@@ -25,19 +25,29 @@ export function Card({ title, children }: { title: string; children: ReactNode }
 const LINK = s('color:var(--teal-light);text-decoration:underline;cursor:pointer;')
 const UNAVAILABLE_LINK = s('color:var(--gray2);background:var(--card2);border:1px solid var(--border);border-radius:4px;padding:1px 4px;cursor:default;')
 
-function LinkSpan({ id, label }: { id: string; label: string }) {
+/** Inline form of a page name: drop any " — subtitle" tail, so a link reads
+ *  "stabilise per Respiratory Crisis" rather than dragging the full page title
+ *  ("Respiratory Crisis — Initial Stabilisation") into the middle of a sentence. */
+const inlineName = (name: string): string => name.split(' — ')[0].trim()
+
+function LinkSpan({ id, label }: { id: string; label?: string }) {
   const nav = useNav()
   const isProtocol = id.startsWith('PROT-')
-  const exists = isProtocol
-    ? DB.protocols.some(protocol => protocol.id === id)
-    : DB.disease_page.some(disease => disease.id === id)
-  if (!exists) {
-    return <span style={UNAVAILABLE_LINK} aria-disabled="true" title="No linked page available">{label}</span>
+  const target = isProtocol
+    ? DB.protocols.find(protocol => protocol.id === id)
+    : DB.disease_page.find(disease => disease.id === id)
+  // An authored `@ID:label` always wins. A bare `@ID` resolves to the target's
+  // own name, so a raw id like "PROT-RESP" never reaches the page — and the
+  // link keeps tracking the name if the protocol is later retitled. Only an
+  // unknown id falls back to showing the id itself.
+  const text = label ?? (target ? inlineName(str(target.name)) : id)
+  if (!target) {
+    return <span style={UNAVAILABLE_LINK} aria-disabled="true" title="No linked page available">{text}</span>
   }
   function go(): void {
     nav.navigate(isProtocol ? { kind: 'protocol', id } : { kind: 'disease', id })
   }
-  return <span style={LINK} role="button" onClick={go}>{label}</span>
+  return <span style={LINK} role="button" onClick={go}>{text}</span>
 }
 
 /** Tappable navigation card — icon (optional) + title + subtitle + arrow. */
@@ -69,7 +79,7 @@ export function Linkify({ text }: { text: string }) {
   if (text.startsWith('@') && !hasCitation(text)) {
     const ci = text.indexOf(':')
     const did = ci > 0 ? text.slice(1, ci) : text.slice(1)
-    const lbl = ci > 0 ? text.slice(ci + 1) : did
+    const lbl = ci > 0 ? text.slice(ci + 1) : undefined
     return <LinkSpan id={did} label={lbl} />
   }
   const re = /@([A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+)(?::([A-Za-z0-9 /\-.]+))?/g
@@ -83,7 +93,7 @@ export function Linkify({ text }: { text: string }) {
     let m: RegExpExecArray | null
     while ((m = re.exec(seg.text)) !== null) {
       if (m.index > last) parts.push(seg.text.slice(last, m.index))
-      parts.push(<LinkSpan key={k++} id={m[1]} label={(m[2] || m[1]).trim()} />)
+      parts.push(<LinkSpan key={k++} id={m[1]} label={m[2]?.trim()} />)
       last = m.index + m[0].length
     }
     parts.push(last < seg.text.length ? seg.text.slice(last) : '')
