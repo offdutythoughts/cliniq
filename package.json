@@ -11,6 +11,7 @@
     "lint:cats": "tsx scripts/lint-cats.ts",
     "lint:chips": "tsx scripts/lint-chips.ts",
     "lint:choices": "tsx scripts/lint-choices.ts",
+    "lint:confsupp": "tsx scripts/lint-conf-supp.ts",
     "lint:content": "tsx scripts/lint-all.ts",
     "lint:cram": "tsx scripts/lint-disease-crams.ts",
     "lint:deadcontent": "tsx scripts/lint-deadcontent.ts",
