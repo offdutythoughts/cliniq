@@ -38,10 +38,22 @@ const clinical = {
   ddx: text.optional(),
 }
 
+/** Protocol ids a disease page surfaces as its top cards, pipe-separated. */
+const protoIds = z.string().regex(
+  /^PROT-[A-Z0-9-]+(\|PROT-[A-Z0-9-]+)*$/,
+  'protos is pipe-separated PROT-… ids',
+)
+
 const diseasePage = z.object({
   id: z.string().regex(/^DIS-[A-Z0-9-]+$/, 'disease ids are DIS-…'),
   name: text,
   sp: text,
+  // Rendered by DiseasePageView as the protocol NavCards above the clinical
+  // sections — the "if a protocol applies, it is at the top of the disease
+  // page" rule. Declared explicitly rather than inferred from @PROT- prose so
+  // that a protocol named in `ddx` (a DIFFERENTIAL's protocol) cannot be
+  // mistaken for this disease's own.
+  protos: protoIds.optional(),
   synonyms: text.optional(),
   breed: text.optional(),
   age: text.optional(),
@@ -113,6 +125,30 @@ for (const [table, schema, rows] of TABLES) {
         ? `undeclared field(s) ${(issue as unknown as { keys: string[] }).keys.join(', ')} — declare them in scripts/lint-schema.ts (and give them a renderer) or remove them`
         : `${where}: ${issue.message}`
       fail(`[${table}] ${id} — ${msg}`)
+    }
+  }
+}
+
+// A `protos` id that resolves to nothing renders as a silently missing card —
+// the reader never learns the protocol was meant to be there.
+const protocolIds = new Set(DB.protocols.map(p => p.id))
+for (const disease of DB.disease_page) {
+  if (typeof disease.protos !== 'string') continue
+  for (const id of disease.protos.split('|')) {
+    if (!protocolIds.has(id)) fail(`[disease_page] ${disease.id} — protos names ${id}, which is not a protocol`)
+  }
+}
+
+// A ddx entry is a page you go READ to tell two diagnoses apart, so it links to
+// the differential's DISEASE page. Pointing it at a protocol both dropped the
+// reader into treatment steps for a disease they have not diagnosed, and — while
+// the top cards were inferred from @PROT- prose — hoisted that protocol onto
+// this page: the metaldehyde protocol headlined the hypomyelination page.
+for (const table of [DB.disease_page, DB.lesion_type] as { id: string; ddx?: unknown }[][]) {
+  for (const row of table) {
+    if (typeof row.ddx !== 'string') continue
+    for (const m of row.ddx.matchAll(/@(PROT-[A-Z0-9-]+)/g)) {
+      fail(`${row.id} — ddx links to ${m[1]}; a differential links to its disease page (@DIS-…), not to a protocol`)
     }
   }
 }

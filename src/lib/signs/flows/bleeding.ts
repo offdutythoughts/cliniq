@@ -595,9 +595,9 @@ const bleedingConsump: FlowPage = {
           tone: 'danger',
           blocks: [{ kind: 'endpoints', items: [
             { label: 'Significant haemorrhage', sublabel: 'Platelets lost with bleeding; secondary thrombocytopenia', tone: 'danger' },
-            { label: 'Sepsis', sublabel: 'Platelet activation + consumption in microthrombi', tone: 'danger', link: { to: 'protocol', id: 'PROT-SEPSIS' } },
+            { label: 'Sepsis', sublabel: 'Platelet activation + consumption in microthrombi', tone: 'danger', link: { to: 'disease', id: 'DIS-SHOCK-SEPTIC' } },
             { label: 'Vasculitis', sublabel: 'Endothelial damage → continuous platelet activation', tone: 'danger' },
-            { label: 'DIC', link: { to: 'protocol', id: 'PROT-BLEED-DIC' }, sublabel: 'Early thrombosis → late haemorrhage; PT + aPTT both prolonged', tone: 'danger' },
+            { label: 'DIC', link: { to: 'disease', id: 'DIS-BD-DIC' }, sublabel: 'Early thrombosis → late haemorrhage; PT + aPTT both prolonged', tone: 'danger' },
           ]}],
         },
         {

@@ -136,7 +136,7 @@ const anorexiaTrue: FlowPage = {
           tone: 'info',
           tiles: [
             { label: 'Uraemia (CKD / AKI)', link: { to: 'disease', id: 'DIS-SEC-CKD' } },
-            { label: 'Diabetic Ketoacidosis', link: { to: 'protocol', id: 'PROT-ENDO-DKA' } },
+            { label: 'Diabetic Ketoacidosis', link: { to: 'disease', id: 'DIS-ENDO-DKA' } },
             { label: 'Hypoadrenocorticism', link: { to: 'disease', id: 'DIS-SEC-HYPO' } },
             { label: 'Hypercalcaemia', link: { to: 'disease', id: 'DIS-ENDO-HCALC' } },
           ],
@@ -144,7 +144,7 @@ const anorexiaTrue: FlowPage = {
         {
           cat: 'Infectious',
           tiles: [
-            { label: 'Sepsis / Septic Peritonitis', link: { to: 'protocol', id: 'PROT-SEPSIS' } },
+            { label: 'Sepsis / Septic Peritonitis', link: { to: 'disease', id: 'DIS-SHOCK-SEPTIC' } },
             { label: 'FIP', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
           ],
         },

@@ -63,6 +63,12 @@ const SCREENS: { name: string; nav: Nav }[] = [
   // (signs + differentials list); diff-d001 renderDiffDetail.
   { name: 'subtype-gi-neo', nav: { fn: 'renderSubTypeDetail', args: ['LES-GI-UP-NEO'] } },
   { name: 'subtype-hepatic', nav: { fn: 'renderSubTypeDetail', args: ['LES-JD-HEP'] } },
+  // The two halves of the protocol rule (src/app/screens/protocolCards.tsx), one
+  // screen each: subtype-pleural-exudate is a leaf with NO disease page, so it
+  // carries its own <ProtocolCards>; subtype-pericardial HAS one, so it shows
+  // <DiseasePageCard> at the top instead and the protocol lives on that page.
+  { name: 'subtype-pleural-exudate', nav: { fn: 'renderSubTypeDetail', args: ['LES-PL-FL2'] } },
+  { name: 'subtype-pericardial', nav: { fn: 'renderSubTypeDetail', args: ['LES-PM-CARD'] } },
   { name: 'lesion-detail-regen', nav: { fn: 'renderLesionDetail', args: ['LES-PM-REGEN'] } },
   { name: 'diff-d001', nav: { fn: 'renderDiffDetail', args: ['D001'] } },
 ]

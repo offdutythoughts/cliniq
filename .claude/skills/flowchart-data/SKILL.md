@@ -183,6 +183,57 @@ Add a plain object to the matching array in `src/data/db.ts` — copy a neighbou
 A `Link` can then point at it. The link-integrity test fails if a link references an id not in
 `DB`/`FLOWS`/`DX`, so add the target first.
 
+---
+
+## THE PROTOCOL RULE — a protocol is reached through the page for the diagnosis it treats
+
+```
+lesion category  →  disease page  →  protocol
+```
+
+A tile, chip, endpoint or lesion sub-type that **names a diagnosis** ("Metaldehyde",
+"Diabetic ketoacidosis", "Cardiac tamponade") links to that diagnosis's **disease page** —
+never straight to a protocol. The disease page then shows its protocols as the **first cards
+on the page**, above the clinical sections. Skipping the disease page hands the reader
+treatment steps with no aetiology, signalment, confirmation or prognosis, and lets the same
+condition behave differently depending on which flow reached it.
+
+**To give a disease page a protocol — one edit:**
+
+```ts
+{id:'DIS-TOX-METALD',protos:'PROT-TOX-METALD',name:'Metaldehyde Toxicosis', …}
+```
+
+Pipe-separate several (`protos:'PROT-A|PROT-B'`). Nothing else needs touching — the card
+stack renders itself. `protos` is the **only** place to declare this.
+
+| Do | Don't |
+|---|---|
+| `{ to:'disease', id:'DIS-TOX-METALD' }` on a tile | `{ to:'protocol', id:'PROT-TOX-METALD' }` on a tile |
+| `protos:'PROT-X'` on the disease row | `proto:'PROT-X'` on a lesion that has a `dis` |
+| `@DIS-…` tokens in a `ddx` | `@PROT-…` tokens in a `ddx` |
+
+**The three exceptions**, all narrow:
+- A tile whose label *says* "protocol" ("SE emergency protocol", "Thoracocentesis protocol")
+  is an explicit shortcut, not a diagnosis — allowed, and only in `dxRow`/`diseaseGrid`.
+- A **lesion with no disease page** (a fluid class, an oedema type, a shock category) is the
+  leaf: its own `proto:'PROT-…'` is the only route to the steps and is expected.
+- A condition with a protocol but **no disease page yet** — a content gap. It needs an entry
+  in `PROTOCOL_ONLY_TILES` (`scripts/lint-tiles.ts`) with the reason; write the page and
+  remove the entry.
+
+**Enforced by** (all in `npm run lint:content`):
+
+| Lint | Catches |
+|---|---|
+| `lint-tiles` CHECK 6 | a category tile linking straight to a protocol |
+| `lint-schema` | a `protos` id that doesn't resolve; an `@PROT-` token inside any `ddx` |
+| `lint-lesions` | a lesion declaring `proto` when it has a `dis`; a `proto` that doesn't resolve |
+
+The rendering side lives in one module — `src/app/screens/protocolCards.tsx`
+(`protocolsForDisease` / `protocolsForLesion` / `<ProtocolCards>` / `<DiseasePageCard>`), used
+by `DiseasePageView`, `SubTypeDetailView` and `LesionDetailView` so all three agree.
+
 **A new block type** (only when a layout recurs — don't build one for a single one-off)
 1. Add the typed block to `flowTypes.ts`/`dxTypes.ts` + the `Block`/`DxBlock` union.
 2. Add a `case` to `BlockView` in `FlowPageView.tsx` / `DxBlockView` in `DxApproachView.tsx` that emits

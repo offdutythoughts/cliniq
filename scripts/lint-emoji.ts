@@ -34,7 +34,11 @@ const WARN_OK = new Set([
   'markup.tsx',          // `warn` blocks — the sign-flowchart surface, not covered here
 ])
 const SIREN_OK = new Set([
-  'DiseasePageView.tsx',    // emergency banner + emergency protocol card
+  'DiseasePageView.tsx',    // the emergency banner
+  // The emergency protocol card itself — extracted from DiseasePageView so the
+  // disease page and the two lesion leaves render one identical card. Still the
+  // disease-page emergency meaning; see protocolCards.tsx for the rule.
+  'protocolCards.tsx',
   // A protocol IS the emergency response the disease page sends you to, so the
   // glyph carries the same meaning on its header and on its home-tab chip.
   'ProtocolDetailView.tsx',

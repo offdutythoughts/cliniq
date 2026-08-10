@@ -70,7 +70,7 @@ const polyphagiaWeightLoss: FlowPage = {
             { label: 'Diabetes mellitus', link: { to: 'disease', id: 'DIS-ENDO-DM' } },
             { label: 'Feline hyperthyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
             { label: 'Acromegaly (cat)', link: { to: 'disease', id: 'DIS-ENDO-ACRO' } },
-            { label: 'Diabetic ketoacidosis', link: { to: 'protocol', id: 'PROT-ENDO-DKA' } },
+            { label: 'Diabetic ketoacidosis', link: { to: 'disease', id: 'DIS-ENDO-DKA' } },
           ],
         },
         {

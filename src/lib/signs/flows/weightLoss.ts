@@ -82,7 +82,7 @@ const weightLossAppetite: FlowPage = {
           tiles: [
             { label: 'Feline hyperthyroidism', link: { to: 'disease', id: 'DIS-ENDO-HYPERTHY' } },
             { label: 'Diabetes mellitus', link: { to: 'disease', id: 'DIS-ENDO-DM' } },
-            { label: 'Diabetic ketoacidosis', link: { to: 'protocol', id: 'PROT-ENDO-DKA' } },
+            { label: 'Diabetic ketoacidosis', link: { to: 'disease', id: 'DIS-ENDO-DKA' } },
           ],
         },
       ],

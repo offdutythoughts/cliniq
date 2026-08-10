@@ -2,6 +2,10 @@
   "name": "cliniq-next",
   "version": "0.1.0",
   "private": true,
+  "//engines": "Both desktops and CI resolve from .nvmrc; this makes a mismatched local Node fail loudly at install instead of silently rewriting package-lock.json.",
+  "engines": {
+    "node": ">=24.0.0 <25"
+  },
   "scripts": {
     "build": "next build",
     "dev": "next dev",

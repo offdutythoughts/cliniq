@@ -16,6 +16,22 @@
 // Sub-types with NO `dis` link are exempt: for broad symptom sub-types (e.g. "Syncope",
 // "Seizure disorder") the differential fallback IS the intended aetiology content, and there
 // is no duplicate disease page to redirect to.
+//
+// SECOND RULE — a protocol is reached through the page for the diagnosis it treats
+// (see src/app/screens/protocolCards.tsx):
+//
+//     lesion category  →  disease page  →  protocol
+//
+// So a lesion that HAS a disease page must not also declare `proto`. The disease
+// page declares it, in `protos`, and shows it as a card at the top of the page;
+// declaring it on the lesion too let the reader reach treatment steps a tap
+// before the diagnosis, and split the answer to "which protocol treats this?"
+// across two rows that could drift apart. A lesion WITHOUT a disease page is a
+// genuine leaf (a fluid class, an oedema type, a shock category) — its `proto`
+// is the only route to the steps and is expected.
+//
+// THIRD RULE — `proto` must name a protocol that exists, or the card navigates
+// to a NotFound (LES-HU-GEN-PYO pointed at PROT-REPRO-PYO, which was never written).
 
 import { DB } from '../src/data/db'
 import type { Lesion } from '../src/types'
@@ -40,7 +56,20 @@ function impliedDisease(l: Lesion): string | undefined {
   return dis && pageIds.has(dis) ? dis : undefined
 }
 
+const protocolIds = new Set(DB.protocols.map(p => p.id))
+
 for (const l of DB.lesion_type as unknown as Lesion[]) {
+  // The protocol rules apply to EVERY lesion, including the directDis redirects
+  // below — a redirecting row's `proto` was silently inherited by the disease
+  // page it points at, which is exactly the drift this closes.
+  if (l.proto) {
+    if (l.dis) {
+      fail(`[${l.id}] "${l.sub}" declares proto:'${l.proto}' AND links to ${l.dis} — a protocol is reached through the disease page. Move it to protos:'${l.proto}' on ${l.dis} and drop it here.`)
+    } else if (!protocolIds.has(l.proto)) {
+      fail(`[${l.id}] "${l.sub}" declares proto:'${l.proto}', which is not a protocol — the card would navigate to a NotFound.`)
+    }
+  }
+
   const redirects = !!(l.directDis && l.dis)
   if (redirects) continue // goes straight to the disease page — no intermediate leaf rendered
 
@@ -73,5 +102,5 @@ if (errors > 0) {
   console.error(`\n${errors} lesion lint error(s) found.`)
   process.exit(1)
 } else {
-  console.log(`✓ All lesion sub-type pages pass lint (${(DB.lesion_type as unknown as Lesion[]).length} lesions checked).`)
+  console.log(`✓ All lesion sub-type pages pass lint, and every lesion protocol is reached through its disease page (${(DB.lesion_type as unknown as Lesion[]).length} lesions checked).`)
 }

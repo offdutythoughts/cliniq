@@ -1,0 +1,7 @@
+# Binary — never attempt a textual merge. A conflicted PNG has no resolution
+# other than regenerating it, so fail cleanly rather than corrupting the file.
+*.png binary -merge
+
+# Generated: keep it out of diffs and off the PR review surface. It is still
+# committed and still the source of truth for `npm ci`.
+package-lock.json -diff linguist-generated=true

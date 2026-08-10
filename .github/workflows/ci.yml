@@ -15,10 +15,12 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version-file: .nvmrc
           cache: npm
 
-      - run: npm install --no-audit --no-fund
+      # `ci`, not `install`: install re-resolves and can build a tree the
+      # lockfile never described, so CI stops being a check on what you pushed.
+      - run: npm ci --no-audit --no-fund
 
       # npm skips this one platform-specific optional native dep on the Linux
       # runner (npm/cli#4828), so vitest's rolldown engine can't find its
@@ -37,13 +39,34 @@ jobs:
       - name: Tests (link-integrity · registry · allowlist)
         run: npm test
 
-      # The visual guardrail. It was previously local-only, so baselines drifted
-      # silently — 20 of 60 were stale before this job was added. Chromium only,
-      # at a fixed mobile viewport, so the render is deterministic on the runner.
+      # The visual guardrail. It compares against __screenshots__/linux/, which
+      # only this runner ever writes — see playwright.config.ts on why a macOS
+      # baseline cannot gate a Linux render. If that directory is absent the
+      # guardrail is unarmed, and Playwright would "pass" by silently writing new
+      # baselines, so say so loudly instead of going green on nothing.
+      - name: Check linux baselines exist
+        id: baselines
+        run: |
+          if [ -d tests/visual/__screenshots__/linux ] && \
+             [ -n "$(ls -A tests/visual/__screenshots__/linux 2>/dev/null)" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=Visual guardrail unarmed::No tests/visual/__screenshots__/linux baselines. Run Actions → 'Update visual baselines' to generate them."
+          fi
+
       - name: Install Playwright chromium
+        if: steps.baselines.outputs.present == 'true'
         run: npx playwright install --with-deps chromium
 
+      # Built here rather than inside playwright's webServer, so a slow cold
+      # build fails as a build error instead of a webServer timeout.
+      - name: Build app for the visual run
+        if: steps.baselines.outputs.present == 'true'
+        run: NEXT_PUBLIC_CONVEX_URL= NEXT_DIST_DIR=.next-pw npx next build
+
       - name: Visual regression (60 screens · light + dark)
+        if: steps.baselines.outputs.present == 'true'
         run: npx playwright test
 
       # The diff images are the only way to judge a visual failure, so keep them

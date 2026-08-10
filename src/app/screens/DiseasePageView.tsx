@@ -7,7 +7,7 @@
 // AMA-numbered references.
 
 import { DB } from '../../data/db'
-import type { DiseaseRow, ProtocolRow } from '../../data/db'
+import type { DiseaseRow } from '../../data/db'
 import { SPECIES_PAIRS } from '../../data/speciesPairs'
 import { scopeToSpecies, speciesMode, speciesOf, type Species } from '../../lib/species'
 import { useNav } from '../nav/NavContext'
@@ -15,7 +15,8 @@ import { rememberSpecies, resolveSpecies } from '../nav/speciesPref'
 import { styleStringToObject as s } from './style'
 import { SpeciesNote, SpeciesToggle, pageForSpecies } from './SpeciesToggle'
 import { SpTag, ZOO_TITLE, ZOO_WORDS } from './tags'
-import { Bul, Linkify, NavCard, str } from './markup'
+import { Bul, Linkify, str } from './markup'
+import { ProtocolCards, protocolsForDisease } from './protocolCards'
 import { ClinicalBody, ClinicalSections } from './diseaseSections'
 import { buildDiseaseCitations, CitationContext, type RefEntry } from './diseaseReferences'
 import { NotFound } from './NotFound'
@@ -32,18 +33,6 @@ const REFERENCES_TITLE = s('font-size:var(--fs-label);font-weight:700;text-trans
 const REFERENCE_ITEM = s('margin-left:18px;padding-left:2px;margin-bottom:4px;')
 
 const pip = (v: unknown): boolean => typeof v === 'string' && v.includes('|')
-
-function diseaseProtocols(disease: DiseaseRow): ProtocolRow[] {
-  const ids = new Set<string>()
-  for (const lesion of DB.lesion_type) {
-    if (lesion.dis === disease.id && typeof lesion.proto === 'string' && lesion.proto) ids.add(lesion.proto)
-  }
-  for (const value of Object.values(disease)) {
-    if (typeof value !== 'string') continue
-    for (const match of value.matchAll(/@(PROT-[A-Z0-9-]+)/g)) ids.add(match[1])
-  }
-  return DB.protocols.filter(protocol => ids.has(protocol.id))
-}
 
 function isEmergencyDisease(disease: DiseaseRow, topAlert: string): boolean {
   return /\bemergency\b/i.test(topAlert)
@@ -122,7 +111,7 @@ export function DiseasePageView({ id, sp }: { id: string; sp?: Species }) {
   // red banner is then left to say only what is an emergency.
   const zooOwnsAlert = d.zoo === true && ZOO_WORDS.test(topAlert)
   const redAlert = zooOwnsAlert ? '' : topAlert
-  const protocols = diseaseProtocols(d)
+  const protocols = protocolsForDisease(d)
 
   // AMA numbering — collect citations in the order the fields render below.
   const { numberOf, entries } = buildDiseaseCitations([
@@ -188,15 +177,7 @@ export function DiseasePageView({ id, sp }: { id: string; sp?: Species }) {
         </div>
       )}
 
-      {protocols.map(protocol => (
-        <NavCard
-          key={protocol.id}
-          title={`${emergency ? '🚨 Emergency' : '⚡'} protocol: ${protocol.name}`}
-          sub="Open step-by-step protocol"
-          onClick={() => nav.navigate({ kind: 'protocol', id: protocol.id })}
-          style={{ marginBottom: 14 }}
-        />
-      ))}
+      <ProtocolCards protocols={protocols} emergency={emergency} />
 
       <ClinicalSections content={{
         etiology: f(d.etiology),

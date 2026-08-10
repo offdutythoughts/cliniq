@@ -322,7 +322,7 @@ const encephalopathyDiffuse: FlowPage = {
                 { label: 'Electrolyte extremes', tone: 'teal', sublabel: 'Na >170 or <120 mmol/L — correct slowly' },
                 { label: 'Hypocalcaemia', tone: 'teal', sublabel: 'Eclampsia · HypoPTH' },
                 { label: 'Hypertensive encephalopathy', tone: 'teal' },
-                { label: 'Sepsis / shock', tone: 'teal', link: { to: 'protocol', id: 'PROT-SEPSIS' } },
+                { label: 'Sepsis / shock', tone: 'teal', link: { to: 'disease', id: 'DIS-SHOCK-SEPTIC' } },
                 { label: 'Hyperthyroidism', tone: 'teal', sublabel: '🐱 Cats' },
               ],
             },

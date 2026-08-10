@@ -16,11 +16,11 @@
 
 import { DB } from '../../data/db'
 import { spOf } from '../../lib/species'
-import { useNav } from '../nav/NavContext'
 import { UrgTag, SpTag, ZooTag } from './tags'
 import { DiseasePageView } from './DiseasePageView'
 import { ClinicalSections } from './diseaseSections'
-import { NavCard, Bul, str } from './markup'
+import { Bul, str } from './markup'
+import { DiseasePageCard, ProtocolCards, protocolsForLesion } from './protocolCards'
 import { TAG_ROW, PAGE_TITLE } from './styles'
 
 /** Fallback Etiology for a broad symptom sub-type with nothing authored: the
@@ -52,13 +52,11 @@ function diffTests(filter: string): string {
 }
 
 export function SubTypeDetailView({ id }: { id: string }) {
-  const nav = useNav()
   const l = DB.lesion_type.find(x => x.id === id)
   if (!l) return null
   if (l.directDis && l.dis) return <DiseasePageView id={str(l.dis)} {...spOf(l.sp)} />
 
   const isEM = l.urg === 'EMERGENCY'
-  const proto = str(l.proto)
   const dis = str(l.dis)
   const filter = str(l.filter)
   const signalment = str(l.signalment)
@@ -70,9 +68,13 @@ export function SubTypeDetailView({ id }: { id: string }) {
       <div style={TAG_ROW}><UrgTag urg={l.urg} /><ZooTag zoo={l.zoo === true} /><SpTag sp={l.sp} /><span className="tag tag-sp-all">{l.cat}</span></div>
       {isEM && <div className="em-alert">EMERGENCY — initiate stabilisation before full diagnostic workup</div>}
 
-      {proto && (
-        <NavCard title={`⚡ Protocol: ${proto}`} sub="Tap to open step-by-step protocol" onClick={() => nav.navigate({ kind: 'protocol', id: proto })} style={{ marginBottom: 14 }} />
-      )}
+      {/* The route on, at the top of the page: a sub-type that has a disease
+          page sends the reader there for the protocol, and one that doesn't is
+          the leaf, so it carries the protocol card itself. Exactly one of these
+          two renders — see protocolCards.tsx for the rule. */}
+      {dis
+        ? <DiseasePageCard id={dis} />
+        : <ProtocolCards protocols={protocolsForLesion(l)} emergency={isEM} />}
 
       <ClinicalSections
         content={{
@@ -92,11 +94,6 @@ export function SubTypeDetailView({ id }: { id: string }) {
           pearl: str(l.pearl),
         }}
       />
-
-
-      {dis && (
-        <NavCard title="📋 Disease Page" sub="Tap to view full disease profile" onClick={() => nav.navigate({ kind: 'disease', id: dis })} style={{ marginBottom: 14 }} />
-      )}
     </>
   )
 }
