@@ -12,22 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      # `ci`, not `install`: install re-resolves and can build a tree the
-      # lockfile never described, so CI stops being a check on what you pushed.
-      - run: npm ci --no-audit --no-fund
-
-      # npm skips this one platform-specific optional native dep on the Linux
-      # runner (npm/cli#4828), so vitest's rolldown engine can't find its
-      # binding. Install it explicitly at the exact version of the resolved
-      # rolldown (derived at runtime so it never drifts from the lockfile).
-      - name: Ensure Linux rolldown binding (npm/cli#4828 workaround)
-        run: npm install --no-save "@rolldown/binding-linux-x64-gnu@$(node -p "require('rolldown/package.json').version")"
+      - uses: ./.github/actions/setup
 
       # Gating checks — a red here blocks the branch.
       - name: Type-check
@@ -55,15 +40,8 @@ jobs:
             echo "::warning title=Visual guardrail unarmed::No tests/visual/__screenshots__/linux baselines. Run Actions → 'Update visual baselines' to generate them."
           fi
 
-      - name: Install Playwright chromium
+      - uses: ./.github/actions/visual-build
         if: steps.baselines.outputs.present == 'true'
-        run: npx playwright install --with-deps chromium
-
-      # Built here rather than inside playwright's webServer, so a slow cold
-      # build fails as a build error instead of a webServer timeout.
-      - name: Build app for the visual run
-        if: steps.baselines.outputs.present == 'true'
-        run: NEXT_PUBLIC_CONVEX_URL= NEXT_DIST_DIR=.next-pw npx next build
 
       - name: Visual regression (60 screens · light + dark)
         if: steps.baselines.outputs.present == 'true'

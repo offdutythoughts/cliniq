@@ -1,0 +1,27 @@
+name: Setup
+description: Node toolchain plus dependencies installed exactly as the lockfile describes.
+
+# Shared by ci.yml and visual-baselines.yml. Both need an identical toolchain —
+# a baseline regenerated against different deps than CI verifies against is worse
+# than no baseline, because it looks authoritative.
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v7
+      with:
+        node-version-file: .nvmrc
+        cache: npm
+
+    # `ci`, not `install`: install re-resolves and can build a tree the lockfile
+    # never described, so CI stops being a check on what you pushed.
+    - run: npm ci --no-audit --no-fund
+      shell: bash
+
+    # npm skips this one platform-specific optional native dep on the Linux
+    # runner (npm/cli#4828), so vitest's rolldown engine can't find its binding.
+    # Install it explicitly at the exact version of the resolved rolldown
+    # (derived at runtime so it never drifts from the lockfile).
+    - name: Ensure Linux rolldown binding (npm/cli#4828 workaround)
+      shell: bash
+      run: npm install --no-save "@rolldown/binding-linux-x64-gnu@$(node -p "require('rolldown/package.json').version")"
