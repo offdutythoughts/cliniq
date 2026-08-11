@@ -29,6 +29,7 @@ typed data (FLOWS / DX / DB)  →  a View (what screen to show)  →  <Screen vi
 | `src/app/screens/style.ts` | `styleStringToObject(str)` — converts a legacy inline-style string to a React style object. |
 | `src/app/screens/markup.tsx` | `<Linkify>` (`@DIS-…`/`@PROT-…` tokens → nav) and `<Bul>` (pipe `#`/`-`/bullet markup) — the disease/lesion/diff bullet renderers. |
 | `src/app/screens/tags.tsx` | `<SpTag>` / `<UrgTag>` / `urgClass()` — the `.tag tag-*` species/urgency chips. |
+| `src/app/screens/protocolCards.tsx` | **The protocol rule**, in one place: `protocolsForDisease` / `protocolsForLesion` decide which protocols a page owns; `<ProtocolCards>` draws the card stack at the top of the page; `<DiseasePageCard>` is the lesion→diagnosis route. Used by `DiseasePageView`, `SubTypeDetailView`, `LesionDetailView` — never re-implement a protocol card in a screen. See the **flowchart-data** skill for the authoring rule. |
 | `src/app/screens/NotFound.tsx`, `InjuryGradingTable.tsx`, `diagnosticHomeCards.ts` | Small shared/static pieces. |
 | `src/app/page.tsx` | Host: `<NavProvider>` → `<Screen view={nav.view}>` inside `.screen-inner`; wires Topbar/BottomNav/NotesPanel and the slide animation; exposes `window.__nav(view)` (deep-link + test hook). |
 | `src/lib/signs/tone.ts` | `HUE` / `TITLE` tone→CSS-var tables (shared by FlowPageView + DxApproachView). |

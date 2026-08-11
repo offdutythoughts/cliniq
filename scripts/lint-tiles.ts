@@ -42,6 +42,18 @@
 // same level, not two of them hidden one layer down inside a third. Split such a
 // tile into one tile per cause. This lint fails on any tile that still uses it.
 //
+// CHECK 6 — a category tile names a DIAGNOSIS, so it links to a disease page.
+// A tile is a lesion category: "Metaldehyde", "Diabetic ketoacidosis", "Sepsis".
+// Linking one straight to its protocol skipped the disease page entirely, so the
+// reader met the treatment steps without the aetiology, signalment, confirmation
+// or prognosis — and the same condition behaved differently depending on which
+// flow reached it. The protocol is not lost by this: a disease page surfaces its
+// own protocols as the first cards on the page (`protos` in db.ts). So the route
+// is always tile → disease page → protocol, never tile → protocol.
+// PROTOCOL_ONLY_TILES lists the reviewed exceptions: conditions with a protocol
+// but no disease page yet. Each is a content gap — write the page and remove the
+// entry, rather than adding new ones.
+//
 // CHECK 5 — no SHOUTING tile labels.
 // A lesion/disease name on a tile is written in sentence case ("Bacterial septic
 // arthritis"), not block capitals ("BACTERIAL SEPTIC ARTHRITIS"). The category
@@ -103,6 +115,13 @@ const normLabel = (label: string) =>
     .trim()
     .toLowerCase()
 
+// Reviewed tiles allowed to link straight to a protocol because no disease page
+// covers the condition yet. Keyed `pageId::label`. Removing an entry is the goal.
+const PROTOCOL_ONLY_TILES = new Set([
+  // No DIS- page for anaphylaxis/angioedema — PROT-ANAPHYLAXIS is all there is.
+  'oedema-permeability::Angioedema / anaphylaxis / envenomation',
+])
+
 // A stable key for a link target (or null if the value isn't a resolvable link).
 const targetKey = (link: any): string | null => {
   if (!link || typeof link !== 'object') return null
@@ -141,6 +160,13 @@ for (const { pageId, kind, cat, tile } of eachTile()) {
   // CHECK 5: sentence case — the column header carries the emphasis.
   if (isShouting(label)) {
     fail(`[${pageId}] ${cat} · "${label}" — tile label is in block capitals; write the diagnosis in sentence case (acronyms keep their capitals).`)
+  }
+  // CHECK 6: a tile is a diagnosis, so it links to the disease page — which
+  // carries that diagnosis's protocols as its own top cards.
+  const links = [tile.link, ...((tile.links ?? []) as unknown[])]
+  if (links.some(l => (l as { to?: string })?.to === 'protocol') &&
+      !PROTOCOL_ONLY_TILES.has(`${pageId}::${label}`)) {
+    fail(`[${pageId}] ${cat} · "${label}" — tile links straight to a protocol; point it at the disease page and declare the protocol there (protos in db.ts), so the reader gets the diagnosis before the treatment steps.`)
   }
   // CHECK 4: the nested sub-bullet form is banned — one tile, one cause.
   if (Array.isArray(tile.links) && tile.links.length > 0) {

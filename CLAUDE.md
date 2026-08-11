@@ -11,6 +11,12 @@
 | `references/ettinger9-gap-analysis.md` | Gap summary: ClinIQ vs Ettinger (covered / missing / enrich) | Committed to repo |
 | *(no local file)* | *The Ultimate Guide to Toxicology eBook*, VETgirl / ASPCA APCC 2023 (44 pp) — password-protected FlippingBook, not redistributable | Not in repo |
 | `references/vetgirl-tox-notes.md` | Toxicology extraction from the above (toxic doses, decon decisions, antidote doses, nephro-/hepatotoxicant tables) — tagged inline with `> ClinIQ:` | Committed to repo |
+| `references/vettox3.md` | *Veterinary Toxicology: Basic and Clinical Principles*, 3rd edn, Gupta 2018 — full-text md conversion, 82 chapters, 159k lines | Local only — gitignored |
+| `references/vettox3-index.md` | Chapter → line-number index for the above, plus scope split vs the VETgirl notes | Committed to repo |
+| `references/vetdent4.md` | *Veterinary Dentistry: A Team Approach*, 4th edn, Lemmons et al. 2025 — full-text md conversion, 15 chapters, 24k lines | Local only — gitignored |
+| `references/vetdent4-index.md` | Chapter → line-number index for the above, plus ClinIQ dental gap list | Committed to repo |
+| `references/saccm2.pdf` | *Small Animal Critical Care Medicine*, **2nd** edn, Silverstein & Hopper, Saunders 2015 — mislabelled "3rd edn 2023" by its filename | Local only — gitignored |
+| `references/CITATIONS.md` | AMA 11th ed. citation strings for every reference above | Committed to repo |
 
 When working on ophthalmic signs (`redEye`, `blindEye`, `wetEye`, `abnormalPupil`) or any
 entry in `src/data/db.ts` with id `DIS-OPH-*`, `DIS-EYE-*`, `LES-RE-*`, `LES-BL-*`,
@@ -31,13 +37,60 @@ dose thresholds, activated-charcoal indications and contraindications, antidote 
 7% ethanol, NAC, Digibind, cholestyramine), and the ASPCA nephrotoxicant / hepatotoxicant tables.
 It also lists the 14 toxicants with **no** `DIS-TOX-*` entry today (xylitol, NSAIDs, lilies,
 grapes/raisins, sago palm, iron, and others) — see its **ClinIQ gap summary** section.
+For mechanism, toxicokinetics, target-organ pathophysiology, or any toxicant VETgirl does not
+cover (plants, mycotoxins, zootoxins, metals, industrial agents), fall back to
+`references/vettox3.md` via `references/vettox3-index.md`. Where the two disagree on a dose,
+**VETgirl/APCC wins** — it is small-animal specific and five years newer.
 
-To access the full PDF for deep dives:
+When working on any `DIS-DENT-*` entry, an oral/dental sign flow, or a dental procedure —
+read `references/vetdent4-index.md` and open the relevant chapter range of
+`references/vetdent4.md`. It carries AVDC nomenclature and case-log abbreviations,
+periodontal staging PD 0–4, feline TR type 1/2/3, malocclusion classes, endodontic decision
+criteria, and regional nerve blocks. Six `DIS-DENT-*` entries exist today; the index lists
+the uncovered areas (TR, malocclusion, endodontics, exotic dental).
+
+## Citing references
+
+Any citation of these works — in docs, in app copy, or in entry text — uses the AMA 11th ed.
+strings in `references/CITATIONS.md`. Do not compose a citation from a filename or from
+memory; several filenames in `references/` carry wrong or unverifiable metadata. Entries in
+that file marked **Unverified** must have their title page checked before the citation is
+published anywhere.
+
+## Reading the PDFs
+
+The system Homebrew at `/usr/local` is owned by other user accounts and `vetic` is not an
+admin, so it can never install anything — **never use it or suggest `sudo` fixes for it**. A
+user-owned Homebrew lives at `~/homebrew` (on PATH via `~/.zshrc`); poppler 26.08 is installed
+there. Note that its non-standard prefix means most formulae build from source, so new
+installs are slow.
+
+For text and tables, `pdftotext -layout` is the primary tool:
+
 ```bash
-cp references/vetoph6.pdf /tmp/vetoph.pdf
-pdftotext -f <start_page> -l <end_page> -layout /tmp/vetoph.pdf -
+pdftotext -f <pdf_page> -l <pdf_page> -layout references/vettox3.pdf -
 ```
-PDF page = book page + 22 (Vol 1) or + ~75 (Vol 2, after index pages).
+
+`-layout` is not optional — it is what keeps table columns aligned. PyMuPDF at
+`~/.local/pdfenv/bin/python` is the scripting alternative (`page.find_tables()`,
+`page.get_text()`), and is how to render a page to PNG for visual reading:
+
+```bash
+~/.local/pdfenv/bin/python -c "import fitz; fitz.open('references/vetdent4.pdf')[110].get_pixmap(dpi=150).save('/tmp/p.png')"
+```
+
+PDFs in `references/` (all gitignored), with printed-page → PDF-page offsets:
+
+| File | Pages | Offset |
+|---|---|---|
+| `vettox3.pdf` | 1,239 | PDF page = printed page **+ 33** |
+| `vetdent4.pdf` | 322 | PDF page = printed page **+ 14** |
+| `saccm2.pdf` | 1,238 | PDF page = printed page **+ 23** (drifts to +24; approximate) |
+| `vetoph6.pdf` | 2,744 | PDF page = printed page **+ 23** (Vol 1, measured twice; Vol 2 unmeasured) |
+
+The `.md` conversions of these books have their tables flattened into unaligned fragments, so
+**any dose or threshold read out of a table region in a `.md` file must be re-checked against
+the PDF**. Prose in the `.md` files is reliable.
 
 <!-- convex-ai-start -->
 

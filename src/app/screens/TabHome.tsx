@@ -17,16 +17,22 @@ import { HOW_TO_ITEMS } from './howToItems'
 import { SpTag } from './tags'
 import { useTutorial } from '../tutorial/TutorialContext'
 
+// `protos` holds PROT-… ids, not prose: searching it matches machine keys the
+// reader never typed, and — being the first field on the row — it would win the
+// snippet and print a raw id where a sentence belongs.
+const NON_PROSE = ['protos']
+
 /** Search all string fields of a DiseaseRow for the given lowercase query */
 function diseaseMatchesFull(d: DiseaseRow, lower: string): boolean {
-  return Object.values(d).some(v => typeof v === 'string' && v.toLowerCase().includes(lower))
+  return Object.entries(d).some(([k, v]) =>
+    typeof v === 'string' && !NON_PROSE.includes(k) && v.toLowerCase().includes(lower))
 }
 
 const SNIPPET_LEN = 80
 
 /** Return a short excerpt around the first match in any content field (skips id/name/sp/synonyms) */
 function diseaseSnippet(d: DiseaseRow, lower: string): string {
-  const skip = new Set(['id', 'name', 'sp', 'synonyms'])
+  const skip = new Set(['id', 'name', 'sp', 'synonyms', ...NON_PROSE])
   for (const [k, v] of Object.entries(d)) {
     if (skip.has(k) || typeof v !== 'string') continue
     const idx = v.toLowerCase().indexOf(lower)

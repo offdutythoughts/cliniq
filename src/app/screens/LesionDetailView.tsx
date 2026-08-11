@@ -1,10 +1,12 @@
 'use client'
-// Lesion quick-detail — React port of renderLesionDetail (cliniqApp.ts): tags,
-// key signs, optional notes, optional protocol card, then the differentials list.
+// Lesion quick-detail — tags, the route on to the diagnosis (disease page, or
+// the protocol itself when there is no disease page — see protocolCards.tsx),
+// key signs, optional notes, then the differentials list.
 
 import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
-import { NavCard, Bul, str } from './markup'
+import { Bul, str } from './markup'
+import { DiseasePageCard, ProtocolCards, protocolsForLesion } from './protocolCards'
 import { UrgTag, SpTag, ZooTag } from './tags'
 import { TAG_ROW } from './styles'
 
@@ -13,10 +15,15 @@ export function LesionDetailView({ id }: { id: string }) {
   const l = DB.lesion_type.find(x => x.id === id)
   if (!l) return null
   const diffs = DB.differentials.filter(d => d.filter === l.filter).sort((a, b) => a.order - b.order)
-  const proto = str(l.proto)
+  const dis = str(l.dis)
   return (
     <>
       <div style={TAG_ROW}><UrgTag urg={l.urg} /><ZooTag zoo={l.zoo === true} /><SpTag sp={l.sp} /><span className="tag tag-sp-all">{l.cat}</span></div>
+      {/* Same rule as the sub-type leaf: a lesion with a disease page routes
+          there for the protocol; one without carries the protocol itself. */}
+      {dis
+        ? <DiseasePageCard id={dis} />
+        : <ProtocolCards protocols={protocolsForLesion(l)} emergency={l.urg === 'EMERGENCY'} />}
       <div className="detail-label">Key clinical signs</div>
       <div className="detail-val highlight">{l.signs}</div>
       {str(l.etiology) && (
@@ -44,12 +51,6 @@ export function LesionDetailView({ id }: { id: string }) {
         <>
           <hr className="sep" />
           <div className="pearl">{str(l.note)}</div>
-        </>
-      )}
-      {proto && (
-        <>
-          <hr className="sep" />
-          <NavCard title={`⚡ Protocol: ${proto}`} sub="Tap to open" onClick={() => nav.navigate({ kind: 'protocol', id: proto })} />
         </>
       )}
       <hr className="sep" />
