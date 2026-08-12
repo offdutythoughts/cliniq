@@ -7,90 +7,33 @@ const syncopeEntry: FlowPage = {
   blocks: [
     { kind: 'node', variant: 'entry', text: ' SYNCOPE — TRANSIENT LOSS OF CONSCIOUSNESS' },
 
-    // Q1: Confirm it IS syncope. Drawn as a typed fork rather than prose so the
-    // seizure / narcolepsy mimics sit ON the flowchart — the SYNCOPE leg is a
-    // `continue` leg, so the main spine runs unbroken into the localisation step.
+    // The syncope-vs-seizure-vs-narcolepsy split has ONE owner: the Collapse /
+    // LOC triage page, whose comparison table is the fullest version and which
+    // is how the reader reaches this page. Re-drawing it here as a three-arm
+    // fork made the reader answer the same question twice and put a card back
+    // to the page they had just come from. What stays is a gate: the seizure
+    // red flags that should send them back, and nothing else.
+    {
+      kind: 'callout',
+      tone: 'warning',
+      html: '<strong>Confirmed syncope only.</strong> An aura, rigid or paddling limbs, or confusion / blindness for minutes–hours afterwards means a seizure, not syncope — work it up from the collapse triage instead. Pre-syncope (brief ataxia or stumbling without full LOC) works up the same way as syncope.',
+    },
+
+    // The step asks the question and states the MECHANISM; it deliberately does
+    // not preview the two cards' findings, which would then be read twice and
+    // age separately. (The metabolic mimics — glucose, Na:K ± ACTH — are in the
+    // DON'T MISS box below.)
     {
       kind: 'node',
       variant: 'step',
-      text: 'IS THIS REALLY SYNCOPE?',
+      text: 'IS THE CAUSE CARDIAC?',
       // subItems are PLAIN TEXT (rendered as React children, not HTML) — no tags.
       subItems: [
-        'Match the episode against the three columns below',
-        'Pre-syncope (brief ataxia / stumbling, no full LOC) works up the same way',
-        'AEDs WORSEN syncope; a missed malignant arrhythmia can kill — get this split right',
+        'Syncope is transient LOC from cerebral hypoperfusion',
+        'BP must fall by about half before consciousness goes',
+        'An arrhythmia must last 10–30 s to drop the patient (Ettinger Ch 40)',
       ],
     },
-    // The three arms are told apart by SIGNS, one per bullet, on tone-tinted
-    // cards — the reader ticks off what they saw rather than reading three grey
-    // sentences. SYNCOPE is the `continue` leg, so the spine runs on unbroken.
-    {
-      kind: 'fork',
-      // The SYNCOPE leg is the MIDDLE one, so the spine's centred connector sits
-      // directly under it: `connectAfter` lets the two cause arms below be fed by
-      // the shared fork rather than by a lone arrow pointing into the gap.
-      connectAfter: true,
-      legs: [
-        {
-          label: 'SEIZURE',
-          tone: 'violet',
-          subItems: [
-            'Aura before it',
-            'Rigid / paddling limbs',
-            'Salivation · urination · defecation',
-            'At rest or out of sleep',
-            'Confused / blind for min–hours after',
-          ],
-          blocks: [
-            {
-              kind: 'endpoints',
-              items: [
-                { label: 'Collapse / LOC triage', sublabel: 'Full syncope vs seizure vs narcolepsy table', tone: 'orange', link: { to: 'flow', id: 'weakness-collapse' } },
-                { label: 'Epilepsy / seizures', tone: 'violet', link: { to: 'disease', id: 'DIS-WK-EPILEPSY' } },
-              ],
-            },
-          ],
-        },
-        {
-          label: 'SYNCOPE',
-          // The continuing arm is the page's subject — info blue, matching the
-          // entry node. Red stays reserved for the danger callouts below.
-          tone: 'info',
-          subItems: [
-            'No aura',
-            'Flaccid, limp',
-            'Trigger: exertion · cough · excitement',
-            'Lasts seconds',
-            'Normal INSTANTLY after',
-          ],
-          continue: true,
-        },
-        {
-          label: 'NARCOLEPSY / CATAPLEXY',
-          tone: 'slate',
-          subItems: [
-            'Trigger: food or excitement',
-            'Arousable during the episode',
-            'Normal instantly after',
-            'AEDs make no difference',
-          ],
-          blocks: [
-            {
-              kind: 'endpoints',
-              items: [
-                { label: 'Narcolepsy / cataplexy', sublabel: 'Provoke with a food-trigger test — not a hypoperfusion event', tone: 'slate' },
-              ],
-            },
-          ],
-        },
-      ],
-    },
-
-    // The SYNCOPE leg drops straight onto the two cause arms. No "now localise —
-    // cardiogenic vs non-cardiogenic" step and no callout above them: the two
-    // cards name the split and carry the findings that pick each one, so a step
-    // restating both would be read twice and age separately. (The metabolic
-    // mimics — glucose, Na:K ± ACTH — are in the DON'T MISS box below.)
     {
       kind: 'choices',
       cols: 2,
@@ -118,7 +61,7 @@ const syncopeEntry: FlowPage = {
         '<strong>Malignant arrhythmia</strong> — high-grade AV block, sinus arrest or sustained ventricular tachycardia carry a sudden-death risk; a normal resting ECG does NOT exclude an intermittent arrhythmia (Ettinger Ch 40)',
         '<strong>Hypoglycaemia</strong> and <strong>Addisonian collapse</strong> — cheap, treatable metabolic mimics; check glucose, Na⁺/K⁺ ± ACTH stim early',
         '<strong>Pericardial effusion / tamponade</strong> — muffled heart sounds + weak pulses + jugular distension; a syncopal patient may be one tap away from arrest',
-        '<strong>Mistaking a seizure for syncope (or vice-versa)</strong> — exertional trigger + flaccid tone + instant recovery favours syncope; aura + paddling + post-ictal confusion favours seizure (Ettinger Ch 40)',
+        { bold: 'Mistaking a seizure for syncope (or vice-versa)', link: { to: 'flow', id: 'weakness-collapse' }, html: ' — AEDs WORSEN syncope and a missed malignant arrhythmia kills, so get this split right; the full side-by-side table sits in the collapse triage (Ettinger Ch 40)' },
       ],
     },
 
@@ -171,8 +114,8 @@ const syncopeReflex: FlowPage = {
   id: 'syncope-reflex',
   title: 'Syncope — Reflex / Non-Cardiac',
   blocks: [
-    { kind: 'node', variant: 'entry', text: ' REFLEX / NON-CARDIAC', sub: 'Clear trigger (cough · excitement · micturition) · structurally normal heart · metabolic clues (weakness, GI signs) · or an episode that is really a seizure' },
-    { kind: 'node', variant: 'step', text: 'NEUROCARDIOGENIC / REFLEX vs METABOLIC MIMIC vs SEIZURE?' },
+    { kind: 'node', variant: 'entry', text: ' REFLEX / NON-CARDIAC', sub: 'Clear trigger (cough · excitement · micturition) · structurally normal heart · metabolic clues (weakness, GI signs)' },
+    { kind: 'node', variant: 'step', text: 'NEUROCARDIOGENIC / REFLEX vs METABOLIC MIMIC?' },
     {
       kind: 'categoryGrid',
       columns: [
@@ -193,13 +136,8 @@ const syncopeReflex: FlowPage = {
             { label: ' Severe systemic hypertension', link: { to: 'disease', id: 'DIS-VASC-HYPERT' } },
           ],
         },
-        {
-          cat: 'Not Syncope — Seizure',
-          tone: 'violet',
-          tiles: [
-            { label: 'Epilepsy / seizure', link: { to: 'disease', id: 'DIS-WK-EPILEPSY' } },
-          ],
-        },
+        // No "Not syncope — seizure" column: the seizure escape hatch is stated
+        // once, on the syncope entry gate, and owned by the collapse triage.
       ],
     },
   ],
