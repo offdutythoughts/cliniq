@@ -6,11 +6,51 @@ const dysphagiaEntry: FlowPage = {
   title: 'Dysphagia / Gagging',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' DYSPHAGIA / GAGGING' },
+
+    // Q1 — swallowing problem or vomiting? Asked as a fork over the FINDINGS
+    // (Ettinger Table 48.1) rather than a paragraph: the reader ticks off what
+    // they watched happen. The dysphagia leg continues down the spine.
     {
-      kind: 'callout',
-      tone: 'warning',
-      html: ' <strong>First: is this a swallowing problem or true vomiting?</strong> Dysphagia/regurgitation = <em>passive</em> expulsion of food from the pharynx/oesophagus — head down, material falls out, no nausea or abdominal effort. <strong>Vomiting</strong> is an <em>active</em> centrally-mediated reflex with prodromal nausea, retching and abdominal contractions; bile indicates a patent gastric outflow. Regurgitation is uncommon in cats — assume vomiting in a cat unless proven otherwise. <strong>Aspiration pneumonia is the major lethal complication</strong> — oesophageal disease (megaoesophagus 71% of that group) and neurologic disease are the leading risk factors. (Ettinger Ch 47)',
+      kind: 'node',
+      variant: 'step',
+      text: 'SWALLOWING PROBLEM, OR TRUE VOMITING?',
+      sub: 'Watch the patient eat before anything else (Ettinger Ch 47)',
     },
+    {
+      kind: 'fork',
+      legs: [
+        {
+          label: 'DYSPHAGIA / REGURGITATION',
+          tone: 'teal',
+          subItems: [
+            'Passive — head drops, food falls out',
+            'No nausea, no retching',
+            'No abdominal effort',
+            'Bile rare · ± cervical bulge',
+          ],
+          continue: true,
+        },
+        {
+          label: 'VOMITING',
+          tone: 'orange',
+          subItems: [
+            'Active, centrally driven reflex',
+            'Nausea · lip-smacking first',
+            'Retching + abdominal contractions',
+            'Bile = patent gastric outflow',
+          ],
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'Vomiting', sublabel: 'Regurgitation is uncommon in CATS — assume vomiting until proven otherwise', tone: 'orange', link: { to: 'flow', id: 'vomiting' } },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
     {
       kind: 'node',
       variant: 'step',
@@ -19,7 +59,6 @@ const dysphagiaEntry: FlowPage = {
         'Prehension / mastication fails → ORAL',
         'Transfer through the upper sphincter fails → PHARYNGEAL / cricopharyngeal',
         'Transport down the oesophagus fails → OESOPHAGEAL (regurgitation)',
-        'Watch the patient eat (Ettinger Ch 47)',
       ],
     },
     {
@@ -55,7 +94,7 @@ const dysphagiaEntry: FlowPage = {
         { bold: 'MG-associated megaoesophagus', link: { to: 'disease', id: 'DIS-WK-MG' }, html: ' — megaoesophagus in 84% of dogs / 40% of cats with generalised MG; aspiration pneumonia is the leading cause of death. Run an AChR antibody titre in any acquired megaoesophagus' },
         { bold: 'Rabies', link: { to: 'disease', id: 'DIS-INFECT-RABIES' }, html: ' — pharyngeal dysphagia / inability to swallow with hypersalivation in an unvaccinated or potentially exposed patient is a zoonotic emergency: isolate and handle as a notifiable disease' },
         { bold: 'Oesophageal foreign body', link: { to: 'disease', id: 'DIS-GI-OESFB' }, html: ' — acute onset, retching, hypersalivation; needs prompt endoscopic removal before perforation, stricture or aspiration' },
-        '<strong>Aspiration pneumonia</strong> — thoracic radiographs (minimum 3 views) in EVERY dysphagic patient to catch megaoesophagus and aspiration; protect the airway and withhold oral feeding in severe pharyngeal/oesophageal dysfunction',
+        '<strong>Aspiration pneumonia</strong> — the major lethal complication; oesophageal (megaoesophagus = 71% of that group) and neurologic disease are the leading risks. Thoracic radiographs (min. 3 views) in EVERY dysphagic patient; withhold oral feeding in severe pharyngeal/oesophageal dysfunction',
       ],
     },
 

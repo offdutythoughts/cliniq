@@ -109,6 +109,44 @@ function BlockList({ blocks, fn, onNav }: { blocks: Block[]; fn?: boolean; onNav
 // The same connector, plus a label per leg and each leg's own outcome below it.
 // A `continue` leg draws no outcome: its line stretches to the bottom of the row
 // and arrows into the next spine block, keeping the primary path unbroken.
+function ForkLegHead({ l }: { l: ForkLeg }) {
+  // Two looks, chosen by what the leg carries:
+  //  • a plain caption — a bare YES/NO gate whose answer is one short phrase
+  //    ("True PU/PD"). A box around two words is noise.
+  //  • a tone-tinted card — a leg the reader has to MATCH against the patient:
+  //    bulleted one finding per line, at the tile font size, coloured so the
+  //    arms are told apart before a word is read. This is what replaces the
+  //    grey 8.5px centred run-on that used to carry four criteria in a sentence.
+  const hasCard = !!l.tone || (l.subItems?.length ?? 0) > 0
+  if (!hasCard) {
+    return (
+      <div style={s('display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;text-align:center;')}>
+        <div style={s('font-size:10px;font-weight:700;color:var(--gray2);letter-spacing:.04em;')}>{l.label}</div>
+        {l.sub && <div style={s('font-size:8.5px;color:var(--gray2);line-height:1.35;')}>{l.sub}</div>}
+      </div>
+    )
+  }
+  const h = l.tone ? HUE[l.tone] : null
+  const box = h
+    ? `background:rgba(${h.rgb},var(--tile-bg-a));border:1.5px solid rgba(${h.rgb},var(--tile-bd-a));`
+    : 'background:var(--card);border:1.5px solid var(--border2);'
+  const color = h ? h.color : 'var(--gray)'
+  return (
+    <div style={s(`${box}border-radius:9px;padding:6px 8px;width:100%;min-width:0;`)}>
+      <div style={s(`font-size:10px;font-weight:700;color:${color};letter-spacing:.04em;text-align:center;line-height:1.3;`)}>{l.label}</div>
+      {l.sub && <div style={s(`font-size:9px;color:${color};opacity:.85;line-height:1.4;text-align:center;margin-top:2px;`)}>{l.sub}</div>}
+      {l.subItems && l.subItems.length > 0 && (
+        <div style={s(`font-size:9px;color:${color};opacity:.9;line-height:1.45;text-align:left;margin-top:4px;display:flex;flex-direction:column;gap:2px;`)}>
+          {l.subItems.map((it, i) => (
+            <div key={i} style={s('display:flex;gap:4px;align-items:flex-start;')}>
+              <span aria-hidden="true">•</span><span style={s('min-width:0;')}>{it}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
 function ForkBlockView({ legs, onNav }: { legs: ForkLeg[]; onNav: Nav }) {
   const n = legs.length
   const grid = s(`display:grid;grid-template-columns:repeat(${n},1fr);gap:8px;width:100%;`)
@@ -120,9 +158,8 @@ function ForkBlockView({ legs, onNav }: { legs: ForkLeg[]; onNav: Nav }) {
       <ForkLines n={n} gap={8} arrow={false} />
       <div style={grid}>
         {legs.map((l, i) => (
-          <div key={i} style={s('display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;text-align:center;')}>
-            <div style={s('font-size:10px;font-weight:700;color:var(--gray2);letter-spacing:.04em;')}>{l.label}</div>
-            {l.sub && <div style={s('font-size:8.5px;color:var(--gray2);line-height:1.35;')}>{l.sub}</div>}
+          <div key={i} style={s('display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;')}>
+            <ForkLegHead l={l} />
           </div>
         ))}
       </div>
