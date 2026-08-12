@@ -270,8 +270,16 @@ export type DecisionTreeBlock = Connectable & { kind: 'decisionTree'; steps: Dec
  *  one stem out of the preceding block, a horizontal bar, one labelled leg per
  *  branch. A leg marked `continue` carries no content — its line runs the full
  *  height of the fork and arrows into the NEXT spine block, so the main line of
- *  reasoning stays unbroken while the other legs end on their own outcomes. */
-export type ForkLeg = { label: string; sub?: string; continue?: boolean; blocks?: Block[] }
+ *  reasoning stays unbroken while the other legs end on their own outcomes.
+ *
+ *  A leg's criteria are the SIGNS THE READER CAN SEE — the findings that pick
+ *  this arm. Give them as `subItems`, one finding per bullet, rendered as a
+ *  tinted card the reader can tick off; `tone` colours that card so the arms are
+ *  told apart at a glance. `sub` is the short form — ONE line for a leg whose
+ *  criterion is a single phrase ("True PU/PD"). A run-on `sub` carrying four
+ *  criteria in one grey sentence is what `subItems` exists to replace
+ *  (`lint:prose` enforces the cut-off). */
+export type ForkLeg = { label: string; tone?: Tone; sub?: string; subItems?: string[]; continue?: boolean; blocks?: Block[] }
 export type ForkBlock = Connectable & { kind: 'fork'; legs: ForkLeg[] }
 
 /** The split connector as an authored-HTML string — the exact twin of the

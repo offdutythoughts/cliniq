@@ -26,21 +26,8 @@ jobs:
         with:
           ref: ${{ inputs.branch }}
 
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: npm
-
-      - run: npm ci --no-audit --no-fund
-
-      - name: Ensure Linux rolldown binding (npm/cli#4828 workaround)
-        run: npm install --no-save "@rolldown/binding-linux-x64-gnu@$(node -p "require('rolldown/package.json').version")"
-
-      - name: Install Playwright chromium
-        run: npx playwright install --with-deps chromium
-
-      - name: Build app for the visual run
-        run: NEXT_PUBLIC_CONVEX_URL= NEXT_DIST_DIR=.next-pw npx next build
+      - uses: ./.github/actions/setup
+      - uses: ./.github/actions/visual-build
 
       # --update-snapshots rewrites every baseline; exit code is not meaningful
       # here because "snapshot did not exist, wrote it" is a failure to Playwright

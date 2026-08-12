@@ -1,0 +1,19 @@
+name: Visual build
+description: Chromium plus a production build, the two things a Playwright visual run needs.
+
+# Shared by ci.yml (compare against baselines) and visual-baselines.yml
+# (regenerate them). Keeping one definition is what guarantees the run that
+# WRITES a baseline and the run that CHECKS it build the app the same way.
+
+runs:
+  using: composite
+  steps:
+    - name: Install Playwright chromium
+      shell: bash
+      run: npx playwright install --with-deps chromium
+
+    # Built here rather than inside playwright's webServer, so a slow cold build
+    # fails as a build error instead of a webServer timeout.
+    - name: Build app for the visual run
+      shell: bash
+      run: NEXT_PUBLIC_CONVEX_URL= NEXT_DIST_DIR=.next-pw npx next build

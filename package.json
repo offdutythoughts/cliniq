@@ -24,6 +24,7 @@
     "lint:forks": "tsx scripts/lint-forks.ts",
     "lint:headers": "tsx scripts/lint-headers.ts",
     "lint:lesions": "tsx scripts/lint-lesions.ts",
+    "lint:prose": "tsx scripts/lint-prose.ts",
     "lint:protocols": "tsx scripts/lint-protocol-actions.ts",
     "lint:refs": "tsx scripts/report-refs.ts",
     "lint:schema": "tsx scripts/lint-schema.ts",

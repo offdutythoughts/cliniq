@@ -16,17 +16,31 @@ const syncopeEntry: FlowPage = {
       text: 'IS THIS REALLY SYNCOPE?',
       // subItems are PLAIN TEXT (rendered as React children, not HTML) — no tags.
       subItems: [
-        'Syncope = TLOC from cerebral hypoperfusion · BP must fall ~50%, or an arrhythmia last ~10–30 s, before consciousness is lost',
-        'Pre-syncope = partial LOC with brief ataxia / stumbling — work it up the same way',
-        'Getting this wrong is not neutral: anti-epileptic drugs can WORSEN syncope, and a missed malignant arrhythmia carries a sudden-death risk',
+        'Match the episode against the three columns below',
+        'Pre-syncope (brief ataxia / stumbling, no full LOC) works up the same way',
+        'AEDs WORSEN syncope; a missed malignant arrhythmia can kill — get this split right',
       ],
     },
+    // The three arms are told apart by SIGNS, one per bullet, on tone-tinted
+    // cards — the reader ticks off what they saw rather than reading three grey
+    // sentences. SYNCOPE is the `continue` leg, so the spine runs on unbroken.
     {
       kind: 'fork',
+      // The SYNCOPE leg is the MIDDLE one, so the spine's centred connector sits
+      // directly under it: `connectAfter` lets the two cause arms below be fed by
+      // the shared fork rather than by a lone arrow pointing into the gap.
+      connectAfter: true,
       legs: [
         {
           label: 'SEIZURE',
-          sub: 'Aura / pre-ictal change · tonic-clonic or paddling · often at rest or from sleep · salivation, urination, defecation · post-ictal confusion, blindness, hunger for minutes–hours',
+          tone: 'violet',
+          subItems: [
+            'Aura before it',
+            'Rigid / paddling limbs',
+            'Salivation · urination · defecation',
+            'At rest or out of sleep',
+            'Confused / blind for min–hours after',
+          ],
           blocks: [
             {
               kind: 'endpoints',
@@ -39,12 +53,27 @@ const syncopeEntry: FlowPage = {
         },
         {
           label: 'SYNCOPE',
-          sub: 'Flaccid, limp tone · no aura · exertion / excitement / cough / micturition trigger · seconds long · INSTANT and complete recovery, normal immediately after',
+          // The continuing arm is the page's subject — info blue, matching the
+          // entry node. Red stays reserved for the danger callouts below.
+          tone: 'info',
+          subItems: [
+            'No aura',
+            'Flaccid, limp',
+            'Trigger: exertion · cough · excitement',
+            'Lasts seconds',
+            'Normal INSTANTLY after',
+          ],
           continue: true,
         },
         {
           label: 'NARCOLEPSY / CATAPLEXY',
-          sub: 'Sudden loss of tone triggered by food or excitement, or a sleep attack · arousable during the episode · normal immediately after · AEDs have no effect',
+          tone: 'slate',
+          subItems: [
+            'Trigger: food or excitement',
+            'Arousable during the episode',
+            'Normal instantly after',
+            'AEDs make no difference',
+          ],
           blocks: [
             {
               kind: 'endpoints',
@@ -57,20 +86,11 @@ const syncopeEntry: FlowPage = {
       ],
     },
 
-    {
-      kind: 'callout',
-      tone: 'info',
-      html: '<strong>Syncope confirmed.</strong> Now localise the cause: <strong>Cardiogenic</strong> (arrhythmia / structural outflow / pulmonary hypertension) or <strong>Non-cardiogenic</strong> (reflex / metabolic mimic). Exclude the cheap metabolic mimics — glucose, Na:K ± ACTH stim — before an expensive cardiac work-up. (Ettinger Ch 40)',
-    },
-    {
-      kind: 'node',
-      variant: 'step',
-      text: 'LOCALISE THE CAUSE — CARDIOGENIC vs NON-CARDIOGENIC',
-      subItems: [
-        'Exertional trigger, murmur / gallop, arrhythmia or known heart disease pushes cardiac',
-        'A clear situational trigger with a structurally normal heart pushes reflex (Ettinger Ch 40)',
-      ],
-    },
+    // The SYNCOPE leg drops straight onto the two cause arms. No "now localise —
+    // cardiogenic vs non-cardiogenic" step and no callout above them: the two
+    // cards name the split and carry the findings that pick each one, so a step
+    // restating both would be read twice and age separately. (The metabolic
+    // mimics — glucose, Na:K ± ACTH — are in the DON'T MISS box below.)
     {
       kind: 'choices',
       cols: 2,
@@ -78,13 +98,13 @@ const syncopeEntry: FlowPage = {
         {
           tone: 'danger',
           label: ' CARDIAC',
-          sublabel: 'Exertional collapse · murmur / gallop / arrhythmia · jugular distension · weak pulses · prior heart disease · sudden-death risk',
+          sublabel: 'Collapses on exertion · murmur, gallop or arrhythmia · weak pulses · jugular distension',
           link: { to: 'flow', id: 'syncope-cardiac' },
         },
         {
           tone: 'teal',
           label: ' REFLEX / NON-CARDIAC',
-          sublabel: 'Clear trigger (cough · excitement · micturition) · structurally normal heart · metabolic clues (weakness, GI signs)',
+          sublabel: 'Clear trigger (cough · excitement · micturition) · normal heart · weak between episodes',
           link: { to: 'flow', id: 'syncope-reflex' },
         },
       ],
