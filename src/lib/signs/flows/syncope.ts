@@ -1,5 +1,6 @@
 // ── Syncope flowchart ────────────────────────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
+import { episodicTriageTable } from './episodicTriage'
 
 const syncopeEntry: FlowPage = {
   id: 'syncope',
@@ -7,17 +8,19 @@ const syncopeEntry: FlowPage = {
   blocks: [
     { kind: 'node', variant: 'entry', text: ' SYNCOPE — TRANSIENT LOSS OF CONSCIOUSNESS' },
 
-    // The syncope-vs-seizure-vs-narcolepsy split has ONE owner: the Collapse /
-    // LOC triage page, whose comparison table is the fullest version and which
-    // is how the reader reaches this page. Re-drawing it here as a three-arm
-    // fork made the reader answer the same question twice and put a card back
-    // to the page they had just come from. What stays is a gate: the seizure
-    // red flags that should send them back, and nothing else.
+    // The BRANCHING still has one owner — the Collapse / LOC triage page, which
+    // is how the reader reaches this page; re-drawing the three-arm fork here
+    // made them answer the same question twice and put a card back to the page
+    // they had just come from. What this page carries is the gate: the callout
+    // that names what would send them back, and the shared comparison table so
+    // the reader can confirm syncope without navigating away from the workup.
     {
       kind: 'callout',
       tone: 'warning',
       html: '<strong>Confirmed syncope only.</strong> An aura, rigid or paddling limbs, or confusion / blindness for minutes–hours afterwards means a seizure, not syncope — work it up from the collapse triage instead. Pre-syncope (brief ataxia or stumbling without full LOC) works up the same way as syncope.',
     },
+    // Shared with the collapse triage and the seizures entry — see ./episodicTriage.
+    episodicTriageTable,
 
     // The step asks the question and states the MECHANISM; it deliberately does
     // not preview the two cards' findings, which would then be read twice and
@@ -61,7 +64,7 @@ const syncopeEntry: FlowPage = {
         '<strong>Malignant arrhythmia</strong> — high-grade AV block, sinus arrest or sustained ventricular tachycardia carry a sudden-death risk; a normal resting ECG does NOT exclude an intermittent arrhythmia (Ettinger Ch 40)',
         '<strong>Hypoglycaemia</strong> and <strong>Addisonian collapse</strong> — cheap, treatable metabolic mimics; check glucose, Na⁺/K⁺ ± ACTH stim early',
         '<strong>Pericardial effusion / tamponade</strong> — muffled heart sounds + weak pulses + jugular distension; a syncopal patient may be one tap away from arrest',
-        { bold: 'Mistaking a seizure for syncope (or vice-versa)', link: { to: 'flow', id: 'weakness-collapse' }, html: ' — AEDs WORSEN syncope and a missed malignant arrhythmia kills, so get this split right; the full side-by-side table sits in the collapse triage (Ettinger Ch 40)' },
+        { bold: 'Mistaking a seizure for syncope (or vice-versa)', link: { to: 'flow', id: 'weakness-collapse' }, html: ' — AEDs WORSEN syncope and a missed malignant arrhythmia kills, so get this split right; use the table above, and the collapse triage owns the branch to the other six episodic disorders (Ettinger Ch 40)' },
       ],
     },
 

@@ -259,7 +259,12 @@ function ChoicesBlock({ cols, size, items, onNav }: { cols: number; size: number
 }
 
 // ── Table ─────────────────────────────────────────────────────────────────────
-function Cell({ c, header, onNav }: { c: TableCell; header?: boolean; onNav: Nav }) {
+// A pinned first column paints the page background behind itself AND across the
+// 6px column gap (the box-shadow spread), so the scrolling columns slide under
+// it cleanly; the second shadow layer is the divider that marks the seam.
+const STICKY_COL = 'position:sticky;left:0;z-index:1;background:var(--navy);'
+  + 'box-shadow:6px 0 0 var(--navy),7px 0 0 rgba(var(--slate-muted),.25);'
+function Cell({ c, header, sticky, onNav }: { c: TableCell; header?: boolean; sticky?: boolean; onNav: Nav }) {
   const text = typeof c === 'string' ? c : c.text
   const tone = typeof c !== 'string' ? c.tone : undefined
   const color = tone ? `color:${HUE[tone].color};` : ''
@@ -268,18 +273,18 @@ function Cell({ c, header, onNav }: { c: TableCell; header?: boolean; onNav: Nav
       ? `font-weight:700;padding-bottom:4px;border-bottom:2px solid ${HUE[tone].color};white-space:nowrap;${color}`
       : 'font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(var(--slate-muted),.25);'
     : color
-  return <div style={s(head)}><Raw html={text} onNav={onNav} /></div>
+  return <div style={s(`${head}${sticky ? STICKY_COL : ''}`)}><Raw html={text} onNav={onNav} /></div>
 }
 function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav: Nav }) {
   const lastIdx = b.rows.length - 1
   const grid = (
     <div style={s(`display:grid;grid-template-columns:${b.cols};gap:${b.dividers ? 9 : 3}px 6px;font-size:9.5px;line-height:1.4;${b.minWidth ? `min-width:${b.minWidth}px;` : ''}`)}>
-      {b.headers.map((h, i) => <Cell key={`h${i}`} c={h} header onNav={onNav} />)}
+      {b.headers.map((h, i) => <Cell key={`h${i}`} c={h} header sticky={b.stickyFirstCol && i === 0} onNav={onNav} />)}
       {b.rows.map((row, ri) =>
         Array.isArray(row)
           ? (
             <Fragment key={ri}>
-              {row.map((c, ci) => <Cell key={`${ri}-${ci}`} c={c} onNav={onNav} />)}
+              {row.map((c, ci) => <Cell key={`${ri}-${ci}`} c={c} sticky={b.stickyFirstCol && ci === 0} onNav={onNav} />)}
               {b.dividers && ri !== lastIdx && <div style={ST_ROW_DIVIDER} />}
             </Fragment>
           )

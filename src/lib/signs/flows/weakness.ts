@@ -16,6 +16,7 @@
 //    → links inside `html` are NOT validated by flows.test.ts.
 
 import { forkHtml, type FlowPage } from '../flowTypes'
+import { episodicTriageTable } from './episodicTriage'
 
 // ── 1. Entry — Weakness / Collapse ──────────────────────────────────────────
 const weaknessEntry: FlowPage = {
@@ -197,31 +198,21 @@ const weaknessCollapse: FlowPage = {
     { kind: 'callout', tone: 'danger', html: '⚠️ Collapse with loss of consciousness — always get ECG immediately', connectAfter: false },
     { kind: 'node', variant: 'entry', text: 'COLLAPSE ± LOSS OF CONSCIOUSNESS' },
     { kind: 'node', variant: 'step', text: 'KEY QUESTION: Syncope, Seizure, or other?' },
-    {
-      kind: 'table',
-      cols: '22% 1fr 1fr 1fr',
-      headers: [
-        'Feature',
-        { text: 'Syncope', tone: 'info' },
-        { text: 'Seizure', tone: 'danger' },
-        { text: 'Narcolepsy', tone: 'slate' },
-      ],
-      rows: [
-        [{ text: 'Tone during', tone: 'slate' }, 'Flaccid, limp', { text: 'Tonic-clonic', tone: 'danger' }, { text: 'Sudden loss of tone (cataplexy) or normal (sleep attack)', tone: 'slate' }],
-        [{ text: 'Trigger', tone: 'slate' }, 'Exercise / excitement', { text: 'Often at rest / sleep', tone: 'danger' }, { text: 'Food, excitement (cataplexy); spontaneous (sleep attack)', tone: 'slate' }],
-        [{ text: 'Recovery', tone: 'slate' }, 'Seconds, instant', { text: 'Minutes–hours (post-ictal)', tone: 'danger' }, { text: 'Seconds–minutes; arousable during episode', tone: 'slate' }],
-        [{ text: 'Post-episode', tone: 'slate' }, 'Normal immediately', { text: 'Confused, blind, hungry', tone: 'danger' }, { text: 'Normal immediately', tone: 'slate' }],
-        [{ text: 'AEDs', tone: 'slate' }, { text: 'May WORSEN', tone: 'warning' }, { text: 'Help', tone: 'green' }, { text: 'No effect', tone: 'slate' }],
-      ],
-    },
+    // The seven-disorder split is authored once in ./episodicTriage and shared
+    // with the seizures and syncope entries, so the three pages cannot drift.
+    episodicTriageTable,
     {
       kind: 'choices',
-      cols: 3,
+      cols: 2,
       items: [
-        { tone: 'danger', label: 'SYNCOPE', sublabel: '→ ECG, Echo', link: { to: 'flow', id: 'syncope' } },
-        { tone: 'orange', label: 'SEIZURE', sublabel: '→ MRI, CSF', link: { to: 'lesion', loc: 'LOC-WK-COLLAPSE', name: 'Seizure' } },
-        // renderDiffDetail has no typed Link equivalent — non-clickable for now
-        { tone: 'slate', label: 'NARCOLEPSY', sublabel: '→ trigger by food' },
+        { tone: 'danger', label: 'SYNCOPE', sublabel: 'Flaccid on exertion · normal within seconds', link: { to: 'flow', id: 'syncope' } },
+        { tone: 'orange', label: 'SEIZURE', sublabel: 'Tonic-clonic from rest · post-ictal confusion', link: { to: 'flow', id: 'seizures' } },
+        { tone: 'teal', label: 'VESTIBULAR EPISODE', sublabel: 'Head tilt and nystagmus persist between episodes', link: { to: 'flow', id: 'vestibular' } },
+        // No sign screen exists for these three yet — they read off the table above.
+        { tone: 'violet', label: 'DYSKINESIA / PMD', sublabel: 'Sustained dystonia, fully conscious, no autonomic signs' },
+        { tone: 'warning', label: 'NARCOLEPSY / CATAPLEXY', sublabel: 'Rouses to touch · triggered by food or play' },
+        { tone: 'info', label: 'REM SLEEP DISORDER', sublabel: 'Only ever asleep · wakes fully at once' },
+        { tone: 'lime', label: 'NEUROMUSCULAR COLLAPSE', sublabel: 'Conscious throughout · goes down on strenuous exercise', link: { to: 'flow', id: 'weakness-episodic' } },
       ],
     },
     {
