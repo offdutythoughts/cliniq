@@ -12,6 +12,16 @@ runs:
       shell: bash
       run: npx playwright install --with-deps chromium
 
+    # next.config.ts points the NEXT_DIST_DIR build at tsconfig.pw.json so Next's
+    # auto-reconfigure never edits the app's tsconfig.json. That file is
+    # gitignored (it accretes a per-session dist dir on every local run), so a
+    # fresh runner checkout does not have one — and Turbopack now FAILS with
+    # "tsconfig not found" instead of creating it. Seed it from the real
+    # tsconfig; Next rewrites it in place from there.
+    - name: Seed the isolated tsconfig
+      shell: bash
+      run: '[ -f tsconfig.pw.json ] || cp tsconfig.json tsconfig.pw.json'
+
     # Built here rather than inside playwright's webServer, so a slow cold build
     # fails as a build error instead of a webServer timeout.
     - name: Build app for the visual run
