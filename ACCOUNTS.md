@@ -22,7 +22,8 @@ reasons — see the last section.
 | `/` | yes | Redirect to `/app` — the marketing homepage is not served. `src/app/page.tsx` |
 | `/pricing` | yes | Plan comparison. Reachable by direct URL and from the site chrome; the prices in `src/lib/plans.ts` are **placeholders** and nothing charges for them. `src/app/pricing/page.tsx` |
 | `/signup` | yes | Redirect to `/login`. `src/app/signup/page.tsx` |
-| `/login` | yes | Sign in **and** create an account: email + password, or a passkey. `src/app/login/page.tsx` |
+| `/login` | yes | Sign in **and** create an account: email + password, or a passkey — either from the button or from the email field's autofill dropdown. `src/app/login/page.tsx` |
+| `/welcome` | **no** | Where sign-up lands. Offers a passkey while the user is still thinking about how they get back in, then goes to `/app`. Redirects straight through where WebAuthn is unavailable. `src/app/welcome/page.tsx` |
 | `/verify` | yes | Where the confirmation link lands. Redeems `?email=&code=`, which verifies the address and signs the browser in, then offers to set up a passkey. Unreachable until email verification is switched on. `src/app/verify/page.tsx` |
 | `/forgot` | yes | Request a password reset link. `src/app/forgot/page.tsx` |
 | `/reset` | yes | Where the reset link lands. Sets a new password from `?email=&code=`. `src/app/reset/page.tsx` |
@@ -98,19 +99,40 @@ keys only.
 
 - **Registering** requires a live session — `registerOptions` / `registerVerify`
   both check `getAuthUserId`, so a passkey can only ever be added to the account
-  the caller is already signed in to. Offered on `/verify` right after the email
-  is confirmed, and any time from `/account`.
+  the caller is already signed in to. Offered on `/welcome` immediately after
+  sign-up, on `/verify` once email verification is switched on, and any time
+  from `/account`.
 - **Signing in** is `authenticationOptions()` then
   `signIn("passkey", { challenge, response })`. Keys are registered as
   discoverable with `userVerification: "required"`, so the browser can offer
-  them without an email being typed, and `allowCredentials` is always empty —
+  them without an email being typed, and `allowCredentials` is always omitted —
   which also means this endpoint never reveals whether an address is registered.
+- **Two ways in from `/login`.** The button runs a modal ceremony. Alongside it,
+  a *conditional* request runs for as long as the page is open and puts any
+  passkey this device holds in the email field's autofill dropdown — iCloud
+  Keychain on Apple, Google Password Manager on Android. The field must carry
+  `autocomplete="username webauthn"` or there is nowhere for it to render. Only
+  one WebAuthn ceremony may be outstanding at a time, so the button aborts the
+  conditional request before starting its own.
 - **Challenges** live in `webauthnChallenges`, are deleted as they are redeemed
   (single-use, five-minute TTL), and stale ones are swept opportunistically.
+  Every login-page view starts one for the conditional request; abandoned rows
+  are what the sweep is for.
+
+`NotAllowedError` is the browser's answer both to "you dismissed the sheet" and
+to "this device has no passkey for vetic" — deliberately, since distinguishing
+them would tell any page which sites you hold keys for. So it can never be
+treated as a plain cancellation: doing that made the button appear dead to
+exactly the people who had never registered one. `passkeyErrorMessage` in
+`src/lib/passkeys.ts` returns copy that is true of both readings. The
+conditional request is the opposite case — nobody asked for it, so its failures
+stay silent, and only a self-inflicted `AbortError` is filtered by name.
 
 The relying party ID comes from `SITE_URL`'s hostname. A passkey registered
 against `localhost` will not work against the production domain and vice versa —
-that is WebAuthn working as designed, not a bug.
+that is WebAuthn working as designed, not a bug. `SITE_URL` must also match the
+**port**: it is the expected origin at verification, so a dev server on 3001
+against `SITE_URL=http://localhost:3000` fails every registration.
 
 `package.json` pins `@simplewebauthn/server` v13 via `overrides`: `@auth/core`
 declares an optional peer on v9 for an Auth.js WebAuthn provider this app never
