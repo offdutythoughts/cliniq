@@ -136,6 +136,11 @@ export type TableBlock = Connectable & {
   gap?: number
   scroll?: boolean
   minWidth?: number
+  /** Pin the FIRST column while the rest of the table scrolls sideways. Only
+   *  meaningful with `scroll`, and only on an UNBOXED table — the pinned cells
+   *  paint `var(--navy)` behind themselves (and across the column gap) to hide
+   *  the columns sliding under, which is the page background, not a box tint. */
+  stickyFirstCol?: boolean
   /** Widen the row gap and draw a soft full-width divider between data rows —
    *  for reference tables (e.g. injury grading) that read better as spaced bands. */
   dividers?: boolean

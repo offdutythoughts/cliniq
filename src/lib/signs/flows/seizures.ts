@@ -1,5 +1,6 @@
 // ── Seizures flowchart (data) ───────────────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
+import { episodicTriageTable } from './episodicTriage'
 
 // ── Entry ────────────────────────────────────────────────────────────────────
 const seizuresEntry: FlowPage = {
@@ -38,47 +39,10 @@ const seizuresEntry: FlowPage = {
         'Followed by a postictal phase',
       ],
     },
-    {
-      kind: 'table',
-      gap: 12,
-      boxTone: 'slate',
-      title: 'Rule out mimics',
-      dividers: true,
-      cols: '0.95fr 1.5fr 1.15fr',
-      headers: ['', 'How it differs from a seizure', 'Trigger / signalment'],
-      rows: [
-        [
-          { text: '<strong>Syncope</strong>', tone: 'danger' },
-          { text: '• Sudden collapse<br>• Flaccid — no tonic-clonic<br>• Brief, rapid full recovery<br>• No postictal phase', tone: 'danger' },
-          { text: '• Exertion<br>• Cough or Valsalva<br>• Excitement<br>• Look for cardiac disease', tone: 'danger' },
-        ],
-        [
-          { text: '<strong>Vestibular episode</strong>', tone: 'teal' },
-          { text: '• Head tilt<br>• Rolling<br>• Nystagmus<br>• Consciousness preserved<br>• No tonic-clonic', tone: 'teal' },
-          { text: '• Otitis<br>• Geriatric onset (idiopathic)', tone: 'teal' },
-        ],
-        [
-          { text: '<strong>Dyskinesia / paroxysmal movement disorder</strong>', tone: 'violet' },
-          { text: '• Sustained dystonia<br>• No LOC<br>• No autonomic signs<br>• Normal between episodes', tone: 'violet' },
-          { text: '• Cavalier KCS<br>• Scottish Terrier<br>• Border Terrier<br>• Labrador', tone: 'violet' },
-        ],
-        [
-          { text: '<strong>Narcolepsy / cataplexy</strong>', tone: 'warning' },
-          { text: '• Sudden loss of muscle tone<br>• Rousable<br>• Instant full recovery<br>• No postictal phase', tone: 'warning' },
-          { text: '• Excitement<br>• Food or play<br>• Dobermann<br>• Labrador<br>• Young onset', tone: 'warning' },
-        ],
-        [
-          { text: '<strong>REM sleep disorder</strong>', tone: 'info' },
-          { text: '• Occurs only during sleep<br>• Stops when woken', tone: 'info' },
-          { text: '• Often mistaken for seizures on owner video', tone: 'info' },
-        ],
-        [
-          { text: '<strong>Neuromuscular collapse</strong>', tone: 'orange' },
-          { text: '• Exercise-induced weakness / collapse<br>• No LOC<br>• No postictal phase', tone: 'orange' },
-          { text: '• Labrador (EIC)<br>• Border Collie (BCC)<br>• After intense exercise', tone: 'orange' },
-        ],
-      ],
-    },
+    // The mimics. The box title the old three-column version carried is now a
+    // step, because the shared table is unboxed — see ./episodicTriage.
+    { kind: 'node', variant: 'step', text: 'RULE OUT THE MIMICS', sub: 'Six other episodic disorders collapse a dog or cat and are not epilepsy' },
+    episodicTriageTable,
 
     // Characterise
     {
