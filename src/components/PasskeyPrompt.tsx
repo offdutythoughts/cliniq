@@ -6,8 +6,9 @@ import { api } from '../../convex/_generated/api'
 import { track } from '../lib/analytics'
 import {
   biometricAuthenticatorAvailable,
+  biometricName,
   createPasskey,
-  isPasskeyCancellation,
+  passkeyErrorMessage,
   passkeysSupported,
   suggestPasskeyLabel,
 } from '../lib/passkeys'
@@ -59,43 +60,39 @@ export default function PasskeyPrompt({
       const options = await registerOptions({})
       const response = await createPasskey(options)
       const { challenge } = JSON.parse(options) as { challenge: string }
-      await registerVerify({ challenge, response, label: suggestPasskeyLabel() })
+      await registerVerify({ challenge, response, label: suggestPasskeyLabel(response) })
       track('passkey_registration_succeeded')
       onDone?.()
     } catch (err) {
-      if (isPasskeyCancellation(err)) {
-        setError('No passkey was created — the prompt was dismissed.')
-      } else if (err instanceof DOMException && err.name === 'InvalidStateError') {
-        // The authenticator recognised itself in excludeCredentials.
-        setError('This device already has a passkey for your account.')
-      } else {
-        track('passkey_registration_failed')
-        setError('We couldn’t set up a passkey on this device. You can try again.')
-      }
+      track('passkey_registration_failed')
+      setError(passkeyErrorMessage(err, 'register'))
     } finally {
       setBusy(false)
     }
   }
 
-  const biometric = available === 'biometric'
+  // Name the unlock only where we know what this platform calls it. A device
+  // can have a built-in authenticator we have no name for — an unrecognised
+  // Android skin, a Linux desktop — and "a passkey" is right for all of them.
+  const unlock = available === 'biometric' ? biometricName() : null
 
   return (
     <div className="flex flex-col gap-3">
       <div>
         <h2 className="text-[15px] font-semibold text-[var(--v-ink)]">
-          {biometric ? 'Sign in with Face ID or Touch ID' : 'Sign in with a passkey'}
+          {unlock === null ? 'Sign in with a passkey' : `Sign in with ${unlock}`}
         </h2>
         <p className="mt-1.5 text-[13px] leading-relaxed text-[var(--v-slate)]">
-          {biometric
-            ? 'Next time, unlock Vetic with your face or fingerprint instead of typing a password. The biometric check happens on this device — Vetic only ever sees a signature.'
-            : 'Store a passkey on this device or security key and sign in without a password. Nothing secret leaves the device.'}
+          {unlock === null
+            ? 'Store a passkey on this device or security key and sign in without a password. Nothing secret leaves the device.'
+            : `Next time, unlock Vetic with ${unlock} instead of typing a password. The check happens on this device — Vetic only ever sees a signature.`}
         </p>
       </div>
 
       {error && <ErrorNote>{error}</ErrorNote>}
 
       <button type="button" onClick={register} disabled={busy} className={primaryButtonClass}>
-        {busy ? 'Waiting for your device…' : `${label} ${biometric ? 'Face ID / Touch ID' : 'a passkey'}`}
+        {busy ? 'Waiting for your device…' : `${label} ${unlock === null ? 'a passkey' : unlock}`}
       </button>
     </div>
   )

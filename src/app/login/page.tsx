@@ -4,7 +4,7 @@ import { useAuthActions } from '@convex-dev/auth/react'
 import { useAction } from 'convex/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { api } from '../../../convex/_generated/api'
 import {
   AuthShell,
@@ -19,7 +19,10 @@ import { track } from '../../lib/analytics'
 import {
   assertPasskey,
   biometricAuthenticatorAvailable,
-  isPasskeyCancellation,
+  biometricName,
+  conditionalMediationAvailable,
+  isPasskeyAbort,
+  passkeyErrorMessage,
   passkeysSupported,
 } from '../../lib/passkeys'
 
@@ -55,17 +58,72 @@ function LoginForm() {
   // is replaced by "we've emailed you a link".
   const [awaitingEmail, setAwaitingEmail] = useState<string | null>(null)
   const [passkeyLabel, setPasskeyLabel] = useState<string | null>(null)
+  // The in-flight autofill request. It stays open for as long as this page is,
+  // so anything that starts a second ceremony has to cancel it first — the
+  // platform allows only one outstanding WebAuthn call at a time, and a second
+  // one while it is pending fails outright.
+  const autofillRequest = useRef<AbortController | null>(null)
 
+  /** Trade a signed assertion for a session. Shared by autofill and the button. */
+  const completePasskeySignIn = useCallback(
+    async (optionsJSON: string, response: string) => {
+      const { challenge } = JSON.parse(optionsJSON) as { challenge: string }
+      const result = await signIn('passkey', { challenge, response })
+      if (!result.signingIn) {
+        // The provider throws on every rejection it knows about, so this only
+        // fires if Convex Auth declined to open a session for another reason.
+        throw new Error('Passkey sign-in did not start a session.')
+      }
+      track('passkey_login_succeeded')
+      router.replace('/app')
+    },
+    [signIn, router],
+  )
+
+  // Offer any passkey this device holds from the email field's autofill
+  // dropdown. On Apple devices that is iCloud Keychain and on Android it is
+  // Google Password Manager; where the device holds no passkey for us, nothing
+  // is shown and nothing fails. That is why this runs alongside the button
+  // rather than replacing it — it is the path that cannot dead-end.
   useEffect(() => {
     if (!passkeysSupported()) return
     let cancelled = false
-    void biometricAuthenticatorAvailable().then((biometric) => {
-      if (!cancelled) setPasskeyLabel(biometric ? 'Sign in with Face ID or Touch ID' : 'Sign in with a passkey')
-    })
+    const controller = new AbortController()
+
+    void (async () => {
+      const [biometric, conditional] = await Promise.all([
+        biometricAuthenticatorAvailable(),
+        conditionalMediationAvailable(),
+      ])
+      if (cancelled) return
+      const unlock = biometric ? biometricName() : null
+      setPasskeyLabel(unlock === null ? 'Sign in with a passkey' : `Sign in with ${unlock}`)
+      if (!conditional) return
+
+      autofillRequest.current = controller
+      try {
+        const options = await passkeyOptions({})
+        if (cancelled) return
+        const response = await assertPasskey(options, {
+          conditional: true,
+          signal: controller.signal,
+        })
+        track('passkey_autofill_used')
+        await completePasskeySignIn(options, response)
+      } catch (err) {
+        // Nobody asked for this request, so a failure has no error to report:
+        // either we cancelled it ourselves or the user simply never touched it.
+        if (!cancelled && !isPasskeyAbort(err)) track('passkey_autofill_failed')
+      } finally {
+        if (autofillRequest.current === controller) autofillRequest.current = null
+      }
+    })()
+
     return () => {
       cancelled = true
+      controller.abort()
     }
-  }, [])
+  }, [passkeyOptions, completePasskeySignIn])
 
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -79,7 +137,11 @@ function LoginForm() {
       const result = await signIn('password', { email: normalised, password, flow })
       if (result.signingIn) {
         track('login_succeeded', { flow })
-        router.replace('/app')
+        // A brand-new account goes via /welcome, which offers a passkey while
+        // the user is still in the sign-up frame of mind. Email verification is
+        // switched off (convex/auth.ts), so this is the only moment we get —
+        // /verify, which used to make the same offer, is never reached.
+        router.replace(flow === 'signUp' ? '/welcome' : '/app')
         return
       }
       // No session: the address needs confirming, and the link is already sent.
@@ -95,23 +157,25 @@ function LoginForm() {
   }
 
   async function signInWithPasskey() {
+    // The autofill request is still open; a modal one cannot start until it
+    // closes, so cancel it rather than letting the button fail silently.
+    autofillRequest.current?.abort()
+    autofillRequest.current = null
+
     setError(null)
     setSubmitting(true)
     track('passkey_login_started')
     try {
       const options = await passkeyOptions({})
       const response = await assertPasskey(options)
-      const parsed = JSON.parse(options) as { challenge: string }
-      await signIn('passkey', { challenge: parsed.challenge, response })
-      track('passkey_login_succeeded')
-      router.replace('/app')
+      await completePasskeySignIn(options, response)
     } catch (err) {
-      if (!isPasskeyCancellation(err)) {
-        track('passkey_login_failed')
-        setError(
-          'That passkey didn’t work. Sign in with your email and password, or add a passkey from your account page.',
-        )
-      }
+      // Unlike autofill, the user pressed a button and is owed an answer. Even
+      // the dismissal case gets one: `NotAllowedError` is also what a device
+      // with no passkey for us returns, and reporting nothing made the button
+      // look broken to exactly the people who had never set one up.
+      track('passkey_login_failed')
+      setError(passkeyErrorMessage(err, 'signIn'))
       setSubmitting(false)
     }
   }
@@ -167,7 +231,10 @@ function LoginForm() {
             name="email"
             type="email"
             required
-            autoComplete="email"
+            // `webauthn` is what puts this device's passkeys in the autofill
+            // dropdown for this field — without it the conditional request
+            // above has nowhere to render, on Apple and Android alike.
+            autoComplete={isSignIn ? 'username webauthn' : 'email'}
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className={fieldClass}
