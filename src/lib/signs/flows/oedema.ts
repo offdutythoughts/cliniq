@@ -7,21 +7,18 @@ const oedemaEntry: FlowPage = {
   title: 'Peripheral Oedema',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' PERIPHERAL OEDEMA' },
-    {
-      kind: 'callout',
-      tone: 'info',
-      html:
-        ' <strong>First split: localised vs generalised.</strong><br>' +
-        '• <strong>Localised</strong> — a single-limb or regional swelling points to local venous/lymphatic obstruction, hypersensitivity or trauma.<br>' +
-        '• <strong>Generalised / ventral pitting oedema</strong> — reflects a systemic mechanism; <strong>check serum albumin first</strong>: hypoalbuminaemia needs albumin &lt;2.0 g/dL (&lt;20 g/L) to cause overt oedema alone, with effusion/thromboembolism risk once &lt;1.5 g/dL (&lt;15 g/L) (Ettinger Ch 30 · Ch 60).',
-    },
+    // The distribution + the albumin ARE the split, so they are the step's
+    // bullets rather than a paragraph above it; the three cards below carry the
+    // mechanism each one selects.
     {
       kind: 'node',
       variant: 'step',
-      text: 'GENERALISED / VENTRAL? → CHECK ALBUMIN. LOCALISED? → THINK OBSTRUCTION / PERMEABILITY',
+      text: 'MAP THE DISTRIBUTION, THEN CHECK SERUM ALBUMIN',
       subItems: [
-        'Starling: oedema = an imbalance of hydrostatic vs oncotic pressure, permeability, or lymphatic drainage',
-        'It appears once interstitial tension and lymphatic uptake are overwhelmed (Ettinger Ch 30)',
+        'One limb or one region = local obstruction, trauma or hypersensitivity — see HYDROSTATIC',
+        'Generalised / ventral pitting = a systemic mechanism — measure albumin before anything else',
+        'Albumin must be <2.0 g/dL (<20 g/L) before low oncotic pressure alone explains it',
+        'Starling: hydrostatic vs oncotic pressure, permeability, lymphatic drainage (Ettinger Ch 30)',
       ],
     },
     {

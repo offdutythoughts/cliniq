@@ -8,13 +8,8 @@ export const giParasitesFlow: FlowPage = {
   id: 'gi-parasites',
   title: 'GI Parasites — by location',
   blocks: [
-    { kind: 'node', variant: 'entry', text: ' GI PARASITES — by location' },
-    {
-      kind: 'callout',
-      tone: 'info',
-      html: ' <strong>Localise, then test appropriately.</strong> Faecal centrifugal flotation ×3 (intermittent shedding) is the mainstay for intestinal nematodes • Giardia needs antigen ELISA/SNAP + zinc-sulphate flotation • Tritrichomonas needs faecal PCR • gastric/oesophageal worms (Physaloptera, Ollulanus, Spirocerca) are frequently flotation-negative — reach for endoscopy, vomit examination, or an empirical anthelmintic trial. Empirical deworming is often justified given low test sensitivity.',
-    },
-    { kind: 'node', variant: 'step', text: 'WHERE DOES THE PARASITE LIVE?' },
+    { kind: 'node', variant: 'entry', text: ' GI PARASITES — by location', sub: 'The shared parasite reference behind every GI sign flow — grouped by where the parasite lives' },
+    { kind: 'node', variant: 'step', text: 'WHERE DOES THE PARASITE LIVE?', sub: 'Localise first — the site decides which test is worth running' },
     {
       kind: 'categoryGrid',
       columns: [
@@ -48,6 +43,24 @@ export const giParasitesFlow: FlowPage = {
           ],
         },
       ],
+    },
+
+    // Test selection is a lookup, so it is a table: the old paragraph hid four
+    // parasite→test pairs inside one sentence.
+    {
+      kind: 'table',
+      boxTone: 'info',
+      gap: 12,
+      title: ' WHICH TEST FOR WHICH PARASITE',
+      cols: '38% 1fr',
+      headers: ['Target', 'Test of choice'],
+      rows: [
+        ['Intestinal nematodes', 'Faecal centrifugal flotation ×3 — shedding is intermittent'],
+        ['Giardia', 'Antigen ELISA / SNAP + zinc-sulphate flotation'],
+        ['Tritrichomonas foetus', 'Faecal PCR'],
+        ['Gastric / oesophageal worms', 'Frequently flotation-NEGATIVE — endoscopy, vomit examination, or an empirical anthelmintic trial'],
+      ],
+      footnote: 'Faecal test sensitivity is low, so empirical deworming is often justified before the results are back.',
     },
   ],
 }

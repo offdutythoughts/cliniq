@@ -53,7 +53,7 @@ const vestibularEntry: FlowPage = {
           { text: '—', tone: 'warning' },
         ],
         [
-          'CP deficits',
+          'CP deficits <em>(most reliable localiser)</em>',
           { text: '✗ ABSENT', tone: 'green' },
           { text: '✓ PRESENT', tone: 'danger' },
           { text: 'Variable', tone: 'warning' },
@@ -61,7 +61,7 @@ const vestibularEntry: FlowPage = {
         [
           'Head tilt',
           { text: 'Present (toward lesion)', tone: 'green' },
-          { text: 'Present (toward lesion) OR paradoxical', tone: 'danger' },
+          { text: 'Toward lesion, OR paradoxical — <strong>away</strong> = cerebellar (flocculonodular lobe)', tone: 'danger' },
           { text: '✗ ABSENT', tone: 'warning' },
         ],
         [
@@ -112,8 +112,11 @@ const vestibularEntry: FlowPage = {
       tone: 'warning',
       gap: 12,
       connectAfter: false,
+      // Only the pearls the table cannot hold: the nystagmus, CP-deficit and
+      // paradoxical-tilt rules are rows in it, so repeating them here would give
+      // the reader the same finding twice in two different formats.
       title: '💡 PEARLS',
-      html: '• <strong>Vertical nystagmus</strong> = central until proven otherwise — no exceptions<br>• <strong>CP deficits absent in peripheral</strong> — their presence is the single most reliable central localiser<br>• <strong>Paradoxical head tilt</strong>: tilt/circle <em>away</em> from lesion = cerebellar (flocculonodular lobe)<br>• Horner\'s + CN VII palsy together = petrous temporal bone — peripheral, not central<br>• ~⅓ of clinically peripheral-appearing cases have a central lesion on MRI — low threshold for advanced imaging',
+      html: '• Horner\'s + CN VII palsy together = petrous temporal bone — peripheral, not central<br>• ~⅓ of clinically peripheral-appearing cases have a central lesion on MRI — low threshold for advanced imaging',
     },
 
     // Emergency banner (red/danger), no title.

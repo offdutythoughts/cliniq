@@ -6,19 +6,17 @@ const weightLossEntry: FlowPage = {
   title: 'Weight Loss',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' WEIGHT LOSS' },
-    {
-      kind: 'callout',
-      tone: 'warning',
-      html: ' <strong>FIRST confirm it is TRUE weight loss</strong> — compare recorded serial weights; <strong>~5% body weight over &lt;12 months</strong> warrants investigation. <strong>THEN confirm the diet is adequate</strong> in quality AND quantity (rule out underfeeding, poor-quality food, competition / limited access). Only then work the case up. (Ettinger Ch 18)',
-    },
+    // The two pre-checks are things to DO before the case is worked up, so they
+    // are the step's bullets; the appetite split itself is carried by the two
+    // cards below and is not restated here.
     {
       kind: 'node',
       variant: 'step',
-      text: 'WHAT IS THE APPETITE?',
+      text: 'CONFIRM THE LOSS AND THE DIET — THEN ASK ABOUT APPETITE',
       subItems: [
-        'The appetite is the pivot',
-        'Weight loss DESPITE a normal or increased appetite → calories are lost or unusable, or metabolism is high',
-        'Weight loss WITH a reduced appetite → overlaps anorexia (Ettinger Ch 18)',
+        'Confirm TRUE loss against recorded serial weights — ~5% of body weight in <12 months warrants investigation',
+        'Confirm the diet is adequate in quality AND quantity before working the case up',
+        'Exclude underfeeding, poor-quality food, competition or limited access (Ettinger Ch 18)',
       ],
     },
     {

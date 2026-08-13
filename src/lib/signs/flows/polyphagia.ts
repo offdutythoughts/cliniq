@@ -6,18 +6,16 @@ const polyphagiaEntry: FlowPage = {
   title: 'Polyphagia',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' POLYPHAGIA' },
-    {
-      kind: 'callout',
-      tone: 'info',
-      html: ' <strong>Body-weight trend is the pivot.</strong> Polyphagia <strong>+ weight LOSS</strong> = pathologic (↑demand or nutrient loss) — diabetes, hyperthyroid cat, EPI, IBD/lymphoma, acromegaly. Polyphagia <strong>+ weight GAIN</strong> = drug-induced, hyperadrenocorticism, insulinoma, or simple overfeeding. <strong>Rule out drugs first</strong> — glucocorticoids, anticonvulsants (phenobarbital, KBr), benzodiazepines, progestins all drive appetite. (Ettinger Ch 19)',
-    },
+    // No pivot callout: the two cards below ARE the pivot, and each carries the
+    // mechanism + the findings that pick it. A paragraph above them would state
+    // the same split a second time and age separately from the cards.
     {
       kind: 'node',
       variant: 'step',
       text: 'WEIGH THE PATIENT — IS BW RISING OR FALLING?',
       subItems: [
-        'First exclude pregnancy / lactation, growth, increased exercise or cold, and an obvious dietary or behavioural cause',
-        'Then the weight trend splits the differential (Ettinger Ch 19)',
+        'First exclude pregnancy / lactation, growth, increased exercise or cold, and an obvious dietary cause',
+        'Then review the drug list — glucocorticoids, phenobarbital / KBr, benzodiazepines, progestins (Ettinger Ch 19)',
       ],
     },
     {
@@ -27,13 +25,13 @@ const polyphagiaEntry: FlowPage = {
         {
           tone: 'danger',
           label: ' POLYPHAGIA + WEIGHT LOSS — pathologic',
-          sublabel: 'Ravenous but thin · PU/PD often co-occurs · loose, bulky or greasy stools point to nutrient loss',
+          sublabel: '↑demand or nutrient loss · ravenous but thin · PU/PD often co-occurs · loose, bulky or greasy stools',
           link: { to: 'flow', id: 'polyphagia-weightloss' },
         },
         {
           tone: 'teal',
           label: ' POLYPHAGIA + WEIGHT GAIN — drug / endocrine / behavioural',
-          sublabel: 'Weight rising with the intake · body condition ≥6/9 · take a drug history before anything else',
+          sublabel: 'Intake exceeds expenditure · weight rising · body condition ≥6/9 · drug history first',
           link: { to: 'flow', id: 'polyphagia-weightgain' },
         },
       ],
@@ -47,7 +45,6 @@ const polyphagiaEntry: FlowPage = {
         { bold: 'Undiagnosed diabetes / DKA', link: { to: 'disease', id: 'DIS-ENDO-DKA' }, html: ' — polyphagia + PU/PD + weight loss; check BG + glucosuria + ketones before it decompensates' },
         { bold: 'Insulinoma', link: { to: 'disease', id: 'DIS-NEO-INSULINOMA' }, html: ' — fasting hypoglycaemia drives the appetite; seizures/collapse on fasting — never starve the patient for testing' },
         '<strong>Feline hyperthyroidism</strong> — senior cat losing weight despite eating well; palpate the cervical region and run a TT4',
-        '<strong>Rule out drugs first</strong> — glucocorticoids, phenobarbital/KBr, benzodiazepines, progestins all cause polyphagia; review every medication before working up',
       ],
     },
 

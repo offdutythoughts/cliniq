@@ -1,17 +1,12 @@
 // ── Anorexia / Hyporexia flowchart ───────────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
-import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
+import { DONT_MISS_TITLE, IDENTIFY_CAUSE_STEP } from '../flowTypes'
 
 const anorexiaEntry: FlowPage = {
   id: 'anorexia',
   title: 'Anorexia / Hyporexia',
   blocks: [
     { kind: 'node', variant: 'entry', text: 'ANOREXIA / HYPOREXIA' },
-    {
-      kind: 'callout',
-      tone: 'danger',
-      html: '<strong>Anorexic CAT = emergency.</strong> Hepatic lipidosis can develop in as few as <strong>2 days</strong> in obese cats (typically within 1–2 weeks). Don\'t rely on appetite stimulants — <strong>feed early</strong> (assisted/tube) once eating &lt;RER for &gt;3–5 days. RER (kcal/day) = (30 × kg) + 70 for 3–25 kg cats, or 70 × kg⁰·⁷⁵ for any weight.',
-    },
     {
       kind: 'node',
       variant: 'step',
@@ -38,6 +33,20 @@ const anorexiaEntry: FlowPage = {
           sublabel: 'Systemic illness, pain, or nausea — screen every system',
           link: { to: 'flow', id: 'anorexia-true' },
         },
+      ],
+    },
+
+    // The feeding warning is not a discriminator — it belongs in the house
+    // DON'T MISS box, one instruction per bullet, not in a paragraph above the
+    // split it has nothing to do with.
+    {
+      kind: 'alert',
+      tone: 'danger',
+      title: DONT_MISS_TITLE,
+      items: [
+        { bold: 'Hepatic lipidosis — an anorexic CAT is an emergency', link: { to: 'disease', id: 'DIS-HEP-LIPIDOSIS' }, html: ' — it can develop in as few as 2 days in an obese cat, typically within 1–2 weeks' },
+        '<strong>Feed early — do not wait on appetite stimulants</strong>: assisted or tube feeding once the patient has eaten &lt;RER for &gt;3–5 days',
+        '<strong>RER (kcal/day)</strong> = (30 × kg) + 70 for a 3–25 kg patient, or 70 × kg⁰·⁷⁵ at any weight',
       ],
     },
   ],

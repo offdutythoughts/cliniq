@@ -5,6 +5,7 @@
 // sub-flows use the legacy 'fn' layout (fnHeader + cardGrid + .fn-arrow).
 
 import type { FlowPage } from '../flowTypes'
+import { DONT_MISS_TITLE } from '../flowTypes'
 
 // ── Entry flowchart (4-region branch) ───────────────────────────────────────
 const redEyeEntry: FlowPage = {
@@ -27,17 +28,20 @@ const redEyeEntry: FlowPage = {
         { label: 'Retrobulbar', sublabel: 'Globe pushed forward — exophthalmos, ↓retropulsion, pain on opening the mouth', link: { to: 'flow', id: 'red-eye-orbit' } },
       ],
     },
+    // Was a callout carrying five bullets and two raw onclick links — i.e. the
+    // DON'T MISS box in everything but the block kind. As a typed alert the
+    // links are checked by lint:chips and the title matches every other flow.
     {
-      kind: 'callout',
+      kind: 'alert',
       tone: 'danger',
-      gap: 10,
-      title: '⚡ SIGHT-THREATENING RED EYE — DO NOT MISS',
-      html:
-        '• <strong onclick="renderDiseasePage(\'DIS-OPH-GLAUCOMA\')" style="cursor:pointer;text-decoration:underline;">Acute glaucoma</strong> — episcleral congestion + mydriasis + corneal oedema + IOP &gt;25 mmHg → sight loss within hours<br>' +
-        '• <strong onclick="renderDiseasePage(\'DIS-EYE-UVEITIS-ANT\')" style="cursor:pointer;text-decoration:underline;">Anterior uveitis</strong> — miosis + aqueous flare + ↓ IOP → if untreated → secondary glaucoma, blindness<br>' +
-        '• <strong>Deep / melting ulcer</strong> — stromal loss + Seidel-positive → globe rupture<br>' +
-        '• <strong>Hyphaema with hypertension</strong> — measure BP; uncontrolled HT can blind quickly<br>' +
-        '• <strong>Globe rupture / corneal laceration</strong> — minimise handling, no tonometry, refer',
+      title: DONT_MISS_TITLE,
+      items: [
+        { bold: 'Acute glaucoma', link: { to: 'disease', id: 'DIS-OPH-GLAUCOMA' }, html: ' — episcleral congestion + mydriasis + corneal oedema + IOP &gt;25 mmHg; sight is lost within hours' },
+        { bold: 'Anterior uveitis', link: { to: 'disease', id: 'DIS-EYE-UVEITIS-ANT' }, html: ' — miosis + aqueous flare + ↓ IOP; untreated it runs on to secondary glaucoma and blindness' },
+        '<strong>Deep / melting ulcer</strong> — stromal loss, Seidel-positive; the globe can rupture',
+        '<strong>Hyphaema with hypertension</strong> — measure BP; uncontrolled hypertension blinds quickly',
+        '<strong>Globe rupture / corneal laceration</strong> — minimise handling, no tonometry, refer',
+      ],
     },
     { kind: 'banner', tone: 'info', html: 'Tap a region to see lesion types and urgency' },
   ],
@@ -140,7 +144,21 @@ const redEyeBleed: FlowPage = {
       kind: 'callout',
       tone: 'danger',
       gap: 10,
-      html: '⚡ <strong>Any intraocular bleed → systemic workup:</strong> blood pressure, CBC + smear, platelet count, BMBT, PT/aPTT, retinal exam of opposite eye. Bilateral hyphaema with retinal detachment → systemic hypertension until proven otherwise (CKD, hyperthyroidism, HAC, primary HT). Unilateral with trauma history → trauma or intraocular neoplasia.',
+      html: '⚡ <strong>Any intraocular bleed gets a systemic work-up</strong> — blood pressure, CBC + smear, platelet count, BMBT, PT/aPTT, and a retinal exam of the OPPOSITE eye.',
+    },
+    // Laterality is what points at the cause, so it is a two-row lookup rather
+    // than the tail of the work-up sentence.
+    {
+      kind: 'table',
+      boxTone: 'danger',
+      gap: 8,
+      dividers: true,
+      cols: '40% 1fr',
+      headers: ['Pattern', 'Think'],
+      rows: [
+        ['Bilateral hyphaema ± retinal detachment', 'Systemic hypertension until proven otherwise — CKD, hyperthyroidism, HAC, primary HT'],
+        ['Unilateral, with a trauma history', 'Trauma — or an intraocular neoplasm that bled'],
+      ],
     },
   ],
 }
@@ -156,22 +174,34 @@ const redEyeOrbit: FlowPage = {
     {
       // Legacy uses a `.dx-check` box here, sitting between two .fn-arrow
       // connectors → must be a spine block, so a neutral callout (not html).
+      // Exam findings only. The acute-painful / chronic-non-painful split below
+      // is drawn by the two cards, and the bilateral and feline patterns are in
+      // the lookup table under them — the box used to carry all three at once.
       kind: 'callout',
       tone: 'slate',
       html: '• Exophthalmos · third eyelid protrusion · resistance on retropulsion<br>' +
-        '• Pain on opening mouth (zygomatic abscess/cellulitis) — typical of acute orbital inflammation<br>' +
+        '• Pain on opening the mouth — typical of acute orbital inflammation<br>' +
         '• Strabismus (extraocular muscle involvement)<br>' +
-        '• Exposure keratitis from incomplete blink<br>' +
-        '• Acute + painful + young/mid-age dog → orbital cellulitis / abscess (often dental)<br>' +
-        '• Chronic + non-painful + older patient → orbital neoplasia until proven otherwise<br>' +
-        '• Cat: zygomatic salivary mucocoele · retrobulbar lymphoma<br>' +
-        '• Masticatory muscle myositis (MMM) → bilateral exophthalmos + jaw pain + 2M antibodies',
+        '• Exposure keratitis from an incomplete blink',
     },
     {
       kind: 'cardGrid',
       tiles: [
         { anat: 'pleural', sys: 'Acute · painful · pyrexia', loc: 'Orbital cellulitis / abscess', link: { to: 'lesion', loc: 'LOC-RE-ORBIT', name: 'Retrobulbar — inflammatory' } },
         { anat: 'mechanic', sys: 'Chronic · non-painful · older patient', loc: 'Orbital neoplasia', link: { to: 'lesion', loc: 'LOC-RE-ORBIT', name: 'Retrobulbar — mass' } },
+      ],
+    },
+    {
+      kind: 'table',
+      boxTone: 'slate',
+      gap: 10,
+      dividers: true,
+      cols: '42% 1fr',
+      headers: ['Pattern', 'Think'],
+      rows: [
+        ['Acute + painful, young or mid-age dog', 'Orbital cellulitis / abscess — often dental in origin'],
+        ['Cat with exophthalmos', 'Zygomatic salivary mucocoele · retrobulbar lymphoma'],
+        ['BILATERAL exophthalmos + jaw pain', 'Masticatory muscle myositis — run 2M antibodies'],
       ],
     },
   ],
