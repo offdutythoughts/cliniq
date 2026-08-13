@@ -7,10 +7,48 @@ const constipationEntry: FlowPage = {
   title: 'Constipation / Tenesmus',
   blocks: [
     { kind: 'node', variant: 'entry', text: 'CONSTIPATION / TENESMUS' },
+    // Q1 — tenesmus or stranguria? They look identical to an owner, and getting
+    // it wrong turns a blocked cat into a constipation case. Asked as a fork over
+    // what the bladder feels like, with the urinary arm exiting to pollakiuria.
     {
-      kind: 'callout',
-      tone: 'danger',
-      html: '<strong>FIRST: straining to DEFECATE or URINATE?</strong> Tenesmus and <strong>stranguria</strong> look identical to an owner. Palpate the bladder — a blocked male cat straining unproductively is a <strong>hyperkalaemic emergency</strong>, not constipation.<br>• <strong>Obstipation</strong> = cannot defecate without intervention<br>• Recurrent obstipation → <strong>idiopathic megacolon</strong><br>(Ettinger Ch 51)',
+      kind: 'node',
+      variant: 'step',
+      text: 'STRAINING TO DEFECATE, OR TO URINATE?',
+      sub: 'Palpate the bladder before anything else (Ettinger Ch 51)',
+    },
+    {
+      kind: 'fork',
+      legs: [
+        {
+          label: 'DEFECATION — tenesmus',
+          tone: 'info',
+          subItems: [
+            'Bladder small and easily expressed',
+            'Colon palpably full of firm faeces',
+            'Passes hard, dry faeces or nothing',
+            'Obstipation = cannot defecate unaided',
+          ],
+          continue: true,
+        },
+        {
+          label: 'URINATION — stranguria',
+          tone: 'danger',
+          subItems: [
+            'Bladder large, firm, painful',
+            'Little or no urine passed',
+            'Blocked male cat = emergency',
+            'Bradycardia / collapse = hyperkalaemia',
+          ],
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'Pollakiuria / Stranguria', sublabel: 'ECG + potassium before anything else', tone: 'danger', link: { to: 'flow', id: 'pollakiuria' } },
+              ],
+            },
+          ],
+        },
+      ],
     },
     {
       kind: 'node',
@@ -20,6 +58,7 @@ const constipationEntry: FlowPage = {
         'Tenesmus precedes defecation in obstructive disease',
         'Tenesmus follows defecation in inflammatory disease',
         'Rectal exam is key — pelvic canal, prostate, masses, stricture, anal sacs',
+        'Recurrent obstipation with a dilated, unpropulsive colon = idiopathic megacolon',
       ],
     },
     {

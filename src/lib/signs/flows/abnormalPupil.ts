@@ -6,6 +6,7 @@
 // bespoke 2-col compare + arrow-branch layout with no typed block yet → html.
 
 import type { FlowPage } from '../flowTypes'
+import { DONT_MISS_TITLE } from '../flowTypes'
 
 /** A "DIFFERENTIALS" sub-box for a decision-tree exit. Sits on the exit's solid
  *  (darkened) tone fill, so it reads as a darker inset of the same tone with a
@@ -33,30 +34,37 @@ const abnormalPupilEntry: FlowPage = {
         { variant: 'mixed', label: '🧠 Neurological', sublabel: 'Only pupil/PLR abnormality', link: { to: 'flow', id: 'abnormal-pupil-neuro' } },
       ],
     },
+    // Five checks, each with what its result tells you — a lookup, so a table.
+    // The old numbered paragraph made the reader parse a sentence per test.
     {
-      kind: 'callout',
-      tone: 'purple',
+      kind: 'table',
+      boxTone: 'purple',
       gap: 10,
-      connectAfter: false,
+      dividers: true,
       title: '🔬 KEY EXAM CHECKS BEFORE LOCALISING',
-      html:
-        '1. <strong>Vision</strong> (menace, tracking, dazzle): if vision is impaired, prioritise retina / optic nerve / cortical workup over iris/Horner\'s.<br>' +
-        '2. <strong>PLR direct, indirect, swinging-light</strong>: localises afferent (retina/CN II) vs efferent (CN III).<br>' +
-        '3. <strong>IOP</strong>: rule out glaucoma (mid-fixed mydriasis + ↑ IOP) and uveitis (miosis + ↓ IOP).<br>' +
-        '4. <strong>Slit-lamp / focal light</strong>: iris atrophy, synechiae, aqueous flare, lens position, dyscoria.<br>' +
-        '5. <strong>Concurrent Horner\'s signs?</strong> Miosis + ptosis + enophthalmos + 3rd eyelid protrusion = sympathetic denervation.',
+      cols: '34% 1fr',
+      headers: ['Check', 'What the result tells you'],
+      rows: [
+        ['Vision — menace, tracking, dazzle', "Impaired → work up retina / optic nerve / cortex before iris or Horner's"],
+        ['PLR — direct, indirect, swinging-light', 'Separates AFFERENT (retina, CN II) from EFFERENT (CN III)'],
+        ['IOP', 'Mid-fixed mydriasis + ↑ IOP = glaucoma; miosis + ↓ IOP = uveitis'],
+        ['Slit-lamp / focal light', 'Iris atrophy, synechiae, aqueous flare, lens position, dyscoria'],
+        ["Horner's signs", 'Miosis + ptosis + enophthalmos + 3rd eyelid protrusion = sympathetic denervation'],
+      ],
     },
+    // Was a callout with five bullets and four raw onclick links — the DON'T
+    // MISS box in all but name. Typed, the links are lint-checked like the rest.
     {
-      kind: 'callout',
+      kind: 'alert',
       tone: 'danger',
-      gap: 10,
-      title: '⚡ DO NOT MISS',
-      html:
-        '• <strong onclick="renderDiseasePage(\'DIS-OPH-GLAUCOMA\')" style="cursor:pointer;text-decoration:underline;">Acute glaucoma</strong> — fixed mid-dilated unresponsive pupil + ↑ IOP → sight-threatening (refer same day)<br>' +
-        '• <strong onclick="renderDiseasePage(\'DIS-EYE-LENS-LUX\')" style="cursor:pointer;text-decoration:underline;">Anterior lens luxation</strong> — altered pupil shape + pain + ↑ IOP risk (Jack Russell, Tibetan Terrier) → emergency lensectomy<br>' +
-        '• <strong onclick="renderDiseasePage(\'DIS-EYE-OPTNEUR\')" style="cursor:pointer;text-decoration:underline;">Optic neuritis (MUA, infectious, idiopathic)</strong> — bilateral mydriasis + acute blindness → MRI + CSF, aggressive immunosuppression<br>' +
-        '• <strong>Brainstem / CN III lesion</strong> — anisocoria + altered mentation, hemiparesis, cranial nerve deficits → emergency neuro workup<br>' +
-        '• <strong onclick="renderDiseasePage(\'DIS-EYE-SARDS\')" style="cursor:pointer;text-decoration:underline;">SARDS</strong> — acute bilateral blindness + dilated unresponsive pupils + normal fundus + PU/PD → chromatic PLR + ERG',
+      title: DONT_MISS_TITLE,
+      items: [
+        { bold: 'Acute glaucoma', link: { to: 'disease', id: 'DIS-OPH-GLAUCOMA' }, html: ' — fixed mid-dilated unresponsive pupil + ↑ IOP; sight-threatening, refer the same day' },
+        { bold: 'Anterior lens luxation', link: { to: 'disease', id: 'DIS-EYE-LENS-LUX' }, html: ' — altered pupil shape + pain + ↑ IOP risk (Jack Russell, Tibetan Terrier); emergency lensectomy' },
+        { bold: 'Optic neuritis (MUA, infectious, idiopathic)', link: { to: 'disease', id: 'DIS-EYE-OPTNEUR' }, html: ' — bilateral mydriasis + acute blindness; MRI + CSF, then aggressive immunosuppression' },
+        '<strong>Brainstem / CN III lesion</strong> — anisocoria with altered mentation, hemiparesis or other cranial nerve deficits; emergency neuro work-up',
+        { bold: 'SARDS', link: { to: 'disease', id: 'DIS-EYE-SARDS' }, html: ' — acute bilateral blindness + dilated unresponsive pupils + normal fundus + PU/PD; chromatic PLR + ERG' },
+      ],
     },
     { kind: 'banner', tone: 'info', html: 'Tap a branch to drill down to specific lesion types' },
   ],
@@ -208,12 +216,10 @@ const anisocoriaMydriasisLocalise: FlowPage = {
       tone: 'warning',
       gap: 10,
       connectAfter: false,
-      title: '💡 PEARLS',
-      html:
-        '• <strong>Absent direct PLR + consensual intact</strong> = pre-chiasmal — NOT efferent CN III<br>' +
-        '• CN III parasympathetic only: mydriasis without ptosis or lateral strabismus → orbital/cavernous sinus<br>' +
-        '• Cortical blindness: absent menace + intact PLR + intact dazzle = forebrain lesion → MRI<br>' +
-        '• SARDS: PLR absent to red light, preserved to blue (melanopsin RGCs) — ERG flat',
+      // The first three pearls were the tree's own outcome boxes restated; only
+      // the chromatic-PLR rule lives nowhere else on the page.
+      title: '💡 PEARL',
+      html: '• <strong>SARDS</strong> — the PLR is absent to RED light but preserved to BLUE (melanopsin RGCs), and the ERG is flat',
     },
     { kind: 'disclaimer' },
   ],
@@ -278,12 +284,13 @@ const anisocoriaHornersLocalise: FlowPage = {
       tone: 'warning',
       gap: 10,
       connectAfter: false,
+      // The localising pearls (CN VII, neck pain, the Golden Retriever) are all
+      // in the tree's outcome boxes already. What is left is the caveat on the
+      // test the whole tree hangs on, and what to do about the idiopathic form.
       title: '💡 PEARLS',
       html:
-        '• <strong>Golden Retriever idiopathic Horner\'s</strong>: 3rd order, self-limiting — phenylephrine 1% q6–8h for cosmesis; median resolution ~15 weeks<br>' +
-        '• CN VII palsy + Horner\'s = petrous temporal bone / middle ear (3rd order) → CT bullae<br>' +
-        '• Horner\'s + neck pain/paresis = 1st order cord lesion → MRI cervical cord urgently<br>' +
-        '• Horner\'s &gt;3 weeks: 2nd-order lesions may develop denervation hypersensitivity — phenylephrine test less reliable',
+        '• <strong>Horner\'s &gt;3 weeks</strong> — 2nd-order lesions can develop denervation hypersensitivity, so the phenylephrine test becomes less reliable<br>' +
+        '• Idiopathic 3rd-order Horner\'s needs no treatment — phenylephrine 1% q6–8h is for cosmesis only',
     },
     { kind: 'disclaimer' },
   ],

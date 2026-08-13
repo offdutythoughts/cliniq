@@ -7,19 +7,58 @@ const tremorsEntry: FlowPage = {
   title: 'Tremors',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' TREMORS' },
+
+    // Q1 — tremor or seizure? Asked as a fork over the FINDINGS the reader
+    // watched, not as a paragraph they have to disassemble. The tremor leg
+    // continues down the spine; the seizure leg exits to the seizures flow.
     {
-      kind: 'callout',
-      tone: 'danger',
-      html: ' <strong>Is this a tremor or a seizure?</strong> A <strong>tremor</strong> is a rhythmic oscillation with consciousness preserved and no post-ictal phase; a <strong>seizure</strong> has impaired consciousness, increased tone and autonomic signs — if in doubt, work it up as a <strong>seizure</strong>. And remember: an <strong>acute whole-body tremor with hyperthermia</strong> (tremorgenic mycotoxin, metaldehyde, permethrin in a cat) is a <strong>toxic emergency</strong> — stabilise before you investigate. (Ettinger Ch 42)',
+      kind: 'node',
+      variant: 'step',
+      text: 'IS THIS A TREMOR, OR A SEIZURE?',
+      sub: 'Watch one episode before you commit (Ettinger Ch 42)',
     },
+    {
+      kind: 'fork',
+      legs: [
+        {
+          label: 'TREMOR',
+          tone: 'info',
+          subItems: [
+            'Rhythmic oscillation at a fixed rhythm',
+            'Consciousness PRESERVED',
+            'Tone normal · no autonomic signs',
+            'No post-ictal phase',
+          ],
+          continue: true,
+        },
+        {
+          label: 'SEIZURE',
+          tone: 'violet',
+          subItems: [
+            'Consciousness impaired',
+            'Tone increased — rigid or paddling',
+            'Salivation · urination · defecation',
+            'Post-ictal confusion or blindness',
+          ],
+          blocks: [
+            {
+              kind: 'endpoints',
+              items: [
+                { label: 'Seizures', sublabel: 'If in doubt, work it up as a seizure', tone: 'violet', link: { to: 'flow', id: 'seizures' } },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+
     {
       kind: 'node',
       variant: 'step',
       text: 'ACUTE & SICK, OR CHRONIC & WELL?',
       subItems: [
-        'Acute generalised tremor ± hyperthermia / tachycardia / mydriasis = toxic or metabolic until proven otherwise',
-        'Check glucose, ionised calcium and potassium and take a toxin history FIRST',
-        'A slowly progressive tremor in an otherwise bright dog points cerebellar or idiopathic',
+        'Check glucose, ionised calcium and potassium before anything else',
+        'Take a toxin history — mouldy food, snail bait, spot-on products',
       ],
     },
     {
@@ -57,7 +96,6 @@ const tremorsEntry: FlowPage = {
         '<strong>Permethrin in a cat</strong> — misapplied dog pyrethroid spot-on; tremors → seizures + hyperthermia; bathe, methocarbamol, ILE',
         '<strong>Hypocalcaemia</strong> — check <strong>ionised</strong> calcium (eclampsia in a lactating bitch, hypoparathyroidism); facial/whole-body tremor and twitching can tip into tetany',
         '<strong>Hypoglycaemia</strong> — measure glucose in EVERY tremoring/seizuring patient (insulinoma, sepsis, toy-breed/neonate, hepatic failure)',
-        '<strong>It might be a seizure, not a tremor</strong> — impaired consciousness, increased tone or autonomic signs send you to the seizures flow',
       ],
     },
 
