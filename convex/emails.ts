@@ -35,13 +35,29 @@ export function siteUrl(): string {
   return raw.replace(/\/$/, "");
 }
 
-/** An absolute link into the app, e.g. `linkTo("/verify", { code, email })`. */
+/** An absolute link into the app, e.g. `linkTo("/verify", { t: packCredential(...) })`. */
 export function linkTo(path: string, params: Record<string, string>): string {
   const url = new URL(path, siteUrl() + "/");
   for (const [key, value] of Object.entries(params)) {
     url.searchParams.set(key, value);
   }
   return url.toString();
+}
+
+/**
+ * Pack an address and a token into ONE query parameter.
+ *
+ * Account links used to carry `?email=…&code=…`, and the `&` was fatal: every
+ * request that reached us had been truncated at it, arriving with the address and
+ * no token, so the page had nothing to redeem and reported a dead link. A link
+ * with a single parameter has no `&` to cut at.
+ *
+ * `~` is the separator because it is URL-safe, never produced by
+ * {@link randomToken}, and not valid in a real email address. The token is read
+ * back from the LAST separator so an exotic address containing one still works.
+ */
+export function packCredential(email: string, token: string): string {
+  return `${email}~${token}`;
 }
 
 /**

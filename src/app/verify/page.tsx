@@ -12,6 +12,7 @@ import {
   secondaryButtonClass,
 } from '../../components/site/AuthShell'
 import { track } from '../../lib/analytics'
+import { unpackCredential } from '../../lib/credentialLink'
 
 /**
  * Where the confirmation link lands (convex/emailVerification.ts builds it).
@@ -36,8 +37,10 @@ function VerifyFlow() {
   const params = useSearchParams()
   const router = useRouter()
   const { signIn } = useAuthActions()
-  const email = (params.get('email') ?? '').trim().toLowerCase()
-  const code = params.get('code') ?? ''
+  // One parameter, `t`, holding `address~token` — see convex/emailVerification.ts.
+  // Two parameters did not survive the trip from the inbox: the `&` was truncated
+  // en route, and a parameter named `code` gets eaten by ConvexAuthProvider.
+  const { email, code } = unpackCredential(params.get('t'))
   const [state, setState] = useState<State>('verifying')
   // React runs effects twice in development; a verification code is single-use,
   // so the second run would report a valid link as expired.

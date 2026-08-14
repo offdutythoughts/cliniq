@@ -1,5 +1,12 @@
 import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import type { NextFetchEvent, NextRequest } from 'next/server'
+
+// The one host this app is served from. `SITE_URL` on every deployment must
+// agree with it: it is where emailed links point, and the origin passkeys are
+// bound to. www and apex both resolving would mean a passkey registered on one
+// silently failing on the other, and confirmation links leading users off the
+// host they signed up on.
+const CANONICAL_HOST = 'vetic.app'
 
 // When Convex is not configured locally, skip auth middleware entirely
 const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
@@ -43,9 +50,32 @@ const convexMiddleware = hasConvex
         }
       })
     })()
-  : (_request: NextRequest) => NextResponse.next()
+  : (_request: NextRequest, _event: NextFetchEvent) => NextResponse.next()
 
-export default convexMiddleware
+/**
+ * Send www to the apex, before anything else runs.
+ *
+ * This has to live in middleware rather than `redirects` in next.config: for a
+ * signed-out visitor to a private route the auth gate below returns a redirect
+ * of its own, and middleware runs first — so a config-level rule would never be
+ * reached, and the visitor would land on /login still on the wrong host.
+ *
+ * 308 keeps the method and tells browsers to stop asking. Only the exact www
+ * host is matched, so localhost and preview deployments are untouched.
+ */
+export default function middleware(request: NextRequest, event: NextFetchEvent) {
+  if (request.headers.get('host') === `www.${CANONICAL_HOST}`) {
+    const url = request.nextUrl.clone()
+    url.host = CANONICAL_HOST
+    url.port = ''
+    // Pinned, not inherited: behind the proxy `nextUrl.protocol` can read as
+    // http, which would send the browser to an insecure URL for one hop before
+    // it gets upgraded. Anything arriving on this host is production traffic.
+    url.protocol = 'https:'
+    return NextResponse.redirect(url, 308)
+  }
+  return convexMiddleware(request, event)
+}
 
 export const config = {
   matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
