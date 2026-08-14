@@ -183,6 +183,10 @@ export function useNotes(pageKey: string, pageTitle: string, isOpen: boolean) {
   }, [flush, pageKey])
 
   useEffect(() => {
+    // Closing the notes panel must flush whatever is pending, and `flush` reports
+    // progress through `setStatus`. The trigger is a prop changing, not an event
+    // this hook can hang a handler on, so it has to live in an effect.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!isOpen) void flush()
   }, [isOpen, flush])
 

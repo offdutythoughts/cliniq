@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useSyncExternalStore } from 'react'
 import { useMutation, useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
 import { HOW_TO_ITEMS } from '../app/screens/howToItems'
@@ -25,18 +25,24 @@ export function OnboardingModal() {
 
 // Standalone build (no backend): device-local persistence only.
 function OnboardingLocal() {
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    if (!readLocalSeen()) setVisible(true)
-  }, [])
+  // localStorage is not readable while rendering on the server, so the flag is
+  // read through useSyncExternalStore rather than set from an effect: the server
+  // snapshot says "seen" (render nothing), and the client re-reads after
+  // hydration. Nothing is subscribed because the value cannot change underneath
+  // us — only `dismiss` below changes it, and that re-renders on its own.
+  const seen = useSyncExternalStore(
+    () => () => {},
+    readLocalSeen,
+    () => true,
+  )
+  const [dismissed, setDismissed] = useState(false)
 
   const dismiss = () => {
     writeLocalSeen()
-    setVisible(false)
+    setDismissed(true)
   }
 
-  return <OnboardingSheet visible={visible} onDismiss={dismiss} />
+  return <OnboardingSheet visible={!seen && !dismissed} onDismiss={dismiss} />
 }
 
 // Convex build: the welcome sheet is gated on a server-side per-user flag so it
