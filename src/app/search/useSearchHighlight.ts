@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { useSearch } from './SearchContext'
 
 // Elements whose text should not be highlighted (inputs, scripts, the search bar itself)
@@ -92,9 +92,6 @@ function hideEmptyCards(root: HTMLElement) {
 
 export function useSearchHighlight(screenRef: React.RefObject<HTMLElement | null>) {
   const { query, setMatchCount } = useSearch()
-  // Stable ref to avoid stale closure issues
-  const queryRef = useRef(query)
-  queryRef.current = query
 
   useEffect(() => {
     const root = screenRef.current

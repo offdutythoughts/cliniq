@@ -124,22 +124,32 @@ const SUB_UNDER = { ...SUB, paddingLeft: `${HEADER_INDENT + 14}px` }
  *  box (used by protocol steps). Empty segments render an empty bullet,
  *  matching the legacy bul() (no filtering). */
 export function Bul({ text, warn, allowDash = true }: { text: string; warn?: boolean; allowDash?: boolean }) {
+  const blocks = parseBlocks(text, { warn, allowDash })
+
   // Once a header has been seen, everything after it belongs to that section
   // (a later header just opens a new section — the depth is unchanged).
-  let underHeader = false
+  // Resolved up front rather than tracked inside the map: a variable reassigned
+  // from a render callback is exactly what the compiler cannot reason about.
+  const isUnderHeader: boolean[] = []
+  let seenHeader = false
+  for (const b of blocks) {
+    isUnderHeader.push(seenHeader)
+    if (b.kind === 'header') seenHeader = true
+  }
+
   return (
     <>
-      {parseBlocks(text, { warn, allowDash }).map((b, i) => {
+      {blocks.map((b, i) => {
+        const under = isUnderHeader[i]
         switch (b.kind) {
           // Headers linkify too — a `#Header` may carry an @-link (e.g.
           // "#Acute crisis (see @PROT-RESP)"), which otherwise rendered as
           // literal "@PROT-RESP" text instead of a tappable protocol link.
           case 'header':
-            underHeader = true
             return <div key={i} style={HEADER}>▸ <Linkify text={b.text} /></div>
           case 'warn': return <div key={i} style={WARN}>⚠️ {b.text}</div>
-          case 'sub': return <div key={i} style={underHeader ? SUB_UNDER : SUB}><span style={DASH}>–</span><Linkify text={b.text} /></div>
-          default: return <div key={i} style={underHeader ? BULLET_UNDER : BULLET}><span style={DOT}>•</span><Linkify text={b.text} /></div>
+          case 'sub': return <div key={i} style={under ? SUB_UNDER : SUB}><span style={DASH}>–</span><Linkify text={b.text} /></div>
+          default: return <div key={i} style={under ? BULLET_UNDER : BULLET}><span style={DOT}>•</span><Linkify text={b.text} /></div>
         }
       })}
     </>
