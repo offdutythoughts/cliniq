@@ -1,11 +1,16 @@
 # Ettinger's Textbook of Veterinary Internal Medicine, 9th Edition — Clinical Reference Notes
 
-**Source:** Ettinger SJ, Feldman EC, Côté E (eds). *Ettinger's Textbook of Veterinary
-Internal Medicine: Diseases of the Dog and the Cat*, 9th edn. Elsevier, 2024 (2 vols).
+**Source:** Côté E, Ettinger SJ, Feldman EC (eds). *Ettinger's Textbook of Veterinary
+Internal Medicine*, 9th edn. Elsevier, 2024 (2 vols). Editor order and the absence of a
+subtitle are both verified against the book's own title page — see
+[`CITATIONS.md`](CITATIONS.md), which records the two corrections to the string this header
+used to carry.
 
-**PDF:** local only — `~/Downloads/Ettinger's Textbook of Veterinary Internal Medicine, 9th Edition (VetBooks.ir).pdf`
-(2,801 PDF pages; gitignored / not in repo). Citations below are by **chapter number** `(Ch NN)`,
-which is stable regardless of edition pagination. (PDF page ≈ book page + 86 for Vol 1 content.)
+**Full text:** `references/ettinger9.md` (local only, gitignored), navigable by chapter via
+[`ettinger9-index.md`](ettinger9-index.md). The PDF these notes were extracted from is gone
+and is not being replaced; the `.md` conversion supersedes it. Citations below are by
+**chapter number** `(Ch NN)`, which is stable regardless of edition pagination — the index
+explains how to recover printed page numbers if an external citation ever needs them.
 
 These notes distil the clinically actionable content of Ettinger 9th that is most relevant to
 ClinIQ's sign-based model and reference DB (`src/data/db.ts`): **differential lists, diagnostic

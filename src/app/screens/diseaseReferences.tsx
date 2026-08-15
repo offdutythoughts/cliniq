@@ -13,8 +13,10 @@ import { createContext, useContext } from 'react'
 // Chapter authors/titles aren't tracked, so the editor-led chapter form is used.
 // Verbatim from references/CITATIONS.md, which is the source of truth for these
 // strings — do not retype one from memory or from a filename.
+// Editor order is title-page order (Côté leads the 9th), and the 9th carries no
+// subtitle — both verified against the book's own front matter, 2026-08-15.
 const ETTINGER_BOOK =
-  'Ettinger SJ, Feldman EC, Côté E, eds. Ettinger’s Textbook of Veterinary Internal Medicine: Diseases of the Dog and the Cat. 9th ed. Elsevier; 2024'
+  'Côté E, Ettinger SJ, Feldman EC, eds. Ettinger’s Textbook of Veterinary Internal Medicine. 9th ed. Elsevier; 2024'
 const GELATT_BOOK =
   'Gelatt KN, Ben-Shlomo G, Gilger BC, Hendrix DVH, Kern TJ, Plummer CE, eds. Veterinary Ophthalmology. 6th ed. Wiley-Blackwell; 2021'
 // Web-published clinical guideline — organisation-as-author AMA form with URL.
