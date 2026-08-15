@@ -66,23 +66,46 @@ Note the title page distinguishes **Editor** Kirk N. Gelatt from five **Associat
 which overstates the associates' role — prefer the single-editor form above. Cite associate
 editors only if a house style requires the full list.
 
+### Ettinger's Textbook of Veterinary Internal Medicine (`ettinger9.md`, `ettinger9-notes.md`)
+
+> Côté E, Ettinger SJ, Feldman EC, eds. *Ettinger's Textbook of Veterinary Internal Medicine*. 9th ed. Elsevier; 2024.
+
+2 volumes, ~2,320 pp. Two-volume set ISBN 978-0-323-77931-9; Vol 1 978-0-443-10785-6, Vol 2
+978-0-443-10786-3. "Copyright © 2024 by Elsevier Inc."; previous editions 2017, 2010, 2005,
+2000, 1995, 1989, 1983, 1975.
+
+Promoted from second-hand to verified on 2026-08-15, when the full-text conversion
+`references/ettinger9.md` arrived and made the front matter readable again (title page at
+lines 53–75, copyright page 77–95). **Two corrections to the string previously carried
+here:**
+
+1. **Editor order is Côté, Ettinger, Feldman** — that is the title-page order in the 9th
+   edn, where Côté is now lead editor. The old string led with Ettinger. (The photo caption
+   on the Editors page, front matter line 103, runs Feldman/Ettinger/Côté; AMA follows the
+   title page, so that ordering is not the one to use.)
+2. **The 9th edn carries no subtitle.** Its title page and copyright page both read plain
+   `ETTINGER'S TEXTBOOK OF VETERINARY INTERNAL MEDICINE`. *Diseases of the Dog and the Cat*
+   was the subtitle of earlier editions and survives only inside the book's own citations of
+   the 3rd and 7th edns. The old string appended it to the 9th.
+
+Chapter template — 331 chapters, each singly or jointly authored, with the author line
+immediately below the title in `ettinger9.md`:
+
+> [Chapter author(s)]. [Chapter title]. In: Côté E, Ettinger SJ, Feldman EC, eds. *Ettinger's Textbook of Veterinary Internal Medicine*. 9th ed. Elsevier; 2024:[pp-pp].
+
+Page ranges *are* recoverable from this conversion, unlike `vettox3.md` — the running-header
+lines carry printed page numbers. See `ettinger9-index.md` for the lookup. The inline
+`(Ettinger Ch NN)` shorthand used in app data remains chapter-only and needs no pages.
+
+**`ettinger9.pdf` is still gone and is still not being replaced** (decision, 2026-08-10).
+The full-text `.md` supersedes the need for it.
+
 ---
 
-## Second-hand — recorded in the notes files, source PDF no longer on disk
+## Second-hand — recorded in the notes files, source no longer on disk
 
-Bibliographic data below was transcribed from the books when the notes were written. It is
-good enough to cite, but nobody has re-checked it against a title page since.
-
-**`ettinger9.pdf` is gone and is not being replaced** (decision, 2026-08-10). Do not ask for
-it — `ettinger9-notes.md` is the reference of record for that book.
-
-### Ettinger's Textbook of Veterinary Internal Medicine (`ettinger9-notes.md`)
-
-> Ettinger SJ, Feldman EC, Côté E, eds. *Ettinger's Textbook of Veterinary Internal Medicine: Diseases of the Dog and the Cat*. 9th ed. Elsevier; 2024.
-
-2 volumes. Source: header of `ettinger9-notes.md`. The PDF it cites (2,801 pp, formerly in
-`~/Downloads/`) is **not on this machine**. The notes' inline `(Ch NN)` shorthand is stable
-across printings and needs no page numbers.
+Bibliographic data below was transcribed when the notes were written. It is good enough to
+cite, but nobody has re-checked it against a title page since.
 
 ### VETgirl / ASPCA APCC toxicology ebook
 
