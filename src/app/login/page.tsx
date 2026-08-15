@@ -137,11 +137,11 @@ function LoginForm() {
       const result = await signIn('password', { email: normalised, password, flow })
       if (result.signingIn) {
         track('login_succeeded', { flow })
-        // A brand-new account goes via /welcome, which offers a passkey while
-        // the user is still in the sign-up frame of mind. Email verification is
-        // switched off (convex/auth.ts), so this is the only moment we get —
-        // /verify, which used to make the same offer, is never reached.
-        router.replace(flow === 'signUp' ? '/welcome' : '/app')
+        // Straight to the app. The passkey offer lives on /verify, which is
+        // where a new account lands once it follows the confirmation link —
+        // with email verification on (convex/auth.ts) sign-up never returns a
+        // session, so there is no signed-in moment to intercept here.
+        router.replace('/app')
         return
       }
       // No session: the address needs confirming, and the link is already sent.
