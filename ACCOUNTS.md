@@ -25,7 +25,8 @@ see the last section.
 | `/pricing` | yes | Plan comparison. Reachable by direct URL and from the site chrome; the prices in `src/lib/plans.ts` are **placeholders** and nothing charges for them. `src/app/pricing/page.tsx` |
 | `/signup` | yes | Redirect to `/login`. `src/app/signup/page.tsx` |
 | `/login` | yes | Sign in **and** create an account: email + password, or a passkey — either from the button or from the email field's autofill dropdown. `src/app/login/page.tsx` |
-| `/verify` | yes | Where the confirmation link lands. Redeems `?t=`, which verifies the address and signs the browser in, then offers to set up a passkey. `src/app/verify/page.tsx` |
+| `/welcome` | **no** | Where sign-up lands while email verification is off — offers a passkey, then continues to `/app`. Skips straight through where WebAuthn is unavailable. `src/app/welcome/page.tsx` |
+| `/verify` | yes | Where the confirmation link lands. Redeems `?t=`, which verifies the address and signs the browser in, then offers to set up a passkey. Only reachable while email verification is on. `src/app/verify/page.tsx` |
 | `/forgot` | yes | Request a password reset link. `src/app/forgot/page.tsx` |
 | `/reset` | yes | Where the reset link lands. Sets a new password from `?t=`. `src/app/reset/page.tsx` |
 | `/account` | **no** | Passkeys (add, list, remove), password reset, log out. `src/app/account/page.tsx` |
@@ -125,9 +126,13 @@ keys only.
 
 - **Registering** requires a live session — `registerOptions` / `registerVerify`
   both check `getAuthUserId`, so a passkey can only ever be added to the account
-  the caller is already signed in to. Offered on `/verify` after a confirmation
-  link is redeemed — the first moment a new account has a session — and any
-  time from `/account`.
+  the caller is already signed in to. Offered at the first moment a new account
+  has a session, and any time afterwards from `/account`. Which screen that is
+  depends on email verification: with it **off**, sign-up returns a session and
+  `/welcome` catches it; with it **on**, sign-up returns none and `/verify`
+  makes the offer once the emailed link is redeemed. The `/welcome` redirect is
+  gated on `signingIn`, so exactly one of the two fires — never both, never
+  neither.
 - **Signing in** is `authenticationOptions()` then
   `signIn("passkey", { challenge, response })`. Keys are registered as
   discoverable with `userVerification: "required"`, so the browser can offer
