@@ -8,10 +8,14 @@ ID, Touch ID, Windows Hello, a security key) from `/account` and sign in with
 that instead. There is no subscription and no paywall — anyone signed in has the
 whole clinical library.
 
-**Email verification is on**, and **password reset works**. Both send through
-Resend from `no-reply@vetic.app`; the sections below cover how each behaves and
-what the links look like. The subscription code is unmounted for its own
-reasons — see the last section.
+**Email verification is OFF again** (2026-08-16), and **password reset is wired
+but cannot deliver**. Both send through Resend from `no-reply@vetic.app`, and
+that domain is not verified with Resend — it publishes no DKIM, SPF or DMARC
+records, so every send is rejected. Verification was switched on in `f9d3688`
+and reached prod on 2026-08-15, where it blocked sign-up outright; it is off
+until the domain is verified. The sections below cover how each behaves and what
+the links look like. The subscription code is unmounted for its own reasons —
+see the last section.
 
 ## Routes
 
@@ -39,9 +43,12 @@ call to, so it stays mounted in dev; only the redirect is relaxed there.
 It is a no-op when `NEXT_PUBLIC_CONVEX_URL` is unset, which is how the no-auth
 local build and the Playwright visual suite run.
 
-## Email verification — on
+## Email verification — off
 
-`convex/auth.ts` passes `verify: EmailVerificationLink` to `Password()`.
+`convex/auth.ts` has `verify: EmailVerificationLink` **commented out**, so
+sign-up returns a session straight away. Everything below describes what happens
+when the line is uncommented; it is all written and tested, and was briefly live
+in prod. Read the note in `convex/auth.ts` before turning it back on.
 
 - `EmailVerificationLink` (`convex/emailVerification.ts`) — sign-up, and any
   sign-in on an address that hasn't been confirmed, returns **no session**.
@@ -50,12 +57,21 @@ local build and the Playwright visual suite run.
 - The "check your inbox" state in `/login` triggers off `signingIn === false`,
   and `/verify` redeems the link.
 
-**Email delivery is load-bearing.** Without `AUTH_RESEND_KEY` the link is only
-written to the function log, so the session is withheld pending a link nobody
-received — a full lockout. Set `SITE_URL` and a mail key on every deployment
-real users touch. Accounts predating this have no `emailVerified`, so each gets
-a confirmation link at its next sign-in; that migration is intended, but it
-means the key must be live first.
+**Email delivery is load-bearing, and a key alone is not delivery.** Two ways it
+locks everyone out:
+
+- Without `AUTH_RESEND_KEY` the link is only written to the function log, so the
+  session is withheld pending a link nobody received.
+- With a key but an **unverified sending domain**, Resend rejects the send,
+  `sendEmail()` throws, and sign-up fails outright. This is what happened in
+  prod on 2026-08-15 and caused the rollback.
+
+So `SITE_URL`, a mail key, **and** a verified `AUTH_EMAIL_FROM` domain must all
+be in place on every deployment real users touch. Check the domain in DNS, not
+in a dashboard: `dig +short resend._domainkey.vetic.app TXT` must return a key.
+Accounts predating this have no `emailVerified`, so each gets a confirmation
+link at its next sign-in; that migration is intended, but it means delivery must
+genuinely work first.
 
 ## Password reset — on
 
