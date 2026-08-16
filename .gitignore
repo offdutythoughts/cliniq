@@ -40,6 +40,10 @@
 .DS_Store
 *.pem
 
+# One-off generators run against src/data/db.ts. Their output is committed; the
+# scripts themselves are scratch, written for a single edit and not maintained.
+scripts/tmp/
+
 # debug
 npm-debug.log*
 yarn-debug.log*
