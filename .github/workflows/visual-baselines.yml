@@ -60,7 +60,14 @@ jobs:
         run: npx playwright test --update-snapshots || true
 
       - name: Commit baselines
+        # inputs.branch on a dispatch, the pushed branch on a sentinel push.
+        env:
+          TARGET_BRANCH: ${{ inputs.branch || github.ref_name }}
         run: |
+          set -euo pipefail
+          target="${TARGET_BRANCH:-$GITHUB_REF_NAME}"
+          echo "Regenerating baselines on $target"
+
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A tests/visual/__screenshots__/linux
@@ -69,8 +76,24 @@ jobs:
             exit 0
           fi
           count=$(git diff --cached --name-only | wc -l | tr -d ' ')
+          git diff --cached --name-only
           git commit -m "test(visual): regenerate $count linux baselines on the CI runner"
-          # Pushed with GITHUB_TOKEN, which by design does not trigger workflows —
-          # so this commit starts no CI run, and (if it ever touched the sentinel)
-          # could not re-trigger this one either.
-          git push origin HEAD:${{ inputs.branch || github.ref_name }}
+
+          # This job takes ~2 minutes, and anything pushed to the branch inside
+          # that window leaves our push non-fast-forward. Baselines are whole
+          # files that nobody edits by hand, so rebasing onto whatever landed is
+          # safe — replay and retry rather than dying and making a human re-run.
+          #
+          # Pushed with GITHUB_TOKEN, which by design does not trigger workflows,
+          # so this commit starts no CI run and cannot re-trigger this one.
+          for attempt in 1 2 3; do
+            if git push origin "HEAD:$target"; then
+              echo "Pushed $count baselines to $target on attempt $attempt."
+              exit 0
+            fi
+            echo "Push rejected — $target moved under us. Rebasing and retrying."
+            git fetch origin "$target"
+            git rebase "origin/$target"
+          done
+          echo "::error title=Baseline push failed::Three pushes to $target were rejected."
+          exit 1
