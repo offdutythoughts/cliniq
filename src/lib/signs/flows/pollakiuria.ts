@@ -50,9 +50,9 @@ const pollakiuriaEntry: FlowPage = {
           ],
         },
         {
-          header: '🔵 NON-OBSTRUCTED — localise',
+          header: 'NON-OBSTRUCTED — localise',
           tone: 'teal',
-          sub: 'Small bladder · comfortable to express · frequent small voids ± haematuria',
+          sub: 'Small bladder · comfortable to express · frequent small voids ± haematuria — time the straining within the void, then rectal-palpate for a mass or narrowing',
           blocks: [
             {
               kind: 'choices',

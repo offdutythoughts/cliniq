@@ -120,9 +120,9 @@ const pupdEntry: FlowPage = {
       kind: 'choices',
       size: 10,
       items: [
-        { tone: 'green', label: 'Primary PD',link: { to: 'flow', id: 'pupd-prim-pd' } },
-        { tone: 'indigo', label: 'Primary PU',link: { to: 'flow', id: 'pupd-prim-pu' } },
-        { tone: 'warning', label: 'Secondary PU',link: { to: 'flow', id: 'pupd-sec-pu' } },
+        { tone: 'green', label: 'Primary PD', link: { to: 'flow', id: 'pupd-prim-pd' } },
+        { tone: 'indigo', label: 'Primary PU', link: { to: 'flow', id: 'pupd-prim-pu' } },
+        { tone: 'warning', label: 'Secondary PU', link: { to: 'flow', id: 'pupd-sec-pu' } },
       ],
     },
 

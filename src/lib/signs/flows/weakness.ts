@@ -33,9 +33,9 @@ const weaknessEntry: FlowPage = {
       cols: 3,
       size: 10,
       items: [
-        { variant: 'insp', label: 'EPISODIC weakness',link: { to: 'flow', id: 'weakness-episodic' } },
-        { variant: 'exp', label: 'PERSISTENT weakness',link: { to: 'flow', id: 'weakness-persistent' } },
-        { variant: 'mixed', label: 'COLLAPSE ± loss of<br>consciousness',link: { to: 'flow', id: 'weakness-collapse' } },
+        { variant: 'insp', label: 'EPISODIC weakness', link: { to: 'flow', id: 'weakness-episodic' } },
+        { variant: 'exp', label: 'PERSISTENT weakness', link: { to: 'flow', id: 'weakness-persistent' } },
+        { variant: 'mixed', label: 'COLLAPSE ± loss of<br>consciousness', link: { to: 'flow', id: 'weakness-collapse' } },
       ],
     },
     {
@@ -205,14 +205,14 @@ const weaknessCollapse: FlowPage = {
       kind: 'choices',
       cols: 2,
       items: [
-        { tone: 'danger', label: 'SYNCOPE',link: { to: 'flow', id: 'syncope' } },
-        { tone: 'orange', label: 'SEIZURE',link: { to: 'flow', id: 'seizures' } },
-        { tone: 'teal', label: 'VESTIBULAR EPISODE',link: { to: 'flow', id: 'vestibular' } },
+        { tone: 'danger', label: 'SYNCOPE', link: { to: 'flow', id: 'syncope' } },
+        { tone: 'orange', label: 'SEIZURE', link: { to: 'flow', id: 'seizures' } },
+        { tone: 'teal', label: 'VESTIBULAR EPISODE', link: { to: 'flow', id: 'vestibular' } },
         // No sign screen exists for these three yet — they read off the table above.
         { tone: 'violet', label: 'DYSKINESIA / PMD',},
         { tone: 'warning', label: 'NARCOLEPSY / CATAPLEXY',},
         { tone: 'info', label: 'REM SLEEP DISORDER',},
-        { tone: 'lime', label: 'NEUROMUSCULAR COLLAPSE',link: { to: 'flow', id: 'weakness-episodic' } },
+        { tone: 'lime', label: 'NEUROMUSCULAR COLLAPSE', link: { to: 'flow', id: 'weakness-episodic' } },
       ],
     },
     {

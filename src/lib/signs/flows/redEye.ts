@@ -22,10 +22,10 @@ const redEyeEntry: FlowPage = {
       cols: 4,
       connectAfter: false,
       items: [
-        { label: 'Ocular coats',link: { to: 'flow', id: 'red-eye-coats' } },
-        { label: 'Iris hyperaemia',link: { to: 'flow', id: 'red-eye-iris' } },
-        { label: 'Intraocular bleed',link: { to: 'flow', id: 'red-eye-bleed' } },
-        { label: 'Retrobulbar',link: { to: 'flow', id: 'red-eye-orbit' } },
+        { label: 'Ocular coats', link: { to: 'flow', id: 'red-eye-coats' } },
+        { label: 'Iris hyperaemia', link: { to: 'flow', id: 'red-eye-iris' } },
+        { label: 'Intraocular bleed', link: { to: 'flow', id: 'red-eye-bleed' } },
+        { label: 'Retrobulbar', link: { to: 'flow', id: 'red-eye-orbit' } },
       ],
     },
     // Was a callout carrying five bullets and two raw onclick links — i.e. the
