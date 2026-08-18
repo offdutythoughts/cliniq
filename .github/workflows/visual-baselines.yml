@@ -7,6 +7,18 @@ name: Update visual baselines
 # font stack that CI renders with, and no developer machine here is Linux. Run it
 # from Actions → "Update visual baselines" → Run workflow, after any change that
 # legitimately moves pixels. Never hand-edit the linux/ directory.
+#
+# There are two ways to ask for a regen, and they do the same thing:
+#
+#   1. Actions → "Update visual baselines" → Run workflow (pick the branch).
+#   2. Edit .github/visual-baselines-request, commit, push.
+#
+# (2) exists because (1) needs the Actions UI — a wide-enough window to see the
+# workflow sidebar, and a human at the keyboard. A push is reachable from a
+# terminal, a phone, or an agent working on the repo. The path filter is what
+# keeps this honest: ONLY a commit touching that one sentinel file regenerates
+# anything, so the guardrail stays opt-in and no ordinary content commit can
+# quietly rewrite its own baselines.
 on:
   workflow_dispatch:
     inputs:
@@ -14,6 +26,16 @@ on:
         description: Branch to regenerate and commit on
         required: true
         default: main
+  push:
+    paths:
+      - .github/visual-baselines-request
+
+# Two regens racing on the same branch would both try to push, and the loser
+# fails on a non-fast-forward. Queue them instead — never cancel, because a
+# half-finished baseline set is worse than a slow one.
+concurrency:
+  group: visual-baselines-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -22,9 +44,11 @@ jobs:
   regenerate:
     runs-on: ubuntu-latest
     steps:
+      # workflow_dispatch names the branch as an input; a sentinel push carries
+      # it as the ref that was pushed.
       - uses: actions/checkout@v7
         with:
-          ref: ${{ inputs.branch }}
+          ref: ${{ inputs.branch || github.ref_name }}
 
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/visual-build
@@ -46,4 +70,7 @@ jobs:
           fi
           count=$(git diff --cached --name-only | wc -l | tr -d ' ')
           git commit -m "test(visual): regenerate $count linux baselines on the CI runner"
-          git push origin HEAD:${{ inputs.branch }}
+          # Pushed with GITHUB_TOKEN, which by design does not trigger workflows —
+          # so this commit starts no CI run, and (if it ever touched the sentinel)
+          # could not re-trigger this one either.
+          git push origin HEAD:${{ inputs.branch || github.ref_name }}

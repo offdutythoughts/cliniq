@@ -1,7 +1,6 @@
 import { Password } from "@convex-dev/auth/providers/Password";
 import { convexAuth } from "@convex-dev/auth/server";
-// Uncomment together with the `verify` line below — see the note there.
-// import { EmailVerificationLink } from "./emailVerification";
+import { EmailVerificationLink } from "./emailVerification";
 import { Passkey } from "./passkeys";
 import { PasswordResetLink } from "./passwordReset";
 
@@ -11,33 +10,37 @@ import { PasswordResetLink } from "./passwordReset";
 //   * Passkey — Face ID, Touch ID, Windows Hello or a security key, added from
 //     an account that is already signed in. See ./passkeys.ts.
 //
-// ── Email verification is built but switched OFF again ──────────────────────
+// ── Email verification is on ─────────────────────────────────────────────────
 //
-// Uncommenting the `verify` line below turns it on: sign-up, and any sign-in on
-// an unconfirmed address, then return `{ signingIn: false }` instead of a
-// session, the client shows "check your email", and the session appears when
-// the emailed link is followed. Everything behind it is written and tested —
-// ./emailVerification.ts, the /verify landing page, the "check your inbox"
+// Sign-up, and any sign-in on an unconfirmed address, return
+// `{ signingIn: false }` instead of a session; the client shows "check your
+// email", and the session appears when the emailed link is followed. See
+// ./emailVerification.ts, the /verify landing page, and the "check your inbox"
 // state in the login form.
 //
-// It was on briefly (f9d3688, deployed to prod 2026-08-15) and is off again
-// because it broke prod sign-up. A mail KEY is not sufficient: the sending
-// domain in AUTH_EMAIL_FROM must be verified with the mail provider, and
-// `vetic.app` is not — it publishes no DKIM, SPF or DMARC records at all, so
-// Resend rejects every send from `no-reply@vetic.app`. sendEmail() in
-// ./emails.ts throws on that rejection, and the throw surfaces as a failed
-// sign-up rather than an unverified account.
+// This makes email delivery load-bearing, and it has already failed once. It
+// was switched on in f9d3688, reached prod on 2026-08-15, and blocked every
+// sign-up: `vetic.app` was not a verified sending domain, Resend rejected each
+// send, and sendEmail() in ./emails.ts throws on a non-2xx — so the throw
+// surfaced as a failed sign-up rather than an unverified account. Rolled back
+// the same day, and on again 2026-08-17 with the domain verified.
 //
-// Before turning it on again, verify the domain with the provider and confirm
-// the DNS records resolve — `dig +short resend._domainkey.vetic.app TXT`
-// must return a key. A green tick in a dashboard is not the check; DNS is.
-// Accounts predating this have no `emailVerified`, so each gets a confirmation
-// link at its next sign-in once it is live.
+// So the precondition is not "a mail key exists". It is all three of SITE_URL,
+// a mail key, and a VERIFIED sending domain for AUTH_EMAIL_FROM, on every
+// deployment real users touch. Check the domain in DNS rather than a
+// dashboard — these must all answer:
 //
-// `reset` stays wired, but note it sends through the same unverified sender, so
-// /forgot throws today too. It is left on because it is opt-in — one user who
-// clicks "forgot password" hits it, whereas `verify` blocked EVERY sign-up.
-// Verifying the domain fixes both at once, with no further change here.
+//   dig +short resend._domainkey.vetic.app TXT   # DKIM public key
+//   dig +short send.vetic.app TXT                # v=spf1 include:amazonses.com
+//   dig +short send.vetic.app MX                 # feedback-smtp…amazonses.com
+//
+// Comment the `verify` line back out before deploying anywhere that lacks
+// them. Accounts predating this have no `emailVerified`, so each gets a
+// confirmation link at its next sign-in.
+//
+// `reset` shares the same sender and the same fate: it breaks and recovers with
+// `verify`. It stays wired either way, being opt-in rather than a gate on
+// everyone.
 export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
   providers: [
     Password({
@@ -46,7 +49,7 @@ export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
       profile(params) {
         return { email: String(params.email ?? "").trim().toLowerCase() };
       },
-      // verify: EmailVerificationLink,
+      verify: EmailVerificationLink,
       reset: PasswordResetLink,
     }),
     Passkey,
