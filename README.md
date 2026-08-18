@@ -47,7 +47,7 @@ left the repo mid-merge with conflict markers in the working tree, because local
 refuses to run on a dirty tree or when `main` has unpushed commits, and passes an
 explicit `-m` so the merge message can never capture the editor's comment template.
 
-### Do not add `vercel.json` back without a Convex deploy key
+### Do not add `vercel.json` back — the deploy key is not enough
 
 The Convex backend is deployed **by hand** (`npx convex deploy`), not by the
 Vercel build. A `vercel.json` that puts `npx convex deploy` in `buildCommand`
@@ -67,10 +67,48 @@ Previews were green throughout because the `else` branch of that
 `CONVEX_DEPLOY_KEY` in the environment — without it the CLI cannot authenticate
 non-interactively and exits non-zero, taking the build with it.
 
-So if you want the backend to deploy itself again, set `CONVEX_DEPLOY_KEY`
-(Convex dashboard → production deploy key → Vercel → Settings → Environment
-Variables, Production scope) **first**, and only then restore `vercel.json`.
-Verify with a production deployment that reaches `success`, not by assuming.
+The obvious fix is `CONVEX_DEPLOY_KEY` — without it the CLI cannot
+authenticate non-interactively and exits non-zero, taking the build with it.
+**That was tried on 2026-08-18 and it did not work.** The key was set in
+Vercel, `vercel.json` was restored (`bcab546`), and production was promoted
+twice:
+
+| deployment | SHA | when | result |
+|---|---|---|---|
+| `5965482446` | `832e133` | before the key was saved | failure |
+| `5966045270` | `c57eaa4` | **after** the key was saved | failure |
+| `5966095355` | `ece43e3` | `vercel.json` reverted again (`5f638f3`) | **success** |
+
+Two failures with the file present, immediate success on removing it, and
+previews green throughout. So the app build is fine and the deploy key alone
+does not explain the failure.
+
+**Before trying a third time, read the build log** — that is the one piece of
+evidence nobody has yet, and every attempt so far has been diagnosis by
+correlation:
+
+```bash
+npx vercel inspect <deployment-url-or-id> --logs   # needs Vercel auth
+```
+
+Unverified candidates: the key saved to the Preview/Development scope rather
+than Production; a key minted for the wrong Convex deployment; or a failure
+inside `npx convex deploy` that has nothing to do with auth.
+
+Whatever you try, verify with a **Production** deployment reaching `success`.
+A green preview proves nothing here — previews never run `convex deploy`. The
+check needs no Vercel account, since the repo is public:
+
+```bash
+SHA=$(git rev-parse origin/production)
+curl -s "https://api.github.com/repos/offdutythoughts/cliniq/deployments?sha=$SHA&environment=Production"
+curl -s "https://api.github.com/repos/offdutythoughts/cliniq/deployments/<id>/statuses"
+```
+
+Check the HTTP status of those calls. Unauthenticated GitHub allows 60
+requests/hour, and a rate-limited response is a JSON object that looks nothing
+like a verdict — reading it as "no deployment yet" has already produced one
+round of confident nonsense.
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
