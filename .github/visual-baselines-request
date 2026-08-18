@@ -26,3 +26,4 @@ Bump the log below (newest last) so the diff is never empty:
 2026-08-18  retry the push when the branch moves mid-run
 2026-08-18  redirect production regens to main
 2026-08-18  regen after the separation-box type change
+2026-08-18  regen check after the deploy-config and flow-type changes
