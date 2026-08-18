@@ -41,6 +41,17 @@ export default defineConfig({
   retries: 0,
   workers: 1,
   reporter: [['list']],
+  // A plain `npx playwright test` must never write a baseline. Playwright 1.60
+  // was observed rewriting ten darwin PNGs during an ordinary compare run —
+  // four of them without ever reporting a failure — which turns the local set
+  // into a mirror of whatever you just rendered and hides the very drift it
+  // exists to show. 'none' also makes a MISSING baseline fail loudly instead of
+  // being silently created.
+  //
+  // The regen job overrides this from the command line (`--update-snapshots`,
+  // which presets to 'changed'); CLI beats config, so this pins the compare
+  // path without disarming the workflow that is supposed to write.
+  updateSnapshots: 'none',
   // A little tolerance for sub-pixel font AA differences; styling regressions
   // move far more pixels than this.
   expect: {

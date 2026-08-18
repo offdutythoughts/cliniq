@@ -148,7 +148,7 @@ const dyspnoeaEntry: FlowPage = {
           Non-cardiogenic oedema (toxin, trauma)`,
         },
         {
-          header: '🔵 Inspiratory / stertor',
+          header: 'Inspiratory / stertor',
           html: `Nasopharyngeal polyp — stertor ± Horner's<br>
           Viral URTI (herpes / calici)<br>
           Nasopharyngeal stenosis`,

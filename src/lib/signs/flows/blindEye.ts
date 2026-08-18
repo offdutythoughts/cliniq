@@ -9,15 +9,25 @@ const blindEyeEntry: FlowPage = {
   title: 'Blind Eye / Vision Loss',
   blocks: [
     { kind: 'node', variant: 'entry', text: '⚫ BLINDNESS / VISION LOSS' },
-    { kind: 'node', variant: 'step', text: 'CHARACTERISE THE ONSET' },
+    {
+      kind: 'node',
+      variant: 'step',
+      text: 'CHARACTERISE THE ONSET',
+      // The two arms are name-only boxes, so the timings that separate them are
+      // asked here, once, instead of restated under each box.
+      subItems: [
+        'ACUTE — minutes to days; emergency until proven otherwise',
+        'CHRONIC — weeks to months; progressive vision decline',
+      ],
+    },
 
     {
       kind: 'choices',
       cols: 2,
       size: 11,
       items: [
-        { tone: 'danger', label: 'ACUTE',link: { to: 'flow', id: 'blind-eye-acute' } },
-        { tone: 'info', label: 'CHRONIC',link: { to: 'flow', id: 'blind-eye-chronic' } },
+        { tone: 'danger', label: 'ACUTE', link: { to: 'flow', id: 'blind-eye-acute' } },
+        { tone: 'info', label: 'CHRONIC', link: { to: 'flow', id: 'blind-eye-chronic' } },
       ],
     },
 

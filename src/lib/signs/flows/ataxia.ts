@@ -59,9 +59,9 @@ const ataxiaEntry: FlowPage = {
       cols: '22% 24% 1fr',
       headers: ['Type', 'Paresis / CP deficits', 'Hallmark'],
       rows: [
-        [{ text: 'Cerebellar', tone: 'info' }, 'NONE', 'Hypermetria — the cerebellum coordinates movement, it does not initiate it'],
-        [{ text: 'Vestibular', tone: 'warning' }, 'Only if CENTRAL', 'Asymmetric — falls or leans to one side; head tilt + nystagmus until proven otherwise'],
-        [{ text: 'Proprioceptive', tone: 'danger' }, 'ALWAYS', 'Weakness AND incoordination together — a spinal cord lesion'],
+        [{ text: 'Cerebellar', tone: 'info' }, 'NONE', 'Hypermetria — the cerebellum coordinates movement, it does not initiate it; intention tremor, truncal sway, wide-based stance, normal mentation'],
+        [{ text: 'Vestibular', tone: 'warning' }, 'Only if CENTRAL', 'Asymmetric — falls, leans, rolls or circles tightly to one side; head tilt + nystagmus until proven otherwise; ± ↓ mentation if central'],
+        [{ text: 'Proprioceptive', tone: 'danger' }, 'ALWAYS', 'Weakness AND incoordination together — a spinal cord lesion; knuckling, crossing over, scuffed toes, delayed CP placing'],
       ],
     },
     {
