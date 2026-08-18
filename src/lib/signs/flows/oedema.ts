@@ -28,19 +28,16 @@ const oedemaEntry: FlowPage = {
         {
           tone: 'teal',
           label: ' HYPOALBUMINAEMIA (↓ oncotic)',
-          sublabel: 'Generalised/ventral pitting oedema ± effusions · albumin <2.0 g/dL — check UPC, faecal α₁-PI, bile acids',
           link: { to: 'flow', id: 'oedema-hypoalbumin' },
         },
         {
           tone: 'danger',
           label: ' HYDROSTATIC / CARDIAC',
-          sublabel: 'Albumin normal · ↑ intravascular hydrostatic pressure · jugular distension, murmur, arrhythmia',
           link: { to: 'flow', id: 'oedema-hydrostatic' },
         },
         {
           tone: 'orange',
           label: ' VASCULAR PERMEABILITY / VASCULITIS',
-          sublabel: 'Albumin normal · ↑ permeability · oedematous swelling erythematous/warm · fever/shock',
           link: { to: 'flow', id: 'oedema-permeability' },
         },
       ],

@@ -24,13 +24,11 @@ const anorexiaEntry: FlowPage = {
         {
           tone: 'orange',
           label: 'PSEUDO-ANOREXIA — wants to but can\'t',
-          sublabel: 'Drops food · drooling · pain on prehension · pawing at mouth · gags / regurgitates',
           link: { to: 'flow', id: 'anorexia-pseudo' },
         },
         {
           tone: 'info',
           label: 'TRUE ANOREXIA — won\'t eat (by system)',
-          sublabel: 'Systemic illness, pain, or nausea — screen every system',
           link: { to: 'flow', id: 'anorexia-true' },
         },
       ],

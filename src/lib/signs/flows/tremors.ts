@@ -69,19 +69,16 @@ const tremorsEntry: FlowPage = {
         {
           tone: 'danger',
           label: ' TOXIC / METABOLIC',
-          sublabel: 'Acute · generalised · whole-body tremor at rest · hyperthermia · tachycardia · mydriasis · GI signs · may progress to seizures',
           link: { to: 'flow', id: 'tremors-toxic' },
         },
         {
           tone: 'violet',
           label: ' CEREBELLAR',
-          sublabel: 'INTENTION tremor — crescendos as the head/limb approaches a target · postural head tremor · truncal sway · NO weakness',
           link: { to: 'flow', id: 'tremors-cerebellar' },
         },
         {
           tone: 'teal',
           label: ' IDIOPATHIC / OTHER',
-          sublabel: 'Whole-body fine tremor in a young dog with a normal neuro exam — worse with anxiety or excitement, absent when asleep',
           link: { to: 'flow', id: 'tremors-idiopathic' },
         },
       ],

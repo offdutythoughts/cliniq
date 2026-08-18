@@ -26,13 +26,11 @@ const weightLossEntry: FlowPage = {
         {
           tone: 'teal',
           label: ' NORMAL / ↑ APPETITE',
-          sublabel: 'Eating well (often ravenous) yet still losing weight → calories are being lost or not utilised',
           link: { to: 'flow', id: 'weight-loss-appetite' },
         },
         {
           tone: 'violet',
           label: ' REDUCED APPETITE',
-          sublabel: 'Eating poorly and losing weight → overlaps anorexia; the weight loss is a marker of systemic illness',
           link: { to: 'flow', id: 'weight-loss-reduced' },
         },
       ],

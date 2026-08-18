@@ -26,14 +26,12 @@ export const sneezingFlows: FlowPage[] = [
         items: [
           {
             variant: 'mixed',
-            label: '🔴 Unilateral',
-            sublabel: 'Discharge from ONE nostril<br>± facial asymmetry, depigmented or ulcerated nasal planum<br>± reduced airflow on that side',
+            label: 'Unilateral',
             link: { to: 'lesion', loc: 'LOC-SN-UNI', name: 'Unilateral sneezing' },
           },
           {
             variant: 'exp',
-            label: '🟢 Bilateral',
-            sublabel: 'Discharge from BOTH nostrils<br>± ocular discharge, oral ulcers, systemic signs<br>Airflow equal side to side',
+            label: 'Bilateral',
             link: { to: 'lesion', loc: 'LOC-SN-BI', name: 'Bilateral sneezing' },
           },
         ],

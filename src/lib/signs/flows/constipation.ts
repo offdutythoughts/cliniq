@@ -68,19 +68,16 @@ const constipationEntry: FlowPage = {
         {
           tone: 'orange',
           label: 'OBSTRUCTIVE / INTRALUMINAL',
-          sublabel: 'Hard faecal mass palpable in the colon · rectal exam finds a lesion or narrowing inside the lumen',
           link: { to: 'flow', id: 'constipation-obstructive' },
         },
         {
           tone: 'violet',
           label: 'PELVIC / EXTRALUMINAL',
-          sublabel: 'Narrowed pelvic canal or compressive mass outside the bowel wall',
           link: { to: 'flow', id: 'constipation-pelvic' },
         },
         {
           tone: 'teal',
           label: 'NEUROMUSCULAR / METABOLIC',
-          sublabel: 'Colon fills but does not propel — soft to doughy faeces and weak, ineffective straining',
           link: { to: 'flow', id: 'constipation-neuromet' },
         },
       ],

@@ -31,19 +31,16 @@ const ataxiaEntry: FlowPage = {
         {
           variant: 'insp',
           label: 'Cerebellar',
-          sublabel: 'Hypermetria (dysmetria)<br>Intention tremor<br>Truncal sway<br>Wide-based stance<br><strong style="color:var(--tone-info-fg);">No paresis</strong><br>Normal mentation',
           link: { to: 'lesion', loc: 'LOC-AT-CEREB', name: 'Cerebellar ataxia' },
         },
         {
           variant: 'rest',
           label: 'Vestibular',
-          sublabel: 'Head tilt<br>Nystagmus<br>Falling / rolling<br>Tight circling<br><strong style="color:var(--amber-text);">± Paresis (central)</strong><br>± ↓ Mentation (central)',
           link: { to: 'flow', id: 'vestibular' },
         },
         {
           variant: 'mixed',
           label: 'Proprioceptive',
-          sublabel: 'Knuckling<br>Crossing over<br>Scuffing toes<br>Delayed CP placing<br><strong style="color:var(--tone-danger-fg);">Paresis present</strong><br>Spinal cord / brainstem',
           link: { to: 'flow', id: 'myelopathy' },
         },
       ],

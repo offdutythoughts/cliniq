@@ -24,14 +24,12 @@ export const wetEyeFlow: FlowPage = {
       items: [
         {
           variant: 'insp',
-          label: '😣 Increased production',
-          sublabel: 'CN V irritation — ulcer · FB · distichiasis · ectopic cilia · entropion · uveitis',
+          label: 'Increased production',
           link: { to: 'lesion', loc: 'LOC-WE-PROD', name: 'Increased tear production' },
         },
         {
           variant: 'exp',
-          label: '🚫 Reduced drainage',
-          sublabel: 'NLS atresia · puncta · NLS obstruction · eyelid conformation',
+          label: 'Reduced drainage',
           link: { to: 'lesion', loc: 'LOC-WE-DRAIN', name: 'Reduced tear drainage' },
         },
       ],

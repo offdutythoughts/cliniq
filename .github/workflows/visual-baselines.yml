@@ -1,7 +1,8 @@
 name: Update visual baselines
 
 # Regenerates tests/visual/__screenshots__/linux/ on the ubuntu runner and commits
-# it back to the branch you ran this on.
+# it back to the branch you ran this on — except `production`, which is
+# redirected to `main`. See "Never production" below.
 #
 # This exists because the committed baselines have to be rendered by the same
 # font stack that CI renders with, and no developer machine here is Linux. Run it
@@ -19,11 +20,28 @@ name: Update visual baselines
 # keeps this honest: ONLY a commit touching that one sentinel file regenerates
 # anything, so the guardrail stays opt-in and no ordinary content commit can
 # quietly rewrite its own baselines.
+#
+# ── Never production ─────────────────────────────────────────────────────────
+#
+# `production` is a deploy branch: it is `main` plus one file, and it should
+# only ever receive content by merging main. But merging main into it carries
+# the sentinel's diff along, which re-triggers this workflow with
+# github.ref_name = production, and it used to commit baselines straight there.
+# That left production holding baseline commits main did not have — a second
+# divergence that nobody asked for and that the next merge had to clean up.
+#
+# So a request that resolves to `production` is redirected to `main`: we check
+# main out, render from main, and push there. Baselines then reach production
+# the same way everything else does, by merge. Any other branch still gets its
+# own baselines in place, which is what a feature branch that moves pixels
+# needs — and note this is why the redirect is production-specific rather than
+# "always push to main": baselines rendered from a feature branch's code must
+# never be committed onto main, where that code does not exist.
 on:
   workflow_dispatch:
     inputs:
       branch:
-        description: Branch to regenerate and commit on
+        description: Branch to regenerate and commit on (production redirects to main)
         required: true
         default: main
   push:
@@ -33,8 +51,12 @@ on:
 # Two regens racing on the same branch would both try to push, and the loser
 # fails on a non-fast-forward. Queue them instead — never cancel, because a
 # half-finished baseline set is worse than a slow one.
+#
+# Keyed on the RESOLVED target, not the requesting ref: a production push and a
+# main push both land on main, and keying on the requester would put them in
+# different groups and let them race exactly as this is meant to prevent.
 concurrency:
-  group: visual-baselines-${{ github.ref }}
+  group: visual-baselines-${{ (inputs.branch || github.ref_name) == 'production' && 'main' || (inputs.branch || github.ref_name) }}
   cancel-in-progress: false
 
 permissions:
@@ -45,10 +67,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # workflow_dispatch names the branch as an input; a sentinel push carries
-      # it as the ref that was pushed.
+      # it as the ref that was pushed. Either way production means main.
+      - name: Resolve the target branch
+        id: target
+        env:
+          REQUESTED: ${{ inputs.branch || github.ref_name }}
+        run: |
+          set -euo pipefail
+          requested="$REQUESTED"
+          if [ "$requested" = "production" ]; then
+            target=main
+            echo "::notice title=Redirected to main::production is a deploy branch and takes content only by merge from main, so these baselines were rendered from main and pushed there. Merge main into production to carry them across."
+          else
+            target="$requested"
+          fi
+          echo "Requested: $requested → target: $target"
+          echo "target=$target" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@v7
         with:
-          ref: ${{ inputs.branch || github.ref_name }}
+          ref: ${{ steps.target.outputs.target }}
 
       - uses: ./.github/actions/setup
       - uses: ./.github/actions/visual-build
@@ -60,12 +98,11 @@ jobs:
         run: npx playwright test --update-snapshots || true
 
       - name: Commit baselines
-        # inputs.branch on a dispatch, the pushed branch on a sentinel push.
         env:
-          TARGET_BRANCH: ${{ inputs.branch || github.ref_name }}
+          TARGET_BRANCH: ${{ steps.target.outputs.target }}
         run: |
           set -euo pipefail
-          target="${TARGET_BRANCH:-$GITHUB_REF_NAME}"
+          target="$TARGET_BRANCH"
           echo "Regenerating baselines on $target"
 
           git config user.name  "github-actions[bot]"

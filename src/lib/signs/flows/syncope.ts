@@ -44,13 +44,11 @@ const syncopeEntry: FlowPage = {
         {
           tone: 'danger',
           label: ' CARDIAC',
-          sublabel: 'Collapses on exertion · murmur, gallop or arrhythmia · weak pulses · jugular distension',
           link: { to: 'flow', id: 'syncope-cardiac' },
         },
         {
           tone: 'teal',
           label: ' REFLEX / NON-CARDIAC',
-          sublabel: 'Clear trigger (cough · excitement · micturition) · normal heart · weak between episodes',
           link: { to: 'flow', id: 'syncope-reflex' },
         },
       ],

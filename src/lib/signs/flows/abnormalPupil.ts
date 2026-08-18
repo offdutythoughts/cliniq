@@ -30,8 +30,8 @@ const abnormalPupilEntry: FlowPage = {
       cols: 2,
       connectAfter: false,
       items: [
-        { variant: 'insp', label: '👁️ Ophthalmic', sublabel: 'Visible ocular changes', link: { to: 'flow', id: 'abnormal-pupil-ophthalmic' } },
-        { variant: 'mixed', label: '🧠 Neurological', sublabel: 'Only pupil/PLR abnormality', link: { to: 'flow', id: 'abnormal-pupil-neuro' } },
+        { variant: 'insp', label: 'Ophthalmic',link: { to: 'flow', id: 'abnormal-pupil-ophthalmic' } },
+        { variant: 'mixed', label: 'Neurological',link: { to: 'flow', id: 'abnormal-pupil-neuro' } },
       ],
     },
     // Five checks, each with what its result tells you — a lookup, so a table.

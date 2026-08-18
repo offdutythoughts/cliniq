@@ -120,9 +120,9 @@ const pupdEntry: FlowPage = {
       kind: 'choices',
       size: 10,
       items: [
-        { tone: 'green', label: 'Primary PD', sublabel: 'Drinking is the primary event · systemically well · Na⁺ low-normal', link: { to: 'flow', id: 'pupd-prim-pd' } },
-        { tone: 'indigo', label: 'Primary PU', sublabel: 'Urination is the primary event · thirst is compensatory · Na⁺ high-normal', link: { to: 'flow', id: 'pupd-prim-pu' } },
-        { tone: 'warning', label: 'Secondary PU', sublabel: 'PU/PD alongside other systemic signs + abnormal biochemistry', link: { to: 'flow', id: 'pupd-sec-pu' } },
+        { tone: 'green', label: 'Primary PD',link: { to: 'flow', id: 'pupd-prim-pd' } },
+        { tone: 'indigo', label: 'Primary PU',link: { to: 'flow', id: 'pupd-prim-pu' } },
+        { tone: 'warning', label: 'Secondary PU',link: { to: 'flow', id: 'pupd-sec-pu' } },
       ],
     },
 

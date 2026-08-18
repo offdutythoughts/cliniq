@@ -22,10 +22,10 @@ const redEyeEntry: FlowPage = {
       cols: 4,
       connectAfter: false,
       items: [
-        { label: 'Ocular coats', sublabel: 'Redness in the surface tissues · vessels movable and blanch with topical phenylephrine', link: { to: 'flow', id: 'red-eye-coats' } },
-        { label: 'Iris hyperaemia', sublabel: 'Vessels visible on the iris face itself ± swollen, dull iris', link: { to: 'flow', id: 'red-eye-iris' } },
-        { label: 'Intraocular bleed', sublabel: 'Free blood inside the globe — settles with gravity, obscures the fundus', link: { to: 'flow', id: 'red-eye-bleed' } },
-        { label: 'Retrobulbar', sublabel: 'Globe pushed forward — exophthalmos, ↓retropulsion, pain on opening the mouth', link: { to: 'flow', id: 'red-eye-orbit' } },
+        { label: 'Ocular coats',link: { to: 'flow', id: 'red-eye-coats' } },
+        { label: 'Iris hyperaemia',link: { to: 'flow', id: 'red-eye-iris' } },
+        { label: 'Intraocular bleed',link: { to: 'flow', id: 'red-eye-bleed' } },
+        { label: 'Retrobulbar',link: { to: 'flow', id: 'red-eye-orbit' } },
       ],
     },
     // Was a callout carrying five bullets and two raw onclick links — i.e. the
