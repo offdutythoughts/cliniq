@@ -7,6 +7,18 @@ on:
     branches: [main, production]
   pull_request:
 
+# A compare gate only answers a question about the newest commit, so a push that
+# supersedes a running check cancels it rather than paying for both. Run #166 sat
+# "in progress" for twenty minutes against a commit two pushes stale, long after
+# main had gone green on top of it — a red from a run like that means nothing and
+# reads like a real failure in the list.
+#
+# Keyed on github.ref, so main, production and each PR queue separately: a
+# production merge never cancels main's run, and a PR never cancels either.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   verify:
     runs-on: ubuntu-latest
