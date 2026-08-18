@@ -16,3 +16,4 @@ Actions → "Update visual baselines" → Run workflow.
 Bump the log below (newest last) so the diff is never empty:
 
 2026-08-17  seed the sentinel
+2026-08-18  retry the push when the branch moves mid-run
