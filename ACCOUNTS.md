@@ -3,10 +3,10 @@
 What is live today, and what is written but switched off.
 
 **Live: sign-in is the only gate.** An account is an email and a password, and
-sign-up returns a session straight away. Once in, a user can add a passkey (Face
-ID, Touch ID, Windows Hello, a security key) from `/account` and sign in with
-that instead. There is no subscription and no paywall — anyone signed in has the
-whole clinical library.
+sign-up emails a confirmation link — the session arrives when it is followed.
+Once in, a user can add a passkey (Face ID, Touch ID, Windows Hello, a security
+key) from `/account` and sign in with that instead. There is no subscription and
+no paywall — anyone signed in has the whole clinical library.
 
 **Email verification is on** (again, since 2026-08-17), and **password reset
 works**. Both send through Resend from `no-reply@vetic.app`, and that domain is
