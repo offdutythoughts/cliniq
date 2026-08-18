@@ -27,13 +27,11 @@ const melenaEntry: FlowPage = {
         {
           tone: 'danger',
           label: ' MELENA — UPPER GI / small intestine',
-          sublabel: 'Black tarry digested stool · ± vomiting / haematemesis · BUN:Cr >30 supports upper GI bleed',
           link: { to: 'flow', id: 'melena-upper' },
         },
         {
           tone: 'orange',
           label: ' HAEMATOCHEZIA — LOWER GI / colon-rectum-anus',
-          sublabel: 'Bright-red fresh blood · ± mucus / tenesmus · normal appetite often preserved',
           link: { to: 'flow', id: 'melena-lower' },
         },
       ],

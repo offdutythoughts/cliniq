@@ -57,7 +57,7 @@ const pollakiuriaEntry: FlowPage = {
             {
               kind: 'choices',
               items: [
-                { label: 'LOCALISE BY SITE', sublabel: 'Time the straining within the void, then rectal-palpate for a mass or narrowing', tone: 'teal', link: { to: 'flow', id: 'pollakiuria-localise' } },
+                { label: 'LOCALISE BY SITE',tone: 'teal', link: { to: 'flow', id: 'pollakiuria-localise' } },
               ],
             },
           ],

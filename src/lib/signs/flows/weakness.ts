@@ -33,9 +33,9 @@ const weaknessEntry: FlowPage = {
       cols: 3,
       size: 10,
       items: [
-        { variant: 'insp', label: 'EPISODIC weakness', sublabel: 'Normal between episodes<br>± exercise triggered', link: { to: 'flow', id: 'weakness-episodic' } },
-        { variant: 'exp', label: 'PERSISTENT weakness', sublabel: 'Continuously weak<br>Flaccid or stiff', link: { to: 'flow', id: 'weakness-persistent' } },
-        { variant: 'mixed', label: 'COLLAPSE ± loss of<br>consciousness', sublabel: 'Sudden loss of postural tone ± altered consciousness<br>Normal between events', link: { to: 'flow', id: 'weakness-collapse' } },
+        { variant: 'insp', label: 'EPISODIC weakness',link: { to: 'flow', id: 'weakness-episodic' } },
+        { variant: 'exp', label: 'PERSISTENT weakness',link: { to: 'flow', id: 'weakness-persistent' } },
+        { variant: 'mixed', label: 'COLLAPSE ± loss of<br>consciousness',link: { to: 'flow', id: 'weakness-collapse' } },
       ],
     },
     {
@@ -205,14 +205,14 @@ const weaknessCollapse: FlowPage = {
       kind: 'choices',
       cols: 2,
       items: [
-        { tone: 'danger', label: 'SYNCOPE', sublabel: 'Flaccid on exertion · normal within seconds', link: { to: 'flow', id: 'syncope' } },
-        { tone: 'orange', label: 'SEIZURE', sublabel: 'Tonic-clonic from rest · post-ictal confusion', link: { to: 'flow', id: 'seizures' } },
-        { tone: 'teal', label: 'VESTIBULAR EPISODE', sublabel: 'Head tilt and nystagmus persist between episodes', link: { to: 'flow', id: 'vestibular' } },
+        { tone: 'danger', label: 'SYNCOPE',link: { to: 'flow', id: 'syncope' } },
+        { tone: 'orange', label: 'SEIZURE',link: { to: 'flow', id: 'seizures' } },
+        { tone: 'teal', label: 'VESTIBULAR EPISODE',link: { to: 'flow', id: 'vestibular' } },
         // No sign screen exists for these three yet — they read off the table above.
-        { tone: 'violet', label: 'DYSKINESIA / PMD', sublabel: 'Sustained dystonia, fully conscious, no autonomic signs' },
-        { tone: 'warning', label: 'NARCOLEPSY / CATAPLEXY', sublabel: 'Rouses to touch · triggered by food or play' },
-        { tone: 'info', label: 'REM SLEEP DISORDER', sublabel: 'Only ever asleep · wakes fully at once' },
-        { tone: 'lime', label: 'NEUROMUSCULAR COLLAPSE', sublabel: 'Conscious throughout · goes down on strenuous exercise', link: { to: 'flow', id: 'weakness-episodic' } },
+        { tone: 'violet', label: 'DYSKINESIA / PMD',},
+        { tone: 'warning', label: 'NARCOLEPSY / CATAPLEXY',},
+        { tone: 'info', label: 'REM SLEEP DISORDER',},
+        { tone: 'lime', label: 'NEUROMUSCULAR COLLAPSE',link: { to: 'flow', id: 'weakness-episodic' } },
       ],
     },
     {

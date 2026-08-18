@@ -69,19 +69,16 @@ const heartMurmurEntry: FlowPage = {
         {
           tone: 'danger',
           label: ' ACQUIRED STRUCTURAL',
-          sublabel: 'Older patient · grade often rises with severity · ± cough, exercise intolerance, dyspnoea, gallop, arrhythmia',
           link: { to: 'flow', id: 'heart-murmur-acquired' },
         },
         {
           tone: 'violet',
           label: ' CONGENITAL STRUCTURAL',
-          sublabel: 'Young / puppy / kitten · loud murmur (often grade ≥III–IV) that PERSISTS beyond ~16 weeks · ± growth retardation, cyanosis',
           link: { to: 'flow', id: 'heart-murmur-congenital' },
         },
         {
           tone: 'green',
           label: ' FUNCTIONAL / INNOCENT',
-          sublabel: 'Soft (grade I–III/VI) · proto-to-mesosystolic · loudest at left base · NO structural disease on echo',
           link: { to: 'flow', id: 'heart-murmur-functional' },
         },
       ],

@@ -25,13 +25,11 @@ const swollenJointsEntry: FlowPage = {
         {
           tone: 'slate',
           label: ' SINGLE JOINT (MONOARTHROPATHY)',
-          sublabel: 'Every other joint normal on palpation · localise the pain to the joint, not the adjacent bone',
           link: { to: 'flow', id: 'swollen-joints-single' },
         },
         {
           tone: 'info',
           label: ' MULTIPLE JOINTS (POLYARTHROPATHY)',
-          sublabel: 'Two or more joints ± shifting / stilted "walking on eggshells" gait · often febrile and lethargic rather than lame',
           link: { to: 'flow', id: 'swollen-joints-poly' },
         },
       ],
@@ -138,19 +136,16 @@ const swollenJointsPoly: FlowPage = {
         {
           tone: 'danger',
           label: ' SEPTIC / INFECTIOUS',
-          sublabel: 'Degenerate neutrophils ± intracellular organisms on cytology · febrile · tick exposure or a penetrating wound in the history',
           link: { to: 'flow', id: 'swollen-joints-septic' },
         },
         {
           tone: 'info',
           label: ' IMMUNE-MEDIATED',
-          sublabel: 'Culture-negative neutrophilic inflammation · multiple DISTAL joints (carpi + tarsi) · young–middle-aged',
           link: { to: 'flow', id: 'swollen-joints-immune' },
         },
         {
           tone: 'slate',
           label: ' NON-INFLAMMATORY / DEGENERATIVE',
-          sublabel: 'Mononuclear synovial fluid · <10% neutrophils · intermittent / shifting lameness in an otherwise well animal',
           link: { to: 'flow', id: 'swollen-joints-noninflam' },
         },
       ],

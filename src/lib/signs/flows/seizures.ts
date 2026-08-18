@@ -123,19 +123,16 @@ const seizuresEntry: FlowPage = {
         {
           variant: 'insp',
           label: 'Idiopathic',
-          sublabel: 'Onset 6mo–6yr<br>Normal bloods<br>Normal interictal exam<br>Breed predisposed',
           link: { to: 'lesion', loc: 'LOC-SZ-INTRACRANIAL', name: 'Intracranial' },
         },
         {
           variant: 'rest',
           label: 'Structural',
-          sublabel: '&lt;6mo or &gt;6yr<br>Abnormal exam / focal signs<br>Progressive course<br>VITAMIN D →',
           link: { to: 'flow', id: 'seizures-structural' },
         },
         {
           variant: 'mixed',
           label: 'Reactive',
-          sublabel: 'Abnormal bloods<br>Any age<br>Signs persist between seizures<br>⚠️ High SE risk',
           link: { to: 'flow', id: 'seizures-reactive' },
         },
       ],

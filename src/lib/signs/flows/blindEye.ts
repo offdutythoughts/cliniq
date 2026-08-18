@@ -16,8 +16,8 @@ const blindEyeEntry: FlowPage = {
       cols: 2,
       size: 11,
       items: [
-        { tone: 'danger', label: '⚡ ACUTE', sublabel: 'Onset mins → days<br>Emergency until proven otherwise', link: { to: 'flow', id: 'blind-eye-acute' } },
-        { tone: 'info', label: '🕐 CHRONIC', sublabel: 'Onset weeks → months<br>Progressive vision decline', link: { to: 'flow', id: 'blind-eye-chronic' } },
+        { tone: 'danger', label: 'ACUTE',link: { to: 'flow', id: 'blind-eye-acute' } },
+        { tone: 'info', label: 'CHRONIC',link: { to: 'flow', id: 'blind-eye-chronic' } },
       ],
     },
 

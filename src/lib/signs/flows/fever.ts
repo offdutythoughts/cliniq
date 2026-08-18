@@ -27,13 +27,11 @@ const feverEntry: FlowPage = {
         {
           tone: 'danger',
           label: ' TRUE FEVER — find the cause',
-          sublabel: 'Regulated rise — shivers, seeks warmth, responds to NSAIDs · FUO = >39.2°C for ≥3 weeks with no cause after ≥3 visits',
           link: { to: 'flow', id: 'fever-true' },
         },
         {
           tone: 'warning',
           label: ' HYPERTHERMIA — non-pyrogenic',
-          sublabel: 'Unregulated rise — pants, seeks cooling, does NOT respond to NSAIDs · ACTIVELY COOL if >41.1°C (106°F)',
           link: { to: 'flow', id: 'fever-hyperthermia' },
         },
       ],

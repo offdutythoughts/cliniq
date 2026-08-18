@@ -28,14 +28,12 @@ export const coughingFlows: FlowPage[] = [
         items: [
           {
             variant: 'insp',
-            label: '🔵 Dry / Unproductive',
-            sublabel: 'Harsh, honking, hacking<br>No sputum produced<br>Ends in a retch or gag, not a swallow',
+            label: 'Dry / Unproductive',
             link: { to: 'lesion', loc: 'LOC-CO-DRY', name: 'Dry / Unproductive cough' },
           },
           {
             variant: 'rest',
-            label: '🟡 Wet / Productive',
-            sublabel: 'Moist, rattling<br>Sputum / discharge produced<br>Swallows or licks the lips after coughing',
+            label: 'Wet / Productive',
             link: { to: 'lesion', loc: 'LOC-CO-WET', name: 'Wet / Productive cough' },
           },
         ],

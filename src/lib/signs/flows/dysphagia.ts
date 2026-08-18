@@ -68,19 +68,16 @@ const dysphagiaEntry: FlowPage = {
         {
           tone: 'teal',
           label: ' ORAL (prehension / mastication)',
-          sublabel: 'Drops food · drools · pain on opening mouth · pawing at face · tongue/jaw weakness',
           link: { to: 'flow', id: 'dysphagia-oral' },
         },
         {
           tone: 'indigo',
           label: ' PHARYNGEAL / CRICOPHARYNGEAL',
-          sublabel: 'Repeated swallowing attempts · gagging · coughing/nasal reflux during eating',
           link: { to: 'flow', id: 'dysphagia-pharyngeal' },
         },
         {
           tone: 'orange',
           label: ' OESOPHAGEAL (regurgitation)',
-          sublabel: 'Passive regurgitation of undigested food/saliva · weight loss · high aspiration risk',
           link: { to: 'flow', id: 'dysphagia-oesophageal' },
         },
       ],

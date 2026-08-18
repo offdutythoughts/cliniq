@@ -25,13 +25,11 @@ const polyphagiaEntry: FlowPage = {
         {
           tone: 'danger',
           label: ' POLYPHAGIA + WEIGHT LOSS — pathologic',
-          sublabel: '↑demand or nutrient loss · ravenous but thin · PU/PD often co-occurs · loose, bulky or greasy stools',
           link: { to: 'flow', id: 'polyphagia-weightloss' },
         },
         {
           tone: 'teal',
           label: ' POLYPHAGIA + WEIGHT GAIN — drug / endocrine / behavioural',
-          sublabel: 'Intake exceeds expenditure · weight rising · body condition ≥6/9 · drug history first',
           link: { to: 'flow', id: 'polyphagia-weightgain' },
         },
       ],
