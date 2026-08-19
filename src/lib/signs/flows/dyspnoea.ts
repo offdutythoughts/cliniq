@@ -27,7 +27,20 @@ const dyspnoeaEntry: FlowPage = {
   title: 'Dyspnoea',
   blocks: [
     { kind: 'node', variant: 'entry', text: '🌬️ DYSPNOEA' },
-    { kind: 'node', variant: 'step', text: 'IDENTIFY RESPIRATORY PATTERN', connectAfter: false },
+    {
+      kind: 'node',
+      variant: 'step',
+      text: 'IDENTIFY RESPIRATORY PATTERN',
+      connectAfter: false,
+      // The four pattern boxes below are name-only, so what separates them is
+      // asked here once. Same rule as the typed `choices` boxes (lint-choices).
+      subItems: [
+        'Inspiratory — stertor or stridor',
+        'Expiratory — ± wheeze ± cough',
+        'Restrictive — rapid, shallow · muffled sounds',
+        'Mixed — both phases',
+      ],
+    },
 
     {
       // Bespoke middle section: leading arrow + 4-pattern tile grid + 4-arrow
@@ -39,10 +52,10 @@ const dyspnoeaEntry: FlowPage = {
 
     <!-- 4 pattern columns -->
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;">
-      <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="renderFlowId('dyspnoea-insp')">🔵 Inspiratory<br><span style="font-size:9px;opacity:.7">tap ↓</span></div>
-      <div class="flow-node exp" style="cursor:pointer;font-size:11px;" onclick="renderExpFlow()">🟢 Expiratory<br><span style="font-size:9px;opacity:.7">± wheeze ± cough</span></div>
-      <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="renderRestFlow()">🟡 Restrictive<br><span style="font-size:9px;opacity:.7">rapid, shallow · muffled sounds</span></div>
-      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="renderMixedFlow()">🔴 Mixed<br><span style="font-size:9px;opacity:.7">both phases</span></div>
+      <div class="flow-node insp" style="cursor:pointer;font-size:11px;" onclick="renderFlowId('dyspnoea-insp')">Inspiratory</div>
+      <div class="flow-node exp" style="cursor:pointer;font-size:11px;" onclick="renderExpFlow()">Expiratory</div>
+      <div class="flow-node rest" style="cursor:pointer;font-size:11px;" onclick="renderRestFlow()">Restrictive</div>
+      <div class="flow-node mixed" style="cursor:pointer;font-size:11px;" onclick="renderMixedFlow()">Mixed</div>
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%;margin-top:3px;">
@@ -175,13 +188,20 @@ const dyspnoeaInsp: FlowPage = {
   title: 'Inspiratory',
   layout: 'fn',
   blocks: [
-    { kind: 'fnHeader', variant: 'insp', text: '🔵 INSPIRATORY DYSPNOEA' },
+    { kind: 'fnHeader', variant: 'insp', text: 'INSPIRATORY DYSPNOEA' },
     { kind: 'fnHeader', variant: 'step', text: 'CHARACTERISE SOUND' },
+    {
+      // The cards are name-only, so the sound that picks each one is asked here.
+      kind: 'callout',
+      tone: 'slate',
+      html: '• <strong>Stertor</strong> — nasal cavity / nasopharynx<br>'
+        + '• <strong>Stridor</strong> — larynx / cervical trachea',
+    },
     {
       kind: 'cardGrid',
       tiles: [
-        { anat: 'nasal', sys: 'Sound: Stertor', loc: 'Nasal cavity / Nasopharynx', link: { to: 'lesion', loc: 'LOC-NASAL', name: 'Nasal cavity / Nasopharynx' } },
-        { anat: 'larynx', sys: 'Sound: Stridor', loc: 'Larynx / Cervical trachea', link: { to: 'lesion', loc: 'LOC-LARYNX', name: 'Larynx / Cervical trachea' } },
+        { anat: 'nasal', loc: 'Nasal cavity / Nasopharynx', link: { to: 'lesion', loc: 'LOC-NASAL', name: 'Nasal cavity / Nasopharynx' } },
+        { anat: 'larynx', loc: 'Larynx / Cervical trachea', link: { to: 'lesion', loc: 'LOC-LARYNX', name: 'Larynx / Cervical trachea' } },
       ],
     },
   ],
@@ -195,13 +215,19 @@ const dyspnoeaRest: FlowPage = {
   title: 'Restrictive',
   layout: 'fn',
   blocks: [
-    { kind: 'fnHeader', variant: 'rest', text: '🟡 RESTRICTIVE PATTERN — rapid, shallow' },
+    { kind: 'fnHeader', variant: 'rest', text: 'RESTRICTIVE PATTERN — rapid, shallow' },
     { kind: 'fnHeader', variant: 'step', text: 'AUSCULTATION + PERCUSSION' },
+    {
+      kind: 'callout',
+      tone: 'slate',
+      html: '• <strong>Muffled / absent lung sounds</strong> — pleural cavity<br>'
+        + '• <strong>Normal lung sounds</strong> — neuromuscular / chest wall',
+    },
     {
       kind: 'cardGrid',
       tiles: [
-        { anat: 'pleural', sys: 'Muffled / absent lung sounds', loc: 'Pleural cavity', badge: '⚠️ EMERGENCY', link: { to: 'lesion', loc: 'LOC-PLEURAL', name: 'Pleural cavity' } },
-        { anat: 'mechanic', sys: 'Normal lung sounds', loc: 'Neuromuscular / Chest wall', link: { to: 'lesion', loc: 'LOC-MECHANIC', name: 'Neuromuscular / Chest wall / Diaphragm' } },
+        { anat: 'pleural', loc: 'Pleural cavity', badge: '⚠️ EMERGENCY', link: { to: 'lesion', loc: 'LOC-PLEURAL', name: 'Pleural cavity' } },
+        { anat: 'mechanic', loc: 'Neuromuscular / Chest wall', link: { to: 'lesion', loc: 'LOC-MECHANIC', name: 'Neuromuscular / Chest wall / Diaphragm' } },
       ],
     },
   ],

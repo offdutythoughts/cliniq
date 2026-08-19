@@ -22,6 +22,12 @@
 //   selects an arm belongs in that step's `sub`/`subItems`; detail about what is
 //   on the other side belongs on the destination page.
 //
+// RAW HTML — the same rule applies to a separation box authored in an `html`
+// escape hatch: a `.flow-node` carrying a PATTERN class (insp/exp/rest/mixed) is
+// a separation box drawn by hand, so it too is name-only — no emoji, and no
+// `.fn-sub` / `<span>` sublabel tucked inside it. A `.flow-node.sub-step` is a
+// QUESTION, not a box, and is exempt: its multi-line text is the question.
+//
 // SCOPE — every choices item on every flow page, linked or not.
 
 import { FLOWS } from '../src/lib/signs/flows/index'
@@ -34,6 +40,27 @@ const strip = (s: string) => s.replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' '
 const EMOJI = /\p{Extended_Pictographic}/u
 
 let choiceCount = 0
+
+// Pattern-class .flow-node boxes in authored html, and the sublabel forms they
+// used to carry. `[\s\S]*?` stops at the first </div>, which for a sublabel-free
+// box is its own — a box WITH a nested .fn-sub div therefore captures that div's
+// opening tag, which is exactly what we want to flag.
+const HTML_BOX = /<div class="flow-node (?:insp|exp|rest|mixed)\b[^"]*"[^>]*>([\s\S]*?)<\/div>/g
+const EMOJI_G = /\p{Extended_Pictographic}/u
+const SUBLABEL = /<span|class="fn-sub"/
+
+function checkHtml(pageId: string, html: string) {
+  for (const m of html.matchAll(HTML_BOX)) {
+    const inner = m[1]
+    const name = strip(inner.split(/<div|<span/)[0]).trim()
+    if (EMOJI_G.test(name)) {
+      fail(`[${pageId}] html separation box "${name}" leads with an emoji — the box's colour already comes from its pattern class.`)
+    }
+    if (SUBLABEL.test(inner)) {
+      fail(`[${pageId}] html separation box "${name}" has a sublabel — put the finding that selects this arm in the step above the split.`)
+    }
+  }
+}
 
 function checkBlocks(pageId: string, blocks: Block[]) {
   for (const b of blocks as any[]) {
@@ -49,6 +76,7 @@ function checkBlocks(pageId: string, blocks: Block[]) {
         }
       }
     }
+    if (b.kind === 'html') checkHtml(pageId, String(b.html ?? ''))
     if (b.kind === 'branch') for (const col of b.columns ?? []) checkBlocks(pageId, col.blocks ?? [])
     if (b.kind === 'fork') for (const leg of b.legs ?? []) checkBlocks(pageId, leg.blocks ?? [])
   }

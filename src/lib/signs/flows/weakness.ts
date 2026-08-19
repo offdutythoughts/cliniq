@@ -135,7 +135,18 @@ const weaknessPersistent: FlowPage = {
   title: 'Persistent weakness',
   blocks: [
     { kind: 'node', variant: 'entry', text: 'PERSISTENT WEAKNESS — continuously weak' , sub: 'Weak at every examination · define whether the limbs are flaccid (LMN) or stiff (UMN) before listing causes' },
-    { kind: 'node', variant: 'step', text: 'NEUROLOGICAL EXAMINATION — flaccid or stiff?', connectAfter: false },
+    {
+      kind: 'node',
+      variant: 'step',
+      text: 'NEUROLOGICAL EXAMINATION — flaccid or stiff?',
+      connectAfter: false,
+      // The two boxes below are name-only, so the exam findings that separate
+      // them are stated here rather than under each box.
+      subItems: [
+        'FLACCID — ↓ reflexes, ↓ tone, atrophy',
+        'STIFF — normal or ↑ tone, ± pain',
+      ],
+    },
     {
       // Two-column branch: nested YES/NO sub-grid + anat-classed lesion
       // endpoints — kept as byte-identical html.
@@ -144,7 +155,7 @@ const weaknessPersistent: FlowPage = {
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
       <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <div class="flow-node rest" style="width:100%;font-size:10px;">FLACCID paresis<br><span style="font-size:9px;opacity:.7">↓ reflexes, ↓ tone, atrophy</span></div>
+        <div class="flow-node rest" style="width:100%;font-size:10px;">FLACCID paresis</div>
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node sub-step" style="width:100%;font-size:10px;">Ataxia present?</div>
         ${forkHtml(2, 4)}
@@ -165,7 +176,7 @@ const weaknessPersistent: FlowPage = {
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <div class="flow-node mixed" style="width:100%;font-size:10px;">STIFF stilted gait<br><span style="font-size:9px;opacity:.7">normal/↑ tone, pain?</span></div>
+        <div class="flow-node mixed" style="width:100%;font-size:10px;">STIFF stilted gait</div>
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node sub-step" style="width:100%;font-size:10px;">CK level?</div>
         <div class="flow-arrow-v">↓</div>

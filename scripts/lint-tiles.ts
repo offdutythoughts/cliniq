@@ -54,6 +54,16 @@
 // but no disease page yet. Each is a content gap — write the page and remove the
 // entry, rather than adding new ones.
 //
+// CHECK 7 — fn-layout LOCATION CARDS are name-only (`cardGrid`).
+// The .fn-ep cards the legacy sign pages split into are separation boxes, so they
+// follow the same rule as a `choices` box (lint-choices): the card carries the
+// location / differential NAME and nothing else. The `sys` line above the name —
+// "Dichotomous · moves with cotton-tip · fornixes", "Sound: Stertor" — was the
+// discriminator, and it belongs in the step, callout or lookup table above the
+// grid where the reader meets it once. `loc` carries no emoji. A `badge` may keep
+// a glyph ONLY where it flags an emergency, matching the one kept siren on
+// pollakiuria's obstructed column.
+//
 // CHECK 5 — no SHOUTING tile labels.
 // A lesion/disease name on a tile is written in sentence case ("Bacterial septic
 // arthritis"), not block capitals ("BACTERIAL SEPTIC ARTHRITIS"). The category
@@ -61,7 +71,7 @@
 // the hierarchy and is markedly slower to read at 8–9px. Genuine acronyms keep
 // their capitals (IMHA, MMVD, SRMA, DJD …) — add new ones to ACRONYMS below.
 
-import { eachTile, pageCount } from './lib/walk'
+import { eachPageBlock, eachTile, pageCount } from './lib/walk'
 import { lint } from './lib/lint'
 
 const { fail, done } = lint('category-tile')
@@ -188,7 +198,25 @@ for (const [norm, byTarget] of seen) {
   }
 }
 
+// ── CHECK 7 — fn-layout location cards are name-only ─────────────────────────
+const EMOJI = /\p{Extended_Pictographic}/u
+const EMERGENCY_BADGE = /emergency/i
+for (const { pageId, block } of eachPageBlock()) {
+  if (block.kind !== 'cardGrid') continue
+  for (const tile of block.tiles) {
+    if (tile.sys) {
+      fail(`[${pageId}] card "${tile.loc}" has a sys line "${tile.sys}" — a location card is name-only; put the finding that picks it in the step, callout or table above the grid.`)
+    }
+    if (EMOJI.test(tile.loc)) {
+      fail(`[${pageId}] card "${tile.loc}" has an emoji in its name — the card's colour already comes from its anat class.`)
+    }
+    if (tile.badge && EMOJI.test(tile.badge) && !EMERGENCY_BADGE.test(tile.badge)) {
+      fail(`[${pageId}] card "${tile.loc}" badge "${tile.badge}" carries an emoji but does not flag an emergency — keep the words, drop the glyph.`)
+    }
+  }
+}
+
 done(
-  `All category tiles resolve, map to one target, are name-only when linked, are in sentence case, and carry no nested sub-bullets, across ${pageCount()} flow pages.`,
-  "Link a page / set terminal:true / make the label's target consistent / strip the linked tile to its name / split a sub-bullet tile into one tile per cause.",
+  `All category tiles resolve, map to one target, are name-only when linked, are in sentence case, and carry no nested sub-bullets — and every fn-layout location card is name-only — across ${pageCount()} flow pages.`,
+  "Link a page / set terminal:true / make the label's target consistent / strip the linked tile or location card to its name / split a sub-bullet tile into one tile per cause.",
 )
