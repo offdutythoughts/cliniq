@@ -84,7 +84,7 @@ const abnormalPupilOphthalmic: FlowPage = {
   title: 'Abnormal Pupil — Ophthalmic',
   layout: 'fn',
   blocks: [
-    { kind: 'fnHeader', variant: 'insp', text: '👁️ OPHTHALMIC CAUSES' },
+    { kind: 'fnHeader', variant: 'insp', text: 'OPHTHALMIC CAUSES' },
     {
       kind: 'cardGrid',
       perRow: 3,

@@ -58,12 +58,12 @@ const redEyeCoats: FlowPage = {
     {
       kind: 'cardGrid',
       tiles: [
-        { anat: 'nasal', sys: 'Periocular skin · Meibomian · Eyelid margin', loc: 'Eyelids / Adnexa', link: { to: 'lesion', loc: 'LOC-RE-ADNEXA', name: 'Eyelids / Adnexa' } },
-        { anat: 'larynx', sys: 'TEL — cartilage · gland · lymphoid', loc: 'Third eyelid', link: { to: 'lesion', loc: 'LOC-RE-TEL', name: 'Third eyelid' } },
-        { anat: 'pleural', sys: 'Dichotomous · moves with cotton-tip · fornixes', loc: 'Conjunctiva', link: { to: 'lesion', loc: 'LOC-RE-CONJ', name: 'Conjunctiva' } },
-        { anat: 'mechanic', sys: 'Straight radial · no movement · limbal', loc: 'Episclera / Sclera', link: { to: 'lesion', loc: 'LOC-RE-EPISC', name: 'Episclera / Sclera' } },
-        { anat: 'pleural', sys: 'Superficial neovascularisation ("trees")', loc: 'Cornea — surface disease', link: { to: 'lesion', loc: 'LOC-RE-CORNEA-SUP', name: 'Cornea — surface' } },
-        { anat: 'larynx', sys: 'Deep neovascularisation ("brush") at limbus', loc: 'Cornea — deep / intraocular signal', link: { to: 'lesion', loc: 'LOC-RE-CORNEA-DEEP', name: 'Cornea — deep' } },
+        { anat: 'nasal', loc: 'Eyelids / Adnexa', link: { to: 'lesion', loc: 'LOC-RE-ADNEXA', name: 'Eyelids / Adnexa' } },
+        { anat: 'larynx', loc: 'Third eyelid', link: { to: 'lesion', loc: 'LOC-RE-TEL', name: 'Third eyelid' } },
+        { anat: 'pleural', loc: 'Conjunctiva', link: { to: 'lesion', loc: 'LOC-RE-CONJ', name: 'Conjunctiva' } },
+        { anat: 'mechanic', loc: 'Episclera / Sclera', link: { to: 'lesion', loc: 'LOC-RE-EPISC', name: 'Episclera / Sclera' } },
+        { anat: 'pleural', loc: 'Cornea — surface disease', link: { to: 'lesion', loc: 'LOC-RE-CORNEA-SUP', name: 'Cornea — surface' } },
+        { anat: 'larynx', loc: 'Cornea — deep / intraocular signal', link: { to: 'lesion', loc: 'LOC-RE-CORNEA-DEEP', name: 'Cornea — deep' } },
       ],
     },
     {
@@ -104,13 +104,29 @@ const redEyeIris: FlowPage = {
     { kind: 'fnHeader', variant: 'exp', text: 'IRIS HYPERAEMIA' },
     { kind: 'fnHeader', variant: 'step', text: 'DIFFERENTIATE MECHANISM' },
     {
+      // The cards below are name-only, so the mechanism that picks each one is
+      // stated here once — as a lookup, scanned by what is in front of you.
+      kind: 'table',
+      boxTone: 'slate',
+      gap: 8,
+      dividers: true,
+      cols: '40% 1fr',
+      headers: ['Mechanism', 'What you see'],
+      rows: [
+        ['Anterior uveitis', 'Engorgement of normal vasculature — the most common cause'],
+        ['Iris rubeosis / PIFM', 'Pre-iridal fibrovascular membranes from a chronic insult'],
+        ['Iris neoplasia', 'Pigmented or vascular mass — iris cyst is the differential'],
+        ['Anterior chamber bleed', 'Free blood in the anterior chamber'],
+      ],
+    },
+    {
       kind: 'cardGrid',
       connectAfter: false,
       tiles: [
-        { anat: 'nasal', sys: 'Engorgement of normal vasculature · most common cause', loc: 'Anterior uveitis', link: { to: 'lesion', loc: 'LOC-RE-UVEA', name: 'Anterior uvea — uveitis' } },
-        { anat: 'larynx', sys: 'Pre-iridal fibrovascular membranes — chronic insult', loc: 'Iris rubeosis / PIFM', link: { to: 'lesion', loc: 'LOC-RE-UVEA', name: 'Anterior uvea — rubeosis / PIFM' } },
-        { anat: 'pleural', sys: 'Pigmented or vascular mass · iris cyst differential', loc: 'Iris neoplasia', link: { to: 'lesion', loc: 'LOC-RE-UVEA', name: 'Iris mass / neoplasia' } },
-        { anat: 'mechanic', sys: 'Bleed into anterior chamber', loc: 'Anterior chamber bleed', link: { to: 'lesion', loc: 'LOC-RE-AC', name: 'Hyphaema / iris bleed' } },
+        { anat: 'nasal', loc: 'Anterior uveitis', link: { to: 'lesion', loc: 'LOC-RE-UVEA', name: 'Anterior uvea — uveitis' } },
+        { anat: 'larynx', loc: 'Iris rubeosis / PIFM', link: { to: 'lesion', loc: 'LOC-RE-UVEA', name: 'Anterior uvea — rubeosis / PIFM' } },
+        { anat: 'pleural', loc: 'Iris neoplasia', link: { to: 'lesion', loc: 'LOC-RE-UVEA', name: 'Iris mass / neoplasia' } },
+        { anat: 'mechanic', loc: 'Anterior chamber bleed', link: { to: 'lesion', loc: 'LOC-RE-AC', name: 'Hyphaema / iris bleed' } },
       ],
     },
     {
@@ -131,13 +147,21 @@ const redEyeBleed: FlowPage = {
     { kind: 'fnHeader', variant: 'rest', text: 'INTRAOCULAR BLEED' },
     { kind: 'fnHeader', variant: 'step', text: 'LOCALISE BLEED' },
     {
+      kind: 'callout',
+      tone: 'slate',
+      html: '• <strong>Hyphaema</strong> — blood in the anterior chamber ± hypopyon ± aqueous flare<br>' +
+        '• <strong>Vitreal haemorrhage</strong> — posterior segment bleed obscuring the fundus<br>' +
+        '• <strong>Retinal / choroidal haemorrhage</strong> — detachment, bullous lesions, hypertension<br>' +
+        '• <strong>Intracorneal haemorrhage</strong> — uncommon, always with corneal neovascularisation',
+    },
+    {
       kind: 'cardGrid',
       connectAfter: false,
       tiles: [
-        { anat: 'pleural', sys: 'Blood in AC ± hypopyon ± aqueous flare', loc: 'Hyphaema', badge: '⚠️ CHECK BP + COAGS', link: { to: 'lesion', loc: 'LOC-RE-AC', name: 'Anterior chamber — hyphaema' } },
-        { anat: 'mechanic', sys: 'Posterior segment haemorrhage · obscures fundus', loc: 'Vitreal haemorrhage', link: { to: 'lesion', loc: 'LOC-RE-AC', name: 'Vitreal cavity bleed' } },
-        { anat: 'nasal', sys: 'Retinal detachment · bullous lesions · hypertension', loc: 'Retinal / choroidal haemorrhage', link: { to: 'lesion', loc: 'LOC-RE-RETINA', name: 'Retinal / choroidal bleed' } },
-        { anat: 'larynx', sys: 'Uncommon · always with corneal neovascularisation', loc: 'Intracorneal haemorrhage', link: { to: 'lesion', loc: 'LOC-RE-CORNEA-SUP', name: 'Intracorneal haemorrhage' } },
+        { anat: 'pleural', loc: 'Hyphaema', badge: 'CHECK BP + COAGS', link: { to: 'lesion', loc: 'LOC-RE-AC', name: 'Anterior chamber — hyphaema' } },
+        { anat: 'mechanic', loc: 'Vitreal haemorrhage', link: { to: 'lesion', loc: 'LOC-RE-AC', name: 'Vitreal cavity bleed' } },
+        { anat: 'nasal', loc: 'Retinal / choroidal haemorrhage', link: { to: 'lesion', loc: 'LOC-RE-RETINA', name: 'Retinal / choroidal bleed' } },
+        { anat: 'larynx', loc: 'Intracorneal haemorrhage', link: { to: 'lesion', loc: 'LOC-RE-CORNEA-SUP', name: 'Intracorneal haemorrhage' } },
       ],
     },
     {
@@ -174,9 +198,10 @@ const redEyeOrbit: FlowPage = {
     {
       // Legacy uses a `.dx-check` box here, sitting between two .fn-arrow
       // connectors → must be a spine block, so a neutral callout (not html).
-      // Exam findings only. The acute-painful / chronic-non-painful split below
-      // is drawn by the two cards, and the bilateral and feline patterns are in
-      // the lookup table under them — the box used to carry all three at once.
+      // Exam findings only. The acute-painful / chronic-non-painful split the
+      // two cards used to carry — before they became name-only — is now the
+      // first two rows of the lookup table under them, with the bilateral and
+      // feline patterns.
       kind: 'callout',
       tone: 'slate',
       html: '• Exophthalmos · third eyelid protrusion · resistance on retropulsion<br>' +
@@ -187,8 +212,8 @@ const redEyeOrbit: FlowPage = {
     {
       kind: 'cardGrid',
       tiles: [
-        { anat: 'pleural', sys: 'Acute · painful · pyrexia', loc: 'Orbital cellulitis / abscess', link: { to: 'lesion', loc: 'LOC-RE-ORBIT', name: 'Retrobulbar — inflammatory' } },
-        { anat: 'mechanic', sys: 'Chronic · non-painful · older patient', loc: 'Orbital neoplasia', link: { to: 'lesion', loc: 'LOC-RE-ORBIT', name: 'Retrobulbar — mass' } },
+        { anat: 'pleural', loc: 'Orbital cellulitis / abscess', link: { to: 'lesion', loc: 'LOC-RE-ORBIT', name: 'Retrobulbar — inflammatory' } },
+        { anat: 'mechanic', loc: 'Orbital neoplasia', link: { to: 'lesion', loc: 'LOC-RE-ORBIT', name: 'Retrobulbar — mass' } },
       ],
     },
     {
@@ -199,7 +224,8 @@ const redEyeOrbit: FlowPage = {
       cols: '42% 1fr',
       headers: ['Pattern', 'Think'],
       rows: [
-        ['Acute + painful, young or mid-age dog', 'Orbital cellulitis / abscess — often dental in origin'],
+        ['Acute + painful ± pyrexia, young or mid-age dog', 'Orbital cellulitis / abscess — often dental in origin'],
+        ['Chronic + non-painful, older patient', 'Orbital neoplasia'],
         ['Cat with exophthalmos', 'Zygomatic salivary mucocoele · retrobulbar lymphoma'],
         ['BILATERAL exophthalmos + jaw pain', 'Masticatory muscle myositis — run 2M antibodies'],
       ],
