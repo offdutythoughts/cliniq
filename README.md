@@ -47,57 +47,94 @@ left the repo mid-merge with conflict markers in the working tree, because local
 refuses to run on a dirty tree or when `main` has unpushed commits, and passes an
 explicit `-m` so the merge message can never capture the editor's comment template.
 
-### Do not add `vercel.json` back — the deploy key is not enough
+### `vercel.json` was never the cause — `CONVEX_DEPLOY_KEY` is missing
 
-The Convex backend is deployed **by hand** (`npx convex deploy`), not by the
-Vercel build. A `vercel.json` that puts `npx convex deploy` in `buildCommand`
-has been added and removed twice now, and the second time it broke production
-for two days:
+Production builds failed eight times running between 2026-08-16 and 2026-08-18,
+always within 6–11 seconds, against 36–51 seconds for a build that works. The
+log says why (read 2026-08-19 with `vercel inspect --logs`):
+
+```
+Running "if [ "$VERCEL_ENV" = "production" ]; then npx convex deploy ..."
+✖ Error fetching GET https://api.convex.dev/api/deployment/determined-hawk-630/team_and_project
+  401 Unauthorized: MissingAccessToken: An access token is required for this command.
+Error: Command "..." exited with 1
+```
+
+`npx convex deploy` cannot authenticate non-interactively without
+`CONVEX_DEPLOY_KEY`, so it exits non-zero and takes the build with it.
+
+**That variable does not exist in this Vercel project.** `vercel env ls` against
+`offdutythoughts-projects/cliniq`:
+
+| name | environments |
+|---|---|
+| `CONVEX_DEPLOYMENT` | Preview, Production |
+| `NEXT_PUBLIC_CONVEX_URL` | Preview, Production |
+| `NEXT_PUBLIC_POSTHOG_HOST` | Preview, Production |
+| `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` | Preview, Production |
+
+No `CONVEX_DEPLOY_KEY`, in any scope. An earlier version of this section said
+the key had been set, the build failed anyway, and the key was therefore not the
+answer. It never reached this project — wrong project, wrong scope, or never
+saved — so that attempt tested nothing, and the conclusion drawn from it was
+wrong.
+
+`vercel.json` looked guilty because it is the file that *invokes* `convex
+deploy`. Removing it removed the call, not the cause, which is why removing it
+"fixed" production every time. Previews stayed green for the same reason: the
+`else` branch of that `buildCommand` is a plain `npm run build`, and only the
+production branch ever runs `convex deploy`.
+
+History of the file:
 
 | | |
 |---|---|
-| `4f00195` | added it — production builds run `npx convex deploy --cmd 'npm run build'` |
-| `e26eafb` | removed it on production only, creating a branch divergence |
-| `cff91b1` | put it back on main |
-| — | **every production deployment failed from 2026-08-16 to 2026-08-18**, eight in a row, while previews stayed green |
+| `4f00195` | added — production builds run `npx convex deploy --cmd 'npm run build'` |
+| `e26eafb` | removed on production only, creating a branch divergence |
+| `cff91b1` | put back on main |
+| `bcab546` | restored, alongside the deploy-key attempt that never landed |
+| `5f638f3` | reverted again — the state today |
 
-Previews were green throughout because the `else` branch of that
-`buildCommand` is a plain `npm run build`; only the production branch runs
-`convex deploy`, and that is the branch that failed. `npx convex deploy` needs
-`CONVEX_DEPLOY_KEY` in the environment — without it the CLI cannot authenticate
-non-interactively and exits non-zero, taking the build with it.
+### Consequence today: production does not deploy the backend
 
-The obvious fix is `CONVEX_DEPLOY_KEY` — without it the CLI cannot
-authenticate non-interactively and exits non-zero, taking the build with it.
-**That was tried on 2026-08-18 and it did not work.** The key was set in
-Vercel, `vercel.json` was restored (`bcab546`), and production was promoted
-twice:
+With `vercel.json` absent from `main` and `production`, a production build falls
+back to the project's default command. The successful build of `854946c` on
+2026-08-19 logged:
 
-| deployment | SHA | when | result |
-|---|---|---|---|
-| `5965482446` | `832e133` | before the key was saved | failure |
-| `5966045270` | `c57eaa4` | **after** the key was saved | failure |
-| `5966095355` | `ece43e3` | `vercel.json` reverted again (`5f638f3`) | **success** |
-
-Two failures with the file present, immediate success on removing it, and
-previews green throughout. So the app build is fine and the deploy key alone
-does not explain the failure.
-
-**Before trying a third time, read the build log** — that is the one piece of
-evidence nobody has yet, and every attempt so far has been diagnosis by
-correlation:
-
-```bash
-npx vercel inspect <deployment-url-or-id> --logs   # needs Vercel auth
+```
+Running "npm run build"      ← not the conditional command
 ```
 
-Unverified candidates: the key saved to the Preview/Development scope rather
-than Production; a key minted for the wrong Convex deployment; or a failure
-inside `npx convex deploy` that has nothing to do with auth.
+**Convex functions do not ship with a production deploy.** They reach
+`determined-hawk-630` only when someone runs `npx convex deploy` by hand, which
+is how everything live there got there. Nothing is broken by this today, but a
+frontend change that depends on a backend change will ship without it.
 
-Whatever you try, verify with a **Production** deployment reaching `success`.
+### Fixing it properly
+
+Order matters, and so does step 3 — its absence is what produced the wrong
+conclusion last time:
+
+1. Mint a **production** deploy key for `determined-hawk-630` (Convex dashboard
+   → Settings → Deploy Keys).
+2. `vercel env add CONVEX_DEPLOY_KEY production`
+3. **Confirm it is listed under Production** in `vercel env ls`.
+4. Revert `5f638f3` to bring `vercel.json` back.
+5. Promote, and confirm a **Production** deployment reaches `Ready`.
+
+Reading a build log needs `vercel login` and `vercel link` first:
+
+```bash
+vercel ls --prod                        # Age / Status / Duration per deployment
+vercel inspect --logs <deployment-url>  # the actual failure
+```
+
+Duration alone is a strong tell: a `convex deploy` auth failure dies in under
+ten seconds, far short of a real build.
+
 A green preview proves nothing here — previews never run `convex deploy`. The
-check needs no Vercel account, since the repo is public:
+repo is public, so production deployment status can also be read with no Vercel
+account:
 
 ```bash
 SHA=$(git rev-parse origin/production)
