@@ -63,7 +63,7 @@ function checkHtml(pageId: string, html: string) {
 }
 
 function checkBlocks(pageId: string, blocks: Block[]) {
-  for (const b of blocks as any[]) {
+  for (const b of blocks) {
     if (b.kind === 'choices') {
       for (const it of b.items ?? []) {
         choiceCount++
@@ -71,9 +71,12 @@ function checkBlocks(pageId: string, blocks: Block[]) {
         if (EMOJI.test(label)) {
           fail(`[${pageId}] choice "${label}" leads with an emoji — a separation box is name-only; the arm's colour already comes from tone/variant.`)
         }
-        if (it.sublabel) {
-          fail(`[${pageId}] choice "${label}" has a sublabel — a separation box is name-only; put the finding that selects this arm in the step above the split, and what waits on the other side on the destination page.`)
-        }
+        // No sublabel check here: ChoiceItem is {variant, tone, label, link},
+        // so a typed choice CANNOT carry one and the type is the guarantee.
+        // This previously read `if (it.sublabel)` behind a `blocks as any[]`
+        // cast, which made it permanently undefined — a check that could never
+        // fire. Hand-authored HTML is the only route a sublabel can take into a
+        // separation box, and checkHtml's SUBLABEL regex above covers that.
       }
     }
     if (b.kind === 'html') checkHtml(pageId, String(b.html ?? ''))
