@@ -47,131 +47,28 @@ left the repo mid-merge with conflict markers in the working tree, because local
 refuses to run on a dirty tree or when `main` has unpushed commits, and passes an
 explicit `-m` so the merge message can never capture the editor's comment template.
 
-### `vercel.json` was never the cause — `CONVEX_DEPLOY_KEY` is missing
+### How a production deploy works
 
-Production builds failed eight times running between 2026-08-16 and 2026-08-18,
-always within 6–11 seconds, against 36–51 seconds for a build that works. The
-log says why (read 2026-08-19 with `vercel inspect --logs`):
+`vercel.json` puts `npx convex deploy` in the production `buildCommand`, so one
+promote ships frontend and backend together. Previews take the `else` branch —
+plain `npm run build` — and never deploy Convex.
 
-```
-Running "if [ "$VERCEL_ENV" = "production" ]; then npx convex deploy ..."
-✖ Error fetching GET https://api.convex.dev/api/deployment/determined-hawk-630/team_and_project
-  401 Unauthorized: MissingAccessToken: An access token is required for this command.
-Error: Command "..." exited with 1
-```
-
-`npx convex deploy` cannot authenticate non-interactively without
-`CONVEX_DEPLOY_KEY`, so it exits non-zero and takes the build with it.
-
-**That variable does not exist in this Vercel project.** `vercel env ls` against
-`offdutythoughts-projects/cliniq`:
-
-| name | environments |
-|---|---|
-| `CONVEX_DEPLOYMENT` | Preview, Production |
-| `NEXT_PUBLIC_CONVEX_URL` | Preview, Production |
-| `NEXT_PUBLIC_POSTHOG_HOST` | Preview, Production |
-| `NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN` | Preview, Production |
-
-No `CONVEX_DEPLOY_KEY`, in any scope. An earlier version of this section said
-the key had been set, the build failed anyway, and the key was therefore not the
-answer. It never reached this project — wrong project, wrong scope, or never
-saved — so that attempt tested nothing, and the conclusion drawn from it was
-wrong.
-
-`vercel.json` looked guilty because it is the file that *invokes* `convex
-deploy`. Removing it removed the call, not the cause, which is why removing it
-"fixed" production every time. Previews stayed green for the same reason: the
-`else` branch of that `buildCommand` is a plain `npm run build`, and only the
-production branch ever runs `convex deploy`.
-
-History of the file:
-
-| | |
-|---|---|
-| `4f00195` | added — production builds run `npx convex deploy --cmd 'npm run build'` |
-| `e26eafb` | removed on production only, creating a branch divergence |
-| `cff91b1` | put back on main |
-| `bcab546` | restored, alongside the deploy-key attempt that never landed |
-| `5f638f3` | reverted again — the state today |
-
-### Consequence today: production does not deploy the backend
-
-With `vercel.json` absent from `main` and `production`, a production build falls
-back to the project's default command. The successful build of `854946c` on
-2026-08-19 logged:
-
-```
-Running "npm run build"      ← not the conditional command
-```
-
-**Convex functions do not ship with a production deploy.** They reach
-`determined-hawk-630` only when someone runs `npx convex deploy` by hand, which
-is how everything live there got there. Nothing is broken by this today, but a
-frontend change that depends on a backend change will ship without it.
-
-### A bare `npx convex deploy` does not reach `determined-hawk-630`
-
-Deploying by hand is not as simple as the sentence above makes it sound. There
-are three deployments, and the CLI's "prod" is not the live one:
-
-| deployment | what it is |
-|---|---|
-| `determined-hawk-630` | **live** — what `vetic.app` talks to, where the real user data is |
-| `clever-nightingale-958` | what a bare `npx convex deploy` targets, because the project calls it prod. Serves no traffic. |
-| `modest-kingfisher-670` | personal dev, set in `.env.local` |
-
-A bare `npx convex deploy` announces "Your prod deployment
-clever-nightingale-958", pushes there, and prints `✔ Deployed`. Nothing errors.
-On 2026-08-18 a full day of backend work — the email-verification rollback and
-re-enable — went there while live users kept running the old code.
-
-The browser bundle is the authority on which one is live:
+Confirm a promote actually landed. The build log names the Convex target:
 
 ```bash
-curl -s -L https://vetic.app/login | grep -oE '/_next/static/[^"]+\.js' | head -1 \
-  | xargs -I{} curl -s "https://vetic.app{}" | grep -oE 'https://[a-z-]+-[0-9]+\.convex\.cloud'
+vercel ls --prod                        # Age / Status / Duration
+vercel inspect --logs <deployment-url>  # look for the [Production] line
 ```
 
-`convex deploy` has no `--deployment` flag, so target it with `--env-file`:
-
-```bash
-echo 'CONVEX_DEPLOYMENT=prod:determined-hawk-630' > /tmp/live.env
-npx convex deploy --env-file /tmp/live.env
+```
+▌ [Production] offdutythoughts:cliniq:production (prod) (dashboard: .../determined-hawk-630)
+✔ Deployed Convex functions to [REDACTED]
 ```
 
-The same flag works for `env list`, `env get` and `function-spec`, which is how
-to read the live backend's config instead of guessing at it.
+Duration is a useful tell on its own: a `convex deploy` auth failure dies in
+under ten seconds, a real build takes 35–50.
 
-This also matters for the deploy key below: it must be minted for
-`determined-hawk-630`. A key for `clever-nightingale-958` would authenticate
-fine and deploy the wrong backend on every production build — green, and wrong.
-
-### Fixing it properly
-
-Order matters, and so does step 3 — its absence is what produced the wrong
-conclusion last time:
-
-1. Mint a **production** deploy key for `determined-hawk-630` (Convex dashboard
-   → Settings → Deploy Keys).
-2. `vercel env add CONVEX_DEPLOY_KEY production`
-3. **Confirm it is listed under Production** in `vercel env ls`.
-4. Revert `5f638f3` to bring `vercel.json` back.
-5. Promote, and confirm a **Production** deployment reaches `Ready`.
-
-Reading a build log needs `vercel login` and `vercel link` first:
-
-```bash
-vercel ls --prod                        # Age / Status / Duration per deployment
-vercel inspect --logs <deployment-url>  # the actual failure
-```
-
-Duration alone is a strong tell: a `convex deploy` auth failure dies in under
-ten seconds, far short of a real build.
-
-A green preview proves nothing here — previews never run `convex deploy`. The
-repo is public, so production deployment status can also be read with no Vercel
-account:
+Status is also readable with no Vercel account, since the repo is public:
 
 ```bash
 SHA=$(git rev-parse origin/production)
@@ -182,7 +79,94 @@ curl -s "https://api.github.com/repos/offdutythoughts/cliniq/deployments/<id>/st
 Check the HTTP status of those calls. Unauthenticated GitHub allows 60
 requests/hour, and a rate-limited response is a JSON object that looks nothing
 like a verdict — reading it as "no deployment yet" has already produced one
-round of confident nonsense.
+round of confident nonsense. A green **preview** proves nothing about any of
+this; only a Production deployment reaching `success` does.
+
+### There are two Convex projects. Only one is real.
+
+This is the trap, and it is still armed:
+
+| project | prod | dev | |
+|---|---|---|---|
+| `cliniq` | `determined-hawk-630` | `original-raven-198` | **the real one** — `vetic.app` talks to it, the user data is there |
+| `cliniq-262bb` | `clever-nightingale-958` | `modest-kingfisher-670` | a duplicate, serving nothing |
+
+Convex appends a suffix like `-262bb` when a project name is already taken, so
+`npx convex dev` in a fresh checkout can silently create a *second* project
+instead of joining this one. That is what happened, and `.env.local` pointed at
+the duplicate for weeks.
+
+The consequence is quiet, which is what makes it dangerous: a bare `npx convex
+deploy` announced "Your prod deployment clever-nightingale-958", pushed, and
+printed `✔ Deployed`. Nothing errored. On 2026-08-18 a full day of backend work
+— an email-verification rollback and re-enable — went to a deployment no user
+touches, while live users kept running the old code.
+
+Fixed on 2026-08-21 with
+
+```bash
+npx convex deployment select offdutythoughts:cliniq:dev
+```
+
+which rewrites `CONVEX_DEPLOYMENT` in `.env.local`. **Check that line before
+trusting a deploy** — it carries the project name in a comment:
+
+```
+CONVEX_DEPLOYMENT=dev:original-raven-198 # team: offdutythoughts, project: cliniq
+```
+
+If it says `cliniq-262bb`, you are pointed at the duplicate. Re-run the select.
+
+The browser bundle is the independent authority on which backend is live, and
+needs no Convex access at all:
+
+```bash
+curl -s -L https://vetic.app/login | grep -oE '/_next/static/[^"]+\.js' | sort -u \
+  | while read -r b; do curl -s "https://vetic.app$b"; done \
+  | grep -oE 'https://[a-z-]+-[0-9]+\.convex\.cloud' | sort -u \
+  | grep -v happy-otter-123
+```
+
+Every bundle has to be checked, not just the first — the URL is not in the entry
+chunk. And `happy-otter-123.convex.cloud` is filtered because it is a
+placeholder compiled into `node_modules/convex/dist/react.bundle.js` (an example
+in a client error message), so it ships in the bundle without being a
+deployment. An earlier version of this command used `head -1` and printed
+nothing at all.
+
+`cliniq-262bb` still exists and still has a day of stray deploys in it. Deleting
+it would remove the trap; nobody has.
+
+### If a production build fails
+
+`vercel.json` is the file that *invokes* `convex deploy`, so it looks guilty
+whenever that call fails, and removing it "fixes" production every time by
+removing the call rather than the cause. It has been added and removed four
+times on that reasoning:
+
+| | |
+|---|---|
+| `4f00195` | added |
+| `e26eafb` | removed on production only, creating a branch divergence |
+| `cff91b1` | put back on main |
+| `5f638f3` | removed again, after two failed attempts with a deploy key that had never actually been set |
+| `f068012` | restored — green, once `CONVEX_DEPLOY_KEY` genuinely existed |
+
+Between 2026-08-16 and 2026-08-18 every production deployment failed, eight in a
+row, while previews stayed green. The cause was `MissingAccessToken` from
+`convex deploy`, visible in the build log the whole time and diagnosed only
+after someone read it.
+
+**Read the log before touching `vercel.json`.** If the key ever needs
+re-creating, mint it for `determined-hawk-630` — a key for
+`clever-nightingale-958` authenticates fine and deploys the wrong backend on
+every build, green and wrong:
+
+```bash
+npx convex deployment token create vercel-production \
+  --deployment determined-hawk-630 --save-env /tmp/key.env
+vercel env add CONVEX_DEPLOY_KEY production   # then confirm in `vercel env ls`
+```
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
