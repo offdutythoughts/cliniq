@@ -133,10 +133,11 @@ const PROTOCOL_ONLY_TILES = new Set([
 ])
 
 // A stable key for a link target (or null if the value isn't a resolvable link).
-const targetKey = (link: any): string | null => {
+const targetKey = (link: unknown): string | null => {
   if (!link || typeof link !== 'object') return null
-  if (link.to === 'lesion') return `lesion:${link.loc}`
-  if (link.to && link.id) return `${link.to}:${link.id}`
+  const l = link as { to?: unknown; id?: unknown; loc?: unknown }
+  if (l.to === 'lesion') return `lesion:${String(l.loc)}`
+  if (l.to && l.id) return `${String(l.to)}:${String(l.id)}`
   return null
 }
 

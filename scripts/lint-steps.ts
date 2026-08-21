@@ -25,7 +25,7 @@ let errors = 0
 const fail = (msg: string) => { console.error(`  ✗ ${msg}`); errors++ }
 
 function checkBlocks(pageId: string, blocks: Block[]) {
-  for (const b of blocks as any[]) {
+  for (const b of blocks) {
     if (b.kind === 'node' && b.variant === 'step') {
       const text = String(b.text ?? '').trim()
       if (typeof b.sub === 'string' && b.sub.length > MAX_SUB) {

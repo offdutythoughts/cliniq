@@ -44,8 +44,7 @@ for (const id of entryIds) {
     continue
   }
 
-  for (const block of alertBlocks) {
-    const b = block as any
+  for (const b of alertBlocks) {
 
     // Check title
     if (!EXEMPT_TITLE.has(id) && b.title !== DONT_MISS_TITLE) {

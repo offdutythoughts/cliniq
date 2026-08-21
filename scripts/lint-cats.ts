@@ -85,7 +85,7 @@ const PAGE_SPECIFIC = new Set<string>([
 ])
 
 function checkBlocks(pageId: string, blocks: Block[]) {
-  for (const b of blocks as any[]) {
+  for (const b of blocks) {
     if (b.kind === 'categoryGrid' || b.kind === 'categoryColumns') {
       for (const col of b.columns ?? []) {
         const cat = String(col.cat ?? '').trim()

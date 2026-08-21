@@ -43,7 +43,7 @@ const strip = (s: string) => s.replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' '
 const words = (s: string) => (strip(s) ? strip(s).split(' ').length : 0)
 
 function checkBlocks(pageId: string, blocks: Block[]) {
-  for (const b of blocks as any[]) {
+  for (const b of blocks) {
     if (b.kind === 'fork') {
       for (const leg of b.legs ?? []) {
         const label = String(leg.label ?? '')
