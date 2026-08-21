@@ -137,10 +137,11 @@ function LoginForm() {
       const result = await signIn('password', { email: normalised, password, flow })
       if (result.signingIn) {
         track('login_succeeded', { flow })
-        // A brand-new account goes via /welcome, which offers a passkey while
-        // the user is still in the sign-up frame of mind. Email verification is
-        // switched off (convex/auth.ts), so this is the only moment we get —
-        // /verify, which used to make the same offer, is never reached.
+        // A brand-new account detours via /welcome to be offered a passkey.
+        // Reaching this branch on a sign-up means no confirmation email was
+        // required, so this is the only signed-in moment we get; when email
+        // verification is on (convex/auth.ts) sign-up returns no session and
+        // /verify makes the same offer instead. Never both.
         router.replace(flow === 'signUp' ? '/welcome' : '/app')
         return
       }
@@ -315,16 +316,54 @@ function LoginForm() {
   )
 }
 
+/**
+ * Turn a server error into something the user can act on.
+ *
+ * Matched against the error's MESSAGE, never the whole error. Convex returns
+ * the stack with it, and those frames run through `…/providers/Password.ts`,
+ * so testing the lot for /password/i matched nearly every sign-up failure — a
+ * rejected email send reported "Password must be at least 8 characters" at a
+ * perfectly good password, and shadowed the delivery message below it.
+ *
+ * The patterns are Convex Auth's own strings: "Invalid password" from the
+ * Password provider's length check, "Invalid credentials" from its sign-in,
+ * `InvalidAccountId` / `InvalidSecret` from retrieveAccountWithCredentials, and
+ * "already exists" from createAccountFromCredentials.
+ */
 function friendlyAuthError(err: unknown, flow: Flow): string {
-  const raw = err instanceof Error ? err.message : String(err)
-  if (/InvalidAccountId|InvalidSecret|Invalid credentials/i.test(raw)) {
-    return flow === 'signIn' ? 'Invalid email or password.' : 'That email is already in use.'
+  const message = authErrorMessage(err)
+
+  // Checked first, and by its own name: signing up on an address that already
+  // has an account used to fall all the way through to "Something went wrong",
+  // which hid the one fact that tells the user what to do next.
+  if (/already exists/i.test(message)) {
+    return 'That email already has an account. Sign in instead, or reset your password.'
   }
-  if (flow === 'signUp' && /TooShort|password/i.test(raw)) {
+  if (/Invalid password/i.test(message)) {
     return 'Password must be at least 8 characters.'
   }
-  if (/SITE_URL|Resend|send the email/i.test(raw)) {
+  if (/InvalidAccountId|InvalidSecret|Invalid credentials/i.test(message)) {
+    return flow === 'signIn' ? 'Invalid email or password.' : 'That email is already in use.'
+  }
+  if (/SITE_URL|Resend|send the email/i.test(message)) {
     return 'We couldn’t send the confirmation email. Please try again in a moment.'
   }
   return 'Something went wrong. Please try again.'
+}
+
+/**
+ * The message out of a Convex error, without the stack it arrives with:
+ *
+ *   [Request ID: …] Server Error
+ *   Uncaught Error: Account you@example.com already exists
+ *       at createAccountFromCredentialsImpl (…)
+ *
+ * Everything from the first `at` frame on is filenames, and matching against
+ * filenames is what produced the wrong answers. The request ID goes too — it is
+ * a hex string that could match anything.
+ */
+function authErrorMessage(err: unknown): string {
+  const raw = err instanceof Error ? err.message : String(err)
+  const [beforeStack] = raw.split(/\n\s+at\s/)
+  return beforeStack.replace(/\[Request ID: [^\]]*\]/g, '').replace(/\s+/g, ' ').trim()
 }

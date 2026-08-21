@@ -85,8 +85,10 @@ const myelopathyEntry: FlowPage = {
       tone: 'danger',
       gap: 10,
       connectAfter: false,
+      // The box keeps only the TECHNIQUE — what absent DPP means for the patient
+      // is prognosis, and lives under the recovery table with the other numbers.
       title: '⚠️ DEEP PAIN PERCEPTION — most important prognostic indicator',
-      html: 'Test by applying firm pressure to digit with haemostat (separate from withdrawal — look for conscious response: turning head, vocalisation, behavioural change).<br><strong>DPP absent:</strong> Thoracolumbar &lt;48 h → 50–60% recovery with decompression; &gt;48 h → poor prognosis (myelomalacia risk). Grade 5 IVDE (IVDD type III): 10–13% risk of progressive myelomalacia (fatal).',
+      html: 'Apply firm haemostat pressure to a digit. Withdrawal is a spinal reflex, not perception — look for a <strong>conscious</strong> response: head turn, vocalisation, behavioural change.',
     },
     {
       kind: 'table',
@@ -108,7 +110,7 @@ const myelopathyEntry: FlowPage = {
         [{ text: '4', tone: 'warning' }, '>90%', '50%', '56%*', '70%*'],
         [{ text: '5', tone: 'danger' }, '58%†', '<10%', '<10%', '10%'],
       ],
-      footnote: '*Partial urinary/faecal incontinence may persist. †Increases to 69% including recovery without pain perception.',
+      footnote: '*Partial urinary/faecal incontinence may persist. †Increases to 69% including recovery without pain perception. DPP absent, thoracolumbar: 50–60% recover if decompressed within 48 h, poor beyond it; grade 5 IVDE carries a 10–13% risk of progressive (fatal) myelomalacia.',
     },
     { kind: 'node', variant: 'step', text: 'NAVIGATE TO LESION DATABASE' },
     {

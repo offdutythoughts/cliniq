@@ -43,13 +43,13 @@ const LEGACY_LAYOUT = new Set<string>([
 ])
 
 const hasStep = (blocks: Block[]): boolean =>
-  (blocks as any[]).some(b =>
+  blocks.some(b =>
     (b.kind === 'node' && b.variant === 'step') ||
-    (b.kind === 'branch' && (b.columns ?? []).some((c: any) => hasStep(c.blocks ?? []))) ||
-    (b.kind === 'fork' && (b.legs ?? []).some((l: any) => hasStep(l.blocks ?? []))))
+    (b.kind === 'branch' && b.columns.some(c => hasStep(c.blocks))) ||
+    (b.kind === 'fork' && b.legs.some(l => hasStep(l.blocks ?? []))))
 
 for (const [id, page] of Object.entries(FLOWS)) {
-  const blocks = page.blocks as any[]
+  const blocks = page.blocks
   const [first, second] = blocks
 
   if (ENTRY_PAGES.has(id)) {

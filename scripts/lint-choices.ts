@@ -1,94 +1,85 @@
-// Validates `choices` sublabels across every flow page.
+// Validates the `choices` boxes — the tappable nodes a sign page splits into
+// ("Increased production" / "Reduced drainage" on wet-eye).
 //
-// A `choices` item that links to ANOTHER FLOW PAGE is a branch decision: the
-// reader picks it based on what is in front of them RIGHT NOW. Its sublabel is
-// therefore the DISCRIMINATOR — the history, exam or test finding that makes
-// this arm the right one ("Every other joint normal on palpation", "Regulated
-// rise — shivers, seeks warmth, responds to NSAIDs").
+// A separation box is NAME-ONLY. It carries the differential's name and nothing
+// else: no emoji, no sublabel.
 //
-// It is NOT a preview of the destination page. A sublabel that lists the lesion
-// categories or named causes waiting on the other side ("Impacted faeces ·
-// foreign material · intraluminal mass · stricture", "screen INFECTIOUS ·
-// IMMUNE-MEDIATED · NEOPLASTIC") duplicates the tap-through page, ages
-// independently of it, and asks the reader to choose between answers instead of
-// between findings. This mirrors CHECK 3 in lint-tiles (linked tiles must be
-// name-only) one level up the tree.
+//   NO EMOJI — the glyph that used to lead these labels was decoration. The box
+//   already carries its arm's colour through `tone`/`variant`, so the emoji
+//   restated the tone at best ("🔵 Dry / Unproductive", "🔴 Unilateral") and
+//   mimed the sign at worst ("😣 Increased production"). Mirrors Rule 1 in
+//   lint-chips. Branch COLUMN headers follow the same rule by hand — only
+//   pollakiuria's "🚨 OBSTRUCTED — emergency" keeps its glyph, where the siren
+//   flags an emergency rather than restating the column's tone.
 //
-// DETECTION — for each flow-linked choice, every label the destination page
-// renders (category names, tile labels, choice/endpoint labels, branch headers,
-// card titles) is compared against the sublabel. A destination label counts as
-// echoed when its significant words (≥5 chars, so "joint"/"fever" count but
-// "of"/"the" don't) all appear in the sublabel — capped at 2, so a multi-word
-// label needs two hits and a one-word label needs its single word.
+//   NO SUBLABEL — enforced by the type: `ChoiceItem` has no `sublabel` slot
+//   (src/lib/signs/flowTypes.ts), so this check only catches an object that
+//   reaches FLOWS around the type. The 70 sublabels these boxes used to carry
+//   were a mix of discriminators ("Every other joint normal on palpation") and
+//   destination previews ("ulcer · FB · distichiasis · ectopic cilia"); the
+//   reader now meets the deciding question once, in the step above the split,
+//   instead of N times as competing paragraphs beside the names. Detail that
+//   selects an arm belongs in that step's `sub`/`subItems`; detail about what is
+//   on the other side belongs on the destination page.
 //
-// KEPT_SUBLABEL lists reviewed sublabels whose overlap is a genuine clinical
-// discriminator that happens to share vocabulary with a destination tile (a
-// named trigger, a named test result), keyed `pageId::label`.
+// RAW HTML — the same rule applies to a separation box authored in an `html`
+// escape hatch: a `.flow-node` carrying a PATTERN class (insp/exp/rest/mixed) is
+// a separation box drawn by hand, so it too is name-only — no emoji, and no
+// `.fn-sub` / `<span>` sublabel tucked inside it. A `.flow-node.sub-step` is a
+// QUESTION, not a box, and is exempt: its multi-line text is the question.
 //
-// SCOPE — only choices linking to another FLOW page are checked automatically,
-// because only then can the destination's labels be read. The same rule applies
-// to choices that open a lesion tab or disease page (coughing, sneezing), but
-// those destinations live outside FLOWS, so they are reviewed by hand.
+// SCOPE — every choices item on every flow page, linked or not.
 
 import { FLOWS } from '../src/lib/signs/flows/index'
-import type { Block, FlowPage } from '../src/lib/signs/flowTypes'
+import type { Block } from '../src/lib/signs/flowTypes'
 
 let errors = 0
 const fail = (msg: string) => { console.error(`  ✗ ${msg}`); errors++ }
 
 const strip = (s: string) => s.replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim()
-const sigWords = (s: string) => strip(s).toLowerCase().match(/[a-zà-ÿ]{5,}/g) ?? []
+const EMOJI = /\p{Extended_Pictographic}/u
 
-// Reviewed discriminators: the overlap is the finding itself, not a preview of
-// the destination's contents.
-const KEPT_SUBLABEL = new Set<string>([
-  // The trigger IS the discriminator for reflex syncope; the destination happens
-  // to name a "tussive / situational" tile using the same words.
-  'syncope::REFLEX / NON-CARDIAC',
-  // "normal SaO2 / distal extremities" is the bedside test result that selects
-  // this arm; it also appears in a peripheral-cyanosis tile downstream.
-  'cyanosis::METHAEMOGLOBIN / PERIPHERAL',
-])
+let choiceCount = 0
 
-/** Every label the destination page puts in front of the reader. */
-function destLabels(page: FlowPage): string[] {
-  const out: string[] = []
-  const walk = (blocks: Block[]) => {
-    for (const b of blocks as any[]) {
-      if (b.kind === 'choices' || b.kind === 'endpoints') for (const it of b.items ?? []) out.push(String(it.label ?? ''))
-      if (b.kind === 'categoryGrid' || b.kind === 'categoryColumns') {
-        for (const col of b.columns ?? []) { out.push(String(col.cat ?? '')); for (const t of col.tiles ?? []) out.push(String(t.label ?? '')) }
-      }
-      if (b.kind === 'cardSection') for (const c of b.cards ?? []) out.push(String(c.title ?? ''))
-      if (b.kind === 'cardGrid') for (const t of b.tiles ?? []) out.push(String(t.loc ?? ''))
-      if (b.kind === 'branch') for (const col of b.columns ?? []) { out.push(String(col.header ?? '')); walk(col.blocks ?? []) }
-      if (b.kind === 'fork') for (const leg of b.legs ?? []) walk(leg.blocks ?? [])
+// Pattern-class .flow-node boxes in authored html, and the sublabel forms they
+// used to carry. `[\s\S]*?` stops at the first </div>, which for a sublabel-free
+// box is its own — a box WITH a nested .fn-sub div therefore captures that div's
+// opening tag, which is exactly what we want to flag.
+const HTML_BOX = /<div class="flow-node (?:insp|exp|rest|mixed)\b[^"]*"[^>]*>([\s\S]*?)<\/div>/g
+const EMOJI_G = /\p{Extended_Pictographic}/u
+const SUBLABEL = /<span|class="fn-sub"/
+
+function checkHtml(pageId: string, html: string) {
+  for (const m of html.matchAll(HTML_BOX)) {
+    const inner = m[1]
+    const name = strip(inner.split(/<div|<span/)[0]).trim()
+    if (EMOJI_G.test(name)) {
+      fail(`[${pageId}] html separation box "${name}" leads with an emoji — the box's colour already comes from its pattern class.`)
+    }
+    if (SUBLABEL.test(inner)) {
+      fail(`[${pageId}] html separation box "${name}" has a sublabel — put the finding that selects this arm in the step above the split.`)
     }
   }
-  walk(page.blocks)
-  return out.filter(Boolean)
 }
 
 function checkBlocks(pageId: string, blocks: Block[]) {
-  for (const b of blocks as any[]) {
+  for (const b of blocks) {
     if (b.kind === 'choices') {
       for (const it of b.items ?? []) {
+        choiceCount++
         const label = strip(String(it.label ?? ''))
-        if (it.link?.to !== 'flow' || !it.sublabel) continue
-        if (KEPT_SUBLABEL.has(`${pageId}::${label}`)) continue
-        const dest = FLOWS[it.link.id]
-        if (!dest) continue
-        const subWords = new Set(sigWords(it.sublabel))
-        const echoed = destLabels(dest).filter(l => {
-          const lw = [...new Set(sigWords(l))]
-          if (lw.length === 0) return false
-          return lw.filter(w => subWords.has(w)).length >= Math.min(2, lw.length)
-        })
-        if (echoed.length > 0) {
-          fail(`[${pageId}] choice "${label}" → ${it.link.id} — sublabel previews the destination page (echoes ${echoed.slice(0, 3).map(e => `"${strip(e)}"`).join(', ')}); make it the discriminator that selects this arm.`)
+        if (EMOJI.test(label)) {
+          fail(`[${pageId}] choice "${label}" leads with an emoji — a separation box is name-only; the arm's colour already comes from tone/variant.`)
         }
+        // No sublabel check here: ChoiceItem is {variant, tone, label, link},
+        // so a typed choice CANNOT carry one and the type is the guarantee.
+        // This previously read `if (it.sublabel)` behind a `blocks as any[]`
+        // cast, which made it permanently undefined — a check that could never
+        // fire. Hand-authored HTML is the only route a sublabel can take into a
+        // separation box, and checkHtml's SUBLABEL regex above covers that.
       }
     }
+    if (b.kind === 'html') checkHtml(pageId, String(b.html ?? ''))
     if (b.kind === 'branch') for (const col of b.columns ?? []) checkBlocks(pageId, col.blocks ?? [])
     if (b.kind === 'fork') for (const leg of b.legs ?? []) checkBlocks(pageId, leg.blocks ?? [])
   }
@@ -97,8 +88,8 @@ function checkBlocks(pageId: string, blocks: Block[]) {
 for (const [id, page] of Object.entries(FLOWS)) checkBlocks(id, page.blocks)
 
 if (errors > 0) {
-  console.error(`\n${errors} choice-sublabel issue(s) found. A branch choice's sublabel is the finding that selects it — not a list of what the next page contains.`)
+  console.error(`\n${errors} choice issue(s) found. A separation box carries the differential's name and nothing else.`)
   process.exit(1)
 } else {
-  console.log(`✓ All flow-linked choice sublabels are discriminators, not destination previews (${Object.keys(FLOWS).length} flow pages checked).`)
+  console.log(`✓ All ${choiceCount} separation boxes are name-only across ${Object.keys(FLOWS).length} flow pages.`)
 }

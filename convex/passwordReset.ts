@@ -1,5 +1,5 @@
 import { Email } from "@convex-dev/auth/providers/Email";
-import { emailHtml, emailText, linkTo, randomToken, sendEmail } from "./emails";
+import { emailHtml, emailText, linkTo, packCredential, randomToken, sendEmail } from "./emails";
 
 // ── Password reset link ──────────────────────────────────────────────────────
 //
@@ -9,10 +9,13 @@ import { emailHtml, emailText, linkTo, randomToken, sendEmail } from "./emails";
 //   signIn("password", { email, flow: "reset" })                  → sends this email
 //   signIn("password", { email, code, newPassword, flow: "reset-verification" })
 //
-// The second one is what /reset submits, using the `email` and `code` from the
-// link. On success Convex Auth changes the password, signs the browser in, and
-// invalidates every other session on the account — so a stolen password stops
-// working the moment its owner resets it.
+// The second one is what /reset submits, using the address and token unpacked
+// from the link's single `?t=` parameter. On success Convex Auth changes the
+// password, signs the browser in, and invalidates every other session on the
+// account — so a stolen password stops working the moment its owner resets it.
+//
+// One parameter, and not called `code` — see the note in ./emailVerification.ts
+// for both reasons. This flow was broken the same way and by the same causes.
 //
 // Shorter-lived than the verification link: a reset link is a live credential
 // for an account that already exists.
@@ -28,7 +31,7 @@ export const PasswordResetLink = Email({
   },
 
   async sendVerificationRequest({ identifier: email, token, expires }) {
-    const link = linkTo("/reset", { email, code: token });
+    const link = linkTo("/reset", { t: packCredential(email, token) });
     const minutes = Math.max(1, Math.round((expires.getTime() - Date.now()) / 60_000));
     const expiry = `This link expires in ${minutes} minutes and can only be used once.`;
     const intro = "Choose a new password for your Vetic account.";

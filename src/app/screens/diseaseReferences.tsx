@@ -11,10 +11,17 @@ import { createContext, useContext } from 'react'
 
 // AMA book form: Editors, eds. Title. Edition. Publisher; year(: chap N).
 // Chapter authors/titles aren't tracked, so the editor-led chapter form is used.
+// Verbatim from references/CITATIONS.md, which is the source of truth for these
+// strings — do not retype one from memory or from a filename.
+// Editor order is title-page order (Côté leads the 9th), and the 9th carries no
+// subtitle — both verified against the book's own front matter, 2026-08-15.
 const ETTINGER_BOOK =
-  'Ettinger SJ, Feldman EC, Côté E, eds. Ettinger’s Textbook of Veterinary Internal Medicine. 9th ed. Elsevier; 2024'
+  'Côté E, Ettinger SJ, Feldman EC, eds. Ettinger’s Textbook of Veterinary Internal Medicine. 9th ed. Elsevier; 2024'
+// Verbatim from references/CITATIONS.md. The title page (PDF p6) names Gelatt as
+// the sole Editor; Ben-Shlomo, Gilger, Hendrix, Kern and Plummer are Associate
+// Editors, who AMA does not promote to 'eds.' — an earlier string listed all six.
 const GELATT_BOOK =
-  'Gelatt KN, Ben-Shlomo G, Gilger BC, Hendrix DVH, Kern TJ, Plummer CE, eds. Veterinary Ophthalmology. 6th ed. Wiley-Blackwell; 2021'
+  'Gelatt KN, ed. Veterinary Ophthalmology. 6th ed. Wiley Blackwell; 2021'
 // Web-published clinical guideline — organisation-as-author AMA form with URL.
 const AHS_GUIDELINES =
   'American Heartworm Society. Current Canine Guidelines for the Prevention, Diagnosis, and Management of Heartworm (Dirofilaria immitis) Infection in Dogs. American Heartworm Society; 2024. https://www.heartwormsociety.org/veterinary-resources/american-heartworm-society-guidelines'
@@ -136,7 +143,18 @@ export function parseSources(inner: string): { id: string; text: string }[] {
   const out: { id: string; text: string }[] = []
   for (const raw of inner.split(';')) {
     const part = raw.trim()
-    if (/^Gelatt/.test(part)) { out.push({ id: 'gelatt', text: `${GELATT_BOOK}.` }); continue }
+    // Gelatt is numbered per CHAPTER, exactly as Ettinger is below. Without this
+    // every ophthalmology page collapsed to one book-level entry, so a citation
+    // that had been traced to a specific chapter lost that chapter on the way to
+    // the screen. Table/figure citations ("Gelatt 6th edn Table 17.3") carry no
+    // chapter and still resolve to the book.
+    if (/^Gelatt/.test(part)) {
+      const chap = part.match(/Ch(?:apter|\.)?\s*(\d+)/)
+      out.push(chap
+        ? { id: `gelatt-ch${chap[1]}`, text: `${GELATT_BOOK}: chap ${chap[1]}.` }
+        : { id: 'gelatt', text: `${GELATT_BOOK}.` })
+      continue
+    }
     if (/^AHS/.test(part)) { out.push({ id: 'ahs', text: AHS_GUIDELINES }); continue }
     if (/^AAHA/.test(part)) { out.push({ id: 'aaha-endocrine', text: AAHA_ENDOCRINE }); continue }
     if (/^CDC/.test(part)) { out.push({ id: 'cdc-bartonella', text: CDC_BARTONELLA }); continue }

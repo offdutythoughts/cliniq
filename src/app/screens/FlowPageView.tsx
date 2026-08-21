@@ -238,7 +238,7 @@ function EndpointView({ e, onNav }: { e: Endpoint; onNav: Nav }) {
   )
 }
 
-// ── Choices (label/sublabel are raw HTML) ────────────────────────────────────
+// ── Choices (name-only separation boxes; `label` is raw HTML) ────────────────
 function ChoicesBlock({ cols, size, items, onNav }: { cols: number; size: number; items: ChoiceItem[]; onNav: Nav }) {
   return (
     <div style={s(`display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;`)}>
@@ -250,7 +250,6 @@ function ChoicesBlock({ cols, size, items, onNav }: { cols: number; size: number
           <div key={i} className={`flow-node${cls}`} style={s(`${toneStyle}${cursor}font-size:${size}px;font-weight:700;`)}
             {...(it.link ? { role: 'button', onClick: () => onNav(linkToView(it.link!)) } : {})}>
             <Raw html={it.label} onNav={onNav} />
-            {it.sublabel && <><br /><span style={s(`font-size:${size - 2}px;font-weight:400;opacity:.8;`)}><Raw html={it.sublabel} onNav={onNav} /></span></>}
           </div>
         )
       })}

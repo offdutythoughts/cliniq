@@ -72,6 +72,9 @@ export function TutorialOverlay() {
   }, [])
 
   useEffect(() => {
+    // The spotlight rectangle is measured from the live DOM, so it can only be
+    // derived in an effect — there is nothing to compute it from during render.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (step < 0) { setRect(null); prevStepRef.current = -1; return }
     const def = STEPS[step]
     const prevStep = prevStepRef.current

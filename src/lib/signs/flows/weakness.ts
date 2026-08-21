@@ -33,9 +33,9 @@ const weaknessEntry: FlowPage = {
       cols: 3,
       size: 10,
       items: [
-        { variant: 'insp', label: 'EPISODIC weakness', sublabel: 'Normal between episodes<br>± exercise triggered', link: { to: 'flow', id: 'weakness-episodic' } },
-        { variant: 'exp', label: 'PERSISTENT weakness', sublabel: 'Continuously weak<br>Flaccid or stiff', link: { to: 'flow', id: 'weakness-persistent' } },
-        { variant: 'mixed', label: 'COLLAPSE ± loss of<br>consciousness', sublabel: 'Sudden loss of postural tone ± altered consciousness<br>Normal between events', link: { to: 'flow', id: 'weakness-collapse' } },
+        { variant: 'insp', label: 'EPISODIC weakness', link: { to: 'flow', id: 'weakness-episodic' } },
+        { variant: 'exp', label: 'PERSISTENT weakness', link: { to: 'flow', id: 'weakness-persistent' } },
+        { variant: 'mixed', label: 'COLLAPSE ± loss of<br>consciousness', link: { to: 'flow', id: 'weakness-collapse' } },
       ],
     },
     {
@@ -135,7 +135,18 @@ const weaknessPersistent: FlowPage = {
   title: 'Persistent weakness',
   blocks: [
     { kind: 'node', variant: 'entry', text: 'PERSISTENT WEAKNESS — continuously weak' , sub: 'Weak at every examination · define whether the limbs are flaccid (LMN) or stiff (UMN) before listing causes' },
-    { kind: 'node', variant: 'step', text: 'NEUROLOGICAL EXAMINATION — flaccid or stiff?', connectAfter: false },
+    {
+      kind: 'node',
+      variant: 'step',
+      text: 'NEUROLOGICAL EXAMINATION — flaccid or stiff?',
+      connectAfter: false,
+      // The two boxes below are name-only, so the exam findings that separate
+      // them are stated here rather than under each box.
+      subItems: [
+        'FLACCID — ↓ reflexes, ↓ tone, atrophy',
+        'STIFF — normal or ↑ tone, ± pain',
+      ],
+    },
     {
       // Two-column branch: nested YES/NO sub-grid + anat-classed lesion
       // endpoints — kept as byte-identical html.
@@ -144,7 +155,7 @@ const weaknessPersistent: FlowPage = {
 
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
       <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <div class="flow-node rest" style="width:100%;font-size:10px;">FLACCID paresis<br><span style="font-size:9px;opacity:.7">↓ reflexes, ↓ tone, atrophy</span></div>
+        <div class="flow-node rest" style="width:100%;font-size:10px;">FLACCID paresis</div>
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node sub-step" style="width:100%;font-size:10px;">Ataxia present?</div>
         ${forkHtml(2, 4)}
@@ -165,7 +176,7 @@ const weaknessPersistent: FlowPage = {
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <div class="flow-node mixed" style="width:100%;font-size:10px;">STIFF stilted gait<br><span style="font-size:9px;opacity:.7">normal/↑ tone, pain?</span></div>
+        <div class="flow-node mixed" style="width:100%;font-size:10px;">STIFF stilted gait</div>
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node sub-step" style="width:100%;font-size:10px;">CK level?</div>
         <div class="flow-arrow-v">↓</div>
@@ -205,14 +216,14 @@ const weaknessCollapse: FlowPage = {
       kind: 'choices',
       cols: 2,
       items: [
-        { tone: 'danger', label: 'SYNCOPE', sublabel: 'Flaccid on exertion · normal within seconds', link: { to: 'flow', id: 'syncope' } },
-        { tone: 'orange', label: 'SEIZURE', sublabel: 'Tonic-clonic from rest · post-ictal confusion', link: { to: 'flow', id: 'seizures' } },
-        { tone: 'teal', label: 'VESTIBULAR EPISODE', sublabel: 'Head tilt and nystagmus persist between episodes', link: { to: 'flow', id: 'vestibular' } },
+        { tone: 'danger', label: 'SYNCOPE', link: { to: 'flow', id: 'syncope' } },
+        { tone: 'orange', label: 'SEIZURE', link: { to: 'flow', id: 'seizures' } },
+        { tone: 'teal', label: 'VESTIBULAR EPISODE', link: { to: 'flow', id: 'vestibular' } },
         // No sign screen exists for these three yet — they read off the table above.
-        { tone: 'violet', label: 'DYSKINESIA / PMD', sublabel: 'Sustained dystonia, fully conscious, no autonomic signs' },
-        { tone: 'warning', label: 'NARCOLEPSY / CATAPLEXY', sublabel: 'Rouses to touch · triggered by food or play' },
-        { tone: 'info', label: 'REM SLEEP DISORDER', sublabel: 'Only ever asleep · wakes fully at once' },
-        { tone: 'lime', label: 'NEUROMUSCULAR COLLAPSE', sublabel: 'Conscious throughout · goes down on strenuous exercise', link: { to: 'flow', id: 'weakness-episodic' } },
+        { tone: 'violet', label: 'DYSKINESIA / PMD',},
+        { tone: 'warning', label: 'NARCOLEPSY / CATAPLEXY',},
+        { tone: 'info', label: 'REM SLEEP DISORDER',},
+        { tone: 'lime', label: 'NEUROMUSCULAR COLLAPSE', link: { to: 'flow', id: 'weakness-episodic' } },
       ],
     },
     {

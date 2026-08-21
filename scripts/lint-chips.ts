@@ -4,8 +4,11 @@
 //
 // Convention:
 //   1. No decorative emoji. The `icon` field on an endpoints item is banned outright —
-//      chips carry the disease/lesion name only. Applies to EVERY chip. (Branch/node
-//      HEADER emojis like "🔵 LOCAL" are a different, kept concern and are not chips.)
+//      chips carry the disease/lesion name only. Applies to EVERY chip. (Separation
+//      boxes — `choices` items and branch column headers — follow the same name-only
+//      rule, enforced one level up in lint-choices; the sole surviving glyph is
+//      pollakiuria's "🚨 OBSTRUCTED — emergency", where the siren flags an emergency
+//      rather than restating the column's tone.)
 //   2. Sublabels are gated on whether the chip is a TAP-THROUGH link:
 //        • LINKED chip (has `link`): the reader navigates to a disease/lesion/protocol
 //          page that already carries the detail, so a descriptive sublabel is redundant

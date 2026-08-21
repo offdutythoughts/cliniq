@@ -15,6 +15,15 @@
 # keeping. It is a pointer at the remote. `checkout -B` resets it to
 # origin/production every time, so there is nothing to diverge.
 #
+# Two people promoting at once is also handled. The fetch and the push are not
+# atomic, so a promotion landing in that window rejects ours as non-fast-forward.
+# That is not an error to force through — force-with-lease would delete theirs —
+# so we re-read the remote: if their promotion already carries what ours would
+# have, we are done; if not, we rebuild on the new tip and retry.
+#
+# Every exit path restores the branch you started on. Before, a rejected push or
+# a merge conflict left you sitting on `production` mid-promotion.
+#
 #   ./scripts/promote.sh            # verify, promote, push
 #   ./scripts/promote.sh --dry-run  # verify and show what would happen
 set -euo pipefail
@@ -52,12 +61,61 @@ if $DRY_RUN; then
 fi
 
 STARTED_ON=$(git rev-parse --abbrev-ref HEAD)
-# Reset the local branch to the remote rather than merging into whatever it held.
-git checkout --quiet -B production origin/production
-# -m is explicit: an editor-driven merge once committed the comment template into
-# the message, which then had to be amended and force-pushed to clean up.
-git merge --no-edit -m "Merge main into production" main
-git push origin production
-git checkout --quiet "$STARTED_ON"
 
-echo -e "\n✓ promoted. Vercel will deploy from origin/production."
+# From here the repo is mid-promotion: checked out on `production` with a merge
+# either in progress or made but unpushed. Every exit path has to undo that.
+# Without this, a rejected push left the caller stranded on `production` holding
+# an orphaned merge commit — `set -e` skipped the checkout that used to follow
+# the push — and a merge conflict left them there with conflict markers too.
+restore() {
+  # Only true on the conflict path, and git's own output does not say that
+  # nothing was pushed or where to fix it.
+  if git rev-parse --quiet --verify MERGE_HEAD >/dev/null 2>&1; then
+    echo "→ merge conflict: nothing was pushed. Resolve it on main, then re-run." >&2
+  fi
+  git merge --abort 2>/dev/null || true
+  git checkout --quiet "$STARTED_ON" 2>/dev/null || true
+  # Local `production` is a pointer at the remote, never history worth keeping
+  # (see the note at the top), so drop whatever we built on it.
+  if [[ "$STARTED_ON" != "production" ]]; then
+    git fetch --quiet origin 2>/dev/null || true
+    git branch -f production origin/production 2>/dev/null || true
+  fi
+}
+trap restore EXIT
+
+# The fetch above and the push below are not atomic. A second promotion landing
+# in that window makes the push non-fast-forward, which is not an error to force
+# through — force-with-lease here would delete their promotion. Re-read the
+# remote instead and decide.
+ATTEMPTS=3
+for attempt in $(seq 1 $ATTEMPTS); do
+  # Reset the local branch to the remote rather than merging into whatever it held.
+  git checkout --quiet -B production origin/production
+  # -m is explicit: an editor-driven merge once committed the comment template into
+  # the message, which then had to be amended and force-pushed to clean up.
+  git merge --no-edit -m "Merge main into production" main
+
+  if git push origin production; then
+    trap - EXIT
+    git checkout --quiet "$STARTED_ON"
+    echo -e "\n✓ promoted. Vercel will deploy from origin/production."
+    exit 0
+  fi
+
+  echo "→ push rejected: origin/production moved (attempt $attempt/$ATTEMPTS)"
+  git fetch --quiet origin
+
+  # If their promotion already carries everything ours would have, we are done —
+  # this is the common case, two people promoting the same commits at once.
+  if git merge-base --is-ancestor origin/main origin/production; then
+    trap - EXIT
+    restore
+    echo -e "\n✓ production already carries everything on main — promoted concurrently."
+    exit 0
+  fi
+
+  # Otherwise they promoted something else. Rebuild on the new tip and retry.
+done
+
+fail "origin/production kept moving across $ATTEMPTS attempts. Re-run when it settles."

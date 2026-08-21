@@ -91,14 +91,20 @@ export type FnHeaderBlock = Connectable & {
 export type CardTile = { anat: string; sys?: string; loc: string; badge?: string; link?: Link }
 export type CardGridBlock = Connectable & { kind: 'cardGrid'; perRow?: number; tiles: CardTile[] }
 
-/** A grid of clickable pattern-nodes used as branch choices. Colour comes from
- *  either a pattern `variant` (.flow-node.insp/.exp/.rest/.mixed) or a `tone`.
- *  `label`/`sublabel` are HTML (may contain <br>). */
+/** A grid of clickable pattern-nodes used as branch choices — the boxes a sign
+ *  page splits into. Colour comes from either a pattern `variant`
+ *  (.flow-node.insp/.exp/.rest/.mixed) or a `tone`; `label` is HTML (may contain
+ *  <br>).
+ *
+ *  NAME-ONLY: a separation box carries the differential's name and nothing else,
+ *  so there is deliberately no `sublabel` slot and no `icon`. The detail these
+ *  boxes used to carry — the discriminator that selects the arm — belongs in the
+ *  step above the split (`NodeBlock.sub`/`subItems`), where the reader meets it
+ *  once as a question instead of N times as competing paragraphs. */
 export type ChoiceItem = {
   variant?: 'insp' | 'exp' | 'rest' | 'mixed' | 'step'
   tone?: Tone
   label: string
-  sublabel?: string
   link?: Link
 }
 export type ChoicesBlock = Connectable & { kind: 'choices'; cols?: number; size?: number; items: ChoiceItem[] }

@@ -24,28 +24,40 @@ export const wetEyeFlow: FlowPage = {
       items: [
         {
           variant: 'insp',
-          label: '😣 Increased production',
-          sublabel: 'CN V irritation — ulcer · FB · distichiasis · ectopic cilia · entropion · uveitis',
+          label: 'Increased production',
           link: { to: 'lesion', loc: 'LOC-WE-PROD', name: 'Increased tear production' },
         },
         {
           variant: 'exp',
-          label: '🚫 Reduced drainage',
-          sublabel: 'NLS atresia · puncta · NLS obstruction · eyelid conformation',
+          label: 'Reduced drainage',
           link: { to: 'lesion', loc: 'LOC-WE-DRAIN', name: 'Reduced tear drainage' },
         },
       ],
     },
 
+    // The Jones test was one paragraph carrying a technique AND three result
+    // interpretations. The technique stays prose (it is a sequence of actions);
+    // the interpretations are a lookup, so they are a table the reader scans by
+    // the result they are holding.
     {
       kind: 'callout',
       tone: 'violet',
       gap: 14,
       title: '🔍 JONES TEST — DRAINAGE PATENCY',
-      html: 'Apply fluorescein stain to the conjunctival fornix, do <strong>NOT</strong> rinse, wait ≤ 4 min and observe the ipsilateral nostril (or oropharynx in brachycephalics).<br>' +
-        '• <strong>Stain at nostril</strong> → patent nasolacrimal system → suspect <strong>increased production</strong> (CN V irritation: ulcer, FB, ectopic cilia, distichiasis, uveitis, KCS).<br>' +
-        '• <strong>No stain at nostril after 4 min</strong> → not necessarily blocked — many normal dogs (esp. brachycephalics) fail Jones. Confirm with <strong>NLS flushing</strong>: cannulate the upper punctum with a 22–24 G blunt cannula + saline, expect outflow from nostril and / or lower punctum.<br>' +
-        '• <strong>Confirmed obstruction</strong> → look for foreign body (grass awn, hair), dacryocystitis, congenital atresia / micropuncta (&lt;1 yr old), or neoplasia (older patient — orbital / nasal).',
+      html: 'Apply fluorescein to the conjunctival fornix, do <strong>NOT</strong> rinse, wait ≤ 4 min, then watch the ipsilateral nostril — or the oropharynx in a brachycephalic.',
+    },
+    {
+      kind: 'table',
+      boxTone: 'violet',
+      gap: 8,
+      dividers: true,
+      cols: '26% 30% 1fr',
+      headers: ['Result', 'What it means', 'Do next'],
+      rows: [
+        [{ text: 'Stain at the nostril', tone: 'green' }, 'Nasolacrimal system is patent', 'Work up INCREASED PRODUCTION — ulcer, FB, ectopic cilia, distichiasis, uveitis, KCS'],
+        [{ text: 'No stain after 4 min', tone: 'warning' }, 'NOT proof of blockage — many normal dogs, especially brachycephalics, fail Jones', 'Flush the NLS: upper punctum, 22–24 G blunt cannula + saline; expect outflow at the nostril and/or lower punctum'],
+        [{ text: 'Obstruction on flushing', tone: 'danger' }, 'The duct itself is the problem', 'Foreign body (grass awn, hair), dacryocystitis, congenital atresia / micropuncta (&lt;1 yr), or neoplasia in an older patient'],
+      ],
     },
 
     {

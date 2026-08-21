@@ -9,8 +9,8 @@ import { SIGNS } from '../src/lib/signs/registry'
 const EXEMPT_NO_ALERT = new Set<string>([
   'coughing', 'sneezing', 'encephalopathy', 'diarrhoea', 'dyspnoea',
   'vomiting', 'jaundice', 'pale-mm', 'pupd', 'weakness', 'seizures',
-  'myelopathy', 'vestibular', 'ataxia', 'anorexia', 'cyanosis',
-  'constipation', 'red-eye', 'blind-eye', 'abnormal-pupil',
+  'myelopathy', 'vestibular', 'ataxia', 'cyanosis',
+  'constipation', 'blind-eye', 'abnormal-pupil',
 ])
 
 // Entry pages whose alert title is intentionally non-canonical
@@ -44,8 +44,7 @@ for (const id of entryIds) {
     continue
   }
 
-  for (const block of alertBlocks) {
-    const b = block as any
+  for (const b of alertBlocks) {
 
     // Check title
     if (!EXEMPT_TITLE.has(id) && b.title !== DONT_MISS_TITLE) {

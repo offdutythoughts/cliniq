@@ -6,19 +6,18 @@ const melenaEntry: FlowPage = {
   title: 'Melena / Haematochezia',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' MELENA / HAEMATOCHEZIA' },
-    {
-      kind: 'callout',
-      tone: 'warning',
-      html: ' <strong>Characterise the blood first.</strong> <strong>Melena</strong> = black, tarry, digested blood from the UPPER GI / small intestine (≥50–100 mL blood must be swallowed before stool turns melanic). <strong>Haematochezia</strong> = bright-red fresh blood from the LOWER GI / colon-rectum-anus. Always exclude <strong>swallowed blood</strong> (sinonasal, oral/pharyngeal, pulmonary lesions, raw diet) and a <strong>systemic coagulopathy</strong> before localising. (Ettinger Ch 50)',
-    },
+    // The two cards below define melena and haematochezia by the stool in front
+    // of the reader; the step carries only what has to be excluded BEFORE
+    // localising, one exclusion per bullet.
     {
       kind: 'node',
       variant: 'step',
       text: 'IS THIS BLOOD — AND FROM WHERE?',
       subItems: [
         'Confirm it is blood — charcoal, iron, bismuth and blueberries mimic melena; beets and red dye mimic haematochezia',
-        'Exclude swallowed blood and coagulopathy',
-        'Then localise by the stool appearance',
+        'Exclude swallowed blood — sinonasal, oral/pharyngeal or pulmonary bleeding, raw diet',
+        'Exclude a systemic coagulopathy before you localise (Ettinger Ch 50)',
+        '≥50–100 mL of blood must be swallowed before stool turns melanic — a normal stool does not exclude a bleed',
       ],
     },
     {
@@ -28,13 +27,11 @@ const melenaEntry: FlowPage = {
         {
           tone: 'danger',
           label: ' MELENA — UPPER GI / small intestine',
-          sublabel: 'Black tarry digested stool · ± vomiting / haematemesis · BUN:Cr >30 supports upper GI bleed',
           link: { to: 'flow', id: 'melena-upper' },
         },
         {
           tone: 'orange',
           label: ' HAEMATOCHEZIA — LOWER GI / colon-rectum-anus',
-          sublabel: 'Bright-red fresh blood · ± mucus / tenesmus · normal appetite often preserved',
           link: { to: 'flow', id: 'melena-lower' },
         },
       ],

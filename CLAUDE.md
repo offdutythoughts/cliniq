@@ -6,7 +6,8 @@
 |---|---|---|
 | `references/vetoph6.pdf` | Veterinary Ophthalmology 6th edn, Gelatt et al. 2021 (2,744 pp) | Local only — gitignored |
 | `references/vetoph6-notes.md` | Extracted clinical tables + protocols from the above | Committed to repo |
-| `references/ettinger9.pdf` | Ettinger's Textbook of Veterinary Internal Medicine, 9th edn | Local only — gitignored |
+| `references/ettinger9.md` | *Ettinger's Textbook of Veterinary Internal Medicine*, 9th edn, Côté et al. 2024 — full-text md conversion, both volumes, 331 chapters, 41k lines | Local only — gitignored |
+| `references/ettinger9-index.md` | Chapter → line-number index for the above, plus its conversion defects and the ClinIQ section mapping | Committed to repo |
 | `references/ettinger9-notes.md` | Clinical extraction (differentials, criteria, staging, doses) — tagged inline with `> ClinIQ:` | Committed to repo |
 | `references/ettinger9-gap-analysis.md` | Gap summary: ClinIQ vs Ettinger (covered / missing / enrich) | Committed to repo |
 | *(no local file)* | *The Ultimate Guide to Toxicology eBook*, VETgirl / ASPCA APCC 2023 (44 pp) — password-protected FlippingBook, not redistributable | Not in repo |
@@ -28,8 +29,16 @@ respiratory, neurologic, urinary, or oncology entries (`DIS-CARD-*`, `DIS-SEC-*`
 `DIS-ENDO-*`, `DIS-GI-*`, `DIS-HEP-*`, `DIS-BD-*`, `DIS-INFECT-*`, `DIS-RESP-*`, `DIS-NEU-*`,
 `DIS-URO-*`, `DIS-NEO-*`, and their sign flows/Dx views) — read `references/ettinger9-notes.md`
 first for differential lists, diagnostic criteria, staging/grading, lab thresholds, and drug
-doses. **Use SDMA in µg/dL** (the IRIS table in the notes has a unit typo printing ng/dL); keep
-dog vs cat doses distinct and verify every dose against a current formulary before shipping.
+doses. **Use SDMA in µg/dL** (the IRIS table prints ng/dL — the typo is the textbook's own, and
+the notes reproduce it faithfully); keep dog vs cat doses distinct and verify every dose against
+a current formulary before shipping.
+
+Where the notes are silent, thin, or need checking at source, the full text is now on disk:
+open the chapter range from `references/ettinger9-index.md` into `references/ettinger9.md`.
+The notes skip §I, §V interventional, §IX nutrition and most technique chapters entirely, so
+those are full-text-only. **Read the index's conversion-defect section before quoting the full
+text** — two-column body prose is interleaved mid-sentence there, which is a sharper hazard
+than the flattened tables in the other `.md` conversions.
 
 When working on any `DIS-TOX-*` entry, a poisoning/toxidrome sign flow, or a decontamination or
 antidote protocol — read `references/vetgirl-tox-notes.md` first. It carries species-split toxic
@@ -88,9 +97,14 @@ PDFs in `references/` (all gitignored), with printed-page → PDF-page offsets:
 | `saccm2.pdf` | 1,238 | PDF page = printed page **+ 23** (drifts to +24; approximate) |
 | `vetoph6.pdf` | 2,744 | PDF page = printed page **+ 23** (Vol 1, measured twice; Vol 2 unmeasured) |
 
-The `.md` conversions of these books have their tables flattened into unaligned fragments, so
-**any dose or threshold read out of a table region in a `.md` file must be re-checked against
-the PDF**. Prose in the `.md` files is reliable.
+In `vettox3.md` and `vetdent4.md` the tables are flattened into unaligned fragments, so **any
+dose or threshold read out of a table region must be re-checked against the PDF**; prose in
+those two is reliable.
+
+`ettinger9.md` fails the opposite way, and has no PDF to check against: its tables mostly
+survive row by row, but two-column body prose interleaves **mid-sentence**, splicing unrelated
+statements into fluent-looking English. Confirm any sentence you take from it closes on itself
+before using it — details and the tells are in `references/ettinger9-index.md`.
 
 <!-- convex-ai-start -->
 

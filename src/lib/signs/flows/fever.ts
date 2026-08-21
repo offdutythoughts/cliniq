@@ -7,15 +7,9 @@ const feverEntry: FlowPage = {
   title: 'Fever / FUO',
   blocks: [
     { kind: 'node', variant: 'entry', text: ' FEVER / FUO' },
-    {
-      kind: 'callout',
-      tone: 'danger',
-      html:
-        ' <strong>TRUE FEVER vs HYPERTHERMIA — decide first.</strong><br>' +
-        '• <strong>Fever (pyrexia)</strong> is a <strong>regulated</strong>, pyrogen-mediated rise in the hypothalamic set point — the animal does NOT seek to cool.<br>' +
-        '• <strong>Hyperthermia</strong> (heatstroke, exercise, seizures, stress, drugs) raises core temperature WITHOUT a set-point change — the animal pants, vasodilates and seeks cool.<br>' +
-        '<strong>Do NOT actively cool a true fever</strong> — fever improves the host immune response. Reserve active cooling for temperature &gt;41.1°C (106°F), which is far more likely with hyperthermia (Ettinger Ch 16).',
-    },
+    // No "fever vs hyperthermia" paragraph above the split: the step's bullets
+    // are the behaviour to observe and the two cards carry the mechanism, so a
+    // box restating both would be read twice and age separately from them.
     {
       kind: 'node',
       variant: 'step',
@@ -33,13 +27,11 @@ const feverEntry: FlowPage = {
         {
           tone: 'danger',
           label: ' TRUE FEVER — find the cause',
-          sublabel: 'Regulated rise — shivers, seeks warmth, responds to NSAIDs · FUO = >39.2°C for ≥3 weeks with no cause after ≥3 visits',
           link: { to: 'flow', id: 'fever-true' },
         },
         {
           tone: 'warning',
           label: ' HYPERTHERMIA — non-pyrogenic',
-          sublabel: 'Unregulated rise — pants, seeks cooling, does NOT respond to NSAIDs · ACTIVELY COOL if >41.1°C (106°F)',
           link: { to: 'flow', id: 'fever-hyperthermia' },
         },
       ],
@@ -54,7 +46,7 @@ const feverEntry: FlowPage = {
         '<strong>Occult septic focus</strong> — abscess (subcutaneous, liver, prostate, lung, tooth root, CNS), pyometra/stump, pyothorax, septic peritonitis — search systematically before calling it FUO',
         { bold: 'Discospondylitis', link: { to: 'disease', id: 'DIS-DISCO' }, html: ' — palpate the whole spine; only ~30% are febrile and radiographs lag 2–6 weeks behind clinical onset' },
         '<strong>Endocarditis</strong> — a new/changing murmur with fever needs blood cultures + echocardiography (only 40–43% are febrile)',
-        '<strong>Do NOT actively cool a true fever</strong> — reserve cooling for temperature &gt;41.1°C (106°F), almost always hyperthermia',
+        '<strong>Do NOT actively cool a true fever</strong> — the regulated rise aids the host immune response; reserve active cooling for temperature &gt;41.1°C (106°F), which is almost always hyperthermia (Ettinger Ch 16)',
       ],
     },
 

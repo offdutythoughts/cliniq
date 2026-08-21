@@ -12,10 +12,11 @@ import {
   primaryButtonClass,
 } from '../../components/site/AuthShell'
 import { track } from '../../lib/analytics'
+import { unpackCredential } from '../../lib/credentialLink'
 
 /**
  * Forgotten password, step two: where the reset link lands
- * (convex/passwordReset.ts builds it) with `email` and `code` in the query.
+ * (convex/passwordReset.ts builds it) with the address and token packed into `t`.
  *
  * Submitting sets the new password, signs this browser in, and — because
  * Convex Auth invalidates the account's other sessions on reset — logs out
@@ -34,8 +35,8 @@ function ResetPasswordForm() {
   const params = useSearchParams()
   const router = useRouter()
   const { signIn } = useAuthActions()
-  const email = (params.get('email') ?? '').trim().toLowerCase()
-  const code = params.get('code') ?? ''
+  // One parameter, `t`, holding `address~token` — see convex/emailVerification.ts.
+  const { email, code } = unpackCredential(params.get('t'))
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
   const [submitting, setSubmitting] = useState(false)

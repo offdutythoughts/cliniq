@@ -32,7 +32,7 @@ export const epistaxisFlow: FlowPage = {
       kind: 'branch',
       columns: [
         {
-          header: '🔵 LOCAL / INTRANASAL',
+          header: 'LOCAL / INTRANASAL',
           tone: 'teal',
           sub: 'Chronic nasal signs · sneezing · stertor · mucopurulent discharge · unilateral epiphora · facial pain / deformity · nasal planum depigmentation · ↓ retropulsion · submandibular LN',
           blocks: [
@@ -73,7 +73,7 @@ export const epistaxisFlow: FlowPage = {
           ],
         },
         {
-          header: '🩸 SYSTEMIC DISEASE',
+          header: 'SYSTEMIC DISEASE',
           tone: 'danger',
           sub: 'Bleeding at other sites · petechiae / ecchymoses · melena · gingival bleed · venepuncture bruising · lethargy · weight loss · hyphema / retinal haemorrhage',
           blocks: [

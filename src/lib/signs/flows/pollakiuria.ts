@@ -50,14 +50,14 @@ const pollakiuriaEntry: FlowPage = {
           ],
         },
         {
-          header: '🔵 NON-OBSTRUCTED — localise',
+          header: 'NON-OBSTRUCTED — localise',
           tone: 'teal',
-          sub: 'Small bladder · comfortable to express · frequent small voids ± haematuria',
+          sub: 'Small bladder · comfortable to express · frequent small voids ± haematuria — time the straining within the void, then rectal-palpate for a mass or narrowing',
           blocks: [
             {
               kind: 'choices',
               items: [
-                { label: 'LOCALISE BY SITE', sublabel: 'Time the straining within the void, then rectal-palpate for a mass or narrowing', tone: 'teal', link: { to: 'flow', id: 'pollakiuria-localise' } },
+                { label: 'LOCALISE BY SITE',tone: 'teal', link: { to: 'flow', id: 'pollakiuria-localise' } },
               ],
             },
           ],
@@ -120,12 +120,22 @@ const pollakiuriaLocalise: FlowPage = {
       },
     ]),
 
+    // Where the stone sits decides both the presentation and the intervention —
+    // four site-specific facts that were one paragraph, now one row each.
     {
-      kind: 'callout',
-      tone: 'info',
+      kind: 'table',
+      boxTone: 'info',
       gap: 12,
-      title: '🪨 Urolithiasis — where is the stone?',
-      html: 'This flow covers <strong>lower-tract</strong> stones — <strong>cystoliths</strong> (bladder → pollakiuria, haematuria) and <strong>urethroliths</strong> (→ outflow obstruction, an emergency). <strong>Upper-tract</strong> stones present differently: a <strong>nephrolith</strong> is usually clinically silent (monitor, don’t reflexively remove), whereas an obstructing <strong>ureterolith</strong> causes azotaemia and PU/PD and needs SUB (subcutaneous ureteral bypass) placement rather than medical expulsion.',
+      dividers: true,
+      title: '🪨 UROLITHIASIS — WHERE IS THE STONE?',
+      cols: '24% 34% 1fr',
+      headers: ['Site', 'Presents as', 'What it needs'],
+      rows: [
+        [{ text: 'Cystolith', tone: 'teal' }, 'Pollakiuria · haematuria', 'This flow — lower-tract work-up'],
+        [{ text: 'Urethrolith', tone: 'danger' }, 'Outflow obstruction', 'EMERGENCY decompression'],
+        [{ text: 'Nephrolith', tone: 'slate' }, 'Usually clinically silent', 'Monitor — do not reflexively remove'],
+        [{ text: 'Ureterolith', tone: 'warning' }, 'Azotaemia + PU/PD rather than LUTS', 'SUB (subcutaneous ureteral bypass), not medical expulsion'],
+      ],
     },
 
     {

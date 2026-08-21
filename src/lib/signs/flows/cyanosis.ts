@@ -29,19 +29,16 @@ const cyanosisEntry: FlowPage = {
         {
           tone: 'info',
           label: ' CENTRAL — respiratory',
-          sublabel: 'Generalised cyanosis + respiratory distress · low SaO2 · responds (at least partly) to O2',
           link: { to: 'flow', id: 'cyanosis-central' },
         },
         {
           tone: 'violet',
           label: ' CARDIAC R→L SHUNT',
-          sublabel: 'Cyanosis does NOT improve with O2 · secondary erythrocytosis · differential cyanosis',
           link: { to: 'flow', id: 'cyanosis-cardiac' },
         },
         {
           tone: 'warning',
           label: ' METHAEMOGLOBIN / PERIPHERAL',
-          sublabel: 'MetHb: normal PaO2, brown blood, pulse-ox ~85% · Peripheral: normal SaO2, distal extremities only',
           link: { to: 'flow', id: 'cyanosis-methb' },
         },
       ],

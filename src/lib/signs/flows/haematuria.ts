@@ -182,12 +182,23 @@ const haematuriaPseudo: FlowPage = {
         },
       ],
     },
+    // Each line was test → what the result means, so it is a table. The old
+    // first line (centrifuge → red supernatant) is the page's own header and is
+    // not repeated here.
     {
-      kind: 'infoBox',
-      tone: 'indigo',
-      icon: '🔬',
-      title: 'KEY WORKUP',
-      html: '<strong style="color:var(--white);">Centrifuge urine</strong> — red supernatant + clear sediment confirms pseudo-haematuria<br><strong style="color:var(--white);">Dipstick</strong> — negative for blood rules out Hb/Mb; positive with red supernatant = Hb or Mb<br><strong style="color:var(--white);">CK</strong> — markedly ↑ = myoglobinuria<br><strong style="color:var(--white);">Plasma colour</strong> — pink/red = haemoglobinaemia (intravascular haemolysis)<br><strong style="color:var(--white);">CBC + smear</strong> — spherocytes · agglutination · ↓ PCV → haemolysis screen',
+      kind: 'table',
+      boxTone: 'indigo',
+      gap: 12,
+      dividers: true,
+      title: '🔬 KEY WORKUP',
+      cols: '24% 1fr',
+      headers: ['Test', 'What the result means'],
+      rows: [
+        ['Dipstick (blood)', 'Negative rules out Hb and Mb; positive with a red supernatant = one of the two'],
+        ['CK', 'Markedly raised = myoglobinuria'],
+        ['Plasma colour', 'Pink or red = haemoglobinaemia, i.e. intravascular haemolysis'],
+        ['CBC + smear', 'Spherocytes · agglutination · ↓ PCV → work it up as haemolysis'],
+      ],
     },
 
     { kind: 'disclaimer' },

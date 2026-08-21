@@ -10,12 +10,15 @@ import { passkeysSupported } from '../../lib/passkeys'
 /**
  * Where a brand-new account lands, straight after sign-up creates its session.
  *
- * The only job here is to offer a passkey at the one moment the user is
- * guaranteed to be thinking about how they get back in. /verify makes the same
- * offer after an emailed confirmation link, but email verification is off (see
- * convex/auth.ts), so nobody reaches it — without this page a new account is
- * never told passkeys exist, and the passkey button on /login has nothing to
- * find when they next return.
+ * The job is to offer a passkey at the one moment the user is certainly
+ * thinking about how they get back in — otherwise nothing ever mentions
+ * passkeys and the button on /login has nothing to find when they return.
+ *
+ * /verify makes the same offer, but only reaches anyone while email
+ * verification is switched on (convex/auth.ts), and that setting has been
+ * flipped both ways. The two screens cover opposite halves and cannot both
+ * fire: the redirect here is gated on sign-up actually returning a session,
+ * which is precisely what verification being on takes away.
  *
  * Not a public route: the middleware in src/proxy.ts requires the session that
  * sign-up has just created, and PasskeyPrompt's registration actions require it

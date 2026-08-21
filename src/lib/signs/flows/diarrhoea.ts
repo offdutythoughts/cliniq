@@ -38,6 +38,12 @@ export const diarrhoeaFlow: FlowPage = {
       variant: 'step',
       text: 'STEP 1 — CLASSIFY THE DIARRHOEA',
       sub: 'Acute or chronic? Mild or severe? Primary or secondary GI?',
+      // The two boxes below are name-only, so the duration that separates them
+      // is stated here rather than inside each box.
+      subItems: [
+        'ACUTE — under 2 weeks',
+        'CHRONIC — over 2–3 weeks',
+      ],
     },
 
     {
@@ -51,7 +57,7 @@ export const diarrhoeaFlow: FlowPage = {
     <!-- Acute vs Chronic -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;">
       <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <div class="flow-node insp" style="width:100%;font-size:11px;">ACUTE diarrhoea<div class="fn-sub" style="font-size:9px;opacity:.7">< 2 weeks</div></div>
+        <div class="flow-node insp" style="width:100%;font-size:11px;">ACUTE diarrhoea</div>
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node sub-step" style="width:100%;font-size:10px;">Severe / haemorrhagic?</div>
         ${forkHtml(2, 4)}
@@ -78,7 +84,7 @@ export const diarrhoeaFlow: FlowPage = {
       </div>
 
       <div style="display:flex;flex-direction:column;align-items:center;gap:3px;">
-        <div class="flow-node exp" style="width:100%;font-size:11px;">CHRONIC diarrhoea<div class="fn-sub" style="font-size:9px;opacity:.7">> 2-3 weeks</div></div>
+        <div class="flow-node exp" style="width:100%;font-size:11px;">CHRONIC diarrhoea</div>
         <div class="flow-arrow-v">↓</div>
         <div class="flow-node sub-step" style="width:100%;font-size:10px;">STEP 2 — LOCALISE: Small bowel or large bowel?</div>
         ${forkHtml(2, 4)}

@@ -1,0 +1,30 @@
+Touch this file to ask the runner to regenerate the visual baselines.
+
+Any commit that changes this file — on any branch — runs
+.github/workflows/visual-baselines.yml, which rebuilds
+tests/visual/__screenshots__/linux/ on the ubuntu runner and commits the result
+back to the branch you pushed. Nothing else in the repo triggers it, so a regen
+is always something you asked for on purpose.
+
+ONE EXCEPTION: `production`. It is a deploy branch that should hold nothing main
+does not, so a request landing there is redirected — baselines are rendered from
+`main` and pushed to `main`, and reach production by the next merge. This matters
+because merging main into production carries THIS file's diff across and
+re-triggers the workflow there; before the redirect, that quietly left production
+holding baseline commits main lacked.
+
+Use it after a change that legitimately moves pixels, once you have LOOKED at
+what moved. Regenerating to make CI go green is how a real regression gets
+baked into the baseline it was supposed to be caught by.
+
+The equivalent button, when you can reach the Actions UI:
+Actions → "Update visual baselines" → Run workflow.
+
+Bump the log below (newest last) so the diff is never empty:
+
+2026-08-17  seed the sentinel
+2026-08-18  retry the push when the branch moves mid-run
+2026-08-18  redirect production regens to main
+2026-08-18  regen after the separation-box type change
+2026-08-18  regen check after the deploy-config and flow-type changes
+2026-08-19  regen after the legacy separation-box pass — flow-dyspnoea moved

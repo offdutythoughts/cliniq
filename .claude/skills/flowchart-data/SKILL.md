@@ -60,7 +60,7 @@ registry `flowId`) plus 0..n **sub-flow** pages (`id` like `'<sign>-coats'`). `l
 | `node` | `.flow-node` entry/step/sub-step header | `variant`, `text`, `sub?`, `tone?` (entry only) |
 | `branch` | N-column split with per-column header + body | `columns: { header, tone, sub?, blocks }[]` (recursive) |
 | `endpoints` | vertical stack of `.flow-endpoint` leaf links | `items: { label, sublabel?, tone?, icon?, link? }[]` |
-| `choices` | grid of clickable pattern-nodes | `cols?`, `size?`, `items: { variant?\|tone?, label(html), sublabel?(html), link? }[]` |
+| `choices` | grid of clickable pattern-nodes — name-only separation boxes: no sublabel slot, no emoji in `label` (lint-choices) | `cols?`, `size?`, `items: { variant?\|tone?, label(html), link? }[]` |
 | `cardGrid` | `.fn-row` grids of `.fn-ep` location cards | `perRow?`, `tiles: { anat, sys?, loc, badge?, link? }[]` |
 | `fnHeader` | `.fn .fn-insp/.fn-exp/.fn-rest/.fn-mixed/.fn-step` header | `variant`, `text` |
 | `banner` | centred info strip | `tone`, `html` |
