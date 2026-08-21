@@ -110,6 +110,43 @@ Running "npm run build"      ← not the conditional command
 is how everything live there got there. Nothing is broken by this today, but a
 frontend change that depends on a backend change will ship without it.
 
+### A bare `npx convex deploy` does not reach `determined-hawk-630`
+
+Deploying by hand is not as simple as the sentence above makes it sound. There
+are three deployments, and the CLI's "prod" is not the live one:
+
+| deployment | what it is |
+|---|---|
+| `determined-hawk-630` | **live** — what `vetic.app` talks to, where the real user data is |
+| `clever-nightingale-958` | what a bare `npx convex deploy` targets, because the project calls it prod. Serves no traffic. |
+| `modest-kingfisher-670` | personal dev, set in `.env.local` |
+
+A bare `npx convex deploy` announces "Your prod deployment
+clever-nightingale-958", pushes there, and prints `✔ Deployed`. Nothing errors.
+On 2026-08-18 a full day of backend work — the email-verification rollback and
+re-enable — went there while live users kept running the old code.
+
+The browser bundle is the authority on which one is live:
+
+```bash
+curl -s -L https://vetic.app/login | grep -oE '/_next/static/[^"]+\.js' | head -1 \
+  | xargs -I{} curl -s "https://vetic.app{}" | grep -oE 'https://[a-z-]+-[0-9]+\.convex\.cloud'
+```
+
+`convex deploy` has no `--deployment` flag, so target it with `--env-file`:
+
+```bash
+echo 'CONVEX_DEPLOYMENT=prod:determined-hawk-630' > /tmp/live.env
+npx convex deploy --env-file /tmp/live.env
+```
+
+The same flag works for `env list`, `env get` and `function-spec`, which is how
+to read the live backend's config instead of guessing at it.
+
+This also matters for the deploy key below: it must be minted for
+`determined-hawk-630`. A key for `clever-nightingale-958` would authenticate
+fine and deploy the wrong backend on every production build — green, and wrong.
+
 ### Fixing it properly
 
 Order matters, and so does step 3 — its absence is what produced the wrong
