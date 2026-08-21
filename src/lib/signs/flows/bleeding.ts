@@ -472,7 +472,7 @@ const bleedingVasc: FlowPage = {
               items: [
                 { label: 'CRGV / Alabama rot', sublabel: '→ AKI in 1–10 days', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-CRGV' } },
                 { label: 'Cutaneous vasculitis', tone: 'violet', link: { to: 'disease', id: 'DIS-BD-VASC' } },
-                { label: 'Lhasa Apso vasculopathy', sublabel: 'ear tips', tone: 'neutral' },
+                { label: 'Lhasa Apso vasculopathy', sublabel: 'ear tips', tone: 'neutral', link: { to: 'disease', id: 'DIS-BD-VASCLH' } },
               ],
             },
           ],
@@ -547,7 +547,7 @@ const bleedingProd: FlowPage = {
           tone: 'danger',
           blocks: [{ kind: 'endpoints', items: [
             { label: 'Lymphoma', sublabel: 'Marrow infiltration → megakaryocyte suppression', tone: 'danger', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
-            { label: 'Leukaemia', sublabel: 'Neoplastic cell replacement of marrow', tone: 'danger' },
+            { label: 'Leukaemia', sublabel: 'Neoplastic cell replacement of marrow', tone: 'danger', link: { to: 'disease', id: 'DIS-NEO-LEUK' } },
             { label: 'Multiple myeloma', sublabel: 'Plasma cell neoplasia infiltrating marrow', tone: 'danger', link: { to: 'disease', id: 'DIS-NEO-MM' } },
             { label: 'Immune-mediated aplasia', sublabel: 'Immune destruction of megakaryocytes', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-NRA' } },
             { label: 'Myelofibrosis / myelophthisis', sublabel: 'Replacement of marrow architecture', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-NRA' } },
@@ -596,7 +596,7 @@ const bleedingConsump: FlowPage = {
           blocks: [{ kind: 'endpoints', items: [
             { label: 'Significant haemorrhage', sublabel: 'Platelets lost with bleeding; secondary thrombocytopenia', tone: 'danger' },
             { label: 'Sepsis', sublabel: 'Platelet activation + consumption in microthrombi', tone: 'danger', link: { to: 'disease', id: 'DIS-SHOCK-SEPTIC' } },
-            { label: 'Vasculitis', sublabel: 'Endothelial damage → continuous platelet activation', tone: 'danger' },
+            { label: 'Vasculitis', sublabel: 'Endothelial damage → continuous platelet activation', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-VASC' } },
             { label: 'DIC', link: { to: 'disease', id: 'DIS-BD-DIC' }, sublabel: 'Early thrombosis → late haemorrhage; PT + aPTT both prolonged', tone: 'danger' },
           ]}],
         },
@@ -604,7 +604,7 @@ const bleedingConsump: FlowPage = {
           header: 'Sequestration',
           tone: 'warning',
           blocks: [{ kind: 'endpoints', items: [
-            { label: 'Splenomegaly', sublabel: 'Up to 90 % of platelet pool can pool in markedly enlarged spleen — counts often 50–100 ×10⁹/L', tone: 'warning' },
+            { label: 'Splenomegaly', sublabel: 'Up to 90 % of platelet pool can pool in markedly enlarged spleen — counts often 50–100 ×10⁹/L', tone: 'warning', link: { to: 'disease', id: 'DIS-SPLEEN' } },
           ]}],
         },
       ],
@@ -652,13 +652,83 @@ const bleedingDest: FlowPage = {
         {
           header: 'Infectious',
           tone: 'orange',
+          sub: 'Tick-borne · viral · protozoal / fungal',
           blocks: [{ kind: 'endpoints', items: [
-            { label: 'Tick-borne', sublabel: 'Ehrlichiosis · babesiosis · rickettsiosis · anaplasmosis · borreliosis', tone: 'orange' },
-            { label: 'Viral', sublabel: 'Distemper · parvovirus · adenovirus · herpesvirus · FeLV · panleukopenia · FIV · FIP', tone: 'neutral' },
-            { label: 'Protozoal / fungal', sublabel: 'Leishmaniasis · cytauxzoonosis · histoplasmosis · candidiasis · haemobartonellosis', tone: 'neutral' },
-            { label: 'Other', sublabel: 'Dirofilariasis · leptospirosis · septicaemia', tone: 'neutral' },
+            { label: 'Infectious causes', tone: 'orange', link: { to: 'flow', id: 'bleeding-dest-infect' } },
           ]}],
         },
+      ],
+    },
+    { kind: 'disclaimer' },
+  ],
+}
+
+// ── Destruction → infectious causes ──────────────────────────────────────────
+const bleedingDestInfect: FlowPage = {
+  id: 'bleeding-dest-infect',
+  title: 'Bleeding — Infectious Thrombocytopenia',
+  blocks: [
+    {
+      kind: 'node',
+      variant: 'entry',
+      tone: 'orange',
+      text: 'INFECTIOUS THROMBOCYTOPENIA',
+      sub: 'Peripheral platelet destruction driven by an infectious agent — the commonest secondary cause',
+    },
+    {
+      kind: 'categoryColumns',
+      columns: [
+        {
+          cat: 'Tick-borne',
+          tiles: [
+            { label: 'Ehrlichiosis', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
+            { label: 'Babesiosis', link: { to: 'disease', id: 'DIS-BD-BABS' } },
+            { label: 'Anaplasmosis', link: { to: 'disease', id: 'DIS-INFECT-ANAP' } },
+            { label: 'Rocky Mountain spotted fever', link: { to: 'disease', id: 'DIS-INFECT-RMSF' } },
+            { label: 'Lyme borreliosis', link: { to: 'disease', id: 'DIS-INFECT-LYME' } },
+          ],
+        },
+        {
+          cat: 'Viral',
+          tiles: [
+            { label: 'Distemper', link: { to: 'disease', id: 'DIS-INFECT-CDV' } },
+            { label: 'Parvovirus', link: { to: 'disease', id: 'DIS-GI-PARVO' } },
+            { label: 'FeLV', link: { to: 'disease', id: 'DIS-INFECT-FELV' } },
+            { label: 'Panleukopenia', link: { to: 'disease', id: 'DIS-GI-FPV' } },
+            { label: 'FIP', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
+            { label: 'Adenovirus', link: { to: 'disease', id: 'DIS-INFECT-CAV' } },
+            { label: 'Herpesvirus', terminal: true },
+            { label: 'FIV', link: { to: 'disease', id: 'DIS-INFECT-FIV' } },
+          ],
+        },
+        {
+          cat: 'Protozoal / fungal',
+          tiles: [
+            { label: 'Leishmaniasis', link: { to: 'disease', id: 'DIS-INFECT-LEISHM' } },
+            { label: 'Cytauxzoonosis', link: { to: 'disease', id: 'DIS-INFECT-CYTAUX' } },
+            { label: 'Histoplasmosis', link: { to: 'disease', id: 'DIS-INFECT-HISTO' } },
+            { label: 'Haemotropic Mycoplasma', link: { to: 'disease', id: 'DIS-INFECT-HMYCO' } },
+            { label: 'Candidiasis', terminal: true },
+          ],
+        },
+        {
+          cat: 'Bacterial / parasitic',
+          tiles: [
+            { label: 'Heartworm disease', link: { to: 'disease', id: 'DIS-CARD-HW' } },
+            { label: 'Leptospirosis', link: { to: 'disease', id: 'DIS-INFECT-LEPTO' } },
+            { label: 'Sepsis', link: { to: 'disease', id: 'DIS-SHOCK-SEPTIC' } },
+          ],
+        },
+      ],
+    },
+    {
+      kind: 'alert',
+      tone: 'orange',
+      title: "DON'T MISS — TREAT WHILE YOU WAIT",
+      items: [
+        '<strong>Start doxycycline empirically</strong> while vector-borne serology and PCR are pending — 5–10 mg/kg PO q12–24 h, based on geography and tick exposure',
+        '<strong>Cats: test for FeLV and FIV</strong> — feline thrombocytopenia is almost always secondary, and retroviral status changes the whole workup',
+        '<strong>Do not commit to immunosuppression</strong> until the infectious screen is back — steroids alone can worsen an untreated infection',
       ],
     },
     { kind: 'disclaimer' },
@@ -721,17 +791,21 @@ const bleedingImmunePlt: FlowPage = {
           header: 'Multi-system immune disease',
           tone: 'warning',
           blocks: [{ kind: 'endpoints', items: [
-            { label: 'Evans Syndrome', sublabel: 'Concurrent IMHA + IMTP — check PCV and platelet count together · Coombs + · respond to immunosuppression', tone: 'warning' },
-            { label: 'SLE', sublabel: 'Systemic lupus — ANA positive · polyarthritis · skin lesions · immune complex deposition on vessel walls and platelets', tone: 'warning' },
-            { label: 'Antiphospholipid syndrome', sublabel: 'Thrombosis + thrombocytopenia — paradoxical bleeding from thrombocytopenia despite prothrombotic state', tone: 'warning' },
+            { label: 'Evans Syndrome', tone: 'warning', link: { to: 'disease', id: 'DIS-BD-EVANS' } },
+            { label: 'SLE', tone: 'warning', link: { to: 'disease', id: 'DIS-IM-SLE' } },
+            { label: 'Antiphospholipid syndrome', tone: 'warning', link: { to: 'disease', id: 'DIS-BD-APS' } },
           ]}],
         },
         {
           header: 'Secondary immune activation',
           tone: 'orange',
+          sub: 'Immune complexes from an infection or a tumour impair platelet function',
           blocks: [{ kind: 'endpoints', items: [
-            { label: 'Infectious trigger', sublabel: 'Ehrlichiosis · FIP · Mycoplasma haemofelis in cats — immune complex deposition → platelet dysfunction', tone: 'orange' },
-            { label: 'Neoplasia-associated', sublabel: 'Lymphoma · HSA — tumour antigens trigger immune complex formation', tone: 'orange' },
+            { label: 'Ehrlichiosis', tone: 'orange', link: { to: 'disease', id: 'DIS-INFECT-EHRLICH' } },
+            { label: 'FIP', tone: 'orange', link: { to: 'disease', id: 'DIS-INFECT-FIP' } },
+            { label: 'Haemotropic Mycoplasma', tone: 'orange', link: { to: 'disease', id: 'DIS-INFECT-HMYCO' } },
+            { label: 'Lymphoma', tone: 'orange', link: { to: 'disease', id: 'DIS-NEO-LSA' } },
+            { label: 'Haemangiosarcoma', tone: 'orange', link: { to: 'disease', id: 'DIS-NEO-HSA' } },
           ]}],
         },
       ],
@@ -756,6 +830,7 @@ export const bleedingFlows: FlowPage[] = [
   bleedingProd,
   bleedingConsump,
   bleedingDest,
+  bleedingDestInfect,
   bleedingThrombopathia,
   bleedingImmunePlt,
 ]

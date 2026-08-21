@@ -55,6 +55,11 @@ const PAGE_SPECIFIC = new Set<string>([
   'dysphagia-oral::Mechanical (Pain / Mass)', 'dysphagia-oral::Neuromuscular (CN / Muscle)',
   'dysphagia-pharyngeal::Mechanical (Mass / Obstruction)', 'dysphagia-pharyngeal::Neuromuscular',
   'dysphagia-oesophageal::Mechanical (Obstruction)', 'dysphagia-oesophageal::Motility / Inflammatory',
+  // bleeding-dest-infect splits the infectious causes of platelet destruction by
+  // PATHOGEN CLASS, not by lesion category — the whole page sits under the
+  // parent page's 'Infectious' arm, so 'Infectious' as a column would be circular.
+  'bleeding-dest-infect::Tick-borne', 'bleeding-dest-infect::Viral',
+  'bleeding-dest-infect::Protozoal / fungal', 'bleeding-dest-infect::Bacterial / parasitic',
   'melena-upper::Infectious / Parasitic', 'melena-lower::Infectious / Parasitic',
   'constipation-obstructive::Impaction / Dietary', 'constipation-obstructive::Infectious / Inflammatory',
   'constipation-pelvic::Structural / Mechanical',
