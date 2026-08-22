@@ -64,6 +64,14 @@
 // a glyph ONLY where it flags an emergency, matching the one kept siren on
 // pollakiuria's obstructed column.
 //
+// CHECK 8 — a tile's SUBLABEL is a triage qualifier, not a description
+// (mirrors lint-chips Rule 2, and applies to linked and unlinked tiles alike).
+// A category tile renders exactly like an endpoints chip — name, then a dimmed
+// second line — so it follows the same rule: the box carries the DIAGNOSIS NAME.
+// The only second line worth its space is one that helps pick between the boxes:
+// a ranking ("Most common feline cause") or a species restriction ("🐱 Cats").
+// Anatomy, mechanism, breed lists and lab thresholds are disease-page content.
+//
 // CHECK 5 — no SHOUTING tile labels.
 // A lesion/disease name on a tile is written in sentence case ("Bacterial septic
 // arthritis"), not block capitals ("BACTERIAL SEPTIC ARTHRITIS"). The category
@@ -76,7 +84,7 @@ import { lint } from './lib/lint'
 
 const { fail, done } = lint('category-tile')
 
-type TileLike = { label?: string; link?: unknown; links?: unknown[]; terminal?: boolean }
+type TileLike = { label?: string; sublabel?: string; link?: unknown; links?: unknown[]; terminal?: boolean }
 
 const isGap = (t: TileLike) =>
   !t.link && !(Array.isArray(t.links) && t.links.length > 0) && t.terminal !== true
@@ -84,6 +92,10 @@ const isGap = (t: TileLike) =>
 // Post-em-dash text that is a pure species / ranking qualifier — kept on linked
 // tiles (e.g. "dog", "cat", "dog (#1)", "cat (#1), dog (#2)", "dog (#3)").
 const SPECIES_RANK = /^(dog|cat)(\s*\(#\d+\))?(\s*,\s*(dog|cat)(\s*\(#\d+\))?)*$/i
+
+// CHECK 8 — the only sublabel a tile may keep. Same shape as lint-chips'
+// ALLOWED_SUBLABEL, because a tile and a chip are the same box to the reader.
+const ALLOWED_SUBLABEL = /^(?:#\d+ cause\b.*|.*most common .*cause.*|(?:🐱|🐶)?\s*(?:cats?|dogs?)(?: only)?)$/i
 
 // Reviewed linked tiles whose post-dash text is load-bearing (the specific linked
 // diagnosis / triage), not a strippable description. Keyed `pageId::label`.
@@ -167,6 +179,11 @@ for (const { pageId, kind, cat, tile } of eachTile()) {
   if (tile.link && dash && !SPECIES_RANK.test(dash[1].trim()) &&
       !KEPT_TILE_DETAIL.has(`${pageId}::${label}`)) {
     fail(`[${pageId}] ${cat} · "${label}" — linked tile carries a description the tap-through page already gives; strip to the name (keep only a species/ranking qualifier).`)
+  }
+  // CHECK 8: the second line is a ranking / species qualifier or it does not exist.
+  const sublabel = String(tile.sublabel ?? '').trim()
+  if (sublabel && !ALLOWED_SUBLABEL.test(sublabel)) {
+    fail(`[${pageId}] ${cat} · "${label}" sublabel "${sublabel}" — a tile carries the diagnosis name only; strip it (keep only a ranking or species qualifier, e.g. "Most common feline cause", "🐱 Cats").`)
   }
   // CHECK 5: sentence case — the column header carries the emphasis.
   if (isShouting(label)) {

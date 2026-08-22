@@ -43,7 +43,7 @@ const constipationEntry: FlowPage = {
             {
               kind: 'endpoints',
               items: [
-                { label: 'Pollakiuria / Stranguria', sublabel: 'ECG + potassium before anything else', tone: 'danger', link: { to: 'flow', id: 'pollakiuria' } },
+                { label: 'Pollakiuria / Stranguria', tone: 'danger', link: { to: 'flow', id: 'pollakiuria' } },
               ],
             },
           ],

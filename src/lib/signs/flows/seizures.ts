@@ -43,6 +43,16 @@ const seizuresEntry: FlowPage = {
     // step, because the shared table is unboxed — see ./episodicTriage.
     { kind: 'node', variant: 'step', text: 'RULE OUT THE MIMICS', sub: 'Six other episodic disorders collapse a dog or cat and are not epilepsy' },
     episodicTriageTable,
+    // The pearl that used to sit under the tremors flow's "Seizures" chip. It is the
+    // answer to what the table above cannot always settle — and it belongs here, where
+    // the reader arrives to act on it, rather than on the box they tapped to get here.
+    {
+      kind: 'callout',
+      tone: 'warning',
+      gap: 12,
+      title: '⚠️ IF IN DOUBT',
+      html: '<strong>Work it up as a seizure.</strong> The mimics are mostly benign or self-limiting; the seizure differentials include structural brain disease and reactive metabolic causes that are time-sensitive. Over-investigating a dyskinesia costs an MRI — missing a reactive cause costs the patient.',
+    },
 
     // Characterise
     {

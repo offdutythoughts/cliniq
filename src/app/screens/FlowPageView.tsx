@@ -217,10 +217,15 @@ function endpointStyle(tone: Tone): string {
   const h = HUE[tone]
   return `background:rgba(${h.rgb},var(--panel-bg-a));border:1.5px solid rgba(${h.rgb},var(--panel-bd-a));color:${h.color};`
 }
+// Rule 3 — a chip with no `link` has no disease page behind it, so it renders
+// MUTED: same treatment as a `terminal` category tile (in-tone, dimmed, no
+// pointer, no hover — `.flow-endpoint[role="button"]:hover` in globals.css is
+// scoped to the clickable ones). Muting lives here, not in the data, so it
+// applies to every unlinked chip already authored and every one added later.
 function EndpointView({ e, onNav }: { e: Endpoint; onNav: Nav }) {
   const tone = e.tone ?? 'neutral'
   const clickable = !!e.link
-  const cursor = clickable ? 'cursor:pointer;' : 'cursor:default;'
+  const cursor = clickable ? 'cursor:pointer;' : ST_TILE_MUTED
   return (
     <div
       className="flow-endpoint"
