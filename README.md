@@ -98,11 +98,31 @@ it is a dashboard action; check whether it has actually happened rather than
 assuming, because the deployments answer normally right up until they do not:
 
 ```bash
-npx convex function-spec --deployment clever-nightingale-958   # duplicate's prod
+for d in clever-nightingale-958 modest-kingfisher-670; do
+  printf '%-26s ' "$d"
+  curl -s -o /dev/null -w '%{http_code}\n' "https://$d.convex.cloud/version"
+done
 ```
 
-A JSON response means `cliniq-262bb` is still there. Either way the mechanism
-that created it is unchanged and will do the same again in a fresh checkout.
+**200 means the deployment is alive**, so `cliniq-262bb` has not gone. A deleted
+or never-existent deployment gives **404** — verify that yourself against a
+made-up name before trusting a 200, because a check that cannot fail proves
+nothing:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' https://zzzz-nonexistent-12345.convex.cloud/version   # → 404
+```
+
+This needs no Convex login, unlike `npx convex function-spec --deployment …`,
+which answers the same question but only for someone already authenticated.
+
+Deletion was reported done on 2026-08-22 and both deployments still returned
+200 afterwards, so if the dashboard no longer lists the project while these URLs
+answer, that is a Convex-side inconsistency worth raising with them rather than
+a stale local cache.
+
+Either way the mechanism that created it is unchanged and will do the same again
+in a fresh checkout.
 
 The consequence is quiet, which is what makes it dangerous: a bare `npx convex
 deploy` announced "Your prod deployment clever-nightingale-958", pushed, and
