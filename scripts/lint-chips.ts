@@ -9,28 +9,43 @@
 //      rule, enforced one level up in lint-choices; the sole surviving glyph is
 //      pollakiuria's "🚨 OBSTRUCTED — emergency", where the siren flags an emergency
 //      rather than restating the column's tone.)
-//   2. Sublabels are gated on whether the chip is a TAP-THROUGH link:
-//        • LINKED chip (has `link`): the reader navigates to a disease/lesion/protocol
-//          page that already carries the detail, so a descriptive sublabel is redundant
-//          clutter. The only sublabel worth keeping is a "most common cause" triage
-//          qualifier — ranking context the destination page does NOT give.
-//        • UNLINKED terminal chip (no `link`): there is no destination page, so the
-//          sublabel is the ONLY place its clinical content exists (toxin pearls, drug
-//          lists, mechanisms). Stripping it would DELETE information — so unlinked chips
-//          keep their sublabel and are exempt from Rule 2.
+//   2. A chip carries the DISEASE NAME and nothing else. The rule is now unconditional —
+//      it applies to EVERY chip, linked or not. The earlier version exempted unlinked
+//      chips (on the theory that their sublabel was the sole home of that content) and
+//      exempted six dense sub-flows wholesale; both exemptions are gone. A drug list, a
+//      mechanism, a breed list, a treatment threshold or a lab cut-off appended under a
+//      chip is detail the disease page carries — and where there is no disease page, it
+//      is still detail a flowchart box is the wrong place for. The reader is matching a
+//      NAME against a differential, not reading a paragraph in 8px type.
 //
-// Rule 1 applies everywhere. Rule 2 applies to LINKED chips, EXCEPT on the dense
-// differential sub-flows listed in KEPT_SUBLABEL: there the terse linked sublabels are
-// load-bearing — some disambiguate several chips that share ONE destination page (e.g.
-// four encephalopathy-diffuse chips → DIS-NEU-METABENC), others carry a triage/action
-// pearl (IMTP "#1 cause dog · immunosuppress if <30"; DIC "PT + aPTT both prolonged").
-// These were reviewed and intentionally kept, not a pending backlog. Mirrors lint-flows.ts.
+//      The ONLY sublabel worth keeping is a triage qualifier the reader needs to pick
+//      between the boxes — ranking ("#1 cause dog", "Most common feline cause") or a
+//      species restriction ("🐱 Cats"). See ALLOWED_SUBLABEL.
+//
+//      There is NO exception list, per-chip or per-page, and one should not be
+//      reintroduced. The last holdouts were the three cross-sign referral chips
+//      ("Vomiting", "Seizures", "Pollakiuria / Stranguria" — the outcome of a "this is
+//      not the sign you are looking at" fork), whose sublabel carried an action to take
+//      on arrival. That action belongs on the flow the chip leads to, where the reader
+//      arrives to act on it, not in 8px type under a box they are still choosing.
+//
+//   3. Sentence case — see ACRONYMS below.
+//
+// A fourth rule has no lint because it needs none: a chip with NO `link` has no disease
+// page behind it, so it renders MUTED (dimmed, no pointer, no hover), the same as a
+// `terminal` category tile. That is enforced in the renderer (`EndpointView` in
+// FlowPageView.tsx), which means it covers every unlinked chip already authored and
+// every one added later, with no data change and nothing to keep in step here.
+//
+// Mirrors lint-flows.ts.
 
 import { FLOWS } from '../src/lib/signs/flows/index'
 import type { Block, Endpoint } from '../src/lib/signs/flowTypes'
 
-// A sublabel is allowed only if it is a "most common cause" qualifier.
-const ALLOWED_SUBLABEL = /most common .*cause/i
+// A sublabel is allowed only if it is a triage qualifier: a ranking ("#1 cause dog",
+// "Most common feline cause") or a bare species restriction ("🐱 Cats") — context that
+// picks between boxes and that the destination page does not give at a glance.
+const ALLOWED_SUBLABEL = /^(?:#\d+ cause\b.*|.*most common .*cause.*|(?:🐱|🐶)?\s*(?:cats?|dogs?)(?: only)?)$/i
 
 // Rule 3 — sentence case. A chip carries a lesion/disease NAME, written the way it
 // reads in a sentence ("Bacterial septic arthritis"), not in block capitals. Mirrors
@@ -52,15 +67,6 @@ const isShouting = (label: string) => {
   return rest.length >= 4 && rest.replace(/[^A-Z]/g, '').length / rest.length > 0.6
 }
 
-// Dense differential sub-flows whose LINKED sublabels were reviewed and intentionally kept
-// (disambiguation of same-destination chips / triage pearls — see header). Rule 1 (no
-// emoji) still applies to them. Only add a page here after confirming its linked sublabels
-// genuinely carry content the destination page does not.
-const KEPT_SUBLABEL = new Set<string>([
-  'bleeding-consump', 'bleeding-dest', 'bleeding-prod', 'bleeding-vasc',
-  'encephalopathy-brainstem', 'encephalopathy-diffuse',
-])
-
 let errors = 0
 function fail(msg: string) {
   console.error(`  ✗ ${msg}`)
@@ -78,16 +84,15 @@ function forEachEndpoint(blocks: Block[], visit: (e: Endpoint) => void) {
 
 let chipCount = 0
 for (const [id, page] of Object.entries(FLOWS)) {
-  const checkSublabel = !KEPT_SUBLABEL.has(id)
   forEachEndpoint(page.blocks, e => {
     chipCount++
     if (e.icon) {
       fail(`[${id}] chip "${e.label}" has icon:"${e.icon}" — chips are name-only; drop the emoji.`)
     }
-    // Rule 2 only applies to LINKED chips: an unlinked terminal chip has no destination
-    // page, so its sublabel is the sole home of that content — keep it.
-    if (checkSublabel && e.link && e.sublabel && !ALLOWED_SUBLABEL.test(e.sublabel)) {
-      fail(`[${id}] chip "${e.label}" sublabel "${e.sublabel}" duplicates the tap-through page — strip it (keep only a "most common cause" qualifier).`)
+    // Rule 2 — unconditional: linked or not, a chip is its disease name plus, at most, a
+    // ranking / species triage qualifier.
+    if (e.sublabel && !ALLOWED_SUBLABEL.test(e.sublabel)) {
+      fail(`[${id}] chip "${e.label}" sublabel "${e.sublabel}" — a chip carries the disease name only; strip it (keep only a ranking or species qualifier, e.g. "#1 cause dog", "🐱 Cats").`)
     }
     // Rule 3: sentence case — block capitals are for acronyms only.
     if (isShouting(e.label)) {

@@ -252,7 +252,7 @@ Vertical or direction-changing nystagmus · progression despite treatment`,
             {
               kind: 'endpoints',
               items: [
-                { label: 'Thiamine deficiency', tone: 'teal', sublabel: '🐱 Raw fish / sulphite diet', link: { to: 'disease', id: 'DIS-NEU-THIAMINE' } },
+                { label: 'Thiamine deficiency', tone: 'teal', sublabel: '🐱 Cats', link: { to: 'disease', id: 'DIS-NEU-THIAMINE' } },
                 { label: 'Hepatic encephalopathy (severe)', tone: 'teal', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
                 { label: 'Hyperosmolar states', tone: 'teal' },
               ],
@@ -313,11 +313,11 @@ const encephalopathyDiffuse: FlowPage = {
             {
               kind: 'endpoints',
               items: [
-                { label: 'Hypoglycaemia', tone: 'teal', sublabel: 'Insulinoma · PSS · Addison\'s · toy breeds', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
-                { label: 'Hepatic encephalopathy', tone: 'teal', sublabel: 'PSS · liver failure — post-prandial', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
-                { label: 'Uraemic encephalopathy', tone: 'teal', sublabel: 'CKD / AKI', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
-                { label: 'Electrolyte extremes', tone: 'teal', sublabel: 'Na >170 or <120 mmol/L — correct slowly' },
-                { label: 'Hypocalcaemia', tone: 'teal', sublabel: 'Eclampsia · HypoPTH' },
+                { label: 'Hypoglycaemia', tone: 'teal', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
+                { label: 'Hepatic encephalopathy', tone: 'teal', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
+                { label: 'Uraemic encephalopathy', tone: 'teal', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
+                { label: 'Electrolyte extremes', tone: 'teal' },
+                { label: 'Hypocalcaemia', tone: 'teal' },
                 { label: 'Hypertensive encephalopathy', tone: 'teal' },
                 { label: 'Sepsis / shock', tone: 'teal', link: { to: 'disease', id: 'DIS-SHOCK-SEPTIC' } },
                 { label: 'Hyperthyroidism', tone: 'teal', sublabel: '🐱 Cats' },
@@ -332,8 +332,8 @@ const encephalopathyDiffuse: FlowPage = {
             {
               kind: 'endpoints',
               items: [
-                { label: 'Storage diseases (NCL)', tone: 'info', sublabel: 'Lysosomal storage — breed-specific', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
-                { label: 'CDS / dementia', tone: 'info', sublabel: 'Geriatric · gradual · dx of exclusion' },
+                { label: 'Storage diseases (NCL)', tone: 'info', link: { to: 'disease', id: 'DIS-NEU-METABENC' } },
+                { label: 'CDS / dementia', tone: 'info' },
               ],
             },
           ],
@@ -351,7 +351,7 @@ const encephalopathyDiffuse: FlowPage = {
                 { label: 'Ivermectin (MDR1 breeds)', tone: 'warning' },
                 { label: 'Permethrin', tone: 'warning', sublabel: '🐱 Cats' },
                 { label: 'Heavy metals (lead, mercury)', tone: 'warning' },
-                { label: 'Thiamine deficiency', tone: 'warning', sublabel: '🐱 Raw fish / sulphite diet', link: { to: 'disease', id: 'DIS-NEU-THIAMINE' } },
+                { label: 'Thiamine deficiency', tone: 'warning', sublabel: '🐱 Cats', link: { to: 'disease', id: 'DIS-NEU-THIAMINE' } },
                 { label: 'Metronidazole toxicity', tone: 'warning', link: { to: 'disease', id: 'DIS-NEU-METRO' } },
               ],
             },

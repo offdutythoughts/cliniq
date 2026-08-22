@@ -45,6 +45,12 @@ on:
         required: true
         default: main
   push:
+    # Not production: a promote merges main's sentinel diff across, which fired
+    # this workflow a second time for no gain — the redirect below sent it
+    # straight back to main, where the baselines it would render are already
+    # current. workflow_dispatch can still name production; the redirect stays
+    # for that path.
+    branches-ignore: [production]
     paths:
       - .github/visual-baselines-request
 

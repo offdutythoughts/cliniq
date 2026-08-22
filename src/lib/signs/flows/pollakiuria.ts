@@ -104,7 +104,7 @@ const pollakiuriaLocalise: FlowPage = {
         categories: [
           { cat: 'Infectious', tiles: [{ label: 'Bacterial cystitis / UTI', sublabel: 'Most common canine cause', link: { to: 'disease', id: 'DIS-URO-UTI' } }] },
           { cat: 'Inflammatory', tiles: [{ label: 'Feline idiopathic cystitis', sublabel: 'Most common feline cause', link: { to: 'disease', id: 'DIS-URO-FIC' } }] },
-          { cat: 'Metabolic / Endocrine', tiles: [{ label: 'Urolithiasis', sublabel: 'Lower-tract (cystoliths)', link: { to: 'disease', id: 'DIS-URO-UROLITH-STRUV' } }] },
+          { cat: 'Metabolic / Endocrine', tiles: [{ label: 'Urolithiasis', link: { to: 'disease', id: 'DIS-URO-UROLITH-STRUV' } }] },
           { cat: 'Neoplastic', tiles: [{ label: 'Urothelial carcinoma (TCC)', link: { to: 'disease', id: 'DIS-NEO-TCC' } }] },
         ],
       },

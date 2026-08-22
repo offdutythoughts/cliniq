@@ -49,7 +49,7 @@ export function* eachTile(): Generator<{
   pageId: string
   kind: 'categoryGrid' | 'categoryColumns'
   cat: string
-  tile: { label: string; link?: unknown; links?: unknown[]; terminal?: boolean }
+  tile: { label: string; sublabel?: string; link?: unknown; links?: unknown[]; terminal?: boolean }
 }> {
   for (const { pageId, block } of eachPageBlock()) {
     if (block.kind !== 'categoryGrid' && block.kind !== 'categoryColumns') continue

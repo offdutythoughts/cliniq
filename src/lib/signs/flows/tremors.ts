@@ -44,7 +44,7 @@ const tremorsEntry: FlowPage = {
             {
               kind: 'endpoints',
               items: [
-                { label: 'Seizures', sublabel: 'If in doubt, work it up as a seizure', tone: 'violet', link: { to: 'flow', id: 'seizures' } },
+                { label: 'Seizures', tone: 'violet', link: { to: 'flow', id: 'seizures' } },
               ],
             },
           ],

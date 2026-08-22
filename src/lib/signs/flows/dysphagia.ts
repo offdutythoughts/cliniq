@@ -43,7 +43,7 @@ const dysphagiaEntry: FlowPage = {
             {
               kind: 'endpoints',
               items: [
-                { label: 'Vomiting', sublabel: 'Regurgitation is uncommon in CATS — assume vomiting until proven otherwise', tone: 'orange', link: { to: 'flow', id: 'vomiting' } },
+                { label: 'Vomiting', tone: 'orange', link: { to: 'flow', id: 'vomiting' } },
               ],
             },
           ],
