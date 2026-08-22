@@ -82,19 +82,47 @@ like a verdict — reading it as "no deployment yet" has already produced one
 round of confident nonsense. A green **preview** proves nothing about any of
 this; only a Production deployment reaching `success` does.
 
-### There are two Convex projects. Only one is real.
+### Check which Convex project you are pointed at
 
-This is the trap, and it is still armed:
+There is one project, `cliniq`:
 
-| project | prod | dev | |
-|---|---|---|---|
-| `cliniq` | `determined-hawk-630` | `original-raven-198` | **the real one** — `vetic.app` talks to it, the user data is there |
-| `cliniq-262bb` | `clever-nightingale-958` | `modest-kingfisher-670` | a duplicate, serving nothing |
+| | deployment |
+|---|---|
+| production | `determined-hawk-630` — what `vetic.app` talks to |
+| dev | `original-raven-198` — set in `.env.local` |
 
-Convex appends a suffix like `-262bb` when a project name is already taken, so
-`npx convex dev` in a fresh checkout can silently create a *second* project
-instead of joining this one. That is what happened, and `.env.local` pointed at
-the duplicate for weeks.
+There has been a second. Convex appends a suffix when a project name is already
+taken, so `npx convex dev` in a fresh checkout created `cliniq-262bb` instead of
+joining this one, and `.env.local` pointed at that duplicate for weeks. Deleting
+it is a dashboard action; check whether it has actually happened rather than
+assuming, because the deployments answer normally right up until they do not:
+
+```bash
+for d in clever-nightingale-958 modest-kingfisher-670; do
+  printf '%-26s ' "$d"
+  curl -s -o /dev/null -w '%{http_code}\n' "https://$d.convex.cloud/version"
+done
+```
+
+**200 means the deployment is alive**, so `cliniq-262bb` has not gone. A deleted
+or never-existent deployment gives **404** — verify that yourself against a
+made-up name before trusting a 200, because a check that cannot fail proves
+nothing:
+
+```bash
+curl -s -o /dev/null -w '%{http_code}\n' https://zzzz-nonexistent-12345.convex.cloud/version   # → 404
+```
+
+This needs no Convex login, unlike `npx convex function-spec --deployment …`,
+which answers the same question but only for someone already authenticated.
+
+Deletion was reported done on 2026-08-22 and both deployments still returned
+200 afterwards, so if the dashboard no longer lists the project while these URLs
+answer, that is a Convex-side inconsistency worth raising with them rather than
+a stale local cache.
+
+Either way the mechanism that created it is unchanged and will do the same again
+in a fresh checkout.
 
 The consequence is quiet, which is what makes it dangerous: a bare `npx convex
 deploy` announced "Your prod deployment clever-nightingale-958", pushed, and
@@ -115,7 +143,8 @@ trusting a deploy** — it carries the project name in a comment:
 CONVEX_DEPLOYMENT=dev:original-raven-198 # team: offdutythoughts, project: cliniq
 ```
 
-If it says `cliniq-262bb`, you are pointed at the duplicate. Re-run the select.
+Anything other than `project: cliniq` means a duplicate has been created again.
+Re-run the select rather than deploying.
 
 The browser bundle is the independent authority on which backend is live, and
 needs no Convex access at all:
@@ -133,9 +162,6 @@ placeholder compiled into `node_modules/convex/dist/react.bundle.js` (an example
 in a client error message), so it ships in the bundle without being a
 deployment. An earlier version of this command used `head -1` and printed
 nothing at all.
-
-`cliniq-262bb` still exists and still has a day of stray deploys in it. Deleting
-it would remove the trap; nobody has.
 
 ### If a production build fails
 
