@@ -26,13 +26,22 @@
 #
 #   ./scripts/promote.sh            # verify, promote, push
 #   ./scripts/promote.sh --dry-run  # verify and show what would happen
+#   ./scripts/promote.sh --skip-ci  # promote without waiting for a green CI
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
-DRY_RUN=false
-[[ "${1:-}" == "--dry-run" ]] && DRY_RUN=true
 
 fail() { printf '\n✗ %s\n' "$1" >&2; exit 1; }
+
+DRY_RUN=false
+SKIP_CI=false
+for arg in "$@"; do
+  case "$arg" in
+    --dry-run) DRY_RUN=true ;;
+    --skip-ci) SKIP_CI=true ;;
+    *) fail "unknown option: $arg (expected --dry-run or --skip-ci)" ;;
+  esac
+done
 
 # A promotion must start from a clean tree — a half-finished edit would otherwise
 # be carried onto production by the checkout.
@@ -54,6 +63,47 @@ fi
 
 echo "→ $AHEAD commit(s) to promote:"
 git log --oneline --no-decorate origin/production..origin/main | sed 's/^/    /'
+
+# ── CI gate ──────────────────────────────────────────────────────────────────
+#
+# This script pushes on demand and Vercel deploys straight from that push, so
+# nothing but the operator's memory stood between a red main and production. A
+# visual regression shipped that way: promoted at 05:23, CI went red at 05:28.
+#
+# Fails CLOSED. An unreadable verdict blocks the promotion rather than waving it
+# through, because a gate that silently skips itself is worse than no gate —
+# --skip-ci is the deliberate override for a hotfix.
+#
+# The one exception is "no run at all", which is a real, benign case: the
+# baseline bot pushes with GITHUB_TOKEN, and GitHub deliberately does not start
+# workflows for those commits. Blocking there would strand a promotion behind a
+# run that is never coming, so it warns loudly and continues.
+if $SKIP_CI; then
+  echo "→ CI check skipped (--skip-ci)"
+else
+  SLUG=$(git remote get-url origin | sed -E 's#^(git@github\.com:|https://github\.com/)##; s#\.git$##')
+  SHA=$(git rev-parse origin/main)
+
+  RUNS=$(curl -fsS --max-time 15 \
+    "https://api.github.com/repos/$SLUG/actions/runs?branch=main&per_page=20" 2>/dev/null) \
+    || fail "could not reach the GitHub API to read CI. Re-run with --skip-ci to promote regardless."
+
+  VERDICT=$(jq -r --arg sha "$SHA" \
+    '[.workflow_runs[] | select(.name == "CI" and .head_sha == $sha)][0]
+     | if . == null then "none" else (.conclusion // .status) end' <<<"$RUNS")
+
+  case "$VERDICT" in
+    success)
+      echo "→ CI green on ${SHA:0:7}" ;;
+    none)
+      echo "→ ⚠ no CI run for ${SHA:0:7} (bot pushes do not trigger workflows) — promoting unverified" ;;
+    queued|in_progress|pending|waiting|requested)
+      fail "CI is still $VERDICT on ${SHA:0:7}. Wait for it, or re-run with --skip-ci." ;;
+    *)
+      fail "CI is $VERDICT on ${SHA:0:7}. Fix main first, or re-run with --skip-ci.
+    https://github.com/$SLUG/actions?query=branch%3Amain" ;;
+  esac
+fi
 
 if $DRY_RUN; then
   echo -e "\n(dry run — nothing changed)"
