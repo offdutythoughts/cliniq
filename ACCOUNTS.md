@@ -113,6 +113,35 @@ passkeys are bound to — so it must be set on every deployment regardless of
 mail. `/forgot` shows the same confirmation whether or not the address has an
 account, so the page can't be used to enumerate who is registered.
 
+## Deployments — which Convex project is which
+
+vetic.app runs on project **`cliniq`**, production deployment
+**`determined-hawk-630`**. That is where the real accounts and their notes live.
+
+A second project, `cliniq-262bb`, exists with production
+`clever-nightingale-958`. It is empty. The repo, its dev deployment and the
+Vercel deploy key all pointed at *that* project until 2026-08-18, so
+`npx convex deploy` succeeded while pushing to a deployment nothing serves —
+production could not be updated at all, and the live site kept running an older
+bundle pinned to `determined-hawk-630`. No data was lost, and users never saw a
+fault, but four builds were spent before the split was visible.
+
+What to keep from it:
+
+- `CONVEX_DEPLOY_KEY` in Vercel must be a **production** key for project
+  `cliniq`. A key from the wrong project does not error — it deploys, to the
+  wrong database.
+- Do **not** set `CONVEX_DEPLOYMENT` in Vercel. The deploy key selects the
+  target; a second selector is how this went unnoticed for so long.
+- **`--prod` is not proof of anything.** It resolves through local project
+  config, which disagreed with the live site for days and reported two different
+  deployments in one session. Identify a deployment by what actually serves
+  traffic — compare `JWKS`, or look at the users table — then address it by name:
+
+```bash
+npx convex env list --deployment determined-hawk-630
+```
+
 ## Passkeys — live
 
 `convex/passkeys.ts` implements WebAuthn on top of `@simplewebauthn/server`,
