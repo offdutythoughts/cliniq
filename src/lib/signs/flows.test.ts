@@ -94,6 +94,14 @@ describe('raw-html onclick integrity (every onclick target resolves)', () => {
   // dyspnoea Expiratory/Restrictive/Mixed entry tiles call functions that never
   // existed. Documented + allow-listed, not introduced by us.
   const KNOWN_BROKEN = new Set(['renderExpFlow', 'renderRestFlow', 'renderMixedFlow'])
+  // Handlers whose VIEW has been deleted. Distinct from KNOWN_BROKEN, which is a
+  // legacy allow-list: these must never appear again, so they fail rather than
+  // being skipped. parseLegacyOnclick returns null for them, which means an
+  // authored call is a silently dead click — exactly the failure a test should
+  // catch instead of a reader discovering it.
+  const REMOVED_FN = new Map([
+    ['renderLesionDetail', 'LesionDetailView was deleted as unreachable; link the disease page, or goLesionTab'],
+  ])
   const NAV_FN = /\b(renderFlowId|renderDxId|renderDiseasePage|renderProtoDetail|renderLesionDetail|goLesionTab|renderDiffDetail|renderSubTypeDetail|renderExpFlow|renderRestFlow|renderMixedFlow)\('([^']*)'/g
 
   const problems: string[] = []
@@ -103,6 +111,8 @@ describe('raw-html onclick integrity (every onclick target resolves)', () => {
     while ((m = NAV_FN.exec(json)) !== null) {
       const [, fn, arg] = m
       const note = `${pageId}: ${fn}('${arg}')`
+      const removed = REMOVED_FN.get(fn)
+      if (removed) { problems.push(`${note} → handler removed: ${removed}`); continue }
       if (KNOWN_BROKEN.has(fn)) continue
       if (fn === 'renderFlowId') { if (!FLOWS[arg]) problems.push(`${note} → flow id not in FLOWS`); continue }
       if (fn === 'renderDxId') { if (!DX[arg]) problems.push(`${note} → dx sign not in DX`); continue }

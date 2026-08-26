@@ -1,13 +1,14 @@
 // The one definition of what a name-only box is allowed to say beneath the name.
 //
-// Three surfaces render the same shape — a clinical NAME with a dimmed second
-// line and a tap-through — and all three follow the same rule, so the rule lives
-// here rather than being spelled three times:
+// Two surfaces render the same shape — a clinical NAME with a dimmed second line
+// and a tap-through — and both follow the same rule, so the rule lives here
+// rather than being spelled twice:
 //
-//   • flow chips           `endpoints` items      (EndpointView)      — lint-chips
-//   • category tiles       categoryGrid/Columns   (CatTile)           — lint-tiles
-//   • differential rows    the ranked list on a   (LesionDetailView)  — filtered
-//                          lesion page                                  at render
+//   • flow chips     `endpoints` items      (EndpointView)  — lint-chips
+//   • category tiles categoryGrid/Columns   (CatTile)       — lint-tiles
+//
+// A third consumer, the lesion page's ranked differential rows, was filtered
+// through this predicate until that view was deleted as unreachable.
 //
 // THE RULE: the box carries the name. The detail belongs on the page the box
 // opens — a reader scanning a differential is matching a name against a list,
