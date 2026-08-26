@@ -81,6 +81,9 @@
 
 import { eachPageBlock, eachTile, pageCount } from './lib/walk'
 import { lint } from './lib/lint'
+// CHECK 8's allowed second line — shared with lint-chips and the lesion-page
+// differential rows, because they are all the same box to the reader.
+import { isTriageQualifier } from '../src/lib/triageQualifier'
 
 const { fail, done } = lint('category-tile')
 
@@ -93,9 +96,6 @@ const isGap = (t: TileLike) =>
 // tiles (e.g. "dog", "cat", "dog (#1)", "cat (#1), dog (#2)", "dog (#3)").
 const SPECIES_RANK = /^(dog|cat)(\s*\(#\d+\))?(\s*,\s*(dog|cat)(\s*\(#\d+\))?)*$/i
 
-// CHECK 8 — the only sublabel a tile may keep. Same shape as lint-chips'
-// ALLOWED_SUBLABEL, because a tile and a chip are the same box to the reader.
-const ALLOWED_SUBLABEL = /^(?:#\d+ cause\b.*|.*most common .*cause.*|(?:🐱|🐶)?\s*(?:cats?|dogs?)(?: only)?)$/i
 
 // Reviewed linked tiles whose post-dash text is load-bearing (the specific linked
 // diagnosis / triage), not a strippable description. Keyed `pageId::label`.
@@ -182,7 +182,7 @@ for (const { pageId, kind, cat, tile } of eachTile()) {
   }
   // CHECK 8: the second line is a ranking / species qualifier or it does not exist.
   const sublabel = String(tile.sublabel ?? '').trim()
-  if (sublabel && !ALLOWED_SUBLABEL.test(sublabel)) {
+  if (sublabel && !isTriageQualifier(sublabel)) {
     fail(`[${pageId}] ${cat} · "${label}" sublabel "${sublabel}" — a tile carries the diagnosis name only; strip it (keep only a ranking or species qualifier, e.g. "Most common feline cause", "🐱 Cats").`)
   }
   // CHECK 5: sentence case — the column header carries the emphasis.
