@@ -41,11 +41,10 @@
 
 import { FLOWS } from '../src/lib/signs/flows/index'
 import type { Block, Endpoint } from '../src/lib/signs/flowTypes'
+// The allowed second line is defined once, for chips, tiles and the lesion-page
+// differential rows alike — see that module's header for the rule.
+import { isTriageQualifier } from '../src/lib/triageQualifier'
 
-// A sublabel is allowed only if it is a triage qualifier: a ranking ("#1 cause dog",
-// "Most common feline cause") or a bare species restriction ("🐱 Cats") — context that
-// picks between boxes and that the destination page does not give at a glance.
-const ALLOWED_SUBLABEL = /^(?:#\d+ cause\b.*|.*most common .*cause.*|(?:🐱|🐶)?\s*(?:cats?|dogs?)(?: only)?)$/i
 
 // Rule 3 — sentence case. A chip carries a lesion/disease NAME, written the way it
 // reads in a sentence ("Bacterial septic arthritis"), not in block capitals. Mirrors
@@ -91,7 +90,7 @@ for (const [id, page] of Object.entries(FLOWS)) {
     }
     // Rule 2 — unconditional: linked or not, a chip is its disease name plus, at most, a
     // ranking / species triage qualifier.
-    if (e.sublabel && !ALLOWED_SUBLABEL.test(e.sublabel)) {
+    if (e.sublabel && !isTriageQualifier(e.sublabel)) {
       fail(`[${id}] chip "${e.label}" sublabel "${e.sublabel}" — a chip carries the disease name only; strip it (keep only a ranking or species qualifier, e.g. "#1 cause dog", "🐱 Cats").`)
     }
     // Rule 3: sentence case — block capitals are for acronyms only.

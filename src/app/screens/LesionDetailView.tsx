@@ -8,7 +8,10 @@ import { useNav } from '../nav/NavContext'
 import { Bul, str } from './markup'
 import { DiseasePageCard, ProtocolCards, protocolsForLesion } from './protocolCards'
 import { UrgTag, SpTag, ZooTag } from './tags'
+import { isTriageQualifier } from '../../lib/triageQualifier'
 import { TAG_ROW } from './styles'
+
+const showFeat = (feat: unknown): boolean => isTriageQualifier(str(feat))
 
 export function LesionDetailView({ id }: { id: string }) {
   const nav = useNav()
@@ -60,8 +63,15 @@ export function LesionDetailView({ id }: { id: string }) {
           <div key={d.id} className="diff-row" role="button" onClick={() => nav.navigate({ kind: 'diff', id: d.id })}>
             <div className="diff-num">{i + 1}</div>
             <div className="diff-body">
-              <div className="diff-name">{d.name}</div>
-              <div className="diff-feat">{d.feat}</div>
+              {/* Name-only, same rule as a flow chip: `feat` is the discriminator
+                  paragraph, and it is already the headline field of the page this
+                  row opens ("Key distinguishing feature" in DiffDetailView), so
+                  showing it here duplicates the destination in 11px grey. Only a
+                  ranking / species qualifier survives in the list — see
+                  lib/triageQualifier. Filtered at render, not deleted from the
+                  data, so the detail page keeps it. */}
+              <div className="diff-name" style={showFeat(d.feat) ? undefined : { marginBottom: 0 }}>{d.name}</div>
+              {showFeat(d.feat) && <div className="diff-feat">{str(d.feat)}</div>}
             </div>
             <div className="diff-arrow">›</div>
           </div>
