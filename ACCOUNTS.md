@@ -128,9 +128,9 @@ fault, but four builds were spent before the split was visible.
 
 What to keep from it:
 
-- `CONVEX_DEPLOY_KEY` in Vercel must be a **production** key for project
-  `cliniq`. A key from the wrong project does not error — it deploys, to the
-  wrong database.
+- A deploy key from the wrong project does not error — it deploys, to the wrong
+  database. Vercel no longer uses one (see the deploying section below), but the
+  same trap applies to any CI that does.
 - Do **not** set `CONVEX_DEPLOYMENT` in Vercel. The deploy key selects the
   target; a second selector is how this went unnoticed for so long.
 - **`--prod` is not proof of anything.** It resolves through local project
@@ -141,6 +141,30 @@ What to keep from it:
 ```bash
 npx convex env list --deployment determined-hawk-630
 ```
+
+## Deploying — the backend is a separate, manual step
+
+`vercel.json` builds the frontend only (`npm run build`). Vercel does **not**
+deploy Convex functions. After changing anything under `convex/`, push it
+yourself:
+
+```bash
+npx convex deploy          # targets project cliniq / determined-hawk-630
+```
+
+It used to be automatic — `npx convex deploy --cmd 'npm run build'` — but that
+made every production build depend on `CONVEX_DEPLOY_KEY` reaching it, and it
+repeatedly did not: builds failed with `CONVEX_DEPLOY_KEY is not set` even with
+the variable present and scoped to Production, and Vercel's Redeploy reads the
+environment as it stood when that deployment was first created, so retrying an
+old deployment could never pick up a corrected value. Splitting the two removes
+Vercel from the Convex path entirely.
+
+The cost is that the two halves can drift: deploy `convex/` changes and the
+frontend separately, and remember that a backend change alone will not appear
+in a Vercel build. `NEXT_PUBLIC_CONVEX_URL` is set in Vercel's Production
+environment and pins the bundle to `determined-hawk-630`; the build no longer
+sets it, so do not remove it.
 
 ## Passkeys — live
 
