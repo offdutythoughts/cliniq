@@ -24,9 +24,10 @@
 # Every exit path restores the branch you started on. Before, a rejected push or
 # a merge conflict left you sitting on `production` mid-promotion.
 #
-#   ./scripts/promote.sh            # verify, promote, push
-#   ./scripts/promote.sh --dry-run  # verify and show what would happen
-#   ./scripts/promote.sh --skip-ci  # promote without waiting for a green CI
+#   ./scripts/promote.sh              # verify, promote, push, watch the deploy
+#   ./scripts/promote.sh --dry-run    # verify and show what would happen
+#   ./scripts/promote.sh --skip-ci    # promote without waiting for a green CI
+#   ./scripts/promote.sh --no-watch   # push and exit without watching the deploy
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -35,11 +36,13 @@ fail() { printf '\n✗ %s\n' "$1" >&2; exit 1; }
 
 DRY_RUN=false
 SKIP_CI=false
+WATCH=true
 for arg in "$@"; do
   case "$arg" in
-    --dry-run) DRY_RUN=true ;;
-    --skip-ci) SKIP_CI=true ;;
-    *) fail "unknown option: $arg (expected --dry-run or --skip-ci)" ;;
+    --dry-run)  DRY_RUN=true ;;
+    --skip-ci)  SKIP_CI=true ;;
+    --no-watch) WATCH=false ;;
+    *) fail "unknown option: $arg (expected --dry-run, --skip-ci or --no-watch)" ;;
   esac
 done
 
@@ -110,6 +113,85 @@ if $DRY_RUN; then
   exit 0
 fi
 
+# ── Deploy watch ─────────────────────────────────────────────────────────────
+#
+# The CI gate above proves main is good. It says NOTHING about whether the build
+# Vercel runs off the push actually succeeds, because the two are independent:
+# nothing in ci.yml gates the deploy, and the production build does work CI never
+# performs — it runs `npx convex deploy` before `npm run build`. A promotion once
+# went green on CI and then failed in Vercel on a missing CONVEX_DEPLOY_KEY, and
+# the only reason it was noticed is that somebody went looking.
+#
+# REPORTS, DOES NOT PREVENT. This runs after the push, because the deploy does
+# not exist until the push creates it. It cannot stop a bad deploy — it makes one
+# impossible to miss, and tells you the alias did not move. Preventing would mean
+# building a preview first and promoting that artifact, which is a different
+# (and much larger) design.
+#
+# Degrades to a warning, never a false alarm: no token, no linked project, no
+# jq, an unreachable API or a slow build all print a note and leave the exit
+# status alone. The promotion itself already succeeded by then, so failing the
+# script over an unreadable verdict would be a lie about what happened. Only a
+# deployment Vercel positively reports as ERROR or CANCELED exits non-zero.
+DEPLOY_POLL_SECONDS=10
+DEPLOY_TIMEOUT_SECONDS=600
+
+# The CLI stores its token per-platform; $VERCEL_TOKEN wins when set (CI, or an
+# operator who would rather not have the script read the CLI's state at all).
+vercel_token() {
+  if [[ -n "${VERCEL_TOKEN:-}" ]]; then printf '%s' "$VERCEL_TOKEN"; return 0; fi
+  local f
+  for f in "$HOME/Library/Application Support/com.vercel.cli/auth.json" \
+           "${XDG_DATA_HOME:-$HOME/.local/share}/com.vercel.cli/auth.json"; do
+    [[ -r "$f" ]] || continue
+    jq -re '.token // empty' "$f" 2>/dev/null && return 0
+  done
+  return 1
+}
+
+watch_deploy() {
+  local sha="$1" short="${1:0:7}"
+  local token project team
+
+  command -v jq >/dev/null 2>&1 || { echo "→ ⚠ deploy watch skipped: jq not installed"; return 0; }
+  token=$(vercel_token) || { echo "→ ⚠ deploy watch skipped: no Vercel token (set VERCEL_TOKEN, or run: vercel login)"; return 0; }
+  [[ -r .vercel/project.json ]] || { echo "→ ⚠ deploy watch skipped: no .vercel/project.json (run: vercel link)"; return 0; }
+  project=$(jq -re '.projectId // empty' .vercel/project.json) || { echo "→ ⚠ deploy watch skipped: no projectId in .vercel/project.json"; return 0; }
+  team=$(jq -r '.orgId // empty' .vercel/project.json)
+
+  local url="https://api.vercel.com/v6/deployments?projectId=$project&target=production&limit=20"
+  [[ -n "$team" ]] && url="$url&teamId=$team"
+
+  echo "→ watching the production deploy for $short …"
+  local waited=0 body state="" uid=""
+  while (( waited < DEPLOY_TIMEOUT_SECONDS )); do
+    body=$(curl -fsS --max-time 15 -H "Authorization: Bearer $token" "$url" 2>/dev/null) || body=""
+    if [[ -n "$body" ]]; then
+      # Match on the commit, not on "newest": a concurrent promotion or a
+      # redeploy of something else must not be mistaken for ours.
+      state=$(jq -r --arg sha "$sha" '[.deployments[] | select(.meta.githubCommitSha == $sha)][0].readyState // ""' <<<"$body")
+      uid=$(jq -r --arg sha "$sha"   '[.deployments[] | select(.meta.githubCommitSha == $sha)][0].uid // ""'        <<<"$body")
+    fi
+    case "$state" in
+      READY)
+        echo "✓ deploy READY — https://vetic.app is serving $short"
+        return 0 ;;
+      ERROR|CANCELED)
+        printf '\n✗ the deploy for %s finished %s. The git promotion succeeded, but production is\n' "$short" "$state" >&2
+        printf '  STILL SERVING THE PREVIOUS BUILD — a failed build never takes the alias.\n\n' >&2
+        printf '  Build log:  vercel inspect %s --logs\n' "${uid:-<deployment>}" >&2
+        printf '  Retry:      vercel redeploy %s\n' "${uid:-<deployment>}" >&2
+        return 1 ;;
+    esac
+    sleep "$DEPLOY_POLL_SECONDS"
+    waited=$(( waited + DEPLOY_POLL_SECONDS ))
+  done
+
+  echo "→ ⚠ deploy still ${state:-unreported} after ${DEPLOY_TIMEOUT_SECONDS}s. Not a failure —"
+  echo "  a slow build outlives the watch. Check it with:  vercel ls --prod"
+  return 0
+}
+
 STARTED_ON=$(git rev-parse --abbrev-ref HEAD)
 
 # From here the repo is mid-promotion: checked out on `production` with a merge
@@ -149,8 +231,13 @@ for attempt in $(seq 1 $ATTEMPTS); do
   if git push origin production; then
     trap - EXIT
     git checkout --quiet "$STARTED_ON"
+    PROMOTED_SHA=$(git rev-parse origin/production)
     echo -e "\n✓ promoted. Vercel will deploy from origin/production."
-    exit 0
+    $WATCH || { echo "→ deploy watch skipped (--no-watch)"; exit 0; }
+    # `if`, not a bare call: under `set -e` a non-zero return would abort here
+    # before any line that reads $?, which happens to exit 1 anyway but reads as
+    # if the exit code were being chosen deliberately somewhere. It is, here.
+    if watch_deploy "$PROMOTED_SHA"; then exit 0; else exit 1; fi
   fi
 
   echo "→ push rejected: origin/production moved (attempt $attempt/$ATTEMPTS)"
