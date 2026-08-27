@@ -18,7 +18,6 @@ type Nav =
   | { fn: 'renderProtoDetail'; args: [string] }
   | { fn: 'goLesionTab'; args: [string, string] }
   | { fn: 'renderSubTypeDetail'; args: [string] }
-  | { fn: 'renderLesionDetail'; args: [string] }
   | { fn: 'renderDiffDetail'; args: [string] }
 
 const SCREENS: { name: string; nav: Nav }[] = [
@@ -59,8 +58,7 @@ const SCREENS: { name: string; nav: Nav }[] = [
   { name: 'lesion-hepatic', nav: { fn: 'goLesionTab', args: ['LOC-JD-HEP', 'Hepatic'] } },
   // Lesion drill-down detail leaves (reached from the lesion grid / flows).
   // subtype-gi-neo exercises the subTypeDetail etiology #/-/@ parser + diag +
-  // treat; subtype-hepatic a simpler one; lesion-detail-regen renderLesionDetail
-  // (signs + differentials list); diff-d001 renderDiffDetail.
+  // treat; subtype-hepatic a simpler one; diff-d001 renderDiffDetail.
   { name: 'subtype-gi-neo', nav: { fn: 'renderSubTypeDetail', args: ['LES-GI-UP-NEO'] } },
   { name: 'subtype-hepatic', nav: { fn: 'renderSubTypeDetail', args: ['LES-JD-HEP'] } },
   // The two halves of the protocol rule (src/app/screens/protocolCards.tsx), one
@@ -69,7 +67,6 @@ const SCREENS: { name: string; nav: Nav }[] = [
   // <DiseasePageCard> at the top instead and the protocol lives on that page.
   { name: 'subtype-pleural-exudate', nav: { fn: 'renderSubTypeDetail', args: ['LES-PL-FL2'] } },
   { name: 'subtype-pericardial', nav: { fn: 'renderSubTypeDetail', args: ['LES-PM-CARD'] } },
-  { name: 'lesion-detail-regen', nav: { fn: 'renderLesionDetail', args: ['LES-PM-REGEN'] } },
   { name: 'diff-d001', nav: { fn: 'renderDiffDetail', args: ['D001'] } },
 ]
 
@@ -95,7 +92,6 @@ function toView(nav: Nav): unknown {
     case 'renderProtoDetail': return { kind: 'protocol', id: nav.args[0] }
     case 'goLesionTab': return { kind: 'lesionLoc', loc: nav.args[0], name: nav.args[1] }
     case 'renderSubTypeDetail': return { kind: 'subTypeDetail', id: nav.args[0] }
-    case 'renderLesionDetail': return { kind: 'lesionDetail', id: nav.args[0] }
     case 'renderDiffDetail': return { kind: 'diff', id: nav.args[0] }
   }
 }

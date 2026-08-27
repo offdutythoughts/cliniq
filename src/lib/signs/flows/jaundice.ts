@@ -6,8 +6,10 @@
 //   renderJaundiceFlowPostHep  → 'jaundice-post-hep'
 // The 3 sub-flows are CAT_STYLE category grids (the legacy `col()` generator) →
 // `categoryGrid`. Hep/Post-hep chips link via goLesionTab → typed `lesion`
-// links. Pre-hep's two clickable chips use renderLesionDetail('LES-PM-REGEN'),
-// which has NO typed Link kind → that grid is an `html` block (FLAGGED below).
+// links. Pre-hep is a typed `categoryColumns`, one cause per chip, each linking
+// to its own disease page (see the note above jaundicePreHep) — it used to be an
+// html grid whose chips called renderLesionDetail('LES-PM-REGEN'), a handler
+// since removed along with the view behind it.
 // The entry's branch is bespoke: the left arm ends in one endpoint, the right
 // arm ends in a captioned 2-col endpoint sub-grid that the typed `endpoints`
 // (vertical stack) cannot reproduce → that terminal is an `html` block.

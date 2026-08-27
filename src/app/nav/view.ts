@@ -25,7 +25,6 @@ export type View =
   | { kind: 'protocol'; id: string }                                             // renderProtoDetail
   | { kind: 'lesionLoc'; loc: string; name: string; filter?: 'acute' | 'chronic' } // goLesionTab
   | { kind: 'subTypeDetail'; id: string }                                        // renderSubTypeDetail
-  | { kind: 'lesionDetail'; id: string }                                         // renderLesionDetail
   | { kind: 'diff'; id: string }                                                 // renderDiffDetail
 
 export type ViewKind = View['kind']
@@ -40,7 +39,6 @@ export function viewKey(v: View): string {
     case 'protocol': return `protocol:${v.id}`
     case 'lesionLoc': return `lesionLoc:${v.loc}`
     case 'subTypeDetail': return `subTypeDetail:${v.id}`
-    case 'lesionDetail': return `lesionDetail:${v.id}`
     case 'diff': return `diff:${v.id}`
   }
 }
@@ -71,9 +69,10 @@ export function parseLegacyOnclick(js: string): View | null {
     case 'renderFlowId': return { kind: 'flow', flowId: args[0] }
     case 'renderDxId': return { kind: 'dx', sign: args[0], tab: args[1] || 'history' }
     case 'goLesionTab': return { kind: 'lesionLoc', loc: args[0], name: args[1] }
-    case 'renderLesionDetail': return { kind: 'lesionDetail', id: args[0] }
     case 'renderSubTypeDetail': return { kind: 'subTypeDetail', id: args[0] }
     case 'renderDiffDetail': return { kind: 'diff', id: args[0] }
+    // renderLesionDetail lived here until its view was deleted as unreachable;
+    // the REMOVED_FN guard in flows.test.ts fails if one is authored again.
     default: return null // renderRestFlow/renderMixedFlow/renderExpFlow: known-broken legacy links
   }
 }
@@ -138,10 +137,6 @@ export function screenMeta(v: View): ScreenMeta {
       // heading. Match the plain `disease` case and leave the topbar blank.
       const redirects = !!(l?.directDis && l?.dis)
       return { topbarTitle: redirects ? '' : trunc(sub, 30), noteKey: `lesion:${v.id}`, noteTitle: sub }
-    }
-    case 'lesionDetail': {
-      const sub = lesionById.get(v.id)?.sub ?? ''
-      return { topbarTitle: sub, noteKey: `lesion:${v.id}`, noteTitle: sub }
     }
     case 'diff': {
       const name = diffById.get(v.id)?.name ?? ''

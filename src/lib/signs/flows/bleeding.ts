@@ -12,9 +12,10 @@
 //   • entry: the 🐕 vs 🐱 dog/cat species-difference matrix
 //   • primary: the platelet-mechanism 3-column sub-grid (LOW <50) + the
 //     normal-count BMBT branch (asymmetric 3fr:2fr, custom labels)
-//   • vasc: the violet col()/chip lesion-distribution grid — its chips call
-//     renderLesionDetail('LES-…'), for which there is NO typed Link (the only
-//     lesion Link is goLesionTab); kept verbatim in html.
+//   • vasc: the violet col()/chip lesion-distribution grid — now typed
+//     `endpoints` linking each cause to its disease page. It was kept verbatim in
+//     html while its chips called renderLesionDetail('LES-…'), a handler since
+//     removed along with the view behind it.
 
 import { forkHtml, type FlowPage } from '../flowTypes'
 

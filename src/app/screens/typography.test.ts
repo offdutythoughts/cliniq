@@ -19,7 +19,6 @@ const SCALED_FILES = [
   'markup.tsx',
   'DiseasePageView.tsx',
   'SubTypeDetailView.tsx',
-  'LesionDetailView.tsx',
   'DiffDetailView.tsx',
   'ProtocolDetailView.tsx',
   'ProtocolStep.tsx',
