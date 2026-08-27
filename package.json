@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "next build",
+    "check:convex": "tsx scripts/check-convex-drift.ts",
     "dev": "next dev",
     "lint": "eslint",
     "lint:alphas": "tsx scripts/lint-alphas.ts",
