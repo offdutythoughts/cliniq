@@ -49,25 +49,35 @@ explicit `-m` so the merge message can never capture the editor's comment templa
 
 ### How a production deploy works
 
-`vercel.json` puts `npx convex deploy` in the production `buildCommand`, so one
-promote ships frontend and backend together. Previews take the `else` branch —
-plain `npm run build` — and never deploy Convex.
+`vercel.json` builds the frontend only (`npm run build`). Vercel does **not**
+deploy Convex — after changing anything under `convex/`, push it yourself:
 
-Confirm a promote actually landed. The build log names the Convex target:
+```bash
+npx convex deploy          # targets project cliniq / determined-hawk-630
+```
+
+The two used to be one step (`npx convex deploy --cmd 'npm run build'`), and
+`f2991e0` split them. Why, and the drift that costs, is in ACCOUNTS.md under
+"Deploying — the backend is a separate, manual step". The short version: it made
+every frontend deploy depend on a credential that repeatedly failed to arrive,
+and a frontend that cannot ship is worse than a backend you have to remember.
+
+**A backend change alone produces no Vercel build.** Nothing will look wrong;
+the frontend simply keeps talking to whatever `convex/` code was last pushed by
+hand.
+
+Confirm a promote landed:
 
 ```bash
 vercel ls --prod                        # Age / Status / Duration
-vercel inspect --logs <deployment-url>  # look for the [Production] line
+vercel inspect --logs <deployment-url>  # `Running "npm run build"`
 ```
 
-```
-▌ [Production] offdutythoughts:cliniq:production (prod) (dashboard: .../determined-hawk-630)
-✔ Deployed Convex functions to [REDACTED]
-```
+A production build now takes 30–50 seconds. Anything finishing in under ten is
+failing early — that was the signature of the `convex deploy` auth failure back
+when the build still called it.
 
-Duration is a useful tell on its own: a `convex deploy` auth failure dies in
-under ten seconds, a real build takes 35–50.
-
+Status is also readable with no Vercel account, since the repo is public:
 Status is also readable with no Vercel account, since the repo is public:
 
 ```bash
@@ -165,10 +175,15 @@ nothing at all.
 
 ### If a production build fails
 
-`vercel.json` is the file that *invokes* `convex deploy`, so it looks guilty
-whenever that call fails, and removing it "fixes" production every time by
-removing the call rather than the cause. It has been added and removed four
-times on that reasoning:
+Read the build log before changing anything. Between 2026-08-16 and 2026-08-18
+every production deployment failed, eight in a row, while previews stayed green.
+The cause — `MissingAccessToken` from `convex deploy` — was in the log the whole
+time and was diagnosed only once someone opened it.
+
+`vercel.json` was the file that *invoked* `convex deploy`, so it looked guilty
+whenever that call failed, and removing it "fixed" production every time by
+removing the call rather than the cause. It was added and removed five times on
+that reasoning before the coupling was dropped for good:
 
 | | |
 |---|---|
@@ -177,20 +192,22 @@ times on that reasoning:
 | `cff91b1` | put back on main |
 | `5f638f3` | removed again, after two failed attempts with a deploy key that had never actually been set |
 | `f068012` | restored — green, once `CONVEX_DEPLOY_KEY` genuinely existed |
+| `f2991e0` | **coupling removed.** Builds failed again with the key present and scoped to Production |
 
-Between 2026-08-16 and 2026-08-18 every production deployment failed, eight in a
-row, while previews stayed green. The cause was `MissingAccessToken` from
-`convex deploy`, visible in the build log the whole time and diagnosed only
-after someone read it.
+So a build failing today cannot be a Convex auth problem: the build no longer
+talks to Convex at all. If one fails, it is the Next build, and the log says so.
 
-**Read the log before touching `vercel.json`.** If the key ever needs
-re-creating, mint it for `determined-hawk-630` — a key for
-`clever-nightingale-958` authenticates fine and deploys the wrong backend on
-every build, green and wrong:
+Two things learned the hard way, should anyone re-couple them:
+
+- **Vercel's Redeploy reads the environment as it stood when that deployment was
+  first created.** Retrying an old deployment can never pick up a corrected
+  variable. Push a new commit instead.
+- **Mint the key for `determined-hawk-630`.** One for `clever-nightingale-958`
+  authenticates perfectly well and deploys the wrong backend on every build —
+  green, and wrong.
 
 ```bash
-npx convex deployment token create vercel-production \
-  --deployment determined-hawk-630 --save-env /tmp/key.env
+npx convex deployment token create ci --deployment determined-hawk-630 --save-env /tmp/key.env
 vercel env add CONVEX_DEPLOY_KEY production   # then confirm in `vercel env ls`
 ```
 
