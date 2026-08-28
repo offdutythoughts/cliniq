@@ -340,19 +340,16 @@ const haematuriaTerminal: FlowPage = {
       <!-- Bladder neck / trigone -->
       <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--tone-indigo-fg);background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
         🫧 Bladder Neck / Trigone ›
-        <div style="font-weight:400;font-size:8.5px;margin-top:3px;opacity:.8;">Urothelial carcinoma (TCC) · Bacterial cystitis · Cystic calculi (trigonal) · Polypoid cystitis · FIC · Bladder trauma / rupture</div>
       </div>
 
       <!-- Proximal urethra -->
       <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--tone-info-fg);background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
         🩻 Proximal Urethra ›
-        <div style="font-weight:400;font-size:8.5px;margin-top:3px;opacity:.8;">Urethral TCC (extension from bladder trigone)</div>
       </div>
 
       <!-- Prostate -->
       <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--tone-info-fg);background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
         ⚙️ Prostate ›
-        <div style="font-weight:400;font-size:8.5px;margin-top:3px;opacity:.8;">Prostatic disease (BPH · prostatitis · carcinoma)</div>
       </div>
     </div>`,
     },
@@ -401,13 +398,11 @@ const haematuriaUniform: FlowPage = {
       <!-- Upper UT -->
       <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--tone-info-fg);background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);cursor:pointer;" onclick="goLesionTab('LOC-HU-UPPER','Upper urinary tract')">
         🫘 Upper UT — YES ›
-        <div style="font-weight:400;font-size:8.5px;margin-top:3px;opacity:.8;">Pyelonephritis · Renal neoplasia · Renal calculi / nephrolithiasis · Idiopathic renal haematuria · CRGV / "Alabama rot" · Renal / ureteric trauma</div>
       </div>
 
       <!-- Bladder body -->
       <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--tone-indigo-fg);background:rgba(99,102,241,0.1);border-color:rgba(99,102,241,0.3);cursor:pointer;" onclick="goLesionTab('LOC-HU-BLADDER','Bladder')">
         🫧 Bladder Body — NO ›
-        <div style="font-weight:400;font-size:8.5px;margin-top:3px;opacity:.8;">Bacterial cystitis (diffuse) · Cystic calculi (body) · FIC (cat) · Bladder lymphoma (cat)</div>
       </div>
     </div>`,
     },
@@ -448,19 +443,16 @@ const haematuriaIndep: FlowPage = {
       <!-- Genital tract -->
       <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--hl-pink);background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);cursor:pointer;" onclick="goLesionTab('LOC-HU-GENIT','Genital tract')">
         ♀ Genital ›
-        <div style="font-weight:400;font-size:8.5px;margin-top:3px;opacity:.8;">Oestrus · Vaginal / vulvar tumour · Subinvolution of placental sites · Open pyometra</div>
       </div>
 
       <!-- Prostate -->
       <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--tone-info-fg);background:rgba(37,99,235,0.1);border-color:rgba(37,99,235,0.3);cursor:pointer;" onclick="goLesionTab('LOC-HU-PROST','Prostate')">
         ⚙️ Prostate ›
-        <div style="font-weight:400;font-size:8.5px;margin-top:3px;opacity:.8;">BPH · Chronic prostatitis · Prostatic carcinoma</div>
       </div>
 
       <!-- Distal urethra -->
       <div class="flow-node" style="font-size:9.5px;font-weight:700;color:var(--tone-violet-fg);background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.3);cursor:pointer;" onclick="goLesionTab('LOC-HU-URETHRA','Urethra')">
         🩻 Distal Urethra ›
-        <div style="font-weight:400;font-size:8.5px;margin-top:3px;opacity:.8;">Urethral neoplasia · Urethral prolapse · Granulomatous urethritis</div>
       </div>
     </div>
 
