@@ -49,6 +49,27 @@ describe('parseSources', () => {
     expect(parseSources('Gelatt 6th edn Table 17.3').map(s => s.id)).toEqual(['gelatt'])
   })
 
+  it('numbers every chapter a single Gelatt parenthetical names, not just the first', () => {
+    expect(parseSources('Gelatt 6th edn Ch 15, Ch 28').map(s => s.id))
+      .toEqual(['gelatt-ch15', 'gelatt-ch28'])
+    // Gelatt part-chapters are decimal and must survive intact.
+    expect(parseSources('Gelatt 6th edn Ch 8.5, Ch 20').map(s => s.id))
+      .toEqual(['gelatt-ch8.5', 'gelatt-ch20'])
+    // Page ranges and table refs trailing a chapter must not be read as chapters.
+    expect(parseSources('Gelatt 6th edn Ch 20 pp. 1213–1221, Ch 22').map(s => s.id))
+      .toEqual(['gelatt-ch20', 'gelatt-ch22'])
+  })
+
+  it('resolves the dentistry and toxicology books per chapter', () => {
+    expect(parseSources('Lemmons 4th edn Ch 6').map(s => s.id)).toEqual(['lemmons-ch6'])
+    expect(parseSources('Lemmons 4th edn Ch 6')[0].text)
+      .toContain('Lemmons MS. Veterinary Dentistry: A Team Approach. 4th ed. Elsevier; 2025')
+    expect(parseSources('Gupta 3rd edn Ch 29 lead, Ch 34 salt').map(s => s.id))
+      .toEqual(['gupta-ch29', 'gupta-ch34'])
+    // No chapter named — fall back to a book-level entry.
+    expect(parseSources('Lemmons 4th edn').map(s => s.id)).toEqual(['lemmons'])
+  })
+
   it('treats ACVIM as the uroliths consensus source', () => {
     expect(parseSources('ACVIM 2016').map(s => s.id)).toEqual(['acvim-uroliths'])
     expect(parseSources('ACVIM 2016')[0].text).toContain('J Vet Intern Med. 2016;30(5):1564-1574')
