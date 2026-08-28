@@ -24,10 +24,11 @@
 # Every exit path restores the branch you started on. Before, a rejected push or
 # a merge conflict left you sitting on `production` mid-promotion.
 #
-#   ./scripts/promote.sh              # verify, promote, push, watch the deploy
-#   ./scripts/promote.sh --dry-run    # verify and show what would happen
-#   ./scripts/promote.sh --skip-ci    # promote without waiting for a green CI
-#   ./scripts/promote.sh --no-watch   # push and exit without watching the deploy
+#   ./scripts/promote.sh                # verify, promote, push, watch the deploy
+#   ./scripts/promote.sh --dry-run      # verify and show what would happen
+#   ./scripts/promote.sh --skip-ci      # promote without waiting for a green CI
+#   ./scripts/promote.sh --skip-convex  # promote with the backend out of sync
+#   ./scripts/promote.sh --no-watch     # push and exit without watching the deploy
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -36,13 +37,15 @@ fail() { printf '\n✗ %s\n' "$1" >&2; exit 1; }
 
 DRY_RUN=false
 SKIP_CI=false
+SKIP_CONVEX=false
 WATCH=true
 for arg in "$@"; do
   case "$arg" in
-    --dry-run)  DRY_RUN=true ;;
-    --skip-ci)  SKIP_CI=true ;;
-    --no-watch) WATCH=false ;;
-    *) fail "unknown option: $arg (expected --dry-run, --skip-ci or --no-watch)" ;;
+    --dry-run)     DRY_RUN=true ;;
+    --skip-ci)     SKIP_CI=true ;;
+    --skip-convex) SKIP_CONVEX=true ;;
+    --no-watch)    WATCH=false ;;
+    *) fail "unknown option: $arg (expected --dry-run, --skip-ci, --skip-convex or --no-watch)" ;;
   esac
 done
 
@@ -106,6 +109,35 @@ else
       fail "CI is $VERDICT on ${SHA:0:7}. Fix main first, or re-run with --skip-ci.
     https://github.com/$SLUG/actions?query=branch%3Amain" ;;
   esac
+fi
+
+# ── Convex backend gate ──────────────────────────────────────────────────────
+#
+# This script promotes the FRONTEND. Since f2991e0 the backend ships separately —
+# Vercel does not deploy Convex — so a promote can put a frontend into production
+# that calls functions the live backend does not have. The CI gate cannot see
+# that: CI never talks to the Convex deployment.
+#
+# Fails CLOSED on drift it can actually see, matching the CI gate; --skip-convex
+# is the deliberate override for promoting a frontend while backend work is
+# deliberately pending. It does NOT fail when the check cannot run — the checker
+# exits 0 with a note when the Convex CLI is missing or not logged in, which is
+# normal on a machine that only ever ships the frontend, and an unreadable
+# verdict is not evidence of drift.
+if $SKIP_CONVEX; then
+  echo "→ Convex drift check skipped (--skip-convex)"
+elif [[ ! -x node_modules/.bin/tsx ]]; then
+  echo "→ ⚠ Convex drift check skipped: node_modules/.bin/tsx not found (npm install)"
+else
+  if CONVEX_OUT=$(node_modules/.bin/tsx scripts/check-convex-drift.ts 2>&1); then
+    # Either "in sync" or the checker's own skip note; print its first line so the
+    # promote log says which.
+    echo "→ $(head -n1 <<<"$CONVEX_OUT")"
+  else
+    printf '%s\n' "$CONVEX_OUT" >&2
+    fail "the Convex backend has drifted from convex/. Deploy it first (npx convex deploy),
+    or re-run with --skip-convex if this frontend does not depend on the difference."
+  fi
 fi
 
 if $DRY_RUN; then
