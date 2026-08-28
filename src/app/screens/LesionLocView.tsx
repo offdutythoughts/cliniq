@@ -3,11 +3,10 @@
 // Groups a location's lesions by category into a flow-wrap (category row →
 // arrows → tappable sub-type columns), then an optional diagnostic-approach card.
 
-import { Fragment } from 'react'
 import type { LesionRow } from '../../data/db'
 import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
-import { styleStringToObject as s, SCROLL_X, colTier } from './style'
+import { styleStringToObject as s, colTier } from './style'
 import { NavCard } from './markup'
 import { ForkLines } from './flowHelpers'
 import type { Tone } from '../../lib/signs/flowTypes'
@@ -180,12 +179,17 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
   // doesn't get the same width as "Immune-mediated". Width is derived from the
   // longest UNBREAKABLE run of each label (text wraps at spaces, slashes and
   // after hyphens, so only the longest run has to fit on one line).
-  //   0.58 = px of advance width per character per px of font-size, measured off
-  //   the app font at these sizes. It's an estimate, so `overflow-wrap:anywhere`
-  //   below is the backstop: a slight under-estimate wraps mid-word instead of
-  //   overflowing the border. Being deterministic (no canvas/DOM measurement) it
-  //   also renders identically on the server and the client.
-  const CH = 0.58
+  //   CH = px of advance width per character per px of font-size. Being a fixed
+  //   ratio (no canvas/DOM measurement) it renders identically on the server and
+  //   the client — but it has to ERR HIGH, because the two directions fail very
+  //   differently. Over-estimating spends slack the row already has; the tracks
+  //   are centred and a four-category row uses ~330px of ~568px. Under-estimating
+  //   breaks a word: "Glaucoma" measures 48px and a 0.58 estimate bought it 46,
+  //   so it wrapped to "Glaucom / a" with 234px of the row standing empty.
+  //   Measured against the real app font, the worst-case ratio is 0.623 (short
+  //   words at the bold card weight — "Mass", "Glaucoma"); 0.63 clears every
+  //   label in the DB with a little margin.
+  const CH = 0.63
   const runPx = (label: string, fontPx: number) =>
     Math.max(...label.split(/[\s/]+|(?<=-)/).map(w => w.length)) * fontPx * CH
   // Floor keeps a too-short label (e.g. "Mass") from collapsing to a sliver; the
@@ -201,6 +205,13 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
   // One explicit track list, shared by all four rows (fork legs, headers, arrows,
   // cards) so the columns stay aligned — they can't each size to their own
   // content independently or the arrows would drift off their headers.
+  //
+  // Every category stays on ONE line, next to its peers. Wrapping to a second
+  // line doesn't work here: the columns hold sub-type STACKS of unequal height,
+  // so a wrapped column sits far below the tallest stack above it and reads as
+  // part of that column rather than as a category of its own. When the line is
+  // wider than the page it scrolls sideways as one unit instead — `.scroll-x`
+  // shades the overflowing edge so the reader can see there is more.
   const gridCols = colPx.map(w => `${w}px`).join(' ')
   const gridStyle = s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;justify-content:center;`)
   const dxSign = DX_MAP[loc]
@@ -213,7 +224,7 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
         <div className="flow-node step">IDENTIFY LESION CATEGORY</div>
         {/* A single category isn't a split — it keeps the plain spine arrow. */}
         {cols < 2 && <div className="flow-arrow-v">↓</div>}
-        <div style={s(SCROLL_X)}>
+        <div className="scroll-x">
           {/* The category row is a split, so it gets the shared fork — inside the
               scroll box and on the row's own tracks, so the drops stay on their
               headers when a wide row scrolls. */}
@@ -227,23 +238,21 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
               <div key={cat} className="flow-node" style={s(`background:${cBg(cat)};border-color:${cBd(cat)};color:${cTx(cat)};font-size:${catFontSize}px;padding-left:${catPadX}px;padding-right:${catPadX}px;overflow-wrap:anywhere;cursor:default;`)}>{wrappable(cat)}</div>
             ))}
           </div>
-          <div style={s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;justify-content:center;`)}>
+          <div style={gridStyle}>
             {cats.map(cat => <div key={cat} className="flow-arrow-v">↓</div>)}
           </div>
           <div style={s(`display:grid;grid-template-columns:${gridCols};gap:6px;min-width:${totalMinPx}px;justify-content:center;align-items:start;`)}>
             {cats.map(cat => (
               <div key={cat} style={s('display:flex;flex-direction:column;gap:4px;')}>
-                {groups.get(cat)!.map(l => {
-                  return (
-                    <div key={l.id} role="button"
-                      style={s(`border-radius:8px;padding:${cardPadding};font-size:${cardFontSize}px;font-weight:600;text-align:center;border:1.5px solid ${cBd(cat)};background:${cBg(cat)};color:${cTx(cat)};cursor:pointer;transition:all .2s;line-height:1.3;overflow-wrap:anywhere;`)}
-                      onClick={() => nav.navigate({ kind: 'subTypeDetail', id: l.id })}
-                      onMouseOver={e => { e.currentTarget.style.filter = 'brightness(1.2)' }}
-                      onMouseOut={e => { e.currentTarget.style.filter = '' }}>
-                      {l.sub}
-                    </div>
-                  )
-                })}
+                {groups.get(cat)!.map(le => (
+                  <div key={le.id} role="button"
+                    style={s(`border-radius:8px;padding:${cardPadding};font-size:${cardFontSize}px;font-weight:600;text-align:center;border:1.5px solid ${cBd(cat)};background:${cBg(cat)};color:${cTx(cat)};cursor:pointer;transition:all .2s;line-height:1.3;overflow-wrap:anywhere;`)}
+                    onClick={() => nav.navigate({ kind: 'subTypeDetail', id: le.id })}
+                    onMouseOver={e => { e.currentTarget.style.filter = 'brightness(1.2)' }}
+                    onMouseOut={e => { e.currentTarget.style.filter = '' }}>
+                    {le.sub}
+                  </div>
+                ))}
               </div>
             ))}
           </div>

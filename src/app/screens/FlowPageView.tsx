@@ -17,7 +17,7 @@ import { DX } from '../../lib/signs/dx'
 import { RichText } from '../../components/RichText'
 import { useNav } from '../nav/NavContext'
 import { linkToView } from '../nav/view'
-import { styleStringToObject as s, toneBox, SCROLL_X, colTier } from './style'
+import { styleStringToObject as s, toneBox, SCROLL_X, colTier, evenTracks, WRAP_ANY } from './style'
 import { NotFound } from './NotFound'
 import { ForkLines, type Nav, Raw, ToneBox } from './flowHelpers'
 import { NavCard } from './markup'
@@ -30,7 +30,7 @@ const ST_ROW_DIVIDER   = s('grid-column:1/-1;height:1px;background:rgba(var(--sl
 const ST_BLOCK_TITLE   = s('font-size:11px;font-weight:700;margin-bottom:6px;')
 const ST_COL_FLEX      = s('display:flex;flex-direction:column;gap:4px;')
 const ST_UNLINKED_TILE = 'background:var(--card);border:1.5px solid var(--border);color:var(--gray2);opacity:.72;filter:saturate(.2);cursor:default;'
-const ST_TILE_BASE     = 'border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;line-height:1.3;word-break:break-word;'
+const ST_TILE_BASE     = 'border-radius:8px;padding:6px 8px;font-size:10px;font-weight:600;text-align:center;line-height:1.3;word-break:break-word;overflow-wrap:anywhere;'
 // Muted (intentional leaf note): keeps the category hue but visibly de-emphasised
 // — distinct from ST_UNLINKED_TILE (desaturated grey = authoring gap / lint error).
 const ST_TILE_MUTED    = 'opacity:.6;cursor:default;'
@@ -54,30 +54,24 @@ const connectsBefore = (b: Block): boolean => SPINE.has(b.kind)
 // ── Fork connector — how EVERY split is drawn ─────────────────────────────────
 // <ForkLines> (the shared component, in flowHelpers) is the ONE connector in
 // front of a split, on every screen; see its comment there for the geometry.
-// Column count at which each category preset stops being an even 1fr row and
-// spills into a clamped, horizontally scrolling one (see `spillGrid`). Shared so
-// the fork's "which grid template?" test can never drift from the layout's.
-const SPILL_AT = { grid: 4, dense: 5 } as const
 
 // The fork that should precede a block which lays its content out as a row of
 // columns: leg count, the split grid's gap, and (when the tracks aren't even 1fr)
 // its grid-template-columns so the legs line up track-for-track. `null` = not a
-// split, so the spine draws its usual single arrow. `'self'` = the block draws its
-// own leading fork (see `lead` on CategoryBlock): a spilled category row scrolls
-// horizontally, so its fork has to sit INSIDE that scroll box to stay aligned.
+// split, so the spine draws its usual single arrow. `'self'` = the block draws
+// its own leading fork (see `lead` on BranchBlock/CategoryBlock).
+//
+// Every row that fits itself to the measured width draws its OWN fork, because
+// only the block knows how many columns ended up on its first line: a four-
+// category row that wraps to 2 + 2 on a phone needs a two-leg fork, and the
+// spine — which renders before any measurement — would have drawn four.
 type Fork = { n: number; gap: number; cols?: string; extra?: string; rootExtra?: string }
 function splitCols(b: Block): Fork | 'self' | null {
   const fork = (n: number, gap: number, cols?: string) => (n >= 2 ? { n, gap, cols } : null)
   switch (b.kind) {
-    // A `scroll` branch keeps its columns' intrinsic widths inside a scroll box —
-    // there is no track template to mirror, so it keeps the plain spine arrow. A
-    // plain branch draws its own fork: its arms have a floor and scroll past it.
-    case 'branch': return b.scroll ? null : (b.columns.length >= 2 ? 'self' : null)
-    case 'categoryGrid': return b.columns.length >= SPILL_AT.grid ? 'self' : fork(b.columns.length, 6)
-    case 'categoryColumns': {
-      const n = b.columns.length
-      return n >= SPILL_AT.dense ? 'self' : fork(n, 6)
-    }
+    case 'branch': return b.columns.length >= 2 ? 'self' : null
+    case 'categoryGrid':
+    case 'categoryColumns': return b.columns.length >= 2 ? 'self' : null
     case 'choices': return fork(b.cols ?? b.items.length, 6)
     default: return null
   }
@@ -149,12 +143,12 @@ function ForkLegHead({ l }: { l: ForkLeg }) {
 }
 function ForkBlockView({ legs, onNav }: { legs: ForkLeg[]; onNav: Nav }) {
   const n = legs.length
-  const grid = s(`display:grid;grid-template-columns:repeat(${n},1fr);gap:8px;width:100%;`)
+  const grid = s(`display:grid;grid-template-columns:${evenTracks(n)};gap:8px;width:100%;`)
   // One .flow-wrap child: the connector, the leg labels and the leg bodies are a
   // single unit with its own tight spacing (the wrap's 8px gap would otherwise
   // push the label off its own line).
   return (
-    <div style={s('width:100%;display:flex;flex-direction:column;align-items:center;gap:2px;')}>
+    <div style={s('width:100%;min-width:0;display:flex;flex-direction:column;align-items:center;gap:2px;')}>
       <ForkLines n={n} gap={8} arrow={false} />
       <div style={grid}>
         {legs.map((l, i) => (
@@ -244,15 +238,26 @@ function EndpointView({ e, onNav }: { e: Endpoint; onNav: Nav }) {
 }
 
 // ── Choices (name-only separation boxes; `label` is raw HTML) ────────────────
+// `.flow-node`'s stock 14px side padding is sized for a full-width box. Packed
+// five to a row on a phone that is 28 of the ~62px each box gets, leaving 34px
+// of text width — not enough for "Anterior" or "forebrain", so they broke
+// mid-word. Scale the padding with the column count, same tiering the lesion
+// grid and the category rows use: the crowd is what costs the space, so the
+// crowd is what pays it back.
+const CHOICE_PAD = (cols: number) => (cols <= 3 ? '9px 14px' : cols === 4 ? '8px 8px' : '7px 4px')
 function ChoicesBlock({ cols, size, items, onNav }: { cols: number; size: number; items: ChoiceItem[]; onNav: Nav }) {
+  const pad = CHOICE_PAD(cols)
   return (
-    <div style={s(`display:grid;grid-template-columns:repeat(${cols},1fr);gap:6px;width:100%;`)}>
+    // `minmax(0,1fr)` + `min-width:0`: a choice row carrying `step`/`entry`
+    // nodes would otherwise hold their 200px/180px floors, and two of them run
+    // a 375px phone off the page. The labels wrap instead.
+    <div style={s(`display:grid;grid-template-columns:${evenTracks(cols)};gap:6px;width:100%;`)}>
       {items.map((it, i) => {
         const cls = it.variant ? ` ${it.variant}` : ''
         const toneStyle = it.tone ? `background:rgba(${HUE[it.tone].rgb},var(--tile-bg-a));border-color:rgba(${HUE[it.tone].rgb},var(--tile-bd-a));color:${HUE[it.tone].color};` : ''
         const cursor = it.link ? 'cursor:pointer;' : ''
         return (
-          <div key={i} className={`flow-node${cls}`} style={s(`${toneStyle}${cursor}font-size:${size}px;font-weight:700;`)}
+          <div key={i} className={`flow-node${cls}`} style={s(`${toneStyle}${cursor}font-size:${size}px;font-weight:700;min-width:0;padding:${pad};${WRAP_ANY}`)}
             {...(it.link ? { role: 'button', onClick: () => onNav(linkToView(it.link!)) } : {})}>
             <Raw html={it.label} onNav={onNav} />
           </div>
@@ -362,47 +367,46 @@ function ColumnView({ col, onNav }: { col: Column; onNav: Nav }) {
     </div>
   )
 }
-// Locked-scroll branch: each column keeps an intrinsic width sized to its nested
-// category row (n dense columns at a legible width + gaps), the tracks sum to a
-// `max-content` grid, and ONE overflow-x wrapper scrolls the whole split as a
-// unit. `LOCK_CAT_GAP` matches the categoryColumns internal column gap so each
-// 1fr category inside resolves back to `LOCK_CAT_W`.
-const LOCK_CAT_W = 104
-const LOCK_CAT_GAP = 6
-function armTrackWidth(col: Column): string {
-  const cc = col.blocks.find(b => b.kind === 'categoryColumns')
-  if (!cc || cc.kind !== 'categoryColumns') return 'max-content'
-  const n = cc.columns.length
-  return `${n * LOCK_CAT_W + (n - 1) * LOCK_CAT_GAP}px`
-}
-// Legible floor for a branch arm. Arms shrink with the viewport (the column is
-// min-width:0 so its boxes shrink with it, see `.flow-col`), but only to here:
-// past this the whole row scrolls sideways as ONE unit — the same spill policy the
-// category rows use — instead of crushing every box to a couple of characters. A
-// page that fits is unaffected: at or above the floor, minmax(FLOOR,1fr) IS 1fr.
-const MIN_ARM = 120
-const branchTracks = (n: number) => ({
-  cols: `repeat(${n},minmax(${MIN_ARM}px,1fr))`,
-  minWidth: n * MIN_ARM + (n - 1) * 8,
-})
-function BranchBlock({ columns, scroll, lead, onNav }: { columns: Column[]; scroll?: boolean; lead?: boolean; onNav: Nav }) {
-  if (scroll) {
-    return (
-      <div style={s('width:100%;overflow-x:auto;')}>
-        <div style={s(`display:grid;grid-template-columns:${columns.map(armTrackWidth).join(' ')};gap:8px;width:max-content;`)}>
-          {columns.map((c, i) => <ColumnView key={i} col={c} onNav={onNav} />)}
-        </div>
-      </div>
-    )
-  }
-  const t = branchTracks(columns.length)
-  // The leading fork lives INSIDE the scroll box, on the row's own tracks, so it
-  // stays on the arms when a too-narrow row scrolls. `gap:8px` reproduces the
-  // .flow-wrap spacing the fork had when the spine drew it.
+// Branch arms are STATIC: they share the width evenly and always fit it, at
+// every nesting depth. No floor, no scroll box — `minmax(0,1fr)` tracks, and the
+// arms absorb the squeeze internally (`.flow-col` lets their boxes shrink,
+// `overflow-wrap:anywhere` lets the labels wrap). A split you can see all of is
+// worth more than one whose arms hold a nominal width and hide half of
+// themselves behind a scrollbar: an arm the reader can't see is an arm they
+// don't know to consider.
+//
+// Nesting still costs width — three splits deep is a fraction of the column
+// however it is shared out — but `armWeight` below spends what there is where
+// the content actually is, rather than halving it evenly at every level.
+const BRANCH_GAP = 8
+// Does this arm have to fit a further split inside itself?
+const splitsAgain = (blocks: Block[]): boolean =>
+  blocks.some(b =>
+    b.kind === 'branch' ? true
+    : b.kind === 'fork' ? b.legs.some(l => splitsAgain(l.blocks ?? []))
+    : false)
+// Arms are weighted by what they have to hold, not counted off evenly. An arm
+// that ends in a chip needs the width of a chip; an arm that splits again has to
+// fit two of them, so it gets twice the share.
+//
+// This is what stops the deep side of a flow starving. Even shares compound:
+// three splits down, each level halving, left the last boxes ~37px on a phone —
+// one letter per line — while the shallow sibling arms sat half empty beside
+// them. Weighting spends that idle space where the content actually is.
+//
+// Capped at 2:1 (not the arm's true leaf count) so it can't overcorrect: a
+// shallow arm is often shallow *and* wordy — REGURGITATION ends in two long
+// endpoint names — and starving it to a quarter of the row to widen its
+// neighbour just trades one unreadable arm for another.
+const armWeight = (col: Column) => (splitsAgain(col.blocks) ? 2 : 1)
+function BranchBlock({ columns, lead, onNav }: { columns: Column[]; lead?: boolean; onNav: Nav }) {
+  const cols = columns.map(c => `minmax(0,${armWeight(c)}fr)`).join(' ')
+  // `gap:8px` reproduces the .flow-wrap spacing the fork had when the spine
+  // drew it; the fork mirrors the arms' own tracks so its drops land on them.
   return (
-    <div style={s(`${SCROLL_X}display:flex;flex-direction:column;gap:8px;`)}>
-      {lead && <ForkLines n={columns.length} gap={8} cols={t.cols} extra={`min-width:${t.minWidth}px;`} rootExtra={`min-width:${t.minWidth}px;`} />}
-      <div style={s(`display:grid;grid-template-columns:${t.cols};gap:8px;min-width:${t.minWidth}px;`)}>
+    <div style={s('width:100%;display:flex;flex-direction:column;gap:8px;')}>
+      {lead && <ForkLines n={columns.length} gap={BRANCH_GAP} cols={cols} />}
+      <div style={s(`display:grid;grid-template-columns:${cols};gap:${BRANCH_GAP}px;width:100%;`)}>
         {columns.map((c, i) => <ColumnView key={i} col={c} onNav={onNav} />)}
       </div>
     </div>
@@ -414,7 +418,7 @@ function FnHeaderBlock({ b }: { b: Extract<Block, { kind: 'fnHeader' }> }) {
   return <div className={`fn fn-${b.variant}`}>{b.text}</div>
 }
 function CardGridBlock({ perRow, tiles, onNav }: { perRow: number; tiles: CardTile[]; onNav: Nav }) {
-  const rowStyle = perRow === 2 ? undefined : s(`grid-template-columns:repeat(${perRow},1fr);`)
+  const rowStyle = perRow === 2 ? undefined : s(`grid-template-columns:${evenTracks(perRow)};`)
   const rows: CardTile[][] = []
   for (let i = 0; i < tiles.length; i += perRow) rows.push(tiles.slice(i, i + perRow))
   return (
@@ -486,95 +490,78 @@ function CatTile({ tile, st, theme, onNav }: { tile: CategoryTile; st: { bg: str
   )
 }
 
-// Min column width for the 'grid' preset — tuned so four categories fit the
-// app's ~568px flow column without scrolling on tablet/desktop (4×130 + gaps ≈
-// 538 < 568), while narrower phones scroll the single line rather than crush it.
-// Wide enough that the longest single-word labels ("Adenocarcinoma") never break
-// mid-word.
-const CAT_GRID_MIN_COL = 130
-// Shared column-spill policy for both category blocks. Below `wideAt` columns,
-// stretch to full width (repeat(n,1fr)). At/above it, clamp each track to a
-// legible `minCol` floor and report the intrinsic `minWidth`, so the row scrolls
-// horizontally as ONE unit rather than crushing labels or wrapping — the fix that
-// keeps every category on a single line. Callers wrap the wide grid in SCROLL_X.
-function spillGrid(n: number, minCol: number, wideAt: number): { wide: boolean; cols: string; minWidth: number } {
-  const wide = n >= wideAt
-  return {
-    wide,
-    cols: wide ? `repeat(${n},minmax(${minCol}px,1fr))` : `repeat(${n},1fr)`,
-    minWidth: n * minCol + (n - 1) * 6,
-  }
-}
+// Legible floor per preset — the width a category column may not shrink below.
+// Above it the tracks are even 1fr and the row simply fits; at it the row stops
+// shrinking and SCROLLS instead.
+//  • 'grid'  — 130px keeps four categories on one line in the app's ~568px flow
+//              column (4×130 + gaps ≈ 538) and never breaks the longest single
+//              word ("Adenocarcinoma") mid-label.
+//  • 'dense' — the crowded lesion look, tiered by how many columns are packed in.
+const CAT_MIN_COL = { grid: 130, dense: [70, 76, 70] } as const
+const CAT_GAP = 6
 type CatPreset = 'grid' | 'dense'
-function chunk<T>(arr: T[], size: number): T[][] {
-  if (size >= arr.length) return [arr]
-  const out: T[][] = []
-  for (let i = 0; i < arr.length; i += size) out.push(arr.slice(i, i + size))
-  return out
-}
 // The single category-layout renderer behind BOTH `categoryGrid` and
-// `categoryColumns`. Columns are chunked into rows of `cols` (default: one row
-// of every category); each row is three column-aligned sub-grids — headers →
-// arrows → tile stacks — so headers stay locked in a line while the row spills
-// (scrolls) or wraps. Two presets carry the only real differences:
+// `categoryColumns`. Every category stays on ONE line — three column-aligned
+// sub-grids (headers → arrows → tile stacks) so a category and its diseases read
+// as one vertical column, side by side with its peers. Two presets carry the
+// only real differences:
 //   • 'grid'  — roomy sign-flow look: flow-node headers, styled arrows, 10px
-//               tiles, min-col 130, spill at 4 cols, 8px row gap.
+//               tiles, min-col 130, 8px row gap.
 //   • 'dense' — crowded lesion look: tiered small headers/tiles, plain ↓ arrows,
-//               tiered min-col, spill at 5 cols, 4px row gap.
-// `lead` = this block follows a connected block AND is a split the spine left to
-// it (a spilled row): draw the fork as the first child of the scroll box, on the
-// row's own tracks, so connector and columns scroll together and stay aligned.
+//               tiered min-col, 4px row gap.
+//
+// The row never wraps onto a second line. Wrapping was tried and is wrong here:
+// the columns carry tile STACKS of unequal height, so a wrapped column lands far
+// below the tallest stack of the line above and reads as a continuation of it
+// rather than as a peer category. Below the legible floor the row scrolls
+// sideways as one unit instead — the columns stay adjacent and comparable, and
+// the reader swipes. `.scroll-x` marks the edges so it's visible there is more.
+//
+// `lead` = this block follows a connected block AND is the split the spine left
+// to it: draw the fork as the first child of the scroll box, on the row's own
+// tracks, so connector and columns scroll together and stay aligned.
 function CategoryBlock({ columns, cols, preset, lead, onNav }: { columns: CatColumn[]; cols: number; preset: CatPreset; lead?: boolean; onNav: Nav }) {
   const dense = preset === 'dense'
   const t = dense ? colTier(cols) : 0
-  const sp = spillGrid(cols, dense ? [70, 76, 70][t] : CAT_GRID_MIN_COL, dense ? SPILL_AT.dense : SPILL_AT.grid)
-  const wide = sp.wide
-  const gridStyle = !wide
-    ? s(`display:grid;grid-template-columns:${sp.cols};gap:6px;width:100%;`)
-    : dense
-      ? s(`display:grid;grid-template-columns:${sp.cols};gap:6px;min-width:${sp.minWidth}px;justify-content:center;`)
-      : s(`display:grid;grid-template-columns:${sp.cols};gap:6px;`)
+  const minCol = dense ? CAT_MIN_COL.dense[t] : CAT_MIN_COL.grid
+  // At or above the floor `minmax(FLOOR,1fr)` IS 1fr, so a row with room behaves
+  // exactly as an even row; `minWidth` only bites once it doesn't fit, and then
+  // it is what makes the wrapper scroll rather than the columns crush.
+  const tracks = `repeat(${cols},minmax(${minCol}px,1fr))`
+  const minWidth = cols * minCol + (cols - 1) * CAT_GAP
+  const gridStyle = s(`display:grid;grid-template-columns:${tracks};gap:${CAT_GAP}px;min-width:${minWidth}px;`)
   const headerFs = dense ? [9.5, 9, 8.5][t] : 11
   const theme: TileTheme = dense
     ? {
-        chip: `border-radius:8px;padding:${['6px 4px', '6px 3px', '5px 3px'][t]};font-size:${[9, 8.5, 8][t]}px;font-weight:600;text-align:center;line-height:1.35;`,
-        linksBox: 'border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;text-align:center;line-height:1.35;',
+        chip: `border-radius:8px;padding:${['6px 4px', '6px 3px', '5px 3px'][t]};font-size:${[9, 8.5, 8][t]}px;font-weight:600;text-align:center;line-height:1.35;${WRAP_ANY}`,
+        linksBox: `border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;text-align:center;line-height:1.35;${WRAP_ANY}`,
         linksLabelMb: '3px', subFs: '8.5px', subPad: '1px 0',
       }
     : TILE_GRID
   const st = (i: number) => resolveCatStyle(columns[i].cat, columns[i].tone, i)
   const header = (c: CatColumn, i: number) => dense
-    ? <div key={i} style={s(`background:${st(i).bg};border:1.5px solid ${st(i).border};border-radius:10px;padding:${['7px 5px', '7px 4px', '7px 4px'][t]};font-size:${headerFs}px;font-weight:700;color:${st(i).col};text-align:center;line-height:1.3;`)}>{c.cat}</div>
-    : <div key={i} className="flow-node" style={s(`background:${st(i).bg};border-color:${st(i).border};color:${st(i).col};font-size:11px;cursor:default;min-width:0;`)}>{c.cat}</div>
+    ? <div key={i} style={s(`background:${st(i).bg};border:1.5px solid ${st(i).border};border-radius:10px;padding:${['7px 5px', '7px 4px', '7px 4px'][t]};font-size:${headerFs}px;font-weight:700;color:${st(i).col};text-align:center;line-height:1.3;${WRAP_ANY}`)}>{c.cat}</div>
+    : <div key={i} className="flow-node" style={s(`background:${st(i).bg};border-color:${st(i).border};color:${st(i).col};font-size:11px;cursor:default;min-width:0;${WRAP_ANY}`)}>{c.cat}</div>
   const arrow = (i: number) => dense
     ? <div key={i} style={s(`color:${st(i).col};text-align:center;font-size:11px;line-height:1;`)}>↓</div>
     : <div key={i} className="flow-arrow-v">↓</div>
-  // The row's own tracks/centring, reused by the leading fork so its drops land
-  // on the category headers whatever the row does (even 1fr, spilled, centred).
-  const rowExtra = wide && dense ? `min-width:${sp.minWidth}px;justify-content:center;` : ''
-  const body = chunk(columns, cols).map((row, r) => {
-    const base = r * cols
-    return (
-      <Fragment key={r}>
-        {r === 0 && lead && (
-          <ForkLines n={row.length} gap={6} cols={sp.cols} extra={rowExtra}
-            rootExtra={wide && dense ? `min-width:${sp.minWidth}px;` : ''} />
-        )}
-        <div style={gridStyle}>{row.map((c, i) => header(c, base + i))}</div>
-        <div style={gridStyle}>{row.map((_, i) => arrow(base + i))}</div>
-        <div style={gridStyle}>
-          {row.map((c, i) => (
-            <div key={base + i} style={ST_COL_FLEX}>
-              {c.tiles.map((tile, j) => <CatTile key={j} tile={tile} st={st(base + i)} theme={theme} onNav={onNav} />)}
-            </div>
-          ))}
-        </div>
-      </Fragment>
-    )
-  })
-  // One flow-wrap child: the sub-grids scroll together when wide (spill) and are
-  // spaced by the preset's row gap (grid 8px / dense 4px).
-  return <div style={s(`width:100%;display:flex;flex-direction:column;gap:${dense ? 4 : 8}px;${wide ? 'overflow-x:auto;' : ''}`)}>{body}</div>
+  // One flow-wrap child: the fork and the three sub-grids share a single scroll
+  // track, so they slide together and the drops stay on their headers. Spaced by
+  // the preset's row gap (grid 8px / dense 4px).
+  return (
+    <div className="scroll-x" style={s(`width:100%;display:flex;flex-direction:column;gap:${dense ? 4 : 8}px;`)}>
+      {lead && <ForkLines n={cols} gap={CAT_GAP} cols={tracks} extra={`min-width:${minWidth}px;`} rootExtra={`min-width:${minWidth}px;`} />}
+      <div style={gridStyle}>{columns.map((c, i) => header(c, i))}</div>
+      <div style={gridStyle}>{columns.map((_, i) => arrow(i))}</div>
+      <div style={gridStyle}>
+        {columns.map((c, i) => (
+          <div key={i} style={ST_COL_FLEX}>
+            {c.tiles.map((tile, j) => <CatTile key={j} tile={tile} st={st(i)} theme={theme} onNav={onNav} />)}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
 }
 
 // ── Category columns (CAT_STYLE) ──────────────────────────────────────────────
@@ -640,7 +627,7 @@ function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
         <DecBox question={step.question} sub={step.sub} />
         {/* Same fork as every other split — the tree's two outcomes are one. */}
         <ForkLines n={2} gap={6} />
-        <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:6px;width:100%;')}>
+        <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px;width:100%;')}>
           <div><div style={s('font-size:9px;font-weight:700;color:var(--gray);margin-bottom:4px;')}>{step.noLabel}</div><OutBox o={step.no} onNav={onNav} /></div>
           <div><div style={s('font-size:9px;font-weight:700;color:var(--gray);margin-bottom:4px;')}>{step.yesLabel}</div><OutBox o={step.yes} onNav={onNav} /></div>
         </div>
@@ -693,7 +680,7 @@ function InfoBoxBlock({ b, onNav }: { b: InfoBoxBlockType; onNav: Nav }) {
 // ── Compare box ───────────────────────────────────────────────────────────────
 function CompareBoxBlock({ b, onNav }: { b: Extract<Block, { kind: 'compareBox' }>; onNav: Nav }) {
   const h = HUE[b.tone]
-  const grid = Array(b.cols ?? 2).fill('1fr').join(' ')
+  const grid = Array(b.cols ?? 2).fill('minmax(0,1fr)').join(' ')
   return (
     <div style={s(`margin-top:${b.gap ?? 14}px;padding:10px 12px;background:rgba(${h.rgb},var(--panel-bg-a));border:1px solid rgba(${h.rgb},var(--panel-bd-a));border-radius:10px;width:100%;`)}>
       {b.title && <div style={{ ...ST_BLOCK_TITLE, color: h.color, marginBottom: '8px' }}><Raw html={b.title} onNav={onNav} /></div>}
@@ -718,7 +705,7 @@ function SpeciesCompareBlock({ b, onNav }: { b: Extract<Block, { kind: 'speciesC
     <div style={s(`margin-top:10px;padding:10px 12px;background:rgba(${h.rgb},var(--panel-bg-a));border:1px solid rgba(${h.rgb},var(--panel-bd-a));border-radius:10px;width:100%;`)}>
       <div style={s(`font-size:10px;font-weight:700;color:${h.color};margin-bottom:5px;`)}>🐕 vs 🐱 KEY SPECIES DIFFERENCES</div>
       <div style={s('font-size:9px;line-height:1.5;color:var(--gray);')}>
-        <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;')}>
+        <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 10px;')}>
           <div><strong style={{ color: HUE.info.color }}>DOG</strong></div>
           <div><strong style={{ color: 'var(--hl-orange)' }}>CAT</strong></div>
           {b.dog.map((d, i) => (
@@ -801,7 +788,7 @@ function DiseaseGridBlock({ title, links, onNav }: { title: string; links: Label
   return (
     <Box tone="teal" extra="margin-top:10px;padding:10px 12px;">
       <div style={{ ...ST_BLOCK_TITLE, color: 'var(--tone-teal-fg)' }}>{title}</div>
-      <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;')}>
+      <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;font-size:9.5px;')}>
         {links.map((l, i) => <div key={i} role="button" onClick={() => onNav(linkToView(l.link))} style={s('cursor:pointer;color:var(--fg-teal-deep);')}>→ {l.label}</div>)}
       </div>
     </Box>
@@ -842,7 +829,7 @@ function DxRowBlock({ items, onNav }: { items: LabeledLink[]; onNav: Nav }) {
 function BlockView({ b, lead, onNav }: { b: Block; lead?: boolean; onNav: Nav }): ReactNode {
   switch (b.kind) {
     case 'node': return <NodeBlock b={b} />
-    case 'branch': return <BranchBlock columns={b.columns} scroll={b.scroll} lead={lead} onNav={onNav} />
+    case 'branch': return <BranchBlock columns={b.columns} lead={lead} onNav={onNav} />
     case 'endpoints': return <div style={s('display:flex;flex-direction:column;gap:4px;width:100%;')}>{b.items.map((e, i) => <EndpointView key={i} e={e} onNav={onNav} />)}</div>
     case 'fnHeader': return <FnHeaderBlock b={b} />
     case 'cardGrid': return <CardGridBlock perRow={b.perRow ?? 2} tiles={b.tiles} onNav={onNav} />
@@ -863,7 +850,7 @@ function BlockView({ b, lead, onNav }: { b: Block; lead?: boolean; onNav: Nav })
     case 'speciesChooser': return <SpeciesChooserBlock b={b} onNav={onNav} />
     case 'infoBox': return <InfoBoxBlock b={b} onNav={onNav} />
     case 'disclaimer': return DISCLAIMER
-    case 'html': return <Raw html={b.html} onNav={onNav} />
+    case 'html': return <div className="flow-authored scroll-x"><Raw html={b.html} onNav={onNav} /></div>
     default: throw new Error(`FlowPageView: block kind '${(b as Block).kind}' not implemented`)
   }
 }

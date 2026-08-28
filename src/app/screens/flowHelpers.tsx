@@ -44,7 +44,7 @@ export function ForkLines({ n, gap, cols, extra = '', rootExtra = '', arrow = tr
   return (
     <div className="flow-fork" style={s(`--fork-gap:${gap}px;${rootExtra}`)}>
       <div className="flow-fork-stem" />
-      <div className="flow-fork-legs" style={s(`grid-template-columns:${cols ?? `repeat(${n},1fr)`};${extra}`)}>
+      <div className="flow-fork-legs" style={s(`grid-template-columns:${cols ?? `repeat(${n},minmax(0,1fr))`};${extra}`)}>
         {Array.from({ length: n }, (_, i) => (
           <div key={i} className="flow-fork-leg">
             <div className={arrow ? 'flow-arrow-v' : 'flow-fork-drop'} />
