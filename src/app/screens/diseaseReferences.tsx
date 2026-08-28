@@ -107,6 +107,16 @@ const ACVIM_SE =
 const ACVIM_FCE =
   'Marsilio S, Freiche V, Johnson E, et al. ACVIM consensus statement guidelines on diagnosing and distinguishing low-grade neoplastic from inflammatory lymphocytic chronic enteropathies in cats. J Vet Intern Med. 2023;37(3):794. doi:10.1111/jvim.16690'
 
+// Verbatim from references/CITATIONS.md. Cited as AUTHOR, not editor: the title
+// page (PDF p5) gives Lemmons alone with no role label, unlike the Gupta title
+// page, which says "Edited by" explicitly.
+const LEMMONS_BOOK =
+  'Lemmons MS. Veterinary Dentistry: A Team Approach. 4th ed. Elsevier; 2025'
+// Verbatim from references/CITATIONS.md. Academic Press is an Elsevier imprint;
+// the copyright page carries both, and AMA cites the imprint.
+const GUPTA_BOOK =
+  'Gupta RC, ed. Veterinary Toxicology: Basic and Clinical Principles. 3rd ed. Academic Press; 2018'
+
 // Toxicology eBook — organisation-as-author form. Password-protected FlippingBook,
 // so no URL is given; page numbers refer to the eBook's own pagination.
 const VETGIRL_TOX =
@@ -124,7 +134,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'VETgirl',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'VETgirl', 'Lemmons', 'Gupta',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -148,13 +158,26 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     // that had been traced to a specific chapter lost that chapter on the way to
     // the screen. Table/figure citations ("Gelatt 6th edn Table 17.3") carry no
     // chapter and still resolve to the book.
-    if (/^Gelatt/.test(part)) {
-      const chap = part.match(/Ch(?:apter|\.)?\s*(\d+)/)
-      out.push(chap
-        ? { id: `gelatt-ch${chap[1]}`, text: `${GELATT_BOOK}: chap ${chap[1]}.` }
-        : { id: 'gelatt', text: `${GELATT_BOOK}.` })
-      continue
+    const byChapter = (
+      prefix: string,
+      book: string,
+    ): { id: string; text: string }[] => {
+      // Every "Ch n" in the part, not just the first: a single parenthetical may
+      // name several chapters ("Ch 15, Ch 28"), and each is its own AMA entry.
+      const nums = [...part.matchAll(/Ch(?:apter|\.)?\s*(\d+(?:\.\d+)?(?:\s*,\s*\d+(?:\.\d+)?)*)/g)]
+        .flatMap(m => m[1].match(/\d+(?:\.\d+)?/g) ?? [])
+      return nums.length
+        ? nums.map(n => ({ id: `${prefix}-ch${n}`, text: `${book}: chap ${n}.` }))
+        : [{ id: prefix, text: `${book}.` }]
     }
+    // Gelatt, Lemmons and Gupta are all numbered per CHAPTER, exactly as Ettinger
+    // is below. Without that, every ophthalmology page collapsed to one book-level
+    // entry and a citation traced to a specific chapter lost it on the way to the
+    // screen. Table/figure citations ("Gelatt 6th edn Table 17.3") carry no
+    // chapter and still resolve to the book.
+    if (/^Gelatt/.test(part)) { out.push(...byChapter('gelatt', GELATT_BOOK)); continue }
+    if (/^Lemmons/.test(part)) { out.push(...byChapter('lemmons', LEMMONS_BOOK)); continue }
+    if (/^Gupta/.test(part)) { out.push(...byChapter('gupta', GUPTA_BOOK)); continue }
     if (/^AHS/.test(part)) { out.push({ id: 'ahs', text: AHS_GUIDELINES }); continue }
     if (/^AAHA/.test(part)) { out.push({ id: 'aaha-endocrine', text: AAHA_ENDOCRINE }); continue }
     if (/^CDC/.test(part)) { out.push({ id: 'cdc-bartonella', text: CDC_BARTONELLA }); continue }

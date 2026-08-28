@@ -1,6 +1,8 @@
 # Veterinary Dentistry: A Team Approach, 4th edn — line index
 
-Lemmons MS, Castejon-Gonzalez AC, Reiter AM (eds.), Elsevier 2025 (Holmstrom lineage).
+Lemmons MS, Elsevier 2025 (Holmstrom lineage). Cited as AUTHOR, not editor — the title
+page names Lemmons alone with no role label; Castejon-Gonzalez and Reiter appear under
+CONTRIBUTORS. See references/CITATIONS.md, which is the source of truth for the string.
 15 chapters, ~270 pp. Source file: `references/vetdent4.md` (23,889 lines, 789 KB —
 local only, gitignored).
 
