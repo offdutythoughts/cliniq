@@ -1,6 +1,6 @@
 // ── Peripheral Oedema flowchart ──────────────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
-import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
+import { IDENTIFY_CAUSE_STEP, SHY } from '../flowTypes'
 
 const oedemaEntry: FlowPage = {
   id: 'oedema',
@@ -27,7 +27,7 @@ const oedemaEntry: FlowPage = {
       items: [
         {
           tone: 'teal',
-          label: ' HYPOALBUMINAEMIA (↓ oncotic)',
+          label: ` HYPO${SHY}ALBUMIN${SHY}AEMIA (↓ oncotic)`,
           link: { to: 'flow', id: 'oedema-hypoalbumin' },
         },
         {

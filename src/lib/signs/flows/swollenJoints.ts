@@ -1,6 +1,6 @@
 // ── Swollen Joints / Joint Pain flowchart ────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
-import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
+import { IDENTIFY_CAUSE_STEP, SHY } from '../flowTypes'
 
 const swollenJointsEntry: FlowPage = {
   id: 'swollen-joints',
@@ -145,7 +145,7 @@ const swollenJointsPoly: FlowPage = {
         },
         {
           tone: 'slate',
-          label: ' NON-INFLAMMATORY / DEGENERATIVE',
+          label: ` NON-INFLAMM${SHY}ATORY / DEGENERATIVE`,
           link: { to: 'flow', id: 'swollen-joints-noninflam' },
         },
       ],

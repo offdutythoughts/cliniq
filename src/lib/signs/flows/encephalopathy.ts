@@ -14,6 +14,7 @@
 //   LOC-EN-METAB   Metabolic encephalopathy
 
 import type { FlowPage } from '../flowTypes'
+import { SHY } from '../flowTypes'
 
 // ── Main page ────────────────────────────────────────────────────────────────
 const encephalopathyMain: FlowPage = {
@@ -211,7 +212,7 @@ const encephalopathyForebrain: FlowPage = {
               kind: 'endpoints',
               items: [
                 { label: 'Lead toxicity', tone: 'warning' },
-                { label: 'Organophosphates', tone: 'warning' },
+                { label: `Organo${SHY}phosphates`, tone: 'warning' },
                 { label: 'Bromethalin', tone: 'warning' },
                 { label: 'Ethylene glycol', tone: 'warning' },
               ],
@@ -284,7 +285,7 @@ Vertical or direction-changing nystagmus · progression despite treatment`,
                 { label: 'Metronidazole toxicity', tone: 'danger', link: { to: 'disease', id: 'DIS-NEU-METRO' } },
                 { label: 'Bromethalin', tone: 'danger' },
                 { label: 'Ivermectin (MDR1 breeds)', tone: 'danger' },
-                { label: 'Organophosphates', tone: 'danger' },
+                { label: `Organo${SHY}phosphates`, tone: 'danger' },
               ],
             },
           ],

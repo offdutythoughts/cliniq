@@ -1,5 +1,6 @@
 // ── Dysphagia / Gagging flowchart ────────────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
+import { SHY } from '../flowTypes'
 
 const dysphagiaEntry: FlowPage = {
   id: 'dysphagia',
@@ -72,12 +73,12 @@ const dysphagiaEntry: FlowPage = {
         },
         {
           tone: 'indigo',
-          label: ' PHARYNGEAL / CRICOPHARYNGEAL',
+          label: ` PHARYNGEAL / CRICO${SHY}PHARYNGEAL`,
           link: { to: 'flow', id: 'dysphagia-pharyngeal' },
         },
         {
           tone: 'orange',
-          label: ' OESOPHAGEAL (regurgitation)',
+          label: ` OESO${SHY}PHAGEAL (regurgitation)`,
           link: { to: 'flow', id: 'dysphagia-oesophageal' },
         },
       ],
