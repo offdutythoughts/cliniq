@@ -35,7 +35,7 @@ const weaknessEntry: FlowPage = {
       items: [
         { variant: 'insp', label: 'EPISODIC weakness', link: { to: 'flow', id: 'weakness-episodic' } },
         { variant: 'exp', label: 'PERSISTENT weakness', link: { to: 'flow', id: 'weakness-persistent' } },
-        { variant: 'mixed', label: 'COLLAPSE ± loss of<br>consciousness', link: { to: 'flow', id: 'weakness-collapse' } },
+        { variant: 'mixed', label: 'COLLAPSE ± loss of consciousness', link: { to: 'flow', id: 'weakness-collapse' } },
       ],
     },
     {
