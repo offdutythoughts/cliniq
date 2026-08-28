@@ -119,8 +119,27 @@ externally. Author attribution is provisional.
 
 ## Using citations inside app data
 
-`src/data/db.ts` has no citation field; the three entries that source anything do it inline
-in prose (`(Ettinger Ch 121)`). If citations need to surface in the UI, that shorthand is the
-existing convention — keep using it for now, and reserve the full AMA strings above for
-external or printed output. Adding a structured `refs` field to the entry type would be the
-clean fix, but it is a schema change and hasn't been requested.
+`src/data/db.ts` has no citation field; entries cite inline in prose instead —
+`(Ettinger Ch 121)` for internal medicine, `(Gelatt 6th edn Ch 20)` or
+`(Gelatt 6th edn Table 17.3)` for ophthalmology, `(VETgirl 2023 p. 27)` for toxicology.
+This is now widespread, not a handful of entries. Ophthalmology is fully attributed as of
+2026-08-28: all 26 `DIS-EYE-*` / `DIS-OPH-*` / ocular `DIS-NEU-*` disease pages **and** all 118
+ophthalmic lesion rows (`LES-RE-*`, `LES-BL-*`, `LES-WE-*`, `LES-AP-*`) carry a chapter-level
+cite. Chapter numbers were read off the `vetoph6.pdf` table of contents (PDF pp. 8–14), not
+inferred: 1 embryology · 8.4 mydriatics · 8.5 glaucoma therapy · 14 orbit · 15 eyelid ·
+16 nasolacrimal · 17 lacrimal secretory · 18 conjunctiva + nictitans · 19 cornea + sclera ·
+20 glaucoma · 21 anterior uvea · 22 lens + cataract · 25 ocular fundus · 27 optic nerve ·
+28 feline · 36 neuro-ophthalmology.
+
+Note the routing exception: the cortical/forebrain blindness rows (`LES-BL-CX-*`) are internal
+medicine, not ophthalmology, and cite Ettinger (or Gupta for the toxicoses) per the CLAUDE.md
+source-routing rule — Gelatt Ch 36 covers central blindness and dysautonomia but not hepatic
+encephalopathy, hypoglycaemia or toxicoses. `(Gupta 3rd edn Ch NN)` is a new shorthand
+introduced for that one row; it follows the same pattern as the others.
+
+Non-ophthalmic areas of `db.ts` have not been audited to this standard.
+
+If citations need to surface in the UI, that shorthand is the existing convention — keep using
+it for now, and reserve the full AMA strings above for external or printed output. Adding a
+structured `refs` field to the entry type would be the clean fix, but it is a schema change
+and hasn't been requested.
