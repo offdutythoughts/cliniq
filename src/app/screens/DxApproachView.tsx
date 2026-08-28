@@ -30,7 +30,7 @@ function DxTabs({ sign, nav, active, variant = 'std' }: { sign: string; nav: DxN
     : 'padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;'
   const container = flex
     ? 'display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;'
-    : `display:grid;grid-template-columns:repeat(${nav.length},1fr);gap:4px;margin-bottom:14px;`
+    : `display:grid;grid-template-columns:repeat(${nav.length},minmax(0,1fr));gap:4px;margin-bottom:14px;`
   return (
     <div style={s(container)}>
       {nav.map((t, i) => {
@@ -86,7 +86,7 @@ function DxDiseaseGrid({ b, onNav }: { b: Extract<DxBlock, { kind: 'diseaseGrid'
   return (
     <ToneBox tone="teal" extra="margin-top:10px;padding:10px 12px;">
       <div style={s('font-size:11px;font-weight:700;color:var(--tone-teal-fg);margin-bottom:6px;')}>{b.title}</div>
-      <div style={s('display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:9.5px;')}>
+      <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;font-size:9.5px;')}>
         {b.links.map((l, i) => (
           <div key={i} role="button" style={s('cursor:pointer;color:var(--fg-teal-deep);')} onClick={() => onNav(linkToView(l.link))}>→ {l.label}</div>
         ))}
@@ -96,7 +96,7 @@ function DxDiseaseGrid({ b, onNav }: { b: Extract<DxBlock, { kind: 'diseaseGrid'
 }
 
 function DxAccordion({ b, onNav }: { b: Extract<DxBlock, { kind: 'accordion' }>; onNav: Nav }) {
-  const grid = b.cols ? `display:grid;grid-template-columns:repeat(${b.cols},1fr);gap:6px;align-items:start;` : 'display:flex;flex-direction:column;gap:6px;'
+  const grid = b.cols ? `display:grid;grid-template-columns:repeat(${b.cols},minmax(0,1fr));gap:6px;align-items:start;` : 'display:flex;flex-direction:column;gap:6px;'
   return (
     <div style={s(grid)}>
       {b.items.map((item, i) => (
@@ -216,7 +216,7 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
       )
     }
     case 'comparisonTable': return <DxComparisonTable b={b} onNav={onNav} />
-    case 'html': return <Raw html={b.html} onNav={onNav} />
+    case 'html': return <div className="flow-authored scroll-x"><Raw html={b.html} onNav={onNav} /></div>
     case 'disclaimer': return <div className="disclaimer">For qualified veterinary professionals only.</div>
   }
 }

@@ -38,7 +38,7 @@ const cyanosisEntry: FlowPage = {
         },
         {
           tone: 'warning',
-          label: ' METHAEMOGLOBIN / PERIPHERAL',
+          label: ' MetHb / PERIPHERAL',
           link: { to: 'flow', id: 'cyanosis-methb' },
         },
       ],

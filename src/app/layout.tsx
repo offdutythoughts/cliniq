@@ -42,8 +42,18 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  // Pinch-zoom is the reading affordance on a flowchart page. Rows shrink to
+  // fit the width and, at their legible floor, scroll rather than shrink
+  // further — so on a phone the densest rows sit at that floor and enlarging
+  // them is how the reader gets a closer look. Locking the scale takes that
+  // away, and
+  // `user-scalable=no` is a WCAG 2.1 1.4.4 failure besides. iOS honours
+  // userScalable; Android honours maximumScale, so both are set.
+  // NB: enabling this re-arms iOS Safari's focus auto-zoom for any field under
+  // 16px — globals.css gives touch devices 16px fields to keep taps from
+  // jumping the page.
+  maximumScale: 5,
+  userScalable: true,
   viewportFit: 'cover',
   // Mobile browser chrome follows the OS scheme (the in-app theme is attribute-
   // driven, but this is the closest the static viewport meta can get).

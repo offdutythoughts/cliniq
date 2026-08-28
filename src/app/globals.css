@@ -306,7 +306,11 @@ html[data-theme="dark"]{
 /* Topbar + BottomNav chrome live as Tailwind utilities in their components now. */
 
 /* ── MAIN CONTENT ── */
-.screen{flex:1;overflow-y:auto;overflow-x:auto;-webkit-overflow-scrolling:touch;min-width:0;min-height:0;overflow-anchor:none;}
+/* The horizontal axis is a safety net, not a layout: every row inside is laid
+   out to fit, or to scroll inside its own `.scroll-x` box. `touch-action`
+   keeps pinch-zoom working over the scroller — with pan-x/pan-y alone iOS would
+   swallow the two-finger gesture the page now depends on for a close read. */
+.screen{flex:1;overflow-y:auto;overflow-x:auto;-webkit-overflow-scrolling:touch;touch-action:pan-x pan-y pinch-zoom;min-width:0;min-height:0;overflow-anchor:none;}
 .screen-inner{padding:16px;max-width:600px;margin:0 auto;}
 .slide-in-right{animation:slideInRight .28s cubic-bezier(.22,.61,.36,1) both;}
 .slide-in-left{animation:slideInLeft .28s cubic-bezier(.22,.61,.36,1) both;}
@@ -378,7 +382,7 @@ html[data-theme="dark"]{
 .fn-exp{background:rgba(var(--tone-teal),var(--tile-bg-a));border-color:rgba(var(--tone-teal),var(--tile-bd-a));color:var(--fg-teal-deep);}
 .fn-rest{background:rgba(var(--amber-rgb),var(--tile-bg-a));border-color:rgba(var(--amber-rgb),var(--tile-bd-a));color:var(--amber-text);}
 .fn-mixed{background:rgba(var(--tone-danger),var(--tile-bg-a));border-color:rgba(var(--tone-danger),var(--tile-bd-a));color:var(--tone-danger-fg);}
-.fn-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px;}
+.fn-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-bottom:4px;}
 .fn-ep{
   border-radius:12px;padding:12px 14px;
   font-size:12px;font-weight:500;border:1.5px solid;
@@ -618,7 +622,10 @@ details.ref-fold[open] > summary::after{content:" ▾";}
    grid gaps, and stops dead on the centre of the first and last leg. */
 .flow-fork{--fork-gap:8px;width:100%;display:flex;flex-direction:column;align-items:center;}
 .flow-fork-stem{width:2px;height:10px;background:var(--gray2);}
-.flow-fork-legs{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--fork-gap);width:100%;}
+/* `minmax(0,1fr)`, not `1fr`: a leg's auto minimum would otherwise let one long
+   label widen its track and push the whole fork off the page. Every grid in the
+   flow/dx renderers uses the same zero-floor track for the same reason. */
+.flow-fork-legs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--fork-gap);width:100%;}
 .flow-fork-leg{position:relative;display:flex;justify-content:center;}
 .flow-fork-leg::before{content:'';position:absolute;top:0;left:calc(var(--fork-gap) / -2);right:calc(var(--fork-gap) / -2);height:2px;background:var(--gray2);}
 .flow-fork-leg:first-child::before{left:calc(50% - 1px);}
@@ -642,7 +649,80 @@ details.ref-fold[open] > summary::after{content:" ▾";}
    wraps instead. Must stay AFTER the .flow-node.* rules (equal specificity).
    (Text can still only wrap so far — the arm itself has a legible floor below
    which the whole row scrolls sideways instead; see MIN_ARM in FlowPageView.) */
-.flow-col .flow-node{min-width:0;}
+.flow-col .flow-node{min-width:0;overflow-wrap:anywhere;}
+/* …and so must everything else the arm holds. A flex item's `width:100%` loses
+   to its own `auto` min-width, so a nested split (whose min-content is the sum
+   of its legs') rendered at its natural 216px inside a 166px arm and slid
+   UNDER the neighbouring arm — boxes overlapping boxes, on the page today.
+   Clamping every direct child, and zeroing the minimum down the fork's own
+   chain, is what keeps an arm's content inside the arm. */
+.flow-col > *{min-width:0;max-width:100%;}
+.flow-fork,.flow-fork-legs{min-width:0;}
+/* Arms are static — they shrink instead of scrolling — so an arm's leaf boxes
+   must wrap rather than hold their intrinsic width. Endpoints are the ones with
+   long clinical names ("Secondary / Extra-GI"); the nodes are covered above. */
+.flow-col .flow-endpoint{min-width:0;overflow-wrap:anywhere;}
+
+/* A deeply nested arm (three splits down = a quarter of the column) has so
+   little width that the stock 12px side padding is most of it, and a word like
+   "Secondary" breaks mid-syllable. Give those arms their space back instead:
+   less padding, a step down in type. Sized by the ARM, not the viewport, so it
+   fires exactly where the squeeze is — a 64px arm on a wide desktop gets it, a
+   full-width arm on a phone does not. `@container` needs each arm to be a
+   containment context, which is safe here: an arm's width comes from its grid
+   track, never from its contents. */
+.flow-col{container-type:inline-size;}
+@container (max-width: 100px){
+  .flow-col > * .flow-endpoint,
+  .flow-col > .flow-endpoint{padding:6px 4px;font-size:8.5px;letter-spacing:0;}
+  .flow-col > * .flow-node,
+  .flow-col > .flow-node{padding:7px 5px;font-size:9px;}
+}
+
+/* ── A section that scrolls sideways ──
+   Where a row of columns can't shrink any further without becoming unreadable,
+   it scrolls as one unit instead — the columns stay adjacent and comparable and
+   the reader swipes. The page itself never scrolls sideways; the overflow stops
+   at this box.
+
+   The edge shading is the point, not decoration. The bug this whole area came
+   from was a row that overflowed silently: on a phone the scrollbar is an
+   overlay that fades out, so a reader had no way to know a second arm of the
+   split existed at all. Two gradients per side do it, and only when there IS
+   something off-screen that side: a cover pinned to the CONTENT (background-
+   attachment:local, so it slides away as you scroll into that end) sitting over
+   a shadow pinned to the BOX (scroll). `--scroll-x-bg` must match whatever the
+   box sits on — the page background here; override it on a tinted panel. */
+.scroll-x{
+  --scroll-x-bg:var(--navy);
+  width:100%;overflow-x:auto;overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;scrollbar-width:thin;
+  background:
+    linear-gradient(to right, var(--scroll-x-bg) 40%, rgba(0,0,0,0)) left center,
+    linear-gradient(to left,  var(--scroll-x-bg) 40%, rgba(0,0,0,0)) right center,
+    radial-gradient(farthest-side at 0 50%,   rgba(var(--slate-muted),.30), rgba(0,0,0,0)) left center,
+    radial-gradient(farthest-side at 100% 50%,rgba(var(--slate-muted),.30), rgba(0,0,0,0)) right center;
+  background-repeat:no-repeat;
+  background-size:26px 100%,26px 100%,11px 100%,11px 100%;
+  background-attachment:local,local,scroll,scroll;
+}
+
+/* ── Authored `html:` blocks ──
+   The wrapper both renderers put around every `html:` block. These are legacy
+   hand-built layouts — fixed multi-column grids with their own nested splits —
+   that no renderer measures, so they are the one thing on a flow page that
+   can't re-fit itself. Forcing them to (zeroing the track minimums) doesn't
+   work: at phone width a four-column row with a nested two-column split gives
+   each endpoint ~38px, which breaks words mid-syllable and overlaps the boxes.
+
+   So they keep their natural, legible size and scroll INSIDE this box. The page
+   still never scrolls sideways — the overflow stops here.
+
+   `min-width:min-content` is what makes that a scroll instead of a crush: it
+   floors each child at the width its own words need, so a wide grid keeps its
+   columns and slides, while an ordinary prose block (whose min-content is one
+   long word) is untouched and still wraps to the page. */
+.flow-authored > *{min-width:min-content;}
 
 /* Location endpoint — tappable words */
 .flow-endpoint{
@@ -685,8 +765,8 @@ details.ref-fold[open] > summary::after{content:" ▾";}
 .dx-test{border-radius:8px;padding:7px 10px;font-size:10px;text-align:left;line-height:1.5;background:rgba(var(--tone-teal),0.12);color:var(--tone-teal-fg);border:none;}
 .dx-note{border-radius:8px;padding:7px 10px;font-size:10px;text-align:left;line-height:1.5;background:var(--card);color:var(--gray);border:1px solid var(--border);}
 .dx-row{display:grid;gap:6px;width:100%;}
-.dx-row.c2{grid-template-columns:1fr 1fr;}
-.dx-row.c3{grid-template-columns:1fr 1fr 1fr;}
+.dx-row.c2{grid-template-columns:repeat(2,minmax(0,1fr));}
+.dx-row.c3{grid-template-columns:repeat(3,minmax(0,1fr));}
 .dx-connector{display:flex;width:100%;align-items:flex-start;}
 .dx-connector .dx-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 3px;}
 /* ── NOTES SIDEBAR ── the panel/toolbar chrome is now Tailwind utilities in
@@ -694,5 +774,21 @@ details.ref-fold[open] > summary::after{content:" ▾";}
 input[type="color"]::-webkit-color-swatch-wrapper{padding:0;}
 input[type="color"]::-webkit-color-swatch{border:none;border-radius:4px;}
 .notes-editor:empty::before{content:'Tap here to start writing notes...';color:var(--gray2);font-style:italic;}
+
+/* ── TOUCH FIELDS ──
+   The viewport now allows pinch-zoom (layout.tsx), which re-arms iOS Safari's
+   focus auto-zoom: tapping any field under 16px yanks the whole page in, and
+   iOS never zooms back out. Give touch devices 16px fields so a tap just opens
+   the keyboard. Desktop keeps the smaller, denser type.
+   `!important` is required, not lazy: several of these fields (Mix & Match's
+   tag + breed inputs) carry their font-size as an inline style, which no
+   ordinary rule can outrank. */
+@media (pointer: coarse){
+  .global-search-wrap input,
+  .v-field,
+  input[type="text"],input[type="email"],input[type="password"],
+  input[type="search"],input[type="number"],input[type="tel"],
+  textarea,select{font-size:16px !important;}
+}
 
 } /* @layer components */

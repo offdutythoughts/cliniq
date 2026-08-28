@@ -1,5 +1,6 @@
 // ── Seizures flowchart (data) ───────────────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
+import { SHY } from '../flowTypes'
 import { episodicTriageTable } from './episodicTriage'
 
 // ── Entry ────────────────────────────────────────────────────────────────────
@@ -269,7 +270,7 @@ const seizuresReactive: FlowPage = {
           header: 'Toxins',
           tone: 'danger',
           blocks: [{ kind: 'endpoints', items: [
-            { label: 'Organophosphates / carbamates', tone: 'danger', link: { to: 'disease', id: 'DIS-TOX-OP' } },
+            { label: `Organo${SHY}phosphates / carbamates`, tone: 'danger', link: { to: 'disease', id: 'DIS-TOX-OP' } },
             { label: 'Metaldehyde', tone: 'danger', link: { to: 'disease', id: 'DIS-TOX-METALD' } },
             { label: 'Bromethalin', tone: 'danger', link: { to: 'disease', id: 'DIS-TOX-BROM' } },
             { label: 'Ethylene glycol', tone: 'danger', link: { to: 'disease', id: 'DIS-TOX-EG' } },

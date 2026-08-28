@@ -66,6 +66,7 @@ const anorexiaPseudo: FlowPage = {
             { label: 'Periodontal disease / tooth-root abscess', link: { to: 'disease', id: 'DIS-DENT-PERIO' } },
             { label: 'Oronasal fistula', link: { to: 'disease', id: 'DIS-DENT-ORONASAL' } },
             { label: 'Stomatitis / FCGS — cat', link: { to: 'disease', id: 'DIS-DENT-STOMAT' } },
+            { label: 'Tooth resorption — cat', link: { to: 'disease', id: 'DIS-DENT-TR' } },
             { label: 'Oral foreign body', link: { to: 'disease', id: 'DIS-DENT-ORAFB' } },
             { label: 'Jaw fracture / TMJ luxation', link: { to: 'disease', id: 'DIS-DENT-JAWFX' } },
             { label: 'Retrobulbar abscess / mass', link: { to: 'disease', id: 'DIS-DENT-RETRO' } },

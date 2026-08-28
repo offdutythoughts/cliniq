@@ -4,7 +4,12 @@ import type { CSSProperties } from 'react'
 // track so the page body never scrolls sideways. Shared by every "spill" site
 // (flow table + category columns, dx table, lesion-location grid, grading
 // tables) — compose with extra decls (e.g. `SCROLL_X + 'margin-bottom:4px;'`).
-export const SCROLL_X = 'overflow-x:auto;width:100%;'
+// `overscroll-behavior-x:contain` keeps a swipe that runs off the end of a wide
+// table inside the table — without it the gesture chains to the page (and on
+// iOS Safari to the browser's back-swipe), which is what made these sections
+// awkward to read on a phone. Momentum scrolling + a thin scrollbar so the
+// section reads as scrollable rather than as content that just stops.
+export const SCROLL_X = 'overflow-x:auto;width:100%;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;'
 
 // Column-density tier for the "header → ↓ → chips" category layouts, shared so
 // the breakpoint policy lives once: 0 = roomy (≤4 columns), 1 = tight (5),
@@ -43,3 +48,18 @@ export function styleStringToObject(style: string): CSSProperties {
   }
   return obj as CSSProperties
 }
+
+// Even tracks that can always fit their container: `minmax(0,1fr)` (not `1fr`,
+// whose implicit `auto` minimum lets a long word push the track — and the whole
+// row — past the container). Paired with `overflow-wrap:anywhere` on the boxes,
+// this is what keeps a row inside its container at any width or zoom level.
+export const evenTracks = (n: number) => `repeat(${n},minmax(0,1fr))`
+
+// Long clinical labels ("Benign prostatic hyperplasia") in a narrow track: wrap
+// mid-word rather than overflow the box. Applied to every tile/header that sits
+// in a fitted row.
+// (`hyphens:auto` was tried here and dropped — it computes fine but Chrome's
+// dictionary won't hyphenate the all-caps medical words this would be for
+// ("METHAEMOGLOBIN"), so it changed nothing on any page. A label that long in a
+// third of a phone is a content problem, not a CSS one.)
+export const WRAP_ANY = 'overflow-wrap:anywhere;'

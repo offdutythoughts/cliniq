@@ -1,6 +1,6 @@
 // ── Constipation / Tenesmus flowchart ────────────────────────────────────────
 import type { FlowPage } from '../flowTypes'
-import { IDENTIFY_CAUSE_STEP } from '../flowTypes'
+import { IDENTIFY_CAUSE_STEP, SHY } from '../flowTypes'
 
 const constipationEntry: FlowPage = {
   id: 'constipation',
@@ -67,17 +67,17 @@ const constipationEntry: FlowPage = {
       items: [
         {
           tone: 'orange',
-          label: 'OBSTRUCTIVE / INTRALUMINAL',
+          label: `OBSTRUCTIVE / INTRA${SHY}LUMINAL`,
           link: { to: 'flow', id: 'constipation-obstructive' },
         },
         {
           tone: 'violet',
-          label: 'PELVIC / EXTRALUMINAL',
+          label: `PELVIC / EXTRA${SHY}LUMINAL`,
           link: { to: 'flow', id: 'constipation-pelvic' },
         },
         {
           tone: 'teal',
-          label: 'NEUROMUSCULAR / METABOLIC',
+          label: `NEURO${SHY}MUSCULAR / METABOLIC`,
           link: { to: 'flow', id: 'constipation-neuromet' },
         },
       ],

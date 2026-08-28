@@ -69,11 +69,10 @@ export type NodeBlock = Connectable & {
   /** Recolour an entry node (e.g. red acute / blue chronic pathway headers). */
   tone?: Tone
 }
-/** `scroll` locks the whole N-column split into ONE horizontally-scrolling unit:
- *  columns keep their intrinsic width and the entire branch slides under a single
- *  scrollbar, rather than each column fitting (or scrolling) inside its own share.
- *  Used by the side-by-side mechanism-split pages so both arms scroll together. */
-export type BranchBlock = Connectable & { kind: 'branch'; scroll?: boolean; columns: Column[] }
+/** An N-way split into side-by-side arms. The arms always fit the page: they
+ *  share the width evenly and absorb the squeeze internally (their boxes shrink,
+ *  a nested category row wraps) rather than any arm sliding off-screen. */
+export type BranchBlock = Connectable & { kind: 'branch'; columns: Column[] }
 export type EndpointsBlock = Connectable & { kind: 'endpoints'; cols?: number; items: Endpoint[] }
 
 /** An `.fn`-layout header box (the legacy `.fn .fn-insp/.fn-exp/.fn-rest/
@@ -245,17 +244,16 @@ export type MechanismArm = { header: string; tone: Tone; sub?: string; categorie
  *  categories — the arms sit SIDE BY SIDE (one branch column each), and inside
  *  every arm the cause categories lay out horizontally: a uniform linear row of
  *  category headers with their disease chips beneath, matching the
- *  lesion-location pages. The whole split is one locked, horizontally-scrolling
- *  block (`scroll: true`): both arms keep their intrinsic width and slide
- *  together under a single scrollbar rather than each cramming into a half-width
- *  column. Shared by the pale-MM regenerative (haemolysis vs haemorrhage) and
- *  non-regenerative (primary vs secondary) pages; reach for it whenever a page
- *  splits one differential two (or more) ways by mechanism. */
+ *  lesion-location pages. Both arms are always on the page — they share the
+ *  width evenly, and each arm's category row re-fits (wrapping onto a second
+ *  line when it has to) to whatever width the arm ends up with. Shared by the
+ *  pale-MM regenerative (haemolysis vs haemorrhage) and non-regenerative
+ *  (primary vs secondary) pages; reach for it whenever a page splits one
+ *  differential two (or more) ways by mechanism. */
 export function mechanismSplit(arms: MechanismArm[]): BranchBlock {
   return {
     kind: 'branch',
     connectAfter: false,
-    scroll: true,
     columns: arms.map(a => ({
       header: a.header,
       tone: a.tone,
@@ -264,6 +262,27 @@ export function mechanismSplit(arms: MechanismArm[]): BranchBlock {
     })),
   }
 }
+
+/** SOFT HYPHEN (U+00AD) — an invisible "you may break the word here" mark.
+ *
+ *  A long clinical term in a narrow chip has to break somewhere. Left alone the
+ *  browser breaks it wherever the box ends ("EXTRALUMINA / L", "Glaucom / a"),
+ *  which orphans letters and reads as a bug. A soft hyphen offers a syllable
+ *  boundary instead, and renders a real hyphen at the break — "EXTRA-" /
+ *  "LUMINAL". It is invisible whenever the word fits, so a label carrying one
+ *  looks identical on a wide screen and only differs where it used to break
+ *  badly.
+ *
+ *  Use the constant, never a bare U+00AD or an `&shy;` entity: the character is
+ *  invisible in a source file (the next person editing the label would delete
+ *  it without seeing it), and `&shy;` only works in the fields that go through
+ *  the HTML parser — `endpoints` labels are rendered as plain React text and
+ *  would print the entity verbatim. `${SHY}` in a template literal works in
+ *  both, and says what it is.
+ *
+ *  Place it at a syllable boundary a clinician would accept: NEURO-MUSCULAR,
+ *  CRICO-PHARYNGEAL, ORGANO-PHOSPHATES. */
+export const SHY = '\u00AD'
 
 /** A YES/NO localisation decision tree. Each `step` is a decision box with a
  *  continue-arrow (down) for the `continue` answer and a side exit outcome for
