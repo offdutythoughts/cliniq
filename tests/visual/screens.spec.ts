@@ -20,10 +20,42 @@ type Nav =
   | { fn: 'renderSubTypeDetail'; args: [string] }
   | { fn: 'renderDiffDetail'; args: [string] }
 
-const SCREENS: { name: string; nav: Nav }[] = [
+type Screen = {
+  name: string
+  nav: Nav
+  /** Runs after navigation, before the shot — use to pin a data-dependent screen. */
+  prep?: (page: Page) => Promise<void>
+  /** Selectors painted over before comparison (Playwright `mask`). */
+  mask?: string[]
+}
+
+const SCREENS: Screen[] = [
   { name: 'tab-0-clinical', nav: { fn: 'navTo', args: [0] } },
   { name: 'tab-1-diagnostic', nav: { fn: 'navTo', args: [1] } },
-  { name: 'tab-2-disease', nav: { fn: 'navTo', args: [2] } },
+  // The disease home is data-dependent twice over: it prints a live
+  // "N disease pages" count, and with no query it renders a card for EVERY
+  // disease page, so a fullPage shot grows with the database. Adding clinical
+  // content therefore reddened CI on three separate commits (b067e39, 1a6f51a,
+  // d45b79e), each needing a baseline regen that had nothing to do with the
+  // change under test. That is a tax on writing content, not a guardrail.
+  //
+  // So pin it: filter to a single row via a string that appears on exactly one
+  // page, and mask the count. What the shot still covers is the disease-home
+  // chrome and one DiseaseCard including its snippet path; what it no longer
+  // covers is the LENGTH of a list, which was never what this baseline was for.
+  //
+  // The pin is a mutation string on DIS-HCM. If that page ever loses it the
+  // filtered list renders empty and prep() fails loudly on the count assertion —
+  // change the query here, do not delete the pin.
+  {
+    name: 'tab-2-disease',
+    nav: { fn: 'navTo', args: [2] },
+    prep: async (page) => {
+      await page.fill('[aria-label="Search all pages"]', 'MyBPC3-A31P')
+      await expect(page.locator('#dis-list > *')).toHaveCount(1)
+    },
+    mask: ['.stitle'],
+  },
   { name: 'tab-3-protocols', nav: { fn: 'navTo', args: [3] } },
   { name: 'tab-4-settings', nav: { fn: 'navTo', args: [4] } },
   // Flowcharts — chosen for block-type variety (endpoints, branch, choices,
@@ -136,7 +168,14 @@ for (const theme of THEMES) {
         // (e.g. the dyspnoea flow) widens the page, a full-page shot would reveal
         // it. Hide it here — the dedicated notes-panel test covers it on purpose.
         await page.addStyleTag({ content: '[data-notes-panel], [data-notes-overlay] { display: none !important; }' })
-        await expect(page).toHaveScreenshot(`${theme}--${screen.name}.png`, { fullPage: true })
+        if (screen.prep) {
+          await screen.prep(page)
+          await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))))
+        }
+        await expect(page).toHaveScreenshot(`${theme}--${screen.name}.png`, {
+          fullPage: true,
+          ...(screen.mask ? { mask: screen.mask.map((sel) => page.locator(sel)) } : {}),
+        })
       })
     }
 
