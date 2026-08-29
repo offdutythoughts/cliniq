@@ -12,13 +12,15 @@ import { DB } from '../../data/db'
 
 export type Species = 'all' | 'dog' | 'cat'
 export type AgeCategory = 'neonate' | 'young' | 'middleaged' | 'geriatric'
-export type SexFilter = 'male' | 'female' | 'neutered' | 'intact'
+export type SexFilter = 'male' | 'female'
+export type NeuterFilter = 'intact' | 'neutered'
 
 export interface SearchInputs {
   species: Species
   breedQuery: string
   ageCategory?: AgeCategory
   sex?: SexFilter
+  neuter?: NeuterFilter
   signKeywords: string[]   // e.g. ['vomiting', 'weight loss', 'PU/PD']
   diagKeywords: string[]   // e.g. ['elevated ALP', 'thrombocytopenia', 'hypoechoic liver']
 }
@@ -335,6 +337,19 @@ function keywordHits(text: string, keywords: string[]): string[] {
   return matched
 }
 
+// ── Sex / neuter keywords ─────────────────────────────────────────────────────
+// \bmale\b deliberately does not match "female" (word boundary fails mid-word).
+
+const SEX_KEYWORDS: Record<SexFilter, RegExp> = {
+  male:   /\bmales?\b|castrat/i,
+  female: /\bfemales?\b|spay|bitch|queen/i,
+}
+
+const NEUTER_KEYWORDS: Record<NeuterFilter, RegExp> = {
+  intact:   /intact|entire/i,
+  neutered: /neuter|spay|castrat|desex/i,
+}
+
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export interface SearchCategory {
@@ -343,9 +358,9 @@ export interface SearchCategory {
 }
 
 export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
-  const { species, breedQuery, ageCategory, sex, signKeywords, diagKeywords } = inputs
+  const { species, breedQuery, ageCategory, sex, neuter, signKeywords, diagKeywords } = inputs
 
-  const hasSignalment = breedQuery.trim() || ageCategory || sex
+  const hasSignalment = breedQuery.trim() || ageCategory || sex || neuter
   const hasKeywords = signKeywords.length > 0 || diagKeywords.length > 0
 
   if (!hasSignalment && !hasKeywords) return []
@@ -374,15 +389,17 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
       }
     }
 
-    // ── Sex ──
+    // ── Sex + neuter status (independent dimensions, 2 points each) ──
     let sxScore = 0
-    if (sex) {
+    if (sex || neuter) {
       const sexText = ((d.sex as string | undefined) ?? '').toLowerCase()
       if (sexText && !/no sex|no\s+strong sex|either sex|any sex/i.test(sexText)) {
-        if (sex === 'male' && /male/i.test(sexText)) sxScore = 2
-        if (sex === 'female' && /female/i.test(sexText)) sxScore = 2
-        if (sex === 'intact' && /intact/i.test(sexText)) sxScore = 2
-        if (sex === 'neutered' && /neutered|spayed|castrated/i.test(sexText)) sxScore = 2
+        if (sex === 'male' && SEX_KEYWORDS.male.test(sexText)) sxScore += 2
+        if (sex === 'female' && SEX_KEYWORDS.female.test(sexText)) sxScore += 2
+        // strip "unneutered"/"unspayed" so they don't read as neutered
+        const neuterText = sexText.replace(/un-?\s*(neutered|spayed|desexed)/g, 'intact')
+        if (neuter === 'intact' && NEUTER_KEYWORDS.intact.test(neuterText)) sxScore += 2
+        if (neuter === 'neutered' && NEUTER_KEYWORDS.neutered.test(neuterText)) sxScore += 2
       }
     }
 
