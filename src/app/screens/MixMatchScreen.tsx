@@ -5,7 +5,7 @@
 // ranked differential list grouped by aetiology.
 
 import { useState, useMemo, useRef, useCallback } from 'react'
-import { searchDiseases, type SearchInputs, type SearchCategory, type AgeCategory, type SexFilter, type Species } from '../../lib/search/diseaseSearch'
+import { searchDiseases, type SearchInputs, type SearchCategory, type AgeCategory, type SexFilter, type NeuterFilter, type Species } from '../../lib/search/diseaseSearch'
 import { useNav } from '../nav/NavContext'
 import { SpTag } from './tags'
 import { styleStringToObject as s } from './style'
@@ -88,6 +88,7 @@ const _saved = {
   breedQuery: '',
   ageCategory: undefined as AgeCategory | undefined,
   sex: undefined as SexFilter | undefined,
+  neuter: undefined as NeuterFilter | undefined,
   signKeywords: [] as string[],
   diagKeywords: [] as string[],
 }
@@ -100,6 +101,7 @@ export function MixMatchScreen() {
   const [breedQuery, _setBreedQuery] = useState(_saved.breedQuery)
   const [ageCategory, _setAgeCategory] = useState<AgeCategory | undefined>(_saved.ageCategory)
   const [sex, _setSex] = useState<SexFilter | undefined>(_saved.sex)
+  const [neuter, _setNeuter] = useState<NeuterFilter | undefined>(_saved.neuter)
   const [signKeywords, _setSignKeywords] = useState<string[]>(_saved.signKeywords)
   const [diagKeywords, _setDiagKeywords] = useState<string[]>(_saved.diagKeywords)
 
@@ -107,6 +109,7 @@ export function MixMatchScreen() {
   const setBreedQuery = useCallback((v: string) => { _saved.breedQuery = v; _setBreedQuery(v) }, [])
   const setAgeCategory = useCallback((v: AgeCategory | undefined) => { _saved.ageCategory = v; _setAgeCategory(v) }, [])
   const setSex = useCallback((v: SexFilter | undefined) => { _saved.sex = v; _setSex(v) }, [])
+  const setNeuter = useCallback((v: NeuterFilter | undefined) => { _saved.neuter = v; _setNeuter(v) }, [])
 
   const addSign = useCallback((t: string) => _setSignKeywords(p => { const n = [...p, t]; _saved.signKeywords = n; return n }), [])
   const removeSign = useCallback((t: string) => _setSignKeywords(p => { const n = p.filter(x => x !== t); _saved.signKeywords = n; return n }), [])
@@ -118,6 +121,7 @@ export function MixMatchScreen() {
     breedQuery: breedQuery.trim(),
     ageCategory,
     sex,
+    neuter,
     signKeywords,
     diagKeywords,
   }
@@ -125,11 +129,11 @@ export function MixMatchScreen() {
   const results: SearchCategory[] = useMemo(
     () => searchDiseases(inputs),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [species, breedQuery, ageCategory, sex, signKeywords, diagKeywords],
+    [species, breedQuery, ageCategory, sex, neuter, signKeywords, diagKeywords],
   )
 
   const totalCount = results.reduce((n, g) => n + g.items.length, 0)
-  const hasAnyInput = breedQuery.trim() || ageCategory || sex || signKeywords.length > 0 || diagKeywords.length > 0
+  const hasAnyInput = breedQuery.trim() || ageCategory || sex || neuter || signKeywords.length > 0 || diagKeywords.length > 0
 
   return (
     <div style={s('padding-bottom:24px;')}>
@@ -195,28 +199,50 @@ export function MixMatchScreen() {
           </div>
         </div>
 
-        {/* Sex */}
-        <div>
-          <div style={s('font-size:10px;color:var(--gray2);margin-bottom:5px;')}>Sex</div>
-          <div style={s('display:flex;gap:5px;')}>
-            {([
-              ['male',    '♂', 'Male'],
-              ['female',  '♀', 'Female'],
-              ['intact',  '●', 'Intact'],
-              ['neutered','○', 'Neutered'],
-            ] as [SexFilter, string, string][]).map(([id, icon, label]) => {
-              const active = sex === id
-              return (
-                <button
-                  key={id}
-                  onClick={() => setSex(active ? undefined : id)}
-                  style={s(`flex:1;padding:5px 4px;border-radius:8px;border:1px solid ${active ? 'var(--teal)' : 'var(--border)'};background:${active ? 'rgba(0,180,180,0.12)' : 'transparent'};cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;`)}
-                >
-                  <span style={s(`font-size:13px;color:${active ? 'var(--teal)' : 'var(--gray2)'};`)}>{icon}</span>
-                  <span style={s(`font-size:10px;font-weight:700;color:${active ? 'var(--teal)' : 'var(--white)'};`)}>{label}</span>
-                </button>
-              )
-            })}
+        {/* Sex + neuter status — independent, one choice from each row */}
+        <div style={s('display:flex;gap:8px;')}>
+          <div style={s('flex:1;')}>
+            <div style={s('font-size:10px;color:var(--gray2);margin-bottom:5px;')}>Sex</div>
+            <div style={s('display:flex;gap:5px;')}>
+              {([
+                ['male',   '♂', 'Male'],
+                ['female', '♀', 'Female'],
+              ] as [SexFilter, string, string][]).map(([id, icon, label]) => {
+                const active = sex === id
+                return (
+                  <button
+                    key={id}
+                    onClick={() => setSex(active ? undefined : id)}
+                    style={s(`flex:1;padding:5px 4px;border-radius:8px;border:1px solid ${active ? 'var(--teal)' : 'var(--border)'};background:${active ? 'rgba(0,180,180,0.12)' : 'transparent'};cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;`)}
+                  >
+                    <span style={s(`font-size:13px;color:${active ? 'var(--teal)' : 'var(--gray2)'};`)}>{icon}</span>
+                    <span style={s(`font-size:10px;font-weight:700;color:${active ? 'var(--teal)' : 'var(--white)'};`)}>{label}</span>
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          <div style={s('flex:1;')}>
+            <div style={s('font-size:10px;color:var(--gray2);margin-bottom:5px;')}>Neuter status</div>
+            <div style={s('display:flex;gap:5px;')}>
+              {([
+                ['intact',   '●', 'Intact'],
+                ['neutered', '○', 'Neutered'],
+              ] as [NeuterFilter, string, string][]).map(([id, icon, label]) => {
+                const active = neuter === id
+                return (
+                  <button
+                    key={id}
+                    onClick={() => setNeuter(active ? undefined : id)}
+                    style={s(`flex:1;padding:5px 4px;border-radius:8px;border:1px solid ${active ? 'var(--teal)' : 'var(--border)'};background:${active ? 'rgba(0,180,180,0.12)' : 'transparent'};cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;`)}
+                  >
+                    <span style={s(`font-size:13px;color:${active ? 'var(--teal)' : 'var(--gray2)'};`)}>{icon}</span>
+                    <span style={s(`font-size:10px;font-weight:700;color:${active ? 'var(--teal)' : 'var(--white)'};`)}>{label}</span>
+                  </button>
+                )
+              })}
+            </div>
           </div>
         </div>
       </div>
