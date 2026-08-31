@@ -8,9 +8,50 @@ description: Chromium plus a production build, the two things a Playwright visua
 runs:
   using: composite
   steps:
+    # Read from the installed tree rather than hardcoded, so the cache key can
+    # never drift from the lockfile — setup has already run `npm ci` by the time
+    # this action starts.
+    - name: Resolve the Playwright version
+      id: pw
+      shell: bash
+      run: echo "version=$(node -p "require('@playwright/test/package.json').version")" >> "$GITHUB_OUTPUT"
+
+    # The chromium download is ~130MB and byte-identical for a given Playwright
+    # version, so it has no business crossing the network on every run. Keyed on
+    # that version alone: a bump misses and re-downloads, which is correct, and
+    # nothing else about the repo can invalidate it.
+    - name: Cache the chromium download
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/ms-playwright
+        key: ms-playwright-${{ runner.os }}-${{ steps.pw.outputs.version }}
+
+    # Unconditional and unchanged, on purpose. With the cache restored the
+    # download half is a no-op and this collapses to `install-deps` — the apt
+    # libs chromium links against, which live outside the cached directory and
+    # cannot be restored with it. Skipping the whole step on a cache hit would
+    # save that apt call and then fail to launch a browser on any runner image
+    # that stops shipping one of those libs.
     - name: Install Playwright chromium
       shell: bash
       run: npx playwright install --with-deps chromium
+
+    # Next's own build cache, keyed on the dependency tree plus this commit so
+    # every run saves its own entry, with restore-keys falling back to the newest
+    # entry built against the same lockfile.
+    #
+    # That this lives in the SHARED action matters more here than it usually
+    # would. The run that writes a baseline and the run that checks it have to
+    # build the app identically, and a build cache warm on one side and cold on
+    # the other is precisely the asymmetry this action exists to prevent. Both
+    # paths get it or neither does — do not move this into ci.yml.
+    - name: Cache the Next build
+      uses: actions/cache@v4
+      with:
+        path: .next-pw/cache
+        key: nextpw-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-${{ github.sha }}
+        restore-keys: |
+          nextpw-${{ runner.os }}-${{ hashFiles('package-lock.json') }}-
 
     # next.config.ts points the NEXT_DIST_DIR build at tsconfig.pw.json so Next's
     # auto-reconfigure never edits the app's tsconfig.json. That file is
