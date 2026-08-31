@@ -30,7 +30,6 @@ export const coughingDx: DxApproach = {
           { kind: 'row', cells: ['<strong>Chronic &gt;2 months</strong>', 'Old dog, weight loss', '<strong>Neoplasia / chronic bronchitis</strong> → CXR 3-view'] },
         ],
         fontSize: '11px',
-        scrollable: false,
       },
       { kind: 'step', text: '🐾 SPECIES RULE' },
       {

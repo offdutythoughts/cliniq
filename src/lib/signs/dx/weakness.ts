@@ -35,7 +35,6 @@ export const weaknessDx: DxApproach = {
           { kind: 'row', cells: ['<strong>Acute + systemic signs</strong>', 'PU/PD, polyphagia, or weight loss', '<strong>Metabolic (DM, HAC, hypokalaemia)</strong>'] },
         ],
         fontSize: '11px',
-        scrollable: false,
       },
       { kind: 'step', text: '📋 CHARACTERISE THE EPISODE' },
       {
@@ -162,7 +161,6 @@ export const weaknessDx: DxApproach = {
           { kind: 'row', cells: ['<strong>Urgent risk</strong>', 'Sudden cardiac death — treat as cardiac until proven otherwise if exertional + murmur', 'Addisonian crisis · hypoglycaemia — both rapidly reversible if caught early'] },
         ],
         fontSize: '11px',
-        scrollable: false,
       },
       {
         kind: 'callout',

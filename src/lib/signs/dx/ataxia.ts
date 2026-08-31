@@ -27,7 +27,6 @@ export const ataxiaDx: DxApproach = {
           { kind: 'row', cells: ['<strong>Multifocal</strong>', 'Combines signs from multiple systems; systemic illness', 'Vaccination status, travel (CDV, Toxoplasma)'] },
         ],
         fontSize: '11px',
-        scrollable: false,
       },
       {
         kind: 'check',

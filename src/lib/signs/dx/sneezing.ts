@@ -30,7 +30,6 @@ export const sneezingDx: DxApproach = {
           { kind: 'row', cells: ['<strong>Young cat</strong> + stertor', 'Serous', '<strong>Nasopharyngeal polyp</strong> → retroflex pharyngoscopy'] },
         ],
         fontSize: '11px',
-        scrollable: false,
       },
       { kind: 'step', text: '📋 DISCHARGE & ASSOCIATED SIGNS' },
       {
@@ -108,7 +107,6 @@ export const sneezingDx: DxApproach = {
           { kind: 'row', cells: ['Key diagnoses', 'FB · Neoplasia · Aspergillosis · Oronasal fistula', 'Viral URTI · Chronic rhinosinusitis · NP polyp (🐱) · Crypto (🐱)'] },
         ],
         fontSize: '11px',
-        scrollable: false,
       },
       ...stepPair(1, 'MINIMUM DATABASE', `CBC + biochemistry: leukocytosis (infectious); thrombocytopenia (coagulopathy → haemorrhagic sneezing / epistaxis — check before rhinoscopy). Coagulation panel (PT/aPTT) if haemorrhagic discharge.<br>
       🐱 FIV/FeLV. Blood pressure (hypertension → epistaxis in older cats).<br>

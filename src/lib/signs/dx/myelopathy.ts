@@ -29,7 +29,6 @@ export const myelopathyDx: DxApproach = {
           { kind: 'row', cells: ['<strong>Chronic progressive</strong>', 'Weeks–months', 'Neoplasia · DM · CCSM → MRI'] },
         ],
         fontSize: '11px',
-        scrollable: false,
       },
       { kind: 'step', text: '🐾 SIGNALMENT & BREED CLUES' },
       {

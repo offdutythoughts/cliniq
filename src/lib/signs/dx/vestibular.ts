@@ -32,7 +32,6 @@ export const vestibularDx: DxApproach = {
           { kind: 'row', cells: ['<strong>Multifocal CNS signs</strong> · ↓ mentation', '<strong>Central</strong> (neoplasia / encephalitis / stroke)', 'MRI brain + CSF analysis'] },
         ],
         fontSize: '11px',
-        scrollable: false,
       },
       { kind: 'step', alt: true, text: '💊 DRUGS, EARS & SYSTEMIC HISTORY' },
       {
