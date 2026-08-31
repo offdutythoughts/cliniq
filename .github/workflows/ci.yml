@@ -22,6 +22,10 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    # A run that passes this is wedged, not slow. Without it a hung `next start`
+    # or a stuck browser sits on GitHub's 360-minute default, burning the runner
+    # and telling nobody anything.
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
@@ -41,14 +45,28 @@ jobs:
       # baseline cannot gate a Linux render. If that directory is absent the
       # guardrail is unarmed, and Playwright would "pass" by silently writing new
       # baselines, so say so loudly instead of going green on nothing.
+      #
+      # How loudly depends on the branch. A warning annotation still leaves a
+      # green checkmark, and on main and production that checkmark is what
+      # promote.sh reads as permission to ship — a green meaning "skipped" is
+      # exactly the verdict that gate must never receive. So a deploy branch
+      # fails here. On PRs and feature branches nothing consumes the verdict, so
+      # a warning is enough and the other three gates still run.
       - name: Check linux baselines exist
         id: baselines
+        env:
+          BRANCH: ${{ github.ref_name }}
+          DEPLOY_BRANCH: ${{ github.event_name == 'push' && (github.ref_name == 'main' || github.ref_name == 'production') }}
         run: |
           if [ -d tests/visual/__screenshots__/linux ] && \
              [ -n "$(ls -A tests/visual/__screenshots__/linux 2>/dev/null)" ]; then
             echo "present=true" >> "$GITHUB_OUTPUT"
           else
             echo "present=false" >> "$GITHUB_OUTPUT"
+            if [ "$DEPLOY_BRANCH" = "true" ]; then
+              echo "::error title=Visual guardrail unarmed::No tests/visual/__screenshots__/linux baselines on $BRANCH, and a green run on a deploy branch is what promote.sh ships on. Run Actions → 'Update visual baselines' to generate them."
+              exit 1
+            fi
             echo "::warning title=Visual guardrail unarmed::No tests/visual/__screenshots__/linux baselines. Run Actions → 'Update visual baselines' to generate them."
           fi
 
