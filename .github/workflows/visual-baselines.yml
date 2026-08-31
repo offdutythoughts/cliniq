@@ -1,8 +1,9 @@
 name: Update visual baselines
 
-# Regenerates tests/visual/__screenshots__/linux/ on the ubuntu runner and commits
-# it back to the branch you ran this on — except `production`, which is
-# redirected to `main`. See "Never production" below.
+# Regenerates tests/visual/__screenshots__/linux/ on the ubuntu runner, verifies
+# the set it just rendered actually passes a strict compare, and commits it back
+# to the branch you ran this on — except `production`, which is redirected to
+# `main`. See "Never production" below.
 #
 # This exists because the committed baselines have to be rendered by the same
 # font stack that CI renders with, and no developer machine here is Linux. Run it
@@ -71,6 +72,10 @@ permissions:
 jobs:
   regenerate:
     runs-on: ubuntu-latest
+    # Two playwright passes plus a build. Anything past this is wedged, and the
+    # 360-minute default would hold the concurrency group — which never cancels —
+    # against every regen queued behind it.
+    timeout-minutes: 25
     steps:
       # workflow_dispatch names the branch as an input; a sentinel push carries
       # it as the ref that was pushed. Either way production means main.
@@ -102,6 +107,40 @@ jobs:
       # and is exactly what we want on the first run.
       - name: Regenerate baselines
         run: npx playwright test --update-snapshots || true
+
+      # The regen pass writes whatever it renders and swallows its exit code, so
+      # on its own it proves nothing about the set it just produced. Compare
+      # against that set once, strictly — playwright.config.ts pins
+      # updateSnapshots to 'none' and only the line above overrides it, so this
+      # pass cannot write. Two things fall out. A screen that renders differently
+      # on two consecutive runs is flake, and it gets caught here instead of on
+      # someone's unrelated PR. And the assertions that are not screenshots at
+      # all — fits.spec.ts's page-overflow checks, the pinned tab-2-disease row
+      # count — have to hold before this set is worth committing.
+      #
+      # A failure here stops the commit step on its own (steps default to
+      # if: success()), which is the point: nothing lands unverified.
+      #
+      # This also retires the ceremony that used to follow a bot push. Baselines
+      # land via GITHUB_TOKEN, which by design starts no workflow, so the branch
+      # sat at a commit CI had never seen and promote.sh waved it through on its
+      # "no run at all" branch. Verifying here is what makes that commit
+      # trustworthy — see 405d3f6, 4dbfbc4 and 8e771be, three commits whose only
+      # job was to make CI run again on top of one of these.
+      - name: Verify the regenerated baselines
+        run: npx playwright test
+
+      # A verify failure means the set is not committable, and the diff images
+      # are the only way to see why.
+      - name: Upload verification report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: baseline-verification-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
 
       - name: Commit baselines
         env:
