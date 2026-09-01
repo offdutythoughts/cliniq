@@ -100,6 +100,20 @@ lines carry printed page numbers. See `ettinger9-index.md` for the lookup. The i
 **`ettinger9.pdf` is still gone and is still not being replaced** (decision, 2026-08-10).
 The full-text `.md` supersedes the need for it.
 
+### Feline eosinophilic keratitis (journal source)
+
+> Romaneck AK, Sebbag L. Case report: clinical remission in a cat with severe bilateral eosinophilic keratitis receiving combined immunosuppressive therapy (triamcinolone acetonide and tacrolimus). Front Vet Sci. 2021;8:580396. doi:10.3389/fvets.2021.580396
+
+Verified against the article's own `Citation:` line (frontiersin.org, 30 Apr 2021).
+Open access, so the full text is retrievable without a subscription.
+
+Cited on `DIS-EYE-KERATITIS` for three things Gelatt ch 28 does not give: the
+non-response and recurrence rates for topical megestrol (~12% and ~33%) and for
+topical ciclosporin 1.5% (11.4% and 22.6%), and the combined triamcinolone +
+tacrolimus protocol. **It is a single case report** — n=1 — so the protocol is
+recorded as feasibility, not superiority, and the entry says so. The comparative
+percentages come from its literature review rather than its own cohort.
+
 ---
 
 ## Second-hand — recorded in the notes files, source no longer on disk
