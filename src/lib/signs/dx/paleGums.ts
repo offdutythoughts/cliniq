@@ -24,7 +24,7 @@ export const paleGumsDx: DxApproach = {
       <strong>Red–brown urine</strong> (haemoglobinuria) + pallor → intravascular haemolysis.<br>
       <strong>Chronic, gradual</strong> → CKD (renal anaemia), chronic disease, marrow disease, occult bleeding.`,
       },
-      { kind: 'step', alt: true, text: '💊 TOXIN / DRUG / INFECTIOUS / SIGNALMENT' },
+      { kind: 'step', text: '💊 TOXIN / DRUG / INFECTIOUS / SIGNALMENT' },
       {
         kind: 'check',
         html: `<strong>Oxidant access</strong>: onion/garlic (Allium), zinc (coins/hardware), paracetamol (cat) → Heinz-body haemolysis.<br>
@@ -53,7 +53,7 @@ export const paleGumsDx: DxApproach = {
       <strong>Anaemia</strong>: pale but with a normal/bounding pulse and normal CRT (unless concurrent shock).<br>
       <strong>Hypoperfusion/shock</strong>: pale + prolonged CRT + weak pulses + tachycardia (dog) — or <strong>bradycardia + hypothermia in a cat</strong> (decompensated).`,
       },
-      { kind: 'step', alt: true, text: '🔍 STEP 2 — SOURCE-HUNTING EXAM' },
+      { kind: 'step', text: '🔍 STEP 2 — SOURCE-HUNTING EXAM' },
       {
         kind: 'check',
         html: `<strong>Icterus</strong> (with pallor) → haemolysis. <strong>Petechiae/ecchymoses</strong> → thrombocytopenia/coagulopathy.<br>
@@ -61,7 +61,7 @@ export const paleGumsDx: DxApproach = {
       <strong>Muffled heart + jugular distension</strong> → pericardial effusion. <strong>Murmur/arrhythmia</strong> → cardiogenic.<br>
       A haemic murmur may appear with severe anaemia.`,
       },
-      { kind: 'step', alt: true, text: '⚡ STEP 3 — DECIDE THE PATH' },
+      { kind: 'step', text: '⚡ STEP 3 — DECIDE THE PATH' },
       {
         kind: 'check',
         html: `Pale + signs of blood loss/icterus/petechiae → anaemia path (PCV/TS, smear, reticulocytes). Pale + shock parameters with normal PCV → perfusion path (lactate, BP, FAST, ECG). The Diagnostics tab branches on PCV.`,
@@ -74,7 +74,7 @@ export const paleGumsDx: DxApproach = {
     title: 'Dx: Pale MM — Diagnostics',
     blocks: [
       { kind: 'step', text: 'PALE MUCOUS MEMBRANES — DIAGNOSTIC APPROACH' },
-      { kind: 'step', alt: true, text: 'PCV/TS + CRT + HR + pulse quality' },
+      { kind: 'step', text: 'PCV/TS + CRT + HR + pulse quality' },
       {
         kind: 'html',
         html: `<div class="dx-connector">

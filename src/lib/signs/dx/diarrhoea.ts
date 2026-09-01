@@ -54,7 +54,7 @@ export const diarrhoeaDx: DxApproach = {
     <strong>Water source:</strong> Ponds, creeks, standing water? (Giardia, Heterobilharzia)<br>
     <strong>Weight change:</strong> Progressive loss? Polyphagia despite weight loss? (EPI)`,
         },
-        { kind: 'step', alt: true, text: '🐾 SIGNALMENT + BREED CLUES' },
+        { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
         {
           kind: 'check',
           html: `<strong>Young + unvaccinated:</strong> Parvovirus, parasites<br>
@@ -160,7 +160,7 @@ export const diarrhoeaDx: DxApproach = {
     <div style="font-size:10.5px;color:var(--white);">Mandatory before any further diagnostics in LB disease. Palpate for mass, stricture, polyp, mucosal irregularity, pain. A rectal mass found here changes the entire workup.</div>
   </div>`,
         },
-        { kind: 'step', alt: true, text: 'STEP 1 — EMPIRIC MEDICAL MANAGEMENT' },
+        { kind: 'step', text: 'STEP 1 — EMPIRIC MEDICAL MANAGEMENT' },
         {
           kind: 'check',
           html: `<span style="font-size:10px;opacity:.8;">Start empiric treatment in all cases while awaiting diagnostics. Many acute diarrhoeas resolve with supportive care alone.</span><br><br>
@@ -187,7 +187,7 @@ export const diarrhoeaDx: DxApproach = {
       <span style="font-weight:700;color:var(--tone-teal-fg);">🟢 Large Bowel:</span> <strong>High-fibre supplementation first line</strong> — psyllium husk / wheat bran 1–6 tsp/day OR commercial high-fibre diet for 3–4 weeks. Effective for idiopathic LB diarrhoea and stress colitis. Fenbendazole course ×3 (repeat at 3 and 6 weeks) to cover <em>Trichuris vulpis</em> even if flotation negative. Avoid metronidazole as sole treatment — address fibre and parasites first.
     </div>`,
         },
-        { kind: 'step', alt: true, text: 'STEP 2 — FAECAL PANEL' },
+        { kind: 'step', text: 'STEP 2 — FAECAL PANEL' },
         {
           kind: 'check',
           html: `<strong>Minimum panel:</strong><br>
@@ -203,7 +203,7 @@ export const diarrhoeaDx: DxApproach = {
       <span style="font-weight:700;color:var(--tone-teal-fg);">🟢 Large Bowel:</span> Priority target is <strong><em>Trichuris vulpis</em></strong> — ova shed intermittently, flotation frequently negative; treat empirically regardless. <strong>Cats:</strong> <em>Tritrichomonas foetus</em> — <strong>InPouch culture or faecal PCR</strong> (young cats, crowded environments); NOT detected on routine flotation. Treat with ronidazole 30–50 mg/kg PO SID ×14 days. Faecal culture if haemorrhagic, febrile, or zoonotic risk.
     </div>`,
         },
-        { kind: 'step', alt: true, text: 'STEP 3 — BLOODWORK<span style="font-weight:400;font-size:9px;opacity:.8;"> · indicated if: not resolving after empiric Rx · chronic (&gt;3 wk) · weight loss · systemic signs</span>' },
+        { kind: 'step', text: 'STEP 3 — BLOODWORK<span style="font-weight:400;font-size:9px;opacity:.8;"> · indicated if: not resolving after empiric Rx · chronic (&gt;3 wk) · weight loss · systemic signs</span>' },
         {
           kind: 'check',
           html: `<strong style="color:var(--tone-warning-fg);">CBC:</strong><br>
@@ -233,7 +233,7 @@ export const diarrhoeaDx: DxApproach = {
       <span style="font-weight:700;color:var(--tone-teal-fg);">🟢 Large Bowel:</span> Bloodwork usually normal in straightforward LB disease. Run if: weight loss, systemic signs, haemorrhagic diarrhoea, refractory to empiric treatment, or patient &gt;7 years old. GI-specific panel (TLI / cobalamin / folate) not routinely indicated — only if concurrent SB signs or systemic disease suspected.
     </div>`,
         },
-        { kind: 'step', alt: true, text: 'STEP 4 — ABDOMINAL IMAGING<span style="font-weight:400;font-size:9px;opacity:.8;"> · chronic · weight loss · palpable abnormality</span>' },
+        { kind: 'step', text: 'STEP 4 — ABDOMINAL IMAGING<span style="font-weight:400;font-size:9px;opacity:.8;"> · chronic · weight loss · palpable abnormality</span>' },
         {
           kind: 'check',
           html: `<strong>Survey radiograph:</strong><br>
@@ -250,7 +250,7 @@ export const diarrhoeaDx: DxApproach = {
       <span style="font-weight:700;color:var(--tone-teal-fg);">🟢 Large Bowel:</span> Lower yield in straightforward LB disease. Ultrasound useful for colonic wall thickening and mesenteric LN if chronic or severe. Rectal exam and colonoscopy are higher-yield.
     </div>`,
         },
-        { kind: 'step', alt: true, text: 'STEP 5 — ENDOSCOPY + BIOPSY<span style="font-weight:400;font-size:9px;opacity:.8;"> · dietary trial failed · systemic causes excluded · progressive weight loss</span>' },
+        { kind: 'step', text: 'STEP 5 — ENDOSCOPY + BIOPSY<span style="font-weight:400;font-size:9px;opacity:.8;"> · dietary trial failed · systemic causes excluded · progressive weight loss</span>' },
         {
           kind: 'check',
           html: `• <strong>Full-thickness surgical biopsy</strong> preferred — necessary for lymphoma subtyping, transmural disease (pythiosis, histoplasmosis)<br>
@@ -307,7 +307,7 @@ export const diarrhoeaDx: DxApproach = {
           style: 'font-size:10.5px;',
           html: `<strong>Suspect when:</strong> chronic SI-pattern diarrhoea + weight loss · systemic signs (PU/PD, lethargy, episodic weakness, jaundice, tachycardia) · bloodwork abnormalities pointing away from primary GI · poor response to GI treatment`,
         },
-        { kind: 'step', alt: true, text: 'STEP 1 — BLOODWORK FLAGS + FIRST TESTS' },
+        { kind: 'step', text: 'STEP 1 — BLOODWORK FLAGS + FIRST TESTS' },
         {
           kind: 'check',
           html: `<strong style="color:var(--tone-warning-fg);">Hypoadrenocorticism (Addison's):</strong><br>
@@ -334,7 +334,7 @@ export const diarrhoeaDx: DxApproach = {
     <strong style="color:var(--tone-warning-fg);">Regional infectious clue:</strong><br>
     • Hypercalcaemia + Gulf Coast dog + outdoor water exposure → <em>Heterobilharzia americana</em>`,
         },
-        { kind: 'step', alt: true, text: 'STEP 2 — TARGETED FOLLOW-UP BY SUSPECTED CAUSE' },
+        { kind: 'step', text: 'STEP 2 — TARGETED FOLLOW-UP BY SUSPECTED CAUSE' },
         {
           kind: 'check',
           html: `<strong style="color:var(--tone-green-fg);">If hypoadrenocorticism suspected:</strong><br>
@@ -356,7 +356,7 @@ export const diarrhoeaDx: DxApproach = {
     • Endoscopy + full-thickness biopsy — lymphangiectasia (dilated lacteals), IBD, lymphoma<br>
     • Check cobalamin + folate (B12 low → ileal disease; folate ↑ → SIBO)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 3 — REGION-SPECIFIC INFECTIOUS CAUSES' },
+        { kind: 'step', text: 'STEP 3 — REGION-SPECIFIC INFECTIOUS CAUSES' },
         {
           kind: 'check',
           html: `<strong style="color:var(--tone-danger-fg);">Heterobilharzia americana</strong> (Gulf Coast / SE USA · outdoor + freshwater exposure):<br>

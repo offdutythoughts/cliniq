@@ -18,22 +18,19 @@ export const vestibularDx: DxApproach = {
         html: `Owners report a "stroke" — head tilt, falling/rolling to one side, circling, nausea/inappetence, nystagmus. Confirm this is vestibular (loss of balance to one side) rather than generalised weakness or seizure.`,
       },
       {
-        kind: 'comparisonTable',
-        cols: [
-          { label: 'Onset / Pattern', isLabel: true, width: '30%' },
-          { label: 'Likely diagnosis', color: '#94a3b8', width: '30%' },
-          { label: 'Next step' },
-        ],
+        kind: 'gridTable',
+        cols: '0.3fr 0.3fr 0.4fr',
+        dividers: true,
+        headers: ['Onset / pattern', { text: 'Differential', tone: 'teal' }, 'Next step'],
         rows: [
-          { kind: 'row', cells: ['<strong>Peracute</strong> — older dog', '<strong>Idiopathic / Geriatric</strong> vestibular', 'Supportive care; re-examine if not improving at 72 h'] },
-          { kind: 'row', cells: ['<strong>Peracute</strong> — young cat', '<strong>Idiopathic feline</strong> vestibular', 'Exclude otitis media/interna + nasopharyngeal polyp'] },
-          { kind: 'row', cells: ['<strong>Chronic</strong> + recurrent otitis', '<strong>Otitis media / interna</strong>', 'Otoscopy → CT bullae'] },
-          { kind: 'row', cells: ['<strong>Drug history</strong> (aminoglycosides, chlorhexidine)', '<strong>Ototoxicity</strong>', 'Stop drug; supportive care'] },
-          { kind: 'row', cells: ['<strong>Multifocal CNS signs</strong> · ↓ mentation', '<strong>Central</strong> (neoplasia / encephalitis / stroke)', 'MRI brain + CSF analysis'] },
+          ['<strong>Peracute</strong> — older dog', { text: '<strong>Idiopathic / geriatric</strong> vestibular', tone: 'teal' }, 'Supportive care; re-examine if not improving at 72 h'],
+          ['<strong>Peracute</strong> — young cat', { text: '<strong>Idiopathic feline</strong> vestibular', tone: 'teal' }, 'Exclude otitis media/interna + nasopharyngeal polyp'],
+          ['<strong>Chronic</strong> + recurrent otitis', { text: '<strong>Otitis media / interna</strong>', tone: 'teal' }, 'Otoscopy → CT bullae'],
+          ['<strong>Drug history</strong> (aminoglycosides, chlorhexidine)', { text: '<strong>Ototoxicity</strong>', tone: 'teal' }, 'Stop drug; supportive care'],
+          ['<strong>Multifocal CNS signs</strong> · ↓ mentation', { text: '<strong>Central</strong> (neoplasia / encephalitis / stroke)', tone: 'teal' }, 'MRI brain + CSF analysis'],
         ],
-        fontSize: '11px',
       },
-      { kind: 'step', alt: true, text: '💊 DRUGS, EARS & SYSTEMIC HISTORY' },
+      { kind: 'step', text: '💊 DRUGS, EARS & SYSTEMIC HISTORY' },
       {
         kind: 'check',
         html: `<strong>Ototoxic drugs:</strong> topical/systemic aminoglycosides, chlorhexidine flushed into a perforated bulla.<br>
@@ -62,7 +59,7 @@ export const vestibularDx: DxApproach = {
       <strong>Nystagmus at rest:</strong> Horizontal, rotary, or vertical? Direction-changing with head position?`,
       },
 
-      { kind: 'step', alt: true, text: 'STEP 2 — FOUR SIGNS THAT MEAN CENTRAL' },
+      { kind: 'step', text: 'STEP 2 — FOUR SIGNS THAT MEAN CENTRAL' },
       {
         kind: 'check',
         html: `Any one of these places the lesion centrally (brainstem/cerebellum):<br>
@@ -74,27 +71,22 @@ export const vestibularDx: DxApproach = {
 
       { kind: 'step', text: 'STEP 3 — PERIPHERAL vs CENTRAL vs BILATERAL TABLE' },
       {
-        kind: 'comparisonTable',
-        fontSize: '9px',
-        cols: [
-          { label: '',            isLabel: true, width: '28%' },
-          { label: 'Peripheral',  color: '#86efac', width: '24%' },
-          { label: 'Central',     color: '#fca5a5', width: '24%' },
-          { label: 'Bilateral',   color: '#fcd34d', width: '24%' },
-        ],
+        kind: 'gridTable',
+        cols: '1fr 1.4fr 1.4fr 1.4fr',
+        headers: ['', { text: 'Peripheral', tone: 'green' }, { text: 'Central', tone: 'danger' }, { text: 'Bilateral', tone: 'warning' }],
         rows: [
-          { kind: 'row', cells: ['Mentation',          'Alert / normal',                                   'Often depressed / obtunded',                         'Alert / normal'] },
-          { kind: 'row', cells: ['Nystagmus type',      'Horizontal or rotary only',                        'Any type incl. vertical',                            'Absent'] },
-          { kind: 'row', cells: ['Nystagmus direction', 'Fixed — does not change with head position',        'May be <strong>direction-changing</strong> or disconjugate', '—'] },
-          { kind: 'row', cells: ['CP deficits',         '✗ ABSENT',                                         '✓ PRESENT',                                          'Variable'] },
-          { kind: 'row', cells: ['Head tilt',           'Present (toward lesion)',                           'Present (toward lesion) OR paradoxical',              '✗ ABSENT'] },
-          { kind: 'row', cells: ['Other CN deficits',   "± Horner's · ± CN VII only",                       'Multiple CN V–XII',                                  'Bilateral ventrolateral strabismus'] },
-          { kind: 'row', cells: ['VOR',                 'Intact',                                           'May be impaired',                                    'Absent bilaterally'] },
-          { kind: 'row', cells: ['Gait',                'Rolling/falling toward lesion; ataxic',             'Ataxia ± hemiparesis',                               'Wide-based; side-to-side sway; crouching'] },
+          ['Mentation',           { text: 'Alert / normal', tone: 'green' },                              { text: 'Often depressed / obtunded', tone: 'danger' },                        { text: 'Alert / normal', tone: 'warning' }],
+          ['Nystagmus type',      { text: 'Horizontal or rotary only', tone: 'green' },                   { text: 'Any type incl. vertical', tone: 'danger' },                           { text: 'Absent', tone: 'warning' }],
+          ['Nystagmus direction', { text: 'Fixed — does not change with head position', tone: 'green' },   { text: 'May be <strong>direction-changing</strong> or disconjugate', tone: 'danger' }, { text: '—', tone: 'warning' }],
+          ['CP deficits',         { text: '✗ ABSENT', tone: 'green' },                                    { text: '✓ PRESENT', tone: 'danger' },                                         { text: 'Variable', tone: 'warning' }],
+          ['Head tilt',           { text: 'Present (toward lesion)', tone: 'green' },                      { text: 'Present (toward lesion) OR paradoxical', tone: 'danger' },             { text: '✗ ABSENT', tone: 'warning' }],
+          ['Other CN deficits',   { text: "± Horner's · ± CN VII only", tone: 'green' },                   { text: 'Multiple CN V–XII', tone: 'danger' },                                 { text: 'Bilateral ventrolateral strabismus', tone: 'warning' }],
+          ['VOR',                 { text: 'Intact', tone: 'green' },                                      { text: 'May be impaired', tone: 'danger' },                                   { text: 'Absent bilaterally', tone: 'warning' }],
+          ['Gait',                { text: 'Rolling/falling toward lesion; ataxic', tone: 'green' },        { text: 'Ataxia ± hemiparesis', tone: 'danger' },                              { text: 'Wide-based; side-to-side sway; crouching', tone: 'warning' }],
         ],
       },
 
-      { kind: 'step', alt: true, text: 'STEP 4 — ADDITIONAL EXAM: OTOSCOPY' },
+      { kind: 'step', text: 'STEP 4 — ADDITIONAL EXAM: OTOSCOPY' },
       {
         kind: 'check',
         html: `<strong>Otoscopy both ears:</strong> discharge, erythema, proliferative tissue, polyp in the external canal (young cat). Pain on palpation of the bulla or pinnae.<br>

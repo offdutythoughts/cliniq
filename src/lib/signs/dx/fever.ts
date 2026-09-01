@@ -26,7 +26,7 @@ export const feverDx: DxApproach = {
     <strong>Stress suspected</strong> (clinic, handling) → rest the patient 20 min in a cool room; if temperature normalises or is only mild (≤39.6°C / 103.3°F), further investigation may not be required.<br>
     <strong>Drug history</strong> — opioids, ketamine/phenobarbital (cats), SSRIs (both species) cause non-pyrogenic hyperthermia; sulfonamides/vaccines cause idiosyncratic drug fever.`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — SIGNALMENT & EPIDEMIOLOGY' },
+        { kind: 'step', text: ' STEP 2 — SIGNALMENT & EPIDEMIOLOGY' },
         {
           kind: 'check',
           html: `<strong>Young cat</strong> → FIP (20.8% of all feline FUO) — FeLV/FIV testing essential; bite abscess is the commonest feline cause.<br>
@@ -35,7 +35,7 @@ export const feverDx: DxApproach = {
     <strong>Entire female</strong> → pyometra/stump pyometra; <strong>entire male</strong> → prostatitis.<br>
     <strong>Tick exposure, geography & travel</strong> → vector-borne (ehrlichiosis, anaplasmosis, Lyme, RMSF, bartonellosis) and regional systemic fungal (blasto, cocci, histo) risk.`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — COURSE, PATTERN & PRIOR RESPONSE' },
+        { kind: 'step', text: ' STEP 3 — COURSE, PATTERN & PRIOR RESPONSE' },
         {
           kind: 'check',
           html: `<strong>Acute (&lt;5 days), mild, no localising signs</strong> → may monitor; can resolve spontaneously and a mild acute fever may be better left untreated to allow localising signs to develop.<br>
@@ -66,7 +66,7 @@ export const feverDx: DxApproach = {
     <strong>Nose palpation is NOT reliable</strong> (sensitivity 29.4%, specificity 79.5%).<br>
     <strong>&gt;41.1°C (106°F)</strong> risks neurological damage, DIC and metabolic derangement and is more likely with hyperthermia — active cooling is required at this threshold (but NOT for a true fever below it).`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — SYSTEMATIC SEARCH FOR A LOCALISING FOCUS' },
+        { kind: 'step', text: ' STEP 2 — SYSTEMATIC SEARCH FOR A LOCALISING FOCUS' },
         {
           kind: 'check',
           html: `<strong>Skin / SC:</strong> abscesses (esp. cat bite), cellulitis, panniculitis, juvenile cellulitis, draining tracts.<br>
@@ -76,7 +76,7 @@ export const feverDx: DxApproach = {
     <strong>Abdomen:</strong> organomegaly, pain, masses, painful kidneys (pyelonephritis); palpate for pyometra in entire females.<br>
     <strong>Spine:</strong> palpate the whole vertebral column for focal pain (discospondylitis — radiographs lag 2–6 weeks) and assess for neck pain (SRMA).`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — MUSCULOSKELETAL, RECTAL & LYMPHORETICULAR' },
+        { kind: 'step', text: ' STEP 3 — MUSCULOSKELETAL, RECTAL & LYMPHORETICULAR' },
         {
           kind: 'check',
           html: `<strong>Joints:</strong> palpate ALL joints for effusion/pain and watch for shifting/stiff gait — immune-mediated polyarthritis is the commonest non-infectious inflammatory cause in dogs and joints can look grossly normal.<br>
@@ -99,7 +99,7 @@ export const feverDx: DxApproach = {
     <strong>Reserve antipyretic NSAIDs</strong> for severe/prolonged fever with significant signs (risks: renal/hepatic impairment, GI ulceration, blood dyscrasias). A mild acute fever may be left untreated to allow localising signs to develop.<br>
     <strong>Withhold steroids</strong> until an immune-mediated diagnosis is established and infection is excluded.`,
         },
-        { kind: 'step', alt: true, text: 'STEP 2 — MINIMUM DATABASE (Phase 1)' },
+        { kind: 'step', text: 'STEP 2 — MINIMUM DATABASE (Phase 1)' },
         {
           kind: 'check',
           html: `<strong>CBC + blood smear:</strong> inflammatory leukogram, left shift, cytopenias, blood parasites (e.g. <em>Mycoplasma</em>, <em>Babesia</em>, morulae), atypical cells.<br>
@@ -109,7 +109,7 @@ export const feverDx: DxApproach = {
     <strong>± FNA of any mass / enlarged lymph node</strong>; <strong>± thoracic & abdominal radiographs</strong>.<br>
     <strong>Antibacterial trial (5 days):</strong> clavulanate-potentiated amoxicillin first line; <strong>doxycycline</strong> in tick-endemic areas; GS-441524 for suspected FIP. (Avoid fluoroquinolones, aminoglycosides and later cephalosporins as first-line empiric choices.)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 3 — TARGETED IMAGING & FLUID SAMPLING (Phase 2)' },
+        { kind: 'step', text: 'STEP 3 — TARGETED IMAGING & FLUID SAMPLING (Phase 2)' },
         {
           kind: 'check',
           html: `<strong>Abdominal ultrasound</strong> (focus, organomegaly, effusion → sample any effusion: cytology, glucose/lactate for septic peritonitis, culture).<br>
@@ -117,7 +117,7 @@ export const feverDx: DxApproach = {
     <strong>Radiographs of the vertebrae and limbs</strong> — discospondylitis (end-plate lysis; remember the 2–6 week radiographic lag), osteomyelitis, panosteitis, metaphyseal osteopathy.<br>
     <strong>Specific serology / PCR</strong> by history and region (Ehrlichia, Anaplasma, Lyme, RMSF, Bartonella, Leptospira, Toxoplasma, Leishmania, Brucella, systemic fungal).`,
         },
-        { kind: 'step', alt: true, text: 'STEP 4 — ARTHROCENTESIS, BLOOD CULTURES & ECHO' },
+        { kind: 'step', text: 'STEP 4 — ARTHROCENTESIS, BLOOD CULTURES & ECHO' },
         {
           kind: 'check',
           html: `<strong>Arthrocentesis of multiple joints</strong> (carpi, tarsi, stifles — even normal-looking joints): neutrophilic, non-septic effusion in several joints = immune-mediated polyarthritis; degenerate neutrophils + intracellular bacteria = septic arthritis.<br>
@@ -125,7 +125,7 @@ export const feverDx: DxApproach = {
     <strong>CSF analysis</strong> (MRI of brain/spine BEFORE the tap) for SRMA / meningoencephalitis — neutrophilic pleocytosis supports SRMA.<br>
     <strong>Prostatic wash / ejaculate</strong> and <strong>Brucella serology</strong> where relevant.`,
         },
-        { kind: 'step', alt: true, text: 'STEP 5 — MARROW / TISSUE & THE TREATMENT TRIAL SEQUENCE (Phase 3)' },
+        { kind: 'step', text: 'STEP 5 — MARROW / TISSUE & THE TREATMENT TRIAL SEQUENCE (Phase 3)' },
         {
           kind: 'check',
           html: `<strong>Bone-marrow aspirate & biopsy</strong> and <strong>lymph-node aspirate</strong> (even if nodes feel normal) — occult lymphoproliferative/myeloproliferative disease, marrow infection.<br>

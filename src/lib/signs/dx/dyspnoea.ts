@@ -58,7 +58,7 @@ export const dyspnoeaDx: DxApproach = {
       • Diuretics → CHF (both species)<br>
       • 🐕 Improvement at rest, worse on exercise → tracheal collapse / cardiac disease`,
       },
-      { kind: 'step', alt: true, text: '🐕 DOG-SPECIFIC HISTORY' },
+      { kind: 'step', text: '🐕 DOG-SPECIFIC HISTORY' },
       {
         kind: 'check',
         html: `<strong>Vocalization changes:</strong> Hoarse bark, change in bark character → laryngeal disease (laryngeal paralysis, collapse, mass)<br>
@@ -70,7 +70,7 @@ export const dyspnoeaDx: DxApproach = {
       <strong>Heartworm prevention:</strong> Endemic region + no prophylaxis → consider HW disease<br>
       <strong>Travel history:</strong> Histoplasma / Blastomyces (midwest/SE USA, Great Lakes), Coccidioides (SW USA/Mexico), Angiostrongylus vasorum (UK/Europe)`,
       },
-      { kind: 'step', alt: true, text: '🐱 CAT-SPECIFIC HISTORY' },
+      { kind: 'step', text: '🐱 CAT-SPECIFIC HISTORY' },
       {
         kind: 'check',
         html: `<strong>Concurrent signs:</strong><br>
@@ -82,7 +82,7 @@ export const dyspnoeaDx: DxApproach = {
       • Multi-cat / shelter → viral URTI, FIP, secondary bacterial infections<br>
       <strong>Drug history:</strong> NSAIDs → renal compromise; corticosteroids → immunosuppression; recent anaesthesia → aspiration`,
       },
-      { kind: 'step', alt: true, text: '🐾 SIGNALMENT + BREED CLUES' },
+      { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
@@ -146,7 +146,7 @@ export const dyspnoeaDx: DxApproach = {
       • <strong>Canine — Pulse quality + rhythm:</strong> Weak/rapid → shock; irregular pulse with deficits → atrial fibrillation (DCM, advanced MMVD)<br>
       • <strong>Canine — Jugular distension:</strong> → Right-sided CHF, pulmonary hypertension, pericardial effusion`,
       },
-      { kind: 'step', alt: true, text: '🔊 AUSCULTATION + SOUND LOCALISATION' },
+      { kind: 'step', text: '🔊 AUSCULTATION + SOUND LOCALISATION' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;font-size:10px;line-height:1.45;">
@@ -165,7 +165,7 @@ export const dyspnoeaDx: DxApproach = {
         <div>Atrial fibrillation</div><div style="color:var(--tone-danger-title);">🐕 DCM or advanced MMVD — increased CHF risk</div>
       </div>`,
       },
-      { kind: 'step', alt: true, text: '🐕 DOG-SPECIFIC EXAM FINDINGS' },
+      { kind: 'step', text: '🐕 DOG-SPECIFIC EXAM FINDINGS' },
       {
         kind: 'check',
         html: `<strong style="color:var(--tone-info-fg);">Tracheal palpation:</strong><br>
@@ -183,7 +183,7 @@ export const dyspnoeaDx: DxApproach = {
       • Hepatomegaly → right CHF, hepatic disease<br>
       • Organomegaly / abdominal mass → primary disease with pulmonary metastasis or functional compression limiting diaphragm excursion`,
       },
-      { kind: 'step', alt: true, text: '🐱 CAT-SPECIFIC EXAM FINDINGS' },
+      { kind: 'step', text: '🐱 CAT-SPECIFIC EXAM FINDINGS' },
       {
         kind: 'check',
         html: `<strong style="color:var(--tone-violet-fg);">Cranial mediastinal compressibility:</strong><br>
@@ -218,7 +218,7 @@ export const dyspnoeaDx: DxApproach = {
       • 🐕 BOAS / laryngeal paralysis / upper airway obstruction: nebulised epinephrine (0.05 mg/kg in 5 mL saline q6h ×24h); cool environment; treat hyperthermia urgently<br>
       • 🐕 Transtracheal O₂ (14–16 gauge catheter, 3rd–5th tracheal ring, 50 mL/kg/min): bypasses upper airway obstruction; achieves FiO₂ ~80%`,
       },
-      { kind: 'step', alt: true, text: 'STEP 2 — POINT-OF-CARE ULTRASOUND (POCUS / TFAST)' },
+      { kind: 'step', text: 'STEP 2 — POINT-OF-CARE ULTRASOUND (POCUS / TFAST)' },
       {
         kind: 'check',
         html: `<strong>First bedside test — &lt;2 min, minimal stress (sternal positioning):</strong><br>
@@ -234,7 +234,7 @@ export const dyspnoeaDx: DxApproach = {
       • <strong>🐕 Heartworms:</strong> Double-lined structures in pulmonary artery/right heart → caval syndrome<br>
       <span style="font-size:10px;opacity:.75;">⚠️ POCUS rules in pleural disease and oedema — does NOT exclude parenchymal or airway disease. Normal POCUS does not = normal lungs.</span>`,
       },
-      { kind: 'step', alt: true, text: 'STEP 3 — PULSE OXIMETRY + S/F RATIO' },
+      { kind: 'step', text: 'STEP 3 — PULSE OXIMETRY + S/F RATIO' },
       {
         kind: 'check',
         html: `<strong>SpO₂ interpretation (standard conditions):</strong><br>
@@ -251,7 +251,7 @@ export const dyspnoeaDx: DxApproach = {
       • 🚫 Inaccurate: poor perfusion, vasoconstriction, dark pigment, motion, dyshemoglobin (smoke/CO)<br>
       • Waveform must match heart rate — mismatched waveform = erroneous reading`,
       },
-      { kind: 'step', alt: true, text: 'STEP 4 — THORACIC RADIOGRAPHS (when stabilised)' },
+      { kind: 'step', text: 'STEP 4 — THORACIC RADIOGRAPHS (when stabilised)' },
       {
         kind: 'check',
         html: `<strong>3 views (as allowed by stability):</strong> R lateral + L lateral + DV; DV less stressful than VD if unstable<br><br>
@@ -277,7 +277,7 @@ export const dyspnoeaDx: DxApproach = {
       • Pulmonary venous distension (cranial + caudal lobar veins) = cardiogenic — NOT seen with NCPE<br>
       • 🐕 DCM: ventral alveolar distribution; peribronchial cuffing; dilated CVC; dilated cardiac silhouette`,
       },
-      { kind: 'step', alt: true, text: 'STEP 5 — BLOODWORK (CBC · BIOCHEMISTRY · URINALYSIS)' },
+      { kind: 'step', text: 'STEP 5 — BLOODWORK (CBC · BIOCHEMISTRY · URINALYSIS)' },
       {
         kind: 'check',
         html: `<strong>CBC:</strong><br>
@@ -297,7 +297,7 @@ export const dyspnoeaDx: DxApproach = {
       • <strong>NT-proBNP (feline):</strong> &gt;100 pmol/L = elevated; &gt;265 pmol/L = high specificity for CHF. Normal does NOT fully exclude cardiac disease.<br>
       • <strong>cTnI (canine):</strong> Marker of myocardial injury — NOT specific for CHF; elevated in myocarditis, arrhythmias, cardiomyopathy, systemic disease (sepsis, heatstroke). Less useful than NT-proBNP for distinguishing CHF from primary respiratory disease.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 6 — ARTERIAL BLOOD GAS (when available)' },
+      { kind: 'step', text: 'STEP 6 — ARTERIAL BLOOD GAS (when available)' },
       {
         kind: 'check',
         html: `<strong>Oxygenation:</strong><br>
@@ -312,7 +312,7 @@ export const dyspnoeaDx: DxApproach = {
       • Metabolic acidosis → Kussmaul breathing (deep, laboured, rapid tachypnoea) = compensatory CO₂ elimination<br>
       • Respiratory acidosis + metabolic alkalosis → chronic upper airway obstruction with bicarbonate retention`,
       },
-      { kind: 'step', alt: true, text: 'STEP 7 — ECHOCARDIOGRAPHY' },
+      { kind: 'step', text: 'STEP 7 — ECHOCARDIOGRAPHY' },
       {
         kind: 'check',
         html: `<strong>🐕 Dog:</strong><br>
@@ -327,7 +327,7 @@ export const dyspnoeaDx: DxApproach = {
       • SAM of mitral valve → dynamic LVOTO<br>
       • Always perform before starting cardiac medications`,
       },
-      { kind: 'step', alt: true, text: 'STEP 8 — PLEURAL FLUID ANALYSIS (post-thoracocentesis)' },
+      { kind: 'step', text: 'STEP 8 — PLEURAL FLUID ANALYSIS (post-thoracocentesis)' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1.2fr 1fr 1.1fr;gap:4px 6px;font-size:9px;line-height:1.4;">
@@ -342,7 +342,7 @@ export const dyspnoeaDx: DxApproach = {
       </div>
       <div style="margin-top:6px;font-size:10px;opacity:.8;">Always send cytology. Degenerate neutrophils + intracellular bacteria = pyothorax → culture + sensitivity essential. Post-tap CXR for full parenchymal assessment.</div>`,
       },
-      { kind: 'step', alt: true, text: 'STEP 9 — AIRWAY SAMPLING + ADDITIONAL BY SUSPICION' },
+      { kind: 'step', text: 'STEP 9 — AIRWAY SAMPLING + ADDITIONAL BY SUSPICION' },
       {
         kind: 'check',
         html: `<strong>BAL / Transtracheal wash:</strong> Cell differential + culture + susceptibility<br>

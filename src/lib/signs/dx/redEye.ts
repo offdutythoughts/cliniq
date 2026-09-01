@@ -64,7 +64,7 @@ export const redEyeDx: DxApproach = {
     • Unilateral → local cause more likely (FB, ulcer, trauma, orbital, primary glaucoma in some breeds)<br>
     • Bilateral → systemic disease likely (hypertension, infectious uveitis, immune-mediated, allergic, KCS)`,
       },
-      { kind: 'step', alt: true, text: '🩺 SYSTEMIC / GENERAL HISTORY' },
+      { kind: 'step', text: '🩺 SYSTEMIC / GENERAL HISTORY' },
       {
         kind: 'check',
         html: `<strong>Concurrent illness:</strong><br>
@@ -89,7 +89,7 @@ export const redEyeDx: DxApproach = {
     • Taurine-deficient diet in cats → retinal degeneration (not red eye but vision)<br>
     • Raw diet → infectious risk (toxoplasma)`,
       },
-      { kind: 'step', alt: true, text: '🐾 SIGNALMENT + BREED CLUES' },
+      { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
@@ -140,7 +140,7 @@ export const redEyeDx: DxApproach = {
     • <strong>Discharge character:</strong> Serous · mucoid · purulent · sanguineous<br>
     • <strong>Behaviour / vision:</strong> Bumping objects, head tilt, hesitancy → vision deficit`,
       },
-      { kind: 'step', alt: true, text: '🩺 CRANIAL NERVE / VISION BATTERY' },
+      { kind: 'step', text: '🩺 CRANIAL NERVE / VISION BATTERY' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1.2fr;gap:5px 8px;font-size:10px;line-height:1.45;">
@@ -161,7 +161,7 @@ export const redEyeDx: DxApproach = {
       💡 In any red eye, PLR is essential — miosis → uveitis · mydriasis → glaucoma or retinal/optic nerve disease.
     </div>`,
       },
-      { kind: 'step', alt: true, text: '👀 OUTSIDE → IN: SYSTEMATIC OCULAR EXAM' },
+      { kind: 'step', text: '👀 OUTSIDE → IN: SYSTEMATIC OCULAR EXAM' },
       {
         kind: 'check',
         html: `<strong>1. Periocular skin + eyelids:</strong> dermatitis, swelling, alopecia, ulcers, masses, Meibomian gland eversion (chalazion, MGD, neoplasia). Evert lids — distichiasis, ectopic cilia, FB, ulcers.<br>
@@ -187,7 +187,7 @@ export const redEyeDx: DxApproach = {
     <strong>9. Lens:</strong> position (subluxation = aphakic crescent · luxation), opacity (cataract vs nuclear sclerosis — retroillumination), lens capsule rupture.<br>
     <strong>10. Vitreous + fundus:</strong> haemorrhage, asteroid hyalosis, retinal detachment, optic disc oedema (papilloedema · papillitis), tapetal hyperreflectivity (retinal atrophy) vs dullness (oedema/infiltrate), retinal vessel attenuation, chorioretinitis foci.`,
       },
-      { kind: 'step', alt: true, text: '🔍 KEY DISCRIMINATORS — PATTERN RECOGNITION' },
+      { kind: 'step', text: '🔍 KEY DISCRIMINATORS — PATTERN RECOGNITION' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;font-size:10px;line-height:1.45;">
@@ -221,7 +221,7 @@ export const redEyeDx: DxApproach = {
         html: `<strong>Suspected globe / scleral rupture or deep ulcer:</strong> Minimise handling. <strong>DO NOT</strong> apply pressure, do <strong>NOT</strong> perform Schiotz/applanation tonometry, do not flush. Use rebound tonometry only if essential. Place Elizabethan collar. Refer same day if available. Cover with broad-spectrum systemic antibiotics (e.g. amoxicillin–clavulanate ± fluoroquinolone for Pseudomonas risk) and systemic NSAID/analgesia.<br><br>
     <strong>Order of tests is critical:</strong> Schirmer Tear Test FIRST (any drops alter the result) → ocular surface cytology/swab if indicated → fluorescein stain → tonometry → topical anaesthetic → mydriatic for fundoscopy LAST. Tonometry before mydriatics.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 2 — SCHIRMER TEAR TEST (STT-1)' },
+      { kind: 'step', text: 'STEP 2 — SCHIRMER TEAR TEST (STT-1)' },
       {
         kind: 'check',
         html: `<strong>Performed before any solutions, drops, or bright light.</strong><br>
@@ -230,7 +230,7 @@ export const redEyeDx: DxApproach = {
     • <strong>Cat normal:</strong> wide reference (median ~14 mm/min, 95% PI ~8–22); a substantial proportion of clinically normal cats read &lt;10. Interpret with clinical signs (mucoid discharge, corneal scarring) — single low readings without clinical correlation are non-diagnostic.<br>
     • <strong>Pitfalls:</strong> Recent topicals · sedation · third eyelid disease · neurogenic KCS (CN VII) — often dry ipsilateral nostril; do contralateral STT for comparison.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 3 — OCULAR SURFACE SAMPLING (if indicated)' },
+      { kind: 'step', text: 'STEP 3 — OCULAR SURFACE SAMPLING (if indicated)' },
       {
         kind: 'check',
         html: `<strong>Indications:</strong> Deep, melting or non-healing ulcers · purulent conjunctivitis · suspected infectious cause · pre-surgical.<br>
@@ -238,7 +238,7 @@ export const redEyeDx: DxApproach = {
     • <strong>Culture + sensitivity:</strong> swab BEFORE topicals; transport in Amies/charcoal. Empirical first-line antibiotics based on cytology while awaiting C&amp;S.<br>
     • <strong>PCR (cats):</strong> Conjunctival/corneal swab for FHV-1, FCV, <em>Chlamydia felis</em>, <em>Mycoplasma felis</em>. Interpret with care — FHV-1 PCR positive in many normal cats (latent infection).`,
       },
-      { kind: 'step', alt: true, text: 'STEP 4 — FLUORESCEIN STAIN' },
+      { kind: 'step', text: 'STEP 4 — FLUORESCEIN STAIN' },
       {
         kind: 'check',
         html: `• Wet single strip with saline; touch bulbar conjunctiva; flush excess; view with cobalt blue light.<br>
@@ -251,7 +251,7 @@ export const redEyeDx: DxApproach = {
     • <strong>Jones test:</strong> Stain placed in eye should appear at nostril within 5 min → tests nasolacrimal patency.<br>
     • <strong>Pitfalls:</strong> Excess stain pools in pockets and false-positives; mucus retains stain; rose bengal more sensitive for FHV-1 dendritic ulcers (geographic/dendritic uptake).`,
       },
-      { kind: 'step', alt: true, text: 'STEP 5 — TONOMETRY (IOP)' },
+      { kind: 'step', text: 'STEP 5 — TONOMETRY (IOP)' },
       {
         kind: 'check',
         html: `<strong>Methods:</strong> Rebound (TonoVet) preferred — no anaesthetic required, accurate; Applanation (Tono-Pen) — topical anaesthetic needed; Schiotz — indentation, weight calibration needed.<br>
@@ -266,7 +266,7 @@ export const redEyeDx: DxApproach = {
     </div>
     <strong>Pitfalls:</strong> Squeezing eyelids · jugular compression · head position · poor calibration → falsely high readings. Take 3+ readings and use the mean.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 6 — FOCAL LIGHT + SLIT-LAMP / OPHTHALMOSCOPY' },
+      { kind: 'step', text: 'STEP 6 — FOCAL LIGHT + SLIT-LAMP / OPHTHALMOSCOPY' },
       {
         kind: 'check',
         html: `<strong>Direct ophthalmoscope / pen torch / Finoff transilluminator:</strong> evaluate cornea, AC, iris, pupil, lens, retinal red reflex.<br>
@@ -277,7 +277,7 @@ export const redEyeDx: DxApproach = {
     • <strong>Slit lamp</strong> (if available): biomicroscopic depth assessment — KP, flare, fibrin, lens capsule, vitreous strands.<br>
     • <strong>Pupil dilation:</strong> Tropicamide 1% topically (15–30 min onset, 2–4 h duration). Tonometry FIRST. Avoid in suspected narrow ICA (Cocker Spaniel) — may precipitate acute glaucoma.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 7 — TARGETED ADVANCED TESTS' },
+      { kind: 'step', text: 'STEP 7 — TARGETED ADVANCED TESTS' },
       {
         kind: 'check',
         html: `<strong>Gonioscopy</strong> — direct visualisation of iridocorneal angle. Indicated in any primary glaucoma diagnosis + screen contralateral eye for narrow/closed angle.<br><br>

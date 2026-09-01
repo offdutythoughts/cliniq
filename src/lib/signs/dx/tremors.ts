@@ -30,7 +30,7 @@ export const tremorsDx: DxApproach = {
     <strong>Permethrin in cats</strong> — a dog pyrethroid spot-on applied to (or groomed from) a cat is a classic, lethal mistake.<br>
     Recent <strong>drugs</strong> (metronidazole, 5-HT drugs/SSRIs, macrocyclic lactones) or drug <strong>withdrawal</strong>.`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — SIGNALMENT & ONSET PATTERN' },
+        { kind: 'step', text: ' STEP 2 — SIGNALMENT & ONSET PATTERN' },
         {
           kind: 'check',
           html: `<strong>Young adult small/white dog, fine whole-body tremor, otherwise well</strong> → idiopathic generalised tremor syndrome (IGTS, "white-shaker") — but it occurs in any breed and is rare in dogs &gt;20 kg.<br>
@@ -39,7 +39,7 @@ export const tremorsDx: DxApproach = {
     <strong>Toy-breed puppy, juvenile, or older dog with fasting/exertional episodes</strong> → hypoglycaemia (incl. insulinoma in an older dog).<br>
     <strong>Tremor confined to standing, gone on walking/lying down</strong> → orthostatic tremor (Great Dane/Deerhound, or senile).`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — TRIGGERS, COURSE & WHAT MAKES IT WORSE' },
+        { kind: 'step', text: ' STEP 3 — TRIGGERS, COURSE & WHAT MAKES IT WORSE' },
         {
           kind: 'check',
           html: `<strong>Worse with intention / movement toward a target</strong> (eating, sniffing) → cerebellar.<br>
@@ -67,20 +67,20 @@ export const tremorsDx: DxApproach = {
           kind: 'check',
           html: `<strong>Hyperthermia</strong> (often non-febrile, from sustained muscle activity) + <strong>tachycardia</strong> + <strong>mydriasis</strong> point to an intoxication (mycotoxin, metaldehyde, permethrin) and are themselves treatment targets — active cooling and muscle relaxation. Note GI signs and hyperaesthesia.`,
         },
-        { kind: 'step', alt: true, text: ' STEP 1 — CHARACTERISE THE TREMOR' },
+        { kind: 'step', text: ' STEP 1 — CHARACTERISE THE TREMOR' },
         {
           kind: 'check',
           html: `<strong>Where & when?</strong> Whole-body vs head-only vs limb/trunk; at <strong>rest</strong> (uncommon — toxic/drug) vs <strong>action</strong>.<br>
     <strong>Action tremors:</strong> postural (holding against gravity), kinetic-simple (throughout movement), <strong>kinetic-intention (crescendos toward a target — cerebellar)</strong>, orthostatic (only when standing).<br>
     A <strong>fine whole-body tremor in a small white dog</strong> = idiopathic shaker; an <strong>intention tremor worsening toward a target</strong> = cerebellar.`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — FOCUSED NEUROLOGICAL EXAM (localise)' },
+        { kind: 'step', text: ' STEP 2 — FOCUSED NEUROLOGICAL EXAM (localise)' },
         {
           kind: 'check',
           html: `Look for the cerebellar triad: <strong>intention tremor</strong> (head/limb crescendo toward a target), <strong>postural head tremor + truncal sway</strong>, <strong>hypermetria/dysmetria</strong> and a wide-based stance — with <strong>NO weakness and NO proprioceptive-positioning deficits</strong>. (Ettinger Ch 42)<br>
     Add menace deficit with intact vision/PLR (cerebellar), and check for vestibular signs (paradoxical = caudal cerebellar). Multifocal/asymmetric signs, mentation change or cervical pain in a young small-breed dog raise <strong>MUO/GME</strong>. A normal neuro exam apart from the tremor fits IGTS.`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — SCREEN FOR METABOLIC CLUES' },
+        { kind: 'step', text: ' STEP 3 — SCREEN FOR METABOLIC CLUES' },
         {
           kind: 'check',
           html: `Weakness/cervical ventroflexion (hypokalaemia, hypocalcaemia), facial twitching → tetany (hypocalcaemia), obtundation/weakness that waxes and wanes (hypoglycaemia). These steer the first-line bloods on the Diagnostics tab.`,
@@ -97,7 +97,7 @@ export const tremorsDx: DxApproach = {
           kind: 'check',
           html: `An acute generalised tremor with hyperthermia is an emergency. <strong>Cool actively</strong>, secure IV access and control the tremors: <strong>methocarbamol 40–50 mg/kg slow IV</strong> to effect (then 8.8–12.2 mg/kg/h CRI; do not exceed 330 mg/kg/day), with dexmedetomidine, phenobarbital/levetiracetam or ketamine as needed. <strong>Decontaminate</strong> (emesis only if conscious — apomorphine 20–40 µg/kg IV; activated charcoal 0.5–4 g/kg; <strong>bathe</strong> for dermal permethrin) and give <strong>intralipid 20%</strong> (1.5 mL/kg IV bolus then 0.25–0.5 mL/kg/min CRI) for lipophilic toxins. See the toxin protocols. (Ettinger Ch 42)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 2 — METABOLIC PANEL (rule out the reversible causes)' },
+        { kind: 'step', text: 'STEP 2 — METABOLIC PANEL (rule out the reversible causes)' },
         {
           kind: 'check',
           html: `Before chasing a neurological diagnosis, exclude metabolic tremor with blood work:<br>
@@ -106,12 +106,12 @@ export const tremorsDx: DxApproach = {
     <strong>Potassium</strong> (hypokalaemia — weakness/ventroflexion more than tremor) and the rest of the electrolytes.<br>
     Add CBC/biochemistry, and <strong>bile acids ± ammonia</strong> if hepatic encephalopathy is possible. (Ettinger Ch 42)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 3 — TARGETED TOXICOLOGY' },
+        { kind: 'step', text: 'STEP 3 — TARGETED TOXICOLOGY' },
         {
           kind: 'check',
           html: `Pursue specific assays/treatments by history: <strong>blood lead</strong> (± basophilic stippling/nucleated RBCs on the smear) → chelation; <strong>cholinesterase</strong> activity for organophosphate/carbamate; stomach contents/urine/serum for tremorgenic mycotoxins where available; chocolate/xylitol/cannabis per exposure. Treatment is rarely delayed for confirmatory results — decontaminate and support empirically.`,
         },
-        { kind: 'step', alt: true, text: 'STEP 4 — ADVANCED IMAGING (cerebellar / inflammatory disease)' },
+        { kind: 'step', text: 'STEP 4 — ADVANCED IMAGING (cerebellar / inflammatory disease)' },
         {
           kind: 'check',
           html: `If the tremor is an <strong>intention tremor</strong> or there are multifocal/progressive central signs and the metabolic/toxic screen is clean → <strong>MRI brain + CSF analysis</strong>.<br>
@@ -120,7 +120,7 @@ export const tremorsDx: DxApproach = {
     <strong>MUO / GME:</strong> multifocal T2/FLAIR hyperintensities ± enhancement; CSF mononuclear/mixed pleocytosis with raised protein — run an <strong>infectious panel</strong> to exclude infection BEFORE immunosuppressing.<br>
     Stop any <strong>metronidazole</strong> (drug-induced cerebellovestibular signs resolve on cessation). (Ettinger Ch 42)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 5 — IDIOPATHIC GENERALISED TREMOR (steroid-response test)' },
+        { kind: 'step', text: 'STEP 5 — IDIOPATHIC GENERALISED TREMOR (steroid-response test)' },
         {
           kind: 'check',
           html: `When toxic, metabolic, structural and inflammatory causes are excluded — young dog, fine whole-body tremor worse with anxiety, <strong>normal MRI</strong>, normal-to-mild mononuclear/lymphocytic CSF pleocytosis — the diagnosis is <strong>idiopathic generalised tremor syndrome (IGTS / "white-shaker")</strong>. It is presumed immune-mediated and <strong>steroid-responsive</strong>: prednisolone <strong>1–2 mg/kg PO q12–24h</strong>, tremor improves in <strong>3–10 days</strong>, then taper over <strong>≥6 months</strong>; add mycophenolate (10 mg/kg PO q24h, q12h for the first 7 days) if poorly responsive or relapsing. A clear response supports the diagnosis. (No dedicated disease page.) (Ettinger Ch 42)`,

@@ -15,28 +15,25 @@ export const coughingDx: DxApproach = {
     blocks: [
       { kind: 'branch', text: 'COUGH CHARACTER + SPECIES = THE TWO KEY HISTORY AXES' },
       {
-        kind: 'comparisonTable',
-        cols: [
-          { label: 'Cough character', isLabel: true, width: '28%' },
-          { label: 'Pattern / species clues', color: '#94a3b8', width: '34%' },
-          { label: 'Likely dx → next step' },
-        ],
+        kind: 'gridTable',
+        cols: '0.28fr 0.34fr 0.38fr',
+        dividers: true,
+        headers: ['Cough character', 'Pattern / species clues', { text: 'Differential & next step', tone: 'teal' }],
         rows: [
-          { kind: 'row', cells: ['<strong>Dry / honking</strong>', 'Toy breed, worse with excitement/leash', '<strong>Tracheal collapse</strong> → fluoroscopy/tracheal radiograph'] },
-          { kind: 'row', cells: ['<strong>Dry / harsh productive on excitement</strong>', 'Dog with grade ≥3/6 murmur + nocturnal cough', '<strong>Cardiogenic (LA enlargement)</strong> → CXR + echo + NT-proBNP'] },
-          { kind: 'row', cells: ['<strong>Paroxysmal + terminal wheeze</strong>', 'Cat → feline asthma/bronchitis (never cardiac)', '<strong>Feline asthma/bronchitis</strong> → BAL cytology ± bronchodilator trial'] },
-          { kind: 'row', cells: ['<strong>Moist / productive</strong>', 'Pyrexia + crackles', '<strong>Pneumonia</strong> → CXR + BAL culture'] },
-          { kind: 'row', cells: ['<strong>Acute &lt;2 wk + recent boarding</strong>', 'Dog, incomplete vaccine', '<strong>CIRD</strong> → tracheal swab/PCR'] },
-          { kind: 'row', cells: ['<strong>Chronic &gt;2 months</strong>', 'Old dog, weight loss', '<strong>Neoplasia / chronic bronchitis</strong> → CXR 3-view'] },
+          ['<strong>Dry / honking</strong>', 'Toy breed, worse with excitement/leash', { text: '<strong>Tracheal collapse</strong><br>Fluoroscopy / tracheal radiograph', tone: 'teal' }],
+          ['<strong>Dry / harsh, productive on excitement</strong>', 'Dog with grade ≥3/6 murmur + nocturnal cough', { text: '<strong>Cardiogenic (LA enlargement)</strong><br>CXR + echo + NT-proBNP', tone: 'teal' }],
+          ['<strong>Paroxysmal + terminal wheeze</strong>', 'Cat → never assume cardiac', { text: '<strong>Feline asthma / bronchitis</strong><br>BAL cytology ± bronchodilator trial', tone: 'teal' }],
+          ['<strong>Moist / productive</strong>', 'Pyrexia + crackles', { text: '<strong>Pneumonia</strong><br>CXR + BAL culture', tone: 'teal' }],
+          ['<strong>Acute &lt;2 wk + recent boarding</strong>', 'Dog, incomplete vaccine', { text: '<strong>CIRD</strong><br>Tracheal swab / PCR', tone: 'teal' }],
+          ['<strong>Chronic &gt;2 months</strong>', 'Old dog, weight loss', { text: '<strong>Neoplasia / chronic bronchitis</strong><br>CXR 3-view', tone: 'teal' }],
         ],
-        fontSize: '11px',
       },
       { kind: 'step', text: '🐾 SPECIES RULE' },
       {
         kind: 'check',
         html: `<strong>Cats do NOT cough from cardiac disease</strong> — a coughing cat almost always has airway/lung disease (feline asthma/bronchitis top of list). In dogs, both cardiac and respiratory causes are common.`,
       },
-      { kind: 'step', alt: true, text: '🌍 RISK / EXPOSURE / SIGNALMENT' },
+      { kind: 'step', text: '🌍 RISK / EXPOSURE / SIGNALMENT' },
       {
         kind: 'check',
         html: `<strong>Recent boarding/kennels/dog park, incomplete vaccination</strong> → CIRD (kennel cough).<br>
@@ -70,7 +67,7 @@ export const coughingDx: DxApproach = {
         html: `Respiratory rate and effort, posture, cyanosis — a cyanotic patient is an emergency, stabilise first before any further examination.<br>
       <strong>Respiratory pattern:</strong> Inspiratory stridor = upper airway obstruction (laryngeal, tracheal, nasopharyngeal). Expiratory effort / push = lower airway / dynamic collapse (bronchitis, asthma, intrathoracic collapse). Paradoxical abdominal movement = diaphragmatic dysfunction or severe respiratory distress.`,
       },
-      { kind: 'step', alt: true, text: '👂 STEP 2 — AUSCULTATION' },
+      { kind: 'step', text: '👂 STEP 2 — AUSCULTATION' },
       {
         kind: 'check',
         html: `<strong>Tracheal auscultation:</strong> referred upper airway sound loud over trachea vs lung fields = upper vs lower airway origin.<br>
@@ -84,7 +81,7 @@ export const coughingDx: DxApproach = {
         kind: 'check',
         html: `Pyrexia → pneumonia/infectious. Weight loss/cachexia → neoplasia/chronic disease. Jugular distension → right heart failure or cranial mediastinal mass. Ascites → right-sided cardiac failure or hypoproteinaemia. Peripheral oedema → hypoproteinaemia or severe cardiac disease. Lymphadenopathy → neoplasia, fungal, or infectious disease. Pulse quality (weak/thready → poor cardiac output; bounding → early sepsis or patent ductus).`,
       },
-      { kind: 'step', alt: true, text: '🐾 STEP 4 — SPECIES-SPECIFIC CLUES' },
+      { kind: 'step', text: '🐾 STEP 4 — SPECIES-SPECIFIC CLUES' },
       {
         kind: 'check',
         html: `🐱 <strong>CATS:</strong> Almost never cough from cardiac disease — a coughing cat = airway/lung disease. Diaphragmatic breathing at rest → pleural effusion (effusive FIP, chylothorax, cardiac — HCM effusion). Expiratory push → bronchoconstriction (asthma/bronchitis).<br>

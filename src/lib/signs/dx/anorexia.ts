@@ -26,14 +26,14 @@ export const anorexiaDx: DxApproach = {
           kind: 'check',
           html: `Establish <strong>how long</strong> the patient has not been eating. In the cat, anorexia of <strong>≥2–14 days</strong> drives negative energy balance and <strong>hepatic lipidosis</strong> (especially the overweight cat) — this shortens the work-up timeline and makes <strong>early feeding</strong> a priority, not an afterthought (Ettinger Ch 17 / Ch 274). Quantify intake against <strong>RER</strong>: RER (kcal/day) = (30 × kg) + 70 for 3–25 kg, or 70 × kg^0.75 for any weight.`,
         },
-        { kind: 'step', alt: true, text: 'STEP 2 — ENVIRONMENT, DIET & MEDICATIONS' },
+        { kind: 'step', text: 'STEP 2 — ENVIRONMENT, DIET & MEDICATIONS' },
         {
           kind: 'check',
           html: `<strong>Environmental stressors</strong> (new pet/person, moved house, changed routine, noise, lack of hiding/feeding resources in cats) and <strong>diet factors</strong> (spoiled/unbalanced food, change of texture/format, bowl, feeding location) commonly cause reduced intake or food aversion.<br>
     <strong>Medications</strong> that suppress appetite or cause nausea: <strong>chemotherapy, opioids, NSAIDs, antibiotics, antifungals</strong> — review the current drug list.<br>
     A genuinely well animal that simply won't eat a new food behaves very differently from one that is systemically ill.`,
         },
-        { kind: 'step', alt: true, text: 'STEP 3 — OTHER CLINICAL SIGNS (localise the system)' },
+        { kind: 'step', text: 'STEP 3 — OTHER CLINICAL SIGNS (localise the system)' },
         {
           kind: 'check',
           html: `Anchor the anorexia to any accompanying signs:<br>
@@ -66,13 +66,13 @@ export const anorexiaDx: DxApproach = {
           html: `Examine the mouth carefully (often needs sedation): <strong>periodontal / periapical disease, fractured teeth, oral masses, ulceration, oronasal fistula, foreign body</strong> (e.g. linear FB under the tongue in cats), and the <strong>pharynx</strong>.<br>
     Assess the <strong>jaw and masticatory muscles</strong> (pain on opening, trismus, masseter/temporal atrophy → masticatory myositis; TMJ disease; mandibular fracture) and <strong>cranial nerves</strong> (trigeminal/facial). Also check the <strong>nose</strong> (fungal/neoplastic disease) and <strong>retrobulbar space</strong> (pain on opening the mouth / globe displacement).`,
         },
-        { kind: 'step', alt: true, text: 'STEP 2 — GENERAL, OCULAR & MUCOUS MEMBRANES' },
+        { kind: 'step', text: 'STEP 2 — GENERAL, OCULAR & MUCOUS MEMBRANES' },
         {
           kind: 'check',
           html: `Assess <strong>BCS and muscle condition score</strong> (drives the urgency of nutritional support), hydration, temperature (fever vs hypothermia), and mucous membranes for <strong>icterus</strong> (hepatobiliary / lipidosis), pallor or injection.<br>
     Ocular exam for <strong>uveitis / chorioretinitis</strong> (FIP, infectious, neoplastic disease). Palpate <strong>peripheral lymph nodes</strong> and the thyroid (cat).`,
         },
-        { kind: 'step', alt: true, text: 'STEP 3 — ABDOMINAL PALPATION & RECTAL EXAM' },
+        { kind: 'step', text: 'STEP 3 — ABDOMINAL PALPATION & RECTAL EXAM' },
         {
           kind: 'check',
           html: `Palpate for <strong>organomegaly, masses, intestinal foreign body, pain, effusion or thickened bowel loops</strong>. A painful cranial abdomen supports pancreatitis. <strong>Rectal exam</strong> assesses faecal character (melena), masses, and the sublumbar region.<br>
@@ -90,21 +90,21 @@ export const anorexiaDx: DxApproach = {
           kind: 'check',
           html: `Before an extensive systemic work-up, settle whether the patient <strong>can</strong> eat. A thorough <strong>oral / dental exam under sedation</strong> (± dental radiographs) and assessment of the pharynx, jaw and oesophagus rules in/out a mechanical/painful "can't-eat" cause (oral/dental/oronasal disease, mass, masticatory myositis, megaoesophagus). If swallowing/regurgitation is the issue, divert to the <strong>vomiting vs regurgitation</strong> approach.`,
         },
-        { kind: 'step', alt: true, text: 'STEP 2 — MINIMUM DATABASE (CBC · BIOCHEM · UA)' },
+        { kind: 'step', text: 'STEP 2 — MINIMUM DATABASE (CBC · BIOCHEM · UA)' },
         {
           kind: 'check',
           html: `<strong>CBC</strong> (inflammatory/infectious leukogram, anaemia, cytopenias), <strong>serum biochemistry</strong> (azotaemia → uraemia; ↑ liver enzymes/bilirubin → hepatobiliary; glucose/ketones → DKA; <strong>hypercalcaemia</strong>; electrolytes — Na:K ratio for hypoadrenocorticism) and <strong>urinalysis</strong> (USG before fluids; glucose/ketones; sediment) are the cornerstone (Ettinger Ch 17).<br>
     <strong>Blood pressure:</strong> hypotensive SBP &lt;90 mmHg → ACTH stimulation test (hypoadrenocorticism); SBP ≥140 mmHg → add SDMA and UPC (Ettinger Ch 17).<br>
     Cat-specific add-ons: <strong>Spec fPL</strong> (pancreatitis), <strong>total T4</strong>, retroviral (FeLV/FIV) status.`,
         },
-        { kind: 'step', alt: true, text: 'STEP 3 — IMAGING (localise the problem)' },
+        { kind: 'step', text: 'STEP 3 — IMAGING (localise the problem)' },
         {
           kind: 'check',
           html: `<strong>Abdominal ultrasound / radiographs</strong> for GI foreign body/obstruction, pancreatic, hepatobiliary, renal, intra-abdominal mass or effusion.<br>
     <strong>Thoracic radiographs</strong> for masses, metastasis, pleural effusion and aspiration. Reduced intake can also be driven by respiratory distress (pleural effusion, pneumonia) — don't overlook the chest.<br>
     <strong>CT / MRI</strong> for nasal, skull, retrobulbar or CNS disease and for staging neoplasia.`,
         },
-        { kind: 'step', alt: true, text: 'STEP 4 — TARGETED / SYSTEM-BY-SYSTEM SEARCH' },
+        { kind: 'step', text: 'STEP 4 — TARGETED / SYSTEM-BY-SYSTEM SEARCH' },
         {
           kind: 'check',
           html: `Driven by the database and imaging:<br>
@@ -113,7 +113,7 @@ export const anorexiaDx: DxApproach = {
     <strong>GI/hepatic:</strong> cobalamin/folate, bile acids, abdominocentesis; <strong>endoscopy / FNA / biopsy</strong> for IBD vs lymphoma and for hepatobiliary disease.<br>
     <strong>Pain work-up:</strong> orthopaedic/dental assessment for occult OA or oral pain.`,
         },
-        { kind: 'step', alt: true, text: 'STEP 5 — TREAT WHILE YOU INVESTIGATE (support intake)' },
+        { kind: 'step', text: 'STEP 5 — TREAT WHILE YOU INVESTIGATE (support intake)' },
         {
           kind: 'check',
           html: `Run supportive care <em>alongside</em> the diagnostics — never wait:<br>

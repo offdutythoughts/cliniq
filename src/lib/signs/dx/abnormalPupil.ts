@@ -51,7 +51,7 @@ export const abnormalPupilDx: DxApproach = {
     • Unilateral → local cause likely (Horner's, uveitis, glaucoma, trauma, lens luxation)<br>
     • Bilateral → systemic / central / drug cause (SARDS, optic neuritis, dysautonomia, central blindness, atropine, opioids, ketamine, sympathomimetics)`,
       },
-      { kind: 'step', alt: true, text: '💊 DRUG + EXPOSURE HISTORY' },
+      { kind: 'step', text: '💊 DRUG + EXPOSURE HISTORY' },
       {
         kind: 'check',
         html: `<strong>Drugs causing mydriasis:</strong><br>
@@ -66,7 +66,7 @@ export const abnormalPupilDx: DxApproach = {
     <strong>Toxin exposure:</strong> jimson weed (atropine — mydriasis), organophosphates / carbamates (miosis), strychnine. Lily ingestion in cats causes AKI rather than direct pupillary signs.<br><br>
     <strong>Trauma history:</strong> Head trauma → ipsilateral mydriasis (CN III compression, intracranial bleed) — neurosurgical emergency.`,
       },
-      { kind: 'step', alt: true, text: '🩺 SYSTEMIC / GENERAL HISTORY' },
+      { kind: 'step', text: '🩺 SYSTEMIC / GENERAL HISTORY' },
       {
         kind: 'check',
         html: `<strong>SARDS suspicion (dog):</strong> sudden bilateral blindness + weight gain + PU/PD + polyphagia ± HAC-like phenotype → "Cushingoid SARDS" cluster.<br>
@@ -77,7 +77,7 @@ export const abnormalPupilDx: DxApproach = {
     <strong>Megaoesophagus + regurgitation + Horner's-like signs:</strong> dysautonomia in dog (rural / outdoor, midwest USA endemic).<br>
     <strong>Travel + tick exposure:</strong> tick-borne uveitis (Ehrlichia, RMSF).`,
       },
-      { kind: 'step', alt: true, text: '🐾 SIGNALMENT + BREED CLUES' },
+      { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
         kind: 'html',
         noArrowAfter: true,
@@ -185,7 +185,7 @@ export const abnormalPupilDx: DxApproach = {
     • Always compare to baseline pupil size in normal light; bilateral fixed mydriasis or miosis is missed when you fail to compare to expected size.<br>
     • <strong>Cat-specific:</strong> assess in both bright and dim light — cat pupil normally transitions from slit to round; a "dilated" cat pupil in a dim exam room may be normal. Also note that the feline iris sphincter is more powerful than the dilator — miosis from uveitis or pilocarpine is more pronounced in cats than dogs at equivalent doses.`,
       },
-      { kind: 'step', alt: true, text: '🔦 STEP 2 — PLR BATTERY (afferent vs efferent localisation)' },
+      { kind: 'step', text: '🔦 STEP 2 — PLR BATTERY (afferent vs efferent localisation)' },
       {
         kind: 'check',
         html: `<strong>Direct PLR</strong> = CN II afferent → CN III efferent in same eye.<br>
@@ -206,7 +206,7 @@ export const abnormalPupilDx: DxApproach = {
     </div>
     <span style="font-size:9.5px;opacity:.75;">Pre-chiasmal = retina/optic nerve · Optic tract → LGN · CN III lesion = ipsilateral mydriasis + ptosis + lateral strabismus + ophthalmoparesis.</span>`,
       },
-      { kind: 'step', alt: true, text: '💡 STEP 3 — DAZZLE + MENACE (separate vision from PLR)' },
+      { kind: 'step', text: '💡 STEP 3 — DAZZLE + MENACE (separate vision from PLR)' },
       {
         kind: 'check',
         html: `<strong>Dazzle reflex</strong>: subcortical (CN II → CN VII via colliculus). Present even when cortically blind. Absent = retina / optic nerve / midbrain.<br>
@@ -217,7 +217,7 @@ export const abnormalPupilDx: DxApproach = {
     • Absent menace + absent dazzle + absent PLR → <strong>retinal disease</strong> (SARDS, RD, end-stage PRA) or pre-geniculate lesion.<br>
     • Absent menace + absent dazzle + PLR present with BLUE light only → <strong>SARDS</strong> (intrinsically photosensitive RGCs preserved).`,
       },
-      { kind: 'step', alt: true, text: '👁️ STEP 4 — SLIT-LAMP / FOCAL LIGHT — PUPIL SHAPE + IRIS' },
+      { kind: 'step', text: '👁️ STEP 4 — SLIT-LAMP / FOCAL LIGHT — PUPIL SHAPE + IRIS' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1.2fr;gap:5px 8px;font-size:10px;line-height:1.45;">
@@ -235,7 +235,7 @@ export const abnormalPupilDx: DxApproach = {
       <div>Miosis + ptosis + enophthalmos + 3rd eyelid</div><div style="color:var(--tone-warning-fg);">Horner's syndrome</div>
     </div>`,
       },
-      { kind: 'step', alt: true, text: "🧠 STEP 5 — HORNER'S? LOCALISE 1st / 2nd / 3rd ORDER" },
+      { kind: 'step', text: "🧠 STEP 5 — HORNER'S? LOCALISE 1st / 2nd / 3rd ORDER" },
       {
         kind: 'check',
         html: `<strong>1st order (central / brainstem / cervical cord T1):</strong> Rare. Concurrent neurological deficits — ataxia, paresis, hemineglect, vestibular signs. Lesions: cervical IVDD, fibrocartilaginous embolism, cerebrovascular accident, neoplasia. <strong>MRI</strong> + CSF.<br>
@@ -253,7 +253,7 @@ export const abnormalPupilDx: DxApproach = {
     </div>
     <span style="font-size:9.5px;opacity:.75;">Apply identical drop to contralateral eye and time both — interpret only the time difference, not absolute values. Note: if Horner's has been present &gt;3 weeks, postganglionic axonal degeneration can still develop hypersensitivity in 2nd-order lesions, blurring the test. Always document concurrent neurological exam.</span>`,
       },
-      { kind: 'step', alt: true, text: '🧠 STEP 6 — FULL CN BATTERY + GENERAL NEURO EXAM' },
+      { kind: 'step', text: '🧠 STEP 6 — FULL CN BATTERY + GENERAL NEURO EXAM' },
       {
         kind: 'check',
         html: `Document at minimum:<br>
@@ -280,7 +280,7 @@ export const abnormalPupilDx: DxApproach = {
     4. <strong>Trauma evaluation</strong> — head trauma + ipsilateral mydriasis = rising ICP / CN III herniation → mannitol 0.5–1 g/kg IV slow + emergent imaging.<br>
     5. <strong>Drug / toxin history</strong> — exclude pharmacological causes before lengthy workup.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 2 — TARGETED OPHTHALMIC TESTS' },
+      { kind: 'step', text: 'STEP 2 — TARGETED OPHTHALMIC TESTS' },
       {
         kind: 'check',
         html: `<strong>Schirmer Tear Test (BEFORE drops)</strong> — bilateral low STT + bilateral mydriasis + autonomic signs = <strong>dysautonomia</strong>. Unilateral low STT + ipsilateral dry nostril = <strong>neurogenic KCS</strong> (CN VII branch).<br>
@@ -289,7 +289,7 @@ export const abnormalPupilDx: DxApproach = {
     <strong>Slit-lamp</strong> — aqueous flare, KP, synechiae, lens position, iris detail, fibrin in AC.<br>
     <strong>Mydriatic challenge (tropicamide 1%)</strong> — used to dilate for fundus exam. Failure to dilate or only partial dilation in an otherwise normal eye → posterior synechiae (chronic uveitis sequela).`,
       },
-      { kind: 'step', alt: true, text: 'STEP 3 — PHARMACOLOGICAL LOCALISATION' },
+      { kind: 'step', text: 'STEP 3 — PHARMACOLOGICAL LOCALISATION' },
       {
         kind: 'check',
         html: `<strong>1% phenylephrine — Horner's localisation</strong> (as in Exam step 5):<br>• Rapid response (≤20 min) = 3rd order<br>• Intermediate = 2nd order<br>• Slow = 1st order<br>Always run a contralateral control.<br><br>
@@ -304,7 +304,7 @@ export const abnormalPupilDx: DxApproach = {
     <strong>Atropine response test:</strong> in dysautonomia, atropine 0.04 mg/kg SC produces no rise in heart rate (failed parasympathetic blockade) — supportive evidence.<br><br>
     <strong>Cocaine 10% or apraclonidine 0.5%</strong>: classical Horner's confirmation tests in humans — limited availability and not routinely used in veterinary practice; phenylephrine is the practical choice.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 4 — CHROMATIC PLR + ERG (when vision is lost)' },
+      { kind: 'step', text: 'STEP 4 — CHROMATIC PLR + ERG (when vision is lost)' },
       {
         kind: 'check',
         html: `<strong>Chromatic PLR</strong> (handheld melanopsin-targeted device): differentiates retinal vs optic nerve vs cortical blindness when both eyes are blind with dilated pupils.<br>
@@ -319,7 +319,7 @@ export const abnormalPupilDx: DxApproach = {
     <strong>Electroretinography (ERG)</strong> — gold standard for SARDS (flat ERG) vs optic neuritis (preserved ERG, abnormal MRI). Referral.<br>
     <strong>Visual evoked potentials</strong> — central / cortical vs post-retinal. Referral.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 5 — IMAGING + SYSTEMIC WORKUP' },
+      { kind: 'step', text: 'STEP 5 — IMAGING + SYSTEMIC WORKUP' },
       {
         kind: 'check',
         html: `<strong>2nd-order Horner's:</strong> Thoracic radiographs ± thoracic CT (mediastinal mass, lymphoma, thymoma, lung mass at thoracic inlet), cervical exam, brachial plexus palpation, ± CT/MRI neck for cervical neoplasia.<br>

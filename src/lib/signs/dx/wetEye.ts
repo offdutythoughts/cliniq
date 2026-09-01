@@ -47,7 +47,7 @@ export const wetEyeDx: DxApproach = {
     <strong>Chronic / lifelong (months–years):</strong> congenital NLS atresia / micropuncta (puppy / kitten), distichiasis (often well-tolerated), brachycephalic ocular surface disease, ectropion / euryblepharon with poor drainage, pannus / plasmoma, idiopathic dacryocystitis (intermittent).<br>
     <strong>Chronic with discharge change:</strong> dacryocystitis (mucopurulent waxing/waning), orbital / nasal neoplasia (unilateral, progressive ± epistaxis).`,
       },
-      { kind: 'step', alt: true, text: '🐾 SIGNALMENT + BREED CLUES' },
+      { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
@@ -71,7 +71,7 @@ export const wetEyeDx: DxApproach = {
       </div>
     </div>`,
       },
-      { kind: 'step', alt: true, text: '💊 OTHER HISTORY' },
+      { kind: 'step', text: '💊 OTHER HISTORY' },
       {
         kind: 'check',
         html: `<strong>Drugs / topicals:</strong> recent topical anaesthetic or NSAID (reflex tearing as confounder); sulfonamides, etodolac (drug-induced KCS — paradoxical tearing as KCS evolves); recent dental / nasal surgery (post-op NLS damage).<br>
@@ -106,7 +106,7 @@ export const wetEyeDx: DxApproach = {
     • <strong>Globe position:</strong> exophthalmos (orbital mass / NLS compression), proptosis history.<br>
     • <strong>Facial symmetry:</strong> unilateral facial swelling → dacryocystitis, abscess, neoplasia.`,
       },
-      { kind: 'step', alt: true, text: '👁️ STEP 2 — STRUCTURED OCULAR EXAM' },
+      { kind: 'step', text: '👁️ STEP 2 — STRUCTURED OCULAR EXAM' },
       {
         kind: 'check',
         html: `<strong>1. Eyelids:</strong> evert upper + lower with magnification — look for distichiasis (extra hairs from Meibomian gland openings), ectopic cilia (through palpebral conjunctiva — usually dorsal cornea linear ulcer), trichiasis (normal-position hairs contacting cornea), entropion / ectropion, eyelid mass.<br>
@@ -117,7 +117,7 @@ export const wetEyeDx: DxApproach = {
     <strong>6. Iris / pupil / AC:</strong> miosis + flare = uveitis (reflex tearing common); rule out before steroids.<br>
     <strong>7. NLS region:</strong> palpate medial canthus and rostromedial maxilla for swelling (dacryocystitis), fluctuance (abscess), or firm mass (neoplasia). Expressing the lacrimal sac may produce purulent material from the upper punctum — diagnostic of dacryocystitis.`,
       },
-      { kind: 'step', alt: true, text: '🔍 STEP 3 — PATTERN RECOGNITION' },
+      { kind: 'step', text: '🔍 STEP 3 — PATTERN RECOGNITION' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1.2fr;gap:5px 8px;font-size:10px;line-height:1.45;">
@@ -135,7 +135,7 @@ export const wetEyeDx: DxApproach = {
       <div>Photophobia + blepharospasm but no surface lesion identified</div><div style="color:var(--tone-danger-fg);">Anterior uveitis (rule out flare + IOP)</div>
     </div>`,
       },
-      { kind: 'step', alt: true, text: '🧪 STEP 4 — PROXYMETACAINE / PROPARACAINE TEST FOR PAIN' },
+      { kind: 'step', text: '🧪 STEP 4 — PROXYMETACAINE / PROPARACAINE TEST FOR PAIN' },
       {
         kind: 'check',
         html: `Apply one drop of topical anaesthetic and observe blepharospasm + tearing within 2–3 minutes:<br>
@@ -160,7 +160,7 @@ export const wetEyeDx: DxApproach = {
     5. <strong>Topical anaesthetic + magnified eyelid exam</strong> — evert lids and TEL; look for distichiasis, ectopic cilia, conjunctival FB, puncta atresia.<br>
     6. <strong>Direct + indirect ophthalmoscopy</strong> after pupil dilation (tropicamide 1% — after IOP).`,
       },
-      { kind: 'step', alt: true, text: 'STEP 2 — JONES TEST + NASOLACRIMAL FLUSH' },
+      { kind: 'step', text: 'STEP 2 — JONES TEST + NASOLACRIMAL FLUSH' },
       {
         kind: 'check',
         html: `<strong>Jones test:</strong> apply fluorescein into the lateral conjunctival fornix without rinsing; observe ipsilateral nostril (or oropharynx in brachycephalics) for ≤ 4 min.<br>
@@ -173,7 +173,7 @@ export const wetEyeDx: DxApproach = {
     <strong>Dacryocystorhinography</strong> (contrast NLS imaging, if needed): inject iohexol into the upper punctum and image with x-ray / fluoroscopy. Identifies strictures, dacryoliths, fistulas, neoplasia compression.<br><br>
     <strong>Lacrimal sac expression:</strong> apply gentle pressure over the medial canthus / lacrimal sac and watch the upper punctum for purulent reflux — diagnostic of dacryocystitis. Submit material for cytology + C&amp;S.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 3 — TARGETED ADVANCED IMAGING' },
+      { kind: 'step', text: 'STEP 3 — TARGETED ADVANCED IMAGING' },
       {
         kind: 'check',
         html: `<strong>CT of skull / orbit</strong> (gold standard for NLS / orbital pathology in adult / senior patients):<br>
@@ -185,7 +185,7 @@ export const wetEyeDx: DxApproach = {
     <strong>Rhinoscopy + nasal biopsy</strong> — for chronic unilateral epiphora + nasal signs (epistaxis, sneezing, facial deformity).<br><br>
     <strong>Dental imaging</strong> — caudal maxillary tooth root disease can erode into the NLS or lacrimal sac and present as chronic epiphora ± dacryocystitis.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 4 — TREATMENT OF SPECIFIC CAUSES' },
+      { kind: 'step', text: 'STEP 4 — TREATMENT OF SPECIFIC CAUSES' },
       {
         kind: 'check',
         html: `<strong>Increased production (CN V irritation):</strong>

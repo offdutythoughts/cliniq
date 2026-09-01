@@ -20,21 +20,18 @@ export const weaknessDx: DxApproach = {
       <strong>Persistent / progressive</strong> → neuromuscular disease, metabolic, anaemia, cardiorespiratory.`,
       },
       {
-        kind: 'comparisonTable',
-        cols: [
-          { label: 'Pattern', isLabel: true, width: '28%' },
-          { label: 'Key history features', color: '#94a3b8', width: '30%' },
-          { label: 'Likely cause → direction' },
-        ],
+        kind: 'gridTable',
+        cols: '0.28fr 0.3fr 0.42fr',
+        dividers: true,
+        headers: ['Pattern', 'Key history features', { text: 'Differential & next step', tone: 'teal' }],
         rows: [
-          { kind: 'row', cells: ['<strong>Episodic + rapid full recovery</strong>', 'Exercise/excitement trigger; normal between', '<strong>Syncope (arrhythmia) · MG · hypoglycaemia</strong>'] },
-          { kind: 'row', cells: ['<strong>Episodic + post-exercise stiffness</strong>', 'Fit dog, hot conditions', '<strong>EIC · heat stroke</strong>'] },
-          { kind: 'row', cells: ['<strong>Peracute generalised flaccid paralysis</strong>', 'Tick exposure; raw meat access; ascending LMN', '<strong>Tick paralysis · Botulism · Polyradiculoneuritis</strong>'] },
-          { kind: 'row', cells: ['<strong>Progressive + exercise-worsening</strong>', 'Worsens over weeks; 🐱 ventroflexion', '<strong>Myasthenia gravis · Hypothyroid neuropathy</strong>'] },
-          { kind: 'row', cells: ['<strong>Chronic progressive + waxing/waning GI</strong>', 'GI signs, stress episodes', '<strong>Hypoadrenocorticism (Addison\'s)</strong>'] },
-          { kind: 'row', cells: ['<strong>Acute + systemic signs</strong>', 'PU/PD, polyphagia, or weight loss', '<strong>Metabolic (DM, HAC, hypokalaemia)</strong>'] },
+          ['<strong>Episodic + rapid full recovery</strong>', 'Exercise/excitement trigger; normal between', { text: '<strong>Syncope (arrhythmia) · MG · hypoglycaemia</strong>', tone: 'teal' }],
+          ['<strong>Episodic + post-exercise stiffness</strong>', 'Fit dog, hot conditions', { text: '<strong>EIC · heat stroke</strong>', tone: 'teal' }],
+          ['<strong>Peracute generalised flaccid paralysis</strong>', 'Tick exposure; raw meat access; ascending LMN', { text: '<strong>Tick paralysis · Botulism · Polyradiculoneuritis</strong>', tone: 'teal' }],
+          ['<strong>Progressive + exercise-worsening</strong>', 'Worsens over weeks; 🐱 ventroflexion', { text: '<strong>Myasthenia gravis · Hypothyroid neuropathy</strong>', tone: 'teal' }],
+          ['<strong>Chronic progressive + waxing/waning GI</strong>', 'GI signs, stress episodes', { text: '<strong>Hypoadrenocorticism (Addison\'s)</strong>', tone: 'teal' }],
+          ['<strong>Acute + systemic signs</strong>', 'PU/PD, polyphagia, or weight loss', { text: '<strong>Metabolic (DM, HAC, hypokalaemia)</strong>', tone: 'teal' }],
         ],
-        fontSize: '11px',
       },
       { kind: 'step', text: '📋 CHARACTERISE THE EPISODE' },
       {
@@ -44,7 +41,7 @@ export const weaknessDx: DxApproach = {
       <strong>Loss of consciousness?</strong> true LOC favours syncope/seizure over neuromuscular weakness.<br>
       <strong>Onset:</strong> peracute generalised LMN paralysis → tick paralysis, botulism, polyradiculoneuritis (coonhound).`,
       },
-      { kind: 'step', alt: true, text: '💊 SYSTEMIC / DRUG / SIGNALMENT CLUES' },
+      { kind: 'step', text: '💊 SYSTEMIC / DRUG / SIGNALMENT CLUES' },
       {
         kind: 'check',
         html: `<strong>Cat with ventroflexion of the neck</strong> → hypokalaemia, thiamine deficiency, or MG.<br>
@@ -84,7 +81,7 @@ export const weaknessDx: DxApproach = {
       <strong>Assess respiratory effort and tidal volume:</strong> intercostal weakness or diaphragm involvement → hypoventilation in tick paralysis, botulism, and polyradiculoneuritis — these patients may need oxygen supplementation or ventilatory support.<br>
       <strong>Rate of progression is critical:</strong> ascending paralysis developing overnight = emergency — perform full coat tick search immediately before any further workup.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 2 — SYSTEMIC EXAM BEFORE NEUROLOGY' },
+      { kind: 'step', text: 'STEP 2 — SYSTEMIC EXAM BEFORE NEUROLOGY' },
       {
         kind: 'check',
         html: `<strong>Cardiovascular:</strong> murmur, arrhythmia, pulse deficits, jugular distension, pale/cyanotic MM.<br>
@@ -124,7 +121,7 @@ export const weaknessDx: DxApproach = {
         html: `<strong>Fatigability test:</strong> walk/exercise the patient — myasthenia gravis worsens dramatically and recovers with brief rest. Patellar reflex fatigues with rapid repetition.<br>
       <strong>SPINAL PAIN CHECK:</strong> palpate vertebral column — pain or guarding → myelopathy (see Myelopathy approach). Proprioception absent with weakness = spinal cord origin, not peripheral neuromuscular.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 4 — SPECIES-SPECIFIC EXAM TIPS' },
+      { kind: 'step', text: 'STEP 4 — SPECIES-SPECIFIC EXAM TIPS' },
       {
         kind: 'check',
         html: `<strong>🐱 CATS — cervical ventroflexion:</strong> check if neck droops and whether chin approaches sternum (severe). Generalised muscle pain on palpation + elevated CK = polymyositis. Plantigrade stance (hocks touching ground) = diabetic neuropathy — assess blood glucose. Palpate ventral neck for thyroid nodule (hyperthyroid myopathy can cause generalised weakness and muscle wasting).<br>
@@ -147,20 +144,17 @@ export const weaknessDx: DxApproach = {
       },
       { kind: 'step', tone: 'warning', text: 'IF COLLAPSE ± LOC — CARDIOGENIC vs NON-CARDIOGENIC SYNCOPE?' },
       {
-        kind: 'comparisonTable',
-        cols: [
-          { label: 'Feature', isLabel: true, width: '25%' },
-          { label: '⚡ Cardiogenic', color: '#ef4444', width: '37%' },
-          { label: '🔄 Non-cardiogenic', color: '#38bdf8' },
-        ],
+        kind: 'gridTable',
+        cols: '0.25fr 0.37fr 0.38fr',
+        dividers: true,
+        headers: ['Feature', { text: '⚡ Cardiogenic', tone: 'danger' }, { text: '🔄 Non-cardiogenic', tone: 'info' }],
         rows: [
-          { kind: 'row', cells: ['<strong>Trigger</strong>', 'Exertion / excitement; ± no trigger', 'Clear reflex trigger (cough, micturition, swallowing, pain) or fasting'] },
-          { kind: 'row', cells: ['<strong>Cardiac exam</strong>', 'Murmur, gallop, arrhythmia, pulse deficits, jugular distension', 'Structurally normal heart on PE; normal rhythm in-clinic'] },
-          { kind: 'row', cells: ['<strong>History clues</strong>', 'Prior heart disease; sudden-death in breed (Boxer ARVC, Dobermann DCM)', 'GI signs or fasting (Addison / hypoglycaemia); young Boxer excitement syncope (vasovagal)'] },
-          { kind: 'row', cells: ['<strong>Key tests</strong>', 'ECG → Holter/event recorder → Echo; NT-proBNP', 'Blood glucose · Na:K ratio · ACTH stim; rule out airway disease (tussive syncope)'] },
-          { kind: 'row', cells: ['<strong>Urgent risk</strong>', 'Sudden cardiac death — treat as cardiac until proven otherwise if exertional + murmur', 'Addisonian crisis · hypoglycaemia — both rapidly reversible if caught early'] },
+          ['<strong>Trigger</strong>', { text: 'Exertion / excitement; ± no trigger', tone: 'danger' }, { text: 'Clear reflex trigger (cough, micturition, swallowing, pain) or fasting', tone: 'info' }],
+          ['<strong>Cardiac exam</strong>', { text: 'Murmur, gallop, arrhythmia, pulse deficits, jugular distension', tone: 'danger' }, { text: 'Structurally normal heart on PE; normal rhythm in-clinic', tone: 'info' }],
+          ['<strong>History clues</strong>', { text: 'Prior heart disease; sudden death in breed (Boxer ARVC, Dobermann DCM)', tone: 'danger' }, { text: 'GI signs or fasting (Addison / hypoglycaemia); young Boxer excitement syncope (vasovagal)', tone: 'info' }],
+          ['<strong>Key tests</strong>', { text: 'ECG → Holter / event recorder → echo; NT-proBNP', tone: 'danger' }, { text: 'Blood glucose · Na:K ratio · ACTH stim; rule out airway disease (tussive syncope)', tone: 'info' }],
+          ['<strong>Urgent risk</strong>', { text: 'Sudden cardiac death — treat as cardiac until proven otherwise if exertional + murmur', tone: 'danger' }, { text: 'Addisonian crisis · hypoglycaemia — both rapidly reversible if caught early', tone: 'info' }],
         ],
-        fontSize: '11px',
       },
       {
         kind: 'callout',

@@ -31,7 +31,7 @@ export const oedemaDx: DxApproach = {
     <strong>Single hindlimb + ventral caudal abdomen</strong> → caudal vena cava obstruction (caudal abdominal mass, thrombus).<br>
     <strong>Acute onset</strong> after a drug/vaccine/sting/snakebite → hypersensitivity / angioedema / envenomation; <strong>chronic single-limb</strong> → lymphoedema (Ettinger Ch 30).`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — SYSTEMIC SIGNS POINTING TO A MECHANISM' },
+        { kind: 'step', text: ' STEP 2 — SYSTEMIC SIGNS POINTING TO A MECHANISM' },
         {
           kind: 'check',
           html: `<strong>GI signs (diarrhoea, weight loss)</strong> → protein-losing enteropathy.<br>
@@ -40,7 +40,7 @@ export const oedemaDx: DxApproach = {
     <strong>Cough, exercise intolerance, syncope, abdominal distension (ascites)</strong> → right-sided congestive heart failure.<br>
     <strong>Fever, lethargy, collapse</strong> → SIRS/sepsis or immune-mediated/vector-borne vasculitis.`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — EXPOSURE, BREED & PRIOR EVENTS' },
+        { kind: 'step', text: ' STEP 3 — EXPOSURE, BREED & PRIOR EVENTS' },
         {
           kind: 'check',
           html: `<strong>Envenomation / vaccination / drugs / toxins / burns / trauma</strong> in the recent history → hypersensitivity or permeability oedema (Ettinger Ch 30, Fig 30.1).<br>
@@ -71,14 +71,14 @@ export const oedemaDx: DxApproach = {
     <strong>Non-pitting</strong> → fluid within cells / clotted fibrinogen — angioedema (deeper subdermal), post-surgical/traumatic, lymphangiosarcoma, myxedema; <strong>chronic lymphoedema becomes non-pitting</strong> (collagen deposition, interstitial fibrosis).<br>
     <strong>Warm, erythematous swelling</strong> → increased vascular permeability / inflammation (vasculitis, cellulitis, AV fistula) — distinct from the cool, non-tender oedema of oncotic/hydrostatic causes (Ettinger Ch 30).`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — CARDIOVASCULAR / VENOUS EXAM' },
+        { kind: 'step', text: ' STEP 2 — CARDIOVASCULAR / VENOUS EXAM' },
         {
           kind: 'check',
           html: `<strong>Jugular venous distension or positive hepatojugular reflux, a heart murmur, an arrhythmia, ± ascites</strong> → right-sided CHF — go to echocardiography.<br>
     <strong>Muffled heart sounds, weak pulses, pulsus paradoxus</strong> → pericardial effusion / tamponade.<br>
     Palpate for a <strong>warm focal swelling with a bruit</strong> → arteriovenous fistula (test: US, angiogram).`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — SIGNS OF PERMEABILITY / INFECTION / ENDOCRINE' },
+        { kind: 'step', text: ' STEP 3 — SIGNS OF PERMEABILITY / INFECTION / ENDOCRINE' },
         {
           kind: 'check',
           html: `<strong>Fever, petechiae/ecchymoses, skin necrosis or ulceration</strong> → vasculitis (early signs: petechiae, ecchymoses, oedema → necrosis, pain, systemic signs).<br>
@@ -97,14 +97,14 @@ export const oedemaDx: DxApproach = {
           kind: 'check',
           html: `Treat <strong>anaphylaxis / angioedema with airway compromise</strong> before any work-up (adrenaline, airway). Tap a <strong>tamponading pericardial effusion</strong>, and resuscitate <strong>SIRS/sepsis</strong>. Severe hypoalbuminaemia (&lt;1.5 g/dL / &lt;15 g/L) carries effusion + thromboembolism risk (Ettinger Ch 60).`,
         },
-        { kind: 'step', alt: true, text: 'STEP 2 — SERUM ALBUMIN (the pivotal first test)' },
+        { kind: 'step', text: 'STEP 2 — SERUM ALBUMIN (the pivotal first test)' },
         {
           kind: 'check',
           html: `Albumin provides ~80% of colloid oncotic pressure. Overt oedema from hypoalbuminaemia alone requires <strong>albumin &lt;2.0 g/dL (&lt;20 g/L)</strong>; risk of effusions, oedema and thromboembolism appears once <strong>&lt;1.5 g/dL (&lt;15 g/L)</strong> (Ettinger Ch 30 · Ch 60).<br>
     <strong>Thresholds:</strong> mildly low 2.1–2.5 g/dL (21–25 g/L) · moderately low 1.5–2.0 g/dL (15–20 g/L) · severely low &lt;1.5 g/dL (&lt;15 g/L).<br>
     Run the baseline minimum database alongside it: <strong>CBC, chemistry, urinalysis</strong> (Ettinger Ch 30, Fig 30.1).`,
         },
-        { kind: 'step', alt: true, text: 'STEP 3a — IF ALBUMIN LOW → LOCALISE THE PROTEIN LOSS' },
+        { kind: 'step', text: 'STEP 3a — IF ALBUMIN LOW → LOCALISE THE PROTEIN LOSS' },
         {
           kind: 'check',
           html: `Distinguish protein-losing nephropathy vs enteropathy vs hepatic failure (Ettinger Ch 30, Fig 30.1):<br>
@@ -112,13 +112,13 @@ export const oedemaDx: DxApproach = {
     <strong>Faecal α₁-proteinase inhibitor (α₁-PI)</strong> ↑ → protein-losing enteropathy (GI loss; typically panhypoproteinaemia).<br>
     <strong>Bile acids ± ammonia</strong> abnormal → hepatic failure / portosystemic shunt (reduced synthesis — needs &gt;80% hepatocyte loss).`,
         },
-        { kind: 'step', alt: true, text: 'STEP 3b — IF ALBUMIN NORMAL → CARDIAC / PERICARDIAL FIRST' },
+        { kind: 'step', text: 'STEP 3b — IF ALBUMIN NORMAL → CARDIAC / PERICARDIAL FIRST' },
         {
           kind: 'check',
           html: `With normal albumin and <strong>jugular distension, a murmur or an arrhythmia</strong> → <strong>echocardiography</strong> for right-sided CHF or pericardial disease (R-CHF is rare in small animals and is almost always accompanied by cavitary effusions).<br>
     <strong>Thoracic radiographs / ultrasound / CT</strong> assess pericardial effusion, heartworm/caval disease and a cranial mediastinal mass causing cranial vena cava obstruction (Ettinger Ch 30, Fig 30.1).`,
         },
-        { kind: 'step', alt: true, text: 'STEP 4 — VASCULITIS / SEPSIS vs VENOUS-LYMPHATIC OBSTRUCTION' },
+        { kind: 'step', text: 'STEP 4 — VASCULITIS / SEPSIS vs VENOUS-LYMPHATIC OBSTRUCTION' },
         {
           kind: 'check',
           html: `<strong>Fever or circulatory shock</strong> (normal albumin, no cardiac cause) → SIRS/sepsis or vasculitis: <strong>CBC, chemistry, UA, thoracic/abdominal imaging, infectious-disease testing</strong>; consider an immune-mediated panel.<br>

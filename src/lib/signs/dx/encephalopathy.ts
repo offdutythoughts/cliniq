@@ -27,7 +27,7 @@ export const encephalopathyDx: DxApproach = {
 <strong>Course:</strong> Progressive (structural/neoplastic) or episodic/waxing-waning (metabolic — particularly post-prandial hepatic encephalopathy, hypoglycaemia)?<br><br>
 <strong>Severity grading:</strong> Alert → Obtunded (dull, slow responses) → Stupor (rousable by noxious stimulus, lapses back) → Coma (unrousable even by noxious stimulus). Track progression over time.`,
       },
-      { kind: 'step', alt: true, text: '🐾 SIGNALMENT AND BREED PATTERNS' },
+      { kind: 'step', text: '🐾 SIGNALMENT AND BREED PATTERNS' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
@@ -64,7 +64,7 @@ export const encephalopathyDx: DxApproach = {
   </div>
 </div>`,
       },
-      { kind: 'step', alt: true, text: '💊 TOXIN / DRUG / DIET / SYSTEMIC DISEASE' },
+      { kind: 'step', text: '💊 TOXIN / DRUG / DIET / SYSTEMIC DISEASE' },
       {
         kind: 'check',
         html: `<strong>Toxin access:</strong> ethylene glycol (antifreeze — peracute inebriation then renal failure), metaldehyde (slug bait — acute tremors), organophosphates, bromethalin (rodenticide — cerebral oedema, delayed onset 12h–5d), lead (young dogs, pica + vomiting), cannabinoids (CNS depression, miosis, ataxia, urine incontinence).<br><br>
@@ -92,7 +92,7 @@ export const encephalopathyDx: DxApproach = {
         kind: 'check',
         html: `Secure airway (sternal recumbency, extend head, suction if needed) · High-flow O₂ · Establish IV access · Check blood glucose immediately · Vital signs (HR, RR, SpO₂, T°, blood pressure) · Control active seizures. A crashing brain patient is resuscitated before examination.`,
       },
-      { kind: 'step', alt: true, text: '🧠 MENTATION GRADING (AVPU / mGCS)' },
+      { kind: 'step', text: '🧠 MENTATION GRADING (AVPU / mGCS)' },
       {
         kind: 'row',
         cols: 2,
@@ -116,14 +116,14 @@ Limb withdrawal from noxious stimulus = SPINAL REFLEX, not consciousness — lim
           },
         ],
       },
-      { kind: 'step', alt: true, text: '📍 LOCALISE — FOREBRAIN vs BRAINSTEM vs DIFFUSE' },
+      { kind: 'step', text: '📍 LOCALISE — FOREBRAIN vs BRAINSTEM vs DIFFUSE' },
       {
         kind: 'check',
         html: `<strong style="color:var(--tone-info-fg);">Forebrain (cortical/diencephalic):</strong> Altered behaviour/mentation, compulsive circling toward the lesion, contralateral menace deficit with normal PLR, focal seizures, central blindness. Consciousness variably affected.<br><br>
 <strong style="color:var(--tone-danger-fg);">Brainstem (midbrain/pons/medulla):</strong> Multiple cranial nerve deficits, abnormal respiratory pattern, vestibular signs, severely depressed consciousness (stupor/coma). More ominous prognosis.<br><br>
 <strong style="color:var(--tone-green-fg);">Diffuse/symmetric (metabolic):</strong> No lateralising signs, bilateral symmetric findings, small reactive pupils, waxing-waning course, post-prandial worsening — chase systemic causes first.`,
       },
-      { kind: 'step', alt: true, text: '👁 PUPIL SIGNS BY LESION LOCATION' },
+      { kind: 'step', text: '👁 PUPIL SIGNS BY LESION LOCATION' },
       {
         kind: 'html',
         html: `<div class="dx-row c2">
@@ -131,7 +131,7 @@ Limb withdrawal from noxious stimulus = SPINAL REFLEX, not consciousness — lim
   <div class="dx-test" style="font-size:9px;"><strong>Fixed dilated bilateral (mydriasis)</strong><br>→ CN III / midbrain damage bilaterally<br>→ Severe ↑ICP with herniation ⚠️<br><br><strong>Unilateral fixed dilated</strong><br>→ Ipsilateral midbrain lesion<br>→ OR uncal herniation (CN III compression) ⚠️</div>
 </div>`,
       },
-      { kind: 'step', alt: true, text: '🔺 SIGNS OF RAISED INTRACRANIAL PRESSURE (ICP)' },
+      { kind: 'step', text: '🔺 SIGNS OF RAISED INTRACRANIAL PRESSURE (ICP)' },
       {
         kind: 'check',
         html: `<strong>Cushing reflex</strong> = systemic hypertension + concurrent reflex bradycardia — triggered by severe acute ICP increase (cerebral ischaemic response) → indicates life-threatening intracranial hypertension with imminent herniation → treat immediately.<br><br>
@@ -144,7 +144,7 @@ Other ↑ICP signs: obtundation/stupor/coma, bilateral mydriasis with poor PLR, 
 • Agonal breathing (shallow gasps) → anoxic → rapidly progresses to apnea<br><br>
 <strong>Posture:</strong> Decerebrate (extensor rigidity all 4 limbs) → midbrain/rostral pons or bilateral cerebral hemispheric dysfunction; stupor/coma present. Decerebellate (opisthotonos + forelimb extension + hindlimb flexion) → does NOT affect consciousness.`,
       },
-      { kind: 'step', alt: true, text: '🔍 PHYSICAL EXAMINATION — SYSTEMIC CLUES' },
+      { kind: 'step', text: '🔍 PHYSICAL EXAMINATION — SYSTEMIC CLUES' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
@@ -207,7 +207,7 @@ Other ↑ICP signs: obtundation/stupor/coma, bilateral mydriasis with poor PLR, 
           },
         ],
       },
-      { kind: 'step', alt: true, text: 'TIER 1 — MINIMUM DATABASE (all patients)' },
+      { kind: 'step', text: 'TIER 1 — MINIMUM DATABASE (all patients)' },
       {
         kind: 'html',
         html: `<div class="dx-row c2">
@@ -260,7 +260,7 @@ Other ↑ICP signs: obtundation/stupor/coma, bilateral mydriasis with poor PLR, 
   </div>
 </div>`,
       },
-      { kind: 'step', alt: true, text: 'TIER 2 — ADVANCED IMAGING + CSF' },
+      { kind: 'step', text: 'TIER 2 — ADVANCED IMAGING + CSF' },
       {
         kind: 'row',
         cols: 2,

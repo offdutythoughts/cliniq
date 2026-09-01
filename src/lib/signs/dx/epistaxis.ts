@@ -43,7 +43,7 @@ export const epistaxisDx: DxApproach = {
     <strong>Other nasal-tract signs</strong> (sneezing, stertor, mucopurulent discharge, unilateral epiphora, nasal planum depigmentation, facial rubbing/pain) are more common with intranasal disease.<br>
     <strong>Mucoid / mucopurulent discharge is rare in systemic causes</strong> — its presence shifts you toward local disease.`,
       },
-      { kind: 'step', alt: true, text: '💊 MEDICATION / TOXIN EXPOSURE' },
+      { kind: 'step', text: '💊 MEDICATION / TOXIN EXPOSURE' },
       {
         kind: 'check',
         html: `<strong>Drugs that increase bleeding tendency:</strong> aspirin / other NSAIDs, clopidogrel, rivaroxaban — ask specifically and consider discontinuing.<br>
@@ -51,7 +51,7 @@ export const epistaxisDx: DxApproach = {
     <strong>Anticoagulant rodenticide</strong> — assess potential access in any patient with other signs of haemorrhage; treat empirically with Vitamin K1 if suspected.<br>
     <strong>Chemotherapy / oestrogens</strong> → marrow suppression / thrombocytopenia.`,
       },
-      { kind: 'step', alt: true, text: '🩺 SYSTEMIC & BLEEDING HISTORY' },
+      { kind: 'step', text: '🩺 SYSTEMIC & BLEEDING HISTORY' },
       {
         kind: 'check',
         html: `<strong>Systemic signs</strong> (lethargy, inappetence, weight loss) → more common with systemic causes.<br>
@@ -59,7 +59,7 @@ export const epistaxisDx: DxApproach = {
     <strong>Historical bleeding tendency, especially in a young patient</strong> (umbilical, deciduous-tooth, post-neuter or post-surgical bleeding) → inherited coagulopathy / von Willebrand disease.<br>
     <strong>Melena</strong> may simply be swallowed blood — do not over-interpret as a GI/systemic bleed.`,
       },
-      { kind: 'step', alt: true, text: '🌍 GEOGRAPHIC / LIFESTYLE / BREED CLUES' },
+      { kind: 'step', text: '🌍 GEOGRAPHIC / LIFESTYLE / BREED CLUES' },
       {
         kind: 'check',
         html: `<strong>Tick exposure, preventive history, geographic location & travel</strong> → vector-borne disease risk (ehrlichiosis, leishmaniosis, anaplasmosis, babesiosis, RMSF).<br>
@@ -97,21 +97,21 @@ export const epistaxisDx: DxApproach = {
     <strong>Decreased nasal airflow</strong> may indicate intranasal disease — but any epistaxis can occlude the nostril with clot, so interpret cautiously.<br>
     <strong>Gross abnormalities</strong> of the nose, frontal sinus, or palate deformities are essentially limited to intranasal disease.`,
       },
-      { kind: 'step', alt: true, text: '🔵 STEP 2 — LOCAL (INTRANASAL) SIGNS' },
+      { kind: 'step', text: '🔵 STEP 2 — LOCAL (INTRANASAL) SIGNS' },
       {
         kind: 'check',
         html: `Sneezing, stertor, mucopurulent nasal discharge, unilateral epiphora, nasal planum depigmentation, <strong>reduced ocular retropulsion</strong> (retrobulbar extension), facial pain / rubbing.<br>
     <strong>Regional (submandibular) lymphadenopathy</strong> — in one study was seen <em>only</em> with intranasal disease.<br>
     <strong>Dental disease</strong> — assess closely for periodontal disease, periapical infection, palate erosion / oronasal fistula.`,
       },
-      { kind: 'step', alt: true, text: '🩸 STEP 3 — SIGNS OF SYSTEMIC HAEMORRHAGE' },
+      { kind: 'step', text: '🩸 STEP 3 — SIGNS OF SYSTEMIC HAEMORRHAGE' },
       {
         kind: 'check',
         html: `<strong>Primary haemostatic pattern (mucosal/cutaneous):</strong> petechiae, ecchymoses, gingival haemorrhage, increased bruising at venepuncture sites, melena (caution — may be swallowed blood).<br>
     <strong>Secondary haemostatic pattern:</strong> cavity bleeding (haemoperitoneum, haemothorax, haemarthrosis), haematomas.<br>
     <strong>Generalised lymphadenopathy</strong> → consider lymphoma, ehrlichiosis, leishmaniosis.`,
       },
-      { kind: 'step', alt: true, text: '👁️ STEP 4 — OPHTHALMIC & NEURO EXAM' },
+      { kind: 'step', text: '👁️ STEP 4 — OPHTHALMIC & NEURO EXAM' },
       {
         kind: 'check',
         html: `<strong>Uveitis</strong> (aqueous flare) → neoplastic / infectious disease (fungal, leishmaniosis).<br>
@@ -120,7 +120,7 @@ export const epistaxisDx: DxApproach = {
     <strong>Retinal detachment</strong> — exudative (ehrlichiosis) or serous (panuveitis: lymphoma, systemic fungal); also classic for hypertension.<br>
     <strong>Neurologic abnormalities</strong> → intracranial extension of nasal disease, or concurrent intracranial bleeding (more common with systemic causes).`,
       },
-      { kind: 'step', alt: true, text: '🔍 STEP 5 — PATTERN RECOGNITION' },
+      { kind: 'step', text: '🔍 STEP 5 — PATTERN RECOGNITION' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1.1fr;gap:5px 8px;font-size:10px;line-height:1.45;">
@@ -152,7 +152,7 @@ export const epistaxisDx: DxApproach = {
     4. <strong>Protect the airway</strong> — consider intubation if risk of obstruction or aspiration; interventional control is ideally performed on an anaesthetised, intubated patient.<br>
     5. Minimise venepuncture sites, use small-gauge needles and prolonged pressure if a coagulopathy is suspected.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 2 — MINIMUM DATABASE (every significant case)' },
+      { kind: 'step', text: 'STEP 2 — MINIMUM DATABASE (every significant case)' },
       {
         kind: 'check',
         html: `<strong>CBC + blood smear:</strong>
@@ -165,7 +165,7 @@ export const epistaxisDx: DxApproach = {
     <strong>Urinalysis:</strong> underlying renal disease + haematuria (wider mucosal haemorrhage).<br>
     <strong>Blood pressure (ideally Doppler):</strong> hypertension exacerbates bleeding — measure especially with retinal haemorrhage or neuro signs.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 3a — IF LOCAL DISEASE SUSPECTED → IMAGE' },
+      { kind: 'step', text: 'STEP 3a — IF LOCAL DISEASE SUSPECTED → IMAGE' },
       {
         kind: 'check',
         html: `<strong>CT is the imaging modality of choice</strong> — cross-sectional, fine bony detail, faster than skull radiographs; image <em>before</em> rhinoscopy/biopsy (blood obscures the scan).<br>
@@ -174,7 +174,7 @@ export const epistaxisDx: DxApproach = {
     ⚠️ Radiopacity, bony lysis and frontal-sinus involvement occur with BOTH malignant and benign disease (fungal, FB, lymphoplasmacytic) — imaging <strong>cannot</strong> distinguish them; <strong>biopsy / histopathology is required</strong>.<br>
     <strong>Fungal testing</strong> (cytology, fungal plaques on rhinoscopy, serology/PCR) and <strong>parasite testing</strong> as indicated.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 3b — IF SYSTEMIC DISEASE SUSPECTED → COAGULATION TIERS' },
+      { kind: 'step', text: 'STEP 3b — IF SYSTEMIC DISEASE SUSPECTED → COAGULATION TIERS' },
       {
         kind: 'check',
         html: `<strong>Primary haemostasis</strong> (epistaxis is classically a mucosal/primary-defect bleed):
@@ -193,7 +193,7 @@ export const epistaxisDx: DxApproach = {
     <strong>Tertiary haemostasis (fibrinolysis):</strong> D-dimers / FDPs (sensitive, not specific) and <strong>viscoelastic testing (TEG/ROTEM)</strong> for hyperfibrinolysis (DIC, hepatic failure, <em>Angiostrongylus</em>, greyhound post-op bleeding).<br>
     <strong>Infectious / vector-borne testing</strong> (Ehrlichia, Anaplasma, Babesia, Leishmania, RMSF) per geography.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 4 — TREATMENT POINTERS' },
+      { kind: 'step', text: 'STEP 4 — TREATMENT POINTERS' },
       {
         kind: 'check',
         html: `<strong>Emergent local control (stepwise, least → most invasive):</strong> firm compression of the soft nose 5–15 min (use a timer); topical vasoconstrictor — dilute epinephrine 1:10,000 or phenylephrine 1 mg/mL on packing (caution: systemic absorption; avoid in cardiac/hypertensive patients); ice pack on the nasal bridge / chilled-saline flush (anaesthetised, packed); silver-nitrate cautery or electrocautery under visualisation; nasal packing (resorbable e.g. Surgicel/Gelfoam if a bleeding disorder, or non-resorbable); topical/oral <strong>antifibrinolytics</strong> (tranexamic acid, aminocaproic acid); ± Yunnan Baiyao (topical evidence stronger than oral).<br>

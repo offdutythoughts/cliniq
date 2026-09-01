@@ -26,13 +26,13 @@ export const weightLossDx: DxApproach = {
     <strong>Inadequate diet</strong> → underfeeding, poor-quality food, starvation, or environmental factors (competition for food, limited access in a multi-pet household) — correct the diet and re-weigh before an extensive work-up.<br>
     <strong>Adequate diet</strong> with ongoing loss → proceed to a comprehensive diagnostic work-up. (Ettinger Ch 18)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — THE APPETITE (the pivot)' },
+        { kind: 'step', text: ' STEP 2 — THE APPETITE (the pivot)' },
         {
           kind: 'check',
           html: `<strong>Normal / increased appetite + weight loss</strong> → calories are lost or cannot be used (maldigestion/malabsorption, glucosuria) OR metabolism is high (hyperthyroidism). Think EPI, IBD, GI lymphoma, PLE, parasites, diabetes mellitus, feline hyperthyroidism.<br>
     <strong>Reduced appetite + weight loss</strong> → overlaps anorexia: chronic organ disease (CKD, hepatic, cardiac cachexia), neoplasia / paraneoplastic cachexia, or chronic infection (FIV/FeLV, FIP). (Ettinger Ch 18)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — SIGNALMENT & ASSOCIATED SIGNS' },
+        { kind: 'step', text: ' STEP 3 — SIGNALMENT & ASSOCIATED SIGNS' },
         {
           kind: 'check',
           html: `<strong>Older cat, good appetite, ± PU/PD / hyperactivity</strong> → feline hyperthyroidism.<br>
@@ -60,12 +60,12 @@ export const weightLossDx: DxApproach = {
           kind: 'check',
           html: `<strong>Weigh on calibrated scales</strong> and record a <strong>body condition score (BCS)</strong> and a separate <strong>muscle condition score (MCS)</strong> — generalised muscle wasting out of proportion to fat loss points to <strong>cachexia</strong> (chronic inflammation, cancer, cardiac, end-stage renal disease). (Ettinger Ch 18)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — ORAL / DENTAL & SWALLOWING' },
+        { kind: 'step', text: ' STEP 2 — ORAL / DENTAL & SWALLOWING' },
         {
           kind: 'check',
           html: `Examine the mouth for <strong>oral / dental disease</strong> (painful eating), masses, and ulceration; uraemic oral ulceration suggests CKD. A history of <strong>regurgitation</strong> points to megaesophagus; difficulty prehending/swallowing suggests a neuromuscular or oropharyngeal cause. (Ettinger Ch 18)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — TARGETED SYSTEM EXAM' },
+        { kind: 'step', text: ' STEP 3 — TARGETED SYSTEM EXAM' },
         {
           kind: 'check',
           html: `<strong>Cervical palpation</strong> for a thyroid slip / nodule (older cat → hyperthyroidism).<br>
@@ -84,37 +84,37 @@ export const weightLossDx: DxApproach = {
           kind: 'check',
           html: `Before testing, <strong>document the loss objectively</strong> (serial weights; &gt;5% over &lt;12 months) and <strong>confirm the diet is adequate</strong> in quality and quantity. Inadequate intake is corrected and re-weighed; adequate intake with ongoing loss earns the full work-up below. (Ettinger Ch 18)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 2 — MINIMUM DATABASE (+ TT4 in cats)' },
+        { kind: 'step', text: 'STEP 2 — MINIMUM DATABASE (+ TT4 in cats)' },
         {
           kind: 'check',
           html: `<strong>CBC, serum biochemistry and urinalysis</strong> are the starting point — laboratory changes are non-specific and reflect the primary disease.<br>
     Screen for <strong>azotaemia</strong> (CKD), <strong>↑ liver enzymes / ↓ albumin</strong> (hepatic, PLE), <strong>hyperglycaemia + glucosuria ± ketones</strong> (DM/DKA), and cachexia markers (variable serum protein; ↑ fibrinogen, ↓ albumin).<br>
     <strong>Add a basal TT4 in every older cat</strong> (hyperthyroidism). (Ettinger Ch 18)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 3 — FAECAL / PARASITE SCREEN' },
+        { kind: 'step', text: 'STEP 3 — FAECAL / PARASITE SCREEN' },
         {
           kind: 'check',
           html: `<strong>Faecal flotation ± centrifugation</strong> for GI parasites, especially in young animals or those with an unknown deworming history; a pragmatic <strong>deworming trial</strong> is reasonable in an otherwise-healthy young patient with weight loss + polyphagia. (Ettinger Ch 18/19)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 4 — MALASSIMILATION PANEL (EPI / malabsorption)' },
+        { kind: 'step', text: 'STEP 4 — MALASSIMILATION PANEL (EPI / malabsorption)' },
         {
           kind: 'check',
           html: `If weight loss persists with a good appetite ± GI signs, run the malassimilation panel:<br>
     <strong>TLI</strong> — low TLI confirms <strong>exocrine pancreatic insufficiency</strong>.<br>
     <strong>Cobalamin (B12) and folate</strong> — low cobalamin / abnormal folate support distal small-intestinal malabsorption / dysbiosis and guide supplementation. (Ettinger Ch 18)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 5 — RETROVIRAL TEST (cats)' },
+        { kind: 'step', text: 'STEP 5 — RETROVIRAL TEST (cats)' },
         {
           kind: 'check',
           html: `Test <strong>every cat with chronic weight loss for FeLV antigen and FIV antibody</strong> — retroviral status reshapes the differential and prognosis and flags chronic infection / secondary neoplasia. (Ettinger Ch 18)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 6 — IMAGING & GI BIOPSY' },
+        { kind: 'step', text: 'STEP 6 — IMAGING & GI BIOPSY' },
         {
           kind: 'check',
           html: `<strong>Thoracic radiographs + abdominal ultrasound</strong> assess for organ disease, effusion, masses and infiltrative bowel disease; image the heart (echocardiography) where cardiac cachexia is suspected.<br>
     <strong>GI biopsy (endoscopic or surgical)</strong> is needed to separate <strong>IBD from alimentary lymphoma</strong> and to confirm PLE / lymphangiectasia — imaging alone cannot distinguish them. (Ettinger Ch 18)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 7 — SEARCH FOR OCCULT NEOPLASIA / CACHEXIA' },
+        { kind: 'step', text: 'STEP 7 — SEARCH FOR OCCULT NEOPLASIA / CACHEXIA' },
         {
           kind: 'check',
           html: `When the minimum database is unrewarding, actively <strong>search for occult neoplasia</strong> — aspirate any node/mass, stage with imaging, and consider that marked weight loss with severe muscle loss in a chronic inflammatory or cancer setting represents <strong>cachexia</strong>.<br>

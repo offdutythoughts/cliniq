@@ -25,7 +25,7 @@ export const jaundiceDx: DxApproach = {
       <strong>Older (cat):</strong> neutrophilic cholangitis, hepatic lipidosis, pancreatitis, neoplasia.<br>
       <strong>Siamese / Oriental:</strong> FIP, amyloidosis. <strong>Persian:</strong> FIP, lymphocytic cholangitis. Any pedigree → FIP.`,
       },
-      { kind: 'step', alt: true, text: '📋 HISTORY OF PRESENTING ILLNESS' },
+      { kind: 'step', text: '📋 HISTORY OF PRESENTING ILLNESS' },
       {
         kind: 'check',
         html: `<strong>Overweight cat with recent anorexia / weight loss:</strong> hepatic lipidosis.<br>
@@ -34,7 +34,7 @@ export const jaundiceDx: DxApproach = {
       <strong>Any current medications:</strong> consider hepatotoxicity (e.g. paracetamol, azoles, lomustine, phenobarbital).<br>
       <strong>Anorexia + vomiting + lethargy</strong> — non-specific but common to all three categories.`,
       },
-      { kind: 'step', alt: true, text: '🩸 CLUES TO A PRE-HEPATIC (HAEMOLYTIC) CAUSE' },
+      { kind: 'step', text: '🩸 CLUES TO A PRE-HEPATIC (HAEMOLYTIC) CAUSE' },
       {
         kind: 'check',
         html: `Known/observed pallor or collapse, pigmenturia (red–brown urine = haemoglobinuria).<br>
@@ -62,7 +62,7 @@ export const jaundiceDx: DxApproach = {
         html: `Check sclera, mucous membranes, soft palate, pinnae, ventral abdomen and non-pigmented skin.<br>
       Tissue jaundice is generally only visible once serum bilirubin exceeds ~50 µmol/L (reference 0–15). The higher the bilirubin, the more likely complete post-hepatic obstruction (often &gt;250 µmol/L → surgical emergency).`,
       },
-      { kind: 'step', alt: true, text: '🔍 STEP 2 — TARGETED PHYSICAL FINDINGS' },
+      { kind: 'step', text: '🔍 STEP 2 — TARGETED PHYSICAL FINDINGS' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1.2fr;gap:5px 8px;font-size:10px;line-height:1.45;">
@@ -76,7 +76,7 @@ export const jaundiceDx: DxApproach = {
         <div>Respiratory compromise (pleural effusion)</div><div style="color:var(--tone-info-fg);">FIP, neoplasia</div>
       </div>`,
       },
-      { kind: 'step', alt: true, text: '🧠 STEP 3 — DON\'T MISS' },
+      { kind: 'step', text: '🧠 STEP 3 — DON\'T MISS' },
       {
         kind: 'check',
         html: `<strong>Pigmenturia:</strong> haemoglobinuria (pre-hepatic) vs bilirubinuria (hepatic/post-hepatic).<br>
@@ -92,7 +92,7 @@ export const jaundiceDx: DxApproach = {
     blocks: [
       { kind: 'step', text: 'JAUNDICE — DIAGNOSTIC APPROACH' },
       { kind: 'check', html: `<strong>First step:</strong> Check PCV + bilirubin. PCV tells you the category immediately.` },
-      { kind: 'step', alt: true, text: 'CHECK PCV' },
+      { kind: 'step', text: 'CHECK PCV' },
       {
         kind: 'html',
         html: `<div class="dx-connector">
@@ -119,7 +119,7 @@ export const jaundiceDx: DxApproach = {
       </div>
     </div>`,
       },
-      { kind: 'step', alt: true, text: 'LAB PATTERNS THAT POINT TO A DIAGNOSIS' },
+      { kind: 'step', text: 'LAB PATTERNS THAT POINT TO A DIAGNOSIS' },
       {
         kind: 'check',
         html: `<strong>ALT &gt; ALP:</strong> hepatotoxicity, amyloidosis, hepatic neoplasia.<br>

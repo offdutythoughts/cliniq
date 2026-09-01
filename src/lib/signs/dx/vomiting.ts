@@ -20,7 +20,7 @@ export const vomitingDx: DxApproach = {
     <div style="margin-top:8px;font-size:10px;opacity:.75;">⚠️ If uncertain, work up as vomiting. If vomiting workup yields no diagnosis, pursue oesophageal investigation. Owner video is very helpful.</div>
   </div>`,
       },
-      { kind: 'step', alt: true, text: '📖 AETIOLOGICAL CLUES — CHRONICITY' },
+      { kind: 'step', text: '📖 AETIOLOGICAL CLUES — CHRONICITY' },
       {
         kind: 'check',
         html: `<strong style="color:var(--tone-green-fg);">Acute vomiting (&lt;7 days)</strong><br>
@@ -47,7 +47,7 @@ export const vomitingDx: DxApproach = {
     • Pancreatitis (chronic/recurrent)<br>
     <span style="font-size:10px;opacity:.75;">Requires systematic minimum database + targeted second-tier diagnostics.</span>`,
       },
-      { kind: 'step', alt: true, text: '📖 CHARACTER OF VOMITUS' },
+      { kind: 'step', text: '📖 CHARACTER OF VOMITUS' },
       {
         kind: 'check',
         html: `<strong style="color:var(--tone-danger-fg);">Blood (haematemesis)</strong><br>
@@ -68,7 +68,7 @@ export const vomitingDx: DxApproach = {
     • Hours after eating → motility disorder or gastric outflow obstruction<br>
     • Immediately / soon after eating → anxiety, oesophageal disease, or obstructive lesion`,
       },
-      { kind: 'step', alt: true, text: '📖 KEY SIGNALMENT + EXPOSURE CLUES' },
+      { kind: 'step', text: '📖 KEY SIGNALMENT + EXPOSURE CLUES' },
       {
         kind: 'check',
         html: `<strong style="color:var(--tone-green-fg);">Age</strong><br>
@@ -180,7 +180,7 @@ export const vomitingDx: DxApproach = {
         { html: '<strong>🧪 CBC · Serum Chemistry · UA</strong><br><span style="font-size:10.5px;">All vomiting cases — first-line</span>' },
         { html: '<strong>📊 Abdominal Imaging</strong><br><span style="font-size:10.5px;">Radiography + Ultrasound</span>' },
       ] },
-      { kind: 'step', alt: true, text: '🧪 CBC · SERUM CHEMISTRY · URINALYSIS' },
+      { kind: 'step', text: '🧪 CBC · SERUM CHEMISTRY · URINALYSIS' },
       {
         kind: 'check',
         html: `<strong>Haematology:</strong><br>
@@ -236,7 +236,7 @@ export const vomitingDx: DxApproach = {
     • ↓ Albumin + ↓ Globulin → <strong>PLE / hepatic failure</strong> — panhypoproteinaemia = PLE; investigate intestinal vs hepatic origin<br><br>
     <span style="font-size:10.5px;opacity:.8;">Secondary cause confirmed → investigate primary condition. Not all extra-GI vomiting requires GI workup.</span>`,
       },
-      { kind: 'step', alt: true, text: '🔍 FURTHER INVESTIGATION — IF PRIMARY GI SUSPECTED<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: first-line diagnostics normal or non-diagnostic · chronic or refractory</span>' },
+      { kind: 'step', text: '🔍 FURTHER INVESTIGATION — IF PRIMARY GI SUSPECTED<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: first-line diagnostics normal or non-diagnostic · chronic or refractory</span>' },
       {
         kind: 'check',
         html: `• <strong>fPLI / cPLI</strong> — pancreatitis (especially if imaging equivocal)<br>

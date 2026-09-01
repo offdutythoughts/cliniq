@@ -6,14 +6,14 @@
 // linkToView. Same .dx-* classes / inline styles → pixel-identical.
 
 import { Fragment } from 'react'
-import type { DxApproach, DxBlock, DxNavItem, CompTableCell } from '../../lib/signs/dxTypes'
+import type { DxApproach, DxBlock, DxNavItem } from '../../lib/signs/dxTypes'
 import { HUE, TITLE } from '../../lib/signs/tone'
 import { DX } from '../../lib/signs/dx'
-import { RichText } from '../../components/RichText'
 import { useNav } from '../nav/NavContext'
 import { linkToView } from '../nav/view'
-import { styleStringToObject as s, toneBox, SCROLL_X } from './style'
+import { styleStringToObject as s, toneBox } from './style'
 import { NotFound } from './NotFound'
+import { GridTable } from './gridTable'
 import { type Nav, Raw, ToneBox } from './flowHelpers'
 
 const STD_NAV: DxNavItem[] = [
@@ -57,7 +57,7 @@ function DxStep({ b, onNav }: { b: Extract<DxBlock, { kind: 'step' }>; onNav: Na
       </div>
     )
   }
-  return <div className={`dx-step${b.alt ? ' alt' : ''}`}><Raw html={b.text} onNav={onNav} /></div>
+  return <div className="dx-step"><Raw html={b.text} onNav={onNav} /></div>
 }
 
 function DxRow({ b, onNav }: { b: Extract<DxBlock, { kind: 'row' }>; onNav: Nav }) {
@@ -116,83 +116,6 @@ function DxAccordion({ b, onNav }: { b: Extract<DxBlock, { kind: 'accordion' }>;
   )
 }
 
-function DxComparisonTable({ b, onNav }: { b: Extract<DxBlock, { kind: 'comparisonTable' }>; onNav: Nav }) {
-  const fs = b.fontSize ?? '10px'
-  const cellPad = '10px 8px'
-  const borderRow = '1px solid rgba(var(--slate-muted),0.1)'
-
-  function cellColor(col: typeof b.cols[number], cell: CompTableCell): string {
-    if (typeof cell !== 'string' && cell.dim) return 'rgba(var(--slate-muted),0.45)'
-    if (col.isLabel) return 'var(--white)'
-    return col.color ?? 'var(--white)'
-  }
-  function cellHtml(cell: CompTableCell): string {
-    return typeof cell === 'string' ? cell : cell.html
-  }
-
-  const colCount = b.cols.length
-  const table = (
-    <table style={s(`border-collapse:collapse;font-size:${fs};${b.minWidth ? `min-width:${b.minWidth};` : ''}width:100%;`)}>
-      <thead>
-        <tr>
-          {b.cols.map((col, ci) => {
-            const headerColor = col.isLabel ? 'rgba(var(--slate-muted),0.8)' : (col.color ?? 'var(--white)')
-            const borderB = col.isLabel
-              ? '2px solid rgba(var(--slate-muted),0.3)'
-              : col.color ? `2px solid ${col.color}` : '2px solid rgba(var(--slate-muted),0.3)'
-            return (
-              <th key={ci} style={s(`padding:${cellPad};font-size:${fs};font-weight:700;color:${headerColor};border-bottom:${borderB};text-align:${ci === 0 ? 'left' : 'center'};white-space:nowrap;${col.width ? `width:${col.width};` : ''}`)}>
-                {col.label}
-              </th>
-            )
-          })}
-        </tr>
-      </thead>
-      <tbody>
-        {b.rows.map((row, ri) => {
-          if (row.kind === 'section') {
-            return (
-              <tr key={ri}>
-                <td colSpan={colCount} style={s(`padding:14px 8px 4px;font-size:8px;font-weight:700;color:rgba(var(--slate-muted),0.6);letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid rgba(var(--slate-muted),0.15);`)}>
-                  {row.label}
-                </td>
-              </tr>
-            )
-          }
-          return (
-            <tr key={ri}>
-              {row.cells.map((cell, ci) => {
-                const col = b.cols[ci]
-                const color = cellColor(col, cell)
-                const fw = col.isLabel ? '600' : undefined
-                const align = ci === 0 ? 'left' : 'center'
-                return (
-                  <td key={ci} style={s(`padding:${cellPad};font-size:${fs};color:${color};${fw ? `font-weight:${fw};` : ''}text-align:${align};border-bottom:${borderRow};line-height:1.4;`)}>
-                    <RichText html={cellHtml(cell)} onNavigate={onNav} />
-                  </td>
-                )
-              })}
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
-  )
-
-  return (
-    <div>
-      {b.label && (
-        <div style={s('font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;')}>
-          {b.label}
-        </div>
-      )}
-      {b.scrollable !== false ? (
-        <div style={s(SCROLL_X)}>{table}</div>
-      ) : table}
-    </div>
-  )
-}
-
 function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
   switch (b.kind) {
     case 'branch': return <div className="dx-branch"><Raw html={b.text} onNav={onNav} /></div>
@@ -215,7 +138,17 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
         </div>
       )
     }
-    case 'comparisonTable': return <DxComparisonTable b={b} onNav={onNav} />
+    case 'gridTable': return (
+      <div style={s(`margin-top:${b.gap ?? 10}px;width:100%;`)}>
+        {b.label && (
+          <div style={s('font-size:10px;font-weight:700;color:var(--tone-teal-fg);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;')}>
+            {b.label}
+          </div>
+        )}
+        <GridTable cols={b.cols} headers={b.headers} rows={b.rows} dividers={b.dividers}
+          scroll={b.scroll} minWidth={b.minWidth} fontSize={b.fontSize} onNav={onNav} />
+      </div>
+    )
     case 'html': return <div className="flow-authored scroll-x"><Raw html={b.html} onNav={onNav} /></div>
     case 'disclaimer': return <div className="disclaimer">For qualified veterinary professionals only.</div>
   }

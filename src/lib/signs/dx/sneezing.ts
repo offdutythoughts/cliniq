@@ -14,22 +14,19 @@ export const sneezingDx: DxApproach = {
     blocks: [
       { kind: 'branch', text: 'ACUTE vs CHRONIC, AND LATERALITY' },
       {
-        kind: 'comparisonTable',
-        cols: [
-          { label: 'Onset + laterality', isLabel: true, width: '28%' },
-          { label: 'Discharge type', color: '#94a3b8', width: '28%' },
-          { label: 'Likely diagnosis → next step' },
-        ],
+        kind: 'gridTable',
+        cols: '0.28fr 0.28fr 0.44fr',
+        dividers: true,
+        headers: ['Onset + laterality', 'Discharge type', { text: 'Differential & next step', tone: 'teal' }],
         rows: [
-          { kind: 'row', cells: ['<strong>Peracute, violent</strong> + unilateral', 'Serous → moist', '<strong>Foreign body</strong> (grass seed) → rhinoscopy (urgent)'] },
-          { kind: 'row', cells: ['<strong>Acute, progressive</strong> + unilateral', 'Haemorrhagic', '<strong>Neoplasia or fungal</strong> (aspergillosis) → CT + rhinoscopy + biopsy'] },
-          { kind: 'row', cells: ['<strong>Acute</strong> + bilateral', 'Serous to mucopurulent', '<strong>Infectious</strong> (viral URTI, FHV-1/FCV in 🐱; CIRD in 🐕) → PCR panel'] },
-          { kind: 'row', cells: ['<strong>Chronic, progressive</strong> + unilateral', 'Mucopurulent ± epistaxis', '<strong>Neoplasia</strong> (older dolichocephalic dog) → CT + biopsy'] },
-          { kind: 'row', cells: ['<strong>Chronic, bilateral</strong>', 'Mucopurulent', '<strong>Chronic rhinosinusitis / lymphoplasmacytic rhinitis</strong> → CT + rhinoscopy + biopsy'] },
-          { kind: 'row', cells: ['With <strong>dental disease</strong>', 'Mucopurulent from one side', '<strong>Tooth-root abscess / oronasal fistula</strong> → dental radiographs'] },
-          { kind: 'row', cells: ['<strong>Young cat</strong> + stertor', 'Serous', '<strong>Nasopharyngeal polyp</strong> → retroflex pharyngoscopy'] },
+          ['<strong>Peracute, violent</strong> + unilateral', 'Serous → moist', { text: '<strong>Foreign body</strong> (grass seed)<br>Rhinoscopy — urgent', tone: 'teal' }],
+          ['<strong>Acute, progressive</strong> + unilateral', 'Haemorrhagic', { text: '<strong>Neoplasia or fungal</strong> (aspergillosis)<br>CT + rhinoscopy + biopsy', tone: 'teal' }],
+          ['<strong>Acute</strong> + bilateral', 'Serous to mucopurulent', { text: '<strong>Infectious</strong> (FHV-1/FCV 🐱; CIRD 🐕)<br>PCR panel', tone: 'teal' }],
+          ['<strong>Chronic, progressive</strong> + unilateral', 'Mucopurulent ± epistaxis', { text: '<strong>Neoplasia</strong> (older dolichocephalic dog)<br>CT + biopsy', tone: 'teal' }],
+          ['<strong>Chronic, bilateral</strong>', 'Mucopurulent', { text: '<strong>Chronic rhinosinusitis / lymphoplasmacytic rhinitis</strong><br>CT + rhinoscopy + biopsy', tone: 'teal' }],
+          ['With <strong>dental disease</strong>', 'Mucopurulent from one side', { text: '<strong>Tooth-root abscess / oronasal fistula</strong><br>Dental radiographs', tone: 'teal' }],
+          ['<strong>Young cat</strong> + stertor', 'Serous', { text: '<strong>Nasopharyngeal polyp</strong><br>Retroflex pharyngoscopy', tone: 'teal' }],
         ],
-        fontSize: '11px',
       },
       { kind: 'step', text: '📋 DISCHARGE & ASSOCIATED SIGNS' },
       {
@@ -38,7 +35,7 @@ export const sneezingDx: DxApproach = {
       <strong>Cat with conjunctivitis + ocular discharge + oral ulcers</strong> → FHV-1 / FCV (cat flu).<br>
       <strong>Signs worse with eating / dropped food into nose</strong> → oronasal fistula, cleft.`,
       },
-      { kind: 'step', alt: true, text: '🌍 SIGNALMENT / ENVIRONMENT' },
+      { kind: 'step', text: '🌍 SIGNALMENT / ENVIRONMENT' },
       {
         kind: 'check',
         html: `<strong>Older dolichocephalic dog</strong> → nasal neoplasia / aspergillosis. <strong>Young multi-cat household / shelter</strong> → viral URTI.<br>
@@ -62,7 +59,7 @@ export const sneezingDx: DxApproach = {
       <strong>Pain on facial palpation</strong>: fungal erosion, neoplasia. <strong>Nasal planum pigmentation / ulceration / depigmentation</strong>: Aspergillus causes nasal depigmentation; also consider autoimmune disease.<br>
       <strong>Nasal airflow</strong>: test each nostril with a glass slide or cotton wisp — unilateral reduction indicates obstruction. <strong>Ocular retropulsion</strong>: reduced with retrobulbar or caudal nasal mass.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 2 — ORAL CAVITY AND DENTAL ARCADE' },
+      { kind: 'step', text: 'STEP 2 — ORAL CAVITY AND DENTAL ARCADE' },
       {
         kind: 'check',
         html: `Examine <strong>hard palate</strong> for erosion (fungal) and <strong>dental arcades</strong> for fractures, abscessed teeth, or fistulae.<br>
@@ -78,7 +75,7 @@ export const sneezingDx: DxApproach = {
       <strong>Horner syndrome</strong>: the sympathetic chain runs near the ear and nasopharynx — polyp or neoplasia can compress it (miosis, ptosis, enophthalmos, third-eyelid protrusion).<br>
       <strong>Submandibular lymphadenopathy</strong>: sample if enlarged — neoplasia, fungal infection.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 4 — FUNDUS AND SYSTEMIC' },
+      { kind: 'step', text: 'STEP 4 — FUNDUS AND SYSTEMIC' },
       {
         kind: 'check',
         html: `Fundoscopy: chorioretinitis suggests systemic fungal (Cryptococcus, Aspergillus, Blastomyces in endemic areas) or distemper.<br>
@@ -94,19 +91,16 @@ export const sneezingDx: DxApproach = {
     blocks: [
       { kind: 'branch', text: 'LATERALITY OF DISCHARGE = THE KEY DECISION AXIS' },
       {
-        kind: 'comparisonTable',
-        cols: [
-          { label: 'Feature', isLabel: true, width: '30%' },
-          { label: 'Unilateral', color: '#E8713A', width: '35%' },
-          { label: 'Bilateral', color: 'var(--tone-green-fg)' },
-        ],
+        kind: 'gridTable',
+        cols: '0.3fr 0.35fr 0.35fr',
+        dividers: true,
+        headers: ['Feature', { text: 'Unilateral', tone: 'orange' }, { text: 'Bilateral', tone: 'green' }],
         rows: [
-          { kind: 'row', cells: ['First thought', 'Structural (FB, neoplasia, fungal, fistula)', 'Infectious / inflammatory'] },
-          { kind: 'row', cells: ['Key initial test', 'CT nose + paranasal sinuses', 'PCR panel (FHV-1/FCV/Chlamydia in 🐱; B.bronch/virus in 🐕)'] },
-          { kind: 'row', cells: ['Rhinoscopy', 'Essential — directed biopsy', 'Useful for chronic bilateral'] },
-          { kind: 'row', cells: ['Key diagnoses', 'FB · Neoplasia · Aspergillosis · Oronasal fistula', 'Viral URTI · Chronic rhinosinusitis · NP polyp (🐱) · Crypto (🐱)'] },
+          ['First thought', { text: 'Structural (FB, neoplasia, fungal, fistula)', tone: 'orange' }, { text: 'Infectious / inflammatory', tone: 'green' }],
+          ['Key initial test', { text: 'CT nose + paranasal sinuses', tone: 'orange' }, { text: 'PCR panel (FHV-1/FCV/Chlamydia 🐱; B. bronch/virus 🐕)', tone: 'green' }],
+          ['Rhinoscopy', { text: 'Essential — directed biopsy', tone: 'orange' }, { text: 'Useful for chronic bilateral', tone: 'green' }],
+          ['Key diagnoses', { text: 'FB · Neoplasia · Aspergillosis · Oronasal fistula', tone: 'orange' }, { text: 'Viral URTI · Chronic rhinosinusitis · NP polyp (🐱) · Crypto (🐱)', tone: 'green' }],
         ],
-        fontSize: '11px',
       },
       ...stepPair(1, 'MINIMUM DATABASE', `CBC + biochemistry: leukocytosis (infectious); thrombocytopenia (coagulopathy → haemorrhagic sneezing / epistaxis — check before rhinoscopy). Coagulation panel (PT/aPTT) if haemorrhagic discharge.<br>
       🐱 FIV/FeLV. Blood pressure (hypertension → epistaxis in older cats).<br>
