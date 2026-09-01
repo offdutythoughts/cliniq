@@ -22,10 +22,14 @@ const redEyeEntry: FlowPage = {
       cols: 4,
       connectAfter: false,
       items: [
-        { label: 'Ocular coats', link: { to: 'flow', id: 'red-eye-coats' } },
-        { label: 'Iris hyperaemia', link: { to: 'flow', id: 'red-eye-iris' } },
-        { label: 'Intraocular bleed', link: { to: 'flow', id: 'red-eye-bleed' } },
-        { label: 'Retrobulbar', link: { to: 'flow', id: 'red-eye-orbit' } },
+        // Each arm carries its own pattern class, as every other sign page does.
+        // lint-choices states the convention: the box carries its arm's colour
+        // through tone/variant. These four were the only separation boxes in the
+        // ophthalmic set with neither, so they rendered as plain outlines.
+        { variant: 'insp', label: 'Ocular coats', link: { to: 'flow', id: 'red-eye-coats' } },
+        { variant: 'rest', label: 'Iris hyperaemia', link: { to: 'flow', id: 'red-eye-iris' } },
+        { variant: 'mixed', label: 'Intraocular bleed', link: { to: 'flow', id: 'red-eye-bleed' } },
+        { variant: 'exp', label: 'Retrobulbar', link: { to: 'flow', id: 'red-eye-orbit' } },
       ],
     },
     // Was a callout carrying five bullets and two raw onclick links — i.e. the

@@ -107,6 +107,13 @@ const ACVIM_SE =
 const ACVIM_FCE =
   'Marsilio S, Freiche V, Johnson E, et al. ACVIM consensus statement guidelines on diagnosing and distinguishing low-grade neoplastic from inflammatory lymphocytic chronic enteropathies in cats. J Vet Intern Med. 2023;37(3):794. doi:10.1111/jvim.16690'
 
+// Feline eosinophilic keratitis. A single case report, so it carries the weight
+// of one animal — but it is the source for the comparative non-response and
+// recurrence figures the textbook does not give, and for the combined
+// triamcinolone/tacrolimus protocol.
+const ROMANECK_EK =
+  'Romaneck AK, Sebbag L. Case report: clinical remission in a cat with severe bilateral eosinophilic keratitis receiving combined immunosuppressive therapy (triamcinolone acetonide and tacrolimus). Front Vet Sci. 2021;8:580396. doi:10.3389/fvets.2021.580396'
+
 // Verbatim from references/CITATIONS.md. Cited as AUTHOR, not editor: the title
 // page (PDF p5) gives Lemmons alone with no role label, unlike the Gupta title
 // page, which says "Edited by" explicitly.
@@ -135,6 +142,7 @@ const SOURCE_NAMES = [
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
   'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'VETgirl', 'Lemmons', 'Gupta',
+  'Romaneck',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -212,6 +220,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Charalambous/.test(part)) { out.push({ id: 'acvim-se', text: ACVIM_SE }); continue }
     if (/^Marsilio/.test(part)) { out.push({ id: 'acvim-fce', text: ACVIM_FCE }); continue }
     if (/^Chirayath/.test(part)) { out.push({ id: 'chirayath-iatrogenic', text: CHIRAYATH_IATROGENIC }); continue }
+    if (/^Romaneck/.test(part)) { out.push({ id: 'romaneck-ek', text: ROMANECK_EK }); continue }
     const chapters = part.match(/Ch(?:apter|\.)?\s*([\d,\s]+)/)
     if (!chapters) { out.push({ id: 'ettinger', text: `${ETTINGER_BOOK}.` }); continue }
     const nums = chapters[1].match(/\d+/g) ?? []
