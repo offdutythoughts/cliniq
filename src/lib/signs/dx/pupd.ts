@@ -28,7 +28,7 @@ export const pupdDx: DxApproach = {
       • <strong>True PU/PD</strong> — large volume voiding, increased frequency with large volumes, owner reports drinking excessively<br>
       <div style="margin-top:8px;font-size:10px;opacity:.8;">📏 Thresholds (if owners measure) • Polydipsia: water intake &gt;100 ml/kg/day (dog; normal usually &lt;80) · &gt;50 ml/kg/day (cat, ≈&gt;200 ml/cat/day) • Polyuria: urine output &gt;50 ml/kg/day (both species)</div>`,
       },
-      { kind: 'step', alt: true, text: '📖 CHRONICITY + ONSET' },
+      { kind: 'step', text: '📖 CHRONICITY + ONSET' },
       {
         kind: 'check',
         html: `<strong style="color:var(--tone-green-fg);">Acute onset (&lt;1–2 weeks)</strong><br>
@@ -48,7 +48,7 @@ export const pupdDx: DxApproach = {
       • CDI / primary polydipsia — profound dilute urine, otherwise well<br>
       • Hyperthyroidism (cat) — weight loss, tachycardia, often concurrent CKD`,
       },
-      { kind: 'step', alt: true, text: '📖 KEY SIGNALMENT CLUES' },
+      { kind: 'step', text: '📖 KEY SIGNALMENT CLUES' },
       {
         kind: 'check',
         html: `<strong style="color:var(--tone-green-fg);">Age</strong><br>
@@ -64,7 +64,7 @@ export const pupdDx: DxApproach = {
       • Intact female dog (mid-cycle or 4–8 wks post-oestrus) → <strong>Pyometra — emergency</strong><br>
       • Female dog 4–8 yr → HAC slightly overrepresented in females`,
       },
-      { kind: 'step', alt: true, text: '📖 MEDICATION + EXPOSURE HISTORY' },
+      { kind: 'step', text: '📖 MEDICATION + EXPOSURE HISTORY' },
       {
         kind: 'check',
         html: `<strong style="color:var(--tone-danger-fg);">Iatrogenic causes — common and easily missed</strong><br>
@@ -81,7 +81,7 @@ export const pupdDx: DxApproach = {
       <strong style="color:var(--tone-info-fg);">Vaccination + outdoor access</strong><br>
       • Unvaccinated, outdoor, water access → <strong>Leptospirosis</strong> (zoonotic — PPE!)`,
       },
-      { kind: 'step', alt: true, text: '📖 CONCURRENT SIGNS — NARROW THE DIFFERENTIAL' },
+      { kind: 'step', text: '📖 CONCURRENT SIGNS — NARROW THE DIFFERENTIAL' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;font-size:10px;line-height:1.5;">
@@ -209,7 +209,7 @@ export const pupdDx: DxApproach = {
       • Active sediment (WBC casts, bacteriuria) → pyelonephritis — culture regardless<br>
       • Ammonium biurate crystals → PSS — young dog`,
       },
-      { kind: 'step', alt: true, text: 'STEP 2 — MINIMUM DATABASE + IMAGING' },
+      { kind: 'step', text: 'STEP 2 — MINIMUM DATABASE + IMAGING' },
       {
         kind: 'check',
         html: `<strong style="color:var(--tone-warning-fg);">Biochemistry:</strong> BUN · Cr · SDMA · phosphate · Ca²⁺ · K⁺ · Na⁺ · glucose · ALP · ALT · albumin · cholesterol<br>
@@ -350,7 +350,7 @@ export const pupdDx: DxApproach = {
       </div>
     </div>`,
       },
-      { kind: 'step', alt: true, text: 'IF DATABASE NORMAL — SERIAL USG + PLASMA Na⁺ → DESMOPRESSIN' },
+      { kind: 'step', text: 'IF DATABASE NORMAL — SERIAL USG + PLASMA Na⁺ → DESMOPRESSIN' },
       {
         kind: 'check',
         html: `• ≥1 USG &gt;1.030 (dog) / &gt;1.035 (cat) + Na⁺ low-normal → <strong>Primary polydipsia</strong><br>
@@ -403,7 +403,7 @@ export const pupdDx: DxApproach = {
       • Patient is <strong>not azotaemic</strong> without knowing cause<br>
       • Patient has <strong>free access to water at all times</strong> during the trial — NEVER restrict water`,
       },
-      { kind: 'step', alt: true, text: 'BASELINE MEASUREMENTS (Day 0)' },
+      { kind: 'step', text: 'BASELINE MEASUREMENTS (Day 0)' },
       {
         kind: 'check',
         html: `• <strong>Serial USG</strong> — minimum 3–5 samples (different days); confirm all are &lt;1.007 for CDI/NDI workup<br>
@@ -412,7 +412,7 @@ export const pupdDx: DxApproach = {
       • <strong>Bodyweight</strong> — monitor for water retention<br>
       <span style="font-size:10px;opacity:.75;">📝 Instruct owner to record water intake carefully — the most sensitive response indicator.</span>`,
       },
-      { kind: 'step', alt: true, text: 'DESMOPRESSIN ADMINISTRATION' },
+      { kind: 'step', text: 'DESMOPRESSIN ADMINISTRATION' },
       {
         kind: 'check',
         html: `<strong style="color:var(--tone-warning-fg);">Dog:</strong><br>
@@ -424,7 +424,7 @@ export const pupdDx: DxApproach = {
       • Oral DDAVP less predictable in cats — conjunctival route preferred<br><br>
       <span style="font-size:10px;opacity:.8;">Duration: <strong>5–7 days</strong> for full response assessment. USG checked Days 3–4 then Day 7.</span>`,
       },
-      { kind: 'step', alt: true, text: 'INTERPRETING RESPONSE (Day 5–7)' },
+      { kind: 'step', text: 'INTERPRETING RESPONSE (Day 5–7)' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px 10px;font-size:10px;line-height:1.4;">
@@ -445,7 +445,7 @@ export const pupdDx: DxApproach = {
         <div><strong>Partial CDI</strong> or secondary NDI<br>Rule out HAC (most common secondary NDI) — treat underlying cause and retest</div>
       </div>`,
       },
-      { kind: 'step', alt: true, text: 'MONITORING DURING TRIAL' },
+      { kind: 'step', text: 'MONITORING DURING TRIAL' },
       {
         kind: 'check',
         html: `• <strong>Bodyweight daily</strong> — weight gain &gt;5% → water retention → reduce dose or discontinue<br>
@@ -455,7 +455,7 @@ export const pupdDx: DxApproach = {
         <span style="font-weight:700;color:var(--tone-danger-title);">⚠️ STOP IMMEDIATELY IF:</span> Plasma Na falls &lt;140 mEq/L · Bodyweight gain &gt;5% · Oedema develops · Owner stops measuring water and patient appears more depressed
       </div>`,
       },
-      { kind: 'step', alt: true, text: 'CDI CONFIRMED — LONG-TERM MANAGEMENT' },
+      { kind: 'step', text: 'CDI CONFIRMED — LONG-TERM MANAGEMENT' },
       {
         kind: 'check',
         html: `• Continue DDAVP at effective trial dose — titrate to lowest effective dose<br>

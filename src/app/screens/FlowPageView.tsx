@@ -8,7 +8,7 @@
 import { Fragment, useState, type ReactNode } from 'react'
 import type {
   Block, Column, Endpoint, ChoiceItem, CardTile, CategoryColumn, CategoryTile, CatColumn, DecisionStep, ForkLeg,
-  DecisionOutcome, TableCell, TableRow, LabeledLink, Tone, InfoBoxBlock as InfoBoxBlockType,
+  DecisionOutcome, LabeledLink, Tone, InfoBoxBlock as InfoBoxBlockType,
   AlertItem,
 } from '../../lib/signs/flowTypes'
 import { HUE, TITLE } from '../../lib/signs/tone'
@@ -17,16 +17,15 @@ import { DX } from '../../lib/signs/dx'
 import { RichText } from '../../components/RichText'
 import { useNav } from '../nav/NavContext'
 import { linkToView } from '../nav/view'
-import { styleStringToObject as s, toneBox, SCROLL_X, colTier, evenTracks, WRAP_ANY } from './style'
+import { styleStringToObject as s, toneBox, colTier, evenTracks, WRAP_ANY } from './style'
 import { NotFound } from './NotFound'
 import { ForkLines, type Nav, Raw, ToneBox } from './flowHelpers'
 import { NavCard } from './markup'
+import { GridTable } from './gridTable'
 
 const DISCLAIMER = <div className="disclaimer">For qualified veterinary professionals only.</div>
 
 // ── Shared static style constants ─────────────────────────────────────────────
-const ST_SECTION_LABEL = s('grid-column:1/-1;padding:4px 0 2px;font-size:8px;font-weight:700;color:var(--gray2);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(var(--slate-muted),.08);margin-top:2px;')
-const ST_ROW_DIVIDER   = s('grid-column:1/-1;height:1px;background:rgba(var(--slate-muted),.2);')
 const ST_BLOCK_TITLE   = s('font-size:11px;font-weight:700;margin-bottom:6px;')
 const ST_COL_FLEX      = s('display:flex;flex-direction:column;gap:4px;')
 const ST_UNLINKED_TILE = 'background:var(--card);border:1.5px solid var(--border);color:var(--gray2);opacity:.72;filter:saturate(.2);cursor:default;'
@@ -271,37 +270,11 @@ function ChoicesBlock({ cols, size, items, onNav }: { cols: number; size: number
 // A pinned first column paints the page background behind itself AND across the
 // 6px column gap (the box-shadow spread), so the scrolling columns slide under
 // it cleanly; the second shadow layer is the divider that marks the seam.
-const STICKY_COL = 'position:sticky;left:0;z-index:1;background:var(--navy);'
-  + 'box-shadow:6px 0 0 var(--navy),7px 0 0 rgba(var(--slate-muted),.25);'
-function Cell({ c, header, sticky, onNav }: { c: TableCell; header?: boolean; sticky?: boolean; onNav: Nav }) {
-  const text = typeof c === 'string' ? c : c.text
-  const tone = typeof c !== 'string' ? c.tone : undefined
-  const color = tone ? `color:${HUE[tone].color};` : ''
-  const head = header
-    ? tone
-      ? `font-weight:700;padding-bottom:4px;border-bottom:2px solid ${HUE[tone].color};white-space:nowrap;${color}`
-      : 'font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(var(--slate-muted),.25);'
-    : color
-  return <div style={s(`${head}${sticky ? STICKY_COL : ''}`)}><Raw html={text} onNav={onNav} /></div>
-}
 function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav: Nav }) {
-  const lastIdx = b.rows.length - 1
-  const grid = (
-    <div style={s(`display:grid;grid-template-columns:${b.cols};gap:${b.dividers ? 9 : 3}px 6px;font-size:9.5px;line-height:1.4;${b.minWidth ? `min-width:${b.minWidth}px;` : ''}`)}>
-      {b.headers.map((h, i) => <Cell key={`h${i}`} c={h} header sticky={b.stickyFirstCol && i === 0} onNav={onNav} />)}
-      {b.rows.map((row, ri) =>
-        Array.isArray(row)
-          ? (
-            <Fragment key={ri}>
-              {row.map((c, ci) => <Cell key={`${ri}-${ci}`} c={c} sticky={b.stickyFirstCol && ci === 0} onNav={onNav} />)}
-              {b.dividers && ri !== lastIdx && <div style={ST_ROW_DIVIDER} />}
-            </Fragment>
-          )
-          : <div key={`s${ri}`} style={ST_SECTION_LABEL}>{row.section}</div>
-      )}
-    </div>
+  const wrapped = (
+    <GridTable cols={b.cols} headers={b.headers} rows={b.rows} dividers={b.dividers}
+      stickyFirstCol={b.stickyFirstCol} scroll={b.scroll} minWidth={b.minWidth} onNav={onNav} />
   )
-  const wrapped = b.scroll ? <div style={s(SCROLL_X)}>{grid}</div> : grid
   const footColor = b.boxTone ? `color:${HUE[b.boxTone].color};opacity:.85;` : 'opacity:.9;'
   const foot = b.footnote ? <div style={s(`margin-top:7px;font-size:9.5px;line-height:1.55;${footColor}`)}><Raw html={b.footnote} onNav={onNav} /></div> : null
   if (!b.boxTone && !b.title) return b.gap ? <div style={s(`margin-top:${b.gap}px;width:100%;`)}>{wrapped}{foot}</div> : <>{wrapped}{foot}</>

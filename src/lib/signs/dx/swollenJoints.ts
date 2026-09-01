@@ -26,14 +26,14 @@ export const swollenJointsDx: DxApproach = {
           kind: 'check',
           html: `A single, swollen, very painful joint — especially after <strong>surgery, trauma or a penetrating wound (cat bite / foreign body)</strong> — is septic arthritis until proven otherwise. Prior surgery greatly increases the likelihood of a bacterial aetiology. This is an emergency: sample/lavage and start antimicrobials. Most common in a large proximal joint (stifle, elbow, shoulder, hip). (Ettinger Ch 32 / Ch 177)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — SIGNALMENT & BREED CLUES' },
+        { kind: 'step', text: ' STEP 2 — SIGNALMENT & BREED CLUES' },
         {
           kind: 'check',
           html: `<strong>Young–middle-aged dog (3–7 yr most common, no sex predilection)</strong> with fever + multiple distal joints → idiopathic IMPA (the commonest inflammatory joint disease).<br>
     <strong>Breed-associated syndromes:</strong> Shar-Pei (familial Shar-Pei fever — 12–48 h bouts of fever + swollen hocks; colchicine to reduce amyloidosis risk); Akita (severe juvenile-onset polyarthropathy); erosive disease in Greyhounds and Border Collies.<br>
     <strong>Cats:</strong> infectious arthritis (Mycoplasma, calicivirus) is more common than immune-mediated; FeLV-implicated periosteal proliferative polyarthritis in male cats. (Ettinger Ch 32 / Ch 177)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — DRUGS, VACCINES & A DISTANT FOCUS (reactive)' },
+        { kind: 'step', text: ' STEP 3 — DRUGS, VACCINES & A DISTANT FOCUS (reactive)' },
         {
           kind: 'check',
           html: `Non-erosive IMPA is frequently <strong>reactive</strong> — driven by an antigenic stimulus elsewhere. Ask about:<br>
@@ -41,7 +41,7 @@ export const swollenJointsDx: DxApproach = {
     <strong>Recent vaccination</strong> — canine distemper, Lyme; typically within 1–2 weeks.<br>
     <strong>A distant inflammatory / infectious / neoplastic focus</strong> — chronic infection (deep mycoses, discospondylitis, endocarditis), GI inflammation (enteropathic polyarthropathy), or distant neoplasia (particularly haemic). (Ettinger Ch 32 / Ch 177)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 4 — TRAVEL, TICKS & GEOGRAPHY' },
+        { kind: 'step', text: ' STEP 4 — TRAVEL, TICKS & GEOGRAPHY' },
         {
           kind: 'check',
           html: `Vector-borne polyarthritis is common and treatable — ask about <strong>tick exposure, preventive history, geographic location and travel</strong>. Consider <strong>Lyme (Borrelia), Anaplasma, Ehrlichia, RMSF (Rickettsia)</strong> and <strong>Leishmania</strong> by region, plus systemic mycoses (coccidioidomycosis, blastomycosis) where endemic. <strong>Negative serology in acute disease does not exclude infection.</strong> (Ettinger Ch 32 / Ch 177)`,
@@ -67,19 +67,19 @@ export const swollenJointsDx: DxApproach = {
           kind: 'check',
           html: `Systematically flex/extend and palpate <strong>all</strong> appendicular joints for swelling, effusion, heat, pain, crepitus and instability — a polyarthropathy can hide in joints that look and feel normal. A "walking on eggshells", stilted or shifting-leg lameness with reluctance to move suggests <strong>polyarthritis</strong> rather than a single orthopaedic lesion. (Ettinger Ch 32)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — SYSTEMIC SIGNS OF INFLAMMATORY DISEASE' },
+        { kind: 'step', text: ' STEP 2 — SYSTEMIC SIGNS OF INFLAMMATORY DISEASE' },
         {
           kind: 'check',
           html: `Check for <strong>fever, lethargy and inappetence</strong> — these accompany inflammatory joint disease far more than degenerative disease. Inflammatory joint disease patients are frequently presented for "weakness / won't move" rather than overt lameness. (Ettinger Ch 32)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — HUNT FOR A SOURCE / MULTISYSTEM DISEASE' },
+        { kind: 'step', text: ' STEP 3 — HUNT FOR A SOURCE / MULTISYSTEM DISEASE' },
         {
           kind: 'check',
           html: `Look for the inciting focus or a systemic immune disease:<br>
     <strong>Peripheral lymphadenopathy</strong> (aspirate if enlarged); <strong>heart murmur</strong> (endocarditis as a haematogenous source); <strong>spinal pain</strong> (discospondylitis); <strong>skin / mucocutaneous lesions, oral ulcers</strong> (SLE, leishmaniosis).<br>
     <strong>Fundic exam</strong> — chorioretinitis / retinal change with systemic hypertension, fungal or vector-borne disease. (Ettinger Ch 32)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 4 — DON\'T MISTAKE BONE FOR JOINT' },
+        { kind: 'step', text: ' STEP 4 — DON\'T MISTAKE BONE FOR JOINT' },
         {
           kind: 'check',
           html: `A firm, painful swelling at a <strong>juxta-articular site</strong> (distal radius, proximal humerus, distal femur, proximal tibia — "away from the elbow, toward the knee") may be <strong>osteosarcoma</strong>, not joint disease. Localise the pain to bone vs joint and image early. Prostatic disease and paw-pad disease can also masquerade as orthopaedic signs. (Ettinger Ch 32)`,
@@ -104,29 +104,29 @@ export const swollenJointsDx: DxApproach = {
       • <strong>Immune-mediated:</strong> high neutrophil counts that are <strong>culture-negative</strong> and non-degenerate (± ragocytes, LE cells).
     </div> (Ettinger Ch 32 / Ch 71 / Ch 87)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 2 — RADIOGRAPHS (erosive vs non-erosive · OA · bone tumour)' },
+        { kind: 'step', text: 'STEP 2 — RADIOGRAPHS (erosive vs non-erosive · OA · bone tumour)' },
         {
           kind: 'check',
           html: `Radiograph affected <strong>and contralateral</strong> joints. <strong>Non-erosive</strong> immune-mediated disease shows soft-tissue swelling only; <strong>erosive</strong> disease (rheumatoid arthritis; feline periosteal proliferative) shows subchondral bone lysis ± periosteal proliferation. Degenerative disease shows osteophytes / joint-space change. Crucially, radiographs also <strong>identify a juxta-articular bone tumour (osteosarcoma)</strong> masquerading as joint disease. (Ettinger Ch 32 / Ch 177)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 3 — CBC / CHEM / UA + HUNT THE FOCUS' },
+        { kind: 'step', text: 'STEP 3 — CBC / CHEM / UA + HUNT THE FOCUS' },
         {
           kind: 'check',
           html: `<strong>CBC:</strong> mild nonregenerative anaemia and mild leukocytosis are common; <strong>thrombocytopenia</strong> prompts testing for tick-borne organisms or concurrent ITP. <strong>Chemistry:</strong> marked liver-enzyme elevation may signal a distant inflammatory stimulus; hyperglobulinaemia suggests ehrlichiosis / leishmaniosis. <strong>UA with culture.</strong><br>
     Stage and source-hunt: <strong>thoracic + abdominal imaging</strong> (occult neoplasia / infection), <strong>blood + urine cultures</strong> and <strong>echocardiogram</strong> if bacteraemia/endocarditis suspected, vertebral radiographs for discospondylitis, and CSF analysis if SRMA is concurrent.<br>
     <strong>Serum CRP</strong> is usually elevated in uncontrolled IMPA and helps differentiate IMPA from DJD and monitor response. <strong>FIV / FeLV testing in all cats with polyarthritis.</strong> (Ettinger Ch 32 / Ch 177)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 4 — VECTOR-BORNE SEROLOGY / PCR BY GEOGRAPHY' },
+        { kind: 'step', text: 'STEP 4 — VECTOR-BORNE SEROLOGY / PCR BY GEOGRAPHY' },
         {
           kind: 'check',
           html: `Test for the regionally relevant agents — <strong>Ehrlichia canis, Borrelia burgdorferi, Anaplasma phagocytophilum, RMSF (Rickettsia)</strong>, Leishmania and systemic mycoses — by serology and/or PCR, guided by geography and travel. <strong>Acute-phase serology can be negative</strong>; a pragmatic option is a <strong>doxycycline / minocycline trial</strong> — clinical response within 72 h supports a rickettsial cause. Look for <strong>morulae in neutrophils</strong> on synovial / blood smears (Anaplasma, E. ewingii). In cats add <strong>Mycoplasma culture/PCR</strong> (hard to culture conventionally). (Ettinger Ch 32 / Ch 177)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 5 — ANA / RF (interpret cautiously)' },
+        { kind: 'step', text: 'STEP 5 — ANA / RF (interpret cautiously)' },
         {
           kind: 'check',
           html: `<strong>ANA</strong> supports SLE (one of its diagnostic criteria) but is not on its own diagnostic. <strong>Rheumatoid factor (RF)</strong> is present in ~70% of clinically diagnosed canine RA but is <strong>neither sensitive nor specific</strong> — it rises in many inflammatory diseases. Treat both as findings that <em>bolster</em> suspicion, never as stand-alone confirmation. Idiopathic/primary IMPA remains a <strong>diagnosis of exclusion</strong> after ruling out infection, reactive causes and neoplasia. (Ettinger Ch 32 / Ch 177)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 6 — ANTIBIOTIC-THEN-IMMUNOSUPPRESSION DECISION' },
+        { kind: 'step', text: 'STEP 6 — ANTIBIOTIC-THEN-IMMUNOSUPPRESSION DECISION' },
         {
           kind: 'check',
           html: `<strong>Screen for infection BEFORE immunosuppressing.</strong> If septic / vector-borne disease is possible, treat the infection first (lavage + antimicrobials for septic arthritis; <strong>doxycycline trial</strong> for suspected vector-borne polyarthritis) — you can culture/serotest and treat empirically while awaiting results.<br>

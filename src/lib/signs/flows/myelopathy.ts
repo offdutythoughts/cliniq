@@ -1,11 +1,6 @@
 // ── Acute Myelopathy / Spinal-cord-localisation flowchart (data) ────────────
 import type { FlowPage } from '../flowTypes'
-
-// Inline state colouring for the localisation table: deficient / reduced /
-// absent findings read red, increased / spastic findings read green. Whole-cell
-// states use the cell `tone`; these spans colour a single token in a mixed cell.
-const red = (t: string) => `<span style="color:var(--tone-danger-fg)">${t}</span>`
-const grn = (t: string) => `<span style="color:var(--tone-green-fg)">${t}</span>`
+import { NEURO_LOC_COLS, NEURO_LOC_HEADERS, NEURO_LOC_MIN_WIDTH, NEURO_LOC_ROWS } from '../neuroLocalisation'
 
 const myelopathyEntry: FlowPage = {
   id: 'myelopathy',
@@ -22,41 +17,12 @@ const myelopathyEntry: FlowPage = {
     {
       kind: 'table',
       scroll: true,
-      minWidth: 560,
+      minWidth: NEURO_LOC_MIN_WIDTH,
       gap: 8,
       title: 'Neurological Localisation',
-      cols: 'auto repeat(5, 1fr)',
-      headers: [
-        'Finding',
-        { text: 'C1–C5', tone: 'green' },
-        { text: 'C6–T2', tone: 'indigo' },
-        { text: 'T3–L3', tone: 'warning' },
-        { text: 'L4–S3', tone: 'violet' },
-        { text: 'S2–Ca5', tone: 'purple' },
-      ],
-      rows: [
-        { section: 'General & Gait' },
-        ['Pain', 'Cervical low head · stiff neck', 'Caudal cervical / thoracic inlet', 'Thoracolumbar kyphosis', 'Lumbosacral pain', 'Lumbosacral / perineal pain'],
-        ['Gait', 'Tetraparesis (all 4 limbs)', 'Tetraparesis (FL worse)', 'HL paraparesis', 'Paraparesis / monoparesis (HL)', 'Paraparesis (HL + tail)'],
-        { section: 'CP & Muscle Tone' },
-        ['Forelimb CP', { text: 'Deficient', tone: 'danger' }, { text: 'Deficient', tone: 'danger' }, 'Normal', 'Normal', 'Normal'],
-        ['Hindlimb CP', { text: 'Deficient', tone: 'danger' }, { text: 'Deficient', tone: 'danger' }, { text: 'Deficient', tone: 'danger' }, { text: 'Deficient', tone: 'danger' }, { text: 'Deficient', tone: 'danger' }],
-        ['FL tone', { text: 'UMN spastic / ↑', tone: 'green' }, { text: 'LMN flaccid · atrophy', tone: 'danger' }, 'Normal', 'Normal', 'Normal'],
-        ['HL tone', { text: 'UMN spastic / ↑', tone: 'green' }, { text: 'UMN spastic / ↑', tone: 'green' }, { text: 'UMN spastic / ↑', tone: 'green' }, { text: 'LMN flaccid / ↓', tone: 'danger' }, { text: 'LMN flaccid / ↓', tone: 'danger' }],
-        { section: 'Spinal Reflexes' },
-        ['Biceps (C6–C8)', `${grn('↑')} / Normal`, { text: '↓ / Absent', tone: 'danger' }, 'Normal', 'Normal', 'Normal'],
-        ['Triceps (C7–T1)', `${grn('↑')} / Normal`, { text: '↓ / Absent', tone: 'danger' }, 'Normal', 'Normal', 'Normal'],
-        ['FL withdrawal', `${grn('↑')} / Normal`, { text: '↓ / Absent', tone: 'danger' }, 'Normal', 'Normal', 'Normal'],
-        ['Patellar (L3–L4)', `${grn('↑')} / Normal`, `${grn('↑')} / Normal`, `${grn('↑')} / Normal`, { text: '↓ / Absent', tone: 'danger' }, 'Normal'],
-        ['HL withdrawal', `${grn('↑')} / Normal`, `${grn('↑')} / Normal`, `${grn('↑')} / Normal`, { text: '↓ / Absent', tone: 'danger' }, { text: 'Absent', tone: 'danger' }],
-        ['Perineal / anal', 'Normal', 'Normal', 'Normal', { text: '↓ / Absent', tone: 'danger' }, { text: 'Absent', tone: 'danger' }],
-        { section: 'Special Tests' },
-        ['Cutaneous trunci', 'Present bilateral', `${red('↓/absent')} if C8–T1`, `${red('Absent')} caudal (cutoff ≈1–2 segs)`, 'Normal', 'Normal'],
-        ["Horner's", 'Normal', 'Present (T1–T3)', 'Normal', 'Normal', 'Normal'],
-        ['Schiff-Sherrington', 'Normal', 'Normal', '± FL ext · HL paralysis (severe)', 'Normal', 'Normal'],
-        ['Bladder', `UMN ${grn('spastic')} · large`, `UMN ${grn('spastic')}`, `UMN ${grn('spastic')} · reflexic`, `LMN ${red('flaccid')} · easy`, `LMN ${red('flaccid')} · easy`],
-        ['Tail tone', 'Normal', 'Normal', 'Normal', { text: '↓ reduced', tone: 'danger' }, { text: 'Flaccid', tone: 'danger' }],
-      ],
+      cols: NEURO_LOC_COLS,
+      headers: NEURO_LOC_HEADERS,
+      rows: NEURO_LOC_ROWS,
     },
     {
       kind: 'table',

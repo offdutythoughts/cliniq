@@ -20,7 +20,7 @@ export const regurgitationDx: DxApproach = {
     <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:5px 8px;font-size:10.5px;line-height:1.4;"><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);">Feature</div><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:var(--tone-green-fg);">Regurgitation</div><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:var(--tone-danger-fg);">Vomiting</div><div>Retching?</div><div style="color:var(--tone-green-fg);">Usually absent</div><div style="color:var(--tone-danger-fg);">Usually present</div><div>Abdominal effort?</div><div style="color:var(--tone-green-fg);">Passive — none</div><div style="color:var(--tone-danger-fg);">Active</div><div>Prodromal nausea?</div><div style="color:var(--tone-green-fg);">Absent</div><div style="color:var(--tone-danger-fg);">Lip licking, ptyalism</div><div>Bile present?</div><div style="color:var(--tone-green-fg);">Usually absent</div><div style="color:var(--tone-danger-fg);">May be present</div><div>Ingesta digested?</div><div style="color:var(--tone-green-fg);">Typically undigested, tubular</div><div style="color:var(--tone-danger-fg);">May be digested</div><div>Timing after eating?</div><div style="color:var(--tone-green-fg);">Any time; soon after ↑ suspicion</div><div style="color:var(--tone-danger-fg);">Variable</div><div>White/clear mucus?</div><div style="color:var(--tone-green-fg);">Frothy saliva common</div><div style="color:var(--tone-danger-fg);">Less typical</div><div>Frequency?</div><div style="color:var(--tone-green-fg);">Many/day, no systemic signs</div><div style="color:var(--tone-danger-fg);">Variable</div><div>Duration?</div><div style="color:var(--tone-green-fg);">Weeks–months (megaoesoph.); acute if obstructive</div><div style="color:var(--tone-danger-fg);">Variable</div></div>
   `,
       },
-      { kind: 'step', alt: true, text: '📖 AETIOLOGICAL CLUES — ONCE CONFIRMED' },
+      { kind: 'step', text: '📖 AETIOLOGICAL CLUES — ONCE CONFIRMED' },
       {
         kind: 'check',
         html: `<strong style="color:var(--tone-green-fg);">Neuromuscular disease</strong><br>
@@ -141,7 +141,7 @@ export const regurgitationDx: DxApproach = {
         html: `Passive, effortless expulsion · No prodromal nausea · Undigested tubular food · No bile<br>
     <span style="font-size:10px;opacity:.8;">Distinguish from vomiting (active abdominal effort, bile-stained, retching). Diagnostic approach is highly variable and dependent on differentials for the underlying aetiology.</span>`,
       },
-      { kind: 'step', alt: true, text: '🔬 FIRST-LINE DIAGNOSTICS' },
+      { kind: 'step', text: '🔬 FIRST-LINE DIAGNOSTICS' },
       {
         kind: 'html',
         html: `<div class="dx-row c2">
@@ -166,7 +166,7 @@ export const regurgitationDx: DxApproach = {
     <strong>⚠️ Aspiration pneumonia caveat:</strong> Radiographic changes lag behind aspiration (chemical injury precedes fluid accumulation) — radiograph may be normal despite active aspiration. Changes persist for days after clinical improvement with poor correlation to hypoxaemia and prognosis.`,
         noArrowAfter: true,
       },
-      { kind: 'step', alt: true, text: '🧪 CBC · SERUM CHEMISTRY · URINALYSIS' },
+      { kind: 'step', text: '🧪 CBC · SERUM CHEMISTRY · URINALYSIS' },
       {
         kind: 'check',
         html: `Assess for concurrent disease and complicating factors.<br><br>
@@ -179,7 +179,7 @@ export const regurgitationDx: DxApproach = {
         noArrowAfter: true,
       },
       { kind: 'step', text: '🔍 FURTHER DIAGNOSTICS' },
-      { kind: 'step', alt: true, text: `📊 POSITIVE-CONTRAST OESOPHAGRAM<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: normal non-contrast radiograph + oesophageal disease still suspected</span>` },
+      { kind: 'step', text: `📊 POSITIVE-CONTRAST OESOPHAGRAM<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: normal non-contrast radiograph + oesophageal disease still suspected</span>` },
       {
         kind: 'check',
         html: `<strong>Indications:</strong> Use when non-contrast radiography is normal but oesophageal disease still suspected — can reveal hypomotility, focal dilation (obstruction: VRA, stricture, mass, FB), filling defects, or diverticula. Abdominal inclusion helps confirm gastric position (hiatal hernia).<br><br>
@@ -215,7 +215,7 @@ export const regurgitationDx: DxApproach = {
     • Discrepancies between clinical signs and endoscopic findings are common — 91% of GER-suspected dogs had unremarkable oesophagoscopy in one study<br>
     • Non-erosive oesophagitis not detectable endoscopically`,
       },
-      { kind: 'step', alt: true, text: `📡 ABDOMINAL RADIOGRAPHY + ULTRASONOGRAPHY<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: concurrent vomiting, weight loss, or hyporexia</span>` },
+      { kind: 'step', text: `📡 ABDOMINAL RADIOGRAPHY + ULTRASONOGRAPHY<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: concurrent vomiting, weight loss, or hyporexia</span>` },
       {
         kind: 'check',
         html: `Generally unhelpful for primary oesophageal disease. Consider when vomiting, weight loss, or hyporexia are concurrent.<br><br>
@@ -233,7 +233,7 @@ export const regurgitationDx: DxApproach = {
     • Perform with both liquid and dry contrast media to maximise stricture detection sensitivity<br>
     • <strong>Not useful</strong> for diagnosing oesophagitis (assesses function, not mucosa)`,
       },
-      { kind: 'step', alt: true, text: `🖥️ CT + ANGIOGRAPHY<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: confirm vascular ring anomaly · neoplasia staging</span>` },
+      { kind: 'step', text: `🖥️ CT + ANGIOGRAPHY<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: confirm vascular ring anomaly · neoplasia staging</span>` },
       {
         kind: 'check',
         html: `CT with angiography is the recommended diagnostic to confirm vascular ring anomaly (VRA) — defines vascular anatomy and confirms oesophageal constriction. Also used for neoplasia staging and complex mediastinal disease.`,

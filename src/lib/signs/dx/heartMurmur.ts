@@ -27,7 +27,7 @@ export const heartMurmurDx: DxApproach = {
     <strong>Large / giant breed</strong> (Doberman, Great Dane, Irish Wolfhound, Boxer) → DCM; the murmur is often soft or absent.<br>
     <strong>Cat of any age</strong> → cardiomyopathy (HCM/RCM), but many feline murmurs are dynamic / physiologic and HCM may have NO murmur.`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — CARDIAC SIGNS & FUNCTIONAL STATUS' },
+        { kind: 'step', text: ' STEP 2 — CARDIAC SIGNS & FUNCTIONAL STATUS' },
         {
           kind: 'check',
           html: `Ask about <strong>exercise intolerance, cough (dogs — LA enlargement compressing the bronchus), tachypnoea / dyspnoea, syncope or collapse</strong>.<br>
@@ -35,7 +35,7 @@ export const heartMurmurDx: DxApproach = {
     Cats do NOT cough from cardiac disease — feline CHF presents as dyspnoea/tachypnoea, not cough.<br>
     Document the resting / sleeping respiratory rate (a rising RR is an early sign of decompensation).`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — IS THERE A NON-CARDIAC EXPLANATION?' },
+        { kind: 'step', text: ' STEP 3 — IS THERE A NON-CARDIAC EXPLANATION?' },
         {
           kind: 'check',
           html: `Screen for <strong>high-output / hyperdynamic states</strong> that produce a functional murmur: <strong>anaemia</strong> (pallor, lethargy — HCT &lt;20% dog / &lt;15% cat), <strong>fever / sepsis, pregnancy, hyperthyroidism</strong> (older cat — weight loss, polyphagia, goitre), and high sympathetic tone.<br>
@@ -63,7 +63,7 @@ export const heartMurmurDx: DxApproach = {
           html: `<strong>I/VI</strong> very soft, heard only after intently listening ≥1 min · <strong>II/VI</strong> soft but easily heard · <strong>III/VI</strong> moderate · <strong>IV/VI</strong> loud, NO thrill · <strong>V/VI</strong> loud WITH a palpable precordial thrill · <strong>VI/VI</strong> very loud, thrill, audible with the stethoscope lifted 1 cm off the chest.<br>
     Grade tracks severity in congenital disease (PS, SAS) and MMVD, but <strong>not</strong> reliably in cats — palpate the precordium for a thrill (≥ grade V). (Ettinger Ch 38)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — TIMING (systolic / diastolic / continuous)' },
+        { kind: 'step', text: ' STEP 2 — TIMING (systolic / diastolic / continuous)' },
         {
           kind: 'check',
           html: `<strong>Systolic</strong> (between S1 and S2) — by far the commonest: MMVD, HCM, SAS, PS, VSD, tricuspid insufficiency, functional murmurs.<br>
@@ -71,7 +71,7 @@ export const heartMurmurDx: DxApproach = {
     <strong>Continuous "machinery"</strong> (throughout the cycle, peaking near S2) — PDA. The diastolic component disappears if pulmonary hypertension develops.<br>
     Also note <strong>gallop sounds (S3/S4)</strong> and systolic clicks — a gallop in a cat strongly suggests cardiomyopathy.`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — PMI & RADIATION (localise the lesion)' },
+        { kind: 'step', text: ' STEP 3 — PMI & RADIATION (localise the lesion)' },
         {
           kind: 'check',
           html: `<strong>Left apex (mitral area), systolic</strong> → mitral insufficiency (MMVD), may radiate dorsally / to the right.<br>
@@ -80,7 +80,7 @@ export const heartMurmurDx: DxApproach = {
     <strong>Left craniodorsal base, continuous</strong> → PDA.<br>
     <strong>Cats</strong> — apical / sternal systolic murmurs are often dynamic RV/LV outflow obstruction and may be physiologic; PMI is a less reliable localiser. (Ettinger Ch 38)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 4 — PULSE QUALITY & PRECORDIUM' },
+        { kind: 'step', text: ' STEP 4 — PULSE QUALITY & PRECORDIUM' },
         {
           kind: 'check',
           html: `<strong>Hyperkinetic / bounding ("waterhammer") pulse</strong> → PDA (diastolic runoff widens pulse pressure) — also aortic insufficiency, anaemia, hyperthyroidism.<br>
@@ -102,24 +102,24 @@ export const heartMurmurDx: DxApproach = {
           html: `<strong>Echo is the gold standard</strong> — it confirms the structural lesion (MMVD prolapse/regurgitation, HCM wall thickness + SAM, DCM dilation + poor FS/EF, congenital defects), quantifies severity, measures chamber size (LA:Ao), and estimates pulmonary artery pressure (TR/PI velocity).<br>
     Doppler maps the regurgitant / stenotic jet to the murmur. Echo is the only way to reliably separate a structural lesion from a functional murmur. (Ettinger Ch 38)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 2 — THORACIC RADIOGRAPHS + VHS' },
+        { kind: 'step', text: 'STEP 2 — THORACIC RADIOGRAPHS + VHS' },
         {
           kind: 'check',
           html: `Radiographs assess <strong>cardiac size (vertebral heart score, VHS)</strong>, chamber enlargement (LA enlargement → bronchial compression / cough in dogs), and — crucially — the <strong>lungs</strong> for cardiogenic pulmonary oedema and the vessels for pulmonary over- (L→R shunt) or under-circulation.<br>
     They answer "is this murmur causing CHF <em>now</em>?" better than echo. VHS &gt; breed-specific cut-offs and a rising serial VHS support cardiomegaly.`,
         },
-        { kind: 'step', alt: true, text: 'STEP 3 — ECG' },
+        { kind: 'step', text: 'STEP 3 — ECG' },
         {
           kind: 'check',
           html: `ECG characterises <strong>rhythm and chamber-enlargement patterns</strong> (tall/wide P or R waves), and detects arrhythmias that accompany structural disease (atrial fibrillation in DCM/MMVD, VPCs in cardiomyopathy/Boxer ARVC). It does not size the heart — pair with imaging.`,
         },
-        { kind: 'step', alt: true, text: 'STEP 4 — BLOOD PRESSURE & NT-proBNP' },
+        { kind: 'step', text: 'STEP 4 — BLOOD PRESSURE & NT-proBNP' },
         {
           kind: 'check',
           html: `<strong>Blood pressure</strong> (Doppler, esp. cats) — systemic hypertension can cause/exacerbate a murmur and drive LV changes; treat if confirmed.<br>
     <strong>NT-proBNP</strong> — especially valuable in <strong>cats</strong>: a point-of-care assay (result &lt;10 min) helps decide whether a murmur reflects clinically relevant cardiac disease and whether echo is warranted; a LOW NT-proBNP makes significant occult cardiomyopathy unlikely, while an elevated value (± cTnI) supports cardiac disease and differentiates cardiac from non-cardiac dyspnoea. (Ettinger Ch 38)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 5 — TARGETED / WORK-UP-FOR-FUNCTIONAL TESTS' },
+        { kind: 'step', text: 'STEP 5 — TARGETED / WORK-UP-FOR-FUNCTIONAL TESTS' },
         {
           kind: 'check',
           html: `Pursue the <strong>functional</strong> differentials when the murmur is soft, basilar and the patient is otherwise well: <strong>CBC</strong> (anaemia), <strong>total T4</strong> (older cat — hyperthyroidism), <strong>temperature / inflammatory screen</strong> (fever, sepsis), pregnancy.<br>

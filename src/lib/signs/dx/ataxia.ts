@@ -14,19 +14,16 @@ export const ataxiaDx: DxApproach = {
     blocks: [
       { kind: 'branch', text: 'ONSET, PROGRESSION & DRUG HISTORY' },
       {
-        kind: 'comparisonTable',
-        cols: [
-          { label: 'Ataxia type', isLabel: true, width: '22%' },
-          { label: 'Key clues in history', color: '#94a3b8', width: '42%' },
-          { label: 'First priority' },
-        ],
+        kind: 'gridTable',
+        cols: '0.22fr 0.42fr 0.36fr',
+        dividers: true,
+        headers: ['Ataxia type', 'Key clues in history', { text: 'First priority', tone: 'teal' }],
         rows: [
-          { kind: 'row', cells: ['<strong>Cerebellar</strong>', 'Intention tremor, hypermetria, no weakness; breed history', 'Drug/diet first (metronidazole, thiamine)'] },
-          { kind: 'row', cells: ['<strong>Vestibular</strong>', 'Head tilt, nystagmus, rolling, onset in older dog', 'Age, ear history, ototoxic drugs'] },
-          { kind: 'row', cells: ['<strong>Proprioceptive (spinal)</strong>', 'Knuckling, scuffing, paresis; chondrodystrophic breed', 'Spinal pain? Onset speed?'] },
-          { kind: 'row', cells: ['<strong>Multifocal</strong>', 'Combines signs from multiple systems; systemic illness', 'Vaccination status, travel (CDV, Toxoplasma)'] },
+          ['<strong>Cerebellar</strong>', 'Intention tremor, hypermetria, no weakness; breed history', { text: 'Drug / diet first (metronidazole, thiamine)', tone: 'teal' }],
+          ['<strong>Vestibular</strong>', 'Head tilt, nystagmus, rolling, onset in older dog', { text: 'Age, ear history, ototoxic drugs', tone: 'teal' }],
+          ['<strong>Proprioceptive (spinal)</strong>', 'Knuckling, scuffing, paresis; chondrodystrophic breed', { text: 'Spinal pain? Onset speed?', tone: 'teal' }],
+          ['<strong>Multifocal</strong>', 'Combines signs from multiple systems; systemic illness', { text: 'Vaccination status, travel (CDV, Toxoplasma)', tone: 'teal' }],
         ],
-        fontSize: '11px',
       },
       {
         kind: 'check',
@@ -53,7 +50,7 @@ export const ataxiaDx: DxApproach = {
       <strong>CKCS / Greyhound with peracute ataxia</strong> → ischaemic stroke (predisposed).<br>
       <strong>Alaskan Husky puppy with episodic CNS signs</strong> → Alaskan Husky encephalopathy (SLC19A3 thiamine transporter mutation).`,
       },
-      { kind: 'step', alt: true, text: '📋 ASSOCIATED SIGNS POINT TO THE SYSTEM' },
+      { kind: 'step', text: '📋 ASSOCIATED SIGNS POINT TO THE SYSTEM' },
       {
         kind: 'check',
         html: `<strong>Head tilt / nystagmus / rolling</strong> → vestibular. <strong>Intention tremor / hypermetria, no weakness</strong> → cerebellar.<br>
@@ -96,7 +93,7 @@ export const ataxiaDx: DxApproach = {
           },
         ],
       },
-      { kind: 'step', alt: true, text: '🔍 STEP 2 — KEY DISCRIMINATORS' },
+      { kind: 'step', text: '🔍 STEP 2 — KEY DISCRIMINATORS' },
       {
         kind: 'check',
         html: `<strong>Is there paresis?</strong> Cerebellar disease has NONE (it coordinates, not initiates). Proprioceptive ataxia ALWAYS has weakness.<br>
@@ -105,7 +102,7 @@ export const ataxiaDx: DxApproach = {
       <strong>Menace response</strong> can be reduced with cerebellar disease (with intact vision and PLR).<br>
       <strong>Cervical ventroflexion</strong> in a cat = neuromuscular weakness (hypokalaemia, thiamine, myasthenia) NOT cerebellar.`,
       },
-      { kind: 'step', alt: true, text: '🧠 STEP 3 — CENTRAL vs PERIPHERAL (if vestibular)' },
+      { kind: 'step', text: '🧠 STEP 3 — CENTRAL vs PERIPHERAL (if vestibular)' },
       {
         kind: 'check',
         html: `Proprioceptive deficits, vertical/positional nystagmus, multiple CN deficits, or ↓ consciousness = <strong>central</strong>. Otherwise peripheral. (See the Vestibular approach for the full battery.)<br>
@@ -119,7 +116,7 @@ export const ataxiaDx: DxApproach = {
       <strong>Blood pressure</strong> (all cats, geriatric dogs) — hypertensive encephalopathy and retinal detachment can present as acute CNS signs.<br>
       <strong>Fundoscopy</strong> (especially cats) — hypertensive retinopathy, uveitis/chorioretinitis (Toxoplasma, FIP, fungal), papilloedema.`,
       },
-      { kind: 'step', alt: true, text: 'SPECIES-SPECIFIC EXAM TIPS' },
+      { kind: 'step', text: 'SPECIES-SPECIFIC EXAM TIPS' },
       {
         kind: 'check',
         html: `<strong>Canine</strong><br>
@@ -142,22 +139,23 @@ export const ataxiaDx: DxApproach = {
       ...stepPair(1, 'MINIMUM DATABASE — ALL ATAXIA', `CBC (leukogram, PCV/TS, platelets). Biochemistry: glucose · iCa · K⁺ · Na⁺ · BUN/Cr · ALP/ALT · globulins/A:G (🐱 FIP screen) · CK (myopathy). Blood pressure — all cats, geriatric dogs. 🐱 FIV/FeLV + T4 (all cats).`),
       { kind: 'branch', text: 'CLASSIFY ATAXIA TYPE → DICTATES NEXT STEP' },
       {
-        kind: 'comparisonTable',
-        scrollable: true,
-        minWidth: '540px',
-        fontSize: '9px',
-        cols: [
-          { label: 'Finding', isLabel: true, width: '26%' },
-          { label: 'Cerebellar', color: 'var(--fg-teal-deep)' },
-          { label: 'Vestibular', color: 'var(--fg-teal-deep)' },
-          { label: 'Proprioceptive (spinal)', color: 'var(--fg-teal-deep)' },
+        kind: 'gridTable',
+        scroll: true,
+        minWidth: 540,
+        cols: '1.05fr 1fr 1fr 1fr',
+        dividers: true,
+        headers: [
+          'Finding',
+          { text: 'Cerebellar', tone: 'teal' },
+          { text: 'Vestibular', tone: 'teal' },
+          { text: 'Proprioceptive (spinal)', tone: 'teal' },
         ],
         rows: [
-          { kind: 'row', cells: ['Clinical signs', 'Hypermetria / intention tremor / no paresis', 'Head tilt / nystagmus / rolling', 'Knuckling / scuffing / paresis'] },
-          { kind: 'row', cells: ['Next imaging', 'MRI brain (cerebellum)', 'Otoscopy + CT/MRI bullae (periph) / MRI brain + CSF (central)', 'Spinal rads → CT/MRI spine'] },
-          { kind: 'row', cells: ['Key infectious tests', 'CDV PCR (🐕) · FIP globulins (🐱) · Toxoplasma/Neospora', 'Ear swab · Brucella if chronic', 'CK · protozoal serology · CSF'] },
-          { kind: 'row', cells: ['Key metabolic', 'Thiamine (🐱 fish diet); metronidazole → STOP', 'Hypothyroid T4 (🐕 CN VII + vestibular)', 'Spinal CSF protein (polyradiculo)'] },
-          { kind: 'row', cells: ['Key hereditary/breed', 'Abiotrophy/SCA → DNA test (breed)', 'Idiopathic (excl. by elimination)', 'DM (GSD, older); CCSM (Dobermann)'] },
+          ['Clinical signs', { text: 'Hypermetria / intention tremor / no paresis', tone: 'teal' }, { text: 'Head tilt / nystagmus / rolling', tone: 'teal' }, { text: 'Knuckling / scuffing / paresis', tone: 'teal' }],
+          ['Next imaging', { text: 'MRI brain (cerebellum)', tone: 'teal' }, { text: 'Otoscopy + CT/MRI bullae (periph) / MRI brain + CSF (central)', tone: 'teal' }, { text: 'Spinal rads → CT/MRI spine', tone: 'teal' }],
+          ['Key infectious tests', { text: 'CDV PCR (🐕) · FIP globulins (🐱) · Toxoplasma/Neospora', tone: 'teal' }, { text: 'Ear swab · Brucella if chronic', tone: 'teal' }, { text: 'CK · protozoal serology · CSF', tone: 'teal' }],
+          ['Key metabolic', { text: 'Thiamine (🐱 fish diet); metronidazole → STOP', tone: 'teal' }, { text: 'Hypothyroid T4 (🐕 CN VII + vestibular)', tone: 'teal' }, { text: 'Spinal CSF protein (polyradiculo)', tone: 'teal' }],
+          ['Key hereditary/breed', { text: 'Abiotrophy/SCA → DNA test (breed)', tone: 'teal' }, { text: 'Idiopathic (excl. by elimination)', tone: 'teal' }, { text: 'DM (GSD, older); CCSM (Dobermann)', tone: 'teal' }],
         ],
       },
       ...stepPair(2, 'CEREBELLAR BRANCH — MRI BRAIN + CSF', `MRI brain (focus on cerebellum, brainstem).<br>CSF patterns:<br>

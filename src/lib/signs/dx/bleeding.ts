@@ -43,7 +43,7 @@ export const bleedingDx: DxApproach = {
     <strong>Chronic / lifelong:</strong> inherited coagulopathies (haemophilia A — factor VIII; haemophilia B — factor IX; vWD types I–III), thrombocytopathies (Glanzmann, Scott syndrome), heritable vasculopathies.<br><br>
     <strong>Episodic recurrent bleeding from puppyhood</strong> → inherited factor deficiency or vWD — type history of bleeding from umbilicus, deciduous tooth eruption, neutering surgery.`,
       },
-      { kind: 'step', alt: true, text: '💊 DRUG / TOXIN / EXPOSURE HISTORY' },
+      { kind: 'step', text: '💊 DRUG / TOXIN / EXPOSURE HISTORY' },
       {
         kind: 'check',
         html: `<strong>Anticoagulants / rodenticides:</strong> warfarin, brodifacoum, bromadiolone, difenacoum (2nd-generation — last weeks). Bait colour: turquoise, pink, green — variable.<br>
@@ -56,7 +56,7 @@ export const bleedingDx: DxApproach = {
     <strong>Heat / environmental:</strong> heatstroke → DIC.<br>
     <strong>Recent vaccinations:</strong> rare association with immune-mediated thrombocytopenia.`,
       },
-      { kind: 'step', alt: true, text: '🩺 SYSTEMIC / FAMILY / BREEDING HISTORY' },
+      { kind: 'step', text: '🩺 SYSTEMIC / FAMILY / BREEDING HISTORY' },
       {
         kind: 'check',
         html: `<strong>Family / breed history:</strong>
@@ -76,7 +76,7 @@ export const bleedingDx: DxApproach = {
     <strong>Concurrent uraemia + bleeding:</strong> uraemic platelet dysfunction → primary haemostatic defect despite normal counts.<br>
     <strong>Previous transfusion / blood products:</strong> alloimmunisation, post-transfusion purpura (rare).`,
       },
-      { kind: 'step', alt: true, text: '🐾 SIGNALMENT + BREED CLUES' },
+      { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
@@ -131,7 +131,7 @@ export const bleedingDx: DxApproach = {
     • <strong>Lameness / joint swelling</strong>: haemarthrosis (factor deficiency).<br>
     • <strong>Skin lesions</strong>: petechiae (ventrum, sclera, oral mucosa, pinnae), ecchymoses, vasculitis ulcers, alopecia of Sertoli hyperestrogenism.`,
       },
-      { kind: 'step', alt: true, text: '👋 STEP 2 — FOCUSED EXAM' },
+      { kind: 'step', text: '👋 STEP 2 — FOCUSED EXAM' },
       {
         kind: 'check',
         html: `<strong>Petechiae location:</strong> ventral abdomen, axilla, oral mucosa (especially upper canine pillar), conjunctiva, pinnae, scleral, pads. Quantify (few, scattered, generalised).<br>
@@ -146,7 +146,7 @@ export const bleedingDx: DxApproach = {
     <strong>Spinal palpation</strong>: vertebral haemorrhage / spinal IVDD with subarachnoid bleed.<br>
     <strong>Skin / coat</strong>: vasculitis lesions (ulcers, ear-tip necrosis, footpad ulcers — pinnae especially), alopecia of hyperestrogenism (bilaterally symmetrical), Cushingoid changes (HAC predisposes to PTE not bleeding, but iatrogenic steroid use predisposes to GI ulcer / haemorrhage).`,
       },
-      { kind: 'step', alt: true, text: '🔍 STEP 3 — PATTERN RECOGNITION' },
+      { kind: 'step', text: '🔍 STEP 3 — PATTERN RECOGNITION' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1.2fr;gap:5px 8px;font-size:10px;line-height:1.45;">
@@ -184,7 +184,7 @@ export const bleedingDx: DxApproach = {
     4. <strong>Avoid intramuscular injections</strong> and cystocentesis in any patient with suspected coagulopathy.<br>
     5. <strong>Type and cross-match</strong> before transfusion. Cats: type before transfusion is mandatory — Type B cats carry strong naturally-occurring anti-A antibodies and react severely (potentially fatal) to Type A blood. Type A cats have weak anti-B (mild reaction). Type AB cats have no anti-A or anti-B antibodies and are universal recipients.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 2 — TIER 1 LABORATORY EVALUATION' },
+      { kind: 'step', text: 'STEP 2 — TIER 1 LABORATORY EVALUATION' },
       {
         kind: 'html',
         html: `<div style="padding:10px 12px;background:var(--check-bg,rgba(148,163,184,0.07));border:1px solid rgba(148,163,184,0.18);border-radius:10px;display:flex;flex-direction:column;gap:12px;">
@@ -296,7 +296,7 @@ export const bleedingDx: DxApproach = {
   </table>
 </div>`,
       },
-      { kind: 'step', alt: true, text: 'STEP 3 — ADVANCED / SPECIALIST TESTS' },
+      { kind: 'step', text: 'STEP 3 — ADVANCED / SPECIALIST TESTS' },
       {
         kind: 'check',
         html: `<strong>vWF antigen + collagen-binding activity</strong> (referral lab): screen Doberman, Sheltie, Scottie, Golden Retriever pre-operatively; type I, II, III differentiation.<br>
@@ -309,7 +309,7 @@ export const bleedingDx: DxApproach = {
     <strong>Tick-borne disease workup</strong>: 4Dx (Ehrlichia canis / ewingii, Anaplasma phagocytophilum / platys, Borrelia, heartworm) + Babesia PCR + region-specific (Leishmania ELISA, RMSF, leptospirosis).<br>
     <strong>Abdominal + thoracic imaging</strong>: HSA / hepatic mass, mediastinal mass, retroperitoneal haemorrhage, splenic / hepatic rupture.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 4 — TREATMENT POINTERS' },
+      { kind: 'step', text: 'STEP 4 — TREATMENT POINTERS' },
       {
         kind: 'check',
         html: `<strong>Anticoagulant rodenticide:</strong> Vitamin K1 PO 3–5 mg/kg divided BID × 28 d (2nd-generation; 14 d for 1st generation). FFP / PCC if active bleeding. Recheck PT 72 h after last dose.<br>

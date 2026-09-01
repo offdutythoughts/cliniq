@@ -28,7 +28,7 @@ export const dysphagiaDx: DxApproach = {
     <strong>Pharyngeal/cricopharyngeal:</strong> repeated swallowing attempts, gagging, coughing or nasal reflux while eating, the bolus won't clear the throat.<br>
     <strong>Oesophageal:</strong> passive regurgitation of undigested food/saliva (variable timing after eating), cervical oesophageal distension, weight loss despite a good appetite. (Ettinger Ch 47)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — SIGNALMENT, AGE & BREED' },
+        { kind: 'step', text: ' STEP 2 — SIGNALMENT, AGE & BREED' },
         {
           kind: 'check',
           html: `<strong>Young dog at weaning</strong> → congenital causes: <strong>cricopharyngeal achalasia</strong> (Cocker Spaniel, Golden Retriever), <strong>vascular ring anomaly / PRAA</strong> (German Shepherd, Irish Setter — regurgitation of solids as it starts on solid food), congenital megaoesophagus (Shar-Pei, GSD, Great Dane, Irish Setter, Labrador, Newfoundland).<br>
@@ -36,7 +36,7 @@ export const dysphagiaDx: DxApproach = {
     <strong>MG signalment</strong> is bimodal (&lt;4 yr or &gt;9 yr); Akita, GSP, Chihuahua, GSD, Golden Retriever overrepresented.<br>
     <strong>Masticatory myositis</strong> → painful/swollen then atrophied jaw muscles, inability to open the mouth. (Ettinger Ch 47)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — ONSET, COURSE & EXPOSURES' },
+        { kind: 'step', text: ' STEP 3 — ONSET, COURSE & EXPOSURES' },
         {
           kind: 'check',
           html: `<strong>Acute onset</strong> + retching + hypersalivation → suspect <strong>oesophageal foreign body</strong> (emergency).<br>
@@ -65,7 +65,7 @@ export const dysphagiaDx: DxApproach = {
           kind: 'check',
           html: `A conscious oral exam is rarely complete — <strong>examine the oral cavity under sedation/GA</strong> for dental/periodontal disease, oral masses, foreign bodies (e.g. a stick lodged across the palate), stomatitis, cleft palate, TMJ disorder and a retrobulbar abscess (pain on opening + exophthalmos). Assess salivary swellings (mucocele/sialocele) and the tonsils/pharynx. (Ettinger Ch 47)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — NEUROLOGIC EXAM (cranial nerves)' },
+        { kind: 'step', text: ' STEP 2 — NEUROLOGIC EXAM (cranial nerves)' },
         {
           kind: 'check',
           html: `Localise functional dysphagia by cranial nerve:<br>
@@ -75,12 +75,12 @@ export const dysphagiaDx: DxApproach = {
     <strong>CN XII</strong> — tongue strength/symmetry (lingual paresis).<br>
     Assess for generalised/exercise-induced weakness (MG), neck ventroflexion, and signs of LMN polyneuropathy (polyradiculoneuritis). (Ettinger Ch 47)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — MASTICATORY MUSCLES & JAW' },
+        { kind: 'step', text: ' STEP 3 — MASTICATORY MUSCLES & JAW' },
         {
           kind: 'check',
           html: `Palpate the temporal and masseter muscles for pain/swelling (acute) or atrophy (chronic). Assess the range of jaw opening — restricted, painful opening with masticatory muscle atrophy suggests <strong>masticatory myositis</strong> (confirm with the type 2M-fibre antibody). Trismus/inability to open also occurs with retrobulbar disease and tetanus. (Ettinger Ch 47)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 4 — THORACIC AUSCULTATION & GENERAL' },
+        { kind: 'step', text: ' STEP 4 — THORACIC AUSCULTATION & GENERAL' },
         {
           kind: 'check',
           html: `Auscult for crackles/increased lung sounds of <strong>aspiration pneumonia</strong> (cranioventral; the major complication). Note body condition/weight loss, cervical oesophageal distension, fever, and any systemic signs pointing to an endocrine (hypothyroid coat changes) or neuromuscular cause. (Ettinger Ch 47)`,
@@ -97,17 +97,17 @@ export const dysphagiaDx: DxApproach = {
           kind: 'check',
           html: `Take <strong>thoracic radiographs (minimum 3 views) in ALL dysphagic patients</strong> to identify <strong>megaoesophagus</strong> and <strong>aspiration pneumonia</strong> (cranioventral alveolar pattern). Aspiration is the leading lethal complication — among aspiration cases, oesophageal disease accounted for ~40% (megaoesophagus = 71% of that group) and neurologic disease ~27%. Stabilise/treat aspiration before invasive work-up. (Ettinger Ch 47, 221)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 2 — VFSS / CONTRAST SWALLOW STUDY (the key functional test)' },
+        { kind: 'step', text: 'STEP 2 — VFSS / CONTRAST SWALLOW STUDY (the key functional test)' },
         {
           kind: 'check',
           html: `The <strong>videofluoroscopic swallow study (VFSS)</strong> is the <strong>criterion standard for functional dysphagia</strong> — the free-feeding, free-standing protocol is preferred. It defines <strong>cricopharyngeal achalasia vs dyssynchrony</strong> (timing of upper-sphincter relaxation against the pharyngeal contraction — the distinction changes the surgery), detects segmental oesophageal dysmotility, the <strong>LES achalasia-like syndrome (LES-AS)</strong>, and sliding hiatal hernia better than static radiographs. A static <strong>barium/contrast oesophagram</strong> (± food) helps when fluoroscopy is unavailable, but cannot assess the dynamic phases. (Ettinger Ch 47, 221)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 3 — OESOPHAGOSCOPY' },
+        { kind: 'step', text: 'STEP 3 — OESOPHAGOSCOPY' },
         {
           kind: 'check',
           html: `<strong>Oesophagoscopy</strong> directly assesses and treats mucosal/luminal disease: <strong>oesophagitis</strong>, <strong>stricture</strong> (and balloon dilation), <strong>foreign body</strong> (retrieval), diverticulum, neoplasia and the gastro-oesophageal junction. Image (thoracic rads ± contrast) first; endoscope when a mucosal/obstructive lesion is suspected or when retrieval/dilation is planned. (Ettinger Ch 47)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 4 — TEST FOR SECONDARY / NEUROMUSCULAR CAUSES' },
+        { kind: 'step', text: 'STEP 4 — TEST FOR SECONDARY / NEUROMUSCULAR CAUSES' },
         {
           kind: 'check',
           html: `For acquired megaoesophagus or pharyngeal/oesophageal functional dysphagia, screen the secondary causes:<br>

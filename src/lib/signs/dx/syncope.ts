@@ -20,7 +20,7 @@ export const syncopeDx: DxApproach = {
           html: `• <strong>Syncope</strong> = transient loss of consciousness from cerebral hypoperfusion — BP must fall ~50% and an arrhythmia must last ~10–30 s before unconsciousness results<br>• <strong>Pre-syncope</strong> = partial LOC with brief ataxia/stumbling<br>
     <strong>Syncope vs seizure triage:</strong> use the <em>Weakness / Collapse</em> flow first if still unsure — that screen has the full feature comparison table (tone, trigger, recovery, AEDs). This workup assumes syncope is confirmed and focuses on whether the cause is <strong>cardiogenic</strong> (arrhythmia / structural) or <strong>non-cardiogenic</strong> (reflex / metabolic mimic). (Ettinger Ch 40)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 1 — TRIGGER, POSTURE & RECOVERY' },
+        { kind: 'step', text: ' STEP 1 — TRIGGER, POSTURE & RECOVERY' },
         {
           kind: 'check',
           html: `<strong>Exertional / excitement-induced collapse</strong> → structural heart disease with limited output (HCM, DCM, pulmonary hypertension, heartworm) or a tachyarrhythmia.<br>
@@ -28,7 +28,7 @@ export const syncopeDx: DxApproach = {
     <strong>Cough first, then collapse</strong> → tussive syncope (advanced airway/cardiac disease).<br>
     Note <strong>colour</strong> (cyanosis/pallor) and whether recovery was truly <strong>instant</strong> (syncope) rather than a slow post-ictal recovery. (Ettinger Ch 40)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — SIGNALMENT, MEDS & SYSTEMIC CLUES' },
+        { kind: 'step', text: ' STEP 3 — SIGNALMENT, MEDS & SYSTEMIC CLUES' },
         {
           kind: 'check',
           html: `<strong>Signalment:</strong> young Boxer → vasovagal/ARVC; small-breed dog with a murmur → MMVD ± pulmonary hypertension; large-breed dog → DCM; cat → HCM (± arterial thromboembolism).<br>
@@ -58,14 +58,14 @@ export const syncopeDx: DxApproach = {
           html: `Listen for a <strong>murmur</strong> (MMVD, dynamic LVOT obstruction in feline HCM, congenital outflow obstruction), a <strong>gallop</strong> (cardiomyopathy), and <strong>muffled heart sounds</strong> (pericardial effusion).<br>
     Assess <strong>rate & rhythm</strong> — bradycardia (AV block, sick sinus) or a fast/irregular rhythm with <strong>pulse deficits</strong> (tachyarrhythmia, AF). Note that a single in-clinic exam can be entirely normal between episodes.`,
         },
-        { kind: 'step', alt: true, text: ' STEP 2 — RIGHT-HEART & PERFUSION SIGNS' },
+        { kind: 'step', text: ' STEP 2 — RIGHT-HEART & PERFUSION SIGNS' },
         {
           kind: 'check',
           html: `<strong>Jugular distension / pulsation, ascites, weak femoral pulses, pulsus paradoxus</strong> → pericardial effusion / tamponade or right-sided failure.<br>
     <strong>Split/loud S2, right-apical murmur, exertional cyanosis</strong> → pulmonary hypertension (64% present with syncope in one study) or heartworm disease.<br>
     Assess mucous membrane colour and CRT — pallor (low output/anaemia) vs cyanosis (hypoxaemia). (Ettinger Ch 40)`,
         },
-        { kind: 'step', alt: true, text: ' STEP 3 — NEURO, RESP & METABOLIC SCREEN' },
+        { kind: 'step', text: ' STEP 3 — NEURO, RESP & METABOLIC SCREEN' },
         {
           kind: 'check',
           html: `Brief <strong>neuro exam</strong> — interictal deficits favour a structural/neurological episodic cause rather than syncope.<br>
@@ -86,7 +86,7 @@ export const syncopeDx: DxApproach = {
     Run a <strong>CBC + serum biochemistry</strong> (anaemia, organ disease) and check <strong>thyroid status</strong>.<br>
     If Addison is suspected → <strong>ACTH stimulation test</strong>. These are quick, inexpensive and treatable — don't miss them. (Ettinger Ch 40)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 2 — ECG + AMBULATORY MONITORING (the key test)' },
+        { kind: 'step', text: 'STEP 2 — ECG + AMBULATORY MONITORING (the key test)' },
         {
           kind: 'check',
           html: `<strong>A resting ECG is always indicated</strong>, but a normal resting ECG does NOT exclude an intermittent arrhythmia — arrhythmias are paroxysmal, so the diagnostic yield of a snapshot is low.<br>
@@ -98,14 +98,14 @@ export const syncopeDx: DxApproach = {
     </div>
     The goal is symptom–rhythm correlation: capture the heart rhythm <em>during</em> a spontaneous episode. (Ettinger Ch 40)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 3 — ECHOCARDIOGRAPHY + THORACIC IMAGING' },
+        { kind: 'step', text: 'STEP 3 — ECHOCARDIOGRAPHY + THORACIC IMAGING' },
         {
           kind: 'check',
           html: `<strong>Echocardiography is nearly always indicated</strong> — defines structural disease (HCM, DCM, RCM, MMVD), dynamic LVOT obstruction, pericardial effusion/tamponade, and estimates pulmonary artery pressure (pulmonary hypertension).<br>
     <strong>Thoracic radiographs</strong> — cardiomegaly, congestion, pulmonary patterns, and screening for heartworm/airway disease as a tussive-syncope substrate.<br>
     Heartworm antigen/microfilaria testing where endemic. (Ettinger Ch 40)`,
         },
-        { kind: 'step', alt: true, text: 'STEP 4 — BP, BIOMARKERS & ADJUNCTS' },
+        { kind: 'step', text: 'STEP 4 — BP, BIOMARKERS & ADJUNCTS' },
         {
           kind: 'check',
           html: `<strong>Blood pressure</strong> (Doppler/oscillometric) — hypotension supports a haemodynamic mechanism; severe hypertension exacerbates rather than causes syncope.<br>

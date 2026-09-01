@@ -35,7 +35,7 @@ export const blindEyeDx: DxApproach = {
     • Unilateral → local cause (trauma, FB, optic nerve neoplasia, single-eye glaucoma, single-side cortical lesion is rare and presents with contralateral menace deficit)<br>
     • Bilateral → systemic or central (SARDS, optic neuritis MUA, hypertension, hepatic encephalopathy, toxins, PRA, cortical disease)`,
       },
-      { kind: 'step', alt: true, text: '💊 DRUG + TOXIN HISTORY' },
+      { kind: 'step', text: '💊 DRUG + TOXIN HISTORY' },
       {
         kind: 'check',
         html: `<strong>🐱 Enrofloxacin retinal toxicity (cat):</strong> classical at &gt;5 mg/kg/day but reported even at currently-recommended dose 5 mg/kg q24h. May cause acute bilateral blindness, mydriasis, neurological signs (seizures, mentation change). Marbofloxacin and pradofloxacin have a wider safety margin but are not 100% safe — STOP fluoroquinolone immediately and switch antibiotic.<br>
@@ -45,7 +45,7 @@ export const blindEyeDx: DxApproach = {
     <strong>Hyperosmolar contrast media / metronidazole / cyclosporine:</strong> rare reports of optic / cortical signs.<br>
     <strong>Atropine / opioids:</strong> drug-induced mydriasis can be mistaken for vision loss — reassess after wash-out.`,
       },
-      { kind: 'step', alt: true, text: '🩺 SYSTEMIC / GENERAL HISTORY' },
+      { kind: 'step', text: '🩺 SYSTEMIC / GENERAL HISTORY' },
       {
         kind: 'check',
         html: `<strong>SARDS phenotype (dog):</strong> sudden bilateral blindness + recent PU/PD + polyphagia + weight gain (Cushingoid look) → ACTH stim / LDDST.<br>
@@ -57,7 +57,7 @@ export const blindEyeDx: DxApproach = {
     <strong>Hepatic disease:</strong> jaundice, PU/PD, intermittent stupor post-prandially → hepatic encephalopathy can present as cortical blindness.<br>
     <strong>Cat on long-term taurine-deficient (vegetarian / homemade) diet:</strong> central retinal degeneration (TCRD) — bilateral retinal atrophy with central hyperreflective ellipse before peripheral involvement.`,
       },
-      { kind: 'step', alt: true, text: '🐾 SIGNALMENT + BREED CLUES' },
+      { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
@@ -110,7 +110,7 @@ export const blindEyeDx: DxApproach = {
     • <strong>Owner-reported behaviours</strong>: bumping, hesitancy, stair refusal — capture before exam.<br>
     Compare each eye separately by occluding the contralateral side.`,
       },
-      { kind: 'step', alt: true, text: '🔦 STEP 2 — APPLY THE LOCALISATION TABLE' },
+      { kind: 'step', text: '🔦 STEP 2 — APPLY THE LOCALISATION TABLE' },
       {
         kind: 'check',
         html: `Once you have established blindness, the next priority is to localise the lesion using <strong>menace + dazzle + PLR</strong>:
@@ -130,7 +130,7 @@ export const blindEyeDx: DxApproach = {
     </div>
     <span style="font-size:9.5px;opacity:.85;">💡 Cortical blindness is the one pattern where <strong>both subcortical reflexes (dazzle + PLR) are preserved</strong>. SARDS uniquely preserves only <strong>blue chromatic PLR</strong> (melanopsin RGCs spared); optic neuritis abolishes both red and blue.</span>`,
       },
-      { kind: 'step', alt: true, text: '👁️ STEP 3 — STRUCTURED OCULAR EXAM (outside → in)' },
+      { kind: 'step', text: '👁️ STEP 3 — STRUCTURED OCULAR EXAM (outside → in)' },
       {
         kind: 'check',
         html: `<strong>1. Globe position + size:</strong> buphthalmos (chronic glaucoma — blind painful), microphthalmos (congenital), exophthalmos (orbital), enophthalmos (Horner / pain / dehydration).<br>
@@ -142,7 +142,7 @@ export const blindEyeDx: DxApproach = {
     <strong>7. Vitreous:</strong> haemorrhage, asteroid hyalosis, debris (uveitis), retinal detachment leaflets.<br>
     <strong>8. Fundus — by lesion pattern (see table below).</strong>`,
       },
-      { kind: 'step', alt: true, text: '🔬 STEP 4 — FUNDIC PATTERN RECOGNITION' },
+      { kind: 'step', text: '🔬 STEP 4 — FUNDIC PATTERN RECOGNITION' },
       {
         kind: 'check',
         html: `<strong>Dilate with tropicamide 1% q15 min × 2 doses (after IOP, never if narrow ICA suspected).</strong>
@@ -161,7 +161,7 @@ export const blindEyeDx: DxApproach = {
       <div>Acute bilateral retinopathy in a cat on fluoroquinolone</div><div style="color:var(--tone-danger-title);">Enrofloxacin retinal toxicity (STOP DRUG)</div>
     </div>`,
       },
-      { kind: 'step', alt: true, text: '🧠 STEP 5 — NEUROLOGICAL EXAM (forebrain vs structural)' },
+      { kind: 'step', text: '🧠 STEP 5 — NEUROLOGICAL EXAM (forebrain vs structural)' },
       {
         kind: 'check',
         html: `Always perform a neuro exam in any animal with bilateral vision loss and apparent forebrain signs:<br>
@@ -191,7 +191,7 @@ export const blindEyeDx: DxApproach = {
     5. <strong>Trauma / head injury</strong> — anisocoria + obtundation → mannitol 0.5–1 g/kg IV slow, emergent imaging, neurosurgery referral.<br>
     6. <strong>Glucose stick</strong> — severe hypoglycaemia in a small / young dog can mimic cortical blindness.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 2 — STANDARD OPHTHALMIC TESTS' },
+      { kind: 'step', text: 'STEP 2 — STANDARD OPHTHALMIC TESTS' },
       {
         kind: 'check',
         html: `<strong>Schirmer Tear Test</strong> (before any drops): low STT + bilateral mydriasis + dry mucous membranes + autonomic signs = dysautonomia → bilateral cortical-like blindness in advanced cases.<br>
@@ -201,7 +201,7 @@ export const blindEyeDx: DxApproach = {
     <strong>Mydriatic challenge (tropicamide 1%)</strong>: complete failure to dilate suggests posterior synechiae, iris atrophy, or pharmacological mydriasis already present.<br>
     <strong>Direct + indirect ophthalmoscopy</strong>: indirect first for retinal overview, direct for optic disc detail. Green filter helps distinguish pigment from haemorrhage; blue filter for fluorescein.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 3 — CHROMATIC PLR + ERG (when fundus is normal but pupils are dilated and dazzle absent)' },
+      { kind: 'step', text: 'STEP 3 — CHROMATIC PLR + ERG (when fundus is normal but pupils are dilated and dazzle absent)' },
       {
         kind: 'check',
         html: `<strong>Chromatic PLR</strong> uses a handheld device or commercial torch with separate red and blue LEDs (e.g. Melan-100, BIOPAC chromatic):<br>
@@ -220,7 +220,7 @@ export const blindEyeDx: DxApproach = {
     • Severely reduced ERG + tapetal hyperreflectivity → <strong>PRA / retinal degeneration</strong>.<br>
     Refer for ERG if non-fundoscopic causes need to be distinguished.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 4 — SYSTEMIC + INFECTIOUS WORKUP' },
+      { kind: 'step', text: 'STEP 4 — SYSTEMIC + INFECTIOUS WORKUP' },
       {
         kind: 'check',
         html: `<strong>Always:</strong> CBC, biochemistry, urinalysis, BP (≥3 calm readings). Faecal if indicated.<br><br>
@@ -234,7 +234,7 @@ export const blindEyeDx: DxApproach = {
     <strong>Toxicology:</strong> blood lead, drug levels where applicable, owner-supplied product/dose.<br><br>
     <strong>Coagulation:</strong> PT/aPTT, platelet count, BMBT if hyphaema or vitreal haemorrhage.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 5 — ADVANCED IMAGING' },
+      { kind: 'step', text: 'STEP 5 — ADVANCED IMAGING' },
       {
         kind: 'check',
         html: `<strong>Ocular ultrasound (10–20 MHz)</strong> — indispensable when fundus is not visible (corneal oedema, mature cataract, hyphaema):<br>

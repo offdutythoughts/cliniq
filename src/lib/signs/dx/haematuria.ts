@@ -35,7 +35,7 @@ export const haematuriaDx: DxApproach = {
     • PU/PD + haematuria → pyelonephritis, renal neoplasia, hypercalcaemia with urolithiasis, hyperadrenocorticism with UTI.<br><br>
     <strong>Obstruction red flags:</strong> straining + no urine produced + abdominal pain + collapse / vomiting → urethral obstruction (cat plug; male dog urolith) — emergency.`,
       },
-      { kind: 'step', alt: true, text: '💊 DRUG / TOXIN / TRAUMA HISTORY' },
+      { kind: 'step', text: '💊 DRUG / TOXIN / TRAUMA HISTORY' },
       {
         kind: 'check',
         html: `<strong>Bleeding-related:</strong><br>
@@ -50,7 +50,7 @@ export const haematuriaDx: DxApproach = {
     <strong>Trauma:</strong> RTA, falls, kicks → renal contusion / rupture, bladder rupture, urethral tear<br>
     <strong>Recent procedures:</strong> cystocentesis (mild traumatic haematuria expected ~24 h), catheterisation, recent urinary surgery`,
       },
-      { kind: 'step', alt: true, text: '🩺 SYSTEMIC HISTORY' },
+      { kind: 'step', text: '🩺 SYSTEMIC HISTORY' },
       {
         kind: 'check',
         html: `<strong>PU/PD + haematuria:</strong> hypercalcaemia (lymphoma, anal sac adenocarcinoma, hyperparathyroidism — increases urolithiasis risk), hyperadrenocorticism (calcium oxalate urolithiasis, UTI), CKD with concurrent UTI.<br>
@@ -62,7 +62,7 @@ export const haematuriaDx: DxApproach = {
     <strong>Intact female with anorexia + vulvar discharge ± PU/PD ± vomiting:</strong> pyometra — urgent surgical / medical management.<br>
     <strong>Intact male with tenesmus + dysuria + dyschezia:</strong> prostatic disease — DRE + ultrasound.`,
       },
-      { kind: 'step', alt: true, text: '🐾 SIGNALMENT + BREED CLUES' },
+      { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
@@ -113,7 +113,7 @@ export const haematuriaDx: DxApproach = {
     • <strong>Mucous membranes</strong>: pale (blood loss, haemolysis), petechiae (thrombocytopenia, vasculitis), icteric (haemolysis).<br>
     • <strong>Lameness / muscle pain</strong>: rhabdomyolysis → myoglobinuria; ITP-related haemarthrosis.`,
       },
-      { kind: 'step', alt: true, text: '👋 STEP 2 — TARGETED PHYSICAL EXAM' },
+      { kind: 'step', text: '👋 STEP 2 — TARGETED PHYSICAL EXAM' },
       {
         kind: 'check',
         html: `<strong>Abdominal palpation:</strong>
@@ -132,7 +132,7 @@ export const haematuriaDx: DxApproach = {
     <strong>Skin / mucosa for bleeding diathesis:</strong> petechiae (thrombocytopenia), ecchymoses (clotting factor deficiency), epistaxis, melaena, gum bleeding.<br>
     <strong>Joint palpation:</strong> haemarthrosis in factor deficiencies; polyarthritis in vasculitis / SLE.`,
       },
-      { kind: 'step', alt: true, text: '🔍 STEP 3 — PATTERN RECOGNITION' },
+      { kind: 'step', text: '🔍 STEP 3 — PATTERN RECOGNITION' },
       {
         kind: 'check',
         html: `<div style="display:grid;grid-template-columns:1fr 1.2fr;gap:5px 8px;font-size:10px;line-height:1.45;">
@@ -169,7 +169,7 @@ export const haematuriaDx: DxApproach = {
     4. <strong>Haemolytic crisis</strong> (haemoglobinuria + severe anaemia): CBC + smear, agglutination, Coombs, transfusion if required.<br>
     5. <strong>Bladder rupture from trauma</strong>: abdominal effusion creat &gt; 2× serum creat — surgical exploration.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 2 — URINALYSIS (CYSTOCENTESIS WHEREVER POSSIBLE)' },
+      { kind: 'step', text: 'STEP 2 — URINALYSIS (CYSTOCENTESIS WHEREVER POSSIBLE)' },
       {
         kind: 'check',
         html: `<strong>Cystocentesis</strong> is the gold-standard sample for culture and to avoid contamination from urethra / prepuce / vagina. Avoid only if obstructed bladder very distended (rupture risk in cat) or coagulopathy.<br><br>
@@ -189,7 +189,7 @@ export const haematuriaDx: DxApproach = {
     <strong>UPC</strong> (after sediment is bland — proteinuria interpretation requires inactive sediment): glomerular vs tubular protein loss.<br>
     <strong>Urine culture + sensitivity</strong> on every haematuria patient — submit even with clinically obvious cystitis (resistance is rising).`,
       },
-      { kind: 'step', alt: true, text: 'STEP 3 — SYSTEMIC WORKUP' },
+      { kind: 'step', text: 'STEP 3 — SYSTEMIC WORKUP' },
       {
         kind: 'check',
         html: `<strong>CBC:</strong> anaemia (chronic blood loss vs haemolysis), leucocytosis (UTI, prostatitis, pyelonephritis, pyometra), thrombocytopenia (IMTP, ehrlichia, DIC).<br>
@@ -200,7 +200,7 @@ export const haematuriaDx: DxApproach = {
     <strong>Endocrine / metabolic:</strong> if PU/PD or recurrent UTI — HAC, DM, hyperthyroidism (cat), hypercalcaemia workup.<br>
     <strong>Faecal occult blood</strong> if concurrent GI signs (HSA, GI ulcer with haemoglobin → false-positive urine dipstick if marked).`,
       },
-      { kind: 'step', alt: true, text: 'STEP 4 — IMAGING + ENDOSCOPY' },
+      { kind: 'step', text: 'STEP 4 — IMAGING + ENDOSCOPY' },
       {
         kind: 'check',
         html: `<strong>Abdominal ultrasound</strong> — first-line imaging for haematuria:
@@ -220,7 +220,7 @@ export const haematuriaDx: DxApproach = {
     <strong>BRAF mutation testing</strong> (CADET BRAF, voided urine PCR): non-invasive screen for canine urothelial carcinoma — sensitivity ~80–85% (CADET BRAF), up to ~95% with CADET BRAF-Plus reflex panel; specificity &gt;99% (a positive test is highly confirmatory; a negative does not rule out TCC).<br>
     <strong>Vaginoscopy</strong>: persistent vaginal haematuria in intact / spayed female with no other source.`,
       },
-      { kind: 'step', alt: true, text: 'STEP 5 — SPECIFIC TREATMENT POINTERS' },
+      { kind: 'step', text: 'STEP 5 — SPECIFIC TREATMENT POINTERS' },
       {
         kind: 'check',
         html: `• <strong>Bacterial cystitis</strong>: culture-driven antibiotic for 3–7 days (uncomplicated) or 4 wks (complicated — pyelonephritis, prostatitis, structural anomaly). Sub-clinical bacteriuria often does not need treatment in dogs / cats per ISCAID 2019.<br>

@@ -24,7 +24,7 @@ export const seizuresDx: DxApproach = {
     <strong style="color:var(--tone-green-fg);">Postictal recovery:</strong> disorientation, transient blindness, ataxia, polyphagia — normally minutes to a few hours. <strong>Prolonged (&gt;24h) or not improving = structural.</strong>`,
       },
 
-      { kind: 'step', alt: true, text: '⏱ DURATION · CLUSTERS · AGE OF ONSET' },
+      { kind: 'step', text: '⏱ DURATION · CLUSTERS · AGE OF ONSET' },
       {
         kind: 'check',
         html: `<strong style="color:var(--tone-danger-fg);">&gt;5 min = status epilepticus</strong> — treat now, do not wait. <strong style="color:var(--tone-danger-fg);">≥2 seizures/24h = cluster</strong> — high SE risk, treat aggressively.<br><br>
@@ -35,7 +35,7 @@ export const seizuresDx: DxApproach = {
     <strong>Interictal behaviour:</strong> completely normal between episodes? Head pressing, circling, personality or vision change → structural. Frequency trend: stable, increasing, or decreasing?`,
       },
 
-      { kind: 'step', alt: true, text: '💊 TOXIN · MEDICATION · AED HISTORY' },
+      { kind: 'step', text: '💊 TOXIN · MEDICATION · AED HISTORY' },
       {
         kind: 'check',
         html: `Three questions, every seizure patient:<br>
@@ -53,7 +53,7 @@ export const seizuresDx: DxApproach = {
         ],
       },
 
-      { kind: 'step', alt: true, text: '🐾 SIGNALMENT' },
+      { kind: 'step', text: '🐾 SIGNALMENT' },
       {
         kind: 'accordion',
         items: [
@@ -105,7 +105,7 @@ Small and toy breeds, onset &lt;1 year, signs often post-prandial. Check fasted 
     Drug dosing → see <strong>PROT-SEIZ</strong>.`,
       },
 
-      { kind: 'step', alt: true, text: '🧠 POSTICTAL vs INTERICTAL' },
+      { kind: 'step', text: '🧠 POSTICTAL vs INTERICTAL' },
       {
         kind: 'row',
         cols: 2,
@@ -131,30 +131,26 @@ Small and toy breeds, onset &lt;1 year, signs often post-prandial. Check fasted 
         ],
       },
 
-      { kind: 'step', alt: true, text: '🩺 NEURO FINDING → WHAT IT MEANS' },
+      { kind: 'step', text: '🩺 NEURO FINDING → WHAT IT MEANS' },
       {
-        kind: 'comparisonTable',
-        fontSize: '9.5px',
-        scrollable: false,
-        cols: [
-          { label: 'Finding', isLabel: true, width: '34%' },
-          { label: 'Implication', color: '#fca5a5', width: '38%' },
-          { label: 'Action', color: '#94a3b8' },
-        ],
+        kind: 'gridTable',
+        cols: '0.34fr 0.38fr 0.28fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Implication', tone: 'danger' }, { text: 'Action', tone: 'teal' }],
         rows: [
-          { kind: 'section', label: 'Lateralising — a focal lesion until proven otherwise' },
-          { kind: 'row', cells: ['<strong>Unilateral CP deficit</strong> · asymmetric hopping', 'Forebrain lesion, <strong>ipsilateral</strong> to the deficit', 'MRI brain'] },
-          { kind: 'row', cells: ['<strong>Unilateral menace loss</strong> (PLR intact)', 'Forebrain lesion, <strong>contralateral</strong> to the loss', 'MRI brain'] },
-          { kind: 'row', cells: ['<strong>Circling · head turn</strong>', 'Forebrain, ipsilateral to the turn', 'MRI brain'] },
-          { kind: 'row', cells: ['<strong>Hemiparesis</strong>', 'Contralateral forebrain, or brainstem', 'MRI brain'] },
-          { kind: 'section', label: 'Raised ICP / herniation — emergency' },
-          { kind: 'row', cells: ['<strong>Fixed dilated pupil</strong>', 'CN III compression / brainstem herniation', 'Mannitol or hypertonic saline — PROT-SEIZ'] },
-          { kind: 'row', cells: ['<strong>Head pressing</strong> · deteriorating mentation', 'Raised ICP (or hepatic encephalopathy)', 'Treat ICP; check ammonia / bile acids'] },
-          { kind: 'row', cells: ['<strong>Papilloedema</strong> on fundoscopy', 'Raised ICP', 'Treat before GA for imaging'] },
-          { kind: 'section', label: 'Points to the underlying cause' },
-          { kind: 'row', cells: ['<strong>Chorioretinitis</strong>', 'Infectious / immune — Toxo, CDV, FIP, Crypto', 'Serology / PCR + CSF'] },
-          { kind: 'row', cells: ['<strong>Retinal haemorrhage or detachment</strong>', 'Systemic hypertension', 'Measure BP; T4 in cats &gt;8yr'] },
-          { kind: 'row', cells: ['<strong>Normal, symmetric exam</strong>', 'Idiopathic or reactive still possible', 'Metabolic database first'] },
+          { section: 'Lateralising — a focal lesion until proven otherwise' },
+          ['<strong>Unilateral CP deficit</strong> · asymmetric hopping', { text: 'Forebrain lesion, <strong>ipsilateral</strong> to the deficit', tone: 'danger' }, { text: 'MRI brain', tone: 'teal' }],
+          ['<strong>Unilateral menace loss</strong> (PLR intact)', { text: 'Forebrain lesion, <strong>contralateral</strong> to the loss', tone: 'danger' }, { text: 'MRI brain', tone: 'teal' }],
+          ['<strong>Circling · head turn</strong>', { text: 'Forebrain, ipsilateral to the turn', tone: 'danger' }, { text: 'MRI brain', tone: 'teal' }],
+          ['<strong>Hemiparesis</strong>', { text: 'Contralateral forebrain, or brainstem', tone: 'danger' }, { text: 'MRI brain', tone: 'teal' }],
+          { section: 'Raised ICP / herniation — emergency' },
+          ['<strong>Fixed dilated pupil</strong>', { text: 'CN III compression / brainstem herniation', tone: 'danger' }, { text: 'Mannitol or hypertonic saline — PROT-SEIZ', tone: 'teal' }],
+          ['<strong>Head pressing</strong> · deteriorating mentation', { text: 'Raised ICP (or hepatic encephalopathy)', tone: 'danger' }, { text: 'Treat ICP; check ammonia / bile acids', tone: 'teal' }],
+          ['<strong>Papilloedema</strong> on fundoscopy', { text: 'Raised ICP', tone: 'danger' }, { text: 'Treat before GA for imaging', tone: 'teal' }],
+          { section: 'Points to the underlying cause' },
+          ['<strong>Chorioretinitis</strong>', { text: 'Infectious / immune — Toxo, CDV, FIP, Crypto', tone: 'danger' }, { text: 'Serology / PCR + CSF', tone: 'teal' }],
+          ['<strong>Retinal haemorrhage or detachment</strong>', { text: 'Systemic hypertension', tone: 'danger' }, { text: 'Measure BP; T4 in cats &gt;8 yr', tone: 'teal' }],
+          ['<strong>Normal, symmetric exam</strong>', { text: 'Idiopathic or reactive still possible', tone: 'danger' }, { text: 'Metabolic database first', tone: 'teal' }],
         ],
       },
       {
@@ -162,7 +158,7 @@ Small and toy breeds, onset &lt;1 year, signs often post-prandial. Check fasted 
         html: `Mentation grading: alert → obtunded → stuporous → comatose. Record it at every recheck — the <em>trend</em> is what matters, not the single value.`,
       },
 
-      { kind: 'step', alt: true, text: '🔍 TARGETED PHYSICAL EXAM' },
+      { kind: 'step', text: '🔍 TARGETED PHYSICAL EXAM' },
       {
         kind: 'check',
         html: `Only four things on the general exam change the seizure workup:<br><br>
@@ -172,7 +168,7 @@ Small and toy breeds, onset &lt;1 year, signs often post-prandial. Check fasted 
     <strong style="color:var(--tone-green-fg);">Liver + body size</strong> — small liver, poor growth, copper-coloured irises in a toy breed &lt;1yr → PSS.`,
       },
 
-      { kind: 'step', alt: true, text: '📖 CRANIAL NERVE EXAM — TECHNIQUE' },
+      { kind: 'step', text: '📖 CRANIAL NERVE EXAM — TECHNIQUE' },
       CN_EXAM_ACCORDION,
     ],
     after: [
@@ -203,7 +199,7 @@ Small and toy breeds, onset &lt;1 year, signs often post-prandial. Check fasted 
         ],
       },
 
-      { kind: 'step', alt: true, text: 'TIER 1 — MINIMUM DATABASE (all seizure patients)' },
+      { kind: 'step', text: 'TIER 1 — MINIMUM DATABASE (all seizure patients)' },
       {
         kind: 'html',
         html: `<div class="dx-row c2">
@@ -220,23 +216,19 @@ Small and toy breeds, onset &lt;1 year, signs often post-prandial. Check fasted 
 
       { kind: 'branch', text: 'TIER 1 ABNORMAL → REACTIVE' },
       {
-        kind: 'comparisonTable',
-        fontSize: '9.5px',
-        scrollable: false,
-        cols: [
-          { label: 'Finding', isLabel: true, width: '30%' },
-          { label: 'Diagnosis', color: '#fca5a5', width: '30%' },
-          { label: 'Next step', color: '#94a3b8' },
-        ],
+        kind: 'gridTable',
+        cols: '0.3fr 0.3fr 0.4fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Diagnosis', tone: 'danger' }, { text: 'Next step', tone: 'teal' }],
         rows: [
-          { kind: 'row', cells: ['<strong>BG &lt;3.5 mmol/L</strong>', 'Hypoglycaemia', 'Dextrose now → fasted insulin:glucose (insulinoma) · PSS · Addison\'s · hepatic failure'] },
-          { kind: 'row', cells: ['<strong>↑ bile acids / ↑ ammonia</strong>', 'Hepatic encephalopathy', 'Abdominal US ± scintigraphy (PSS); liver biopsy if diffuse'] },
-          { kind: 'row', cells: ['<strong>iCa &lt;1.0 mmol/L</strong>', 'Hypocalcaemia', 'Ca gluconate IV with ECG · eclampsia? hypoparathyroidism? ethylene glycol?'] },
-          { kind: 'row', cells: ['<strong>Na &lt;120 or &gt;170 mmol/L</strong>', 'Electrolyte encephalopathy', "Na:K &lt;27 → Addison's · DI · SIADH — correct slowly"] },
-          { kind: 'row', cells: ['<strong>Marked ↑ BUN / creatinine</strong>', 'Uraemic encephalopathy', 'Fluids, phosphate binders, treat the renal cause'] },
-          { kind: 'row', cells: ['<strong>PCV &gt;60%</strong>', 'Polycythaemia / hyperviscosity', 'Phlebotomy · check SpO₂, EPO'] },
-          { kind: 'row', cells: ['<strong>Hypertension + retinal change</strong>', 'Hypertensive encephalopathy', 'Amlodipine · T4 in cats · investigate CKD'] },
-          { kind: 'row', cells: ['<strong>Toxin / drug history</strong>', 'Intoxication', 'Decontaminate if &lt;2h · toxicology · specific antidote'] },
+          ['<strong>BG &lt;3.5 mmol/L</strong>', { text: 'Hypoglycaemia', tone: 'danger' }, { text: 'Dextrose now → fasted insulin:glucose (insulinoma) · PSS · Addison\'s · hepatic failure', tone: 'teal' }],
+          ['<strong>↑ bile acids / ↑ ammonia</strong>', { text: 'Hepatic encephalopathy', tone: 'danger' }, { text: 'Abdominal US ± scintigraphy (PSS); liver biopsy if diffuse', tone: 'teal' }],
+          ['<strong>iCa &lt;1.0 mmol/L</strong>', { text: 'Hypocalcaemia', tone: 'danger' }, { text: 'Ca gluconate IV with ECG · eclampsia? hypoparathyroidism? ethylene glycol?', tone: 'teal' }],
+          ['<strong>Na &lt;120 or &gt;170 mmol/L</strong>', { text: 'Electrolyte encephalopathy', tone: 'danger' }, { text: "Na:K &lt;27 → Addison's · DI · SIADH — correct slowly", tone: 'teal' }],
+          ['<strong>Marked ↑ BUN / creatinine</strong>', { text: 'Uraemic encephalopathy', tone: 'danger' }, { text: 'Fluids, phosphate binders, treat the renal cause', tone: 'teal' }],
+          ['<strong>PCV &gt;60%</strong>', { text: 'Polycythaemia / hyperviscosity', tone: 'danger' }, { text: 'Phlebotomy · check SpO₂, EPO', tone: 'teal' }],
+          ['<strong>Hypertension + retinal change</strong>', { text: 'Hypertensive encephalopathy', tone: 'danger' }, { text: 'Amlodipine · T4 in cats · investigate CKD', tone: 'teal' }],
+          ['<strong>Toxin / drug history</strong>', { text: 'Intoxication', tone: 'danger' }, { text: 'Decontaminate if &lt;2 h · toxicology · specific antidote', tone: 'teal' }],
         ],
       },
       {
@@ -262,7 +254,7 @@ Small and toy breeds, onset &lt;1 year, signs often post-prandial. Check fasted 
     None of these, 6mo–6yr, normal exam and normal bloods → idiopathic epilepsy is reasonable without MRI, but re-examine at every recheck.`,
       },
 
-      { kind: 'step', alt: true, text: 'TIER 2 — MRI + CSF' },
+      { kind: 'step', text: 'TIER 2 — MRI + CSF' },
       {
         kind: 'row',
         cols: 2,
@@ -279,21 +271,17 @@ Small and toy breeds, onset &lt;1 year, signs often post-prandial. Check fasted 
       },
       { kind: 'branch', text: 'MRI / CSF RESULTS' },
       {
-        kind: 'comparisonTable',
-        fontSize: '9.5px',
-        scrollable: false,
-        cols: [
-          { label: 'Result', isLabel: true, width: '34%' },
-          { label: 'Diagnosis', color: '#fca5a5', width: '30%' },
-          { label: 'Next step', color: '#94a3b8' },
-        ],
+        kind: 'gridTable',
+        cols: '0.34fr 0.3fr 0.36fr',
+        dividers: true,
+        headers: ['Result', { text: 'Diagnosis', tone: 'danger' }, { text: 'Next step', tone: 'teal' }],
         rows: [
-          { kind: 'row', cells: ['<strong>Extra-axial, contrast-enhancing mass</strong>', 'Meningioma', 'Older cats · dolichocephalic dogs — surgical candidate'] },
-          { kind: 'row', cells: ['<strong>Intra-axial mass + peri-lesional oedema</strong>', 'Glioma', 'Brachycephalics · older dogs — RT / palliation'] },
-          { kind: 'row', cells: ['<strong>↑ TNCC + ↑ protein</strong>', 'MUO or infectious encephalitis', 'Serology / PCR: Toxo, Neospora, CDV, Crypto, FIP, Ehrlichia'] },
-          { kind: 'row', cells: ['<strong>Vascular-territory lesion, peracute</strong>', 'CVA (stroke)', 'Hunt the cause: BP, T4 (cats), cardiac, coagulation'] },
-          { kind: 'row', cells: ['<strong>Multifocal T2 lesions, eosinophilic CSF</strong>', 'Eosinophilic meningoencephalitis', 'Parasitic / fungal / idiopathic'] },
-          { kind: 'row', cells: ['<strong>MRI and CSF both normal</strong>', '<strong>Idiopathic epilepsy</strong>', 'Diagnosis of exclusion — requires 6mo–6yr onset + normal bloods + normal interictal exam'] },
+          ['<strong>Extra-axial, contrast-enhancing mass</strong>', { text: 'Meningioma', tone: 'danger' }, { text: 'Older cats · dolichocephalic dogs — surgical candidate', tone: 'teal' }],
+          ['<strong>Intra-axial mass + peri-lesional oedema</strong>', { text: 'Glioma', tone: 'danger' }, { text: 'Brachycephalics · older dogs — RT / palliation', tone: 'teal' }],
+          ['<strong>↑ TNCC + ↑ protein</strong>', { text: 'MUO or infectious encephalitis', tone: 'danger' }, { text: 'Serology / PCR: Toxo, Neospora, CDV, Crypto, FIP, Ehrlichia', tone: 'teal' }],
+          ['<strong>Vascular-territory lesion, peracute</strong>', { text: 'CVA (stroke)', tone: 'danger' }, { text: 'Hunt the cause: BP, T4 (cats), cardiac, coagulation', tone: 'teal' }],
+          ['<strong>Multifocal T2 lesions, eosinophilic CSF</strong>', { text: 'Eosinophilic meningoencephalitis', tone: 'danger' }, { text: 'Parasitic / fungal / idiopathic', tone: 'teal' }],
+          ['<strong>MRI and CSF both normal</strong>', { text: '<strong>Idiopathic epilepsy</strong>', tone: 'danger' }, { text: 'Diagnosis of exclusion — 6 mo–6 yr onset + normal bloods + normal interictal exam', tone: 'teal' }],
         ],
       },
       {

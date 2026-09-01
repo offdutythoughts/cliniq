@@ -8,51 +8,31 @@
 // vertical spine of DxBlocks inside `.dx-wrap` (uniform `.dx-arrow` connectors),
 // plus optional trailing boxes rendered OUTSIDE the wrap (`after`).
 
-import type { Tone, LabeledLink } from './flowTypes'
+import type { Tone, LabeledLink, TableCell, TableRow } from './flowTypes'
 
 /** One `.dx-test` card inside a `row`. `style` is a raw inline-style string
  *  appended verbatim (the legacy cards carry bespoke align/size/accent styles);
  *  `html` is the card body (may contain <strong>/<br>/nested markup). */
 export type DxCard = { html: string; style?: string }
 
-// ── comparisonTable block types ───────────────────────────────────────────────
-
-/** One column of a comparison table. `color` is applied to the header text and
- *  to all data cells in the column (unless a cell overrides with `dim`).
- *  Set `isLabel` for the row-label column: header gets `var(--gray)` and cells
- *  get `var(--white)` bold, regardless of `color`. */
-export type CompTableCol = {
-  label: string
-  color?: string    // CSS color for header text + cell text
-  width?: string    // CSS width e.g. '28%'
-  isLabel?: boolean // first-column "finding" treatment (white bold cells, gray header)
-}
-
-/** A full-width section-separator row (spans all columns). Renders as a small
- *  uppercase label, visually grouping the rows that follow it. */
-export type CompTableSection = { kind: 'section'; label: string }
-
-/** A single data cell. Pass a plain string for the common case, or an object
- *  to set `dim: true` which renders the cell in `var(--gray)` instead of the
- *  column color (use for "Normal / not affected" cells in localisation tables). */
-export type CompTableCell = string | { html: string; dim?: boolean }
-
-/** A data row in a comparison table; `cells` aligns 1-to-1 with `cols`. */
-export type CompTableDataRow = { kind: 'row'; cells: CompTableCell[] }
-
-/** A structured comparison / localisation table — replaces the `kind: 'html'`
- *  raw-table escape hatch for columnar differential/localisation data.
- *  `scrollable` wraps the table in `overflow-x:auto` (default `true`).
- *  `minWidth` sets the table's minimum width for horizontal scroll (e.g. `'560px'`).
- *  `fontSize` defaults to `'9px'`. `label` is an optional teal section label. */
-export type ComparisonTableBlock = {
-  kind: 'comparisonTable'
-  cols: CompTableCol[]
-  rows: (CompTableSection | CompTableDataRow)[]
+/** The compact CSS-grid comparison table shared with the flowcharts (flow
+ *  `kind:'table'`) — left-aligned cells coloured by `tone`, no cell borders or
+ *  padding, so it stays readable at phone widths. The single table block for dx
+ *  views. `cols` is a CSS grid-template-columns string. */
+export type DxGridTableBlock = {
+  kind: 'gridTable'
+  cols: string
+  /** Small teal caption above the table (e.g. 'Neurological Localisation'). */
   label?: string
+  headers: TableCell[]
+  rows: TableRow[]
+  dividers?: boolean
+  scroll?: boolean
+  minWidth?: number
   fontSize?: string
-  scrollable?: boolean
-  minWidth?: string
+  /** margin-top (px) — the spine arrow is usually suppressed above a table, so
+   *  this is what keeps it off the block above. Defaults to 10. */
+  gap?: number
 }
 
 /** Arrow-spine control common to every block. The renderer draws a `.dx-arrow`
@@ -64,9 +44,10 @@ type DxArrowCtl = { noArrowAfter?: boolean }
 export type DxBlock = DxArrowCtl & (
   /** `.dx-branch` — a goal / decision header box. */
   | { kind: 'branch'; text: string }
-  /** `.dx-step` step header. `alt` selects the alternating colour; `tone` paints
-   *  a coloured intro step (e.g. teal "complete PE", red "STABILISE FIRST"). */
-  | { kind: 'step'; text: string; alt?: boolean; tone?: Tone }
+  /** `.dx-step` step header. `tone` paints a coloured intro step (e.g. teal
+   *  "complete PE", red "STABILISE FIRST"); otherwise every header is the same
+   *  teal (the old `alt` alternation carried no meaning and was removed). */
+  | { kind: 'step'; text: string; tone?: Tone }
   /** `.dx-check` — an explanation box (html body). `style` appends a raw inline
    *  style to the box (a few checks carry e.g. `font-size:10.5px;`). */
   | { kind: 'check'; html: string; style?: string }
@@ -88,9 +69,8 @@ export type DxBlock = DxArrowCtl & (
    *  html body that expands on tap. Rendered as native `<details>/<summary>`
    *  (no RichText boundary — body is plain JSX via RichText component). */
   | { kind: 'accordion'; items: { title: string; html: string }[]; cols?: number }
-  /** Structured comparison / localisation table (typed replacement for `kind: 'html'`
-   *  raw tables). Column headers are colour-coded; rows may include section separators. */
-  | ComparisonTableBlock
+  /** Compact grid comparison table (same renderer as the flowchart tables). */
+  | DxGridTableBlock
   /** Escape hatch for genuinely bespoke markup (e.g. the seizures tier tree). */
   | { kind: 'html'; html: string }
   /** The "For qualified veterinary professionals only." footer. */
