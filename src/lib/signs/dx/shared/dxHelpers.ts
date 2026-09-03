@@ -11,14 +11,17 @@ import type { DxBlock } from '../../dxTypes'
  *
  * ```ts
  * blocks: [
- *   ...stepPair(1, 'MINIMUM DATABASE', `<strong>CBC…</strong>`),
- *   ...stepPair(2, 'SPINAL RADIOGRAPHS', `Survey <strong>lateral…`),
+ *   ...stepPair(1, 'MINIMUM DATABASE', `<strong>CBC…</strong>`, '🧪'),
+ *   ...stepPair(2, 'SPINAL RADIOGRAPHS', `Survey <strong>lateral…`, '📊'),
  * ]
  * ```
+ *
+ * The optional `icon` sits ahead of the number (`🧪 STEP 1 — …`), matching the
+ * hand-authored headers.
  */
-export function stepPair(n: number, title: string, html: string): [DxBlock, DxBlock] {
+export function stepPair(n: number, title: string, html: string, icon?: string): [DxBlock, DxBlock] {
   return [
-    { kind: 'step', text: `STEP ${n} — ${title}` },
+    { kind: 'step', text: `${icon ? `${icon} ` : ''}STEP ${n} — ${title}` },
     { kind: 'check', html },
   ]
 }
