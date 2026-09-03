@@ -35,6 +35,41 @@ export type DxGridTableBlock = {
   gap?: number
 }
 
+/** One breed → clue entry inside a `breedClues` block. `breeds` are the chip
+ *  labels the reader picks from; a breed may appear in several entries (Cocker
+ *  is both a glaucoma and a cataract breed) and every match is shown. */
+export type BreedClue = {
+  breeds: string[]
+  /** The clue body (inline HTML allowed). */
+  html: string
+  tone?: Tone
+  /** Entries keyed on something other than a breed ("Older intact male",
+   *  "Outdoor cat", "FeLV positive") — chipped in their own section so the
+   *  breed list stays a breed list. */
+  group?: 'signalment'
+}
+
+/** Interactive breed / signalment picker. Replaces the two-column wall of
+ *  breed→clue text: the reader picks a species, then a breed, and only the
+ *  matching clues render ("Show all" restores the full list). */
+export type DxBreedCluesBlock = {
+  kind: 'breedClues'
+  dog?: BreedClue[]
+  cat?: BreedClue[]
+  /** Panel heading. Defaults to "Breed & signalment clues". */
+  title?: string
+}
+
+/** Canine-vs-feline comparison, one card per feature: the feature is named
+ *  once, then the dog and cat lines sit under it. Replaces the paired-column
+ *  grid that repeated the feature name in both cells. */
+export type DxSpeciesDiffBlock = {
+  kind: 'speciesDiff'
+  title?: string
+  rows: { feature: string; dog: string; cat: string }[]
+  gap?: number
+}
+
 /** Arrow-spine control common to every block. The renderer draws a `.dx-arrow`
  *  between consecutive blocks inside `.dx-wrap`; set `noArrowAfter` to suppress
  *  the connector after this block (the legacy `.dx-arrow` placement is
@@ -71,6 +106,10 @@ export type DxBlock = DxArrowCtl & (
   | { kind: 'accordion'; items: { title: string; html: string }[]; cols?: number }
   /** Compact grid comparison table (same renderer as the flowchart tables). */
   | DxGridTableBlock
+  /** Breed / signalment picker (see DxBreedCluesBlock). */
+  | DxBreedCluesBlock
+  /** Canine-vs-feline feature cards (see DxSpeciesDiffBlock). */
+  | DxSpeciesDiffBlock
   /** Escape hatch for genuinely bespoke markup (e.g. the seizures tier tree). */
   | { kind: 'html'; html: string }
   /** The "For qualified veterinary professionals only." footer. */

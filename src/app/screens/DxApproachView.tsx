@@ -5,7 +5,7 @@
 // <RichText> boundary (with @-link / onclick navigation); diseaseGrid links use
 // linkToView. Same .dx-* classes / inline styles → pixel-identical.
 
-import { Fragment } from 'react'
+import { Fragment, useMemo, useState } from 'react'
 import type { DxApproach, DxBlock, DxNavItem } from '../../lib/signs/dxTypes'
 import { HUE, TITLE } from '../../lib/signs/tone'
 import { DX } from '../../lib/signs/dx'
@@ -116,6 +116,150 @@ function DxAccordion({ b, onNav }: { b: Extract<DxBlock, { kind: 'accordion' }>;
   )
 }
 
+// ── Breed / signalment picker ────────────────────────────────────────────────
+/** The breed sections used to be two columns of a dozen breed→clue paragraphs
+ *  each — a wall you had to read end to end to find your patient. Here you pick
+ *  a species and tap (or type) the breed, and only the matching clues render;
+ *  "Show all" keeps the whole list one tap away. */
+function DxBreedClues({ b, onNav }: { b: Extract<DxBlock, { kind: 'breedClues' }>; onNav: Nav }) {
+  const dog = b.dog ?? []
+  const cat = b.cat ?? []
+  const both = dog.length > 0 && cat.length > 0
+  const [sp, setSp] = useState<'dog' | 'cat'>(dog.length ? 'dog' : 'cat')
+  const [sel, setSel] = useState<string | null>(null)
+  const [q, setQ] = useState('')
+  const [all, setAll] = useState(false)
+  const clues = sp === 'dog' ? dog : cat
+  const h = HUE[sp === 'dog' ? 'info' : 'orange']
+
+  // Chips: every breed named by any clue, deduped. Breeds sort alphabetically
+  // (you scan for a name); the non-breed keys ("Older intact male") keep author
+  // order in their own row, so the breed list stays a breed list.
+  const { breeds, other } = useMemo(() => {
+    const seen = new Map<string, boolean>()
+    for (const c of clues) for (const name of c.breeds) if (!seen.has(name)) seen.set(name, c.group === 'signalment')
+    const entries = [...seen.entries()]
+    return {
+      breeds: entries.filter(([, sig]) => !sig).map(([n]) => n).sort((x, y) => x.localeCompare(y)),
+      other: entries.filter(([, sig]) => sig).map(([n]) => n),
+    }
+  }, [clues])
+
+  const needle = q.trim().toLowerCase()
+  const hit = (n: string) => !needle || n.toLowerCase().includes(needle)
+  const shown = sel ? clues.filter(c => c.breeds.includes(sel)) : all ? clues : []
+
+  const pickSpecies = (next: 'dog' | 'cat') => { setSp(next); setSel(null); setQ('') }
+  const pickBreed = (name: string) => { setSel(cur => (cur === name ? null : name)); setAll(false) }
+
+  const chip = (name: string) => {
+    const on = sel === name
+    return (
+      <button key={name} type="button" aria-pressed={on} onClick={() => pickBreed(name)}
+        style={s(`padding:5px 9px;border-radius:999px;font-size:10px;line-height:1.2;cursor:pointer;text-align:left;border:1px solid ${on ? `rgba(${h.rgb},var(--tile-bd-a))` : 'var(--border)'};background:${on ? `rgba(${h.rgb},var(--tile-bg-a))` : 'transparent'};color:${on ? h.color : 'var(--gray)'};font-weight:${on ? 700 : 500};`)}>
+        {name}
+      </button>
+    )
+  }
+  const spBtn = (id: 'dog' | 'cat', label: string) => {
+    const on = sp === id
+    const hh = HUE[id === 'dog' ? 'info' : 'orange']
+    return (
+      <button type="button" aria-pressed={on} onClick={() => pickSpecies(id)}
+        style={s(`flex:1;padding:6px 10px;border-radius:9px;font-size:11px;font-weight:700;line-height:1;cursor:pointer;border:1.5px solid ${on ? `rgba(${hh.rgb},var(--tile-bd-a))` : 'var(--border)'};background:${on ? `rgba(${hh.rgb},var(--tile-bg-a))` : 'transparent'};color:${on ? hh.color : 'var(--gray2)'};`)}>
+        {label}
+      </button>
+    )
+  }
+
+  const visibleBreeds = breeds.filter(hit)
+  const visibleOther = other.filter(hit)
+  const total = breeds.length + other.length
+
+  return (
+    <ToneBox tone="teal" extra="padding:10px 12px;width:100%;">
+      <div style={s('display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px;')}>
+        <div style={s('font-size:10px;font-weight:700;color:var(--tone-teal-fg);')}>
+          {b.title ?? '🐾 Breed & signalment clues'}
+        </div>
+        <button type="button" aria-pressed={all} onClick={() => { setAll(v => !v); setSel(null) }}
+          style={s(`padding:3px 8px;border-radius:999px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid ${all ? 'rgba(var(--tone-teal),var(--tile-bd-a))' : 'var(--border)'};background:${all ? 'rgba(var(--tone-teal),var(--tile-bg-a))' : 'transparent'};color:${all ? 'var(--tone-teal-fg)' : 'var(--gray2)'};flex-shrink:0;`)}>
+          {all ? '✓ All' : 'Show all'}
+        </button>
+      </div>
+
+      {both && <div style={s('display:flex;gap:6px;margin-bottom:7px;')}>{spBtn('dog', '🐕 Dog')}{spBtn('cat', '🐈 Cat')}</div>}
+
+      {total > 8 && (
+        <input value={q} onChange={e => setQ(e.target.value)} placeholder={`Filter ${total} ${sp === 'dog' ? 'dog' : 'cat'} entries…`}
+          style={s('width:100%;box-sizing:border-box;background:var(--navy3);border:1px solid var(--border);border-radius:8px;padding:5px 9px;font-size:11px;color:var(--white);outline:none;margin-bottom:7px;')} />
+      )}
+
+      <div style={s('display:flex;flex-wrap:wrap;gap:4px;')}>{visibleBreeds.map(chip)}</div>
+      {visibleOther.length > 0 && (
+        <>
+          {breeds.length > 0 && (
+            <div style={s('font-size:9px;color:var(--gray2);margin:7px 0 4px;text-transform:uppercase;letter-spacing:.06em;')}>Not breed-specific</div>
+          )}
+          <div style={s('display:flex;flex-wrap:wrap;gap:4px;')}>{visibleOther.map(chip)}</div>
+        </>
+      )}
+      {visibleBreeds.length === 0 && visibleOther.length === 0 && (
+        <div style={s('font-size:10px;color:var(--gray2);')}>No entry for “{q.trim()}” — this sign has no clue recorded for that breed.</div>
+      )}
+
+      {shown.length > 0 ? (
+        <div style={s('display:flex;flex-direction:column;gap:5px;margin-top:8px;')}>
+          {shown.map((c, i) => {
+            const ch = HUE[c.tone ?? 'teal']
+            return (
+              <div key={i} style={s(`border-radius:8px;padding:7px 9px;font-size:10px;line-height:1.55;background:rgba(${ch.rgb},var(--tile-bg-a));color:var(--gray);border-left:2px solid rgba(${ch.rgb},var(--tile-bd-a));`)}>
+                <span style={s(`font-weight:700;color:${ch.color};`)}>{c.breeds.join(' · ')}</span>{' — '}
+                <Raw html={c.html} onNav={onNav} />
+              </div>
+            )
+          })}
+        </div>
+      ) : (
+        <div style={s('font-size:9.5px;color:var(--gray2);margin-top:8px;')}>Tap {breeds.length ? 'a breed' : 'an entry'} to see its clues.</div>
+      )}
+    </ToneBox>
+  )
+}
+
+// ── Canine vs feline ─────────────────────────────────────────────────────────
+/** One card per feature: the feature is named once as a heading, then the dog
+ *  and cat lines sit under it. The old paired-column grid repeated the feature
+ *  name in both cells and forced the reader to align two columns by eye. */
+function DxSpeciesDiff({ b, onNav }: { b: Extract<DxBlock, { kind: 'speciesDiff' }>; onNav: Nav }) {
+  const dogH = HUE.info
+  const catH = HUE.orange
+  // A word, not an emoji: 🐕 and 🐈 are the same small brown shape at 9px, and
+  // which species a line belongs to is the one thing that must never be guessed.
+  const line = (label: string, hh: { rgb: string; color: string }, html: string) => (
+    <div style={s('display:flex;gap:7px;align-items:baseline;')}>
+      <span style={s(`flex-shrink:0;font-size:8.5px;font-weight:700;letter-spacing:.06em;color:${hh.color};width:22px;`)}>{label}</span>
+      <span style={s('flex:1;min-width:0;')}><Raw html={html} onNav={onNav} /></span>
+    </div>
+  )
+  return (
+    <div style={s(`margin-top:${b.gap ?? 10}px;width:100%;display:flex;flex-direction:column;gap:6px;`)}>
+      <div style={s('font-size:10px;font-weight:700;color:var(--tone-indigo-fg);')}>
+        {b.title ?? '🔑 Canine vs feline — key differences'}
+      </div>
+      {b.rows.map((r, i) => (
+        <div key={i} style={s('border-radius:9px;padding:8px 10px;background:var(--card);border:1px solid var(--border);font-size:9.5px;line-height:1.55;color:var(--gray);')}>
+          <div style={s('font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--tone-indigo-fg);margin-bottom:5px;')}>{r.feature}</div>
+          <div style={s('display:flex;flex-direction:column;gap:4px;')}>
+            {line('DOG', dogH, r.dog)}
+            {line('CAT', catH, r.cat)}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
   switch (b.kind) {
     case 'branch': return <div className="dx-branch"><Raw html={b.text} onNav={onNav} /></div>
@@ -127,6 +271,8 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
     case 'diseaseGrid': return <DxDiseaseGrid b={b} onNav={onNav} />
     case 'note': return <div className="dx-note" style={b.style ? s(b.style) : undefined}><Raw html={b.html} onNav={onNav} /></div>
     case 'accordion': return <DxAccordion b={b} onNav={onNav} />
+    case 'breedClues': return <DxBreedClues b={b} onNav={onNav} />
+    case 'speciesDiff': return <DxSpeciesDiff b={b} onNav={onNav} />
     case 'lesionLink': {
       const bg = b.tone === 'secondary'
         ? 'background:rgba(var(--tone-teal),0.2);border-color:rgba(var(--tone-teal),0.5);'

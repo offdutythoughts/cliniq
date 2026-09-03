@@ -91,28 +91,24 @@ export const redEyeDx: DxApproach = {
       },
       { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
-        kind: 'check',
-        html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
-      <div>
-        <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG</strong><br><br>
-        <strong style="color:var(--tone-warning-fg);">Brachycephalic</strong> (Pug, Boston, French Bulldog, Pekingese, Shih Tzu)<br>→ Exposure keratopathy · ulcers · pigmentary keratitis · proptosis risk<br><br>
-        <strong style="color:var(--tone-green-fg);">Cocker Spaniel · CKCS · Lhasa Apso · Bichon · Westie · Yorkie</strong><br>→ KCS (immune-mediated) · primary closed-angle glaucoma (Cocker, Basset, Springer)<br><br>
-        <strong style="color:var(--tone-danger-fg);">German Shepherd</strong><br>→ Chronic superficial keratitis (pannus) · plasmoma · pigmentary uveitis<br><br>
-        <strong style="color:var(--tone-violet-fg);">Golden Retriever</strong><br>→ Pigmentary uveitis · primary uveitic glaucoma · uveal cysts<br><br>
-        <strong style="color:var(--tone-warning-fg);">Collie / Sheltie</strong><br>→ Nodular granulomatous episcleritis (NGE) · Collie eye anomaly<br><br>
-        <strong style="color:var(--tone-danger-fg);">Boxer · Dane · Shar-Pei</strong><br>→ Entropion · ulcers · indolent erosion (Boxer ulcer)<br><br>
-        <strong style="color:var(--tone-green-fg);">Akita · Samoyed · Husky</strong><br>→ Uveodermatologic syndrome (VKH-like)
-      </div>
-      <div>
-        <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT</strong><br><br>
-        <strong style="color:var(--tone-violet-fg);">Young cat</strong><br>→ FHV-1 keratitis · eosinophilic keratitis · symblepharon · viral URTI conjunctivitis<br><br>
-        <strong style="color:var(--tone-green-fg);">Persian / Himalayan / Exotic SH</strong><br>→ Brachycephalic ocular surface disease · corneal sequestrum · entropion<br><br>
-        <strong style="color:var(--tone-warning-fg);">Middle-aged–older cat</strong><br>→ Uveitis (FIV/FeLV/FIP/toxoplasma) · iris melanoma · hypertensive retinopathy<br><br>
-        <strong style="color:var(--tone-danger-fg);">Outdoor cat</strong><br>→ Trauma · proptosis · uveitis (FIV, toxoplasma)<br><br>
-        <strong style="color:var(--tone-info-fg);">Burmese</strong><br>→ Corneal sequestrum predisposed<br><br>
-        <strong style="color:var(--tone-warning-fg);">FIV/FeLV positive</strong><br>→ Anterior uveitis · lymphoma (orbital, intraocular)
-      </div>
-    </div>`,
+        kind: 'breedClues',
+        dog: [
+          { breeds: ['Pug', 'Boston Terrier', 'French Bulldog', 'Pekingese', 'Shih Tzu'], tone: 'warning', html: 'brachycephalic — exposure keratopathy · ulcers · pigmentary keratitis · proptosis risk.' },
+          { breeds: ['Cocker Spaniel', 'Cavalier King Charles Spaniel', 'Lhasa Apso', 'Bichon', 'West Highland White Terrier', 'Yorkshire Terrier'], tone: 'green', html: 'KCS (immune-mediated) · primary closed-angle glaucoma (Cocker, Basset, Springer).' },
+          { breeds: ['German Shepherd'], tone: 'danger', html: 'chronic superficial keratitis (pannus) · plasmoma · pigmentary uveitis.' },
+          { breeds: ['Golden Retriever'], tone: 'violet', html: 'pigmentary uveitis · primary uveitic glaucoma · uveal cysts.' },
+          { breeds: ['Collie', 'Sheltie'], tone: 'warning', html: 'nodular granulomatous episcleritis (NGE) · Collie eye anomaly.' },
+          { breeds: ['Boxer', 'Great Dane', 'Shar-Pei'], tone: 'danger', html: 'entropion · ulcers · indolent erosion (Boxer ulcer).' },
+          { breeds: ['Akita', 'Samoyed', 'Husky'], tone: 'green', html: 'uveodermatologic syndrome (VKH-like).' },
+        ],
+        cat: [
+          { breeds: ['Persian', 'Himalayan', 'Exotic Shorthair'], tone: 'green', html: 'brachycephalic ocular surface disease · corneal sequestrum · entropion.' },
+          { breeds: ['Burmese'], tone: 'info', html: 'corneal sequestrum predisposed.' },
+          { breeds: ['Young cat'], group: 'signalment', tone: 'violet', html: 'FHV-1 keratitis · eosinophilic keratitis · symblepharon · viral URTI conjunctivitis.' },
+          { breeds: ['Middle-aged–older cat'], group: 'signalment', tone: 'warning', html: 'uveitis (FIV / FeLV / FIP / toxoplasma) · iris melanoma · hypertensive retinopathy.' },
+          { breeds: ['Outdoor cat'], group: 'signalment', tone: 'danger', html: 'trauma · proptosis · uveitis (FIV, toxoplasma).' },
+          { breeds: ['FIV / FeLV positive'], group: 'signalment', tone: 'warning', html: 'anterior uveitis · lymphoma (orbital, intraocular).' },
+        ],
       },
     ],
     after: [

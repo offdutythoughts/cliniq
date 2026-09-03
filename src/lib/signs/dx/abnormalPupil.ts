@@ -170,74 +170,50 @@ export const abnormalPupilDx: DxApproach = {
       },
       { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
-        kind: 'html',
+        kind: 'speciesDiff',
         noArrowAfter: true,
-        html: `<div style="margin-bottom:8px;padding:10px 12px;background:rgba(37,99,235,0.07);border:1px solid rgba(37,99,235,0.2);border-radius:10px;width:100%;">
-    <div style="font-size:10.5px;font-weight:700;color:var(--tone-info-fg);margin-bottom:7px;">🔑 CANINE vs FELINE — KEY SPECIES DIFFERENCES</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;font-size:9px;line-height:1.5;">
-      <div style="color:var(--tone-info-fg);font-weight:700;padding-bottom:2px;border-bottom:1px solid rgba(148,163,184,.15);">🐕 Dog</div>
-      <div style="color:var(--hl-orange);font-weight:700;padding-bottom:2px;border-bottom:1px solid rgba(148,163,184,.15);">🐱 Cat</div>
-      <div>Normal pupil: <strong>round</strong></div>
-      <div>Normal pupil: <strong>vertical ellipse / slit</strong> (can appear round in dim light)</div>
-      <div>Iris atrophy: <strong>common</strong> (senile, small breeds) — most often <em>primary</em> degenerative</div>
-      <div>Iris atrophy: <strong>uncommon</strong>; secondary (uveitis, glaucoma) &gt; primary in cats; blue irises predisposed (thinner stroma)</div>
-      <div>Iris innervation: <strong>5–8 short ciliary nerves</strong> — denervated pupil = round, fully dilated</div>
-      <div>Iris innervation: <strong>only 2 short ciliary nerves</strong> (malar lateral · nasal medial) — partial denervation = <strong>D-shaped or reverse-D pupil</strong> (hemi-dilation)</div>
-      <div>Optic neuritis: <strong>immune-mediated forms well-documented</strong> (MUE/GME/NME) — empiric immunosuppression after ruling out infection is reasonable</div>
-      <div>Optic neuritis: <strong>no immune-mediated form described</strong> — workup must aggressively pursue infection (FIP, toxo, crypto) or neoplasia; enrofloxacin/fluoroquinolone toxic retinopathy is a key DDx</div>
-      <div>Lens luxation: typically <strong>↑ IOP (often &gt;40)</strong> with anterior luxation in dogs</div>
-      <div>Lens luxation: <strong>many cats remain normotensive</strong> despite luxation — normal IOP does NOT exclude the diagnosis</div>
-      <div>Cataract aetiology: <strong>diabetes mellitus is a major cause</strong> (rapid progression, lens-induced uveitis); many inherited breed forms</div>
-      <div>Cataract aetiology: <strong>chronic uveitis is the most common cause</strong> (DM cataracts are rare in cats — Russian Blue, Bengal hereditary)</div>
-      <div>Spastic pupil syndrome: <strong>not described</strong></div>
-      <div>Spastic pupil syndrome: <strong>FeLV-associated</strong> — tonic anisocoria; viral neuritis of short ciliary nerves; D-shape characteristic</div>
-      <div>PPMs: <strong>common</strong> (27% of dogs with congenital anomalies); many breeds</div>
-      <div>PPMs: <strong>rare</strong> (~1.4–2.3% prevalence); often in eyes with other anomalies</div>
-      <div>Uveal cysts: <strong>transilluminate</strong> — reliably distinguish from melanoma</div>
-      <div>Uveal cysts: may be <strong>darkly pigmented, do NOT transilluminate</strong> — mimic melanoma; ultrasound needed</div>
-      <div>Opioids → <strong>miosis</strong> (morphine, fentanyl)</div>
-      <div>Opioids → <strong>mydriasis</strong> (paradoxical in cats)</div>
-      <div>Pilocarpine test: safe at 0.05–2%; may cause conjunctival hyperaemia / blepharospasm</div>
-      <div>Pilocarpine test: irritating; <strong>concentrations ≥1% can cause salivation, vomiting, anorexia, diarrhoea</strong> — use 0.05–0.5% only</div>
-      <div>Glaucoma: usually <strong>primary closed-angle</strong> (goniodysgenesis, breed-specific); responds to latanoprost</div>
-      <div>Glaucoma: usually <strong>secondary</strong> to chronic uveitis / lens luxation; <strong>latanoprost ineffective</strong> (no FP receptors in feline ciliary body)</div>
-      <div>Horner's: idiopathic 3rd order most common (<strong>Golden Retriever</strong>, median resolution ~15 weeks)</div>
-      <div>Horner's: <strong>middle ear disease</strong> most common cause; screen with otoscopy + CT bullae</div>
-      <div>Lens luxation: primary (ADAMTS17 mutation) in <strong>terrier breeds</strong>; secondary to uveitis/glaucoma</div>
-      <div>Lens luxation: primary is <strong>rare</strong>; secondary to chronic uveitis is most common cause in cats</div>
-      <div>Optic nerve hypoplasia: <strong>SIX6 mutation in Golden Retriever</strong> (autosomal dominant CEM syndrome); reported in mini/toy poodle, shih tzu, beagle, borzoi, GSD</div>
-      <div>Optic nerve hypoplasia: <strong>extremely rare</strong>; specifically linked to <strong>griseofulvin (teratogen)</strong> in queens and feline parvovirus</div>
-    </div>
-  </div>`,
+        rows: [
+          { feature: 'Normal pupil', dog: '<strong>Round</strong> at every light level.', cat: '<strong>Vertical ellipse / slit</strong> — can appear round in dim light.' },
+          { feature: 'Iris atrophy', dog: '<strong>Common</strong> (senile, small breeds) — most often <em>primary</em> degenerative.', cat: '<strong>Uncommon</strong>; secondary (uveitis, glaucoma) &gt; primary. Blue irises predisposed (thinner stroma).' },
+          { feature: 'Iris innervation', dog: '<strong>5–8 short ciliary nerves</strong> — denervated pupil = round, fully dilated.', cat: '<strong>Only 2 short ciliary nerves</strong> (malar lateral · nasal medial) — partial denervation = <strong>D-shaped or reverse-D pupil</strong> (hemi-dilation).' },
+          { feature: 'Optic neuritis', dog: '<strong>Immune-mediated forms well documented</strong> (MUE/GME/NME) — empiric immunosuppression after ruling out infection is reasonable.', cat: '<strong>No immune-mediated form described</strong> — pursue infection (FIP, toxo, crypto) or neoplasia aggressively; enrofloxacin/fluoroquinolone toxic retinopathy is a key DDx.' },
+          { feature: 'Lens luxation — IOP', dog: 'Typically <strong>↑ IOP (often &gt;40)</strong> with anterior luxation.', cat: '<strong>Many cats stay normotensive</strong> despite luxation — a normal IOP does NOT exclude it.' },
+          { feature: 'Lens luxation — cause', dog: '<strong>Primary</strong> (ADAMTS17) in terrier breeds; also secondary to uveitis / glaucoma.', cat: 'Primary is <strong>rare</strong>; secondary to chronic uveitis is the commonest cause.' },
+          { feature: 'Cataract aetiology', dog: '<strong>Diabetes mellitus is a major cause</strong> (rapid progression, lens-induced uveitis); many inherited breed forms.', cat: '<strong>Chronic uveitis is the commonest cause</strong> — DM cataracts are rare (Russian Blue, Bengal hereditary).' },
+          { feature: 'Spastic pupil syndrome', dog: '<strong>Not described.</strong>', cat: '<strong>FeLV-associated</strong> — tonic anisocoria; viral neuritis of short ciliary nerves; D-shape characteristic.' },
+          { feature: 'PPMs', dog: '<strong>Common</strong> (27% of dogs with congenital anomalies); many breeds.', cat: '<strong>Rare</strong> (~1.4–2.3%); usually in eyes with other anomalies.' },
+          { feature: 'Uveal cysts', dog: '<strong>Transilluminate</strong> — reliably distinguished from melanoma.', cat: 'May be <strong>darkly pigmented and NOT transilluminate</strong> — mimic melanoma; ultrasound needed.' },
+          { feature: 'Opioids', dog: '→ <strong>Miosis</strong> (morphine, fentanyl).', cat: '→ <strong>Mydriasis</strong> (paradoxical).' },
+          { feature: 'Pilocarpine test', dog: 'Safe at 0.05–2%; may cause conjunctival hyperaemia / blepharospasm.', cat: 'Irritating — <strong>≥1% can cause salivation, vomiting, anorexia, diarrhoea</strong>; use 0.05–0.5% only.' },
+          { feature: 'Glaucoma', dog: 'Usually <strong>primary closed-angle</strong> (goniodysgenesis, breed-specific); responds to latanoprost.', cat: 'Usually <strong>secondary</strong> to chronic uveitis / lens luxation; <strong>latanoprost ineffective</strong> (no FP receptors in the feline ciliary body).' },
+          { feature: "Horner's", dog: 'Idiopathic 3rd order commonest (<strong>Golden Retriever</strong>; median resolution ~15 weeks).', cat: '<strong>Middle ear disease</strong> commonest cause — screen with otoscopy + CT bullae.' },
+          { feature: 'Optic nerve hypoplasia', dog: '<strong>SIX6 mutation in Golden Retriever</strong> (autosomal dominant CEM syndrome); also mini/toy poodle, shih tzu, beagle, borzoi, GSD.', cat: '<strong>Extremely rare</strong>; linked to <strong>griseofulvin (teratogen)</strong> in queens and to feline parvovirus.' },
+        ],
       },
       {
-        kind: 'check',
-        html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
-      <div>
-        <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG — BREED-SPECIFIC CLUES</strong><br><br>
-        <strong style="color:var(--tone-warning-fg);">Golden Retriever</strong> → idiopathic Horner's (3rd order — most common breed); pigmentary uveitis (iris cysts → uveitis → 2° glaucoma)<br><br>
-        <strong style="color:var(--tone-danger-fg);">Jack Russell, Tibetan Terrier, Border Collie, Sealyham, Manchester Terrier</strong> → primary anterior lens luxation (ADAMTS17 mutation)<br><br>
-        <strong style="color:var(--tone-green-fg);">Cocker, Basset, Springer, Bouvier, Chow, Akita</strong> → primary closed-angle glaucoma → mid-fixed mydriasis<br><br>
-        <strong style="color:var(--tone-violet-fg);">Miniature Schnauzer, Toy Poodle, Cocker</strong> → cataract → lens-induced uveitis → posterior synechiae<br><br>
-        <strong style="color:var(--tone-danger-fg);">Miniature Schnauzer (especially), Dachshund, Brittany</strong> → SARDS<br><br>
-        <strong style="color:var(--tone-warning-fg);">Toy and miniature breeds, senior small breeds</strong> → senile iris atrophy (most common in Poodle, Shih Tzu, Yorkshire Terrier — may appear as early as 4–5 yr)<br><br>
-        <strong style="color:var(--tone-green-fg);">Beagle, Norwegian Elkhound</strong> → PRA<br><br>
-        <strong style="color:var(--tone-violet-fg);">Any large breed</strong> → mediastinal mass / brachial plexus tumour → 2nd-order Horner's<br><br>
-        <strong style="color:var(--tone-warning-fg);">Akita, Samoyed, Husky</strong> → uveodermatologic syndrome → bilateral granulomatous uveitis + periocular depigmentation
-      </div>
-      <div>
-        <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT — BREED-SPECIFIC CLUES</strong><br><br>
-        <strong style="color:var(--tone-violet-fg);">Older cat (any breed)</strong> → systemic hypertension → bilateral mydriasis + retinal detachment ± intraocular haemorrhage — <em>check BP FIRST</em><br><br>
-        <strong style="color:var(--tone-warning-fg);">FIV/FeLV positive</strong> → chronic uveitis → dyscoria; diffuse iris melanosis (age-related, progressive)<br><br>
-        <strong style="color:var(--tone-danger-fg);">FeLV positive</strong> → spastic pupil syndrome — tonic anisocoria with impaired constriction; one or both eyes<br><br>
-        <strong style="color:var(--tone-green-fg);">Burmese</strong> → corneal sequestrum → reflex uveitis → miosis; uveal cysts (breed-associated); more susceptible to eyelid agenesis<br><br>
-        <strong style="color:var(--tone-danger-fg);">Outdoor cat</strong> → trauma → 2nd / 3rd order Horner's; toxoplasma uveitis; proptosis<br><br>
-        <strong style="color:var(--tone-info-fg);">Cat with otitis media</strong> → 3rd-order Horner's (postganglionic — middle ear via chorda tympani); ± CN VII deficit<br><br>
-        <strong style="color:var(--tone-violet-fg);">Multi-cat household / FIP</strong> → pyogranulomatous uveitis → miosis · hypopyon · aqueous flare<br><br>
-        <strong style="color:var(--tone-green-fg);">Key-Gaskell cat (UK / Australia)</strong> → dysautonomia: bilateral fixed mydriasis + dry mucosae + megaoesophagus<br><br>
-        <strong style="color:var(--tone-warning-fg);">Bengal, Domestic Shorthair</strong> → PPMs (iris-to-cornea type) — rare but reported
-      </div>
-    </div>`,
+        kind: 'breedClues',
+        dog: [
+          { breeds: ['Golden Retriever'], tone: 'warning', html: "idiopathic Horner's (3rd order — the commonest breed); pigmentary uveitis (iris cysts → uveitis → 2° glaucoma)." },
+          { breeds: ['Jack Russell', 'Tibetan Terrier', 'Border Collie', 'Sealyham', 'Manchester Terrier'], tone: 'danger', html: 'primary anterior lens luxation (ADAMTS17 mutation).' },
+          { breeds: ['Cocker', 'Basset', 'Springer', 'Bouvier', 'Chow', 'Akita'], tone: 'green', html: 'primary closed-angle glaucoma → mid-fixed mydriasis.' },
+          { breeds: ['Miniature Schnauzer', 'Toy Poodle', 'Cocker'], tone: 'violet', html: 'cataract → lens-induced uveitis → posterior synechiae.' },
+          { breeds: ['Miniature Schnauzer', 'Dachshund', 'Brittany'], tone: 'danger', html: 'SARDS — Miniature Schnauzer especially.' },
+          { breeds: ['Poodle', 'Shih Tzu', 'Yorkshire Terrier', 'Toy / miniature breeds'], tone: 'warning', html: 'senile iris atrophy — commonest in Poodle, Shih Tzu, Yorkshire Terrier; may appear as early as 4–5 yr.' },
+          { breeds: ['Beagle', 'Norwegian Elkhound'], tone: 'green', html: 'PRA.' },
+          { breeds: ['Akita', 'Samoyed', 'Husky'], tone: 'warning', html: 'uveodermatologic syndrome → bilateral granulomatous uveitis + periocular depigmentation.' },
+          { breeds: ['Any large breed'], group: 'signalment', tone: 'violet', html: "mediastinal mass / brachial plexus tumour → 2nd-order Horner's." },
+        ],
+        cat: [
+          { breeds: ['Burmese'], tone: 'green', html: 'corneal sequestrum → reflex uveitis → miosis; uveal cysts (breed-associated); more susceptible to eyelid agenesis.' },
+          { breeds: ['Bengal', 'Domestic Shorthair'], tone: 'warning', html: 'PPMs (iris-to-cornea type) — rare but reported.' },
+          { breeds: ['Older cat (any breed)'], group: 'signalment', tone: 'violet', html: 'systemic hypertension → bilateral mydriasis + retinal detachment ± intraocular haemorrhage — <em>check BP FIRST</em>.' },
+          { breeds: ['FIV / FeLV positive'], group: 'signalment', tone: 'warning', html: 'chronic uveitis → dyscoria; diffuse iris melanosis (age-related, progressive).' },
+          { breeds: ['FeLV positive'], group: 'signalment', tone: 'danger', html: 'spastic pupil syndrome — tonic anisocoria with impaired constriction; one or both eyes.' },
+          { breeds: ['Outdoor cat'], group: 'signalment', tone: 'danger', html: "trauma → 2nd / 3rd order Horner's; toxoplasma uveitis; proptosis." },
+          { breeds: ['Otitis media'], group: 'signalment', tone: 'info', html: "3rd-order Horner's (postganglionic — middle ear via chorda tympani); ± CN VII deficit." },
+          { breeds: ['Multi-cat household / FIP'], group: 'signalment', tone: 'violet', html: 'pyogranulomatous uveitis → miosis · hypopyon · aqueous flare.' },
+          { breeds: ['Key-Gaskell (UK / Australia)'], group: 'signalment', tone: 'green', html: 'dysautonomia: bilateral fixed mydriasis + dry mucosae + megaoesophagus.' },
+        ],
       },
     ],
     after: [
