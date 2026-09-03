@@ -5,6 +5,7 @@
 // banner. The Dx views (renderDxVestibular) are out of scope.
 
 import type { FlowPage } from '../flowTypes'
+import { VEST_LOC_COLS, VEST_LOC_HEADERS, VEST_LOC_ROWS } from '../vestibularLocalisation'
 
 const vestibularEntry: FlowPage = {
   id: 'vestibular',
@@ -20,69 +21,22 @@ const vestibularEntry: FlowPage = {
       subItems: [
         'Nystagmus that is horizontal or rotary and never changes direction with head position = peripheral',
         'Vertical or direction-changing nystagmus = central',
+        'Name the nystagmus by its FAST phase: away from the lesion = peripheral, either way = central',
         'Postural-reaction deficits, ↓mentation or deficits in other cranial nerves (except VII) = central',
         'Horner syndrome or facial paresis with an otherwise normal exam = peripheral (middle/inner ear)',
       ],
     },
 
-    // Peripheral vs Central vs Bilateral comparison table. The legacy colours
-    // every data cell by its column (Peripheral→green, Central→red/danger,
-    // Bilateral→amber/warning); the row-label column is plain text.
+    // Peripheral vs Central vs Bilateral comparison table — the SAME rows the
+    // Diagnostic exam tab renders, from ../vestibularLocalisation. Kept in one
+    // place because the two copies had already drifted apart.
     {
       kind: 'table',
       gap: 12,
-      cols: '1fr 1.4fr 1.4fr 1.4fr',
-      headers: ['', 'Peripheral', 'Central', 'Bilateral'],
-      rows: [
-        [
-          'Mentation',
-          { text: 'Alert / normal', tone: 'green' },
-          { text: 'Often depressed / obtunded', tone: 'danger' },
-          { text: 'Alert / normal', tone: 'warning' },
-        ],
-        [
-          'Nystagmus type',
-          { text: 'Horizontal or rotary only', tone: 'green' },
-          { text: 'Any type incl. vertical', tone: 'danger' },
-          { text: 'Absent', tone: 'warning' },
-        ],
-        [
-          'Nystagmus direction',
-          { text: '<strong>Fixed</strong> — does not change with head position', tone: 'green' },
-          { text: 'May be <strong>direction-changing</strong> or disconjugate', tone: 'danger' },
-          { text: '—', tone: 'warning' },
-        ],
-        [
-          'CP deficits <em>(most reliable localiser)</em>',
-          { text: '✗ ABSENT', tone: 'green' },
-          { text: '✓ PRESENT', tone: 'danger' },
-          { text: 'Variable', tone: 'warning' },
-        ],
-        [
-          'Head tilt',
-          { text: 'Present (toward lesion)', tone: 'green' },
-          { text: 'Toward lesion, OR paradoxical — <strong>away</strong> = cerebellar (flocculonodular lobe)', tone: 'danger' },
-          { text: '✗ ABSENT', tone: 'warning' },
-        ],
-        [
-          'Other CN deficits',
-          { text: "± Horner's · ± CN VII only", tone: 'green' },
-          { text: 'Multiple CN V–XII', tone: 'danger' },
-          { text: 'Bilateral ventrolateral strabismus', tone: 'warning' },
-        ],
-        [
-          'VOR',
-          { text: 'Intact', tone: 'green' },
-          { text: 'May be impaired', tone: 'danger' },
-          { text: 'Absent bilaterally', tone: 'warning' },
-        ],
-        [
-          'Gait',
-          { text: 'Rollling/falling toward lesion; ataxic', tone: 'green' },
-          { text: 'Ataxia ± hemiparesis', tone: 'danger' },
-          { text: 'Wide-based; side-to-side sway; crouching', tone: 'warning' },
-        ],
-      ],
+      dividers: true,
+      cols: VEST_LOC_COLS,
+      headers: VEST_LOC_HEADERS,
+      rows: VEST_LOC_ROWS,
     },
 
     // Nav tiles — a 3-col grid of `.flow-endpoint` cause tiles, each with a
