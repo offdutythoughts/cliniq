@@ -1,7 +1,7 @@
 // ── Diagnostic-approach authoring helpers ────────────────────────────────────
 // Small utilities that reduce boilerplate when building DxTab block arrays.
 
-import type { DxBlock } from '../../dxTypes'
+import type { DxBlock, DxGridTableBlock } from '../../dxTypes'
 
 /**
  * Returns a `[step, check]` pair for a numbered diagnostic step.
@@ -23,6 +23,38 @@ export function stepPair(n: number, title: string, html: string, icon?: string):
   return [
     { kind: 'step', text: `${icon ? `${icon} ` : ''}STEP ${n} — ${title}` },
     { kind: 'check', html },
+  ]
+}
+
+/**
+ * The table-shaped sibling of `stepPair` — returns a `[step, gridTable]` pair.
+ *
+ * `stepPair` can only produce a `check`, so reaching for it is what turns a
+ * numbered step into a paragraph. Use this whenever the step body is a lookup
+ * (do → look for, finding → diagnosis, test → why), which is most of them:
+ *
+ * ```ts
+ * blocks: [
+ *   ...stepTable(3, 'CT SCAN', {
+ *     cols: '1fr 1.2fr',
+ *     dividers: true,
+ *     headers: ['Choose CT when', { text: 'Why', tone: 'teal' }],
+ *     rows: [...],
+ *   }, '🔍'),
+ * ]
+ * ```
+ *
+ * `icon` behaves exactly as it does in `stepPair`.
+ */
+export function stepTable(
+  n: number,
+  title: string,
+  table: Omit<DxGridTableBlock, 'kind'>,
+  icon?: string,
+): [DxBlock, DxBlock] {
+  return [
+    { kind: 'step', text: `${icon ? `${icon} ` : ''}STEP ${n} — ${title}`, noArrowAfter: true },
+    { kind: 'gridTable', ...table },
   ]
 }
 

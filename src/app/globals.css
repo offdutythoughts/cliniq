@@ -375,7 +375,7 @@ html[data-theme="dark"]{
   font-size:13px;font-weight:500;text-align:center;
   border:1px solid;margin-bottom:4px;
 }
-.fn-arrow{text-align:center;color:var(--gray2);font-size:18px;margin:2px 0;line-height:1;}
+.fn-arrow{text-align:center;color:var(--gray2);font-size:18px;margin:8px 0;line-height:1;}
 .fn-entry{background:rgba(var(--tone-info),var(--tile-bg-a));border-color:rgba(var(--tone-info),var(--tile-bd-a));color:var(--tone-info-fg);}
 .fn-step{background:var(--card);border-color:var(--border2);color:var(--white);}
 .fn-insp{background:rgba(var(--tone-info),var(--tile-bg-a));border-color:rgba(var(--tone-info),var(--tile-bd-a));color:var(--fg-blue-deep);}
@@ -609,6 +609,11 @@ details.ref-fold[open] > summary::after{content:" ▾";}
 .flow-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;padding-bottom:20px;width:100%;}
 .flow-arrow-v{margin:0 auto;width:2px;height:16px;background:var(--gray2);position:relative;color:transparent;font-size:0;}
 .flow-arrow-v::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--gray2);}
+/* Spine connectors only (direct children of the wrap) get the extra breathing
+   room — box → arrow → box reads as three separated things. Arrows INSIDE a
+   fork leg or a .flow-col must stay flush: they continue a drawn line from the
+   fork bar, and a margin would break the line and misalign the grid rows. */
+.flow-wrap > .flow-arrow-v{margin:8px auto;height:18px;}
 
 /* ── Fork connector — the ONE way an N-way split is drawn ──────────────────────
    Stem → horizontal bar → a drop into every column, never a lone arrow pointing
@@ -752,7 +757,7 @@ details.ref-fold[open] > summary::after{content:" ▾";}
    overflow-x:auto scrolls, instead of forcing min-content and overflowing the
    screen. Without min-width:0 a flex item won't shrink below its content. */
 .flow-wrap > *, .dx-wrap > * { min-width: 0; max-width: 100%; }
-.dx-arrow{text-align:center;margin:0 auto;line-height:1;width:2px;height:16px;background:var(--gray2);position:relative;color:transparent;font-size:0;}
+.dx-arrow{text-align:center;margin:8px auto;line-height:1;width:2px;height:18px;background:var(--gray2);position:relative;color:transparent;font-size:0;}
 .dx-arrow::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--gray2);}
 .dx-step{border-radius:10px;padding:10px 14px;font-size:12px;font-weight:600;text-align:center;width:100%;line-height:1.4;background:var(--teal);color:var(--on-teal);border:none;}
 .dx-step.alt{background:rgba(var(--tone-teal),0.65);color:var(--on-teal);}

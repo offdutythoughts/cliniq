@@ -6,7 +6,7 @@
 import type { DxApproach } from '../dxTypes'
 import { CN_EXAM_ACCORDION } from './shared/neuroExam'
 import { NEURO_LOC_COLS, NEURO_LOC_HEADERS, NEURO_LOC_MIN_WIDTH, NEURO_LOC_ROWS } from '../neuroLocalisation'
-import { stepPair, numBadge } from './shared/dxHelpers'
+import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const myelopathyDx: DxApproach = {
   title: 'Myelopathy',
@@ -46,7 +46,7 @@ export const myelopathyDx: DxApproach = {
       },
 
       { kind: 'step', text: '📋 STEP 3 — PROGRESSION & FUNCTION' },
-      { kind: 'check', html: `Establish the timeline — function is lost in this order, and the order + speed drive urgency and prognosis.`, noArrowAfter: true },
+      { kind: 'note', html: `Establish the timeline — function is lost in this order, and the order + speed drive urgency and prognosis.`, noArrowAfter: true },
       {
         kind: 'gridTable',
         cols: '0.8fr 1.4fr',
@@ -59,8 +59,15 @@ export const myelopathyDx: DxApproach = {
         ],
       },
       {
-        kind: 'check',
-        html: `<strong>Also ask:</strong> urinary / faecal continence · spinal pain (reluctance to jump, yelping) · prior episodes.`,
+        kind: 'gridTable',
+        cols: '0.8fr 1.4fr',
+        dividers: true,
+        headers: ['Also ask', { text: 'Why it changes the plan', tone: 'teal' }],
+        rows: [
+          ['<strong>Urinary / faecal continence</strong>', { text: 'Sacral (S1–S3) involvement — changes nursing, bladder management and prognosis', tone: 'teal' }],
+          ['<strong>Spinal pain</strong><br>reluctance to jump · yelping', { text: 'Painful → compressive or inflammatory · non-painful → FCE / ANNPE / DM', tone: 'teal' }],
+          ['<strong>Prior episodes</strong>', { text: 'Recurrent IVDD, or a progressive degenerative course', tone: 'teal' }],
+        ],
       },
     ],
     after: [
@@ -79,7 +86,7 @@ export const myelopathyDx: DxApproach = {
       { kind: 'branch', text: 'HEAD-TO-TAIL NEUROLOGICAL EXAMINATION' },
 
       { kind: 'step', text: '👀 STEP 1 — HANDS-OFF OBSERVATION' },
-      { kind: 'check', html: `Observe before touching — many findings are lost once the patient is anxious or restrained.`, noArrowAfter: true },
+      { kind: 'note', html: `Observe before touching — many findings are lost once the patient is anxious or restrained.`, noArrowAfter: true },
       {
         kind: 'gridTable',
         cols: '0.75fr 1.4fr',
@@ -97,12 +104,26 @@ export const myelopathyDx: DxApproach = {
       { kind: 'step', text: '🧠 STEP 2 — HANDS-ON: CRANIAL NERVES (tap to expand)' },
       CN_EXAM_ACCORDION,
 
-      ...stepPair(3, 'NECK: CERVICAL PAIN & MUSCLE ATROPHY', `${numBadge(1)}<strong>Palpate</strong> the vertebral column occiput → sacrum; note site(s) of pain, muscle guarding, rigidity.<br>
-      ${numBadge(2)}<strong>Assess supraspinatus / infraspinatus bulk</strong> — C6–T2 LMN atrophy in forelimb monoparesis.`, '👋'),
+      ...stepTable(3, 'NECK: CERVICAL PAIN & MUSCLE ATROPHY', {
+        cols: '0.95fr 1.25fr',
+        dividers: true,
+        headers: ['Do', { text: 'Looking for', tone: 'teal' }],
+        rows: [
+          [`${numBadge(1)}<strong>Palpate</strong> the vertebral column, occiput → sacrum`, { text: 'Site(s) of pain · muscle guarding · rigidity', tone: 'teal' }],
+          [`${numBadge(2)}<strong>Assess supraspinatus / infraspinatus bulk</strong>`, { text: 'C6–T2 LMN atrophy in forelimb monoparesis', tone: 'teal' }],
+        ],
+      }, '👋'),
 
-      ...stepPair(4, 'TRUNK: CUTANEOUS TRUNCI REFLEX', `${numBadge(1)}<strong>Technique</strong> — gently pinch the dorsal skin with haemostats, bilaterally, moving caudal → cranial.<br>
-      ${numBadge(2)}<strong>Pathway</strong> — afferent enters the cord locally; efferent exits via the lateral thoracic nerve (C8–T1) to the cutaneus trunci.<br>
-      ${numBadge(3)}<strong>Interpret</strong> — skin twitch lost caudal to a level → lesion ≈ <strong>1–2 segments cranial</strong> to the cutoff (most useful for T3–L3).`, '👆'),
+      ...stepTable(4, 'TRUNK: CUTANEOUS TRUNCI REFLEX', {
+        cols: '0.55fr 1.6fr',
+        dividers: true,
+        headers: ['', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          [`${numBadge(1)}<strong>Technique</strong>`, { text: 'Gently pinch the dorsal skin with haemostats, bilaterally, moving caudal → cranial', tone: 'teal' }],
+          [`${numBadge(2)}<strong>Pathway</strong>`, { text: 'Afferent enters the cord locally; efferent exits via the lateral thoracic nerve (C8–T1) to the cutaneus trunci', tone: 'teal' }],
+          [`${numBadge(3)}<strong>Interpret</strong>`, { text: 'Skin twitch lost caudal to a level → lesion ≈ <strong>1–2 segments cranial</strong> to the cutoff — most useful for T3–L3', tone: 'teal' }],
+        ],
+      }, '👆'),
 
       { kind: 'branch', text: 'LOCALISE SPINAL CORD SEGMENT' },
       {
@@ -153,7 +174,7 @@ export const myelopathyDx: DxApproach = {
         ],
       },
       { kind: 'step', text: '📊 STEP 2 — SPINAL RADIOGRAPHS' },
-      { kind: 'check', html: `Survey <strong>lateral + VD</strong> of the localised spinal region, under sedation.`, noArrowAfter: true },
+      { kind: 'note', html: `Survey <strong>lateral + VD</strong> of the localised spinal region, under sedation.`, noArrowAfter: true },
       {
         kind: 'gridTable',
         cols: '1fr 1fr',
@@ -169,7 +190,7 @@ export const myelopathyDx: DxApproach = {
         ],
       },
       {
-        kind: 'check',
+        kind: 'note',
         html: `<strong>Caveat:</strong> radiographs cannot visualise cord compression — a normal study does <strong>NOT</strong> exclude significant IVDD.`,
       },
       {
@@ -177,14 +198,19 @@ export const myelopathyDx: DxApproach = {
         html: `<strong>End-plate lysis → discospondylitis work-up:</strong><br>
       ${numBadge(1)}Blood culture × 2 &nbsp; ${numBadge(2)}Brucella canis serology &nbsp; ${numBadge(3)}Urine culture &nbsp; ${numBadge(4)}Cardiac echo (endocarditis source)`,
       },
-      ...stepPair(3, 'CT SCAN', `<strong>Choose CT when:</strong><br>
-      • Spinal radiographs are equivocal<br>
-      • Trauma suspected — superior bone detail<br>
-      • Pre-surgical planning for thoracolumbar IVDD — shows lateralisation of disc material<br>
-      Faster and more widely available than MRI; adequate for most acute IVDD decompression planning.<br>
-      <strong>Blind spot:</strong> poor soft-tissue contrast — does not reliably detect intraparenchymal cord lesions (FCE, ANNPE, neoplastic infiltration, DM).`, '🔍'),
+      ...stepTable(3, 'CT SCAN', {
+        cols: '0.95fr 1.3fr',
+        dividers: true,
+        headers: ['Choose CT when', { text: 'Why', tone: 'teal' }],
+        rows: [
+          ['Spinal radiographs are <strong>equivocal</strong>', { text: 'Faster and more widely available than MRI', tone: 'teal' }],
+          ['<strong>Trauma</strong> suspected', { text: 'Superior bone detail', tone: 'teal' }],
+          ['<strong>Pre-surgical planning</strong> for thoracolumbar IVDD', { text: 'Shows lateralisation of disc material — adequate for most acute IVDD decompression planning', tone: 'teal' }],
+          [{ text: '⚠️ <strong>Blind spot</strong>', tone: 'danger' }, { text: 'Poor soft-tissue contrast — does <strong>not</strong> reliably detect intraparenchymal cord lesions (FCE · ANNPE · neoplastic infiltration · DM)', tone: 'danger' }],
+        ],
+      }, '🔍'),
       { kind: 'step', text: '🧲 STEP 4 — MRI (REFERRAL)' },
-      { kind: 'check', html: `<strong>Gold standard for spinal cord assessment.</strong> Required for:`, noArrowAfter: true },
+      { kind: 'note', html: `<strong>Gold standard for spinal cord assessment.</strong> Required for:`, noArrowAfter: true },
       {
         kind: 'gridTable',
         cols: '0.9fr 1.25fr',
@@ -198,9 +224,16 @@ export const myelopathyDx: DxApproach = {
           ['<strong>CT non-diagnostic</strong>', { text: 'Clinical signs still demand an explanation', tone: 'teal' }],
         ],
       },
-      ...stepPair(5, 'CSF ANALYSIS (REFERRAL)', `${numBadge(1)}<strong>Timing</strong> — collect <strong>after MRI</strong> (exclude obstructive hydrocephalus / herniation risk before tapping).<br>
-      ${numBadge(2)}<strong>Indications</strong> — infectious / inflammatory myelopathy (GME, meningomyelitis, distemper) · neoplastic infiltration · progressive non-compressive myelopathy with no imaging diagnosis.<br>
-      ${numBadge(3)}<strong>Interpret</strong> — cell count · differential · protein · cytology ± infectious PCR (Toxoplasma, Neospora, CDV; 🐱 FIV/FeLV).`, '💧'),
+      ...stepTable(5, 'CSF ANALYSIS (REFERRAL)', {
+        cols: '0.6fr 1.6fr',
+        dividers: true,
+        headers: ['', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          [`${numBadge(1)}<strong>Timing</strong>`, { text: 'Collect <strong>after MRI</strong> — exclude obstructive hydrocephalus / herniation risk before tapping', tone: 'danger' }],
+          [`${numBadge(2)}<strong>Indications</strong>`, { text: 'Infectious / inflammatory myelopathy (GME · meningomyelitis · distemper) · neoplastic infiltration · progressive non-compressive myelopathy with no imaging diagnosis', tone: 'teal' }],
+          [`${numBadge(3)}<strong>Interpret</strong>`, { text: 'Cell count · differential · protein · cytology ± infectious PCR (Toxoplasma, Neospora, CDV; 🐱 FIV/FeLV)', tone: 'teal' }],
+        ],
+      }, '💧'),
     ],
     after: [
       {

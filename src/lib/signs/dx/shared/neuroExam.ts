@@ -46,6 +46,12 @@ export const CN_EXAM_ACCORDION: Extract<DxBlock, { kind: 'accordion' }> = {
     {
       title: 'CN VIII — Vestibulocochlear',
       html: `<strong>Vestibular:</strong> Head tilt, spontaneous nystagmus (note direction &amp; plane — horizontal/rotary = peripheral; vertical or direction-changing = central), falling/rolling.<br>
+<strong>Fast vs slow phase — which side is the lesion:</strong><br>
+• Named by the <strong>fast</strong> flick; the slow phase drifts toward the lesion, with the head tilt<br>
+• Fast phase <strong>away</strong> from the lesion = peripheral — a reliable side marker<br>
+• Fast phase either way = <strong>central</strong> — cannot side the lesion<br>
+• &gt;66 beats/min favours peripheral (95% specific)<br>
+• <strong>No</strong> fast phase = pendular — congenital visual-pathway anomaly (Siamese, Birman, Himalayan, Belgian Shepherd), not vestibular<br>
 <strong>Central vs peripheral:</strong> Vertical nystagmus, multiple CN deficits, cerebellar signs, or changing nystagmus direction = <strong>central</strong> (brainstem/cerebellum) — requires MRI, not spinal workup.<br>
 <strong>Hearing:</strong> Cotton-ball test, hand clap out of sight. BAER testing for definitive assessment.`,
     },
