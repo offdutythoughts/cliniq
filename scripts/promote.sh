@@ -90,9 +90,26 @@ else
   SLUG=$(git remote get-url origin | sed -E 's#^(git@github\.com:|https://github\.com/)##; s#\.git$##')
   SHA=$(git rev-parse origin/main)
 
-  RUNS=$(curl -fsS --max-time 15 \
-    "https://api.github.com/repos/$SLUG/actions/runs?branch=main&per_page=20" 2>/dev/null) \
-    || fail "could not reach the GitHub API to read CI. Re-run with --skip-ci to promote regardless."
+  # Read the verdict through `gh api`, not a bare curl. Unauthenticated
+  # api.github.com allows 60 requests/hour per IP, and that bucket is shared
+  # with every other tool on the machine — exhausting it made this gate fail
+  # closed on a green main and blocked a promotion for no reason, while
+  # `gh api rate_limit` still read 5000/5000 because it reports the
+  # authenticated bucket. `gh` sends the stored token and gets 5000/hour.
+  # curl stays as the fallback so a machine without gh can still read a
+  # verdict rather than being forced onto --skip-ci.
+  RUNS_PATH="repos/$SLUG/actions/runs?branch=main&per_page=20"
+  RUNS=""
+  if command -v gh >/dev/null 2>&1; then
+    RUNS=$(gh api "$RUNS_PATH" 2>/dev/null) || RUNS=""
+  fi
+  if [[ -z "$RUNS" ]]; then
+    RUNS=$(curl -fsS --max-time 15 "https://api.github.com/$RUNS_PATH" 2>/dev/null) \
+      || fail "could not reach the GitHub API to read CI — gh is missing or unauthenticated
+    and the unauthenticated curl fallback failed too, usually the 60/hour per-IP
+    limit. Check with: curl -s https://api.github.com/rate_limit
+    Fix by running 'gh auth login', or re-run with --skip-ci to promote regardless."
+  fi
 
   VERDICT=$(jq -r --arg sha "$SHA" \
     '[.workflow_runs[] | select(.name == "CI" and .head_sha == $sha)][0]
