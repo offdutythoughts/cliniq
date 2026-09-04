@@ -55,33 +55,22 @@ export const seizuresDx: DxApproach = {
 
       { kind: 'step', text: '🐾 SIGNALMENT' },
       {
-        kind: 'accordion',
-        items: [
-          {
-            title: 'Idiopathic epilepsy — breeds',
-            html: `<strong>🐕 Dog:</strong> Border Collie · Labrador · GSD · Golden Retriever · Belgian Shepherd (Tervuren, Malinois) · Beagle · Keeshond · Vizsla · Finnish Spitz.<br>
-<strong>🐱 Cat:</strong> less common than in dogs; no breed predisposition; remains a diagnosis of exclusion.<br><br>
-Breed predisposition supports idiopathic epilepsy in a 6mo–6yr patient — it never replaces a normal metabolic database and a normal interictal exam.`,
-          },
-          {
-            title: 'PSS / hepatic encephalopathy — breeds',
-            html: `Yorkshire Terrier · Maltese · Pomeranian · Miniature Schnauzer · Shih Tzu.<br><br>
-Small and toy breeds, onset &lt;1 year, signs often post-prandial. Check fasted and 2h post-prandial bile acids before committing to idiopathic epilepsy.`,
-          },
-          {
-            title: 'Intracranial mass — skull type',
-            html: `<strong>Glioma — brachycephalics:</strong> Boston Terrier · French Bulldog · Pug · Boxer. Older dogs, progressive focal signs, intra-axial with peri-lesional oedema.<br>
-<strong>Meningioma — dolichocephalics:</strong> Golden Retriever · Greyhound · Collie. Extra-axial, slow progression.<br>
-<strong>🐱 Cat:</strong> meningioma (Siamese, older DSH) is the commonest brain tumour; CNS lymphoma in FeLV-positive cats.`,
-          },
-          {
-            title: 'MUO · infectious · drug sensitivity',
-            html: `<strong>MUO / meningoencephalitis:</strong> Pug · Yorkshire Terrier · Maltese · Chihuahua · French Bulldog.<br>
-<strong>MDR1 / ABCB1:</strong> Collie · Shetland Sheepdog · Australian Shepherd · Border Collie — macrocyclic lactone toxicity.<br>
-<strong>Storage disease (NCL):</strong> Dalmatian · Poodle · Tibetan Terrier · English Setter — juvenile onset, progressive.<br>
-<strong>🐱 Infectious:</strong> outdoor / unvaccinated cats — FIP, Toxoplasma, Cryptococcus.<br>
-<strong>Travel + vaccination:</strong> CDV in the under-vaccinated dog; travel opens Neospora, Leishmania, Ehrlichia, Babesia, Coccidioides.`,
-          },
+        kind: 'breedClues',
+        dog: [
+          { breeds: ['Border Collie', 'Labrador', 'German Shepherd', 'Golden Retriever', 'Belgian Shepherd (Tervuren, Malinois)', 'Beagle', 'Keeshond', 'Vizsla', 'Finnish Spitz'], tone: 'info', html: 'idiopathic epilepsy. Breed predisposition supports IE in a 6 mo–6 yr patient — it never replaces a normal metabolic database and a normal interictal exam.' },
+          { breeds: ['Yorkshire Terrier', 'Maltese', 'Pomeranian', 'Miniature Schnauzer', 'Shih Tzu'], tone: 'green', html: 'PSS / hepatic encephalopathy — small and toy breeds, onset &lt;1 year, signs often post-prandial. Check fasted and 2 h post-prandial bile acids before committing to idiopathic epilepsy.' },
+          { breeds: ['Boston Terrier', 'French Bulldog', 'Pug', 'Boxer'], tone: 'danger', html: 'glioma (brachycephalic skull) — older dogs, progressive focal signs, intra-axial with peri-lesional oedema.' },
+          { breeds: ['Golden Retriever', 'Greyhound', 'Collie'], tone: 'warning', html: 'meningioma (dolichocephalic skull) — extra-axial, slow progression.' },
+          { breeds: ['Pug', 'Yorkshire Terrier', 'Maltese', 'Chihuahua', 'French Bulldog'], tone: 'violet', html: 'MUO / meningoencephalitis.' },
+          { breeds: ['Collie', 'Shetland Sheepdog', 'Australian Shepherd', 'Border Collie'], tone: 'warning', html: 'MDR1 / ABCB1 — macrocyclic lactone toxicity.' },
+          { breeds: ['Dalmatian', 'Poodle', 'Tibetan Terrier', 'English Setter'], tone: 'info', html: 'storage disease (NCL) — juvenile onset, progressive.' },
+          { breeds: ['Under-vaccinated or travelled dog'], group: 'signalment', tone: 'danger', html: 'CDV in the under-vaccinated dog; travel opens Neospora, Leishmania, Ehrlichia, Babesia, Coccidioides.' },
+        ],
+        cat: [
+          { breeds: ['Siamese', 'Domestic Shorthair'], tone: 'warning', html: 'meningioma — the commonest feline brain tumour (older DSH, Siamese).' },
+          { breeds: ['FeLV positive'], group: 'signalment', tone: 'danger', html: 'CNS lymphoma.' },
+          { breeds: ['Outdoor / unvaccinated cat'], group: 'signalment', tone: 'violet', html: 'FIP, Toxoplasma, Cryptococcus.' },
+          { breeds: ['Recurrent seizures, any breed'], group: 'signalment', tone: 'info', html: 'idiopathic epilepsy is less common than in the dog and carries no breed predisposition — it remains a diagnosis of exclusion.' },
         ],
       },
     ],
