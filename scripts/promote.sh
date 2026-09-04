@@ -61,6 +61,13 @@ git rev-parse --verify --quiet main >/dev/null || fail "no local main branch"
 [[ -z "$(git log --oneline origin/main..main)" ]] \
   || fail "local main is ahead of origin/main. Push it first: git push origin main"
 
+# Warn when local main trails the remote. Nothing below reads it any more — the
+# merge takes origin/main — but a stale local main is a sign the operator is
+# looking at an older tree than the one about to ship.
+BEHIND=$(git rev-list --count main..origin/main)
+[[ "$BEHIND" == "0" ]] \
+  || echo "→ note: local main is $BEHIND commit(s) behind origin/main; promoting origin/main"
+
 AHEAD=$(git log --oneline origin/production..origin/main | wc -l | tr -d ' ')
 if [[ "$AHEAD" == "0" ]]; then
   echo "✓ production already carries everything on main. Nothing to promote."
@@ -275,9 +282,31 @@ for attempt in $(seq 1 $ATTEMPTS); do
   git checkout --quiet -B production origin/production
   # -m is explicit: an editor-driven merge once committed the comment template into
   # the message, which then had to be amended and force-pushed to clean up.
-  git merge --no-edit -m "Merge main into production" main
+  #
+  # origin/main, not main. Every count and every line printed above comes from
+  # origin/main; merging the local branch instead meant the two could disagree.
+  # They did: a checkout whose `main` sat two commits back (another worktree held
+  # the branch, so it could not be fast-forwarded) listed nine commits to promote
+  # and then merged a stale ref. "Already up to date" — nothing merged, nothing
+  # pushed, and the summary below still said promoted.
+  git merge --no-edit -m "Merge main into production" origin/main
 
   if git push origin production; then
+    # Assert the promotion actually moved production before claiming it did.
+    # A push that sends nothing still exits 0, so "success" here used to mean
+    # only "git did not error". When the merge above was a no-op, this branch
+    # ran in full: it printed ✓ promoted, then handed the UNCHANGED production
+    # sha to the deploy watch, which found the build already live from the
+    # previous promotion, saw READY, and reported a deploy that never happened.
+    # Nothing in the output distinguished that from a real ship.
+    #
+    # We only reach here past the AHEAD==0 early exit, so production must now
+    # contain origin/main. If it does not, the promotion silently did nothing.
+    git merge-base --is-ancestor origin/main production \
+      || fail "production does not contain origin/main after the merge and push —
+    the promotion did nothing. Nothing was deployed; production still serves its
+    previous build. Re-run, and if it repeats, check what 'git merge origin/main'
+    reports on a fresh checkout of production."
     trap - EXIT
     git checkout --quiet "$STARTED_ON"
     PROMOTED_SHA=$(git rev-parse origin/production)
