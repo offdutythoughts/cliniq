@@ -7,6 +7,7 @@
 // Dx views (renderDxAtaxia*) are a separate tranche and are NOT migrated here.
 
 import type { FlowPage } from '../flowTypes'
+import { ATAXIA_COLS, ATAXIA_HEADERS, ATAXIA_ROWS } from '../ataxiaClassification'
 
 const ataxiaEntry: FlowPage = {
   id: 'ataxia',
@@ -56,13 +57,9 @@ const ataxiaEntry: FlowPage = {
       gap: 12,
       dividers: true,
       title: ' KEY DISTINCTION — DOES THE PATIENT HAVE PARESIS?',
-      cols: '22% 24% 1fr',
-      headers: ['Type', 'Paresis / CP deficits', 'Hallmark'],
-      rows: [
-        [{ text: 'Cerebellar', tone: 'info' }, 'NONE', 'Hypermetria — the cerebellum coordinates movement, it does not initiate it; intention tremor, truncal sway, wide-based stance, normal mentation'],
-        [{ text: 'Vestibular', tone: 'warning' }, 'Only if CENTRAL', 'Asymmetric — falls, leans, rolls or circles tightly to one side; head tilt + nystagmus until proven otherwise; ± ↓ mentation if central'],
-        [{ text: 'Proprioceptive', tone: 'danger' }, 'ALWAYS', 'Weakness AND incoordination together — a spinal cord lesion; knuckling, crossing over, scuffed toes, delayed CP placing'],
-      ],
+      cols: ATAXIA_COLS,
+      headers: ATAXIA_HEADERS,
+      rows: ATAXIA_ROWS,
     },
     {
       kind: 'table',

@@ -13,69 +13,160 @@ export const abnormalPupilDx: DxApproach = {
     title: 'History: Abnormal Pupil',
     blocks: [
       { kind: 'branch', text: 'CHARACTERISE THE COMPLAINT' },
+      // Three complaint types, each with what the owner says and where it sends
+      // you — a lookup, so a table rather than three cards the reader must
+      // compare by eye.
       {
-        kind: 'row',
-        cols: 3,
-        items: [
-          {
-            style: 'text-align:left;font-size:9px;',
-            html: `<strong style="font-size:10px;">👁️ Visible pupil change</strong><br>
-      Anisocoria · dyscoria<br>
-      Persistent mydriasis or miosis<br>
-      <span style="opacity:.75;">Owner notices asymmetry or fixed pupil</span>`,
-          },
-          {
-            style: 'text-align:left;background:rgba(var(--tone-teal),var(--tile-bg-a));border:1px solid rgba(var(--tone-teal),var(--tile-bd-a));color:var(--tone-teal-fg);font-size:9px;',
-            html: `<strong style="font-size:10px;">👀 Vision change</strong><br>
-      Bumping objects · uncertainty<br>
-      Sudden vs gradual onset<br>
-      <span style="opacity:.75;">Often the chief complaint when retinal/optic</span>`,
-          },
-          {
-            style: 'text-align:left;font-size:9px;',
-            html: `<strong style="font-size:10px;">🧠 Systemic / neuro signs</strong><br>
-      Mentation change · ataxia · CN deficits<br>
-      Megaoesophagus · PU/PD · autonomic signs<br>
-      <span style="opacity:.75;">Points to central or systemic cause</span>`,
-          },
+        kind: 'gridTable',
+        cols: '0.8fr 1.25fr 1.15fr',
+        dividers: true,
+        headers: ['Complaint', 'What the owner describes', { text: 'Where it points', tone: 'teal' }],
+        rows: [
+          [
+            '<strong>👁️ Visible pupil change</strong>',
+            'Anisocoria · dyscoria · a persistently large or small pupil; owner notices asymmetry or a fixed pupil',
+            { text: 'Iris / lens, or EFFERENT arm (CN III · sympathetic) — vision usually preserved', tone: 'teal' },
+          ],
+          [
+            '<strong>👀 Vision change</strong>',
+            'Bumping into objects · hesitant in new places · sudden vs gradual onset',
+            { text: 'AFFERENT arm — retina, optic nerve or cortex; usually the chief complaint', tone: 'teal' },
+          ],
+          [
+            '<strong>🧠 Systemic / neuro signs</strong>',
+            'Mentation change · ataxia · CN deficits · megaoesophagus · PU/PD · autonomic signs',
+            { text: 'Central or systemic — intracranial disease, dysautonomia, SARDS / HAC', tone: 'teal' },
+          ],
         ],
       },
       { kind: 'step', text: '📋 ONSET, DURATION, PROGRESSION' },
+      // Tempo is the single most discriminating history question here, and it
+      // maps one-to-one onto a differential list + a first move — a table, not
+      // four run-on sentences.
       {
-        kind: 'check',
-        html: `<strong>Peracute (min–hours):</strong> Acute glaucoma · anterior lens luxation · trauma · CVA · acute uveitis · pharmacological exposure.<br>
-    <strong>Acute (days):</strong> Optic neuritis · MUA · retinal detachment · SARDS · infectious uveitis · Horner's idiopathic (Golden Retriever).<br>
-    <strong>Subacute (weeks):</strong> Neoplasia (orbital, intracranial, mediastinal causing 2nd-order Horner's) · chronic uveitis · cataract + 2° glaucoma.<br>
-    <strong>Chronic / progressive:</strong> Senile iris atrophy · PRA · degenerative cataract · uveal cysts (incidental) · chronic Horner's with concurrent OM.<br><br>
-    <strong>Unilateral or bilateral?</strong><br>
-    • Unilateral → local cause likely (Horner's, uveitis, glaucoma, trauma, lens luxation)<br>
-    • Bilateral → systemic / central / drug cause (SARDS, optic neuritis, dysautonomia, central blindness, atropine, opioids, ketamine, sympathomimetics)`,
+        kind: 'gridTable',
+        cols: '0.62fr 1.5fr 0.95fr',
+        dividers: true,
+        headers: ['Tempo', 'Differentials', { text: 'First move', tone: 'teal' }],
+        rows: [
+          [
+            { text: '<strong>Peracute</strong><br>min–hours', tone: 'danger' },
+            "Acute glaucoma · anterior lens luxation · trauma · CVA · acute uveitis · pharmacological exposure",
+            { text: 'IOP + fundus <strong>today</strong> — sight-threatening', tone: 'danger' },
+          ],
+          [
+            { text: '<strong>Acute</strong><br>days', tone: 'warning' },
+            "Optic neuritis · MUA · retinal detachment · SARDS · infectious uveitis · idiopathic Horner's (Golden Retriever)",
+            { text: 'BP + fundus + chromatic PLR; MRI/CSF if central', tone: 'warning' },
+          ],
+          [
+            { text: '<strong>Subacute</strong><br>weeks', tone: 'violet' },
+            "Neoplasia (orbital · intracranial · mediastinal → 2nd-order Horner's) · chronic uveitis · cataract + 2° glaucoma",
+            { text: 'Thoracic radiographs + orbital / brain imaging', tone: 'violet' },
+          ],
+          [
+            { text: '<strong>Chronic</strong><br>progressive', tone: 'green' },
+            "Senile iris atrophy · PRA · degenerative cataract · uveal cysts (incidental) · chronic Horner's with concurrent OM",
+            { text: 'Often benign — confirm vision, IOP and fundus are normal', tone: 'green' },
+          ],
+        ],
+      },
+      {
+        kind: 'gridTable',
+        label: 'Unilateral or bilateral?',
+        cols: '0.42fr 1fr 1fr',
+        dividers: true,
+        headers: ['', { text: '◐ Unilateral', tone: 'info' }, { text: '◉ Bilateral', tone: 'violet' }],
+        rows: [
+          [
+            'Implies',
+            { text: 'A <strong>local</strong> cause', tone: 'info' },
+            { text: 'A <strong>systemic, central or drug</strong> cause', tone: 'violet' },
+          ],
+          [
+            'Think',
+            { text: "Horner's · uveitis · glaucoma · trauma · lens luxation · iris atrophy", tone: 'info' },
+            { text: 'SARDS · optic neuritis · dysautonomia · central blindness', tone: 'violet' },
+          ],
+          [
+            'Also ask',
+            { text: 'Which eye is the abnormal one? (light vs dark room rule)', tone: 'info' },
+            { text: 'Any drug? atropine · opioids · ketamine · sympathomimetics', tone: 'violet' },
+          ],
+        ],
       },
       { kind: 'step', text: '💊 DRUG + EXPOSURE HISTORY' },
+      // Agent → pupil → the question that confirms it. Mydriasis is violet and
+      // miosis blue throughout the sign (the neuro branch uses the same pair),
+      // so the middle column is scannable on its own. The dog/cat opioid split
+      // sits on adjacent rows because that is where it is misread.
       {
-        kind: 'check',
-        html: `<strong>Drugs causing mydriasis:</strong><br>
-    • Topical atropine, tropicamide, phenylephrine, cyclopentolate<br>
-    • Systemic atropine (premed), glycopyrrolate<br>
-    • Opioids in cats (paradoxical mydriasis), ketamine, amphetamines, cocaine<br>
-    • Tricyclic antidepressants, antihistamines (anticholinergic)<br><br>
-    <strong>Drugs causing miosis:</strong><br>
-    • Opioids in dogs (morphine, fentanyl)<br>
-    • Topical pilocarpine, demecarium, latanoprost (also lowers IOP)<br>
-    • Organophosphate toxicity (SLUDGE signs)<br><br>
-    <strong>Toxin exposure:</strong> jimson weed (atropine — mydriasis), organophosphates / carbamates (miosis), strychnine. Lily ingestion in cats causes AKI rather than direct pupillary signs.<br><br>
-    <strong>Trauma history:</strong> Head trauma → ipsilateral mydriasis (CN III compression, intracranial bleed) — neurosurgical emergency.`,
+        kind: 'gridTable',
+        cols: '1fr 0.62fr 1.15fr',
+        dividers: true,
+        headers: ['Agent', 'Pupil', { text: 'Clue / what to ask', tone: 'teal' }],
+        rows: [
+          { section: 'Drugs → mydriasis' },
+          ['Topical <strong>atropine</strong> · tropicamide · phenylephrine · cyclopentolate', { text: 'Mydriasis', tone: 'violet' }, 'Any recent eye exam or drops? Tropicamide wears off in hours, atropine in days'],
+          ['Systemic <strong>atropine</strong> (premed) · glycopyrrolate', { text: 'Mydriasis<br>bilateral', tone: 'violet' }, "Check today's anaesthetic record"],
+          ['<strong>Opioids</strong> — 🐱 cat', { text: 'Mydriasis<br><em>paradoxical</em>', tone: 'violet' }, 'The opposite of the dog — see the miosis block below'],
+          ['Ketamine · amphetamines · cocaine', { text: 'Mydriasis', tone: 'violet' }, 'Dissociative / sympathomimetic'],
+          ['Tricyclic antidepressants · antihistamines', { text: 'Mydriasis', tone: 'violet' }, "Anticholinergic — ask what is in the owner's medicine cabinet"],
+          { section: 'Drugs → miosis' },
+          ['<strong>Opioids</strong> — 🐕 dog (morphine · fentanyl)', { text: 'Miosis', tone: 'info' }, 'Species-split: the same drugs dilate the cat'],
+          ['Topical pilocarpine · demecarium', { text: 'Miosis', tone: 'info' }, 'Glaucoma / KCS therapy — ask before calling it Horner\'s'],
+          ['Latanoprost', { text: 'Miosis<br>+ ↓ IOP', tone: 'info' }, 'Prostaglandin analogue — ineffective in cats (no FP receptors)'],
+          { section: 'Toxins' },
+          ['Jimson weed / <em>Datura</em> (atropine)', { text: 'Mydriasis', tone: 'violet' }, 'Outdoor or rural plant access'],
+          ['Organophosphates · carbamates', { text: 'Miosis', tone: 'info' }, '<strong>SLUDGE</strong> — salivation · lacrimation · urination · defecation · GI upset · emesis'],
+          ['Strychnine', { text: 'Mydriasis', tone: 'violet' }, 'Tonic convulsions · opisthotonus · hypersensitive to touch and sound'],
+          ['Lilies — 🐱', { text: 'No pupil sign', dim: true }, 'Causes AKI, not pupillary change — do not pin anisocoria on it'],
+          { section: 'Trauma' },
+          ['Head trauma', { text: 'Ipsilateral mydriasis', tone: 'danger' }, 'CN III compression or intracranial bleed — <strong>neurosurgical emergency</strong>'],
+        ],
       },
       { kind: 'step', text: '🩺 SYSTEMIC / GENERAL HISTORY' },
+      // Each row is a cluster the owner reports, the diagnosis it names, and the
+      // test that settles it. The two dysautonomia lines of the old prose block
+      // are one row — they were the same disease described twice, which is what
+      // made the block feel long without adding a finding.
       {
-        kind: 'check',
-        html: `<strong>SARDS suspicion (dog):</strong> sudden bilateral blindness + weight gain + PU/PD + polyphagia ± HAC-like phenotype → "Cushingoid SARDS" cluster.<br>
-    <strong>Diabetic dog with rapid cataract progression:</strong> lens-induced uveitis → posterior synechia → distorted pupil.<br>
-    <strong>FIV/FeLV/FIP positive cat:</strong> chronic uveitis → posterior synechiae → dyscoria.<br>
-    <strong>Vomiting, regurgitation, dry mucous membranes, urinary retention:</strong> dysautonomia — bilateral mydriasis + decreased tear production + multi-system autonomic failure.<br>
-    <strong>Neurological signs</strong> (seizures, behavioural change, circling, hemiparesis) + anisocoria → intracranial mass / inflammatory CNS disease / CVA — MRI + CSF indicated.<br>
-    <strong>Megaoesophagus + regurgitation + Horner's-like signs:</strong> dysautonomia in dog (rural / outdoor, midwest USA endemic).<br>
-    <strong>Travel + tick exposure:</strong> tick-borne uveitis (Ehrlichia, RMSF).`,
+        kind: 'gridTable',
+        cols: '1.1fr 1fr 0.8fr',
+        dividers: true,
+        headers: ['History cluster', { text: 'Points to', tone: 'teal' }, 'Confirm with'],
+        rows: [
+          [
+            'Sudden bilateral blindness + weight gain + PU/PD + polyphagia ± HAC phenotype — 🐕',
+            { text: '<strong>SARDS</strong> — the "Cushingoid SARDS" cluster', tone: 'teal' },
+            'Chromatic PLR + ERG — fundus normal early',
+          ],
+          [
+            'Diabetic dog, cataract progressing fast — 🐕',
+            { text: 'Lens-induced uveitis → posterior synechia → distorted pupil', tone: 'teal' },
+            'Slit-lamp: aqueous flare + synechiae · IOP',
+          ],
+          [
+            'FIV / FeLV / FIP positive — 🐱',
+            { text: 'Chronic uveitis → posterior synechiae → dyscoria', tone: 'teal' },
+            'Retroviral status · full uveitis work-up',
+          ],
+          [
+            'Vomiting · regurgitation · dry mucous membranes · urinary retention ± megaoesophagus',
+            { text: "<strong>Dysautonomia</strong> — bilateral mydriasis · ↓ tear production · ± Horner's-like signs · multi-system autonomic failure", tone: 'teal' },
+            'STT · thoracic radiographs. 🐕 rural / outdoor, midwest USA endemic',
+          ],
+          [
+            'Seizures · behavioural change · circling · hemiparesis + anisocoria',
+            { text: 'Intracranial mass · inflammatory CNS disease · CVA', tone: 'danger' },
+            { text: '<strong>MRI + CSF</strong>', tone: 'danger' },
+          ],
+          [
+            'Travel + tick exposure',
+            { text: 'Tick-borne uveitis (Ehrlichia · RMSF)', tone: 'teal' },
+            'Tick-borne serology / PCR',
+          ],
+        ],
       },
       { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
@@ -164,105 +255,217 @@ export const abnormalPupilDx: DxApproach = {
     title: 'Exam: Abnormal Pupil',
     blocks: [
       {
-        kind: 'html',
+        kind: 'note',
         noArrowAfter: true,
-        html: `<div style="margin-bottom:10px;padding:9px 12px;background:rgba(251,146,60,0.07);border:1px solid rgba(251,146,60,0.25);border-radius:10px;width:100%;">
-    <div style="font-size:10.5px;font-weight:700;color:var(--hl-orange);margin-bottom:6px;">🐾 SPECIES — NORMAL PUPIL SHAPE (confirm before labelling as abnormal)</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 10px;font-size:9.5px;line-height:1.5;">
-      <div><strong style="color:var(--tone-info-fg);">🐕 Dog:</strong> <strong>round</strong> at all light levels. Any deviation from round = abnormal.</div>
-      <div><strong style="color:var(--hl-orange);">🐱 Cat:</strong> <strong>vertical slit/ellipse in bright light → round/oval in dim light.</strong> A round pupil in a cat with bright ambient light is normal dilation — not mydriasis. Judge only in standardised lighting.</div>
-      <div><strong style="color:var(--tone-info-fg);">Iris atrophy (dog):</strong> very common in senior small breeds — moth-eaten ragged pupil margin, transillumination defects. Can masquerade as neurological mydriasis.</div>
-      <div><strong style="color:var(--hl-orange);">Iris atrophy (cat):</strong> uncommon; usually secondary (chronic uveitis, glaucoma). Blue irises normally thinner and more prone. Always retroilluminate before ascribing to primary degenerative disease in a cat.</div>
-    </div>
-  </div>`,
+        html: '🐾 <strong>Confirm the species-normal pupil before calling one abnormal</strong> — light level, species and age account for most "abnormal" pupils.',
       },
-      { kind: 'step', text: '🩺 STEP 1 — CONFIRM ANISOCORIA + IDENTIFY THE ABNORMAL PUPIL' },
       {
-        kind: 'check',
-        html: `<strong>Compare in bright light AND in a dark room</strong> using a focal light at arm's length:<br>
-    • <strong>Abnormally LARGE pupil</strong> → anisocoria LESS obvious in the dark (the normal pupil dilates and the gap narrows) — lesion preventing constriction (CN III · iris atrophy · pharmacological mydriasis · glaucoma · sympathetic discharge).<br>
-    • <strong>Abnormally SMALL pupil</strong> → anisocoria MORE obvious in the dark (the normal pupil dilates while the abnormal stays small) — lesion preventing dilation (sympathetic denervation = Horner's · uveitis · pharmacological miotic · posterior synechiae).<br>
-    • Always compare to baseline pupil size in normal light; bilateral fixed mydriasis or miosis is missed when you fail to compare to expected size.<br>
-    • <strong>Cat-specific:</strong> assess in both bright and dim light — cat pupil normally transitions from slit to round; a "dilated" cat pupil in a dim exam room may be normal. Also note that the feline iris sphincter is more powerful than the dilator — miosis from uveitis or pilocarpine is more pronounced in cats than dogs at equivalent doses.`,
+        kind: 'gridTable',
+        gap: 6,
+        cols: '0.5fr 1fr 1.2fr',
+        dividers: true,
+        headers: ['', { text: '🐕 Dog', tone: 'info' }, { text: '🐱 Cat', tone: 'warning' }],
+        rows: [
+          [
+            '<strong>Normal shape</strong>',
+            { text: '<strong>Round</strong> at all light levels — any deviation from round is abnormal', tone: 'info' },
+            { text: '<strong>Vertical slit / ellipse in bright light → round / oval in dim light.</strong> A round pupil under bright ambient light is normal dilation, not mydriasis — judge only in standardised lighting', tone: 'warning' },
+          ],
+          [
+            '<strong>Iris atrophy</strong>',
+            { text: 'Very common in senior small breeds — moth-eaten ragged margin, transillumination defects; masquerades as neurological mydriasis', tone: 'info' },
+            { text: 'Uncommon and usually secondary (chronic uveitis, glaucoma); blue irises are thinner and more prone — always retroilluminate before calling it primary degenerative', tone: 'warning' },
+          ],
+        ],
       },
+
+      { kind: 'step', text: '🩺 STEP 1 — CONFIRM ANISOCORIA + IDENTIFY THE ABNORMAL PUPIL' },
+      // The light/dark rule is a two-way comparison, so it reads as two columns —
+      // the same violet/blue pair the neurological branch uses for mydriasis and
+      // miosis, so the reader carries one colour code across the whole sign.
+      {
+        kind: 'gridTable',
+        label: 'Light vs dark room rule — focal light at arm’s length, both conditions',
+        cols: '0.42fr 1fr 1fr',
+        dividers: true,
+        headers: ['', { text: 'Abnormally LARGE pupil', tone: 'violet' }, { text: 'Abnormally SMALL pupil', tone: 'info' }],
+        rows: [
+          [
+            '<strong>In the dark</strong>',
+            { text: 'Anisocoria <strong>LESS</strong> obvious — the normal pupil dilates and the gap narrows', tone: 'violet' },
+            { text: 'Anisocoria <strong>MORE</strong> obvious — the normal pupil dilates while the abnormal one stays small', tone: 'info' },
+          ],
+          [
+            '<strong>Lesion</strong>',
+            { text: 'Prevents <strong>constriction</strong>', tone: 'violet' },
+            { text: 'Prevents <strong>dilation</strong>', tone: 'info' },
+          ],
+          [
+            '<strong>Causes</strong>',
+            { text: 'CN III · iris atrophy · pharmacological mydriasis · glaucoma · sympathetic discharge', tone: 'violet' },
+            { text: "Horner's (sympathetic denervation) · uveitis · pharmacological miotic · posterior synechiae", tone: 'info' },
+          ],
+        ],
+      },
+      {
+        kind: 'note',
+        html: '• Compare against the <strong>expected</strong> size in normal light too — bilateral fixed mydriasis or miosis is missed when you only compare one pupil with the other.<br>• 🐱 The feline iris sphincter outmuscles the dilator, so miosis from uveitis or pilocarpine is more pronounced than in the dog at equivalent doses.',
+      },
+
       { kind: 'step', text: '🔦 STEP 2 — PLR BATTERY (afferent vs efferent localisation)' },
       {
-        kind: 'check',
-        html: `<strong>Direct PLR</strong> = CN II afferent → CN III efferent in same eye.<br>
-    <strong>Consensual (indirect) PLR</strong> = light into eye A causes constriction of pupil B; tests crossed optic fibres.<br>
-    <strong>Swinging-light test</strong> = detects relative afferent pupillary defect (RAPD): light moves between eyes; an eye with optic-nerve / retinal disease shows paradoxical dilation when re-illuminated.<br><br>
-    <strong>Localisation by the 5 classical PLR-lesion patterns:</strong>
-    <div style="display:grid;grid-template-columns:1.3fr 0.9fr 0.9fr 0.9fr 0.9fr;gap:3px 6px;font-size:9px;margin:6px 0 4px 0;">
-      <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.2);">Lesion site</div>
-      <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.2);">Pupil R at rest</div>
-      <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.2);">Pupil L at rest</div>
-      <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.2);">Direct PLR</div>
-      <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.2);">Indirect PLR</div>
-      <div>1. Pre-chiasmal (R)</div><div>Dilated</div><div>Normal</div><div>R: absent</div><div>R→L: present · L→R: absent</div>
-      <div>2. Focal optic tract (R)</div><div>Normal</div><div>Normal</div><div>Both present</div><div>Both present</div>
-      <div>3. Chiasmal</div><div>Dilated</div><div>Dilated</div><div>Both absent</div><div>Both absent</div>
-      <div>4. CN III (L)</div><div>Normal</div><div>Dilated</div><div>R: present · L: absent</div><div>R→L: absent · L→R: present</div>
-      <div>5. Parasymp nucleus of CN III (R)</div><div>Dilated</div><div>Normal</div><div>R: absent · L: present</div><div>R→L: present · L→R: absent</div>
-    </div>
-    <span style="font-size:9.5px;opacity:.75;">Pre-chiasmal = retina/optic nerve · Optic tract → LGN · CN III lesion = ipsilateral mydriasis + ptosis + lateral strabismus + ophthalmoparesis.</span>`,
+        kind: 'gridTable',
+        cols: '0.6fr 1fr 1fr',
+        dividers: true,
+        headers: ['Test', 'What you do', { text: 'What it detects', tone: 'teal' }],
+        rows: [
+          ['<strong>Direct PLR</strong>', 'Light into one eye, watch that same pupil', { text: 'CN II afferent → CN III efferent in that eye', tone: 'teal' }],
+          ['<strong>Consensual</strong><br>(indirect) PLR', 'Light into eye A, watch pupil B', { text: 'The crossed optic fibres', tone: 'teal' }],
+          ['<strong>Swinging-light</strong>', 'Move the light between the eyes', { text: 'Relative afferent pupillary defect (RAPD) — an eye with retinal / optic-nerve disease <strong>dilates paradoxically</strong> when re-illuminated', tone: 'teal' }],
+        ],
       },
+      {
+        kind: 'gridTable',
+        label: 'The 5 classical PLR-lesion patterns',
+        scroll: true,
+        minWidth: 540,
+        cols: '1.25fr 0.7fr 0.7fr 0.95fr 1.25fr',
+        dividers: true,
+        headers: ['Lesion site', 'Pupil R at rest', 'Pupil L at rest', 'Direct PLR', 'Indirect PLR'],
+        rows: [
+          ['<strong>1.</strong> Pre-chiasmal (R)', { text: 'Dilated', tone: 'violet' }, 'Normal', 'R: absent', 'R→L: present · L→R: absent'],
+          ['<strong>2.</strong> Focal optic tract (R)', 'Normal', 'Normal', { text: 'Both present', tone: 'green' }, { text: 'Both present', tone: 'green' }],
+          ['<strong>3.</strong> Chiasmal', { text: 'Dilated', tone: 'violet' }, { text: 'Dilated', tone: 'violet' }, { text: 'Both absent', tone: 'danger' }, { text: 'Both absent', tone: 'danger' }],
+          ['<strong>4.</strong> CN III (L)', 'Normal', { text: 'Dilated', tone: 'violet' }, 'R: present · L: absent', 'R→L: absent · L→R: present'],
+          ['<strong>5.</strong> Parasympathetic nucleus of CN III (R)', { text: 'Dilated', tone: 'violet' }, 'Normal', 'R: absent · L: present', 'R→L: present · L→R: absent'],
+        ],
+      },
+      {
+        kind: 'note',
+        html: 'Pre-chiasmal = retina / optic nerve · optic tract → LGN · a CN III lesion also gives ipsilateral <strong>ptosis, lateral strabismus and ophthalmoparesis</strong>, which is what separates it from pattern 5.',
+      },
+
       { kind: 'step', text: '💡 STEP 3 — DAZZLE + MENACE (separate vision from PLR)' },
       {
-        kind: 'check',
-        html: `<strong>Dazzle reflex</strong>: subcortical (CN II → CN VII via colliculus). Present even when cortically blind. Absent = retina / optic nerve / midbrain.<br>
-    <strong>Menace response</strong>: cortical (CN II → cortex → CN VII). Tests vision pathway. Develops at 10–12 wks of age.<br>
-    <strong>Combinations:</strong><br>
-    • Absent menace + intact dazzle + intact PLR → <strong>cortical blindness</strong> (forebrain — MUA, neoplasia, hepatic encephalopathy, hypertensive encephalopathy).<br>
-    • Absent menace + intact dazzle + absent PLR in affected eye → <strong>optic nerve / chiasmal lesion</strong>.<br>
-    • Absent menace + absent dazzle + absent PLR → <strong>retinal disease</strong> (SARDS, RD, end-stage PRA) or pre-geniculate lesion.<br>
-    • Absent menace + absent dazzle + PLR present with BLUE light only → <strong>SARDS</strong> (intrinsically photosensitive RGCs preserved).`,
+        kind: 'gridTable',
+        cols: '0.45fr 1fr 1.15fr',
+        dividers: true,
+        headers: ['Reflex', 'Pathway', { text: 'What it tells you', tone: 'teal' }],
+        rows: [
+          ['<strong>Dazzle</strong>', 'Subcortical — CN II → colliculus → CN VII', { text: 'Present even in a cortically blind animal. Absent = retina / optic nerve / midbrain', tone: 'teal' }],
+          ['<strong>Menace</strong>', 'Cortical — CN II → cortex → CN VII', { text: 'Tests the vision pathway. Not developed until <strong>10–12 weeks</strong> of age', tone: 'teal' }],
+        ],
       },
+      {
+        kind: 'gridTable',
+        label: 'Read menace, dazzle and PLR together',
+        cols: '0.5fr 0.5fr 0.85fr 1.5fr',
+        dividers: true,
+        headers: ['Menace', 'Dazzle', 'PLR', { text: 'Localisation', tone: 'teal' }],
+        rows: [
+          [{ text: 'Absent', tone: 'danger' }, { text: 'Intact', tone: 'green' }, { text: 'Intact', tone: 'green' }, { text: '<strong>Cortical blindness</strong> — forebrain (MUA · neoplasia · hepatic or hypertensive encephalopathy)', tone: 'teal' }],
+          [{ text: 'Absent', tone: 'danger' }, { text: 'Intact', tone: 'green' }, { text: 'Absent in the affected eye', tone: 'danger' }, { text: '<strong>Optic nerve / chiasmal lesion</strong>', tone: 'teal' }],
+          [{ text: 'Absent', tone: 'danger' }, { text: 'Absent', tone: 'danger' }, { text: 'Absent', tone: 'danger' }, { text: '<strong>Retinal disease</strong> — SARDS · retinal detachment · end-stage PRA — or a pre-geniculate lesion', tone: 'teal' }],
+          [{ text: 'Absent', tone: 'danger' }, { text: 'Absent', tone: 'danger' }, { text: 'Present with <strong>BLUE light only</strong>', tone: 'warning' }, { text: '<strong>SARDS</strong> — intrinsically photosensitive retinal ganglion cells are preserved', tone: 'teal' }],
+        ],
+      },
+
       { kind: 'step', text: '👁️ STEP 4 — SLIT-LAMP / FOCAL LIGHT — PUPIL SHAPE + IRIS' },
       {
-        kind: 'check',
-        html: `<div style="display:grid;grid-template-columns:1fr 1.2fr;gap:5px 8px;font-size:10px;line-height:1.45;">
-      <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Finding</div>
-      <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Most likely</div>
-      <div>Dyscoria (D-shape, irregular pupil)</div><div style="color:var(--tone-warning-fg);">Posterior synechiae · iris atrophy · congenital · iris coloboma</div>
-      <div>Ragged margin, transilluminates</div><div style="color:var(--tone-info-fg);">Senile iris atrophy (mistaken for true mydriasis)</div>
-      <div>Iris-to-iris / iris-to-lens / iris-to-cornea strand</div><div style="color:var(--tone-violet-fg);">Persistent pupillary membranes (PPMs)</div>
-      <div>Round, free-floating pigmented sphere in AC</div><div style="color:var(--tone-green-fg);">Uveal cyst (transilluminates · benign · Golden Retriever)</div>
-      <div>Solid pigmented iris mass</div><div style="color:var(--tone-danger-title);">Iris melanoma / diffuse iris melanoma (cat)</div>
-      <div>Posterior synechiae adherent to lens</div><div style="color:var(--tone-danger-fg);">Chronic uveitis · 2° glaucoma risk if 360°</div>
-      <div>Aqueous flare + miosis + ↓ IOP</div><div style="color:var(--tone-danger-fg);">Anterior uveitis</div>
-      <div>Mid-fixed mydriasis + corneal oedema + ↑ IOP</div><div style="color:var(--tone-danger-title);">Acute glaucoma</div>
-      <div>Lens visible in AC / aphakic crescent</div><div style="color:var(--tone-danger-title);">Anterior lens luxation</div>
-      <div>Miosis + ptosis + enophthalmos + 3rd eyelid</div><div style="color:var(--tone-warning-fg);">Horner's syndrome</div>
-    </div>`,
+        kind: 'gridTable',
+        cols: '1fr 1.15fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Most likely', tone: 'teal' }],
+        rows: [
+          ['Dyscoria — D-shape or irregular pupil', { text: 'Posterior synechiae · iris atrophy · congenital · iris coloboma', tone: 'warning' }],
+          ['Ragged margin that transilluminates', { text: 'Senile iris atrophy — mistaken for true mydriasis', tone: 'info' }],
+          ['Iris-to-iris · iris-to-lens · iris-to-cornea strand', { text: 'Persistent pupillary membranes (PPMs)', tone: 'violet' }],
+          ['Round free-floating pigmented sphere in the AC', { text: 'Uveal cyst — transilluminates · benign · Golden Retriever', tone: 'green' }],
+          ['Solid pigmented iris mass', { text: 'Iris melanoma · diffuse iris melanoma (🐱)', tone: 'danger' }],
+          ['Posterior synechiae adherent to the lens', { text: 'Chronic uveitis — 2° glaucoma risk if 360°', tone: 'danger' }],
+          ['Aqueous flare + miosis + ↓ IOP', { text: 'Anterior uveitis', tone: 'danger' }],
+          ['Mid-fixed mydriasis + corneal oedema + ↑ IOP', { text: 'Acute glaucoma', tone: 'danger' }],
+          ['Lens visible in the AC / aphakic crescent', { text: 'Anterior lens luxation', tone: 'danger' }],
+          ['Miosis + ptosis + enophthalmos + 3rd eyelid', { text: "Horner's syndrome", tone: 'warning' }],
+        ],
       },
+
       { kind: 'step', text: "🧠 STEP 5 — HORNER'S? LOCALISE 1st / 2nd / 3rd ORDER" },
+      // 3 columns, not 4 — the lesion site folds under the order label so the
+      // "look for" column keeps its width at phone size instead of scrolling
+      // the one thing the reader came for off the right edge.
       {
-        kind: 'check',
-        html: `<strong>1st order (central / brainstem / cervical cord T1):</strong> Rare. Concurrent neurological deficits — ataxia, paresis, hemineglect, vestibular signs. Lesions: cervical IVDD, fibrocartilaginous embolism, cerebrovascular accident, neoplasia. <strong>MRI</strong> + CSF.<br>
-    <strong>2nd order (preganglionic, T1–T3 → cervical sympathetic chain):</strong> Look in the chest and neck — thoracic radiographs (mediastinal mass, thymoma, lymphoma), trauma (brachial plexus avulsion), cervical neoplasia, head/neck surgery history.<br>
-    <strong>3rd order (postganglionic, after cranial cervical ganglion):</strong> Middle / inner ear disease, retrobulbar mass, idiopathic (most common — particularly <strong>Golden Retriever idiopathic Horner's</strong>, typically resolves spontaneously over weeks to months; published median ~15 weeks, range 11–20 weeks, up to 6 months). Otoscopy + CT/MRI bullae and orbit.<br>
-    <strong style="color:var(--hl-orange);">Cat-specific:</strong> middle ear disease is the most common 3rd-order cause in cats (otitis media, nasopharyngeal polyp extending to bulla). Check CN VII concurrently (facial nerve travels through petrous temporal bone — CN VII deficit + Horner's = middle ear). Also consider thoracic causes in outdoor or trauma-exposed cats (rib fracture, thoracic mass). FeLV screen in cats with unexplained anisocoria — spastic pupil syndrome can mimic Horner's.<br><br>
-    <strong>Pharmacological localisation — two-step phenylephrine protocol:</strong>
-    <div style="display:grid;grid-template-columns:1fr 1.1fr;gap:3px 6px;font-size:9.5px;margin:4px 0;">
-      <div style="font-weight:600;">Step / Order</div><div style="font-weight:600;">Expected response</div>
-      <div>Step 1 — 1% phenylephrine, both eyes</div><div>Time to dilation of the affected pupil</div>
-      <div>3rd order (postganglionic — denervation hypersensitivity)</div><div style="color:var(--tone-green-fg);">Dilates in ≤ 20 min with 1% (normal eye does not)</div>
-      <div>Step 2 — if no 1% response → switch to 10% phenylephrine</div><div>Time to bilateral dilation</div>
-      <div>2nd order (preganglionic)</div><div style="color:var(--tone-warning-fg);">10% dilates both pupils in 20–40 min</div>
-      <div>1st order (central)</div><div style="color:var(--tone-danger-fg);">10% &gt; 40 min (slow / minimal)</div>
-    </div>
-    <span style="font-size:9.5px;opacity:.75;">Apply identical drop to contralateral eye and time both — interpret only the time difference, not absolute values. Note: if Horner's has been present &gt;3 weeks, postganglionic axonal degeneration can still develop hypersensitivity in 2nd-order lesions, blurring the test. Always document concurrent neurological exam.</span>`,
+        kind: 'gridTable',
+        cols: '0.62fr 1.4fr 0.85fr',
+        dividers: true,
+        headers: ['Order', { text: 'Look for', tone: 'teal' }, 'Work-up'],
+        rows: [
+          [
+            { text: '<strong>1st</strong> central<br><em>brainstem · cervical cord to T1</em>', tone: 'danger' },
+            { text: 'Rare. <strong>Concurrent neurological deficits</strong> — ataxia, paresis, hemineglect, vestibular signs. Cervical IVDD · fibrocartilaginous embolism · CVA · neoplasia', tone: 'teal' },
+            { text: 'MRI + CSF', tone: 'danger' },
+          ],
+          [
+            { text: '<strong>2nd</strong> preganglionic<br><em>T1–T3 → cervical sympathetic chain</em>', tone: 'warning' },
+            { text: 'Look in the <strong>chest and neck</strong> — mediastinal mass, thymoma, lymphoma; brachial plexus avulsion; cervical neoplasia; recent head or neck surgery', tone: 'teal' },
+            { text: 'Thoracic radiographs ± CT', tone: 'warning' },
+          ],
+          [
+            { text: '<strong>3rd</strong> postganglionic<br><em>after the cranial cervical ganglion</em>', tone: 'green' },
+            { text: 'Middle / inner ear disease · retrobulbar mass · <strong>idiopathic</strong> (most common — Golden Retriever; resolves spontaneously over weeks to months, median ~15 weeks, range 11–20, up to 6 months)', tone: 'teal' },
+            { text: 'Otoscopy + CT/MRI bullae and orbit', tone: 'green' },
+          ],
+        ],
       },
+      {
+        kind: 'callout',
+        tone: 'warning',
+        title: "🐱 CAT — HORNER'S SPECIFICS",
+        html: '• <strong>Middle ear disease is the most common 3rd-order cause</strong> — otitis media, nasopharyngeal polyp extending into the bulla<br>• Check <strong>CN VII at the same time</strong>: the facial nerve runs through the petrous temporal bone, so a CN VII deficit with Horner\'s localises to the middle ear<br>• Consider thoracic causes in outdoor or trauma-exposed cats — rib fracture, thoracic mass<br>• <strong>FeLV screen</strong> any cat with unexplained anisocoria — spastic pupil syndrome mimics Horner\'s',
+      },
+      {
+        kind: 'gridTable',
+        label: 'Two-step phenylephrine protocol',
+        cols: '0.66fr 1fr 1fr',
+        dividers: true,
+        headers: ['Order', { text: 'Step 1 — 1% phenylephrine', tone: 'teal' }, { text: 'Step 2 — 10% if no 1% response', tone: 'teal' }],
+        rows: [
+          [
+            { text: '<strong>3rd</strong> postganglionic', tone: 'green' },
+            { text: '<strong>Dilates in ≤20 min</strong> — denervation hypersensitivity; the normal eye does not', tone: 'green' },
+            { text: 'Not needed', dim: true },
+          ],
+          [
+            { text: '<strong>2nd</strong> preganglionic', tone: 'warning' },
+            { text: 'No response', dim: true },
+            { text: 'Both pupils dilate in <strong>20–40 min</strong>', tone: 'warning' },
+          ],
+          [
+            { text: '<strong>1st</strong> central', tone: 'danger' },
+            { text: 'No response', dim: true },
+            { text: '<strong>&gt;40 min</strong> — slow or minimal', tone: 'danger' },
+          ],
+        ],
+      },
+      {
+        kind: 'note',
+        html: 'Apply the identical drop to the contralateral eye and time both — interpret the <strong>time difference</strong>, never absolute values. Once Horner\'s has been present <strong>&gt;3 weeks</strong>, postganglionic axonal degeneration can give a 2nd-order lesion hypersensitivity too, blurring the test. Always document the concurrent neurological exam.',
+      },
+
       { kind: 'step', text: '🧠 STEP 6 — FULL CN BATTERY + GENERAL NEURO EXAM' },
       {
-        kind: 'check',
-        html: `Document at minimum:<br>
-    • Mentation (forebrain) · postural reactions (any UMN) · gait<br>
-    • CN II–VII palpebral / corneal / facial sensation · CN III/IV/VI eye movement (ophthalmoparesis suggests CN III lesion)<br>
-    • CN VIII vestibular signs (head tilt, nystagmus) — if anisocoria + vestibular = central rostral brainstem lesion until proven otherwise<br>
-    • Symmetry of facial muscles, ear and eyelid position (concurrent CN VII with 3rd-order Horner's points to middle ear)<br>
-    • Autonomic signs: dry mucous membranes, decreased tear production, bradycardia, urinary retention, megaoesophagus → <strong>dysautonomia</strong><br>
-    • Trauma signs: external wounds, scleral haemorrhage, fundus haemorrhage — head trauma with anisocoria = rising ICP until proven otherwise`,
+        kind: 'gridTable',
+        cols: '0.66fr 1fr 1.15fr',
+        dividers: true,
+        headers: ['Document', 'What to record', { text: 'Why it matters', tone: 'teal' }],
+        rows: [
+          ['<strong>Mentation · postural reactions · gait</strong>', 'Forebrain function, any UMN sign', { text: 'Places the lesion centrally', tone: 'teal' }],
+          ['<strong>CN II–VII</strong>', 'Palpebral · corneal · facial sensation; CN III/IV/VI eye movement', { text: 'Ophthalmoparesis suggests a CN III lesion', tone: 'teal' }],
+          ['<strong>CN VIII</strong>', 'Head tilt · nystagmus — name the fast phase', { text: 'Anisocoria + vestibular signs = central rostral brainstem until proven otherwise. Fast phase beats away from the lesion if peripheral, either way if central', tone: 'teal' }],
+          ['<strong>Facial symmetry</strong>', 'Facial muscles, ear and eyelid position', { text: "A CN VII deficit alongside 3rd-order Horner's points to the middle ear", tone: 'teal' }],
+          ['<strong>Autonomic signs</strong>', 'Dry mucous membranes · ↓ tear production · bradycardia · urinary retention · megaoesophagus', { text: '<strong>Dysautonomia</strong>', tone: 'teal' }],
+          ['<strong>Trauma signs</strong>', 'External wounds · scleral haemorrhage · fundic haemorrhage', { text: 'Head trauma with anisocoria = <strong>rising ICP</strong> until proven otherwise', tone: 'danger' }],
+        ],
       },
     ],
     after: [{ kind: 'disclaimer' }],
@@ -273,76 +476,123 @@ export const abnormalPupilDx: DxApproach = {
     blocks: [
       { kind: 'step', tone: 'danger', text: '⚡ STEP 1 — RULE OUT EMERGENCIES FIRST' },
       {
-        kind: 'check',
-        html: `1. <strong>Tonometry</strong> (rebound preferred) — any mid-fixed mydriasis with IOP &gt;25 mmHg = acute glaucoma → refer same-day.<br>
-    2. <strong>Slit-lamp / focal light</strong> — anterior lens position; lens in AC = anterior lens luxation → emergency lensectomy referral.<br>
-    3. <strong>Mentation + general neurological exam</strong> — anisocoria + obtundation, hemiparesis, ataxia, CN deficits = central emergency → MRI within hours if possible.<br>
-    4. <strong>Trauma evaluation</strong> — head trauma + ipsilateral mydriasis = rising ICP / CN III herniation → mannitol 0.5–1 g/kg IV slow + emergent imaging.<br>
-    5. <strong>Drug / toxin history</strong> — exclude pharmacological causes before lengthy workup.`,
+        kind: 'gridTable',
+        cols: '0.72fr 1fr 1.1fr',
+        dividers: true,
+        headers: ['Test', { text: 'Finding', tone: 'danger' }, 'Do now'],
+        rows: [
+          ['<strong>1. Tonometry</strong><br>rebound preferred', { text: 'Mid-fixed mydriasis + IOP <strong>&gt;25 mmHg</strong>', tone: 'danger' }, 'Acute glaucoma → refer <strong>same day</strong>'],
+          ['<strong>2. Slit-lamp / focal light</strong>', { text: 'Lens sitting in the anterior chamber', tone: 'danger' }, 'Anterior lens luxation → emergency lensectomy referral'],
+          ['<strong>3. Mentation + neuro exam</strong>', { text: 'Anisocoria + obtundation · hemiparesis · ataxia · CN deficits', tone: 'danger' }, 'Central emergency → MRI within hours if possible'],
+          ['<strong>4. Trauma evaluation</strong>', { text: 'Head trauma + ipsilateral mydriasis', tone: 'danger' }, 'Rising ICP / CN III herniation → <strong>mannitol 0.5–1 g/kg IV slow</strong> + emergent imaging'],
+          ['<strong>5. Drug / toxin history</strong>', { text: 'Any mydriatic or miotic exposure', tone: 'danger' }, 'Exclude pharmacological causes before a lengthy work-up'],
+        ],
       },
+
       { kind: 'step', text: 'STEP 2 — TARGETED OPHTHALMIC TESTS' },
       {
-        kind: 'check',
-        html: `<strong>Schirmer Tear Test (BEFORE drops)</strong> — bilateral low STT + bilateral mydriasis + autonomic signs = <strong>dysautonomia</strong>. Unilateral low STT + ipsilateral dry nostril = <strong>neurogenic KCS</strong> (CN VII branch).<br>
-    <strong>Fluorescein stain</strong> — corneal ulcer can cause reflex miosis (anterior uveitis component); rule out before topical steroids.<br>
-    <strong>Tonometry</strong> — see emergency step above. ↓ IOP + miosis + flare = anterior uveitis · ↑ IOP + mid-mydriasis = glaucoma.<br>
-    <strong>Slit-lamp</strong> — aqueous flare, KP, synechiae, lens position, iris detail, fibrin in AC.<br>
-    <strong>Mydriatic challenge (tropicamide 1%)</strong> — used to dilate for fundus exam. Failure to dilate or only partial dilation in an otherwise normal eye → posterior synechiae (chronic uveitis sequela).`,
+        kind: 'gridTable',
+        cols: '0.72fr 1fr 1fr',
+        dividers: true,
+        headers: ['Test', 'Result', { text: 'Means', tone: 'teal' }],
+        rows: [
+          ['<strong>Schirmer tear test</strong><br><em>before any drops</em>', 'Bilateral low STT + bilateral mydriasis + autonomic signs', { text: '<strong>Dysautonomia</strong>', tone: 'teal' }],
+          ['<strong>Schirmer tear test</strong>', 'Unilateral low STT + ipsilateral dry nostril', { text: '<strong>Neurogenic KCS</strong> — CN VII branch', tone: 'teal' }],
+          ['<strong>Fluorescein stain</strong>', 'Corneal ulcer', { text: 'Reflex miosis from its uveitis component — rule out before any topical steroid', tone: 'teal' }],
+          ['<strong>Tonometry</strong>', '↓ IOP + miosis + aqueous flare', { text: 'Anterior uveitis', tone: 'teal' }],
+          ['<strong>Tonometry</strong>', '↑ IOP + mid-mydriasis', { text: 'Glaucoma', tone: 'teal' }],
+          ['<strong>Slit-lamp</strong>', 'Aqueous flare · KP · synechiae · lens position · iris detail · fibrin in the AC', { text: 'Localises within the anterior segment', tone: 'teal' }],
+          ['<strong>Mydriatic challenge</strong><br>tropicamide 1%', 'Fails to dilate, or dilates only partially, in an otherwise normal eye', { text: 'Posterior synechiae — a chronic uveitis sequela', tone: 'teal' }],
+        ],
       },
+
       { kind: 'step', text: 'STEP 3 — PHARMACOLOGICAL LOCALISATION' },
       {
-        kind: 'check',
-        html: `<strong>1% phenylephrine — Horner's localisation</strong> (as in Exam step 5):<br>• Rapid response (≤20 min) = 3rd order<br>• Intermediate = 2nd order<br>• Slow = 1st order<br>Always run a contralateral control.<br><br>
-    <strong>Dilute pilocarpine (0.05–0.1%) — dysautonomia / denervation hypersensitivity:</strong> dilute pilocarpine causes constriction within 30 min in a parasympathetically denervated pupil (dysautonomia, CN III parasympathetic nucleus lesion) but no constriction in a normal pupil.<br>
-    <div style="margin:6px 0;padding:7px 10px;background:rgba(251,146,60,0.08);border:1px solid rgba(251,146,60,0.2);border-radius:7px;font-size:9px;line-height:1.55;">
-      <strong style="color:var(--hl-orange);">🐱 CAT — Pilocarpine Testing Cautions:</strong><br>
-      • Pilocarpine is irritating to feline eyes — use 0.05–0.1% only for testing.<br>
-      • Concentrations ≥1% may cause <strong>salivation, vomiting, anorexia, and diarrhoea</strong> from systemic absorption — do NOT use 1–2% pilocarpine in cats (unlike dogs).<br>
-      • Pharmacological testing is <strong>rarely needed in cats</strong> — most iris atrophy is secondary and diagnosable by clinical examination under magnification. Reserve for cases where efferent CN III dysfunction cannot be excluded clinically.<br>
-      • Iris atrophy in cats: uncommon (vs dogs); suspect if slit-lamp shows thinning, holes, or transillumination defects in the iris. Most cases are secondary to chronic uveitis or glaucoma.
-    </div><br>
-    <strong>Atropine response test:</strong> in dysautonomia, atropine 0.04 mg/kg SC produces no rise in heart rate (failed parasympathetic blockade) — supportive evidence.<br><br>
-    <strong>Cocaine 10% or apraclonidine 0.5%</strong>: classical Horner's confirmation tests in humans — limited availability and not routinely used in veterinary practice; phenylephrine is the practical choice.`,
+        kind: 'gridTable',
+        cols: '0.72fr 1fr 1.2fr',
+        dividers: true,
+        headers: ['Test', 'Protocol', { text: 'Interpretation', tone: 'teal' }],
+        rows: [
+          ["<strong>1% phenylephrine</strong><br>Horner's localisation", 'Both eyes, time to dilation — always run the contralateral control (full protocol in Exam step 5)', { text: 'Rapid ≤20 min = <strong>3rd order</strong> · intermediate = <strong>2nd</strong> · slow = <strong>1st</strong>', tone: 'teal' }],
+          ['<strong>Dilute pilocarpine</strong><br>0.05–0.1%', 'Watch for constriction within 30 min', { text: 'Constricts = <strong>parasympathetic denervation</strong> (dysautonomia, CN III parasympathetic nucleus lesion). A normal pupil does not constrict', tone: 'teal' }],
+          ['<strong>Atropine response</strong>', '0.04 mg/kg SC, monitor heart rate', { text: '<strong>No rise in HR</strong> = failed parasympathetic blockade — supports dysautonomia', tone: 'teal' }],
+          ['<strong>Cocaine 10%</strong> · <strong>apraclonidine 0.5%</strong>', "The classical human Horner's confirmation tests", { text: 'Limited availability and not routine in veterinary practice — phenylephrine is the practical choice', dim: true }],
+        ],
       },
+      {
+        kind: 'callout',
+        tone: 'warning',
+        title: '🐱 CAT — PILOCARPINE TESTING CAUTIONS',
+        html: '• Pilocarpine is irritating to feline eyes — use <strong>0.05–0.1% only</strong> for testing<br>• <strong>≥1% can cause salivation, vomiting, anorexia and diarrhoea</strong> from systemic absorption — do NOT use 1–2% in cats, unlike dogs<br>• Pharmacological testing is <strong>rarely needed in cats</strong> — most iris atrophy is secondary and diagnosable under magnification. Reserve it for cases where efferent CN III dysfunction cannot be excluded clinically<br>• Feline iris atrophy: uncommon vs dogs; suspect on slit-lamp thinning, holes or transillumination defects — most are secondary to chronic uveitis or glaucoma',
+      },
+
       { kind: 'step', text: 'STEP 4 — CHROMATIC PLR + ERG (when vision is lost)' },
       {
-        kind: 'check',
-        html: `<strong>Chromatic PLR</strong> (handheld melanopsin-targeted device): differentiates retinal vs optic nerve vs cortical blindness when both eyes are blind with dilated pupils.<br>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px 6px;font-size:9.5px;margin:4px 0;">
-      <div style="font-weight:600;">Condition</div><div style="font-weight:600;">Red PLR</div><div style="font-weight:600;">Blue PLR</div>
-      <div>Normal</div><div style="color:var(--tone-green-fg);">Present</div><div style="color:var(--tone-green-fg);">Present</div>
-      <div>SARDS</div><div style="color:var(--tone-danger-title);">Absent</div><div style="color:var(--tone-green-fg);">Present</div>
-      <div>Optic neuritis</div><div style="color:var(--tone-danger-title);">Absent</div><div style="color:var(--tone-danger-title);">Absent</div>
-      <div>End-stage retinal degeneration</div><div style="color:var(--tone-danger-title);">Absent</div><div style="color:var(--tone-warning-fg);">Reduced / absent</div>
-      <div>Cortical blindness</div><div style="color:var(--tone-green-fg);">Present</div><div style="color:var(--tone-green-fg);">Present</div>
-    </div>
-    <strong>Electroretinography (ERG)</strong> — gold standard for SARDS (flat ERG) vs optic neuritis (preserved ERG, abnormal MRI). Referral.<br>
-    <strong>Visual evoked potentials</strong> — central / cortical vs post-retinal. Referral.`,
+        kind: 'note',
+        noArrowAfter: true,
+        html: 'Chromatic PLR (melanopsin-targeted handheld device) separates <strong>retinal vs optic nerve vs cortical</strong> blindness when both eyes are blind with dilated pupils.',
       },
+      {
+        kind: 'gridTable',
+        gap: 6,
+        cols: '1.2fr 0.7fr 0.85fr',
+        dividers: true,
+        headers: ['Condition', 'Red PLR', 'Blue PLR'],
+        rows: [
+          ['Normal', { text: 'Present', tone: 'green' }, { text: 'Present', tone: 'green' }],
+          ['<strong>SARDS</strong>', { text: 'Absent', tone: 'danger' }, { text: 'Present', tone: 'green' }],
+          ['Optic neuritis', { text: 'Absent', tone: 'danger' }, { text: 'Absent', tone: 'danger' }],
+          ['End-stage retinal degeneration', { text: 'Absent', tone: 'danger' }, { text: 'Reduced / absent', tone: 'warning' }],
+          ['Cortical blindness', { text: 'Present', tone: 'green' }, { text: 'Present', tone: 'green' }],
+        ],
+      },
+      {
+        kind: 'gridTable',
+        label: 'Referral electrodiagnostics',
+        cols: '0.7fr 1.4fr',
+        dividers: true,
+        headers: ['Test', { text: 'What it settles', tone: 'teal' }],
+        rows: [
+          ['<strong>ERG</strong>', { text: 'Gold standard for <strong>SARDS</strong> (flat ERG) vs <strong>optic neuritis</strong> (preserved ERG with an abnormal MRI)', tone: 'teal' }],
+          ['<strong>Visual evoked potentials</strong>', { text: 'Central / cortical vs post-retinal', tone: 'teal' }],
+        ],
+      },
+
       { kind: 'step', text: 'STEP 5 — IMAGING + SYSTEMIC WORKUP' },
       {
-        kind: 'check',
-        html: `<strong>2nd-order Horner's:</strong> Thoracic radiographs ± thoracic CT (mediastinal mass, lymphoma, thymoma, lung mass at thoracic inlet), cervical exam, brachial plexus palpation, ± CT/MRI neck for cervical neoplasia.<br>
-    <strong>3rd-order Horner's:</strong> Otoscopy + CT/MRI of bullae and retrobulbar space for otitis media/interna, polyp (cat), retrobulbar mass.<br>
-    <strong>Central anisocoria (1st-order Horner's / CN III lesion / parasympathetic nucleus / cortical blindness):</strong> MRI brain + CSF analysis — MUA, neoplasia, CVA, infectious encephalitis.<br>
-    <strong>Cataract + posterior synechiae:</strong> ocular ultrasound for posterior segment integrity prior to phacoemulsification referral; check IOP repeatedly.<br>
-    <strong>Hyphaema / retinal detachment + mydriasis:</strong> blood pressure (calm × 3), CBC, biochemistry, urinalysis, coagulation, FeLV/FIV (cat), endocrine workup (HAC, hyperthyroid).<br>
-    <strong>SARDS workup:</strong> ACTH stim / LDDST (HAC look-alike phenotype common), urinalysis, full biochemistry; counsel on irreversibility but rule out treatable mimics first.<br>
-    <strong>Dysautonomia workup:</strong> chest radiographs (megaoesophagus), abdominal radiographs (atonic bladder, megacolon), pilocarpine + atropine tests, Schirmer, full autonomic battery.<br>
-    <strong>Infectious uveitis with posterior synechiae:</strong> Toxoplasma IgG/IgM, FeLV/FIV/FCoV titre, tick-borne panel (region-dependent), fungal serology, BP.`,
+        kind: 'gridTable',
+        cols: '0.8fr 1.5fr',
+        dividers: true,
+        headers: ['Scenario', { text: 'Work-up', tone: 'teal' }],
+        rows: [
+          ["<strong>2nd-order Horner's</strong>", { text: 'Thoracic radiographs ± thoracic CT (mediastinal mass · lymphoma · thymoma · lung mass at the thoracic inlet) · cervical exam · brachial plexus palpation · ± CT/MRI neck for cervical neoplasia', tone: 'teal' }],
+          ["<strong>3rd-order Horner's</strong>", { text: 'Otoscopy + CT/MRI of the bullae and retrobulbar space — otitis media/interna, polyp (🐱), retrobulbar mass', tone: 'teal' }],
+          ["<strong>Central anisocoria</strong><br>1st-order Horner's · CN III lesion · parasympathetic nucleus · cortical blindness", { text: 'MRI brain + CSF analysis — MUA, neoplasia, CVA, infectious encephalitis', tone: 'teal' }],
+          ['<strong>Cataract + posterior synechiae</strong>', { text: 'Ocular ultrasound for posterior segment integrity before phacoemulsification referral; recheck IOP repeatedly', tone: 'teal' }],
+          ['<strong>Hyphaema / retinal detachment + mydriasis</strong>', { text: 'Blood pressure (calm, × 3) · CBC · biochemistry · urinalysis · coagulation · FeLV/FIV (🐱) · endocrine work-up (HAC, hyperthyroid)', tone: 'teal' }],
+          ['<strong>SARDS</strong>', { text: 'ACTH stim / LDDST — the HAC look-alike phenotype is common · urinalysis · full biochemistry. Counsel on irreversibility, but rule out treatable mimics first', tone: 'teal' }],
+          ['<strong>Dysautonomia</strong>', { text: 'Chest radiographs (megaoesophagus) · abdominal radiographs (atonic bladder, megacolon) · pilocarpine + atropine tests · Schirmer · full autonomic battery', tone: 'teal' }],
+          ['<strong>Infectious uveitis + posterior synechiae</strong>', { text: 'Toxoplasma IgG/IgM · FeLV/FIV/FCoV titre · tick-borne panel (region-dependent) · fungal serology · BP', tone: 'teal' }],
+        ],
       },
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'gridTable',
         gap: 10,
-        html: `<strong>⚠️ Therapy pearls while you investigate:</strong><br>
-  • <strong>Acute glaucoma (dog):</strong> topical latanoprost 0.005% q6h + dorzolamide 2% + timolol 0.5%; mannitol 1 g/kg IV slow if vision-threatening — refer same day. <strong>Note: latanoprost is ineffective in cats</strong> (no functional FP prostanoid receptors in feline ciliary body) — use dorzolamide + timolol ± oral carbonic anhydrase inhibitor instead.<br>
-  • <strong>Anterior uveitis with miosis:</strong> topical 1% atropine (only if IOP not elevated) + topical 1% prednisolone acetate q6–8h (no ulcer) — treat underlying cause aggressively.<br>
-  • <strong>Optic neuritis (suspected MUA):</strong> aggressive immunosuppression (prednisolone 2 mg/kg/day + cytotoxic adjunct) — refer for MRI + CSF before chronic therapy.<br>
-  • <strong>Idiopathic Horner's (Golden Retriever):</strong> reassure, phenylephrine 1% q6h can temporarily improve cosmesis; most resolve over weeks to months (median ~15 weeks, up to 6 months).<br>
-  • <strong>Dysautonomia:</strong> supportive care, dilute pilocarpine drops to maintain pupil function, artificial tears; guarded prognosis.<br>
-  • <strong>SARDS:</strong> no proven specific therapy; manage HAC-like phenotype if present; counsel on blindness and quality of life.`,
+        label: '⚠️ Therapy pearls while you investigate',
+        cols: '0.72fr 1.5fr',
+        dividers: true,
+        headers: ['Condition', { text: 'While you investigate', tone: 'warning' }],
+        rows: [
+          ['<strong>Acute glaucoma</strong> — 🐕', { text: 'Topical latanoprost 0.005% q6h + dorzolamide 2% + timolol 0.5%; mannitol 1 g/kg IV slow if vision-threatening — <strong>refer same day</strong>', tone: 'warning' }],
+          ['<strong>Acute glaucoma</strong> — 🐱', { text: '<strong>Latanoprost is ineffective</strong> (no functional FP prostanoid receptors in the feline ciliary body) — use dorzolamide + timolol ± an oral carbonic anhydrase inhibitor', tone: 'warning' }],
+          ['<strong>Anterior uveitis with miosis</strong>', { text: 'Topical 1% atropine (only if IOP is not elevated) + topical 1% prednisolone acetate q6–8h (no ulcer) — treat the underlying cause aggressively', tone: 'warning' }],
+          ['<strong>Optic neuritis</strong><br>suspected MUA', { text: 'Aggressive immunosuppression — prednisolone 2 mg/kg/day + a cytotoxic adjunct. Refer for MRI + CSF before committing to chronic therapy', tone: 'warning' }],
+          ["<strong>Idiopathic Horner's</strong><br>Golden Retriever", { text: 'Reassure; phenylephrine 1% q6h temporarily improves cosmesis. Most resolve over weeks to months (median ~15 weeks, up to 6 months)', tone: 'warning' }],
+          ['<strong>Dysautonomia</strong>', { text: 'Supportive care · dilute pilocarpine drops to maintain pupil function · artificial tears. Guarded prognosis', tone: 'warning' }],
+          ['<strong>SARDS</strong>', { text: 'No proven specific therapy; manage the HAC-like phenotype if present; counsel on blindness and quality of life', tone: 'warning' }],
+        ],
       },
       { kind: 'disclaimer' },
     ],

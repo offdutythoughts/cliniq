@@ -3,7 +3,7 @@
 // in ../cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
-import { stepPair } from './shared/dxHelpers'
+import { VEST_LOC_COLS, VEST_LOC_HEADERS, VEST_LOC_ROWS } from '../vestibularLocalisation'
 
 export const vestibularDx: DxApproach = {
   title: 'Vestibular',
@@ -14,8 +14,15 @@ export const vestibularDx: DxApproach = {
     blocks: [
       { kind: 'branch', text: 'CONFIRM IT IS VESTIBULAR, THEN AGE & ONSET' },
       {
-        kind: 'check',
-        html: `Owners report a "stroke" — head tilt, falling/rolling to one side, circling, nausea/inappetence, nystagmus. Confirm this is vestibular (loss of balance to one side) rather than generalised weakness or seizure.`,
+        kind: 'gridTable',
+        gap: 6,
+        cols: '0.55fr 1.5fr',
+        dividers: true,
+        headers: ['', { text: 'What to do with it', tone: 'teal' }],
+        rows: [
+          ['<strong>Owner says</strong><br><em>"he had a stroke"</em>', { text: 'Head tilt · falling or rolling to one side · tight circling · nausea, inappetence · nystagmus', tone: 'teal' }],
+          ['<strong>Confirm first</strong>', { text: 'Loss of balance <strong>to one side</strong> — not generalised weakness, and not a seizure', tone: 'teal' }],
+        ],
       },
       {
         kind: 'gridTable',
@@ -32,11 +39,16 @@ export const vestibularDx: DxApproach = {
       },
       { kind: 'step', text: '💊 DRUGS, EARS & SYSTEMIC HISTORY' },
       {
-        kind: 'check',
-        html: `<strong>Ototoxic drugs:</strong> topical/systemic aminoglycosides, chlorhexidine flushed into a perforated bulla.<br>
-      <strong>Ear disease history:</strong> chronic otitis, prior ear surgery/TECA, head shaking.<br>
-      <strong>Hypothyroidism (dog)</strong> can cause peripheral vestibular / facial nerve signs.<br>
-      <strong>Systemic illness, pyrexia, multifocal signs</strong> → favour central (encephalitis, neoplasia).`,
+        kind: 'gridTable',
+        cols: '0.6fr 1.15fr 0.75fr',
+        dividers: true,
+        headers: ['Ask about', 'Specifics', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Ototoxic drugs</strong>', 'Topical or systemic aminoglycosides · chlorhexidine flushed into a perforated bulla', { text: 'Peripheral — stop the drug', tone: 'green' }],
+          ['<strong>Ear disease</strong>', 'Chronic otitis · prior ear surgery or TECA · head shaking', { text: 'Peripheral — middle / inner ear', tone: 'green' }],
+          ['<strong>Hypothyroidism</strong> — 🐕', 'Middle-aged to older, larger breeds', { text: 'Peripheral vestibular ± CN VII', tone: 'green' }],
+          ['<strong>Systemic illness</strong>', 'Pyrexia · multifocal signs', { text: '<strong>Central</strong> — encephalitis, neoplasia', tone: 'danger' }],
+        ],
       },
     ],
     after: [
@@ -52,46 +64,70 @@ export const vestibularDx: DxApproach = {
 
       { kind: 'step', text: 'STEP 1 — HANDS-OFF OBSERVATION' },
       {
-        kind: 'check',
-        html: `Observe before touching — anxiety and restraint can mask or exaggerate findings.<br>
-      <strong>Gait:</strong> Rolling/falling direction; ataxia; circling. Note which side the animal falls toward — that is the side of the lesion in most cases.<br>
-      <strong>Head tilt:</strong> Note direction. Head tilt toward lesion = peripheral or central; head tilt AWAY from lesion (paradoxical) = cerebellar / caudal peduncle lesion.<br>
-      <strong>Nystagmus at rest:</strong> Horizontal, rotary, or vertical? Direction-changing with head position?`,
+        kind: 'note',
+        noArrowAfter: true,
+        html: 'Observe before touching — anxiety and restraint mask or exaggerate every sign below.',
+      },
+      // What to look at / what to record / what it means. Prose made the reader
+      // hold four rules in their head at once; the fast-phase rule in particular
+      // only earns its place if it can be found in one glance.
+      {
+        kind: 'gridTable',
+        gap: 6,
+        cols: '0.62fr 0.85fr 1.25fr',
+        dividers: true,
+        headers: ['Observe', 'Record', { text: 'What it means', tone: 'teal' }],
+        rows: [
+          ['<strong>Gait</strong>', 'Rolling / falling direction · circling · ataxia', { text: 'Falls and rolls <strong>toward</strong> the lesion in most cases', tone: 'teal' }],
+          ['<strong>Head tilt</strong>', 'Which ear is held lower', { text: '<strong>Toward lesion</strong> = peripheral <em>or</em> central<br><strong>Away</strong> = paradoxical → cerebellum / caudal peduncle', tone: 'teal' }],
+          ['<strong>Nystagmus</strong><br>1 · is it pathological?', 'Watch the eyes with the head still, then with the head held up, then in dorsal recumbency', { text: 'Only while the head <em>moves</em> = physiological, normal<br>At rest = pathological — <strong>spontaneous</strong> (normal head position) or <strong>positional</strong> (only in certain positions)', tone: 'teal' }],
+          ['<strong>Nystagmus</strong><br>2 · jerk or pendular?', '<strong>Jerk</strong> — slow drift, then a quick flick<br><strong>Pendular</strong> — continuous to-and-fro, no fast phase', { text: '<strong>Jerk</strong> = vestibular · characterise it in 3–5 below<br><strong>Pendular</strong> = congenital visual-pathway anomaly (Siamese · Birman · Himalayan · Belgian Shepherd); <strong>not</strong> vestibular', tone: 'teal' }],
+          ['<strong>Jerk nystagmus</strong><br>3 · plane', 'Horizontal · rotary · vertical<br>Recheck in each head position — does the plane change?', { text: 'Horizontal or rotary, unchanging = peripheral <em>or</em> central<br>Vertical, or direction-changing with head position = <strong>central</strong>', tone: 'teal' }],
+          ['<strong>Jerk nystagmus</strong><br>4 · fast phase', 'Name it by the <strong>flick</strong> — the direction the quick phase beats', { text: 'Slow phase is the pathological one — drifts <strong>toward</strong> the lesion, with the head tilt<br>Fast phase is corrective — beats <strong>away</strong><br>Sides the lesion if peripheral · <strong>unreliable if central</strong> (may beat either way)', tone: 'teal' }],
+          ['<strong>Jerk nystagmus</strong><br>5 · rate', 'Beats per minute', { text: '&gt;66/min → peripheral (95% specific · 85% sensitive)', tone: 'teal' }],
+        ],
       },
 
       { kind: 'step', text: 'STEP 2 — FOUR SIGNS THAT MEAN CENTRAL' },
       {
-        kind: 'check',
-        html: `Any one of these places the lesion centrally (brainstem/cerebellum):<br>
-      1. <strong>Postural (proprioceptive) deficits</strong>, especially unilateral — the most reliable sign of central disease.<br>
-      2. <strong>Vertical nystagmus, or nystagmus that changes direction with head position.</strong><br>
-      3. <strong>Cranial nerve deficits other than CN VII / Horner</strong> (these two can occur with peripheral disease near the inner ear).<br>
-      4. <strong>Decreased level of consciousness.</strong>`,
+        kind: 'note',
+        noArrowAfter: true,
+        html: 'Any <strong>one</strong> of these four places the lesion centrally — brainstem or cerebellum.',
+      },
+      {
+        kind: 'gridTable',
+        gap: 6,
+        cols: '1fr 1fr',
+        dividers: true,
+        headers: ['Sign', { text: 'Why it counts', tone: 'danger' }],
+        rows: [
+          ['<strong>1. Postural (proprioceptive) deficits</strong> — especially unilateral', { text: 'The <strong>most reliable</strong> sign of central disease', tone: 'danger' }],
+          ['<strong>2. Vertical nystagmus</strong>, or nystagmus that changes direction with head position', { text: 'Peripheral disease never does either', tone: 'danger' }],
+          ["<strong>3. Cranial nerve deficits other than CN VII / Horner's</strong>", { text: 'Those two occur with peripheral disease near the inner ear — anything else is central', tone: 'danger' }],
+          ['<strong>4. Decreased level of consciousness</strong>', { text: 'Reticular formation involvement in the brainstem', tone: 'danger' }],
+        ],
       },
 
       { kind: 'step', text: 'STEP 3 — PERIPHERAL vs CENTRAL vs BILATERAL TABLE' },
       {
         kind: 'gridTable',
-        cols: '1fr 1.4fr 1.4fr 1.4fr',
-        headers: ['', { text: 'Peripheral', tone: 'green' }, { text: 'Central', tone: 'danger' }, { text: 'Bilateral', tone: 'warning' }],
-        rows: [
-          ['Mentation',           { text: 'Alert / normal', tone: 'green' },                              { text: 'Often depressed / obtunded', tone: 'danger' },                        { text: 'Alert / normal', tone: 'warning' }],
-          ['Nystagmus type',      { text: 'Horizontal or rotary only', tone: 'green' },                   { text: 'Any type incl. vertical', tone: 'danger' },                           { text: 'Absent', tone: 'warning' }],
-          ['Nystagmus direction', { text: 'Fixed — does not change with head position', tone: 'green' },   { text: 'May be <strong>direction-changing</strong> or disconjugate', tone: 'danger' }, { text: '—', tone: 'warning' }],
-          ['CP deficits',         { text: '✗ ABSENT', tone: 'green' },                                    { text: '✓ PRESENT', tone: 'danger' },                                         { text: 'Variable', tone: 'warning' }],
-          ['Head tilt',           { text: 'Present (toward lesion)', tone: 'green' },                      { text: 'Present (toward lesion) OR paradoxical', tone: 'danger' },             { text: '✗ ABSENT', tone: 'warning' }],
-          ['Other CN deficits',   { text: "± Horner's · ± CN VII only", tone: 'green' },                   { text: 'Multiple CN V–XII', tone: 'danger' },                                 { text: 'Bilateral ventrolateral strabismus', tone: 'warning' }],
-          ['VOR',                 { text: 'Intact', tone: 'green' },                                      { text: 'May be impaired', tone: 'danger' },                                   { text: 'Absent bilaterally', tone: 'warning' }],
-          ['Gait',                { text: 'Rolling/falling toward lesion; ataxic', tone: 'green' },        { text: 'Ataxia ± hemiparesis', tone: 'danger' },                              { text: 'Wide-based; side-to-side sway; crouching', tone: 'warning' }],
-        ],
+        dividers: true,
+        cols: VEST_LOC_COLS,
+        headers: VEST_LOC_HEADERS,
+        rows: VEST_LOC_ROWS,
       },
 
       { kind: 'step', text: 'STEP 4 — ADDITIONAL EXAM: OTOSCOPY' },
       {
-        kind: 'check',
-        html: `<strong>Otoscopy both ears:</strong> discharge, erythema, proliferative tissue, polyp in the external canal (young cat). Pain on palpation of the bulla or pinnae.<br>
-      <strong>Horner syndrome ipsilateral</strong> (miosis · ptosis · enophthalmos · third eyelid protrusion) — suggests involvement of the postganglionic sympathetic fibres within the middle ear. Supports peripheral disease.<br>
-      <strong>CN VII (facial nerve) deficit ipsilateral</strong> — drooping lip/ear, absent menace/palpebral, inability to blink. The facial nerve courses through the petrous temporal bone adjacent to the inner ear; ipsilateral CN VII deficit with vestibular signs = strong localisation to the middle/inner ear region.`,
+        kind: 'gridTable',
+        cols: '0.95fr 1.25fr',
+        dividers: true,
+        headers: ['Finding', { text: 'What it means', tone: 'teal' }],
+        rows: [
+          ['<strong>Otoscopy, both ears</strong><br>discharge · erythema · proliferative tissue · polyp in the canal (young 🐱) · pain on bulla or pinna palpation', { text: 'Middle / inner ear disease — <strong>peripheral</strong>', tone: 'green' }],
+          ["<strong>Ipsilateral Horner's</strong><br>miosis · ptosis · enophthalmos · third eyelid protrusion", { text: 'Postganglionic sympathetic fibres running through the middle ear — supports <strong>peripheral</strong>', tone: 'green' }],
+          ['<strong>Ipsilateral CN VII deficit</strong><br>drooping lip or ear · absent menace / palpebral · cannot blink', { text: 'The facial nerve runs through the petrous temporal bone beside the inner ear — with vestibular signs this is <strong>strong localisation to the middle / inner ear</strong>', tone: 'green' }],
+        ],
       },
     ],
     after: [
@@ -103,20 +139,89 @@ export const vestibularDx: DxApproach = {
   dx: {
     title: 'Dx: Vestibular — Diagnostics',
     blocks: [
-      ...stepPair(1, 'MINIMUM DATABASE', `<strong>CBC + biochemistry + urinalysis.</strong> Screen for systemic or metabolic disease and establish anaesthetic safety if imaging is likely.<br>
-      <strong>Blood pressure</strong> — hypertension can cause cerebrovascular accident (CVA / stroke).<br>
-      <strong>T4 in cats &gt;7 yr</strong> — hyperthyroidism predisposes to hypertensive brain disease.`),
-      ...stepPair(2, 'OTOSCOPY + NEUROLOGICAL LOCALISATION', `<strong>Otoscopy both ears</strong> — evidence of otitis media/interna (discharge, pain on bulla palpation, polyp in young cat).<br>
-      <strong>Full neurological examination</strong> (see Exam tab): does this patient have any of the four central signs? This single question determines the imaging branch.`),
-      ...stepPair(3, 'PERIPHERAL BRANCH — CT or MRI BULLAE', `<strong>Indicated when:</strong> otoscopy abnormal, chronic otitis history, Horner syndrome, or ipsilateral CN VII deficit.<br>
-      <strong>CT of bullae</strong> — fluid density within the bulla, bony thickening or lysis, nasopharyngeal polyp (young cat with stertor). CT is faster and widely available for bony disease.<br>
-      <strong>MRI bullae</strong> provides superior soft-tissue detail and is preferred when CT is non-diagnostic or soft-tissue extension is suspected.`),
-      ...stepPair(4, 'CENTRAL BRANCH — MRI BRAIN + CSF', `<strong>Any central sign</strong> (CP deficits, vertical/positional nystagmus, multiple CN deficits, ↓ consciousness) → MRI brain + CSF analysis under GA.<br>
-      <strong>MRI:</strong> identify neoplasia, infarct (stroke — T2/FLAIR wedge lesion), GME/MUO, FIP (periventricular contrast enhancement in cats), thiamine deficiency (symmetric brainstem T2 hyperintensity in cats).<br>
-      <strong>CSF:</strong> cell count, differential, protein, cytology ± infectious PCR (Toxoplasma, Neospora, CDV; FIV/FeLV/FCoV in cats).`),
-      ...stepPair(5, 'HYPOTHYROIDISM WORKUP (DOG)', `Hypothyroidism can cause peripheral vestibular and/or facial nerve disease in dogs.<br>
-      Check <strong>total T4 + free T4 + cTSH</strong> in any dog with peripheral vestibular signs + ipsilateral CN VII deficit, especially middle-aged to older dogs of larger breeds.<br>
-      Response to thyroxine supplementation may be slow (weeks to months).`),
+      { kind: 'step', text: 'STEP 1 — MINIMUM DATABASE' },
+      {
+        kind: 'gridTable',
+        cols: '0.85fr 1.4fr',
+        dividers: true,
+        headers: ['Test', { text: 'Why', tone: 'teal' }],
+        rows: [
+          ['<strong>CBC + biochemistry + urinalysis</strong>', { text: 'Screen for systemic or metabolic disease, and establish anaesthetic safety if imaging is likely', tone: 'teal' }],
+          ['<strong>Blood pressure</strong>', { text: 'Hypertension causes cerebrovascular accident (CVA / stroke)', tone: 'teal' }],
+          ['<strong>T4</strong> — 🐱 over 7 yr', { text: 'Hyperthyroidism predisposes to hypertensive brain disease', tone: 'teal' }],
+        ],
+      },
+
+      { kind: 'step', text: 'STEP 2 — OTOSCOPY + NEUROLOGICAL LOCALISATION' },
+      {
+        kind: 'gridTable',
+        cols: '0.85fr 1.4fr',
+        dividers: true,
+        headers: ['Do', { text: 'Looking for', tone: 'teal' }],
+        rows: [
+          ['<strong>Otoscopy, both ears</strong>', { text: 'Otitis media / interna — discharge, pain on bulla palpation, polyp in a young cat', tone: 'teal' }],
+          ['<strong>Full neurological exam</strong><br><em>see the Exam tab</em>', { text: 'Any of the <strong>four central signs</strong> — this single question picks the imaging branch below', tone: 'teal' }],
+        ],
+      },
+
+      { kind: 'step', text: 'STEP 3 — PERIPHERAL BRANCH: CT or MRI BULLAE' },
+      {
+        kind: 'note',
+        noArrowAfter: true,
+        html: '<strong>Indicated when:</strong> otoscopy is abnormal · chronic otitis history · Horner syndrome · ipsilateral CN VII deficit.',
+      },
+      {
+        kind: 'gridTable',
+        gap: 6,
+        cols: '0.5fr 1.25fr 1fr',
+        dividers: true,
+        headers: ['Modality', { text: 'Shows', tone: 'teal' }, 'Choose it when'],
+        rows: [
+          ['<strong>CT bullae</strong>', { text: 'Fluid density within the bulla · bony thickening or lysis · nasopharyngeal polyp (young cat with stertor)', tone: 'teal' }, 'Faster and widely available — first choice for bony disease'],
+          ['<strong>MRI bullae</strong>', { text: 'Superior soft-tissue detail', tone: 'teal' }, 'CT is non-diagnostic, or soft-tissue extension is suspected'],
+        ],
+      },
+
+      { kind: 'step', text: 'STEP 4 — CENTRAL BRANCH: MRI BRAIN + CSF' },
+      {
+        kind: 'note',
+        noArrowAfter: true,
+        html: '<strong>Any</strong> central sign — CP deficits · vertical or positional nystagmus · multiple CN deficits · ↓ consciousness — sends the patient to MRI brain + CSF analysis under GA.',
+      },
+      // MRI finding → diagnosis, rather than a list of diseases the scan "may
+      // identify": the reader is standing in front of the images, so the finding
+      // is the thing they have and the diagnosis is the thing they want.
+      {
+        kind: 'gridTable',
+        gap: 6,
+        cols: '1.35fr 1fr',
+        dividers: true,
+        headers: ['MRI finding', { text: 'Diagnosis', tone: 'teal' }],
+        rows: [
+          ['T2 / FLAIR <strong>wedge-shaped</strong> lesion', { text: 'Infarct — stroke', tone: 'teal' }],
+          ['Mass lesion with contrast enhancement', { text: 'Neoplasia', tone: 'teal' }],
+          ['Multifocal / diffuse T2 + FLAIR hyperintensity, irregular margins, variable enhancement', { text: 'GME / MUO', tone: 'teal' }],
+          ['<strong>Periventricular</strong> contrast enhancement — 🐱', { text: 'FIP', tone: 'teal' }],
+          ['<strong>Symmetric brainstem</strong> T2 hyperintensity — 🐱', { text: 'Thiamine deficiency', tone: 'teal' }],
+        ],
+      },
+      {
+        kind: 'note',
+        html: '<strong>CSF on every central case:</strong> cell count · differential · protein · cytology ± infectious PCR — Toxoplasma, Neospora, CDV; FIV / FeLV / FCoV in cats.',
+      },
+
+      { kind: 'step', text: 'STEP 5 — HYPOTHYROIDISM WORKUP (🐕)' },
+      {
+        kind: 'gridTable',
+        cols: '0.5fr 1.6fr',
+        dividers: true,
+        headers: ['', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Who</strong>', { text: 'Any dog with peripheral vestibular signs + an ipsilateral CN VII deficit — especially middle-aged to older dogs of larger breeds', tone: 'teal' }],
+          ['<strong>Run</strong>', { text: '<strong>Total T4 + free T4 + cTSH</strong>', tone: 'teal' }],
+          ['<strong>Expect</strong>', { text: 'Response to thyroxine supplementation may be slow — weeks to months', tone: 'teal' }],
+        ],
+      },
     ],
     after: [
       {
@@ -133,7 +238,10 @@ export const vestibularDx: DxApproach = {
       {
         kind: 'alert',
         gap: 8,
-        html: `<strong>💡 Clinical pearls:</strong> Idiopathic vestibular disease is a diagnosis of exclusion — the patient must be improving within 72 h. Paradoxical vestibular signs (head tilt <em>away</em> from the lesion) localise to the cerebellum or caudal cerebellar peduncle. Approximately one-third of patients with an apparent peripheral presentation are found to have central disease on advanced imaging — maintain a low threshold for MRI.`,
+        html: `<strong>💡 Clinical pearls:</strong><br>
+      • Idiopathic vestibular disease is a <strong>diagnosis of exclusion</strong> — the patient must be improving within 72 h<br>
+      • Paradoxical signs (head tilt <em>away</em> from the lesion) localise to the cerebellum or caudal cerebellar peduncle<br>
+      • ~⅓ of apparently peripheral presentations have central disease on advanced imaging — keep a low threshold for MRI`,
       },
       { kind: 'disclaimer' },
     ],
