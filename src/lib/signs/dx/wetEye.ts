@@ -49,27 +49,23 @@ export const wetEyeDx: DxApproach = {
       },
       { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
-        kind: 'check',
-        html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
-      <div>
-        <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG</strong><br><br>
-        <strong style="color:var(--tone-warning-fg);">Brachycephalic</strong> (Pug, Bulldog, Pekingese, Shih Tzu, Persian-cross)<br>→ Multi-factorial: lower NLS opening into oropharynx, exposure keratopathy, macroblepharon, entropion, distichiasis. Tear staining classical.<br><br>
-        <strong style="color:var(--tone-green-fg);">Toy / Mini breeds</strong> (Maltese, Toy Poodle, Bichon, Yorkie)<br>→ Cosmetic tear-stain (chronic, non-painful) and chronic KCS or distichiasis.<br><br>
-        <strong style="color:var(--tone-danger-fg);">Cocker Spaniel</strong> → ectropion + cherry eye + KCS + chronic dacryocystitis.<br><br>
-        <strong style="color:var(--tone-warning-fg);">Cavalier King Charles Spaniel, Westie, Yorkie, Bichon</strong> → KCS — paradoxical reflex tearing.<br><br>
-        <strong style="color:var(--tone-violet-fg);">Young dog (&lt;1 yr) with bilateral lifelong wet eyes</strong> → puncta atresia / micropuncta — examine puncta under sedation.<br><br>
-        <strong style="color:var(--tone-danger-fg);">German Shepherd, Greyhound, Husky</strong> → pannus / plasmoma.<br><br>
-        <strong style="color:var(--tone-info-fg);">Older dog, unilateral epiphora ± epistaxis ± facial deformity</strong> → orbital or nasal neoplasia.
-      </div>
-      <div>
-        <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT</strong><br><br>
-        <strong style="color:var(--tone-violet-fg);">Persian / Himalayan / Exotic SH</strong><br>→ Brachycephalic ocular surface disease, lower-punctum malposition, entropion, corneal sequestrum, KCS.<br><br>
-        <strong style="color:var(--tone-warning-fg);">Young cat with bilateral mucopurulent epiphora + sneezing</strong> → feline URTI (FHV-1, FCV, Chlamydia, Mycoplasma).<br><br>
-        <strong style="color:var(--tone-danger-fg);">Outdoor / hunting cat</strong> → trauma, FB (grass awn), bite-wound dacryocystitis.<br><br>
-        <strong style="color:var(--tone-green-fg);">Senior cat with chronic unilateral epiphora ± facial swelling ± nasal discharge</strong> → nasal SCC, lymphoma, fungal rhinitis with NLS obstruction.<br><br>
-        <strong style="color:var(--tone-info-fg);">Kitten with concurrent symblepharon</strong> → severe neonatal FHV-1 with destroyed NLS punctum or canaliculus.
-      </div>
-    </div>`,
+        kind: 'breedClues',
+        dog: [
+          { breeds: ['Pug', 'Bulldog', 'Pekingese', 'Shih Tzu'], tone: 'warning', html: 'brachycephalic — multifactorial: lower NLS opening into the oropharynx, exposure keratopathy, macroblepharon, entropion, distichiasis. Tear staining classical.' },
+          { breeds: ['Maltese', 'Toy Poodle', 'Bichon', 'Yorkshire Terrier'], tone: 'green', html: 'toy / miniature — cosmetic tear stain (chronic, non-painful), chronic KCS or distichiasis.' },
+          { breeds: ['Cocker Spaniel'], tone: 'danger', html: 'ectropion + cherry eye + KCS + chronic dacryocystitis.' },
+          { breeds: ['Cavalier King Charles Spaniel', 'West Highland White Terrier', 'Yorkshire Terrier', 'Bichon'], tone: 'warning', html: 'KCS — paradoxical reflex tearing.' },
+          { breeds: ['German Shepherd', 'Greyhound', 'Husky'], tone: 'danger', html: 'pannus / plasmoma.' },
+          { breeds: ['Young dog (&lt;1 yr), bilateral lifelong wet eyes'], group: 'signalment', tone: 'violet', html: 'puncta atresia / micropuncta — examine the puncta under sedation.' },
+          { breeds: ['Older dog, unilateral epiphora ± epistaxis ± facial deformity'], group: 'signalment', tone: 'info', html: 'orbital or nasal neoplasia.' },
+        ],
+        cat: [
+          { breeds: ['Persian', 'Himalayan', 'Exotic Shorthair'], tone: 'violet', html: 'brachycephalic ocular surface disease, lower-punctum malposition, entropion, corneal sequestrum, KCS.' },
+          { breeds: ['Young cat, bilateral mucopurulent epiphora + sneezing'], group: 'signalment', tone: 'warning', html: 'feline URTI (FHV-1, FCV, Chlamydia, Mycoplasma).' },
+          { breeds: ['Outdoor / hunting cat'], group: 'signalment', tone: 'danger', html: 'trauma, foreign body (grass awn), bite-wound dacryocystitis.' },
+          { breeds: ['Senior cat, chronic unilateral epiphora ± facial swelling ± nasal discharge'], group: 'signalment', tone: 'green', html: 'nasal SCC, lymphoma, fungal rhinitis with NLS obstruction.' },
+          { breeds: ['Kitten with symblepharon'], group: 'signalment', tone: 'info', html: 'severe neonatal FHV-1 with destroyed NLS punctum or canaliculus.' },
+        ],
       },
       { kind: 'step', text: '💊 OTHER HISTORY' },
       {

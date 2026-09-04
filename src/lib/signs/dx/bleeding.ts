@@ -78,33 +78,29 @@ export const bleedingDx: DxApproach = {
       },
       { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
-        kind: 'check',
-        html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
-      <div>
-        <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG</strong><br><br>
-        <strong style="color:var(--tone-danger-fg);">Cocker Spaniel, Poodle, OES, Lhasa Apso, Maltese</strong><br>→ Idiopathic IMTP.<br><br>
-        <strong style="color:var(--tone-warning-fg);">Doberman</strong> → vWD type I (mild–moderate). Pre-op test essential before any surgery.<br><br>
-        <strong style="color:var(--tone-green-fg);">Scottish Terrier, Shetland</strong> → vWD type III (most severe; spontaneous bleeding).<br><br>
-        <strong style="color:var(--tone-violet-fg);">GSD</strong> → haemophilia A (factor VIII, X-linked).<br><br>
-        <strong style="color:var(--tone-danger-fg);">Splenic / hepatic HSA in middle-aged–older large breed</strong> (GSD, Goldie, Lab, Pointer) → acute haemoperitoneum + collapse + pale gums.<br><br>
-        <strong style="color:var(--tone-warning-fg);">Older intact male</strong> → Sertoli cell tumour with hyperestrogenism → bone marrow suppression → pancytopenia + bleeding.<br><br>
-        <strong style="color:var(--tone-info-fg);">Cocker, Springer</strong> → familial vasculopathy (idiopathic cutaneous vasculitis).<br><br>
-        <strong style="color:var(--tone-danger-fg);">Greyhound</strong> → post-operative fibrinolysis tendency (aminocaproic acid prophylaxis).<br><br>
-        <strong style="color:var(--tone-green-fg);">Cavalier King Charles Spaniel</strong> → macrothrombocytopenia (mild, asymptomatic — beware misinterpretation).<br><br>
-        <strong style="color:var(--tone-violet-fg);">Norfolk Terrier, Otterhound</strong> → Glanzmann thrombasthenia.<br><br>
-        <strong style="color:var(--tone-warning-fg);">Sighthound, Greyhound</strong> → CRGV / "Alabama rot" — skin ulcers + AKI + thrombocytopenia.
-      </div>
-      <div>
-        <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT</strong><br><br>
-        <strong style="color:var(--tone-violet-fg);">FeLV / FIV positive</strong><br>→ Bone marrow suppression → thrombocytopenia + anaemia + bleeding tendency.<br><br>
-        <strong style="color:var(--tone-warning-fg);">Cat with sepsis, pancreatitis, severe pyrexia</strong><br>→ DIC.<br><br>
-        <strong style="color:var(--tone-danger-fg);">Mycoplasma haemofelis + concurrent infection</strong><br>→ Haemolytic anaemia + thrombocytopenia.<br><br>
-        <strong style="color:var(--tone-green-fg);">DSH young to middle-aged cat with epistaxis + petechiae</strong><br>→ Tick-borne (in endemic areas), FIP-associated vasculitis, idiopathic IMTP (less common than dog).<br><br>
-        <strong style="color:var(--tone-info-fg);">Birman</strong> → reported hereditary deficiency of factor XII (asymptomatic — prolonged aPTT incidentally).<br><br>
-        <strong style="color:var(--tone-danger-fg);">Outdoor cat with envenomation history</strong><br>→ Snake / spider bite — combined primary + secondary defect.<br><br>
-        <strong style="color:var(--tone-warning-fg);">Cat on long-term anticoagulant for cardiomyopathy</strong><br>→ Iatrogenic — clopidogrel + ATE prevention complications.
-      </div>
-    </div>`,
+        kind: 'breedClues',
+        dog: [
+          { breeds: ['Cocker Spaniel', 'Poodle', 'Old English Sheepdog', 'Lhasa Apso', 'Maltese'], tone: 'danger', html: 'idiopathic IMTP.' },
+          { breeds: ['Doberman'], tone: 'warning', html: 'vWD type I (mild–moderate). Pre-op testing is essential before any surgery.' },
+          { breeds: ['Scottish Terrier', 'Shetland'], tone: 'green', html: 'vWD type III — the most severe form; spontaneous bleeding.' },
+          { breeds: ['German Shepherd'], tone: 'violet', html: 'haemophilia A (factor VIII, X-linked).' },
+          { breeds: ['German Shepherd', 'Golden Retriever', 'Labrador', 'Pointer'], tone: 'danger', html: 'splenic / hepatic HSA in the middle-aged–older large breed → acute haemoperitoneum + collapse + pale gums.' },
+          { breeds: ['Cocker Spaniel', 'Springer'], tone: 'info', html: 'familial vasculopathy (idiopathic cutaneous vasculitis).' },
+          { breeds: ['Greyhound'], tone: 'danger', html: 'post-operative fibrinolysis tendency (aminocaproic acid prophylaxis).' },
+          { breeds: ['Cavalier King Charles Spaniel'], tone: 'green', html: 'macrothrombocytopenia — mild and asymptomatic; beware misinterpreting the low count.' },
+          { breeds: ['Norfolk Terrier', 'Otterhound'], tone: 'violet', html: 'Glanzmann thrombasthenia.' },
+          { breeds: ['Sighthound', 'Greyhound'], tone: 'warning', html: 'CRGV / "Alabama rot" — skin ulcers + AKI + thrombocytopenia.' },
+          { breeds: ['Older intact male'], group: 'signalment', tone: 'warning', html: 'Sertoli cell tumour with hyperestrogenism → bone marrow suppression → pancytopenia + bleeding.' },
+        ],
+        cat: [
+          { breeds: ['Birman'], tone: 'info', html: 'reported hereditary factor XII deficiency (asymptomatic — prolonged aPTT found incidentally).' },
+          { breeds: ['Domestic Shorthair'], tone: 'green', html: 'young to middle-aged with epistaxis + petechiae → tick-borne disease (endemic areas), FIP-associated vasculitis, idiopathic IMTP (less common than in the dog).' },
+          { breeds: ['FeLV / FIV positive'], group: 'signalment', tone: 'violet', html: 'bone marrow suppression → thrombocytopenia + anaemia + bleeding tendency.' },
+          { breeds: ['Sepsis, pancreatitis, severe pyrexia'], group: 'signalment', tone: 'warning', html: 'DIC.' },
+          { breeds: ['Mycoplasma haemofelis'], group: 'signalment', tone: 'danger', html: 'with concurrent infection → haemolytic anaemia + thrombocytopenia.' },
+          { breeds: ['Outdoor cat, envenomation history'], group: 'signalment', tone: 'danger', html: 'snake / spider bite — combined primary + secondary defect.' },
+          { breeds: ['On long-term anticoagulant'], group: 'signalment', tone: 'warning', html: 'iatrogenic — clopidogrel for cardiomyopathy / ATE prevention.' },
+        ],
       },
     ],
     after: [

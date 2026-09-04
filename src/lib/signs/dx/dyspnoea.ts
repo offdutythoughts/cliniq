@@ -84,28 +84,24 @@ export const dyspnoeaDx: DxApproach = {
       },
       { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
-        kind: 'check',
-        html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
-        <div>
-          <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG</strong><br><br>
-          <strong style="color:var(--tone-warning-fg);">Brachycephalic</strong> (Bulldog, French Bulldog, Pug, Boston, Shih Tzu)<br>→ BOAS · secondary lower airway disease · post-obstructive NCPE<br><br>
-          <strong style="color:var(--tone-green-fg);">Large/Giant breeds</strong> (Labrador, Golden, Great Dane, Irish Wolfhound)<br>→ Laryngeal paralysis (GOLPP) · DCM<br><br>
-          <strong style="color:var(--tone-danger-fg);">Toy/Small breeds</strong> (Yorkshire, Chihuahua, Pomeranian, Toy Poodle, Maltese)<br>→ Tracheal collapse · MMVD<br><br>
-          <strong style="color:var(--tone-violet-fg);">CKCS, Dachshund</strong> → MMVD (early onset)<br><br>
-          <strong style="color:var(--tone-violet-fg);">Dobermann, Irish Wolfhound, Great Dane</strong> → DCM → CHF<br><br>
-          <strong style="color:var(--tone-warning-fg);">Husky, Malamute</strong> → Eosinophilic bronchopneumopathy<br><br>
-          <strong style="color:var(--tone-danger-fg);">Cocker Spaniel</strong> → Bronchiectasis · PLN → PTE risk
-        </div>
-        <div>
-          <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT</strong><br><br>
-          <strong style="color:var(--tone-violet-fg);">Maine Coon, Ragdoll, BSH, Persian</strong><br>→ HCM (high risk; can present young)<br><br>
-          <strong style="color:var(--tone-green-fg);">Young cat (1–5 yr)</strong><br>→ Feline asthma · viral URTI · pyothorax (outdoor) · lymphoma<br><br>
-          <strong style="color:var(--tone-warning-fg);">Middle-aged–older cat</strong><br>→ HCM · pleural neoplasia · cranial mediastinal mass · hyperthyroidism<br><br>
-          <strong style="color:var(--tone-danger-fg);">Male cat</strong><br>→ HCM more common (esp Maine Coon)<br><br>
-          <strong style="color:var(--tone-info-fg);">Outdoor/hunting cat</strong><br>→ Pyothorax · lungworm · trauma<br><br>
-          <strong style="color:var(--tone-warning-fg);">FIV/FeLV positive</strong><br>→ Secondary infections · lymphoma · FIP
-        </div>
-      </div>`,
+        kind: 'breedClues',
+        dog: [
+          { breeds: ['Bulldog', 'French Bulldog', 'Pug', 'Boston Terrier', 'Shih Tzu'], tone: 'warning', html: 'brachycephalic — BOAS · secondary lower airway disease · post-obstructive NCPE.' },
+          { breeds: ['Labrador', 'Golden Retriever', 'Great Dane', 'Irish Wolfhound'], tone: 'green', html: 'large / giant breed — laryngeal paralysis (GOLPP) · DCM.' },
+          { breeds: ['Yorkshire Terrier', 'Chihuahua', 'Pomeranian', 'Toy Poodle', 'Maltese'], tone: 'danger', html: 'toy / small breed — tracheal collapse · MMVD.' },
+          { breeds: ['Cavalier King Charles Spaniel', 'Dachshund'], tone: 'violet', html: 'MMVD, early onset.' },
+          { breeds: ['Dobermann', 'Irish Wolfhound', 'Great Dane'], tone: 'violet', html: 'DCM → CHF.' },
+          { breeds: ['Husky', 'Malamute'], tone: 'warning', html: 'eosinophilic bronchopneumopathy.' },
+          { breeds: ['Cocker Spaniel'], tone: 'danger', html: 'bronchiectasis · PLN → PTE risk.' },
+        ],
+        cat: [
+          { breeds: ['Maine Coon', 'Ragdoll', 'British Shorthair', 'Persian'], tone: 'violet', html: 'HCM — high risk, and can present young.' },
+          { breeds: ['Young cat (1–5 yr)'], group: 'signalment', tone: 'green', html: 'feline asthma · viral URTI · pyothorax (outdoor) · lymphoma.' },
+          { breeds: ['Middle-aged–older cat'], group: 'signalment', tone: 'warning', html: 'HCM · pleural neoplasia · cranial mediastinal mass · hyperthyroidism.' },
+          { breeds: ['Male cat'], group: 'signalment', tone: 'danger', html: 'HCM more common (especially Maine Coon).' },
+          { breeds: ['Outdoor / hunting cat'], group: 'signalment', tone: 'info', html: 'pyothorax · lungworm · trauma.' },
+          { breeds: ['FIV / FeLV positive'], group: 'signalment', tone: 'warning', html: 'secondary infections · lymphoma · FIP.' },
+        ],
       },
     ],
     after: [

@@ -64,29 +64,25 @@ export const haematuriaDx: DxApproach = {
       },
       { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
-        kind: 'check',
-        html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
-      <div>
-        <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG</strong><br><br>
-        <strong style="color:var(--tone-danger-fg);">Older bitch (especially Scottie, WHWT, Beagle, Shetland Sheepdog)</strong><br>→ <strong>Urothelial carcinoma (TCC)</strong> — persistent haematuria refractory to antibiotic, trigonal location, CADET BRAF positive in ~80% (specificity &gt;99%).<br><br>
-        <strong style="color:var(--tone-warning-fg);">Intact male middle-aged–older dog</strong><br>→ BPH · bacterial prostatitis · prostatic abscess · prostatic adenocarcinoma (also in neutered males).<br><br>
-        <strong style="color:var(--tone-green-fg);">Bitches of any age</strong><br>→ Bacterial cystitis is the most common LUT cause (E. coli predominates). Recurrent → consider underlying disease (HAC, DM, structural anomaly).<br><br>
-        <strong style="color:var(--tone-violet-fg);">Dalmatian, English Bulldog</strong> → urate uroliths (Dalmatian SLC2A9 mutation; uroliths can also be from PSS).<br><br>
-        <strong style="color:var(--tone-danger-fg);">Miniature Schnauzer, Bichon, Yorkie, Lhasa Apso, Pug</strong> → calcium oxalate uroliths.<br><br>
-        <strong style="color:var(--tone-warning-fg);">German Shepherd</strong> → renal cystadenocarcinoma + nodular dermatofibrosis (RCND, autosomal-dominant FLCN mutation).<br><br>
-        <strong style="color:var(--tone-info-fg);">Boxer, GSD, Scottie</strong> → idiopathic renal haematuria reported.<br><br>
-        <strong style="color:var(--tone-danger-fg);">Sighthounds, Greyhounds</strong> → idiopathic cutaneous and renal glomerular vasculopathy ("Alabama rot" / CRGV) — haematuria + skin lesions + AKI.
-      </div>
-      <div>
-        <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT</strong><br><br>
-        <strong style="color:var(--tone-violet-fg);">Young–middle-aged cat with LUTS</strong><br>→ <strong>Feline idiopathic cystitis (FIC)</strong> — most common cause of LUTS in cats &lt;10 yr. Stress-related; recurrent episodes.<br><br>
-        <strong style="color:var(--tone-warning-fg);">Cat with LUTS + urolithiasis</strong><br>→ Struvite (commercial diet — declining) or calcium oxalate (more common now in some populations).<br><br>
-        <strong style="color:var(--tone-danger-fg);">Male cat with stranguria + collapse + abdominal pain</strong><br>→ Urethral obstruction (struvite plug, calcium oxalate, FIC-related) — life-threatening hyperkalaemia.<br><br>
-        <strong style="color:var(--tone-green-fg);">Older cat with persistent haematuria</strong><br>→ Bladder TCC / lymphoma (rare in cats) — ultrasound + cytology + CADET BRAF (rare positivity in cats).<br><br>
-        <strong style="color:var(--tone-info-fg);">Outdoor cat with anaemia + haemoglobinuria</strong><br>→ Mycoplasma haemofelis, FeLV, oxidative haemolytic anaemia (onion, garlic, paracetamol — DO NOT give to cats), zinc.<br><br>
-        <strong style="color:var(--tone-warning-fg);">CKD cat with concurrent UTI</strong> — often subclinical, found on culture.
-      </div>
-    </div>`,
+        kind: 'breedClues',
+        dog: [
+          { breeds: ['Scottish Terrier', 'West Highland White Terrier', 'Beagle', 'Shetland Sheepdog'], tone: 'danger', html: 'older bitch especially → <strong>urothelial carcinoma (TCC)</strong> — persistent haematuria refractory to antibiotics, trigonal location, CADET BRAF positive in ~80% (specificity &gt;99%).' },
+          { breeds: ['Dalmatian', 'English Bulldog'], tone: 'violet', html: 'urate uroliths (Dalmatian SLC2A9 mutation; also seen with PSS).' },
+          { breeds: ['Miniature Schnauzer', 'Bichon', 'Yorkshire Terrier', 'Lhasa Apso', 'Pug'], tone: 'danger', html: 'calcium oxalate uroliths.' },
+          { breeds: ['German Shepherd'], tone: 'warning', html: 'renal cystadenocarcinoma + nodular dermatofibrosis (RCND, autosomal-dominant FLCN mutation).' },
+          { breeds: ['Boxer', 'German Shepherd', 'Scottish Terrier'], tone: 'info', html: 'idiopathic renal haematuria reported.' },
+          { breeds: ['Sighthound', 'Greyhound'], tone: 'danger', html: 'CRGV / "Alabama rot" — haematuria + skin lesions + AKI.' },
+          { breeds: ['Intact male, middle-aged–older'], group: 'signalment', tone: 'warning', html: 'BPH · bacterial prostatitis · prostatic abscess · prostatic adenocarcinoma (also in neutered males).' },
+          { breeds: ['Bitch of any age'], group: 'signalment', tone: 'green', html: 'bacterial cystitis is the commonest LUT cause (E. coli predominates). Recurrent → look for underlying disease (HAC, DM, structural anomaly).' },
+        ],
+        cat: [
+          { breeds: ['Young–middle-aged cat with LUTS'], group: 'signalment', tone: 'violet', html: '<strong>feline idiopathic cystitis (FIC)</strong> — commonest cause of LUTS under 10 yr. Stress-related; recurrent episodes.' },
+          { breeds: ['LUTS + urolithiasis'], group: 'signalment', tone: 'warning', html: 'struvite (commercial diet — declining) or calcium oxalate (now commoner in some populations).' },
+          { breeds: ['Male cat, stranguria + collapse + abdominal pain'], group: 'signalment', tone: 'danger', html: 'urethral obstruction (struvite plug, calcium oxalate, FIC-related) — life-threatening hyperkalaemia.' },
+          { breeds: ['Older cat, persistent haematuria'], group: 'signalment', tone: 'green', html: 'bladder TCC / lymphoma (rare in cats) — ultrasound + cytology + CADET BRAF (rarely positive in cats).' },
+          { breeds: ['Outdoor cat with anaemia + haemoglobinuria'], group: 'signalment', tone: 'info', html: 'Mycoplasma haemofelis, FeLV, oxidative haemolytic anaemia (onion, garlic, paracetamol — never give to cats), zinc.' },
+          { breeds: ['CKD cat with concurrent UTI'], group: 'signalment', tone: 'warning', html: 'often subclinical — found on culture.' },
+        ],
       },
     ],
     after: [
