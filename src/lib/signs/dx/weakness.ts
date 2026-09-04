@@ -52,13 +52,18 @@ export const weaknessDx: DxApproach = {
       },
       { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
-        kind: 'check',
-        html: `<strong>🐱 Cats — hypokalaemia:</strong> common in CKD and hyperaldosteronism (Conn's syndrome); cervical ventroflexion is the hallmark sign — ask if neck droops or touches sternum.<br>
-      <strong>MDR1/ABCB1 breeds</strong> (Collie, Shetland Sheepdog, Australian Shepherd, Border Collie, Long-haired Whippet): ivermectin and other P-gp substrates → profound ataxia/weakness at standard doses.<br>
-      <strong>Labrador Retriever:</strong> exercise-induced collapse (EIC) due to DYNAMIN1 (DNM1) mutation — episodic hindlimb collapse after intense exercise; DNA test available.<br>
-      <strong>Young German Shepherd / Boxer with progressive LMN paralysis</strong> → hereditary motor/sensory neuropathy (HMSN) / inherited polyneuropathy.<br>
-      <strong>🐕 Border Collie EIC:</strong> distinct from Lab EIC; avoid high-intensity exercise and hot conditions — mechanism involves SLC6A5 variant.<br>
-      <strong>Intact females — always consider:</strong> pyometra (sepsis → weakness), hyperadrenocorticism (PDH), and hormonal fluctuations as systemic causes before pursuing neuromuscular workup.`,
+        kind: 'breedClues',
+        dog: [
+          { breeds: ['Collie', 'Shetland Sheepdog', 'Australian Shepherd', 'Border Collie', 'Long-haired Whippet'], tone: 'warning', html: 'MDR1 / ABCB1 — ivermectin and other P-gp substrates → profound ataxia / weakness at standard doses.' },
+          { breeds: ['Labrador'], tone: 'danger', html: 'exercise-induced collapse (EIC), DYNAMIN1 (DNM1) mutation — episodic hindlimb collapse after intense exercise; DNA test available.' },
+          { breeds: ['Border Collie'], tone: 'info', html: 'Border Collie EIC — distinct from the Labrador form; avoid high-intensity exercise and hot conditions. Mechanism involves an SLC6A5 variant.' },
+          { breeds: ['German Shepherd', 'Boxer'], tone: 'violet', html: 'young dog with progressive LMN paralysis → hereditary motor / sensory neuropathy (HMSN) / inherited polyneuropathy.' },
+          { breeds: ['Intact female'], group: 'signalment', tone: 'green', html: 'always consider pyometra (sepsis → weakness), hyperadrenocorticism (PDH) and hormonal fluctuation as systemic causes before pursuing a neuromuscular workup.' },
+        ],
+        cat: [
+          { breeds: ['Cervical ventroflexion'], group: 'signalment', tone: 'warning', html: 'hypokalaemia — common in CKD and hyperaldosteronism (Conn\'s syndrome); ventroflexion is the hallmark sign. Ask whether the neck droops or touches the sternum.' },
+          { breeds: ['Intact female'], group: 'signalment', tone: 'green', html: 'pyometra (sepsis → weakness) and hormonal causes before a neuromuscular workup.' },
+        ],
       },
     ],
     after: [

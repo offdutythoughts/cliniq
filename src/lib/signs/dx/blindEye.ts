@@ -59,29 +59,25 @@ export const blindEyeDx: DxApproach = {
       },
       { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
       {
-        kind: 'check',
-        html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
-      <div>
-        <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG</strong><br><br>
-        <strong style="color:var(--tone-danger-fg);">Miniature Schnauzer, Brittany, Dachshund, Maltese</strong><br>→ SARDS (sudden bilateral blindness + Cushingoid phenotype)<br><br>
-        <strong style="color:var(--tone-warning-fg);">Collie, Sheltie</strong><br>→ Collie eye anomaly (choroidal hypoplasia + ONH coloboma + RD) — genetic test available<br><br>
-        <strong style="color:var(--tone-green-fg);">Many breeds (over 20): Labrador, Poodle, Cocker, Irish Setter, Tibetan Terrier, Mini Schnauzer</strong><br>→ PRA (genetic tests for prcd, rcd1 etc.)<br><br>
-        <strong style="color:var(--tone-violet-fg);">CKCS, English Springer Spaniel</strong><br>→ Retinal dysplasia (congenital, bilateral)<br><br>
-        <strong style="color:var(--tone-danger-fg);">ABCB1/MDR1 breeds</strong> (Collie, Aussie, Long-haired Whippet, Shetland)<br>→ ivermectin / milbemycin neurotoxicity → blindness + ataxia + coma<br><br>
-        <strong style="color:var(--tone-warning-fg);">Older small breeds with rapidly progressive cataract</strong> → diabetic cataract<br><br>
-        <strong style="color:var(--tone-info-fg);">Cocker, Basset, Springer, Chow, Akita</strong> → primary glaucoma → corneal oedema → vision loss
-      </div>
-      <div>
-        <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT</strong><br><br>
-        <strong style="color:var(--tone-violet-fg);">Older cat with acute bilateral blindness</strong><br>→ systemic hypertension (CKD, hyperthyroid, HAC) — BP first<br><br>
-        <strong style="color:var(--tone-warning-fg);">Any cat on enrofloxacin</strong><br>→ retinal toxicity — stop drug immediately<br><br>
-        <strong style="color:var(--tone-green-fg);">FIV / FeLV positive</strong><br>→ chronic uveitis · intraocular lymphoma · optic neuritis<br><br>
-        <strong style="color:var(--tone-danger-fg);">Outdoor / hunting cat</strong><br>→ toxoplasma chorioretinitis · trauma · fungal (Cryptococcus)<br><br>
-        <strong style="color:var(--tone-info-fg);">Cat on vegetarian / homemade diet</strong><br>→ taurine-deficient retinal degeneration (central retinal atrophy)<br><br>
-        <strong style="color:var(--tone-warning-fg);">Multi-cat / FCoV exposure</strong><br>→ FIP — pyogranulomatous uveitis + chorioretinitis<br><br>
-        <strong style="color:var(--tone-danger-fg);">Kitten / young cat with adhesions</strong><br>→ FHV-1 symblepharon → corneal opacity → vision blocked
-      </div>
-    </div>`,
+        kind: 'breedClues',
+        dog: [
+          { breeds: ['Miniature Schnauzer', 'Brittany', 'Dachshund', 'Maltese'], tone: 'danger', html: 'SARDS â sudden bilateral blindness + Cushingoid phenotype.' },
+          { breeds: ['Collie', 'Sheltie'], tone: 'warning', html: 'Collie eye anomaly â choroidal hypoplasia + ONH coloboma + retinal detachment; genetic test available.' },
+          { breeds: ['Labrador', 'Poodle', 'Cocker', 'Irish Setter', 'Tibetan Terrier', 'Miniature Schnauzer'], tone: 'green', html: 'PRA â over 20 breeds affected; genetic tests for prcd, rcd1 and others.' },
+          { breeds: ['Cavalier King Charles Spaniel', 'English Springer Spaniel'], tone: 'violet', html: 'retinal dysplasia (congenital, bilateral).' },
+          { breeds: ['Collie', 'Australian Shepherd', 'Long-haired Whippet', 'Shetland'], tone: 'danger', html: 'ABCB1 / MDR1 â ivermectin / milbemycin neurotoxicity → blindness + ataxia + coma.' },
+          { breeds: ['Cocker', 'Basset', 'Springer', 'Chow', 'Akita'], tone: 'info', html: 'primary glaucoma → corneal oedema → vision loss.' },
+          { breeds: ['Older small breed, rapidly progressive cataract'], group: 'signalment', tone: 'warning', html: 'diabetic cataract.' },
+        ],
+        cat: [
+          { breeds: ['Older cat, acute bilateral blindness'], group: 'signalment', tone: 'violet', html: 'systemic hypertension (CKD, hyperthyroidism, HAC) — measure BP first.' },
+          { breeds: ['On enrofloxacin'], group: 'signalment', tone: 'warning', html: 'retinal toxicity — stop the drug immediately.' },
+          { breeds: ['FIV / FeLV positive'], group: 'signalment', tone: 'green', html: 'chronic uveitis · intraocular lymphoma · optic neuritis.' },
+          { breeds: ['Outdoor / hunting cat'], group: 'signalment', tone: 'danger', html: 'toxoplasma chorioretinitis · trauma · fungal (Cryptococcus).' },
+          { breeds: ['Vegetarian / homemade diet'], group: 'signalment', tone: 'info', html: 'taurine-deficient retinal degeneration (central retinal atrophy).' },
+          { breeds: ['Multi-cat / FCoV exposure'], group: 'signalment', tone: 'warning', html: 'FIP — pyogranulomatous uveitis + chorioretinitis.' },
+          { breeds: ['Kitten / young cat with adhesions'], group: 'signalment', tone: 'danger', html: 'FHV-1 symblepharon → corneal opacity → vision blocked.' },
+        ],
       },
     ],
     after: [

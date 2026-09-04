@@ -29,40 +29,22 @@ export const encephalopathyDx: DxApproach = {
       },
       { kind: 'step', text: '🐾 SIGNALMENT AND BREED PATTERNS' },
       {
-        kind: 'check',
-        html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
-  <div>
-    <strong style="color:var(--tone-info-fg);font-size:10px;">🐕 DOG — Age/Signalment clues</strong><br><br>
-    <strong style="color:var(--tone-green-fg);">Young + stunted + post-prandial signs:</strong><br>
-    → Congenital PSS (toy breeds: Yorkie, Maltese, Pom, Schnauzer, Shih Tzu); large breeds intrahepatic<br>
-    Clues: ↓BUN, ↓albumin, ↓glucose, ↓cholesterol; ammonium biurate crystals in urine<br>
-    Note: chemistry/bile acids/ammonia may be normal in PSS until 7–12 years of age<br><br>
-    <strong style="color:var(--tone-violet-fg);">Young–middle-aged small breed, progressive multifocal:</strong><br>
-    → MUO (Pug, Maltese, Yorkie, Chihuahua, French Bulldog — NME/NLE/GME)<br><br>
-    <strong style="color:var(--tone-warning-fg);">Middle-aged dog with HAC signs + pituitary macroadenoma:</strong><br>
-    → Early signs (&lt;1.5cm): inappetence, mild obtundation, disorientation, pacing<br>
-    → Severe (&gt;1.5cm): obtundation, circling, tetraparesis, ataxia, seizures<br><br>
-    <strong style="color:var(--tone-danger-fg);">Older dog, progressive, focal:</strong><br>
-    → Neoplasia (glioma — brachycephalics; meningioma — dolichocephalics)<br><br>
-    <strong style="color:var(--tone-warning-fg);">MDR1/ABCB1 breeds (Collie, Australian Shepherd, Shetland Sheepdog):</strong><br>
-    → Ivermectin / macrocyclic lactone CNS toxicity
-  </div>
-  <div>
-    <strong style="color:var(--hl-orange);font-size:10px;">🐱 CAT — Age/Signalment clues</strong><br><br>
-    <strong style="color:var(--tone-info-fg);">Older cat + hypertension + retinal changes:</strong><br>
-    → Hypertensive encephalopathy (CKD, hyperthyroidism, HCM)<br><br>
-    <strong style="color:var(--tone-danger-fg);">Cat on fish/sulphite-preserved diet + vestibular signs + seizures:</strong><br>
-    → Thiamine (B1) deficiency — supplement immediately; signs resolve in weeks<br><br>
-    <strong style="color:var(--tone-violet-fg);">Young cat + FIP-suspect (effusive or dry):</strong><br>
-    → FIP encephalitis (pyogranulomatous vasculitis); CSF protein markedly elevated<br><br>
-    <strong style="color:var(--tone-warning-fg);">Outdoor / unvaccinated cat:</strong><br>
-    → Toxoplasma, Cryptococcus, FIP<br><br>
-    <strong style="color:var(--tone-danger-fg);">Any cat exposed to permethrin spot-on:</strong><br>
-    → Permethrin toxicity — tremors, seizures, hyperthermia; decontaminate + methocarbamol<br><br>
-    <strong style="color:var(--tone-green-fg);">Geriatric dog or cat — gradual onset, no other signs:</strong><br>
-    → Canine/Feline cognitive dysfunction syndrome (CDS)
-  </div>
-</div>`,
+        kind: 'breedClues',
+        dog: [
+          { breeds: ['Yorkshire Terrier', 'Maltese', 'Pomeranian', 'Miniature Schnauzer', 'Shih Tzu'], tone: 'green', html: 'young + stunted + post-prandial signs → congenital PSS (large breeds get intrahepatic shunts). Clues: ↓BUN, ↓albumin, ↓glucose, ↓cholesterol; ammonium biurate crystals in urine. Chemistry, bile acids and ammonia may all stay normal until 7–12 yr.' },
+          { breeds: ['Pug', 'Maltese', 'Yorkshire Terrier', 'Chihuahua', 'French Bulldog'], tone: 'violet', html: 'young–middle-aged small breed with progressive multifocal signs → MUO (NME / NLE / GME).' },
+          { breeds: ['Collie', 'Australian Shepherd', 'Shetland Sheepdog'], tone: 'warning', html: 'MDR1 / ABCB1 — ivermectin / macrocyclic lactone CNS toxicity.' },
+          { breeds: ['Middle-aged dog with HAC signs'], group: 'signalment', tone: 'warning', html: 'pituitary macroadenoma — early (&lt;1.5 cm): inappetence, mild obtundation, disorientation, pacing; severe (&gt;1.5 cm): obtundation, circling, tetraparesis, ataxia, seizures.' },
+          { breeds: ['Older dog, progressive focal signs'], group: 'signalment', tone: 'danger', html: 'neoplasia — glioma in brachycephalics, meningioma in dolichocephalics.' },
+        ],
+        cat: [
+          { breeds: ['Older cat + hypertension + retinal changes'], group: 'signalment', tone: 'info', html: 'hypertensive encephalopathy (CKD, hyperthyroidism, HCM).' },
+          { breeds: ['Fish / sulphite-preserved diet'], group: 'signalment', tone: 'danger', html: 'thiamine (B1) deficiency with vestibular signs + seizures — supplement immediately; signs resolve within weeks.' },
+          { breeds: ['Young cat, FIP-suspect'], group: 'signalment', tone: 'violet', html: 'FIP encephalitis (pyogranulomatous vasculitis); CSF protein markedly elevated.' },
+          { breeds: ['Outdoor / unvaccinated cat'], group: 'signalment', tone: 'warning', html: 'Toxoplasma, Cryptococcus, FIP.' },
+          { breeds: ['Permethrin spot-on exposure'], group: 'signalment', tone: 'danger', html: 'permethrin toxicity — tremors, seizures, hyperthermia; decontaminate + methocarbamol.' },
+          { breeds: ['Geriatric, gradual onset, no other signs'], group: 'signalment', tone: 'green', html: 'cognitive dysfunction syndrome (CDS) — dog or cat.' },
+        ],
       },
       { kind: 'step', text: '💊 TOXIN / DRUG / DIET / SYSTEMIC DISEASE' },
       {
