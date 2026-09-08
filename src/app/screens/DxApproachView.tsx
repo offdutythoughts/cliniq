@@ -119,22 +119,26 @@ function DxAccordion({ b, onNav }: { b: Extract<DxBlock, { kind: 'accordion' }>;
 // ── Breed / signalment picker ────────────────────────────────────────────────
 /** The breed sections used to be two columns of a dozen breed→clue paragraphs
  *  each — a wall you had to read end to end to find your patient. Here you pick
- *  a species and tap (or type) the breed, and only the matching clues render;
- *  "Show all" keeps the whole list one tap away. */
+ *  a species and a breed and only the matching clues render.
+ *
+ *  A native <select> rather than a grid of chips: twenty-odd chips cost ~400px
+ *  of scroll before the first clue appears, which is the wall again in a nicer
+ *  font. The select is one row high, gets the OS picker on a phone, and takes
+ *  type-ahead on a desktop keyboard for free. "Show all" keeps the whole list
+ *  one tap away. */
 function DxBreedClues({ b, onNav }: { b: Extract<DxBlock, { kind: 'breedClues' }>; onNav: Nav }) {
   const dog = b.dog ?? []
   const cat = b.cat ?? []
   const both = dog.length > 0 && cat.length > 0
   const [sp, setSp] = useState<'dog' | 'cat'>(dog.length ? 'dog' : 'cat')
-  const [sel, setSel] = useState<string | null>(null)
-  const [q, setQ] = useState('')
+  const [sel, setSel] = useState('')
   const [all, setAll] = useState(false)
   const clues = sp === 'dog' ? dog : cat
   const h = HUE[sp === 'dog' ? 'info' : 'orange']
 
-  // Chips: every breed named by any clue, deduped. Breeds sort alphabetically
-  // (you scan for a name); the non-breed keys ("Older intact male") keep author
-  // order in their own row, so the breed list stays a breed list.
+  // Every breed named by any clue, deduped. Breeds sort alphabetically (you
+  // scan for a name); the non-breed keys ("Older intact male") keep author
+  // order in their own optgroup, so the breed list stays a breed list.
   const { breeds, other } = useMemo(() => {
     const seen = new Map<string, boolean>()
     for (const c of clues) for (const name of c.breeds) if (!seen.has(name)) seen.set(name, c.group === 'signalment')
@@ -145,22 +149,9 @@ function DxBreedClues({ b, onNav }: { b: Extract<DxBlock, { kind: 'breedClues' }
     }
   }, [clues])
 
-  const needle = q.trim().toLowerCase()
-  const hit = (n: string) => !needle || n.toLowerCase().includes(needle)
   const shown = sel ? clues.filter(c => c.breeds.includes(sel)) : all ? clues : []
 
-  const pickSpecies = (next: 'dog' | 'cat') => { setSp(next); setSel(null); setQ('') }
-  const pickBreed = (name: string) => { setSel(cur => (cur === name ? null : name)); setAll(false) }
-
-  const chip = (name: string) => {
-    const on = sel === name
-    return (
-      <button key={name} type="button" aria-pressed={on} onClick={() => pickBreed(name)}
-        style={s(`padding:5px 9px;border-radius:999px;font-size:10px;line-height:1.2;cursor:pointer;text-align:left;border:1px solid ${on ? `rgba(${h.rgb},var(--tile-bd-a))` : 'var(--border)'};background:${on ? `rgba(${h.rgb},var(--tile-bg-a))` : 'transparent'};color:${on ? h.color : 'var(--gray)'};font-weight:${on ? 700 : 500};`)}>
-        {name}
-      </button>
-    )
-  }
+  const pickSpecies = (next: 'dog' | 'cat') => { setSp(next); setSel('') }
   const spBtn = (id: 'dog' | 'cat', label: string) => {
     const on = sp === id
     const hh = HUE[id === 'dog' ? 'info' : 'orange']
@@ -172,44 +163,38 @@ function DxBreedClues({ b, onNav }: { b: Extract<DxBlock, { kind: 'breedClues' }
     )
   }
 
-  const visibleBreeds = breeds.filter(hit)
-  const visibleOther = other.filter(hit)
-  const total = breeds.length + other.length
-
   return (
     <ToneBox tone="teal" extra="padding:10px 12px;width:100%;">
       <div style={s('display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px;')}>
         <div style={s('font-size:10px;font-weight:700;color:var(--tone-teal-fg);')}>
           {b.title ?? '🐾 Breed & signalment clues'}
         </div>
-        <button type="button" aria-pressed={all} onClick={() => { setAll(v => !v); setSel(null) }}
+        <button type="button" aria-pressed={all} onClick={() => { setAll(v => !v); setSel('') }}
           style={s(`padding:3px 8px;border-radius:999px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid ${all ? 'rgba(var(--tone-teal),var(--tile-bd-a))' : 'var(--border)'};background:${all ? 'rgba(var(--tone-teal),var(--tile-bg-a))' : 'transparent'};color:${all ? 'var(--tone-teal-fg)' : 'var(--gray2)'};flex-shrink:0;`)}>
           {all ? '✓ All' : 'Show all'}
         </button>
       </div>
 
-      {both && <div style={s('display:flex;gap:6px;margin-bottom:7px;')}>{spBtn('dog', '🐕 Dog')}{spBtn('cat', '🐈 Cat')}</div>}
+      {both && <div style={s('display:flex;gap:6px;margin-bottom:6px;')}>{spBtn('dog', '🐕 Dog')}{spBtn('cat', '🐈 Cat')}</div>}
 
-      {total > 8 && (
-        <input value={q} onChange={e => setQ(e.target.value)} placeholder={`Filter ${total} ${sp === 'dog' ? 'dog' : 'cat'} entries…`}
-          style={s('width:100%;box-sizing:border-box;background:var(--navy3);border:1px solid var(--border);border-radius:8px;padding:5px 9px;font-size:11px;color:var(--white);outline:none;margin-bottom:7px;')} />
-      )}
+      <select value={sel} onChange={e => { setSel(e.target.value); setAll(false) }}
+        aria-label={`Breed or signalment (${sp === 'dog' ? 'dog' : 'cat'})`}
+        style={s(`width:100%;box-sizing:border-box;background:var(--navy3);border:1px solid ${sel ? `rgba(${h.rgb},var(--tile-bd-a))` : 'var(--border)'};border-radius:8px;padding:6px 9px;font-size:11px;color:${sel ? h.color : 'var(--gray)'};font-weight:${sel ? 700 : 400};outline:none;`)}>
+        <option value="">{breeds.length ? 'Select a breed…' : 'Select an entry…'}</option>
+        {breeds.length > 0 && (
+          <optgroup label="Breeds">
+            {breeds.map(n => <option key={n} value={n}>{n}</option>)}
+          </optgroup>
+        )}
+        {other.length > 0 && (
+          <optgroup label="Not breed-specific">
+            {other.map(n => <option key={n} value={n}>{n}</option>)}
+          </optgroup>
+        )}
+      </select>
 
-      <div style={s('display:flex;flex-wrap:wrap;gap:4px;')}>{visibleBreeds.map(chip)}</div>
-      {visibleOther.length > 0 && (
-        <>
-          {breeds.length > 0 && (
-            <div style={s('font-size:9px;color:var(--gray2);margin:7px 0 4px;text-transform:uppercase;letter-spacing:.06em;')}>Not breed-specific</div>
-          )}
-          <div style={s('display:flex;flex-wrap:wrap;gap:4px;')}>{visibleOther.map(chip)}</div>
-        </>
-      )}
-      {visibleBreeds.length === 0 && visibleOther.length === 0 && (
-        <div style={s('font-size:10px;color:var(--gray2);')}>No entry for “{q.trim()}” — this sign has no clue recorded for that breed.</div>
-      )}
-
-      {shown.length > 0 ? (
-        <div style={s('display:flex;flex-direction:column;gap:5px;margin-top:8px;')}>
+      {shown.length > 0 && (
+        <div style={s('display:flex;flex-direction:column;gap:5px;margin-top:7px;')}>
           {shown.map((c, i) => {
             const ch = HUE[c.tone ?? 'teal']
             return (
@@ -220,8 +205,6 @@ function DxBreedClues({ b, onNav }: { b: Extract<DxBlock, { kind: 'breedClues' }
             )
           })}
         </div>
-      ) : (
-        <div style={s('font-size:9.5px;color:var(--gray2);margin-top:8px;')}>Tap {breeds.length ? 'a breed' : 'an entry'} to see its clues.</div>
       )}
     </ToneBox>
   )

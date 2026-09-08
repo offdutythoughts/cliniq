@@ -45,29 +45,29 @@ export const abnormalPupilDx: DxApproach = {
       // four run-on sentences.
       {
         kind: 'gridTable',
-        cols: '0.62fr 1.5fr 0.95fr',
+        cols: '0.62fr 0.95fr 1.5fr',
         dividers: true,
-        headers: ['Tempo', 'Differentials', { text: 'First move', tone: 'teal' }],
+        headers: ['Tempo', { text: 'First move', tone: 'teal' }, 'Differentials'],
         rows: [
           [
             { text: '<strong>Peracute</strong><br>min–hours', tone: 'danger' },
-            "Acute glaucoma · anterior lens luxation · trauma · CVA · acute uveitis · pharmacological exposure",
             { text: 'IOP + fundus <strong>today</strong> — sight-threatening', tone: 'danger' },
+            "Acute glaucoma · anterior lens luxation · trauma · CVA · acute uveitis · pharmacological exposure",
           ],
           [
             { text: '<strong>Acute</strong><br>days', tone: 'warning' },
-            "Optic neuritis · MUA · retinal detachment · SARDS · infectious uveitis · idiopathic Horner's (Golden Retriever)",
             { text: 'BP + fundus + chromatic PLR; MRI/CSF if central', tone: 'warning' },
+            "Optic neuritis · MUA · retinal detachment · SARDS · infectious uveitis · idiopathic Horner's (Golden Retriever)",
           ],
           [
             { text: '<strong>Subacute</strong><br>weeks', tone: 'violet' },
-            "Neoplasia (orbital · intracranial · mediastinal → 2nd-order Horner's) · chronic uveitis · cataract + 2° glaucoma",
             { text: 'Thoracic radiographs + orbital / brain imaging', tone: 'violet' },
+            "Neoplasia (orbital · intracranial · mediastinal → 2nd-order Horner's) · chronic uveitis · cataract + 2° glaucoma",
           ],
           [
             { text: '<strong>Chronic</strong><br>progressive', tone: 'green' },
-            "Senile iris atrophy · PRA · degenerative cataract · uveal cysts (incidental) · chronic Horner's with concurrent OM",
             { text: 'Often benign — confirm vision, IOP and fundus are normal', tone: 'green' },
+            "Senile iris atrophy · PRA · degenerative cataract · uveal cysts (incidental) · chronic Horner's with concurrent OM",
           ],
         ],
       },
