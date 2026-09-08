@@ -1,6 +1,6 @@
 'use client'
 import { useMutation, useQuery } from 'convex/react'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import {
   clearCache,
@@ -20,12 +20,19 @@ const RETRY_MAX_MS = 30000
 // open the editor anyway with the locally cached copy.
 const LOCAL_FALLBACK_MS = 1500
 
+export interface NoteListEntry {
+  pageKey: string
+  pageTitle: string
+  updatedAt: number
+}
+
 const isOffline = () => typeof navigator !== 'undefined' && !navigator.onLine
 
 export function useNotes(pageKey: string, pageTitle: string, isOpen: boolean) {
   const editorRef = useRef<HTMLDivElement>(null)
   const [status, setStatus] = useState('Saved')
   const note = useQuery(api.notes.get, isOpen && pageKey ? { pageKey } : 'skip')
+  const listed = useQuery(api.notes.list, isOpen ? {} : 'skip')
   const upsert = useMutation(api.notes.upsert)
   const remove = useMutation(api.notes.remove)
 
@@ -263,7 +270,28 @@ export function useNotes(pageKey: string, pageTitle: string, isOpen: boolean) {
 
   const isReady = !isOpen || note !== undefined || localFallback
 
-  return { editorRef, status, onInput, onCmd, onClear, onExport, isReady }
+  // Every annotated page, for the panel's note picker. Unsynced local edits
+  // (written offline, or in this session before the debounce fired) are merged
+  // over the server list so a note is listed the moment it is written.
+  const noteList = useMemo(() => {
+    if (!isOpen) return []
+    const byKey = new Map<string, NoteListEntry>()
+    for (const row of listed ?? []) byKey.set(row.pageKey, row)
+    for (const pk of listPendingPageKeys()) {
+      const pending = readPending(pk)
+      if (!pending) continue
+      // An empty pending body is a delete that has not reached the server yet.
+      if (!pending.html.trim()) byKey.delete(pk)
+      else byKey.set(pk, { pageKey: pk, pageTitle: pending.pageTitle, updatedAt: pending.editedAt })
+    }
+    return [...byKey.values()].sort((a, b) => b.updatedAt - a.updatedAt)
+    // `status` is the re-read trigger, not an input: it changes on exactly the
+    // transitions that add or clear a pending copy (Saving… / Saved / Cleared),
+    // and localStorage cannot be subscribed to from here.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen, listed, status])
+
+  return { editorRef, status, onInput, onCmd, onClear, onExport, noteList, isReady }
 }
 
 function fallbackCopy(text: string, setStatus: (s: string) => void) {
