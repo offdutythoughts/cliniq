@@ -144,3 +144,74 @@ export function screenMeta(v: View): ScreenMeta {
     }
   }
 }
+
+// ── Note key → View (reverse of screenMeta) ──────────────────────────────────
+// The notes panel lists every page the reader has annotated, so it needs to get
+// from a saved note key back to the page it belongs to. Keys are the legacy
+// scheme built above; anything whose target no longer exists returns null and
+// is shown without an "open page" link.
+
+const dxNoteKeys = (() => {
+  const m = new Map<string, View>()
+  for (const [sign, ap] of Object.entries(DX)) {
+    for (const tab of Object.keys(ap.tabs)) {
+      const Tab = tab.charAt(0).toUpperCase() + tab.slice(1)
+      m.set(`page:dx${dxPascal(sign)}${Tab}`, { kind: 'dx', sign, tab })
+    }
+  }
+  return m
+})()
+
+const locNames = (() => {
+  const m = new Map<string, string>()
+  for (const l of DB.lesion_type) if (l.loc && !m.has(l.loc)) m.set(l.loc, l.loc_name || l.loc)
+  return m
+})()
+
+export function viewFromNoteKey(key: string): View | null {
+  const tabMatch = key.match(/^tab-([0-5])$/)
+  if (tabMatch) return { kind: 'tab', tab: Number(tabMatch[1]) as Tab }
+  const sep = key.indexOf(':')
+  if (sep < 0) return null
+  const id = key.slice(sep + 1)
+  switch (key.slice(0, sep)) {
+    case 'page': return dxNoteKeys.get(key) ?? null
+    case 'flow': return FLOWS[id] ? { kind: 'flow', flowId: id } : null
+    case 'disease': return diseaseById.has(id) ? { kind: 'disease', id } : null
+    case 'proto': return protocolById.has(id) ? { kind: 'protocol', id } : null
+    case 'lesion': return lesionById.has(id) ? { kind: 'subTypeDetail', id } : null
+    case 'diff': return diffById.has(id) ? { kind: 'diff', id } : null
+    case 'loc': {
+      const name = locNames.get(id)
+      return name ? { kind: 'lesionLoc', loc: id, name } : null
+    }
+    default: return null
+  }
+}
+
+/** Where a page sits in the app, for the "Clinical · Abnormal Pupil" breadcrumb
+ *  the notes panel shows above each note. */
+const KIND_SECTION: Record<Exclude<ViewKind, 'tab'>, string> = {
+  flow: 'Clinical',
+  dx: 'Diagnostic',
+  disease: 'Disease',
+  protocol: 'Protocols',
+  lesionLoc: 'Lesions',
+  subTypeDetail: 'Lesions',
+  diff: 'Differentials',
+}
+
+export function sectionName(v: View): string {
+  return v.kind === 'tab' ? TAB_NAMES[v.tab] : KIND_SECTION[v.kind]
+}
+
+/** Human label for a saved note key: "Diagnostic · Abnormal Pupil".
+ *  `stored` is the title recorded when the note was saved — used when the key
+ *  no longer resolves to a page (renamed or removed content). */
+export function noteKeyLabel(key: string, stored?: string): string {
+  const v = viewFromNoteKey(key)
+  if (!v) return stored || key
+  const title = screenMeta(v).noteTitle || stored || key
+  // A tab's own note title already names its section ("Clinical — General").
+  return v.kind === 'tab' ? title : `${sectionName(v)} · ${title}`
+}

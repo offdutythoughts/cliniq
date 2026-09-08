@@ -1,12 +1,12 @@
 'use client'
-import React, { useState, useEffect, useLayoutEffect, useRef, useCallback } from 'react'
+import React, { useState, useEffect, useLayoutEffect, useMemo, useRef, useCallback } from 'react'
 import Topbar from '../../components/Topbar'
 import BottomNav from '../../components/BottomNav'
 import NotesPanel from '../../components/NotesPanel'
 import { useNotes } from '../../hooks/useNotes'
 import { useNotesLocal } from '../../hooks/useNotesLocal'
 import { NavProvider, useNav } from '../nav/NavContext'
-import { screenMeta, viewKey, type View } from '../nav/view'
+import { noteKeyLabel, screenMeta, viewFromNoteKey, viewKey, type View } from '../nav/view'
 import { Screen } from '../screens/Screen'
 import { track } from '../../lib/analytics'
 import type { Tab } from '../../types'
@@ -39,6 +39,7 @@ function PageWithLocal() {
 type NotesHook = (key: string, title: string, open: boolean) => {
   editorRef: React.RefObject<HTMLDivElement | null>
   status: string
+  noteList: { pageKey: string; pageTitle: string; updatedAt: number }[]
   onInput: () => void
   onCmd: (cmd: string, val?: string) => void
   onClear: () => void
@@ -52,8 +53,14 @@ function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
   const screenRef = useRef<HTMLDivElement>(null)
 
   const meta = screenMeta(nav.view)
-  const notes = useNotesHook(meta.noteKey, meta.noteTitle, notesOpen)
   const vk = viewKey(nav.view)
+
+  // The panel normally edits the note for the page on screen; picking another
+  // note from its dropdown overrides that. The override carries the view key it
+  // was made on, so navigating away drops it without an effect.
+  const [picked, setPicked] = useState<{ vk: string; key: string; title: string } | null>(null)
+  const active = picked?.vk === vk ? picked : { key: meta.noteKey, title: meta.noteTitle }
+  const notes = useNotesHook(active.key, active.title, notesOpen)
 
   // Programmatic navigation entry point (deep links + the visual-test driver).
   useEffect(() => {
@@ -72,11 +79,35 @@ function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
   const slideClass = nav.slideDir === 'left' ? 'slide-in-left' : 'slide-in-right'
   const handleNavTo = useCallback((tab: Tab) => nav.navTo(tab), [nav])
   const handleToggleNotes = useCallback(() => {
+    setPicked(null) // reopen on the page's own note, not the last one browsed
     setNotesOpen((v) => {
       track(v ? 'notes_closed' : 'notes_opened')
       return !v
     })
   }, [])
+
+  // Dropdown options: every annotated page, labelled "Diagnostic · Abnormal
+  // Pupil". The stored title is the fallback for keys whose page is gone.
+  const noteOptions = useMemo(
+    () => notes.noteList.map((n) => ({ pageKey: n.pageKey, label: noteKeyLabel(n.pageKey, n.pageTitle) })),
+    [notes.noteList],
+  )
+
+  const handleSelectNote = useCallback((pageKey: string) => {
+    const view = viewFromNoteKey(pageKey)
+    setPicked({ vk, key: pageKey, title: view ? screenMeta(view).noteTitle : pageKey })
+  }, [vk])
+
+  // The page the note in view belongs to — shown next to the title so the
+  // reader can jump there instead of hunting for it.
+  const activeView = viewFromNoteKey(active.key)
+  const handleOpenPage = useCallback(() => {
+    if (!activeView) return
+    setNotesOpen(false)
+    setPicked(null)
+    if (activeView.kind === 'tab') nav.navTo(activeView.tab)
+    else nav.navigate(activeView)
+  }, [activeView, nav])
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
@@ -100,7 +131,12 @@ function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
       <NotesPanel
         isOpen={notesOpen}
         onClose={handleToggleNotes}
-        noteTitle={meta.noteTitle}
+        noteTitle={active.title}
+        options={noteOptions}
+        activeKey={active.key}
+        onSelectNote={handleSelectNote}
+        pageLabel={activeView ? noteKeyLabel(active.key) : null}
+        onOpenPage={handleOpenPage}
         status={notes.status}
         isReady={notes.isReady}
         editorRef={notes.editorRef}

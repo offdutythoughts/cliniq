@@ -9,6 +9,9 @@ const HISTORY_CAP = 20;
 // snapshot on every save — the first snapshot in this window preserves the
 // pre-session content, which is what recovery needs.
 const HISTORY_MIN_GAP_MS = 5 * 60 * 1000;
+// Upper bound on the annotated-page list — one row per page the user has
+// written on, so this is far above any realistic count.
+const LIST_CAP = 500;
 
 // Snapshot the current content of a note before it is overwritten or deleted.
 // `force` bypasses the min-gap throttle (used before deletes, where the
@@ -146,5 +149,28 @@ export const history = query({
       .order("desc")
       .take(HISTORY_CAP);
     return rows.map((r) => ({ html: r.html, savedAt: r.savedAt }));
+  },
+});
+
+// Every page this user has annotated, newest edit first — the source for the
+// notes panel's "jump to another note" dropdown. Titles are the ones recorded
+// at save time; the client re-derives a fresher label where the page still exists.
+export const list = query({
+  args: {},
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) return [];
+    const rows = await ctx.db
+      .query("notes")
+      .withIndex("by_user_and_page", (q) => q.eq("userId", userId))
+      .take(LIST_CAP);
+    return rows
+      .filter((r) => r.html.trim())
+      .sort((a, b) => b.updatedAt - a.updatedAt)
+      .map((r) => ({
+        pageKey: r.pageKey,
+        pageTitle: r.pageTitle,
+        updatedAt: r.updatedAt,
+      }));
   },
 });
