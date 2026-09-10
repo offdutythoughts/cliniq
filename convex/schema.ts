@@ -55,6 +55,39 @@ export default defineSchema({
     html: v.string(),
     savedAt: v.number(),
   }).index("by_user_and_page", ["userId", "pageKey"]),
+  // One row per text mark a reader has drawn on a content page. Marks are
+  // stored per-row rather than as an array on a page document so a single
+  // add/remove is one small write, and so a heavily annotated page can never
+  // approach the 1MB document limit.
+  //
+  // `start`/`end` are character offsets into the concatenated visible text of
+  // the rendered page (see src/lib/annotations/dom.ts); `text` is the marked
+  // string itself, kept so a mark can be re-anchored after the clinical
+  // content is edited and the offsets shift. `clientId` is minted on the
+  // device, which is what makes the offline replay queue idempotent — the same
+  // add can be sent twice without drawing the mark twice.
+  annotations: defineTable({
+    userId: v.id("users"),
+    clientId: v.string(),
+    pageKey: v.string(),
+    pageTitle: v.string(),
+    kind: v.union(
+      v.literal("highlight"),
+      v.literal("underline"),
+      v.literal("strike"),
+    ),
+    /** Which of that kind's colours the mark is drawn in — a token, not a
+     *  colour value. The values live in globals.css so the two themes can
+     *  differ; storing one here would freeze a reader's marks to whichever
+     *  theme they happened to be using. */
+    colour: v.string(),
+    start: v.number(),
+    end: v.number(),
+    text: v.string(),
+    createdAt: v.number(),
+  })
+    .index("by_user_and_page", ["userId", "pageKey"])
+    .index("by_user_and_client", ["userId", "clientId"]),
   // One row per user once they've seen the onboarding welcome/tour. Server-side
   // (rather than localStorage) so the "new user only" popup stays dismissed
   // across re-logins and devices — mobile Safari evicts localStorage, which made

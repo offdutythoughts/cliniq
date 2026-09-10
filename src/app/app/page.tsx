@@ -3,8 +3,13 @@ import React, { useState, useEffect, useLayoutEffect, useMemo, useRef, useCallba
 import Topbar from '../../components/Topbar'
 import BottomNav from '../../components/BottomNav'
 import NotesPanel from '../../components/NotesPanel'
+import AnnotationToolbar from '../../components/AnnotationToolbar'
 import { useNotes } from '../../hooks/useNotes'
 import { useNotesLocal } from '../../hooks/useNotesLocal'
+import { useAnnotations, type AnnotationStore } from '../../hooks/useAnnotations'
+import { useAnnotationsLocal } from '../../hooks/useAnnotationsLocal'
+import { useAnnotationLayer } from '../../hooks/useAnnotationLayer'
+import type { MarkColour, MarkKind } from '../../lib/annotations/marks'
 import { NavProvider, useNav } from '../nav/NavContext'
 import { noteKeyLabel, screenMeta, viewFromNoteKey, viewKey, type View } from '../nav/view'
 import { Screen } from '../screens/Screen'
@@ -28,12 +33,12 @@ export default hasConvex ? PageWithConvex : PageWithLocal
 // unmounted, waiting on a subscription backend that is not deployed.
 function PageWithConvex() {
   return (
-    <NavProvider><TutorialProvider><SearchProvider><PageBase useNotesHook={useNotes} /></SearchProvider></TutorialProvider></NavProvider>
+    <NavProvider><TutorialProvider><SearchProvider><PageBase useNotesHook={useNotes} useAnnotationsHook={useAnnotations} /></SearchProvider></TutorialProvider></NavProvider>
   )
 }
 
 function PageWithLocal() {
-  return <NavProvider><TutorialProvider><SearchProvider><PageBase useNotesHook={useNotesLocal} /></SearchProvider></TutorialProvider></NavProvider>
+  return <NavProvider><TutorialProvider><SearchProvider><PageBase useNotesHook={useNotesLocal} useAnnotationsHook={useAnnotationsLocal} /></SearchProvider></TutorialProvider></NavProvider>
 }
 
 type NotesHook = (key: string, title: string, open: boolean) => {
@@ -47,7 +52,15 @@ type NotesHook = (key: string, title: string, open: boolean) => {
   isReady: boolean
 }
 
-function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
+type AnnotationsHook = (pageKey: string, pageTitle: string) => AnnotationStore
+
+function PageBase({
+  useNotesHook,
+  useAnnotationsHook,
+}: {
+  useNotesHook: NotesHook
+  useAnnotationsHook: AnnotationsHook
+}) {
   const nav = useNav()
   const [notesOpen, setNotesOpen] = useState(false)
   const screenRef = useRef<HTMLDivElement>(null)
@@ -75,6 +88,20 @@ function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
   }, [vk])
 
   useSearchHighlight(screenRef)
+
+  // Reader annotations. Keyed by the page's note key, so a page's marks and
+  // its notes travel together. This must be called after useSearchHighlight:
+  // both rewrap text nodes in `screenRef` after every render, and the mark
+  // layer has to be the one that runs last (see useAnnotationLayer).
+  const annotations = useAnnotationsHook(meta.noteKey, meta.noteTitle)
+  const annotate = useAnnotationLayer(screenRef, annotations, meta.noteKey)
+  const handleToggleMark = useCallback(
+    (kind: MarkKind, colour: MarkColour) => {
+      track('annotation_toggled', { kind, colour })
+      annotate.toggle(kind, colour)
+    },
+    [annotate],
+  )
 
   const slideClass = nav.slideDir === 'left' ? 'slide-in-left' : 'slide-in-right'
   const handleNavTo = useCallback((tab: Tab) => nav.navTo(tab), [nav])
@@ -144,6 +171,16 @@ function PageBase({ useNotesHook }: { useNotesHook: NotesHook }) {
         onCmd={notes.onCmd}
         onClear={notes.onClear}
         onExport={notes.onExport}
+      />
+
+      {/* Floats over the selection, so it sits outside the scrolling screen. */}
+      <AnnotationToolbar
+        ui={annotate.ui}
+        onToggle={handleToggleMark}
+        onErase={annotate.eraseTarget}
+        onClearPage={() => { track('annotations_cleared'); annotate.clearPage() }}
+        onInteractStart={annotate.beginInteract}
+        markCount={annotate.markCount}
       />
 
       {/* The welcome sheet runs a Convex query; isolate it so a query failure
