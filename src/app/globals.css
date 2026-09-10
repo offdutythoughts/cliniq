@@ -548,7 +548,60 @@ html[data-theme="dark"]{
 .global-search-result-snippet{font-size:11px;color:var(--gray2);font-style:italic;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .global-search-result-arrow{color:var(--gray2);font-size:16px;flex-shrink:0;}
 
-/* Highlight marks */
+/* ── READER ANNOTATIONS ── */
+/* Drawn by src/lib/annotations/dom.ts, which wraps each run of marked text in
+   one span carrying its kinds, plus a colour token per colourable kind.
+   Decoration (not border-bottom) is used for underline and strikethrough so
+   the line follows the text across a wrap.
+
+   Every colour value lives here and nowhere else: the toolbar swatches read
+   these same custom properties, so a swatch can never show a colour the mark
+   will not be drawn in. Highlights are translucent so the clinical text stays
+   legible through them; underlines are solid because a 2px line has to hold
+   its own against the body colour. */
+:root{
+  --annot-hl-yellow:rgba(253,224,71,.50);
+  --annot-hl-green:rgba(134,239,172,.55);
+  --annot-hl-blue:rgba(147,197,253,.55);
+  --annot-hl-pink:rgba(249,168,212,.50);
+  --annot-hl-orange:rgba(253,186,116,.50);
+  --annot-ul-teal:#0D9488;
+  --annot-ul-red:#DC2626;
+  --annot-ul-purple:#7C3AED;
+}
+[data-theme=dark]{
+  --annot-hl-yellow:rgba(234,179,8,.32);
+  --annot-hl-green:rgba(34,197,94,.30);
+  --annot-hl-blue:rgba(59,130,246,.34);
+  --annot-hl-pink:rgba(236,72,153,.30);
+  --annot-hl-orange:rgba(249,115,22,.30);
+  --annot-ul-teal:#2DD4BF;
+  --annot-ul-red:#F87171;
+  --annot-ul-purple:#A78BFA;
+}
+
+[data-annot]{border-radius:2px;}
+[data-annot-hl="yellow"]{background:var(--annot-hl-yellow);}
+[data-annot-hl="green"]{background:var(--annot-hl-green);}
+[data-annot-hl="blue"]{background:var(--annot-hl-blue);}
+[data-annot-hl="pink"]{background:var(--annot-hl-pink);}
+[data-annot-hl="orange"]{background:var(--annot-hl-orange);}
+
+[data-annot~="underline"]{text-decoration-line:underline;text-decoration-thickness:2px;text-underline-offset:2px;}
+[data-annot~="strike"]{text-decoration-line:line-through;text-decoration-thickness:2px;text-decoration-color:var(--annot-ul-teal);}
+/* One element cannot carry two `text-decoration-line` values, so the overlap of
+   an underline and a strikethrough is spelled out rather than left to the
+   cascade. These are longhands throughout on purpose: the `text-decoration`
+   shorthand would reset `text-decoration-thickness` back to `auto` here, and
+   the overlap would draw thinner lines than either mark does on its own. */
+[data-annot~="underline"][data-annot~="strike"]{text-decoration-line:underline line-through;}
+/* A run can only have one decoration colour, so where an underline and a
+   strikethrough overlap the underline's colour wins — it is the one the
+   reader chose, and the strikethrough still reads from its line. */
+[data-annot-ul="teal"]{text-decoration-color:var(--annot-ul-teal);}
+[data-annot-ul="red"]{text-decoration-color:var(--annot-ul-red);}
+[data-annot-ul="purple"]{text-decoration-color:var(--annot-ul-purple);}
+
 mark.search-highlight{
   background:rgba(253,224,71,0.55);color:inherit;border-radius:2px;padding:0 1px;
 }
