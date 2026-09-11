@@ -93,10 +93,10 @@ export default function HomePage() {
             aria-hidden
             className="v-panel-mist pointer-events-none absolute top-0 right-0 hidden h-full w-[42%] lg:block"
           />
-          <div className="relative mx-auto grid max-w-[1180px] items-center gap-14 px-5 pt-16 pb-20 sm:px-8 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16 lg:pt-24 lg:pb-28">
+          <div className="relative mx-auto grid max-w-[1180px] items-center gap-10 px-5 pt-10 pb-14 sm:gap-14 sm:px-8 sm:pt-16 sm:pb-20 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16 lg:pt-24 lg:pb-28">
             <div>
               <p className="v-eyebrow-plain">Clinical support tool · dogs &amp; cats</p>
-              <h1 className="v-display mt-6 text-[40px] text-balance sm:text-[54px] lg:text-[62px]">
+              <h1 className="v-display mt-4 sm:mt-6 text-[40px] text-balance sm:text-[54px] lg:text-[62px]">
                 Empowering veterinarians with confidence.
               </h1>
               <p className="mt-6 max-w-[34rem] text-[17px] leading-[1.65] text-[var(--v-slate)]">
@@ -105,7 +105,7 @@ export default function HomePage() {
                 protocols, built for the ten minutes you actually have.
               </p>
 
-              <div className="mt-9 flex flex-wrap items-center gap-3">
+              <div className="mt-7 flex flex-wrap items-center gap-3 sm:mt-9">
                 <Link href="/login" className="v-btn v-btn-primary">
                   Create your free account
                 </Link>
@@ -132,7 +132,7 @@ export default function HomePage() {
             {CAPABILITIES.map((c, i) => (
               <div
                 key={c.title}
-                className={`border-[var(--v-line)] px-1 py-8 sm:px-6 ${i % 2 === 1 ? 'border-l' : ''} ${
+                className={`border-[var(--v-line)] py-7 sm:px-6 sm:py-8 ${i % 2 === 1 ? 'border-l pl-4 sm:pl-6' : 'pr-4 sm:pr-6'} ${
                   i < 2 ? 'border-b lg:border-b-0' : ''
                 } lg:border-l lg:first:border-l-0 lg:px-7`}
               >
@@ -158,7 +158,7 @@ export default function HomePage() {
 
         {/* ── The platform, in three parts ───────────────────────────────── */}
         <section className="v-panel-clay">
-          <div className="mx-auto grid max-w-[1180px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:py-24">
+          <div className="mx-auto grid max-w-[1180px] gap-8 px-5 sm:gap-10 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:py-24">
             <div className="lg:sticky lg:top-28 lg:self-start">
               <p className="v-display-italic text-[30px] leading-[1.25] text-[var(--v-ink)] sm:text-[34px]">
                 One tool for the whole consult,
@@ -198,15 +198,15 @@ export default function HomePage() {
 
         {/* ── The three tools, in detail ─────────────────────────────────── */}
         <section id="features" className="scroll-mt-20 border-b border-[var(--v-line)]">
-          <div className="mx-auto max-w-[1180px] px-5 py-20 sm:px-8 lg:py-24">
+          <div className="mx-auto max-w-[1180px] px-5 py-14 sm:px-8 sm:py-20 lg:py-24">
             <div className="max-w-2xl">
               <p className="v-eyebrow">What it does</p>
-              <h2 className="v-display mt-6 text-[34px] sm:text-[42px]">
+              <h2 className="v-display mt-4 sm:mt-6 text-[34px] sm:text-[42px]">
                 Three tools, one clinical workflow.
               </h2>
             </div>
 
-            <div className="mt-16 flex flex-col gap-16 lg:gap-24">
+            <div className="mt-10 flex flex-col gap-14 sm:mt-16 sm:gap-16 lg:gap-24">
               <Feature
                 label="Clinical & diagnostic flowcharts"
                 title="Start from the sign in front of you."
@@ -250,11 +250,11 @@ export default function HomePage() {
 
         {/* ── How it works ───────────────────────────────────────────────── */}
         <section id="how" className="v-panel-mist scroll-mt-20 border-b border-[var(--v-line)]">
-          <div className="mx-auto max-w-[1180px] px-5 py-20 sm:px-8">
+          <div className="mx-auto max-w-[1180px] px-5 py-14 sm:px-8 sm:py-20">
             <h2 className="v-display max-w-xl text-[32px] sm:text-[38px]">
               Three taps from a sign to a plan.
             </h2>
-            <ol className="mt-12 grid list-none gap-8 md:grid-cols-3 md:gap-10">
+            <ol className="mt-8 grid list-none gap-7 sm:mt-12 sm:gap-8 md:grid-cols-3 md:gap-10">
               {STEPS.map((s) => (
                 <li key={s.n} className="border-t border-[var(--v-navy)]/25 pt-5">
                   <span className="font-[family-name:var(--font-display)] text-[13px] text-[var(--v-brick)]">
@@ -270,10 +270,10 @@ export default function HomePage() {
 
         {/* ── Who it's for ───────────────────────────────────────────────── */}
         <section className="border-b border-[var(--v-line)]">
-          <div className="mx-auto grid max-w-[1180px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+          <div className="mx-auto grid max-w-[1180px] gap-8 px-5 sm:gap-10 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
             <div>
               <p className="v-eyebrow">Who it&rsquo;s for</p>
-              <h2 className="v-display mt-6 text-[32px] sm:text-[38px]">
+              <h2 className="v-display mt-4 sm:mt-6 text-[32px] sm:text-[38px]">
                 Practising vets and the teams around them.
               </h2>
             </div>
@@ -290,14 +290,14 @@ export default function HomePage() {
 
         {/* ── How it's built ─────────────────────────────────────────────── */}
         <section className="border-b border-[var(--v-line)]">
-          <div className="mx-auto max-w-[1180px] px-5 py-20 sm:px-8">
+          <div className="mx-auto max-w-[1180px] px-5 py-14 sm:px-8 sm:py-20">
             <div className="max-w-xl">
               <p className="v-eyebrow">How Vetic is built</p>
-              <h2 className="v-display mt-6 text-[32px] sm:text-[38px]">
+              <h2 className="v-display mt-4 sm:mt-6 text-[32px] sm:text-[38px]">
                 Four decisions that shape every page.
               </h2>
             </div>
-            <dl className="mt-14 grid gap-x-14 gap-y-10 md:grid-cols-2">
+            <dl className="mt-9 grid gap-x-14 gap-y-8 sm:mt-14 sm:gap-y-10 md:grid-cols-2">
               {PRINCIPLES.map((p) => (
                 <div key={p.label} className="border-l-2 border-[var(--v-brick)] pl-6">
                   <dt className="text-[16px] font-semibold text-[var(--v-ink)]">{p.label}</dt>
@@ -310,10 +310,10 @@ export default function HomePage() {
 
         {/* ── About / mission ────────────────────────────────────────────── */}
         <section id="about" className="v-panel-clay scroll-mt-20 border-b border-[var(--v-line)]">
-          <div className="mx-auto grid max-w-[1180px] gap-10 px-5 py-20 sm:px-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 lg:py-24">
+          <div className="mx-auto grid max-w-[1180px] gap-8 px-5 sm:gap-10 py-14 sm:px-8 sm:py-20 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16 lg:py-24">
             <div>
               <p className="v-eyebrow-plain">About us</p>
-              <h2 className="v-display mt-6 text-[32px] leading-[1.15] sm:text-[40px]">
+              <h2 className="v-display mt-4 sm:mt-6 text-[32px] leading-[1.15] sm:text-[40px]">
                 Our mission: supporting veterinary professionals.
               </h2>
             </div>
@@ -338,7 +338,7 @@ export default function HomePage() {
 
         {/* ── Closing CTA ────────────────────────────────────────────────── */}
         <section>
-          <div className="mx-auto max-w-[1180px] px-5 py-20 sm:px-8 lg:py-24">
+          <div className="mx-auto max-w-[1180px] px-5 py-14 sm:px-8 sm:py-20 lg:py-24">
             <div className="max-w-2xl">
               <h2 className="v-display text-[34px] sm:text-[42px]">Try it on your next tricky case.</h2>
               <p className="mt-5 text-[16px] leading-[1.7] text-[var(--v-slate)]">
@@ -381,7 +381,7 @@ function Feature({
   reverse?: boolean
 }) {
   return (
-    <article className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+    <article className="grid items-center gap-8 sm:gap-10 lg:grid-cols-2 lg:gap-16">
       <div className={reverse ? 'lg:order-2' : ''}>
         <p className="v-eyebrow-plain">{label}</p>
         <h3 className="v-display mt-4 text-[27px] sm:text-[32px]">{title}</h3>
