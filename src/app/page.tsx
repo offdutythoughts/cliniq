@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 import { SiteFooter } from '../components/site/SiteFooter'
 import { AppSequence } from '../components/site/AppSequence'
 import { SiteHeader } from '../components/site/SiteHeader'
@@ -81,7 +82,23 @@ const STEPS = [
   { n: '03', title: 'Act on the detail', body: 'Open the disease page or protocol for the workup, dose and monitoring plan.' },
 ]
 
+// The marketing homepage is served everywhere EXCEPT the production deploy,
+// where `/` redirects to the clinical app at /app (the proxy gates /app behind
+// sign-in). Production used to get this by carrying its own one-file version of
+// this page — see b00defb — which meant every promotion that touched the
+// homepage landed as a merge conflict on `production`, and resolving one the
+// wrong way would silently put the marketing page back in front of customers.
+// e675b78 was the first such conflict. The gate below is that divergence folded
+// into main so there is nothing left to re-resolve.
+//
+// VERCEL_ENV is set by Vercel on every deployment ('production' | 'preview' |
+// 'development') and is absent outside it, so preview builds and `next dev`
+// keep rendering the marketing page exactly as before. It is a server-side
+// variable — do not swap it for the NEXT_PUBLIC_ form, which would inline the
+// value into the client bundle at build time.
 export default function HomePage() {
+  if (process.env.VERCEL_ENV === 'production') redirect('/app')
+
   return (
     <div className="site-page">
       <SiteHeader />
