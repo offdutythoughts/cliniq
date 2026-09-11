@@ -23,6 +23,9 @@ interface Props {
   /** Told that a press has started, so the layer does not close the toolbar
    *  when that press collapses the text selection. */
   onInteractStart: () => void
+  /** Called when a palette opens, to detach the toolbar from the selection for
+   *  good — the press that opened it has already collapsed the selection. */
+  onPin: () => void
   /** Marks stored for this page — gates the "clear page" escape hatch. */
   markCount: number
 }
@@ -41,10 +44,16 @@ const GAP = 8
 const EDGE = 8
 
 export default function AnnotationToolbar({
-  ui, onToggle, onErase, onClearPage, onInteractStart, markCount,
+  ui, onToggle, onErase, onClearPage, onInteractStart, onPin, markCount,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null)
   const [size, setSize] = useState({ w: 0, h: 0 })
+  // iOS puts its own Copy / Look Up bar over the selection and there is no way
+  // to suppress it, so on a touch screen the toolbar stops competing for that
+  // space and sits above the bottom nav instead. Also the easier place to
+  // reach one-handed. Measured, not assumed: the nav's height varies with the
+  // safe-area inset.
+  const [dock, setDock] = useState<number | null>(null)
   /** Which tool's palette is open; null is the tool row. */
   const [palette, setPalette] = useState<MarkKind | null>(null)
 
@@ -61,18 +70,23 @@ export default function AnnotationToolbar({
     if (!el || !ui.target) return
     const box = el.getBoundingClientRect()
     setSize(prev => (prev.w === box.width && prev.h === box.height ? prev : { w: box.width, h: box.height }))
+    const coarse = window.matchMedia('(pointer: coarse)').matches
+    const nav = document.querySelector('[data-tutorial="bottom-nav"]')
+    const next = coarse ? (nav?.getBoundingClientRect().height ?? 0) + GAP : null
+    setDock(prev => (prev === next ? prev : next))
   }, [ui.target, ui.source, palette, markCount])
 
   if (!ui.target || !ui.rect) return null
 
   const vw = typeof window === 'undefined' ? 0 : window.innerWidth
-  const centre = ui.rect.left + ui.rect.width / 2
+  const docked = dock !== null
+  // Docked: centred above the bottom nav, clear of iOS's own selection menu.
+  // Floating: over the selection, above it unless there is no room up there.
+  const centre = docked ? vw / 2 : ui.rect.left + ui.rect.width / 2
   const half = size.w / 2
   const left = size.w ? Math.min(Math.max(centre, half + EDGE), vw - half - EDGE) : centre
-  // Above the selection by default; below it when the selection is near the
-  // top of the viewport and there is no room.
-  const above = ui.rect.top - GAP - size.h > EDGE
-  const top = above ? ui.rect.top - GAP : ui.rect.bottom + GAP
+  const above = !docked && ui.rect.top - GAP - size.h > EDGE
+  const top = docked ? undefined : above ? ui.rect.top - GAP : ui.rect.bottom + GAP
 
   // 44px is the smallest reliable finger target; this app is read one-handed
   // on a phone, so the tools are sized for that rather than for a cursor.
@@ -83,11 +97,20 @@ export default function AnnotationToolbar({
   const divider = <span className="w-px h-[18px] bg-(--color-line) mx-0.5" />
 
   const activeFor = (kind: MarkKind) => ui.active.find(p => p.kind === kind)
+  // "Clear all 1 marks" read as a bug in itself.
+  const clearLabel = `Clear ${markCount === 1 ? 'the 1 mark' : `all ${markCount} marks`} on this page`
 
   function press(kind: MarkKind) {
     // Strikethrough has nothing to choose; the others show their colours.
-    if (kind === 'strike') onToggle('strike', 'plain')
-    else setPalette(kind)
+    if (kind === 'strike') {
+      onToggle('strike', 'plain')
+      return
+    }
+    // Pin before opening: this very press has already collapsed the selection
+    // on a touch screen, and without pinning the palette closes before a
+    // colour can be chosen.
+    onPin()
+    setPalette(kind)
   }
 
   return (
@@ -110,6 +133,7 @@ export default function AnnotationToolbar({
       style={{
         left,
         top,
+        bottom: docked ? dock : undefined,
         transform: `translate(-50%, ${above ? '-100%' : '0'})`,
         visibility: size.w ? 'visible' : 'hidden',
       }}
@@ -175,8 +199,8 @@ export default function AnnotationToolbar({
           {ui.source === 'mark' && markCount > 0 && (
             <button
               className="h-11 px-2.5 rounded-md border border-(--color-line) bg-(--color-card) text-(--color-muted) text-[10px] cursor-pointer hover:bg-[var(--card2)]"
-              aria-label={`Clear all ${markCount} marks on this page`}
-              title={`Clear all ${markCount} marks on this page`}
+              aria-label={clearLabel}
+              title={clearLabel}
               onClick={onClearPage}
             >
               Clear all

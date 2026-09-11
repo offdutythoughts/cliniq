@@ -40,9 +40,17 @@ export interface AnnotationUi {
    *  selection goes; one opened by tapping a mark must not, because that tap
    *  clears the selection and would otherwise close it immediately. */
   source: 'selection' | 'mark' | null
+  /** Set once the reader has pressed a tool, after which the toolbar no longer
+   *  depends on the selection surviving. On a touch screen that press collapses
+   *  the selection, which used to close the colour palette out from under the
+   *  finger about to choose from it. The range being marked is already held in
+   *  `target`, so nothing is lost by letting the selection go. */
+  pinned: boolean
 }
 
-const EMPTY_UI: AnnotationUi = { target: null, rect: null, active: [], hasMarks: false, source: null }
+const EMPTY_UI: AnnotationUi = {
+  target: null, rect: null, active: [], hasMarks: false, source: null, pinned: false,
+}
 
 // How long an empty selection must persist before the toolbar closes. Long
 // enough to ride out iOS's mid-gesture reports, short enough that tapping
@@ -205,6 +213,7 @@ export function useAnnotationLayer(
         active,
         hasMarks: list.some(m => m.start < end && m.end > start),
         source,
+        pinned: false,
       })
     },
     [],
@@ -233,8 +242,11 @@ export function useAnnotationLayer(
           clearTimeout(closing)
           closing = setTimeout(() => {
             if (selectionRange(root)) return
-            // Only a selection toolbar closes here — see AnnotationUi.source.
-            setUi(prev => (prev.source === 'selection' ? EMPTY_UI : prev))
+            // Only an unpinned selection toolbar closes here — see
+            // AnnotationUi.source and AnnotationUi.pinned.
+            setUi(prev =>
+              prev.source === 'selection' && !prev.pinned ? EMPTY_UI : prev,
+            )
           }, SELECTION_GRACE_MS)
           return
         }
@@ -314,6 +326,26 @@ export function useAnnotationLayer(
     }
   }, [ui.target, screenRef])
 
+  /** Keep the toolbar up regardless of what happens to the selection. */
+  const pin = useCallback(() => {
+    setUi(prev => (prev.target && !prev.pinned ? { ...prev, pinned: true } : prev))
+  }, [])
+
+  // A press anywhere outside the toolbar dismisses it. With pinning above, the
+  // selection going away no longer closes anything, so this is what replaces it
+  // — and it is the behaviour a popover should have had from the start.
+  // Capture phase, so it still runs for presses the content handles itself.
+  useEffect(() => {
+    if (!ui.target) return
+    const onDown = (e: Event) => {
+      const el = e.target instanceof Element ? e.target : null
+      if (el?.closest('[data-annot-toolbar]')) return
+      hide()
+    }
+    document.addEventListener('pointerdown', onDown, true)
+    return () => document.removeEventListener('pointerdown', onDown, true)
+  }, [ui.target, hide])
+
   /** Apply one kind in one colour over the toolbar's target range. Pressing
    *  the colour already there removes the mark; pressing another recolours it
    *  — see `applyMark`. */
@@ -355,5 +387,5 @@ export function useAnnotationLayer(
     hide()
   }, [clearAll, hide])
 
-  return { ui, toggle, eraseTarget, clearPage, hide, beginInteract, markCount: marks.length }
+  return { ui, toggle, eraseTarget, clearPage, hide, beginInteract, pin, markCount: marks.length }
 }

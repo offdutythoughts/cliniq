@@ -180,6 +180,7 @@ function PageBase({
         onErase={annotate.eraseTarget}
         onClearPage={() => { track('annotations_cleared'); annotate.clearPage() }}
         onInteractStart={annotate.beginInteract}
+        onPin={annotate.pin}
         markCount={annotate.markCount}
       />
 
