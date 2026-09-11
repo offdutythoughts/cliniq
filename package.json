@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "next build",
+    "capture:screens": "node scripts/capture-screens.mjs",
     "check:convex": "tsx scripts/check-convex-drift.ts",
     "dev": "next dev",
     "lint": "eslint",

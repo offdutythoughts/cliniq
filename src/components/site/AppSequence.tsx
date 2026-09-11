@@ -2,31 +2,41 @@
 
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import { HERO_FRAMES, SCREEN } from '../../lib/heroSequence'
+import { SCREEN, SEQUENCES, VISIBLE_HEIGHT, type SequenceName } from '../../lib/screenSequences'
 
-// The hero replays one real drill-down: the Acute Vestibular flow → tap
-// "Peripheral causes" → the peripheral lesion categories → tap "Idiopathic
-// vestibular" → the disease page. Frames and tap positions come from
-// scripts/capture-screens.mjs, so the indicator always lands on the element that
-// was actually clicked.
+// Every product visual on the homepage is a replayed drill-down rather than a
+// still: the real screens, in the real order, with the tap that led from one to
+// the next shown where it actually landed. Frames and tap positions come from
+// scripts/capture-screens.mjs, so re-running the capture after a format change
+// updates the pictures AND the indicator together — there is nothing to line up
+// by hand.
 //
-// The frame matches AppScreen on the same page: 320px wide, showing the top
-// 390×560 of each capture.
-const CROP_HEIGHT = 560
-const Y_SCALE = SCREEN.height / CROP_HEIGHT
+// The frame shows the top VISIBLE_HEIGHT of each 390×844 capture, so a tap's y
+// has to be rescaled into that crop.
+const Y_SCALE = SCREEN.height / VISIBLE_HEIGHT
 
 const SETTLE_MS = 900 // cursor glides in, then presses
 const ADVANCE_MS = 1250 // press → next screen
-const LAST_FRAME_MS = 2400 // read the disease page, then start over
+const LAST_FRAME_MS = 2600 // read the payoff screen, then start over
 
-export function HeroSequence({ caption }: { caption?: string }) {
+export function AppSequence({
+  sequence,
+  caption,
+  priority = false,
+}: {
+  sequence: SequenceName
+  caption?: string
+  /** Set on the hero only — it is the one sequence above the fold. */
+  priority?: boolean
+}) {
+  const { label, frames } = SEQUENCES[sequence]
   const [step, setStep] = useState(0)
   const [pressed, setPressed] = useState(false)
   const [playing, setPlaying] = useState(false)
   const [paused, setPaused] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
-  // Only animate when the hero is on screen and the visitor hasn't asked for
+  // Only animate while the figure is on screen and the visitor hasn't asked for
   // reduced motion — otherwise the first frame stands on its own.
   useEffect(() => {
     const el = ref.current
@@ -43,43 +53,45 @@ export function HeroSequence({ caption }: { caption?: string }) {
 
   useEffect(() => {
     if (!playing || paused) return
-    const frame = HERO_FRAMES[step]
     const timers: ReturnType<typeof setTimeout>[] = []
-    if (frame.tap !== null) {
+    if (frames[step].tap !== null) {
       timers.push(setTimeout(() => setPressed(true), SETTLE_MS))
       timers.push(
         setTimeout(() => {
           setPressed(false)
-          setStep((s) => (s + 1) % HERO_FRAMES.length)
+          setStep((s) => (s + 1) % frames.length)
         }, ADVANCE_MS),
       )
     } else {
       timers.push(setTimeout(() => setStep(0), LAST_FRAME_MS))
     }
     return () => timers.forEach(clearTimeout)
-  }, [step, playing, paused])
+  }, [step, playing, paused, frames])
 
-  const tap = HERO_FRAMES[step].tap
+  const tap = frames[step].tap
 
   return (
     <figure className="mx-auto w-full max-w-[320px]">
       <div
         ref={ref}
         role="img"
-        aria-label="Vetic on a phone: the Acute Vestibular flow, tapping through to the peripheral causes and then to the Idiopathic Vestibular Disease page."
+        aria-label={label}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
         className="overflow-hidden rounded-[18px] border border-[var(--v-line)] bg-white p-1.5 shadow-[0_26px_60px_-34px_rgba(11,33,75,0.28)]"
       >
-        <div className="relative aspect-[390/560] overflow-hidden rounded-[13px] bg-white">
-          {HERO_FRAMES.map((frame, i) => (
+        <div
+          className="relative overflow-hidden rounded-[13px] bg-white"
+          style={{ aspectRatio: `${SCREEN.width} / ${VISIBLE_HEIGHT}` }}
+        >
+          {frames.map((frame, i) => (
             <Image
               key={frame.file}
               src={`/screens/${frame.file}.png`}
               alt=""
-              width={780}
-              height={1688}
-              priority={i === 0}
+              width={SCREEN.width * 2}
+              height={SCREEN.height * 2}
+              priority={priority && i === 0}
               sizes="(max-width: 640px) 86vw, 320px"
               className="absolute inset-0 h-full w-full object-cover object-top"
               style={{
@@ -114,7 +126,7 @@ export function HeroSequence({ caption }: { caption?: string }) {
               {/* Fingertip, gliding between the two taps. */}
               <span
                 aria-hidden
-                className="absolute z-30 -ml-[13px] -mt-[13px] h-[26px] w-[26px] rounded-full border border-[var(--v-navy)]/45 bg-[var(--v-navy)]/20 transition-[left,top,transform] duration-500 ease-out"
+                className="absolute z-30 -mt-[13px] -ml-[13px] h-[26px] w-[26px] rounded-full border border-[var(--v-navy)]/45 bg-[var(--v-navy)]/20 transition-[left,top,transform] duration-500 ease-out"
                 style={{
                   left: `${tap.x}%`,
                   top: `${tap.y * Y_SCALE}%`,
@@ -125,7 +137,7 @@ export function HeroSequence({ caption }: { caption?: string }) {
               <span
                 aria-hidden
                 key={`ripple-${step}-${pressed}`}
-                className={`absolute z-30 -ml-[13px] -mt-[13px] h-[26px] w-[26px] rounded-full border-2 border-[var(--v-navy)] ${
+                className={`absolute z-30 -mt-[13px] -ml-[13px] h-[26px] w-[26px] rounded-full border-2 border-[var(--v-navy)] ${
                   pressed ? 'v-tap-ripple' : 'opacity-0'
                 }`}
                 style={{ left: `${tap.x}%`, top: `${tap.y * Y_SCALE}%` }}
@@ -135,8 +147,21 @@ export function HeroSequence({ caption }: { caption?: string }) {
         </div>
       </div>
 
+      {/* Where the replay has got to. Outside the frame, not over it — these
+          screens are dense enough without a dot sitting on a table row. */}
+      <div aria-hidden className="mt-3 flex justify-center gap-1.5">
+        {frames.map((frame, i) => (
+          <span
+            key={frame.file}
+            className={`h-[5px] rounded-full transition-all duration-300 ${
+              i === step ? 'w-[14px] bg-[var(--v-navy)]/65' : 'w-[5px] bg-[var(--v-navy)]/22'
+            }`}
+          />
+        ))}
+      </div>
+
       {caption && (
-        <figcaption className="mt-3 text-center text-[12px] text-[var(--v-slate)]">
+        <figcaption className="mt-2.5 text-center text-[12px] text-[var(--v-slate)]">
           {caption}
         </figcaption>
       )}

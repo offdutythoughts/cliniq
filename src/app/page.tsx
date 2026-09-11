@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
 import Link from 'next/link'
 import { SiteFooter } from '../components/site/SiteFooter'
-import { HeroSequence } from '../components/site/HeroSequence'
+import { AppSequence } from '../components/site/AppSequence'
 import { SiteHeader } from '../components/site/SiteHeader'
 
 export const metadata: Metadata = {
@@ -119,7 +118,11 @@ export default function HomePage() {
               </p>
             </div>
 
-            <HeroSequence caption="Acute Vestibular, tapped through to the diagnosis — recorded from the app." />
+            <AppSequence
+              sequence="vestibular"
+              priority
+              caption="Acute Vestibular, tapped through to the diagnosis — recorded from the app."
+            />
           </div>
         </section>
 
@@ -175,7 +178,7 @@ export default function HomePage() {
               {PILLARS.map((p) => (
                 <article
                   key={p.title}
-                  className={`flex min-h-[260px] flex-col justify-between rounded-[14px] border border-[var(--v-line)] p-6 ${
+                  className={`flex flex-col rounded-[14px] border border-[var(--v-line)] p-5 sm:min-h-[260px] sm:justify-between sm:p-6 ${
                     p.tone === 'sage'
                       ? 'v-panel-mist'
                       : p.tone === 'bone'
@@ -184,7 +187,9 @@ export default function HomePage() {
                   }`}
                 >
                   <h3 className="v-display text-[21px] text-[var(--v-ink)]">{p.title}</h3>
-                  <p className="mt-8 text-[13.5px] leading-[1.65] text-[var(--v-slate)]">{p.body}</p>
+                  <p className="mt-3 text-[13.5px] leading-[1.65] text-[var(--v-slate)] sm:mt-8">
+                    {p.body}
+                  </p>
                 </article>
               ))}
             </div>
@@ -208,9 +213,9 @@ export default function HomePage() {
                 body="Dyspnoea, seizures, a red eye, PU/PD — each flow asks the questions you would ask, localises the lesion, then opens the differentials for that category, ranked and filtered by species. Diagnostic approaches sit alongside them, walking through history, exam and confirmatory tests in order."
                 points={['Sign-led flows across every body system', 'Lesion localisation before differential lists', 'Dog and cat filters at every step']}
                 visual={
-                  <AppScreen
-                    src="/screens/myelopathy-approach.png"
-                    alt="The Acute Myelopathy diagnostic approach in Vetic: History, Exam and Diagnostics tabs over a table mapping onset and pain to the likely diagnosis and next step."
+                  <AppSequence
+                    sequence="dx-approach"
+                    caption="The Acute Myelopathy approach — History, Exam, Diagnostics."
                   />
                 }
               />
@@ -221,9 +226,9 @@ export default function HomePage() {
                 body="Select several clinical signs at once and Vetic returns the differentials that explain the combination, grouped by category so the pattern is visible. Narrow by species and signalment when the list gets long."
                 points={['Combine any number of signs', 'Grouped, ranked, tappable results', 'Species and signalment filters']}
                 visual={
-                  <AppScreen
-                    src="/screens/mix-match.png"
-                    alt="Mix & Match results in Vetic for head tilt, nystagmus and ataxia in a dog, scored and grouped by category."
+                  <AppSequence
+                    sequence="mix-match"
+                    caption="Head tilt, nystagmus and ataxia in a dog — one ranked list."
                   />
                 }
               />
@@ -233,9 +238,9 @@ export default function HomePage() {
                 body="Every differential opens a full page — aetiology, signalment, pathophysiology, diagnosis, treatment, monitoring, prognosis — with citations. Emergency and procedure protocols are written as numbered steps with the doses attached, so nothing has to be looked up twice."
                 points={['Dx, Tx, monitoring and prognosis together', 'Dog and cat doses kept distinct', 'Step-by-step emergency protocols']}
                 visual={
-                  <AppScreen
-                    src="/screens/ataxia-protocol.png"
-                    alt="The acute ataxia emergency protocol in Vetic: numbered steps with doses and a drug-toxicity warning."
+                  <AppSequence
+                    sequence="protocol"
+                    caption="A disease page, and the emergency protocol it carries."
                   />
                 }
               />
@@ -392,36 +397,6 @@ function Feature({
       </div>
       <div className={reverse ? 'lg:order-1' : ''}>{visual}</div>
     </article>
-  )
-}
-
-/* ── Product screens ─────────────────────────────────────────────────────────
-   Real captures from the app (390×844 @2x), not illustrations: the Acute
-   Vestibular flow, the Acute Myelopathy localisation table, a Mix & Match
-   result set and the emergency ataxia protocol. Regenerate them by pointing the
-   capture script at a running build rather than editing by hand. */
-
-function AppScreen({ src, alt, caption }: { src: string; alt: string; caption?: string }) {
-  return (
-    <figure className="mx-auto w-full max-w-[320px]">
-      <div className="overflow-hidden rounded-[18px] border border-[var(--v-line)] bg-white p-1.5 shadow-[0_26px_60px_-34px_rgba(11,33,75,0.28)]">
-        <div className="aspect-[390/560] overflow-hidden rounded-[13px]">
-          <Image
-            src={src}
-            alt={alt}
-            width={780}
-            height={1688}
-            sizes="(max-width: 640px) 86vw, 320px"
-            className="h-full w-full object-cover object-top"
-          />
-        </div>
-      </div>
-      {caption && (
-        <figcaption className="mt-3 text-center text-[12px] text-[var(--v-slate)]">
-          {caption}
-        </figcaption>
-      )}
-    </figure>
   )
 }
 
