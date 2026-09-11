@@ -7,6 +7,7 @@
 // (Ettinger Ch 47)
 
 import type { DxApproach } from '../dxTypes'
+import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const dysphagiaDx: DxApproach = {
   title: 'Dysphagia / Gagging',
@@ -17,33 +18,58 @@ export const dysphagiaDx: DxApproach = {
       blocks: [
         { kind: 'branch', text: 'GOAL: SWALLOWING PROBLEM vs VOMITING, THEN LOCALISE' },
         {
-          kind: 'check',
-          html: `• <strong>Dysphagia</strong> = difficulty swallowing (a clinical finding, not a diagnosis)<br>• <strong>Gagging</strong> = airway-protective reflex (tongue base/palate/epiglottis → CN V afferent, CN X efferent)<br>Distinguish from:<br>• <strong>Regurgitation</strong> = passive expulsion from pharynx/oesophagus — head down, food falls out, no nausea<br>• <strong>True vomiting</strong> = active, centrally-mediated, with prodromal nausea, retching and abdominal contractions — see the Vomiting approach<br>• <strong>Expectoration</strong> = "hacking" terminal retch of a coughing paroxysm → respiratory disease<br>Regurgitation is uncommon in cats — assume vomiting in a cat unless proven otherwise. <span style="opacity:.7">(Ettinger Ch 47)</span>`,
+          kind: 'gridTable',
+          cols: '0.6fr 1.5fr',
+          dividers: true,
+          headers: ['Term', { text: 'Definition', tone: 'teal' }],
+          rows: [
+            ['<strong>Dysphagia</strong>', { text: 'Difficulty swallowing — a clinical finding, not a diagnosis', tone: 'teal' }],
+            ['<strong>Gagging</strong>', { text: 'Airway-protective reflex — tongue base / palate / epiglottis → CN V afferent, CN X efferent', tone: 'teal' }],
+            ['<strong>Regurgitation</strong>', { text: 'Passive expulsion from pharynx / oesophagus — head down, food falls out, no nausea', tone: 'teal' }],
+            ['<strong>True vomiting</strong>', { text: 'Active, centrally-mediated, with prodromal nausea, retching and abdominal contractions — see the Vomiting approach', tone: 'teal' }],
+            ['<strong>Expectoration</strong>', { text: '"Hacking" terminal retch of a coughing paroxysm → respiratory disease', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: ' STEP 1 — WATCH THE PATIENT EAT & LOCALISE' },
-        {
-          kind: 'check',
-          html: `Offer food and water and observe.<br>
-    <strong>Oral (prehension/mastication):</strong> drops food, drools, pain on opening the mouth, pawing at the face, tilts the head to chew.<br>
-    <strong>Pharyngeal/cricopharyngeal:</strong> repeated swallowing attempts, gagging, coughing or nasal reflux while eating, the bolus won't clear the throat.<br>
-    <strong>Oesophageal:</strong> passive regurgitation of undigested food/saliva (variable timing after eating), cervical oesophageal distension, weight loss despite a good appetite. (Ettinger Ch 47)`,
-        },
-        { kind: 'step', text: ' STEP 2 — SIGNALMENT, AGE & BREED' },
-        {
-          kind: 'check',
-          html: `<strong>Young dog at weaning</strong> → congenital causes: <strong>cricopharyngeal achalasia</strong> (Cocker Spaniel, Golden Retriever), <strong>vascular ring anomaly / PRAA</strong> (German Shepherd, Irish Setter — regurgitation of solids as it starts on solid food), congenital megaoesophagus (Shar-Pei, GSD, Great Dane, Irish Setter, Labrador, Newfoundland).<br>
-    <strong>Adult dog</strong> → acquired megaoesophagus (idiopathic; or secondary to MG, hypothyroidism, hypoadrenocorticism, lead), oesophagitis, stricture, foreign body, neoplasia.<br>
-    <strong>MG signalment</strong> is bimodal (&lt;4 yr or &gt;9 yr); Akita, GSP, Chihuahua, GSD, Golden Retriever overrepresented.<br>
-    <strong>Masticatory myositis</strong> → painful/swollen then atrophied jaw muscles, inability to open the mouth. (Ettinger Ch 47)`,
-        },
-        { kind: 'step', text: ' STEP 3 — ONSET, COURSE & EXPOSURES' },
-        {
-          kind: 'check',
-          html: `<strong>Acute onset</strong> + retching + hypersalivation → suspect <strong>oesophageal foreign body</strong> (emergency).<br>
-    <strong>Post-anaesthetic / post-prolonged-recumbency</strong> regurgitation → reflux oesophagitis ± stricture.<br>
-    <strong>Progressive with appendicular weakness that worsens on exercise</strong> → generalised MG.<br>
-    <strong>Dysphagia + hypersalivation + behaviour change in an unvaccinated or exposed patient</strong> → consider <strong>rabies</strong> (zoonotic — isolate, notifiable). Ask about toxin access (lead, organophosphate/anticholinesterase, thallium) and any history of coughing (concurrent aspiration / aerodigestive disease — 80% of dogs coughing exclusively had swallow dysfunction on VFSS). (Ettinger Ch 47, 221)`,
-        },
+        { kind: 'note', html: `Regurgitation is uncommon in cats — assume vomiting in a cat unless proven otherwise. <span style="opacity:.7">(Ettinger Ch 47)</span>` },
+
+        ...stepTable(1, 'WATCH THE PATIENT EAT & LOCALISE', {
+          cols: '0.75fr 1.4fr',
+          dividers: true,
+          headers: ['Phase', { text: 'What you see', tone: 'teal' }],
+          rows: [
+            [`${numBadge(1)}<strong>Oral</strong><br>prehension / mastication`, { text: 'Drops food · drools · pain on opening the mouth · pawing at the face · tilts the head to chew', tone: 'teal' }],
+            [`${numBadge(2)}<strong>Pharyngeal / cricopharyngeal</strong>`, { text: 'Repeated swallowing attempts · gagging · coughing or nasal reflux while eating · the bolus won\'t clear the throat', tone: 'teal' }],
+            [`${numBadge(3)}<strong>Oesophageal</strong>`, { text: 'Passive regurgitation of undigested food / saliva (variable timing after eating) · cervical oesophageal distension · weight loss despite a good appetite', tone: 'teal' }],
+          ],
+        }, '👀'),
+        { kind: 'note', html: `Offer food and water and observe. <span style="opacity:.7">(Ettinger Ch 47)</span>` },
+
+        ...stepTable(2, 'SIGNALMENT, AGE & BREED', {
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['Signalment', { text: 'Differential diagnosis', tone: 'teal' }],
+          rows: [
+            ['<strong>Young dog at weaning</strong>', { text: '<strong>Cricopharyngeal achalasia</strong> (Cocker Spaniel · Golden Retriever) · <strong>vascular ring anomaly / PRAA</strong> (German Shepherd · Irish Setter — regurgitation of solids as it starts on solid food) · congenital megaoesophagus (Shar-Pei · GSD · Great Dane · Irish Setter · Labrador · Newfoundland)', tone: 'teal' }],
+            ['<strong>Adult dog</strong>', { text: 'Acquired megaoesophagus (idiopathic, or secondary to MG · hypothyroidism · hypoadrenocorticism · lead) · oesophagitis · stricture · foreign body · neoplasia', tone: 'teal' }],
+            ['<strong>MG signalment</strong>', { text: 'Bimodal — &lt;4 yr or &gt;9 yr. Akita · GSP · Chihuahua · GSD · Golden Retriever overrepresented', tone: 'teal' }],
+            ['<strong>Masticatory myositis</strong>', { text: 'Painful / swollen then atrophied jaw muscles · inability to open the mouth', tone: 'teal' }],
+          ],
+        }, '🐾'),
+
+        ...stepTable(3, 'ONSET, COURSE & EXPOSURES', {
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['History', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Acute onset + retching + hypersalivation</strong>', { text: '<strong>Oesophageal foreign body</strong> — emergency', tone: 'danger' }],
+            ['<strong>Post-anaesthetic / post-prolonged-recumbency regurgitation</strong>', { text: 'Reflux oesophagitis ± stricture', tone: 'teal' }],
+            ['<strong>Progressive, with appendicular weakness worsening on exercise</strong>', { text: 'Generalised myasthenia gravis', tone: 'teal' }],
+            ['<strong>Dysphagia + hypersalivation + behaviour change, unvaccinated or exposed</strong>', { text: 'Consider <strong>rabies</strong> — zoonotic, isolate, notifiable', tone: 'danger' }],
+            ['<strong>Toxin access</strong>', { text: 'Lead · organophosphate / anticholinesterase · thallium', tone: 'teal' }],
+            ['<strong>Any history of coughing</strong>', { text: 'Concurrent aspiration / aerodigestive disease — 80% of dogs coughing exclusively had swallow dysfunction on VFSS', tone: 'teal' }],
+          ],
+        }, '⏱️'),
+        { kind: 'note', html: `<span style="opacity:.7">(Ettinger Ch 47, 221)</span>` },
       ],
       after: [
         {
@@ -60,31 +86,56 @@ export const dysphagiaDx: DxApproach = {
       title: 'Exam: Dysphagia / Gagging',
       blocks: [
         { kind: 'step', tone: 'teal', text: ' A complete PE is imperative — include ORAL, NEURO & THORACIC AUSCULTATION' },
-        { kind: 'step', text: ' STEP 1 — ORAL EXAMINATION (often needs sedation)' },
-        {
-          kind: 'check',
-          html: `A conscious oral exam is rarely complete — <strong>examine the oral cavity under sedation/GA</strong> for dental/periodontal disease, oral masses, foreign bodies (e.g. a stick lodged across the palate), stomatitis, cleft palate, TMJ disorder and a retrobulbar abscess (pain on opening + exophthalmos). Assess salivary swellings (mucocele/sialocele) and the tonsils/pharynx. (Ettinger Ch 47)`,
-        },
-        { kind: 'step', text: ' STEP 2 — NEUROLOGIC EXAM (cranial nerves)' },
-        {
-          kind: 'check',
-          html: `Localise functional dysphagia by cranial nerve:<br>
-    <strong>CN V</strong> — masticatory muscle bulk/symmetry, dropped jaw (bilateral), facial hypalgesia.<br>
-    <strong>CN VII</strong> — facial paresis (lip/cheek control of the bolus).<br>
-    <strong>CN IX / X</strong> — <strong>gag reflex</strong>; reduced gag, dysphagia, dysphonia, laryngeal paralysis, megaoesophagus.<br>
-    <strong>CN XII</strong> — tongue strength/symmetry (lingual paresis).<br>
-    Assess for generalised/exercise-induced weakness (MG), neck ventroflexion, and signs of LMN polyneuropathy (polyradiculoneuritis). (Ettinger Ch 47)`,
-        },
-        { kind: 'step', text: ' STEP 3 — MASTICATORY MUSCLES & JAW' },
-        {
-          kind: 'check',
-          html: `Palpate the temporal and masseter muscles for pain/swelling (acute) or atrophy (chronic). Assess the range of jaw opening — restricted, painful opening with masticatory muscle atrophy suggests <strong>masticatory myositis</strong> (confirm with the type 2M-fibre antibody). Trismus/inability to open also occurs with retrobulbar disease and tetanus. (Ettinger Ch 47)`,
-        },
-        { kind: 'step', text: ' STEP 4 — THORACIC AUSCULTATION & GENERAL' },
-        {
-          kind: 'check',
-          html: `Auscult for crackles/increased lung sounds of <strong>aspiration pneumonia</strong> (cranioventral; the major complication). Note body condition/weight loss, cervical oesophageal distension, fever, and any systemic signs pointing to an endocrine (hypothyroid coat changes) or neuromuscular cause. (Ettinger Ch 47)`,
-        },
+
+        ...stepTable(1, 'ORAL EXAMINATION (often needs sedation)', {
+          cols: '0.75fr 1.4fr',
+          dividers: true,
+          headers: ['Examine', { text: 'Looking for', tone: 'teal' }],
+          rows: [
+            ['<strong>Oral cavity under sedation / GA</strong>', { text: 'A conscious oral exam is rarely complete', tone: 'teal' }],
+            ['<strong>Teeth &amp; mucosa</strong>', { text: 'Dental / periodontal disease · oral masses · stomatitis · cleft palate', tone: 'teal' }],
+            ['<strong>Foreign bodies</strong>', { text: 'E.g. a stick lodged across the palate', tone: 'teal' }],
+            ['<strong>Jaw &amp; orbit</strong>', { text: 'TMJ disorder · retrobulbar abscess (pain on opening + exophthalmos)', tone: 'teal' }],
+            ['<strong>Salivary swellings</strong>', { text: 'Mucocele / sialocele', tone: 'teal' }],
+            ['<strong>Tonsils / pharynx</strong>', { text: 'Inflammation · masses <span style="opacity:.7">(Ettinger Ch 47)</span>', tone: 'teal' }],
+          ],
+        }, '👄'),
+
+        ...stepTable(2, 'NEUROLOGIC EXAM (cranial nerves)', {
+          cols: '0.55fr 1.6fr',
+          dividers: true,
+          headers: ['Nerve', { text: 'Assess', tone: 'teal' }],
+          rows: [
+            ['<strong>CN V</strong>', { text: 'Masticatory muscle bulk / symmetry · dropped jaw (bilateral) · facial hypalgesia', tone: 'teal' }],
+            ['<strong>CN VII</strong>', { text: 'Facial paresis — lip / cheek control of the bolus', tone: 'teal' }],
+            ['<strong>CN IX / X</strong>', { text: '<strong>Gag reflex</strong> — reduced gag · dysphagia · dysphonia · laryngeal paralysis · megaoesophagus', tone: 'teal' }],
+            ['<strong>CN XII</strong>', { text: 'Tongue strength / symmetry — lingual paresis', tone: 'teal' }],
+            ['<strong>Generalised</strong>', { text: 'Exercise-induced weakness (MG) · neck ventroflexion · LMN polyneuropathy signs (polyradiculoneuritis) <span style="opacity:.7">(Ettinger Ch 47)</span>', tone: 'teal' }],
+          ],
+        }, '🧠'),
+
+        ...stepTable(3, 'MASTICATORY MUSCLES & JAW', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Assess', { text: 'Interpretation', tone: 'teal' }],
+          rows: [
+            ['<strong>Temporal + masseter palpation</strong>', { text: 'Pain / swelling (acute) or atrophy (chronic)', tone: 'teal' }],
+            ['<strong>Range of jaw opening</strong>', { text: 'Restricted, painful opening + masticatory muscle atrophy → <strong>masticatory myositis</strong> (confirm with the type 2M-fibre antibody)', tone: 'teal' }],
+            ['<strong>Trismus / inability to open</strong>', { text: 'Also occurs with retrobulbar disease and tetanus <span style="opacity:.7">(Ettinger Ch 47)</span>', tone: 'teal' }],
+          ],
+        }, '🦷'),
+
+        ...stepTable(4, 'THORACIC AUSCULTATION & GENERAL', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Assess', { text: 'Looking for', tone: 'teal' }],
+          rows: [
+            ['<strong>Thoracic auscultation</strong>', { text: 'Crackles / increased lung sounds of <strong>aspiration pneumonia</strong> — cranioventral; the major complication', tone: 'danger' }],
+            ['<strong>Body condition</strong>', { text: 'Weight loss', tone: 'teal' }],
+            ['<strong>Neck</strong>', { text: 'Cervical oesophageal distension', tone: 'teal' }],
+            ['<strong>Systemic signs</strong>', { text: 'Fever · endocrine clues (hypothyroid coat changes) · neuromuscular signs <span style="opacity:.7">(Ettinger Ch 47)</span>', tone: 'teal' }],
+          ],
+        }, '🫁'),
       ],
       after: [{ kind: 'disclaimer' }],
     },
@@ -92,31 +143,55 @@ export const dysphagiaDx: DxApproach = {
     dx: {
       title: 'Dx: Dysphagia / Gagging — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: ' STEP 1 — THORACIC RADIOGRAPHS (every dysphagic patient)' },
+        { kind: 'step', tone: 'danger', text: '📊 STEP 1 — THORACIC RADIOGRAPHS (every dysphagic patient)', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `Take <strong>thoracic radiographs (minimum 3 views) in ALL dysphagic patients</strong> to identify <strong>megaoesophagus</strong> and <strong>aspiration pneumonia</strong> (cranioventral alveolar pattern). Aspiration is the leading lethal complication — among aspiration cases, oesophageal disease accounted for ~40% (megaoesophagus = 71% of that group) and neurologic disease ~27%. Stabilise/treat aspiration before invasive work-up. (Ettinger Ch 47, 221)`,
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Do</strong>', { text: 'Thoracic radiographs (minimum 3 views) in <strong>ALL</strong> dysphagic patients', tone: 'teal' }],
+            ['<strong>Looking for</strong>', { text: '<strong>Megaoesophagus</strong> · <strong>aspiration pneumonia</strong> (cranioventral alveolar pattern)', tone: 'teal' }],
+            ['<strong>Why</strong>', { text: 'Aspiration is the leading lethal complication — among aspiration cases, oesophageal disease accounted for ~40% (megaoesophagus = 71% of that group) and neurologic disease ~27%', tone: 'danger' }],
+            ['<strong>Then</strong>', { text: 'Stabilise / treat aspiration before invasive work-up <span style="opacity:.7">(Ettinger Ch 47, 221)</span>', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 2 — VFSS / CONTRAST SWALLOW STUDY (the key functional test)' },
-        {
-          kind: 'check',
-          html: `The <strong>videofluoroscopic swallow study (VFSS)</strong> is the <strong>criterion standard for functional dysphagia</strong> — the free-feeding, free-standing protocol is preferred. It defines <strong>cricopharyngeal achalasia vs dyssynchrony</strong> (timing of upper-sphincter relaxation against the pharyngeal contraction — the distinction changes the surgery), detects segmental oesophageal dysmotility, the <strong>LES achalasia-like syndrome (LES-AS)</strong>, and sliding hiatal hernia better than static radiographs. A static <strong>barium/contrast oesophagram</strong> (± food) helps when fluoroscopy is unavailable, but cannot assess the dynamic phases. (Ettinger Ch 47, 221)`,
-        },
-        { kind: 'step', text: 'STEP 3 — OESOPHAGOSCOPY' },
-        {
-          kind: 'check',
-          html: `<strong>Oesophagoscopy</strong> directly assesses and treats mucosal/luminal disease: <strong>oesophagitis</strong>, <strong>stricture</strong> (and balloon dilation), <strong>foreign body</strong> (retrieval), diverticulum, neoplasia and the gastro-oesophageal junction. Image (thoracic rads ± contrast) first; endoscope when a mucosal/obstructive lesion is suspected or when retrieval/dilation is planned. (Ettinger Ch 47)`,
-        },
-        { kind: 'step', text: 'STEP 4 — TEST FOR SECONDARY / NEUROMUSCULAR CAUSES' },
-        {
-          kind: 'check',
-          html: `For acquired megaoesophagus or pharyngeal/oesophageal functional dysphagia, screen the secondary causes:<br>
-    <strong>AChR antibody titre</strong> — gold standard for <strong>myasthenia gravis</strong> (≈98% sensitive in dogs); megaoesophagus occurs in 84% of dogs / 40% of cats with generalised MG. A negative titre does not fully exclude focal/seronegative MG.<br>
-    <strong>Type 2M-fibre (masticatory muscle) antibody</strong> — for <strong>masticatory myositis</strong> when the jaw muscles are painful/atrophied; biopsy if equivocal.<br>
-    <strong>Endocrine</strong> — total/free T4 + TSH (hypothyroidism), basal cortisol / ACTH stimulation (hypoadrenocorticism).<br>
-    <strong>Toxin screens</strong> — blood lead, cholinesterase activity where exposure is plausible.<br>
-    <strong>CBC/chemistry</strong> for systemic/inflammatory disease, and advanced neuro imaging (MRI/CT) for a brainstem lesion affecting the CN IX/X nuclei. (Ettinger Ch 47)`,
-        },
+
+        ...stepTable(2, 'VFSS / CONTRAST SWALLOW STUDY (the key functional test)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Videofluoroscopic swallow study (VFSS)</strong>', { text: '<strong>Criterion standard for functional dysphagia</strong> — the free-feeding, free-standing protocol is preferred', tone: 'teal' }],
+            ['<strong>What it defines</strong>', { text: '<strong>Cricopharyngeal achalasia vs dyssynchrony</strong> (timing of upper-sphincter relaxation against the pharyngeal contraction — the distinction changes the surgery) · segmental oesophageal dysmotility · the <strong>LES achalasia-like syndrome (LES-AS)</strong> · sliding hiatal hernia — all better than static radiographs', tone: 'teal' }],
+            ['<strong>Static barium / contrast oesophagram</strong>', { text: '± food; helps when fluoroscopy is unavailable, but cannot assess the dynamic phases <span style="opacity:.7">(Ettinger Ch 47, 221)</span>', tone: 'teal' }],
+          ],
+        }, '🎬'),
+
+        ...stepTable(3, 'OESOPHAGOSCOPY', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>What it assesses and treats</strong>', { text: '<strong>Oesophagitis</strong> · <strong>stricture</strong> (and balloon dilation) · <strong>foreign body</strong> (retrieval) · diverticulum · neoplasia · the gastro-oesophageal junction', tone: 'teal' }],
+            ['<strong>Sequencing</strong>', { text: 'Image (thoracic rads ± contrast) first; endoscope when a mucosal / obstructive lesion is suspected or when retrieval or dilation is planned <span style="opacity:.7">(Ettinger Ch 47)</span>', tone: 'teal' }],
+          ],
+        }, '🔬'),
+
+        ...stepTable(4, 'TEST FOR SECONDARY / NEUROMUSCULAR CAUSES', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'What it rules in / out', tone: 'teal' }],
+          rows: [
+            ['<strong>AChR antibody titre</strong>', { text: 'Gold standard for <strong>myasthenia gravis</strong> (≈98% sensitive in dogs). Megaoesophagus occurs in 84% of dogs / 40% of cats with generalised MG. A negative titre does <strong>not</strong> fully exclude focal / seronegative MG', tone: 'teal' }],
+            ['<strong>Type 2M-fibre (masticatory muscle) antibody</strong>', { text: '<strong>Masticatory myositis</strong> when the jaw muscles are painful / atrophied; biopsy if equivocal', tone: 'teal' }],
+            ['<strong>Endocrine</strong>', { text: 'Total / free T4 + TSH (hypothyroidism) · basal cortisol / ACTH stimulation (hypoadrenocorticism)', tone: 'teal' }],
+            ['<strong>Toxin screens</strong>', { text: 'Blood lead · cholinesterase activity where exposure is plausible', tone: 'teal' }],
+            ['<strong>CBC / chemistry</strong>', { text: 'Systemic / inflammatory disease', tone: 'teal' }],
+            ['<strong>Advanced neuro imaging (MRI / CT)</strong>', { text: 'Brainstem lesion affecting the CN IX / X nuclei <span style="opacity:.7">(Ettinger Ch 47)</span>', tone: 'teal' }],
+          ],
+        }, '🧪'),
+        { kind: 'note', html: `Screen these in any acquired megaoesophagus or pharyngeal / oesophageal functional dysphagia.` },
       ],
       after: [
       { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [

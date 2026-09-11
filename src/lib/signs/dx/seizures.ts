@@ -7,6 +7,7 @@
 
 import type { DxApproach } from '../dxTypes'
 import { CN_EXAM_ACCORDION } from './shared/neuroExam'
+import { numBadge } from './shared/dxHelpers'
 
 export const seizuresDx: DxApproach = {
   title: 'Seizures',
@@ -15,35 +16,49 @@ export const seizuresDx: DxApproach = {
   history: {
     title: 'History: Seizures',
     blocks: [
-      { kind: 'step', text: '📋 CHARACTERISE THE EVENT' },
+      { kind: 'step', text: '📋 STEP 1 — CHARACTERISE THE EVENT', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong>Ask owners to video future episodes.</strong> The description is the diagnostic tool — the two findings below redirect the whole workup.<br><br>
-    <strong style="color:var(--tone-info-fg);">Focal onset?</strong> One body region or one side — facial twitching, lip smacking, fly-catching, one limb jerking. Consciousness may be preserved. Focal onset (including focal-to-bilateral) → <strong>structural until proven otherwise.</strong><br><br>
-    <strong style="color:var(--tone-warning-fg);">Generalised?</strong> Both sides at once — tonic-clonic, tonic, atonic; consciousness lost; autonomic signs (urination, defaecation, hypersalivation). Any category still possible.<br><br>
-    <strong style="color:var(--tone-green-fg);">Postictal recovery:</strong> disorientation, transient blindness, ataxia, polyphagia — normally minutes to a few hours. <strong>Prolonged (&gt;24h) or not improving = structural.</strong>`,
+        kind: 'gridTable',
+        cols: '0.7fr 1.45fr',
+        dividers: true,
+        headers: ['Feature', { text: 'What it means', tone: 'teal' }],
+        rows: [
+          ['<strong>Focal onset?</strong>', { text: 'One body region or one side — facial twitching · lip smacking · fly-catching · one limb jerking. Consciousness may be preserved. Focal onset (including focal-to-bilateral) → <strong>structural until proven otherwise</strong>', tone: 'info' }],
+          ['<strong>Generalised?</strong>', { text: 'Both sides at once — tonic-clonic · tonic · atonic; consciousness lost; autonomic signs (urination · defaecation · hypersalivation). Any category still possible', tone: 'warning' }],
+          ['<strong>Postictal recovery</strong>', { text: 'Disorientation · transient blindness · ataxia · polyphagia — normally minutes to a few hours. <strong>Prolonged (&gt;24 h) or not improving = structural</strong>', tone: 'green' }],
+        ],
+      },
+      { kind: 'note', html: `<strong>Ask owners to video future episodes.</strong> The description is the diagnostic tool — the findings above redirect the whole workup.` },
+
+      { kind: 'step', text: '⏱ STEP 2 — DURATION · CLUSTERS · AGE OF ONSET', noArrowAfter: true },
+      {
+        kind: 'gridTable',
+        cols: '0.7fr 1.45fr',
+        dividers: true,
+        headers: ['Feature', { text: 'Means', tone: 'teal' }],
+        rows: [
+          ['<strong>&gt;5 min</strong>', { text: '<strong>Status epilepticus</strong> — treat now, do not wait', tone: 'danger' }],
+          ['<strong>≥2 seizures / 24 h</strong>', { text: '<strong>Cluster</strong> — high SE risk, treat aggressively', tone: 'danger' }],
+          ['<strong>Age at first seizure &lt;6 months</strong>', { text: 'Structural (anomalous · storage) or reactive (hypoglycaemia · PSS · toxin)', tone: 'teal' }],
+          ['<strong>6 months–6 years</strong>', { text: 'Idiopathic epilepsy most likely — <em>if</em> bloods and interictal exam are normal', tone: 'teal' }],
+          ['<strong>&gt;6 years</strong>', { text: 'Structural (neoplasia · CVA · MUO) or reactive — idiopathic rare', tone: 'teal' }],
+          ['<strong>Interictal behaviour</strong>', { text: 'Completely normal between episodes? Head pressing · circling · personality or vision change → <strong>structural</strong>. Note the frequency trend — stable, increasing, decreasing', tone: 'teal' }],
+        ],
       },
 
-      { kind: 'step', text: '⏱ DURATION · CLUSTERS · AGE OF ONSET' },
+      { kind: 'step', text: '💊 STEP 3 — TOXIN · MEDICATION · AED HISTORY', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-danger-fg);">&gt;5 min = status epilepticus</strong> — treat now, do not wait. <strong style="color:var(--tone-danger-fg);">≥2 seizures/24h = cluster</strong> — high SE risk, treat aggressively.<br><br>
-    <strong>Age at first seizure:</strong><br>
-    • <strong>&lt;6 months</strong> → structural (anomalous, storage) or reactive (hypoglycaemia, PSS, toxin)<br>
-    • <strong>6 months–6 years</strong> → idiopathic epilepsy most likely, <em>if</em> bloods and interictal exam are normal<br>
-    • <strong>&gt;6 years</strong> → structural (neoplasia, CVA, MUO) or reactive — idiopathic rare<br><br>
-    <strong>Interictal behaviour:</strong> completely normal between episodes? Head pressing, circling, personality or vision change → structural. Frequency trend: stable, increasing, or decreasing?`,
+        kind: 'gridTable',
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Ask every seizure patient', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>1. Any possible toxin access?</strong>', { text: 'Slug bait · rodenticide · antifreeze · mouldy food · chocolate · lead · farm chemicals', tone: 'teal' }],
+          ['<strong>2. Any medication started or changed?</strong>', { text: '🐱 ask specifically about <strong>5-FU cream in the household</strong> (trace exposure is fatal) · permethrin spot-ons · metronidazole', tone: 'danger' }],
+          ['<strong>3. Any missed AED doses?</strong>', { text: '<strong>Abrupt phenobarbitone or KBr withdrawal is a major cause of breakthrough seizures and SE</strong>', tone: 'danger' }],
+        ],
       },
-
-      { kind: 'step', text: '💊 TOXIN · MEDICATION · AED HISTORY' },
-      {
-        kind: 'check',
-        html: `Three questions, every seizure patient:<br>
-    <strong>1. Any possible toxin access?</strong> Slug bait, rodenticide, antifreeze, mouldy food, chocolate, lead, farm chemicals.<br>
-    <strong>2. Any medication started or changed?</strong> — with cats, ask specifically about <strong style="color:var(--tone-danger-fg);">5-FU cream in the household</strong> (trace exposure is fatal), permethrin spot-ons, metronidazole.<br>
-    <strong>3. Any missed AED doses?</strong> <strong style="color:var(--tone-danger-fg);">Abrupt phenobarbitone or KBr withdrawal is a major cause of breakthrough seizures and SE.</strong><br><br>
-    A "yes" to any of these moves the patient into the reactive category — open the list below for the full toxin / medication catalogue with linked pages.`,
-      },
+      { kind: 'note', html: `A "yes" to any of these moves the patient into the <strong>reactive</strong> category — open the list below for the full toxin / medication catalogue with linked pages.` },
       {
         kind: 'diseaseGrid',
         title: 'REACTIVE CAUSES — FULL LISTS',
@@ -82,16 +97,20 @@ export const seizuresDx: DxApproach = {
   exam: {
     title: 'Exam: Seizures',
     blocks: [
-      { kind: 'step', tone: 'danger', text: '🚨 SEIZING OR IMMEDIATELY POST-ICTAL?' },
+      { kind: 'step', tone: 'danger', text: '🚨 SEIZING OR IMMEDIATELY POST-ICTAL?', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `1. Airway — sternal recumbency, head extended, suction if needed<br>
-    2. High-flow O₂ (5–10 L/min mask or flow-by)<br>
-    3. IV access (cephalic or saphenous)<br>
-    4. Point-of-care BG immediately — dextrose if &lt;3.5 mmol/L<br>
-    5. T° &gt;41°C after SE → active cooling; stop at 39.5°C<br>
-    6. <strong>Do NOT attempt a full neuro exam during an active seizure</strong> — examine when calm.<br><br>
-    Drug dosing → see <strong>PROT-SEIZ</strong>.`,
+        kind: 'gridTable',
+        cols: '0.7fr 1.45fr',
+        dividers: true,
+        headers: ['Do', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          [`${numBadge(1)}<strong>Airway</strong>`, { text: 'Sternal recumbency · head extended · suction if needed', tone: 'danger' }],
+          [`${numBadge(2)}<strong>High-flow O₂</strong>`, { text: '5–10 L/min mask or flow-by', tone: 'danger' }],
+          [`${numBadge(3)}<strong>IV access</strong>`, { text: 'Cephalic or saphenous', tone: 'teal' }],
+          [`${numBadge(4)}<strong>Point-of-care BG immediately</strong>`, { text: 'Dextrose if &lt;3.5 mmol/L', tone: 'teal' }],
+          [`${numBadge(5)}<strong>Temperature</strong>`, { text: 'T° &gt;41°C after SE → active cooling; stop at 39.5°C', tone: 'teal' }],
+          [`${numBadge(6)}<strong>Do NOT attempt a full neuro exam during an active seizure</strong>`, { text: 'Examine when calm. Drug dosing → <strong>PROT-SEIZ</strong>', tone: 'danger' }],
+        ],
       },
 
       { kind: 'step', text: '🧠 POSTICTAL vs INTERICTAL' },
@@ -147,15 +166,20 @@ export const seizuresDx: DxApproach = {
         html: `Mentation grading: alert → obtunded → stuporous → comatose. Record it at every recheck — the <em>trend</em> is what matters, not the single value.`,
       },
 
-      { kind: 'step', text: '🔍 TARGETED PHYSICAL EXAM' },
+      { kind: 'step', text: '🔍 TARGETED PHYSICAL EXAM', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `Only four things on the general exam change the seizure workup:<br><br>
-    <strong style="color:var(--tone-info-fg);">Cardiac auscultation + pulse quality</strong> — murmur, arrhythmia or weak pulses reopen <strong>syncope</strong> as the diagnosis. Collapse without a postictal phase is not a seizure.<br>
-    <strong style="color:var(--tone-warning-fg);">Blood pressure</strong> — hypertensive encephalopathy is treatable and easily missed (older cat, CKD, hyperthyroid).<br>
-    <strong style="color:var(--tone-violet-fg);">Fundus</strong> — the only place you see the CNS directly: papilloedema, chorioretinitis, retinal detachment.<br>
-    <strong style="color:var(--tone-green-fg);">Liver + body size</strong> — small liver, poor growth, copper-coloured irises in a toy breed &lt;1yr → PSS.`,
+        kind: 'gridTable',
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Assess', { text: 'Why it changes the workup', tone: 'teal' }],
+        rows: [
+          ['<strong>Cardiac auscultation + pulse quality</strong>', { text: 'Murmur · arrhythmia · weak pulses reopen <strong>syncope</strong> as the diagnosis. Collapse without a postictal phase is not a seizure', tone: 'info' }],
+          ['<strong>Blood pressure</strong>', { text: 'Hypertensive encephalopathy is treatable and easily missed — older cat · CKD · hyperthyroid', tone: 'warning' }],
+          ['<strong>Fundus</strong>', { text: 'The only place you see the CNS directly — papilloedema · chorioretinitis · retinal detachment', tone: 'violet' }],
+          ['<strong>Liver + body size</strong>', { text: 'Small liver · poor growth · copper-coloured irises in a toy breed &lt;1 yr → <strong>PSS</strong>', tone: 'green' }],
+        ],
       },
+      { kind: 'note', html: `Only these four things on the general exam change the seizure workup.` },
 
       { kind: 'step', text: '📖 CRANIAL NERVE EXAM — TECHNIQUE' },
       CN_EXAM_ACCORDION,

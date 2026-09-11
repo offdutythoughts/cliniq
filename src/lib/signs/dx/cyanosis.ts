@@ -10,6 +10,7 @@
 // the emergency protocols. (Ettinger Ch 27)
 
 import type { DxApproach } from '../dxTypes'
+import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const cyanosisDx: DxApproach = {
   title: 'Cyanosis',
@@ -20,31 +21,68 @@ export const cyanosisDx: DxApproach = {
       blocks: [
         { kind: 'branch', text: 'GOAL: CENTRAL vs PERIPHERAL vs DYSHAEMOGLOBINAEMIA' },
         {
-          kind: 'check',
-          html: `<strong>Cyanosis</strong> is blue/dark discoloration of skin and mucosa from <strong>≥5 g/dL deoxygenated haemoglobin</strong> (≈3 g/dL arterial). Because it depends on absolute deoxyHb, a <strong>severely anaemic patient may NOT look cyanotic</strong> even when critically hypoxic, while a polycythaemic one cyanoses early — never use mucous-membrane colour as your only oxygenation gauge. (Ettinger Ch 27)`,
+          kind: 'gridTable',
+          cols: '0.7fr 1.4fr',
+          dividers: true,
+          headers: ['Definition', { text: 'Consequence', tone: 'teal' }],
+          rows: [
+            ['<strong>Cyanosis</strong><br>blue / dark discoloration of skin and mucosa', { text: 'Requires <strong>≥5 g/dL deoxygenated haemoglobin</strong> (≈3 g/dL arterial)', tone: 'teal' }],
+            ['<strong>Severe anaemia</strong>', { text: 'May <strong>NOT</strong> look cyanotic even when critically hypoxic', tone: 'danger' }],
+            ['<strong>Polycythaemia</strong>', { text: 'Cyanoses early', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', tone: 'danger', text: ' STEP 1 — IS THIS AN EMERGENCY? (it usually is)' },
+        { kind: 'note', html: `Never use mucous-membrane colour as your only oxygenation gauge. <span style="opacity:.7">(Ettinger Ch 27)</span>` },
+
+        { kind: 'step', tone: 'danger', text: '🚨 STEP 1 — IS THIS AN EMERGENCY? (it usually is)', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `Central cyanosis + respiratory distress is an emergency — <strong>give oxygen and minimise stress before any history-taking is completed</strong>. Take the history from the owner <em>while</em> the patient is in an oxygen cage. Ask about <strong>speed of onset, exercise tolerance, and any toxin access</strong>.`,
+          kind: 'gridTable',
+          cols: '0.75fr 1.4fr',
+          dividers: true,
+          headers: ['Do', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Central cyanosis + respiratory distress</strong>', { text: 'An emergency — <strong>give oxygen and minimise stress before any history-taking is completed</strong>', tone: 'danger' }],
+            ['<strong>Take the history</strong>', { text: 'From the owner <em>while</em> the patient is in an oxygen cage', tone: 'teal' }],
+            ['<strong>Ask about</strong>', { text: 'Speed of onset · exercise tolerance · any toxin access', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: ' STEP 2 — ONSET, COURSE & EXERCISE' },
-        {
-          kind: 'check',
-          html: `<strong>Peracute</strong> → toxin (paracetamol, benzocaine, nitrate — methaemoglobinaemia), pulmonary thromboembolism, aortic thromboembolism, pneumothorax, or airway crisis.<br>
-    <strong>Chronic / lifelong, worse on exercise, in a young animal</strong> → cyanotic congenital heart disease (R→L shunt) with secondary erythrocytosis. <strong>Differential cyanosis</strong> (caudal end blue, cranial pink, worse with light exercise) = reverse PDA.<br>
-    <strong>Cough, wheeze, stridor or honking</strong> → parenchymal vs lower- vs upper-airway disease.`,
-        },
-        { kind: 'step', text: ' STEP 3 — TOXIN & DRUG EXPOSURE (methaemoglobinaemia)' },
-        {
-          kind: 'check',
-          html: `Ask specifically about <strong>paracetamol (acetaminophen)</strong> — highly toxic, especially to cats — <strong>benzocaine / topical local anaesthetics</strong>, <strong>nitrates / nitrites</strong>, hydroxyurea, and <strong>skunk musk</strong>. These oxidant exposures cause <strong>acute cyanosis with a normal PaO2</strong> and often a concurrent Heinz-body haemolytic anaemia. <strong>Hereditary methaemoglobinaemia</strong> (cytochrome-b5 reductase deficiency) gives mild, persistent cyanosis with erythrocytosis.`,
-        },
-        { kind: 'step', text: ' STEP 4 — SIGNALMENT & BREED' },
-        {
-          kind: 'check',
-          html: `<strong>Brachycephalic dog</strong> → BOAS / upper-airway obstruction. <strong>Older large-breed dog with stridor</strong> → laryngeal paralysis. <strong>Toy breed with a honking cough</strong> → tracheal collapse. <strong>Cat with acute distress</strong> → feline asthma, pleural effusion, or congestive heart failure; <strong>cat with painful pulseless hind limbs</strong> → aortic thromboembolism.`,
-        },
+
+        ...stepTable(2, 'ONSET, COURSE & EXERCISE', {
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['Pattern', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Peracute</strong>', { text: 'Toxin (paracetamol · benzocaine · nitrate → methaemoglobinaemia) · pulmonary thromboembolism · aortic thromboembolism · pneumothorax · airway crisis', tone: 'teal' }],
+            ['<strong>Chronic / lifelong, worse on exercise, young animal</strong>', { text: 'Cyanotic congenital heart disease (R→L shunt) with secondary erythrocytosis', tone: 'teal' }],
+            ['<strong>Differential cyanosis</strong><br>caudal end blue, cranial pink, worse with light exercise', { text: '<strong>Reverse PDA</strong>', tone: 'teal' }],
+            ['<strong>Cough · wheeze · stridor · honking</strong>', { text: 'Parenchymal vs lower- vs upper-airway disease', tone: 'teal' }],
+          ],
+        }, '⏱️'),
+
+        ...stepTable(3, 'TOXIN & DRUG EXPOSURE (methaemoglobinaemia)', {
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['Ask about', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Paracetamol (acetaminophen)</strong>', { text: 'Highly toxic, especially to cats', tone: 'danger' }],
+            ['<strong>Benzocaine / topical local anaesthetics</strong>', { text: 'Oxidant exposure', tone: 'teal' }],
+            ['<strong>Nitrates / nitrites · hydroxyurea · skunk musk</strong>', { text: 'Oxidant exposure', tone: 'teal' }],
+            ['<strong>Effect of these oxidants</strong>', { text: '<strong>Acute cyanosis with a normal PaO₂</strong>, often with a concurrent Heinz-body haemolytic anaemia', tone: 'teal' }],
+            ['<strong>Hereditary methaemoglobinaemia</strong><br>cytochrome-b5 reductase deficiency', { text: 'Mild, persistent cyanosis with erythrocytosis', tone: 'teal' }],
+          ],
+        }, '💊'),
+
+        ...stepTable(4, 'SIGNALMENT & BREED', {
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['Signalment', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Brachycephalic dog</strong>', { text: 'BOAS / upper-airway obstruction', tone: 'teal' }],
+            ['<strong>Older large-breed dog with stridor</strong>', { text: 'Laryngeal paralysis', tone: 'teal' }],
+            ['<strong>Toy breed with a honking cough</strong>', { text: 'Tracheal collapse', tone: 'teal' }],
+            ['<strong>🐱 Cat with acute distress</strong>', { text: 'Feline asthma · pleural effusion · congestive heart failure', tone: 'teal' }],
+            ['<strong>🐱 Cat with painful pulseless hind limbs</strong>', { text: 'Aortic thromboembolism', tone: 'danger' }],
+          ],
+        }, '🐾'),
       ],
       after: [
         {
@@ -60,30 +98,52 @@ export const cyanosisDx: DxApproach = {
     exam: {
       title: 'Exam: Cyanosis',
       blocks: [
-        { kind: 'step', tone: 'teal', text: ' Stabilise on oxygen first — examine in stages, do not stress a dyspnoeic patient' },
-        { kind: 'step', text: ' STEP 1 — IS THE CYANOSIS GENERALISED OR DISTAL?' },
-        {
-          kind: 'check',
-          html: `<strong>Central cyanosis</strong> = blue mucous membranes AND skin throughout the body, reflecting low arterial saturation (respiratory disease or R→L shunt).<br>
-    <strong>Peripheral cyanosis</strong> = limited to distal extremities with <em>normal</em> SaO2 (poor perfusion — shock, thromboembolism, hypothermia).<br>
-    <strong>Differential cyanosis</strong> = caudal mucous membranes/pads blue while cranial (oral) membranes stay pink → reverse PDA — compare oral mucosa with the vulvar/preputial mucosa.`,
-        },
-        { kind: 'step', text: ' STEP 2 — RESPIRATORY PATTERN & THORACIC AUSCULTATION' },
-        {
-          kind: 'check',
-          html: `<strong>Inspiratory effort / stridor</strong> → upper-airway obstruction (BOAS, laryngeal paralysis, tracheal collapse). <strong>Expiratory effort / wheeze</strong> → lower-airway disease (feline asthma).<br>
-    <strong>Increased lung sounds / crackles</strong> → parenchymal disease (pneumonia, oedema). <strong>Muffled / absent lung sounds ventrally or dorsally</strong> → pleural space disease (effusion, pneumothorax) — this patient needs a thoracocentesis, not a delay.`,
-        },
-        { kind: 'step', text: ' STEP 3 — CARDIAC EXAM' },
-        {
-          kind: 'check',
-          html: `Auscultate for a <strong>murmur</strong> (congenital shunt, MVD) and assess for signs of congestive failure. A young cyanotic animal with a murmur, exercise intolerance and a <strong>packed-cell volume that is high (erythrocytosis)</strong> points to a R→L shunt. In a cat with peripheral cyanosis, palpate the <strong>femoral pulses and footpads</strong> — absent pulses + cold cyanotic pads + pain = aortic thromboembolism.`,
-        },
-        { kind: 'step', text: ' STEP 4 — LOOK AT THE BLOOD ITSELF' },
-        {
-          kind: 'check',
-          html: `When you draw blood, <strong>look at its colour</strong>. <strong>Chocolate-brown blood that does NOT brighten on exposure to air</strong> = methaemoglobinaemia. Normal hypoxaemic blood is dark red/violet and turns bright red with O2 exposure. This single observation can redirect the entire work-up at the bedside.`,
-        },
+        { kind: 'step', tone: 'teal', text: '🫁 Stabilise on oxygen first — examine in stages, do not stress a dyspnoeic patient' },
+
+        ...stepTable(1, 'IS THE CYANOSIS GENERALISED OR DISTAL?', {
+          cols: '0.75fr 1.4fr',
+          dividers: true,
+          headers: ['Type', { text: 'What you see / means', tone: 'teal' }],
+          rows: [
+            ['<strong>Central cyanosis</strong>', { text: 'Blue mucous membranes <strong>and</strong> skin throughout the body — low arterial saturation (respiratory disease or R→L shunt)', tone: 'teal' }],
+            ['<strong>Peripheral cyanosis</strong>', { text: 'Limited to distal extremities with <em>normal</em> SaO₂ — poor perfusion (shock · thromboembolism · hypothermia)', tone: 'teal' }],
+            ['<strong>Differential cyanosis</strong>', { text: 'Caudal mucous membranes / pads blue while cranial (oral) membranes stay pink → <strong>reverse PDA</strong>. Compare oral mucosa with vulvar / preputial mucosa', tone: 'teal' }],
+          ],
+        }, '🔵'),
+
+        ...stepTable(2, 'RESPIRATORY PATTERN & THORACIC AUSCULTATION', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Inspiratory effort / stridor</strong>', { text: 'Upper-airway obstruction — BOAS · laryngeal paralysis · tracheal collapse', tone: 'teal' }],
+            ['<strong>Expiratory effort / wheeze</strong>', { text: 'Lower-airway disease — feline asthma', tone: 'teal' }],
+            ['<strong>Increased lung sounds / crackles</strong>', { text: 'Parenchymal disease — pneumonia · oedema', tone: 'teal' }],
+            ['<strong>Muffled / absent lung sounds ventrally or dorsally</strong>', { text: 'Pleural space disease (effusion · pneumothorax) — <strong>this patient needs a thoracocentesis, not a delay</strong>', tone: 'danger' }],
+          ],
+        }, '👂'),
+
+        ...stepTable(3, 'CARDIAC EXAM', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Assess', { text: 'Means', tone: 'teal' }],
+          rows: [
+            ['<strong>Murmur</strong>', { text: 'Congenital shunt · MVD; assess for signs of congestive failure', tone: 'teal' }],
+            ['<strong>Young cyanotic animal + murmur + exercise intolerance + high PCV (erythrocytosis)</strong>', { text: '<strong>R→L shunt</strong>', tone: 'teal' }],
+            ['<strong>🐱 Femoral pulses + footpads</strong>', { text: 'Absent pulses + cold cyanotic pads + pain = <strong>aortic thromboembolism</strong>', tone: 'danger' }],
+          ],
+        }, '❤️'),
+
+        ...stepTable(4, 'LOOK AT THE BLOOD ITSELF', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Blood colour', { text: 'Means', tone: 'teal' }],
+          rows: [
+            ['<strong>Chocolate-brown, does NOT brighten on exposure to air</strong>', { text: '<strong>Methaemoglobinaemia</strong>', tone: 'danger' }],
+            ['<strong>Dark red / violet, turns bright red with O₂</strong>', { text: 'Normal hypoxaemic blood', tone: 'teal' }],
+          ],
+        }, '🩸'),
+        { kind: 'note', html: `This single bedside observation can redirect the entire work-up.` },
       ],
       after: [{ kind: 'disclaimer' }],
     },
@@ -91,43 +151,73 @@ export const cyanosisDx: DxApproach = {
     dx: {
       title: 'Dx: Cyanosis — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: ' STEP 1 — STABILISE: OXYGEN FIRST' },
+        { kind: 'step', tone: 'danger', text: '🫁 STEP 1 — STABILISE: OXYGEN FIRST', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `<strong>Supplement oxygen immediately</strong> in every cyanotic patient and minimise handling stress.<br>
-    Two important caveats: oxygen does <strong>NOT</strong> correct a <strong>right-to-left shunt</strong> (shunted blood never meets alveolar gas), and oxygen is <strong>of little use in methaemoglobinaemia</strong> (metHb cannot bind O2). A failure to pink up on oxygen is itself a diagnostic clue. (Ettinger Ch 27)`,
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Do', { text: 'Caveat', tone: 'teal' }],
+          rows: [
+            ['<strong>Supplement oxygen immediately</strong>', { text: 'In every cyanotic patient, and minimise handling stress', tone: 'teal' }],
+            ['<strong>Oxygen does NOT correct a right-to-left shunt</strong>', { text: 'Shunted blood never meets alveolar gas', tone: 'danger' }],
+            ['<strong>Oxygen is of little use in methaemoglobinaemia</strong>', { text: 'metHb cannot bind O₂ — a failure to pink up on oxygen is itself a diagnostic clue <span style="opacity:.7">(Ettinger Ch 27)</span>', tone: 'danger' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 2 — PULSE OXIMETRY (SpO2) — useful but flawed' },
-        {
-          kind: 'check',
-          html: `<strong>Normal SpO2 &gt;95%.</strong> SpO2 is a fast non-invasive screen but it <strong>overestimates</strong> SaO2 at low ranges (&lt;70–80%) and is degraded by pigmentation, poor perfusion and severe anaemia.<br>
-    <strong>Critically: in methaemoglobinaemia, SpO2 is FALSELY pinned at ~85% regardless of true oxygenation</strong> — a clinically cyanotic patient with an "85%" pulse-ox that won't move is a red flag for metHb.`,
-        },
-        { kind: 'step', text: 'STEP 3 — ARTERIAL BLOOD GAS / CO-OXIMETRY' },
-        {
-          kind: 'check',
-          html: `<strong>Arterial blood gas is the gold standard for PaO2</strong> (normal 80–100 mmHg on room air at sea level; severe hypoxaemia = PaO2 &lt;60 mmHg / SaO2 &lt;90%). A <strong>normal PaO2 with clinical cyanosis</strong> indicts a dyshaemoglobinaemia.<br>
-    <strong>Pulse CO-oximetry</strong> uses multiple wavelengths to neutralise the effect of dyshaemoglobins (quantifies metHb directly) and also estimates haemoglobin concentration — the test of choice when methaemoglobinaemia is suspected.`,
-        },
-        { kind: 'step', text: 'STEP 4 — THORACIC IMAGING ± THORACOCENTESIS' },
-        {
-          kind: 'check',
-          html: `<strong>Thoracic radiography</strong> characterises parenchymal, airway, pleural-space and cardiac disease.<br>
-    <strong>If lung sounds are muffled and the patient is unstable, thoracocentesis comes BEFORE radiographs</strong> — it is both diagnostic and immediately therapeutic for pleural effusion / pneumothorax (see the thoracocentesis protocol). Defer GA/CT until the patient is stable.<br>
-    <strong>Thoracic CT</strong> is sensitive for pulmonary thromboembolism and other respiratory causes of hypoxaemia once the patient can tolerate it.`,
-        },
-        { kind: 'step', text: 'STEP 5 — ECHOCARDIOGRAPHY ± BUBBLE STUDY' },
-        {
-          kind: 'check',
-          html: `<strong>Echocardiography</strong> is the gold standard for structural cardiac disease and pulmonary hypertension. A <strong>contrast echo ("bubble study")</strong> — agitated saline injected IV — confirms a <strong>right-to-left shunt</strong> when bubbles appear in the systemic (left-sided) circulation.<br>
-    <strong>Point-of-care NT-proBNP</strong> helps differentiate cardiac from non-cardiac respiratory distress, especially in cats.`,
-        },
-        { kind: 'step', text: 'STEP 6 — METHAEMOGLOBINAEMIA SPOT TEST' },
-        {
-          kind: 'check',
-          html: `Place <strong>1–3 drops of blood on white filter paper</strong>: <strong>chocolate-brown that stays brown against the white background = methaemoglobinaemia</strong>; hypoxaemic blood is dark red/violet and turns bright red as it oxygenates. metHb &gt;2–3% of total Hb is abnormal.<br>
-    Confirm with co-oximetry, then treat the cause: remove the oxidant, give <strong>methylene blue</strong> + N-acetylcysteine (or transfusion) for acquired metHb — see the metHb protocol. Oxygen alone will not work.`,
-        },
+
+        ...stepTable(2, 'PULSE OXIMETRY (SpO₂) — useful but flawed', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Normal</strong>', { text: 'SpO₂ &gt;95%', tone: 'teal' }],
+            ['<strong>Limitations</strong>', { text: 'Fast non-invasive screen, but <strong>overestimates</strong> SaO₂ at low ranges (&lt;70–80%); degraded by pigmentation, poor perfusion and severe anaemia', tone: 'teal' }],
+            ['<strong>Methaemoglobinaemia</strong>', { text: 'SpO₂ is <strong>falsely pinned at ~85%</strong> regardless of true oxygenation — a clinically cyanotic patient with an "85%" pulse-ox that won\'t move is a red flag for metHb', tone: 'danger' }],
+          ],
+        }, '📟'),
+
+        ...stepTable(3, 'ARTERIAL BLOOD GAS / CO-OXIMETRY', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'Interpretation', tone: 'teal' }],
+          rows: [
+            ['<strong>Arterial blood gas</strong>', { text: 'Gold standard for PaO₂ — normal 80–100 mmHg on room air at sea level; severe hypoxaemia = PaO₂ &lt;60 mmHg / SaO₂ &lt;90%', tone: 'teal' }],
+            ['<strong>Normal PaO₂ with clinical cyanosis</strong>', { text: 'Indicts a <strong>dyshaemoglobinaemia</strong>', tone: 'danger' }],
+            ['<strong>Pulse CO-oximetry</strong>', { text: 'Multiple wavelengths neutralise the effect of dyshaemoglobins (quantifies metHb directly) and estimates haemoglobin concentration — the test of choice when methaemoglobinaemia is suspected', tone: 'teal' }],
+          ],
+        }, '🧪'),
+
+        ...stepTable(4, 'THORACIC IMAGING ± THORACOCENTESIS', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Thoracic radiography</strong>', { text: 'Characterises parenchymal, airway, pleural-space and cardiac disease', tone: 'teal' }],
+            ['<strong>Muffled lung sounds + unstable patient</strong>', { text: '<strong>Thoracocentesis comes BEFORE radiographs</strong> — diagnostic and immediately therapeutic for pleural effusion / pneumothorax (see the thoracocentesis protocol). Defer GA/CT until stable', tone: 'danger' }],
+            ['<strong>Thoracic CT</strong>', { text: 'Sensitive for pulmonary thromboembolism and other respiratory causes of hypoxaemia — once the patient can tolerate it', tone: 'teal' }],
+          ],
+        }, '📊'),
+
+        ...stepTable(5, 'ECHOCARDIOGRAPHY ± BUBBLE STUDY', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'What it shows', tone: 'teal' }],
+          rows: [
+            ['<strong>Echocardiography</strong>', { text: 'Gold standard for structural cardiac disease and pulmonary hypertension', tone: 'teal' }],
+            ['<strong>Contrast echo ("bubble study")</strong>', { text: 'Agitated saline injected IV — confirms a <strong>right-to-left shunt</strong> when bubbles appear in the systemic (left-sided) circulation', tone: 'teal' }],
+            ['<strong>Point-of-care NT-proBNP</strong>', { text: 'Differentiates cardiac from non-cardiac respiratory distress, especially in cats', tone: 'teal' }],
+          ],
+        }, '❤️'),
+
+        ...stepTable(6, 'METHAEMOGLOBINAEMIA SPOT TEST', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Step', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            [`${numBadge(1)}<strong>Technique</strong>`, { text: 'Place 1–3 drops of blood on white filter paper', tone: 'teal' }],
+            [`${numBadge(2)}<strong>Interpret</strong>`, { text: '<strong>Chocolate-brown that stays brown against the white background = methaemoglobinaemia</strong>; hypoxaemic blood is dark red / violet and turns bright red as it oxygenates. metHb &gt;2–3% of total Hb is abnormal', tone: 'teal' }],
+            [`${numBadge(3)}<strong>Confirm &amp; treat</strong>`, { text: 'Confirm with co-oximetry, then remove the oxidant and give <strong>methylene blue</strong> + N-acetylcysteine (or transfusion) for acquired metHb — see the metHb protocol. <strong>Oxygen alone will not work</strong>', tone: 'danger' }],
+          ],
+        }, '🟤'),
       ],
       after: [
       { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [

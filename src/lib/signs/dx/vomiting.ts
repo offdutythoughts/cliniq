@@ -3,6 +3,7 @@
 // ../vomiting.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
+import { stepTable } from './shared/dxHelpers'
 
 export const vomitingDx: DxApproach = {
   title: 'Vomiting',
@@ -12,93 +13,118 @@ export const vomitingDx: DxApproach = {
   history: {
     title: 'History: Vomiting',
     blocks: [
-      { kind: 'step', text: '📋 VOMITING vs REGURGITATION?' },
+      { kind: 'step', text: '📋 STEP 1 — VOMITING vs REGURGITATION?', noArrowAfter: true },
       {
-        kind: 'html',
-        html: `<div class="dx-check">
-    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:5px 8px;font-size:10.5px;line-height:1.4;"><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);">Feature</div><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:var(--tone-danger-fg);">Vomiting</div><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:var(--tone-green-fg);">Regurgitation</div><div>Retching?</div><div style="color:var(--tone-danger-fg);">Usually present</div><div style="color:var(--tone-green-fg);">Usually absent</div><div>Abdominal effort?</div><div style="color:var(--tone-danger-fg);">Active</div><div style="color:var(--tone-green-fg);">Passive — none</div><div>Prodromal nausea?</div><div style="color:var(--tone-danger-fg);">Lip licking, ptyalism</div><div style="color:var(--tone-green-fg);">Absent</div><div>Bile present?</div><div style="color:var(--tone-danger-fg);">May be present</div><div style="color:var(--tone-green-fg);">Usually absent</div><div>Ingesta digested?</div><div style="color:var(--tone-danger-fg);">May be digested</div><div style="color:var(--tone-green-fg);">Typically undigested, tubular</div><div>Timing after eating?</div><div style="color:var(--tone-danger-fg);">Variable</div><div style="color:var(--tone-green-fg);">Any time; soon after ↑ suspicion</div><div>White/clear mucus?</div><div style="color:var(--tone-danger-fg);">Less typical</div><div style="color:var(--tone-green-fg);">Frothy saliva common</div><div>Frequency?</div><div style="color:var(--tone-danger-fg);">Variable</div><div style="color:var(--tone-green-fg);">Many/day, no systemic signs</div><div>Duration?</div><div style="color:var(--tone-danger-fg);">Variable</div><div style="color:var(--tone-green-fg);">Weeks–months (megaoesoph.); acute if obstructive</div></div>
-    <div style="margin-top:8px;font-size:10px;opacity:.75;">⚠️ If uncertain, work up as vomiting. If vomiting workup yields no diagnosis, pursue oesophageal investigation. Owner video is very helpful.</div>
-  </div>`,
+        kind: 'gridTable',
+        cols: '1.2fr 1fr 1fr',
+        dividers: true,
+        headers: ['Feature', { text: 'Vomiting', tone: 'danger' }, { text: 'Regurgitation', tone: 'green' }],
+        rows: [
+          ['Retching?', { text: 'Usually present', tone: 'danger' }, { text: 'Usually absent', tone: 'green' }],
+          ['Abdominal effort?', { text: 'Active', tone: 'danger' }, { text: 'Passive — none', tone: 'green' }],
+          ['Prodromal nausea?', { text: 'Lip licking, ptyalism', tone: 'danger' }, { text: 'Absent', tone: 'green' }],
+          ['Bile present?', { text: 'May be present', tone: 'danger' }, { text: 'Usually absent', tone: 'green' }],
+          ['Ingesta digested?', { text: 'May be digested', tone: 'danger' }, { text: 'Typically undigested, tubular', tone: 'green' }],
+          ['Timing after eating?', { text: 'Variable', tone: 'danger' }, { text: 'Any time; soon after ↑ suspicion', tone: 'green' }],
+          ['White/clear mucus?', { text: 'Less typical', tone: 'danger' }, { text: 'Frothy saliva common', tone: 'green' }],
+          ['Frequency?', { text: 'Variable', tone: 'danger' }, { text: 'Many/day, no systemic signs', tone: 'green' }],
+          ['Duration?', { text: 'Variable', tone: 'danger' }, { text: 'Weeks–months (megaoesoph.); acute if obstructive', tone: 'green' }],
+        ],
       },
-      { kind: 'step', text: '📖 AETIOLOGICAL CLUES — CHRONICITY' },
+      { kind: 'note', html: `⚠️ If uncertain, work up as <strong>vomiting</strong>. If the vomiting workup yields no diagnosis, pursue oesophageal investigation. Owner video is very helpful.` },
+
+      { kind: 'step', text: '📖 STEP 2 — AETIOLOGICAL CLUES: CHRONICITY', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Acute vomiting (&lt;7 days)</strong><br>
-    • Dietary indiscretion — most common cause in dogs<br>
-    • Toxin ingestion (ethylene glycol, chocolate, lilies, grapes, xylitol, lead)<br>
-    • Drug-induced (NSAIDs, antibiotics, chemotherapy, opioids, xylazine in cats)<br>
-    • Infectious gastroenteritis — parvovirus, panleukopenia (young unvaccinated)<br>
-    • Foreign body — especially young animals + known pica<br>
-    • GDV — emergency; acute distension + non-productive retching in large breed dog<br>
-    • Intussusception — animals &lt;1 year; often concurrent diarrhoea + haematochezia<br>
-    • Acute pancreatitis<br>
-    <span style="font-size:10px;opacity:.75;">Many acute cases are self-limiting. Red flags require urgent workup.</span>`,
+        kind: 'gridTable',
+        label: 'Acute vomiting (<7 days)',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Cause', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Dietary indiscretion</strong>', { text: 'Most common cause in dogs', tone: 'green' }],
+          ['<strong>Toxin ingestion</strong>', { text: 'Ethylene glycol · chocolate · lilies · grapes · xylitol · lead', tone: 'green' }],
+          ['<strong>Drug-induced</strong>', { text: 'NSAIDs · antibiotics · chemotherapy · opioids · xylazine (🐱)', tone: 'green' }],
+          ['<strong>Infectious gastroenteritis</strong>', { text: 'Parvovirus · panleukopenia — young unvaccinated', tone: 'green' }],
+          ['<strong>Foreign body</strong>', { text: 'Especially young animals + known pica', tone: 'green' }],
+          ['<strong>GDV</strong>', { text: '<strong>Emergency</strong> — acute distension + non-productive retching in a large breed dog', tone: 'danger' }],
+          ['<strong>Intussusception</strong>', { text: 'Animals &lt;1 year; often concurrent diarrhoea + haematochezia', tone: 'green' }],
+          ['<strong>Acute pancreatitis</strong>', { text: 'Cranial abdominal pain common', tone: 'green' }],
+        ],
+      },
+      { kind: 'note', html: `Many acute cases are self-limiting. <strong>Red flags require urgent workup.</strong>` },
+      {
+        kind: 'gridTable',
+        label: 'Chronic vomiting (>7 days)',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Cause', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Chronic enteropathy / IBD</strong>', { text: 'Commonest chronic primary GI cause', tone: 'warning' }],
+          ['<strong>GI neoplasia</strong>', { text: 'Lymphoma · adenocarcinoma · mast cell tumour · gastrinoma', tone: 'warning' }],
+          ['<strong>Food allergy or intolerance</strong>', { text: 'Dietary trial required to confirm', tone: 'warning' }],
+          ['<strong>Motility disorder / delayed gastric emptying</strong>', { text: 'Vomiting food hours after eating', tone: 'warning' }],
+          ['<strong><em>Helicobacter</em> spp.</strong>', { text: 'Clinical significance variable', tone: 'warning' }],
+          ['<strong>Systemic / metabolic</strong>', { text: 'CKD · hepatic disease · hyperthyroidism (🐱) · hypoadrenocorticism', tone: 'warning' }],
+          ['<strong>Structural</strong>', { text: 'Hiatal hernia · pyloric stenosis · gastric antral hypertrophy', tone: 'warning' }],
+          ['<strong>Pancreatitis</strong>', { text: 'Chronic / recurrent', tone: 'warning' }],
+        ],
+      },
+      { kind: 'note', html: `Requires a systematic minimum database + targeted second-tier diagnostics.` },
+
+      { kind: 'step', text: '📖 STEP 3 — CHARACTER OF VOMITUS', noArrowAfter: true },
+      {
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Character', { text: 'Means', tone: 'teal' }],
+        rows: [
+          ['<strong>Frank red blood</strong> (haematemesis)', { text: 'Active upper GI haemorrhage — ulceration · neoplasia · coagulopathy', tone: 'danger' }],
+          ['<strong>"Coffee grounds"</strong>', { text: 'Slow upper GI haemorrhage', tone: 'danger' }],
+          ['<strong>Blood — caveat</strong>', { text: 'Swallowed blood from a nasal / oral / pulmonary source can mimic haematemesis', tone: 'danger' }],
+          ['<strong>Bile</strong>', { text: 'Gastric outflow problem, or intestinal dysmotility with duodenogastric reflux', tone: 'warning' }],
+          ['<strong>Pyloric outflow obstruction</strong>', { text: 'Bile usually <strong>absent</strong> — no communication with the duodenum', tone: 'warning' }],
+          ['<strong>Bilious vomiting syndrome</strong>', { text: 'Small amounts of bile after prolonged fasting → duodenogastric reflux at the end of the fasting window', tone: 'warning' }],
+          ['<strong>Undigested / partially digested food, hours after eating</strong>', { text: 'Motility disorder or gastric outflow obstruction', tone: 'green' }],
+          ['<strong>Food immediately / soon after eating</strong>', { text: 'Anxiety · oesophageal disease · obstructive lesion', tone: 'green' }],
+        ],
+      },
+
+      { kind: 'step', text: '🐾 STEP 4 — KEY SIGNALMENT + EXPOSURE CLUES', noArrowAfter: true },
+      {
+        kind: 'gridTable',
+        label: 'Signalment',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Signalment', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Young (unvaccinated)</strong>', { text: 'Parvovirus · panleukopenia · intussusception · FB · parasites', tone: 'green' }],
+          ['<strong>Older</strong>', { text: 'Neoplasia (GI or extra-GI) · hyperthyroidism (🐱) · CKD', tone: 'green' }],
+          ['<strong>Brachycephalic</strong>', { text: 'Pyloric stenosis · hiatal hernia', tone: 'warning' }],
+          ['<strong>Shar Pei / German Shepherd / Rottweiler</strong>', { text: 'IBD', tone: 'warning' }],
+          ['<strong>Large / giant breed</strong>', { text: '<strong>GDV</strong> — emergency if acute distension', tone: 'danger' }],
+          ['<strong>Miniature Schnauzer</strong>', { text: 'Dyslipidaemia → pancreatitis', tone: 'warning' }],
+          ['<strong>Nova Scotia Duck Tolling Retriever · Great Dane · WHWT</strong>', { text: 'Hypoadrenocorticism', tone: 'warning' }],
+          ['<strong>Siamese cat</strong>', { text: 'GI adenocarcinoma · intussusception', tone: 'warning' }],
+          ['<strong>Intact female</strong>', { text: '<strong>Pyometra</strong> — always consider if not neutered', tone: 'danger' }],
+        ],
       },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Chronic vomiting (&gt;7 days)</strong><br>
-    • Chronic enteropathy / IBD<br>
-    • GI neoplasia (lymphoma, adenocarcinoma, mast cell tumour, gastrinoma)<br>
-    • Food allergy or intolerance<br>
-    • Motility disorder / delayed gastric emptying<br>
-    • Helicobacter spp. (clinical significance variable)<br>
-    • Systemic / metabolic: CKD, hepatic disease, hyperthyroidism (cat), hypoadrenocorticism<br>
-    • Hiatal hernia, pyloric stenosis, gastric antral hypertrophy<br>
-    • Pancreatitis (chronic/recurrent)<br>
-    <span style="font-size:10px;opacity:.75;">Requires systematic minimum database + targeted second-tier diagnostics.</span>`,
-      },
-      { kind: 'step', text: '📖 CHARACTER OF VOMITUS' },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-danger-fg);">Blood (haematemesis)</strong><br>
-    • Frank red blood → active upper GI haemorrhage (ulceration, neoplasia, coagulopathy)<br>
-    • "Coffee grounds" → slow upper GI haemorrhage<br>
-    • Swallowed blood from nasal/oral/pulmonary source can mimic haematemesis`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Bile</strong><br>
-    • Suggests gastric outflow problem or intestinal dysmotility with duodenogastric reflux<br>
-    • Pyloric outflow obstruction: bile usually absent (no communication with duodenum)<br>
-    • Bilious vomiting syndrome: small amounts of bile after prolonged fasting → duodenogastric reflux (end of fasting window)`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Undigested / partially digested food</strong><br>
-    • Hours after eating → motility disorder or gastric outflow obstruction<br>
-    • Immediately / soon after eating → anxiety, oesophageal disease, or obstructive lesion`,
-      },
-      { kind: 'step', text: '📖 KEY SIGNALMENT + EXPOSURE CLUES' },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Age</strong><br>
-    • Young (unvaccinated): parvovirus, panleukopenia, intussusception, FB, parasites<br>
-    • Older: neoplasia (GI or extra-GI), hyperthyroidism (cat), CKD<br>
-    <strong style="color:var(--tone-warning-fg);">Breed</strong><br>
-    • Brachycephalic: pyloric stenosis, hiatal hernia<br>
-    • Shar Pei / German Shepherd / Rottweiler: IBD<br>
-    • Large / giant breed: GDV — emergency if acute distension<br>
-    • Miniature Schnauzer: dyslipidaemia → pancreatitis<br>
-    • Nova Scotia Duck Tolling Retriever, Great Dane, WHWT: hypoadrenocorticism<br>
-    • Siamese cat: GI adenocarcinoma, intussusception<br>
-    <strong style="color:var(--tone-danger-fg);">Sex</strong><br>
-    • Intact female: pyometra — always consider if not neutered`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-info-fg);">Drug / toxin / vaccination history</strong><br>
-    • NSAIDs → gastric erosion/ulceration; discontinue immediately if vomiting<br>
-    • Antibiotics, chemotherapy, opioids, cyclosporine, mycophenolate, xylazine (cats)<br>
-    • Toxins: ethylene glycol, ethanol, theobromine, lilies (cats), xylitol, grapes<br>
-    • Incomplete vaccination → parvovirus / panleukopenia remain on differential<br>
-    <strong style="color:var(--tone-violet-fg);">Travel / geography</strong><br>
-    • Histoplasmosis — endemic area (concurrent diarrhoea, weight loss, lung signs)<br>
-    • Pythium insidiosum — Gulf Coast/tropical region (GI mass, weight loss)<br>
-    <strong style="color:var(--tone-warning-fg);">Concurrent signs</strong><br>
-    • Concurrent diarrhoea → ileal/jejunal/colonic involvement<br>
-    • Weight loss + hyporexia → diffuse GI disease or systemic illness<br>
-    • Neurological signs → CNS / vestibular cause (motion sickness, intracranial disease)<br>
-    • Intact female + systemic illness → pyometra (even without PU/PD)`,
+        kind: 'gridTable',
+        label: 'Drug / toxin / vaccination · travel · concurrent signs',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['History', { text: 'Significance', tone: 'teal' }],
+        rows: [
+          ['<strong>NSAIDs</strong>', { text: 'Gastric erosion / ulceration — <strong>discontinue immediately if vomiting</strong>', tone: 'info' }],
+          ['<strong>Other drugs</strong>', { text: 'Antibiotics · chemotherapy · opioids · cyclosporine · mycophenolate · xylazine (🐱)', tone: 'info' }],
+          ['<strong>Toxins</strong>', { text: 'Ethylene glycol · ethanol · theobromine · lilies (🐱) · xylitol · grapes', tone: 'info' }],
+          ['<strong>Incomplete vaccination</strong>', { text: 'Parvovirus / panleukopenia remain on the differential', tone: 'info' }],
+          ['<strong>Travel — endemic area</strong>', { text: 'Histoplasmosis (concurrent diarrhoea · weight loss · lung signs) · <em>Pythium insidiosum</em> in Gulf Coast / tropical regions (GI mass · weight loss)', tone: 'violet' }],
+          ['<strong>Concurrent diarrhoea</strong>', { text: 'Ileal / jejunal / colonic involvement', tone: 'warning' }],
+          ['<strong>Weight loss + hyporexia</strong>', { text: 'Diffuse GI disease or systemic illness', tone: 'warning' }],
+          ['<strong>Neurological signs</strong>', { text: 'CNS / vestibular cause — motion sickness · intracranial disease', tone: 'warning' }],
+          ['<strong>Intact female + systemic illness</strong>', { text: '<strong>Pyometra</strong> — even without PU/PD', tone: 'danger' }],
+        ],
       },
     ],
     after: [{ kind: 'disclaimer' }],
@@ -107,66 +133,58 @@ export const vomitingDx: DxApproach = {
   exam: {
     title: 'Exam: Vomiting',
     blocks: [
-      { kind: 'step', text: '🩺 PHYSICAL EXAMINATION' },
+      { kind: 'step', text: '🩺 PHYSICAL EXAMINATION', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Temperature</strong><br>
-    • Fever → infectious gastroenteritis, aspiration pneumonia, septic peritonitis, pyometra<br>
-    • Hypothermia → shock, hypoadrenocorticism, severe systemic disease<br>
-    <span style="font-size:10px;opacity:.75;">Absence of fever does not exclude serious disease.</span>`,
+        kind: 'gridTable',
+        label: 'Temperature · hydration · cardiovascular · mucous membranes',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Fever</strong>', { text: 'Infectious gastroenteritis · aspiration pneumonia · septic peritonitis · pyometra. <em>Absence of fever does not exclude serious disease</em>', tone: 'green' }],
+          ['<strong>Hypothermia</strong>', { text: 'Shock · hypoadrenocorticism · severe systemic disease', tone: 'green' }],
+          ['<strong>Hydration</strong>', { text: 'Skin turgor · mucous membrane moisture · capillary refill time', tone: 'green' }],
+          ['<strong>Tachycardia + weak pulses + prolonged CRT</strong>', { text: 'Hypovolaemic shock — GDV · intussusception · peritonitis', tone: 'danger' }],
+          ['<strong>Bradycardia</strong>', { text: 'Hypoadrenocorticism (hyperkalaemia) · severe vagal response', tone: 'green' }],
+          ['<strong>Pale MM</strong>', { text: 'Blood loss (haematemesis / melaena) or hypovolaemic shock', tone: 'green' }],
+          ['<strong>Icteric MM</strong>', { text: 'Hepatic disease · haemolysis · biliary obstruction', tone: 'green' }],
+          ['<strong>Hyperaemic "injected" MM</strong>', { text: 'Early shock · sepsis · SIRS', tone: 'green' }],
+        ],
       },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Hydration + Cardiovascular</strong><br>
-    • Assess skin turgor, mucous membrane moisture, capillary refill time<br>
-    • Tachycardia + weak pulses + prolonged CRT → hypovolaemic shock (GDV, intussusception, peritonitis)<br>
-    • Bradycardia → hypoadrenocorticism (hyperkalaemia), severe vagal response`,
+        kind: 'gridTable',
+        label: 'Abdominal palpation',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Pain / guarding</strong>', { text: 'Pancreatitis · peritonitis · obstruction · GDV', tone: 'warning' }],
+          ['<strong>Tympanic distension</strong>', { text: 'GDV · intestinal obstruction — <strong>large breed dog + non-productive retching = emergency, do not delay</strong>', tone: 'danger' }],
+          ['<strong>Cranial abdominal mass</strong>', { text: 'Hepatomegaly · splenomegaly · gastric or pancreatic mass', tone: 'warning' }],
+          ['<strong>Mid-abdominal cylindrical mass</strong>', { text: 'Intussusception — "sausage loop"', tone: 'warning' }],
+          ['<strong>Fluid wave</strong>', { text: 'Ascites — hepatic disease · peritonitis · hypoalbuminaemia', tone: 'warning' }],
+          ['<strong>Thickened intestinal loops</strong>', { text: 'IBD · neoplasia · infectious enteritis', tone: 'warning' }],
+        ],
       },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Mucous Membranes</strong><br>
-    • Pale → blood loss (haematemesis/melaena) or hypovolaemic shock<br>
-    • Icteric → hepatic disease, haemolysis, biliary obstruction<br>
-    • Hyperaemic "injected" → early shock, sepsis, SIRS`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Abdominal Palpation</strong><br>
-    • Pain / guarding → pancreatitis, peritonitis, obstruction, GDV<br>
-    • Tympanic distension → GDV, intestinal obstruction — large breed dog + non-productive retching = emergency<br>
-    • Cranial abdominal mass → hepatomegaly, splenomegaly, gastric/pancreatic mass<br>
-    • Mid-abdominal cylindrical mass → intussusception ("sausage loop")<br>
-    • Fluid wave → ascites (hepatic disease, peritonitis, hypoalbuminaemia)<br>
-    • Thickened intestinal loops → IBD, neoplasia, infectious enteritis<br>
-    <span style="font-size:10px;opacity:.75;">⚠️ GDV: large breed dog + tympanic abdomen + non-productive retching → emergency — do not delay.</span>`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-danger-fg);">Oral Cavity</strong><br>
-    • Linear FB under tongue (especially cats) → intestinal obstruction<br>
-    • Oral ulcers → uraemia (CKD), caustic toxin ingestion<br>
-    • Ptyalism → nausea, oesophagitis, toxin, pharyngeal disease<br>
-    • Halitosis → uraemia, hepatic encephalopathy, oral disease`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Neck + Thyroid</strong><br>
-    • Cat: thyroid nodule (ventral neck) → hyperthyroidism — common cause of chronic vomiting in cats<br>
-    • Submandibular lymphadenopathy → neoplasia, infection, lymphoma`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-violet-fg);">Neurological Assessment</strong><br>
-    • Head tilt + nystagmus + ataxia → vestibular disease (idiopathic, otitis interna)<br>
-    • Altered mentation / seizures → intracranial disease, hepatic encephalopathy, severe uraemia, toxin<br>
-    • Generalised weakness → hypoadrenocorticism, hypokalaemia, neuromuscular disease<br>
-    <span style="font-size:10px;opacity:.75;">Primary CNS disease causing vomiting alone (without other neurological signs) is rare.</span>`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-danger-fg);">Rectal Examination</strong><br>
-    • Melaena → upper GI haemorrhage (ulceration, neoplasia)<br>
-    • Haematochezia → large bowel involvement (colitis, intussusception)`,
+        kind: 'gridTable',
+        label: 'Oral cavity · neck · neuro · rectal',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Linear FB under the tongue</strong> (especially 🐱)', { text: 'Intestinal obstruction', tone: 'danger' }],
+          ['<strong>Oral ulcers</strong>', { text: 'Uraemia (CKD) · caustic toxin ingestion', tone: 'danger' }],
+          ['<strong>Ptyalism</strong>', { text: 'Nausea · oesophagitis · toxin · pharyngeal disease', tone: 'danger' }],
+          ['<strong>Halitosis</strong>', { text: 'Uraemia · hepatic encephalopathy · oral disease', tone: 'danger' }],
+          ['<strong>🐱 Thyroid nodule (ventral neck)</strong>', { text: 'Hyperthyroidism — a common cause of chronic vomiting in cats', tone: 'warning' }],
+          ['<strong>Submandibular lymphadenopathy</strong>', { text: 'Neoplasia · infection · lymphoma', tone: 'warning' }],
+          ['<strong>Head tilt + nystagmus + ataxia</strong>', { text: 'Vestibular disease — idiopathic · otitis interna', tone: 'violet' }],
+          ['<strong>Altered mentation / seizures</strong>', { text: 'Intracranial disease · hepatic encephalopathy · severe uraemia · toxin', tone: 'violet' }],
+          ['<strong>Generalised weakness</strong>', { text: 'Hypoadrenocorticism · hypokalaemia · neuromuscular disease. <em>Primary CNS disease causing vomiting alone is rare</em>', tone: 'violet' }],
+          ['<strong>Rectal: melaena</strong>', { text: 'Upper GI haemorrhage — ulceration · neoplasia', tone: 'danger' }],
+          ['<strong>Rectal: haematochezia</strong>', { text: 'Large bowel involvement — colitis · intussusception', tone: 'danger' }],
+        ],
       },
     ],
     after: [{ kind: 'disclaimer' }],
@@ -180,73 +198,110 @@ export const vomitingDx: DxApproach = {
         { html: '<strong>🧪 CBC · Serum Chemistry · UA</strong><br><span style="font-size:10.5px;">All vomiting cases — first-line</span>' },
         { html: '<strong>📊 Abdominal Imaging</strong><br><span style="font-size:10.5px;">Radiography + Ultrasound</span>' },
       ] },
-      { kind: 'step', text: '🧪 CBC · SERUM CHEMISTRY · URINALYSIS' },
+
+      { kind: 'step', text: '🧪 CBC · SERUM CHEMISTRY · URINALYSIS', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong>Haematology:</strong><br>
-    • Leucopenia → parvovirus / panleukopenia (young unvaccinated)<br>
-    • Neutrophilia → infection, peritonitis, pyometra<br>
-    • Eosinophilia + absence of stress leukogram → hypoadrenocorticism; also parasites, eosinophilic disease<br>
-    • Anaemia (regenerative) → GI haemorrhage<br>
-    • Thrombocytopenia → DIC, immune-mediated thrombocytopenia<br><br>
-    <strong>Biochemistry:</strong><br>
-    • ↑ BUN/Cr + low USG → CKD / AKI<br>
-    • ↑ ALT/ALP/GGT → hepatobiliary disease<br>
-    • Na:K ratio &lt;27 → hypoadrenocorticism (confirm with ACTH stimulation)<br>
-    • Persistent hyperglycaemia + glucosuria (no ketones) → diabetes mellitus<br>
-    • Hyperglycaemia + ketonuria → DKA<br>
-    • ↑ Total Ca²⁺ → neoplasia, hypoadrenocorticism, hypervitaminosis D<br>
-    • Hypoalbuminaemia → protein-losing enteropathy, hepatic failure<br><br>
-    <strong>Urinalysis:</strong><br>
-    • USG &lt;1.030 in dehydrated dog → CKD, hypoadrenocorticism, diabetes insipidus, pyometra<br>
-    • Glucosuria without hyperglycaemia → CKD (Fanconi)<br>
-    • Bilirubinuria → hepatobiliary disease`,
+        kind: 'gridTable',
+        label: 'Haematology',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Leucopenia</strong>', { text: 'Parvovirus / panleukopenia — young unvaccinated', tone: 'teal' }],
+          ['<strong>Neutrophilia</strong>', { text: 'Infection · peritonitis · pyometra', tone: 'teal' }],
+          ['<strong>Eosinophilia + absent stress leukogram</strong>', { text: 'Hypoadrenocorticism; also parasites · eosinophilic disease', tone: 'teal' }],
+          ['<strong>Regenerative anaemia</strong>', { text: 'GI haemorrhage', tone: 'teal' }],
+          ['<strong>Thrombocytopenia</strong>', { text: 'DIC · immune-mediated thrombocytopenia', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: '📊 ABDOMINAL IMAGING' },
       {
-        kind: 'check',
-        html: `<strong>Survey radiograph (right lateral + VD):</strong><br>
-    • Gas pattern: dilated loops proximal to obstruction ("stacked" appearance)<br>
-    • Radiopaque FB<br>
-    • Gastric compartmentalisation (double bubble, right lateral view) → GDV<br>
-    • Free peritoneal gas → perforation<br>
-    • Hepatomegaly, splenomegaly, abdominal mass<br>
-    • Reduced serosal detail → peritoneal effusion or emaciation<br><br>
-    <strong>Abdominal ultrasound:</strong><br>
-    • Intestinal wall layering: loss → neoplasia; preserved but thickened → IBD/enteritis<br>
-    • "Bullseye" / "target" sign → intussusception<br>
-    • Pancreatic enlargement, altered echogenicity, peripancreatic fat saponification → pancreatitis<br>
-    • Hepatic, splenic, adrenal lesions<br>
-    • Mesenteric lymphadenopathy (IBD vs lymphoma)<br>
-    • Free abdominal fluid → characterise (ascites, exudate, haemorrhage)`,
+        kind: 'gridTable',
+        label: 'Biochemistry & urinalysis',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>↑ BUN / Cr + low USG</strong>', { text: 'CKD · AKI', tone: 'teal' }],
+          ['<strong>↑ ALT / ALP / GGT</strong>', { text: 'Hepatobiliary disease', tone: 'teal' }],
+          ['<strong>Na:K ratio &lt;27</strong>', { text: 'Hypoadrenocorticism — confirm with ACTH stimulation', tone: 'danger' }],
+          ['<strong>Persistent hyperglycaemia + glucosuria, no ketones</strong>', { text: 'Diabetes mellitus', tone: 'teal' }],
+          ['<strong>Hyperglycaemia + ketonuria</strong>', { text: 'DKA', tone: 'danger' }],
+          ['<strong>↑ Total Ca²⁺</strong>', { text: 'Neoplasia · hypoadrenocorticism · hypervitaminosis D', tone: 'teal' }],
+          ['<strong>Hypoalbuminaemia</strong>', { text: 'Protein-losing enteropathy · hepatic failure', tone: 'teal' }],
+          ['<strong>USG &lt;1.030 in a dehydrated dog</strong>', { text: 'CKD · hypoadrenocorticism · diabetes insipidus · pyometra', tone: 'teal' }],
+          ['<strong>Glucosuria without hyperglycaemia</strong>', { text: 'CKD (Fanconi)', tone: 'teal' }],
+          ['<strong>Bilirubinuria</strong>', { text: 'Hepatobiliary disease', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: '🔍 FURTHER INVESTIGATION — SECONDARY / EXTRA-GI' },
+
+      { kind: 'step', text: '📊 ABDOMINAL IMAGING', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong>If bloods or imaging abnormal, pursue specific secondary cause:</strong><br><br>
-    • ↑ BUN/Cr + low USG → <strong>Renal disease</strong> — urine culture, UPC ratio, renal imaging<br>
-    • ↑ ALT/ALP/GGT → <strong>Hepatobiliary disease</strong> — bile acids, abdominal US, liver biopsy<br>
-    • Na:K &lt;27, absent stress leukogram, or eosinophilia in sick dog → <strong>Hypoadrenocorticism</strong> — check basal cortisol; if low or suspicion remains → ACTH stimulation test<br>
-    &nbsp;&nbsp;<span style="font-size:10px;opacity:.75;">Atypical Addison's: Na:K ratio normal — do not exclude on electrolytes alone</span><br>
-    • Persistent hyperglycaemia + glucosuria (no ketones) → <strong>Diabetes mellitus</strong> — fructosamine, urinalysis + culture, start insulin + diet<br>
-    • Hyperglycaemia + ketonuria → <strong>DKA</strong> — blood gas, fluid therapy, insulin protocol<br>
-    • ↑ Total Ca²⁺ → <strong>Hypercalcaemia workup</strong> — PTH, PTHrP, vitamin D metabolites, thoracic imaging<br>
-    • Cat ↑ T4 → <strong>Hyperthyroidism</strong> — confirm, recheck in 3 weeks if equivocal<br>
-    • ↑ cPLI / fPLI → <strong>Pancreatitis</strong> — imaging, supportive care<br>
-    • ↓ Albumin + ↓ Globulin → <strong>PLE / hepatic failure</strong> — panhypoproteinaemia = PLE; investigate intestinal vs hepatic origin<br><br>
-    <span style="font-size:10.5px;opacity:.8;">Secondary cause confirmed → investigate primary condition. Not all extra-GI vomiting requires GI workup.</span>`,
+        kind: 'gridTable',
+        label: 'Survey radiograph (right lateral + VD)',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Means', tone: 'teal' }],
+        rows: [
+          ['<strong>Gas pattern</strong>', { text: 'Dilated loops proximal to obstruction — "stacked" appearance', tone: 'teal' }],
+          ['<strong>Radiopaque FB</strong>', { text: 'Foreign body', tone: 'teal' }],
+          ['<strong>Gastric compartmentalisation</strong> (double bubble, right lateral)', { text: '<strong>GDV</strong>', tone: 'danger' }],
+          ['<strong>Free peritoneal gas</strong>', { text: 'Perforation', tone: 'danger' }],
+          ['<strong>Organomegaly / abdominal mass</strong>', { text: 'Hepatomegaly · splenomegaly · mass', tone: 'teal' }],
+          ['<strong>Reduced serosal detail</strong>', { text: 'Peritoneal effusion or emaciation', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: '🔍 FURTHER INVESTIGATION — IF PRIMARY GI SUSPECTED<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: first-line diagnostics normal or non-diagnostic · chronic or refractory</span>' },
       {
-        kind: 'check',
-        html: `• <strong>fPLI / cPLI</strong> — pancreatitis (especially if imaging equivocal)<br>
-    • <strong>Serum T4</strong> — hyperthyroidism (cat, any age; atypical presentations possible)<br>
-    • <strong>Resting cortisol ± ACTH stimulation</strong> — atypical Addison's (absent stress leukogram, eosinophilia in sick dog)<br>
-    • <strong>Cobalamin + folate</strong> — SI disease indicator; cobalamin low in EPI, severe IBD, ileal disease<br>
-    • <strong>Fasting gastrin</strong> — gastrinoma / Zollinger-Ellison (refractory ulcers, profound acid hypersecretion)<br>
-    • <strong>Bile acids ± plasma ammonia</strong> — hepatic function / PSVA<br>
-    • <strong>Dietary trial (4–8 weeks)</strong> — exclusive novel protein or hydrolysed diet; no treats, chews, flavoured medications<br>
-    • <strong>Endoscopy + biopsy</strong> — mucosal assessment, chronic gastritis, IBD, early neoplasia; full-thickness preferred for deeper infiltrates`,
+        kind: 'gridTable',
+        label: 'Abdominal ultrasound',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Means', tone: 'teal' }],
+        rows: [
+          ['<strong>Intestinal wall layering</strong>', { text: 'Loss → neoplasia · preserved but thickened → IBD / enteritis', tone: 'teal' }],
+          ['<strong>"Bullseye" / "target" sign</strong>', { text: 'Intussusception', tone: 'teal' }],
+          ['<strong>Pancreatic enlargement · altered echogenicity · peripancreatic fat saponification</strong>', { text: 'Pancreatitis', tone: 'teal' }],
+          ['<strong>Hepatic · splenic · adrenal lesions</strong>', { text: 'Organ-specific disease', tone: 'teal' }],
+          ['<strong>Mesenteric lymphadenopathy</strong>', { text: 'IBD vs lymphoma', tone: 'teal' }],
+          ['<strong>Free abdominal fluid</strong>', { text: 'Characterise — ascites · exudate · haemorrhage', tone: 'teal' }],
+        ],
+      },
+
+      { kind: 'step', text: '🔍 FURTHER INVESTIGATION — SECONDARY / EXTRA-GI', noArrowAfter: true },
+      {
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Abnormality', { text: 'Diagnosis → next step', tone: 'teal' }],
+        rows: [
+          ['<strong>↑ BUN / Cr + low USG</strong>', { text: '<strong>Renal disease</strong> — urine culture · UPC ratio · renal imaging', tone: 'teal' }],
+          ['<strong>↑ ALT / ALP / GGT</strong>', { text: '<strong>Hepatobiliary disease</strong> — bile acids · abdominal US · liver biopsy', tone: 'teal' }],
+          ['<strong>Na:K &lt;27 · absent stress leukogram · eosinophilia in a sick dog</strong>', { text: '<strong>Hypoadrenocorticism</strong> — check basal cortisol; if low or suspicion remains → ACTH stimulation test. <em>Atypical Addison\'s: Na:K normal — do not exclude on electrolytes alone</em>', tone: 'danger' }],
+          ['<strong>Persistent hyperglycaemia + glucosuria, no ketones</strong>', { text: '<strong>Diabetes mellitus</strong> — fructosamine · urinalysis + culture · start insulin + diet', tone: 'teal' }],
+          ['<strong>Hyperglycaemia + ketonuria</strong>', { text: '<strong>DKA</strong> — blood gas · fluid therapy · insulin protocol', tone: 'danger' }],
+          ['<strong>↑ Total Ca²⁺</strong>', { text: '<strong>Hypercalcaemia workup</strong> — PTH · PTHrP · vitamin D metabolites · thoracic imaging', tone: 'teal' }],
+          ['<strong>🐱 ↑ T4</strong>', { text: '<strong>Hyperthyroidism</strong> — confirm; recheck in 3 weeks if equivocal', tone: 'teal' }],
+          ['<strong>↑ cPLI / fPLI</strong>', { text: '<strong>Pancreatitis</strong> — imaging · supportive care', tone: 'teal' }],
+          ['<strong>↓ Albumin + ↓ Globulin</strong>', { text: '<strong>PLE / hepatic failure</strong> — panhypoproteinaemia = PLE; investigate intestinal vs hepatic origin', tone: 'teal' }],
+        ],
+      },
+      { kind: 'note', html: `Secondary cause confirmed → investigate the primary condition. <strong>Not all extra-GI vomiting requires a GI workup.</strong>` },
+
+      { kind: 'step', text: '🔍 FURTHER INVESTIGATION — IF PRIMARY GI SUSPECTED<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: first-line diagnostics normal or non-diagnostic · chronic or refractory</span>', noArrowAfter: true },
+      {
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Test', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>fPLI / cPLI</strong>', { text: 'Pancreatitis — especially if imaging is equivocal', tone: 'teal' }],
+          ['<strong>Serum T4</strong>', { text: 'Hyperthyroidism — 🐱 any age; atypical presentations possible', tone: 'teal' }],
+          ['<strong>Resting cortisol ± ACTH stimulation</strong>', { text: 'Atypical Addison\'s — absent stress leukogram · eosinophilia in a sick dog', tone: 'teal' }],
+          ['<strong>Cobalamin + folate</strong>', { text: 'SI disease indicator — cobalamin low in EPI · severe IBD · ileal disease', tone: 'teal' }],
+          ['<strong>Fasting gastrin</strong>', { text: 'Gastrinoma / Zollinger-Ellison — refractory ulcers · profound acid hypersecretion', tone: 'teal' }],
+          ['<strong>Bile acids ± plasma ammonia</strong>', { text: 'Hepatic function · PSVA', tone: 'teal' }],
+          ['<strong>Dietary trial (4–8 weeks)</strong>', { text: 'Exclusive novel protein or hydrolysed diet — <strong>no treats, chews, or flavoured medications</strong>', tone: 'teal' }],
+          ['<strong>Endoscopy + biopsy</strong>', { text: 'Mucosal assessment — chronic gastritis · IBD · early neoplasia. Full-thickness preferred for deeper infiltrates', tone: 'teal' }],
+        ],
       },
       { kind: 'lesionLink', loc: 'LOC-GI-UPPER', name: 'Primary GI lesions', noArrowAfter: true },
       { kind: 'lesionLink', loc: 'LOC-GI-SECONDARY', name: 'Secondary / extra-GI causes', tone: 'secondary' },

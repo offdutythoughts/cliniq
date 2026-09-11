@@ -5,6 +5,7 @@
 // pages across the infectious / immune-mediated / neoplastic categories.
 
 import type { DxApproach } from '../dxTypes'
+import { stepTable } from './shared/dxHelpers'
 
 export const feverDx: DxApproach = {
   title: 'Fever / FUO',
@@ -15,34 +16,58 @@ export const feverDx: DxApproach = {
       blocks: [
         { kind: 'branch', text: 'GOAL: CONFIRM TRUE FEVER, THEN LOCALISE' },
         {
-          kind: 'check',
-          html: `• <strong>Fever (pyrexia)</strong> = a <strong>regulated</strong>, pyrogen-mediated rise in the hypothalamic set point (exogenous pyrogens → IL-1, IL-6, TNF-α → prostaglandin E2 → ↑set point) — the animal does NOT show cooling behaviour<br>• <strong>Hyperthermia</strong> = a rise in core temperature WITHOUT a set-point change (panting, vasodilation, cold-seeking)<br>• <strong>FUO</strong> = temp &gt;39.2°C (102.5°F) for ≥3 weeks, no cause after ≥3 visits and/or 3 days hospitalisation (CBC, biochem, UA), often defined as persisting after a 5–10 day antibacterial trial<br>• Normal rectal = 38.0–39.2°C (100.5–102.5°F) — healthy dogs/cats reach 39.7°C (103.5°F) in the consulting room`,
+          kind: 'gridTable',
+          cols: '0.6fr 1.5fr',
+          dividers: true,
+          headers: ['Term', { text: 'Definition', tone: 'teal' }],
+          rows: [
+            ['<strong>Fever (pyrexia)</strong>', { text: 'A <strong>regulated</strong>, pyrogen-mediated rise in the hypothalamic set point (exogenous pyrogens → IL-1 · IL-6 · TNF-α → prostaglandin E2 → ↑ set point) — the animal does <strong>NOT</strong> show cooling behaviour', tone: 'teal' }],
+            ['<strong>Hyperthermia</strong>', { text: 'A rise in core temperature <strong>without</strong> a set-point change — panting · vasodilation · cold-seeking', tone: 'teal' }],
+            ['<strong>FUO</strong>', { text: 'Temp &gt;39.2°C (102.5°F) for ≥3 weeks, no cause after ≥3 visits and/or 3 days hospitalisation (CBC · biochem · UA); often defined as persisting after a 5–10 day antibacterial trial', tone: 'teal' }],
+            ['<strong>Normal rectal</strong>', { text: '38.0–39.2°C (100.5–102.5°F) — healthy dogs and cats reach 39.7°C (103.5°F) in the consulting room', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', tone: 'danger', text: ' STEP 1 — FEVER vs HYPERTHERMIA' },
+
+        { kind: 'step', tone: 'danger', text: '🌡️ STEP 1 — FEVER vs HYPERTHERMIA', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `<strong>Recent heat exposure / exercise</strong> → hyperthermia (Labradors reach 42.2°C / 108°F; most dogs 41.1°C / 106°F after exercise).<br>
-    <strong>Active cooling behaviour</strong> (panting, inactivity, seeking cool areas) → hyperthermia; <strong>no cooling behaviour + lethargy / anorexia / stiffness / hyperpnea</strong> → fever.<br>
-    <strong>Stress suspected</strong> (clinic, handling) → rest the patient 20 min in a cool room; if temperature normalises or is only mild (≤39.6°C / 103.3°F), further investigation may not be required.<br>
-    <strong>Drug history</strong> — opioids, ketamine/phenobarbital (cats), SSRIs (both species) cause non-pyrogenic hyperthermia; sulfonamides/vaccines cause idiosyncratic drug fever.`,
+          kind: 'gridTable',
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['History / finding', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Recent heat exposure / exercise</strong>', { text: '<strong>Hyperthermia</strong> — Labradors reach 42.2°C (108°F); most dogs 41.1°C (106°F) after exercise', tone: 'teal' }],
+            ['<strong>Active cooling behaviour</strong> — panting · inactivity · seeking cool areas', { text: '<strong>Hyperthermia</strong>', tone: 'teal' }],
+            ['<strong>No cooling behaviour + lethargy / anorexia / stiffness / hyperpnoea</strong>', { text: '<strong>Fever</strong>', tone: 'teal' }],
+            ['<strong>Stress suspected</strong> (clinic, handling)', { text: 'Rest the patient 20 min in a cool room — if the temperature normalises or is only mild (≤39.6°C / 103.3°F), further investigation may not be required', tone: 'teal' }],
+            ['<strong>Drug history</strong>', { text: 'Opioids · ketamine / phenobarbital (🐱) · SSRIs (both species) cause <em>non-pyrogenic</em> hyperthermia. Sulfonamides and vaccines cause idiosyncratic <em>drug fever</em>', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: ' STEP 2 — SIGNALMENT & EPIDEMIOLOGY' },
-        {
-          kind: 'check',
-          html: `<strong>Young cat</strong> → FIP (20.8% of all feline FUO) — FeLV/FIV testing essential; bite abscess is the commonest feline cause.<br>
-    <strong>Young dog (&lt;18 months)</strong> → non-infectious inflammatory in 65% of cases, <strong>60% of which are SRMA</strong> (Beagle, Border Collie, Cocker Spaniel, Whippet predisposed).<br>
-    <strong>Older dog</strong> → neoplasia rises; Bernese Mountain Dog → histiocytic disease.<br>
-    <strong>Entire female</strong> → pyometra/stump pyometra; <strong>entire male</strong> → prostatitis.<br>
-    <strong>Tick exposure, geography & travel</strong> → vector-borne (ehrlichiosis, anaplasmosis, Lyme, RMSF, bartonellosis) and regional systemic fungal (blasto, cocci, histo) risk.`,
-        },
-        { kind: 'step', text: ' STEP 3 — COURSE, PATTERN & PRIOR RESPONSE' },
-        {
-          kind: 'check',
-          html: `<strong>Acute (&lt;5 days), mild, no localising signs</strong> → may monitor; can resolve spontaneously and a mild acute fever may be better left untreated to allow localising signs to develop.<br>
-    <strong>Chronic (≥5 days) or severe signs</strong> → proceed to the minimum database (Phase 1).<br>
-    <strong>Failure to respond to an appropriate antibacterial trial</strong> → reconsider an immune-mediated, neoplastic or non-bacterial infectious cause rather than escalating antibiotics blindly.<br>
-    Document the temperature trend, any localising signs (lameness, neck/back pain, coughing, dysuria, GI signs) and travel/medication history.`,
-        },
+
+        ...stepTable(2, 'SIGNALMENT & EPIDEMIOLOGY', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Signalment', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>🐱 Young cat</strong>', { text: '<strong>FIP</strong> — 20.8% of all feline FUO; FeLV / FIV testing essential. Bite abscess is the commonest feline cause', tone: 'teal' }],
+            ['<strong>🐕 Young dog (&lt;18 months)</strong>', { text: 'Non-infectious inflammatory in 65% of cases, <strong>60% of which are SRMA</strong> — Beagle · Border Collie · Cocker Spaniel · Whippet predisposed', tone: 'teal' }],
+            ['<strong>Older dog</strong>', { text: 'Neoplasia rises; Bernese Mountain Dog → histiocytic disease', tone: 'teal' }],
+            ['<strong>Entire female</strong>', { text: 'Pyometra / stump pyometra', tone: 'teal' }],
+            ['<strong>Entire male</strong>', { text: 'Prostatitis', tone: 'teal' }],
+            ['<strong>Tick exposure, geography &amp; travel</strong>', { text: 'Vector-borne (ehrlichiosis · anaplasmosis · Lyme · RMSF · bartonellosis) and regional systemic fungal (blasto · cocci · histo) risk', tone: 'teal' }],
+          ],
+        }, '🐾'),
+
+        ...stepTable(3, 'COURSE, PATTERN & PRIOR RESPONSE', {
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['Course', { text: 'What to do', tone: 'teal' }],
+          rows: [
+            ['<strong>Acute (&lt;5 days), mild, no localising signs</strong>', { text: 'May monitor — can resolve spontaneously, and a mild acute fever may be better left untreated to allow localising signs to develop', tone: 'teal' }],
+            ['<strong>Chronic (≥5 days) or severe signs</strong>', { text: 'Proceed to the minimum database (Phase 1)', tone: 'teal' }],
+            ['<strong>Failure to respond to an appropriate antibacterial trial</strong>', { text: 'Reconsider an immune-mediated, neoplastic or non-bacterial infectious cause — do not escalate antibiotics blindly', tone: 'danger' }],
+            ['<strong>Document</strong>', { text: 'Temperature trend · localising signs (lameness · neck or back pain · coughing · dysuria · GI signs) · travel and medication history', tone: 'teal' }],
+          ],
+        }, '📈'),
       ],
       after: [
         {
@@ -59,31 +84,44 @@ export const feverDx: DxApproach = {
       title: 'Exam: Fever / FUO',
       blocks: [
         { kind: 'step', tone: 'teal', text: ' A complete PE is imperative — measure temperature correctly, then search every system for a focus' },
-        { kind: 'step', text: ' STEP 1 — CONFIRM & MEASURE THE TEMPERATURE' },
-        {
-          kind: 'check',
-          html: `<strong>Rectal</strong> is the most accurate, preferred method (good agreement with core). Second choice: <strong>tympanic membrane in dogs</strong>, <strong>axillary in cats</strong> (rectal ≈ axillary + 0.9°C / 1.6°F in cats). A difference &gt;0.5°C (0.9°F) between methods is clinically unacceptable.<br>
-    <strong>Nose palpation is NOT reliable</strong> (sensitivity 29.4%, specificity 79.5%).<br>
-    <strong>&gt;41.1°C (106°F)</strong> risks neurological damage, DIC and metabolic derangement and is more likely with hyperthermia — active cooling is required at this threshold (but NOT for a true fever below it).`,
-        },
-        { kind: 'step', text: ' STEP 2 — SYSTEMATIC SEARCH FOR A LOCALISING FOCUS' },
-        {
-          kind: 'check',
-          html: `<strong>Skin / SC:</strong> abscesses (esp. cat bite), cellulitis, panniculitis, juvenile cellulitis, draining tracts.<br>
-    <strong>Oral cavity:</strong> tooth-root abscess, stomatitis, mass.<br>
-    <strong>Cardiac:</strong> auscultate for a new/changing murmur (endocarditis — only 40–43% febrile).<br>
-    <strong>Thorax:</strong> dyspnoea/dullness (pneumonia, pyothorax).<br>
-    <strong>Abdomen:</strong> organomegaly, pain, masses, painful kidneys (pyelonephritis); palpate for pyometra in entire females.<br>
-    <strong>Spine:</strong> palpate the whole vertebral column for focal pain (discospondylitis — radiographs lag 2–6 weeks) and assess for neck pain (SRMA).`,
-        },
-        { kind: 'step', text: ' STEP 3 — MUSCULOSKELETAL, RECTAL & LYMPHORETICULAR' },
-        {
-          kind: 'check',
-          html: `<strong>Joints:</strong> palpate ALL joints for effusion/pain and watch for shifting/stiff gait — immune-mediated polyarthritis is the commonest non-infectious inflammatory cause in dogs and joints can look grossly normal.<br>
-    <strong>Rectal exam:</strong> assess the prostate (prostatitis), sublumbar nodes, and rectal mucosa/melena.<br>
-    <strong>Lymph nodes & spleen:</strong> generalised lymphadenopathy / splenomegaly → lymphoma, vector-borne disease — sample any enlarged node.<br>
-    <strong>Ophthalmic:</strong> uveitis / chorioretinitis (FIP, systemic fungal, vector-borne, lymphoma).`,
-        },
+
+        ...stepTable(1, 'CONFIRM & MEASURE THE TEMPERATURE', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Method / threshold', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Rectal</strong>', { text: 'Most accurate, preferred method — good agreement with core', tone: 'teal' }],
+            ['<strong>Second choice</strong>', { text: 'Tympanic membrane in 🐕 · axillary in 🐱 (rectal ≈ axillary + 0.9°C / 1.6°F in cats). A difference &gt;0.5°C (0.9°F) between methods is clinically unacceptable', tone: 'teal' }],
+            ['<strong>Nose palpation</strong>', { text: '<strong>NOT reliable</strong> — sensitivity 29.4%, specificity 79.5%', tone: 'danger' }],
+            ['<strong>&gt;41.1°C (106°F)</strong>', { text: 'Risks neurological damage · DIC · metabolic derangement, and is more likely with hyperthermia — <strong>active cooling required at this threshold</strong> (but not for a true fever below it)', tone: 'danger' }],
+          ],
+        }, '🌡️'),
+
+        ...stepTable(2, 'SYSTEMATIC SEARCH FOR A LOCALISING FOCUS', {
+          cols: '0.7fr 1.45fr',
+          dividers: true,
+          headers: ['System', { text: 'Looking for', tone: 'teal' }],
+          rows: [
+            ['<strong>Skin / SC</strong>', { text: 'Abscesses (especially cat bite) · cellulitis · panniculitis · juvenile cellulitis · draining tracts', tone: 'teal' }],
+            ['<strong>Oral cavity</strong>', { text: 'Tooth-root abscess · stomatitis · mass', tone: 'teal' }],
+            ['<strong>Cardiac</strong>', { text: 'New or changing murmur — endocarditis (only 40–43% febrile)', tone: 'teal' }],
+            ['<strong>Thorax</strong>', { text: 'Dyspnoea / dullness — pneumonia · pyothorax', tone: 'teal' }],
+            ['<strong>Abdomen</strong>', { text: 'Organomegaly · pain · masses · painful kidneys (pyelonephritis); palpate for pyometra in entire females', tone: 'teal' }],
+            ['<strong>Spine</strong>', { text: 'Palpate the whole vertebral column for focal pain (discospondylitis — radiographs lag 2–6 weeks) and assess for neck pain (SRMA)', tone: 'teal' }],
+          ],
+        }, '🔍'),
+
+        ...stepTable(3, 'MUSCULOSKELETAL, RECTAL & LYMPHORETICULAR', {
+          cols: '0.7fr 1.45fr',
+          dividers: true,
+          headers: ['Assess', { text: 'Looking for', tone: 'teal' }],
+          rows: [
+            ['<strong>Joints</strong>', { text: 'Palpate <strong>ALL</strong> joints for effusion / pain; watch for a shifting or stiff gait — immune-mediated polyarthritis is the commonest non-infectious inflammatory cause in dogs and <strong>joints can look grossly normal</strong>', tone: 'danger' }],
+            ['<strong>Rectal exam</strong>', { text: 'Prostate (prostatitis) · sublumbar nodes · rectal mucosa / melena', tone: 'teal' }],
+            ['<strong>Lymph nodes &amp; spleen</strong>', { text: 'Generalised lymphadenopathy / splenomegaly → lymphoma · vector-borne disease — sample any enlarged node', tone: 'teal' }],
+            ['<strong>Ophthalmic</strong>', { text: 'Uveitis / chorioretinitis — FIP · systemic fungal · vector-borne · lymphoma', tone: 'teal' }],
+          ],
+        }, '🦴'),
       ],
       after: [{ kind: 'disclaimer' }],
     },
@@ -91,48 +129,71 @@ export const feverDx: DxApproach = {
     dx: {
       title: 'Dx: Fever / FUO — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: ' STEP 1 — DON\'T TREAT THE NUMBER; COOL ONLY HYPERTHERMIA' },
+        { kind: 'step', tone: 'danger', text: '🌡️ STEP 1 — DON\'T TREAT THE NUMBER; COOL ONLY HYPERTHERMIA', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `<strong>Active cooling (fans, cool water) ONLY if &gt;41.1°C (106°F)</strong> — obese and upper-respiratory-compromised patients are higher risk. <strong>Do NOT actively cool a true fever</strong> — fever improves the host immune response.<br>
-    Fever increases insensible water losses → monitor hydration; IV fluids may be required.<br>
-    <strong>Reserve antipyretic NSAIDs</strong> for severe/prolonged fever with significant signs (risks: renal/hepatic impairment, GI ulceration, blood dyscrasias). A mild acute fever may be left untreated to allow localising signs to develop.<br>
-    <strong>Withhold steroids</strong> until an immune-mediated diagnosis is established and infection is excluded.`,
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Rule', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Active cooling ONLY if &gt;41.1°C (106°F)</strong>', { text: 'Fans, cool water. Obese and upper-respiratory-compromised patients are higher risk. <strong>Do NOT actively cool a true fever</strong> — fever improves the host immune response', tone: 'danger' }],
+            ['<strong>Hydration</strong>', { text: 'Fever increases insensible water losses — monitor; IV fluids may be required', tone: 'teal' }],
+            ['<strong>Antipyretic NSAIDs</strong>', { text: 'Reserve for severe / prolonged fever with significant signs — risks: renal / hepatic impairment · GI ulceration · blood dyscrasias. A mild acute fever may be left untreated to allow localising signs to develop', tone: 'teal' }],
+            ['<strong>Steroids</strong>', { text: '<strong>Withhold</strong> until an immune-mediated diagnosis is established and infection is excluded', tone: 'danger' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 2 — MINIMUM DATABASE (Phase 1)' },
-        {
-          kind: 'check',
-          html: `<strong>CBC + blood smear:</strong> inflammatory leukogram, left shift, cytopenias, blood parasites (e.g. <em>Mycoplasma</em>, <em>Babesia</em>, morulae), atypical cells.<br>
-    <strong>Serum biochemistry:</strong> organ involvement, hyperglobulinaemia (vector-borne, FIP, myeloma → protein electrophoresis).<br>
-    <strong>Urinalysis (cystocentesis) + urine culture:</strong> pyelonephritis, occult UTI as a discospondylitis/bacteraemia source.<br>
-    <strong>FeLV / FIV testing</strong> in at-risk cats; in cats also <strong>abdominal ultrasound</strong> + <strong>alpha-1 acid glycoprotein</strong> (FIP support).<br>
-    <strong>± FNA of any mass / enlarged lymph node</strong>; <strong>± thoracic & abdominal radiographs</strong>.<br>
-    <strong>Antibacterial trial (5 days):</strong> clavulanate-potentiated amoxicillin first line; <strong>doxycycline</strong> in tick-endemic areas; GS-441524 for suspected FIP. (Avoid fluoroquinolones, aminoglycosides and later cephalosporins as first-line empiric choices.)`,
-        },
-        { kind: 'step', text: 'STEP 3 — TARGETED IMAGING & FLUID SAMPLING (Phase 2)' },
-        {
-          kind: 'check',
-          html: `<strong>Abdominal ultrasound</strong> (focus, organomegaly, effusion → sample any effusion: cytology, glucose/lactate for septic peritonitis, culture).<br>
-    <strong>Thoracic ± abdominal imaging</strong> for pyothorax/pneumonia and occult masses.<br>
-    <strong>Radiographs of the vertebrae and limbs</strong> — discospondylitis (end-plate lysis; remember the 2–6 week radiographic lag), osteomyelitis, panosteitis, metaphyseal osteopathy.<br>
-    <strong>Specific serology / PCR</strong> by history and region (Ehrlichia, Anaplasma, Lyme, RMSF, Bartonella, Leptospira, Toxoplasma, Leishmania, Brucella, systemic fungal).`,
-        },
-        { kind: 'step', text: 'STEP 4 — ARTHROCENTESIS, BLOOD CULTURES & ECHO' },
-        {
-          kind: 'check',
-          html: `<strong>Arthrocentesis of multiple joints</strong> (carpi, tarsi, stifles — even normal-looking joints): neutrophilic, non-septic effusion in several joints = immune-mediated polyarthritis; degenerate neutrophils + intracellular bacteria = septic arthritis.<br>
-    <strong>Blood cultures (aerobic + anaerobic)</strong> + <strong>echocardiography</strong> for endocarditis, especially with a new/changing murmur (endocarditis is only 40–43% febrile).<br>
-    <strong>CSF analysis</strong> (MRI of brain/spine BEFORE the tap) for SRMA / meningoencephalitis — neutrophilic pleocytosis supports SRMA.<br>
-    <strong>Prostatic wash / ejaculate</strong> and <strong>Brucella serology</strong> where relevant.`,
-        },
-        { kind: 'step', text: 'STEP 5 — MARROW / TISSUE & THE TREATMENT TRIAL SEQUENCE (Phase 3)' },
-        {
-          kind: 'check',
-          html: `<strong>Bone-marrow aspirate & biopsy</strong> and <strong>lymph-node aspirate</strong> (even if nodes feel normal) — occult lymphoproliferative/myeloproliferative disease, marrow infection.<br>
-    <strong>Tissue biopsies</strong>, <strong>bronchoscopy + BAL</strong>, blood & faecal cultures, advanced imaging (CT thorax/head, MRI) as the picture directs.<br>
-    <strong>Treatment-trial logic:</strong> an appropriately chosen <strong>antibacterial trial first</strong> (clavulanate-amoxicillin; doxycycline if tick-borne suspected) — only AFTER infection has been reasonably excluded should you move to an <strong>immunosuppressive (glucocorticoid) trial</strong> for steroid-responsive disease. Exception: co-administer antibacterials + steroids when an immune-mediated cause cannot be distinguished from a treatable infectious one (e.g. some tick-borne + secondary immune-mediated disease).<br>
-    Despite a full work-up, ~22% of referred dogs and ~15% of referred cats remain undiagnosed (true FUO).`,
-        },
+
+        ...stepTable(2, 'MINIMUM DATABASE (Phase 1)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'What it shows', tone: 'teal' }],
+          rows: [
+            ['<strong>CBC + blood smear</strong>', { text: 'Inflammatory leukogram · left shift · cytopenias · blood parasites (<em>Mycoplasma</em> · <em>Babesia</em> · morulae) · atypical cells', tone: 'teal' }],
+            ['<strong>Serum biochemistry</strong>', { text: 'Organ involvement · hyperglobulinaemia (vector-borne · FIP · myeloma → protein electrophoresis)', tone: 'teal' }],
+            ['<strong>Urinalysis (cystocentesis) + urine culture</strong>', { text: 'Pyelonephritis · occult UTI as a discospondylitis / bacteraemia source', tone: 'teal' }],
+            ['<strong>🐱 FeLV / FIV testing</strong>', { text: 'In at-risk cats; also abdominal ultrasound + <strong>alpha-1 acid glycoprotein</strong> (FIP support)', tone: 'teal' }],
+            ['<strong>± FNA of any mass / enlarged lymph node</strong>', { text: 'Cytology', tone: 'teal' }],
+            ['<strong>± Thoracic &amp; abdominal radiographs</strong>', { text: 'Screening for an occult focus', tone: 'teal' }],
+            ['<strong>Antibacterial trial (5 days)</strong>', { text: 'Clavulanate-potentiated amoxicillin first line · <strong>doxycycline</strong> in tick-endemic areas · GS-441524 for suspected FIP. Avoid fluoroquinolones, aminoglycosides and later cephalosporins as first-line empiric choices', tone: 'teal' }],
+          ],
+        }, '🧪'),
+
+        ...stepTable(3, 'TARGETED IMAGING & FLUID SAMPLING (Phase 2)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Abdominal ultrasound</strong>', { text: 'Focus · organomegaly · effusion → sample any effusion (cytology · glucose/lactate for septic peritonitis · culture)', tone: 'teal' }],
+            ['<strong>Thoracic ± abdominal imaging</strong>', { text: 'Pyothorax · pneumonia · occult masses', tone: 'teal' }],
+            ['<strong>Radiographs of vertebrae and limbs</strong>', { text: 'Discospondylitis (end-plate lysis — remember the <strong>2–6 week radiographic lag</strong>) · osteomyelitis · panosteitis · metaphyseal osteopathy', tone: 'teal' }],
+            ['<strong>Specific serology / PCR</strong>', { text: 'By history and region — Ehrlichia · Anaplasma · Lyme · RMSF · Bartonella · Leptospira · Toxoplasma · Leishmania · Brucella · systemic fungal', tone: 'teal' }],
+          ],
+        }, '📊'),
+
+        ...stepTable(4, 'ARTHROCENTESIS, BLOOD CULTURES & ECHO', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'Interpretation', tone: 'teal' }],
+          rows: [
+            ['<strong>Arthrocentesis of multiple joints</strong><br>carpi · tarsi · stifles — <em>even normal-looking joints</em>', { text: 'Neutrophilic, non-septic effusion in several joints = <strong>immune-mediated polyarthritis</strong> · degenerate neutrophils + intracellular bacteria = <strong>septic arthritis</strong>', tone: 'teal' }],
+            ['<strong>Blood cultures (aerobic + anaerobic) + echocardiography</strong>', { text: 'Endocarditis, especially with a new or changing murmur — endocarditis is only 40–43% febrile', tone: 'teal' }],
+            ['<strong>CSF analysis</strong>', { text: 'MRI of brain / spine <strong>before</strong> the tap. For SRMA / meningoencephalitis — neutrophilic pleocytosis supports SRMA', tone: 'teal' }],
+            ['<strong>Prostatic wash / ejaculate + Brucella serology</strong>', { text: 'Where relevant', tone: 'teal' }],
+          ],
+        }, '💉'),
+
+        ...stepTable(5, 'MARROW / TISSUE & THE TREATMENT TRIAL SEQUENCE (Phase 3)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test / decision', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Bone-marrow aspirate &amp; biopsy · lymph-node aspirate</strong> (even if nodes feel normal)', { text: 'Occult lymphoproliferative / myeloproliferative disease · marrow infection', tone: 'teal' }],
+            ['<strong>Tissue biopsies · bronchoscopy + BAL · blood and faecal cultures · advanced imaging</strong>', { text: 'CT thorax / head · MRI — as the picture directs', tone: 'teal' }],
+            ['<strong>Treatment-trial logic</strong>', { text: 'An appropriately chosen <strong>antibacterial trial first</strong> (clavulanate-amoxicillin; doxycycline if tick-borne suspected). Only <em>after</em> infection has been reasonably excluded should you move to an <strong>immunosuppressive (glucocorticoid) trial</strong>', tone: 'danger' }],
+            ['<strong>Exception</strong>', { text: 'Co-administer antibacterials + steroids when an immune-mediated cause cannot be distinguished from a treatable infectious one (e.g. some tick-borne + secondary immune-mediated disease)', tone: 'teal' }],
+            ['<strong>Outcome</strong>', { text: 'Despite a full work-up, ~22% of referred dogs and ~15% of referred cats remain undiagnosed (true FUO)', tone: 'teal' }],
+          ],
+        }, '🦴'),
       ],
       after: [
       { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [

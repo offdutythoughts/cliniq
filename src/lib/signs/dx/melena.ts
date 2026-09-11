@@ -7,6 +7,7 @@
 // (Ettinger Ch 50)
 
 import type { DxApproach } from '../dxTypes'
+import { stepTable } from './shared/dxHelpers'
 
 export const melenaDx: DxApproach = {
   title: 'Melena / Haematochezia',
@@ -17,31 +18,54 @@ export const melenaDx: DxApproach = {
       blocks: [
         { kind: 'branch', text: 'GOAL: CONFIRM BLOOD · LOCALISE UPPER vs LOWER · EXCLUDE COAGULOPATHY' },
         {
-          kind: 'check',
-          html: `• <strong>Melena</strong> = black, tarry, digested blood → PROXIMAL / upper GI (stomach, small intestine, or swallowed blood) — ≥50–100 mL blood must be ingested before stool turns melanic<br>• <strong>Haematochezia</strong> = bright-red fresh blood → distal colon, rectum or anus (occasionally small intestine with rapid transit)<br>  · Surface blood only → anorectal lesion<br>  · Red-maroon "raspberry-jam" stool throughout → proximal colonic / AHDS<br><span style="opacity:.7">(Ettinger Ch 50)</span>`,
+          kind: 'gridTable',
+          cols: '0.7fr 1.45fr',
+          dividers: true,
+          headers: ['Sign', { text: 'Localises to', tone: 'teal' }],
+          rows: [
+            ['<strong>Melena</strong><br>black, tarry, digested blood', { text: '<strong>Proximal / upper GI</strong> — stomach · small intestine · swallowed blood. ≥50–100 mL blood must be ingested before stool turns melanic', tone: 'teal' }],
+            ['<strong>Haematochezia</strong><br>bright-red fresh blood', { text: '<strong>Distal colon · rectum · anus</strong> — occasionally small intestine with rapid transit', tone: 'teal' }],
+            ['<strong>Surface blood only</strong>', { text: 'Anorectal lesion', tone: 'teal' }],
+            ['<strong>Red-maroon "raspberry-jam" stool throughout</strong>', { text: 'Proximal colonic / AHDS <span style="opacity:.7">(Ettinger Ch 50)</span>', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: ' STEP 1 — IS IT REALLY BLOOD? (exclude mimics)' },
-        {
-          kind: 'check',
-          html: `<strong>Melena mimics:</strong> activated charcoal, iron supplements, bismuth-containing medications, large amounts of blueberries.<br>
-    <strong>Haematochezia mimics:</strong> red food colouring, beets; perineal bite wound; anal-sac abscess.<br>
-    Confirm with a faecal occult-blood test if uncertain (avoid meat-containing diet 72 h to prevent false positives), and remember <strong>swallowed blood</strong> (epistaxis, oral/pharyngeal or pulmonary lesions, raw diet) can produce melena with no true GI bleed.`,
-        },
-        { kind: 'step', text: ' STEP 2 — DRUGS & TOXIN EXPOSURE' },
-        {
-          kind: 'check',
-          html: `<strong>Ulcerogenic drugs:</strong> NSAIDs and corticosteroids (highest risk when combined), anticoagulants, platelet inhibitors, thrombolytics — ask specifically and discontinue.<br>
-    <strong>Anticoagulant rodenticide</strong> — assess potential access; treat empirically with Vitamin K1 if suspected.<br>
-    Recent surgery (enterotomy, post-GDV, PEG-tube placement) can cause melena.`,
-        },
-        { kind: 'step', text: ' STEP 3 — SIGNALMENT, COURSE & ASSOCIATED SIGNS' },
-        {
-          kind: 'check',
-          html: `<strong>Young / unvaccinated dog</strong> with fever, vomiting, fetid bloody diarrhoea → parvovirus. <strong>Small-breed dog, peracute "raspberry-jam" bloody diarrhoea ± shock</strong> → AHDS.<br>
-    <strong>Boxer / French Bulldog, young, large-bowel diarrhoea + weight loss</strong> → granulomatous colitis.<br>
-    <strong>Older dog, weight loss, tenesmus, large-bowel signs</strong> → colorectal neoplasia / polyp.<br>
-    <strong>Episodic GI signs + waxing-waning lethargy / collapse</strong> → consider hypoadrenocorticism. Vomiting / haematemesis alongside melena points upper GI — see the <strong>Vomiting</strong> approach.`,
-        },
+
+        ...stepTable(1, 'IS IT REALLY BLOOD? (exclude mimics)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Mimic / test', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Melena mimics</strong>', { text: 'Activated charcoal · iron supplements · bismuth-containing medications · large amounts of blueberries', tone: 'teal' }],
+            ['<strong>Haematochezia mimics</strong>', { text: 'Red food colouring · beets · perineal bite wound · anal-sac abscess', tone: 'teal' }],
+            ['<strong>Faecal occult-blood test</strong>', { text: 'If uncertain — avoid meat-containing diet for 72 h to prevent false positives', tone: 'teal' }],
+            ['<strong>Swallowed blood</strong>', { text: 'Epistaxis · oral / pharyngeal or pulmonary lesions · raw diet — can produce melena with <strong>no true GI bleed</strong>', tone: 'teal' }],
+          ],
+        }, '🔍'),
+
+        ...stepTable(2, 'DRUGS & TOXIN EXPOSURE', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Exposure', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Ulcerogenic drugs</strong>', { text: 'NSAIDs and corticosteroids (<strong>highest risk when combined</strong>) · anticoagulants · platelet inhibitors · thrombolytics — ask specifically and discontinue', tone: 'danger' }],
+            ['<strong>Anticoagulant rodenticide</strong>', { text: 'Assess potential access; treat empirically with Vitamin K1 if suspected', tone: 'danger' }],
+            ['<strong>Recent surgery</strong>', { text: 'Enterotomy · post-GDV · PEG-tube placement can cause melena', tone: 'teal' }],
+          ],
+        }, '💊'),
+
+        ...stepTable(3, 'SIGNALMENT, COURSE & ASSOCIATED SIGNS', {
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['Picture', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Young / unvaccinated dog</strong> + fever · vomiting · fetid bloody diarrhoea', { text: 'Parvovirus', tone: 'teal' }],
+            ['<strong>Small-breed dog, peracute "raspberry-jam" bloody diarrhoea ± shock</strong>', { text: 'AHDS', tone: 'danger' }],
+            ['<strong>Boxer / French Bulldog, young, large-bowel diarrhoea + weight loss</strong>', { text: 'Granulomatous colitis', tone: 'teal' }],
+            ['<strong>Older dog · weight loss · tenesmus · large-bowel signs</strong>', { text: 'Colorectal neoplasia / polyp', tone: 'teal' }],
+            ['<strong>Episodic GI signs + waxing–waning lethargy / collapse</strong>', { text: 'Consider hypoadrenocorticism', tone: 'teal' }],
+            ['<strong>Vomiting / haematemesis alongside melena</strong>', { text: 'Upper GI — see the <strong>Vomiting</strong> approach', tone: 'teal' }],
+          ],
+        }, '🐾'),
       ],
       after: [
         {
@@ -58,26 +82,51 @@ export const melenaDx: DxApproach = {
       title: 'Exam: Melena / Haematochezia',
       blocks: [
         { kind: 'step', tone: 'teal', text: ' A complete PE is imperative — include ORAL, RECTAL + a coagulation-screen mindset' },
-        { kind: 'step', text: ' STEP 1 — PERFUSION & BLOOD-LOSS STATUS' },
-        {
-          kind: 'check',
-          html: `Mucous-membrane colour (pallor), CRT, pulse quality, heart rate and mentation quantify the haemorrhage. <strong>Bradycardia + waterhammer collapse</strong> in a hypovolaemic patient is classic for an <strong>Addisonian crisis</strong> (a tachycardia would be expected with true hypovolaemia). Estimate acute blood loss and decide whether the patient needs stabilising before any work-up.`,
-        },
-        { kind: 'step', text: ' STEP 2 — ORAL / NASAL / RESPIRATORY EXAM (swallowed-blood sources)' },
-        {
-          kind: 'check',
-          html: `Examine the mouth, pharynx, gingiva and nasal planum for bleeding lesions, and auscultate the chest — <strong>swallowed blood</strong> from sinonasal, oral/pharyngeal or pulmonary disease can produce melena without a primary GI bleed. Note any petechiae / ecchymoses / venepuncture bruising suggesting a <strong>primary haemostatic defect</strong>.`,
-        },
-        { kind: 'step', text: ' STEP 3 — ABDOMINAL PALPATION' },
-        {
-          kind: 'check',
-          html: `Palpate for a mass (neoplasia, intussusception "sausage"), foreign body, thickened bowel loops, organomegaly, pain or fluid wave. <strong>Marked abdominal pain ± fever</strong> raises perforation / septic peritonitis. Assess hydration and any signs of effusion.`,
-        },
-        { kind: 'step', text: ' STEP 4 — RECTAL EXAMINATION (essential)' },
-        {
-          kind: 'check',
-          html: `A digital rectal exam directly confirms the stool character (melena vs frank blood vs mucus), and detects <strong>rectal / colorectal masses or polyps, strictures, anal-sac disease and pelvic-canal lesions</strong>. Express and palpate the <strong>anal sacs</strong> (abscess = haematochezia mimic; firm/fixed mass ± hypercalcaemia → apocrine anal-sac adenocarcinoma, AGASACA). Always inspect the gloved finger for blood colour.`,
-        },
+
+        ...stepTable(1, 'PERFUSION & BLOOD-LOSS STATUS', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Assess', { text: 'Interpretation', tone: 'teal' }],
+          rows: [
+            ['<strong>MM colour (pallor) · CRT · pulse quality · heart rate · mentation</strong>', { text: 'Quantify the haemorrhage', tone: 'teal' }],
+            ['<strong>Bradycardia + waterhammer collapse in a hypovolaemic patient</strong>', { text: 'Classic for an <strong>Addisonian crisis</strong> — a tachycardia would be expected with true hypovolaemia', tone: 'danger' }],
+            ['<strong>Estimate acute blood loss</strong>', { text: 'Decide whether the patient needs stabilising before any work-up', tone: 'teal' }],
+          ],
+        }, '🩺'),
+
+        ...stepTable(2, 'ORAL / NASAL / RESPIRATORY EXAM (swallowed-blood sources)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Examine', { text: 'Looking for', tone: 'teal' }],
+          rows: [
+            ['<strong>Mouth · pharynx · gingiva · nasal planum</strong>', { text: 'Bleeding lesions', tone: 'teal' }],
+            ['<strong>Chest auscultation</strong>', { text: '<strong>Swallowed blood</strong> from sinonasal, oral / pharyngeal or pulmonary disease can produce melena without a primary GI bleed', tone: 'teal' }],
+            ['<strong>Petechiae / ecchymoses / venepuncture bruising</strong>', { text: 'A <strong>primary haemostatic defect</strong>', tone: 'danger' }],
+          ],
+        }, '👄'),
+
+        ...stepTable(3, 'ABDOMINAL PALPATION', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Palpate for', { text: 'Significance', tone: 'teal' }],
+          rows: [
+            ['<strong>Mass</strong>', { text: 'Neoplasia · intussusception ("sausage")', tone: 'teal' }],
+            ['<strong>Foreign body · thickened bowel loops · organomegaly</strong>', { text: 'Structural GI disease', tone: 'teal' }],
+            ['<strong>Marked abdominal pain ± fever</strong>', { text: '<strong>Perforation / septic peritonitis</strong>', tone: 'danger' }],
+            ['<strong>Hydration · fluid wave</strong>', { text: 'Effusion', tone: 'teal' }],
+          ],
+        }, '🤲'),
+
+        ...stepTable(4, 'RECTAL EXAMINATION (essential)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Assess', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Stool character</strong>', { text: 'Melena vs frank blood vs mucus — always inspect the gloved finger for blood colour', tone: 'teal' }],
+            ['<strong>Rectal / colorectal lesions</strong>', { text: 'Masses · polyps · strictures · pelvic-canal lesions', tone: 'teal' }],
+            ['<strong>Anal sacs</strong> — express and palpate', { text: 'Abscess = haematochezia mimic · firm / fixed mass ± hypercalcaemia → <strong>apocrine anal-sac adenocarcinoma (AGASACA)</strong>', tone: 'teal' }],
+          ],
+        }, '👆'),
       ],
       after: [{ kind: 'disclaimer' }],
     },
@@ -85,40 +134,77 @@ export const melenaDx: DxApproach = {
     dx: {
       title: 'Dx: Melena / Haematochezia — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: ' STEP 1 — STABILISE SIGNIFICANT HAEMORRHAGE FIRST' },
+        { kind: 'step', tone: 'danger', text: '⚡ STEP 1 — STABILISE SIGNIFICANT HAEMORRHAGE FIRST', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `Check <strong>PCV/TS</strong>; transfuse (whole blood / pRBC) for symptomatic anaemia and fluid-resuscitate hypovolaemia before GA for endoscopy. <strong>Plasma / Vitamin K1</strong> if a coagulopathy or rodenticide is suspected. For ulcer-related bleeding start gastroprotection — <strong>omeprazole / esomeprazole PO q12h (NSAID ulcer: 3–4 weeks)</strong> and <strong>sucralfate slurry 0.25 g (cats) to 1 g (large dogs) q6–8h</strong>. Discontinue NSAIDs / steroids.`,
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Do', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Check PCV / TS</strong>', { text: 'Transfuse (whole blood / pRBC) for symptomatic anaemia and fluid-resuscitate hypovolaemia <strong>before GA for endoscopy</strong>', tone: 'danger' }],
+            ['<strong>Plasma / Vitamin K1</strong>', { text: 'If a coagulopathy or rodenticide is suspected', tone: 'danger' }],
+            ['<strong>Gastroprotection for ulcer-related bleeding</strong>', { text: '<strong>Omeprazole / esomeprazole PO q12h</strong> (NSAID ulcer: 3–4 weeks) + <strong>sucralfate slurry</strong> 0.25 g (🐱) to 1 g (large 🐕) q6–8h', tone: 'teal' }],
+            ['<strong>Discontinue NSAIDs / steroids</strong>', { text: 'Remove the ulcerogenic driver', tone: 'danger' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 2 — CONFIRM IT IS BLOOD' },
-        {
-          kind: 'check',
-          html: `Faecal occult-blood test (off meat-containing diet 72 h) when the stool colour is equivocal — to separate true GI bleeding from <strong>melena mimics</strong> (charcoal, iron, bismuth, blueberries) and <strong>haematochezia mimics</strong> (red dye, beets). Re-confirm localisation: digested black/tarry → upper; bright-red fresh → lower.`,
-        },
-        { kind: 'step', text: 'STEP 3 — CBC + SMEAR & COAGULATION PANEL (exclude bleeding disorder)' },
-        {
-          kind: 'check',
-          html: `<strong>CBC + blood smear:</strong> degree/regenerativeness of anaemia (blood loss is expected to become regenerative; peracute loss may be pre-regenerative), <strong>platelet count</strong> (confirm thrombocytopenia on a fresh smear), and <strong>neutropenia</strong> (parvovirus hallmark — present by the time haemorrhagic diarrhoea appears).<br>
-    <strong>Coagulation panel — PT / aPTT</strong> (rodenticide prolongs PT first), platelet count ± buccal-mucosal bleeding time, ± D-dimers/FDPs for <strong>DIC</strong>. Run this <em>before</em> any biopsy / endoscopy.`,
-        },
-        { kind: 'step', text: 'STEP 4 — CHEMISTRY + ELECTROLYTES + FAECAL TESTS' },
-        {
-          kind: 'check',
-          html: `<strong>Serum chemistry:</strong> a <strong>BUN:creatinine ratio &gt;30 (mg/dL)</strong> — or <strong>&gt;27:1</strong> in a well-hydrated dog not on a high-protein diet — supports upper-GI haemorrhage (low sensitivity). Screen liver (portal hypertension / PSS) and kidney (uraemic gastropathy) disease, and check calcium (hypercalcaemia → AGASACA / lymphoma).<br>
-    <strong>Electrolytes — Na:K ratio</strong> (hyponatraemia + hyperkalaemia, Na:K &lt;27 → <strong>hypoadrenocorticism</strong>; confirm with a baseline cortisol / ACTH-stimulation test; whipworm can mimic this).<br>
-    <strong>Faecal:</strong> flotation + centrifugation (hookworm, whipworm/<em>Trichuris</em>, coccidia), parvovirus antigen ELISA, and PCR/culture for <em>Clostridium</em> / <em>Campylobacter</em> / <em>Salmonella</em>.`,
-        },
-        { kind: 'step', text: 'STEP 5 — IMAGING (localise mass / obstruction / effusion)' },
-        {
-          kind: 'check',
-          html: `<strong>Abdominal radiographs / ultrasound</strong> for masses, bowel-wall thickening/layering loss, intussusception, foreign body, lymphadenopathy and <strong>free gas / effusion</strong> (perforation). Aspirate any abdominal effusion — septic / degenerate neutrophils with intracellular bacteria, or fluid:blood-glucose gradient, confirm <strong>septic peritonitis</strong> (surgical emergency). <strong>Thoracic radiographs</strong> for metastasis (colorectal / anal-sac carcinoma) and aspiration.`,
-        },
-        { kind: 'step', text: 'STEP 6 — ENDOSCOPY / COLONOSCOPY + BIOPSY (the definitive step)' },
-        {
-          kind: 'check',
-          html: `<strong>Upper GI endoscopy</strong> for melena — visualise and biopsy gastroduodenal ulcers/erosions, masses (adenocarcinoma, GIST, lymphoma, mast-cell tumour, gastrinoma), and sample for <em>Helicobacter</em>.<br>
-    <strong>Colonoscopy</strong> for haematochezia — biopsy colitis, colorectal neoplasia/polyps, and <strong>granulomatous (histiocytic ulcerative) colitis</strong> (PAS-positive macrophages + FISH/culture for adherent-invasive <em>E. coli</em>; treat with <strong>enrofloxacin 5 mg/kg PO q12h × 6–8 weeks</strong>). Biopsy / histopathology is required for definitive diagnosis of infiltrative and neoplastic disease.`,
-        },
+
+        ...stepTable(2, 'CONFIRM IT IS BLOOD', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Faecal occult-blood test</strong>', { text: 'Off meat-containing diet for 72 h — when the stool colour is equivocal', tone: 'teal' }],
+            ['<strong>Separates true GI bleeding from</strong>', { text: '<strong>Melena mimics</strong> (charcoal · iron · bismuth · blueberries) and <strong>haematochezia mimics</strong> (red dye · beets)', tone: 'teal' }],
+            ['<strong>Re-confirm localisation</strong>', { text: 'Digested black / tarry → upper · bright-red fresh → lower', tone: 'teal' }],
+          ],
+        }, '🔬'),
+
+        ...stepTable(3, 'CBC + SMEAR & COAGULATION PANEL (exclude bleeding disorder)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'Interpretation', tone: 'teal' }],
+          rows: [
+            ['<strong>CBC + blood smear</strong>', { text: 'Degree and regenerativeness of anaemia (blood loss is expected to become regenerative; peracute loss may be pre-regenerative)', tone: 'teal' }],
+            ['<strong>Platelet count</strong>', { text: 'Confirm thrombocytopenia on a fresh smear', tone: 'teal' }],
+            ['<strong>Neutropenia</strong>', { text: 'Parvovirus hallmark — present by the time haemorrhagic diarrhoea appears', tone: 'teal' }],
+            ['<strong>Coagulation panel — PT / aPTT</strong>', { text: 'Rodenticide prolongs <strong>PT first</strong>; ± buccal-mucosal bleeding time; ± D-dimers / FDPs for <strong>DIC</strong>', tone: 'teal' }],
+            ['<strong>Timing</strong>', { text: 'Run this <strong>before</strong> any biopsy or endoscopy', tone: 'danger' }],
+          ],
+        }, '🩸'),
+
+        ...stepTable(4, 'CHEMISTRY + ELECTROLYTES + FAECAL TESTS', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'Interpretation', tone: 'teal' }],
+          rows: [
+            ['<strong>BUN:creatinine ratio</strong>', { text: '<strong>&gt;30 (mg/dL)</strong> — or <strong>&gt;27:1</strong> in a well-hydrated dog not on a high-protein diet — supports upper-GI haemorrhage (low sensitivity)', tone: 'teal' }],
+            ['<strong>Serum chemistry</strong>', { text: 'Liver (portal hypertension / PSS) · kidney (uraemic gastropathy) · calcium (hypercalcaemia → AGASACA / lymphoma)', tone: 'teal' }],
+            ['<strong>Electrolytes — Na:K ratio</strong>', { text: 'Hyponatraemia + hyperkalaemia, Na:K &lt;27 → <strong>hypoadrenocorticism</strong>; confirm with baseline cortisol / ACTH-stimulation test. <strong>Whipworm can mimic this</strong>', tone: 'danger' }],
+            ['<strong>Faecal</strong>', { text: 'Flotation + centrifugation (hookworm · whipworm / <em>Trichuris</em> · coccidia) · parvovirus antigen ELISA · PCR / culture for <em>Clostridium</em> · <em>Campylobacter</em> · <em>Salmonella</em>', tone: 'teal' }],
+          ],
+        }, '🧪'),
+
+        ...stepTable(5, 'IMAGING (localise mass / obstruction / effusion)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Modality', { text: 'What it shows', tone: 'teal' }],
+          rows: [
+            ['<strong>Abdominal radiographs / ultrasound</strong>', { text: 'Masses · bowel-wall thickening or loss of layering · intussusception · foreign body · lymphadenopathy · <strong>free gas / effusion</strong> (perforation)', tone: 'teal' }],
+            ['<strong>Aspirate any abdominal effusion</strong>', { text: 'Septic / degenerate neutrophils with intracellular bacteria, or a fluid:blood-glucose gradient, confirm <strong>septic peritonitis</strong> — surgical emergency', tone: 'danger' }],
+            ['<strong>Thoracic radiographs</strong>', { text: 'Metastasis (colorectal / anal-sac carcinoma) · aspiration', tone: 'teal' }],
+          ],
+        }, '📊'),
+
+        ...stepTable(6, 'ENDOSCOPY / COLONOSCOPY + BIOPSY (the definitive step)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Procedure', { text: 'What it shows / does', tone: 'teal' }],
+          rows: [
+            ['<strong>Upper GI endoscopy</strong> — for melena', { text: 'Visualise and biopsy gastroduodenal ulcers / erosions · masses (adenocarcinoma · GIST · lymphoma · mast-cell tumour · gastrinoma) · sample for <em>Helicobacter</em>', tone: 'teal' }],
+            ['<strong>Colonoscopy</strong> — for haematochezia', { text: 'Biopsy colitis · colorectal neoplasia / polyps · <strong>granulomatous (histiocytic ulcerative) colitis</strong> — PAS-positive macrophages + FISH / culture for adherent-invasive <em>E. coli</em>; treat with <strong>enrofloxacin 5 mg/kg PO q12h × 6–8 weeks</strong>', tone: 'teal' }],
+            ['<strong>Biopsy / histopathology</strong>', { text: 'Required for definitive diagnosis of infiltrative and neoplastic disease', tone: 'teal' }],
+          ],
+        }, '🔬'),
       ],
       after: [
       { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [

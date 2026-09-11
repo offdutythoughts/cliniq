@@ -4,6 +4,7 @@
 // renderDxApproach. Non-standard 4-tab nav (adds 💉 Desmopressin).
 
 import type { DxApproach } from '../dxTypes'
+import { numBadge } from './shared/dxHelpers'
 
 export const pupdDx: DxApproach = {
   title: 'PU/PD',
@@ -19,83 +20,110 @@ export const pupdDx: DxApproach = {
   history: {
     title: 'History: PU/PD',
     blocks: [
-      { kind: 'step', text: '📋 CONFIRM PU/PD — OWNER HISTORY' },
+      { kind: 'step', text: '📋 STEP 1 — CONFIRM PU/PD (owner history)', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Is it truly PU/PD?</strong><br>
-      • <strong>Pollakiuria</strong> — small frequent voids, urgency, straining → lower urinary tract disease (UTI, urolithiasis, FLUTD). Not polyuria.<br>
-      • <strong>Urinary incontinence</strong> — involuntary leakage during sleep/rest → hormonal, neurological, anatomical. Not polydipsia.<br>
-      • <strong>True PU/PD</strong> — large volume voiding, increased frequency with large volumes, owner reports drinking excessively<br>
-      <div style="margin-top:8px;font-size:10px;opacity:.8;">📏 Thresholds (if owners measure) • Polydipsia: water intake &gt;100 ml/kg/day (dog; normal usually &lt;80) · &gt;50 ml/kg/day (cat, ≈&gt;200 ml/cat/day) • Polyuria: urine output &gt;50 ml/kg/day (both species)</div>`,
-      },
-      { kind: 'step', text: '📖 CHRONICITY + ONSET' },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Acute onset (&lt;1–2 weeks)</strong><br>
-      • AKI (toxin, leptospirosis, lily, NSAID) — severe azotaemia possible<br>
-      • Pyometra — intact female, post-oestrus; may present in shock<br>
-      • DKA — diabetic ketoacidosis (existing or newly diagnosed DM)<br>
-      • Hepatic toxin, acute pancreatitis<br>
-      • Recent glucocorticoid or diuretic administration<br>
-      <span style="font-size:10px;opacity:.75;">Acute severe PU/PD → check for emergency flags first.</span>`,
+        kind: 'gridTable',
+        cols: '0.7fr 1.45fr',
+        dividers: true,
+        headers: ['Presentation', { text: 'Means', tone: 'teal' }],
+        rows: [
+          ['<strong>Pollakiuria</strong>', { text: 'Small frequent voids · urgency · straining → lower urinary tract disease (UTI · urolithiasis · FLUTD). <strong>Not polyuria</strong>', tone: 'warning' }],
+          ['<strong>Urinary incontinence</strong>', { text: 'Involuntary leakage during sleep or rest → hormonal · neurological · anatomical. <strong>Not polydipsia</strong>', tone: 'warning' }],
+          ['<strong>True PU/PD</strong>', { text: 'Large-volume voiding · increased frequency <em>with</em> large volumes · owner reports drinking excessively', tone: 'teal' }],
+        ],
       },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Chronic / insidious onset</strong><br>
-      • CKD — gradual progression; owners notice weight loss and water bowl refilling<br>
-      • Hyperadrenocorticism — pot-belly, panting, polyphagia, hair loss — months-years<br>
-      • DM — weight loss despite polyphagia; cataracts in dogs; hind-limb weakness in cats<br>
-      • CDI / primary polydipsia — profound dilute urine, otherwise well<br>
-      • Hyperthyroidism (cat) — weight loss, tachycardia, often concurrent CKD`,
+        kind: 'gridTable',
+        label: '📏 Thresholds (if owners measure)',
+        cols: '0.7fr 1.45fr',
+        dividers: true,
+        headers: ['Definition', { text: 'Threshold', tone: 'teal' }],
+        rows: [
+          ['<strong>Polydipsia</strong>', { text: 'Water intake &gt;100 mL/kg/day (🐕; normal usually &lt;80) · &gt;50 mL/kg/day (🐱, ≈&gt;200 mL/cat/day)', tone: 'teal' }],
+          ['<strong>Polyuria</strong>', { text: 'Urine output &gt;50 mL/kg/day (both species)', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: '📖 KEY SIGNALMENT CLUES' },
+
+      { kind: 'step', text: '📖 STEP 2 — CHRONICITY + ONSET', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Age</strong><br>
-      • Young (&lt;2 yr): CDI, primary NDI (rare), PSS, congenital DM — consider heritable cause<br>
-      • Middle-aged dog: HAC (typical 7–12 yr), DM<br>
-      • Older cat (&gt;8 yr): hyperthyroidism, CKD, DM — always check T4<br>
-      <strong style="color:var(--tone-warning-fg);">Breed</strong><br>
-      • Poodle, Dachshund, Boxer, Beagle, Boston Terrier → HAC<br>
-      • WHWT, Nova Scotia Duck Tolling Retriever, Gr. Dane → Addison's<br>
-      • Young large breed dog → Primary polydipsia (psychogenic)<br>
-      • Siamese, Burmese → DM (cat)<br>
-      <strong style="color:var(--tone-danger-fg);">Sex / reproductive status</strong><br>
-      • Intact female dog (mid-cycle or 4–8 wks post-oestrus) → <strong>Pyometra — emergency</strong><br>
-      • Female dog 4–8 yr → HAC slightly overrepresented in females`,
+        kind: 'gridTable',
+        cols: '0.7fr 1.45fr',
+        dividers: true,
+        headers: ['Onset', { text: 'Differential', tone: 'teal' }],
+        rows: [
+          ['<strong>Acute (&lt;1–2 weeks)</strong>', { text: 'AKI (toxin · leptospirosis · lily · NSAID — severe azotaemia possible) · pyometra (intact female, post-oestrus; may present in shock) · DKA · hepatic toxin · acute pancreatitis · recent glucocorticoid or diuretic administration', tone: 'green' }],
+          ['<strong>Acute severe PU/PD</strong>', { text: '<strong>Check for emergency flags first</strong>', tone: 'danger' }],
+          ['<strong>Chronic / insidious</strong>', { text: 'CKD (gradual; owners notice weight loss and the water bowl refilling) · hyperadrenocorticism (pot-belly · panting · polyphagia · hair loss over months–years) · DM (weight loss despite polyphagia; cataracts in 🐕; hind-limb weakness in 🐱) · CDI / primary polydipsia (profound dilute urine, otherwise well) · hyperthyroidism (🐱 — weight loss · tachycardia · often concurrent CKD)', tone: 'warning' }],
+        ],
       },
-      { kind: 'step', text: '📖 MEDICATION + EXPOSURE HISTORY' },
+
+      { kind: 'step', text: '🐾 STEP 3 — KEY SIGNALMENT CLUES', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-danger-fg);">Iatrogenic causes — common and easily missed</strong><br>
-      • <strong>Glucocorticoids</strong> (oral, injectable, topical, ear drops) → secondary NDI; most common iatrogenic cause<br>
-      • <strong>Phenobarbitone / primidone</strong> (dogs) → hepatotoxicity + secondary PU/PD<br>
-      • <strong>Diuretics</strong> (frusemide, spironolactone) → obligatory diuresis<br>
-      • <strong>Lithium</strong> → primary NDI<br>
-      • Recent megestrol acetate (cat) → DM induction<br>
-      <strong style="color:var(--tone-warning-fg);">Toxin / environmental</strong><br>
-      • Ethylene glycol → AKI (acute, severe), crystalluria<br>
-      • Lily ingestion (cats) → AKI<br>
-      • Jerky treats, copper hepatopathy → Fanconi / glucosuria with normoglycaemia<br>
-      • Grapes / raisins (dogs) → AKI<br>
-      <strong style="color:var(--tone-info-fg);">Vaccination + outdoor access</strong><br>
-      • Unvaccinated, outdoor, water access → <strong>Leptospirosis</strong> (zoonotic — PPE!)`,
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Signalment', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Young (&lt;2 yr)</strong>', { text: 'CDI · primary NDI (rare) · PSS · congenital DM — consider a heritable cause', tone: 'green' }],
+          ['<strong>Middle-aged dog</strong>', { text: 'HAC (typically 7–12 yr) · DM', tone: 'green' }],
+          ['<strong>Older cat (&gt;8 yr)</strong>', { text: 'Hyperthyroidism · CKD · DM — <strong>always check T4</strong>', tone: 'green' }],
+          ['<strong>Poodle · Dachshund · Boxer · Beagle · Boston Terrier</strong>', { text: 'HAC', tone: 'warning' }],
+          ['<strong>WHWT · Nova Scotia Duck Tolling Retriever · Great Dane</strong>', { text: 'Addison\'s', tone: 'warning' }],
+          ['<strong>Young large-breed dog</strong>', { text: 'Primary polydipsia (psychogenic)', tone: 'warning' }],
+          ['<strong>Siamese · Burmese</strong>', { text: 'DM (🐱)', tone: 'warning' }],
+          ['<strong>Intact female dog</strong> — mid-cycle or 4–8 wks post-oestrus', { text: '<strong>Pyometra — emergency</strong>', tone: 'danger' }],
+          ['<strong>Female dog 4–8 yr</strong>', { text: 'HAC slightly overrepresented in females', tone: 'danger' }],
+        ],
       },
-      { kind: 'step', text: '📖 CONCURRENT SIGNS — NARROW THE DIFFERENTIAL' },
+
+      { kind: 'step', text: '💊 STEP 4 — MEDICATION + EXPOSURE HISTORY', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;font-size:10px;line-height:1.5;">
-        <div><strong style="color:var(--tone-danger-fg);">Polyphagia + PU/PD</strong><br>HAC (dog) · DM · Hyperthyroidism (cat)</div>
-        <div><strong style="color:var(--tone-danger-fg);">Weight loss + polyphagia</strong><br>DM · Hyperthyroidism (cat) · Acromegaly (cat)</div>
-        <div><strong style="color:var(--tone-warning-fg);">Pot-belly + panting</strong><br>HAC — high suspicion</div>
-        <div><strong style="color:var(--tone-warning-fg);">Waxing/waning illness</strong><br>Hypoadrenocorticism · CKD · PSS</div>
-        <div><strong style="color:var(--tone-green-fg);">Intact female + systemic signs</strong><br>Pyometra — rule out immediately</div>
-        <div><strong style="color:var(--tone-green-fg);">Young + stunted + neurological</strong><br>PSS (portosystemic shunt)</div>
-        <div><strong style="color:var(--tone-info-fg);">Constipation + weakness</strong><br>Hypercalcaemia</div>
-        <div><strong style="color:var(--tone-info-fg);">Hind-limb weakness (cat)</strong><br>Hypokalemia · Acromegaly (DM)</div>
-        <div><strong style="color:var(--tone-violet-fg);">Profound PU/PD — otherwise well</strong><br>CDI · Primary polydipsia</div>
-        <div><strong style="color:var(--tone-violet-fg);">Nocturia preference for cold water</strong><br>CDI — high suspicion</div>
-      </div>`,
+        kind: 'gridTable',
+        label: 'Iatrogenic causes — common and easily missed',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Agent', { text: 'Effect', tone: 'teal' }],
+        rows: [
+          ['<strong>Glucocorticoids</strong> — oral · injectable · topical · ear drops', { text: 'Secondary NDI — <strong>the most common iatrogenic cause</strong>', tone: 'danger' }],
+          ['<strong>Phenobarbitone / primidone</strong> (🐕)', { text: 'Hepatotoxicity + secondary PU/PD', tone: 'danger' }],
+          ['<strong>Diuretics</strong> — frusemide · spironolactone', { text: 'Obligatory diuresis', tone: 'danger' }],
+          ['<strong>Lithium</strong>', { text: 'Primary NDI', tone: 'danger' }],
+          ['<strong>Recent megestrol acetate</strong> (🐱)', { text: 'DM induction', tone: 'danger' }],
+        ],
+      },
+      {
+        kind: 'gridTable',
+        label: 'Toxin / environmental · vaccination + outdoor access',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Exposure', { text: 'Effect', tone: 'teal' }],
+        rows: [
+          ['<strong>Ethylene glycol</strong>', { text: 'AKI — acute, severe · crystalluria', tone: 'warning' }],
+          ['<strong>Lily ingestion</strong> (🐱)', { text: 'AKI', tone: 'warning' }],
+          ['<strong>Jerky treats · copper hepatopathy</strong>', { text: 'Fanconi / glucosuria with normoglycaemia', tone: 'warning' }],
+          ['<strong>Grapes / raisins</strong> (🐕)', { text: 'AKI', tone: 'warning' }],
+          ['<strong>Unvaccinated · outdoor · water access</strong>', { text: '<strong>Leptospirosis</strong> — zoonotic, PPE!', tone: 'danger' }],
+        ],
+      },
+
+      { kind: 'step', text: '🔍 STEP 5 — CONCURRENT SIGNS: NARROW THE DIFFERENTIAL', noArrowAfter: true },
+      {
+        kind: 'gridTable',
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Concurrent sign', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Polyphagia + PU/PD</strong>', { text: 'HAC (🐕) · DM · hyperthyroidism (🐱)', tone: 'danger' }],
+          ['<strong>Weight loss + polyphagia</strong>', { text: 'DM · hyperthyroidism (🐱) · acromegaly (🐱)', tone: 'danger' }],
+          ['<strong>Pot-belly + panting</strong>', { text: 'HAC — high suspicion', tone: 'warning' }],
+          ['<strong>Waxing/waning illness</strong>', { text: 'Hypoadrenocorticism · CKD · PSS', tone: 'warning' }],
+          ['<strong>Intact female + systemic signs</strong>', { text: 'Pyometra — rule out immediately', tone: 'green' }],
+          ['<strong>Young + stunted + neurological</strong>', { text: 'PSS (portosystemic shunt)', tone: 'green' }],
+          ['<strong>Constipation + weakness</strong>', { text: 'Hypercalcaemia', tone: 'info' }],
+          ['<strong>Hind-limb weakness</strong> (🐱)', { text: 'Hypokalaemia · acromegaly (DM)', tone: 'info' }],
+          ['<strong>Profound PU/PD — otherwise well</strong>', { text: 'CDI · primary polydipsia', tone: 'violet' }],
+          ['<strong>Nocturia · preference for cold water</strong>', { text: 'CDI — high suspicion', tone: 'violet' }],
+        ],
       },
     ],
     after: [
@@ -106,69 +134,80 @@ export const pupdDx: DxApproach = {
   exam: {
     title: 'Exam: PU/PD',
     blocks: [
-      { kind: 'step', text: '🩺 PHYSICAL EXAMINATION' },
+      { kind: 'step', text: '🩺 PHYSICAL EXAMINATION', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Hydration + Cardiovascular</strong><br>
-      • Dehydration (skin tent, dry MM, sunken eyes) → obligate losses (DM, CKD, HAC)<br>
-      • Tachycardia + weak pulses → septic shock (pyometra), haemorrhage, Addisonian crisis<br>
-      • <strong>Bradycardia</strong> → hyperkalaemia → classical Addison's disease (Na:K &lt;27)<br>
-      • Hypertension on indirect BP → CKD, HAC, DM, hyperthyroidism (cat) — check in all PU/PD patients`,
+        kind: 'gridTable',
+        label: 'Hydration + cardiovascular',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Dehydration</strong> — skin tent · dry MM · sunken eyes', { text: 'Obligate losses — DM · CKD · HAC', tone: 'green' }],
+          ['<strong>Tachycardia + weak pulses</strong>', { text: 'Septic shock (pyometra) · haemorrhage · Addisonian crisis', tone: 'green' }],
+          ['<strong>Bradycardia</strong>', { text: 'Hyperkalaemia → <strong>classical Addison\'s disease</strong> (Na:K &lt;27)', tone: 'danger' }],
+          ['<strong>Hypertension on indirect BP</strong>', { text: 'CKD · HAC · DM · hyperthyroidism (🐱) — <strong>check in all PU/PD patients</strong>', tone: 'green' }],
+        ],
       },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Body Condition + Weight</strong><br>
-      • <strong>Pot-belly + muscle wasting + overweight</strong> → HAC — classic presentation<br>
-      • <strong>Weight loss + muscle wasting</strong> → DM, CKD, hyperthyroidism (cat), lymphoma, acromegaly<br>
-      • <strong>Large body frame (cat)</strong> → Acromegaly — broad head, large paws, prognathia<br>
-      • <strong>Young + stunted growth</strong> → PSS (portosystemic shunt)`,
+        kind: 'gridTable',
+        label: 'Body condition + weight',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Pot-belly + muscle wasting + overweight</strong>', { text: 'HAC — the classic presentation', tone: 'warning' }],
+          ['<strong>Weight loss + muscle wasting</strong>', { text: 'DM · CKD · hyperthyroidism (🐱) · lymphoma · acromegaly', tone: 'warning' }],
+          ['<strong>Large body frame</strong> (🐱)', { text: 'Acromegaly — broad head · large paws · prognathia', tone: 'warning' }],
+          ['<strong>Young + stunted growth</strong>', { text: 'PSS (portosystemic shunt)', tone: 'warning' }],
+        ],
       },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-danger-fg);">Skin + Coat</strong><br>
-      • <strong>Truncal alopecia (symmetrical, non-pruritic)</strong> → HAC<br>
-      • <strong>Calcinosis cutis</strong> (white/yellow firm plaques, neck/groin) → HAC — specific but not sensitive<br>
-      • <strong>Thin, inelastic skin</strong> → HAC (collagen loss from cortisol excess)<br>
-      • <strong>Unkempt, poor coat quality</strong> → hyperthyroidism (cat), malnutrition (CKD, PSS)`,
+        kind: 'gridTable',
+        label: 'Skin + coat',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Truncal alopecia</strong> — symmetrical, non-pruritic', { text: 'HAC', tone: 'danger' }],
+          ['<strong>Calcinosis cutis</strong> — white/yellow firm plaques, neck / groin', { text: 'HAC — specific but not sensitive', tone: 'danger' }],
+          ['<strong>Thin, inelastic skin</strong>', { text: 'HAC — collagen loss from cortisol excess', tone: 'danger' }],
+          ['<strong>Unkempt, poor coat quality</strong>', { text: 'Hyperthyroidism (🐱) · malnutrition (CKD · PSS)', tone: 'danger' }],
+        ],
       },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Abdominal Palpation</strong><br>
-      • <strong>Hepatomegaly</strong> → HAC (vacuolar hepatopathy), DM, hyperthyroidism, PSS<br>
-      • <strong>Renomegaly / irregular kidneys</strong> → CKD (end-stage: small kidneys), lymphoma, PKD (cats)<br>
-      • <strong>Painful kidneys</strong> → AKI (toxin, leptospirosis), pyelonephritis<br>
-      • <strong>Uterine distension</strong> (intact female) → Pyometra — may be subtle in closed pyometra<br>
-      • <strong>Fluid wave</strong> → ascites (PSS, hepatic failure, hypoalbuminaemia)<br>
-      • <strong>Microhepatica</strong> → PSS (portosystemic shunt), hepatic atrophy`,
+        kind: 'gridTable',
+        label: 'Abdominal palpation',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Hepatomegaly</strong>', { text: 'HAC (vacuolar hepatopathy) · DM · hyperthyroidism · PSS', tone: 'warning' }],
+          ['<strong>Renomegaly / irregular kidneys</strong>', { text: 'CKD (end-stage: small kidneys) · lymphoma · PKD (🐱)', tone: 'warning' }],
+          ['<strong>Painful kidneys</strong>', { text: 'AKI (toxin · leptospirosis) · pyelonephritis', tone: 'warning' }],
+          ['<strong>Uterine distension</strong> (intact female)', { text: '<strong>Pyometra</strong> — may be subtle in closed pyometra', tone: 'danger' }],
+          ['<strong>Fluid wave</strong>', { text: 'Ascites — PSS · hepatic failure · hypoalbuminaemia', tone: 'warning' }],
+          ['<strong>Microhepatica</strong>', { text: 'PSS · hepatic atrophy', tone: 'warning' }],
+        ],
       },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-info-fg);">Eyes</strong><br>
-      • <strong>Cataracts</strong> (dog) → DM — bilateral, rapidly progressive in dogs with poorly regulated DM<br>
-      • <strong>Retinal haemorrhage / detachment</strong> → systemic hypertension (CKD, HAC, DM, hyperthyroidism)<br>
-      • <strong>Uveitis</strong> → leptospirosis, lymphoma (paraneoplastic), hypertension, DM<br>
-      • <strong>Dilated unresponsive pupils</strong> (cat) → hypertensive retinopathy — measure BP immediately`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Neck — Thyroid</strong><br>
-      • <strong>Palpable thyroid nodule(s)</strong> (ventral neck, cat) → Hyperthyroidism — most cats &gt;8 yr<br>
-      • Bilateral = toxic multinodular goitre (most common); unilateral = adenoma or carcinoma`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-danger-fg);">Rectal Examination — mandatory in all PU/PD dogs</strong><br>
-      • <strong>Anal sac mass</strong> → AGASACA — 27–53% cause paraneoplastic hypercalcaemia → secondary NDI<br>
-      • Examine even without perineal swelling — small masses easily missed<br>
-      • Peripheral lymphadenopathy → lymphoma (T-cell with hypercalcaemia most common)`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-violet-fg);">Neurological</strong><br>
-      • <strong>Altered mentation / hepatic encephalopathy signs</strong> → PSS, hepatic failure<br>
-      • <strong>Generalised muscle weakness</strong> → hypokalaemia (cat: ventroflexion), hypoadrenocorticism<br>
-      • Plantigrade stance (cat) → diabetic neuropathy<br>
-      • Neurological signs + head trauma history → CDI (hypothalamic damage)`,
+        kind: 'gridTable',
+        label: 'Eyes · neck · rectal · neurological',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Cataracts</strong> (🐕)', { text: 'DM — bilateral, rapidly progressive with poorly regulated DM', tone: 'info' }],
+          ['<strong>Retinal haemorrhage / detachment</strong>', { text: 'Systemic hypertension — CKD · HAC · DM · hyperthyroidism', tone: 'info' }],
+          ['<strong>Uveitis</strong>', { text: 'Leptospirosis · lymphoma (paraneoplastic) · hypertension · DM', tone: 'info' }],
+          ['<strong>Dilated unresponsive pupils</strong> (🐱)', { text: 'Hypertensive retinopathy — <strong>measure BP immediately</strong>', tone: 'danger' }],
+          ['<strong>Palpable thyroid nodule(s)</strong> — ventral neck, 🐱', { text: 'Hyperthyroidism — most cats &gt;8 yr. Bilateral = toxic multinodular goitre (most common) · unilateral = adenoma or carcinoma', tone: 'green' }],
+          ['<strong>Rectal exam — mandatory in all PU/PD dogs:</strong> anal sac mass', { text: '<strong>AGASACA</strong> — 27–53% cause paraneoplastic hypercalcaemia → secondary NDI. <strong>Examine even without perineal swelling</strong> — small masses are easily missed', tone: 'danger' }],
+          ['<strong>Peripheral lymphadenopathy</strong>', { text: 'Lymphoma — T-cell with hypercalcaemia most common', tone: 'danger' }],
+          ['<strong>Altered mentation / hepatic encephalopathy signs</strong>', { text: 'PSS · hepatic failure', tone: 'violet' }],
+          ['<strong>Generalised muscle weakness</strong>', { text: 'Hypokalaemia (🐱: ventroflexion) · hypoadrenocorticism', tone: 'violet' }],
+          ['<strong>Plantigrade stance</strong> (🐱)', { text: 'Diabetic neuropathy', tone: 'violet' }],
+          ['<strong>Neurological signs + head trauma history</strong>', { text: 'CDI — hypothalamic damage', tone: 'violet' }],
+        ],
       },
     ],
     after: [
@@ -179,45 +218,48 @@ export const pupdDx: DxApproach = {
   dx: {
     title: 'Dx: PU/PD',
     blocks: [
-      { kind: 'step', text: '🔬 STEP 1 — URINALYSIS (first, before IV fluids)' },
+      { kind: 'step', text: '🔬 STEP 1 — URINALYSIS (first, before IV fluids)', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Serial USG — 3–5 samples on different days/times</strong><br><br>
-      <div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:5px 8px;font-size:10px;line-height:1.4;">
-        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">USG</div>
-        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Interpretation</div>
-        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Consider</div>
-        <div style="color:var(--tone-green-fg);white-space:nowrap;">&gt;1.030 dog<br>&gt;1.035 cat</div>
-        <div>Concentrated — not obligate PU/PD</div>
-        <div style="font-size:9.5px;">Glucosuria? → DM can raise USG artificially. ≥1 concentrated sample → Primary polydipsia possible.</div>
-        <div style="color:var(--tone-warning-fg);">1.013–1.029</div>
-        <div>Partially concentrated</div>
-        <div style="font-size:9.5px;">HAC · early CKD · primary polydipsia</div>
-        <div style="color:var(--hl-orange);">1.008–1.012</div>
-        <div>Isosthenuric</div>
-        <div style="font-size:9.5px;">CKD · HAC · Addison's medullary washout · pyelonephritis</div>
-        <div style="color:var(--tone-danger-title);">&lt;1.008</div>
-        <div>Hyposthenuric</div>
-        <div style="font-size:9.5px;">CDI · NDI · primary polydipsia · severe HAC</div>
-      </div>`,
+        kind: 'gridTable',
+        label: 'Serial USG — 3–5 samples on different days / times',
+        cols: 'auto 1fr 1fr',
+        dividers: true,
+        headers: ['USG', 'Interpretation', { text: 'Consider', tone: 'teal' }],
+        rows: [
+          [{ text: '<strong>&gt;1.030 🐕<br>&gt;1.035 🐱</strong>', tone: 'green' }, 'Concentrated — not obligate PU/PD', { text: 'Glucosuria? DM can raise USG artificially. ≥1 concentrated sample → primary polydipsia possible', tone: 'teal' }],
+          [{ text: '<strong>1.013–1.029</strong>', tone: 'warning' }, 'Partially concentrated', { text: 'HAC · early CKD · primary polydipsia', tone: 'teal' }],
+          [{ text: '<strong>1.008–1.012</strong>', tone: 'warning' }, 'Isosthenuric', { text: 'CKD · HAC · Addison\'s medullary washout · pyelonephritis', tone: 'teal' }],
+          [{ text: '<strong>&lt;1.008</strong>', tone: 'danger' }, 'Hyposthenuric', { text: 'CDI · NDI · primary polydipsia · severe HAC', tone: 'teal' }],
+        ],
       },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Dipstick + sediment</strong><br>
-      • Glucosuria + <em>hyperglycaemia</em> → DM (osmotic diuresis; glucose &gt;180 mg/dL dog, &gt;270 cat)<br>
-      • Glucosuria + <em>normoglycaemia</em> → renal glucosuria / Fanconi (jerky treats, copper hepatopathy)<br>
-      • Active sediment (WBC casts, bacteriuria) → pyelonephritis — culture regardless<br>
-      • Ammonium biurate crystals → PSS — young dog`,
+        kind: 'gridTable',
+        label: 'Dipstick + sediment',
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Glucosuria + <em>hyperglycaemia</em></strong>', { text: 'DM — osmotic diuresis; glucose &gt;180 mg/dL 🐕 · &gt;270 mg/dL 🐱', tone: 'teal' }],
+          ['<strong>Glucosuria + <em>normoglycaemia</em></strong>', { text: 'Renal glucosuria / Fanconi — jerky treats · copper hepatopathy', tone: 'teal' }],
+          ['<strong>Active sediment</strong> — WBC casts · bacteriuria', { text: 'Pyelonephritis — <strong>culture regardless</strong>', tone: 'teal' }],
+          ['<strong>Ammonium biurate crystals</strong>', { text: 'PSS — young dog', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: 'STEP 2 — MINIMUM DATABASE + IMAGING' },
+
+      { kind: 'step', text: '🧪 STEP 2 — MINIMUM DATABASE + IMAGING', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Biochemistry:</strong> BUN · Cr · SDMA · phosphate · Ca²⁺ · K⁺ · Na⁺ · glucose · ALP · ALT · albumin · cholesterol<br>
-      <strong style="color:var(--tone-warning-fg);">Haematology:</strong> CBC — absent stress leukogram in sick dog → Addison's. Leucocytosis + left shift → infectious.<br>
-      <strong style="color:var(--tone-warning-fg);">T4:</strong> ALL cats &gt;7 yr. Free T4 by equilibrium dialysis if total T4 equivocal.<br>
-      <strong style="color:var(--tone-warning-fg);">BP:</strong> Indirect measurement — all PU/PD patients.<br>
-      <strong style="color:var(--tone-warning-fg);">Urine culture:</strong> All PU/PD patients (pyelonephritis often presents without localising signs).<br>
-      <strong style="color:var(--tone-warning-fg);">Abdominal US:</strong> Adrenal size · uterus (closed pyometra) · kidney architecture · hepatic pattern · lymph nodes`,
+        kind: 'gridTable',
+        cols: '0.7fr 1.45fr',
+        dividers: true,
+        headers: ['Test', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          [`${numBadge(1)}<strong>Biochemistry</strong>`, { text: 'BUN · Cr · SDMA · phosphate · Ca²⁺ · K⁺ · Na⁺ · glucose · ALP · ALT · albumin · cholesterol', tone: 'warning' }],
+          [`${numBadge(2)}<strong>Haematology</strong>`, { text: 'CBC — absent stress leukogram in a sick dog → Addison\'s · leucocytosis + left shift → infectious', tone: 'warning' }],
+          [`${numBadge(3)}<strong>T4</strong>`, { text: '<strong>ALL cats &gt;7 yr.</strong> Free T4 by equilibrium dialysis if total T4 equivocal', tone: 'warning' }],
+          [`${numBadge(4)}<strong>Blood pressure</strong>`, { text: 'Indirect measurement — all PU/PD patients', tone: 'warning' }],
+          [`${numBadge(5)}<strong>Urine culture</strong>`, { text: 'All PU/PD patients — pyelonephritis often presents without localising signs', tone: 'warning' }],
+          [`${numBadge(6)}<strong>Abdominal US</strong>`, { text: 'Adrenal size · uterus (closed pyometra) · kidney architecture · hepatic pattern · lymph nodes', tone: 'warning' }],
+        ],
       },
       {
         kind: 'html',
@@ -350,12 +392,20 @@ export const pupdDx: DxApproach = {
       </div>
     </div>`,
       },
-      { kind: 'step', text: 'IF DATABASE NORMAL — SERIAL USG + PLASMA Na⁺ → DESMOPRESSIN' },
+      { kind: 'step', text: 'IF DATABASE NORMAL — SERIAL USG + PLASMA Na⁺ → DESMOPRESSIN', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `• ≥1 USG &gt;1.030 (dog) / &gt;1.035 (cat) + Na⁺ low-normal → <strong>Primary polydipsia</strong><br>
-      • All USG &lt;1.007 + Na⁺ high-normal → <strong>CDI vs NDI</strong> → desmopressin trial<br>
-      <div style="margin-top:8px;">
+        kind: 'gridTable',
+        cols: '0.9fr 1.25fr',
+        dividers: true,
+        headers: ['Pattern', { text: 'Diagnosis', tone: 'teal' }],
+        rows: [
+          ['<strong>≥1 USG &gt;1.030 (🐕) / &gt;1.035 (🐱) + Na⁺ low-normal</strong>', { text: '<strong>Primary polydipsia</strong>', tone: 'teal' }],
+          ['<strong>All USG &lt;1.007 + Na⁺ high-normal</strong>', { text: '<strong>CDI vs NDI</strong> → desmopressin trial', tone: 'teal' }],
+        ],
+      },
+      {
+        kind: 'html',
+        html: `<div style="margin-top:8px;">
         <div class="dx-dx" onclick="renderDxId('pupd','desmopressin')" style="background:rgba(99,102,241,0.15);border-color:rgba(99,102,241,0.45);cursor:pointer;">💉 → Desmopressin Trial protocol</div>
       </div>`,
       },
@@ -393,77 +443,98 @@ export const pupdDx: DxApproach = {
         html: `<div class="dx-step" style="background:rgba(99,102,241,0.2);border-color:rgba(99,102,241,0.45);color:var(--fg-indigo-deep);">💉 DESMOPRESSIN (DDAVP) RESPONSE TRIAL</div>`,
       },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-danger-fg);">⚠️ BEFORE STARTING — absolute prerequisites</strong><br>
-      • Minimum database complete (biochemistry, haematology, urinalysis)<br>
-      • <strong>Hyperadrenocorticism excluded</strong> — some HAC dogs partially respond to DDAVP → false CDI diagnosis<br>
-      • <strong>Pyometra excluded</strong> (ultrasound or confirmed spayed)<br>
-      • <strong>Hypercalcaemia excluded</strong> (total Ca²⁺ checked)<br>
-      • Patient is <strong>not hyponatraemic</strong> (Na &lt;145 mEq/L) → desmopressin in primary polydipsia → severe hyponatraemia → death<br>
-      • Patient is <strong>not azotaemic</strong> without knowing cause<br>
-      • Patient has <strong>free access to water at all times</strong> during the trial — NEVER restrict water`,
+        kind: 'gridTable',
+        label: '⚠️ BEFORE STARTING — absolute prerequisites',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Prerequisite', { text: 'Why', tone: 'teal' }],
+        rows: [
+          ['<strong>Minimum database complete</strong>', { text: 'Biochemistry · haematology · urinalysis', tone: 'danger' }],
+          ['<strong>Hyperadrenocorticism excluded</strong>', { text: 'Some HAC dogs partially respond to DDAVP → <strong>false CDI diagnosis</strong>', tone: 'danger' }],
+          ['<strong>Pyometra excluded</strong>', { text: 'Ultrasound, or confirmed spayed', tone: 'danger' }],
+          ['<strong>Hypercalcaemia excluded</strong>', { text: 'Total Ca²⁺ checked', tone: 'danger' }],
+          ['<strong>Not hyponatraemic</strong> (Na &lt;145 mEq/L)', { text: 'Desmopressin in primary polydipsia → severe hyponatraemia → <strong>death</strong>', tone: 'danger' }],
+          ['<strong>Not azotaemic without a known cause</strong>', { text: 'Investigate the azotaemia first', tone: 'danger' }],
+          ['<strong>Free access to water at all times</strong>', { text: '<strong>NEVER restrict water</strong> during the trial', tone: 'danger' }],
+        ],
       },
-      { kind: 'step', text: 'BASELINE MEASUREMENTS (Day 0)' },
+
+      { kind: 'step', text: '📏 BASELINE MEASUREMENTS (Day 0)', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `• <strong>Serial USG</strong> — minimum 3–5 samples (different days); confirm all are &lt;1.007 for CDI/NDI workup<br>
-      • <strong>Plasma sodium</strong> — baseline (repeat at Day 5–7)<br>
-      • <strong>Water intake</strong> — owner to measure daily (ml/kg/day)<br>
-      • <strong>Bodyweight</strong> — monitor for water retention<br>
-      <span style="font-size:10px;opacity:.75;">📝 Instruct owner to record water intake carefully — the most sensitive response indicator.</span>`,
+        kind: 'gridTable',
+        cols: '0.7fr 1.45fr',
+        dividers: true,
+        headers: ['Measure', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Serial USG</strong>', { text: 'Minimum 3–5 samples on different days — confirm all are &lt;1.007 for the CDI/NDI workup', tone: 'teal' }],
+          ['<strong>Plasma sodium</strong>', { text: 'Baseline — repeat at Day 5–7', tone: 'teal' }],
+          ['<strong>Water intake</strong>', { text: 'Owner to measure daily (mL/kg/day) — <strong>the most sensitive response indicator</strong>; instruct them to record it carefully', tone: 'teal' }],
+          ['<strong>Bodyweight</strong>', { text: 'Monitor for water retention', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: 'DESMOPRESSIN ADMINISTRATION' },
+
+      { kind: 'step', text: '💉 DESMOPRESSIN ADMINISTRATION', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Dog:</strong><br>
-      • <strong>Oral DDAVP tablets:</strong> 0.05–0.1 mg (50–100 µg) PO q8–12h<br>
-      • <strong>Conjunctival drops (ophthalmic):</strong> 1–2 drops into conjunctival sac q12–24h (0.01% solution = 10 µg/drop)<br>
-      • <strong>Intranasal solution used conjunctivally:</strong> 1–2 drops q12h (if ophthalmic not available)<br><br>
-      <strong style="color:var(--tone-warning-fg);">Cat:</strong><br>
-      • <strong>Conjunctival drops:</strong> 1–2 drops q12–24h<br>
-      • Oral DDAVP less predictable in cats — conjunctival route preferred<br><br>
-      <span style="font-size:10px;opacity:.8;">Duration: <strong>5–7 days</strong> for full response assessment. USG checked Days 3–4 then Day 7.</span>`,
+        kind: 'gridTable',
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Route', { text: 'Dose', tone: 'teal' }],
+        rows: [
+          ['<strong>🐕 Oral DDAVP tablets</strong>', { text: '0.05–0.1 mg (50–100 µg) PO q8–12h', tone: 'warning' }],
+          ['<strong>🐕 Conjunctival drops (ophthalmic)</strong>', { text: '1–2 drops into the conjunctival sac q12–24h — 0.01% solution = 10 µg/drop', tone: 'warning' }],
+          ['<strong>🐕 Intranasal solution used conjunctivally</strong>', { text: '1–2 drops q12h — if the ophthalmic preparation is not available', tone: 'warning' }],
+          ['<strong>🐱 Conjunctival drops</strong>', { text: '1–2 drops q12–24h. Oral DDAVP is less predictable in cats — <strong>conjunctival route preferred</strong>', tone: 'warning' }],
+          ['<strong>Duration</strong>', { text: '<strong>5–7 days</strong> for full response assessment. USG checked Days 3–4, then Day 7', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: 'INTERPRETING RESPONSE (Day 5–7)' },
+
+      { kind: 'step', text: '📊 INTERPRETING RESPONSE (Day 5–7)', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px 10px;font-size:10px;line-height:1.4;">
-        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">USG response</div>
-        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Water intake</div>
-        <div style="font-weight:700;border-bottom:1px solid rgba(148,163,184,.25);padding-bottom:3px;">Interpretation</div>
-        <div style="color:var(--tone-green-fg);">USG increases to &gt;1.015<br>(ideally &gt;1.025)</div>
-        <div style="color:var(--tone-green-fg);">↓ significantly (&gt;50%)</div>
-        <div><strong>CDI confirmed</strong><br>ADH-responsive collecting duct → commence long-term DDAVP</div>
-        <div style="color:var(--tone-danger-fg);">USG remains &lt;1.007<br>No change</div>
-        <div style="color:var(--tone-danger-fg);">No change</div>
-        <div><strong>Primary NDI</strong><br>Collecting duct unresponsive to ADH — treat underlying cause</div>
-        <div style="color:var(--tone-warning-fg);">USG already &gt;1.030 (dog)<br>/ &gt;1.035 (cat)</div>
-        <div style="color:var(--tone-warning-fg);">↓ or unchanged</div>
-        <div><strong>Primary polydipsia</strong><br>Patient was concentrating urine all along — medullary washout may blur earlier readings</div>
-        <div style="color:var(--tone-violet-fg);">Partial response<br>(USG 1.008–1.015)</div>
-        <div style="color:var(--tone-violet-fg);">Mild ↓</div>
-        <div><strong>Partial CDI</strong> or secondary NDI<br>Rule out HAC (most common secondary NDI) — treat underlying cause and retest</div>
-      </div>`,
+        kind: 'gridTable',
+        cols: '1fr 1fr 1fr',
+        dividers: true,
+        headers: ['USG response', 'Water intake', { text: 'Interpretation', tone: 'teal' }],
+        rows: [
+          [{ text: 'USG increases to &gt;1.015<br>(ideally &gt;1.025)', tone: 'green' }, { text: '↓ significantly (&gt;50%)', tone: 'green' }, { text: '<strong>CDI confirmed</strong> — ADH-responsive collecting duct → commence long-term DDAVP', tone: 'teal' }],
+          [{ text: 'USG remains &lt;1.007<br>No change', tone: 'danger' }, { text: 'No change', tone: 'danger' }, { text: '<strong>Primary NDI</strong> — collecting duct unresponsive to ADH; treat the underlying cause', tone: 'teal' }],
+          [{ text: 'USG already &gt;1.030 (🐕)<br>/ &gt;1.035 (🐱)', tone: 'warning' }, { text: '↓ or unchanged', tone: 'warning' }, { text: '<strong>Primary polydipsia</strong> — the patient was concentrating urine all along; medullary washout may blur earlier readings', tone: 'teal' }],
+          [{ text: 'Partial response<br>(USG 1.008–1.015)', tone: 'violet' }, { text: 'Mild ↓', tone: 'violet' }, { text: '<strong>Partial CDI</strong> or secondary NDI — rule out HAC (the most common secondary NDI); treat the underlying cause and retest', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: 'MONITORING DURING TRIAL' },
+
+      { kind: 'step', text: '📈 MONITORING DURING TRIAL', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `• <strong>Bodyweight daily</strong> — weight gain &gt;5% → water retention → reduce dose or discontinue<br>
-      • <strong>Plasma sodium Day 5–7</strong> — hyponatraemia developing → primary polydipsia (overdrinking + ADH effect) → stop immediately<br>
-      • <strong>Oedema / ascites</strong> — rare with physiological DDAVP doses; more likely if primary polydipsia misclassified<br>
-      <div style="margin-top:8px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-left:3px solid var(--tone-danger-title);border-radius:8px;padding:8px 10px;font-size:10.5px;">
-        <span style="font-weight:700;color:var(--tone-danger-title);">⚠️ STOP IMMEDIATELY IF:</span> Plasma Na falls &lt;140 mEq/L · Bodyweight gain &gt;5% · Oedema develops · Owner stops measuring water and patient appears more depressed
-      </div>`,
+        kind: 'gridTable',
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Monitor', { text: 'Action', tone: 'teal' }],
+        rows: [
+          ['<strong>Bodyweight daily</strong>', { text: 'Weight gain &gt;5% → water retention → reduce dose or discontinue', tone: 'teal' }],
+          ['<strong>Plasma sodium Day 5–7</strong>', { text: 'Developing hyponatraemia → primary polydipsia (overdrinking + ADH effect) → <strong>stop immediately</strong>', tone: 'danger' }],
+          ['<strong>Oedema / ascites</strong>', { text: 'Rare with physiological DDAVP doses; more likely if primary polydipsia has been misclassified', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: 'CDI CONFIRMED — LONG-TERM MANAGEMENT' },
       {
-        kind: 'check',
-        html: `• Continue DDAVP at effective trial dose — titrate to lowest effective dose<br>
-      • <strong>MRI brain</strong> — mandatory to identify structural cause (neoplasia, cysts, inflammation)<br>
-      • <strong>Dog DDAVP dose:</strong> 0.05–0.1 mg PO q8–12h or 1–2 conjunctival drops q12–24h<br>
-      • <strong>Cat:</strong> 1 conjunctival drop q12–24h; adjust based on USG monitoring<br>
-      • Recheck USG + plasma Na + water intake every 4–6 weeks until stable, then every 3–6 months<br>
-      • Ensure free access to water at ALL times — water restriction with DDAVP is dangerous`,
+        kind: 'callout',
+        tone: 'danger',
+        title: '⚠️ STOP IMMEDIATELY IF',
+        html: `Plasma Na falls &lt;140 mEq/L · Bodyweight gain &gt;5% · Oedema develops · Owner stops measuring water and the patient appears more depressed`,
+      },
+
+      { kind: 'step', text: '✅ CDI CONFIRMED — LONG-TERM MANAGEMENT', noArrowAfter: true },
+      {
+        kind: 'gridTable',
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Element', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Continue DDAVP</strong>', { text: 'At the effective trial dose — titrate to the lowest effective dose', tone: 'teal' }],
+          ['<strong>MRI brain</strong>', { text: '<strong>Mandatory</strong> — identify a structural cause (neoplasia · cysts · inflammation)', tone: 'danger' }],
+          ['<strong>🐕 DDAVP dose</strong>', { text: '0.05–0.1 mg PO q8–12h, or 1–2 conjunctival drops q12–24h', tone: 'teal' }],
+          ['<strong>🐱 DDAVP dose</strong>', { text: '1 conjunctival drop q12–24h — adjust based on USG monitoring', tone: 'teal' }],
+          ['<strong>Recheck</strong>', { text: 'USG + plasma Na + water intake every 4–6 weeks until stable, then every 3–6 months', tone: 'teal' }],
+          ['<strong>Water access</strong>', { text: 'Free access at <strong>ALL</strong> times — water restriction with DDAVP is dangerous', tone: 'danger' }],
+        ],
       },
     ],
     after: [

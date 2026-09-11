@@ -4,6 +4,7 @@
 // Pilot for the Dx-view migration.
 
 import type { DxApproach } from '../dxTypes'
+import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const epistaxisDx: DxApproach = {
   title: 'Epistaxis',
@@ -35,44 +36,68 @@ export const epistaxisDx: DxApproach = {
           },
         ],
       },
-      { kind: 'step', text: '📋 ONSET, DURATION & TYPE OF NASAL SIGNS' },
+
+      ...stepTable(1, 'ONSET, DURATION & TYPE OF NASAL SIGNS', {
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['History', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Chronic nasal signs</strong>', { text: 'Intranasal disease, particularly <strong>neoplasia</strong>', tone: 'teal' }],
+          ['<strong>Acute onset</strong>', { text: 'Trauma. A foreign body can be acute (violent sneezing) then become chronic', tone: 'teal' }],
+          ['<strong>Other nasal-tract signs</strong><br>sneezing · stertor · mucopurulent discharge · unilateral epiphora · nasal planum depigmentation · facial rubbing or pain', { text: 'More common with intranasal disease', tone: 'teal' }],
+          ['<strong>Mucoid / mucopurulent discharge</strong>', { text: '<strong>Rare in systemic causes</strong> — its presence shifts you toward local disease', tone: 'teal' }],
+        ],
+      }, '📋'),
+
+      ...stepTable(2, 'MEDICATION / TOXIN EXPOSURE', {
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Exposure', { text: 'Effect', tone: 'teal' }],
+        rows: [
+          ['<strong>Drugs increasing bleeding tendency</strong>', { text: 'Aspirin / other NSAIDs · clopidogrel · rivaroxaban — ask specifically and consider discontinuing', tone: 'teal' }],
+          ['<strong>Topical nasal sprays / inhaled medications</strong>', { text: 'May locally irritate the nasal mucosa', tone: 'teal' }],
+          ['<strong>Anticoagulant rodenticide</strong>', { text: 'Assess potential access in any patient with other signs of haemorrhage — treat empirically with Vitamin K1 if suspected', tone: 'danger' }],
+          ['<strong>Chemotherapy / oestrogens</strong>', { text: 'Marrow suppression → thrombocytopenia', tone: 'teal' }],
+        ],
+      }, '💊'),
+
+      ...stepTable(3, 'SYSTEMIC & BLEEDING HISTORY', {
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['History', { text: 'Means', tone: 'teal' }],
+        rows: [
+          ['<strong>Systemic signs</strong> — lethargy · inappetence · weight loss', { text: 'More common with systemic causes', tone: 'teal' }],
+          ['<strong>Bleeding at other (extra-nasal) sites</strong>', { text: 'Strongly favours systemic disease — most likely with severe thrombocytopenia', tone: 'teal' }],
+          ['<strong>Historical bleeding tendency, especially in a young patient</strong><br>umbilical · deciduous-tooth · post-neuter or post-surgical bleeding', { text: 'Inherited coagulopathy / von Willebrand disease', tone: 'teal' }],
+          ['<strong>Melena</strong>', { text: 'May simply be swallowed blood — do not over-interpret as a GI / systemic bleed', tone: 'teal' }],
+        ],
+      }, '🩺'),
+
+      { kind: 'step', text: '🌍 STEP 4 — GEOGRAPHIC / LIFESTYLE / BREED CLUES', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong>Chronic nasal signs</strong> → favour intranasal disease, particularly <strong>neoplasia</strong>.<br>
-    <strong>Acute onset</strong> → favours trauma; foreign body can be acute (violent sneezing) then become chronic.<br>
-    <strong>Other nasal-tract signs</strong> (sneezing, stertor, mucopurulent discharge, unilateral epiphora, nasal planum depigmentation, facial rubbing/pain) are more common with intranasal disease.<br>
-    <strong>Mucoid / mucopurulent discharge is rare in systemic causes</strong> — its presence shifts you toward local disease.`,
+        kind: 'gridTable',
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Factor', { text: 'Risk', tone: 'teal' }],
+        rows: [
+          ['<strong>Tick exposure · preventive history · geography · travel</strong>', { text: 'Vector-borne disease — ehrlichiosis · leishmaniosis · anaplasmosis · babesiosis · RMSF', tone: 'teal' }],
+          ['<strong>Geography</strong>', { text: 'Also drives fungal rhinitis risk — <em>Aspergillus</em> · <em>Cryptococcus</em>', tone: 'teal' }],
+          ['<strong>Outdoor / free-roaming</strong>', { text: 'Higher chance of a traumatic or infectious cause', tone: 'teal' }],
+          ['<strong>Concurrent dermatologic disease</strong>', { text: 'More common in dogs with idiopathic rhinitis', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: '💊 MEDICATION / TOXIN EXPOSURE' },
       {
-        kind: 'check',
-        html: `<strong>Drugs that increase bleeding tendency:</strong> aspirin / other NSAIDs, clopidogrel, rivaroxaban — ask specifically and consider discontinuing.<br>
-    <strong>Topical nasal sprays / inhaled medications</strong> may locally irritate the nasal mucosa.<br>
-    <strong>Anticoagulant rodenticide</strong> — assess potential access in any patient with other signs of haemorrhage; treat empirically with Vitamin K1 if suspected.<br>
-    <strong>Chemotherapy / oestrogens</strong> → marrow suppression / thrombocytopenia.`,
-      },
-      { kind: 'step', text: '🩺 SYSTEMIC & BLEEDING HISTORY' },
-      {
-        kind: 'check',
-        html: `<strong>Systemic signs</strong> (lethargy, inappetence, weight loss) → more common with systemic causes.<br>
-    <strong>Bleeding at other (extra-nasal) sites</strong> → strongly favours systemic disease; most likely with severe thrombocytopenia.<br>
-    <strong>Historical bleeding tendency, especially in a young patient</strong> (umbilical, deciduous-tooth, post-neuter or post-surgical bleeding) → inherited coagulopathy / von Willebrand disease.<br>
-    <strong>Melena</strong> may simply be swallowed blood — do not over-interpret as a GI/systemic bleed.`,
-      },
-      { kind: 'step', text: '🌍 GEOGRAPHIC / LIFESTYLE / BREED CLUES' },
-      {
-        kind: 'check',
-        html: `<strong>Tick exposure, preventive history, geographic location & travel</strong> → vector-borne disease risk (ehrlichiosis, leishmaniosis, anaplasmosis, babesiosis, RMSF).<br>
-    <strong>Geography</strong> also drives fungal rhinitis risk (e.g. <em>Aspergillus</em>, <em>Cryptococcus</em>).<br>
-    <strong>Outdoor / free-roaming</strong> → higher chance of traumatic or infectious cause.<br>
-    <strong>Breed dispositions:</strong>
-    <div style="margin-left:8px;">
-      • Doberman, Pembroke Welsh Corgi, Scottish Terrier, Shetland Sheepdog, Chesapeake Bay Retriever, Pointer → <strong>von Willebrand disease</strong><br>
-      • Greater Swiss Mountain Dog → P2Y12 platelet-receptor mutation (thrombocytopathia)<br>
-      • Otterhound, Great Pyrenees → Glanzmann thrombasthenia<br>
-      • Dolichocephalic breeds (Collie, GSD, Greyhound) → predisposed to nasal neoplasia / aspergillosis
-    </div>
-    <strong>Concurrent dermatologic disease</strong> was more common in dogs with idiopathic rhinitis.`,
+        kind: 'gridTable',
+        label: 'Breed dispositions',
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Breed', { text: 'Predisposition', tone: 'teal' }],
+        rows: [
+          ['Doberman · Pembroke Welsh Corgi · Scottish Terrier · Shetland Sheepdog · Chesapeake Bay Retriever · Pointer', { text: '<strong>von Willebrand disease</strong>', tone: 'teal' }],
+          ['Greater Swiss Mountain Dog', { text: 'P2Y12 platelet-receptor mutation (thrombocytopathia)', tone: 'teal' }],
+          ['Otterhound · Great Pyrenees', { text: 'Glanzmann thrombasthenia', tone: 'teal' }],
+          ['Dolichocephalic breeds — Collie · GSD · Greyhound', { text: 'Predisposed to nasal neoplasia / aspergillosis', tone: 'teal' }],
+        ],
       },
     ],
     after: [
@@ -90,52 +115,69 @@ export const epistaxisDx: DxApproach = {
     title: 'Exam: Epistaxis',
     blocks: [
       { kind: 'step', tone: 'teal', text: '🩺 A complete PE is imperative — include FUNDIC + RECTAL exam' },
-      { kind: 'step', text: '👃 STEP 1 — CHARACTERISE THE EPISTAXIS' },
-      {
-        kind: 'check',
-        html: `<strong>Unilateral or bilateral?</strong> Note it, but it does <strong>not</strong> reliably predict local vs systemic (52% of systemic cases were unilateral).<br>
-    <strong>Decreased nasal airflow</strong> may indicate intranasal disease — but any epistaxis can occlude the nostril with clot, so interpret cautiously.<br>
-    <strong>Gross abnormalities</strong> of the nose, frontal sinus, or palate deformities are essentially limited to intranasal disease.`,
-      },
-      { kind: 'step', text: '🔵 STEP 2 — LOCAL (INTRANASAL) SIGNS' },
-      {
-        kind: 'check',
-        html: `Sneezing, stertor, mucopurulent nasal discharge, unilateral epiphora, nasal planum depigmentation, <strong>reduced ocular retropulsion</strong> (retrobulbar extension), facial pain / rubbing.<br>
-    <strong>Regional (submandibular) lymphadenopathy</strong> — in one study was seen <em>only</em> with intranasal disease.<br>
-    <strong>Dental disease</strong> — assess closely for periodontal disease, periapical infection, palate erosion / oronasal fistula.`,
-      },
-      { kind: 'step', text: '🩸 STEP 3 — SIGNS OF SYSTEMIC HAEMORRHAGE' },
-      {
-        kind: 'check',
-        html: `<strong>Primary haemostatic pattern (mucosal/cutaneous):</strong> petechiae, ecchymoses, gingival haemorrhage, increased bruising at venepuncture sites, melena (caution — may be swallowed blood).<br>
-    <strong>Secondary haemostatic pattern:</strong> cavity bleeding (haemoperitoneum, haemothorax, haemarthrosis), haematomas.<br>
-    <strong>Generalised lymphadenopathy</strong> → consider lymphoma, ehrlichiosis, leishmaniosis.`,
-      },
-      { kind: 'step', text: '👁️ STEP 4 — OPHTHALMIC & NEURO EXAM' },
-      {
-        kind: 'check',
-        html: `<strong>Uveitis</strong> (aqueous flare) → neoplastic / infectious disease (fungal, leishmaniosis).<br>
-    <strong>Focal retinal haemorrhage</strong> → vasculitis, vector-borne disease, fungal disease, systemic hypertension, any bleeding diathesis.<br>
-    <strong>Hyphema</strong> → systemic bleeding disorder.<br>
-    <strong>Retinal detachment</strong> — exudative (ehrlichiosis) or serous (panuveitis: lymphoma, systemic fungal); also classic for hypertension.<br>
-    <strong>Neurologic abnormalities</strong> → intracranial extension of nasal disease, or concurrent intracranial bleeding (more common with systemic causes).`,
-      },
-      { kind: 'step', text: '🔍 STEP 5 — PATTERN RECOGNITION' },
-      {
-        kind: 'check',
-        html: `<div style="display:grid;grid-template-columns:1fr 1.1fr;gap:5px 8px;font-size:10px;line-height:1.45;">
-      <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Finding</div>
-      <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Most likely</div>
-      <div>Chronic unilateral signs + facial deformity + ↓ retropulsion + submandibular LN</div><div style="color:var(--fg-violet-deep);">Nasal neoplasia</div>
-      <div>Nasal planum depigmentation/ulceration + marked nasal pain + fungal plaques</div><div style="color:var(--tone-green-fg);">Aspergillosis</div>
-      <div>Peracute violent sneezing + pawing at nose, outdoor dog</div><div style="color:var(--tone-orange-fg);">Nasal foreign body</div>
-      <div>Petechiae + ecchymoses + multiple-site mucosal bleeding</div><div style="color:var(--tone-danger-title);">Thrombocytopenia / IMTP</div>
-      <div>Mucosal bleeding + normal platelet count (predisposed breed)</div><div style="color:var(--tone-warning-fg);">vWD / thrombocytopathia</div>
-      <div>Cavity bleed / haematoma + access to bait</div><div style="color:var(--tone-info-fg);">Anticoagulant rodenticide</div>
-      <div>Hyperglobulinaemia + hyperviscosity signs (retinal, neuro)</div><div style="color:var(--tone-violet-fg);">Myeloma / hyperviscosity</div>
-      <div>Retinal haemorrhage + thrombocytopenia + tick exposure</div><div style="color:var(--tone-violet-fg);">Vector-borne disease</div>
-    </div>`,
-      },
+
+      ...stepTable(1, 'CHARACTERISE THE EPISTAXIS', {
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Feature', { text: 'Interpretation', tone: 'teal' }],
+        rows: [
+          ['<strong>Unilateral or bilateral?</strong>', { text: 'Note it, but it does <strong>not</strong> reliably predict local vs systemic — 52% of systemic cases were unilateral', tone: 'teal' }],
+          ['<strong>Decreased nasal airflow</strong>', { text: 'May indicate intranasal disease — but any epistaxis can occlude the nostril with clot, so interpret cautiously', tone: 'teal' }],
+          ['<strong>Gross abnormalities of the nose, frontal sinus, or palate deformities</strong>', { text: 'Essentially limited to intranasal disease', tone: 'teal' }],
+        ],
+      }, '👃'),
+
+      ...stepTable(2, 'LOCAL (INTRANASAL) SIGNS', {
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Nasal signs</strong>', { text: 'Sneezing · stertor · mucopurulent nasal discharge · unilateral epiphora · nasal planum depigmentation · facial pain or rubbing', tone: 'teal' }],
+          ['<strong>Reduced ocular retropulsion</strong>', { text: 'Retrobulbar extension', tone: 'teal' }],
+          ['<strong>Regional (submandibular) lymphadenopathy</strong>', { text: 'In one study seen <em>only</em> with intranasal disease', tone: 'teal' }],
+          ['<strong>Dental disease</strong>', { text: 'Assess closely for periodontal disease · periapical infection · palate erosion / oronasal fistula', tone: 'teal' }],
+        ],
+      }, '🔵'),
+
+      ...stepTable(3, 'SIGNS OF SYSTEMIC HAEMORRHAGE', {
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Pattern', { text: 'Findings', tone: 'teal' }],
+        rows: [
+          ['<strong>Primary haemostatic</strong> — mucosal / cutaneous', { text: 'Petechiae · ecchymoses · gingival haemorrhage · increased bruising at venepuncture sites · melena (caution — may be swallowed blood)', tone: 'teal' }],
+          ['<strong>Secondary haemostatic</strong>', { text: 'Cavity bleeding (haemoperitoneum · haemothorax · haemarthrosis) · haematomas', tone: 'teal' }],
+          ['<strong>Generalised lymphadenopathy</strong>', { text: 'Consider lymphoma · ehrlichiosis · leishmaniosis', tone: 'teal' }],
+        ],
+      }, '🩸'),
+
+      ...stepTable(4, 'OPHTHALMIC & NEURO EXAM', {
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Uveitis</strong> (aqueous flare)', { text: 'Neoplastic / infectious disease — fungal · leishmaniosis', tone: 'teal' }],
+          ['<strong>Focal retinal haemorrhage</strong>', { text: 'Vasculitis · vector-borne disease · fungal disease · systemic hypertension · any bleeding diathesis', tone: 'teal' }],
+          ['<strong>Hyphaema</strong>', { text: 'Systemic bleeding disorder', tone: 'teal' }],
+          ['<strong>Retinal detachment</strong>', { text: 'Exudative (ehrlichiosis) or serous (panuveitis: lymphoma · systemic fungal) — also classic for hypertension', tone: 'teal' }],
+          ['<strong>Neurologic abnormalities</strong>', { text: 'Intracranial extension of nasal disease, or concurrent intracranial bleeding (more common with systemic causes)', tone: 'teal' }],
+        ],
+      }, '👁️'),
+
+      ...stepTable(5, 'PATTERN RECOGNITION', {
+        cols: '1fr 1.1fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Most likely', tone: 'teal' }],
+        rows: [
+          ['Chronic unilateral signs + facial deformity + ↓ retropulsion + submandibular LN', { text: 'Nasal neoplasia', tone: 'violet' }],
+          ['Nasal planum depigmentation / ulceration + marked nasal pain + fungal plaques', { text: 'Aspergillosis', tone: 'green' }],
+          ['Peracute violent sneezing + pawing at nose, outdoor dog', { text: 'Nasal foreign body', tone: 'warning' }],
+          ['Petechiae + ecchymoses + multiple-site mucosal bleeding', { text: 'Thrombocytopenia / IMTP', tone: 'danger' }],
+          ['Mucosal bleeding + normal platelet count (predisposed breed)', { text: 'vWD / thrombocytopathia', tone: 'warning' }],
+          ['Cavity bleed / haematoma + access to bait', { text: 'Anticoagulant rodenticide', tone: 'info' }],
+          ['Hyperglobulinaemia + hyperviscosity signs (retinal · neuro)', { text: 'Myeloma / hyperviscosity', tone: 'violet' }],
+          ['Retinal haemorrhage + thrombocytopenia + tick exposure', { text: 'Vector-borne disease', tone: 'violet' }],
+        ],
+      }, '🔍'),
     ],
     after: [{ kind: 'disclaimer' }],
   },
@@ -143,63 +185,125 @@ export const epistaxisDx: DxApproach = {
   dx: {
     title: 'Dx: Epistaxis — Diagnostics',
     blocks: [
-      { kind: 'step', tone: 'danger', text: '⚡ STEP 1 — STABILISE FIRST' },
+      { kind: 'step', tone: 'danger', text: '⚡ STEP 1 — STABILISE FIRST', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `1. Epistaxis <strong>rarely</strong> is a true emergency — but severe haemorrhage can cause anaemia, hypovolaemia or upper-airway obstruction.<br>
-    2. <strong>Transfuse</strong> (whole blood / pRBC) for symptomatic anaemia; <strong>fluid resuscitate</strong> hypovolaemic patients — especially to stabilise before GA for CT / rhinoscopy.<br>
-    3. <strong>Plasma transfusion</strong> for severe haemorrhage with suspected factor deficiency / antagonism (haemophilia, rodenticide).<br>
-    4. <strong>Protect the airway</strong> — consider intubation if risk of obstruction or aspiration; interventional control is ideally performed on an anaesthetised, intubated patient.<br>
-    5. Minimise venepuncture sites, use small-gauge needles and prolonged pressure if a coagulopathy is suspected.`,
+        kind: 'gridTable',
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Do', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          [`${numBadge(1)}<strong>Triage</strong>`, { text: 'Epistaxis is <strong>rarely</strong> a true emergency — but severe haemorrhage can cause anaemia · hypovolaemia · upper-airway obstruction', tone: 'teal' }],
+          [`${numBadge(2)}<strong>Transfuse / fluid resuscitate</strong>`, { text: 'Whole blood / pRBC for symptomatic anaemia; fluids for hypovolaemia — especially to stabilise <strong>before GA</strong> for CT / rhinoscopy', tone: 'danger' }],
+          [`${numBadge(3)}<strong>Plasma transfusion</strong>`, { text: 'Severe haemorrhage with suspected factor deficiency or antagonism — haemophilia · rodenticide', tone: 'danger' }],
+          [`${numBadge(4)}<strong>Protect the airway</strong>`, { text: 'Consider intubation if there is risk of obstruction or aspiration; interventional control is ideally performed on an anaesthetised, intubated patient', tone: 'danger' }],
+          [`${numBadge(5)}<strong>Sampling technique</strong>`, { text: 'Minimise venepuncture sites · small-gauge needles · prolonged pressure if a coagulopathy is suspected', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: 'STEP 2 — MINIMUM DATABASE (every significant case)' },
+
+      { kind: 'step', text: '🧪 STEP 2 — MINIMUM DATABASE (every significant case)', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong>CBC + blood smear:</strong>
-    <div style="margin-left:8px;">
-      • Platelet count — clinical bleeding usually needs <strong>severe</strong> thrombocytopenia (&lt;30–50 ×10⁹/L). Confirm on a fresh smear; manual estimate = mean platelets/100× field × 15 ×10⁹/L. Check the feathered edge for clumping.<br>
-      • Anaemia from blood loss is expected to be <strong>regenerative</strong> (reticulocytosis, polychromasia) — but peracute loss may be pre-regenerative.<br>
-      • Platelet count does NOT reliably separate local from systemic disease.
-    </div>
-    <strong>Serum chemistry:</strong> screen for systemic disease (azotaemia, ↑ liver enzymes, hypercalcaemia). <strong>Hyperglobulinaemia</strong> is key — moderate–severe with ehrlichiosis, leishmaniosis, myeloma → follow with protein electrophoresis (mono- vs polyclonal). Rarely <em>cryoglobulinaemia</em>.<br>
-    <strong>Urinalysis:</strong> underlying renal disease + haematuria (wider mucosal haemorrhage).<br>
-    <strong>Blood pressure (ideally Doppler):</strong> hypertension exacerbates bleeding — measure especially with retinal haemorrhage or neuro signs.`,
+        kind: 'gridTable',
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Test', { text: 'Interpretation', tone: 'teal' }],
+        rows: [
+          ['<strong>Platelet count</strong>', { text: 'Clinical bleeding usually needs <strong>severe</strong> thrombocytopenia (&lt;30–50 ×10⁹/L). Confirm on a fresh smear — manual estimate = mean platelets/100× field × 15 ×10⁹/L. Check the feathered edge for clumping. <strong>Platelet count does NOT reliably separate local from systemic disease</strong>', tone: 'teal' }],
+          ['<strong>Anaemia</strong>', { text: 'Blood loss is expected to be <strong>regenerative</strong> (reticulocytosis · polychromasia) — but peracute loss may be pre-regenerative', tone: 'teal' }],
+          ['<strong>Serum chemistry</strong>', { text: 'Azotaemia · ↑ liver enzymes · hypercalcaemia. <strong>Hyperglobulinaemia</strong> is key — moderate–severe with ehrlichiosis · leishmaniosis · myeloma → follow with protein electrophoresis (mono- vs polyclonal). Rarely <em>cryoglobulinaemia</em>', tone: 'teal' }],
+          ['<strong>Urinalysis</strong>', { text: 'Underlying renal disease + haematuria (wider mucosal haemorrhage)', tone: 'teal' }],
+          ['<strong>Blood pressure</strong> (ideally Doppler)', { text: 'Hypertension exacerbates bleeding — measure especially with retinal haemorrhage or neuro signs', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: 'STEP 3a — IF LOCAL DISEASE SUSPECTED → IMAGE' },
+
+      ...stepTable(3, 'IF LOCAL DISEASE SUSPECTED → IMAGE', {
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Modality', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>CT — the modality of choice</strong>', { text: 'Cross-sectional · fine bony detail · faster than skull radiographs. Image <em>before</em> rhinoscopy / biopsy — blood obscures the scan', tone: 'teal' }],
+          ['<strong>Rhinoscopy</strong>', { text: 'Complementary — direct mucosal assessment + biopsy, but cannot assess bony involvement', tone: 'teal' }],
+          ['<strong>Radiography</strong>', { text: 'Limited by superimposition — largely superseded by CT', tone: 'teal' }],
+          ['<strong>MRI</strong>', { text: 'Superior soft-tissue / intracranial-extension detail', tone: 'teal' }],
+          [{ text: '⚠️ <strong>Imaging cannot distinguish tumour from benign disease</strong>', tone: 'danger' }, { text: 'Radiopacity, bony lysis and frontal-sinus involvement occur with <strong>both</strong> malignant and benign disease (fungal · FB · lymphoplasmacytic) — <strong>biopsy / histopathology is required</strong>', tone: 'danger' }],
+          ['<strong>Fungal + parasite testing</strong>', { text: 'Cytology · fungal plaques on rhinoscopy · serology / PCR, as indicated', tone: 'teal' }],
+        ],
+      }, '📊'),
+
+      { kind: 'step', text: '🩸 STEP 3b — IF SYSTEMIC DISEASE SUSPECTED → COAGULATION TIERS', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong>CT is the imaging modality of choice</strong> — cross-sectional, fine bony detail, faster than skull radiographs; image <em>before</em> rhinoscopy/biopsy (blood obscures the scan).<br>
-    <strong>Rhinoscopy</strong> is complementary — direct mucosal assessment + biopsy, but cannot assess bony involvement.<br>
-    <strong>Radiography</strong> — limited by superimposition; largely superseded by CT. <strong>MRI</strong> — superior soft-tissue / intracranial-extension detail.<br>
-    ⚠️ Radiopacity, bony lysis and frontal-sinus involvement occur with BOTH malignant and benign disease (fungal, FB, lymphoplasmacytic) — imaging <strong>cannot</strong> distinguish them; <strong>biopsy / histopathology is required</strong>.<br>
-    <strong>Fungal testing</strong> (cytology, fungal plaques on rhinoscopy, serology/PCR) and <strong>parasite testing</strong> as indicated.`,
+        kind: 'gridTable',
+        label: 'Primary haemostasis — epistaxis is classically a mucosal / primary-defect bleed',
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Test', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Platelet count + smear estimate</strong>', { text: 'As above', tone: 'teal' }],
+          ['<strong>Platelet function</strong>', { text: 'BMBT (point-of-care screen; normal dog &lt;3 min) · point-of-care analysers · aggregometry · flow cytometry', tone: 'teal' }],
+          ['<strong>vWF:Ag</strong>', { text: 'If normal platelet count + mucosal bleeding, especially in predisposed breeds — &gt;70% normal · &lt;50% at risk · &lt;25% severely affected', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: 'STEP 3b — IF SYSTEMIC DISEASE SUSPECTED → COAGULATION TIERS' },
       {
-        kind: 'check',
-        html: `<strong>Primary haemostasis</strong> (epistaxis is classically a mucosal/primary-defect bleed):
-    <div style="margin-left:8px;">
-      • Platelet count + smear estimate (above)<br>
-      • Platelet function — BMBT (point-of-care screen; normal dog &lt;3 min), point-of-care analysers, aggregometry, flow cytometry<br>
-      • <strong>vWF:Ag</strong> if normal platelet count + mucosal bleeding, esp. predisposed breeds (&gt;70% normal; &lt;50% at risk; &lt;25% severely affected)
-    </div>
-    <strong>Secondary haemostasis — PT / aPTT:</strong>
-    <div style="margin-left:8px;">
-      • Both prolonged → common pathway, vitamin K antagonism, liver disease, DIC<br>
-      • aPTT only → haemophilia A (VIII), B (IX), C (XI), contact factors<br>
-      • PT only → factor VII deficiency or <em>early</em> vitamin K antagonism (shortest half-life)<br>
-      • PT/aPTT are normal in primary haemostatic disorders (and were normal in all 35 dogs in one epistaxis series)
-    </div>
-    <strong>Tertiary haemostasis (fibrinolysis):</strong> D-dimers / FDPs (sensitive, not specific) and <strong>viscoelastic testing (TEG/ROTEM)</strong> for hyperfibrinolysis (DIC, hepatic failure, <em>Angiostrongylus</em>, greyhound post-op bleeding).<br>
-    <strong>Infectious / vector-borne testing</strong> (Ehrlichia, Anaplasma, Babesia, Leishmania, RMSF) per geography.`,
+        kind: 'gridTable',
+        label: 'Secondary haemostasis — PT / aPTT',
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Pattern', { text: 'Means', tone: 'teal' }],
+        rows: [
+          ['<strong>Both prolonged</strong>', { text: 'Common pathway · vitamin K antagonism · liver disease · DIC', tone: 'teal' }],
+          ['<strong>aPTT only</strong>', { text: 'Haemophilia A (VIII) · B (IX) · C (XI) · contact factors', tone: 'teal' }],
+          ['<strong>PT only</strong>', { text: 'Factor VII deficiency or <em>early</em> vitamin K antagonism (shortest half-life)', tone: 'teal' }],
+          ['<strong>Both normal</strong>', { text: 'PT/aPTT are normal in primary haemostatic disorders — and were normal in all 35 dogs in one epistaxis series', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: 'STEP 4 — TREATMENT POINTERS' },
       {
-        kind: 'check',
-        html: `<strong>Emergent local control (stepwise, least → most invasive):</strong> firm compression of the soft nose 5–15 min (use a timer); topical vasoconstrictor — dilute epinephrine 1:10,000 or phenylephrine 1 mg/mL on packing (caution: systemic absorption; avoid in cardiac/hypertensive patients); ice pack on the nasal bridge / chilled-saline flush (anaesthetised, packed); silver-nitrate cautery or electrocautery under visualisation; nasal packing (resorbable e.g. Surgicel/Gelfoam if a bleeding disorder, or non-resorbable); topical/oral <strong>antifibrinolytics</strong> (tranexamic acid, aminocaproic acid); ± Yunnan Baiyao (topical evidence stronger than oral).<br>
-    <strong>Refractory:</strong> sphenopalatine artery ligation, endovascular maxillary-artery embolisation, Foley-balloon tamponade, or (last resort) carotid ligation — refer.<br>
-    <strong>Targeted by cause:</strong> radiation for nasal tumours; topical clotrimazole ± sinus trephination for aspergillosis; dental extraction / oronasal-fistula repair for periapical disease; endoscopic FB retrieval; maxillofacial repair for trauma; plasmapheresis for hyperviscosity.<br>
-    <strong>Systemic disease:</strong> immunosuppression for IMTP; Vitamin K1 ± plasma for rodenticide; antimicrobials for vector-borne disease; antihypertensives for hypertension; discontinue NSAIDs / clopidogrel / rivaroxaban.`,
+        kind: 'gridTable',
+        label: 'Tertiary haemostasis & infectious testing',
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Test', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>D-dimers / FDPs</strong>', { text: 'Sensitive, not specific', tone: 'teal' }],
+          ['<strong>Viscoelastic testing (TEG / ROTEM)</strong>', { text: 'Hyperfibrinolysis — DIC · hepatic failure · <em>Angiostrongylus</em> · greyhound post-op bleeding', tone: 'teal' }],
+          ['<strong>Infectious / vector-borne testing</strong>', { text: 'Ehrlichia · Anaplasma · Babesia · Leishmania · RMSF, per geography', tone: 'teal' }],
+        ],
+      },
+
+      { kind: 'step', text: '💉 STEP 4 — TREATMENT POINTERS', noArrowAfter: true },
+      {
+        kind: 'gridTable',
+        label: 'Emergent local control — stepwise, least → most invasive',
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Step', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          [`${numBadge(1)}<strong>Compression</strong>`, { text: 'Firm compression of the soft nose for 5–15 min — use a timer', tone: 'teal' }],
+          [`${numBadge(2)}<strong>Topical vasoconstrictor</strong>`, { text: 'Dilute epinephrine 1:10,000 or phenylephrine 1 mg/mL on packing — <strong>caution: systemic absorption; avoid in cardiac / hypertensive patients</strong>', tone: 'danger' }],
+          [`${numBadge(3)}<strong>Cooling</strong>`, { text: 'Ice pack on the nasal bridge · chilled-saline flush (anaesthetised, packed)', tone: 'teal' }],
+          [`${numBadge(4)}<strong>Cautery</strong>`, { text: 'Silver-nitrate or electrocautery under visualisation', tone: 'teal' }],
+          [`${numBadge(5)}<strong>Nasal packing</strong>`, { text: 'Resorbable (Surgicel / Gelfoam) if a bleeding disorder, or non-resorbable', tone: 'teal' }],
+          [`${numBadge(6)}<strong>Antifibrinolytics</strong>`, { text: 'Topical or oral tranexamic acid · aminocaproic acid ± Yunnan Baiyao (topical evidence stronger than oral)', tone: 'teal' }],
+          [`${numBadge(7)}<strong>Refractory</strong>`, { text: 'Sphenopalatine artery ligation · endovascular maxillary-artery embolisation · Foley-balloon tamponade · (last resort) carotid ligation — <strong>refer</strong>', tone: 'danger' }],
+        ],
+      },
+      {
+        kind: 'gridTable',
+        label: 'Targeted by cause',
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Cause', { text: 'Treatment', tone: 'teal' }],
+        rows: [
+          ['<strong>Nasal tumour</strong>', { text: 'Radiation', tone: 'teal' }],
+          ['<strong>Aspergillosis</strong>', { text: 'Topical clotrimazole ± sinus trephination', tone: 'teal' }],
+          ['<strong>Periapical disease</strong>', { text: 'Dental extraction / oronasal-fistula repair', tone: 'teal' }],
+          ['<strong>Foreign body</strong>', { text: 'Endoscopic retrieval', tone: 'teal' }],
+          ['<strong>Trauma</strong>', { text: 'Maxillofacial repair', tone: 'teal' }],
+          ['<strong>Hyperviscosity</strong>', { text: 'Plasmapheresis', tone: 'teal' }],
+          ['<strong>IMTP</strong>', { text: 'Immunosuppression', tone: 'teal' }],
+          ['<strong>Rodenticide</strong>', { text: 'Vitamin K1 ± plasma', tone: 'teal' }],
+          ['<strong>Vector-borne disease</strong>', { text: 'Antimicrobials', tone: 'teal' }],
+          ['<strong>Hypertension</strong>', { text: 'Antihypertensives', tone: 'teal' }],
+          ['<strong>Drug-induced</strong>', { text: 'Discontinue NSAIDs / clopidogrel / rivaroxaban', tone: 'teal' }],
+        ],
       },
     ],
     after: [
