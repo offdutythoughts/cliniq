@@ -66,6 +66,45 @@ and a frontend that cannot ship is worse than a backend you have to remember.
 the frontend simply keeps talking to whatever `convex/` code was last pushed by
 hand.
 
+### The preview backend
+
+Vercel Preview has its own Convex deployment, `valuable-ostrich-22`, created
+2026-09-11. It is a third deployment, deployed by hand like production:
+
+```bash
+npx convex deploy --env-file .env.staging
+```
+
+`.env.staging` holds that deployment's `CONVEX_DEPLOY_KEY` and is gitignored by
+`.env*`. Without `--env-file`, `npx convex deploy` goes to production.
+
+`npm run check:convex` only checks production, so this one drifts unwatched.
+
+It exists because Preview used to point at `original-raven-198`, the personal dev
+deployment, whose `SITE_URL` is `http://localhost:3000`. Every account there
+predates email verification and so has no `emailVerificationTime`, which makes
+`convex/auth.ts` refuse a session on every sign-in and email a link instead —
+and that link pointed at localhost, unreachable from a `*.vercel.app` host. The
+passkey fallback was dead for the same reason: `relyingParty()` in
+`convex/passkeys.ts` derives `rpID` from `SITE_URL`, giving `localhost`. Sign-in
+on Preview was impossible by either route, with the correct password.
+
+So `SITE_URL` on the preview backend is the **branch alias**, not a deployment
+URL:
+
+```
+https://cliniq-git-main-offdutythoughts-projects.vercel.app
+```
+
+Sign in there, never at a `cliniq-<hash>` URL. `vercel.app` is on the Public
+Suffix List, so `rpID` has to be the full host — a per-deployment hash URL can
+never carry a passkey, and its origin will not match the one this backend
+expects. Previews built from a branch other than `main` get a different alias and
+are not covered.
+
+Its database is separate and starts empty: production and dev accounts do not
+exist there. Sign up once on the alias.
+
 Confirm a promote landed:
 
 ```bash
@@ -99,6 +138,7 @@ There is one project, `cliniq`:
 | | deployment |
 |---|---|
 | production | `determined-hawk-630` — what `vetic.app` talks to |
+| preview | `valuable-ostrich-22` (reference `staging`) — what the `main` preview alias talks to |
 | dev | `original-raven-198` — set in `.env.local` |
 
 There has been a second. Convex appends a suffix when a project name is already

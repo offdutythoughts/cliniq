@@ -278,7 +278,7 @@ html[data-theme="dark"]{
 .v-panel-mist{background:var(--v-mist);}
 .v-hairline{height:1px;background:var(--v-line);border:0;}
 
-/* Tap ripple in the hero's replayed drill-down (components/site/HeroSequence).
+/* Tap ripple in the replayed drill-downs on the homepage (components/site/AppSequence).
    The one piece of motion on the page, so it stays short and single-shot. */
 .v-tap-ripple{animation:vTapRipple .6s cubic-bezier(.22,.61,.36,1) forwards;}
 @keyframes vTapRipple{
