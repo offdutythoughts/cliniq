@@ -9,7 +9,7 @@
 import { Fragment } from 'react'
 import type { TableCell, TableRow } from '../../lib/signs/flowTypes'
 import { HUE } from '../../lib/signs/tone'
-import { styleStringToObject as s, SCROLL_X } from './style'
+import { styleStringToObject as s } from './style'
 import { type Nav, Raw } from './flowHelpers'
 
 const ST_SECTION_LABEL = s('grid-column:1/-1;padding:4px 0 2px;font-size:8px;font-weight:700;color:var(--gray2);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(var(--slate-muted),.08);margin-top:2px;')
@@ -61,5 +61,5 @@ export function GridTable({ cols, headers, rows, dividers, stickyFirstCol, scrol
       )}
     </div>
   )
-  return scroll ? <div style={s(SCROLL_X)}>{grid}</div> : grid
+  return scroll ? <div className="scroll-x">{grid}</div> : grid
 }

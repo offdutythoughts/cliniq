@@ -30,6 +30,10 @@
   --border: rgba(0,0,0,0.1);
   --border2: rgba(0,0,0,0.15);
   --card: rgba(0,0,0,0.03);
+  /* Opaque twin of --card: the same tint already composited over --navy.
+     Needed where a background must be painted rather than layered — the
+     .scroll-x edge cover. Keep in step with --card and --navy above. */
+  --card-solid: #EAEEF2;
   --card2: rgba(0,0,0,0.06);
   --em: #DC2626;
   --em-bg: rgba(var(--tone-danger),0.1);
@@ -145,7 +149,7 @@ html[data-theme="dark"]{
   --navy:#0A1628;--navy2:#111f35;--navy3:#1a2d48;
   --white:#F8FAFC;--gray:#94A3B8;--gray2:#64748B;--teal-light:#14B8A6;
   --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
-  --card:rgba(255,255,255,0.05);--card2:rgba(255,255,255,0.09);
+  --card:rgba(255,255,255,0.05);--card2:rgba(255,255,255,0.09);--card-solid:#162233;
   --em-bg:rgba(var(--tone-danger),0.12);--hi-bg:rgba(var(--amber-rgb),0.12);
   --mo-bg:rgba(var(--tone-teal),0.12);--lo-bg:rgba(var(--tone-info),0.1);
   --amber-text: #FDE68A;
@@ -743,6 +747,11 @@ details.ref-fold[open] > summary::after{content:" ▾";}
    the reader swipes. The page itself never scrolls sideways; the overflow stops
    at this box.
 
+   `overscroll-behavior-x:contain` keeps a swipe that runs off the end of a wide
+   table inside the table — without it the gesture chains to the page, and on
+   iOS Safari to the browser's back-swipe, which is what made these sections
+   awkward to read on a phone.
+
    The edge shading is the point, not decoration. The bug this whole area came
    from was a row that overflowed silently: on a phone the scrollbar is an
    overlay that fades out, so a reader had no way to know a second arm of the
@@ -764,6 +773,9 @@ details.ref-fold[open] > summary::after{content:" ▾";}
   background-size:26px 100%,26px 100%,11px 100%,11px 100%;
   background-attachment:local,local,scroll,scroll;
 }
+/* Same scroller, but sitting on a --card panel: the cover has to match the
+   panel, not the page, or the edges read as a pale 26px stripe. */
+.scroll-x.on-card{--scroll-x-bg:var(--card-solid);}
 
 /* ── Authored `html:` blocks ──
    The wrapper both renderers put around every `html:` block. These are legacy
