@@ -140,6 +140,14 @@ export function applySegments(root: HTMLElement, segments: Segment[]): void {
   }
 }
 
+/** Viewport box of a drawn mark, found by the start offset the wrapper
+ *  records. Used to keep a toolbar opened by tapping a mark anchored to that
+ *  mark while the page moves under it. */
+export function markRect(root: HTMLElement, start: number): DOMRect | null {
+  const el = root.querySelector(`[${MARK_START_ATTR}="${start}"]`)
+  return el ? el.getBoundingClientRect() : null
+}
+
 /** Drop the reader's selection once a mark has been drawn from it, so the
  *  toolbar closes and the blue selection tint stops fighting the highlight. */
 export function collapseSelection(): void {

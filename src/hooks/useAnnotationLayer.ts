@@ -6,6 +6,7 @@ import {
   collapseSelection,
   MARK_ATTR,
   markOffsetFromEvent,
+  markRect,
   pageText,
   selectionRange,
 } from '../lib/annotations/dom'
@@ -42,6 +43,11 @@ export interface AnnotationUi {
 }
 
 const EMPTY_UI: AnnotationUi = { target: null, rect: null, active: [], hasMarks: false, source: null }
+
+// How long an empty selection must persist before the toolbar closes. Long
+// enough to ride out iOS's mid-gesture reports, short enough that tapping
+// elsewhere to dismiss still feels immediate.
+const SELECTION_GRACE_MS = 250
 
 const signature = (marks: Mark[]) =>
   marks.map(m => `${m.id}:${m.kind}:${m.colour}:${m.start}:${m.end}`).sort().join('|')
@@ -211,6 +217,7 @@ export function useAnnotationLayer(
     const root = screenRef.current
     if (!root) return
     let frame = 0
+    let closing: ReturnType<typeof setTimeout> | undefined
     const check = () => {
       cancelAnimationFrame(frame)
       // One frame late: on iOS the range is not final until the touch settles.
@@ -218,16 +225,27 @@ export function useAnnotationLayer(
         const range = selectionRange(root)
         if (!range) {
           if (interacting.current) return // a tap on the toolbar itself
-          // Only a selection toolbar closes here — see AnnotationUi.source.
-          setUi(prev => (prev.source === 'selection' ? EMPTY_UI : prev))
+          // Closing is deferred, opening is not. iOS reports the selection as
+          // momentarily empty part-way through a long-press and while the
+          // handles are being dragged; closing on the first empty report made
+          // the toolbar flicker out mid-gesture. A selection that comes back
+          // within the grace period cancels the close below.
+          clearTimeout(closing)
+          closing = setTimeout(() => {
+            if (selectionRange(root)) return
+            // Only a selection toolbar closes here — see AnnotationUi.source.
+            setUi(prev => (prev.source === 'selection' ? EMPTY_UI : prev))
+          }, SELECTION_GRACE_MS)
           return
         }
+        clearTimeout(closing)
         showFor(range.start, range.end, range.rect, 'selection')
       })
     }
     document.addEventListener('selectionchange', check)
     return () => {
       document.removeEventListener('selectionchange', check)
+      clearTimeout(closing)
       cancelAnimationFrame(frame)
     }
   }, [screenRef, showFor])
@@ -254,17 +272,47 @@ export function useAnnotationLayer(
     return () => root.removeEventListener('click', onClick)
   }, [screenRef, showFor])
 
-  // Scrolling or resizing moves the text out from under a fixed toolbar.
+  // Scrolling or resizing moves the text out from under a fixed toolbar, so
+  // the toolbar follows it.
+  //
+  // It used to close instead, which made the feature unusable on iOS: showing
+  // the selection callout changes the visual viewport and nudges the page, so
+  // `resize` (and often `scroll`) fired the moment a selection was made. The
+  // toolbar appeared and vanished in the same breath. Following the text is
+  // also just better behaviour — a toolbar that evaporates when the page moves
+  // a pixel is no use on a phone.
   useEffect(() => {
     if (!ui.target) return
     const root = screenRef.current
-    window.addEventListener('resize', hide)
-    root?.addEventListener('scroll', hide, { passive: true })
-    return () => {
-      window.removeEventListener('resize', hide)
-      root?.removeEventListener('scroll', hide)
+    let frame = 0
+    const follow = () => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        setUi(prev => {
+          if (!prev.target || !root) return prev
+          const rect =
+            prev.source === 'selection'
+              ? (selectionRange(root)?.rect ?? null)
+              : markRect(root, prev.target.start)
+          // Nothing to measure (the mark scrolled out of the rendered range,
+          // or the selection is mid-gesture): hold the last known position
+          // rather than snapping the toolbar away.
+          if (!rect) return prev
+          // Genuinely scrolled past: the text is no longer on screen.
+          const vh = window.innerHeight
+          if (rect.bottom < 0 || rect.top > vh) return EMPTY_UI
+          return { ...prev, rect }
+        })
+      })
     }
-  }, [ui.target, screenRef, hide])
+    window.addEventListener('resize', follow)
+    root?.addEventListener('scroll', follow, { passive: true })
+    return () => {
+      window.removeEventListener('resize', follow)
+      root?.removeEventListener('scroll', follow)
+      cancelAnimationFrame(frame)
+    }
+  }, [ui.target, screenRef])
 
   /** Apply one kind in one colour over the toolbar's target range. Pressing
    *  the colour already there removes the mark; pressing another recolours it
