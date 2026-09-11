@@ -82,22 +82,31 @@ const STEPS = [
   { n: '03', title: 'Act on the detail', body: 'Open the disease page or protocol for the workup, dose and monitoring plan.' },
 ]
 
-// The marketing homepage is served everywhere EXCEPT the production deploy,
-// where `/` redirects to the clinical app at /app (the proxy gates /app behind
-// sign-in). Production used to get this by carrying its own one-file version of
-// this page — see b00defb — which meant every promotion that touched the
-// homepage landed as a merge conflict on `production`, and resolving one the
-// wrong way would silently put the marketing page back in front of customers.
-// e675b78 was the first such conflict. The gate below is that divergence folded
-// into main so there is nothing left to re-resolve.
+// The marketing homepage is OPT-IN. `/` redirects to the clinical app at /app
+// (which the proxy gates behind sign-in) unless SERVE_MARKETING_HOME is exactly
+// 'true'. Anything else — unset, empty, misspelled, or a deploy whose env vars
+// failed to apply — falls through to the redirect.
 //
-// VERCEL_ENV is set by Vercel on every deployment ('production' | 'preview' |
-// 'development') and is absent outside it, so preview builds and `next dev`
-// keep rendering the marketing page exactly as before. It is a server-side
-// variable — do not swap it for the NEXT_PUBLIC_ form, which would inline the
-// value into the client bundle at build time.
+// The default is deny on purpose. The two failure modes are not symmetric: a
+// preview that redirects is a nuisance someone notices in a minute, while a
+// production deploy that serves the marketing page puts the wrong thing in
+// front of customers and may sit there unnoticed. An earlier version keyed on
+// `VERCEL_ENV === 'production'`, which fails the wrong way — if that variable
+// were ever absent the marketing page would be served.
+//
+// Production therefore needs no configuration at all; it is the default.
+// SERVE_MARKETING_HOME=true must be set wherever the marketing page IS wanted:
+// the Preview environment in Vercel, and .env.local for `next dev`.
+//
+// Server-side variable — do not rename it to the NEXT_PUBLIC_ form, which would
+// inline the value into the client bundle and leak the switch to the browser.
+//
+// This replaces b00defb, where production carried its own copy of this file.
+// That made every promotion touching the homepage a merge conflict (e675b78 was
+// the first) with a wrong resolution putting marketing back in front of
+// customers. The switch now lives in one file on main.
 export default function HomePage() {
-  if (process.env.VERCEL_ENV === 'production') redirect('/app')
+  if (process.env.SERVE_MARKETING_HOME !== 'true') redirect('/app')
 
   return (
     <div className="site-page">
