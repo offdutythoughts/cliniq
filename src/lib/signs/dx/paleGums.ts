@@ -3,6 +3,7 @@
 // in ../cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
+import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const paleGumsDx: DxApproach = {
   title: 'Pale MM',
@@ -13,25 +14,42 @@ export const paleGumsDx: DxApproach = {
     blocks: [
       { kind: 'branch', text: 'ANAEMIA vs POOR PERFUSION — AND IS IT ACUTE?' },
       {
-        kind: 'check',
-        html: `Pale mucous membranes = either <strong>anaemia</strong> (too few red cells) or <strong>poor perfusion</strong> (shock/vasoconstriction). The history starts to separate them and flags emergencies (acute haemorrhage, haemolytic crisis, shock).`,
+        kind: 'gridTable',
+        cols: '0.7fr 1.4fr',
+        dividers: true,
+        headers: ['Pale MM means one of two things', { text: 'Mechanism', tone: 'teal' }],
+        rows: [
+          ['<strong>Anaemia</strong>', { text: 'Too few red cells', tone: 'teal' }],
+          ['<strong>Poor perfusion</strong>', { text: 'Shock / vasoconstriction', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: '📋 ONSET, BLEEDING & PIGMENTURIA' },
-      {
-        kind: 'check',
-        html: `<strong>Acute collapse</strong> → haemorrhage (trauma, splenic mass rupture), haemolytic crisis, or shock.<br>
-      <strong>Evidence of blood loss</strong>: melena, haematochezia, haematuria, epistaxis, trauma, recent surgery.<br>
-      <strong>Red–brown urine</strong> (haemoglobinuria) + pallor → intravascular haemolysis.<br>
-      <strong>Chronic, gradual</strong> → CKD (renal anaemia), chronic disease, marrow disease, occult bleeding.`,
-      },
-      { kind: 'step', text: '💊 TOXIN / DRUG / INFECTIOUS / SIGNALMENT' },
-      {
-        kind: 'check',
-        html: `<strong>Oxidant access</strong>: onion/garlic (Allium), zinc (coins/hardware), paracetamol (cat) → Heinz-body haemolysis.<br>
-      <strong>Rodenticide access</strong> → haemorrhage. <strong>NSAIDs/steroids</strong> → GI ulceration/bleeding.<br>
-      <strong>Tick exposure / travel</strong> → Babesia, Mycoplasma, Cytauxzoon, Ehrlichia.<br>
-      <strong>FeLV/FIV status (cat)</strong> → marrow suppression. Young, acute → consider IMHA (predisposed breeds: Cocker, Springer).`,
-      },
+      { kind: 'note', html: `The history starts to separate them and flags emergencies — acute haemorrhage, haemolytic crisis, shock.` },
+
+      ...stepTable(1, 'ONSET, BLEEDING & PIGMENTURIA', {
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['History', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          [`${numBadge(1)}<strong>Acute collapse</strong>`, { text: 'Haemorrhage (trauma · splenic mass rupture) · haemolytic crisis · shock', tone: 'teal' }],
+          [`${numBadge(2)}<strong>Evidence of blood loss</strong>`, { text: 'Melena · haematochezia · haematuria · epistaxis · trauma · recent surgery', tone: 'teal' }],
+          [`${numBadge(3)}<strong>Red–brown urine</strong> (haemoglobinuria) + pallor`, { text: '<strong>Intravascular haemolysis</strong>', tone: 'teal' }],
+          [`${numBadge(4)}<strong>Chronic, gradual</strong>`, { text: 'CKD (renal anaemia) · chronic disease · marrow disease · occult bleeding', tone: 'teal' }],
+        ],
+      }, '📋'),
+
+      ...stepTable(2, 'TOXIN / DRUG / INFECTIOUS / SIGNALMENT', {
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Exposure / signalment', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Oxidant access</strong><br>onion/garlic (Allium) · zinc (coins, hardware) · paracetamol (🐱)', { text: 'Heinz-body haemolysis', tone: 'teal' }],
+          ['<strong>Rodenticide access</strong>', { text: 'Haemorrhage', tone: 'teal' }],
+          ['<strong>NSAIDs / steroids</strong>', { text: 'GI ulceration and bleeding', tone: 'teal' }],
+          ['<strong>Tick exposure / travel</strong>', { text: 'Babesia · Mycoplasma · Cytauxzoon · Ehrlichia', tone: 'teal' }],
+          ['<strong>FeLV / FIV status (🐱)</strong>', { text: 'Marrow suppression', tone: 'teal' }],
+          ['<strong>Young, acute</strong>', { text: '<strong>IMHA</strong> — predisposed breeds: Cocker, Springer', tone: 'teal' }],
+        ],
+      }, '💊'),
     ],
     after: [
       {
@@ -46,26 +64,41 @@ export const paleGumsDx: DxApproach = {
   exam: {
     title: 'Exam: Pale MM',
     blocks: [
-      { kind: 'step', text: '🩺 STEP 1 — PERFUSION PARAMETERS' },
-      {
-        kind: 'check',
-        html: `Assess <strong>MM colour, CRT, heart rate, pulse quality, extremity temperature, mentation</strong>.<br>
-      <strong>Anaemia</strong>: pale but with a normal/bounding pulse and normal CRT (unless concurrent shock).<br>
-      <strong>Hypoperfusion/shock</strong>: pale + prolonged CRT + weak pulses + tachycardia (dog) — or <strong>bradycardia + hypothermia in a cat</strong> (decompensated).`,
-      },
-      { kind: 'step', text: '🔍 STEP 2 — SOURCE-HUNTING EXAM' },
-      {
-        kind: 'check',
-        html: `<strong>Icterus</strong> (with pallor) → haemolysis. <strong>Petechiae/ecchymoses</strong> → thrombocytopenia/coagulopathy.<br>
-      <strong>Abdominal distension / fluid wave</strong> → haemoabdomen (splenic mass). <strong>Rectal exam</strong> for melena.<br>
-      <strong>Muffled heart + jugular distension</strong> → pericardial effusion. <strong>Murmur/arrhythmia</strong> → cardiogenic.<br>
-      A haemic murmur may appear with severe anaemia.`,
-      },
-      { kind: 'step', text: '⚡ STEP 3 — DECIDE THE PATH' },
-      {
-        kind: 'check',
-        html: `Pale + signs of blood loss/icterus/petechiae → anaemia path (PCV/TS, smear, reticulocytes). Pale + shock parameters with normal PCV → perfusion path (lactate, BP, FAST, ECG). The Diagnostics tab branches on PCV.`,
-      },
+      ...stepTable(1, 'PERFUSION PARAMETERS', {
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Assess', { text: 'Pattern', tone: 'teal' }],
+        rows: [
+          ['<strong>Parameters to record</strong>', { text: 'MM colour · CRT · heart rate · pulse quality · extremity temperature · mentation', tone: 'teal' }],
+          ['<strong>Anaemia</strong>', { text: 'Pale, but normal / bounding pulse and normal CRT (unless concurrent shock)', tone: 'teal' }],
+          ['<strong>Hypoperfusion / shock</strong>', { text: 'Pale + prolonged CRT + weak pulses + tachycardia (🐕) — or <strong>bradycardia + hypothermia in a cat</strong> (decompensated)', tone: 'danger' }],
+        ],
+      }, '🩺'),
+
+      ...stepTable(2, 'SOURCE-HUNTING EXAM', {
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Icterus</strong> (with pallor)', { text: 'Haemolysis', tone: 'teal' }],
+          ['<strong>Petechiae / ecchymoses</strong>', { text: 'Thrombocytopenia · coagulopathy', tone: 'teal' }],
+          ['<strong>Abdominal distension / fluid wave</strong>', { text: 'Haemoabdomen (splenic mass)', tone: 'teal' }],
+          ['<strong>Rectal exam</strong>', { text: 'Melena', tone: 'teal' }],
+          ['<strong>Muffled heart + jugular distension</strong>', { text: 'Pericardial effusion', tone: 'teal' }],
+          ['<strong>Murmur / arrhythmia</strong>', { text: 'Cardiogenic — note a <em>haemic</em> murmur may appear with severe anaemia', tone: 'teal' }],
+        ],
+      }, '🔍'),
+
+      ...stepTable(3, 'DECIDE THE PATH', {
+        cols: '0.9fr 1.25fr',
+        dividers: true,
+        headers: ['If', { text: 'Then', tone: 'teal' }],
+        rows: [
+          ['Pale + blood loss / icterus / petechiae', { text: '<strong>Anaemia path</strong> — PCV/TS · smear · reticulocytes', tone: 'teal' }],
+          ['Pale + shock parameters, PCV normal', { text: '<strong>Perfusion path</strong> — lactate · BP · FAST · ECG', tone: 'teal' }],
+        ],
+      }, '⚡'),
+      { kind: 'note', html: `The Diagnostics tab branches on PCV.` },
     ],
     after: [{ kind: 'disclaimer' }],
   },

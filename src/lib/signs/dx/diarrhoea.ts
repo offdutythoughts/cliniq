@@ -4,6 +4,7 @@
 // Non-standard 4-tab nav (adds 'sec').
 
 import type { DxApproach } from '../dxTypes'
+import { stepTable } from './shared/dxHelpers'
 
 export const diarrhoeaDx: DxApproach = {
   title: 'Diarrhoea',
@@ -42,30 +43,38 @@ export const diarrhoeaDx: DxApproach = {
             },
           ],
         },
-        { kind: 'step', text: '📋 KEY HISTORY' },
-        {
-          kind: 'check',
-          html: `<strong>Duration + onset:</strong> Acute (&lt;3 wk) or chronic (&gt;3 wk)?<br>
-    <strong>Diet:</strong> Recent change? Raw diet? Novel exposures? Treats, chews, table scraps?<br>
-    <strong>Parasites:</strong> Worming history? Last treatment? Which product?<br>
-    <strong>Vaccination:</strong> Up to date? (parvo, distemper in young unvaccinated animals)<br>
-    <strong>Medications:</strong> NSAIDs, antibiotics, corticosteroids, chemotherapy?<br>
-    <strong>Environment:</strong> Outdoor access? Boarding? Shelter? Multiple pets? Travel?<br>
-    <strong>Water source:</strong> Ponds, creeks, standing water? (Giardia, Heterobilharzia)<br>
-    <strong>Weight change:</strong> Progressive loss? Polyphagia despite weight loss? (EPI)`,
-        },
-        { kind: 'step', text: '🐾 SIGNALMENT + BREED CLUES' },
-        {
-          kind: 'check',
-          html: `<strong>Young + unvaccinated:</strong> Parvovirus, parasites<br>
-    <strong>Young + polyphagia + weight loss:</strong> EPI (GSD, CKCS, Chow Chow, Rough Collie)<br>
-    <strong>Middle-aged + chronic ± vomiting:</strong> IBD / small cell lymphoma (cats)<br>
-    <strong>Yorkshire Terrier / Wheaten Terrier:</strong> Lymphangiectasia + PLE<br>
-    <strong>Boxer / French Bulldog:</strong> Granulomatous colitis (AIEC)<br>
-    <strong>Cat + chronic diarrhoea + weight loss:</strong> Hyperthyroidism · Small cell lymphoma · IBD<br>
-    <strong>Dog + waxing/waning GI signs:</strong> Addison's — run <strong>basal cortisol</strong> first to rule out; &lt;55 nmol/L → ACTH stim<br>
-    <strong>Dog + Gulf Coast / tropical:</strong> Heterobilharzia americana`,
-        },
+
+        ...stepTable(1, 'KEY HISTORY', {
+          cols: '0.7fr 1.45fr',
+          dividers: true,
+          headers: ['Ask about', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Duration + onset</strong>', { text: 'Acute (&lt;3 wk) or chronic (&gt;3 wk)?', tone: 'teal' }],
+            ['<strong>Diet</strong>', { text: 'Recent change? Raw diet? Novel exposures? Treats · chews · table scraps?', tone: 'teal' }],
+            ['<strong>Parasites</strong>', { text: 'Worming history? Last treatment? Which product?', tone: 'teal' }],
+            ['<strong>Vaccination</strong>', { text: 'Up to date? Parvo · distemper in young unvaccinated animals', tone: 'teal' }],
+            ['<strong>Medications</strong>', { text: 'NSAIDs · antibiotics · corticosteroids · chemotherapy', tone: 'teal' }],
+            ['<strong>Environment</strong>', { text: 'Outdoor access? Boarding? Shelter? Multiple pets? Travel?', tone: 'teal' }],
+            ['<strong>Water source</strong>', { text: 'Ponds · creeks · standing water — Giardia · Heterobilharzia', tone: 'teal' }],
+            ['<strong>Weight change</strong>', { text: 'Progressive loss? Polyphagia despite weight loss (EPI)?', tone: 'teal' }],
+          ],
+        }, '📋'),
+
+        ...stepTable(2, 'SIGNALMENT + BREED CLUES', {
+          cols: '0.9fr 1.25fr',
+          dividers: true,
+          headers: ['Signalment', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Young + unvaccinated</strong>', { text: 'Parvovirus · parasites', tone: 'teal' }],
+            ['<strong>Young + polyphagia + weight loss</strong>', { text: 'EPI — GSD · CKCS · Chow Chow · Rough Collie', tone: 'teal' }],
+            ['<strong>Middle-aged + chronic ± vomiting</strong>', { text: 'IBD / small cell lymphoma (🐱)', tone: 'teal' }],
+            ['<strong>Yorkshire Terrier / Wheaten Terrier</strong>', { text: 'Lymphangiectasia + PLE', tone: 'teal' }],
+            ['<strong>Boxer / French Bulldog</strong>', { text: 'Granulomatous colitis (AIEC)', tone: 'teal' }],
+            ['<strong>🐱 Cat + chronic diarrhoea + weight loss</strong>', { text: 'Hyperthyroidism · small cell lymphoma · IBD', tone: 'teal' }],
+            ['<strong>🐕 Dog + waxing/waning GI signs</strong>', { text: '<strong>Addison\'s</strong> — run <strong>basal cortisol</strong> first to rule out; &lt;55 nmol/L → ACTH stim', tone: 'danger' }],
+            ['<strong>🐕 Dog + Gulf Coast / tropical</strong>', { text: '<em>Heterobilharzia americana</em>', tone: 'teal' }],
+          ],
+        }, '🐾'),
       ],
       after: [
         {
@@ -81,36 +90,58 @@ export const diarrhoeaDx: DxApproach = {
     exam: {
       title: 'Exam: Diarrhoea',
       blocks: [
-        { kind: 'step', text: '🩺 PHYSICAL EXAMINATION' },
+        { kind: 'step', text: '🩺 PHYSICAL EXAMINATION', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `<strong>BCS / MCS:</strong> Weight loss → chronicity, malabsorption, protein-losing<br>
-    <strong>Coat / skin:</strong> Poor coat quality (EPI, PLE, hypoalbuminaemia); pruritus + otitis (food-responsive)<br>
-    <strong>Mucous membranes:</strong> Pallor (blood loss, anaemia); icterus (hepatic/haemolytic)`,
+          kind: 'gridTable',
+          label: 'General',
+          cols: '0.7fr 1.45fr',
+          dividers: true,
+          headers: ['Assess', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>BCS / MCS</strong>', { text: 'Weight loss → chronicity · malabsorption · protein loss', tone: 'teal' }],
+            ['<strong>Coat / skin</strong>', { text: 'Poor coat quality (EPI · PLE · hypoalbuminaemia) · pruritus + otitis (food-responsive)', tone: 'teal' }],
+            ['<strong>Mucous membranes</strong>', { text: 'Pallor (blood loss · anaemia) · icterus (hepatic / haemolytic)', tone: 'teal' }],
+          ],
         },
         {
-          kind: 'check',
-          html: `<strong>Abdomen:</strong><br>
-    • Thickened intestinal loops (IBD, lymphoma, infiltrative disease)<br>
-    • Palpable mass / intussusception<br>
-    • Pain on palpation (pancreatitis, peritonitis, intussusception)<br>
-    • Fluid wave / tympany (ascites → hypoalbuminaemia, lymphangiectasia, PLE)<br>
-    • Borborygmi / gas (malabsorption, EPI, rapid motility)`,
+          kind: 'gridTable',
+          label: 'Abdomen',
+          cols: '0.7fr 1.45fr',
+          dividers: true,
+          headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Thickened intestinal loops</strong>', { text: 'IBD · lymphoma · infiltrative disease', tone: 'teal' }],
+            ['<strong>Palpable mass / intussusception</strong>', { text: 'Obstructive or neoplastic disease', tone: 'danger' }],
+            ['<strong>Pain on palpation</strong>', { text: 'Pancreatitis · peritonitis · intussusception', tone: 'teal' }],
+            ['<strong>Fluid wave / tympany</strong>', { text: 'Ascites → hypoalbuminaemia · lymphangiectasia · PLE', tone: 'teal' }],
+            ['<strong>Borborygmi / gas</strong>', { text: 'Malabsorption · EPI · rapid motility', tone: 'teal' }],
+          ],
         },
         {
-          kind: 'check',
-          html: `<strong>Digital rectal exam</strong> — ESSENTIAL IN ALL PATIENTS<br>
-    • Mass or stricture in rectum?<br>
-    • Character of faeces: melaena vs haematochezia vs mucus?<br>
-    • Anal tone, perineal exam`,
+          kind: 'gridTable',
+          label: 'Digital rectal exam — ESSENTIAL IN ALL PATIENTS',
+          cols: '0.7fr 1.45fr',
+          dividers: true,
+          headers: ['Assess', { text: 'Looking for', tone: 'teal' }],
+          rows: [
+            ['<strong>Rectal lumen</strong>', { text: 'Mass or stricture', tone: 'danger' }],
+            ['<strong>Faecal character</strong>', { text: 'Melaena vs haematochezia vs mucus', tone: 'teal' }],
+            ['<strong>Anal tone · perineum</strong>', { text: 'Neurological and perineal disease', tone: 'teal' }],
+          ],
         },
         {
-          kind: 'check',
-          html: `<strong>Peripheral lymph nodes:</strong> Generalised lymphadenopathy (lymphoma, fungal, systemic disease)<br>
-    <strong>Thyroid (cat):</strong> Goitre or asymmetric lobe → hyperthyroidism<br>
-    <strong>Cavitary effusions:</strong> Pleural dullness · Pericardial muffling (hypoalbuminaemia, lymphangiectasia)<br>
-    <strong>Oedema:</strong> Peripheral pitting oedema (hypoalbuminaemia, lymphangiectasia)<br>
-    <strong>Eyes / CNS:</strong> Hepatic encephalopathy signs (PSS), uveitis (systemic disease)`,
+          kind: 'gridTable',
+          label: 'Systemic',
+          cols: '0.7fr 1.45fr',
+          dividers: true,
+          headers: ['Assess', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Peripheral lymph nodes</strong>', { text: 'Generalised lymphadenopathy — lymphoma · fungal · systemic disease', tone: 'teal' }],
+            ['<strong>🐱 Thyroid</strong>', { text: 'Goitre or asymmetric lobe → hyperthyroidism', tone: 'teal' }],
+            ['<strong>Cavitary effusions</strong>', { text: 'Pleural dullness · pericardial muffling — hypoalbuminaemia · lymphangiectasia', tone: 'teal' }],
+            ['<strong>Oedema</strong>', { text: 'Peripheral pitting oedema — hypoalbuminaemia · lymphangiectasia', tone: 'teal' }],
+            ['<strong>Eyes / CNS</strong>', { text: 'Hepatic encephalopathy signs (PSS) · uveitis (systemic disease)', tone: 'teal' }],
+          ],
         },
       ],
       after: [
@@ -160,106 +191,162 @@ export const diarrhoeaDx: DxApproach = {
     <div style="font-size:10.5px;color:var(--white);">Mandatory before any further diagnostics in LB disease. Palpate for mass, stricture, polyp, mucosal irregularity, pain. A rectal mass found here changes the entire workup.</div>
   </div>`,
         },
-        { kind: 'step', text: 'STEP 1 — EMPIRIC MEDICAL MANAGEMENT' },
+
+        { kind: 'step', text: '💊 STEP 1 — EMPIRIC MEDICAL MANAGEMENT', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `<span style="font-size:10px;opacity:.8;">Start empiric treatment in all cases while awaiting diagnostics. Many acute diarrhoeas resolve with supportive care alone.</span><br><br>
-    <strong style="color:var(--tone-warning-fg);">Antiparasitic — give in all cases regardless of faecal result:</strong><br>
-    • <strong>Fenbendazole 50 mg/kg PO SID ×5 days</strong> — covers Giardia, roundworms, hookworms, whipworms<br>
-    • Re-dose at 3 and 6 weeks if LB diarrhoea (whipworm ova shed intermittently — flotation often false-negative)<br><br>
-    <strong style="color:var(--tone-warning-fg);">Dietary modification:</strong><br>
-    • <strong>Bland diet</strong> — boiled chicken + rice, or commercial GI diet ×3–5 days (acute); reduces antigenic load and is highly digestible<br>
-    • <strong>Novel protein / hydrolysed diet trial</strong> (4–6 weeks exclusive) — if food-responsive enteropathy suspected after acute phase; no treats, chews, or flavoured medications<br>
-    • <strong>Highly digestible low-fat diet</strong> — reduces osmotic load in malabsorptive/SB diarrhoea<br><br>
-    <strong style="color:var(--tone-warning-fg);">Gut protectants / adsorbents:</strong><br>
-    • <strong>Kaolin-pectin</strong> — coats and soothes mucosa; binds bacterial toxins; safe in all species<br>
-    • <strong>Smectite (diosmectite)</strong> — binds toxins + pathogens; mucosal barrier support<br>
-    • <strong>Sucralfate</strong> 0.5–1g PO TID — if mucosal ulceration suspected (haemorrhagic diarrhoea, known NSAID use)<br><br>
-    <strong style="color:var(--tone-warning-fg);">Probiotics:</strong><br>
-    • <em>Enterococcus faecium</em> SF68 (FortiFlora®) or multi-strain probiotic — supports microbiome recovery; recommended alongside antibiotics if used<br><br>
-    <strong style="color:var(--tone-warning-fg);">Metronidazole:</strong><br>
-    • 10–15 mg/kg PO BID ×5–7 days — anti-anaerobic + anti-Giardia; consider if haemorrhagic, mucosal, or high Giardia suspicion<br>
-    • Avoid routine use in every case — emerging resistance and microbiome disruption concerns<br><br>
-    <strong style="color:var(--tone-warning-fg);">Fluid + electrolyte support:</strong><br>
-    • Oral electrolyte solution if mild–moderate dehydration and not vomiting<br>
-    • IV fluids (Hartmann's / Plasma-Lyte) if moderate–severe dehydration, vomiting, or collapse
-    <div style="margin-top:8px;background:rgba(13,148,136,0.1);border:1px solid rgba(13,148,136,0.3);border-left:3px solid #14B8A6;border-radius:8px;padding:8px 10px;font-size:10.5px;">
-      <span style="font-weight:700;color:var(--tone-teal-fg);">🟢 Large Bowel:</span> <strong>High-fibre supplementation first line</strong> — psyllium husk / wheat bran 1–6 tsp/day OR commercial high-fibre diet for 3–4 weeks. Effective for idiopathic LB diarrhoea and stress colitis. Fenbendazole course ×3 (repeat at 3 and 6 weeks) to cover <em>Trichuris vulpis</em> even if flotation negative. Avoid metronidazole as sole treatment — address fibre and parasites first.
-    </div>`,
+          kind: 'gridTable',
+          cols: '0.75fr 1.4fr',
+          dividers: true,
+          headers: ['Measure', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Antiparasitic</strong> — give in <em>all</em> cases regardless of faecal result', { text: '<strong>Fenbendazole 50 mg/kg PO SID ×5 days</strong> — covers Giardia · roundworms · hookworms · whipworms. Re-dose at 3 and 6 weeks if LB diarrhoea (whipworm ova shed intermittently — flotation often false-negative)', tone: 'warning' }],
+            ['<strong>Bland diet</strong>', { text: 'Boiled chicken + rice, or commercial GI diet × 3–5 days (acute) — reduces antigenic load, highly digestible', tone: 'teal' }],
+            ['<strong>Novel protein / hydrolysed diet trial</strong>', { text: '4–6 weeks exclusive if food-responsive enteropathy suspected after the acute phase — <strong>no treats, chews, or flavoured medications</strong>', tone: 'teal' }],
+            ['<strong>Highly digestible low-fat diet</strong>', { text: 'Reduces osmotic load in malabsorptive / SB diarrhoea', tone: 'teal' }],
+            ['<strong>Kaolin-pectin</strong>', { text: 'Coats and soothes mucosa · binds bacterial toxins · safe in all species', tone: 'teal' }],
+            ['<strong>Smectite (diosmectite)</strong>', { text: 'Binds toxins and pathogens · mucosal barrier support', tone: 'teal' }],
+            ['<strong>Sucralfate</strong>', { text: '0.5–1 g PO TID — if mucosal ulceration suspected (haemorrhagic diarrhoea · known NSAID use)', tone: 'teal' }],
+            ['<strong>Probiotics</strong>', { text: '<em>Enterococcus faecium</em> SF68 (FortiFlora®) or a multi-strain probiotic — supports microbiome recovery; recommended alongside antibiotics if used', tone: 'teal' }],
+            ['<strong>Metronidazole</strong>', { text: '10–15 mg/kg PO BID × 5–7 days — anti-anaerobic + anti-Giardia; consider if haemorrhagic, mucosal, or high Giardia suspicion. <strong>Avoid routine use in every case</strong> — emerging resistance and microbiome disruption', tone: 'danger' }],
+            ['<strong>Fluid + electrolyte support</strong>', { text: 'Oral electrolyte solution if mild–moderate dehydration and not vomiting · IV fluids (Hartmann\'s / Plasma-Lyte) if moderate–severe dehydration, vomiting or collapse', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 2 — FAECAL PANEL' },
         {
-          kind: 'check',
-          html: `<strong>Minimum panel:</strong><br>
-    • <strong>Direct wet mount</strong> — motile Giardia trophozoites, other protozoa<br>
-    • <strong>Giardia ELISA / SNAP</strong> — more sensitive than wet mount alone<br>
-    • <strong>Parvovirus SNAP</strong> — young or unvaccinated animals (do not delay)<br><br>
-    <strong>Extended panel</strong> (chronic, no response to empiric treatment, or systemic signs):<br>
-    • <strong>ZnSO₄ centrifugal flotation ×3</strong> — helminth ova, protozoan cysts (serial samples improve sensitivity)<br>
-    • <strong>Cryptosporidium</strong> — acid-fast stain or faecal PCR (young / immunocompromised)<br>
-    • <strong>Faecal PCR panel</strong> — Salmonella, Campylobacter, Clostridium perfringens toxin / difficile<br>
-    • <strong>Faecal sedimentation</strong> — <em>Heterobilharzia americana</em> ova (Gulf Coast dogs)
-    <div style="margin-top:8px;background:rgba(13,148,136,0.1);border:1px solid rgba(13,148,136,0.3);border-left:3px solid #14B8A6;border-radius:8px;padding:8px 10px;font-size:10.5px;">
-      <span style="font-weight:700;color:var(--tone-teal-fg);">🟢 Large Bowel:</span> Priority target is <strong><em>Trichuris vulpis</em></strong> — ova shed intermittently, flotation frequently negative; treat empirically regardless. <strong>Cats:</strong> <em>Tritrichomonas foetus</em> — <strong>InPouch culture or faecal PCR</strong> (young cats, crowded environments); NOT detected on routine flotation. Treat with ronidazole 30–50 mg/kg PO SID ×14 days. Faecal culture if haemorrhagic, febrile, or zoonotic risk.
-    </div>`,
+          kind: 'callout',
+          tone: 'green',
+          title: '🟢 LARGE BOWEL',
+          html: `<strong>High-fibre supplementation first line</strong> — psyllium husk / wheat bran 1–6 tsp/day OR commercial high-fibre diet for 3–4 weeks. Effective for idiopathic LB diarrhoea and stress colitis. Fenbendazole course ×3 (repeat at 3 and 6 weeks) to cover <em>Trichuris vulpis</em> even if flotation negative. Avoid metronidazole as sole treatment — address fibre and parasites first.`,
         },
-        { kind: 'step', text: 'STEP 3 — BLOODWORK<span style="font-weight:400;font-size:9px;opacity:.8;"> · indicated if: not resolving after empiric Rx · chronic (&gt;3 wk) · weight loss · systemic signs</span>' },
+
+        { kind: 'step', text: '🔬 STEP 2 — FAECAL PANEL', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `<strong style="color:var(--tone-warning-fg);">CBC:</strong><br>
-    • Leucopenia → parvovirus / panleukopenia (young unvaccinated)<br>
-    • Eosinophilia → parasitism, dietary hypersensitivity, eosinophilic enteritis<br>
-    • <strong>Absent stress leukogram in a sick dog</strong> → hypoadrenocorticism (see biochem below)<br>
-    • Regenerative anaemia → GI haemorrhage / blood loss<br>
-    • Lymphopenia → lymphangiectasia / PLE<br><br>
-    <strong style="color:var(--tone-warning-fg);">Serum biochemistry:</strong><br>
-    • ↓ Albumin + ↓ Globulin (panhypoproteinaemia) → <strong>PLE</strong> — lymphangiectasia, IBD, neoplasia<br>
-    • ↓ Albumin alone → hepatic disease, malabsorption, GI loss<br>
-    • Na:K &lt;27 → <strong>classical hypoadrenocorticism</strong> — confirm with ACTH stimulation<br>
-    • <strong>Absent stress leukogram</strong> + normal Na:K → <strong>atypical hypoadrenocorticism</strong> — run <strong>basal cortisol</strong>; &lt;55 nmol/L or ongoing suspicion → <strong>ACTH stimulation test</strong><br>
-    • ↑ ALT / ALP / GGT + ↓ albumin → hepatic disease / <strong>PSS (portosystemic shunt)</strong><br>
-    • ↓ BUN + ↓ albumin + ↓ cholesterol + ↑ liver enzymes ± ↑ ammonia → <strong>PSS</strong><br>
-    • <strong>Serum T4 (ALL cats with chronic diarrhoea)</strong> → hyperthyroidism<br>
-    • ↑ fPLI + ↑ ALT (cat) → triaditis (pancreatitis + cholangitis + IBD)<br><br>
-    <strong style="color:var(--tone-warning-fg);">Urinalysis:</strong><br>
-    • USG &lt;1.030 in dehydrated dog → CKD / hypoadrenocorticism / DI<br>
-    • Ammonium biurate crystals → <strong>PSS (portosystemic shunt)</strong><br><br>
-    <strong style="color:var(--tone-warning-fg);">GI-specific panel</strong> <span style="font-size:9.5px;opacity:.8;">(chronic SB diarrhoea · steatorrhoea · weight loss)</span><strong style="color:var(--tone-warning-fg);">:</strong><br>
-    • <strong>cTLI (dog) / fTLI (cat)</strong> — EPI: cTLI &lt;2.5 μg/L diagnostic; fTLI &lt;8 μg/L (cat). <em>Must be fasted sample.</em><br>
-    • <strong>Serum cobalamin (B12)</strong> — low in EPI, severe ileal disease, severe IBD. Supplement ALL EPI cats regardless of level.<br>
-    • <strong>Serum folate</strong> — elevated with proximal SI SIBO; low with proximal SI mucosal disease<br>
-    • <strong>fPLI / cPLI</strong> — pancreatitis (most sensitive/specific serum marker)
-    <div style="margin-top:8px;background:rgba(13,148,136,0.1);border:1px solid rgba(13,148,136,0.3);border-left:3px solid #14B8A6;border-radius:8px;padding:8px 10px;font-size:10.5px;">
-      <span style="font-weight:700;color:var(--tone-teal-fg);">🟢 Large Bowel:</span> Bloodwork usually normal in straightforward LB disease. Run if: weight loss, systemic signs, haemorrhagic diarrhoea, refractory to empiric treatment, or patient &gt;7 years old. GI-specific panel (TLI / cobalamin / folate) not routinely indicated — only if concurrent SB signs or systemic disease suspected.
-    </div>`,
+          kind: 'gridTable',
+          label: 'Minimum panel',
+          cols: '0.75fr 1.4fr',
+          dividers: true,
+          headers: ['Test', { text: 'Detects', tone: 'teal' }],
+          rows: [
+            ['<strong>Direct wet mount</strong>', { text: 'Motile Giardia trophozoites · other protozoa', tone: 'teal' }],
+            ['<strong>Giardia ELISA / SNAP</strong>', { text: 'More sensitive than wet mount alone', tone: 'teal' }],
+            ['<strong>Parvovirus SNAP</strong>', { text: 'Young or unvaccinated animals — do not delay', tone: 'danger' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 4 — ABDOMINAL IMAGING<span style="font-weight:400;font-size:9px;opacity:.8;"> · chronic · weight loss · palpable abnormality</span>' },
         {
-          kind: 'check',
-          html: `<strong>Survey radiograph:</strong><br>
-    • Reduced serosal detail → effusion (hypoalbuminaemia, PLE, lymphangiectasia)<br>
-    • Hepatomegaly / splenomegaly / gas pattern / obstruction<br><br>
-    <strong>Abdominal ultrasound:</strong><br>
-    • SI wall thickening — <em>layering preserved + thickened</em> → IBD/enteritis; <em>layering lost</em> → neoplasia<br>
-    • Mesenteric lymphadenopathy — IBD, lymphoma, systemic disease<br>
-    • Pancreatic changes — pancreatitis, EPI (atrophy)<br>
-    • <strong>Bilateral small adrenal glands</strong> → hypoadrenocorticism<br>
-    • Hepatic architecture / gallbladder / bile duct thickening → hepatic / biliary disease, triaditis (cat)<br>
-    • Microhepatica + renomegaly → <strong>PSS (portosystemic shunt)</strong>
-    <div style="margin-top:8px;background:rgba(13,148,136,0.1);border:1px solid rgba(13,148,136,0.3);border-left:3px solid #14B8A6;border-radius:8px;padding:8px 10px;font-size:10.5px;">
-      <span style="font-weight:700;color:var(--tone-teal-fg);">🟢 Large Bowel:</span> Lower yield in straightforward LB disease. Ultrasound useful for colonic wall thickening and mesenteric LN if chronic or severe. Rectal exam and colonoscopy are higher-yield.
-    </div>`,
+          kind: 'gridTable',
+          label: 'Extended panel — chronic · no response to empiric treatment · systemic signs',
+          cols: '0.75fr 1.4fr',
+          dividers: true,
+          headers: ['Test', { text: 'Detects', tone: 'teal' }],
+          rows: [
+            ['<strong>ZnSO₄ centrifugal flotation ×3</strong>', { text: 'Helminth ova · protozoan cysts — serial samples improve sensitivity', tone: 'teal' }],
+            ['<strong>Cryptosporidium</strong>', { text: 'Acid-fast stain or faecal PCR — young / immunocompromised', tone: 'teal' }],
+            ['<strong>Faecal PCR panel</strong>', { text: 'Salmonella · Campylobacter · <em>Clostridium perfringens</em> toxin / <em>difficile</em>', tone: 'teal' }],
+            ['<strong>Faecal sedimentation</strong>', { text: '<em>Heterobilharzia americana</em> ova — Gulf Coast dogs', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 5 — ENDOSCOPY + BIOPSY<span style="font-weight:400;font-size:9px;opacity:.8;"> · dietary trial failed · systemic causes excluded · progressive weight loss</span>' },
         {
-          kind: 'check',
-          html: `• <strong>Full-thickness surgical biopsy</strong> preferred — necessary for lymphoma subtyping, transmural disease (pythiosis, histoplasmosis)<br>
-    • <strong>PARR PCR</strong> on biopsy if lymphoma suspected — sensitivity ~70%; negative does not exclude<br>
-    • <strong>Culture + sensitivity</strong> if infectious aetiology not fully excluded<br>
-    • Duodenal aspirate for quantitative culture if SIBO suspected
-    <div style="margin-top:8px;background:rgba(13,148,136,0.1);border:1px solid rgba(13,148,136,0.3);border-left:3px solid #14B8A6;border-radius:8px;padding:8px 10px;font-size:10.5px;">
-      <span style="font-weight:700;color:var(--tone-teal-fg);">🟢 Large Bowel:</span> <strong>Colonoscopy + multiple biopsies</strong> — indicated if chronic, refractory, haemorrhagic, mass on rectal exam, or progressive. <strong>Boxer / French Bulldog / Malamute:</strong> FISH for adherent invasive <em>E. coli</em> (AIEC) — enrofloxacin often curative.
-    </div>`,
+          kind: 'callout',
+          tone: 'green',
+          title: '🟢 LARGE BOWEL',
+          html: `Priority target is <strong><em>Trichuris vulpis</em></strong> — ova shed intermittently, flotation frequently negative; treat empirically regardless. <strong>Cats:</strong> <em>Tritrichomonas foetus</em> — <strong>InPouch culture or faecal PCR</strong> (young cats, crowded environments); NOT detected on routine flotation. Treat with ronidazole 30–50 mg/kg PO SID ×14 days. Faecal culture if haemorrhagic, febrile, or zoonotic risk.`,
+        },
+
+        { kind: 'step', text: '🩸 STEP 3 — BLOODWORK<span style="font-weight:400;font-size:9px;opacity:.8;"> · not resolving after empiric Rx · chronic (&gt;3 wk) · weight loss · systemic signs</span>', noArrowAfter: true },
+        {
+          kind: 'gridTable',
+          label: 'CBC',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Leucopenia</strong>', { text: 'Parvovirus / panleukopenia — young unvaccinated', tone: 'teal' }],
+            ['<strong>Eosinophilia</strong>', { text: 'Parasitism · dietary hypersensitivity · eosinophilic enteritis', tone: 'teal' }],
+            ['<strong>Absent stress leukogram in a sick dog</strong>', { text: '<strong>Hypoadrenocorticism</strong>', tone: 'danger' }],
+            ['<strong>Regenerative anaemia</strong>', { text: 'GI haemorrhage / blood loss', tone: 'teal' }],
+            ['<strong>Lymphopenia</strong>', { text: 'Lymphangiectasia / PLE', tone: 'teal' }],
+          ],
+        },
+        {
+          kind: 'gridTable',
+          label: 'Serum biochemistry & urinalysis',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>↓ Albumin + ↓ Globulin</strong> (panhypoproteinaemia)', { text: '<strong>PLE</strong> — lymphangiectasia · IBD · neoplasia', tone: 'teal' }],
+            ['<strong>↓ Albumin alone</strong>', { text: 'Hepatic disease · malabsorption · GI loss', tone: 'teal' }],
+            ['<strong>Na:K &lt;27</strong>', { text: '<strong>Classical hypoadrenocorticism</strong> — confirm with ACTH stimulation', tone: 'danger' }],
+            ['<strong>Absent stress leukogram + normal Na:K</strong>', { text: '<strong>Atypical hypoadrenocorticism</strong> — run <strong>basal cortisol</strong>; &lt;55 nmol/L or ongoing suspicion → <strong>ACTH stimulation test</strong>', tone: 'danger' }],
+            ['<strong>↑ ALT / ALP / GGT + ↓ albumin</strong>', { text: 'Hepatic disease · <strong>PSS</strong>', tone: 'teal' }],
+            ['<strong>↓ BUN + ↓ albumin + ↓ cholesterol + ↑ liver enzymes ± ↑ ammonia</strong>', { text: '<strong>PSS (portosystemic shunt)</strong>', tone: 'teal' }],
+            ['<strong>🐱 Serum T4 — ALL cats with chronic diarrhoea</strong>', { text: 'Hyperthyroidism', tone: 'teal' }],
+            ['<strong>🐱 ↑ fPLI + ↑ ALT</strong>', { text: 'Triaditis — pancreatitis + cholangitis + IBD', tone: 'teal' }],
+            ['<strong>USG &lt;1.030 in a dehydrated dog</strong>', { text: 'CKD · hypoadrenocorticism · DI', tone: 'teal' }],
+            ['<strong>Ammonium biurate crystals</strong>', { text: '<strong>PSS</strong>', tone: 'teal' }],
+          ],
+        },
+        {
+          kind: 'gridTable',
+          label: 'GI-specific panel — chronic SB diarrhoea · steatorrhoea · weight loss',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'Interpretation', tone: 'teal' }],
+          rows: [
+            ['<strong>cTLI (🐕) / fTLI (🐱)</strong>', { text: 'EPI — cTLI &lt;2.5 μg/L diagnostic · fTLI &lt;8 μg/L. <em>Must be a fasted sample</em>', tone: 'teal' }],
+            ['<strong>Serum cobalamin (B12)</strong>', { text: 'Low in EPI · severe ileal disease · severe IBD. Supplement <strong>all</strong> EPI cats regardless of level', tone: 'teal' }],
+            ['<strong>Serum folate</strong>', { text: 'Elevated with proximal SI SIBO · low with proximal SI mucosal disease', tone: 'teal' }],
+            ['<strong>fPLI / cPLI</strong>', { text: 'Pancreatitis — the most sensitive and specific serum marker', tone: 'teal' }],
+          ],
+        },
+        {
+          kind: 'callout',
+          tone: 'green',
+          title: '🟢 LARGE BOWEL',
+          html: `Bloodwork usually normal in straightforward LB disease. Run if: weight loss, systemic signs, haemorrhagic diarrhoea, refractory to empiric treatment, or patient &gt;7 years old. GI-specific panel (TLI / cobalamin / folate) not routinely indicated — only if concurrent SB signs or systemic disease suspected.`,
+        },
+
+        { kind: 'step', text: '📊 STEP 4 — ABDOMINAL IMAGING<span style="font-weight:400;font-size:9px;opacity:.8;"> · chronic · weight loss · palpable abnormality</span>', noArrowAfter: true },
+        {
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Survey radiograph — reduced serosal detail</strong>', { text: 'Effusion — hypoalbuminaemia · PLE · lymphangiectasia', tone: 'teal' }],
+            ['<strong>Survey radiograph — organomegaly / gas pattern</strong>', { text: 'Hepatomegaly · splenomegaly · obstruction', tone: 'teal' }],
+            ['<strong>US — SI wall thickening</strong>', { text: '<em>Layering preserved + thickened</em> → IBD / enteritis · <em>layering lost</em> → neoplasia', tone: 'teal' }],
+            ['<strong>US — mesenteric lymphadenopathy</strong>', { text: 'IBD · lymphoma · systemic disease', tone: 'teal' }],
+            ['<strong>US — pancreatic changes</strong>', { text: 'Pancreatitis · EPI (atrophy)', tone: 'teal' }],
+            ['<strong>US — bilateral small adrenal glands</strong>', { text: 'Hypoadrenocorticism', tone: 'teal' }],
+            ['<strong>US — hepatic architecture / gallbladder / bile duct thickening</strong>', { text: 'Hepatic or biliary disease · triaditis (🐱)', tone: 'teal' }],
+            ['<strong>US — microhepatica + renomegaly</strong>', { text: '<strong>PSS (portosystemic shunt)</strong>', tone: 'teal' }],
+          ],
+        },
+        {
+          kind: 'callout',
+          tone: 'green',
+          title: '🟢 LARGE BOWEL',
+          html: `Lower yield in straightforward LB disease. Ultrasound useful for colonic wall thickening and mesenteric LN if chronic or severe. Rectal exam and colonoscopy are higher-yield.`,
+        },
+
+        { kind: 'step', text: '🔬 STEP 5 — ENDOSCOPY + BIOPSY<span style="font-weight:400;font-size:9px;opacity:.8;"> · dietary trial failed · systemic causes excluded · progressive weight loss</span>', noArrowAfter: true },
+        {
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Full-thickness surgical biopsy</strong> — preferred', { text: 'Necessary for lymphoma subtyping and transmural disease (pythiosis · histoplasmosis)', tone: 'teal' }],
+            ['<strong>PARR PCR on biopsy</strong>', { text: 'If lymphoma suspected — sensitivity ~70%; a negative does <strong>not</strong> exclude', tone: 'teal' }],
+            ['<strong>Culture + sensitivity</strong>', { text: 'If an infectious aetiology is not fully excluded', tone: 'teal' }],
+            ['<strong>Duodenal aspirate for quantitative culture</strong>', { text: 'If SIBO suspected', tone: 'teal' }],
+          ],
+        },
+        {
+          kind: 'callout',
+          tone: 'green',
+          title: '🟢 LARGE BOWEL',
+          html: `<strong>Colonoscopy + multiple biopsies</strong> — indicated if chronic, refractory, haemorrhagic, mass on rectal exam, or progressive. <strong>Boxer / French Bulldog / Malamute:</strong> FISH for adherent invasive <em>E. coli</em> (AIEC) — enrofloxacin often curative.`,
         },
         {
           kind: 'html',
@@ -303,75 +390,50 @@ export const diarrhoeaDx: DxApproach = {
           html: `<div class="dx-step" style="background:rgba(217,119,6,0.2);border-color:rgba(217,119,6,0.45);color:var(--amber-text);">🟠 SECONDARY / SYSTEMIC CAUSES — TARGETED TESTS</div>`,
         },
         {
-          kind: 'check',
+          kind: 'note',
           style: 'font-size:10.5px;',
-          html: `<strong>Suspect when:</strong> chronic SI-pattern diarrhoea + weight loss · systemic signs (PU/PD, lethargy, episodic weakness, jaundice, tachycardia) · bloodwork abnormalities pointing away from primary GI · poor response to GI treatment`,
+          html: `<strong>Suspect when:</strong> chronic SI-pattern diarrhoea + weight loss · systemic signs (PU/PD · lethargy · episodic weakness · jaundice · tachycardia) · bloodwork abnormalities pointing away from primary GI · poor response to GI treatment`,
         },
-        { kind: 'step', text: 'STEP 1 — BLOODWORK FLAGS + FIRST TESTS' },
+
+        { kind: 'step', text: '🩸 STEP 1 — BLOODWORK FLAGS + FIRST TESTS', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `<strong style="color:var(--tone-warning-fg);">Hypoadrenocorticism (Addison's):</strong><br>
-    • Na:K &lt;27 → classical — <strong>ACTH stimulation test</strong> to confirm<br>
-    • Absent stress leukogram ± eosinophilia in a sick dog (even with NORMAL Na:K) → atypical — <strong>basal cortisol</strong> first; &lt;55 nmol/L → ACTH stim; 55–165 nmol/L (equivocal) → proceed to ACTH stim anyway<br>
-    • Post-stim cortisol &lt;55 nmol/L = diagnostic<br>
-    • <span style="font-size:10px;opacity:.75;">Normal electrolytes do NOT exclude atypical Addison's — never rely on Na:K alone</span><br><br>
-    <strong style="color:var(--tone-warning-fg);">Hyperthyroidism (cat):</strong><br>
-    • <strong>Serum T4 — mandatory in ALL cats with chronic diarrhoea</strong><br>
-    • Equivocal result → free T4 by equilibrium dialysis OR recheck in 3 weeks<br>
-    • T4 can be falsely normal with concurrent illness (occult hyperthyroidism)<br><br>
-    <strong style="color:var(--tone-warning-fg);">Hepatic disease / PSS:</strong><br>
-    • ↑ ALT/ALP/GGT + ↓ albumin → hepatic disease / PSS / hepatic lipidosis (cat)<br>
-    • ↓ BUN + ↓ albumin + ↓ cholesterol + ↑ liver enzymes ± ↑ ammonia → <strong>PSS (portosystemic shunt)</strong><br>
-    • Ammonium biurate crystals on UA → PSS<br><br>
-    <strong style="color:var(--tone-warning-fg);">EPI (exocrine pancreatic insufficiency):</strong><br>
-    • Polyphagia + weight loss + voluminous steatorrhoeic diarrhoea<br>
-    • <strong>cTLI &lt;2.5 μg/L (dog)</strong> / <strong>fTLI &lt;8 μg/L (cat)</strong> — must be fasted sample; recheck if borderline<br><br>
-    <strong style="color:var(--tone-warning-fg);">Triaditis (cat):</strong><br>
-    • ↑ fPLI + ↑ ALT + ↑ GGT + bilirubin → pancreatitis + cholangitis + IBD<br><br>
-    <strong style="color:var(--tone-warning-fg);">Protein-losing enteropathy (PLE):</strong><br>
-    • ↓ Albumin + ↓ Globulin (panhypoproteinaemia) → SI protein loss confirmed<br>
-    • ↓ Albumin alone → hepatic disease or malabsorption (globulins spared)<br><br>
-    <strong style="color:var(--tone-warning-fg);">Regional infectious clue:</strong><br>
-    • Hypercalcaemia + Gulf Coast dog + outdoor water exposure → <em>Heterobilharzia americana</em>`,
+          kind: 'gridTable',
+          cols: '0.75fr 1.4fr',
+          dividers: true,
+          headers: ['Suspected cause', { text: 'Flags and first tests', tone: 'teal' }],
+          rows: [
+            ['<strong>Hypoadrenocorticism (Addison\'s)</strong>', { text: 'Na:K &lt;27 → classical, confirm with <strong>ACTH stimulation test</strong>. Absent stress leukogram ± eosinophilia in a sick dog (<em>even with normal Na:K</em>) → atypical — <strong>basal cortisol</strong> first; &lt;55 nmol/L → ACTH stim; 55–165 nmol/L (equivocal) → proceed to ACTH stim anyway. <strong>Post-stim cortisol &lt;55 nmol/L = diagnostic.</strong> Normal electrolytes do <strong>NOT</strong> exclude atypical Addison\'s — never rely on Na:K alone', tone: 'danger' }],
+            ['<strong>🐱 Hyperthyroidism</strong>', { text: '<strong>Serum T4 — mandatory in ALL cats with chronic diarrhoea.</strong> Equivocal → free T4 by equilibrium dialysis or recheck in 3 weeks. T4 can be falsely normal with concurrent illness (occult hyperthyroidism)', tone: 'teal' }],
+            ['<strong>Hepatic disease / PSS</strong>', { text: '↑ ALT/ALP/GGT + ↓ albumin → hepatic disease · PSS · hepatic lipidosis (🐱). ↓ BUN + ↓ albumin + ↓ cholesterol + ↑ liver enzymes ± ↑ ammonia → <strong>PSS</strong>. Ammonium biurate crystals on UA → PSS', tone: 'teal' }],
+            ['<strong>EPI</strong>', { text: 'Polyphagia + weight loss + voluminous steatorrhoeic diarrhoea. <strong>cTLI &lt;2.5 μg/L (🐕)</strong> / <strong>fTLI &lt;8 μg/L (🐱)</strong> — must be a fasted sample; recheck if borderline', tone: 'teal' }],
+            ['<strong>🐱 Triaditis</strong>', { text: '↑ fPLI + ↑ ALT + ↑ GGT + bilirubin → pancreatitis + cholangitis + IBD', tone: 'teal' }],
+            ['<strong>Protein-losing enteropathy (PLE)</strong>', { text: '↓ Albumin + ↓ Globulin (panhypoproteinaemia) → SI protein loss confirmed. ↓ Albumin alone → hepatic disease or malabsorption (globulins spared)', tone: 'teal' }],
+            ['<strong>Regional infectious clue</strong>', { text: 'Hypercalcaemia + Gulf Coast dog + outdoor water exposure → <em>Heterobilharzia americana</em>', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 2 — TARGETED FOLLOW-UP BY SUSPECTED CAUSE' },
-        {
-          kind: 'check',
-          html: `<strong style="color:var(--tone-green-fg);">If hypoadrenocorticism suspected:</strong><br>
-    • Abdominal US: bilateral small adrenal glands (&lt;3.5mm) — supportive but not diagnostic<br>
-    • ACTH stimulation test (as above) — gold standard<br>
-    • Treat Addisonian crisis: IV saline + dexamethasone (0.1–0.2 mg/kg IV) stat<br><br>
-    <strong style="color:var(--tone-green-fg);">If hepatic disease / PSS suspected:</strong><br>
-    • <strong>Pre/post-prandial bile acids</strong> — hepatic dysfunction, portosystemic shunting<br>
-    • <strong>Abdominal ultrasound</strong> — hepatic architecture, microhepatica (PSS), aberrant vessel, biliary sludge/wall thickening (triaditis), pancreatic changes<br>
-    • Plasma ammonia if encephalopathic signs<br>
-    • Liver biopsy (Tru-cut or surgical) if hepatic parenchymal disease confirmed<br><br>
-    <strong style="color:var(--tone-green-fg);">If EPI suspected:</strong><br>
-    • Serum cobalamin (B12) + folate — cobalamin low in EPI, severe ileal disease; supplement cobalamin in ALL EPI cats regardless of level<br>
-    • Monitor TLI annually — chronic pancreatitis leads to progressive EPI<br>
-    • Pancreatic enzyme supplementation + low-fat diet<br><br>
-    <strong style="color:var(--tone-green-fg);">If PLE suspected:</strong><br>
-    • Faecal α₁-protease inhibitor (dogs) — most sensitive marker of GI protein loss<br>
-    • Abdominal US: intestinal wall layering, mucosal striations (lymphangiectasia), effusion<br>
-    • Endoscopy + full-thickness biopsy — lymphangiectasia (dilated lacteals), IBD, lymphoma<br>
-    • Check cobalamin + folate (B12 low → ileal disease; folate ↑ → SIBO)`,
-        },
-        { kind: 'step', text: 'STEP 3 — REGION-SPECIFIC INFECTIOUS CAUSES' },
-        {
-          kind: 'check',
-          html: `<strong style="color:var(--tone-danger-fg);">Heterobilharzia americana</strong> (Gulf Coast / SE USA · outdoor + freshwater exposure):<br>
-    • Clue: hypercalcaemia (granulomatous inflammation)<br>
-    • Tests: <strong>faecal sedimentation for ova</strong>; <strong>faecal PCR</strong> (more sensitive)<br>
-    • Treat: praziquantel 25 mg/kg TID ×2 days + fenbendazole 40 mg/kg SID ×10 days<br><br>
-    <strong style="color:var(--tone-danger-fg);">Histoplasmosis</strong> (Ohio / Mississippi / Missouri river valleys · Great Lakes):<br>
-    • Clue: concurrent respiratory signs, weight loss, hepatosplenomegaly, pancytopenia<br>
-    • Tests: <strong>urine Histoplasma antigen ELISA</strong> (most sensitive — MiraVista Diagnostics); rectal scraping cytology (intracellular yeast in macrophages — most rapid); faecal PCR<br>
-    • Treat: itraconazole 5 mg/kg SID or BID × minimum 6 months; monitor with urine antigen titre<br><br>
-    <strong style="color:var(--tone-danger-fg);">Pythiosis</strong> (Gulf Coast / tropical · freshwater exposure):<br>
-    • Clue: transmural GI mass + weight loss + young large breed dog<br>
-    • Tests: <strong>Pythium ELISA titre ≥1:400</strong> suggestive; abdominal US (transmural mass, mural thickening); full-thickness biopsy + FISH for definitive diagnosis<br>
-    • Treat: surgical resection + itraconazole + terbinafine. Prognosis guarded — early surgery offers best chance`,
-        },
+
+        ...stepTable(2, 'TARGETED FOLLOW-UP BY SUSPECTED CAUSE', {
+          cols: '0.75fr 1.4fr',
+          dividers: true,
+          headers: ['If suspected', { text: 'Then', tone: 'teal' }],
+          rows: [
+            ['<strong>Hypoadrenocorticism</strong>', { text: 'Abdominal US: bilateral small adrenal glands (&lt;3.5 mm) — supportive but not diagnostic · ACTH stimulation test (gold standard) · treat Addisonian crisis with IV saline + dexamethasone 0.1–0.2 mg/kg IV stat', tone: 'green' }],
+            ['<strong>Hepatic disease / PSS</strong>', { text: '<strong>Pre/post-prandial bile acids</strong> · <strong>abdominal ultrasound</strong> (hepatic architecture · microhepatica (PSS) · aberrant vessel · biliary sludge or wall thickening (triaditis) · pancreatic changes) · plasma ammonia if encephalopathic signs · liver biopsy (Tru-cut or surgical) if hepatic parenchymal disease confirmed', tone: 'green' }],
+            ['<strong>EPI</strong>', { text: 'Serum cobalamin (B12) + folate — cobalamin low in EPI and severe ileal disease; supplement cobalamin in <strong>all</strong> EPI cats regardless of level. Monitor TLI annually — chronic pancreatitis leads to progressive EPI. Pancreatic enzyme supplementation + low-fat diet', tone: 'green' }],
+            ['<strong>PLE</strong>', { text: 'Faecal α₁-protease inhibitor (🐕) — most sensitive marker of GI protein loss · abdominal US (intestinal wall layering · mucosal striations of lymphangiectasia · effusion) · endoscopy + full-thickness biopsy (lymphangiectasia with dilated lacteals · IBD · lymphoma) · check cobalamin + folate (B12 low → ileal disease; folate ↑ → SIBO)', tone: 'green' }],
+          ],
+        }, '🎯'),
+
+        ...stepTable(3, 'REGION-SPECIFIC INFECTIOUS CAUSES', {
+          cols: '0.7fr 1.45fr',
+          dividers: true,
+          headers: ['Agent', { text: 'Clue · tests · treatment', tone: 'teal' }],
+          rows: [
+            ['<strong><em>Heterobilharzia americana</em></strong><br>Gulf Coast / SE USA · outdoor + freshwater exposure', { text: '<strong>Clue:</strong> hypercalcaemia (granulomatous inflammation). <strong>Tests:</strong> faecal sedimentation for ova · faecal PCR (more sensitive). <strong>Treat:</strong> praziquantel 25 mg/kg TID ×2 days + fenbendazole 40 mg/kg SID ×10 days', tone: 'danger' }],
+            ['<strong>Histoplasmosis</strong><br>Ohio / Mississippi / Missouri river valleys · Great Lakes', { text: '<strong>Clue:</strong> concurrent respiratory signs · weight loss · hepatosplenomegaly · pancytopenia. <strong>Tests:</strong> urine Histoplasma antigen ELISA (most sensitive — MiraVista) · rectal scraping cytology (intracellular yeast in macrophages — most rapid) · faecal PCR. <strong>Treat:</strong> itraconazole 5 mg/kg SID or BID × minimum 6 months; monitor with urine antigen titre', tone: 'danger' }],
+            ['<strong>Pythiosis</strong><br>Gulf Coast / tropical · freshwater exposure', { text: '<strong>Clue:</strong> transmural GI mass + weight loss + young large-breed dog. <strong>Tests:</strong> Pythium ELISA titre ≥1:400 suggestive · abdominal US (transmural mass · mural thickening) · full-thickness biopsy + FISH for definitive diagnosis. <strong>Treat:</strong> surgical resection + itraconazole + terbinafine. Prognosis guarded — early surgery offers the best chance', tone: 'danger' }],
+          ],
+        }, '🌍'),
         {
           kind: 'html',
           html: `<div class="dx-dx" onclick="goLesionTab('LOC-DI-SI-SEC','Small intestine — Secondary')">Secondary / Systemic lesions →</div>`,

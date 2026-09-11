@@ -8,6 +8,7 @@
 // (imaging). Numbers verbatim from Ettinger Ch 30 (Fig 30.1) and Ch 60.
 
 import type { DxApproach } from '../dxTypes'
+import { stepTable } from './shared/dxHelpers'
 
 export const oedemaDx: DxApproach = {
   title: 'Peripheral Oedema',
@@ -18,36 +19,54 @@ export const oedemaDx: DxApproach = {
       blocks: [
         { kind: 'branch', text: 'GOAL: LOCALISED vs GENERALISED — THEN MECHANISM' },
         {
-          kind: 'check',
-          html: `<strong>Peripheral oedema</strong> appears when interstitial-matrix tension and lymphatic uptake are overwhelmed (Starling equation, Ettinger Ch 30). The single most useful first distinction:<br>
-    • <strong>Generalised / ventral pitting oedema</strong> — a systemic mechanism (go straight to serum albumin).<br>
-    • <strong>Localised single-limb or regional swelling</strong> — think venous/lymphatic obstruction, hypersensitivity or trauma.`,
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Distribution', { text: 'Mechanism', tone: 'teal' }],
+          rows: [
+            ['<strong>Generalised / ventral pitting oedema</strong>', { text: 'A systemic mechanism — go straight to <strong>serum albumin</strong>', tone: 'teal' }],
+            ['<strong>Localised single-limb or regional swelling</strong>', { text: 'Venous / lymphatic obstruction · hypersensitivity · trauma', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', tone: 'teal', text: ' STEP 1 — DISTRIBUTION & TIME COURSE' },
-        {
-          kind: 'check',
-          html: `<strong>Generalised / ventral</strong> → hypoalbuminaemia, right-sided CHF, or increased vascular permeability (sepsis/vasculitis/myxedema).<br>
-    <strong>Single forelimb + ventral cervical/thoracic</strong> → cranial vena cava obstruction (mediastinal mass, thrombus, pacing lead).<br>
-    <strong>Single hindlimb + ventral caudal abdomen</strong> → caudal vena cava obstruction (caudal abdominal mass, thrombus).<br>
-    <strong>Acute onset</strong> after a drug/vaccine/sting/snakebite → hypersensitivity / angioedema / envenomation; <strong>chronic single-limb</strong> → lymphoedema (Ettinger Ch 30).`,
-        },
-        { kind: 'step', text: ' STEP 2 — SYSTEMIC SIGNS POINTING TO A MECHANISM' },
-        {
-          kind: 'check',
-          html: `<strong>GI signs (diarrhoea, weight loss)</strong> → protein-losing enteropathy.<br>
-    <strong>PU/PD, proteinuria history</strong> → protein-losing nephropathy.<br>
-    <strong>Icterus, encephalopathy, stunting/young animal</strong> → hepatic failure / portosystemic shunt.<br>
-    <strong>Cough, exercise intolerance, syncope, abdominal distension (ascites)</strong> → right-sided congestive heart failure.<br>
-    <strong>Fever, lethargy, collapse</strong> → SIRS/sepsis or immune-mediated/vector-borne vasculitis.`,
-        },
-        { kind: 'step', text: ' STEP 3 — EXPOSURE, BREED & PRIOR EVENTS' },
-        {
-          kind: 'check',
-          html: `<strong>Envenomation / vaccination / drugs / toxins / burns / trauma</strong> in the recent history → hypersensitivity or permeability oedema (Ettinger Ch 30, Fig 30.1).<br>
-    <strong>Tick exposure & travel</strong> → vector-borne vasculitis (e.g. ehrlichiosis — peripheral oedema in the acute phase).<br>
-    <strong>Young animal, hindlimb swelling from the first weeks/months of life</strong> → congenital lymphoedema (lymph-node hypoplasia/aplasia).<br>
-    <strong>Prior surgery, trauma, radiation or neoplasia</strong> → acquired (obstructive) lymphoedema.`,
-        },
+        { kind: 'note', html: `Peripheral oedema appears when interstitial-matrix tension and lymphatic uptake are overwhelmed (Starling equation). <span style="opacity:.7">(Ettinger Ch 30)</span>` },
+
+        ...stepTable(1, 'DISTRIBUTION & TIME COURSE', {
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['Distribution / onset', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Generalised / ventral</strong>', { text: 'Hypoalbuminaemia · right-sided CHF · increased vascular permeability (sepsis · vasculitis · myxedema)', tone: 'teal' }],
+            ['<strong>Single forelimb + ventral cervical / thoracic</strong>', { text: 'Cranial vena cava obstruction — mediastinal mass · thrombus · pacing lead', tone: 'teal' }],
+            ['<strong>Single hindlimb + ventral caudal abdomen</strong>', { text: 'Caudal vena cava obstruction — caudal abdominal mass · thrombus', tone: 'teal' }],
+            ['<strong>Acute onset after a drug / vaccine / sting / snakebite</strong>', { text: 'Hypersensitivity · angioedema · envenomation', tone: 'teal' }],
+            ['<strong>Chronic single-limb</strong>', { text: 'Lymphoedema <span style="opacity:.7">(Ettinger Ch 30)</span>', tone: 'teal' }],
+          ],
+        }, '📍'),
+
+        ...stepTable(2, 'SYSTEMIC SIGNS POINTING TO A MECHANISM', {
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['Systemic sign', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>GI signs</strong> — diarrhoea · weight loss', { text: 'Protein-losing enteropathy', tone: 'teal' }],
+            ['<strong>PU/PD · proteinuria history</strong>', { text: 'Protein-losing nephropathy', tone: 'teal' }],
+            ['<strong>Icterus · encephalopathy · stunting / young animal</strong>', { text: 'Hepatic failure · portosystemic shunt', tone: 'teal' }],
+            ['<strong>Cough · exercise intolerance · syncope · abdominal distension (ascites)</strong>', { text: 'Right-sided congestive heart failure', tone: 'teal' }],
+            ['<strong>Fever · lethargy · collapse</strong>', { text: 'SIRS / sepsis · immune-mediated or vector-borne vasculitis', tone: 'teal' }],
+          ],
+        }, '🔍'),
+
+        ...stepTable(3, 'EXPOSURE, BREED & PRIOR EVENTS', {
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['History', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Envenomation · vaccination · drugs · toxins · burns · trauma</strong>', { text: 'Hypersensitivity or permeability oedema <span style="opacity:.7">(Ettinger Ch 30, Fig 30.1)</span>', tone: 'teal' }],
+            ['<strong>Tick exposure &amp; travel</strong>', { text: 'Vector-borne vasculitis — e.g. ehrlichiosis, peripheral oedema in the acute phase', tone: 'teal' }],
+            ['<strong>Young animal, hindlimb swelling from the first weeks / months of life</strong>', { text: 'Congenital lymphoedema — lymph-node hypoplasia / aplasia', tone: 'teal' }],
+            ['<strong>Prior surgery · trauma · radiation · neoplasia</strong>', { text: 'Acquired (obstructive) lymphoedema', tone: 'teal' }],
+          ],
+        }, '💊'),
       ],
       after: [
         {
@@ -64,27 +83,39 @@ export const oedemaDx: DxApproach = {
       title: 'Exam: Peripheral Oedema',
       blocks: [
         { kind: 'step', tone: 'teal', text: ' A complete PE is imperative — characterise the swelling, then look for the cause' },
-        { kind: 'step', text: ' STEP 1 — PITTING vs NON-PITTING & TEMPERATURE' },
-        {
-          kind: 'check',
-          html: `<strong>Pitting</strong> (persistent depression after digital pressure) → fluid displaced within the interstitium — most mechanisms (hypoalbuminaemia, hydrostatic, early permeability).<br>
-    <strong>Non-pitting</strong> → fluid within cells / clotted fibrinogen — angioedema (deeper subdermal), post-surgical/traumatic, lymphangiosarcoma, myxedema; <strong>chronic lymphoedema becomes non-pitting</strong> (collagen deposition, interstitial fibrosis).<br>
-    <strong>Warm, erythematous swelling</strong> → increased vascular permeability / inflammation (vasculitis, cellulitis, AV fistula) — distinct from the cool, non-tender oedema of oncotic/hydrostatic causes (Ettinger Ch 30).`,
-        },
-        { kind: 'step', text: ' STEP 2 — CARDIOVASCULAR / VENOUS EXAM' },
-        {
-          kind: 'check',
-          html: `<strong>Jugular venous distension or positive hepatojugular reflux, a heart murmur, an arrhythmia, ± ascites</strong> → right-sided CHF — go to echocardiography.<br>
-    <strong>Muffled heart sounds, weak pulses, pulsus paradoxus</strong> → pericardial effusion / tamponade.<br>
-    Palpate for a <strong>warm focal swelling with a bruit</strong> → arteriovenous fistula (test: US, angiogram).`,
-        },
-        { kind: 'step', text: ' STEP 3 — SIGNS OF PERMEABILITY / INFECTION / ENDOCRINE' },
-        {
-          kind: 'check',
-          html: `<strong>Fever, petechiae/ecchymoses, skin necrosis or ulceration</strong> → vasculitis (early signs: petechiae, ecchymoses, oedema → necrosis, pain, systemic signs).<br>
-    <strong>Localised non-pitting swelling with signs of infection</strong> → cellulitis (aspirate for organisms/inflammatory cells).<br>
-    <strong>Non-pitting skin oedema, lethargy, bradycardia, dermatologic change</strong> → myxedema (hypothyroidism — combined ↑permeability + hypoproteinaemia + ↓lymphatic drainage).`,
-        },
+
+        ...stepTable(1, 'PITTING vs NON-PITTING & TEMPERATURE', {
+          cols: '0.75fr 1.4fr',
+          dividers: true,
+          headers: ['Character', { text: 'Means', tone: 'teal' }],
+          rows: [
+            ['<strong>Pitting</strong><br>persistent depression after digital pressure', { text: 'Fluid displaced within the interstitium — most mechanisms (hypoalbuminaemia · hydrostatic · early permeability)', tone: 'teal' }],
+            ['<strong>Non-pitting</strong>', { text: 'Fluid within cells / clotted fibrinogen — angioedema (deeper subdermal) · post-surgical or traumatic · lymphangiosarcoma · myxedema. <strong>Chronic lymphoedema becomes non-pitting</strong> (collagen deposition, interstitial fibrosis)', tone: 'teal' }],
+            ['<strong>Warm, erythematous swelling</strong>', { text: 'Increased vascular permeability / inflammation (vasculitis · cellulitis · AV fistula) — distinct from the cool, non-tender oedema of oncotic / hydrostatic causes <span style="opacity:.7">(Ettinger Ch 30)</span>', tone: 'teal' }],
+          ],
+        }, '👆'),
+
+        ...stepTable(2, 'CARDIOVASCULAR / VENOUS EXAM', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Jugular venous distension or positive hepatojugular reflux · heart murmur · arrhythmia ± ascites</strong>', { text: 'Right-sided CHF — go to echocardiography', tone: 'teal' }],
+            ['<strong>Muffled heart sounds · weak pulses · pulsus paradoxus</strong>', { text: 'Pericardial effusion / tamponade', tone: 'danger' }],
+            ['<strong>Warm focal swelling with a bruit</strong>', { text: 'Arteriovenous fistula — test with US, angiogram', tone: 'teal' }],
+          ],
+        }, '❤️'),
+
+        ...stepTable(3, 'SIGNS OF PERMEABILITY / INFECTION / ENDOCRINE', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Fever · petechiae / ecchymoses · skin necrosis or ulceration</strong>', { text: 'Vasculitis — early signs petechiae, ecchymoses, oedema → then necrosis, pain, systemic signs', tone: 'teal' }],
+            ['<strong>Localised non-pitting swelling with signs of infection</strong>', { text: 'Cellulitis — aspirate for organisms / inflammatory cells', tone: 'teal' }],
+            ['<strong>Non-pitting skin oedema · lethargy · bradycardia · dermatologic change</strong>', { text: 'Myxedema (hypothyroidism) — combined ↑ permeability + hypoproteinaemia + ↓ lymphatic drainage', tone: 'teal' }],
+          ],
+        }, '🌡️'),
       ],
       after: [{ kind: 'disclaimer' }],
     },
@@ -92,41 +123,72 @@ export const oedemaDx: DxApproach = {
     dx: {
       title: 'Dx: Peripheral Oedema — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: ' STEP 1 — STABILISE / TRIAGE FIRST' },
+        { kind: 'step', tone: 'danger', text: '⚡ STEP 1 — STABILISE / TRIAGE FIRST', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `Treat <strong>anaphylaxis / angioedema with airway compromise</strong> before any work-up (adrenaline, airway). Tap a <strong>tamponading pericardial effusion</strong>, and resuscitate <strong>SIRS/sepsis</strong>. Severe hypoalbuminaemia (&lt;1.5 g/dL / &lt;15 g/L) carries effusion + thromboembolism risk (Ettinger Ch 60).`,
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Presentation', { text: 'Action', tone: 'teal' }],
+          rows: [
+            ['<strong>Anaphylaxis / angioedema with airway compromise</strong>', { text: 'Treat <em>before</em> any work-up — adrenaline, airway', tone: 'danger' }],
+            ['<strong>Tamponading pericardial effusion</strong>', { text: 'Tap it', tone: 'danger' }],
+            ['<strong>SIRS / sepsis</strong>', { text: 'Resuscitate', tone: 'danger' }],
+            ['<strong>Severe hypoalbuminaemia</strong> &lt;1.5 g/dL (&lt;15 g/L)', { text: 'Carries effusion + thromboembolism risk <span style="opacity:.7">(Ettinger Ch 60)</span>', tone: 'danger' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 2 — SERUM ALBUMIN (the pivotal first test)' },
+
+        ...stepTable(2, 'SERUM ALBUMIN (the pivotal first test)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Value', { text: 'Interpretation', tone: 'teal' }],
+          rows: [
+            ['<strong>Physiology</strong>', { text: 'Albumin provides ~80% of colloid oncotic pressure', tone: 'teal' }],
+            ['<strong>&lt;2.0 g/dL (&lt;20 g/L)</strong>', { text: 'Threshold for overt oedema from hypoalbuminaemia alone', tone: 'teal' }],
+            ['<strong>&lt;1.5 g/dL (&lt;15 g/L)</strong>', { text: 'Risk of effusions, oedema and thromboembolism <span style="opacity:.7">(Ettinger Ch 30 · Ch 60)</span>', tone: 'danger' }],
+            ['<strong>Grading</strong>', { text: 'Mildly low 2.1–2.5 g/dL (21–25 g/L) · moderately low 1.5–2.0 g/dL (15–20 g/L) · severely low &lt;1.5 g/dL (&lt;15 g/L)', tone: 'teal' }],
+            ['<strong>Run alongside</strong>', { text: 'Baseline minimum database — <strong>CBC · chemistry · urinalysis</strong> <span style="opacity:.7">(Ettinger Ch 30, Fig 30.1)</span>', tone: 'teal' }],
+          ],
+        }, '🧪'),
+
+        { kind: 'step', text: '🔽 STEP 3a — IF ALBUMIN LOW → LOCALISE THE PROTEIN LOSS', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `Albumin provides ~80% of colloid oncotic pressure. Overt oedema from hypoalbuminaemia alone requires <strong>albumin &lt;2.0 g/dL (&lt;20 g/L)</strong>; risk of effusions, oedema and thromboembolism appears once <strong>&lt;1.5 g/dL (&lt;15 g/L)</strong> (Ettinger Ch 30 · Ch 60).<br>
-    <strong>Thresholds:</strong> mildly low 2.1–2.5 g/dL (21–25 g/L) · moderately low 1.5–2.0 g/dL (15–20 g/L) · severely low &lt;1.5 g/dL (&lt;15 g/L).<br>
-    Run the baseline minimum database alongside it: <strong>CBC, chemistry, urinalysis</strong> (Ettinger Ch 30, Fig 30.1).`,
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test result', { text: 'Diagnosis', tone: 'teal' }],
+          rows: [
+            ['<strong>UPC (urine protein:creatinine) ↑</strong>', { text: '<strong>Protein-losing nephropathy</strong> — glomerular loss; note concurrent antithrombin loss → thromboembolism', tone: 'teal' }],
+            ['<strong>Faecal α₁-proteinase inhibitor (α₁-PI) ↑</strong>', { text: '<strong>Protein-losing enteropathy</strong> — GI loss; typically panhypoproteinaemia', tone: 'teal' }],
+            ['<strong>Bile acids ± ammonia abnormal</strong>', { text: '<strong>Hepatic failure / portosystemic shunt</strong> — reduced synthesis; needs &gt;80% hepatocyte loss <span style="opacity:.7">(Ettinger Ch 30, Fig 30.1)</span>', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 3a — IF ALBUMIN LOW → LOCALISE THE PROTEIN LOSS' },
+
+        { kind: 'step', text: '❤️ STEP 3b — IF ALBUMIN NORMAL → CARDIAC / PERICARDIAL FIRST', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `Distinguish protein-losing nephropathy vs enteropathy vs hepatic failure (Ettinger Ch 30, Fig 30.1):<br>
-    <strong>UPC (urine protein:creatinine)</strong> ↑ → protein-losing nephropathy (glomerular loss; note concurrent antithrombin loss → thromboembolism).<br>
-    <strong>Faecal α₁-proteinase inhibitor (α₁-PI)</strong> ↑ → protein-losing enteropathy (GI loss; typically panhypoproteinaemia).<br>
-    <strong>Bile acids ± ammonia</strong> abnormal → hepatic failure / portosystemic shunt (reduced synthesis — needs &gt;80% hepatocyte loss).`,
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Finding / test', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Jugular distension · murmur · arrhythmia</strong> with normal albumin', { text: '<strong>Echocardiography</strong> for right-sided CHF or pericardial disease — R-CHF is rare in small animals and is almost always accompanied by cavitary effusions', tone: 'teal' }],
+            ['<strong>Thoracic radiographs / ultrasound / CT</strong>', { text: 'Pericardial effusion · heartworm / caval disease · cranial mediastinal mass causing cranial vena cava obstruction <span style="opacity:.7">(Ettinger Ch 30, Fig 30.1)</span>', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 3b — IF ALBUMIN NORMAL → CARDIAC / PERICARDIAL FIRST' },
-        {
-          kind: 'check',
-          html: `With normal albumin and <strong>jugular distension, a murmur or an arrhythmia</strong> → <strong>echocardiography</strong> for right-sided CHF or pericardial disease (R-CHF is rare in small animals and is almost always accompanied by cavitary effusions).<br>
-    <strong>Thoracic radiographs / ultrasound / CT</strong> assess pericardial effusion, heartworm/caval disease and a cranial mediastinal mass causing cranial vena cava obstruction (Ettinger Ch 30, Fig 30.1).`,
-        },
-        { kind: 'step', text: 'STEP 4 — VASCULITIS / SEPSIS vs VENOUS-LYMPHATIC OBSTRUCTION' },
-        {
-          kind: 'check',
-          html: `<strong>Fever or circulatory shock</strong> (normal albumin, no cardiac cause) → SIRS/sepsis or vasculitis: <strong>CBC, chemistry, UA, thoracic/abdominal imaging, infectious-disease testing</strong>; consider an immune-mediated panel.<br>
-    <strong>Hypothyroid (↓T4)</strong> → myxedema: thyroid panel + imaging.<br>
-    <strong>Localised forelimb</strong> → thoracic rads/US/CT (cranial mediastinal mass / cranial vena cava); <strong>localised hindlimb</strong> → abdominal rads/US/CT (caudal abdominal mass / caudal vena cava).<br>
-    <strong>Warm swelling with a bruit</strong> → AV fistula (US, angiogram).<br>
-    <strong>Non-pitting single limb</strong> → lymphoedema or lymphangiosarcoma: aspirate/biopsy, CBC, chemistry, lymphatic imaging if needed; <strong>non-pitting with infection</strong> → cellulitis (aspirate the area).`,
-        },
+
+        ...stepTable(4, 'VASCULITIS / SEPSIS vs VENOUS-LYMPHATIC OBSTRUCTION', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Scenario', { text: 'Work-up', tone: 'teal' }],
+          rows: [
+            ['<strong>Fever or circulatory shock</strong><br>normal albumin, no cardiac cause', { text: 'SIRS / sepsis or vasculitis — <strong>CBC · chemistry · UA · thoracic and abdominal imaging · infectious-disease testing</strong>; consider an immune-mediated panel', tone: 'teal' }],
+            ['<strong>Hypothyroid (↓T4)</strong>', { text: 'Myxedema — thyroid panel + imaging', tone: 'teal' }],
+            ['<strong>Localised forelimb</strong>', { text: 'Thoracic rads / US / CT — cranial mediastinal mass · cranial vena cava', tone: 'teal' }],
+            ['<strong>Localised hindlimb</strong>', { text: 'Abdominal rads / US / CT — caudal abdominal mass · caudal vena cava', tone: 'teal' }],
+            ['<strong>Warm swelling with a bruit</strong>', { text: 'AV fistula — US · angiogram', tone: 'teal' }],
+            ['<strong>Non-pitting single limb</strong>', { text: 'Lymphoedema or lymphangiosarcoma — aspirate / biopsy · CBC · chemistry · lymphatic imaging if needed', tone: 'teal' }],
+            ['<strong>Non-pitting with infection</strong>', { text: 'Cellulitis — aspirate the area', tone: 'teal' }],
+          ],
+        }, '🔬'),
       ],
       after: [
       { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [

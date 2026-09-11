@@ -6,6 +6,7 @@
 // intermittent) + echocardiography. Links to the cardiac / metabolic DIS-* pages.
 
 import type { DxApproach } from '../dxTypes'
+import { stepTable } from './shared/dxHelpers'
 
 export const syncopeDx: DxApproach = {
   title: 'Syncope',
@@ -16,26 +17,47 @@ export const syncopeDx: DxApproach = {
       blocks: [
         { kind: 'branch', text: 'GOAL: CONFIRM SYNCOPE IS CARDIAC OR NON-CARDIOGENIC?' },
         {
-          kind: 'check',
-          html: `• <strong>Syncope</strong> = transient loss of consciousness from cerebral hypoperfusion — BP must fall ~50% and an arrhythmia must last ~10–30 s before unconsciousness results<br>• <strong>Pre-syncope</strong> = partial LOC with brief ataxia/stumbling<br>
-    <strong>Syncope vs seizure triage:</strong> use the <em>Weakness / Collapse</em> flow first if still unsure — that screen has the full feature comparison table (tone, trigger, recovery, AEDs). This workup assumes syncope is confirmed and focuses on whether the cause is <strong>cardiogenic</strong> (arrhythmia / structural) or <strong>non-cardiogenic</strong> (reflex / metabolic mimic). (Ettinger Ch 40)`,
+          kind: 'gridTable',
+          cols: '0.6fr 1.5fr',
+          dividers: true,
+          headers: ['Term', { text: 'Definition', tone: 'teal' }],
+          rows: [
+            ['<strong>Syncope</strong>', { text: 'Transient loss of consciousness from cerebral hypoperfusion — BP must fall ~50% and an arrhythmia must last ~10–30 s before unconsciousness results', tone: 'teal' }],
+            ['<strong>Pre-syncope</strong>', { text: 'Partial LOC with brief ataxia / stumbling', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: ' STEP 1 — TRIGGER, POSTURE & RECOVERY' },
         {
-          kind: 'check',
-          html: `<strong>Exertional / excitement-induced collapse</strong> → structural heart disease with limited output (HCM, DCM, pulmonary hypertension, heartworm) or a tachyarrhythmia.<br>
-    <strong>Reflex / situational triggers</strong> → vasovagal syncope (young Boxers, triggered by excitement; Bezold–Jarisch reflex), or tussive / situational syncope (coughing, vomiting, sneezing, micturition, defecation, swallowing, visceral pain).<br>
-    <strong>Cough first, then collapse</strong> → tussive syncope (advanced airway/cardiac disease).<br>
-    Note <strong>colour</strong> (cyanosis/pallor) and whether recovery was truly <strong>instant</strong> (syncope) rather than a slow post-ictal recovery. (Ettinger Ch 40)`,
+          kind: 'note',
+          html: `<strong>Syncope vs seizure triage:</strong> use the <em>Weakness / Collapse</em> flow first if still unsure — that screen has the full feature comparison table (tone · trigger · recovery · AEDs). This workup assumes syncope is confirmed and focuses on whether the cause is <strong>cardiogenic</strong> (arrhythmia / structural) or <strong>non-cardiogenic</strong> (reflex / metabolic mimic). <span style="opacity:.7">(Ettinger Ch 40)</span>`,
         },
-        { kind: 'step', text: ' STEP 3 — SIGNALMENT, MEDS & SYSTEMIC CLUES' },
-        {
-          kind: 'check',
-          html: `<strong>Signalment:</strong> young Boxer → vasovagal/ARVC; small-breed dog with a murmur → MMVD ± pulmonary hypertension; large-breed dog → DCM; cat → HCM (± arterial thromboembolism).<br>
-    <strong>Episodic weakness with GI signs / waxing-waning illness</strong> → consider hypoadrenocorticism (Addison).<br>
-    <strong>Fasting / post-exercise weakness, toy/juvenile, or possible xylitol exposure</strong> → hypoglycaemia (insulinoma in older dogs).<br>
-    <strong>Medications</strong> — sedatives, negative chronotropes/inotropes, vasodilators and diuretics can all precipitate hypotension/bradycardia. (Ettinger Ch 40)`,
-        },
+
+        ...stepTable(1, 'TRIGGER, POSTURE & RECOVERY', {
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['Trigger / feature', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Exertional / excitement-induced collapse</strong>', { text: 'Structural heart disease with limited output (HCM · DCM · pulmonary hypertension · heartworm) or a tachyarrhythmia', tone: 'teal' }],
+            ['<strong>Reflex / situational triggers</strong>', { text: 'Vasovagal syncope (young Boxers, triggered by excitement — Bezold–Jarisch reflex) · tussive / situational syncope (coughing · vomiting · sneezing · micturition · defecation · swallowing · visceral pain)', tone: 'teal' }],
+            ['<strong>Cough first, then collapse</strong>', { text: 'Tussive syncope — advanced airway / cardiac disease', tone: 'teal' }],
+            ['<strong>Colour</strong>', { text: 'Note cyanosis vs pallor', tone: 'teal' }],
+            ['<strong>Recovery</strong>', { text: 'Truly <strong>instant</strong> = syncope; slow post-ictal recovery = seizure <span style="opacity:.7">(Ettinger Ch 40)</span>', tone: 'teal' }],
+          ],
+        }, '⏱️'),
+
+        ...stepTable(2, 'SIGNALMENT, MEDS & SYSTEMIC CLUES', {
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['Clue', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Young Boxer</strong>', { text: 'Vasovagal syncope · ARVC', tone: 'teal' }],
+            ['<strong>Small-breed dog with a murmur</strong>', { text: 'MMVD ± pulmonary hypertension', tone: 'teal' }],
+            ['<strong>Large-breed dog</strong>', { text: 'DCM', tone: 'teal' }],
+            ['<strong>🐱 Cat</strong>', { text: 'HCM ± arterial thromboembolism', tone: 'teal' }],
+            ['<strong>Episodic weakness with GI signs / waxing–waning illness</strong>', { text: 'Hypoadrenocorticism (Addison)', tone: 'teal' }],
+            ['<strong>Fasting / post-exercise weakness · toy or juvenile · possible xylitol exposure</strong>', { text: 'Hypoglycaemia — insulinoma in older dogs', tone: 'teal' }],
+            ['<strong>Medications</strong>', { text: 'Sedatives · negative chronotropes / inotropes · vasodilators · diuretics can all precipitate hypotension / bradycardia <span style="opacity:.7">(Ettinger Ch 40)</span>', tone: 'teal' }],
+          ],
+        }, '🐾'),
       ],
       after: [
         {
@@ -52,26 +74,42 @@ export const syncopeDx: DxApproach = {
       title: 'Exam: Syncope',
       blocks: [
         { kind: 'step', tone: 'teal', text: ' A complete PE is imperative — auscult fully, take pulses & BP' },
-        { kind: 'step', text: ' STEP 1 — CARDIAC AUSCULTATION & PULSE' },
-        {
-          kind: 'check',
-          html: `Listen for a <strong>murmur</strong> (MMVD, dynamic LVOT obstruction in feline HCM, congenital outflow obstruction), a <strong>gallop</strong> (cardiomyopathy), and <strong>muffled heart sounds</strong> (pericardial effusion).<br>
-    Assess <strong>rate & rhythm</strong> — bradycardia (AV block, sick sinus) or a fast/irregular rhythm with <strong>pulse deficits</strong> (tachyarrhythmia, AF). Note that a single in-clinic exam can be entirely normal between episodes.`,
-        },
-        { kind: 'step', text: ' STEP 2 — RIGHT-HEART & PERFUSION SIGNS' },
-        {
-          kind: 'check',
-          html: `<strong>Jugular distension / pulsation, ascites, weak femoral pulses, pulsus paradoxus</strong> → pericardial effusion / tamponade or right-sided failure.<br>
-    <strong>Split/loud S2, right-apical murmur, exertional cyanosis</strong> → pulmonary hypertension (64% present with syncope in one study) or heartworm disease.<br>
-    Assess mucous membrane colour and CRT — pallor (low output/anaemia) vs cyanosis (hypoxaemia). (Ettinger Ch 40)`,
-        },
-        { kind: 'step', text: ' STEP 3 — NEURO, RESP & METABOLIC SCREEN' },
-        {
-          kind: 'check',
-          html: `Brief <strong>neuro exam</strong> — interictal deficits favour a structural/neurological episodic cause rather than syncope.<br>
-    <strong>Upper-airway noise</strong> (stertor/stridor, laryngeal paralysis, BUAS, tracheal collapse) → hypoxaemic / tussive collapse rather than cardiogenic syncope.<br>
-    Look for clues to a metabolic mimic — weakness, weight loss, bradycardia or poor perfusion (Addison), or post-exertional disorientation that resolves with feeding (hypoglycaemia).`,
-        },
+
+        ...stepTable(1, 'CARDIAC AUSCULTATION & PULSE', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Murmur</strong>', { text: 'MMVD · dynamic LVOT obstruction in feline HCM · congenital outflow obstruction', tone: 'teal' }],
+            ['<strong>Gallop</strong>', { text: 'Cardiomyopathy', tone: 'teal' }],
+            ['<strong>Muffled heart sounds</strong>', { text: 'Pericardial effusion', tone: 'teal' }],
+            ['<strong>Bradycardia</strong>', { text: 'AV block · sick sinus syndrome', tone: 'teal' }],
+            ['<strong>Fast / irregular rhythm with pulse deficits</strong>', { text: 'Tachyarrhythmia · AF', tone: 'teal' }],
+          ],
+        }, '❤️'),
+        { kind: 'note', html: `A single in-clinic exam can be entirely normal between episodes.` },
+
+        ...stepTable(2, 'RIGHT-HEART & PERFUSION SIGNS', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Jugular distension / pulsation · ascites · weak femoral pulses · pulsus paradoxus</strong>', { text: 'Pericardial effusion / tamponade · right-sided failure', tone: 'teal' }],
+            ['<strong>Split or loud S2 · right-apical murmur · exertional cyanosis</strong>', { text: 'Pulmonary hypertension (64% present with syncope in one study) · heartworm disease', tone: 'teal' }],
+            ['<strong>Mucous membrane colour + CRT</strong>', { text: 'Pallor (low output / anaemia) vs cyanosis (hypoxaemia) <span style="opacity:.7">(Ettinger Ch 40)</span>', tone: 'teal' }],
+          ],
+        }, '🫀'),
+
+        ...stepTable(3, 'NEURO, RESP & METABOLIC SCREEN', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Assess', { text: 'Interpretation', tone: 'teal' }],
+          rows: [
+            ['<strong>Brief neuro exam</strong>', { text: 'Interictal deficits favour a structural / neurological episodic cause rather than syncope', tone: 'teal' }],
+            ['<strong>Upper-airway noise</strong><br>stertor / stridor · laryngeal paralysis · BUAS · tracheal collapse', { text: 'Hypoxaemic / tussive collapse rather than cardiogenic syncope', tone: 'teal' }],
+            ['<strong>Metabolic mimic clues</strong>', { text: 'Weakness · weight loss · bradycardia · poor perfusion (Addison) · post-exertional disorientation that resolves with feeding (hypoglycaemia)', tone: 'teal' }],
+          ],
+        }, '🧠'),
       ],
       after: [{ kind: 'disclaimer' }],
     },
@@ -79,40 +117,57 @@ export const syncopeDx: DxApproach = {
     dx: {
       title: 'Dx: Syncope — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: ' STEP 1 — RULE OUT THE CHEAP METABOLIC MIMICS FIRST' },
+        { kind: 'step', tone: 'danger', text: '🧪 STEP 1 — RULE OUT THE CHEAP METABOLIC MIMICS FIRST', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `Before chasing the heart, exclude the treatable mimics: <strong>blood glucose</strong> (hypoglycaemia — insulinoma, xylitol, juvenile/toy, sepsis) and <strong>serum electrolytes</strong> (Na⁺/K⁺ — a low Na:K ratio suggests hypoadrenocorticism).<br>
-    Run a <strong>CBC + serum biochemistry</strong> (anaemia, organ disease) and check <strong>thyroid status</strong>.<br>
-    If Addison is suspected → <strong>ACTH stimulation test</strong>. These are quick, inexpensive and treatable — don't miss them. (Ettinger Ch 40)`,
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'What it rules in / out', tone: 'teal' }],
+          rows: [
+            ['<strong>Blood glucose</strong>', { text: 'Hypoglycaemia — insulinoma · xylitol · juvenile / toy · sepsis', tone: 'teal' }],
+            ['<strong>Serum electrolytes</strong>', { text: 'Na⁺ / K⁺ — a low Na:K ratio suggests hypoadrenocorticism', tone: 'teal' }],
+            ['<strong>CBC + serum biochemistry</strong>', { text: 'Anaemia · organ disease', tone: 'teal' }],
+            ['<strong>Thyroid status</strong>', { text: 'Check in every case', tone: 'teal' }],
+            ['<strong>ACTH stimulation test</strong>', { text: 'If Addison is suspected', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 2 — ECG + AMBULATORY MONITORING (the key test)' },
-        {
-          kind: 'check',
-          html: `<strong>A resting ECG is always indicated</strong>, but a normal resting ECG does NOT exclude an intermittent arrhythmia — arrhythmias are paroxysmal, so the diagnostic yield of a snapshot is low.<br>
-    <strong>Ambulatory monitoring is the cornerstone:</strong>
-    <div style="margin-left:8px;">
-      • <strong>Holter</strong> — continuous recording for 24 or 48 h; quantifies rhythm but may miss infrequent events (syncope often needs 5–7 days of monitoring).<br>
-      • <strong>External cardiac event recorder</strong> — owner-activated, battery life ~5–7 days; <strong>75.5%</strong> success rate in correlating rhythm with an episode.<br>
-      • <strong>Implantable loop recorder (ILR)</strong> — diagnostic yield <strong>48–58%</strong> (up to 66%) in dogs with intermittent weakness/syncope; reserved for rare events.
-    </div>
-    The goal is symptom–rhythm correlation: capture the heart rhythm <em>during</em> a spontaneous episode. (Ettinger Ch 40)`,
-        },
-        { kind: 'step', text: 'STEP 3 — ECHOCARDIOGRAPHY + THORACIC IMAGING' },
-        {
-          kind: 'check',
-          html: `<strong>Echocardiography is nearly always indicated</strong> — defines structural disease (HCM, DCM, RCM, MMVD), dynamic LVOT obstruction, pericardial effusion/tamponade, and estimates pulmonary artery pressure (pulmonary hypertension).<br>
-    <strong>Thoracic radiographs</strong> — cardiomegaly, congestion, pulmonary patterns, and screening for heartworm/airway disease as a tussive-syncope substrate.<br>
-    Heartworm antigen/microfilaria testing where endemic. (Ettinger Ch 40)`,
-        },
-        { kind: 'step', text: 'STEP 4 — BP, BIOMARKERS & ADJUNCTS' },
-        {
-          kind: 'check',
-          html: `<strong>Blood pressure</strong> (Doppler/oscillometric) — hypotension supports a haemodynamic mechanism; severe hypertension exacerbates rather than causes syncope.<br>
-    <strong>NT-proBNP</strong> — supports the presence of significant cardiac disease (helps decide whether to pursue echo).<br>
-    <strong>Cardiac troponin I (cTnI)</strong> — elevated cTnI has sensitivity 75% / specificity 80% for cardiogenic syncope vs epileptic seizures, but with significant overlap and <strong>low discriminatory value in the individual</strong> — supportive only.<br>
-    If episodes remain unexplained and a neurological cause is suspected, pursue the seizure work-up (see the Weakness / Collapse approach). (Ettinger Ch 40)`,
-        },
+        { kind: 'note', html: `These are quick, inexpensive and treatable — don't miss them. <span style="opacity:.7">(Ettinger Ch 40)</span>` },
+
+        ...stepTable(2, 'ECG + AMBULATORY MONITORING (the key test)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Resting ECG</strong>', { text: '<strong>Always indicated</strong>, but a normal resting ECG does <strong>NOT</strong> exclude an intermittent arrhythmia — arrhythmias are paroxysmal, so the diagnostic yield of a snapshot is low', tone: 'danger' }],
+            ['<strong>Holter</strong>', { text: 'Continuous recording for 24 or 48 h; quantifies rhythm but may miss infrequent events — syncope often needs 5–7 days of monitoring', tone: 'teal' }],
+            ['<strong>External cardiac event recorder</strong>', { text: 'Owner-activated · battery life ~5–7 days · <strong>75.5%</strong> success rate in correlating rhythm with an episode', tone: 'teal' }],
+            ['<strong>Implantable loop recorder (ILR)</strong>', { text: 'Diagnostic yield <strong>48–58%</strong> (up to 66%) in dogs with intermittent weakness / syncope — reserved for rare events', tone: 'teal' }],
+          ],
+        }, '📈'),
+        { kind: 'note', html: `The goal is <strong>symptom–rhythm correlation</strong>: capture the heart rhythm <em>during</em> a spontaneous episode. <span style="opacity:.7">(Ettinger Ch 40)</span>` },
+
+        ...stepTable(3, 'ECHOCARDIOGRAPHY + THORACIC IMAGING', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'What it shows', tone: 'teal' }],
+          rows: [
+            ['<strong>Echocardiography</strong> — nearly always indicated', { text: 'Structural disease (HCM · DCM · RCM · MMVD) · dynamic LVOT obstruction · pericardial effusion / tamponade · estimated pulmonary artery pressure (pulmonary hypertension)', tone: 'teal' }],
+            ['<strong>Thoracic radiographs</strong>', { text: 'Cardiomegaly · congestion · pulmonary patterns · screening for heartworm and airway disease as a tussive-syncope substrate', tone: 'teal' }],
+            ['<strong>Heartworm antigen / microfilaria testing</strong>', { text: 'Where endemic <span style="opacity:.7">(Ettinger Ch 40)</span>', tone: 'teal' }],
+          ],
+        }, '🫁'),
+
+        ...stepTable(4, 'BP, BIOMARKERS & ADJUNCTS', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'Interpretation', tone: 'teal' }],
+          rows: [
+            ['<strong>Blood pressure</strong> (Doppler / oscillometric)', { text: 'Hypotension supports a haemodynamic mechanism; severe hypertension exacerbates rather than causes syncope', tone: 'teal' }],
+            ['<strong>NT-proBNP</strong>', { text: 'Supports the presence of significant cardiac disease — helps decide whether to pursue echo', tone: 'teal' }],
+            ['<strong>Cardiac troponin I (cTnI)</strong>', { text: 'Sensitivity 75% / specificity 80% for cardiogenic syncope vs epileptic seizures, but with significant overlap and <strong>low discriminatory value in the individual</strong> — supportive only', tone: 'teal' }],
+            ['<strong>Still unexplained + neurological cause suspected</strong>', { text: 'Pursue the seizure work-up — see the Weakness / Collapse approach <span style="opacity:.7">(Ettinger Ch 40)</span>', tone: 'teal' }],
+          ],
+        }, '🩸'),
       ],
       after: [
       { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [

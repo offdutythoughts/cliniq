@@ -4,6 +4,7 @@
 // renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
+import { stepTable } from './shared/dxHelpers'
 
 export const regurgitationDx: DxApproach = {
   title: 'Regurgitation',
@@ -13,56 +14,82 @@ export const regurgitationDx: DxApproach = {
   history: {
     title: 'History: Regurgitation',
     blocks: [
-      { kind: 'step', text: '📋 VOMITING vs REGURGITATION?' },
+      { kind: 'step', text: '📋 STEP 1 — VOMITING vs REGURGITATION?', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `
-    <div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:5px 8px;font-size:10.5px;line-height:1.4;"><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);">Feature</div><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:var(--tone-green-fg);">Regurgitation</div><div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.25);color:var(--tone-danger-fg);">Vomiting</div><div>Retching?</div><div style="color:var(--tone-green-fg);">Usually absent</div><div style="color:var(--tone-danger-fg);">Usually present</div><div>Abdominal effort?</div><div style="color:var(--tone-green-fg);">Passive — none</div><div style="color:var(--tone-danger-fg);">Active</div><div>Prodromal nausea?</div><div style="color:var(--tone-green-fg);">Absent</div><div style="color:var(--tone-danger-fg);">Lip licking, ptyalism</div><div>Bile present?</div><div style="color:var(--tone-green-fg);">Usually absent</div><div style="color:var(--tone-danger-fg);">May be present</div><div>Ingesta digested?</div><div style="color:var(--tone-green-fg);">Typically undigested, tubular</div><div style="color:var(--tone-danger-fg);">May be digested</div><div>Timing after eating?</div><div style="color:var(--tone-green-fg);">Any time; soon after ↑ suspicion</div><div style="color:var(--tone-danger-fg);">Variable</div><div>White/clear mucus?</div><div style="color:var(--tone-green-fg);">Frothy saliva common</div><div style="color:var(--tone-danger-fg);">Less typical</div><div>Frequency?</div><div style="color:var(--tone-green-fg);">Many/day, no systemic signs</div><div style="color:var(--tone-danger-fg);">Variable</div><div>Duration?</div><div style="color:var(--tone-green-fg);">Weeks–months (megaoesoph.); acute if obstructive</div><div style="color:var(--tone-danger-fg);">Variable</div></div>
-  `,
+        kind: 'gridTable',
+        cols: '1.2fr 1fr 1fr',
+        dividers: true,
+        headers: ['Feature', { text: 'Regurgitation', tone: 'green' }, { text: 'Vomiting', tone: 'danger' }],
+        rows: [
+          ['Retching?', { text: 'Usually absent', tone: 'green' }, { text: 'Usually present', tone: 'danger' }],
+          ['Abdominal effort?', { text: 'Passive — none', tone: 'green' }, { text: 'Active', tone: 'danger' }],
+          ['Prodromal nausea?', { text: 'Absent', tone: 'green' }, { text: 'Lip licking, ptyalism', tone: 'danger' }],
+          ['Bile present?', { text: 'Usually absent', tone: 'green' }, { text: 'May be present', tone: 'danger' }],
+          ['Ingesta digested?', { text: 'Typically undigested, tubular', tone: 'green' }, { text: 'May be digested', tone: 'danger' }],
+          ['Timing after eating?', { text: 'Any time; soon after ↑ suspicion', tone: 'green' }, { text: 'Variable', tone: 'danger' }],
+          ['White/clear mucus?', { text: 'Frothy saliva common', tone: 'green' }, { text: 'Less typical', tone: 'danger' }],
+          ['Frequency?', { text: 'Many/day, no systemic signs', tone: 'green' }, { text: 'Variable', tone: 'danger' }],
+          ['Duration?', { text: 'Weeks–months (megaoesoph.); acute if obstructive', tone: 'green' }, { text: 'Variable', tone: 'danger' }],
+        ],
       },
-      { kind: 'step', text: '📖 AETIOLOGICAL CLUES — ONCE CONFIRMED' },
+
+      { kind: 'step', text: '📖 STEP 2 — AETIOLOGICAL CLUES ONCE CONFIRMED', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Neuromuscular disease</strong><br>
-    • Difficulty prehension/swallowing → masticatory/pharyngeal muscle involvement<br>
-    • Generalised weakness → myasthenia gravis or other neuromuscular disease<br>
-    • Stridor (respiratory noise) → laryngeal paralysis or MG-related pharyngeal weakness<br>
-    <span style="font-size:10px;opacity:.75;">Note: uncomplicated idiopathic megaoesophagus can cause ↑ respiratory noise from air mixing with oesophageal fluid.</span>`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Inflammation / Oesophagitis</strong><br>
-    • Pain or discomfort during/after eating → oesophagitis, FB, or mass<br>
-    • Gagging, retching, gulping, reverse sneezing → nausea component suggestive of oesophagitis<br>
-    • Regurgitated blood → oesophageal neoplasia or severe ulceration (oesophagitis/FB)<br>
-    • Medications (clindamycin, doxycycline) → oesophagitis/stricture if tablet retained; small patients/cats at higher risk<br>
-    • Recent anaesthesia/sedation → risk factor for GER → oesophagitis → regurgitation`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-danger-fg);">Obstructive lesion (FB / Stricture)</strong><br>
-    • History of FB ingestion (bones, rawhide — especially small dogs) → oesophageal FB<br>
-    • Unable to pass any food into stomach → obstructive lesion more likely<br>
-    • Gags and regurgitates forcefully soon after eating → obstructive<br>
-    • Acute, progressive course → obstructive more likely than megaoesophagus<br>
-    <span style="font-size:10px;opacity:.75;">Contrast: megaoesophagus is generally non-painful; some food may pass into the stomach.</span>`,
+        kind: 'gridTable',
+        label: 'Neuromuscular disease',
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Clue', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Difficulty prehension / swallowing</strong>', { text: 'Masticatory / pharyngeal muscle involvement', tone: 'green' }],
+          ['<strong>Generalised weakness</strong>', { text: 'Myasthenia gravis or other neuromuscular disease', tone: 'green' }],
+          ['<strong>Stridor</strong> (respiratory noise)', { text: 'Laryngeal paralysis · MG-related pharyngeal weakness. <em>Note: uncomplicated idiopathic megaoesophagus can itself raise respiratory noise from air mixing with oesophageal fluid</em>', tone: 'green' }],
+        ],
       },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-info-fg);">Systemic / Metabolic clues</strong><br>
-    • Inappetence + lethargy → aspiration pneumonia or hypoadrenocorticism<br>
-    • Weight gain + lethargy → hypothyroidism<br>
-    • Dietary indiscretion → toxin ingestion (lead), botulism, or oesophageal FB<br>
-    • Voice change → laryngeal paralysis / GOLPP<br>
-    • Cough → aspiration pneumonia; also occurs from fluid in caudal pharynx with oesophageal disease<br>
-    • Respiratory signs only → may be the sole presenting complaint`,
+        kind: 'gridTable',
+        label: 'Inflammation / oesophagitis',
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Clue', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Pain or discomfort during / after eating</strong>', { text: 'Oesophagitis · FB · mass', tone: 'warning' }],
+          ['<strong>Gagging · retching · gulping · reverse sneezing</strong>', { text: 'Nausea component suggestive of oesophagitis', tone: 'warning' }],
+          ['<strong>Regurgitated blood</strong>', { text: 'Oesophageal neoplasia · severe ulceration (oesophagitis / FB)', tone: 'danger' }],
+          ['<strong>Medications</strong> — clindamycin · doxycycline', { text: 'Oesophagitis / stricture if a tablet is retained; small patients and cats are at higher risk', tone: 'warning' }],
+          ['<strong>Recent anaesthesia / sedation</strong>', { text: 'Risk factor for GER → oesophagitis → regurgitation', tone: 'warning' }],
+        ],
       },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-violet-fg);">Travel + Exposure history</strong><br>
-    • Travel to subtropical/tropical regions → <em>Spirocerca lupi</em><br>
-    • Thorough medication history — drug-induced oesophagitis underdiagnosed<br>
-    • Recent general anaesthesia — ask specifically; owners may not volunteer`,
+        kind: 'gridTable',
+        label: 'Obstructive lesion (FB / stricture)',
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Clue', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>History of FB ingestion</strong> — bones · rawhide (especially small dogs)', { text: 'Oesophageal FB', tone: 'danger' }],
+          ['<strong>Unable to pass any food into the stomach</strong>', { text: 'Obstructive lesion more likely', tone: 'danger' }],
+          ['<strong>Gags and regurgitates forcefully soon after eating</strong>', { text: 'Obstructive', tone: 'danger' }],
+          ['<strong>Acute, progressive course</strong>', { text: 'Obstructive more likely than megaoesophagus. <em>Contrast: megaoesophagus is generally non-painful and some food may pass into the stomach</em>', tone: 'danger' }],
+        ],
+      },
+      {
+        kind: 'gridTable',
+        label: 'Systemic / metabolic · travel and exposure',
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Clue', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Inappetence + lethargy</strong>', { text: 'Aspiration pneumonia · hypoadrenocorticism', tone: 'info' }],
+          ['<strong>Weight gain + lethargy</strong>', { text: 'Hypothyroidism', tone: 'info' }],
+          ['<strong>Dietary indiscretion</strong>', { text: 'Toxin ingestion (lead) · botulism · oesophageal FB', tone: 'info' }],
+          ['<strong>Voice change</strong>', { text: 'Laryngeal paralysis / GOLPP', tone: 'info' }],
+          ['<strong>Cough</strong>', { text: 'Aspiration pneumonia; also from fluid in the caudal pharynx with oesophageal disease', tone: 'info' }],
+          ['<strong>Respiratory signs only</strong>', { text: 'May be the sole presenting complaint', tone: 'info' }],
+          ['<strong>Travel to subtropical / tropical regions</strong>', { text: '<em>Spirocerca lupi</em>', tone: 'violet' }],
+          ['<strong>Thorough medication history</strong>', { text: 'Drug-induced oesophagitis is underdiagnosed', tone: 'violet' }],
+          ['<strong>Recent general anaesthesia</strong>', { text: 'Ask specifically — owners may not volunteer it', tone: 'violet' }],
+        ],
       },
     ],
     after: [
@@ -73,58 +100,43 @@ export const regurgitationDx: DxApproach = {
   exam: {
     title: 'Exam: Regurgitation',
     blocks: [
-      { kind: 'step', text: '🩺 PHYSICAL EXAMINATION' },
+      { kind: 'step', text: '🩺 PHYSICAL EXAMINATION', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Temperature</strong><br>
-    • Fever → raises suspicion for aspiration pneumonia<br>
-    <span style="font-size:10px;opacity:.75;">⚠️ Absence of fever does not preclude aspiration pneumonia — &lt;50% of affected dogs are febrile.</span>`,
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Assess', { text: 'Interpretation', tone: 'teal' }],
+        rows: [
+          ['<strong>Temperature</strong>', { text: 'Fever → raises suspicion for aspiration pneumonia. ⚠️ <strong>Absence of fever does not preclude it</strong> — &lt;50% of affected dogs are febrile', tone: 'green' }],
+          ['<strong>Body + muscle condition</strong>', { text: 'Compare current weight with historical records — assess for malnourishment. Poor muscle condition <em>without</em> general body condition loss → polymyositis or other polymyopathy', tone: 'green' }],
+          ['<strong>Neck palpation</strong>', { text: 'A grossly dilated oesophagus is occasionally palpable in the left ventral neck (not always detected) · a firm structure there → oesophageal foreign material · discomfort or repeated swallowing attempts on palpation → oesophagitis or FB obstruction', tone: 'green' }],
+          ['<strong>Oral examination</strong>', { text: 'Assess the oral cavity for FBs · swellings · masses. Ptyalism commonly noted', tone: 'green' }],
+        ],
       },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Body + Muscle Condition</strong><br>
-    • Compare current weight with historical records — assess for malnourishment<br>
-    • Poor muscle condition without general body condition loss → polymyositis or other polymyopathy`,
+        kind: 'gridTable',
+        label: 'Upper airway noise',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Sound', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Subtle bubbling / fluid noise</strong>', { text: 'Megaoesophagus — oesophageal fluid', tone: 'warning' }],
+          ['<strong>Stridor</strong>', { text: 'Laryngeal paralysis / GOLPP', tone: 'warning' }],
+          ['<strong>Brachycephalic breeds</strong>', { text: 'Assess visible airway conformation + degree of stertor — severity of noise correlates with GI signs', tone: 'warning' }],
+          ['<strong>Harsh / stertorous noise in a non-brachycephalic</strong>', { text: 'Pharyngeal saliva accumulation from weakness — consider generalised neuromuscular disease', tone: 'warning' }],
+        ],
       },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Neck Palpation</strong><br>
-    • Grossly dilated oesophagus occasionally palpable in left ventral neck (not always detected)<br>
-    • Firm structure in left ventral neck → oesophageal foreign material<br>
-    • Discomfort or repeated swallowing attempts on palpation → oesophagitis or FB obstruction`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-green-fg);">Oral Examination</strong><br>
-    • Assess oral cavity for FBs, swellings, or masses<br>
-    • Ptyalism commonly noted`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Upper Airway Noise</strong><br>
-    • Megaoesophagus → subtle bubbling/fluid noise from oesophageal fluid<br>
-    • <strong>Stridor</strong> → laryngeal paralysis / GOLPP<br>
-    • Brachycephalic breeds: assess visible airway conformation + degree of stertor — severity of noise correlates with GI signs<br>
-    • Harsh/stertorous noise in non-brachycephalic breeds → pharyngeal saliva accumulation from weakness — consider generalised neuromuscular disease`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-warning-fg);">Thoracic Auscultation</strong><br>
-    • Auscultate for crackles, ↑ respiratory rate/effort → aspiration pneumonia<br>
-    <span style="font-size:10px;opacity:.75;">⚠️ Normal pulmonary auscultation does not exclude pneumonia. Oesophageal fluid movement can mimic crackles.</span>`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-violet-fg);">Neurological Examination</strong><br>
-    • Assess for generalised neuromuscular disease<br>
-    • Cranial nerve abnormalities (menace, pupillary light) → MG or dysautonomia<br>
-    • Weak gag reflex + weak corneal reflex on repeated stimulation → myasthenia gravis`,
-      },
-      {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-violet-fg);">Musculoskeletal Examination</strong><br>
-    • Fatigable muscle weakness → myasthenia gravis<br>
-    • Walk or jog the patient during exam — weakness may only become apparent with activity`,
+        kind: 'gridTable',
+        label: 'Thoracic · neurological · musculoskeletal',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Assess', { text: 'Interpretation', tone: 'teal' }],
+        rows: [
+          ['<strong>Thoracic auscultation</strong>', { text: 'Crackles · ↑ respiratory rate or effort → aspiration pneumonia. ⚠️ <strong>Normal pulmonary auscultation does not exclude pneumonia</strong>; oesophageal fluid movement can mimic crackles', tone: 'warning' }],
+          ['<strong>Neurological examination</strong>', { text: 'Assess for generalised neuromuscular disease · cranial nerve abnormalities (menace · pupillary light) → MG or dysautonomia · weak gag reflex + weak corneal reflex on repeated stimulation → <strong>myasthenia gravis</strong>', tone: 'violet' }],
+          ['<strong>Musculoskeletal examination</strong>', { text: 'Fatigable muscle weakness → myasthenia gravis. <strong>Walk or jog the patient during the exam</strong> — weakness may only become apparent with activity', tone: 'violet' }],
+        ],
       },
     ],
     after: [
@@ -135,12 +147,19 @@ export const regurgitationDx: DxApproach = {
   dx: {
     title: 'Dx: Regurgitation',
     blocks: [
-      { kind: 'step', text: '📋 CONFIRM REGURGITATION' },
+      { kind: 'step', text: '📋 CONFIRM REGURGITATION', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `Passive, effortless expulsion · No prodromal nausea · Undigested tubular food · No bile<br>
-    <span style="font-size:10px;opacity:.8;">Distinguish from vomiting (active abdominal effort, bile-stained, retching). Diagnostic approach is highly variable and dependent on differentials for the underlying aetiology.</span>`,
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Feature', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Regurgitation</strong>', { text: 'Passive, effortless expulsion · no prodromal nausea · undigested tubular food · no bile', tone: 'teal' }],
+          ['<strong>Distinguish from vomiting</strong>', { text: 'Active abdominal effort · bile-stained · retching', tone: 'teal' }],
+          ['<strong>Note</strong>', { text: 'The diagnostic approach is highly variable and depends on the differentials for the underlying aetiology', tone: 'teal' }],
+        ],
       },
+
       { kind: 'step', text: '🔬 FIRST-LINE DIAGNOSTICS' },
       {
         kind: 'html',
@@ -155,101 +174,126 @@ export const regurgitationDx: DxApproach = {
     </div>
   </div>`,
       },
-      { kind: 'step', text: '📊 CERVICAL + THORACIC RADIOGRAPHY' },
+
+      { kind: 'step', text: '📊 CERVICAL + THORACIC RADIOGRAPHY', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `Most valuable diagnostic tool for oesophageal disease. Perform <strong>without sedation/anaesthesia</strong> where possible.<br><br>
-    <strong>What to look for:</strong><br>
-    • Generalised gas, food or fluid dilation → megaoesophagus (significant hypomotility can exist without radiographic dilation)<br>
-    • Radiopaque foreign body — sensitivity 90–100%; radiolucent FBs may be missed<br>
-    • Ventral lung consolidation → aspiration pneumonia<br><br>
-    <strong>⚠️ Aspiration pneumonia caveat:</strong> Radiographic changes lag behind aspiration (chemical injury precedes fluid accumulation) — radiograph may be normal despite active aspiration. Changes persist for days after clinical improvement with poor correlation to hypoxaemia and prognosis.`,
-        noArrowAfter: true,
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Element', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Technique</strong>', { text: 'The most valuable diagnostic tool for oesophageal disease — perform <strong>without sedation / anaesthesia</strong> where possible', tone: 'teal' }],
+          ['<strong>Generalised gas, food or fluid dilation</strong>', { text: 'Megaoesophagus — significant hypomotility can exist <em>without</em> radiographic dilation', tone: 'teal' }],
+          ['<strong>Radiopaque foreign body</strong>', { text: 'Sensitivity 90–100%; radiolucent FBs may be missed', tone: 'teal' }],
+          ['<strong>Ventral lung consolidation</strong>', { text: 'Aspiration pneumonia', tone: 'teal' }],
+          ['<strong>⚠️ Aspiration pneumonia caveat</strong>', { text: 'Radiographic changes <strong>lag behind</strong> aspiration (chemical injury precedes fluid accumulation) — the radiograph may be normal despite active aspiration. Changes persist for days after clinical improvement, with poor correlation to hypoxaemia and prognosis', tone: 'danger' }],
+        ],
       },
-      { kind: 'step', text: '🧪 CBC · SERUM CHEMISTRY · URINALYSIS' },
+
+      { kind: 'step', text: '🧪 CBC · SERUM CHEMISTRY · URINALYSIS', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `Assess for concurrent disease and complicating factors.<br><br>
-    • <strong>Neutrophilia</strong> → raises suspicion for secondary aspiration pneumonia<br>
-    • <strong>Absence of stress leukogram</strong> → raises suspicion for hypoadrenocorticism, especially with concurrent eosinophilia, hypoglycaemia, hypocholesterolaemia, hyperkalaemia, hyponatraemia<br>
-    • <strong>Creatine kinase (CK):</strong> include to help rule out polymyositis/polymyopathy<br>
-      &nbsp;&nbsp;– Normal: muscle disease unlikely<br>
-      &nbsp;&nbsp;– Mild elevation: non-specific<br>
-      &nbsp;&nbsp;– Significant elevation (&gt;1,000 U/L): raises suspicion for polymyositis/polymyopathy`,
-        noArrowAfter: true,
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Neutrophilia</strong>', { text: 'Raises suspicion for secondary aspiration pneumonia', tone: 'teal' }],
+          ['<strong>Absence of stress leukogram</strong>', { text: 'Raises suspicion for hypoadrenocorticism — especially with concurrent eosinophilia · hypoglycaemia · hypocholesterolaemia · hyperkalaemia · hyponatraemia', tone: 'teal' }],
+          ['<strong>Creatine kinase (CK)</strong>', { text: 'Include to help rule out polymyositis / polymyopathy — normal: muscle disease unlikely · mild elevation: non-specific · <strong>significant elevation (&gt;1,000 U/L)</strong>: raises suspicion for polymyositis / polymyopathy', tone: 'teal' }],
+        ],
       },
+      { kind: 'note', html: `Assess for concurrent disease and complicating factors.` },
+
       { kind: 'step', text: '🔍 FURTHER DIAGNOSTICS' },
-      { kind: 'step', text: `📊 POSITIVE-CONTRAST OESOPHAGRAM<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: normal non-contrast radiograph + oesophageal disease still suspected</span>` },
+      { kind: 'step', text: `📊 POSITIVE-CONTRAST OESOPHAGRAM<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: normal non-contrast radiograph + oesophageal disease still suspected</span>`, noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong>Indications:</strong> Use when non-contrast radiography is normal but oesophageal disease still suspected — can reveal hypomotility, focal dilation (obstruction: VRA, stricture, mass, FB), filling defects, or diverticula. Abdominal inclusion helps confirm gastric position (hiatal hernia).<br><br>
-    <strong>What to evaluate:</strong><br>
-    • Luminal filling defect(s) — usually focal; dilation proximal to defect suggests obstruction<br>
-    • Extra-luminal contrast — indicates perforation (wispy/feathery tracking into tissues)<br>
-    • Focal luminal narrowing — only diagnose stricture/VRA if persistent on several projections (single narrowing may be a normal peristaltic wave)<br>
-    • Mucosal irregularities — only severe oesophagitis detected; mild forms often missed<br><br>
-    <strong>⚠️ Not indicated</strong> if non-contrast radiography shows overt oesophageal dilation.<br>
-    GER observed on contrast study does not necessarily imply disease (seen in healthy dogs).<br><br>
-    <strong>Contraindications + risks:</strong><br>
-    • Contraindicated: altered consciousness / neurological swallowing abnormalities<br>
-    • Extreme caution: active vomiting, frequent regurgitation, known/suspected perforation, dyspnoea (restraint + oral contrast → respiratory distress)<br>
-    • Aspiration risk: barium is caustic to pulmonary parenchyma → severe inflammatory response; high-osmolality iodinated contrast → severe pulmonary oedema if aspirated<br>
-    • Barium contraindicated for suspected perforation (mediastinitis risk); iodinated contrast preferred — but barium has higher sensitivity for small leaks`,
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Element', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Indications</strong>', { text: 'Non-contrast radiography normal but oesophageal disease still suspected — can reveal hypomotility · focal dilation (obstruction: VRA · stricture · mass · FB) · filling defects · diverticula. Abdominal inclusion helps confirm gastric position (hiatal hernia)', tone: 'teal' }],
+          ['<strong>Luminal filling defect(s)</strong>', { text: 'Usually focal — dilation proximal to the defect suggests obstruction', tone: 'teal' }],
+          ['<strong>Extra-luminal contrast</strong>', { text: 'Indicates perforation — wispy / feathery tracking into tissues', tone: 'danger' }],
+          ['<strong>Focal luminal narrowing</strong>', { text: 'Only diagnose stricture / VRA if persistent on several projections — a single narrowing may be a normal peristaltic wave', tone: 'teal' }],
+          ['<strong>Mucosal irregularities</strong>', { text: 'Only severe oesophagitis is detected; mild forms are often missed', tone: 'teal' }],
+          ['<strong>⚠️ Not indicated</strong>', { text: 'If non-contrast radiography already shows overt oesophageal dilation. GER observed on a contrast study does not necessarily imply disease — it is seen in healthy dogs', tone: 'danger' }],
+          ['<strong>Contraindicated</strong>', { text: 'Altered consciousness · neurological swallowing abnormalities', tone: 'danger' }],
+          ['<strong>Extreme caution</strong>', { text: 'Active vomiting · frequent regurgitation · known or suspected perforation · dyspnoea (restraint + oral contrast → respiratory distress)', tone: 'danger' }],
+          ['<strong>Aspiration risk</strong>', { text: 'Barium is caustic to pulmonary parenchyma → severe inflammatory response; high-osmolality iodinated contrast → severe pulmonary oedema if aspirated', tone: 'danger' }],
+          ['<strong>Suspected perforation</strong>', { text: 'Barium contraindicated (mediastinitis risk) — iodinated contrast preferred, but barium has higher sensitivity for small leaks', tone: 'danger' }],
+        ],
       },
-      { kind: 'step', text: `🔬 ENDOSCOPY (OESOPHAGOSCOPY)<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: suspected oesophagitis · mucosal assessment · FB retrieval</span>` },
+
+      { kind: 'step', text: `🔬 ENDOSCOPY (OESOPHAGOSCOPY)<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: suspected oesophagitis · mucosal assessment · FB retrieval</span>`, noArrowAfter: true },
       {
-        kind: 'check',
-        html: `Most sensitive tool for presumptive diagnosis of oesophagitis. Assess mucosa for: hyperaemia, oedema, erosions, ulceration, friability, fibrosis, granular surface texture, increased vascularity, exudative pseudomembranes, submucosal gland proliferation (brown dots).<br><br>
-    <strong>Additional benefits:</strong><br>
-    • Direct visualisation of strictures, intraluminal masses, FBs, granulomas<br>
-    • Biopsy / fine-needle aspiration<br>
-    • Gastrostomy feeding tube placement<br>
-    • Gastroscopy to exclude extra-oesophageal pathology (perform in every patient)<br>
-    • Retroflexion to nasopharynx — assess for laryngopharyngeal reflux changes<br>
-    • Bronchoscopy + BAL — assess lower airways; cytology + culture if concurrent pneumonia<br><br>
-    <strong>⚠️ Limitations:</strong><br>
-    • Cannot assess oesophageal motility or diagnose megaoesophagus<br>
-    • Squamocolumnar junction (erythematous ring near LOS) may mimic reflux oesophagitis — avoid over-insufflation<br>
-    • Strictures challenging to identify in large/giant breeds<br>
-    • Anaesthesia and intubation affect gastro-oesophageal junction assessment<br>
-    • Discrepancies between clinical signs and endoscopic findings are common — 91% of GER-suspected dogs had unremarkable oesophagoscopy in one study<br>
-    • Non-erosive oesophagitis not detectable endoscopically`,
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Element', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Mucosal assessment</strong>', { text: 'The most sensitive tool for a presumptive diagnosis of oesophagitis — hyperaemia · oedema · erosions · ulceration · friability · fibrosis · granular surface texture · increased vascularity · exudative pseudomembranes · submucosal gland proliferation (brown dots)', tone: 'teal' }],
+          ['<strong>Additional benefits</strong>', { text: 'Direct visualisation of strictures · intraluminal masses · FBs · granulomas · biopsy / FNA · gastrostomy feeding tube placement · gastroscopy to exclude extra-oesophageal pathology (<strong>perform in every patient</strong>) · retroflexion to the nasopharynx for laryngopharyngeal reflux changes · bronchoscopy + BAL with cytology and culture if concurrent pneumonia', tone: 'teal' }],
+          ['<strong>⚠️ Limitations</strong>', { text: 'Cannot assess oesophageal motility or diagnose megaoesophagus · the squamocolumnar junction (erythematous ring near the LOS) may mimic reflux oesophagitis — avoid over-insufflation · strictures are challenging to identify in large / giant breeds · anaesthesia and intubation affect gastro-oesophageal junction assessment · discrepancies between clinical signs and endoscopic findings are common (91% of GER-suspected dogs had unremarkable oesophagoscopy in one study) · non-erosive oesophagitis is not detectable endoscopically', tone: 'danger' }],
+        ],
       },
-      { kind: 'step', text: `📡 ABDOMINAL RADIOGRAPHY + ULTRASONOGRAPHY<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: concurrent vomiting, weight loss, or hyporexia</span>` },
+
+      { kind: 'step', text: `📡 ABDOMINAL RADIOGRAPHY + ULTRASONOGRAPHY<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: concurrent vomiting, weight loss, or hyporexia</span>`, noArrowAfter: true },
       {
-        kind: 'check',
-        html: `Generally unhelpful for primary oesophageal disease. Consider when vomiting, weight loss, or hyporexia are concurrent.<br><br>
-    • Rules out reflux secondary to upper GI obstruction<br>
-    • Gastro-oesophageal junction may show mucosal thickening on ultrasound<br>
-    • Pyloric assessment — obstructive lesion or stenosis<br>
-    • Sliding hiatal hernia cannot be excluded by normal gastric positioning on ultrasound`,
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Element', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Yield</strong>', { text: 'Generally unhelpful for primary oesophageal disease — consider when vomiting, weight loss or hyporexia are concurrent', tone: 'teal' }],
+          ['<strong>Rules out</strong>', { text: 'Reflux secondary to upper GI obstruction', tone: 'teal' }],
+          ['<strong>Gastro-oesophageal junction</strong>', { text: 'May show mucosal thickening on ultrasound', tone: 'teal' }],
+          ['<strong>Pyloric assessment</strong>', { text: 'Obstructive lesion or stenosis', tone: 'teal' }],
+          ['<strong>Caveat</strong>', { text: 'A sliding hiatal hernia <strong>cannot</strong> be excluded by normal gastric positioning on ultrasound', tone: 'danger' }],
+        ],
       },
-      { kind: 'step', text: `🎬 VIDEO FLUOROSCOPY<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: motility assessment · dynamic GER · sliding hiatal hernia</span>` },
+
+      { kind: 'step', text: `🎬 VIDEO FLUOROSCOPY<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: motility assessment · dynamic GER · sliding hiatal hernia</span>`, noArrowAfter: true },
       {
-        kind: 'check',
-        html: `Superior to static contrast radiography — assesses motility throughout the entire swallowing phase.<br><br>
-    • More sensitive than static radiography for dynamic conditions (GER, sliding hiatal hernia)<br>
-    • Allows assessment of lower oesophageal sphincter dysfunction<br>
-    • Perform with both liquid and dry contrast media to maximise stricture detection sensitivity<br>
-    • <strong>Not useful</strong> for diagnosing oesophagitis (assesses function, not mucosa)`,
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Element', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Advantage</strong>', { text: 'Superior to static contrast radiography — assesses motility throughout the entire swallowing phase', tone: 'teal' }],
+          ['<strong>Sensitivity</strong>', { text: 'More sensitive than static radiography for dynamic conditions — GER · sliding hiatal hernia', tone: 'teal' }],
+          ['<strong>Also assesses</strong>', { text: 'Lower oesophageal sphincter dysfunction', tone: 'teal' }],
+          ['<strong>Technique</strong>', { text: 'Perform with both liquid and dry contrast media to maximise stricture detection sensitivity', tone: 'teal' }],
+          ['<strong>Not useful for</strong>', { text: 'Diagnosing oesophagitis — assesses function, not mucosa', tone: 'danger' }],
+        ],
       },
-      { kind: 'step', text: `🖥️ CT + ANGIOGRAPHY<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: confirm vascular ring anomaly · neoplasia staging</span>` },
+
+      { kind: 'step', text: `🖥️ CT + ANGIOGRAPHY<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: confirm vascular ring anomaly · neoplasia staging</span>`, noArrowAfter: true },
       {
-        kind: 'check',
-        html: `CT with angiography is the recommended diagnostic to confirm vascular ring anomaly (VRA) — defines vascular anatomy and confirms oesophageal constriction. Also used for neoplasia staging and complex mediastinal disease.`,
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Indication', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Vascular ring anomaly (VRA)</strong>', { text: 'CT with angiography is the <strong>recommended diagnostic to confirm VRA</strong> — defines vascular anatomy and confirms oesophageal constriction', tone: 'teal' }],
+          ['<strong>Also used for</strong>', { text: 'Neoplasia staging · complex mediastinal disease', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: `🔍 FURTHER INVESTIGATION — MEGAOESOPHAGUS<br><span style="font-size:10px;font-weight:400;opacity:.85;">When: megaoesophagus confirmed — identify underlying cause</span>` },
-      {
-        kind: 'check',
-        html: `When megaoesophagus is confirmed, additional diagnostics to rule out underlying cause:<br><br>
-    • Acetylcholine receptor antibody titre (myasthenia gravis)<br>
-    • Neostigmine challenge (MG)<br>
-    • ACTH stimulation test (hypoadrenocorticism)<br>
-    • Thyroid hormone panel (hypothyroidism)<br>
-    • Blood lead ± heavy metal panel<br>
-    • Electrophysiology — polyneuropathy / polymyopathy ± muscle biopsies<br>
-    • Fecal flotation for <em>Spirocerca lupi</em> eggs (endemic regions) — repeat if negative to maximise sensitivity`,
-      },
+
+      ...stepTable(1, 'FURTHER INVESTIGATION — MEGAOESOPHAGUS CONFIRMED', {
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Test', { text: 'Rules in / out', tone: 'teal' }],
+        rows: [
+          ['<strong>Acetylcholine receptor antibody titre</strong>', { text: 'Myasthenia gravis', tone: 'teal' }],
+          ['<strong>Neostigmine challenge</strong>', { text: 'Myasthenia gravis', tone: 'teal' }],
+          ['<strong>ACTH stimulation test</strong>', { text: 'Hypoadrenocorticism', tone: 'teal' }],
+          ['<strong>Thyroid hormone panel</strong>', { text: 'Hypothyroidism', tone: 'teal' }],
+          ['<strong>Blood lead ± heavy metal panel</strong>', { text: 'Lead / heavy metal toxicity', tone: 'teal' }],
+          ['<strong>Electrophysiology ± muscle biopsies</strong>', { text: 'Polyneuropathy / polymyopathy', tone: 'teal' }],
+          ['<strong>Faecal flotation for <em>Spirocerca lupi</em> eggs</strong>', { text: 'Endemic regions — repeat if negative to maximise sensitivity', tone: 'teal' }],
+        ],
+      }, '🔍'),
     ],
     after: [
       { kind: 'html', html: `<div class="disclaimer">For qualified veterinary professionals only. Not a substitute for clinical judgment.</div>` },

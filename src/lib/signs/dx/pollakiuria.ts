@@ -4,6 +4,7 @@
 // urinalysis + culture + imaging. Links to the LUT disease pages (DIS-URO-*).
 
 import type { DxApproach } from '../dxTypes'
+import { stepTable } from './shared/dxHelpers'
 
 export const pollakiuriaDx: DxApproach = {
   title: 'Pollakiuria / Stranguria',
@@ -14,29 +15,54 @@ export const pollakiuriaDx: DxApproach = {
       blocks: [
         { kind: 'branch', text: 'GOAL: CONFIRM LUT SIGNS & EXCLUDE OBSTRUCTION' },
         {
-          kind: 'check',
-          html: `• <strong>Pollakiuria</strong> = frequent small-volume voiding<br>• <strong>Stranguria</strong> = slow/painful straining<br>• <strong>Dysuria</strong> = difficult/painful urination<br>These are LOWER urinary tract signs — distinguish from <strong>polyuria</strong> (large volumes — see the PU/PD approach) and from <strong>tenesmus</strong> (straining to defecate).`,
+          kind: 'gridTable',
+          cols: '0.6fr 1.5fr',
+          dividers: true,
+          headers: ['Term', { text: 'Definition', tone: 'teal' }],
+          rows: [
+            ['<strong>Pollakiuria</strong>', { text: 'Frequent small-volume voiding', tone: 'teal' }],
+            ['<strong>Stranguria</strong>', { text: 'Slow / painful straining', tone: 'teal' }],
+            ['<strong>Dysuria</strong>', { text: 'Difficult / painful urination', tone: 'teal' }],
+            ['<strong>Not this:</strong> polyuria', { text: 'Large volumes — see the PU/PD approach', tone: 'teal' }],
+            ['<strong>Not this:</strong> tenesmus', { text: 'Straining to defecate', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', tone: 'danger', text: '🚨 STEP 1 — IS THE PATIENT BLOCKED?' },
+
+        { kind: 'step', tone: 'danger', text: '🚨 STEP 1 — IS THE PATIENT BLOCKED?', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `Repeated unproductive trips to the litter tray, vocalising, a <strong>large turgid painful bladder</strong>, or systemic collapse/bradycardia = urethral obstruction. This is a <strong>hyperkalaemic emergency</strong> — go straight to ECG + serum potassium and see <strong>Urethral obstruction</strong>. Male cats and male dogs (os penis calculus) are highest risk.`,
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Finding', { text: 'Action', tone: 'teal' }],
+          rows: [
+            ['<strong>Repeated unproductive trips to the litter tray · vocalising · large turgid painful bladder · systemic collapse or bradycardia</strong>', { text: '<strong>Urethral obstruction</strong> — a hyperkalaemic emergency. Go straight to ECG + serum potassium; see <strong>Urethral obstruction</strong>', tone: 'danger' }],
+            ['<strong>Highest-risk signalment</strong>', { text: 'Male cats · male dogs (os penis calculus)', tone: 'danger' }],
+          ],
         },
-        { kind: 'step', text: '🐾 STEP 2 — SIGNALMENT & PATTERN' },
-        {
-          kind: 'check',
-          html: `<strong>Young–middle-aged cat, indoor, multi-cat or stressed household</strong> → feline idiopathic cystitis (FIC) is the commonest cause of feline LUTS.<br>
-    <strong>Spayed female dog</strong> → bacterial cystitis is common (2× risk vs intact males).<br>
-    <strong>Entire male dog</strong> → prostatic disease (BPH, prostatitis); <strong>older dog of any sex</strong> with persistent signs → urothelial carcinoma.<br>
-    <strong>Breed clues:</strong> Dalmatian/PSS → urate; Miniature Schnauzer/Bichon → oxalate; Mastiff/Bulldog (intact male) → cystine.`,
-        },
-        { kind: 'step', text: '🔁 STEP 3 — COURSE, RECURRENCE & RESPONSE' },
-        {
-          kind: 'check',
-          html: `<strong>Recurrent or relapsing signs</strong> → look for an underlying cause (urolith, anatomical anomaly, prostatic disease, neoplasia, endocrinopathy).<br>
-    <strong>Failure to respond to appropriate antibiotics</strong> → reconsider the diagnosis (sterile FIC, urolith, neoplasia) rather than escalating antibiotics.<br>
-    <strong>Diet & water intake</strong>, prior episodes, and any catheterisation history (stricture risk) are all relevant.`,
-        },
+
+        ...stepTable(2, 'SIGNALMENT & PATTERN', {
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['Signalment', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Young–middle-aged cat, indoor, multi-cat or stressed household</strong>', { text: '<strong>Feline idiopathic cystitis (FIC)</strong> — the commonest cause of feline LUTS', tone: 'teal' }],
+            ['<strong>Spayed female dog</strong>', { text: 'Bacterial cystitis is common — 2× the risk of intact males', tone: 'teal' }],
+            ['<strong>Entire male dog</strong>', { text: 'Prostatic disease — BPH · prostatitis', tone: 'teal' }],
+            ['<strong>Older dog, any sex, persistent signs</strong>', { text: 'Urothelial carcinoma', tone: 'teal' }],
+            ['<strong>Breed clues</strong>', { text: 'Dalmatian / PSS → urate · Miniature Schnauzer / Bichon → oxalate · Mastiff / Bulldog (intact male) → cystine', tone: 'teal' }],
+          ],
+        }, '🐾'),
+
+        ...stepTable(3, 'COURSE, RECURRENCE & RESPONSE', {
+          cols: '0.85fr 1.3fr',
+          dividers: true,
+          headers: ['History', { text: 'What it means', tone: 'teal' }],
+          rows: [
+            ['<strong>Recurrent or relapsing signs</strong>', { text: 'Look for an underlying cause — urolith · anatomical anomaly · prostatic disease · neoplasia · endocrinopathy', tone: 'teal' }],
+            ['<strong>Failure to respond to appropriate antibiotics</strong>', { text: 'Reconsider the diagnosis (sterile FIC · urolith · neoplasia) rather than escalating antibiotics', tone: 'teal' }],
+            ['<strong>Also ask</strong>', { text: 'Diet and water intake · prior episodes · any catheterisation history (stricture risk)', tone: 'teal' }],
+          ],
+        }, '🔁'),
       ],
       after: [
         {
@@ -52,21 +78,40 @@ export const pollakiuriaDx: DxApproach = {
     exam: {
       title: 'Exam: Pollakiuria / Stranguria',
       blocks: [
-        { kind: 'step', tone: 'teal', text: '🩺 STEP 1 — ABDOMINAL PALPATION (bladder size & turgor)' },
+        { kind: 'step', tone: 'teal', text: '🩺 STEP 1 — ABDOMINAL PALPATION (bladder size & turgor)', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `<strong>Large, firm, painful, non-expressible bladder</strong> → obstruction (emergency). <strong>Small, thickened, painful bladder</strong> → cystitis/FIC. A bladder that empties then rapidly refills with frequent small voids supports a true LUT problem. Palpate gently — an over-distended bladder can rupture.`,
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Bladder', { text: 'Means', tone: 'teal' }],
+          rows: [
+            ['<strong>Large, firm, painful, non-expressible</strong>', { text: '<strong>Obstruction</strong> — emergency', tone: 'danger' }],
+            ['<strong>Small, thickened, painful</strong>', { text: 'Cystitis / FIC', tone: 'teal' }],
+            ['<strong>Empties then rapidly refills with frequent small voids</strong>', { text: 'Supports a true LUT problem', tone: 'teal' }],
+            ['<strong>Technique</strong>', { text: 'Palpate gently — an over-distended bladder can rupture', tone: 'danger' }],
+          ],
         },
-        { kind: 'step', text: '👆 STEP 2 — RECTAL EXAMINATION' },
-        {
-          kind: 'check',
-          html: `Assess the <strong>prostate</strong> (size, symmetry, pain, mobility): symmetrical non-painful enlargement → BPH; painful → prostatitis; asymmetric/fixed/firm → carcinoma. Palpate the pelvic urethra for calculi/masses and assess <strong>sublumbar lymph nodes</strong> (enlarged with prostatic/urothelial carcinoma).`,
-        },
-        { kind: 'step', text: '🔬 STEP 3 — EXTERNAL GENITALIA & PERINEUM' },
-        {
-          kind: 'check',
-          html: `Examine the vulva/penis and prepuce for conformation, discharge, masses or a palpable urethral calculus at the os penis. Perivulvar/perineal urine scald suggests chronic dribbling or incontinence overlapping the LUTS.`,
-        },
+
+        ...stepTable(2, 'RECTAL EXAMINATION', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Assess', { text: 'Interpretation', tone: 'teal' }],
+          rows: [
+            ['<strong>Prostate</strong> — size · symmetry · pain · mobility', { text: 'Symmetrical non-painful enlargement → <strong>BPH</strong> · painful → <strong>prostatitis</strong> · asymmetric / fixed / firm → <strong>carcinoma</strong>', tone: 'teal' }],
+            ['<strong>Pelvic urethra</strong>', { text: 'Calculi · masses', tone: 'teal' }],
+            ['<strong>Sublumbar lymph nodes</strong>', { text: 'Enlarged with prostatic / urothelial carcinoma', tone: 'teal' }],
+          ],
+        }, '👆'),
+
+        ...stepTable(3, 'EXTERNAL GENITALIA & PERINEUM', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Examine', { text: 'Looking for', tone: 'teal' }],
+          rows: [
+            ['<strong>Vulva / penis and prepuce</strong>', { text: 'Conformation · discharge · masses · a palpable urethral calculus at the os penis', tone: 'teal' }],
+            ['<strong>Perivulvar / perineal skin</strong>', { text: 'Urine scald suggests chronic dribbling or incontinence overlapping the LUTS', tone: 'teal' }],
+          ],
+        }, '🔬'),
       ],
       after: [{ kind: 'disclaimer' }],
     },
@@ -74,33 +119,54 @@ export const pollakiuriaDx: DxApproach = {
     dx: {
       title: 'Dx: Pollakiuria / Stranguria — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: '⚡ STEP 1 — IF OBSTRUCTED, STABILISE FIRST' },
+        { kind: 'step', tone: 'danger', text: '⚡ STEP 1 — IF OBSTRUCTED, STABILISE FIRST', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `ECG + serum potassium; treat hyperkalaemia (calcium gluconate to protect the myocardium, then dextrose ± insulin), restore volume, and decompress (catheterise or decompressive cystocentesis). See <strong>Urethral obstruction</strong>. Only then pursue the full work-up.`,
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Do', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>ECG + serum potassium</strong>', { text: 'Assess the hyperkalaemic emergency', tone: 'danger' }],
+            ['<strong>Treat hyperkalaemia</strong>', { text: 'Calcium gluconate to protect the myocardium, then dextrose ± insulin', tone: 'danger' }],
+            ['<strong>Restore volume, then decompress</strong>', { text: 'Catheterise or perform decompressive cystocentesis — see <strong>Urethral obstruction</strong>', tone: 'danger' }],
+            ['<strong>Only then</strong>', { text: 'Pursue the full work-up', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 2 — URINALYSIS + CULTURE (the cornerstone)' },
-        {
-          kind: 'check',
-          html: `<strong>Cystocentesis</strong> urinalysis is the single most useful first test: USG, pH, sediment (RBC, WBC, bacteria, crystals).<br>
-    <strong>Culture & susceptibility (cystocentesis sample)</strong> is the gold standard for UTI — ISCAID advises culturing only with an active sediment + clinical signs, NOT subclinical bacteriuria.<br>
-    Crystalluria suggests, but does not prove, urolithiasis (and is influenced by storage/temperature).`,
-        },
-        { kind: 'step', text: 'STEP 3 — IMAGING (localise & find stones/masses)' },
-        {
-          kind: 'check',
-          html: `<strong>Radiography</strong> detects radiopaque uroliths (struvite, oxalate; cystine/urate are radiolucent — need ultrasound/contrast).<br>
-    <strong>Ultrasound</strong> assesses bladder wall, mucosal/mural masses, prostate, and the proximal urethra, and screens the upper tract (renal pelvic dilation → pyelonephritis/ureteral obstruction).<br>
-    <strong>Contrast cystourethrography</strong> for urethral lesions/strictures; <strong>CT</strong> for staging neoplasia.`,
-        },
-        { kind: 'step', text: 'STEP 4 — TARGETED / ADVANCED TESTS' },
-        {
-          kind: 'check',
-          html: `<strong>Quantitative urolith analysis</strong> on any retrieved stone (directs dissolution/prevention).<br>
-    <strong>Free-catch urine BRAF (V595E) mutation</strong> — high specificity for urothelial/prostatic carcinoma; avoid traumatic cystotomy/needle sampling (seeding).<br>
-    <strong>Prostatic wash / ejaculate cytology + culture</strong> for prostatic disease.<br>
-    <strong>Bloodwork ± endocrine testing</strong> if recurrent UTI (screen for diabetes, hyperadrenocorticism, CKD).`,
-        },
+
+        ...stepTable(2, 'URINALYSIS + CULTURE (the cornerstone)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Cystocentesis urinalysis</strong>', { text: 'The single most useful first test — USG · pH · sediment (RBC · WBC · bacteria · crystals)', tone: 'teal' }],
+            ['<strong>Culture &amp; susceptibility</strong> (cystocentesis sample)', { text: 'Gold standard for UTI — ISCAID advises culturing only with an active sediment <em>plus</em> clinical signs, <strong>not</strong> subclinical bacteriuria', tone: 'teal' }],
+            ['<strong>Crystalluria</strong>', { text: 'Suggests, but does not prove, urolithiasis — and is influenced by storage and temperature', tone: 'teal' }],
+          ],
+        }, '🧪'),
+
+        ...stepTable(3, 'IMAGING (localise & find stones/masses)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Modality', { text: 'What it shows', tone: 'teal' }],
+          rows: [
+            ['<strong>Radiography</strong>', { text: 'Radiopaque uroliths (struvite · oxalate). <strong>Cystine and urate are radiolucent</strong> — need ultrasound / contrast', tone: 'teal' }],
+            ['<strong>Ultrasound</strong>', { text: 'Bladder wall · mucosal / mural masses · prostate · proximal urethra; screens the upper tract (renal pelvic dilation → pyelonephritis / ureteral obstruction)', tone: 'teal' }],
+            ['<strong>Contrast cystourethrography</strong>', { text: 'Urethral lesions and strictures', tone: 'teal' }],
+            ['<strong>CT</strong>', { text: 'Staging neoplasia', tone: 'teal' }],
+          ],
+        }, '📊'),
+
+        ...stepTable(4, 'TARGETED / ADVANCED TESTS', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            ['<strong>Quantitative urolith analysis</strong>', { text: 'On any retrieved stone — directs dissolution and prevention', tone: 'teal' }],
+            ['<strong>Free-catch urine BRAF (V595E) mutation</strong>', { text: 'High specificity for urothelial / prostatic carcinoma — <strong>avoid traumatic cystotomy or needle sampling</strong> (seeding)', tone: 'danger' }],
+            ['<strong>Prostatic wash / ejaculate cytology + culture</strong>', { text: 'For prostatic disease', tone: 'teal' }],
+            ['<strong>Bloodwork ± endocrine testing</strong>', { text: 'If recurrent UTI — screen for diabetes · hyperadrenocorticism · CKD', tone: 'teal' }],
+          ],
+        }, '🎯'),
       ],
       after: [
       { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [

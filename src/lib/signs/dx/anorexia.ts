@@ -8,6 +8,7 @@
 // crucial in the cat (hepatic lipidosis). Links to the DIS-* disease pages.
 
 import type { DxApproach } from '../dxTypes'
+import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const anorexiaDx: DxApproach = {
   title: 'Anorexia / Hyporexia',
@@ -18,32 +19,59 @@ export const anorexiaDx: DxApproach = {
       blocks: [
         { kind: 'branch', text: 'GOAL: CAN\'T EAT vs WON\'T EAT, THEN FIND THE CAUSE' },
         {
-          kind: 'check',
-          html: `• <strong>Hyporexia</strong> = consuming inadequate calories to maintain/reach ideal weight<br>• <strong>Anorexia</strong> = complete absence of voluntary intake<br>• <strong>Dysrexia</strong> = abnormal (cyclic/unpredictable) intake<br><span style="opacity:.7">(Ettinger Ch 17)</span><br>Anorexia is a <strong>non-specific sign of almost any systemic illness</strong>. The key first step is to separate an animal that <strong>cannot</strong> eat (pseudo-anorexia) from one that <strong>will not</strong> eat (true anorexia).`,
+          kind: 'gridTable',
+          cols: '0.7fr 1.4fr',
+          dividers: true,
+          headers: ['Term', { text: 'Definition', tone: 'teal' }],
+          rows: [
+            ['<strong>Hyporexia</strong>', { text: 'Consuming inadequate calories to maintain / reach ideal weight', tone: 'teal' }],
+            ['<strong>Anorexia</strong>', { text: 'Complete absence of voluntary intake', tone: 'teal' }],
+            ['<strong>Dysrexia</strong>', { text: 'Abnormal (cyclic / unpredictable) intake', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', tone: 'danger', text: 'STEP 1 — IS THIS AN ANOREXIC CAT? (lipidosis clock)' },
         {
-          kind: 'check',
-          html: `Establish <strong>how long</strong> the patient has not been eating. In the cat, anorexia of <strong>≥2–14 days</strong> drives negative energy balance and <strong>hepatic lipidosis</strong> (especially the overweight cat) — this shortens the work-up timeline and makes <strong>early feeding</strong> a priority, not an afterthought (Ettinger Ch 17 / Ch 274). Quantify intake against <strong>RER</strong>: RER (kcal/day) = (30 × kg) + 70 for 3–25 kg, or 70 × kg^0.75 for any weight.`,
+          kind: 'note',
+          html: `Anorexia is a <strong>non-specific sign of almost any systemic illness</strong>. First step: separate an animal that <strong>cannot</strong> eat (pseudo-anorexia) from one that <strong>will not</strong> eat (true anorexia). <span style="opacity:.7">(Ettinger Ch 17)</span>`,
         },
-        { kind: 'step', text: 'STEP 2 — ENVIRONMENT, DIET & MEDICATIONS' },
+
+        { kind: 'step', tone: 'danger', text: '🐱 STEP 1 — IS THIS AN ANOREXIC CAT? (lipidosis clock)', noArrowAfter: true },
         {
-          kind: 'check',
-          html: `<strong>Environmental stressors</strong> (new pet/person, moved house, changed routine, noise, lack of hiding/feeding resources in cats) and <strong>diet factors</strong> (spoiled/unbalanced food, change of texture/format, bowl, feeding location) commonly cause reduced intake or food aversion.<br>
-    <strong>Medications</strong> that suppress appetite or cause nausea: <strong>chemotherapy, opioids, NSAIDs, antibiotics, antifungals</strong> — review the current drug list.<br>
-    A genuinely well animal that simply won't eat a new food behaves very differently from one that is systemically ill.`,
+          kind: 'gridTable',
+          cols: '0.7fr 1.4fr',
+          dividers: true,
+          headers: ['Establish', { text: 'Why it matters', tone: 'teal' }],
+          rows: [
+            [`${numBadge(1)}<strong>How long</strong> not eating`, { text: 'Cat <strong>≥2–14 days</strong> → negative energy balance → <strong>hepatic lipidosis</strong> (especially the overweight cat)', tone: 'danger' }],
+            [`${numBadge(2)}<strong>Consequence</strong>`, { text: 'Shortens the work-up timeline — <strong>early feeding</strong> is a priority, not an afterthought <span style="opacity:.7">(Ettinger Ch 17 / Ch 274)</span>', tone: 'teal' }],
+            [`${numBadge(3)}<strong>Quantify intake</strong> vs RER`, { text: 'RER (kcal/day) = (30 × kg) + 70 for 3–25 kg, or 70 × kg^0.75 for any weight', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 3 — OTHER CLINICAL SIGNS (localise the system)' },
-        {
-          kind: 'check',
-          html: `Anchor the anorexia to any accompanying signs:<br>
-    <strong>Vomiting / diarrhoea / abdominal pain</strong> → GI, pancreatic, hepatobiliary disease.<br>
-    <strong>PU/PD ± weight loss</strong> → renal disease, DKA, hypercalcaemia, hepatic disease.<br>
-    <strong>Jaundice</strong> → hepatobiliary disease / hepatic lipidosis (open the jaundice flow).<br>
-    <strong>Waxing/waning lethargy, GI signs ± collapse</strong> → hypoadrenocorticism (the great pretender).<br>
-    <strong>Fever</strong> → infectious/inflammatory disease, sepsis, FIP, neoplasia.<br>
-    <strong>Lameness / reluctance to move / pain on handling</strong> → occult pain (OA, dental, FLUTD, otitis) — a commonly missed, treatable cause.`,
-        },
+
+        ...stepTable(2, 'ENVIRONMENT, DIET & MEDICATIONS', {
+          cols: '0.7fr 1.4fr',
+          dividers: true,
+          headers: ['Ask about', { text: 'Specifics', tone: 'teal' }],
+          rows: [
+            [`${numBadge(1)}<strong>Environmental stressors</strong>`, { text: 'New pet / person · moved house · changed routine · noise · lack of hiding or feeding resources in cats', tone: 'teal' }],
+            [`${numBadge(2)}<strong>Diet factors</strong>`, { text: 'Spoiled / unbalanced food · change of texture or format · bowl · feeding location — cause reduced intake or food aversion', tone: 'teal' }],
+            [`${numBadge(3)}<strong>Medications</strong>`, { text: 'Appetite suppression or nausea: <strong>chemotherapy · opioids · NSAIDs · antibiotics · antifungals</strong> — review the current drug list', tone: 'teal' }],
+            [`${numBadge(4)}<strong>Interpret</strong>`, { text: 'A genuinely well animal that simply won\'t eat a new food behaves very differently from one that is systemically ill', tone: 'teal' }],
+          ],
+        }, '🏠'),
+
+        ...stepTable(3, 'OTHER CLINICAL SIGNS (localise the system)', {
+          cols: '0.9fr 1.25fr',
+          dividers: true,
+          headers: ['Accompanying sign', { text: 'Points to', tone: 'teal' }],
+          rows: [
+            ['<strong>Vomiting / diarrhoea / abdominal pain</strong>', { text: 'GI · pancreatic · hepatobiliary disease', tone: 'teal' }],
+            ['<strong>PU/PD ± weight loss</strong>', { text: 'Renal disease · DKA · hypercalcaemia · hepatic disease', tone: 'teal' }],
+            ['<strong>Jaundice</strong>', { text: 'Hepatobiliary disease / hepatic lipidosis — open the jaundice flow', tone: 'teal' }],
+            ['<strong>Waxing/waning lethargy, GI signs ± collapse</strong>', { text: '<strong>Hypoadrenocorticism</strong> — the great pretender', tone: 'teal' }],
+            ['<strong>Fever</strong>', { text: 'Infectious / inflammatory disease · sepsis · FIP · neoplasia', tone: 'teal' }],
+            ['<strong>Lameness / reluctance to move / pain on handling</strong>', { text: 'Occult pain (OA · dental · FLUTD · otitis) — commonly missed, treatable', tone: 'teal' }],
+          ],
+        }, '🔍'),
       ],
       after: [
         {
@@ -60,24 +88,43 @@ export const anorexiaDx: DxApproach = {
       title: 'Exam: Anorexia / Hyporexia',
       blocks: [
         { kind: 'step', tone: 'teal', text: 'A complete PE is imperative — include ORAL, NASAL, OCULAR + RECTAL exam' },
-        { kind: 'step', text: 'STEP 1 — ORAL / PHARYNGEAL EXAM (rule out pseudo-anorexia)' },
-        {
-          kind: 'check',
-          html: `Examine the mouth carefully (often needs sedation): <strong>periodontal / periapical disease, fractured teeth, oral masses, ulceration, oronasal fistula, foreign body</strong> (e.g. linear FB under the tongue in cats), and the <strong>pharynx</strong>.<br>
-    Assess the <strong>jaw and masticatory muscles</strong> (pain on opening, trismus, masseter/temporal atrophy → masticatory myositis; TMJ disease; mandibular fracture) and <strong>cranial nerves</strong> (trigeminal/facial). Also check the <strong>nose</strong> (fungal/neoplastic disease) and <strong>retrobulbar space</strong> (pain on opening the mouth / globe displacement).`,
-        },
-        { kind: 'step', text: 'STEP 2 — GENERAL, OCULAR & MUCOUS MEMBRANES' },
-        {
-          kind: 'check',
-          html: `Assess <strong>BCS and muscle condition score</strong> (drives the urgency of nutritional support), hydration, temperature (fever vs hypothermia), and mucous membranes for <strong>icterus</strong> (hepatobiliary / lipidosis), pallor or injection.<br>
-    Ocular exam for <strong>uveitis / chorioretinitis</strong> (FIP, infectious, neoplastic disease). Palpate <strong>peripheral lymph nodes</strong> and the thyroid (cat).`,
-        },
-        { kind: 'step', text: 'STEP 3 — ABDOMINAL PALPATION & RECTAL EXAM' },
-        {
-          kind: 'check',
-          html: `Palpate for <strong>organomegaly, masses, intestinal foreign body, pain, effusion or thickened bowel loops</strong>. A painful cranial abdomen supports pancreatitis. <strong>Rectal exam</strong> assesses faecal character (melena), masses, and the sublumbar region.<br>
-    Don't forget a <strong>musculoskeletal / orthopaedic and brief neuro exam</strong> — occult osteoarthritis and maladaptive pain are easily missed drivers of inappetence.`,
-        },
+
+        ...stepTable(1, 'ORAL / PHARYNGEAL EXAM (rule out pseudo-anorexia)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Examine', { text: 'Looking for', tone: 'teal' }],
+          rows: [
+            [`${numBadge(1)}<strong>Mouth</strong> (often needs sedation)`, { text: '<strong>Periodontal / periapical disease · fractured teeth · oral masses · ulceration · oronasal fistula · foreign body</strong> (linear FB under the tongue in cats) · the <strong>pharynx</strong>', tone: 'teal' }],
+            [`${numBadge(2)}<strong>Jaw &amp; masticatory muscles</strong>`, { text: 'Pain on opening · trismus · masseter / temporal atrophy → masticatory myositis · TMJ disease · mandibular fracture', tone: 'teal' }],
+            [`${numBadge(3)}<strong>Cranial nerves</strong>`, { text: 'Trigeminal · facial', tone: 'teal' }],
+            [`${numBadge(4)}<strong>Nose</strong>`, { text: 'Fungal / neoplastic disease', tone: 'teal' }],
+            [`${numBadge(5)}<strong>Retrobulbar space</strong>`, { text: 'Pain on opening the mouth · globe displacement', tone: 'teal' }],
+          ],
+        }, '👄'),
+
+        ...stepTable(2, 'GENERAL, OCULAR & MUCOUS MEMBRANES', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Assess', { text: 'What to note', tone: 'teal' }],
+          rows: [
+            [`${numBadge(1)}<strong>BCS + muscle condition score</strong>`, { text: 'Drives the urgency of nutritional support', tone: 'teal' }],
+            [`${numBadge(2)}<strong>Hydration &amp; temperature</strong>`, { text: 'Fever vs hypothermia', tone: 'teal' }],
+            [`${numBadge(3)}<strong>Mucous membranes</strong>`, { text: '<strong>Icterus</strong> (hepatobiliary / lipidosis) · pallor · injection', tone: 'teal' }],
+            [`${numBadge(4)}<strong>Ocular exam</strong>`, { text: '<strong>Uveitis / chorioretinitis</strong> → FIP, infectious or neoplastic disease', tone: 'teal' }],
+            [`${numBadge(5)}<strong>Palpate</strong>`, { text: 'Peripheral lymph nodes · thyroid (🐱)', tone: 'teal' }],
+          ],
+        }, '🩺'),
+
+        ...stepTable(3, 'ABDOMINAL PALPATION & RECTAL EXAM', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Do', { text: 'Looking for', tone: 'teal' }],
+          rows: [
+            [`${numBadge(1)}<strong>Abdominal palpation</strong>`, { text: '<strong>Organomegaly · masses · intestinal foreign body · pain · effusion · thickened bowel loops</strong>; a painful cranial abdomen supports pancreatitis', tone: 'teal' }],
+            [`${numBadge(2)}<strong>Rectal exam</strong>`, { text: 'Faecal character (melena) · masses · the sublumbar region', tone: 'teal' }],
+            [`${numBadge(3)}<strong>Musculoskeletal + brief neuro exam</strong>`, { text: 'Occult osteoarthritis and maladaptive pain — easily missed drivers of inappetence', tone: 'teal' }],
+          ],
+        }, '🤲'),
       ],
       after: [{ kind: 'disclaimer' }],
     },
@@ -85,43 +132,71 @@ export const anorexiaDx: DxApproach = {
     dx: {
       title: 'Dx: Anorexia / Hyporexia — Diagnostics',
       blocks: [
-        { kind: 'step', tone: 'danger', text: 'STEP 1 — CONFIRM/EXCLUDE PSEUDO-ANOREXIA' },
+        { kind: 'step', tone: 'danger', text: '👄 STEP 1 — CONFIRM/EXCLUDE PSEUDO-ANOREXIA' },
+        { kind: 'note', html: `Before an extensive systemic work-up, settle whether the patient <strong>can</strong> eat.`, noArrowAfter: true },
         {
-          kind: 'check',
-          html: `Before an extensive systemic work-up, settle whether the patient <strong>can</strong> eat. A thorough <strong>oral / dental exam under sedation</strong> (± dental radiographs) and assessment of the pharynx, jaw and oesophagus rules in/out a mechanical/painful "can't-eat" cause (oral/dental/oronasal disease, mass, masticatory myositis, megaoesophagus). If swallowing/regurgitation is the issue, divert to the <strong>vomiting vs regurgitation</strong> approach.`,
+          kind: 'gridTable',
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Do', { text: 'Rules in / out', tone: 'teal' }],
+          rows: [
+            [`${numBadge(1)}<strong>Oral / dental exam under sedation</strong> ± dental radiographs`, { text: 'Mechanical or painful "can\'t-eat" cause — oral / dental / oronasal disease · mass', tone: 'teal' }],
+            [`${numBadge(2)}<strong>Assess pharynx, jaw, oesophagus</strong>`, { text: 'Masticatory myositis · megaoesophagus', tone: 'teal' }],
+            [`${numBadge(3)}<strong>If swallowing / regurgitation is the issue</strong>`, { text: 'Divert to the <strong>vomiting vs regurgitation</strong> approach', tone: 'teal' }],
+          ],
         },
-        { kind: 'step', text: 'STEP 2 — MINIMUM DATABASE (CBC · BIOCHEM · UA)' },
-        {
-          kind: 'check',
-          html: `<strong>CBC</strong> (inflammatory/infectious leukogram, anaemia, cytopenias), <strong>serum biochemistry</strong> (azotaemia → uraemia; ↑ liver enzymes/bilirubin → hepatobiliary; glucose/ketones → DKA; <strong>hypercalcaemia</strong>; electrolytes — Na:K ratio for hypoadrenocorticism) and <strong>urinalysis</strong> (USG before fluids; glucose/ketones; sediment) are the cornerstone (Ettinger Ch 17).<br>
-    <strong>Blood pressure:</strong> hypotensive SBP &lt;90 mmHg → ACTH stimulation test (hypoadrenocorticism); SBP ≥140 mmHg → add SDMA and UPC (Ettinger Ch 17).<br>
-    Cat-specific add-ons: <strong>Spec fPL</strong> (pancreatitis), <strong>total T4</strong>, retroviral (FeLV/FIV) status.`,
-        },
-        { kind: 'step', text: 'STEP 3 — IMAGING (localise the problem)' },
-        {
-          kind: 'check',
-          html: `<strong>Abdominal ultrasound / radiographs</strong> for GI foreign body/obstruction, pancreatic, hepatobiliary, renal, intra-abdominal mass or effusion.<br>
-    <strong>Thoracic radiographs</strong> for masses, metastasis, pleural effusion and aspiration. Reduced intake can also be driven by respiratory distress (pleural effusion, pneumonia) — don't overlook the chest.<br>
-    <strong>CT / MRI</strong> for nasal, skull, retrobulbar or CNS disease and for staging neoplasia.`,
-        },
-        { kind: 'step', text: 'STEP 4 — TARGETED / SYSTEM-BY-SYSTEM SEARCH' },
-        {
-          kind: 'check',
-          html: `Driven by the database and imaging:<br>
-    <strong>Endocrine:</strong> ACTH stimulation (hypoadrenocorticism), ionised calcium + PTH/PTHrP (hypercalcaemia), confirm DKA.<br>
-    <strong>Infectious:</strong> serology/PCR (FeLV-FIV, Toxoplasma, Leishmania, Ehrlichia), <strong>effusion analysis</strong> (FIP, septic peritonitis — septic if intracellular bacteria / fluid:blood glucose gradient).<br>
-    <strong>GI/hepatic:</strong> cobalamin/folate, bile acids, abdominocentesis; <strong>endoscopy / FNA / biopsy</strong> for IBD vs lymphoma and for hepatobiliary disease.<br>
-    <strong>Pain work-up:</strong> orthopaedic/dental assessment for occult OA or oral pain.`,
-        },
-        { kind: 'step', text: 'STEP 5 — TREAT WHILE YOU INVESTIGATE (support intake)' },
-        {
-          kind: 'check',
-          html: `Run supportive care <em>alongside</em> the diagnostics — never wait:<br>
-    <strong>Nutritional support is the priority, especially in cats.</strong> Provide <strong>assisted / tube feeding</strong> when intake is &lt;RER for &gt;3–5 days (sooner in the at-risk cat) — NG initially, then oesophagostomy/gastrostomy; build to full RER over a few days to avoid refeeding syndrome (Ettinger Ch 17 / Ch 274). Appetite stimulants do not replace tube feeding in lipidosis.<br>
-    <strong>Antiemetics / anti-nausea:</strong> <strong>maropitant</strong> (1 mg/kg q24h) ± ondansetron; treat uraemic/drug-induced nausea and provide <strong>analgesia</strong> for pain-driven anorexia.<br>
-    <strong>Appetite stimulants:</strong> <strong>mirtazapine</strong> (cats 1.88 mg/cat PO q24–48h, or transdermal Mirataz 2 mg/cat; also effective in dogs); <strong>capromorelin</strong> (Entyce, dogs 3 mg/kg PO — ghrelin-receptor agonist; use caution in cats, transient insulin suppression/glucose intolerance); cyproheptadine and gabapentin are alternatives.<br>
-    <strong>Palatability measures:</strong> warm the food, increase moisture/aroma, change texture, remove environmental stressors and food aversions.`,
-        },
+
+        ...stepTable(2, 'MINIMUM DATABASE (CBC · BIOCHEM · UA)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Test', { text: 'What it rules in / out', tone: 'teal' }],
+          rows: [
+            [`${numBadge(1)}<strong>CBC</strong>`, { text: 'Inflammatory / infectious leukogram · anaemia · cytopenias', tone: 'teal' }],
+            [`${numBadge(2)}<strong>Serum biochemistry</strong>`, { text: 'Azotaemia → uraemia · ↑ liver enzymes / bilirubin → hepatobiliary · glucose + ketones → DKA · <strong>hypercalcaemia</strong> · electrolytes (Na:K ratio for hypoadrenocorticism)', tone: 'teal' }],
+            [`${numBadge(3)}<strong>Urinalysis</strong>`, { text: 'USG <em>before</em> fluids · glucose / ketones · sediment', tone: 'teal' }],
+            [`${numBadge(4)}<strong>Blood pressure</strong>`, { text: 'SBP &lt;90 mmHg → ACTH stimulation test (hypoadrenocorticism) · SBP ≥140 mmHg → add SDMA and UPC', tone: 'teal' }],
+            [`${numBadge(5)}<strong>🐱 Cat add-ons</strong>`, { text: '<strong>Spec fPL</strong> (pancreatitis) · total T4 · retroviral (FeLV / FIV) status', tone: 'teal' }],
+          ],
+        }, '🧪'),
+        { kind: 'note', html: `The minimum database is the cornerstone of this work-up <span style="opacity:.7">(Ettinger Ch 17)</span>.` },
+
+        ...stepTable(3, 'IMAGING (localise the problem)', {
+          cols: '0.8fr 1.35fr',
+          dividers: true,
+          headers: ['Modality', { text: 'Looking for', tone: 'teal' }],
+          rows: [
+            [`${numBadge(1)}<strong>Abdominal ultrasound / radiographs</strong>`, { text: 'GI foreign body or obstruction · pancreatic · hepatobiliary · renal disease · intra-abdominal mass or effusion', tone: 'teal' }],
+            [`${numBadge(2)}<strong>Thoracic radiographs</strong>`, { text: 'Masses · metastasis · pleural effusion · aspiration — reduced intake can also be driven by respiratory distress (pleural effusion, pneumonia); don\'t overlook the chest', tone: 'teal' }],
+            [`${numBadge(3)}<strong>CT / MRI</strong>`, { text: 'Nasal · skull · retrobulbar or CNS disease · staging neoplasia', tone: 'teal' }],
+          ],
+        }, '📊'),
+
+        ...stepTable(4, 'TARGETED / SYSTEM-BY-SYSTEM SEARCH', {
+          cols: '0.7fr 1.45fr',
+          dividers: true,
+          headers: ['System', { text: 'Tests', tone: 'teal' }],
+          rows: [
+            ['<strong>Endocrine</strong>', { text: 'ACTH stimulation (hypoadrenocorticism) · ionised calcium + PTH / PTHrP (hypercalcaemia) · confirm DKA', tone: 'teal' }],
+            ['<strong>Infectious</strong>', { text: 'Serology / PCR (FeLV-FIV · Toxoplasma · Leishmania · Ehrlichia) · <strong>effusion analysis</strong> (FIP · septic peritonitis — septic if intracellular bacteria or a fluid:blood glucose gradient)', tone: 'teal' }],
+            ['<strong>GI / hepatic</strong>', { text: 'Cobalamin + folate · bile acids · abdominocentesis · <strong>endoscopy / FNA / biopsy</strong> for IBD vs lymphoma and for hepatobiliary disease', tone: 'teal' }],
+            ['<strong>Pain work-up</strong>', { text: 'Orthopaedic / dental assessment for occult OA or oral pain', tone: 'teal' }],
+          ],
+        }, '🎯'),
+        { kind: 'note', html: `Driven by the findings of the minimum database and imaging.` },
+
+        ...stepTable(5, 'TREAT WHILE YOU INVESTIGATE (support intake)', {
+          cols: '0.75fr 1.4fr',
+          dividers: true,
+          headers: ['Measure', { text: 'Detail', tone: 'teal' }],
+          rows: [
+            [`${numBadge(1)}<strong>Nutritional support</strong><br>the priority, especially in cats`, { text: '<strong>Assisted / tube feeding</strong> when intake &lt;RER for &gt;3–5 days (sooner in the at-risk cat) — NG initially, then oesophagostomy / gastrostomy; build to full RER over a few days to avoid <strong>refeeding syndrome</strong> <span style="opacity:.7">(Ettinger Ch 17 / Ch 274)</span>. Appetite stimulants do <strong>not</strong> replace tube feeding in lipidosis', tone: 'teal' }],
+            [`${numBadge(2)}<strong>Antiemetics / anti-nausea</strong>`, { text: '<strong>Maropitant</strong> 1 mg/kg q24h ± ondansetron — treat uraemic and drug-induced nausea', tone: 'teal' }],
+            [`${numBadge(3)}<strong>Analgesia</strong>`, { text: 'For pain-driven anorexia', tone: 'teal' }],
+            [`${numBadge(4)}<strong>Appetite stimulants</strong>`, { text: '<strong>Mirtazapine</strong> (🐱 1.88 mg/cat PO q24–48h, or transdermal Mirataz 2 mg/cat; also effective in dogs) · <strong>capromorelin</strong> (Entyce, 🐕 3 mg/kg PO — ghrelin-receptor agonist; caution in cats, transient insulin suppression / glucose intolerance) · cyproheptadine · gabapentin', tone: 'teal' }],
+            [`${numBadge(5)}<strong>Palatability measures</strong>`, { text: 'Warm the food · increase moisture and aroma · change texture · remove environmental stressors and food aversions', tone: 'teal' }],
+          ],
+        }, '🍽️'),
+        { kind: 'note', html: `Run supportive care <em>alongside</em> the diagnostics — never wait.` },
       ],
       after: [
       { kind: 'diseaseGrid', title: 'LINKED DISEASE PAGES', links: [

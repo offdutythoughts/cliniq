@@ -4,6 +4,7 @@
 // Three-tab standard (history / exam / dx).
 
 import type { DxApproach } from '../dxTypes'
+import { numBadge } from './shared/dxHelpers'
 
 export const encephalopathyDx: DxApproach = {
   title: 'Disorientation',
@@ -14,20 +15,47 @@ export const encephalopathyDx: DxApproach = {
     blocks: [
       { kind: 'branch', text: 'RULE OUT METABOLIC / TOXIC BEFORE STRUCTURAL' },
       {
-        kind: 'check',
-        html: `Acute "brain" signs (altered mentation, behaviour change, head pressing, circling, blindness) are commonly extracranial. The history should chase metabolic and toxic causes first — they are fast, cheap, and often reversible. Most diffuse/symmetric encephalopathy = systemic cause until proven otherwise.`,
+        kind: 'note',
+        html: `Acute "brain" signs (altered mentation · behaviour change · head pressing · circling · blindness) are commonly <strong>extracranial</strong>. Chase metabolic and toxic causes first — fast, cheap and often reversible. Most diffuse / symmetric encephalopathy = systemic cause until proven otherwise.`,
       },
-      { kind: 'step', text: '📋 CHARACTERISE ONSET AND SEVERITY' },
+
+      { kind: 'step', text: '📋 STEP 1 — CHARACTERISE ONSET AND SEVERITY', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong>Onset speed:</strong><br>
-• <strong>Peracute (seconds–minutes):</strong> cerebrovascular accident (stroke), seizure, toxin, severe metabolic crisis (hypoglycaemia, hypocalcaemia)<br>
-• <strong>Acute (hours–days):</strong> toxin, metabolic encephalopathy (hepatic, uraemic), TBI, acute encephalitis, hypertensive encephalopathy<br>
-• <strong>Subacute–chronic (weeks–months):</strong> neoplasia, MUO/encephalitis, cognitive dysfunction, chronic metabolic disease (PSS, hypothyroidism)<br><br>
-<strong>Course:</strong> Progressive (structural/neoplastic) or episodic/waxing-waning (metabolic — particularly post-prandial hepatic encephalopathy, hypoglycaemia)?<br><br>
-<strong>Severity grading:</strong> Alert → Obtunded (dull, slow responses) → Stupor (rousable by noxious stimulus, lapses back) → Coma (unrousable even by noxious stimulus). Track progression over time.`,
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Onset speed', { text: 'Differential', tone: 'teal' }],
+        rows: [
+          [`${numBadge(1)}<strong>Peracute</strong><br>seconds–minutes`, { text: 'Cerebrovascular accident (stroke) · seizure · toxin · severe metabolic crisis (hypoglycaemia · hypocalcaemia)', tone: 'teal' }],
+          [`${numBadge(2)}<strong>Acute</strong><br>hours–days`, { text: 'Toxin · metabolic encephalopathy (hepatic · uraemic) · TBI · acute encephalitis · hypertensive encephalopathy', tone: 'teal' }],
+          [`${numBadge(3)}<strong>Subacute–chronic</strong><br>weeks–months`, { text: 'Neoplasia · MUO / encephalitis · cognitive dysfunction · chronic metabolic disease (PSS · hypothyroidism)', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: '🐾 SIGNALMENT AND BREED PATTERNS' },
+      {
+        kind: 'gridTable',
+        label: 'Course',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Pattern', { text: 'Suggests', tone: 'teal' }],
+        rows: [
+          ['<strong>Progressive</strong>', { text: 'Structural / neoplastic', tone: 'teal' }],
+          ['<strong>Episodic / waxing–waning</strong>', { text: 'Metabolic — particularly post-prandial hepatic encephalopathy, hypoglycaemia', tone: 'teal' }],
+        ],
+      },
+      {
+        kind: 'gridTable',
+        label: 'Severity grading — track progression over time',
+        cols: '0.6fr 1.5fr',
+        dividers: true,
+        headers: ['Grade', { text: 'Definition', tone: 'teal' }],
+        rows: [
+          ['<strong>Alert</strong>', { text: 'Normal mentation', tone: 'teal' }],
+          ['<strong>Obtunded</strong>', { text: 'Dull, slow responses', tone: 'teal' }],
+          ['<strong>Stupor</strong>', { text: 'Rousable by noxious stimulus, lapses back', tone: 'teal' }],
+          ['<strong>Coma</strong>', { text: 'Unrousable even by noxious stimulus', tone: 'danger' }],
+        ],
+      },
+      { kind: 'step', text: '🐾 STEP 2 — SIGNALMENT AND BREED PATTERNS' },
       {
         kind: 'breedClues',
         dog: [
@@ -46,14 +74,53 @@ export const encephalopathyDx: DxApproach = {
           { breeds: ['Geriatric, gradual onset, no other signs'], group: 'signalment', tone: 'green', html: 'cognitive dysfunction syndrome (CDS) — dog or cat.' },
         ],
       },
-      { kind: 'step', text: '💊 TOXIN / DRUG / DIET / SYSTEMIC DISEASE' },
+      { kind: 'step', text: '💊 STEP 3 — TOXIN / DRUG / DIET / SYSTEMIC DISEASE', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong>Toxin access:</strong> ethylene glycol (antifreeze — peracute inebriation then renal failure), metaldehyde (slug bait — acute tremors), organophosphates, bromethalin (rodenticide — cerebral oedema, delayed onset 12h–5d), lead (young dogs, pica + vomiting), cannabinoids (CNS depression, miosis, ataxia, urine incontinence).<br><br>
-<strong>Drugs causing CNS depression/disorientation:</strong> opioids (depressed mentation + miosis → rapid reversal with naloxone), benzodiazepines, muscle relaxants, anticholinergics (disorientation + mydriasis + hyperthermia), macrocyclic lactones (MDR1 breeds), metronidazole (especially cats — vestibular + ataxia + seizures).<br><br>
-<strong>Diet:</strong> cat on fish/thiaminase-containing food or sulphite-preserved meat → thiamine deficiency. Irradiated diet (cats) → leukoencephalomyelopathy (Wallerian degeneration).<br><br>
-<strong>Known disease:</strong> liver disease/PSS, diabetes (hypoglycaemia/DKA/HONK), CKD/AKI (uraemic encephalopathy), HAC (pituitary macroadenoma), Addison's (hyponatraemia), hypothyroidism (myxoedema coma — rare).<br><br>
-<strong>Recent trauma:</strong> traumatic brain injury (TBI) / intracranial haemorrhage.`,
+        kind: 'gridTable',
+        label: 'Toxin access',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Toxin', { text: 'Presentation', tone: 'teal' }],
+        rows: [
+          ['<strong>Ethylene glycol</strong> (antifreeze)', { text: 'Peracute inebriation, then renal failure', tone: 'teal' }],
+          ['<strong>Metaldehyde</strong> (slug bait)', { text: 'Acute tremors', tone: 'teal' }],
+          ['<strong>Organophosphates</strong>', { text: 'Cholinergic crisis', tone: 'teal' }],
+          ['<strong>Bromethalin</strong> (rodenticide)', { text: 'Cerebral oedema — delayed onset 12 h–5 d', tone: 'teal' }],
+          ['<strong>Lead</strong>', { text: 'Young dogs · pica + vomiting', tone: 'teal' }],
+          ['<strong>Cannabinoids</strong>', { text: 'CNS depression · miosis · ataxia · urine incontinence', tone: 'teal' }],
+        ],
+      },
+      {
+        kind: 'gridTable',
+        label: 'Drugs causing CNS depression / disorientation',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Drug', { text: 'Signs', tone: 'teal' }],
+        rows: [
+          ['<strong>Opioids</strong>', { text: 'Depressed mentation + miosis → rapid reversal with naloxone', tone: 'teal' }],
+          ['<strong>Benzodiazepines · muscle relaxants</strong>', { text: 'CNS depression', tone: 'teal' }],
+          ['<strong>Anticholinergics</strong>', { text: 'Disorientation + mydriasis + hyperthermia', tone: 'teal' }],
+          ['<strong>Macrocyclic lactones</strong>', { text: 'MDR1 breeds', tone: 'teal' }],
+          ['<strong>Metronidazole</strong>', { text: 'Especially cats — vestibular signs + ataxia + seizures', tone: 'teal' }],
+        ],
+      },
+      {
+        kind: 'gridTable',
+        label: 'Diet, known disease & trauma',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['History', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>🐱 Fish / thiaminase-containing food or sulphite-preserved meat</strong>', { text: 'Thiamine deficiency', tone: 'teal' }],
+          ['<strong>🐱 Irradiated diet</strong>', { text: 'Leukoencephalomyelopathy (Wallerian degeneration)', tone: 'teal' }],
+          ['<strong>Liver disease / PSS</strong>', { text: 'Hepatic encephalopathy', tone: 'teal' }],
+          ['<strong>Diabetes</strong>', { text: 'Hypoglycaemia · DKA · HONK', tone: 'teal' }],
+          ['<strong>CKD / AKI</strong>', { text: 'Uraemic encephalopathy', tone: 'teal' }],
+          ['<strong>HAC</strong>', { text: 'Pituitary macroadenoma', tone: 'teal' }],
+          ['<strong>Addison\'s</strong>', { text: 'Hyponatraemia', tone: 'teal' }],
+          ['<strong>Hypothyroidism</strong>', { text: 'Myxoedema coma — rare', tone: 'teal' }],
+          ['<strong>Recent trauma</strong>', { text: 'Traumatic brain injury (TBI) · intracranial haemorrhage', tone: 'danger' }],
+        ],
       },
     ],
     after: [
@@ -69,10 +136,20 @@ export const encephalopathyDx: DxApproach = {
   exam: {
     title: 'Exam: Disorientation',
     blocks: [
-      { kind: 'step', tone: 'danger', text: '⚡ STABILISE (ABC) BEFORE FULL NEUROLOGICAL EXAM' },
+      { kind: 'step', tone: 'danger', text: '⚡ STABILISE (ABC) BEFORE FULL NEUROLOGICAL EXAM', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `Secure airway (sternal recumbency, extend head, suction if needed) · High-flow O₂ · Establish IV access · Check blood glucose immediately · Vital signs (HR, RR, SpO₂, T°, blood pressure) · Control active seizures. A crashing brain patient is resuscitated before examination.`,
+        kind: 'gridTable',
+        cols: '0.75fr 1.4fr',
+        dividers: true,
+        headers: ['Do', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          [`${numBadge(1)}<strong>Secure airway</strong>`, { text: 'Sternal recumbency · extend head · suction if needed', tone: 'danger' }],
+          [`${numBadge(2)}<strong>High-flow O₂</strong>`, { text: 'Immediately', tone: 'danger' }],
+          [`${numBadge(3)}<strong>IV access</strong>`, { text: 'Establish early', tone: 'teal' }],
+          [`${numBadge(4)}<strong>Blood glucose</strong>`, { text: 'Check immediately', tone: 'teal' }],
+          [`${numBadge(5)}<strong>Vital signs</strong>`, { text: 'HR · RR · SpO₂ · T° · blood pressure', tone: 'teal' }],
+          [`${numBadge(6)}<strong>Control active seizures</strong>`, { text: 'A crashing brain patient is resuscitated <em>before</em> examination', tone: 'danger' }],
+        ],
       },
       { kind: 'step', text: '🧠 MENTATION GRADING (AVPU / mGCS)' },
       {
@@ -98,12 +175,17 @@ Limb withdrawal from noxious stimulus = SPINAL REFLEX, not consciousness — lim
           },
         ],
       },
-      { kind: 'step', text: '📍 LOCALISE — FOREBRAIN vs BRAINSTEM vs DIFFUSE' },
+      { kind: 'step', text: '📍 LOCALISE — FOREBRAIN vs BRAINSTEM vs DIFFUSE', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong style="color:var(--tone-info-fg);">Forebrain (cortical/diencephalic):</strong> Altered behaviour/mentation, compulsive circling toward the lesion, contralateral menace deficit with normal PLR, focal seizures, central blindness. Consciousness variably affected.<br><br>
-<strong style="color:var(--tone-danger-fg);">Brainstem (midbrain/pons/medulla):</strong> Multiple cranial nerve deficits, abnormal respiratory pattern, vestibular signs, severely depressed consciousness (stupor/coma). More ominous prognosis.<br><br>
-<strong style="color:var(--tone-green-fg);">Diffuse/symmetric (metabolic):</strong> No lateralising signs, bilateral symmetric findings, small reactive pupils, waxing-waning course, post-prandial worsening — chase systemic causes first.`,
+        kind: 'gridTable',
+        cols: '0.7fr 1.45fr',
+        dividers: true,
+        headers: ['Localisation', { text: 'Findings', tone: 'teal' }],
+        rows: [
+          ['<strong>Forebrain</strong><br>cortical / diencephalic', { text: 'Altered behaviour / mentation · compulsive circling <em>toward</em> the lesion · contralateral menace deficit with normal PLR · focal seizures · central blindness. Consciousness variably affected', tone: 'info' }],
+          ['<strong>Brainstem</strong><br>midbrain / pons / medulla', { text: 'Multiple cranial nerve deficits · abnormal respiratory pattern · vestibular signs · severely depressed consciousness (stupor / coma). More ominous prognosis', tone: 'danger' }],
+          ['<strong>Diffuse / symmetric</strong><br>metabolic', { text: 'No lateralising signs · bilateral symmetric findings · small reactive pupils · waxing–waning course · post-prandial worsening — chase systemic causes first', tone: 'green' }],
+        ],
       },
       { kind: 'step', text: '👁 PUPIL SIGNS BY LESION LOCATION' },
       {
@@ -113,48 +195,64 @@ Limb withdrawal from noxious stimulus = SPINAL REFLEX, not consciousness — lim
   <div class="dx-test" style="font-size:9px;"><strong>Fixed dilated bilateral (mydriasis)</strong><br>→ CN III / midbrain damage bilaterally<br>→ Severe ↑ICP with herniation ⚠️<br><br><strong>Unilateral fixed dilated</strong><br>→ Ipsilateral midbrain lesion<br>→ OR uncal herniation (CN III compression) ⚠️</div>
 </div>`,
       },
-      { kind: 'step', text: '🔺 SIGNS OF RAISED INTRACRANIAL PRESSURE (ICP)' },
+      { kind: 'step', text: '🔺 SIGNS OF RAISED INTRACRANIAL PRESSURE (ICP)', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong>Cushing reflex</strong> = systemic hypertension + concurrent reflex bradycardia — triggered by severe acute ICP increase (cerebral ischaemic response) → indicates life-threatening intracranial hypertension with imminent herniation → treat immediately.<br><br>
-Other ↑ICP signs: obtundation/stupor/coma, bilateral mydriasis with poor PLR, head pressing, opisthotonos.<br><br>
-<strong>Respiratory patterns in brainstem compression:</strong><br>
-• Cheyne-Stokes (cyclical apnea–hyperpnea) → diencephalon/bilateral cerebral<br>
-• Central neurogenic hyperventilation → pons/medulla<br>
-• Apneustic breathing (prolonged inspiration) → upper pons<br>
-• Ataxic respiration (completely irregular) → medulla → intubate immediately<br>
-• Agonal breathing (shallow gasps) → anoxic → rapidly progresses to apnea<br><br>
-<strong>Posture:</strong> Decerebrate (extensor rigidity all 4 limbs) → midbrain/rostral pons or bilateral cerebral hemispheric dysfunction; stupor/coma present. Decerebellate (opisthotonos + forelimb extension + hindlimb flexion) → does NOT affect consciousness.`,
+        kind: 'gridTable',
+        cols: '0.8fr 1.35fr',
+        dividers: true,
+        headers: ['Sign', { text: 'Means', tone: 'teal' }],
+        rows: [
+          ['<strong>Cushing reflex</strong><br>systemic hypertension + reflex bradycardia', { text: 'Cerebral ischaemic response to a severe acute ICP rise → <strong>life-threatening intracranial hypertension with imminent herniation — treat immediately</strong>', tone: 'danger' }],
+          ['<strong>Other ↑ICP signs</strong>', { text: 'Obtundation / stupor / coma · bilateral mydriasis with poor PLR · head pressing · opisthotonos', tone: 'danger' }],
+        ],
       },
-      { kind: 'step', text: '🔍 PHYSICAL EXAMINATION — SYSTEMIC CLUES' },
       {
-        kind: 'check',
-        html: `<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 12px;font-size:9.5px;">
-  <div>
-    <strong style="color:var(--tone-info-fg);">Cardiovascular + perfusion</strong><br>
-    HR · rhythm · pulse quality · CRT<br>
-    Pale MM → anaemia / shock / hypovolaemia<br>
-    Brick-red MM → polycythaemia / sepsis / CO<br>
-    Core-extremity temperature difference → shock<br><br>
-    <strong style="color:var(--tone-warning-fg);">Body condition + skin</strong><br>
-    Pot belly + muscle wasting + alopecia → HAC<br>
-    (pituitary macroadenoma compressing brain)<br>
-    Cachexia → neoplasia / chronic disease<br>
-    Non-pitting skin oedema + bradycardia + hypothermia → myxoedema coma (hypothyroid)
-  </div>
-  <div>
-    <strong style="color:var(--tone-danger-fg);">Fundoscopy — perform in every case</strong><br>
-    Papilloedema (blurred disc margins) → ↑ICP<br>
-    Chorioretinitis → Toxoplasma / CDV / FIP<br>
-    Retinal haemorrhage / detachment → hypertension → check BP immediately<br><br>
-    <strong style="color:var(--tone-violet-fg);">Temperature</strong><br>
-    T° &gt;41°C → heatstroke / post-SE hyperthermia / permethrin (cats) → active cooling<br>
-    T° &lt;37°C + bradycardia + obtundation → myxoedema coma · hypothermia · severe shock<br><br>
-    <strong style="color:var(--tone-green-fg);">Liver size</strong><br>
-    Small liver → PSS / chronic hepatopathy<br>
-    Jaundice → hepatic / haemolytic disease
-  </div>
-</div>`,
+        kind: 'gridTable',
+        label: 'Respiratory patterns in brainstem compression',
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Pattern', { text: 'Localises to', tone: 'teal' }],
+        rows: [
+          ['<strong>Cheyne-Stokes</strong> — cyclical apnoea–hyperpnoea', { text: 'Diencephalon / bilateral cerebral', tone: 'teal' }],
+          ['<strong>Central neurogenic hyperventilation</strong>', { text: 'Pons / medulla', tone: 'teal' }],
+          ['<strong>Apneustic</strong> — prolonged inspiration', { text: 'Upper pons', tone: 'teal' }],
+          ['<strong>Ataxic</strong> — completely irregular', { text: 'Medulla → <strong>intubate immediately</strong>', tone: 'danger' }],
+          ['<strong>Agonal</strong> — shallow gasps', { text: 'Anoxic → rapidly progresses to apnoea', tone: 'danger' }],
+        ],
+      },
+      {
+        kind: 'gridTable',
+        label: 'Posture',
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Posture', { text: 'Localises to', tone: 'teal' }],
+        rows: [
+          ['<strong>Decerebrate</strong> — extensor rigidity all 4 limbs', { text: 'Midbrain / rostral pons or bilateral cerebral hemispheric dysfunction; stupor / coma present', tone: 'danger' }],
+          ['<strong>Decerebellate</strong> — opisthotonos + forelimb extension + hindlimb flexion', { text: 'Does <strong>NOT</strong> affect consciousness', tone: 'teal' }],
+        ],
+      },
+      { kind: 'step', text: '🔍 PHYSICAL EXAMINATION — SYSTEMIC CLUES', noArrowAfter: true },
+      {
+        kind: 'gridTable',
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>HR · rhythm · pulse quality · CRT</strong>', { text: 'Cardiovascular status and perfusion', tone: 'info' }],
+          ['<strong>Pale MM</strong>', { text: 'Anaemia · shock · hypovolaemia', tone: 'info' }],
+          ['<strong>Brick-red MM</strong>', { text: 'Polycythaemia · sepsis · CO', tone: 'info' }],
+          ['<strong>Core–extremity temperature difference</strong>', { text: 'Shock', tone: 'info' }],
+          ['<strong>Pot belly + muscle wasting + alopecia</strong>', { text: 'HAC — pituitary macroadenoma compressing the brain', tone: 'warning' }],
+          ['<strong>Cachexia</strong>', { text: 'Neoplasia · chronic disease', tone: 'warning' }],
+          ['<strong>Non-pitting skin oedema + bradycardia + hypothermia</strong>', { text: 'Myxoedema coma (hypothyroid)', tone: 'warning' }],
+          ['<strong>Fundoscopy — perform in every case:</strong> papilloedema (blurred disc margins)', { text: '↑ICP', tone: 'danger' }],
+          ['<strong>Chorioretinitis</strong>', { text: 'Toxoplasma · CDV · FIP', tone: 'danger' }],
+          ['<strong>Retinal haemorrhage / detachment</strong>', { text: 'Hypertension → <strong>check BP immediately</strong>', tone: 'danger' }],
+          ['<strong>T° &gt;41°C</strong>', { text: 'Heatstroke · post-SE hyperthermia · permethrin (🐱) → active cooling', tone: 'violet' }],
+          ['<strong>T° &lt;37°C + bradycardia + obtundation</strong>', { text: 'Myxoedema coma · hypothermia · severe shock', tone: 'violet' }],
+          ['<strong>Small liver</strong>', { text: 'PSS · chronic hepatopathy', tone: 'green' }],
+          ['<strong>Jaundice</strong>', { text: 'Hepatic · haemolytic disease', tone: 'green' }],
+        ],
       },
     ],
     after: [

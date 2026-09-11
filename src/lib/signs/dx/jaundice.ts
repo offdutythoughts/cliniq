@@ -3,6 +3,7 @@
 // ../cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
+import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const jaundiceDx: DxApproach = {
   title: 'Jaundice',
@@ -13,35 +14,54 @@ export const jaundiceDx: DxApproach = {
     blocks: [
       { kind: 'branch', text: 'CONFIRM ICTERUS, THEN SIGNAL THE CATEGORY' },
       {
-        kind: 'check',
-        html: `<strong>Confirm it is true icterus</strong> — distinguish from lipaemic serum and carotenaemia. Owner often reports yellow gums/sclera, dark urine, or "off colour".<br>
-      <strong>Three-bucket framing from the history:</strong> pre-hepatic (haemolysis) · hepatic · post-hepatic (biliary obstruction).`,
+        kind: 'gridTable',
+        cols: '0.7fr 1.4fr',
+        dividers: true,
+        headers: ['First', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Confirm true icterus</strong>', { text: 'Distinguish from lipaemic serum and carotenaemia. Owner often reports yellow gums / sclera, dark urine, or "off colour"', tone: 'teal' }],
+          ['<strong>Three-bucket framing</strong>', { text: '<strong>Pre-hepatic</strong> (haemolysis) · <strong>hepatic</strong> · <strong>post-hepatic</strong> (biliary obstruction)', tone: 'teal' }],
+        ],
       },
-      { kind: 'step', text: '🐾 SIGNALMENT & BREED CLUES' },
-      {
-        kind: 'check',
-        html: `<strong>Young (cat):</strong> FIP (6 months–3 years), lymphocytic cholangitis (1–5 years).<br>
-      <strong>Young–middle-aged (cat):</strong> pancreatitis, neutrophilic cholangitis, hepatic lipidosis.<br>
-      <strong>Older (cat):</strong> neutrophilic cholangitis, hepatic lipidosis, pancreatitis, neoplasia.<br>
-      <strong>Siamese / Oriental:</strong> FIP, amyloidosis. <strong>Persian:</strong> FIP, lymphocytic cholangitis. Any pedigree → FIP.`,
-      },
-      { kind: 'step', text: '📋 HISTORY OF PRESENTING ILLNESS' },
-      {
-        kind: 'check',
-        html: `<strong>Overweight cat with recent anorexia / weight loss:</strong> hepatic lipidosis.<br>
-      <strong>Weight loss despite a good appetite:</strong> lymphocytic cholangitis.<br>
-      <strong>Cranial abdominal pain:</strong> pancreatitis, acute neutrophilic cholangitis, cholecystitis.<br>
-      <strong>Any current medications:</strong> consider hepatotoxicity (e.g. paracetamol, azoles, lomustine, phenobarbital).<br>
-      <strong>Anorexia + vomiting + lethargy</strong> — non-specific but common to all three categories.`,
-      },
-      { kind: 'step', text: '🩸 CLUES TO A PRE-HEPATIC (HAEMOLYTIC) CAUSE' },
-      {
-        kind: 'check',
-        html: `Known/observed pallor or collapse, pigmenturia (red–brown urine = haemoglobinuria).<br>
-      <strong>Toxin access:</strong> onion/garlic (Allium), zinc (coins, hardware), paracetamol (cat).<br>
-      <strong>Tick exposure / travel:</strong> Babesia, Mycoplasma haemofelis.<br>
-      Recent transfusion (neonatal isoerythrolysis in kittens), drugs, or a known immune-mediated history.`,
-      },
+
+      ...stepTable(1, 'SIGNALMENT & BREED CLUES', {
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Signalment', { text: 'Differential diagnosis', tone: 'teal' }],
+        rows: [
+          [`${numBadge(1)}<strong>Young 🐱</strong>`, { text: '<strong>FIP</strong> (6 months–3 years) · <strong>lymphocytic cholangitis</strong> (1–5 years)', tone: 'teal' }],
+          [`${numBadge(2)}<strong>Young–middle-aged 🐱</strong>`, { text: 'Pancreatitis · neutrophilic cholangitis · hepatic lipidosis', tone: 'teal' }],
+          [`${numBadge(3)}<strong>Older 🐱</strong>`, { text: 'Neutrophilic cholangitis · hepatic lipidosis · pancreatitis · neoplasia', tone: 'teal' }],
+          [`${numBadge(4)}<strong>Siamese / Oriental</strong>`, { text: 'FIP · amyloidosis', tone: 'teal' }],
+          [`${numBadge(5)}<strong>Persian</strong>`, { text: 'FIP · lymphocytic cholangitis — any pedigree → consider FIP', tone: 'teal' }],
+        ],
+      }, '🐾'),
+
+      ...stepTable(2, 'HISTORY OF PRESENTING ILLNESS', {
+        cols: '0.9fr 1.25fr',
+        dividers: true,
+        headers: ['History', { text: 'Points to', tone: 'teal' }],
+        rows: [
+          ['<strong>Overweight cat, recent anorexia / weight loss</strong>', { text: 'Hepatic lipidosis', tone: 'teal' }],
+          ['<strong>Weight loss despite a good appetite</strong>', { text: 'Lymphocytic cholangitis', tone: 'teal' }],
+          ['<strong>Cranial abdominal pain</strong>', { text: 'Pancreatitis · acute neutrophilic cholangitis · cholecystitis', tone: 'teal' }],
+          ['<strong>Current medications</strong>', { text: 'Hepatotoxicity — paracetamol · azoles · lomustine · phenobarbital', tone: 'teal' }],
+          ['<strong>Anorexia + vomiting + lethargy</strong>', { text: 'Non-specific — common to all three categories', tone: 'teal' }],
+        ],
+      }, '📋'),
+
+      ...stepTable(3, 'CLUES TO A PRE-HEPATIC (HAEMOLYTIC) CAUSE', {
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Clue', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          ['<strong>Pallor or collapse</strong>', { text: 'Known or observed', tone: 'teal' }],
+          ['<strong>Pigmenturia</strong>', { text: 'Red–brown urine = haemoglobinuria', tone: 'teal' }],
+          ['<strong>Toxin access</strong>', { text: 'Onion / garlic (Allium) · zinc (coins, hardware) · paracetamol (🐱)', tone: 'teal' }],
+          ['<strong>Tick exposure / travel</strong>', { text: 'Babesia · Mycoplasma haemofelis', tone: 'teal' }],
+          ['<strong>Other</strong>', { text: 'Recent transfusion (neonatal isoerythrolysis in kittens) · drugs · known immune-mediated history', tone: 'teal' }],
+        ],
+      }, '🩸'),
     ],
     after: [
       {
@@ -56,33 +76,41 @@ export const jaundiceDx: DxApproach = {
   exam: {
     title: 'Exam: Jaundice',
     blocks: [
-      { kind: 'step', text: '🩺 STEP 1 — CONFIRM & GRADE THE ICTERUS' },
-      {
-        kind: 'check',
-        html: `Check sclera, mucous membranes, soft palate, pinnae, ventral abdomen and non-pigmented skin.<br>
-      Tissue jaundice is generally only visible once serum bilirubin exceeds ~50 µmol/L (reference 0–15). The higher the bilirubin, the more likely complete post-hepatic obstruction (often &gt;250 µmol/L → surgical emergency).`,
-      },
-      { kind: 'step', text: '🔍 STEP 2 — TARGETED PHYSICAL FINDINGS' },
-      {
-        kind: 'check',
-        html: `<div style="display:grid;grid-template-columns:1fr 1.2fr;gap:5px 8px;font-size:10px;line-height:1.45;">
-        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Finding</div>
-        <div style="font-weight:700;padding-bottom:4px;border-bottom:1px solid rgba(148,163,184,.2);">Most likely</div>
-        <div>Pallor + icterus (± tachycardia, weakness)</div><div style="color:var(--tone-danger-title);">Pre-hepatic haemolysis</div>
-        <div>Pyrexia</div><div style="color:var(--tone-warning-fg);">FIP, neutrophilic cholangitis, sepsis</div>
-        <div>Hepatomegaly</div><div style="color:var(--tone-green-fg);">Lipidosis, lymphocytic cholangitis, neoplasia</div>
-        <div>Cranial abdominal pain</div><div style="color:var(--tone-danger-fg);">Pancreatitis, acute cholangitis, cholecystitis</div>
-        <div>Ascites</div><div style="color:var(--tone-info-fg);">Lymphocytic cholangitis, FIP, neoplasia</div>
-        <div>Respiratory compromise (pleural effusion)</div><div style="color:var(--tone-info-fg);">FIP, neoplasia</div>
-      </div>`,
-      },
-      { kind: 'step', text: '🧠 STEP 3 — DON\'T MISS' },
-      {
-        kind: 'check',
-        html: `<strong>Pigmenturia:</strong> haemoglobinuria (pre-hepatic) vs bilirubinuria (hepatic/post-hepatic).<br>
-      <strong>Hepatic encephalopathy</strong> (ptyalism in cats, obtundation, head-pressing) → severe hepatic dysfunction.<br>
-      <strong>Spontaneous bleeding / prolonged venepuncture ooze</strong> → coagulopathy of hepatic failure or biliary obstruction (vitamin K malabsorption) — correct before any biopsy.`,
-      },
+      ...stepTable(1, 'CONFIRM & GRADE THE ICTERUS', {
+        cols: '0.7fr 1.4fr',
+        dividers: true,
+        headers: ['Do', { text: 'Detail', tone: 'teal' }],
+        rows: [
+          [`${numBadge(1)}<strong>Where to look</strong>`, { text: 'Sclera · mucous membranes · soft palate · pinnae · ventral abdomen · non-pigmented skin', tone: 'teal' }],
+          [`${numBadge(2)}<strong>Threshold</strong>`, { text: 'Tissue jaundice is generally only visible once serum bilirubin exceeds <strong>~50 µmol/L</strong> (reference 0–15)', tone: 'teal' }],
+          [`${numBadge(3)}<strong>Grade it</strong>`, { text: 'The higher the bilirubin, the more likely complete post-hepatic obstruction — often <strong>&gt;250 µmol/L → surgical emergency</strong>', tone: 'danger' }],
+        ],
+      }, '🩺'),
+
+      ...stepTable(2, 'TARGETED PHYSICAL FINDINGS', {
+        cols: '1fr 1.2fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Most likely', tone: 'teal' }],
+        rows: [
+          ['Pallor + icterus (± tachycardia, weakness)', { text: 'Pre-hepatic haemolysis', tone: 'danger' }],
+          ['Pyrexia', { text: 'FIP · neutrophilic cholangitis · sepsis', tone: 'warning' }],
+          ['Hepatomegaly', { text: 'Lipidosis · lymphocytic cholangitis · neoplasia', tone: 'green' }],
+          ['Cranial abdominal pain', { text: 'Pancreatitis · acute cholangitis · cholecystitis', tone: 'danger' }],
+          ['Ascites', { text: 'Lymphocytic cholangitis · FIP · neoplasia', tone: 'info' }],
+          ['Respiratory compromise (pleural effusion)', { text: 'FIP · neoplasia', tone: 'info' }],
+        ],
+      }, '🔍'),
+
+      ...stepTable(3, 'DON\'T MISS', {
+        cols: '0.85fr 1.3fr',
+        dividers: true,
+        headers: ['Finding', { text: 'Means', tone: 'teal' }],
+        rows: [
+          ['<strong>Pigmenturia</strong>', { text: 'Haemoglobinuria (pre-hepatic) vs bilirubinuria (hepatic / post-hepatic)', tone: 'teal' }],
+          ['<strong>Hepatic encephalopathy</strong><br>ptyalism in cats · obtundation · head-pressing', { text: 'Severe hepatic dysfunction', tone: 'teal' }],
+          ['<strong>Spontaneous bleeding / prolonged venepuncture ooze</strong>', { text: 'Coagulopathy of hepatic failure or biliary obstruction (vitamin K malabsorption) — <strong>correct before any biopsy</strong>', tone: 'danger' }],
+        ],
+      }, '🧠'),
     ],
     after: [{ kind: 'disclaimer' }],
   },
@@ -91,7 +119,7 @@ export const jaundiceDx: DxApproach = {
     title: 'Dx: Jaundice — Diagnostics',
     blocks: [
       { kind: 'step', text: 'JAUNDICE — DIAGNOSTIC APPROACH' },
-      { kind: 'check', html: `<strong>First step:</strong> Check PCV + bilirubin. PCV tells you the category immediately.` },
+      { kind: 'note', html: `<strong>First step:</strong> check PCV + bilirubin. PCV tells you the category immediately.` },
       { kind: 'step', text: 'CHECK PCV' },
       {
         kind: 'html',
@@ -119,15 +147,21 @@ export const jaundiceDx: DxApproach = {
       </div>
     </div>`,
       },
-      { kind: 'step', text: 'LAB PATTERNS THAT POINT TO A DIAGNOSIS' },
+      { kind: 'step', text: 'LAB PATTERNS THAT POINT TO A DIAGNOSIS', noArrowAfter: true },
       {
-        kind: 'check',
-        html: `<strong>ALT &gt; ALP:</strong> hepatotoxicity, amyloidosis, hepatic neoplasia.<br>
-      <strong>ALP &gt; ALT:</strong> post-hepatic jaundice, cholangitis, hepatic lipidosis.<br>
-      <strong>Markedly ↑ ALP with only mildly ↑ GGT:</strong> hepatic lipidosis.<br>
-      <strong>Mild hyperbilirubinaemia with normal ALT & ALP:</strong> FIP, pancreatitis.<br>
-      <strong>Marked hyperglobulinaemia:</strong> lymphocytic cholangitis, FIP. <strong>Hypocalcaemia:</strong> pancreatitis, sepsis.<br>
-      Serum bilirubin &gt;100 µmol/L → abdominal ultrasound is critical to identify extrahepatic biliary obstruction.`,
+        kind: 'gridTable',
+        cols: '0.95fr 1.2fr',
+        dividers: true,
+        headers: ['Lab pattern', { text: 'Suggests', tone: 'teal' }],
+        rows: [
+          ['<strong>ALT &gt; ALP</strong>', { text: 'Hepatotoxicity · amyloidosis · hepatic neoplasia', tone: 'teal' }],
+          ['<strong>ALP &gt; ALT</strong>', { text: 'Post-hepatic jaundice · cholangitis · hepatic lipidosis', tone: 'teal' }],
+          ['<strong>Markedly ↑ ALP, only mildly ↑ GGT</strong>', { text: 'Hepatic lipidosis', tone: 'teal' }],
+          ['<strong>Mild hyperbilirubinaemia, normal ALT &amp; ALP</strong>', { text: 'FIP · pancreatitis', tone: 'teal' }],
+          ['<strong>Marked hyperglobulinaemia</strong>', { text: 'Lymphocytic cholangitis · FIP', tone: 'teal' }],
+          ['<strong>Hypocalcaemia</strong>', { text: 'Pancreatitis · sepsis', tone: 'teal' }],
+          ['<strong>Bilirubin &gt;100 µmol/L</strong>', { text: 'Abdominal ultrasound is critical — identify extrahepatic biliary obstruction', tone: 'danger' }],
+        ],
       },
     ],
     after: [
