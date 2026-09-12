@@ -1,15 +1,13 @@
 import type { CSSProperties } from 'react'
 
-// Horizontal-scroll wrapper fragment: keep a wide grid/table on its own scroll
-// track so the page body never scrolls sideways. Shared by every "spill" site
-// (flow table + category columns, dx table, lesion-location grid, grading
-// tables) — compose with extra decls (e.g. `SCROLL_X + 'margin-bottom:4px;'`).
-// `overscroll-behavior-x:contain` keeps a swipe that runs off the end of a wide
-// table inside the table — without it the gesture chains to the page (and on
-// iOS Safari to the browser's back-swipe), which is what made these sections
-// awkward to read on a phone. Momentum scrolling + a thin scrollbar so the
-// section reads as scrollable rather than as content that just stops.
-export const SCROLL_X = 'overflow-x:auto;width:100%;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-width:thin;'
+// NOTE: the horizontal-scroll wrapper used to live here as a `SCROLL_X` string
+// fragment. It is now the `.scroll-x` class in globals.css, which carries the
+// same scroll mechanics PLUS the edge shading that tells a reader there is more
+// off-screen — the point being that a phone's overlay scrollbar fades out, so
+// without the shading a wide table just looks like content that stops. Use
+// `className="scroll-x"` (compose extra decls, e.g. margins, as inline style),
+// and override `--scroll-x-bg` when the box sits on anything but the page
+// background.
 
 // Column-density tier for the "header → ↓ → chips" category layouts, shared so
 // the breakpoint policy lives once: 0 = roomy (≤4 columns), 1 = tight (5),
