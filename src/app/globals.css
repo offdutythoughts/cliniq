@@ -55,6 +55,23 @@
   --fs-label: 10px;    /* uppercase section titles + field labels */
   --lh-body: 1.6;
 
+  /* ── The dense scale — flowcharts, diagnostic approaches, grading tables ──
+     These surfaces pack four or five boxes across a 390px phone, so they run
+     smaller than the detail pages above. That is a real constraint, but it had
+     produced 51 hand-picked sizes between 8px and 9.5px with no rule behind
+     which was which. Three roles, three tokens:
+
+       --fs-box   prose you READ inside a tinted box (callout, alert, footnote)
+       --fs-chip  a label you SCAN (chip, tile, column header, YES/NO)
+       --fs-chip-sub  the one qualifier line allowed under a chip
+
+     Sizes live here and nowhere else, so the legibility floor of the whole
+     clinical surface is four numbers, not a search-and-replace across 30 files.
+     `npm run lint:type` ratchets the remaining hardcoded ones down. */
+  --fs-box: 11px;
+  --fs-chip: 10.5px;
+  --fs-chip-sub: 10px;
+
   /* ── Tone palette — single source for the typed flow/dx renderers (HUE/TITLE)
      and the disease-category colours (CAT_STYLE). The `--tone-*` values are rgb
      triplets fed into rgba(var(--tone-x), α); the `-fg`/`-title` are the readable
@@ -426,7 +443,7 @@ html[data-theme="dark"]{
 .fn-ep:hover{filter:brightness(1.15);}
 .fn-ep .ep-sys{font-size:10px;opacity:.75;margin-bottom:3px;font-weight:400;}
 .fn-ep .ep-loc{font-size:13px;font-weight:600;margin-bottom:4px;}
-.fn-ep .ep-badge{font-size:9px;font-weight:700;padding:2px 6px;border-radius:8px;display:inline-block;background:rgba(0,0,0,.2);}
+.fn-ep .ep-badge{font-size:var(--fs-chip);font-weight:700;padding:2px 6px;border-radius:8px;display:inline-block;background:rgba(0,0,0,.2);}
 .fn-ep-nasal{background:rgba(var(--tone-indigo),var(--tile-bg-a));border-color:rgba(var(--tone-indigo),var(--tile-bd-a));color:var(--fg-indigo-deep);}
 .fn-ep-larynx{background:rgba(var(--tone-violet),var(--tile-bg-a));border-color:rgba(var(--tone-violet),var(--tile-bd-a));color:var(--fg-violet-deep);}
 .fn-ep-bronchi{background:rgba(var(--tone-green),var(--tile-bg-a));border-color:rgba(var(--tone-green),var(--tile-bd-a));color:var(--tone-green-fg);}
@@ -752,9 +769,9 @@ details.ref-fold[open] > summary::after{content:" ▾";}
 .flow-col{container-type:inline-size;}
 @container (max-width: 100px){
   .flow-col > * .flow-endpoint,
-  .flow-col > .flow-endpoint{padding:6px 4px;font-size:8.5px;letter-spacing:0;}
+  .flow-col > .flow-endpoint{padding:6px 4px;font-size:var(--fs-chip-sub);letter-spacing:0;}
   .flow-col > * .flow-node,
-  .flow-col > .flow-node{padding:7px 5px;font-size:9px;}
+  .flow-col > .flow-node{padding:7px 5px;font-size:var(--fs-chip);}
 }
 
 /* ── A section that scrolls sideways ──

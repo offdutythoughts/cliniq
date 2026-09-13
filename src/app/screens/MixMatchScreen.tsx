@@ -311,7 +311,7 @@ export function MixMatchScreen() {
                       <div style={s('flex:1;min-width:0;')}>
                         <div style={s('display:flex;align-items:center;gap:6px;flex-wrap:wrap;')}>
                           <div className="card-title">{d.name as string}</div>
-                          <span style={s(`font-size:9px;font-weight:700;padding:1px 6px;border-radius:6px;background:${item.score >= 6 ? 'var(--teal)' : item.score >= 3 ? 'var(--navy3)' : 'var(--navy3)'};color:${item.score >= 6 ? '#fff' : 'var(--gray2)'};border:1px solid ${item.score >= 6 ? 'transparent' : 'var(--border)'};flex-shrink:0;`)}>
+                          <span style={s(`font-size:var(--fs-chip);font-weight:700;padding:1px 6px;border-radius:6px;background:${item.score >= 6 ? 'var(--teal)' : item.score >= 3 ? 'var(--navy3)' : 'var(--navy3)'};color:${item.score >= 6 ? '#fff' : 'var(--gray2)'};border:1px solid ${item.score >= 6 ? 'transparent' : 'var(--border)'};flex-shrink:0;`)}>
                             {item.score}pt
                           </span>
                         </div>

@@ -92,7 +92,7 @@ function DxDiseaseGrid({ b, onNav }: { b: Extract<DxBlock, { kind: 'diseaseGrid'
   return (
     <ToneBox tone="teal" extra="margin-top:10px;padding:10px 12px;">
       <div style={s('font-size:11px;font-weight:700;color:var(--tone-teal-fg);margin-bottom:6px;')}>{b.title}</div>
-      <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;font-size:9.5px;')}>
+      <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;font-size:var(--fs-box);')}>
         {b.links.map((l, i) => (
           <Tappable key={i} style={s('cursor:pointer;color:var(--fg-teal-deep);')} onTap={() => onNav(linkToView(l.link))}>→ {l.label}</Tappable>
         ))}
@@ -176,7 +176,7 @@ function DxBreedClues({ b, onNav }: { b: Extract<DxBlock, { kind: 'breedClues' }
           {b.title ?? '🐾 Breed & signalment clues'}
         </div>
         <button type="button" aria-pressed={all} onClick={() => { setAll(v => !v); setSel('') }}
-          style={s(`padding:3px 8px;border-radius:999px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid ${all ? 'rgba(var(--tone-teal),var(--tile-bd-a))' : 'var(--border)'};background:${all ? 'rgba(var(--tone-teal),var(--tile-bg-a))' : 'transparent'};color:${all ? 'var(--tone-teal-fg)' : 'var(--gray2)'};flex-shrink:0;`)}>
+          style={s(`padding:3px 8px;border-radius:999px;font-size:var(--fs-chip);font-weight:700;cursor:pointer;border:1px solid ${all ? 'rgba(var(--tone-teal),var(--tile-bd-a))' : 'var(--border)'};background:${all ? 'rgba(var(--tone-teal),var(--tile-bg-a))' : 'transparent'};color:${all ? 'var(--tone-teal-fg)' : 'var(--gray2)'};flex-shrink:0;`)}>
           {all ? '✓ All' : 'Show all'}
         </button>
       </div>
@@ -227,7 +227,7 @@ function DxSpeciesDiff({ b, onNav }: { b: Extract<DxBlock, { kind: 'speciesDiff'
   // which species a line belongs to is the one thing that must never be guessed.
   const line = (label: string, hh: { rgb: string; color: string }, html: string) => (
     <div style={s('display:flex;gap:7px;align-items:baseline;')}>
-      <span style={s(`flex-shrink:0;font-size:8.5px;font-weight:700;letter-spacing:.06em;color:${hh.color};width:22px;`)}>{label}</span>
+      <span style={s(`flex-shrink:0;font-size:var(--fs-chip-sub);font-weight:700;letter-spacing:.06em;color:${hh.color};width:22px;`)}>{label}</span>
       <span style={s('flex:1;min-width:0;')}><Raw html={html} onNav={onNav} /></span>
     </div>
   )
@@ -237,8 +237,8 @@ function DxSpeciesDiff({ b, onNav }: { b: Extract<DxBlock, { kind: 'speciesDiff'
         {b.title ?? '🔑 Canine vs feline — key differences'}
       </div>
       {b.rows.map((r, i) => (
-        <div key={i} style={s('border-radius:9px;padding:8px 10px;background:var(--card);border:1px solid var(--border);font-size:9.5px;line-height:1.55;color:var(--gray);')}>
-          <div style={s('font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--tone-indigo-fg);margin-bottom:5px;')}>{r.feature}</div>
+        <div key={i} style={s('border-radius:9px;padding:8px 10px;background:var(--card);border:1px solid var(--border);font-size:var(--fs-box);line-height:1.55;color:var(--gray);')}>
+          <div style={s('font-size:var(--fs-chip);font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--tone-indigo-fg);margin-bottom:5px;')}>{r.feature}</div>
           <div style={s('display:flex;flex-direction:column;gap:4px;')}>
             {line('DOG', dogH, r.dog)}
             {line('CAT', catH, r.cat)}

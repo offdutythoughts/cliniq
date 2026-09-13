@@ -34,6 +34,7 @@
     "lint:species": "tsx scripts/lint-species.ts",
     "lint:steps": "tsx scripts/lint-steps.ts",
     "lint:tiles": "tsx scripts/lint-tiles.ts",
+    "lint:type": "tsx scripts/lint-typography.ts",
     "preview": "bash scripts/preview.sh",
     "promote": "bash scripts/promote.sh",
     "report:groups": "tsx scripts/report-groups.ts",

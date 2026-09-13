@@ -10,9 +10,9 @@ import { Fragment } from 'react'
 import { styleStringToObject as s } from './style'
 
 const HEAD = s('font-weight:700;font-size:var(--fs-body);color:var(--white);margin-top:8px;margin-bottom:4px;')
-const GRID = s('display:grid;grid-template-columns:1fr 1.1fr;gap:3px 6px;font-size:9.5px;margin:4px 0;')
+const GRID = s('display:grid;grid-template-columns:1fr 1.1fr;gap:3px 6px;font-size:var(--fs-box);margin:4px 0;')
 const TH = s('font-weight:600;')
-const FOOT = s('font-size:9.5px;opacity:.75;line-height:1.5;')
+const FOOT = s('font-size:var(--fs-box);opacity:.75;line-height:1.5;')
 
 const respStyle = (color?: string) => (color ? s(`color:${color};`) : undefined)
 

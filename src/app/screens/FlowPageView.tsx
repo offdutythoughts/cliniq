@@ -116,7 +116,7 @@ function ForkLegHead({ l }: { l: ForkLeg }) {
     return (
       <div style={s('display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;text-align:center;')}>
         <div style={s('font-size:10px;font-weight:700;color:var(--gray2);letter-spacing:.04em;')}>{l.label}</div>
-        {l.sub && <div style={s('font-size:8.5px;color:var(--gray2);line-height:1.35;')}>{l.sub}</div>}
+        {l.sub && <div style={s('font-size:var(--fs-chip-sub);color:var(--gray2);line-height:1.35;')}>{l.sub}</div>}
       </div>
     )
   }
@@ -128,9 +128,9 @@ function ForkLegHead({ l }: { l: ForkLeg }) {
   return (
     <div style={s(`${box}border-radius:9px;padding:6px 8px;width:100%;min-width:0;`)}>
       <div style={s(`font-size:10px;font-weight:700;color:${color};letter-spacing:.04em;text-align:center;line-height:1.3;`)}>{l.label}</div>
-      {l.sub && <div style={s(`font-size:9px;color:${color};opacity:.85;line-height:1.4;text-align:center;margin-top:2px;`)}>{l.sub}</div>}
+      {l.sub && <div style={s(`font-size:var(--fs-chip);color:${color};opacity:.85;line-height:1.4;text-align:center;margin-top:2px;`)}>{l.sub}</div>}
       {l.subItems && l.subItems.length > 0 && (
-        <div style={s(`font-size:9px;color:${color};opacity:.9;line-height:1.45;text-align:left;margin-top:4px;display:flex;flex-direction:column;gap:2px;`)}>
+        <div style={s(`font-size:var(--fs-chip);color:${color};opacity:.9;line-height:1.45;text-align:left;margin-top:4px;display:flex;flex-direction:column;gap:2px;`)}>
           {l.subItems.map((it, i) => (
             <div key={i} style={s('display:flex;gap:4px;align-items:flex-start;')}>
               <span aria-hidden="true">•</span><span style={s('min-width:0;')}>{it}</span>
@@ -183,11 +183,11 @@ function NodeBlock({ b }: { b: Extract<Block, { kind: 'node' }> }) {
     return (
       <>
         <div className="flow-node entry" style={tone}>{b.text}</div>
-        {b.sub && <div style={s('font-size:9.5px;color:var(--gray);text-align:center;margin:4px 0 6px 0;')}>{b.sub}</div>}
+        {b.sub && <div style={s('font-size:var(--fs-box);color:var(--gray);text-align:center;margin:4px 0 6px 0;')}>{b.sub}</div>}
       </>
     )
   }
-  if (b.variant === 'sub-step') return <div className="flow-node sub-step" style={s('width:100%;font-size:9.5px;')}>{b.text}</div>
+  if (b.variant === 'sub-step') return <div className="flow-node sub-step" style={s('width:100%;font-size:var(--fs-box);')}>{b.text}</div>
   return (
     <div className="flow-node step">
       {b.text}
@@ -224,14 +224,14 @@ function EndpointView({ e, onNav }: { e: Endpoint; onNav: Nav }) {
     <TapIf
       on={clickable}
       className="flow-endpoint"
-      style={s(`width:100%;${endpointStyle(tone)}font-size:9px;${cursor}text-align:center;`)}
+      style={s(`width:100%;${endpointStyle(tone)}font-size:var(--fs-chip);${cursor}text-align:center;`)}
       onTap={() => onNav(linkToView(e.link!))}
     >
       {e.icon ? `${e.icon} ` : ''}{e.label}
       {e.sublabel && (
         <>
           <br />
-          <span style={s(`opacity:${clickable ? '.75' : '.7'};font-size:8px;`)}>{e.sublabel}{clickable ? ' ›' : ''}</span>
+          <span style={s(`opacity:${clickable ? '.75' : '.7'};font-size:var(--fs-chip-sub);`)}>{e.sublabel}{clickable ? ' ›' : ''}</span>
         </>
       )}
     </TapIf>
@@ -278,7 +278,7 @@ function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav:
       stickyFirstCol={b.stickyFirstCol} scroll={b.scroll} minWidth={b.minWidth} onNav={onNav} />
   )
   const footColor = b.boxTone ? `color:${HUE[b.boxTone].color};opacity:.85;` : 'opacity:.9;'
-  const foot = b.footnote ? <div style={s(`margin-top:7px;font-size:9.5px;line-height:1.55;${footColor}`)}><Raw html={b.footnote} onNav={onNav} /></div> : null
+  const foot = b.footnote ? <div style={s(`margin-top:7px;font-size:var(--fs-box);line-height:1.55;${footColor}`)}><Raw html={b.footnote} onNav={onNav} /></div> : null
   if (!b.boxTone && !b.title) return b.gap ? <div style={s(`margin-top:${b.gap}px;width:100%;`)}>{wrapped}{foot}</div> : <>{wrapped}{foot}</>
   const tone = b.boxTone ?? 'neutral'
   return (
@@ -307,10 +307,10 @@ function ColumnView({ col, onNav }: { col: Column; onNav: Nav }) {
       {h ? (
         <div className="flow-node" style={s(`width:100%;background:rgba(${h.rgb},var(--tile-bg-a));border-color:rgba(${h.rgb},var(--tile-bd-a));font-size:10px;font-weight:700;color:${h.color};`)}>
           {col.header}
-          {col.sub && <div style={s('font-size:8.5px;font-weight:400;opacity:.85;margin-top:2px;')}>{col.sub}</div>}
+          {col.sub && <div style={s('font-size:var(--fs-chip-sub);font-weight:400;opacity:.85;margin-top:2px;')}>{col.sub}</div>}
         </div>
       ) : (
-        <div style={s('font-size:9px;font-weight:600;color:var(--gray2);text-align:center;width:100%;padding:2px 0;')}>
+        <div style={s('font-size:var(--fs-chip);font-weight:600;color:var(--gray2);text-align:center;width:100%;padding:2px 0;')}>
           {col.header}
         </div>
       )}
@@ -428,7 +428,7 @@ function CatTile({ tile, st, theme, onNav }: { tile: CategoryTile; st: { bg: str
   // Optional muted second line (e.g. "Most common canine cause") — mirrors the
   // endpoint sublabel styling so a tile reads the same in either block.
   const sub = tile.sublabel
-    ? <div style={s('font-size:8px;font-weight:400;opacity:.75;margin-top:2px;')}>{tile.sublabel}</div>
+    ? <div style={s('font-size:var(--fs-chip-sub);font-weight:400;opacity:.75;margin-top:2px;')}>{tile.sublabel}</div>
     : null
   if (tile.link) {
     return (
@@ -490,7 +490,7 @@ function CategoryBlock({ columns, cols, preset, lead, onNav }: { columns: CatCol
   const theme: TileTheme = dense
     ? {
         chip: `border-radius:8px;padding:${['6px 4px', '6px 3px', '5px 3px'][t]};font-size:${[9, 8.5, 8][t]}px;font-weight:600;text-align:center;line-height:1.35;${WRAP_ANY}`,
-        linksBox: `border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;text-align:center;line-height:1.35;${WRAP_ANY}`,
+        linksBox: `border-radius:8px;padding:6px 4px;font-size:var(--fs-chip);font-weight:600;text-align:center;line-height:1.35;${WRAP_ANY}`,
         linksLabelMb: '3px', subFs: '8.5px', subPad: '1px 0',
       }
     : TILE_GRID
@@ -568,13 +568,13 @@ function DecBox({ question, sub }: { question: string; sub?: string }) {
   return (
     <div style={s(`background:${solidFill('var(--tone-warning)')};border:1px solid ${solidBorder('var(--tone-warning)')};border-radius:10px;padding:9px 14px;width:100%;text-align:center;`)}>
       <div style={s('font-size:11.5px;font-weight:700;color:#F8FAFC;line-height:1.4;')}>{question}</div>
-      {sub && <div style={s(`font-size:9px;color:${solidText('var(--tone-warning)')};margin-top:3px;`)}>{sub}</div>}
+      {sub && <div style={s(`font-size:var(--fs-chip);color:${solidText('var(--tone-warning)')};margin-top:3px;`)}>{sub}</div>}
     </div>
   )
 }
 function OutBox({ o, onNav }: { o: DecisionOutcome; onNav: Nav }) {
   const h = HUE[o.tone]
-  return <div style={s(`background:${solidFill(h.rgb)};border:1px solid ${solidBorder(h.rgb)};color:${solidText(h.rgb)};border-radius:9px;padding:9px 11px;font-size:9px;line-height:1.6;`)}><Raw html={o.html} onNav={onNav} /></div>
+  return <div style={s(`background:${solidFill(h.rgb)};border:1px solid ${solidBorder(h.rgb)};color:${solidText(h.rgb)};border-radius:9px;padding:9px 11px;font-size:var(--fs-chip);line-height:1.6;`)}><Raw html={o.html} onNav={onNav} /></div>
 }
 function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
   if (step.type === 'split') {
@@ -584,14 +584,14 @@ function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
         {/* Same fork as every other split — the tree's two outcomes are one. */}
         <ForkLines n={2} gap={6} />
         <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px;width:100%;')}>
-          <div><div style={s('font-size:9px;font-weight:700;color:var(--gray);margin-bottom:4px;')}>{step.noLabel}</div><OutBox o={step.no} onNav={onNav} /></div>
-          <div><div style={s('font-size:9px;font-weight:700;color:var(--gray);margin-bottom:4px;')}>{step.yesLabel}</div><OutBox o={step.yes} onNav={onNav} /></div>
+          <div><div style={s('font-size:var(--fs-chip);font-weight:700;color:var(--gray);margin-bottom:4px;')}>{step.noLabel}</div><OutBox o={step.no} onNav={onNav} /></div>
+          <div><div style={s('font-size:var(--fs-chip);font-weight:700;color:var(--gray);margin-bottom:4px;')}>{step.yesLabel}</div><OutBox o={step.yes} onNav={onNav} /></div>
         </div>
       </>
     )
   }
   if (step.type === 'outcome') {
-    return <div style={s('margin-bottom:8px;')}><div style={s('font-size:9px;font-weight:700;color:var(--tone-danger-title);margin-bottom:4px;')}>{step.label}</div><OutBox o={step.box} onNav={onNav} /></div>
+    return <div style={s('margin-bottom:8px;')}><div style={s('font-size:var(--fs-chip);font-weight:700;color:var(--tone-danger-title);margin-bottom:4px;')}>{step.label}</div><OutBox o={step.box} onNav={onNav} /></div>
   }
   const down = step.continue === 'YES'
   const contColor = 'var(--gray)'
@@ -603,11 +603,11 @@ function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
       <DecBox question={step.question} sub={step.sub} />
       <div style={s('display:flex;gap:5px;width:100%;margin:4px 0 10px;')}>
         <div style={s('width:28%;display:flex;flex-direction:column;align-items:center;padding-top:4px;')}>
-          <div style={s(`font-size:9px;font-weight:700;color:${contColor};`)}>{step.continue}</div>
+          <div style={s(`font-size:var(--fs-chip);font-weight:700;color:${contColor};`)}>{step.continue}</div>
           <div style={s(`font-size:18px;color:${arrowColor};line-height:1.1;`)}>↓</div>
         </div>
         <div style={s('flex:1;')}>
-          <div style={s(`font-size:9px;font-weight:700;color:${exitColor};margin-bottom:4px;`)}>{exitLabel}</div>
+          <div style={s(`font-size:var(--fs-chip);font-weight:700;color:${exitColor};margin-bottom:4px;`)}>{exitLabel}</div>
           <OutBox o={step.exit} onNav={onNav} />
         </div>
       </div>
@@ -626,7 +626,7 @@ function InfoBoxBlock({ b, onNav }: { b: InfoBoxBlockType; onNav: Nav }) {
           {b.icon}{b.icon && b.title ? ' ' : ''}{b.title ?? ''}
         </div>
       )}
-      <div style={s('font-size:9.5px;line-height:1.65;color:var(--gray);')}>
+      <div style={s('font-size:var(--fs-box);line-height:1.65;color:var(--gray);')}>
         <Raw html={b.html} onNav={onNav} />
       </div>
     </div>
@@ -642,13 +642,13 @@ function CompareBoxBlock({ b, onNav }: { b: Extract<Block, { kind: 'compareBox' 
       {b.title && <div style={{ ...ST_BLOCK_TITLE, color: h.color, marginBottom: '8px' }}><Raw html={b.title} onNav={onNav} /></div>}
       <div style={s(`display:grid;grid-template-columns:${grid};gap:6px;`)}>
         {b.cards.map((c, i) => (
-          <div key={i} style={s(`font-size:9.5px;line-height:1.5;background:rgba(${h.rgb},var(--tile-bg-a));border-radius:7px;padding:7px 9px;`)}>
+          <div key={i} style={s(`font-size:var(--fs-box);line-height:1.5;background:rgba(${h.rgb},var(--tile-bg-a));border-radius:7px;padding:7px 9px;`)}>
             <div style={s(`color:${h.color};font-weight:700;margin-bottom:3px;`)}><Raw html={c.header} onNav={onNav} /></div>
             <Raw html={c.html} onNav={onNav} />
           </div>
         ))}
       </div>
-      {b.footnote && <div style={s(`margin-top:7px;font-size:9.5px;line-height:1.6;color:color-mix(in srgb, ${h.color}, transparent 20%);`)}><Raw html={b.footnote} onNav={onNav} /></div>}
+      {b.footnote && <div style={s(`margin-top:7px;font-size:var(--fs-box);line-height:1.6;color:color-mix(in srgb, ${h.color}, transparent 20%);`)}><Raw html={b.footnote} onNav={onNav} /></div>}
     </div>
   )
 }
@@ -660,7 +660,7 @@ function SpeciesCompareBlock({ b, onNav }: { b: Extract<Block, { kind: 'speciesC
   return (
     <div style={s(`margin-top:10px;padding:10px 12px;background:rgba(${h.rgb},var(--panel-bg-a));border:1px solid rgba(${h.rgb},var(--panel-bd-a));border-radius:10px;width:100%;`)}>
       <div style={s(`font-size:10px;font-weight:700;color:${h.color};margin-bottom:5px;`)}>🐕 vs 🐱 KEY SPECIES DIFFERENCES</div>
-      <div style={s('font-size:9px;line-height:1.5;color:var(--gray);')}>
+      <div style={s('font-size:var(--fs-chip);line-height:1.5;color:var(--gray);')}>
         <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 10px;')}>
           <div><strong style={{ color: HUE.info.color }}>DOG</strong></div>
           <div><strong style={{ color: 'var(--hl-orange)' }}>CAT</strong></div>
@@ -699,7 +699,7 @@ function SpeciesChooserBlock({ b, onNav }: { b: Extract<Block, { kind: 'speciesC
         {btn('dog', '🐕 Canine')}
         {btn('cat', '🐈 Feline')}
       </div>
-      <Box tone={tone} extra={`padding:9px 12px;font-size:9.5px;line-height:1.5;color:${HUE[tone].color};`}>
+      <Box tone={tone} extra={`padding:9px 12px;font-size:var(--fs-box);line-height:1.5;color:${HUE[tone].color};`}>
         <Raw html={panel.note} onNav={onNav} />
       </Box>
       <CategoryBlock cols={panel.columns.length} columns={panel.columns} preset="dense" onNav={onNav} />
@@ -709,7 +709,7 @@ function SpeciesChooserBlock({ b, onNav }: { b: Extract<Block, { kind: 'speciesC
 
 // ── Callout / alert / diseaseGrid / dxRow ─────────────────────────────────────
 function CalloutBlock({ b, onNav }: { b: Extract<Block, { kind: 'callout' }>; onNav: Nav }) {
-  const extra = `padding:9px 12px;font-size:9.5px;color:${HUE[b.tone].color};line-height:1.5;${b.gap ? `margin-top:${b.gap}px;` : ''}${b.center ? 'text-align:center;' : ''}`
+  const extra = `padding:9px 12px;font-size:var(--fs-box);color:${HUE[b.tone].color};line-height:1.5;${b.gap ? `margin-top:${b.gap}px;` : ''}${b.center ? 'text-align:center;' : ''}`
   return (
     <Box tone={b.tone} extra={extra}>
       {b.title && <div style={{ ...ST_BLOCK_TITLE, color: TITLE[b.tone] ?? HUE[b.tone].color }}><Raw html={b.title} onNav={onNav} /></div>}
@@ -734,7 +734,7 @@ function AlertBlock({ tone, title, items, onNav }: { tone: Tone; title: string; 
   return (
     <Box tone={tone} extra="margin-top:12px;padding:10px 12px;">
       <div style={s(`font-size:10px;font-weight:700;color:${TITLE[tone] ?? HUE[tone].color};margin-bottom:5px;`)}>{title}</div>
-      <div style={s(`font-size:9.5px;line-height:1.55;color:${HUE[tone].color};`)}>
+      <div style={s(`font-size:var(--fs-box);line-height:1.55;color:${HUE[tone].color};`)}>
         {items.map((it, i) => <Fragment key={i}>{i > 0 && <br />}{'• '}<AlertItemView it={it} onNav={onNav} /></Fragment>)}
       </div>
     </Box>
@@ -744,7 +744,7 @@ function DiseaseGridBlock({ title, links, onNav }: { title: string; links: Label
   return (
     <Box tone="teal" extra="margin-top:10px;padding:10px 12px;">
       <div style={{ ...ST_BLOCK_TITLE, color: 'var(--tone-teal-fg)' }}>{title}</div>
-      <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;font-size:9.5px;')}>
+      <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;font-size:var(--fs-box);')}>
         {links.map((l, i) => <Tappable key={i} onTap={() => onNav(linkToView(l.link))} style={s('cursor:pointer;color:var(--fg-teal-deep);')}>→ {l.label}</Tappable>)}
       </div>
     </Box>
