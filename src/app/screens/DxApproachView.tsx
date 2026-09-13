@@ -15,6 +15,7 @@ import { styleStringToObject as s, toneBox } from './style'
 import { NotFound } from './NotFound'
 import { GridTable } from './gridTable'
 import { type Nav, Raw, ToneBox } from './flowHelpers'
+import { Tappable } from './Tappable'
 
 const STD_NAV: DxNavItem[] = [
   { key: 'history', label: '📋 History' },
@@ -22,28 +23,33 @@ const STD_NAV: DxNavItem[] = [
   { key: 'dx', label: '🔬 Diagnostics' },
 ]
 
-function DxTabs({ sign, nav, active, variant = 'std' }: { sign: string; nav: DxNavItem[]; active: string; variant?: string }) {
+/** One tab strip for every sign.
+ *
+ *  There were four (`navVariant`: std / alt / flex / pupd), kept to match
+ *  hand-authored markup byte-for-byte, and between them they alternated colours
+ *  by position, signalled the selected tab with three different opacities, and
+ *  borrowed `.dx-step` — the class used by step headers inside the page — so the
+ *  control was styled as content. Five of 37 signs opted into a variant; the
+ *  reader met a differently-behaved strip on those five for no reason they could
+ *  act on.
+ *
+ *  `aria-current` carries the state to assistive tech; `.dx-tab` carries it
+ *  visually as fill vs outline, so it survives without colour perception. */
+function DxTabs({ sign, nav, active }: { sign: string; nav: DxNavItem[]; active: string }) {
   const router = useNav()
-  const flex = variant === 'flex'
-  const cellBase = flex
-    ? 'flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;text-align:center;'
-    : 'padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;'
-  const container = flex
-    ? 'display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;'
-    : `display:grid;grid-template-columns:repeat(${nav.length},minmax(0,1fr));gap:4px;margin-bottom:14px;`
   return (
-    <div style={s(container)}>
-      {nav.map((t, i) => {
-        const on = t.key === active
-        const cls = variant === 'std' ? `dx-step${on ? '' : ' alt'}` : i % 2 === 1 ? 'dx-step alt' : 'dx-step'
-        const op = on ? (variant === 'pupd' ? 'opacity:1;' : '') : flex ? 'opacity:.65;' : 'opacity:.5;'
-        return (
-          <div key={t.key} className={cls} style={s(cellBase + op)} role="button"
-            onClick={() => router.replace({ kind: 'dx', sign, tab: t.key })}>
-            {t.label}
-          </div>
-        )
-      })}
+    <div className="dx-tabs">
+      {nav.map(t => (
+        <button
+          key={t.key}
+          type="button"
+          className="dx-tab"
+          aria-current={t.key === active ? 'page' : undefined}
+          onClick={() => router.replace({ kind: 'dx', sign, tab: t.key })}
+        >
+          {t.label}
+        </button>
+      ))}
     </div>
   )
 }
@@ -88,7 +94,7 @@ function DxDiseaseGrid({ b, onNav }: { b: Extract<DxBlock, { kind: 'diseaseGrid'
       <div style={s('font-size:11px;font-weight:700;color:var(--tone-teal-fg);margin-bottom:6px;')}>{b.title}</div>
       <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;font-size:9.5px;')}>
         {b.links.map((l, i) => (
-          <div key={i} role="button" style={s('cursor:pointer;color:var(--fg-teal-deep);')} onClick={() => onNav(linkToView(l.link))}>→ {l.label}</div>
+          <Tappable key={i} style={s('cursor:pointer;color:var(--fg-teal-deep);')} onTap={() => onNav(linkToView(l.link))}>→ {l.label}</Tappable>
         ))}
       </div>
     </ToneBox>
@@ -261,10 +267,10 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
         ? 'background:rgba(var(--tone-teal),0.2);border-color:rgba(var(--tone-teal),0.5);'
         : ''
       return (
-        <div className="dx-dx" role="button" style={bg ? s(bg) : undefined}
-          onClick={() => onNav({ kind: 'lesionLoc', loc: b.loc, name: b.name })}>
+        <Tappable className="dx-dx" style={bg ? s(bg) : undefined}
+          onTap={() => onNav({ kind: 'lesionLoc', loc: b.loc, name: b.name })}>
           {b.name} →
-        </div>
+        </Tappable>
       )
     }
     case 'gridTable': return (
@@ -292,7 +298,7 @@ export function DxApproachView({ sign, active }: { sign: string; active: string 
   const tab = approach.tabs[active] ?? approach.tabs.history
   return (
     <>
-      <DxTabs sign={sign} nav={nav} active={active} variant={approach.navVariant} />
+      <DxTabs sign={sign} nav={nav} active={active} />
       <div className="dx-wrap">
         {tab.blocks.map((b, i) => (
           <Fragment key={i}>

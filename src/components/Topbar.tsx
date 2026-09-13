@@ -26,12 +26,16 @@ export default function Topbar({ title, showBack, onBack, onToggleNotes }: Props
   )
   return (
     <div className="flex items-center pt-[calc(14px+env(safe-area-inset-top))] px-[18px] pb-[10px] bg-(--color-surface) border-b border-(--color-line) shrink-0 gap-2.5">
-      <div
+      {/* A real <button>: it is chrome, not clinical content, so there is no
+          layout to preserve, and "←" alone is not an accessible name. */}
+      <button
+        type="button"
+        aria-label="Back"
         className={`${showBack ? 'flex' : 'hidden'} items-center justify-center w-8 h-8 rounded-lg bg-(--color-card) border border-(--color-line) cursor-pointer text-[16px] text-(--color-muted) transition-all duration-150 shrink-0 hover:bg-[var(--card2)] hover:text-(--color-fg)`}
         onClick={() => { track('back_button_clicked'); onBack() }}
       >
         ←
-      </div>
+      </button>
       <div className={`${title ? 'hidden' : ''} text-[18px] font-semibold tracking-[-.02em] text-(--color-fg)`}>
         Vet<span className="text-(--color-accent)">ic</span>
       </div>

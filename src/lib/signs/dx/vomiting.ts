@@ -7,7 +7,6 @@ import { stepTable } from './shared/dxHelpers'
 
 export const vomitingDx: DxApproach = {
   title: 'Vomiting',
-  navVariant: 'flex',
   tabs: {
 
   history: {

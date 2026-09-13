@@ -32,10 +32,15 @@ import { defineConfig } from '@playwright/test'
 const PORT = Number(process.env.PW_PORT ?? 3456)
 
 export default defineConfig({
-  testDir: './tests/visual',
-  // Snapshots are the deliverable — keep them next to the spec, one directory
-  // per OS so the committed linux set and a local darwin set never collide.
-  snapshotPathTemplate: '{testDir}/__screenshots__/{platform}/{arg}{ext}',
+  // `tests/`, not `tests/visual/`: the screenshot specs are no longer the only
+  // browser tests. tests/a11y/ drives the keyboard, which a screenshot cannot —
+  // a focus ring is a picture, but "Enter on this tile navigates" is behaviour.
+  testDir: './tests',
+  // Snapshots are the deliverable — keep them next to the visual spec, one
+  // directory per OS so the committed linux set and a local darwin set never
+  // collide. Pinned to tests/visual rather than {testDir} so widening testDir
+  // above did not move (and orphan) all 68 committed baselines.
+  snapshotPathTemplate: './tests/visual/__screenshots__/{platform}/{arg}{ext}',
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
   retries: 0,

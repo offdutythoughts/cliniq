@@ -8,6 +8,7 @@ import { DB } from '../../data/db'
 import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s, colTier } from './style'
 import { NavCard } from './markup'
+import { Tappable } from './Tappable'
 import { ForkLines } from './flowHelpers'
 import type { Tone } from '../../lib/signs/flowTypes'
 import { HUE } from '../../lib/signs/tone'
@@ -240,13 +241,13 @@ export function LesionLocView({ loc, name, filter }: { loc: string; name: string
             {cats.map(cat => (
               <div key={cat} style={s('display:flex;flex-direction:column;gap:4px;')}>
                 {groups.get(cat)!.map(le => (
-                  <div key={le.id} role="button"
+                  <Tappable key={le.id}
                     style={s(`border-radius:8px;padding:${cardPadding};font-size:${cardFontSize}px;font-weight:600;text-align:center;border:1.5px solid ${cBd(cat)};background:${cBg(cat)};color:${cTx(cat)};cursor:pointer;transition:all .2s;line-height:1.3;overflow-wrap:anywhere;`)}
-                    onClick={() => nav.navigate({ kind: 'subTypeDetail', id: le.id })}
+                    onTap={() => nav.navigate({ kind: 'subTypeDetail', id: le.id })}
                     onMouseOver={e => { e.currentTarget.style.filter = 'brightness(1.2)' }}
                     onMouseOut={e => { e.currentTarget.style.filter = '' }}>
                     {le.sub}
-                  </div>
+                  </Tappable>
                 ))}
               </div>
             ))}

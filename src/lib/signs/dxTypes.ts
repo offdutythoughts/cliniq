@@ -139,14 +139,6 @@ export type DxApproach = {
   title: string
   /** Tab buttons in order. Omit for the standard 3 (history / exam / dx). */
   nav?: DxNavItem[]
-  /** Nav strip style, matching the hand-authored variants byte-for-byte:
-   *  - 'std' (default): grid; the active tab is `dx-step`, the rest `dx-step alt`.
-   *  - 'alt': grid; classes alternate by position (odd index = `dx-step alt`),
-   *    active shown by opacity only (dyspnoea, diarrhoea).
-   *  - 'flex': flex-wrap; alternating classes; inactive `opacity:.65`; larger
-   *    cells (vomiting, regurgitation).
-   *  - 'pupd': grid; alternating classes; active = explicit `opacity:1`. */
-  navVariant?: 'std' | 'alt' | 'flex' | 'pupd'
   /** Tab content keyed by nav key ('history' | 'exam' | 'dx' | extras). */
   tabs: Record<string, DxTab>
 }

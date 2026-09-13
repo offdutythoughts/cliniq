@@ -8,7 +8,6 @@ import { stepTable } from './shared/dxHelpers'
 
 export const diarrhoeaDx: DxApproach = {
   title: 'Diarrhoea',
-  navVariant: 'alt',
   nav: [
     { key: 'history', label: '📋 History' },
     { key: 'exam', label: '🩺 Exam' },

@@ -1,5 +1,5 @@
 'use client'
-// ── Differential Search screen ────────────────────────────────────────────────
+// ── Mix & Match screen ────────────────────────────────────────────────────────
 // Users enter signalment (species, breed, age, sex) + free-text clinical sign
 // and diagnostic keywords. The engine scores all disease pages and returns a
 // ranked differential list grouped by aetiology.
@@ -8,6 +8,7 @@ import { useState, useMemo, useRef, useCallback } from 'react'
 import { searchDiseases, type SearchInputs, type SearchCategory, type AgeCategory, type SexFilter, type NeuterFilter, type Species } from '../../lib/search/diseaseSearch'
 import { useNav } from '../nav/NavContext'
 import { SpTag } from './tags'
+import { Tappable } from './Tappable'
 import { styleStringToObject as s } from './style'
 
 const CAT_EMOJI: Record<string, string> = {
@@ -140,7 +141,7 @@ export function MixMatchScreen() {
       {/* ── Header ── */}
       <div style={s('margin-bottom:14px;')}>
         <div style={s('font-size:11px;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;')}>
-          Differential Search
+          Mix &amp; Match
         </div>
         <div style={s('font-size:12px;color:var(--gray);line-height:1.5;')}>
           Enter signalment, clinical signs, and diagnostics to generate a scored differential list.
@@ -301,11 +302,10 @@ export function MixMatchScreen() {
                 const allMatched = [...item.matchedSignTerms, ...item.matchedDiagTerms]
 
                 return (
-                  <div
+                  <Tappable
                     key={d.id as string}
                     className="card"
-                    role="button"
-                    onClick={() => nav.navigate({ kind: 'disease', id: d.id as string })}
+                    onTap={() => nav.navigate({ kind: 'disease', id: d.id as string })}
                   >
                     <div className="card-row">
                       <div style={s('flex:1;min-width:0;')}>
@@ -327,7 +327,7 @@ export function MixMatchScreen() {
                       </div>
                       <div className="card-arrow">›</div>
                     </div>
-                  </div>
+                  </Tappable>
                 )
               })}
             </div>

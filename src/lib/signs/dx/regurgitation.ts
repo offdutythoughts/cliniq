@@ -8,7 +8,6 @@ import { stepTable } from './shared/dxHelpers'
 
 export const regurgitationDx: DxApproach = {
   title: 'Regurgitation',
-  navVariant: 'flex',
   tabs: {
 
   history: {

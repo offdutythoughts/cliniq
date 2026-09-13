@@ -8,7 +8,6 @@ import { numBadge } from './shared/dxHelpers'
 
 export const pupdDx: DxApproach = {
   title: 'PU/PD',
-  navVariant: 'pupd',
   nav: [
     { key: 'history', label: '📋 History' },
     { key: 'exam', label: '🩺 Exam' },

@@ -97,12 +97,19 @@ jobs:
             echo "::warning title=Visual guardrail unarmed::No tests/visual/__screenshots__/linux baselines. Run Actions → 'Update visual baselines' to generate them."
           fi
 
+      # Not gated on the baselines: the behaviour suite below needs the built
+      # server too, and it has nothing to do with whether screenshots exist.
       - uses: ./.github/actions/visual-build
-        if: steps.baselines.outputs.present == 'true'
+
+      # Keyboard operability and ARIA state — behaviour a screenshot cannot
+      # assert. Deliberately NOT gated on the baselines: a missing screenshot
+      # set must never silently take the a11y gate down with it.
+      - name: Behaviour (keyboard · focus · ARIA)
+        run: npx playwright test tests/a11y
 
       - name: Visual regression (60 screens · light + dark)
         if: steps.baselines.outputs.present == 'true'
-        run: npx playwright test
+        run: npx playwright test tests/visual
 
       # The diff images are the only way to judge a visual failure, so keep them
       # when the job goes red.

@@ -85,7 +85,23 @@ export function parseLegacyOnclick(js: string): View | null {
 // ── Screen metadata (topbar title + notes key/title) ──────────────────────────
 // Derived from data, reproducing the exact legacy push()/replace() scheme so
 // saved notes carry over. `showBack` is NOT here — it comes from nav stack depth.
-const TAB_NAMES = ['Clinical', 'Diagnostic', 'Disease', 'Mix & Match', 'Protocols', 'Settings']
+/** The bottom-nav tab set — the ONE definition of how many tabs there are, what
+ *  they are called and which icon each carries. `Tab` above is its index type.
+ *
+ *  BottomNav used to keep a second, hand-synced copy of these labels; two lists
+ *  that must agree and nothing checking that they do. Notes keys are derived
+ *  from the label ("Clinical — General"), so a drift between the copies would
+ *  have silently split a reader's saved notes across two key spellings. */
+export const TABS = [
+  { icon: '🔍', label: 'Clinical' },
+  { icon: '🌿', label: 'Diagnostic' },
+  { icon: '📋', label: 'Disease' },
+  { icon: '🔀', label: 'Mix & Match' },
+  { icon: '⚡', label: 'Protocols' },
+  { icon: '⚙️', label: 'Settings' },
+] as const
+
+const TAB_NAMES = TABS.map(t => t.label)
 
 const byId = <T extends { id: string }>(rows: T[]) => {
   const m = new Map<string, T>()

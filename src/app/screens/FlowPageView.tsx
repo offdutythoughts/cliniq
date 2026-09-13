@@ -21,6 +21,7 @@ import { styleStringToObject as s, toneBox, colTier, evenTracks, WRAP_ANY } from
 import { NotFound } from './NotFound'
 import { ForkLines, type Nav, Raw, ToneBox } from './flowHelpers'
 import { NavCard } from './markup'
+import { Tappable, TapIf } from './Tappable'
 import { GridTable } from './gridTable'
 
 const DISCLAIMER = <div className="disclaimer">For qualified veterinary professionals only.</div>
@@ -220,10 +221,11 @@ function EndpointView({ e, onNav }: { e: Endpoint; onNav: Nav }) {
   const clickable = !!e.link
   const cursor = clickable ? 'cursor:pointer;' : ST_TILE_MUTED
   return (
-    <div
+    <TapIf
+      on={clickable}
       className="flow-endpoint"
       style={s(`width:100%;${endpointStyle(tone)}font-size:9px;${cursor}text-align:center;`)}
-      {...(clickable ? { role: 'button', onClick: () => onNav(linkToView(e.link!)) } : {})}
+      onTap={() => onNav(linkToView(e.link!))}
     >
       {e.icon ? `${e.icon} ` : ''}{e.label}
       {e.sublabel && (
@@ -232,7 +234,7 @@ function EndpointView({ e, onNav }: { e: Endpoint; onNav: Nav }) {
           <span style={s(`opacity:${clickable ? '.75' : '.7'};font-size:8px;`)}>{e.sublabel}{clickable ? ' ›' : ''}</span>
         </>
       )}
-    </div>
+    </TapIf>
   )
 }
 
@@ -415,10 +417,10 @@ function CatTile({ tile, st, theme, onNav }: { tile: CategoryTile; st: { bg: str
       <div style={s(`${tint}${theme.linksBox}cursor:default;`)}>
         {tile.label && <div style={s(`margin-bottom:${theme.linksLabelMb};`)}>{tile.label}</div>}
         {tile.links.map((ll, k) => (
-          <div key={k} role="button" onClick={() => onNav(linkToView(ll.link))}
+          <Tappable key={k} onTap={() => onNav(linkToView(ll.link))}
             style={s(`cursor:pointer;text-align:left;padding:${theme.subPad};font-size:${theme.subFs};`)} {...hoverBrighten}>
             → {ll.label}
-          </div>
+          </Tappable>
         ))}
       </div>
     )
@@ -430,10 +432,10 @@ function CatTile({ tile, st, theme, onNav }: { tile: CategoryTile; st: { bg: str
     : null
   if (tile.link) {
     return (
-      <div role="button" onClick={() => onNav(linkToView(tile.link!))} {...hoverBrighten}
+      <Tappable onTap={() => onNav(linkToView(tile.link!))} {...hoverBrighten}
         style={s(`${tint}${theme.chip}cursor:pointer;`)}>
         {tile.label}{sub}
-      </div>
+      </Tappable>
     )
   }
   if (tile.terminal) return <div style={s(`${tint}${theme.chip}${ST_TILE_MUTED}`)}>{tile.label}{sub}</div>
@@ -719,11 +721,11 @@ function AlertItemView({ it, onNav }: { it: AlertItem; onNav: Nav }) {
   if (typeof it === 'string') return <Raw html={it} onNav={onNav} />
   return (
     <>
-      <span
-        role="button"
+      <Tappable
+        as="span"
         style={{ fontWeight: 700, cursor: 'pointer', textDecoration: 'underline' }}
-        onClick={() => onNav(linkToView(it.link))}
-      >{it.bold}</span>
+        onTap={() => onNav(linkToView(it.link))}
+      >{it.bold}</Tappable>
       {it.html && <Raw html={it.html} onNav={onNav} />}
     </>
   )
@@ -743,7 +745,7 @@ function DiseaseGridBlock({ title, links, onNav }: { title: string; links: Label
     <Box tone="teal" extra="margin-top:10px;padding:10px 12px;">
       <div style={{ ...ST_BLOCK_TITLE, color: 'var(--tone-teal-fg)' }}>{title}</div>
       <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;font-size:9.5px;')}>
-        {links.map((l, i) => <div key={i} role="button" onClick={() => onNav(linkToView(l.link))} style={s('cursor:pointer;color:var(--fg-teal-deep);')}>→ {l.label}</div>)}
+        {links.map((l, i) => <Tappable key={i} onTap={() => onNav(linkToView(l.link))} style={s('cursor:pointer;color:var(--fg-teal-deep);')}>→ {l.label}</Tappable>)}
       </div>
     </Box>
   )
@@ -755,22 +757,22 @@ function DxRowBlock({ items, onNav }: { items: LabeledLink[]; onNav: Nav }) {
         const isProto = i2.link.to === 'protocol'
         if (isProto) {
           return (
-            <div key={i} role="button" onClick={() => onNav(linkToView(i2.link))}
+            <Tappable key={i} onTap={() => onNav(linkToView(i2.link))}
               style={s('cursor:pointer;background:rgba(var(--tone-danger),var(--panel-bg-a));border:1px solid rgba(var(--tone-danger),var(--panel-bd-a));border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;')}>
               <span style={s('font-size:11px;font-weight:700;color:var(--tone-danger-fg);')}>{i2.label}</span>
               <span style={s('color:var(--tone-danger-fg);font-size:14px;opacity:.7;')}>›</span>
-            </div>
+            </Tappable>
           )
         }
         return (
-          <div key={i} className="card" role="button" onClick={() => onNav(linkToView(i2.link))}>
+          <Tappable key={i} className="card" onTap={() => onNav(linkToView(i2.link))}>
             <div className="card-row">
               <div style={{ flex: 1 }}>
                 <div className="card-title">{i2.label}</div>
               </div>
               <div className="card-arrow">›</div>
             </div>
-          </div>
+          </Tappable>
         )
       })}
     </div>
