@@ -1,6 +1,6 @@
 'use client'
 // Shared pipe-/@-markup renderers — React ports of the disease-page helpers
-// linkify() and bul() (cliniqApp.ts), reused by the disease / lesion / diff
+// linkify() and bul() (the deleted cliniqApp.ts), reused by the disease / lesion / diff
 // detail screens. `@DIS-…`/`@PROT-…` tokens become real React navigation.
 
 import { type CSSProperties, type ReactNode } from 'react'

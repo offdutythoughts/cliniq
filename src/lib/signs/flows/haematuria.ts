@@ -1,6 +1,6 @@
 // ── Haematuria flowchart (data) ─────────────────────────────────────────────
 // Migration of haematuriaFlowHtml (src/lib/signs/haematuria.ts) plus the inline
-// sub-flow render functions in cliniqApp.ts (renderHaematuriaFlowPseudo /
+// sub-flow render functions in the deleted cliniqApp.ts (renderHaematuriaFlowPseudo /
 // TrueSystemic / Initial / Terminal / Uniform / Indep) to the FlowPage model.
 // The Dx views (haematuriaDx* / renderDxHaematuria*) are a separate tranche and
 // are NOT migrated here.

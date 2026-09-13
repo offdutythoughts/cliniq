@@ -1,6 +1,6 @@
 // ── Vestibular — diagnostic approach (data) ─────────────────────────────────
 // Migration of renderDxVestibular{History,Exam,Dx} (legacy inline render() HTML
-// in ../cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
+// in the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
 import { VEST_LOC_COLS, VEST_LOC_HEADERS, VEST_LOC_ROWS } from '../vestibularLocalisation'

@@ -36,7 +36,6 @@ function collectLinks(blocks: Block[]): Link[] {
       else if (b.kind === 'cardGrid') b.tiles.forEach(t => { if (t.link) out.push(t.link) })
       else if (b.kind === 'categoryGrid') b.columns.forEach(c => c.tiles.forEach(t => { if (t.link) out.push(t.link) }))
       else if (b.kind === 'categoryColumns') b.columns.forEach(c => c.tiles.forEach(t => { if (t.link) out.push(t.link) }))
-      else if (b.kind === 'cardSection') b.cards.forEach(c => { if (c.link) out.push(c.link) })
       else if (b.kind === 'diseaseGrid') b.links.forEach(l => out.push(l.link))
       else if (b.kind === 'dxRow') b.items.forEach(l => out.push(l.link))
       else if (b.kind === 'alert') b.items.forEach(it => { if (typeof it !== 'string' && it.link) out.push(it.link) })

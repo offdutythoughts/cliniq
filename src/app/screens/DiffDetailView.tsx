@@ -1,5 +1,5 @@
 'use client'
-// Differential detail — React port of renderDiffDetail (cliniqApp.ts).
+// Differential detail — React port of renderDiffDetail (the deleted cliniqApp.ts).
 
 import { DB } from '../../data/db'
 import { spOf } from '../../lib/species'

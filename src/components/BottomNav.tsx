@@ -1,5 +1,5 @@
 'use client'
-import type { Tab } from '../types'
+import type { Tab } from '../app/nav/view'
 import { track } from '../lib/analytics'
 
 const NAV_ITEMS: { icon: string; label: string }[] = [

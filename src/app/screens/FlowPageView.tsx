@@ -288,25 +288,6 @@ function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav:
   )
 }
 
-// ── Card section ──────────────────────────────────────────────────────────────
-function CardSectionBlock({ b, onNav }: { b: Extract<Block, { kind: 'cardSection' }>; onNav: Nav }) {
-  const h = HUE[b.tone]
-  return (
-    <Box tone={b.tone} extra={`padding:10px 12px;margin-top:${b.gap ?? 10}px;`}>
-      <div style={{ ...ST_BLOCK_TITLE, color: TITLE[b.tone] ?? h.color }}><Raw html={b.title} onNav={onNav} /></div>
-      <div style={s('display:flex;flex-direction:column;gap:5px;')}>
-        {b.cards.map((c, i) => (
-          <div key={i} style={s(`background:rgba(${h.rgb},var(--tile-bg-a));border-radius:7px;padding:7px 10px;${c.link ? 'cursor:pointer;' : ST_UNLINKED_TILE}`)}
-            {...(c.link ? { role: 'button', onClick: () => onNav(linkToView(c.link!)) } : { 'aria-disabled': true, title: 'No linked page available' })}>
-            <div style={s(`font-size:10.5px;font-weight:700;color:${h.color};`)}><Raw html={c.title} onNav={onNav} />{c.tag && <>{' '}<span style={s('font-size:9px;font-weight:400;opacity:.8;')}><Raw html={c.tag} onNav={onNav} /></span></>}</div>
-            <div style={s(`font-size:9px;color:${h.color};opacity:.8;line-height:1.4;`)}><Raw html={c.desc} onNav={onNav} /></div>
-          </div>
-        ))}
-      </div>
-    </Box>
-  )
-}
-
 // ── Banner ──────────────────────────────────────────────────────────────────
 function BannerBlock({ tone, html, onNav }: { tone: Tone; html: string; onNav: Nav }) {
   const h = HUE[tone]
@@ -813,7 +794,6 @@ function BlockView({ b, lead, onNav }: { b: Block; lead?: boolean; onNav: Nav })
     case 'diseaseGrid': return <DiseaseGridBlock title={b.title} links={b.links} onNav={onNav} />
     case 'dxRow': return <DxRowBlock items={b.items} onNav={onNav} />
     case 'table': return <TableBlock b={b} onNav={onNav} />
-    case 'cardSection': return <CardSectionBlock b={b} onNav={onNav} />
     case 'categoryGrid': return <CategoryBlock columns={b.columns} cols={b.columns.length} preset="grid" lead={lead} onNav={onNav} />
     case 'categoryColumns': return <CategoryBlock columns={b.columns} cols={b.columns.length} preset="dense" lead={lead} onNav={onNav} />
     case 'decisionTree': return <>{b.steps.map((step, i) => <DecisionStepView key={i} step={step} onNav={onNav} />)}</>

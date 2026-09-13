@@ -1,6 +1,6 @@
 // ── Pale Mucous Membranes — diagnostic approach (data) ───────────────────────
 // Migration of the renderDxPaleGums{History,Exam,Dx}() inline views (legacy HTML
-// in ../cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
+// in the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'

@@ -9,10 +9,15 @@
 
 import type { Link } from '../../lib/signs/flowTypes'
 import type { Species } from '../../lib/species'
-import type { Tab } from '../../types'
 import { FLOWS } from '../../lib/signs/flows'
 import { DX } from '../../lib/signs/dx'
 import { DB } from '../../data/db'
+
+/** Which bottom-nav tab is selected. The tab set is defined by TAB_NAMES below;
+ *  these two must stay the same length. Lived in src/types/index.ts until that
+ *  file was deleted — it held one live type and eight dead duplicates of the
+ *  db.ts row interfaces. */
+export type Tab = 0 | 1 | 2 | 3 | 4 | 5
 
 export type View =
   | { kind: 'tab'; tab: Tab }                                                    // navTo(0..4)

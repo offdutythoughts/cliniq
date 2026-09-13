@@ -1,5 +1,5 @@
 // Static spinal-injury grading table — React port of injuryGradingTable
-// (cliniqApp.ts). Included in the Clinical Signs card when a disease sets
+// (the deleted cliniqApp.ts). Included in the Clinical Signs card when a disease sets
 // showGradingTable. Row 5 carries <strong> emphasis, rendered as real <strong>.
 
 import { Fragment } from 'react'

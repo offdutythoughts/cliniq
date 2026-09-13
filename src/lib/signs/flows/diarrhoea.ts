@@ -1,5 +1,5 @@
 // ── Diarrhoea flowchart (data) ──────────────────────────────────────────────
-// Migration of renderDiarrhoeaFlow (inline in src/lib/cliniqApp.ts) to the
+// Migration of renderDiarrhoeaFlow (inline in the deleted cliniqApp.ts) to the
 // FlowPage model. Self-contained: one entry page, no sub-flows (the only
 // onclicks are goLesionTab lesion links). The Dx views (diarrhoea*Html /
 // renderDxDiarrhoea*) are OUT of scope.

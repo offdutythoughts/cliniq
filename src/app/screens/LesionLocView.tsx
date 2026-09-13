@@ -1,5 +1,5 @@
 'use client'
-// Lesion-location category grid — React port of goLesionTab (cliniqApp.ts).
+// Lesion-location category grid — React port of goLesionTab (the deleted cliniqApp.ts).
 // Groups a location's lesions by category into a flow-wrap (category row →
 // arrows → tappable sub-type columns), then an optional diagnostic-approach card.
 
@@ -46,8 +46,7 @@ const CT: Record<string, Tone> = {
   'Haemolytic': 'danger', 'Haemorrhage': 'danger',
   'Non-regenerative': 'danger', 'Protein-losing': 'danger',
   'Renal tubular': 'danger', 'Seizure': 'danger',
-  'Shock': 'danger', 'Central': 'danger',
-  'Infection/Inflammation': 'danger', 'Obstruction/Dysmotility': 'danger',
+  'Shock': 'danger',
   // ── pink: vascular / cardiac / obstructive (red is taken by infection) ──
   'Vascular': 'pink', 'Cardiac': 'pink',
   'Obstruction': 'pink', 'Cystic': 'pink',
@@ -59,18 +58,16 @@ const CT: Record<string, Tone> = {
   'Infection/Fungal': 'orange', 'Myopathy': 'orange',
   'Renal failure': 'orange', 'Secondary': 'orange',
   'Syncope': 'orange', 'Uterine': 'orange',
-  'Secondary GI': 'orange',
   // ── warning: metabolic / hepatic / parasitic ──
   'Metabolic': 'warning', 'Parasitic': 'warning',
   'Trauma': 'warning', 'Hepatic': 'warning',
   'Hormonal': 'warning', 'Adrenal': 'warning',
   'Dental': 'warning', 'Endocrine/Metabolic': 'warning',
   'Gas': 'warning', 'Hepatobiliary': 'warning',
-  'Hepatocellular': 'warning', 'Parasitic/Vascular': 'warning',
-  'Pre-regenerative': 'warning', 'Bilateral': 'warning',
+  'Hepatocellular': 'warning',
+  'Pre-regenerative': 'warning',
   // ── lime: degenerative / endocrine ──
   'Degenerative': 'lime', 'Endocrine': 'lime',
-  'Inflammatory/Allergic': 'lime',
   // ── green: toxic / positional / physiological ──
   'Toxic': 'green', 'Prolapse': 'green',
   'Drug': 'green', 'Pharyngeal': 'green',
@@ -81,7 +78,6 @@ const CT: Record<string, Tone> = {
   'Biliary obstruction': 'teal', 'Fungal': 'teal',
   'GI Disease': 'teal', 'Pharmacological': 'teal',
   'Regenerative': 'teal', 'Thyroid': 'teal',
-  'Peripheral': 'teal',
   // ── cyan: congenital ──
   'Congenital': 'cyan', 'Dynamic collapse': 'cyan',
   'Autonomic': 'cyan', 'Junctionopathy': 'cyan',
@@ -93,7 +89,6 @@ const CT: Record<string, Tone> = {
   'Electrolyte': 'info', 'Fluid': 'info',
   'Fluid/Oedema': 'info', 'Hereditary': 'info',
   'Osmotic diuresis': 'info', 'Primary': 'info',
-  'Dysmotility': 'info',
   // ── violet: neoplastic / proliferative / neuro ──
   'Mass': 'violet', 'Neoplastic': 'violet',
   'Inherited': 'violet', 'Neoplasia': 'violet',

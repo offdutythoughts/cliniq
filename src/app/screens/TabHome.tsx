@@ -5,7 +5,7 @@
 // (no innerHTML); the theme toggle drives a data-theme attribute + state.
 
 import { useState } from 'react'
-import type { Tab } from '../../types'
+import type { Tab } from '../nav/view'
 import type { DiseaseRow, ProtocolRow } from '../../data/db'
 import { DB } from '../../data/db'
 import { FLOW_SIGNS, DX_HOME_CARDS } from '../../lib/signs/registry'

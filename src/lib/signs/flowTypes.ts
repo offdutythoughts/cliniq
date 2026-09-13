@@ -153,17 +153,6 @@ export type TableBlock = Connectable & {
   dividers?: boolean
 }
 
-/** A tinted section containing a title and a stack of disease cards (the
- *  category groups in the blind-eye acute/chronic pathways). */
-export type DiseaseCard = { title: string; tag?: string; desc: string; link?: Link }
-export type CardSectionBlock = Connectable & {
-  kind: 'cardSection'
-  tone: Tone
-  title: string
-  cards: DiseaseCard[]
-  gap?: number
-}
-
 /** A 4-(or N-)column category grid: a row of category headers, a row of
  *  connector arrows, then a row of tile-columns (each column 1+ clickable
  *  tiles). The mydriasis/miosis cause pages; later jaundice/pale/seizures.
@@ -402,7 +391,6 @@ export type Block =
   | DiseaseGridBlock
   | DxRowBlock
   | TableBlock
-  | CardSectionBlock
   | CategoryGridBlock
   | CategoryColumnsBlock
   | DecisionTreeBlock

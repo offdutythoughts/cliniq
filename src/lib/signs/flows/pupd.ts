@@ -1,6 +1,6 @@
 // ── Polyuria / Polydipsia (PU/PD) flowchart (data) ──────────────────────────
 // Sources: renderPUPDFlow / renderPUPDFlowPrimPD / renderPUPDFlowPrimPU /
-// renderPUPDFlowSecPU — all inline render…() functions in cliniqApp.ts (no
+// renderPUPDFlowSecPU — all inline render…() functions in the deleted cliniqApp.ts (no
 // legacy const). The Dx views (renderDxPUPD*, renderDxPUPDDesmopressin) are a
 // separate tranche and are NOT migrated here.
 //

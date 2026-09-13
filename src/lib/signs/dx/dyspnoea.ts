@@ -1,6 +1,6 @@
 // ── Dyspnoea — diagnostic approach (data) ───────────────────────────────────
 // Migration of renderDxDyspnoea{History,Exam,Dx}() (legacy inline-HTML render
-// functions in ../../cliniqApp.ts) to the typed DxApproach model. Rendered by
+// functions in the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by
 // renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'

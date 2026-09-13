@@ -1,6 +1,6 @@
 // ── Sneezing — diagnostic approach (data) ───────────────────────────────────
 // Migration of renderDxSneezing{History,Exam,Dx} (legacy inline render() funcs
-// in ../cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
+// in the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'

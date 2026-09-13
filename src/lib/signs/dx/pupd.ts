@@ -1,6 +1,6 @@
 // ── PU/PD — diagnostic approach (data) ──────────────────────────────────────
 // Migration of renderDxPUPD{History,Exam,,Desmopressin}() (legacy inline render
-// templates in ../../cliniqApp.ts) to the typed DxApproach model. Rendered by
+// templates in the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by
 // renderDxApproach. Non-standard 4-tab nav (adds 💉 Desmopressin).
 
 import type { DxApproach } from '../dxTypes'

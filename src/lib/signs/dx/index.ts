@@ -1,10 +1,17 @@
 // ── DX registry ─────────────────────────────────────────────────────────────
-// All migrated diagnostic-approach views, keyed by sign id (matching the flow
-// `{ to: 'dx', id }` link target, the Diagnostic-home tile, and the legacy
-// renderDx<Pascal> name stem). A sign present here is rendered from data via
-// renderDxId in cliniqApp.ts; signs not yet present fall back to their legacy
-// renderDx<Pascal><Tab> function. Add a sign's DxApproach here as it is
-// migrated.
+// Every diagnostic-approach view, keyed by sign id — the key must match the
+// flow's `{ to: 'dx', id }` link target and the sign's `dxId ?? id` in
+// registry.ts.
+//
+// There is no fallback. DxApproachView looks the sign up here and renders
+// <NotFound> if it is absent, so a sign missing from this map is a dead tile on
+// the Diagnostic tab. (This header used to describe a fallback to a legacy
+// renderDx<Pascal><Tab> function; that renderer, and the file it lived in, were
+// deleted in e8d5347.)
+//
+// Adding a sign means editing three files — registry.ts, flows/index.ts and this
+// one — which is a known sharp edge, not a design: see the audit note about
+// deriving both barrels from SIGNS.
 
 import type { DxApproach } from '../dxTypes'
 import { epistaxisDx } from './epistaxis'

@@ -1,13 +1,13 @@
 'use client'
 // ── Navigation context ──────────────────────────────────────────────────────
 // The React replacement for the legacy imperative engine (history[] / push /
-// replace / goBack / navTo / slideDir in cliniqApp.ts). The current screen is a
+// replace / goBack / navTo / slideDir in the deleted cliniqApp.ts). The current screen is a
 // `View` (data); the back stack is `View[]`; re-rendering a screen is just
 // <Screen view={...}/>. No window globals, no HMR callback plumbing.
 
 import { createContext, useContext, useState, useCallback, useMemo, useEffect, useRef, type ReactNode } from 'react'
 import type { View } from './view'
-import type { Tab } from '../../types'
+import type { Tab } from './view'
 import { track } from '../../lib/analytics'
 
 export interface Nav {

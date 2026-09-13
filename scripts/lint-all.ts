@@ -28,7 +28,7 @@ import * as path from 'path'
 const LINTS = [
   'lint-walk', 'lint-schema', 'lint-deadcontent', 'report-refs',
   'lint-protocol-actions', 'lint-flows', 'lint-disease-blocks', 'lint-disease-sections', 'lint-conf-supp',
-  'lint-lesions', 'lint-chips', 'lint-choices', 'lint-steps', 'lint-prose', 'lint-cats', 'lint-headers',
+  'lint-lesions', 'lint-lesion-cats', 'lint-chips', 'lint-choices', 'lint-steps', 'lint-prose', 'lint-cats', 'lint-headers',
   'lint-tiles', 'lint-forks', 'lint-alphas', 'lint-species', 'lint-emoji', 'lint-disease-crams',
 ]
 

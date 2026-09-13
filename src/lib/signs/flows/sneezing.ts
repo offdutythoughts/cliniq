@@ -1,5 +1,5 @@
 // ── Sneezing flowchart (data) ───────────────────────────────────────────────
-// Migration of renderSneezeFlow (inline in cliniqApp.ts) to the FlowPage model.
+// Migration of renderSneezeFlow (inline in the deleted cliniqApp.ts) to the FlowPage model.
 // Self-contained: the two laterality branches link to lesion tabs; no sub-flows
 // or dx links. The trailing "Key note" box is a neutral-tone `infoBox`.
 
