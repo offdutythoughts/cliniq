@@ -103,6 +103,12 @@ const CHIRAYATH_IATROGENIC =
 // lead author but diverge at the second: diagnosis is Kidd/Garden, treatment is
 // Goggs/Kohn. They were transposed here until 2026-09-10, which an `et al`
 // truncation hid; the status-epilepticus string had the wrong panel entirely.
+const ACVIM_HYPERTENSION =
+  'Acierno MJ, Brown S, Coleman AE, et al. ACVIM consensus statement: guidelines for the identification, evaluation, and management of systemic hypertension in dogs and cats. J Vet Intern Med. 2018;32(6):1803-1822. doi:10.1111/jvim.15331'
+const ACVIM_FELINE_CM =
+  'Luis Fuentes V, Abbott J, Chetboul V, et al. ACVIM consensus statement guidelines for the classification, diagnosis, and management of cardiomyopathies in cats. J Vet Intern Med. 2020;34(3):1062-1077. doi:10.1111/jvim.15745'
+const ACVIM_IMHA_TX =
+  'Swann JW, Garden OA, Fellman CL, et al. ACVIM consensus statement on the treatment of immune-mediated hemolytic anemia in dogs. J Vet Intern Med. 2019;33(3):1141-1172. doi:10.1111/jvim.15463'
 const ACVIM_ITP_DX =
   'LeVine DN, Kidd L, Garden OA, et al. ACVIM consensus statement on the diagnosis of immune thrombocytopenia in dogs and cats. J Vet Intern Med. 2024;38(4):1958-1981. doi:10.1111/jvim.16996'
 const ACVIM_ITP_TX =
@@ -151,6 +157,15 @@ const SOURCE_NAMES = [
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
+/** "(ACVIM <year>)" → the statement that year identifies. Keyed by year because
+ *  that is what the inline markers in db.ts carry. */
+const ACVIM_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2016': { id: 'acvim-uroliths', text: ACVIM_UROLITHS },
+  '2018': { id: 'acvim-hypertension', text: ACVIM_HYPERTENSION },
+  '2019': { id: 'acvim-imha-tx', text: ACVIM_IMHA_TX },
+  '2020': { id: 'acvim-feline-cm', text: ACVIM_FELINE_CM },
+}
+
 /** Matches an inline source-citation parenthetical whose content starts with a
  *  known source: "(Ettinger …)" / "(Gelatt …)". A leading space is consumed so
  *  the marker sits flush against the preceding punctuation. Non-source
@@ -192,16 +207,39 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Lemmons/.test(part)) { out.push(...byChapter('lemmons', LEMMONS_BOOK)); continue }
     if (/^Gupta/.test(part)) { out.push(...byChapter('gupta', GUPTA_BOOK)); continue }
     if (/^AHS/.test(part)) { out.push({ id: 'ahs', text: AHS_GUIDELINES }); continue }
-    if (/^AAHA/.test(part)) { out.push({ id: 'aaha-endocrine', text: AAHA_ENDOCRINE }); continue }
+    // Year-keyed for the same reason as ACVIM below: "(AAHA/AAFP)" on the
+    // hyperthyroidism page and "(AAHA first-choice)" in the protocols are prose
+    // qualifiers, not citations, but a bare /^AAHA/ matched them — attaching the
+    // 2023 endocrinopathies reference AND swallowing the qualifier's own text,
+    // since a matched parenthetical is replaced by its superscript. Requiring a
+    // year leaves those printing verbatim.
+    if (/^AAHA/.test(part)) {
+      if (/\b2023\b/.test(part)) out.push({ id: 'aaha-endocrine', text: AAHA_ENDOCRINE })
+      continue
+    }
     if (/^CDC/.test(part)) { out.push({ id: 'cdc-bartonella', text: CDC_BARTONELLA }); continue }
     if (/^FECAVA/.test(part)) { out.push({ id: 'fecava-hypoadreno', text: FECAVA_HYPOADRENO }); continue }
     if (/^Minnesota/.test(part)) { out.push({ id: 'mn-urolith', text: MN_UROLITH }); continue }
-    // Journal sources are keyed by author/org marker. Five ACVIM consensus
-    // statements are cited; the bare "(ACVIM)" marker is historical and still
-    // resolves to the uroliths one. The other four are keyed on first author
-    // (LeVine x2, Charalambous, Marsilio) below — key any new one the same way
-    // rather than adding a year to this marker.
-    if (/^ACVIM/.test(part)) { out.push({ id: 'acvim-uroliths', text: ACVIM_UROLITHS }); continue }
+    // Journal sources are keyed by author/org marker. ACVIM publishes many
+    // consensus statements, so "(ACVIM <year>)" routes on the year. Until
+    // 2026-09-13 this matched a bare /^ACVIM/ and sent every one of them to the
+    // uroliths statement — which printed a urolith reference on the CKD,
+    // systemic-hypertension and feline-cardiomyopathy pages, plausible enough
+    // to survive review. The original comment here had predicted exactly this
+    // ("if a second ACVIM consensus is ever cited, disambiguate on the year");
+    // the markers were added and the disambiguation never was.
+    //
+    // A year with no entry yields no source, so <Cite> falls back to printing
+    // the marker verbatim — visibly wrong on the page rather than quietly
+    // attributed to the wrong paper. Add the year here when citing a new one.
+    // The four statements keyed on first author (LeVine x2, Charalambous,
+    // Marsilio) stay below; either form is fine for a new one.
+    if (/^ACVIM/.test(part)) {
+      const year = part.match(/\b(?:19|20)\d{2}\b/)?.[0]
+      const hit = ACVIM_BY_YEAR[year ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Berent/.test(part)) { out.push({ id: 'berent-sub', text: BERENT_SUB }); continue }
     if (/^Shelton/.test(part)) { out.push({ id: 'shelton-remission', text: SHELTON_REMISSION }); continue }
     if (/^Forgash/.test(part)) { out.push({ id: 'forgash-mg', text: FORGASH_MG }); continue }

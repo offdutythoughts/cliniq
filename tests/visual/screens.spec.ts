@@ -85,6 +85,14 @@ const SCREENS: Screen[] = [
   { name: 'disease-dic', nav: { fn: 'renderDiseasePage', args: ['DIS-BD-DIC'] } },
   // disease-prostatitis exercises numbered citations — inline markers + footnote.
   { name: 'disease-prostatitis', nav: { fn: 'renderDiseasePage', args: ['DIS-URO-PROSTATITIS'] } },
+  // The three pages carrying a reference table that scrolls sideways: IRIS CKD
+  // staging (three scrollers), IRIS AKI grading, and the IVDD injury grading
+  // table. They are the only `.scroll-x.on-card` sites, so without them nothing
+  // holds the on-card edge-cover colour — a wrong cover paints a pale stripe
+  // down each edge, which is visible but not otherwise guarded.
+  { name: 'disease-ckd', nav: { fn: 'renderDiseasePage', args: ['DIS-SEC-CKD'] } },
+  { name: 'disease-aki', nav: { fn: 'renderDiseasePage', args: ['DIS-SEC-AKI'] } },
+  { name: 'disease-ivdd', nav: { fn: 'renderDiseasePage', args: ['DIS-NEU-IVDD'] } },
   { name: 'protocol-cpr', nav: { fn: 'renderProtoDetail', args: ['PROT-CPR'] } },
   { name: 'protocol-ataxia', nav: { fn: 'renderProtoDetail', args: ['PROT-ATAXIA'] } },
   { name: 'lesion-hepatic', nav: { fn: 'goLesionTab', args: ['LOC-JD-HEP', 'Hepatic'] } },

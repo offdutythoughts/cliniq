@@ -136,6 +136,11 @@ identical author lists, volume/issue and page ranges for all fourteen.
 
 > Acierno MJ, Brown S, Coleman AE, et al. ACVIM consensus statement: guidelines for the identification, evaluation, and management of systemic hypertension in dogs and cats. J Vet Intern Med. 2018;32(6):1803-1822. doi:10.1111/jvim.15331
 
+> Luis Fuentes V, Abbott J, Chetboul V, et al. ACVIM consensus statement guidelines for the classification, diagnosis, and management of cardiomyopathies in cats. J Vet Intern Med. 2020;34(3):1062-1077. doi:10.1111/jvim.15745
+
+Note the surname: the first author is **Luis Fuentes V** — `Luis Fuentes` is the
+family name, not a given name followed by `Fuentes`. Both registries agree.
+
 **Haematology / immune-mediated**
 
 > Garden OA, Kidd L, Mexas AM, et al. ACVIM consensus statement on the diagnosis of immune-mediated hemolytic anemia in dogs and cats. J Vet Intern Med. 2019;33(2):313-334. doi:10.1111/jvim.15441
