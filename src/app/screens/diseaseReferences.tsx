@@ -122,6 +122,13 @@ const ACVIM_FCE =
 // of one animal — but it is the source for the comparative non-response and
 // recurrence figures the textbook does not give, and for the combined
 // triamcinolone/tacrolimus protocol.
+// Primary lens luxation genetics. Both are named in the lens-luxation breed
+// field; until they were registered here that part of the marker matched
+// nothing and fell through to the Ettinger catch-all.
+const FARIAS_PLL =
+  'Farias FHG, Johnson GS, Taylor JF, et al. An ADAMTS17 splice donor site mutation in dogs with primary lens luxation. Invest Ophthalmol Vis Sci. 2010;51(9):4716-4721. doi:10.1167/iovs.09-5142'
+const GOULD_PLL =
+  'Gould D, Pettitt L, McLaughlin B, et al. ADAMTS17 mutation associated with primary lens luxation is widespread among breeds. Vet Ophthalmol. 2011;14(6):378-384. doi:10.1111/j.1463-5224.2011.00892.x'
 const ROMANECK_EK =
   'Romaneck AK, Sebbag L. Case report: clinical remission in a cat with severe bilateral eosinophilic keratitis receiving combined immunosuppressive therapy (triamcinolone acetonide and tacrolimus). Front Vet Sci. 2021;8:580396. doi:10.3389/fvets.2021.580396'
 
@@ -154,6 +161,8 @@ const SOURCE_NAMES = [
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
   'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
+  'Farias',
+  'Gould',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -267,6 +276,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Marsilio/.test(part)) { out.push({ id: 'acvim-fce', text: ACVIM_FCE }); continue }
     if (/^Chirayath/.test(part)) { out.push({ id: 'chirayath-iatrogenic', text: CHIRAYATH_IATROGENIC }); continue }
     if (/^Romaneck/.test(part)) { out.push({ id: 'romaneck-ek', text: ROMANECK_EK }); continue }
+    if (/^Farias/.test(part)) { out.push({ id: 'farias-pll', text: FARIAS_PLL }); continue }
+    if (/^Gould/.test(part)) { out.push({ id: 'gould-pll', text: GOULD_PLL }); continue }
     // Only an Ettinger part reaches the Ettinger fallback. This used to be a
     // bare `else`, so ANY unrecognised part became a book-level Ettinger
     // reference — which credited Ettinger with "Farias et al. 2010, Gould et al.

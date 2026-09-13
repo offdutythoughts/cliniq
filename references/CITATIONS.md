@@ -275,6 +275,19 @@ publishers print (`10.1177/1098612x20979507` = `10.1177/1098612X20979507`).
 
 > Berent AC, Weisse CW, Bagley DH, Lamb K. Use of a subcutaneous ureteral bypass device for treatment of benign ureteral obstruction in cats: 174 ureters in 134 cats (2009-2015). J Am Vet Med Assoc. 2018;253(10):1309-1327. doi:10.2460/javma.253.10.1309
 
+**Ophthalmology — primary lens luxation genetics**
+
+> Farias FHG, Johnson GS, Taylor JF, et al. An ADAMTS17 splice donor site mutation in dogs with primary lens luxation. Invest Ophthalmol Vis Sci. 2010;51(9):4716-4721. doi:10.1167/iovs.09-5142
+
+> Gould D, Pettitt L, McLaughlin B, et al. ADAMTS17 mutation associated with primary lens luxation is widespread among breeds. Vet Ophthalmol. 2011;14(6):378-384. doi:10.1111/j.1463-5224.2011.00892.x
+
+Cited together on `DIS-EYE-LENS-LUX` for the ADAMTS17 mutation behind primary lens
+luxation and the breadth of breeds carrying it. Each needed the fuller of the two
+registry records, in opposite directions: Crossref has the complete `Farias FHG`
+where Europe PMC truncates to `Farias FH`, and Europe PMC has the full page range
+`4716-4721` where Crossref deposited only the start page. Between them they are a
+tidy argument for checking both.
+
 **Endocrine guideline**
 
 > Bugbee A, Rucinsky R, Cazabon S, et al. 2023 AAHA Selected Endocrinopathies of Dogs and Cats Guidelines. J Am Anim Hosp Assoc. 2023;59(3):113-135. doi:10.5326/jaaha-ms-7368
