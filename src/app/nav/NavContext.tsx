@@ -164,7 +164,7 @@ export function NavProvider({ children, initialView }: { children: ReactNode; in
     }
     window.addEventListener('popstate', onPopState, { capture: true })
     return () => window.removeEventListener('popstate', onPopState, { capture: true })
-  }, [])
+  }, [commit])
 
   const navigate = useCallback((v: View) => {
     const props: Record<string, unknown> = { content_type: v.kind }
