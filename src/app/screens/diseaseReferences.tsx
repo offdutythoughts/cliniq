@@ -267,6 +267,14 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Marsilio/.test(part)) { out.push({ id: 'acvim-fce', text: ACVIM_FCE }); continue }
     if (/^Chirayath/.test(part)) { out.push({ id: 'chirayath-iatrogenic', text: CHIRAYATH_IATROGENIC }); continue }
     if (/^Romaneck/.test(part)) { out.push({ id: 'romaneck-ek', text: ROMANECK_EK }); continue }
+    // Only an Ettinger part reaches the Ettinger fallback. This used to be a
+    // bare `else`, so ANY unrecognised part became a book-level Ettinger
+    // reference — which credited Ettinger with "Farias et al. 2010, Gould et al.
+    // 2011" on the lens-luxation page (a compound marker whose second half names
+    // two ophthalmology papers) and deleted those names behind the superscript.
+    // A bare "Ch 12" is allowed through as a continuation of an Ettinger marker.
+    // Anything else yields no source and prints verbatim.
+    if (!/^Ettinger/.test(part) && !/^Ch(?:apter|\.)?\s*\d/.test(part)) continue
     const chapters = part.match(/Ch(?:apter|\.)?\s*([\d,\s]+)/)
     if (!chapters) { out.push({ id: 'ettinger', text: `${ETTINGER_BOOK}.` }); continue }
     const nums = chapters[1].match(/\d+/g) ?? []

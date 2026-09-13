@@ -180,3 +180,88 @@ describe('buildDiseaseCitations', () => {
     expect(offenders).toEqual([])
   })
 })
+
+// ── Reference-block assertions ───────────────────────────────────────────────
+//
+// The visual suite screenshots these pages, but `maxDiffPixelRatio` is 0.01 and
+// a swapped reference line is a few hundred pixels on a page thousands tall, so
+// a pixel compare cannot see a citation change. That is how a bare /^ACVIM/
+// match printed the uroliths statement on the CKD, systemic-hypertension and
+// feline-cardiomyopathy pages for as long as it did. These assert the rendered
+// reference text directly.
+describe('reference block', () => {
+  const FIELDS = ['topAlert', 'severe', 'etiology', 'breed', 'age', 'sex', 'risk', 'path',
+    'signs', 'conf', 'supp', 'tx1', 'tx2', 'outpatient', 'monitor', 'prog', 'ddx', 'pearl']
+
+  const pageFields = (id: string): string[] => {
+    const d = (DB.disease_page as Record<string, unknown>[]).find(x => x.id === id)
+    if (!d) throw new Error(`no disease page ${id}`)
+    return FIELDS.map(f => (typeof d[f] === 'string' ? (d[f] as string) : ''))
+  }
+
+  // The invariant that would have caught the mis-routing on day one: if a marker
+  // names a year, the work it resolves to has to be from that year. A marker
+  // sent to the wrong consensus statement fails here even on a page nobody
+  // thought to write a test for.
+  it('resolves every year-bearing marker to a source printing that year', () => {
+    const offenders: string[] = []
+    for (const d of DB.disease_page as Record<string, unknown>[]) {
+      for (const f of FIELDS) {
+        const text = d[f]
+        if (typeof text !== 'string') continue
+        for (const seg of splitCitations(text)) {
+          if (!seg.raw) continue
+          const inner = seg.raw.trim().replace(/^\(/, '').replace(/\)$/, '')
+          for (const part of inner.split(';').map(x => x.trim())) {
+            const year = part.match(/\b(?:19|20)\d{2}\b/)?.[0]
+            if (!year) continue
+            for (const src of parseSources(part)) {
+              if (!src.text.includes(year)) {
+                offenders.push(`${String(d.id)} ${f}: "(${part})" -> ${src.id} :: ${src.text.slice(0, 70)}`)
+              }
+            }
+          }
+        }
+      }
+    }
+    expect(offenders).toEqual([])
+  })
+
+  // The three pages the bare-prefix match got wrong, pinned by the text a reader
+  // actually sees rather than by id alone.
+  it('prints the statement each ACVIM year names', () => {
+    const cases: [string, string][] = [
+      ['DIS-SEC-CKD', 'systemic hypertension in dogs and cats'],
+      ['DIS-VASC-HYPERT', 'systemic hypertension in dogs and cats'],
+      ['DIS-CARD-RCM', 'cardiomyopathies in cats'],
+      ['DIS-BD-IMHA', 'treatment of immune-mediated hemolytic anemia in dogs'],
+    ]
+    for (const [id, phrase] of cases) {
+      const { entries } = buildDiseaseCitations(pageFields(id))
+      const texts = entries.map(e => e.text).join(' || ')
+      expect(texts, `${id} should cite "${phrase}"`).toContain(phrase)
+      // and must not have fallen back to the uroliths statement
+      expect(texts, `${id} must not cite uroliths`).not.toContain('prevention of uroliths')
+    }
+  })
+
+  // A year with no mapping must not silently borrow another statement's entry.
+  it('drops an unmapped year rather than mis-attributing it', () => {
+    expect(parseSources('ACVIM 2099')).toEqual([])
+    expect(parseSources('AAHA 2099')).toEqual([])
+  })
+
+  // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
+  // parenthetical is replaced by its superscript, so treating one as a citation
+  // deleted the text behind it.
+  it('leaves source-named prose qualifiers as text', () => {
+    expect(parseSources('AAHA/AAFP')).toEqual([])
+    expect(parseSources('AAHA first-choice')).toEqual([])
+    // markup.tsx passes `raw` to <Cite fallback>, and Cite renders the fallback
+    // whenever no id resolves to a number — so the qualifier reaches the page as
+    // its own text. Asserting on `raw`, not `text`, is what matches that path.
+    const seg = splitCitations('PPI if indicated (AAHA/AAFP) then review').find(x => x.citeIds)
+    expect(seg?.citeIds).toEqual([])
+    expect(seg?.raw?.trim()).toBe('(AAHA/AAFP)')
+  })
+})
