@@ -45,6 +45,12 @@ jobs:
       - name: Type-check
         run: npx tsc --noEmit
 
+      # Exits 0 on warnings, non-zero on errors. It has been clean of errors
+      # since it was configured; running it here is what keeps it that way,
+      # and is the enforcement point for the a11y rules.
+      - name: Lint
+        run: npm run lint
+
       - name: Content lints (protocols · flows · blocks · lesions · chips · tiles)
         run: npm run lint:content
 

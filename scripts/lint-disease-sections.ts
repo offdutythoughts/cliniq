@@ -14,6 +14,7 @@
 // only one bullet: that is prose an author has to separate by hand.
 
 import { DB } from '../src/data/db'
+import { lint } from './lib/lint'
 import { splitSentences } from '../src/app/screens/pearlSplit'
 
 /** Sections a disease page must have. The renderer drops any that is empty. */
@@ -38,16 +39,7 @@ const BULLETED = [
  *  `→ … → …` pathophysiology one-liners, which read correctly as one bullet). */
 const PROSE_LIMIT = 340
 
-let errors = 0
-let warnings = 0
-function fail(msg: string) {
-  console.error(`  ✗ ${msg}`)
-  errors++
-}
-function warn(msg: string) {
-  console.warn(`  ⚠ ${msg}`)
-  warnings++
-}
+const { fail, warn, done } = lint('disease-section')
 
 const text = (v: unknown): string => (typeof v === 'string' ? v.trim() : '')
 
@@ -63,9 +55,4 @@ for (const d of DB.disease_page) {
   }
 }
 
-console.log(
-  errors > 0
-    ? `\n${errors} disease-section error(s) found${warnings ? `, ${warnings} warning(s)` : ''}.`
-    : `✓ All ${DB.disease_page.length} disease pages have every required section${warnings ? ` (${warnings} warning(s))` : ''}.`,
-)
-if (errors > 0) process.exit(1)
+done(`All ${DB.disease_page.length} disease pages have every required section.`)

@@ -39,8 +39,8 @@
 //
 // Mirrors lint-flows.ts.
 
-import { FLOWS } from '../src/lib/signs/flows/index'
-import type { Block, Endpoint } from '../src/lib/signs/flowTypes'
+import { eachPageBlock, pageCount } from './lib/walk'
+import { lint } from './lib/lint'
 // The allowed second line is defined once, for chips, tiles and the lesion-page
 // differential rows alike — see that module's header for the rule.
 import { isTriageQualifier } from '../src/lib/triageQualifier'
@@ -66,24 +66,16 @@ const isShouting = (label: string) => {
   return rest.length >= 4 && rest.replace(/[^A-Z]/g, '').length / rest.length > 0.6
 }
 
-let errors = 0
-function fail(msg: string) {
-  console.error(`  ✗ ${msg}`)
-  errors++
-}
+const { fail, done } = lint('chip')
 
-/** Depth-first walk over a page's block tree, yielding every endpoints item.
- *  Branches nest (columns[].blocks), so recurse into them. */
-function forEachEndpoint(blocks: Block[], visit: (e: Endpoint) => void) {
-  for (const b of blocks) {
-    if (b.kind === 'endpoints') b.items.forEach(visit)
-    else if (b.kind === 'branch') b.columns.forEach(c => forEachEndpoint(c.blocks, visit))
-  }
-}
-
+// Traversal comes from lib/walk. This file used to carry its own recursion which
+// descended into `branch` columns but NOT into `fork` legs — so every chip
+// authored inside a labelled fork leg went unchecked, silently, for as long as
+// the lint has existed.
 let chipCount = 0
-for (const [id, page] of Object.entries(FLOWS)) {
-  forEachEndpoint(page.blocks, e => {
+for (const { pageId: id, block } of eachPageBlock()) {
+  if (block.kind !== 'endpoints') continue
+  for (const e of block.items) {
     chipCount++
     if (e.icon) {
       fail(`[${id}] chip "${e.label}" has icon:"${e.icon}" — chips are name-only; drop the emoji.`)
@@ -97,12 +89,7 @@ for (const [id, page] of Object.entries(FLOWS)) {
     if (isShouting(e.label)) {
       fail(`[${id}] chip "${e.label}" is in block capitals — write the name in sentence case (acronyms keep their capitals).`)
     }
-  })
+  }
 }
 
-if (errors > 0) {
-  console.error(`\n${errors} chip lint error(s) found.`)
-  process.exit(1)
-} else {
-  console.log(`✓ All flow chips pass lint (${chipCount} chips across ${Object.keys(FLOWS).length} pages checked).`)
-}
+done(`All flow chips pass lint (${chipCount} chips across ${pageCount()} pages checked).`)

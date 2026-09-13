@@ -8,6 +8,7 @@
 
 import { DB } from '../src/data/db'
 import { parseBlocks, bareHeaderIndices } from '../src/app/screens/blocks'
+import { lint } from './lib/lint'
 
 // String fields on disease/lesion rows that are rendered through <Bul>/<Body>.
 const RENDERED_FIELDS = [
@@ -17,11 +18,7 @@ const RENDERED_FIELDS = [
   'signalment', 'patho', 'diag', 'treat', 'ddx',
 ] as const
 
-let errors = 0
-function fail(msg: string) {
-  console.error(`  ✗ ${msg}`)
-  errors++
-}
+const { fail, done } = lint('bare-header')
 
 let checked = 0
 const rows: { id: string; row: Record<string, unknown> }[] = [
@@ -43,9 +40,4 @@ for (const { id, row } of rows) {
   }
 }
 
-if (errors > 0) {
-  console.error(`\n${errors} bare-header error(s) across ${rows.length} rows.`)
-  process.exit(1)
-} else {
-  console.log(`✓ No bare headers found (${checked} rendered fields across ${rows.length} rows checked).`)
-}
+done(`No bare headers found (${checked} rendered fields across ${rows.length} rows checked).`)

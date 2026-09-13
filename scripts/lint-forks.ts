@@ -18,14 +18,10 @@
 // connector), and a row of one arrow PER column (the parallel per-column
 // continuations under a category row).
 
-import { FLOWS } from '../src/lib/signs/flows/index'
-import type { Block } from '../src/lib/signs/flowTypes'
+import { eachPageBlock, pageCount } from './lib/walk'
+import { lint } from './lib/lint'
 
-let errors = 0
-function fail(msg: string) {
-  console.error(`  ✗ ${msg}`)
-  errors++
-}
+const { fail, done } = lint('fork')
 
 /** Track count of a grid-template-columns value: `repeat(N,…)` or a track list. */
 function trackCount(template: string): number {
@@ -70,23 +66,9 @@ function checkHtml(id: string, html: string) {
   }
 }
 
-function walk(id: string, blocks: Block[]) {
-  for (const b of blocks) {
-    if (b.kind === 'html') checkHtml(id, b.html)
-    else if (b.kind === 'branch') b.columns.forEach(c => walk(id, c.blocks))
-    else if (b.kind === 'fork') b.legs.forEach(l => walk(id, l.blocks ?? []))
-  }
+// Traversal comes from lib/walk — every nesting block kind, handled in one place.
+for (const { pageId, block } of eachPageBlock()) {
+  if (block.kind === 'html') checkHtml(pageId, block.html)
 }
 
-let pages = 0
-for (const [id, page] of Object.entries(FLOWS)) {
-  pages++
-  walk(id, page.blocks)
-}
-
-if (errors > 0) {
-  console.error(`\n${errors} fork lint error(s) found.`)
-  process.exit(1)
-} else {
-  console.log(`✓ Every authored split is fed by the shared fork (${pages} flow pages checked).`)
-}
+done(`Every authored split is fed by the shared fork (${pageCount()} flow pages checked).`)

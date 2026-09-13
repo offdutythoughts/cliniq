@@ -24,14 +24,11 @@
 // yet, so the remaining authoring work is visible rather than assumed done.
 
 import { DB } from '../src/data/db'
+import { lint } from './lib/lint'
 import { SPECIES_ABSENT, SPECIES_PAIRS } from '../src/data/speciesPairs'
 import { crossTalkOf, hasSpeciesScope, markerOf, scopeToSpecies, speciesMode, speciesOf, type Species } from '../src/lib/species'
 
-let errors = 0
-function fail(msg: string) {
-  console.error(`  ✗ ${msg}`)
-  errors++
-}
+const { fail, note, done } = lint('species')
 
 /** Fields where one species has nothing of its own, so scopeToSpecies falls
  *  back to showing the other species' text under both tabs. */
@@ -111,21 +108,19 @@ for (const [id, entry] of Object.entries(SPECIES_ABSENT)) {
 const dual = DB.disease_page.filter(d => speciesOf(d.sp).length === 2)
 const undifferentiated = dual.filter(d => speciesMode(d) === 'shared')
 
-if (errors > 0) {
-  console.error(`\n${errors} species lint error(s) found.`)
-  process.exit(1)
-}
-
-console.log(`✓ Species markers valid across ${DB.disease_page.length} disease pages.`)
-console.log(`  ${dual.length - undifferentiated.length}/${dual.length} dual-species pages show a Dog/Cat toggle; ${undifferentiated.length} render as shared 'Dog + Cat'.`)
+// Statistics, not violations — note() buffers them so they print under the ✓
+// verdict (done() exits, so they cannot simply follow it).
+note(`  ${dual.length - undifferentiated.length}/${dual.length} dual-species pages show a Dog/Cat toggle; ${undifferentiated.length} render as shared 'Dog + Cat'.`)
 if (fallbacks.length > 0) {
-  console.log(`  ${fallbacks.length} field(s) fall back to the other species' text (one species has nothing authored):`)
-  for (const f of fallbacks) console.log(`    · ${f}`)
+  note(`  ${fallbacks.length} field(s) fall back to the other species' text (one species has nothing authored):`)
+  for (const f of fallbacks) note(`    · ${f}`)
 }
 if (crossTalk.length > 0) {
-  console.log(`  ${crossTalk.length} unmarked segment(s) mention only the other species on a toggled page:`)
-  for (const c of crossTalk) console.log(`    · ${c}`)
+  note(`  ${crossTalk.length} unmarked segment(s) mention only the other species on a toggled page:`)
+  for (const c of crossTalk) note(`    · ${c}`)
 }
 if (process.argv.includes('--list')) {
-  for (const d of undifferentiated) console.log(`    · ${d.id} — ${d.name}`)
+  for (const d of undifferentiated) note(`    · ${d.id} — ${d.name}`)
 }
+
+done(`Species markers valid across ${DB.disease_page.length} disease pages.`)

@@ -34,15 +34,12 @@
 // to a NotFound (LES-HU-GEN-PYO pointed at PROT-REPRO-PYO, which was never written).
 
 import { DB } from '../src/data/db'
+import { lint } from './lib/lint'
 import type { Lesion } from '../src/types'
 
 const RICH_FIELDS: (keyof Lesion)[] = ['etiology', 'patho', 'diag', 'treat', 'ddx']
 
-let errors = 0
-function fail(msg: string) {
-  console.error(`  ✗ ${msg}`)
-  errors++
-}
+const { fail, done } = lint('lesion')
 
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
 const pageIds = new Set(DB.disease_page.map(d => d.id))
@@ -98,9 +95,4 @@ for (const l of DB.lesion_type as unknown as Lesion[]) {
   }
 }
 
-if (errors > 0) {
-  console.error(`\n${errors} lesion lint error(s) found.`)
-  process.exit(1)
-} else {
-  console.log(`✓ All lesion sub-type pages pass lint, and every lesion protocol is reached through its disease page (${(DB.lesion_type as unknown as Lesion[]).length} lesions checked).`)
-}
+done(`All lesion sub-type pages pass lint, and every lesion protocol is reached through its disease page (${(DB.lesion_type as unknown as Lesion[]).length} lesions checked).`)

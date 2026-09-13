@@ -41,10 +41,10 @@
 // (see scripts/lib/ratchet.ts): it fails only when the count rises. Converting a
 // page lowers the mark and locks the gain in. Run with --write to record it.
 
-import { FLOWS } from '../src/lib/signs/flows/index'
 import { DX } from '../src/lib/signs/dx/index'
-import type { Block } from '../src/lib/signs/flowTypes'
 import type { DxBlock } from '../src/lib/signs/dxTypes'
+import { eachPageBlock, pageCount } from './lib/walk'
+import { lint } from './lib/lint'
 import { ratchet, setBaseline } from './lib/ratchet'
 
 const WRITE = process.argv.includes('--write')
@@ -53,39 +53,33 @@ const MAX_LEG_SUB = 60
 const MAX_LEG_ITEM = 60
 const MAX_WORDS = 45
 
-let errors = 0
-const fail = (msg: string) => { console.error(`  ✗ ${msg}`); errors++ }
+const { fail, note, done } = lint('prose')
 
 const strip = (s: string) => s.replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim()
 const words = (s: string) => (strip(s) ? strip(s).split(' ').length : 0)
 
-function checkBlocks(pageId: string, blocks: Block[]) {
-  for (const b of blocks) {
-    if (b.kind === 'fork') {
-      for (const leg of b.legs ?? []) {
-        const label = String(leg.label ?? '')
-        if (typeof leg.sub === 'string' && leg.sub.length > MAX_LEG_SUB) {
-          fail(`[${pageId}] fork leg "${label}" — sub is ${leg.sub.length} chars (max ${MAX_LEG_SUB}); the findings that pick this arm go in subItems, one per bullet.`)
+// Traversal comes from lib/walk — every nesting block kind, handled in one place.
+for (const { pageId, block: b } of eachPageBlock()) {
+  if (b.kind === 'fork') {
+    for (const leg of b.legs ?? []) {
+      const label = String(leg.label ?? '')
+      if (typeof leg.sub === 'string' && leg.sub.length > MAX_LEG_SUB) {
+        fail(`[${pageId}] fork leg "${label}" — sub is ${leg.sub.length} chars (max ${MAX_LEG_SUB}); the findings that pick this arm go in subItems, one per bullet.`)
+      }
+      for (const it of (leg.subItems ?? []) as string[]) {
+        if (it.length > MAX_LEG_ITEM) {
+          fail(`[${pageId}] fork leg "${label}" — subItems bullet is ${it.length} chars (max ${MAX_LEG_ITEM}): "${it.slice(0, 50)}…"; one finding per bullet.`)
         }
-        for (const it of (leg.subItems ?? []) as string[]) {
-          if (it.length > MAX_LEG_ITEM) {
-            fail(`[${pageId}] fork leg "${label}" — subItems bullet is ${it.length} chars (max ${MAX_LEG_ITEM}): "${it.slice(0, 50)}…"; one finding per bullet.`)
-          }
-        }
-        checkBlocks(pageId, leg.blocks ?? [])
       }
     }
-    if (b.kind === 'callout' || b.kind === 'infoBox' || b.kind === 'banner') {
-      const n = words(String(b.html ?? ''))
-      if (n > MAX_WORDS) {
-        fail(`[${pageId}] ${b.kind} is ${n} words (max ${MAX_WORDS}) — turn the discriminators into a fork, a comparison table or step subItems, and keep the box for what is left.`)
-      }
+  }
+  if (b.kind === 'callout' || b.kind === 'infoBox' || b.kind === 'banner') {
+    const n = words(String(b.html ?? ''))
+    if (n > MAX_WORDS) {
+      fail(`[${pageId}] ${b.kind} is ${n} words (max ${MAX_WORDS}) — turn the discriminators into a fork, a comparison table or step subItems, and keep the box for what is left.`)
     }
-    if (b.kind === 'branch') for (const col of b.columns ?? []) checkBlocks(pageId, col.blocks ?? [])
   }
 }
-
-for (const [id, page] of Object.entries(FLOWS)) checkBlocks(id, page.blocks)
 
 // ── CHECK 3 — dx pages, ratcheted ──────────────────────────────────────────
 /** The dx-side prose boxes. `html` blocks are excluded: they are the bespoke
@@ -106,22 +100,24 @@ for (const [sign, approach] of Object.entries(DX)) {
 
 const dxPages = Object.keys(DX).length
 
-if (errors > 0) {
-  console.error(`\n${errors} prose issue(s) found. Flow pages differentiate with forks, tables and bullets — not paragraphs.`)
-  process.exit(1)
-}
-
-console.log(`✓ Flow pages differentiate with forks/tables/bullets, not prose (${Object.keys(FLOWS).length} pages checked, no exemptions).`)
-
 if (WRITE) {
   setBaseline('dx-prose-blocks', dxOffenders.length)
   console.log(`baseline written: dx-prose-blocks = ${dxOffenders.length}`)
+  process.exit(0)
+}
+
+// The dx half is ratcheted, the flow half is a hard gate — but both report
+// through the one harness, so there is a single exit path and a single summary.
+const r = ratchet('dx-prose-blocks', dxOffenders.length, `dx prose blocks exceed ${MAX_WORDS} words`)
+if (r.ok) {
+  note(`ℹ ${r.message}`)
+  note(`  (${dxPages} dx pages checked; a step whose body is a lookup belongs in stepTable().)`)
 } else {
-  const r = ratchet('dx-prose-blocks', dxOffenders.length, `dx prose blocks exceed ${MAX_WORDS} words`)
   // Only name them when the count has risen — otherwise the known backlog
   // drowns the real output on every run.
-  if (!r.ok) for (const o of dxOffenders) fail(o)
-  console.log(`${r.ok ? 'ℹ' : '✗'} ${r.message}`)
-  console.log(`  (${dxPages} dx pages checked; a step whose body is a lookup belongs in stepTable().)`)
-  if (!r.ok) process.exit(1)
+  for (const o of dxOffenders) fail(o)
+  fail(r.message)
 }
+
+done(`Flow pages differentiate with forks/tables/bullets, not prose (${pageCount()} pages checked, no exemptions).`,
+  'Flow pages differentiate with forks, tables and bullets — not paragraphs.')

@@ -30,11 +30,10 @@
 //
 // SCOPE — every choices item on every flow page, linked or not.
 
-import { FLOWS } from '../src/lib/signs/flows/index'
-import type { Block } from '../src/lib/signs/flowTypes'
+import { eachPageBlock, pageCount } from './lib/walk'
+import { lint } from './lib/lint'
 
-let errors = 0
-const fail = (msg: string) => { console.error(`  ✗ ${msg}`); errors++ }
+const { fail, done } = lint('choice')
 
 const strip = (s: string) => s.replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim()
 const EMOJI = /\p{Extended_Pictographic}/u
@@ -62,34 +61,25 @@ function checkHtml(pageId: string, html: string) {
   }
 }
 
-function checkBlocks(pageId: string, blocks: Block[]) {
-  for (const b of blocks) {
-    if (b.kind === 'choices') {
-      for (const it of b.items ?? []) {
-        choiceCount++
-        const label = strip(String(it.label ?? ''))
-        if (EMOJI.test(label)) {
-          fail(`[${pageId}] choice "${label}" leads with an emoji — a separation box is name-only; the arm's colour already comes from tone/variant.`)
-        }
-        // No sublabel check here: ChoiceItem is {variant, tone, label, link},
-        // so a typed choice CANNOT carry one and the type is the guarantee.
-        // This previously read `if (it.sublabel)` behind a `blocks as any[]`
-        // cast, which made it permanently undefined — a check that could never
-        // fire. Hand-authored HTML is the only route a sublabel can take into a
-        // separation box, and checkHtml's SUBLABEL regex above covers that.
+// Traversal comes from lib/walk — every nesting block kind, handled in one place.
+for (const { pageId, block: b } of eachPageBlock()) {
+  if (b.kind === 'choices') {
+    for (const it of b.items ?? []) {
+      choiceCount++
+      const label = strip(String(it.label ?? ''))
+      if (EMOJI.test(label)) {
+        fail(`[${pageId}] choice "${label}" leads with an emoji — a separation box is name-only; the arm's colour already comes from tone/variant.`)
       }
+      // No sublabel check here: ChoiceItem is {variant, tone, label, link},
+      // so a typed choice CANNOT carry one and the type is the guarantee.
+      // This previously read `if (it.sublabel)` behind a `blocks as any[]`
+      // cast, which made it permanently undefined — a check that could never
+      // fire. Hand-authored HTML is the only route a sublabel can take into a
+      // separation box, and checkHtml's SUBLABEL regex above covers that.
     }
-    if (b.kind === 'html') checkHtml(pageId, String(b.html ?? ''))
-    if (b.kind === 'branch') for (const col of b.columns ?? []) checkBlocks(pageId, col.blocks ?? [])
-    if (b.kind === 'fork') for (const leg of b.legs ?? []) checkBlocks(pageId, leg.blocks ?? [])
   }
+  if (b.kind === 'html') checkHtml(pageId, String(b.html ?? ''))
 }
 
-for (const [id, page] of Object.entries(FLOWS)) checkBlocks(id, page.blocks)
-
-if (errors > 0) {
-  console.error(`\n${errors} choice issue(s) found. A separation box carries the differential's name and nothing else.`)
-  process.exit(1)
-} else {
-  console.log(`✓ All ${choiceCount} separation boxes are name-only across ${Object.keys(FLOWS).length} flow pages.`)
-}
+done(`All ${choiceCount} separation boxes are name-only across ${pageCount()} flow pages.`,
+  "A separation box carries the differential's name and nothing else.")
