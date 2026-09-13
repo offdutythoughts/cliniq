@@ -12,6 +12,7 @@ import type { Species } from '../../lib/species'
 import { FLOWS } from '../../lib/signs/flows'
 import { DX } from '../../lib/signs/dx'
 import { DB } from '../../data/db'
+import { encodeView } from './viewUrl'
 
 /** Which bottom-nav tab is selected. The tab set is defined by TAB_NAMES below;
  *  these two must stay the same length. Lived in src/types/index.ts until that
@@ -34,18 +35,16 @@ export type View =
 
 export type ViewKind = View['kind']
 
-/** A stable string identity for a View — for React keys + animation triggers. */
+/** A stable string identity for a View — React keys and slide-animation
+ *  triggers. This is the URL path from nav/viewUrl.ts, not a second scheme:
+ *  "which screen is this" had three different spellings in this file, and two
+ *  of them existed only because nobody had written the one that round-trips.
+ *
+ *  It is the `path` only, so a query-carried decoration (a disease page's `sp`)
+ *  is deliberately NOT part of the identity — switching species must not remount
+ *  the page and throw the reader back to the top mid-read. */
 export function viewKey(v: View): string {
-  switch (v.kind) {
-    case 'tab': return `tab:${v.tab}`
-    case 'flow': return `flow:${v.flowId}`
-    case 'dx': return `dx:${v.sign}:${v.tab}`
-    case 'disease': return `disease:${v.id}`
-    case 'protocol': return `protocol:${v.id}`
-    case 'lesionLoc': return `lesionLoc:${v.loc}`
-    case 'subTypeDetail': return `subTypeDetail:${v.id}`
-    case 'diff': return `diff:${v.id}`
-  }
+  return encodeView(v).path
 }
 
 /** Map a typed flow Link to the View it navigates to. Mirrors renderFlow.ts
