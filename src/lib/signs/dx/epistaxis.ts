@@ -14,7 +14,7 @@ export const epistaxisDx: DxApproach = {
   history: {
     title: 'History: Epistaxis',
     blocks: [
-      { kind: 'branch', text: 'GOAL: LOCALISE vs SYSTEMATISE' },
+      { kind: 'goal', text: 'GOAL: LOCALISE vs SYSTEMATISE' },
       {
         kind: 'row',
         cols: 2,
@@ -319,7 +319,7 @@ export const epistaxisDx: DxApproach = {
         ],
       },
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️ Practical pearls:</strong><br>
   • Local vs systemic is the first decision — but unilateral vs bilateral won't make it for you.<br>

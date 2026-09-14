@@ -15,7 +15,7 @@ export const swollenJointsDx: DxApproach = {
     history: {
       title: 'History: Swollen Joints',
       blocks: [
-        { kind: 'branch', text: 'GOAL: INFLAMMATORY vs NON-INFLAMMATORY · MONO- vs POLY-' },
+        { kind: 'goal', text: 'GOAL: INFLAMMATORY vs NON-INFLAMMATORY · MONO- vs POLY-' },
         {
           kind: 'gridTable',
           cols: '0.75fr 1.4fr',
@@ -250,7 +250,7 @@ export const swollenJointsDx: DxApproach = {
           ],
         },
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong> Practical pearls:</strong><br>
   • Arthrocentesis of MULTIPLE joints (carpi + tarsi) is the test — sample even normal-looking joints; one or two taps can miss a polyarthropathy.<br>

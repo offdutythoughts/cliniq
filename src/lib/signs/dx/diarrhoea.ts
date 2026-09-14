@@ -20,7 +20,7 @@ export const diarrhoeaDx: DxApproach = {
     history: {
       title: 'History: Diarrhoea',
       blocks: [
-        { kind: 'branch', text: 'SB OR LB LOCALISATION' },
+        { kind: 'goal', text: 'SB OR LB LOCALISATION' },
         {
           kind: 'row',
           cols: 2,

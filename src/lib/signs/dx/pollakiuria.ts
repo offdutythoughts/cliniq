@@ -14,7 +14,7 @@ export const pollakiuriaDx: DxApproach = {
     history: {
       title: 'History: Pollakiuria / Stranguria',
       blocks: [
-        { kind: 'branch', text: 'GOAL: CONFIRM LUT SIGNS & EXCLUDE OBSTRUCTION' },
+        { kind: 'goal', text: 'GOAL: CONFIRM LUT SIGNS & EXCLUDE OBSTRUCTION' },
         {
           kind: 'gridTable',
           cols: '0.6fr 1.5fr',
@@ -183,7 +183,7 @@ export const pollakiuriaDx: DxApproach = {
           ],
         },
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong>⚠️ Practical pearls:</strong><br>
   • Palpate the bladder first — never miss an obstruction.<br>

@@ -17,7 +17,7 @@ export const constipationDx: DxApproach = {
     history: {
       title: 'History: Constipation / Tenesmus',
       blocks: [
-        { kind: 'branch', text: 'GOAL: DEFECATION vs URINARY STRAINING, THEN MECHANISM' },
+        { kind: 'goal', text: 'GOAL: DEFECATION vs URINARY STRAINING, THEN MECHANISM' },
         {
           kind: 'gridTable',
           cols: '0.6fr 1.5fr',
@@ -193,7 +193,7 @@ export const constipationDx: DxApproach = {
       ],
       after: [
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong>⚠️ Practical pearls:</strong><br>
   • First decision is defecation vs urination — never miss a blocked male cat masquerading as constipation.<br>

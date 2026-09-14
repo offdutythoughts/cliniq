@@ -5,7 +5,7 @@ import { FLOWS } from './flows'
 import { eachBlock } from './blockWalk'
 import { DX } from './dx'
 import { SIGNS } from './registry'
-import type { Block, Column, Link } from './flowTypes'
+import type { Block, Link } from './flowTypes'
 
 // The clinical DB (src/data/db.ts) as text — used to verify that every
 // disease/protocol/lesion id a flow Link (or a raw html-block onclick) targets

@@ -13,7 +13,7 @@ export const blindEyeDx: DxApproach = {
   history: {
     title: 'History: Blind Eye',
     blocks: [
-      { kind: 'branch', text: 'CONFIRM VISION LOSS — REAL OR PERCEIVED?' },
+      { kind: 'goal', text: 'CONFIRM VISION LOSS — REAL OR PERCEIVED?' },
       {
         kind: 'gridTable',
         label: 'Owner-reported clues',
@@ -317,7 +317,7 @@ export const blindEyeDx: DxApproach = {
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️ Therapy pearls while you investigate:</strong><br>
   • <strong>Hypertensive emergency:</strong> amlodipine 0.625–1.25 mg (cat) or 0.1–0.5 mg/kg (dog) PO ± telmisartan; target SBP &lt;160 mmHg; treat underlying cause concurrently. Retinal detachments often reattach if BP controlled within 24–48 h.<br>

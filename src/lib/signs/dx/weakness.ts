@@ -13,7 +13,7 @@ export const weaknessDx: DxApproach = {
   history: {
     title: 'History: Weakness',
     blocks: [
-      { kind: 'branch', text: 'EPISODIC vs PERSISTENT? COLLAPSE vs WEAKNESS?' },
+      { kind: 'goal', text: 'EPISODIC vs PERSISTENT? COLLAPSE vs WEAKNESS?' },
       {
         kind: 'gridTable',
         cols: '0.75fr 1.4fr',
@@ -85,7 +85,7 @@ export const weaknessDx: DxApproach = {
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️</strong> Always get an ECG before starting anti-epileptics in a collapsing animal — antiepileptics can worsen syncope, and a missed arrhythmia is fatal.`,
       },
@@ -178,7 +178,7 @@ export const weaknessDx: DxApproach = {
   dx: {
     title: 'Dx: Weakness — Diagnostics',
     blocks: [
-      { kind: 'branch', text: 'EXCLUDE NON-NEUROLOGICAL CAUSES BEFORE NEUROMUSCULAR WORKUP' },
+      { kind: 'goal', text: 'EXCLUDE NON-NEUROLOGICAL CAUSES BEFORE NEUROMUSCULAR WORKUP' },
       {
         kind: 'gridTable',
         cols: '0.75fr 1.4fr',
@@ -285,7 +285,7 @@ export const weaknessDx: DxApproach = {
       <strong>ECG before ANY anti-epileptic treatment in episodic collapse</strong> — an arrhythmia treated with AEDs is dangerous and potentially fatal.`,
       },
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 8,
         html: `<strong>CK</strong> is the single best screening test for primary muscle disease — if normal, myopathy is unlikely. <strong>AChR titre</strong> is the definitive test for MG — do not diagnose MG on clinical grounds alone. <strong>ECG first</strong> in every episodic collapsing animal — a missed arrhythmia treated as epilepsy worsens outcome. <strong>Tick search</strong> requires parting all coat — remove tick with a rocking motion (not twisting). <strong>Tensilon (edrophonium) test:</strong> 0.1–0.2 mg/kg IV slowly — have atropine 0.02–0.04 mg/kg drawn up and ready; transient improvement confirms MG.`,
       },

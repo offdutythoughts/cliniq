@@ -13,7 +13,7 @@ export const vestibularDx: DxApproach = {
   history: {
     title: 'History: Vestibular',
     blocks: [
-      { kind: 'branch', text: 'CONFIRM IT IS VESTIBULAR, THEN AGE & ONSET' },
+      { kind: 'goal', text: 'CONFIRM IT IS VESTIBULAR, THEN AGE & ONSET' },
       {
         kind: 'gridTable',
         gap: 6,
@@ -61,7 +61,7 @@ export const vestibularDx: DxApproach = {
   exam: {
     title: 'Exam: Vestibular',
     blocks: [
-      { kind: 'branch', text: 'STRUCTURED VESTIBULAR EXAMINATION' },
+      { kind: 'goal', text: 'STRUCTURED VESTIBULAR EXAMINATION' },
 
       { kind: 'step', text: 'STEP 1 — HANDS-OFF OBSERVATION' },
       {
@@ -237,7 +237,7 @@ export const vestibularDx: DxApproach = {
       • <strong>Bilateral vestibular signs</strong> — bilateral idiopathic is rare; central or metabolic cause must be excluded.`,
       },
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 8,
         html: `<strong>💡 Clinical pearls:</strong><br>
       • Idiopathic vestibular disease is a <strong>diagnosis of exclusion</strong> — the patient must be improving within 72 h<br>

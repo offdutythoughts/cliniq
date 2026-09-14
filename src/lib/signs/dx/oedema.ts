@@ -18,7 +18,7 @@ export const oedemaDx: DxApproach = {
     history: {
       title: 'History: Peripheral Oedema',
       blocks: [
-        { kind: 'branch', text: 'GOAL: LOCALISED vs GENERALISED — THEN MECHANISM' },
+        { kind: 'goal', text: 'GOAL: LOCALISED vs GENERALISED — THEN MECHANISM' },
         {
           kind: 'gridTable',
           cols: '0.8fr 1.35fr',
@@ -208,7 +208,7 @@ export const oedemaDx: DxApproach = {
           ],
         },
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong> Practical pearls:</strong><br>
   • Localised vs generalised is the first decision; for generalised oedema, <strong>serum albumin is the pivot</strong>.<br>

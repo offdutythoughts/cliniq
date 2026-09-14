@@ -17,7 +17,7 @@ export const dysphagiaDx: DxApproach = {
     history: {
       title: 'History: Dysphagia / Gagging',
       blocks: [
-        { kind: 'branch', text: 'GOAL: SWALLOWING PROBLEM vs VOMITING, THEN LOCALISE' },
+        { kind: 'goal', text: 'GOAL: SWALLOWING PROBLEM vs VOMITING, THEN LOCALISE' },
         {
           kind: 'gridTable',
           cols: '0.6fr 1.5fr',
@@ -210,7 +210,7 @@ export const dysphagiaDx: DxApproach = {
           ],
         },
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong> Practical pearls:</strong><br>
   • First decide: swallowing problem vs true vomiting — watch the patient eat and look for nausea/abdominal effort.<br>

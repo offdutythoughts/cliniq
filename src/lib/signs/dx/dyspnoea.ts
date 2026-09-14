@@ -16,7 +16,7 @@ export const dyspnoeaDx: DxApproach = {
   history: {
     title: 'History: Dyspnoea',
     blocks: [
-      { kind: 'branch', text: 'DYSPNOEA vs TACHYPNOEA' },
+      { kind: 'goal', text: 'DYSPNOEA vs TACHYPNOEA' },
       {
         kind: 'row',
         cols: 2,

@@ -14,7 +14,7 @@ export const encephalopathyDx: DxApproach = {
   history: {
     title: 'History: Disorientation',
     blocks: [
-      { kind: 'branch', text: 'RULE OUT METABOLIC / TOXIC BEFORE STRUCTURAL' },
+      { kind: 'goal', text: 'RULE OUT METABOLIC / TOXIC BEFORE STRUCTURAL' },
       {
         kind: 'note',
         html: `Acute "brain" signs (altered mentation · behaviour change · head pressing · circling · blindness) are commonly <strong>extracranial</strong>. Chase metabolic and toxic causes first — fast, cheap and often reversible. Most diffuse / symmetric encephalopathy = systemic cause until proven otherwise.`,
@@ -126,7 +126,7 @@ export const encephalopathyDx: DxApproach = {
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️</strong> Check blood glucose in EVERY altered-mentation patient — it takes seconds and hypoglycaemia is instantly correctable. Also check temperature: hyperthermia (heatstroke, post-SE, permethrin toxicity) and hypothyroidism myxoedema coma are both treatable emergencies.`,
       },
@@ -258,7 +258,7 @@ Limb withdrawal from noxious stimulus = SPINAL REFLEX, not consciousness — lim
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️ Elevated ICP:</strong> Head pressing · obtundation · bilateral mydriasis · Cushing reflex → Mannitol 0.25–0.5 g/kg IV over 15 min · Head elevation 30° · Avoid jugular compression. Hypertonic saline 7.2% NaCl 2–4 mL/kg IV alternative. Do NOT use corticosteroids in traumatic brain injury.`,
       },
@@ -302,7 +302,7 @@ Limb withdrawal from noxious stimulus = SPINAL REFLEX, not consciousness — lim
   <div class="dx-test" style="font-size:9px;"><strong>Blood pressure</strong><br>Assess all altered-mentation patients<br>Dog: ≥160 mmHg sustained = hypertensive<br>Cat: ≥160 mmHg → check T4, renal, cardiac<br>Fundoscopy: haemorrhage / detachment</div>
 </div>`,
       },
-      { kind: 'branch', text: 'BLOODS ABNORMAL?' },
+      { kind: 'goal', text: 'BLOODS ABNORMAL?' },
       {
         kind: 'html',
         html: `<div class="dx-connector">
@@ -356,7 +356,7 @@ Limb withdrawal from noxious stimulus = SPINAL REFLEX, not consciousness — lim
           },
         ],
       },
-      { kind: 'branch', text: 'MRI / CSF RESULTS' },
+      { kind: 'goal', text: 'MRI / CSF RESULTS' },
       {
         kind: 'html',
         html: `<div class="dx-connector">

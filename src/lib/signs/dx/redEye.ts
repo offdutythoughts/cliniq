@@ -13,7 +13,7 @@ export const redEyeDx: DxApproach = {
   history: {
     title: 'History: Red Eye',
     blocks: [
-      { kind: 'branch', text: 'RED EYE vs PAINFUL EYE vs LOSS OF VISION' },
+      { kind: 'goal', text: 'RED EYE vs PAINFUL EYE vs LOSS OF VISION' },
       {
         kind: 'row',
         cols: 3,
@@ -372,7 +372,7 @@ export const redEyeDx: DxApproach = {
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️ Empirical treatment pearls while you investigate:</strong><br>
   • <strong>NEVER apply topical steroids</strong> without a negative fluorescein stain — masks/worsens ulcers and infectious keratitis.<br>

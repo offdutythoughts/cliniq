@@ -13,7 +13,7 @@ export const abnormalPupilDx: DxApproach = {
   history: {
     title: 'History: Abnormal Pupil',
     blocks: [
-      { kind: 'branch', text: 'CHARACTERISE THE COMPLAINT' },
+      { kind: 'goal', text: 'CHARACTERISE THE COMPLAINT' },
       // Three complaint types, each with what the owner says and where it sends
       // you — a lookup, so a table rather than three cards the reader must
       // compare by eye.

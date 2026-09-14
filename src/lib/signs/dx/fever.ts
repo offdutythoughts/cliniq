@@ -15,7 +15,7 @@ export const feverDx: DxApproach = {
     history: {
       title: 'History: Fever / FUO',
       blocks: [
-        { kind: 'branch', text: 'GOAL: CONFIRM TRUE FEVER, THEN LOCALISE' },
+        { kind: 'goal', text: 'GOAL: CONFIRM TRUE FEVER, THEN LOCALISE' },
         {
           kind: 'gridTable',
           cols: '0.6fr 1.5fr',
@@ -227,7 +227,7 @@ export const feverDx: DxApproach = {
           ],
         },
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong> Practical pearls:</strong><br>
   • First decide true fever vs hyperthermia — you actively cool hyperthermia, NOT a true fever (cool only if &gt;41.1°C / 106°F).<br>

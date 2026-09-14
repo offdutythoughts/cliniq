@@ -17,7 +17,7 @@ export const melenaDx: DxApproach = {
     history: {
       title: 'History: Melena / Haematochezia',
       blocks: [
-        { kind: 'branch', text: 'GOAL: CONFIRM BLOOD · LOCALISE UPPER vs LOWER · EXCLUDE COAGULOPATHY' },
+        { kind: 'goal', text: 'GOAL: CONFIRM BLOOD · LOCALISE UPPER vs LOWER · EXCLUDE COAGULOPATHY' },
         {
           kind: 'gridTable',
           cols: '0.7fr 1.45fr',
@@ -227,7 +227,7 @@ export const melenaDx: DxApproach = {
           ],
         },
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong> Practical pearls:</strong><br>
   • Characterise the stool first — melena = upper/digested, haematochezia = lower/fresh — then exclude diet/bismuth/iron mimics and swallowed blood.<br>

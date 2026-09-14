@@ -13,7 +13,7 @@ export const jaundiceDx: DxApproach = {
   history: {
     title: 'History: Jaundice',
     blocks: [
-      { kind: 'branch', text: 'CONFIRM ICTERUS, THEN SIGNAL THE CATEGORY' },
+      { kind: 'goal', text: 'CONFIRM ICTERUS, THEN SIGNAL THE CATEGORY' },
       {
         kind: 'gridTable',
         cols: '0.7fr 1.4fr',
@@ -66,7 +66,7 @@ export const jaundiceDx: DxApproach = {
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️</strong> Mild anaemia rarely causes visible jaundice — haemolysis must be acute & severe (typically PCV &lt;13%). Do not over-attribute jaundice to a mild anaemia.`,
       },
@@ -167,7 +167,7 @@ export const jaundiceDx: DxApproach = {
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️</strong> Dog PCV &lt;20% or Cat PCV &lt;15% with jaundice = haemolytic crisis. Consider transfusion. Bilirubin &gt;250 µmol/L with a distended gall bladder/common bile duct = possible surgical emergency.`,
       },

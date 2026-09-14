@@ -18,7 +18,7 @@ export const tremorsDx: DxApproach = {
     history: {
       title: 'History: Tremors',
       blocks: [
-        { kind: 'branch', text: 'GOAL: TREMOR vs SEIZURE, THEN TRIAGE THE CAUSE' },
+        { kind: 'goal', text: 'GOAL: TREMOR vs SEIZURE, THEN TRIAGE THE CAUSE' },
         {
           kind: 'gridTable',
           cols: '0.6fr 1.5fr',
@@ -226,7 +226,7 @@ export const tremorsDx: DxApproach = {
           ],
         },
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong> Practical pearls:</strong><br>
   • Decide tremor vs seizure first — if consciousness is impaired or there are autonomic signs, work it up as a seizure.<br>

@@ -16,7 +16,7 @@ export const heartMurmurDx: DxApproach = {
     history: {
       title: 'History: Heart Murmur',
       blocks: [
-        { kind: 'branch', text: 'GOAL: PATHOLOGIC STRUCTURAL vs FUNCTIONAL / INNOCENT' },
+        { kind: 'goal', text: 'GOAL: PATHOLOGIC STRUCTURAL vs FUNCTIONAL / INNOCENT' },
         {
           kind: 'gridTable',
           cols: '0.7fr 1.45fr',
@@ -224,7 +224,7 @@ export const heartMurmurDx: DxApproach = {
           ],
         },
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong> Practical pearls:</strong><br>
   • A murmur is a sign, not a diagnosis — grade · timing · PMI narrow it, but echo defines the lesion.<br>

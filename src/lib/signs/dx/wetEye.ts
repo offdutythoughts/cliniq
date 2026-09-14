@@ -13,7 +13,7 @@ export const wetEyeDx: DxApproach = {
   history: {
     title: 'History: Wet Eye',
     blocks: [
-      { kind: 'branch', text: 'CHARACTERISE THE EPIPHORA' },
+      { kind: 'goal', text: 'CHARACTERISE THE EPIPHORA' },
       {
         kind: 'row',
         cols: 3,
@@ -246,7 +246,7 @@ export const wetEyeDx: DxApproach = {
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️ Pearls:</strong><br>
   • STT before any drops — KCS with paradoxical reflex tearing is missed otherwise.<br>

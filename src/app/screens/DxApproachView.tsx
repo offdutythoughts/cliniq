@@ -10,12 +10,12 @@ import type { DxApproach, DxBlock, DxNavItem } from '../../lib/signs/dxTypes'
 import { HUE, TITLE } from '../../lib/signs/tone'
 import { DX } from '../../lib/signs/dx'
 import { useNav } from '../nav/NavContext'
-import { linkToView } from '../nav/view'
 import { styleStringToObject as s, toneBox } from './style'
 import { NotFound } from './NotFound'
 import { GridTable } from './gridTable'
 import { type Nav, Raw, ToneBox } from './flowHelpers'
 import { Tappable } from './Tappable'
+import { AuthoredHtml, DISCLAIMER, DiseaseGrid } from './sharedBlocks'
 
 const STD_NAV: DxNavItem[] = [
   { key: 'history', label: '📋 History' },
@@ -82,21 +82,11 @@ function DxCallout({ b, onNav }: { b: Extract<DxBlock, { kind: 'callout' }>; onN
   const h = HUE[b.tone]
   return (
     <ToneBox tone={b.tone} extra={`margin-top:${b.gap ?? 12}px;padding:10px 14px;`}>
-      <div style={s(`font-size:10px;font-weight:700;color:${TITLE[b.tone] ?? h.color};margin-bottom:4px;`)}>{b.title}</div>
-      <div style={s(`font-size:10px;color:${h.color};line-height:1.6;`)}><Raw html={b.html} onNav={onNav} /></div>
-    </ToneBox>
-  )
-}
-
-function DxDiseaseGrid({ b, onNav }: { b: Extract<DxBlock, { kind: 'diseaseGrid' }>; onNav: Nav }) {
-  return (
-    <ToneBox tone="teal" extra="margin-top:10px;padding:10px 12px;">
-      <div style={s('font-size:11px;font-weight:700;color:var(--tone-teal-fg);margin-bottom:6px;')}>{b.title}</div>
-      <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;font-size:var(--fs-box);')}>
-        {b.links.map((l, i) => (
-          <Tappable key={i} style={s('cursor:pointer;color:var(--fg-teal-deep);')} onTap={() => onNav(linkToView(l.link))}>→ {l.label}</Tappable>
-        ))}
-      </div>
+      {/* title and center come from the shared CalloutPayload, so both surfaces
+          have to honour them — a field the type advertises and this renderer
+          dropped would be a silent no-op for whoever authored it. */}
+      {b.title && <div style={s(`font-size:10px;font-weight:700;color:${TITLE[b.tone] ?? h.color};margin-bottom:4px;`)}>{b.title}</div>}
+      <div style={s(`font-size:10px;color:${h.color};line-height:1.6;${b.center ? 'text-align:center;' : ''}`)}><Raw html={b.html} onNav={onNav} /></div>
     </ToneBox>
   )
 }
@@ -251,13 +241,13 @@ function DxSpeciesDiff({ b, onNav }: { b: Extract<DxBlock, { kind: 'speciesDiff'
 
 function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
   switch (b.kind) {
-    case 'branch': return <div className="dx-branch"><Raw html={b.text} onNav={onNav} /></div>
+    case 'goal': return <div className="dx-branch"><Raw html={b.text} onNav={onNav} /></div>
     case 'step': return <DxStep b={b} onNav={onNav} />
     case 'check': return <div className="dx-check" style={b.style ? s(b.style) : undefined}><Raw html={b.html} onNav={onNav} /></div>
     case 'row': return <DxRow b={b} onNav={onNav} />
-    case 'alert': return <div className="dx-alert" style={b.gap ? s(`margin-top:${b.gap}px;`) : undefined}><Raw html={b.html} onNav={onNav} /></div>
+    case 'pearls': return <div className="dx-alert" style={b.gap ? s(`margin-top:${b.gap}px;`) : undefined}><Raw html={b.html} onNav={onNav} /></div>
     case 'callout': return <DxCallout b={b} onNav={onNav} />
-    case 'diseaseGrid': return <DxDiseaseGrid b={b} onNav={onNav} />
+    case 'diseaseGrid': return <DiseaseGrid title={b.title} links={b.links} onNav={onNav} />
     case 'note': return <div className="dx-note" style={b.style ? s(b.style) : undefined}><Raw html={b.html} onNav={onNav} /></div>
     case 'accordion': return <DxAccordion b={b} onNav={onNav} />
     case 'breedClues': return <DxBreedClues b={b} onNav={onNav} />
@@ -281,11 +271,11 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
           </div>
         )}
         <GridTable cols={b.cols} headers={b.headers} rows={b.rows} dividers={b.dividers}
-          scroll={b.scroll} minWidth={b.minWidth} fontSize={b.fontSize} onNav={onNav} />
+          stickyFirstCol={b.stickyFirstCol} scroll={b.scroll} minWidth={b.minWidth} fontSize={b.fontSize} onNav={onNav} />
       </div>
     )
-    case 'html': return <div className="flow-authored scroll-x"><Raw html={b.html} onNav={onNav} /></div>
-    case 'disclaimer': return <div className="disclaimer">For qualified veterinary professionals only.</div>
+    case 'html': return <AuthoredHtml html={b.html} onNav={onNav} />
+    case 'disclaimer': return DISCLAIMER
   }
 }
 

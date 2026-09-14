@@ -14,7 +14,7 @@ export const coughingDx: DxApproach = {
   history: {
     title: 'History: Coughing',
     blocks: [
-      { kind: 'branch', text: 'COUGH CHARACTER + SPECIES = THE TWO KEY HISTORY AXES' },
+      { kind: 'goal', text: 'COUGH CHARACTER + SPECIES = THE TWO KEY HISTORY AXES' },
       {
         kind: 'gridTable',
         cols: '0.28fr 0.34fr 0.38fr',
@@ -70,7 +70,7 @@ export const coughingDx: DxApproach = {
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️</strong> A coughing dog that becomes dyspnoeic at rest or has pink frothy fluid may be in pulmonary oedema — stabilise (O₂, furosemide) before stressful diagnostics.`,
       },
@@ -141,7 +141,7 @@ export const coughingDx: DxApproach = {
   dx: {
     title: 'Dx: Coughing — Diagnostics',
     blocks: [
-      { kind: 'branch', text: 'SPECIES RULE FIRST: CATS DO NOT COUGH FROM CARDIAC DISEASE' },
+      { kind: 'goal', text: 'SPECIES RULE FIRST: CATS DO NOT COUGH FROM CARDIAC DISEASE' },
       {
         kind: 'gridTable',
         cols: '0.5fr 1.55fr',
@@ -226,7 +226,7 @@ export const coughingDx: DxApproach = {
       Haemoptysis + weight loss = neoplasia / coagulopathy — do not delay imaging.`,
       },
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 8,
         html: `<strong>⚠️ Clinical pearls:</strong> Cats do not cough from cardiac disease. NT-proBNP is the first-line test when murmur + respiratory signs overlap. Tracheal pinch should be done gently and is not specific — easily induced in any inflamed airway. Always take 3-view CXR (right lateral + left lateral + DV) for complete evaluation.`,
       },

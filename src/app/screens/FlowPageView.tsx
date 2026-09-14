@@ -23,9 +23,9 @@ import { NotFound } from './NotFound'
 import { ForkLines, type Nav, Raw, ToneBox } from './flowHelpers'
 import { NavCard } from './markup'
 import { Tappable, TapIf } from './Tappable'
+import { AuthoredHtml, DISCLAIMER, DiseaseGrid } from './sharedBlocks'
 import { GridTable } from './gridTable'
 
-const DISCLAIMER = <div className="disclaimer">For qualified veterinary professionals only.</div>
 
 // ── Shared static style constants ─────────────────────────────────────────────
 const ST_BLOCK_TITLE   = s('font-size:11px;font-weight:700;margin-bottom:6px;')
@@ -270,9 +270,11 @@ function ChoicesBlock({ cols, size, items, onNav }: { cols: number; size: number
 }
 
 // ── Table ─────────────────────────────────────────────────────────────────────
-// A pinned first column paints the page background behind itself AND across the
-// 6px column gap (the box-shadow spread), so the scrolling columns slide under
-// it cleanly; the second shadow layer is the divider that marks the seam.
+// A pinned first column paints an opaque background behind itself and across the
+// 6px column gap, so the scrolling columns slide under it cleanly. Inside a Box
+// that background is not the page colour but the panel tint composited over it,
+// which is what `--sticky-col-bg` carries down (a gradient layer of the same
+// rgba() the Box uses, over --navy — the pair renders identically to the panel).
 function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav: Nav }) {
   const wrapped = (
     <GridTable cols={b.cols} headers={b.headers} rows={b.rows} dividers={b.dividers}
@@ -282,8 +284,10 @@ function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav:
   const foot = b.footnote ? <div style={s(`margin-top:7px;font-size:var(--fs-box);line-height:1.55;${footColor}`)}><Raw html={b.footnote} onNav={onNav} /></div> : null
   if (!b.boxTone && !b.title) return b.gap ? <div style={s(`margin-top:${b.gap}px;width:100%;`)}>{wrapped}{foot}</div> : <>{wrapped}{foot}</>
   const tone = b.boxTone ?? 'neutral'
+  const tint = `rgba(${HUE[tone].rgb},var(--panel-bg-a))`
+  const stickyBg = b.stickyFirstCol ? `--sticky-col-bg:linear-gradient(${tint},${tint}),var(--navy);` : ''
   return (
-    <Box tone={tone} extra={`padding:10px 12px;${b.gap ? `margin-top:${b.gap}px;` : ''}`}>
+    <Box tone={tone} extra={`padding:10px 12px;${b.gap ? `margin-top:${b.gap}px;` : ''}${stickyBg}`}>
       {b.title && <div style={s(`font-size:10px;font-weight:700;color:${TITLE[tone] ?? HUE[tone].color};text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;`)}><Raw html={b.title} onNav={onNav} /></div>}
       {wrapped}
       {foot}
@@ -741,16 +745,6 @@ function AlertBlock({ tone, title, items, onNav }: { tone: Tone; title: string; 
     </Box>
   )
 }
-function DiseaseGridBlock({ title, links, onNav }: { title: string; links: LabeledLink[]; onNav: Nav }) {
-  return (
-    <Box tone="teal" extra="margin-top:10px;padding:10px 12px;">
-      <div style={{ ...ST_BLOCK_TITLE, color: 'var(--tone-teal-fg)' }}>{title}</div>
-      <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;font-size:var(--fs-box);')}>
-        {links.map((l, i) => <Tappable key={i} onTap={() => onNav(linkToView(l.link))} style={s('cursor:pointer;color:var(--fg-teal-deep);')}>→ {l.label}</Tappable>)}
-      </div>
-    </Box>
-  )
-}
 function DxRowBlock({ items, onNav }: { items: LabeledLink[]; onNav: Nav }) {
   return (
     <div style={s('display:flex;flex-direction:column;gap:6px;width:100%;margin-top:10px;')}>
@@ -794,7 +788,7 @@ function BlockView({ b, lead, onNav }: { b: Block; lead?: boolean; onNav: Nav })
     case 'banner': return <BannerBlock tone={b.tone} html={b.html} onNav={onNav} />
     case 'callout': return <CalloutBlock b={b} onNav={onNav} />
     case 'alert': return <AlertBlock tone={b.tone} title={b.title} items={b.items} onNav={onNav} />
-    case 'diseaseGrid': return <DiseaseGridBlock title={b.title} links={b.links} onNav={onNav} />
+    case 'diseaseGrid': return <DiseaseGrid title={b.title} links={b.links} onNav={onNav} />
     case 'dxRow': return <DxRowBlock items={b.items} onNav={onNav} />
     case 'table': return <TableBlock b={b} onNav={onNav} />
     case 'categoryGrid': return <CategoryBlock columns={b.columns} cols={b.columns.length} preset="grid" lead={lead} onNav={onNav} />
@@ -806,7 +800,7 @@ function BlockView({ b, lead, onNav }: { b: Block; lead?: boolean; onNav: Nav })
     case 'speciesChooser': return <SpeciesChooserBlock b={b} onNav={onNav} />
     case 'infoBox': return <InfoBoxBlock b={b} onNav={onNav} />
     case 'disclaimer': return DISCLAIMER
-    case 'html': return <div className="flow-authored scroll-x"><Raw html={b.html} onNav={onNav} /></div>
+    case 'html': return <AuthoredHtml html={b.html} onNav={onNav} />
     default: throw new Error(`FlowPageView: block kind '${(b as Block).kind}' not implemented`)
   }
 }

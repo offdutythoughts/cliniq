@@ -13,7 +13,7 @@ export const paleGumsDx: DxApproach = {
   history: {
     title: 'History: Pale MM',
     blocks: [
-      { kind: 'branch', text: 'ANAEMIA vs POOR PERFUSION — AND IS IT ACUTE?' },
+      { kind: 'goal', text: 'ANAEMIA vs POOR PERFUSION — AND IS IT ACUTE?' },
       {
         kind: 'gridTable',
         cols: '0.7fr 1.4fr',
@@ -54,7 +54,7 @@ export const paleGumsDx: DxApproach = {
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️</strong> White/grey gums + weak pulses + tachycardia = shock — resuscitate now; the workup follows stabilisation.`,
       },
@@ -157,12 +157,12 @@ export const paleGumsDx: DxApproach = {
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️ IMHA triad:</strong> anaemia + haemolysis + an immune marker. True agglutination persisting after saline wash is diagnostic (no Coombs needed). Thromboembolism — not the anaemia — kills many dogs: start clopidogrel unless platelets &lt; 30 ×10⁹/L. Never give azathioprine to cats.`,
       },
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 8,
         html: `<strong>⚠️ Transfusion:</strong> Dog PCV &lt; 20% · Cat PCV &lt; 15% — or clinical signs (tachycardia, weakness) at higher PCVs. Blood-type cats before any transfusion.`,
       },

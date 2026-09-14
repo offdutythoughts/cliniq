@@ -16,7 +16,7 @@ export const myelopathyDx: DxApproach = {
   history: {
     title: 'History: Myelopathy',
     blocks: [
-      { kind: 'branch', text: 'ONSET + PAIN = THE TWO KEY HISTORY AXES' },
+      { kind: 'goal', text: 'ONSET + PAIN = THE TWO KEY HISTORY AXES' },
 
       { kind: 'step', text: '⏱️ STEP 1 — ONSET & TEMPO', noArrowAfter: true },
       {
@@ -73,7 +73,7 @@ export const myelopathyDx: DxApproach = {
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️</strong> Progressive loss of deep pain perception is a surgical emergency — time to decompression drives outcome.`,
       },
@@ -84,7 +84,7 @@ export const myelopathyDx: DxApproach = {
   exam: {
     title: 'Exam: Myelopathy',
     blocks: [
-      { kind: 'branch', text: 'HEAD-TO-TAIL NEUROLOGICAL EXAMINATION' },
+      { kind: 'goal', text: 'HEAD-TO-TAIL NEUROLOGICAL EXAMINATION' },
 
       { kind: 'step', text: '👀 STEP 1 — HANDS-OFF OBSERVATION' },
       { kind: 'note', html: `Observe before touching — many findings are lost once the patient is anxious or restrained.`, noArrowAfter: true },
@@ -126,11 +126,12 @@ export const myelopathyDx: DxApproach = {
         ],
       }, '👆'),
 
-      { kind: 'branch', text: 'LOCALISE SPINAL CORD SEGMENT' },
+      { kind: 'goal', text: 'LOCALISE SPINAL CORD SEGMENT' },
       {
         kind: 'gridTable',
         label: 'Neurological Localisation',
         scroll: true,
+        stickyFirstCol: true,
         minWidth: NEURO_LOC_MIN_WIDTH,
         cols: NEURO_LOC_COLS,
         headers: NEURO_LOC_HEADERS,
@@ -151,7 +152,7 @@ export const myelopathyDx: DxApproach = {
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️ Deep pain absent:</strong> Apply firm haemostat pressure to digit — look for behavioural response (vocalisation, head turn), NOT withdrawal reflex alone. Absent DPP = guarded prognosis; IVDD surgery within 24 h = 50–60% good outcome.`,
       },
@@ -248,7 +249,7 @@ export const myelopathyDx: DxApproach = {
       • Trauma with suspected vertebral instability (handle with extreme care, rigid spinal support).`,
       },
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 8,
         html: `<strong>⚠️ Deep pain absent:</strong> IVDD surgery within 24 h = 50–60% good outcome. Each hour of delay worsens prognosis. Confirm true deep pain (conscious behavioural response to noxious stimulus), not withdrawal reflex.`,
       },

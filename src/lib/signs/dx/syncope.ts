@@ -16,7 +16,7 @@ export const syncopeDx: DxApproach = {
     history: {
       title: 'History: Syncope',
       blocks: [
-        { kind: 'branch', text: 'GOAL: CONFIRM SYNCOPE IS CARDIAC OR NON-CARDIOGENIC?' },
+        { kind: 'goal', text: 'GOAL: CONFIRM SYNCOPE IS CARDIAC OR NON-CARDIOGENIC?' },
         {
           kind: 'gridTable',
           cols: '0.6fr 1.5fr',
@@ -185,7 +185,7 @@ export const syncopeDx: DxApproach = {
           ],
         },
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong> Practical pearls:</strong><br>
   • Decide syncope vs seizure first — flaccid + instant recovery + exertional trigger = syncope; aura + paddling + post-ictal confusion = seizure.<br>
