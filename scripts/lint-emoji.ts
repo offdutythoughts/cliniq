@@ -14,8 +14,9 @@
 // Scope: src/data/db.ts (lesion + disease + differential content) and
 // src/app/screens (the components that render it). Sign flowcharts and protocol
 // pages are a separate surface and are deliberately not covered.
-import { readdirSync, readFileSync, statSync } from 'node:fs'
-import { join } from 'node:path'
+import { readFileSync } from 'node:fs'
+import { sourceFiles } from './lib/sources'
+import { lint } from './lib/lint'
 
 const DB = 'src/data/db.ts'
 const SCREENS = 'src/app/screens'
@@ -45,8 +46,8 @@ const SIREN_OK = new Set([
   'TabHome.tsx',
 ])
 
-let errors = 0
-const fail = (where: string, msg: string) => { errors++; console.error(`${where} — ${msg}`) }
+const l = lint('emoji-rule')
+const fail = (where: string, msg: string) => l.fail(`${where} — ${msg}`)
 
 // ── db.ts content ──────────────────────────────────────────────────────────
 readFileSync(DB, 'utf8').split('\n').forEach((line, i) => {
@@ -64,13 +65,6 @@ readFileSync(DB, 'utf8').split('\n').forEach((line, i) => {
 })
 
 // ── screen components ──────────────────────────────────────────────────────
-function walk(dir: string): string[] {
-  return readdirSync(dir).flatMap(name => {
-    const p = join(dir, name)
-    return statSync(p).isDirectory() ? walk(p) : /\.tsx?$/.test(name) ? [p] : []
-  })
-}
-
 /** Prose about the rule and regexes that *detect* the glyph are not uses of it. */
 function isCommentary(line: string): boolean {
   const t = line.trim()
@@ -78,9 +72,8 @@ function isCommentary(line: string): boolean {
     || /\[[^\]]*[⚠\u{1F6A8}]/u.test(line)
 }
 
-for (const file of walk(SCREENS)) {
+for (const file of sourceFiles(SCREENS)) {
   const name = file.split('/').pop()!
-  if (/\.test\.tsx?$/.test(name)) continue
   readFileSync(file, 'utf8').split('\n').forEach((line, i) => {
     const at = `${file}:${i + 1}`
     if (isCommentary(line)) return
@@ -94,13 +87,10 @@ for (const file of walk(SCREENS)) {
 }
 
 // ── the flag has to reach the screen ───────────────────────────────────────
-const screensSrc = walk(SCREENS).map(f => readFileSync(f, 'utf8')).join('\n')
+const screensSrc = sourceFiles(SCREENS).map(f => readFileSync(f, 'utf8')).join('\n')
 if (!/zoo\s*===\s*true|zoo=\{/.test(screensSrc)) {
   fail(SCREENS, 'no screen reads `zoo` — the zoonosis flag is set in db.ts but never rendered.')
 }
 
-if (errors > 0) {
-  console.error(`\n${errors} emoji-rule violation(s). ⚠️ = zoonotic / isolation only; 🚨 = disease-page emergency only.`)
-  process.exit(1)
-}
-console.log('lint:emoji — ok')
+l.done('Emoji rules hold across db.ts content and the screen components.',
+  '⚠️ = zoonotic / isolation only; 🚨 = disease-page emergency only.')

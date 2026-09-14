@@ -1,6 +1,6 @@
 'use client'
 // Shared pipe-/@-markup renderers — React ports of the disease-page helpers
-// linkify() and bul() (cliniqApp.ts), reused by the disease / lesion / diff
+// linkify() and bul() (the deleted cliniqApp.ts), reused by the disease / lesion / diff
 // detail screens. `@DIS-…`/`@PROT-…` tokens become real React navigation.
 
 import { type CSSProperties, type ReactNode } from 'react'
@@ -10,6 +10,7 @@ import { Cite, hasCitation, splitCitations } from './diseaseReferences'
 import { styleStringToObject as s } from './style'
 import { parseBlocks } from './blocks'
 import { BULLET, DOT } from './styles'
+import { Tappable } from './Tappable'
 
 /** Coerce an unknown DB field (may be `undefined` via index signature) to string. */
 export const str = (v: unknown): string => (typeof v === 'string' ? v : '')
@@ -47,7 +48,7 @@ function LinkSpan({ id, label }: { id: string; label?: string }) {
   function go(): void {
     nav.navigate(isProtocol ? { kind: 'protocol', id } : { kind: 'disease', id })
   }
-  return <span style={LINK} role="button" onClick={go}>{text}</span>
+  return <Tappable as="span" style={LINK} onTap={go}>{text}</Tappable>
 }
 
 /** Tappable navigation card — icon (optional) + title + subtitle + arrow. */
@@ -59,7 +60,7 @@ export function NavCard({ icon, title, sub, onClick, style }: {
   style?: CSSProperties
 }) {
   return (
-    <div className="card" style={style} role="button" onClick={onClick}>
+    <Tappable className="card" style={style} onTap={onClick}>
       <div className="card-row">
         {icon && <div className="card-icon">{icon}</div>}
         <div style={{ flex: 1 }}>
@@ -68,7 +69,7 @@ export function NavCard({ icon, title, sub, onClick, style }: {
         </div>
         <div className="card-arrow">›</div>
       </div>
-    </div>
+    </Tappable>
   )
 }
 

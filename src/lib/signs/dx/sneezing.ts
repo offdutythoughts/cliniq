@@ -1,18 +1,19 @@
 // ── Sneezing — diagnostic approach (data) ───────────────────────────────────
 // Migration of renderDxSneezing{History,Exam,Dx} (legacy inline render() funcs
-// in ../cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
+// in the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const sneezingDx: DxApproach = {
+  sign: 'sneezing',
   title: 'Sneezing',
   tabs: {
 
   history: {
     title: 'History: Sneezing',
     blocks: [
-      { kind: 'branch', text: 'ACUTE vs CHRONIC, AND LATERALITY' },
+      { kind: 'goal', text: 'ACUTE vs CHRONIC, AND LATERALITY' },
       {
         kind: 'gridTable',
         cols: '0.28fr 0.28fr 0.44fr',
@@ -121,7 +122,7 @@ export const sneezingDx: DxApproach = {
   dx: {
     title: 'Dx: Sneezing — Diagnostics',
     blocks: [
-      { kind: 'branch', text: 'LATERALITY OF DISCHARGE = THE KEY DECISION AXIS' },
+      { kind: 'goal', text: 'LATERALITY OF DISCHARGE = THE KEY DECISION AXIS' },
       {
         kind: 'gridTable',
         cols: '0.3fr 0.35fr 0.35fr',
@@ -211,7 +212,7 @@ export const sneezingDx: DxApproach = {
       Young cat with dyspnoea + stertor = nasopharyngeal polyp → may need urgent retroflex scope under GA.`,
       },
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 8,
         html: `<strong>⚠️ Clinical pearls:</strong> Unilateral discharge = structural until proven otherwise. Always CT before rhinoscopy. Biopsy every nasal mass — even if CT looks inflammatory (chronic rhinosinusitis and early nasal lymphoma look identical on CT). Aspergillus serology alone has ~70% sensitivity — rhinoscopy + biopsy needed for confirmation.`,
       },

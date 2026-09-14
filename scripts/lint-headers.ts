@@ -27,9 +27,10 @@
 import { FLOWS } from '../src/lib/signs/flows/index'
 import { SIGNS } from '../src/lib/signs/registry'
 import type { Block } from '../src/lib/signs/flowTypes'
+import { eachBlock, pageCount } from './lib/walk'
+import { lint } from './lib/lint'
 
-let errors = 0
-const fail = (msg: string) => { console.error(`  ✗ ${msg}`); errors++ }
+const { fail, done } = lint('page-header')
 
 const ENTRY_PAGES = new Set(SIGNS.map(s => s.flowId).filter(Boolean) as string[])
 
@@ -42,11 +43,13 @@ const LEGACY_LAYOUT = new Set<string>([
   'weakness-collapse',
 ])
 
-const hasStep = (blocks: Block[]): boolean =>
-  blocks.some(b =>
-    (b.kind === 'node' && b.variant === 'step') ||
-    (b.kind === 'branch' && b.columns.some(c => hasStep(c.blocks))) ||
-    (b.kind === 'fork' && b.legs.some(l => hasStep(l.blocks ?? []))))
+// Nesting traversal comes from lib/walk, so this can never fall behind a new
+// nesting block kind. The checks BELOW stay page-level on purpose — they are
+// about what blocks[0]/blocks[1] are, not about every block on the page.
+const hasStep = (blocks: Block[]): boolean => {
+  for (const b of eachBlock(blocks)) if (b.kind === 'node' && b.variant === 'step') return true
+  return false
+}
 
 for (const [id, page] of Object.entries(FLOWS)) {
   const blocks = page.blocks
@@ -74,9 +77,5 @@ for (const [id, page] of Object.entries(FLOWS)) {
   }
 }
 
-if (errors > 0) {
-  console.error(`\n${errors} page-header issue(s) found. Entry pages ask a question; sub-pages restate the finding that got the reader there.`)
-  process.exit(1)
-} else {
-  console.log(`✓ All flow pages open with the house header shape (${Object.keys(FLOWS).length} pages checked).`)
-}
+done(`All flow pages open with the house header shape (${pageCount()} pages checked).`,
+  'Entry pages ask a question; sub-pages restate the finding that got the reader there.')

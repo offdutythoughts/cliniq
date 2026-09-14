@@ -1,18 +1,19 @@
 // ── Vestibular — diagnostic approach (data) ─────────────────────────────────
 // Migration of renderDxVestibular{History,Exam,Dx} (legacy inline render() HTML
-// in ../cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
+// in the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
 import { VEST_LOC_COLS, VEST_LOC_HEADERS, VEST_LOC_ROWS } from '../vestibularLocalisation'
 
 export const vestibularDx: DxApproach = {
+  sign: 'vestibular',
   title: 'Vestibular',
   tabs: {
 
   history: {
     title: 'History: Vestibular',
     blocks: [
-      { kind: 'branch', text: 'CONFIRM IT IS VESTIBULAR, THEN AGE & ONSET' },
+      { kind: 'goal', text: 'CONFIRM IT IS VESTIBULAR, THEN AGE & ONSET' },
       {
         kind: 'gridTable',
         gap: 6,
@@ -60,7 +61,7 @@ export const vestibularDx: DxApproach = {
   exam: {
     title: 'Exam: Vestibular',
     blocks: [
-      { kind: 'branch', text: 'STRUCTURED VESTIBULAR EXAMINATION' },
+      { kind: 'goal', text: 'STRUCTURED VESTIBULAR EXAMINATION' },
 
       { kind: 'step', text: 'STEP 1 — HANDS-OFF OBSERVATION' },
       {
@@ -236,7 +237,7 @@ export const vestibularDx: DxApproach = {
       • <strong>Bilateral vestibular signs</strong> — bilateral idiopathic is rare; central or metabolic cause must be excluded.`,
       },
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 8,
         html: `<strong>💡 Clinical pearls:</strong><br>
       • Idiopathic vestibular disease is a <strong>diagnosis of exclusion</strong> — the patient must be improving within 72 h<br>

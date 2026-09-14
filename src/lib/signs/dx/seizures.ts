@@ -10,6 +10,7 @@ import { CN_EXAM_ACCORDION } from './shared/neuroExam'
 import { numBadge } from './shared/dxHelpers'
 
 export const seizuresDx: DxApproach = {
+  sign: 'seizures',
   title: 'Seizures',
   tabs: {
 
@@ -227,7 +228,7 @@ export const seizuresDx: DxApproach = {
   </div>`,
       },
 
-      { kind: 'branch', text: 'TIER 1 ABNORMAL → REACTIVE' },
+      { kind: 'goal', text: 'TIER 1 ABNORMAL → REACTIVE' },
       {
         kind: 'gridTable',
         cols: '0.3fr 0.3fr 0.4fr',
@@ -253,7 +254,7 @@ export const seizuresDx: DxApproach = {
         ],
       },
 
-      { kind: 'branch', text: 'TIER 1 NORMAL → DO YOU IMAGE?' },
+      { kind: 'goal', text: 'TIER 1 NORMAL → DO YOU IMAGE?' },
       {
         kind: 'callout',
         tone: 'info',
@@ -282,7 +283,7 @@ export const seizuresDx: DxApproach = {
           },
         ],
       },
-      { kind: 'branch', text: 'MRI / CSF RESULTS' },
+      { kind: 'goal', text: 'MRI / CSF RESULTS' },
       {
         kind: 'gridTable',
         cols: '0.34fr 0.3fr 0.36fr',
@@ -312,7 +313,7 @@ export const seizuresDx: DxApproach = {
         ],
       },
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 8,
         html: `<strong>⚠️ Start a maintenance AED if ANY:</strong> cluster (≥2/24h) · SE has occurred · &gt;1 seizure/6 months · increasing frequency or severity · prolonged postictal · structural disease confirmed. Dosing and monitoring → PROT-SEIZ.`,
       },

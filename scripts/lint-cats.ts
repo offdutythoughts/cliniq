@@ -21,11 +21,11 @@
 // CHECK 2 — a CatLabel column must NOT carry a `tone` override, or it would opt
 // out of the shared palette and reintroduce the drift by another route.
 
-import { FLOWS } from '../src/lib/signs/flows/index'
-import type { Block, CatLabel } from '../src/lib/signs/flowTypes'
+import type { CatLabel } from '../src/lib/signs/flowTypes'
+import { eachPageBlock, pageCount } from './lib/walk'
+import { lint } from './lib/lint'
 
-let errors = 0
-const fail = (msg: string) => { console.error(`  ✗ ${msg}`); errors++ }
+const { fail, done } = lint('category-label')
 
 const CANON: CatLabel[] = [
   'Vascular', 'Inflammatory', 'Infectious', 'Neoplastic', 'Immune-mediated', 'Degenerative',
@@ -87,33 +87,39 @@ const PAGE_SPECIFIC = new Set<string>([
   'tremors-cerebellar::Developmental / Degenerative', 'tremors-cerebellar::Inflammatory / Infectious',
   'tremors-idiopathic::Idiopathic / Steroid-Responsive', 'tremors-idiopathic::Breed-Related / Benign',
   'gi-parasites::Stomach / Oesophagus', 'gi-parasites::Small intestine', 'gi-parasites::Large intestine',
+  // Surfaced when this lint started walking `speciesChooser` panels (it never
+  // had before — see lib/walk.ts). Both sit in the DIC page's per-species grids.
+  //
+  // "Cardiac" is a clean organ-system split, same shape as syncope-cardiac's
+  // columns above — it holds cardiomyopathy and ATE, which are a site, not an
+  // aetiology.
+  //
+  // "Vascular / Trauma" is NOT settled. It merges two canonical CatLabels behind
+  // a slash and takes a manual tone, which is the exact drift pattern this lint
+  // exists to stop ("Neoplastic / Mass"). It holds GDV + major trauma. The right
+  // fix is probably two columns, but that changes the page's layout and is a
+  // clinical-authoring call, so it is parked here rather than silently rewritten.
+  'bleeding-dic::Cardiac',
+  'bleeding-dic::Vascular / Trauma',
 ])
 
-function checkBlocks(pageId: string, blocks: Block[]) {
-  for (const b of blocks) {
-    if (b.kind === 'categoryGrid' || b.kind === 'categoryColumns') {
-      for (const col of b.columns ?? []) {
-        const cat = String(col.cat ?? '').trim()
-        const key = `${pageId}::${cat}`
-        if (CANON_SET.has(cat)) {
-          if (col.tone) {
-            fail(`[${pageId}] column "${cat}" carries tone:'${col.tone}' — a shared category takes the shared colour; drop the override.`)
-          }
-        } else if (!PAGE_SPECIFIC.has(key)) {
-          fail(`[${pageId}] column "${cat}" is neither a CatLabel nor a reviewed page-specific split. Use the canonical spelling (${CANON.join(' · ')}) or add "${key}" to PAGE_SPECIFIC.`)
-        }
+// Traversal comes from lib/walk. The old hand-rolled recursion here descended
+// into `branch` columns and `fork` legs but not `speciesChooser` panels — whose
+// per-species CatColumn grids are exactly what this lint exists to check.
+for (const { pageId, block: b } of eachPageBlock()) {
+  if (b.kind !== 'categoryGrid' && b.kind !== 'categoryColumns') continue
+  for (const col of b.columns ?? []) {
+    const cat = String(col.cat ?? '')
+    const key = `${pageId}::${cat}`
+    if (CANON_SET.has(cat)) {
+      if (col.tone) {
+        fail(`[${pageId}] column "${cat}" carries tone:'${col.tone}' — a shared category takes the shared colour; drop the override.`)
       }
+    } else if (!PAGE_SPECIFIC.has(key)) {
+      fail(`[${pageId}] column "${cat}" is neither a CatLabel nor a reviewed page-specific split. Use the canonical spelling (${CANON.join(' · ')}) or add "${key}" to PAGE_SPECIFIC.`)
     }
-    if (b.kind === 'branch') for (const col of b.columns ?? []) checkBlocks(pageId, col.blocks ?? [])
-    if (b.kind === 'fork') for (const leg of b.legs ?? []) checkBlocks(pageId, leg.blocks ?? [])
   }
 }
 
-for (const [id, page] of Object.entries(FLOWS)) checkBlocks(id, page.blocks)
-
-if (errors > 0) {
-  console.error(`\n${errors} category-label issue(s) found. One lesion category = one canonical label = one colour, on every flow.`)
-  process.exit(1)
-} else {
-  console.log(`✓ All category columns use a canonical CatLabel (unstyled) or a reviewed page-specific split (${Object.keys(FLOWS).length} flow pages checked).`)
-}
+done(`All category columns use a canonical CatLabel (unstyled) or a reviewed page-specific split (${pageCount()} flow pages checked).`,
+  'One lesion category = one canonical label = one colour, on every flow.')

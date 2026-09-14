@@ -6,13 +6,14 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const haematuriaDx: DxApproach = {
+  sign: 'haematuria',
   title: 'Haematuria',
   tabs: {
 
   history: {
     title: 'History: Haematuria',
     blocks: [
-      { kind: 'branch', text: 'TRUE HAEMATURIA vs HAEMOGLOBINURIA vs MYOGLOBINURIA vs PIGMENT' },
+      { kind: 'goal', text: 'TRUE HAEMATURIA vs HAEMOGLOBINURIA vs MYOGLOBINURIA vs PIGMENT' },
       { kind: 'note', html: `All three give a positive dipstick for blood. The key bedside discriminator is to <strong>centrifuge the urine</strong>.`, noArrowAfter: true },
       {
         kind: 'gridTable',
@@ -305,7 +306,7 @@ export const haematuriaDx: DxApproach = {
     ],
     after: [
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️ Sample handling pearls:</strong><br>
   • Cystocentesis &gt; catheterised &gt; free catch for culture (contamination matters).<br>

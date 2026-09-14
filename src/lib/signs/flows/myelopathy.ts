@@ -17,6 +17,7 @@ const myelopathyEntry: FlowPage = {
     {
       kind: 'table',
       scroll: true,
+      stickyFirstCol: true,
       minWidth: NEURO_LOC_MIN_WIDTH,
       gap: 8,
       title: 'Neurological Localisation',

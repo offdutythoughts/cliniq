@@ -9,13 +9,14 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const weightLossDx: DxApproach = {
+  sign: 'weight-loss',
   title: 'Weight Loss',
   tabs: {
 
     history: {
       title: 'History: Weight Loss',
       blocks: [
-        { kind: 'branch', text: 'GOAL: CONFIRM TRUE LOSS · CHECK DIET · SPLIT BY APPETITE' },
+        { kind: 'goal', text: 'GOAL: CONFIRM TRUE LOSS · CHECK DIET · SPLIT BY APPETITE' },
         {
           kind: 'gridTable',
           cols: '0.8fr 1.35fr',
@@ -215,7 +216,7 @@ export const weightLossDx: DxApproach = {
           ],
         },
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong> Practical pearls:</strong><br>
   • Confirm true loss (serial weights) and an adequate diet BEFORE an extensive work-up.<br>

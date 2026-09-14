@@ -9,10 +9,16 @@
 
 import type { Link } from '../../lib/signs/flowTypes'
 import type { Species } from '../../lib/species'
-import type { Tab } from '../../types'
 import { FLOWS } from '../../lib/signs/flows'
 import { DX } from '../../lib/signs/dx'
 import { DB } from '../../data/db'
+import { encodeView } from './viewUrl'
+
+/** Which bottom-nav tab is selected. The tab set is defined by TAB_NAMES below;
+ *  these two must stay the same length. Lived in src/types/index.ts until that
+ *  file was deleted — it held one live type and eight dead duplicates of the
+ *  db.ts row interfaces. */
+export type Tab = 0 | 1 | 2 | 3 | 4 | 5
 
 export type View =
   | { kind: 'tab'; tab: Tab }                                                    // navTo(0..4)
@@ -29,18 +35,16 @@ export type View =
 
 export type ViewKind = View['kind']
 
-/** A stable string identity for a View — for React keys + animation triggers. */
+/** A stable string identity for a View — React keys and slide-animation
+ *  triggers. This is the URL path from nav/viewUrl.ts, not a second scheme:
+ *  "which screen is this" had three different spellings in this file, and two
+ *  of them existed only because nobody had written the one that round-trips.
+ *
+ *  It is the `path` only, so a query-carried decoration (a disease page's `sp`)
+ *  is deliberately NOT part of the identity — switching species must not remount
+ *  the page and throw the reader back to the top mid-read. */
 export function viewKey(v: View): string {
-  switch (v.kind) {
-    case 'tab': return `tab:${v.tab}`
-    case 'flow': return `flow:${v.flowId}`
-    case 'dx': return `dx:${v.sign}:${v.tab}`
-    case 'disease': return `disease:${v.id}`
-    case 'protocol': return `protocol:${v.id}`
-    case 'lesionLoc': return `lesionLoc:${v.loc}`
-    case 'subTypeDetail': return `subTypeDetail:${v.id}`
-    case 'diff': return `diff:${v.id}`
-  }
+  return encodeView(v).path
 }
 
 /** Map a typed flow Link to the View it navigates to. Mirrors renderFlow.ts
@@ -80,7 +84,23 @@ export function parseLegacyOnclick(js: string): View | null {
 // ── Screen metadata (topbar title + notes key/title) ──────────────────────────
 // Derived from data, reproducing the exact legacy push()/replace() scheme so
 // saved notes carry over. `showBack` is NOT here — it comes from nav stack depth.
-const TAB_NAMES = ['Clinical', 'Diagnostic', 'Disease', 'Mix & Match', 'Protocols', 'Settings']
+/** The bottom-nav tab set — the ONE definition of how many tabs there are, what
+ *  they are called and which icon each carries. `Tab` above is its index type.
+ *
+ *  BottomNav used to keep a second, hand-synced copy of these labels; two lists
+ *  that must agree and nothing checking that they do. Notes keys are derived
+ *  from the label ("Clinical — General"), so a drift between the copies would
+ *  have silently split a reader's saved notes across two key spellings. */
+export const TABS = [
+  { icon: '🔍', label: 'Clinical' },
+  { icon: '🌿', label: 'Diagnostic' },
+  { icon: '📋', label: 'Disease' },
+  { icon: '🔀', label: 'Mix & Match' },
+  { icon: '⚡', label: 'Protocols' },
+  { icon: '⚙️', label: 'Settings' },
+] as const
+
+const TAB_NAMES = TABS.map(t => t.label)
 
 const byId = <T extends { id: string }>(rows: T[]) => {
   const m = new Map<string, T>()

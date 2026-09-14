@@ -33,16 +33,16 @@
 // THIRD RULE — `proto` must name a protocol that exists, or the card navigates
 // to a NotFound (LES-HU-GEN-PYO pointed at PROT-REPRO-PYO, which was never written).
 
-import { DB } from '../src/data/db'
-import type { Lesion } from '../src/types'
+// LesionRow is the row type db.ts actually declares. This file used to import a
+// `Lesion` interface from src/types/index.ts instead — a hand-kept duplicate of
+// the same shape, which is why every use below needed an `as unknown as` cast to
+// get past the mismatch. One type, no cast.
+import { DB, type LesionRow } from '../src/data/db'
+import { lint } from './lib/lint'
 
-const RICH_FIELDS: (keyof Lesion)[] = ['etiology', 'patho', 'diag', 'treat', 'ddx']
+const RICH_FIELDS: (keyof LesionRow)[] = ['etiology', 'patho', 'diag', 'treat', 'ddx']
 
-let errors = 0
-function fail(msg: string) {
-  console.error(`  ✗ ${msg}`)
-  errors++
-}
+const { fail, done } = lint('lesion')
 
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
 const pageIds = new Set(DB.disease_page.map(d => d.id))
@@ -50,7 +50,7 @@ const pageIds = new Set(DB.disease_page.map(d => d.id))
 /** The disease page a sub-type is really *about*, inferred from the differential of the same
  *  name in its own filter group. This is how a sub-type that never authored a `dis` link is
  *  still recognisable as a single disease. */
-function impliedDisease(l: Lesion): string | undefined {
+function impliedDisease(l: LesionRow): string | undefined {
   const twin = DB.differentials.find(d => d.filter === l.filter && norm(d.name) === norm(l.sub))
   const dis = typeof twin?.dis === 'string' ? twin.dis : undefined
   return dis && pageIds.has(dis) ? dis : undefined
@@ -58,15 +58,20 @@ function impliedDisease(l: Lesion): string | undefined {
 
 const protocolIds = new Set(DB.protocols.map(p => p.id))
 
-for (const l of DB.lesion_type as unknown as Lesion[]) {
+for (const l of DB.lesion_type) {
   // The protocol rules apply to EVERY lesion, including the directDis redirects
   // below — a redirecting row's `proto` was silently inherited by the disease
   // page it points at, which is exactly the drift this closes.
-  if (l.proto) {
+  //
+  // `proto` is not a declared field on LesionRow, so it arrives through the row's
+  // index signature as string | boolean | undefined. Narrow it here rather than
+  // casting the whole row to a parallel interface.
+  const proto = typeof l.proto === 'string' ? l.proto : undefined
+  if (proto) {
     if (l.dis) {
-      fail(`[${l.id}] "${l.sub}" declares proto:'${l.proto}' AND links to ${l.dis} — a protocol is reached through the disease page. Move it to protos:'${l.proto}' on ${l.dis} and drop it here.`)
-    } else if (!protocolIds.has(l.proto)) {
-      fail(`[${l.id}] "${l.sub}" declares proto:'${l.proto}', which is not a protocol — the card would navigate to a NotFound.`)
+      fail(`[${l.id}] "${l.sub}" declares proto:'${proto}' AND links to ${l.dis} — a protocol is reached through the disease page. Move it to protos:'${proto}' on ${l.dis} and drop it here.`)
+    } else if (!protocolIds.has(proto)) {
+      fail(`[${l.id}] "${l.sub}" declares proto:'${proto}', which is not a protocol — the card would navigate to a NotFound.`)
     }
   }
 
@@ -98,9 +103,4 @@ for (const l of DB.lesion_type as unknown as Lesion[]) {
   }
 }
 
-if (errors > 0) {
-  console.error(`\n${errors} lesion lint error(s) found.`)
-  process.exit(1)
-} else {
-  console.log(`✓ All lesion sub-type pages pass lint, and every lesion protocol is reached through its disease page (${(DB.lesion_type as unknown as Lesion[]).length} lesions checked).`)
-}
+done(`All lesion sub-type pages pass lint, and every lesion protocol is reached through its disease page (${DB.lesion_type.length} lesions checked).`)

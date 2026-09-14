@@ -1,5 +1,5 @@
 // ── Ataxia flowchart (data) ─────────────────────────────────────────────────
-// Migration of renderAtaxiaFlow() (inline in cliniqApp.ts) to the FlowPage
+// Migration of renderAtaxiaFlow() (inline in the deleted cliniqApp.ts) to the FlowPage
 // model. Single-page sign: a 3-column classification split (cerebellar /
 // vestibular / proprioceptive) → `choices`; the two info boxes (Key
 // distinctions, Species differences) and the two trailing action `.card` rows

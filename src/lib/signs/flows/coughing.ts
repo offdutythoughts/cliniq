@@ -1,5 +1,5 @@
 // ── Coughing flowchart (data) ───────────────────────────────────────────────
-// Migration of renderCoughFlow (inline in cliniqApp.ts) to the FlowPage model.
+// Migration of renderCoughFlow (inline in the deleted cliniqApp.ts) to the FlowPage model.
 // Single page: entry → character-of-cough step → dry/wet lesion choices, plus a
 // trailing "Key species difference" note card. No sub-flows (the two branches
 // open lesion tabs, not further render functions). The Dx view

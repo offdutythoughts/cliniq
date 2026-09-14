@@ -1,5 +1,5 @@
 // ── Jaundice / Icterus flowchart (data) ─────────────────────────────────────
-// Sources (inline render…() functions in cliniqApp.ts):
+// Sources (inline render…() functions in the deleted cliniqApp.ts):
 //   renderJaundiceFlow         → entry ('jaundice')
 //   renderJaundiceFlowPreHep   → 'jaundice-pre-hep'
 //   renderJaundiceFlowHep      → 'jaundice-hep'

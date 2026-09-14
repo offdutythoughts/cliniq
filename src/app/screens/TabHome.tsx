@@ -5,7 +5,7 @@
 // (no innerHTML); the theme toggle drives a data-theme attribute + state.
 
 import { useState } from 'react'
-import type { Tab } from '../../types'
+import type { Tab } from '../nav/view'
 import type { DiseaseRow, ProtocolRow } from '../../data/db'
 import { DB } from '../../data/db'
 import { FLOW_SIGNS, DX_HOME_CARDS } from '../../lib/signs/registry'
@@ -15,6 +15,8 @@ import { useSearch } from '../search/SearchContext'
 import { styleStringToObject as s } from './style'
 import { HOW_TO_ITEMS } from './howToItems'
 import { SpTag } from './tags'
+import { NavCard } from './markup'
+import { Tappable } from './Tappable'
 import { useTutorial } from '../tutorial/TutorialContext'
 
 // `protos` holds PROT-… ids, not prose: searching it matches machine keys the
@@ -49,22 +51,35 @@ const DISCLAIMER_LONG = 'For qualified veterinary professionals only. Not a subs
 const str = (v: unknown): string => (typeof v === 'string' ? v : '')
 
 // ── Tab 0: Localise ───────────────────────────────────────────────────────────
-function LocaliseHome() {
-  const nav = useNav()
+// Tabs 0 and 1 are the same screen over different data: a heading, a list of
+// icon + title + subtitle cards, the disclaimer. They were two byte-identical
+// copies of that markup, and the card itself was a THIRD copy of <NavCard>.
+// One list, one card.
+function SignList({ heading, signs, onPick }: {
+  heading: string
+  signs: { key: string; icon: string; title: string; sub: string }[]
+  onPick: (key: string) => void
+}) {
   return (
     <>
-      <div className="stitle">Select a clinical sign</div>
-      {FLOW_SIGNS.map(sign => (
-        <div key={sign.flowId} className="card" role="button" onClick={() => nav.navigate({ kind: 'flow', flowId: sign.flowId })}>
-          <div className="card-row">
-            <div className="card-icon">{sign.icon}</div>
-            <div style={FLEX1}><div className="card-title">{sign.title}</div><div className="card-sub">{sign.sub}</div></div>
-            <div className="card-arrow">›</div>
-          </div>
-        </div>
+      <div className="stitle">{heading}</div>
+      {signs.map(sign => (
+        <NavCard key={sign.key} icon={sign.icon} title={sign.title} sub={sign.sub}
+          onClick={() => onPick(sign.key)} />
       ))}
       <div className="disclaimer">{DISCLAIMER_LONG}</div>
     </>
+  )
+}
+
+function LocaliseHome() {
+  const nav = useNav()
+  return (
+    <SignList
+      heading="Select a clinical sign"
+      signs={FLOW_SIGNS.map(s => ({ key: s.flowId, icon: s.icon, title: s.title, sub: s.sub }))}
+      onPick={flowId => nav.navigate({ kind: 'flow', flowId })}
+    />
   )
 }
 
@@ -72,19 +87,11 @@ function LocaliseHome() {
 function DiagnosticHome() {
   const nav = useNav()
   return (
-    <>
-      <div className="stitle">Diagnostic approaches</div>
-      {DX_HOME_CARDS.map(c => (
-        <div key={c.sign} className="card" role="button" onClick={() => nav.navigate({ kind: 'dx', sign: c.sign, tab: 'history' })}>
-          <div className="card-row">
-            <div className="card-icon">{c.icon}</div>
-            <div style={FLEX1}><div className="card-title">{c.title}</div><div className="card-sub">{c.sub}</div></div>
-            <div className="card-arrow">›</div>
-          </div>
-        </div>
-      ))}
-      <div className="disclaimer">{DISCLAIMER_LONG}</div>
-    </>
+    <SignList
+      heading="Diagnostic approaches"
+      signs={DX_HOME_CARDS.map(c => ({ key: c.sign, icon: c.icon, title: c.title, sub: c.sub }))}
+      onPick={sign => nav.navigate({ kind: 'dx', sign, tab: 'history' })}
+    />
   )
 }
 
@@ -93,7 +100,7 @@ function DiseaseCard({ d, snippet }: { d: DiseaseRow; snippet?: string }) {
   const nav = useNav()
   return (
     // data-search-match tells the DOM highlighter not to hide this card
-    <div className="card" role="button" data-search-match={snippet ? '1' : undefined} onClick={() => nav.navigate({ kind: 'disease', id: d.id })}>
+    <Tappable className="card" rest={{ 'data-search-match': snippet ? '1' : undefined }} onTap={() => nav.navigate({ kind: 'disease', id: d.id })}>
       <div className="card-row">
         <div style={FLEX1}>
           <div className="card-title">{d.name}</div>
@@ -102,7 +109,7 @@ function DiseaseCard({ d, snippet }: { d: DiseaseRow; snippet?: string }) {
         </div>
         <div className="card-arrow">›</div>
       </div>
-    </div>
+    </Tappable>
   )
 }
 function DiseaseHome() {
@@ -146,7 +153,7 @@ const protoIcon = (p: ProtocolRow): string =>
 function ProtoCard({ p }: { p: ProtocolRow }) {
   const nav = useNav()
   return (
-    <div className="card" role="button" onClick={() => nav.navigate({ kind: 'protocol', id: p.id })}>
+    <Tappable className="card" onTap={() => nav.navigate({ kind: 'protocol', id: p.id })}>
       <div className="card-row">
         <div style={FLEX1}>
           <div className="card-title">{protoIcon(p)} {p.name}</div>
@@ -157,7 +164,7 @@ function ProtoCard({ p }: { p: ProtocolRow }) {
         </div>
         <div className="card-arrow">›</div>
       </div>
-    </div>
+    </Tappable>
   )
 }
 function ProtoList() {

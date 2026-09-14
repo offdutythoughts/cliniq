@@ -6,13 +6,14 @@
 import type { DxApproach } from '../dxTypes'
 
 export const abnormalPupilDx: DxApproach = {
+  sign: 'abnormal-pupil',
   title: 'Anisocoria / Abnormal Pupil',
   tabs: {
 
   history: {
     title: 'History: Abnormal Pupil',
     blocks: [
-      { kind: 'branch', text: 'CHARACTERISE THE COMPLAINT' },
+      { kind: 'goal', text: 'CHARACTERISE THE COMPLAINT' },
       // Three complaint types, each with what the owner says and where it sends
       // you — a lookup, so a table rather than three cards the reader must
       // compare by eye.

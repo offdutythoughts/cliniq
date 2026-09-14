@@ -119,8 +119,17 @@ export const DONT_MISS_TITLE = "ALWAYS RULE OUT / DON'T MISS"
 export type AlertBlock = Connectable & { kind: 'alert'; tone: Tone; title: string; items: AlertItem[] }
 /** `gap` adds margin-top (px) when the callout is a trailing reference box
  *  rather than part of the arrow-connected spine. `center` centres the text. */
-export type CalloutBlock = Connectable & { kind: 'callout'; tone: Tone; title?: string; html: string; gap?: number; center?: boolean }
-export type DiseaseGridBlock = Connectable & { kind: 'diseaseGrid'; title: string; links: LabeledLink[] }
+/** Shared with dxTypes — see DiseaseGridPayload for why the field set lives in
+ *  one place. `center` is honoured on both surfaces. */
+export type CalloutPayload = { kind: 'callout'; tone: Tone; title?: string; html: string; gap?: number; center?: boolean }
+export type CalloutBlock = Connectable & CalloutPayload
+/** The field set for the "LINKED DISEASE PAGES" grid, WITHOUT the flow-only
+ *  connector control. dxTypes imports this payload rather than re-declaring the
+ *  same three fields, so adding one is a single edit and the two surfaces cannot
+ *  end up with different ideas of what a disease grid is. `sharedBlocks.tsx`
+ *  renders it for both. */
+export type DiseaseGridPayload = { kind: 'diseaseGrid'; title: string; links: LabeledLink[] }
+export type DiseaseGridBlock = Connectable & DiseaseGridPayload
 export type DxRowBlock = Connectable & { kind: 'dxRow'; items: LabeledLink[] }
 
 /** A comparison/reference table, optionally wrapped in a tinted box with a
@@ -151,17 +160,6 @@ export type TableBlock = Connectable & {
   /** Widen the row gap and draw a soft full-width divider between data rows —
    *  for reference tables (e.g. injury grading) that read better as spaced bands. */
   dividers?: boolean
-}
-
-/** A tinted section containing a title and a stack of disease cards (the
- *  category groups in the blind-eye acute/chronic pathways). */
-export type DiseaseCard = { title: string; tag?: string; desc: string; link?: Link }
-export type CardSectionBlock = Connectable & {
-  kind: 'cardSection'
-  tone: Tone
-  title: string
-  cards: DiseaseCard[]
-  gap?: number
 }
 
 /** A 4-(or N-)column category grid: a row of category headers, a row of
@@ -337,8 +335,9 @@ export function forkHtml(cols: number | string, gap = 8, arrow = true): string {
     + '</div>'
 }
 
-/** The "For qualified veterinary professionals only." footer. */
-export type DisclaimerBlock = Connectable & { kind: 'disclaimer' }
+/** The "For qualified veterinary professionals only." footer. Shared with dxTypes. */
+export type DisclaimerPayload = { kind: 'disclaimer' }
+export type DisclaimerBlock = Connectable & DisclaimerPayload
 
 /** A tinted comparison box: a coloured panel with a title, a 2-(or N-)column
  *  wrapping grid of tinted sub-cards (each a bold `header` + html `body`), and an
@@ -387,7 +386,9 @@ export type InfoBoxBlock = Connectable & {
   gap?: number
 }
 
-export type HtmlBlock = Connectable & { kind: 'html'; html: string } // escape hatch — last resort
+/** Authored-markup escape hatch — last resort. Shared with dxTypes. */
+export type HtmlPayload = { kind: 'html'; html: string }
+export type HtmlBlock = Connectable & HtmlPayload
 
 export type Block =
   | NodeBlock
@@ -402,7 +403,6 @@ export type Block =
   | DiseaseGridBlock
   | DxRowBlock
   | TableBlock
-  | CardSectionBlock
   | CategoryGridBlock
   | CategoryColumnsBlock
   | DecisionTreeBlock

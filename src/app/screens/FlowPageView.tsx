@@ -14,6 +14,7 @@ import type {
 import { HUE, TITLE } from '../../lib/signs/tone'
 import { FLOWS } from '../../lib/signs/flows'
 import { DX } from '../../lib/signs/dx'
+import { SIGNS } from '../../lib/signs/registry'
 import { RichText } from '../../components/RichText'
 import { useNav } from '../nav/NavContext'
 import { linkToView } from '../nav/view'
@@ -21,9 +22,10 @@ import { styleStringToObject as s, toneBox, colTier, evenTracks, WRAP_ANY } from
 import { NotFound } from './NotFound'
 import { ForkLines, type Nav, Raw, ToneBox } from './flowHelpers'
 import { NavCard } from './markup'
+import { Tappable, TapIf } from './Tappable'
+import { AuthoredHtml, DISCLAIMER, DiseaseGrid } from './sharedBlocks'
 import { GridTable } from './gridTable'
 
-const DISCLAIMER = <div className="disclaimer">For qualified veterinary professionals only.</div>
 
 // ── Shared static style constants ─────────────────────────────────────────────
 const ST_BLOCK_TITLE   = s('font-size:11px;font-weight:700;margin-bottom:6px;')
@@ -115,7 +117,7 @@ function ForkLegHead({ l }: { l: ForkLeg }) {
     return (
       <div style={s('display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;text-align:center;')}>
         <div style={s('font-size:10px;font-weight:700;color:var(--gray2);letter-spacing:.04em;')}>{l.label}</div>
-        {l.sub && <div style={s('font-size:8.5px;color:var(--gray2);line-height:1.35;')}>{l.sub}</div>}
+        {l.sub && <div style={s('font-size:var(--fs-chip-sub);color:var(--gray2);line-height:1.35;')}>{l.sub}</div>}
       </div>
     )
   }
@@ -127,9 +129,9 @@ function ForkLegHead({ l }: { l: ForkLeg }) {
   return (
     <div style={s(`${box}border-radius:9px;padding:6px 8px;width:100%;min-width:0;`)}>
       <div style={s(`font-size:10px;font-weight:700;color:${color};letter-spacing:.04em;text-align:center;line-height:1.3;`)}>{l.label}</div>
-      {l.sub && <div style={s(`font-size:9px;color:${color};opacity:.85;line-height:1.4;text-align:center;margin-top:2px;`)}>{l.sub}</div>}
+      {l.sub && <div style={s(`font-size:var(--fs-chip);color:${color};opacity:.85;line-height:1.4;text-align:center;margin-top:2px;`)}>{l.sub}</div>}
       {l.subItems && l.subItems.length > 0 && (
-        <div style={s(`font-size:9px;color:${color};opacity:.9;line-height:1.45;text-align:left;margin-top:4px;display:flex;flex-direction:column;gap:2px;`)}>
+        <div style={s(`font-size:var(--fs-chip);color:${color};opacity:.9;line-height:1.45;text-align:left;margin-top:4px;display:flex;flex-direction:column;gap:2px;`)}>
           {l.subItems.map((it, i) => (
             <div key={i} style={s('display:flex;gap:4px;align-items:flex-start;')}>
               <span aria-hidden="true">•</span><span style={s('min-width:0;')}>{it}</span>
@@ -182,11 +184,11 @@ function NodeBlock({ b }: { b: Extract<Block, { kind: 'node' }> }) {
     return (
       <>
         <div className="flow-node entry" style={tone}>{b.text}</div>
-        {b.sub && <div style={s('font-size:9.5px;color:var(--gray);text-align:center;margin:4px 0 6px 0;')}>{b.sub}</div>}
+        {b.sub && <div style={s('font-size:var(--fs-box);color:var(--gray);text-align:center;margin:4px 0 6px 0;')}>{b.sub}</div>}
       </>
     )
   }
-  if (b.variant === 'sub-step') return <div className="flow-node sub-step" style={s('width:100%;font-size:9.5px;')}>{b.text}</div>
+  if (b.variant === 'sub-step') return <div className="flow-node sub-step" style={s('width:100%;font-size:var(--fs-box);')}>{b.text}</div>
   return (
     <div className="flow-node step">
       {b.text}
@@ -220,19 +222,20 @@ function EndpointView({ e, onNav }: { e: Endpoint; onNav: Nav }) {
   const clickable = !!e.link
   const cursor = clickable ? 'cursor:pointer;' : ST_TILE_MUTED
   return (
-    <div
+    <TapIf
+      on={clickable}
       className="flow-endpoint"
-      style={s(`width:100%;${endpointStyle(tone)}font-size:9px;${cursor}text-align:center;`)}
-      {...(clickable ? { role: 'button', onClick: () => onNav(linkToView(e.link!)) } : {})}
+      style={s(`width:100%;${endpointStyle(tone)}font-size:var(--fs-chip);${cursor}text-align:center;`)}
+      onTap={() => onNav(linkToView(e.link!))}
     >
       {e.icon ? `${e.icon} ` : ''}{e.label}
       {e.sublabel && (
         <>
           <br />
-          <span style={s(`opacity:${clickable ? '.75' : '.7'};font-size:8px;`)}>{e.sublabel}{clickable ? ' ›' : ''}</span>
+          <span style={s(`opacity:${clickable ? '.75' : '.7'};font-size:var(--fs-chip-sub);`)}>{e.sublabel}{clickable ? ' ›' : ''}</span>
         </>
       )}
-    </div>
+    </TapIf>
   )
 }
 
@@ -267,42 +270,29 @@ function ChoicesBlock({ cols, size, items, onNav }: { cols: number; size: number
 }
 
 // ── Table ─────────────────────────────────────────────────────────────────────
-// A pinned first column paints the page background behind itself AND across the
-// 6px column gap (the box-shadow spread), so the scrolling columns slide under
-// it cleanly; the second shadow layer is the divider that marks the seam.
+// A pinned first column paints an opaque background behind itself and across the
+// 6px column gap, so the scrolling columns slide under it cleanly. Inside a Box
+// that background is not the page colour but the panel tint composited over it,
+// which is what `--sticky-col-bg` carries down — the Box's own rgba() tint and
+// alpha flattened onto --navy with color-mix, so it must stay a plain colour
+// (GridTable also uses it as a shadow colour, where a gradient would not parse).
 function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav: Nav }) {
   const wrapped = (
     <GridTable cols={b.cols} headers={b.headers} rows={b.rows} dividers={b.dividers}
       stickyFirstCol={b.stickyFirstCol} scroll={b.scroll} minWidth={b.minWidth} onNav={onNav} />
   )
   const footColor = b.boxTone ? `color:${HUE[b.boxTone].color};opacity:.85;` : 'opacity:.9;'
-  const foot = b.footnote ? <div style={s(`margin-top:7px;font-size:9.5px;line-height:1.55;${footColor}`)}><Raw html={b.footnote} onNav={onNav} /></div> : null
+  const foot = b.footnote ? <div style={s(`margin-top:7px;font-size:var(--fs-box);line-height:1.55;${footColor}`)}><Raw html={b.footnote} onNav={onNav} /></div> : null
   if (!b.boxTone && !b.title) return b.gap ? <div style={s(`margin-top:${b.gap}px;width:100%;`)}>{wrapped}{foot}</div> : <>{wrapped}{foot}</>
   const tone = b.boxTone ?? 'neutral'
+  const stickyBg = b.stickyFirstCol
+    ? `--sticky-col-bg:color-mix(in srgb, rgb(${HUE[tone].rgb}) calc(var(--panel-bg-a) * 100%), var(--navy));`
+    : ''
   return (
-    <Box tone={tone} extra={`padding:10px 12px;${b.gap ? `margin-top:${b.gap}px;` : ''}`}>
+    <Box tone={tone} extra={`padding:10px 12px;${b.gap ? `margin-top:${b.gap}px;` : ''}${stickyBg}`}>
       {b.title && <div style={s(`font-size:10px;font-weight:700;color:${TITLE[tone] ?? HUE[tone].color};text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;`)}><Raw html={b.title} onNav={onNav} /></div>}
       {wrapped}
       {foot}
-    </Box>
-  )
-}
-
-// ── Card section ──────────────────────────────────────────────────────────────
-function CardSectionBlock({ b, onNav }: { b: Extract<Block, { kind: 'cardSection' }>; onNav: Nav }) {
-  const h = HUE[b.tone]
-  return (
-    <Box tone={b.tone} extra={`padding:10px 12px;margin-top:${b.gap ?? 10}px;`}>
-      <div style={{ ...ST_BLOCK_TITLE, color: TITLE[b.tone] ?? h.color }}><Raw html={b.title} onNav={onNav} /></div>
-      <div style={s('display:flex;flex-direction:column;gap:5px;')}>
-        {b.cards.map((c, i) => (
-          <div key={i} style={s(`background:rgba(${h.rgb},var(--tile-bg-a));border-radius:7px;padding:7px 10px;${c.link ? 'cursor:pointer;' : ST_UNLINKED_TILE}`)}
-            {...(c.link ? { role: 'button', onClick: () => onNav(linkToView(c.link!)) } : { 'aria-disabled': true, title: 'No linked page available' })}>
-            <div style={s(`font-size:10.5px;font-weight:700;color:${h.color};`)}><Raw html={c.title} onNav={onNav} />{c.tag && <>{' '}<span style={s('font-size:9px;font-weight:400;opacity:.8;')}><Raw html={c.tag} onNav={onNav} /></span></>}</div>
-            <div style={s(`font-size:9px;color:${h.color};opacity:.8;line-height:1.4;`)}><Raw html={c.desc} onNav={onNav} /></div>
-          </div>
-        ))}
-      </div>
     </Box>
   )
 }
@@ -324,10 +314,10 @@ function ColumnView({ col, onNav }: { col: Column; onNav: Nav }) {
       {h ? (
         <div className="flow-node" style={s(`width:100%;background:rgba(${h.rgb},var(--tile-bg-a));border-color:rgba(${h.rgb},var(--tile-bd-a));font-size:10px;font-weight:700;color:${h.color};`)}>
           {col.header}
-          {col.sub && <div style={s('font-size:8.5px;font-weight:400;opacity:.85;margin-top:2px;')}>{col.sub}</div>}
+          {col.sub && <div style={s('font-size:var(--fs-chip-sub);font-weight:400;opacity:.85;margin-top:2px;')}>{col.sub}</div>}
         </div>
       ) : (
-        <div style={s('font-size:9px;font-weight:600;color:var(--gray2);text-align:center;width:100%;padding:2px 0;')}>
+        <div style={s('font-size:var(--fs-chip);font-weight:600;color:var(--gray2);text-align:center;width:100%;padding:2px 0;')}>
           {col.header}
         </div>
       )}
@@ -434,10 +424,10 @@ function CatTile({ tile, st, theme, onNav }: { tile: CategoryTile; st: { bg: str
       <div style={s(`${tint}${theme.linksBox}cursor:default;`)}>
         {tile.label && <div style={s(`margin-bottom:${theme.linksLabelMb};`)}>{tile.label}</div>}
         {tile.links.map((ll, k) => (
-          <div key={k} role="button" onClick={() => onNav(linkToView(ll.link))}
+          <Tappable key={k} onTap={() => onNav(linkToView(ll.link))}
             style={s(`cursor:pointer;text-align:left;padding:${theme.subPad};font-size:${theme.subFs};`)} {...hoverBrighten}>
             → {ll.label}
-          </div>
+          </Tappable>
         ))}
       </div>
     )
@@ -445,14 +435,14 @@ function CatTile({ tile, st, theme, onNav }: { tile: CategoryTile; st: { bg: str
   // Optional muted second line (e.g. "Most common canine cause") — mirrors the
   // endpoint sublabel styling so a tile reads the same in either block.
   const sub = tile.sublabel
-    ? <div style={s('font-size:8px;font-weight:400;opacity:.75;margin-top:2px;')}>{tile.sublabel}</div>
+    ? <div style={s('font-size:var(--fs-chip-sub);font-weight:400;opacity:.75;margin-top:2px;')}>{tile.sublabel}</div>
     : null
   if (tile.link) {
     return (
-      <div role="button" onClick={() => onNav(linkToView(tile.link!))} {...hoverBrighten}
+      <Tappable onTap={() => onNav(linkToView(tile.link!))} {...hoverBrighten}
         style={s(`${tint}${theme.chip}cursor:pointer;`)}>
         {tile.label}{sub}
-      </div>
+      </Tappable>
     )
   }
   if (tile.terminal) return <div style={s(`${tint}${theme.chip}${ST_TILE_MUTED}`)}>{tile.label}{sub}</div>
@@ -507,7 +497,7 @@ function CategoryBlock({ columns, cols, preset, lead, onNav }: { columns: CatCol
   const theme: TileTheme = dense
     ? {
         chip: `border-radius:8px;padding:${['6px 4px', '6px 3px', '5px 3px'][t]};font-size:${[9, 8.5, 8][t]}px;font-weight:600;text-align:center;line-height:1.35;${WRAP_ANY}`,
-        linksBox: `border-radius:8px;padding:6px 4px;font-size:9px;font-weight:600;text-align:center;line-height:1.35;${WRAP_ANY}`,
+        linksBox: `border-radius:8px;padding:6px 4px;font-size:var(--fs-chip);font-weight:600;text-align:center;line-height:1.35;${WRAP_ANY}`,
         linksLabelMb: '3px', subFs: '8.5px', subPad: '1px 0',
       }
     : TILE_GRID
@@ -585,13 +575,13 @@ function DecBox({ question, sub }: { question: string; sub?: string }) {
   return (
     <div style={s(`background:${solidFill('var(--tone-warning)')};border:1px solid ${solidBorder('var(--tone-warning)')};border-radius:10px;padding:9px 14px;width:100%;text-align:center;`)}>
       <div style={s('font-size:11.5px;font-weight:700;color:#F8FAFC;line-height:1.4;')}>{question}</div>
-      {sub && <div style={s(`font-size:9px;color:${solidText('var(--tone-warning)')};margin-top:3px;`)}>{sub}</div>}
+      {sub && <div style={s(`font-size:var(--fs-chip);color:${solidText('var(--tone-warning)')};margin-top:3px;`)}>{sub}</div>}
     </div>
   )
 }
 function OutBox({ o, onNav }: { o: DecisionOutcome; onNav: Nav }) {
   const h = HUE[o.tone]
-  return <div style={s(`background:${solidFill(h.rgb)};border:1px solid ${solidBorder(h.rgb)};color:${solidText(h.rgb)};border-radius:9px;padding:9px 11px;font-size:9px;line-height:1.6;`)}><Raw html={o.html} onNav={onNav} /></div>
+  return <div style={s(`background:${solidFill(h.rgb)};border:1px solid ${solidBorder(h.rgb)};color:${solidText(h.rgb)};border-radius:9px;padding:9px 11px;font-size:var(--fs-chip);line-height:1.6;`)}><Raw html={o.html} onNav={onNav} /></div>
 }
 function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
   if (step.type === 'split') {
@@ -601,14 +591,14 @@ function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
         {/* Same fork as every other split — the tree's two outcomes are one. */}
         <ForkLines n={2} gap={6} />
         <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6px;width:100%;')}>
-          <div><div style={s('font-size:9px;font-weight:700;color:var(--gray);margin-bottom:4px;')}>{step.noLabel}</div><OutBox o={step.no} onNav={onNav} /></div>
-          <div><div style={s('font-size:9px;font-weight:700;color:var(--gray);margin-bottom:4px;')}>{step.yesLabel}</div><OutBox o={step.yes} onNav={onNav} /></div>
+          <div><div style={s('font-size:var(--fs-chip);font-weight:700;color:var(--gray);margin-bottom:4px;')}>{step.noLabel}</div><OutBox o={step.no} onNav={onNav} /></div>
+          <div><div style={s('font-size:var(--fs-chip);font-weight:700;color:var(--gray);margin-bottom:4px;')}>{step.yesLabel}</div><OutBox o={step.yes} onNav={onNav} /></div>
         </div>
       </>
     )
   }
   if (step.type === 'outcome') {
-    return <div style={s('margin-bottom:8px;')}><div style={s('font-size:9px;font-weight:700;color:var(--tone-danger-title);margin-bottom:4px;')}>{step.label}</div><OutBox o={step.box} onNav={onNav} /></div>
+    return <div style={s('margin-bottom:8px;')}><div style={s('font-size:var(--fs-chip);font-weight:700;color:var(--tone-danger-title);margin-bottom:4px;')}>{step.label}</div><OutBox o={step.box} onNav={onNav} /></div>
   }
   const down = step.continue === 'YES'
   const contColor = 'var(--gray)'
@@ -620,11 +610,11 @@ function DecisionStepView({ step, onNav }: { step: DecisionStep; onNav: Nav }) {
       <DecBox question={step.question} sub={step.sub} />
       <div style={s('display:flex;gap:5px;width:100%;margin:4px 0 10px;')}>
         <div style={s('width:28%;display:flex;flex-direction:column;align-items:center;padding-top:4px;')}>
-          <div style={s(`font-size:9px;font-weight:700;color:${contColor};`)}>{step.continue}</div>
+          <div style={s(`font-size:var(--fs-chip);font-weight:700;color:${contColor};`)}>{step.continue}</div>
           <div style={s(`font-size:18px;color:${arrowColor};line-height:1.1;`)}>↓</div>
         </div>
         <div style={s('flex:1;')}>
-          <div style={s(`font-size:9px;font-weight:700;color:${exitColor};margin-bottom:4px;`)}>{exitLabel}</div>
+          <div style={s(`font-size:var(--fs-chip);font-weight:700;color:${exitColor};margin-bottom:4px;`)}>{exitLabel}</div>
           <OutBox o={step.exit} onNav={onNav} />
         </div>
       </div>
@@ -643,7 +633,7 @@ function InfoBoxBlock({ b, onNav }: { b: InfoBoxBlockType; onNav: Nav }) {
           {b.icon}{b.icon && b.title ? ' ' : ''}{b.title ?? ''}
         </div>
       )}
-      <div style={s('font-size:9.5px;line-height:1.65;color:var(--gray);')}>
+      <div style={s('font-size:var(--fs-box);line-height:1.65;color:var(--gray);')}>
         <Raw html={b.html} onNav={onNav} />
       </div>
     </div>
@@ -659,13 +649,13 @@ function CompareBoxBlock({ b, onNav }: { b: Extract<Block, { kind: 'compareBox' 
       {b.title && <div style={{ ...ST_BLOCK_TITLE, color: h.color, marginBottom: '8px' }}><Raw html={b.title} onNav={onNav} /></div>}
       <div style={s(`display:grid;grid-template-columns:${grid};gap:6px;`)}>
         {b.cards.map((c, i) => (
-          <div key={i} style={s(`font-size:9.5px;line-height:1.5;background:rgba(${h.rgb},var(--tile-bg-a));border-radius:7px;padding:7px 9px;`)}>
+          <div key={i} style={s(`font-size:var(--fs-box);line-height:1.5;background:rgba(${h.rgb},var(--tile-bg-a));border-radius:7px;padding:7px 9px;`)}>
             <div style={s(`color:${h.color};font-weight:700;margin-bottom:3px;`)}><Raw html={c.header} onNav={onNav} /></div>
             <Raw html={c.html} onNav={onNav} />
           </div>
         ))}
       </div>
-      {b.footnote && <div style={s(`margin-top:7px;font-size:9.5px;line-height:1.6;color:color-mix(in srgb, ${h.color}, transparent 20%);`)}><Raw html={b.footnote} onNav={onNav} /></div>}
+      {b.footnote && <div style={s(`margin-top:7px;font-size:var(--fs-box);line-height:1.6;color:color-mix(in srgb, ${h.color}, transparent 20%);`)}><Raw html={b.footnote} onNav={onNav} /></div>}
     </div>
   )
 }
@@ -677,7 +667,7 @@ function SpeciesCompareBlock({ b, onNav }: { b: Extract<Block, { kind: 'speciesC
   return (
     <div style={s(`margin-top:10px;padding:10px 12px;background:rgba(${h.rgb},var(--panel-bg-a));border:1px solid rgba(${h.rgb},var(--panel-bd-a));border-radius:10px;width:100%;`)}>
       <div style={s(`font-size:10px;font-weight:700;color:${h.color};margin-bottom:5px;`)}>🐕 vs 🐱 KEY SPECIES DIFFERENCES</div>
-      <div style={s('font-size:9px;line-height:1.5;color:var(--gray);')}>
+      <div style={s('font-size:var(--fs-chip);line-height:1.5;color:var(--gray);')}>
         <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px 10px;')}>
           <div><strong style={{ color: HUE.info.color }}>DOG</strong></div>
           <div><strong style={{ color: 'var(--hl-orange)' }}>CAT</strong></div>
@@ -716,7 +706,7 @@ function SpeciesChooserBlock({ b, onNav }: { b: Extract<Block, { kind: 'speciesC
         {btn('dog', '🐕 Canine')}
         {btn('cat', '🐈 Feline')}
       </div>
-      <Box tone={tone} extra={`padding:9px 12px;font-size:9.5px;line-height:1.5;color:${HUE[tone].color};`}>
+      <Box tone={tone} extra={`padding:9px 12px;font-size:var(--fs-box);line-height:1.5;color:${HUE[tone].color};`}>
         <Raw html={panel.note} onNav={onNav} />
       </Box>
       <CategoryBlock cols={panel.columns.length} columns={panel.columns} preset="dense" onNav={onNav} />
@@ -726,7 +716,7 @@ function SpeciesChooserBlock({ b, onNav }: { b: Extract<Block, { kind: 'speciesC
 
 // ── Callout / alert / diseaseGrid / dxRow ─────────────────────────────────────
 function CalloutBlock({ b, onNav }: { b: Extract<Block, { kind: 'callout' }>; onNav: Nav }) {
-  const extra = `padding:9px 12px;font-size:9.5px;color:${HUE[b.tone].color};line-height:1.5;${b.gap ? `margin-top:${b.gap}px;` : ''}${b.center ? 'text-align:center;' : ''}`
+  const extra = `padding:9px 12px;font-size:var(--fs-box);color:${HUE[b.tone].color};line-height:1.5;${b.gap ? `margin-top:${b.gap}px;` : ''}${b.center ? 'text-align:center;' : ''}`
   return (
     <Box tone={b.tone} extra={extra}>
       {b.title && <div style={{ ...ST_BLOCK_TITLE, color: TITLE[b.tone] ?? HUE[b.tone].color }}><Raw html={b.title} onNav={onNav} /></div>}
@@ -738,11 +728,11 @@ function AlertItemView({ it, onNav }: { it: AlertItem; onNav: Nav }) {
   if (typeof it === 'string') return <Raw html={it} onNav={onNav} />
   return (
     <>
-      <span
-        role="button"
+      <Tappable
+        as="span"
         style={{ fontWeight: 700, cursor: 'pointer', textDecoration: 'underline' }}
-        onClick={() => onNav(linkToView(it.link))}
-      >{it.bold}</span>
+        onTap={() => onNav(linkToView(it.link))}
+      >{it.bold}</Tappable>
       {it.html && <Raw html={it.html} onNav={onNav} />}
     </>
   )
@@ -751,18 +741,8 @@ function AlertBlock({ tone, title, items, onNav }: { tone: Tone; title: string; 
   return (
     <Box tone={tone} extra="margin-top:12px;padding:10px 12px;">
       <div style={s(`font-size:10px;font-weight:700;color:${TITLE[tone] ?? HUE[tone].color};margin-bottom:5px;`)}>{title}</div>
-      <div style={s(`font-size:9.5px;line-height:1.55;color:${HUE[tone].color};`)}>
+      <div style={s(`font-size:var(--fs-box);line-height:1.55;color:${HUE[tone].color};`)}>
         {items.map((it, i) => <Fragment key={i}>{i > 0 && <br />}{'• '}<AlertItemView it={it} onNav={onNav} /></Fragment>)}
-      </div>
-    </Box>
-  )
-}
-function DiseaseGridBlock({ title, links, onNav }: { title: string; links: LabeledLink[]; onNav: Nav }) {
-  return (
-    <Box tone="teal" extra="margin-top:10px;padding:10px 12px;">
-      <div style={{ ...ST_BLOCK_TITLE, color: 'var(--tone-teal-fg)' }}>{title}</div>
-      <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;font-size:9.5px;')}>
-        {links.map((l, i) => <div key={i} role="button" onClick={() => onNav(linkToView(l.link))} style={s('cursor:pointer;color:var(--fg-teal-deep);')}>→ {l.label}</div>)}
       </div>
     </Box>
   )
@@ -774,22 +754,22 @@ function DxRowBlock({ items, onNav }: { items: LabeledLink[]; onNav: Nav }) {
         const isProto = i2.link.to === 'protocol'
         if (isProto) {
           return (
-            <div key={i} role="button" onClick={() => onNav(linkToView(i2.link))}
+            <Tappable key={i} onTap={() => onNav(linkToView(i2.link))}
               style={s('cursor:pointer;background:rgba(var(--tone-danger),var(--panel-bg-a));border:1px solid rgba(var(--tone-danger),var(--panel-bd-a));border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;')}>
               <span style={s('font-size:11px;font-weight:700;color:var(--tone-danger-fg);')}>{i2.label}</span>
               <span style={s('color:var(--tone-danger-fg);font-size:14px;opacity:.7;')}>›</span>
-            </div>
+            </Tappable>
           )
         }
         return (
-          <div key={i} className="card" role="button" onClick={() => onNav(linkToView(i2.link))}>
+          <Tappable key={i} className="card" onTap={() => onNav(linkToView(i2.link))}>
             <div className="card-row">
               <div style={{ flex: 1 }}>
                 <div className="card-title">{i2.label}</div>
               </div>
               <div className="card-arrow">›</div>
             </div>
-          </div>
+          </Tappable>
         )
       })}
     </div>
@@ -810,10 +790,9 @@ function BlockView({ b, lead, onNav }: { b: Block; lead?: boolean; onNav: Nav })
     case 'banner': return <BannerBlock tone={b.tone} html={b.html} onNav={onNav} />
     case 'callout': return <CalloutBlock b={b} onNav={onNav} />
     case 'alert': return <AlertBlock tone={b.tone} title={b.title} items={b.items} onNav={onNav} />
-    case 'diseaseGrid': return <DiseaseGridBlock title={b.title} links={b.links} onNav={onNav} />
+    case 'diseaseGrid': return <DiseaseGrid title={b.title} links={b.links} onNav={onNav} />
     case 'dxRow': return <DxRowBlock items={b.items} onNav={onNav} />
     case 'table': return <TableBlock b={b} onNav={onNav} />
-    case 'cardSection': return <CardSectionBlock b={b} onNav={onNav} />
     case 'categoryGrid': return <CategoryBlock columns={b.columns} cols={b.columns.length} preset="grid" lead={lead} onNav={onNav} />
     case 'categoryColumns': return <CategoryBlock columns={b.columns} cols={b.columns.length} preset="dense" lead={lead} onNav={onNav} />
     case 'decisionTree': return <>{b.steps.map((step, i) => <DecisionStepView key={i} step={step} onNav={onNav} />)}</>
@@ -823,7 +802,7 @@ function BlockView({ b, lead, onNav }: { b: Block; lead?: boolean; onNav: Nav })
     case 'speciesChooser': return <SpeciesChooserBlock b={b} onNav={onNav} />
     case 'infoBox': return <InfoBoxBlock b={b} onNav={onNav} />
     case 'disclaimer': return DISCLAIMER
-    case 'html': return <div className="flow-authored scroll-x"><Raw html={b.html} onNav={onNav} /></div>
+    case 'html': return <AuthoredHtml html={b.html} onNav={onNav} />
     default: throw new Error(`FlowPageView: block kind '${(b as Block).kind}' not implemented`)
   }
 }
@@ -848,10 +827,27 @@ function hasOutboundFlowLinks(blocks: Block[]): boolean {
   return false
 }
 
+/** Which diagnostic approach the "Diagnostic Approach" card at the foot of a
+ *  leaf flow page should open.
+ *
+ *  Sub-flows are named after their parent (`pale-mm-regen`, `pale-mm-shock`), so
+ *  this walks the id back a segment at a time looking for the sign it belongs to.
+ *  The lookup goes through the REGISTRY, which is where the flow id and the dx id
+ *  are related (`flowId: 'pale-mm', dxId: 'pale-gums'`). It used to look straight
+ *  in DX, which meant the pale approach had to be registered under its flow's
+ *  name as well as its own — an alias that existed only to satisfy this function,
+ *  and that nothing stopped from drifting apart. */
 function getDxSign(page: { id: string; dxSign?: string }): string | undefined {
   if (page.dxSign) return page.dxSign
   let id = page.id
   while (id) {
+    const sign = SIGNS.find(s => s.flowId === id)
+    if (sign) {
+      const key = sign.dxId ?? sign.id
+      return DX[key] ? key : undefined
+    }
+    // A page that is itself a dx key without being a registered sign's entry
+    // flow (the shared reference hubs).
     if (DX[id]) return id
     const next = id.replace(/-[^-]+$/, '')
     if (next === id) break

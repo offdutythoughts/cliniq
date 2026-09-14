@@ -1,6 +1,6 @@
 // ── Weakness / Collapse flowchart (data) ────────────────────────────────────
 // Migration of the inline renderWeaknessFlow + renderEpisodicWeakness +
-// renderPersistentWeakness + renderCollapseFlow functions in cliniqApp.ts (no
+// renderPersistentWeakness + renderCollapseFlow functions in the deleted cliniqApp.ts (no
 // HTML-string const — these flows were authored as inline render functions).
 // The Dx views (renderDxWeakness*) are out of scope.
 //

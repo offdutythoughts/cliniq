@@ -1,7 +1,7 @@
 // ── Abnormal Pupil / Anisocoria flowchart (data) ────────────────────────────
 // Sources: abnormalPupilFlowHtml / abnormalPupilOphthalmicHtml /
 // abnormalPupilNeuroBranchHtml (consts) + renderAnisocoria* inline functions in
-// cliniqApp.ts. The cause pages use `categoryGrid`, the localise pages use
+// the deleted cliniqApp.ts. The cause pages use `categoryGrid`, the localise pages use
 // `decisionTree`, ophthalmic uses `cardGrid`. The neurological branch page is a
 // bespoke 2-col compare + arrow-branch layout with no typed block yet → html.
 

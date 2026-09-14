@@ -1,18 +1,19 @@
 // ── Ataxia — diagnostic approach (data) ─────────────────────────────────────
 // Migration of renderDxAtaxia{History,Exam,Dx}() (legacy inline render() HTML in
-// ../../cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
+// the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
 import { ATAXIA_COLS, ATAXIA_HEADERS, ATAXIA_ROWS } from '../ataxiaClassification'
 
 export const ataxiaDx: DxApproach = {
+  sign: 'ataxia',
   title: 'Ataxia',
   tabs: {
 
   history: {
     title: 'History: Ataxia',
     blocks: [
-      { kind: 'branch', text: 'ONSET, PROGRESSION & DRUG HISTORY' },
+      { kind: 'goal', text: 'ONSET, PROGRESSION & DRUG HISTORY' },
       {
         kind: 'gridTable',
         cols: '0.22fr 0.42fr 0.36fr',
@@ -199,7 +200,7 @@ export const ataxiaDx: DxApproach = {
           ['<strong>FIV / FeLV + T4</strong>', { text: 'All cats', tone: 'teal' }],
         ],
       },
-      { kind: 'branch', text: 'CLASSIFY ATAXIA TYPE → DICTATES NEXT STEP' },
+      { kind: 'goal', text: 'CLASSIFY ATAXIA TYPE → DICTATES NEXT STEP' },
       {
         kind: 'gridTable',
         scroll: true,
@@ -279,7 +280,7 @@ export const ataxiaDx: DxApproach = {
       • <strong>Clindamycin + pyrimethamine</strong> empirically for suspected <em>Neospora</em> in a young pup with rigid pelvic-limb hyperextension.`,
       },
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 8,
         html: `⚠️ <strong>Drug, diet and vaccination history first</strong> — metronidazole, thiamine deficiency (🐱), CDV (🐕) are missed when imaging precedes the conversation. Always classify the ataxia type before choosing imaging.`,
       },

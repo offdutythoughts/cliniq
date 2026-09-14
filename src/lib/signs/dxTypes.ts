@@ -8,7 +8,7 @@
 // vertical spine of DxBlocks inside `.dx-wrap` (uniform `.dx-arrow` connectors),
 // plus optional trailing boxes rendered OUTSIDE the wrap (`after`).
 
-import type { Tone, LabeledLink, TableCell, TableRow } from './flowTypes'
+import type { Tone, TableCell, TableRow, CalloutPayload, DiseaseGridPayload, HtmlPayload, DisclaimerPayload } from './flowTypes'
 
 /** One `.dx-test` card inside a `row`. `style` is a raw inline-style string
  *  appended verbatim (the legacy cards carry bespoke align/size/accent styles);
@@ -28,6 +28,10 @@ export type DxGridTableBlock = {
   rows: TableRow[]
   dividers?: boolean
   scroll?: boolean
+  /** Pin the first column while the rest scrolls sideways — only with `scroll`,
+   *  and only where the table sits on the page background (the pinned cells
+   *  paint it behind themselves to hide the columns sliding under). */
+  stickyFirstCol?: boolean
   minWidth?: number
   fontSize?: string
   /** margin-top (px) — the spine arrow is usually suppressed above a table, so
@@ -77,8 +81,13 @@ export type DxSpeciesDiffBlock = {
 type DxArrowCtl = { noArrowAfter?: boolean }
 
 export type DxBlock = DxArrowCtl & (
-  /** `.dx-branch` — a goal / decision header box. */
-  | { kind: 'branch'; text: string }
+  /** `.dx-branch` — the goal / decision header a tab opens on ("GOAL: CONFIRM
+   *  SYNCOPE IS CARDIAC OR NON-CARDIOGENIC?").
+   *
+   *  Named `goal`, not `branch`: a flowchart `branch` is an N-way split into
+   *  side-by-side columns of blocks. This is a line of text in a box. They had
+   *  nothing in common but the word. */
+  | { kind: 'goal'; text: string }
   /** `.dx-step` step header. `tone` paints a coloured intro step (e.g. teal
    *  "complete PE", red "STABILISE FIRST"); otherwise every header is the same
    *  teal (the old `alt` alternation carried no meaning and was removed). */
@@ -89,12 +98,18 @@ export type DxBlock = DxArrowCtl & (
   /** `.dx-row c{cols}` — a row of cards. `itemKind` selects the card class:
    *  'test' (default, teal `.dx-test`) or 'check' (dark `.dx-check`). */
   | { kind: 'row'; cols?: number; items: DxCard[]; itemKind?: 'test' | 'check' }
-  /** `.dx-alert` — a tinted pearls / warning box (html body). */
-  | { kind: 'alert'; html: string; gap?: number }
-  /** A tinted titled callout box (e.g. "⚠️ RED FLAGS IN THE HISTORY"). */
-  | { kind: 'callout'; tone: Tone; title: string; html: string; gap?: number }
-  /** The teal "LINKED DISEASE PAGES" grid (2-col labelled links). */
-  | { kind: 'diseaseGrid'; title: string; links: LabeledLink[] }
+  /** `.dx-alert` — the "Practical pearls" box at the foot of a tab (html body).
+   *  Named `pearls`, not `alert`: the flowcharts already have an `alert`, and it
+   *  is a different thing entirely — a structured DON'T-MISS list of
+   *  `{ bold, link, html }` items with a title. Two block kinds sharing a name
+   *  while sharing no shape is a trap for whoever authors the next one. */
+  | { kind: 'pearls'; html: string; gap?: number }
+  /** A tinted titled callout box (e.g. "⚠️ RED FLAGS IN THE HISTORY"). One
+   *  declaration, shared with the flowcharts. */
+  | CalloutPayload
+  /** The teal "LINKED DISEASE PAGES" grid — one type, one renderer, shared with
+   *  the flowcharts (see DiseaseGridPayload and screens/sharedBlocks.tsx). */
+  | DiseaseGridPayload
   /** `.dx-note` — a small inline note box (html body + optional raw style). */
   | { kind: 'note'; html: string; style?: string }
   /** A tappable navigation link to a lesion-location view. Renders as a
@@ -111,9 +126,9 @@ export type DxBlock = DxArrowCtl & (
   /** Canine-vs-feline feature cards (see DxSpeciesDiffBlock). */
   | DxSpeciesDiffBlock
   /** Escape hatch for genuinely bespoke markup (e.g. the seizures tier tree). */
-  | { kind: 'html'; html: string }
+  | HtmlPayload
   /** The "For qualified veterinary professionals only." footer. */
-  | { kind: 'disclaimer' }
+  | DisclaimerPayload
 )
 
 /** One tab of a sign's diagnostic approach. `blocks` render inside `.dx-wrap`
@@ -135,18 +150,15 @@ export type DxNavItem = { key: string; label: string }
  *  may also hold extra sub-views reached from within a tab (e.g. pupd
  *  'desmopressin') that aren't in the nav strip. */
 export type DxApproach = {
+  /** The sign id this approach answers to — the key it is registered under in
+   *  DX, the `{ to: 'dx', id }` link target, and the `dxId ?? id` of its entry in
+   *  registry.ts. Carried on the data, exactly as FlowPage carries its own `id`,
+   *  so the registry's keys are derived rather than typed out a second time. */
+  sign: string
   /** Sign display name used in the tab titles (e.g. "Epistaxis"). */
   title: string
   /** Tab buttons in order. Omit for the standard 3 (history / exam / dx). */
   nav?: DxNavItem[]
-  /** Nav strip style, matching the hand-authored variants byte-for-byte:
-   *  - 'std' (default): grid; the active tab is `dx-step`, the rest `dx-step alt`.
-   *  - 'alt': grid; classes alternate by position (odd index = `dx-step alt`),
-   *    active shown by opacity only (dyspnoea, diarrhoea).
-   *  - 'flex': flex-wrap; alternating classes; inactive `opacity:.65`; larger
-   *    cells (vomiting, regurgitation).
-   *  - 'pupd': grid; alternating classes; active = explicit `opacity:1`. */
-  navVariant?: 'std' | 'alt' | 'flex' | 'pupd'
   /** Tab content keyed by nav key ('history' | 'exam' | 'dx' | extras). */
   tabs: Record<string, DxTab>
 }

@@ -7,8 +7,8 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const diarrhoeaDx: DxApproach = {
+  sign: 'diarrhoea',
   title: 'Diarrhoea',
-  navVariant: 'alt',
   nav: [
     { key: 'history', label: '📋 History' },
     { key: 'exam', label: '🩺 Exam' },
@@ -20,7 +20,7 @@ export const diarrhoeaDx: DxApproach = {
     history: {
       title: 'History: Diarrhoea',
       blocks: [
-        { kind: 'branch', text: 'SB OR LB LOCALISATION' },
+        { kind: 'goal', text: 'SB OR LB LOCALISATION' },
         {
           kind: 'row',
           cols: 2,

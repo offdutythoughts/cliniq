@@ -13,13 +13,14 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const cyanosisDx: DxApproach = {
+  sign: 'cyanosis',
   title: 'Cyanosis',
   tabs: {
 
     history: {
       title: 'History: Cyanosis',
       blocks: [
-        { kind: 'branch', text: 'GOAL: CENTRAL vs PERIPHERAL vs DYSHAEMOGLOBINAEMIA' },
+        { kind: 'goal', text: 'GOAL: CENTRAL vs PERIPHERAL vs DYSHAEMOGLOBINAEMIA' },
         {
           kind: 'gridTable',
           cols: '0.7fr 1.4fr',
@@ -237,7 +238,7 @@ export const cyanosisDx: DxApproach = {
           ],
         },
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong> Practical pearls:</strong><br>
   • Oxygen first, always — but remember it fixes neither a R→L shunt nor methaemoglobinaemia.<br>

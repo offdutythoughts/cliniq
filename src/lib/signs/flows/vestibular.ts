@@ -1,5 +1,5 @@
 // ── Acute Vestibular flowchart (data) ───────────────────────────────────────
-// Migration of renderVestibularFlow (inline in src/lib/cliniqApp.ts) to the
+// Migration of renderVestibularFlow (inline in the deleted cliniqApp.ts) to the
 // FlowPage model. Single page: entry node → peripheral-vs-central comparison
 // table → peripheral/central/bilateral cause nav tiles → pearls → emergency
 // banner. The Dx views (renderDxVestibular) are out of scope.

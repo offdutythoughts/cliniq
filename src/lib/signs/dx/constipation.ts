@@ -10,13 +10,14 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const constipationDx: DxApproach = {
+  sign: 'constipation',
   title: 'Constipation / Tenesmus',
   tabs: {
 
     history: {
       title: 'History: Constipation / Tenesmus',
       blocks: [
-        { kind: 'branch', text: 'GOAL: DEFECATION vs URINARY STRAINING, THEN MECHANISM' },
+        { kind: 'goal', text: 'GOAL: DEFECATION vs URINARY STRAINING, THEN MECHANISM' },
         {
           kind: 'gridTable',
           cols: '0.6fr 1.5fr',
@@ -192,7 +193,7 @@ export const constipationDx: DxApproach = {
       ],
       after: [
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong>⚠️ Practical pearls:</strong><br>
   • First decision is defecation vs urination — never miss a blocked male cat masquerading as constipation.<br>

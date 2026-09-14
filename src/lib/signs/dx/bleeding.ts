@@ -6,13 +6,14 @@ import type { DxApproach } from '../dxTypes'
 import { numBadge } from './shared/dxHelpers'
 
 export const bleedingDx: DxApproach = {
+  sign: 'bleeding',
   title: 'Bleeding / Petechiae / Ecchymoses',
   tabs: {
 
   history: {
     title: 'History: Bleeding',
     blocks: [
-      { kind: 'branch', text: 'CHARACTERISE THE BLEEDING PATTERN' },
+      { kind: 'goal', text: 'CHARACTERISE THE BLEEDING PATTERN' },
       {
         kind: 'row',
         cols: 2,
@@ -410,7 +411,7 @@ export const bleedingDx: DxApproach = {
 </div>`,
       },
       {
-        kind: 'alert',
+        kind: 'pearls',
         gap: 10,
         html: `<strong>⚠️ Practical pearls:</strong><br>
   • Always count platelets manually on smear — automated counts mislead with clumping.<br>

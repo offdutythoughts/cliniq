@@ -18,13 +18,13 @@ const HEAD_BORDER = 'rgba(var(--slate-muted),0.35)'
 
 const LABEL = s('font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;margin-top:10px;')
 const SCROLL = s('margin-bottom:4px;')
-const TABLE = s('width:100%;border-collapse:collapse;font-size:8.5px;min-width:340px;')
-const FOOT = s('font-size:8.5px;opacity:.75;line-height:1.5;margin-top:2px;')
+const TABLE = s('width:100%;border-collapse:collapse;font-size:var(--fs-chip-sub);min-width:340px;')
+const FOOT = s('font-size:var(--fs-chip-sub);opacity:.75;line-height:1.5;margin-top:2px;')
 const DIM = s('opacity:.6;')
 
-const th = (align = 'center') => s(`padding:5px 5px;font-size:8.5px;font-weight:700;color:var(--gray2);border-bottom:1.5px solid ${HEAD_BORDER};text-align:${align};white-space:nowrap;`)
-const td = (color = 'var(--gray)', align = 'center') => s(`padding:8px 5px;font-size:8.5px;color:${color};border-bottom:1px solid ${BORDER};text-align:${align};line-height:1.4;`)
-const tdGrade = (color: string) => s(`padding:8px 5px;font-size:8.5px;font-weight:700;color:${color};border-bottom:1px solid ${BORDER};text-align:left;white-space:nowrap;`)
+const th = (align = 'center') => s(`padding:5px 5px;font-size:var(--fs-chip-sub);font-weight:700;color:var(--gray2);border-bottom:1.5px solid ${HEAD_BORDER};text-align:${align};white-space:nowrap;`)
+const td = (color = 'var(--gray)', align = 'center') => s(`padding:8px 5px;font-size:var(--fs-chip-sub);color:${color};border-bottom:1px solid ${BORDER};text-align:${align};line-height:1.4;`)
+const tdGrade = (color: string) => s(`padding:8px 5px;font-size:var(--fs-chip-sub);font-weight:700;color:${color};border-bottom:1px solid ${BORDER};text-align:left;white-space:nowrap;`)
 
 /** Creatinine cell: mg/dL prominent, µmol/L dimmed on the line below. */
 function Cr({ v, u }: { v: string; u: string }) {

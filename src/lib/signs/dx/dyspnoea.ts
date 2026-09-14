@@ -1,22 +1,22 @@
 // ── Dyspnoea — diagnostic approach (data) ───────────────────────────────────
 // Migration of renderDxDyspnoea{History,Exam,Dx}() (legacy inline-HTML render
-// functions in ../../cliniqApp.ts) to the typed DxApproach model. Rendered by
+// functions in the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by
 // renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const dyspnoeaDx: DxApproach = {
+  sign: 'dyspnoea',
   title: 'Dyspnoea',
   // Hand-authored nav alternated classes by position (middle tab always `alt`)
   // with opacity-only active state — match it byte-for-byte.
-  navVariant: 'alt',
   tabs: {
 
   history: {
     title: 'History: Dyspnoea',
     blocks: [
-      { kind: 'branch', text: 'DYSPNOEA vs TACHYPNOEA' },
+      { kind: 'goal', text: 'DYSPNOEA vs TACHYPNOEA' },
       {
         kind: 'row',
         cols: 2,

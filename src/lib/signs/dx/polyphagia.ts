@@ -10,13 +10,14 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const polyphagiaDx: DxApproach = {
+  sign: 'polyphagia',
   title: 'Polyphagia',
   tabs: {
 
     history: {
       title: 'History: Polyphagia',
       blocks: [
-        { kind: 'branch', text: 'GOAL: CONFIRM POLYPHAGIA & ESTABLISH THE WEIGHT TREND' },
+        { kind: 'goal', text: 'GOAL: CONFIRM POLYPHAGIA & ESTABLISH THE WEIGHT TREND' },
         {
           kind: 'gridTable',
           cols: '0.7fr 1.45fr',
@@ -204,7 +205,7 @@ export const polyphagiaDx: DxApproach = {
           ],
         },
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong> Practical pearls:</strong><br>
   • Weigh the patient — the body-weight trend splits the entire differential.<br>

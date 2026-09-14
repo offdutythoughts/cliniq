@@ -7,8 +7,8 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const regurgitationDx: DxApproach = {
+  sign: 'regurgitation',
   title: 'Regurgitation',
-  navVariant: 'flex',
   tabs: {
 
   history: {

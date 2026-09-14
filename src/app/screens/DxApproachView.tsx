@@ -10,11 +10,12 @@ import type { DxApproach, DxBlock, DxNavItem } from '../../lib/signs/dxTypes'
 import { HUE, TITLE } from '../../lib/signs/tone'
 import { DX } from '../../lib/signs/dx'
 import { useNav } from '../nav/NavContext'
-import { linkToView } from '../nav/view'
 import { styleStringToObject as s, toneBox } from './style'
 import { NotFound } from './NotFound'
 import { GridTable } from './gridTable'
 import { type Nav, Raw, ToneBox } from './flowHelpers'
+import { Tappable } from './Tappable'
+import { AuthoredHtml, DISCLAIMER, DiseaseGrid } from './sharedBlocks'
 
 const STD_NAV: DxNavItem[] = [
   { key: 'history', label: '📋 History' },
@@ -22,28 +23,33 @@ const STD_NAV: DxNavItem[] = [
   { key: 'dx', label: '🔬 Diagnostics' },
 ]
 
-function DxTabs({ sign, nav, active, variant = 'std' }: { sign: string; nav: DxNavItem[]; active: string; variant?: string }) {
+/** One tab strip for every sign.
+ *
+ *  There were four (`navVariant`: std / alt / flex / pupd), kept to match
+ *  hand-authored markup byte-for-byte, and between them they alternated colours
+ *  by position, signalled the selected tab with three different opacities, and
+ *  borrowed `.dx-step` — the class used by step headers inside the page — so the
+ *  control was styled as content. Five of 37 signs opted into a variant; the
+ *  reader met a differently-behaved strip on those five for no reason they could
+ *  act on.
+ *
+ *  `aria-current` carries the state to assistive tech; `.dx-tab` carries it
+ *  visually as fill vs outline, so it survives without colour perception. */
+function DxTabs({ sign, nav, active }: { sign: string; nav: DxNavItem[]; active: string }) {
   const router = useNav()
-  const flex = variant === 'flex'
-  const cellBase = flex
-    ? 'flex:1;min-width:0;padding:6px 10px;font-size:10px;cursor:pointer;text-align:center;'
-    : 'padding:5px 4px;font-size:9px;cursor:pointer;text-align:center;'
-  const container = flex
-    ? 'display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;'
-    : `display:grid;grid-template-columns:repeat(${nav.length},minmax(0,1fr));gap:4px;margin-bottom:14px;`
   return (
-    <div style={s(container)}>
-      {nav.map((t, i) => {
-        const on = t.key === active
-        const cls = variant === 'std' ? `dx-step${on ? '' : ' alt'}` : i % 2 === 1 ? 'dx-step alt' : 'dx-step'
-        const op = on ? (variant === 'pupd' ? 'opacity:1;' : '') : flex ? 'opacity:.65;' : 'opacity:.5;'
-        return (
-          <div key={t.key} className={cls} style={s(cellBase + op)} role="button"
-            onClick={() => router.replace({ kind: 'dx', sign, tab: t.key })}>
-            {t.label}
-          </div>
-        )
-      })}
+    <div className="dx-tabs">
+      {nav.map(t => (
+        <button
+          key={t.key}
+          type="button"
+          className="dx-tab"
+          aria-current={t.key === active ? 'page' : undefined}
+          onClick={() => router.replace({ kind: 'dx', sign, tab: t.key })}
+        >
+          {t.label}
+        </button>
+      ))}
     </div>
   )
 }
@@ -76,21 +82,11 @@ function DxCallout({ b, onNav }: { b: Extract<DxBlock, { kind: 'callout' }>; onN
   const h = HUE[b.tone]
   return (
     <ToneBox tone={b.tone} extra={`margin-top:${b.gap ?? 12}px;padding:10px 14px;`}>
-      <div style={s(`font-size:10px;font-weight:700;color:${TITLE[b.tone] ?? h.color};margin-bottom:4px;`)}>{b.title}</div>
-      <div style={s(`font-size:10px;color:${h.color};line-height:1.6;`)}><Raw html={b.html} onNav={onNav} /></div>
-    </ToneBox>
-  )
-}
-
-function DxDiseaseGrid({ b, onNav }: { b: Extract<DxBlock, { kind: 'diseaseGrid' }>; onNav: Nav }) {
-  return (
-    <ToneBox tone="teal" extra="margin-top:10px;padding:10px 12px;">
-      <div style={s('font-size:11px;font-weight:700;color:var(--tone-teal-fg);margin-bottom:6px;')}>{b.title}</div>
-      <div style={s('display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4px;font-size:9.5px;')}>
-        {b.links.map((l, i) => (
-          <div key={i} role="button" style={s('cursor:pointer;color:var(--fg-teal-deep);')} onClick={() => onNav(linkToView(l.link))}>→ {l.label}</div>
-        ))}
-      </div>
+      {/* title and center come from the shared CalloutPayload, so both surfaces
+          have to honour them — a field the type advertises and this renderer
+          dropped would be a silent no-op for whoever authored it. */}
+      {b.title && <div style={s(`font-size:10px;font-weight:700;color:${TITLE[b.tone] ?? h.color};margin-bottom:4px;`)}>{b.title}</div>}
+      <div style={s(`font-size:10px;color:${h.color};line-height:1.6;${b.center ? 'text-align:center;' : ''}`)}><Raw html={b.html} onNav={onNav} /></div>
     </ToneBox>
   )
 }
@@ -170,7 +166,7 @@ function DxBreedClues({ b, onNav }: { b: Extract<DxBlock, { kind: 'breedClues' }
           {b.title ?? '🐾 Breed & signalment clues'}
         </div>
         <button type="button" aria-pressed={all} onClick={() => { setAll(v => !v); setSel('') }}
-          style={s(`padding:3px 8px;border-radius:999px;font-size:9px;font-weight:700;cursor:pointer;border:1px solid ${all ? 'rgba(var(--tone-teal),var(--tile-bd-a))' : 'var(--border)'};background:${all ? 'rgba(var(--tone-teal),var(--tile-bg-a))' : 'transparent'};color:${all ? 'var(--tone-teal-fg)' : 'var(--gray2)'};flex-shrink:0;`)}>
+          style={s(`padding:3px 8px;border-radius:999px;font-size:var(--fs-chip);font-weight:700;cursor:pointer;border:1px solid ${all ? 'rgba(var(--tone-teal),var(--tile-bd-a))' : 'var(--border)'};background:${all ? 'rgba(var(--tone-teal),var(--tile-bg-a))' : 'transparent'};color:${all ? 'var(--tone-teal-fg)' : 'var(--gray2)'};flex-shrink:0;`)}>
           {all ? '✓ All' : 'Show all'}
         </button>
       </div>
@@ -221,7 +217,7 @@ function DxSpeciesDiff({ b, onNav }: { b: Extract<DxBlock, { kind: 'speciesDiff'
   // which species a line belongs to is the one thing that must never be guessed.
   const line = (label: string, hh: { rgb: string; color: string }, html: string) => (
     <div style={s('display:flex;gap:7px;align-items:baseline;')}>
-      <span style={s(`flex-shrink:0;font-size:8.5px;font-weight:700;letter-spacing:.06em;color:${hh.color};width:22px;`)}>{label}</span>
+      <span style={s(`flex-shrink:0;font-size:var(--fs-chip-sub);font-weight:700;letter-spacing:.06em;color:${hh.color};width:22px;`)}>{label}</span>
       <span style={s('flex:1;min-width:0;')}><Raw html={html} onNav={onNav} /></span>
     </div>
   )
@@ -231,8 +227,8 @@ function DxSpeciesDiff({ b, onNav }: { b: Extract<DxBlock, { kind: 'speciesDiff'
         {b.title ?? '🔑 Canine vs feline — key differences'}
       </div>
       {b.rows.map((r, i) => (
-        <div key={i} style={s('border-radius:9px;padding:8px 10px;background:var(--card);border:1px solid var(--border);font-size:9.5px;line-height:1.55;color:var(--gray);')}>
-          <div style={s('font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--tone-indigo-fg);margin-bottom:5px;')}>{r.feature}</div>
+        <div key={i} style={s('border-radius:9px;padding:8px 10px;background:var(--card);border:1px solid var(--border);font-size:var(--fs-box);line-height:1.55;color:var(--gray);')}>
+          <div style={s('font-size:var(--fs-chip);font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--tone-indigo-fg);margin-bottom:5px;')}>{r.feature}</div>
           <div style={s('display:flex;flex-direction:column;gap:4px;')}>
             {line('DOG', dogH, r.dog)}
             {line('CAT', catH, r.cat)}
@@ -245,13 +241,13 @@ function DxSpeciesDiff({ b, onNav }: { b: Extract<DxBlock, { kind: 'speciesDiff'
 
 function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
   switch (b.kind) {
-    case 'branch': return <div className="dx-branch"><Raw html={b.text} onNav={onNav} /></div>
+    case 'goal': return <div className="dx-branch"><Raw html={b.text} onNav={onNav} /></div>
     case 'step': return <DxStep b={b} onNav={onNav} />
     case 'check': return <div className="dx-check" style={b.style ? s(b.style) : undefined}><Raw html={b.html} onNav={onNav} /></div>
     case 'row': return <DxRow b={b} onNav={onNav} />
-    case 'alert': return <div className="dx-alert" style={b.gap ? s(`margin-top:${b.gap}px;`) : undefined}><Raw html={b.html} onNav={onNav} /></div>
+    case 'pearls': return <div className="dx-alert" style={b.gap ? s(`margin-top:${b.gap}px;`) : undefined}><Raw html={b.html} onNav={onNav} /></div>
     case 'callout': return <DxCallout b={b} onNav={onNav} />
-    case 'diseaseGrid': return <DxDiseaseGrid b={b} onNav={onNav} />
+    case 'diseaseGrid': return <DiseaseGrid title={b.title} links={b.links} onNav={onNav} />
     case 'note': return <div className="dx-note" style={b.style ? s(b.style) : undefined}><Raw html={b.html} onNav={onNav} /></div>
     case 'accordion': return <DxAccordion b={b} onNav={onNav} />
     case 'breedClues': return <DxBreedClues b={b} onNav={onNav} />
@@ -261,10 +257,10 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
         ? 'background:rgba(var(--tone-teal),0.2);border-color:rgba(var(--tone-teal),0.5);'
         : ''
       return (
-        <div className="dx-dx" role="button" style={bg ? s(bg) : undefined}
-          onClick={() => onNav({ kind: 'lesionLoc', loc: b.loc, name: b.name })}>
+        <Tappable className="dx-dx" style={bg ? s(bg) : undefined}
+          onTap={() => onNav({ kind: 'lesionLoc', loc: b.loc, name: b.name })}>
           {b.name} →
-        </div>
+        </Tappable>
       )
     }
     case 'gridTable': return (
@@ -275,11 +271,11 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
           </div>
         )}
         <GridTable cols={b.cols} headers={b.headers} rows={b.rows} dividers={b.dividers}
-          scroll={b.scroll} minWidth={b.minWidth} fontSize={b.fontSize} onNav={onNav} />
+          stickyFirstCol={b.stickyFirstCol} scroll={b.scroll} minWidth={b.minWidth} fontSize={b.fontSize} onNav={onNav} />
       </div>
     )
-    case 'html': return <div className="flow-authored scroll-x"><Raw html={b.html} onNav={onNav} /></div>
-    case 'disclaimer': return <div className="disclaimer">For qualified veterinary professionals only.</div>
+    case 'html': return <AuthoredHtml html={b.html} onNav={onNav} />
+    case 'disclaimer': return DISCLAIMER
   }
 }
 
@@ -292,7 +288,7 @@ export function DxApproachView({ sign, active }: { sign: string; active: string 
   const tab = approach.tabs[active] ?? approach.tabs.history
   return (
     <>
-      <DxTabs sign={sign} nav={nav} active={active} variant={approach.navVariant} />
+      <DxTabs sign={sign} nav={nav} active={active} />
       <div className="dx-wrap">
         {tab.blocks.map((b, i) => (
           <Fragment key={i}>

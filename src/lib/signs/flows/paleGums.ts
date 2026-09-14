@@ -1,7 +1,7 @@
 // ── Pale Mucous Membranes flowchart (data) ──────────────────────────────────
 // Migration of the inline renderPaleGumsFlow + renderPaleFlowRegen /
 // renderPaleFlowNonRegen / renderPaleFlowPreRegen / renderPaleFlowShock /
-// renderPaleFlowCardiac functions (src/lib/cliniqApp.ts) to the FlowPage model.
+// renderPaleFlowCardiac functions (the deleted cliniqApp.ts) to the FlowPage model.
 //
 // The entry page's branch is bespoke: a 3fr/2fr split with `insp`/`mixed`
 // pattern-class column headers and horizontal endpoint grids inside each

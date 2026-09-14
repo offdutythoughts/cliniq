@@ -59,7 +59,7 @@ const SCREENS: Screen[] = [
   { name: 'tab-3-protocols', nav: { fn: 'navTo', args: [3] } },
   { name: 'tab-4-settings', nav: { fn: 'navTo', args: [4] } },
   // Flowcharts — chosen for block-type variety (endpoints, branch, choices,
-  // categoryColumns, decisionTree, compareBox, table, cardSection).
+  // categoryColumns, decisionTree, compareBox, table).
   { name: 'flow-dyspnoea', nav: { fn: 'renderFlowId', args: ['dyspnoea'] } },
   { name: 'flow-jaundice', nav: { fn: 'renderFlowId', args: ['jaundice'] } },
   { name: 'flow-vomiting', nav: { fn: 'renderFlowId', args: ['vomiting'] } },
@@ -78,7 +78,7 @@ const SCREENS: Screen[] = [
   { name: 'dx-bleeding-dx', nav: { fn: 'renderDxId', args: ['bleeding', 'dx'] } },
   { name: 'dx-pupd-dx', nav: { fn: 'renderDxId', args: ['pupd', 'dx'] } },
   { name: 'dx-diarrhoea-history', nav: { fn: 'renderDxId', args: ['diarrhoea', 'history'] } },
-  // Disease pages, protocols, and a lesion-location list (lesion-card + tag-*).
+  // Disease pages, protocols, and a lesion-location list (category tiles + tag-*).
   { name: 'disease-hcm', nav: { fn: 'renderDiseasePage', args: ['DIS-HCM'] } },
   { name: 'disease-aa', nav: { fn: 'renderDiseasePage', args: ['DIS-AA'] } },
   // disease-dic carries @DIS-/@PROT- link tokens — guards the linkify() path.

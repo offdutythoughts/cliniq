@@ -14,7 +14,7 @@ import { NavProvider, useNav } from '../nav/NavContext'
 import { noteKeyLabel, screenMeta, viewFromNoteKey, viewKey, type View } from '../nav/view'
 import { Screen } from '../screens/Screen'
 import { track } from '../../lib/analytics'
-import type { Tab } from '../../types'
+import type { Tab } from '../nav/view'
 import { SearchProvider } from '../search/SearchContext'
 import SearchBar from '../search/SearchBar'
 import { useSearchHighlight } from '../search/useSearchHighlight'
@@ -25,20 +25,26 @@ import SilentBoundary from '../SilentBoundary'
 
 // Use Convex-backed notes when a deployment URL is configured, otherwise localStorage
 const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
-export default hasConvex ? PageWithConvex : PageWithLocal
+
+/** The clinical app. `initialView` is decoded from the URL on the server, so a
+ *  deep link renders its screen directly instead of painting tab 0 and then
+ *  correcting itself after hydration. */
+export default function AppShell({ initialView }: { initialView: View }) {
+  return hasConvex ? <PageWithConvex initialView={initialView} /> : <PageWithLocal initialView={initialView} />
+}
 
 // Access is decided by sign-in alone: the proxy (src/proxy.ts) sends anyone
 // without a session to /login, and that is the whole gate. There is no
 // entitlement check here — src/components/SubscriptionGate.tsx is written and
 // unmounted, waiting on a subscription backend that is not deployed.
-function PageWithConvex() {
+function PageWithConvex({ initialView }: { initialView: View }) {
   return (
-    <NavProvider><TutorialProvider><SearchProvider><PageBase useNotesHook={useNotes} useAnnotationsHook={useAnnotations} /></SearchProvider></TutorialProvider></NavProvider>
+    <NavProvider initialView={initialView}><TutorialProvider><SearchProvider><PageBase useNotesHook={useNotes} useAnnotationsHook={useAnnotations} /></SearchProvider></TutorialProvider></NavProvider>
   )
 }
 
-function PageWithLocal() {
-  return <NavProvider><TutorialProvider><SearchProvider><PageBase useNotesHook={useNotesLocal} useAnnotationsHook={useAnnotationsLocal} /></SearchProvider></TutorialProvider></NavProvider>
+function PageWithLocal({ initialView }: { initialView: View }) {
+  return <NavProvider initialView={initialView}><TutorialProvider><SearchProvider><PageBase useNotesHook={useNotesLocal} useAnnotationsHook={useAnnotationsLocal} /></SearchProvider></TutorialProvider></NavProvider>
 }
 
 type NotesHook = (key: string, title: string, open: boolean) => {

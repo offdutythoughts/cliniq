@@ -11,13 +11,14 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const anorexiaDx: DxApproach = {
+  sign: 'anorexia',
   title: 'Anorexia / Hyporexia',
   tabs: {
 
     history: {
       title: 'History: Anorexia / Hyporexia',
       blocks: [
-        { kind: 'branch', text: 'GOAL: CAN\'T EAT vs WON\'T EAT, THEN FIND THE CAUSE' },
+        { kind: 'goal', text: 'GOAL: CAN\'T EAT vs WON\'T EAT, THEN FIND THE CAUSE' },
         {
           kind: 'gridTable',
           cols: '0.7fr 1.4fr',
@@ -217,7 +218,7 @@ export const anorexiaDx: DxApproach = {
           ],
         },
         {
-          kind: 'alert',
+          kind: 'pearls',
           gap: 10,
           html: `<strong>Practical pearls:</strong><br>
   • Can't-eat vs won't-eat is the first decision — examine the mouth (under sedation) before chasing systemic disease.<br>

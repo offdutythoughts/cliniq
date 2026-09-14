@@ -1,5 +1,5 @@
 // Shared urgency / species tag helpers — React ports of urgTag/spTag/urgClass
-// (cliniqApp.ts). Same .tag .tag-* classes from globals.css.
+// (the deleted cliniqApp.ts). Same .tag .tag-* classes from globals.css.
 
 import { rareSpecies, speciesOf } from '../../lib/species'
 

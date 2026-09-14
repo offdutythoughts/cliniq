@@ -1,6 +1,6 @@
 // ── Dyspnoea flowchart (data) ───────────────────────────────────────────────
 // Migration of the inline renderDyspFlow (entry) + renderInsp + renderRest
-// sub-flows in src/lib/cliniqApp.ts to the FlowPage model. The diagnostic-
+// sub-flows in the deleted cliniqApp.ts to the FlowPage model. The diagnostic-
 // approach views (renderDxDyspnoea*) are out of scope.
 //
 // The entry's 4-pattern tile grid + 4-arrow row + 4-column sub-branch is a

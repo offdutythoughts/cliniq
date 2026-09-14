@@ -1,6 +1,6 @@
 // ── Bleeding / Petechiae / Ecchymoses flowchart (data) ──────────────────────
 // Migration of bleedingFlowHtml (src/lib/signs/bleeding.ts) + the inline
-// sub-flows renderBleedingFlowPrimary / Secondary / DIC / Vasc (cliniqApp.ts)
+// sub-flows renderBleedingFlowPrimary / Secondary / DIC / Vasc (the deleted cliniqApp.ts)
 // to the FlowPage model. Visible text is transcribed byte-identically from the
 // legacy source.
 //
