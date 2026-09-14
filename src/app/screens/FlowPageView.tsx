@@ -273,8 +273,9 @@ function ChoicesBlock({ cols, size, items, onNav }: { cols: number; size: number
 // A pinned first column paints an opaque background behind itself and across the
 // 6px column gap, so the scrolling columns slide under it cleanly. Inside a Box
 // that background is not the page colour but the panel tint composited over it,
-// which is what `--sticky-col-bg` carries down (a gradient layer of the same
-// rgba() the Box uses, over --navy — the pair renders identically to the panel).
+// which is what `--sticky-col-bg` carries down — the Box's own rgba() tint and
+// alpha flattened onto --navy with color-mix, so it must stay a plain colour
+// (GridTable also uses it as a shadow colour, where a gradient would not parse).
 function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav: Nav }) {
   const wrapped = (
     <GridTable cols={b.cols} headers={b.headers} rows={b.rows} dividers={b.dividers}
@@ -284,8 +285,9 @@ function TableBlock({ b, onNav }: { b: Extract<Block, { kind: 'table' }>; onNav:
   const foot = b.footnote ? <div style={s(`margin-top:7px;font-size:var(--fs-box);line-height:1.55;${footColor}`)}><Raw html={b.footnote} onNav={onNav} /></div> : null
   if (!b.boxTone && !b.title) return b.gap ? <div style={s(`margin-top:${b.gap}px;width:100%;`)}>{wrapped}{foot}</div> : <>{wrapped}{foot}</>
   const tone = b.boxTone ?? 'neutral'
-  const tint = `rgba(${HUE[tone].rgb},var(--panel-bg-a))`
-  const stickyBg = b.stickyFirstCol ? `--sticky-col-bg:linear-gradient(${tint},${tint}),var(--navy);` : ''
+  const stickyBg = b.stickyFirstCol
+    ? `--sticky-col-bg:color-mix(in srgb, rgb(${HUE[tone].rgb}) calc(var(--panel-bg-a) * 100%), var(--navy));`
+    : ''
   return (
     <Box tone={tone} extra={`padding:10px 12px;${b.gap ? `margin-top:${b.gap}px;` : ''}${stickyBg}`}>
       {b.title && <div style={s(`font-size:10px;font-weight:700;color:${TITLE[tone] ?? HUE[tone].color};text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;`)}><Raw html={b.title} onNav={onNav} /></div>}
