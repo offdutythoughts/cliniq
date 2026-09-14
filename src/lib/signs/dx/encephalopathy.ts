@@ -7,6 +7,7 @@ import type { DxApproach } from '../dxTypes'
 import { numBadge } from './shared/dxHelpers'
 
 export const encephalopathyDx: DxApproach = {
+  sign: 'encephalopathy',
   title: 'Disorientation',
   tabs: {
 

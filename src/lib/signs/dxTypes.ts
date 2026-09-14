@@ -135,6 +135,11 @@ export type DxNavItem = { key: string; label: string }
  *  may also hold extra sub-views reached from within a tab (e.g. pupd
  *  'desmopressin') that aren't in the nav strip. */
 export type DxApproach = {
+  /** The sign id this approach answers to — the key it is registered under in
+   *  DX, the `{ to: 'dx', id }` link target, and the `dxId ?? id` of its entry in
+   *  registry.ts. Carried on the data, exactly as FlowPage carries its own `id`,
+   *  so the registry's keys are derived rather than typed out a second time. */
+  sign: string
   /** Sign display name used in the tab titles (e.g. "Epistaxis"). */
   title: string
   /** Tab buttons in order. Omit for the standard 3 (history / exam / dx). */

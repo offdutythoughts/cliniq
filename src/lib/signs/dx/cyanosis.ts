@@ -13,6 +13,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const cyanosisDx: DxApproach = {
+  sign: 'cyanosis',
   title: 'Cyanosis',
   tabs: {
 

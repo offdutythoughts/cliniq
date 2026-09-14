@@ -1,6 +1,6 @@
 // Guards the shared block traversal against the failure that created it.
 //
-// lib/walk.ts exists because seven lints each hand-rolled the recursion over a
+// src/lib/signs/blockWalk.ts exists because seven lints each hand-rolled the recursion over a
 // flow page's block tree and quietly disagreed about which nesting kinds to
 // descend into — so content inside the kinds an author forgot was never checked
 // by that lint at all. Adopting walk.ts fixed the seven. It did NOT fix the
@@ -24,7 +24,7 @@ import { lint } from './lib/lint'
 const { fail, done } = lint('walk-coverage')
 
 const TYPES = readFileSync(join(__dirname, '../src/lib/signs/flowTypes.ts'), 'utf8')
-const WALK = readFileSync(join(__dirname, 'lib/walk.ts'), 'utf8')
+const WALK = readFileSync(join(__dirname, '../src/lib/signs/blockWalk.ts'), 'utf8')
 
 // ── 1. Which container types carry children? ────────────────────────────────
 // Derived, not listed: any exported type whose body declares `blocks[?]: Block[]`
@@ -57,7 +57,7 @@ const handled = new Set([...WALK.matchAll(/case '([^']+)':/g)].map(m => m[1]))
 
 for (const [kind, carrier] of nesting) {
   if (!handled.has(kind)) {
-    fail(`block kind '${kind}' nests children (via ${carrier}) but lib/walk.ts has no case for it — `
+    fail(`block kind '${kind}' nests children (via ${carrier}) but src/lib/signs/blockWalk.ts has no case for it — `
       + `every lint using eachBlock() is silently skipping everything inside it. Add a case to eachBlock().`)
   }
 }
@@ -66,9 +66,9 @@ for (const [kind, carrier] of nesting) {
 // this parser cannot see), so report it rather than failing.
 for (const kind of handled) {
   if (!nesting.has(kind)) {
-    console.log(`  ℹ lib/walk.ts descends into '${kind}', which this lint does not see as a nesting kind — harmless, but check the parser if unexpected.`)
+    console.log(`  ℹ src/lib/signs/blockWalk.ts descends into '${kind}', which this lint does not see as a nesting kind — harmless, but check the parser if unexpected.`)
   }
 }
 
-done(`lib/walk.ts covers all ${nesting.size} nesting block kind(s) (${[...nesting.keys()].join(', ')}).`,
+done(`src/lib/signs/blockWalk.ts covers all ${nesting.size} nesting block kind(s) (${[...nesting.keys()].join(', ')}).`,
   'A nesting kind missing from eachBlock() makes every content lint blind inside it.')

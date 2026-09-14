@@ -9,6 +9,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const syncopeDx: DxApproach = {
+  sign: 'syncope',
   title: 'Syncope',
   tabs: {
 

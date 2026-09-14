@@ -6,6 +6,7 @@
 import type { DxApproach } from '../dxTypes'
 
 export const abnormalPupilDx: DxApproach = {
+  sign: 'abnormal-pupil',
   title: 'Anisocoria / Abnormal Pupil',
   tabs: {
 

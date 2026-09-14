@@ -6,6 +6,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const sneezingDx: DxApproach = {
+  sign: 'sneezing',
   title: 'Sneezing',
   tabs: {
 

@@ -6,6 +6,7 @@ import type { DxApproach } from '../dxTypes'
 import { numBadge } from './shared/dxHelpers'
 
 export const bleedingDx: DxApproach = {
+  sign: 'bleeding',
   title: 'Bleeding / Petechiae / Ecchymoses',
   tabs: {
 

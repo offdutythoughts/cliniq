@@ -10,6 +10,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const dysphagiaDx: DxApproach = {
+  sign: 'dysphagia',
   title: 'Dysphagia / Gagging',
   tabs: {
 

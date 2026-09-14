@@ -10,6 +10,7 @@ import { CN_EXAM_ACCORDION } from './shared/neuroExam'
 import { numBadge } from './shared/dxHelpers'
 
 export const seizuresDx: DxApproach = {
+  sign: 'seizures',
   title: 'Seizures',
   tabs: {
 

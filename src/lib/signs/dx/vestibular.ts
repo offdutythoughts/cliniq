@@ -6,6 +6,7 @@ import type { DxApproach } from '../dxTypes'
 import { VEST_LOC_COLS, VEST_LOC_HEADERS, VEST_LOC_ROWS } from '../vestibularLocalisation'
 
 export const vestibularDx: DxApproach = {
+  sign: 'vestibular',
   title: 'Vestibular',
   tabs: {
 

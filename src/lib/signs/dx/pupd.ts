@@ -7,6 +7,7 @@ import type { DxApproach } from '../dxTypes'
 import { numBadge } from './shared/dxHelpers'
 
 export const pupdDx: DxApproach = {
+  sign: 'pupd',
   title: 'PU/PD',
   nav: [
     { key: 'history', label: '📋 History' },

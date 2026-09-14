@@ -11,6 +11,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const anorexiaDx: DxApproach = {
+  sign: 'anorexia',
   title: 'Anorexia / Hyporexia',
   tabs: {
 

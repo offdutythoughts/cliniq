@@ -7,6 +7,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const diarrhoeaDx: DxApproach = {
+  sign: 'diarrhoea',
   title: 'Diarrhoea',
   nav: [
     { key: 'history', label: '📋 History' },

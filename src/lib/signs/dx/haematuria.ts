@@ -6,6 +6,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const haematuriaDx: DxApproach = {
+  sign: 'haematuria',
   title: 'Haematuria',
   tabs: {
 

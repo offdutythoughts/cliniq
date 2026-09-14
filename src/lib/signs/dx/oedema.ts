@@ -11,6 +11,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const oedemaDx: DxApproach = {
+  sign: 'oedema',
   title: 'Peripheral Oedema',
   tabs: {
 

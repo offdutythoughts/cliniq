@@ -7,6 +7,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const epistaxisDx: DxApproach = {
+  sign: 'epistaxis',
   title: 'Epistaxis',
   tabs: {
 

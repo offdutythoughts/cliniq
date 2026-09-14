@@ -9,6 +9,7 @@ import { NEURO_LOC_COLS, NEURO_LOC_HEADERS, NEURO_LOC_MIN_WIDTH, NEURO_LOC_ROWS 
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const myelopathyDx: DxApproach = {
+  sign: 'myelopathy',
   title: 'Myelopathy',
   tabs: {
 

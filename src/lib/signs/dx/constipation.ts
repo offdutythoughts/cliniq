@@ -10,6 +10,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const constipationDx: DxApproach = {
+  sign: 'constipation',
   title: 'Constipation / Tenesmus',
   tabs: {
 

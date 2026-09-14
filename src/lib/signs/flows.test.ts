@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { describe, it, expect } from 'vitest'
 import { FLOWS } from './flows'
+import { eachBlock } from './blockWalk'
 import { DX } from './dx'
 import { SIGNS } from './registry'
 import type { Block, Column, Link } from './flowTypes'
@@ -25,25 +26,96 @@ const idInDb = (id: string) => {
     protocolsSrc.includes(single) || protocolsSrc.includes(double)
 }
 
-// Recursively collect every typed Link in a flow page.
+// Every typed Link on a flow page.
+//
+// This used to hand-roll the recursion and descended into `branch` columns only,
+// so links inside `fork` legs and `speciesChooser` panels were invisible to it:
+// 22 links across 5 pages — 18 on the DIC page's species panels — had never been
+// checked against the database. Shared traversal, one place.
 function collectLinks(blocks: Block[]): Link[] {
   const out: Link[] = []
-  const walk = (bs: Block[]) => {
-    for (const b of bs) {
-      if (b.kind === 'branch') b.columns.forEach((c: Column) => walk(c.blocks))
-      else if (b.kind === 'endpoints') b.items.forEach(e => { if (e.link) out.push(e.link) })
-      else if (b.kind === 'choices') b.items.forEach(c => { if (c.link) out.push(c.link) })
-      else if (b.kind === 'cardGrid') b.tiles.forEach(t => { if (t.link) out.push(t.link) })
-      else if (b.kind === 'categoryGrid') b.columns.forEach(c => c.tiles.forEach(t => { if (t.link) out.push(t.link) }))
-      else if (b.kind === 'categoryColumns') b.columns.forEach(c => c.tiles.forEach(t => { if (t.link) out.push(t.link) }))
-      else if (b.kind === 'diseaseGrid') b.links.forEach(l => out.push(l.link))
-      else if (b.kind === 'dxRow') b.items.forEach(l => out.push(l.link))
-      else if (b.kind === 'alert') b.items.forEach(it => { if (typeof it !== 'string' && it.link) out.push(it.link) })
+  for (const b of eachBlock(blocks)) {
+    if (b.kind === 'endpoints') b.items.forEach(e => { if (e.link) out.push(e.link) })
+    else if (b.kind === 'choices') b.items.forEach(c => { if (c.link) out.push(c.link) })
+    else if (b.kind === 'cardGrid') b.tiles.forEach(t => { if (t.link) out.push(t.link) })
+    else if (b.kind === 'categoryGrid' || b.kind === 'categoryColumns') {
+      b.columns.forEach(c => c.tiles.forEach(t => { if (t.link) out.push(t.link) }))
     }
+    else if (b.kind === 'diseaseGrid') b.links.forEach(l => out.push(l.link))
+    else if (b.kind === 'dxRow') b.items.forEach(l => out.push(l.link))
+    else if (b.kind === 'alert') b.items.forEach(it => { if (typeof it !== 'string' && it.link) out.push(it.link) })
   }
-  walk(blocks)
   return out
 }
+
+// ── Reachability ────────────────────────────────────────────────────────────
+// A flow page nobody links to is content that ships and cannot be opened. The
+// entry pages are the ones in the registry; everything else has to be reached by
+// following a link from one of them.
+//
+// Two kinds of edge count, and both have to be followed DURING the walk: typed
+// `{ to: 'flow' }` links, and the `onclick="renderFlowId('…')"` in a raw `html:`
+// block. Collecting the html ones afterwards instead reports pages as orphans
+// whose only route in is an authored link — and worse, never follows what THEY
+// link to.
+function flowEdges(id: string): string[] {
+  const page = FLOWS[id]
+  if (!page) return []
+  const out = collectLinks(page.blocks).filter(l => l.to === 'flow').map(l => l.id)
+  for (const b of eachBlock(page.blocks)) {
+    if (b.kind !== 'html') continue
+    for (const m of b.html.matchAll(/renderFlowId\('([^']+)'\)/g)) out.push(m[1])
+  }
+  return out
+}
+
+// Pages known to be unreachable, with the reason. Do not add rows to silence a
+// failure — a page here is content that ships and cannot be opened.
+const KNOWN_ORPHANS = new Map<string, string>([
+  // Documented in flows/dyspnoea.ts: the Restrictive tile's legacy onclick called
+  // renderRestFlow, which never existed. Kept as a known-broken link.
+  ['dyspnoea-rest', "the entry's Restrictive tile calls the non-existent renderRestFlow"],
+  // Found by this test. Its sibling anisocoria-mydriasis links its Neurological
+  // tile to anisocoria-mydriasis-localise; the miosis page's Sympathetic tile
+  // links to the DIS-NEU-HORNERS disease page instead, so the Horner's
+  // three-neuron localisation tree has no route in at all. Fixing it is an
+  // authoring decision — whether that tile should open the localisation flow,
+  // the disease page, or both.
+  ['anisocoria-horners-localise', 'nothing links to it; the miosis tile goes to the disease page'],
+])
+
+describe('every flow page is reachable', () => {
+  it('from an entry flow, by following flow links', () => {
+    const seen = new Set<string>()
+    const queue = SIGNS.map(s => s.flowId).filter(Boolean) as string[]
+    while (queue.length) {
+      const id = queue.shift()!
+      if (seen.has(id)) continue
+      seen.add(id)
+      for (const next of flowEdges(id)) if (!seen.has(next)) queue.push(next)
+    }
+    const orphans = Object.keys(FLOWS).filter(id => !seen.has(id) && !KNOWN_ORPHANS.has(id))
+    expect(orphans, 'unreachable flow pages — nothing links to these').toEqual([])
+  })
+
+  it('the known orphans are still orphans, and still exist', () => {
+    // Both halves matter: a page that becomes reachable should leave the list
+    // rather than sit there claiming to be broken, and a row naming a page that
+    // no longer exists is a stale exemption.
+    const seen = new Set<string>()
+    const queue = SIGNS.map(sg => sg.flowId).filter(Boolean) as string[]
+    while (queue.length) {
+      const id = queue.shift()!
+      if (seen.has(id)) continue
+      seen.add(id)
+      for (const next of flowEdges(id)) if (!seen.has(next)) queue.push(next)
+    }
+    for (const [id, why] of KNOWN_ORPHANS) {
+      expect(FLOWS[id], `KNOWN_ORPHANS names "${id}", which is not a flow page`).toBeTruthy()
+      expect(seen.has(id), `"${id}" is reachable now (${why}) — remove it from KNOWN_ORPHANS`).toBe(false)
+    }
+  })
+})
 
 describe('FLOWS registry', () => {
   it('every page key matches its own id', () => {

@@ -10,6 +10,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const melenaDx: DxApproach = {
+  sign: 'melena',
   title: 'Melena / Haematochezia',
   tabs: {
 

@@ -8,6 +8,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const swollenJointsDx: DxApproach = {
+  sign: 'swollen-joints',
   title: 'Swollen Joints',
   tabs: {
 

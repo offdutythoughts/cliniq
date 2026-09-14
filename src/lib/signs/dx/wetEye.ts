@@ -6,6 +6,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const wetEyeDx: DxApproach = {
+  sign: 'wet-eye',
   title: 'Wet Eye / Epiphora',
   tabs: {
 

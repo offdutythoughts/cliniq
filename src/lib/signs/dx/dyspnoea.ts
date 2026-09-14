@@ -7,6 +7,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const dyspnoeaDx: DxApproach = {
+  sign: 'dyspnoea',
   title: 'Dyspnoea',
   // Hand-authored nav alternated classes by position (middle tab always `alt`)
   // with opacity-only active state — match it byte-for-byte.

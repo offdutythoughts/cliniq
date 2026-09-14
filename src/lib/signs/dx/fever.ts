@@ -8,6 +8,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const feverDx: DxApproach = {
+  sign: 'fever',
   title: 'Fever / FUO',
   tabs: {
 

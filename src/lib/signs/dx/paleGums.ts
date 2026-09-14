@@ -6,6 +6,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const paleGumsDx: DxApproach = {
+  sign: 'pale-gums',
   title: 'Pale MM',
   tabs: {
 

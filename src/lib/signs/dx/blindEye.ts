@@ -6,6 +6,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const blindEyeDx: DxApproach = {
+  sign: 'blind-eye',
   title: 'Blind Eye / Vision Loss',
   tabs: {
 

@@ -10,6 +10,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const polyphagiaDx: DxApproach = {
+  sign: 'polyphagia',
   title: 'Polyphagia',
   tabs: {
 

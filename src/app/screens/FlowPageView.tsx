@@ -14,6 +14,7 @@ import type {
 import { HUE, TITLE } from '../../lib/signs/tone'
 import { FLOWS } from '../../lib/signs/flows'
 import { DX } from '../../lib/signs/dx'
+import { SIGNS } from '../../lib/signs/registry'
 import { RichText } from '../../components/RichText'
 import { useNav } from '../nav/NavContext'
 import { linkToView } from '../nav/view'
@@ -830,10 +831,27 @@ function hasOutboundFlowLinks(blocks: Block[]): boolean {
   return false
 }
 
+/** Which diagnostic approach the "Diagnostic Approach" card at the foot of a
+ *  leaf flow page should open.
+ *
+ *  Sub-flows are named after their parent (`pale-mm-regen`, `pale-mm-shock`), so
+ *  this walks the id back a segment at a time looking for the sign it belongs to.
+ *  The lookup goes through the REGISTRY, which is where the flow id and the dx id
+ *  are related (`flowId: 'pale-mm', dxId: 'pale-gums'`). It used to look straight
+ *  in DX, which meant the pale approach had to be registered under its flow's
+ *  name as well as its own — an alias that existed only to satisfy this function,
+ *  and that nothing stopped from drifting apart. */
 function getDxSign(page: { id: string; dxSign?: string }): string | undefined {
   if (page.dxSign) return page.dxSign
   let id = page.id
   while (id) {
+    const sign = SIGNS.find(s => s.flowId === id)
+    if (sign) {
+      const key = sign.dxId ?? sign.id
+      return DX[key] ? key : undefined
+    }
+    // A page that is itself a dx key without being a registered sign's entry
+    // flow (the shared reference hubs).
     if (DX[id]) return id
     const next = id.replace(/-[^-]+$/, '')
     if (next === id) break

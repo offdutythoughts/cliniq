@@ -7,6 +7,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const pollakiuriaDx: DxApproach = {
+  sign: 'pollakiuria',
   title: 'Pollakiuria / Stranguria',
   tabs: {
 

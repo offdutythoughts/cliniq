@@ -6,6 +6,7 @@ import type { DxApproach } from '../dxTypes'
 import { ATAXIA_COLS, ATAXIA_HEADERS, ATAXIA_ROWS } from '../ataxiaClassification'
 
 export const ataxiaDx: DxApproach = {
+  sign: 'ataxia',
   title: 'Ataxia',
   tabs: {
 

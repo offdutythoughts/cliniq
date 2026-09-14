@@ -7,6 +7,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable, numBadge } from './shared/dxHelpers'
 
 export const coughingDx: DxApproach = {
+  sign: 'coughing',
   title: 'Coughing',
   tabs: {
 

@@ -9,6 +9,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const heartMurmurDx: DxApproach = {
+  sign: 'heart-murmur',
   title: 'Heart Murmur',
   tabs: {
 

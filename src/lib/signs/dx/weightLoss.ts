@@ -9,6 +9,7 @@ import type { DxApproach } from '../dxTypes'
 import { stepTable } from './shared/dxHelpers'
 
 export const weightLossDx: DxApproach = {
+  sign: 'weight-loss',
   title: 'Weight Loss',
   tabs: {
 
