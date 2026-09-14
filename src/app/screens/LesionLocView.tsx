@@ -39,45 +39,38 @@ import { HUE } from '../../lib/signs/tone'
 // before, can reintroduce a clash. Recheck the co-occurrence sets and the ΔE
 // between the tones involved; don't eyeball this list.
 const CT: Record<string, Tone> = {
-  // ── danger: infectious / destructive / urgent ──
-  'Infection': 'danger', 'Infectious': 'danger',
-  'Traumatic': 'danger', 'Ulceration': 'danger',
-  'Cardiovascular': 'danger', 'Chronic': 'danger',
+  // ── danger: infectious / destructive / urgent ── 'Infectious': 'danger', 'Ulceration': 'danger', 'Chronic': 'danger',
   'Coagulopathy': 'danger', 'Consumptive': 'danger',
-  'Haemolytic': 'danger', 'Haemorrhage': 'danger',
+  'Haemorrhage': 'danger',
   'Non-regenerative': 'danger', 'Protein-losing': 'danger',
   'Renal tubular': 'danger', 'Seizure': 'danger',
   'Shock': 'danger',
   // ── pink: vascular / cardiac / obstructive (red is taken by infection) ──
-  'Vascular': 'pink', 'Cardiac': 'pink',
+  'Vascular': 'pink', 'Cardiac': 'pink', 'Haemolytic': 'pink',
   'Obstruction': 'pink', 'Cystic': 'pink',
-  'Haemolysis': 'pink',
-  // ── orange: inflammatory ──
-  'Inflammation': 'orange', 'Inflammatory': 'orange',
+  // ── orange: inflammatory ── 'Inflammatory': 'orange',
   'Infiltrative': 'orange', 'Reactive': 'orange',
-  'Acquired': 'orange', 'Calcium': 'orange',
-  'Infection/Fungal': 'orange', 'Myopathy': 'orange',
+  'Acquired': 'orange', 'Calcium': 'orange', 'Myopathy': 'orange',
   'Renal failure': 'orange', 'Secondary': 'orange',
   'Syncope': 'orange', 'Uterine': 'orange',
   // ── warning: metabolic / hepatic / parasitic ──
-  'Metabolic': 'warning', 'Parasitic': 'warning',
+  'Metabolic': 'warning', 'Parasitic': 'warning', 'Sympathetic': 'warning',
   'Trauma': 'warning', 'Hepatic': 'warning',
   'Hormonal': 'warning', 'Adrenal': 'warning',
-  'Dental': 'warning', 'Endocrine/Metabolic': 'warning',
+  'Dental': 'warning',
   'Gas': 'warning', 'Hepatobiliary': 'warning',
   'Hepatocellular': 'warning',
   'Pre-regenerative': 'warning',
   // ── lime: degenerative / endocrine ──
   'Degenerative': 'lime', 'Endocrine': 'lime',
   // ── green: toxic / positional / physiological ──
-  'Toxic': 'green', 'Prolapse': 'green',
-  'Drug': 'green', 'Pharyngeal': 'green',
-  'Physiological': 'green', 'Sympathetic': 'green',
+  'Toxic': 'green', 'Drug-induced': 'green', 'Prolapse': 'green', 'Pharyngeal': 'green',
+  'Physiological': 'green',
   // ── teal: immune-mediated / responsive ──
   'Immune-mediated': 'teal', 'Idiopathic': 'teal',
   'Dietary': 'teal', 'Non-compressive': 'teal',
   'Biliary obstruction': 'teal', 'Fungal': 'teal',
-  'GI Disease': 'teal', 'Pharmacological': 'teal',
+  'GI Disease': 'teal',
   'Regenerative': 'teal', 'Thyroid': 'teal',
   // ── cyan: congenital ──
   'Congenital': 'cyan', 'Dynamic collapse': 'cyan',
@@ -85,17 +78,16 @@ const CT: Record<string, Tone> = {
   'Pituitary': 'cyan',
   // ── info: mechanical / fluid / conformational ──
   'Compressive': 'info', 'Conformational': 'info',
-  'Nutritional': 'info', 'Glaucoma': 'info',
+  'Nutritional': 'info', 'Glaucoma': 'info', 'Inherited': 'info',
   'Motility': 'info', 'Antibiotic-responsive': 'info',
   'Electrolyte': 'info', 'Fluid': 'info',
-  'Fluid/Oedema': 'info', 'Hereditary': 'info',
+  'Fluid/Oedema': 'info',
   'Osmotic diuresis': 'info', 'Primary': 'info',
   // ── violet: neoplastic / proliferative / neuro ──
   'Mass': 'violet', 'Neoplastic': 'violet',
-  'Inherited': 'violet', 'Neoplasia': 'violet',
   'Neurological': 'violet', 'Neuromuscular': 'violet',
   'Neuropathy': 'violet', 'Behavioural/Neurological': 'violet',
-  'Maldigestion': 'violet', 'Mass/Neoplasia': 'violet',
+  'Maldigestion': 'violet',
   'Muscle': 'violet', 'Pancreatic': 'violet',
   'Sleep disorder': 'violet',
   // ── slate: structural / inert ──

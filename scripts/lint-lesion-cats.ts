@@ -82,7 +82,41 @@ for (let i = 0; i < cats.length; i++) {
   }
 }
 
+// ── CHECK 4 — the graph colouring ───────────────────────────────────────────
+// Two categories that appear on the SAME location page must not share a tone.
+// A tile is rgba(tone, alpha) over the page background, so two columns in one
+// colour read as one group — the defect the CT table's comment describes as
+// "LOC-WE-PROD showed three grey columns and two orange ones".
+//
+// That comment then asks the next person to "recheck the co-occurrence sets …
+// don't eyeball this list" by hand. Nothing checked it, and merging a handful of
+// synonym spellings silently broke it in three places: the merge moved a
+// category onto a colour another category on that page already had.
+const byLoc = new Map<string, Set<string>>()
+for (const l of DB.lesion_type) {
+  const loc = String(l.loc ?? '')
+  if (!loc) continue
+  if (!byLoc.has(loc)) byLoc.set(loc, new Set())
+  byLoc.get(loc)!.add(String(l.cat ?? ''))
+}
+let collisions = 0
+for (const [loc, cats] of byLoc) {
+  const byTone = new Map<string, string[]>()
+  for (const c of cats) {
+    const t = CT.get(c) ?? 'slate'
+    byTone.set(t, [...(byTone.get(t) ?? []), c])
+  }
+  for (const [t, sharing] of byTone) {
+    if (sharing.length < 2) continue
+    collisions++
+    fail(`${loc} renders ${sharing.map(c => `"${c}"`).join(' and ')} both in '${t}' — `
+      + `two categories on one page in one colour read as one group. Give one of them a tone `
+      + `no other category on this page uses.`)
+  }
+}
+
 note(`  ${CT.size} category colours cover ${used.size} distinct cat values across ${DB.lesion_type.length} lesion rows.`)
+if (!collisions) note(`  ${byLoc.size} location pages checked for same-page tone collisions.`)
 if (clashes) note(`  ${clashes} colour clash(es) above are reported, not enforced — fixing one recolours a rendered page.`)
 
 done(`Lesion category colours are 1:1 with the data (${CT.size} entries, none dead, none missing).`,
