@@ -23,6 +23,14 @@ import { AuthoredHtml, CalloutBody, DISCLAIMER, DiseaseGrid } from './sharedBloc
  *  call sites used to, put it outside the type scale. */
 const CAPTION = s('font-size:var(--fs-label);font-weight:700;color:var(--tone-teal-fg);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;')
 
+/** The tinted breed-clue line — one box per clue under "Show all", one box for
+ *  the whole set under a picked breed. Both modes spelled the same seven
+ *  declarations inline, including a hardcoded 10px; --fs-chip-sub is that size's
+ *  role on the scale, so the two render identically and neither is a size chosen
+ *  at a call site. */
+const clueBox = (rgb: string) => s(`border-radius:8px;padding:7px 9px;font-size:var(--fs-chip-sub);line-height:1.55;`
+  + `background:rgba(${rgb},var(--tile-bg-a));color:var(--gray);border-left:2px solid rgba(${rgb},var(--tile-bd-a));`)
+
 const STD_NAV: DxNavItem[] = [
   { key: 'history', label: '📋 History' },
   { key: 'exam', label: '🩺 Exam' },
@@ -214,7 +222,7 @@ function DxBreedClues({ b, onNav }: { b: Extract<DxBlock, { kind: 'breedClues' }
         * box per differential makes two diseases of one patient look unrelated.
         * "Show all" has no single subject, so there each clue keeps its breeds. */}
       {shown.length > 0 && (sel ? (
-        <div style={s(`margin-top:7px;border-radius:8px;padding:7px 9px;font-size:10px;line-height:1.55;background:rgba(${h.rgb},var(--tile-bg-a));color:var(--gray);border-left:2px solid rgba(${h.rgb},var(--tile-bd-a));`)}>
+        <div style={{ ...clueBox(h.rgb), marginTop: '7px' }}>
           <span style={s(`font-weight:700;color:${h.color};`)}>{sel}</span>
           {shown.length === 1
             ? <>{' — '}<Raw html={shown[0].html} onNav={onNav} /></>
@@ -234,7 +242,7 @@ function DxBreedClues({ b, onNav }: { b: Extract<DxBlock, { kind: 'breedClues' }
           {shown.map((c, i) => {
             const ch = HUE[c.tone ?? 'teal']
             return (
-              <div key={i} style={s(`border-radius:8px;padding:7px 9px;font-size:10px;line-height:1.55;background:rgba(${ch.rgb},var(--tile-bg-a));color:var(--gray);border-left:2px solid rgba(${ch.rgb},var(--tile-bd-a));`)}>
+              <div key={i} style={clueBox(ch.rgb)}>
                 <span style={s(`font-weight:700;color:${ch.color};`)}>{c.breeds.join(' · ')}</span>{' — '}
                 <Raw html={c.html} onNav={onNav} />
               </div>
