@@ -39,8 +39,8 @@ const STD_NAV: DxNavItem[] = [
  *  reader met a differently-behaved strip on those five for no reason they could
  *  act on.
  *
- *  `aria-current` carries the state to assistive tech; `.dx-tab` carries it
- *  visually as fill vs outline, so it survives without colour perception. */
+ *  `aria-current` carries the state to assistive tech; `.dx-tab` tiers it
+ *  visually — the selected tab solid teal, the rest the same teal held back. */
 function DxTabs({ sign, nav, active }: { sign: string; nav: DxNavItem[]; active: string }) {
   const router = useNav()
   return (
