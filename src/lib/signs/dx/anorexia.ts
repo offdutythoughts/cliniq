@@ -79,7 +79,12 @@ export const anorexiaDx: DxApproach = {
           kind: 'callout',
           tone: 'danger',
           title: 'RED FLAGS IN THE HISTORY',
-          html: `An anorexic cat (especially overweight) = hepatic lipidosis risk — feed early · Waxing/waning anorexia ± GI signs / collapse = rule out hypoadrenocorticism · Acute febrile anorexia with rapid deterioration = sepsis/SIRS · Persistent anorexia + weight loss in an older patient = neoplasia until excluded.`,
+          items: [
+            `An anorexic cat (especially overweight) = hepatic lipidosis risk — feed early`,
+            `Waxing/waning anorexia ± GI signs / collapse = rule out hypoadrenocorticism`,
+            `Acute febrile anorexia with rapid deterioration = sepsis/SIRS`,
+            `Persistent anorexia + weight loss in an older patient = neoplasia until excluded`,
+          ],
         },
         { kind: 'disclaimer' },
       ],

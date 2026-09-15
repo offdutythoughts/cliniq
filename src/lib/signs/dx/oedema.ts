@@ -74,7 +74,12 @@ export const oedemaDx: DxApproach = {
           kind: 'callout',
           tone: 'danger',
           title: ' RED FLAGS IN THE HISTORY',
-          html: `Acute facial/laryngeal swelling after a drug/vaccine/sting = anaphylaxis/angioedema — airway emergency · Generalised oedema + ascites + exercise intolerance = right-sided CHF · Fever/collapse with warm swelling = sepsis/vasculitis · Known proteinuria or GI loss = hypoalbuminaemia with thromboembolism risk.`,
+          items: [
+            `Acute facial/laryngeal swelling after a drug/vaccine/sting = anaphylaxis/angioedema — airway emergency`,
+            `Generalised oedema + ascites + exercise intolerance = right-sided CHF`,
+            `Fever/collapse with warm swelling = sepsis/vasculitis`,
+            `Known proteinuria or GI loss = hypoalbuminaemia with thromboembolism risk`,
+          ],
         },
         { kind: 'disclaimer' },
       ],

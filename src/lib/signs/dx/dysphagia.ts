@@ -77,7 +77,12 @@ export const dysphagiaDx: DxApproach = {
           kind: 'callout',
           tone: 'danger',
           title: ' RED FLAGS IN THE HISTORY',
-          html: `Acute retching + drooling = oesophageal foreign body until disproven · Acquired megaoesophagus = run an AChR titre for MG · Coughing / fever after regurgitation = aspiration pneumonia · Dysphagia + hypersalivation in an unvaccinated patient = handle as possible rabies.`,
+          items: [
+            `Acute retching + drooling = oesophageal foreign body until disproven`,
+            `Acquired megaoesophagus = run an AChR titre for MG`,
+            `Coughing / fever after regurgitation = aspiration pneumonia`,
+            `Dysphagia + hypersalivation in an unvaccinated patient = handle as possible rabies`,
+          ],
         },
         { kind: 'disclaimer' },
       ],

@@ -120,8 +120,17 @@ export type AlertBlock = Connectable & { kind: 'alert'; tone: Tone; title: strin
 /** `gap` adds margin-top (px) when the callout is a trailing reference box
  *  rather than part of the arrow-connected spine. `center` centres the text. */
 /** Shared with dxTypes — see DiseaseGridPayload for why the field set lives in
- *  one place. `center` is honoured on both surfaces. */
-export type CalloutPayload = { kind: 'callout'; tone: Tone; title?: string; html: string; gap?: number; center?: boolean }
+ *  one place. `center` is honoured on both surfaces.
+ *
+ *  A callout carries EITHER `html` (one continuous warning or pearl) or
+ *  `items` (a list of independent scenarios, one per bullet). Red-flag boxes
+ *  are the second kind: each bullet is its own "finding = diagnosis / action"
+ *  pair, and running them together behind `·` separators made the reader parse
+ *  the punctuation to find where one scenario ended and the next began. Both
+ *  fields go through the RichText boundary, so a bullet may carry inline
+ *  <strong>/<em>/<span> exactly as `html` does. `center` is ignored on a
+ *  bulleted callout — centred bullets have no hanging indent to align to. */
+export type CalloutPayload = { kind: 'callout'; tone: Tone; title?: string; html?: string; items?: string[]; gap?: number; center?: boolean }
 export type CalloutBlock = Connectable & CalloutPayload
 /** The field set for the "LINKED DISEASE PAGES" grid, WITHOUT the flow-only
  *  connector control. dxTypes imports this payload rather than re-declaring the
@@ -140,7 +149,7 @@ export type DxRowBlock = Connectable & { kind: 'dxRow'; items: LabeledLink[] }
  *  localisation grids) instead of taking its column's tone.
  *  Rows may be a `{ section: string }` to render a full-width section divider. */
 export type TableCell = string | { text: string; tone?: Tone; dim?: boolean }
-export type TableRow = TableCell[] | { section: string }
+export type TableRow = TableCell[] | { section: string; tone?: Tone }
 export type TableBlock = Connectable & {
   kind: 'table'
   cols: string

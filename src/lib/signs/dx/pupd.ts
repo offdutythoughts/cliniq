@@ -412,13 +412,17 @@ export const pupdDx: DxApproach = {
     ],
     after: [
       {
-        kind: 'html',
-        html: `<div style="margin-top:12px;padding:10px 14px;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.25);border-radius:10px;">
-    <div style="font-size:10px;font-weight:700;color:var(--tone-danger-title);margin-bottom:4px;">⚠️ RED FLAGS</div>
-    <div style="font-size:10px;color:var(--tone-danger-fg);line-height:1.6;">
-      Intact female + systemic signs (pyometra) · Severe azotaemia + oliguria (AKI) · Addisonian crisis / DKA / sepsis · Hyponatraemia &lt;125 mEq/L · Acute blindness (hypertensive retinal detachment) · Leptospirosis (PPE + isolate)
-    </div>
-  </div>`,
+        kind: 'callout',
+        tone: 'danger',
+        title: '⚠️ RED FLAGS',
+        items: [
+          `Intact female + systemic signs (pyometra)`,
+          `Severe azotaemia + oliguria (AKI)`,
+          `Addisonian crisis / DKA / sepsis`,
+          `Hyponatraemia &lt;125 mEq/L`,
+          `Acute blindness (hypertensive retinal detachment)`,
+          `Leptospirosis (PPE + isolate)`,
+        ],
       },
       {
         kind: 'html',

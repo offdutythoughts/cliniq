@@ -65,7 +65,12 @@ export const syncopeDx: DxApproach = {
           kind: 'callout',
           tone: 'danger',
           title: ' RED FLAGS IN THE HISTORY',
-          html: `Exertional syncope + a murmur or known heart disease = cardiac until proven otherwise (sudden-death risk) · A clear post-ictal phase / aura points to seizure, not syncope · Episodic collapse with weakness + GI signs = rule out Addison · Recurrent syncope with a normal resting ECG still needs ambulatory monitoring — the arrhythmia is intermittent.`,
+          items: [
+            `Exertional syncope + a murmur or known heart disease = cardiac until proven otherwise (sudden-death risk)`,
+            `A clear post-ictal phase / aura points to seizure, not syncope`,
+            `Episodic collapse with weakness + GI signs = rule out Addison`,
+            `Recurrent syncope with a normal resting ECG still needs ambulatory monitoring — the arrhythmia is intermittent`,
+          ],
         },
         { kind: 'disclaimer' },
       ],

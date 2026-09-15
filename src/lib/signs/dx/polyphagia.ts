@@ -72,7 +72,12 @@ export const polyphagiaDx: DxApproach = {
           kind: 'callout',
           tone: 'danger',
           title: ' RED FLAGS IN THE HISTORY',
-          html: `Polyphagia + PU/PD + weight loss = diabetes until disproven (check for ketones) · Episodic collapse/seizure relieved by feeding = insulinoma — never fast for testing without supervision · Senior cat losing weight while eating = hyperthyroidism · Always reconcile the medication list before working up.`,
+          items: [
+            `Polyphagia + PU/PD + weight loss = diabetes until disproven (check for ketones)`,
+            `Episodic collapse/seizure relieved by feeding = insulinoma — never fast for testing without supervision`,
+            `Senior cat losing weight while eating = hyperthyroidism`,
+            `Always reconcile the medication list before working up`,
+          ],
         },
         { kind: 'disclaimer' },
       ],

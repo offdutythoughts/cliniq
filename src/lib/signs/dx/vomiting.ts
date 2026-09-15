@@ -311,9 +311,16 @@ export const vomitingDx: DxApproach = {
         kind: 'callout',
         tone: 'danger',
         title: '⚠️ RED FLAGS — URGENT WORKUP',
-        html: `
-    Haematemesis · Projectile vomiting · Acute abdomen + guarding · Tympanic distension + non-productive retching (GDV) · Young unvaccinated (parvo) · Intact female (pyometra) · Known toxin/FB ingestion · Collapse or hypoperfusion
-  `,
+        items: [
+          `Haematemesis`,
+          `Projectile vomiting`,
+          `Acute abdomen + guarding`,
+          `Tympanic distension + non-productive retching (GDV)`,
+          `Young unvaccinated (parvo)`,
+          `Intact female (pyometra)`,
+          `Known toxin/FB ingestion`,
+          `Collapse or hypoperfusion`,
+        ],
       },
       { kind: 'disclaimer' },
     ],

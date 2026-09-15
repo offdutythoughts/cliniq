@@ -70,7 +70,12 @@ export const heartMurmurDx: DxApproach = {
           kind: 'callout',
           tone: 'danger',
           title: ' RED FLAGS IN THE HISTORY',
-          html: `Syncope / collapse on exertion in a young dog = SAS or PS until disproven · New or changing murmur + fever + shifting lameness = endocarditis · Cat with a murmur AND tachypnoea / dyspnoea = treat as CHF until echo says otherwise · A cat with no murmur is NOT a cat with no heart disease.`,
+          items: [
+            `Syncope / collapse on exertion in a young dog = SAS or PS until disproven`,
+            `New or changing murmur + fever + shifting lameness = endocarditis`,
+            `Cat with a murmur AND tachypnoea / dyspnoea = treat as CHF until echo says otherwise`,
+            `A cat with no murmur is NOT a cat with no heart disease`,
+          ],
         },
         { kind: 'disclaimer' },
       ],

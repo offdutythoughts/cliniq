@@ -78,7 +78,12 @@ export const constipationDx: DxApproach = {
           kind: 'callout',
           tone: 'danger',
           title: '⚠️ RED FLAGS IN THE HISTORY',
-          html: `A male cat straining unproductively = treat as obstructed (urinary) until disproven · Persistent tenesmus + ribbon stool in an older patient = prostatic / sublumbar carcinoma until excluded · An obstipated cat with a colon packed solid = megacolon needing rehydration + decompression · PU/PD + weight loss = check calcium, potassium and renal values.`,
+          items: [
+            `A male cat straining unproductively = treat as obstructed (urinary) until disproven`,
+            `Persistent tenesmus + ribbon stool in an older patient = prostatic / sublumbar carcinoma until excluded`,
+            `An obstipated cat with a colon packed solid = megacolon needing rehydration + decompression`,
+            `PU/PD + weight loss = check calcium, potassium and renal values`,
+          ],
         },
         { kind: 'disclaimer' },
       ],

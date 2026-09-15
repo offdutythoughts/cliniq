@@ -75,7 +75,12 @@ export const feverDx: DxApproach = {
           kind: 'callout',
           tone: 'danger',
           title: ' RED FLAGS IN THE HISTORY',
-          html: `Spinal/neck pain + fever = discospondylitis or SRMA until excluded · New murmur + fever = endocarditis (blood cultures + echo) · Entire female + fever + vulvar discharge = pyometra · Failure to respond to antibiotics in an older dog = neoplasia or immune-mediated disease — never reach for steroids before the infectious work-up is complete.`,
+          items: [
+            `Spinal/neck pain + fever = discospondylitis or SRMA until excluded`,
+            `New murmur + fever = endocarditis (blood cultures + echo)`,
+            `Entire female + fever + vulvar discharge = pyometra`,
+            `Failure to respond to antibiotics in an older dog = neoplasia or immune-mediated disease — never reach for steroids before the infectious work-up is complete`,
+          ],
         },
         { kind: 'disclaimer' },
       ],

@@ -82,7 +82,12 @@ export const swollenJointsDx: DxApproach = {
           kind: 'callout',
           tone: 'danger',
           title: ' RED FLAGS IN THE HISTORY',
-          html: `Single hot joint after surgery / a wound = septic arthritis (emergency) · Fever of unknown origin + stiff, "walking on eggshells" gait = polyarthritis until excluded · Tick / travel exposure = test (or trial doxycycline) BEFORE steroids · Recent TMS / penicillin / vaccine = consider drug-induced or post-vaccinal reactive IMPA.`,
+          items: [
+            `Single hot joint after surgery / a wound = septic arthritis (emergency)`,
+            `Fever of unknown origin + stiff, "walking on eggshells" gait = polyarthritis until excluded`,
+            `Tick / travel exposure = test (or trial doxycycline) BEFORE steroids`,
+            `Recent TMS / penicillin / vaccine = consider drug-induced or post-vaccinal reactive IMPA`,
+          ],
         },
         { kind: 'disclaimer' },
       ],

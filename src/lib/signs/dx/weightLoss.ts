@@ -67,7 +67,12 @@ export const weightLossDx: DxApproach = {
           kind: 'callout',
           tone: 'danger',
           title: ' RED FLAGS IN THE HISTORY',
-          html: `Older cat losing weight with a ravenous appetite = hyperthyroidism / DM until disproven · PU/PD + polyphagia + weight loss = diabetes — a sick inappetent diabetic may be in ketoacidosis · Marked weight + muscle loss with chronic inflammation or a known tumour = cachexia · Any cat with chronic wasting — check retroviral status (FIV/FeLV).`,
+          items: [
+            `Older cat losing weight with a ravenous appetite = hyperthyroidism / DM until disproven`,
+            `PU/PD + polyphagia + weight loss = diabetes — a sick inappetent diabetic may be in ketoacidosis`,
+            `Marked weight + muscle loss with chronic inflammation or a known tumour = cachexia`,
+            `Any cat with chronic wasting — check retroviral status (FIV/FeLV)`,
+          ],
         },
         { kind: 'disclaimer' },
       ],
