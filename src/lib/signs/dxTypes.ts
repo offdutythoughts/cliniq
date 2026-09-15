@@ -96,8 +96,10 @@ export type DxBlock = DxArrowCtl & (
    *  style to the box (a few checks carry e.g. `font-size:10.5px;`). */
   | { kind: 'check'; html: string; style?: string }
   /** `.dx-row c{cols}` — a row of cards. `itemKind` selects the card class:
-   *  'test' (default, teal `.dx-test`) or 'check' (dark `.dx-check`). */
-  | { kind: 'row'; cols?: number; items: DxCard[]; itemKind?: 'test' | 'check' }
+   *  'test' (default, teal `.dx-test`) or 'check' (dark `.dx-check`).
+   *  `label` is the same quiet teal caption `gridTable` takes — use it when
+   *  consecutive rows are separate questions rather than one wrapped set. */
+  | { kind: 'row'; cols?: number; items: DxCard[]; itemKind?: 'test' | 'check'; label?: string }
   /** `.dx-alert` — the "Practical pearls" box at the foot of a tab (html body).
    *  Named `pearls`, not `alert`: the flowcharts already have an `alert`, and it
    *  is a different thing entirely — a structured DON'T-MISS list of

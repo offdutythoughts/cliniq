@@ -14,12 +14,18 @@ export const wetEyeDx: DxApproach = {
     title: 'History: Wet Eye',
     blocks: [
       { kind: 'goal', text: 'CHARACTERISE THE EPIPHORA' },
+
+      // Two independent questions, not three peer cards. Pain IS the
+      // production-vs-drainage fork, so its arms are a matched pair carrying
+      // the same blue/teal the flowchart gives INCREASED PRODUCTION / REDUCED
+      // DRAINAGE. Discharge character is a separate axis and gets its own band.
       {
         kind: 'row',
-        cols: 3,
+        cols: 2,
+        label: 'Painful or not — production vs drainage',
         items: [
           {
-            style: 'text-align:left;font-size:9px;',
+            style: 'text-align:left;background:rgba(var(--tone-info),var(--tile-bg-a));border:1px solid rgba(var(--tone-info),var(--tile-bd-a));color:var(--tone-info-fg);font-size:9px;',
             html: `<strong style="font-size:10px;">😣 Painful?</strong><br>
       Blepharospasm · rubbing<br>
       Photophobia · lacrimation<br>
@@ -32,11 +38,16 @@ export const wetEyeDx: DxApproach = {
       No squint, no rubbing<br>
       <span style="opacity:.75;">→ Drainage: NLS / conformational</span>`,
           },
+        ],
+      },
+      {
+        kind: 'row',
+        cols: 1,
+        label: 'Discharge character',
+        items: [
           {
             style: 'text-align:left;font-size:9px;',
-            html: `<strong style="font-size:10px;">🧪 Discharge character</strong><br>
-      Serous (clear) vs mucoid vs mucopurulent<br>
-      Unilateral vs bilateral<br>
+            html: `<strong style="font-size:10px;">🧪 Serous (clear) vs mucoid vs mucopurulent</strong> · unilateral vs bilateral<br>
       <span style="opacity:.75;">Mucopurulent → bacterial / dacryocystitis</span>`,
           },
         ],
