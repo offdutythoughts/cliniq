@@ -23,16 +23,16 @@ const ST_SECTION_STICKY = s('position:sticky;left:0;display:inline-block;')
 // copies of it across the 6px column gap and the row gaps above/below (`v` =
 // half a row gap, so consecutive rows meet) — the cell backgrounds alone leave
 // those gaps transparent, and scrolling glyphs show through the slivers. Every
-// copy stops at the gap, never over the next column. The first (topmost) layer
-// is the soft seam the columns disappear under. `--sticky-col-bg` is whatever
-// the table sits on: the page background unless a caller sets it (a boxed table
-// passes the panel tint composited over the page — otherwise the frozen column
-// reads as a paler strip).
+// copy stops at the gap, never over the next column, and nothing marks the
+// pinned edge — no rule, no shadow; the columns just slide under.
+// `--sticky-col-bg` is whatever the table sits on: the page background unless a
+// caller sets it (a boxed table passes the panel tint composited over the page —
+// otherwise the frozen column reads as a paler strip).
 const stickyCol = (rowGap: number) => {
   const bg = 'var(--sticky-col-bg,var(--navy))'
   const v = Math.ceil(rowGap / 2)
   const cover = [`6px 0 0 ${bg}`, `0 ${v}px 0 ${bg}`, `0 -${v}px 0 ${bg}`, `6px ${v}px 0 ${bg}`, `6px -${v}px 0 ${bg}`]
-  return `position:sticky;left:0;z-index:1;background:${bg};box-shadow:5px 0 5px -5px rgba(var(--slate-muted),.55),${cover.join(',')};`
+  return `position:sticky;left:0;z-index:1;background:${bg};box-shadow:${cover.join(',')};`
 }
 
 function Cell({ c, header, sticky, onNav }: { c: TableCell; header?: boolean; sticky?: string; onNav: Nav }) {
