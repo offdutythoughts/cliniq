@@ -13,9 +13,15 @@ import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s, toneBox } from './style'
 import { NotFound } from './NotFound'
 import { GridTable } from './gridTable'
+import { PatternList } from './patternList'
 import { type Nav, Raw, ToneBox } from './flowHelpers'
 import { Tappable } from './Tappable'
 import { AuthoredHtml, DISCLAIMER, DiseaseGrid } from './sharedBlocks'
+
+/** The quiet teal caption above a table or a row of cards. --fs-label is the
+ *  scale's "uppercase section title" role; spelling it 10px inline, as both
+ *  call sites used to, put it outside the type scale. */
+const CAPTION = s('font-size:var(--fs-label);font-weight:700;color:var(--tone-teal-fg);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;')
 
 const STD_NAV: DxNavItem[] = [
   { key: 'history', label: '📋 History' },
@@ -69,11 +75,23 @@ function DxStep({ b, onNav }: { b: Extract<DxBlock, { kind: 'step' }>; onNav: Na
 function DxRow({ b, onNav }: { b: Extract<DxBlock, { kind: 'row' }>; onNav: Nav }) {
   const cols = b.cols ?? b.items.length
   const cls = b.itemKind === 'check' ? 'dx-check' : 'dx-test'
-  return (
+  const row = (
     <div className={`dx-row c${cols}`}>
       {b.items.map((c, i) => (
         <div key={i} className={cls} style={c.style ? s(c.style) : undefined}><Raw html={c.html} onNav={onNav} /></div>
       ))}
+    </div>
+  )
+  // Same quiet teal caption `gridTable` uses. A characterisation band that asks
+  // two independent questions needs to say so; without it, consecutive rows
+  // read as one set of cards that happened to wrap.
+  if (!b.label) return row
+  return (
+    <div style={s('width:100%;')}>
+      <div style={CAPTION}>
+        {b.label}
+      </div>
+      {row}
     </div>
   )
 }
@@ -263,10 +281,11 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
         </Tappable>
       )
     }
+    case 'patterns': return <PatternList rows={b.rows} label={b.label} caption={b.caption} gap={b.gap} onNav={onNav} />
     case 'gridTable': return (
       <div style={s(`margin-top:${b.gap ?? 10}px;width:100%;`)}>
         {b.label && (
-          <div style={s('font-size:10px;font-weight:700;color:var(--tone-teal-fg);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;')}>
+          <div style={CAPTION}>
             {b.label}
           </div>
         )}

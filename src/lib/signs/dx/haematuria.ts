@@ -3,7 +3,7 @@
 // ../haematuria.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable, numBadge } from './shared/dxHelpers'
+import { stepTable, stepPatterns, numBadge } from './shared/dxHelpers'
 
 export const haematuriaDx: DxApproach = {
   sign: 'haematuria',
@@ -174,24 +174,26 @@ export const haematuriaDx: DxApproach = {
         ],
       },
 
-      ...stepTable(3, 'PATTERN RECOGNITION', {
-        cols: '1fr 1.2fr',
-        dividers: true,
-        headers: ['Finding', { text: 'Most likely', tone: 'teal' }],
+      ...stepPatterns(3, 'PATTERN RECOGNITION', {
         rows: [
-          ['Female dog · pollakiuria + stranguria · culture-positive', { text: 'Bacterial cystitis (E. coli)', tone: 'warning' }],
-          ['Female dog · persistent haematuria · refractory to antibiotic · trigonal mass on US', { text: 'Bladder TCC (CADET BRAF)', tone: 'danger' }],
-          ['Cat &lt;10 yr · stress-related episodic LUTS · sterile urine', { text: 'Feline idiopathic cystitis (FIC)', tone: 'green' }],
-          ['Male cat · stranguria + abdominal pain + collapse + firm bladder', { text: 'Urethral obstruction (plug / urolith)', tone: 'danger' }],
-          ['Intact male dog · tenesmus / dyschezia · asymmetric prostate', { text: 'Prostatic adenocarcinoma', tone: 'danger' }],
-          ['Intact male dog · pyrexia + painful prostate + preputial reflux', { text: 'Bacterial prostatitis / abscess', tone: 'danger' }],
-          ['Older intact male · symmetric mildly enlarged prostate · preputial blood', { text: 'BPH', tone: 'warning' }],
-          ['Bitch · vulvar mucopurulent / sanguineous discharge · pyrexia · 4–8 wks post-oestrus', { text: 'Pyometra', tone: 'danger' }],
-          ['Bitch in season · sanguineous vulvar discharge · clinically well', { text: 'Oestrus (physiological)', tone: 'info' }],
-          ['Young dog with persistent unilateral renal haematuria', { text: 'Idiopathic renal haematuria', tone: 'violet' }],
-          ['Pale gums + petechiae + haematuria', { text: 'Thrombocytopenia / IMTP / DIC', tone: 'danger' }],
-          ['Pale gums + jaundice + haemoglobinuria', { text: 'IMHA / Babesia / oxidative haemolysis', tone: 'danger' }],
-          ['Severe trauma + myalgia + dark urine + ↑↑ CK', { text: 'Myoglobinuria (rhabdomyolysis)', tone: 'danger' }],
+          { section: 'Lower urinary tract — dog' },
+          { cues: ['Female dog', 'pollakiuria + stranguria', 'culture-positive'], dx: 'Bacterial cystitis (E. coli)', tone: 'warning' },
+          { cues: ['Female dog', 'persistent haematuria', 'refractory to antibiotic', 'trigonal mass on US'], dx: 'Bladder TCC (CADET BRAF)', tone: 'danger', emphasis: true },
+          { section: 'Lower urinary tract — cat' },
+          { cues: ['Cat &lt;10 yr', 'stress-related episodic LUTS', 'sterile urine'], dx: 'Feline idiopathic cystitis (FIC)', tone: 'green' },
+          { cues: ['Male cat', 'stranguria', 'abdominal pain', 'collapse', 'firm bladder'], dx: 'Urethral obstruction (plug / urolith)', tone: 'danger', emphasis: true },
+          { section: 'Prostate — intact male dog' },
+          { cues: ['Intact male dog', 'tenesmus / dyschezia', 'asymmetric prostate'], dx: 'Prostatic adenocarcinoma', tone: 'danger' },
+          { cues: ['Intact male dog', 'pyrexia + painful prostate', 'preputial reflux'], dx: 'Bacterial prostatitis / abscess', tone: 'danger' },
+          { cues: ['Older intact male', 'symmetric mildly enlarged prostate', 'preputial blood'], dx: 'BPH', tone: 'warning' },
+          { section: 'Reproductive tract — bitch' },
+          { cues: ['Bitch', 'vulvar mucopurulent / sanguineous discharge', 'pyrexia', '4–8 wks post-oestrus'], dx: 'Pyometra', tone: 'danger', emphasis: true },
+          { cues: ['Bitch in season', 'sanguineous vulvar discharge', 'clinically well'], dx: 'Oestrus (physiological)', tone: 'info' },
+          { section: 'Kidney · systemic · pigmenturia' },
+          { cues: ['Young dog with persistent unilateral renal haematuria'], dx: 'Idiopathic renal haematuria', tone: 'violet' },
+          { cues: ['Pale gums', 'petechiae', 'haematuria'], dx: 'Thrombocytopenia / IMTP / DIC', tone: 'danger', emphasis: true },
+          { cues: ['Pale gums', 'jaundice', 'haemoglobinuria'], dx: 'IMHA / Babesia / oxidative haemolysis', tone: 'danger' },
+          { cues: ['Severe trauma', 'myalgia', 'dark urine', '↑↑ CK'], dx: 'Myoglobinuria (rhabdomyolysis)', tone: 'danger' },
         ],
       }, '🔍'),
     ],

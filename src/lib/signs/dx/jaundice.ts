@@ -3,7 +3,7 @@
 // the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable, numBadge } from './shared/dxHelpers'
+import { stepTable, stepPatterns, numBadge } from './shared/dxHelpers'
 
 export const jaundiceDx: DxApproach = {
   sign: 'jaundice',
@@ -88,17 +88,15 @@ export const jaundiceDx: DxApproach = {
         ],
       }, '🩺'),
 
-      ...stepTable(2, 'TARGETED PHYSICAL FINDINGS', {
-        cols: '1fr 1.2fr',
-        dividers: true,
-        headers: ['Finding', { text: 'Most likely', tone: 'teal' }],
+      ...stepPatterns(2, 'TARGETED PHYSICAL FINDINGS', {
+        caption: 'Physical finding → most likely',
         rows: [
-          ['Pallor + icterus (± tachycardia, weakness)', { text: 'Pre-hepatic haemolysis', tone: 'danger' }],
-          ['Pyrexia', { text: 'FIP · neutrophilic cholangitis · sepsis', tone: 'warning' }],
-          ['Hepatomegaly', { text: 'Lipidosis · lymphocytic cholangitis · neoplasia', tone: 'green' }],
-          ['Cranial abdominal pain', { text: 'Pancreatitis · acute cholangitis · cholecystitis', tone: 'danger' }],
-          ['Ascites', { text: 'Lymphocytic cholangitis · FIP · neoplasia', tone: 'info' }],
-          ['Respiratory compromise (pleural effusion)', { text: 'FIP · neoplasia', tone: 'info' }],
+          { cues: ['Pallor + icterus (± tachycardia, weakness)'], dx: 'Pre-hepatic haemolysis', tone: 'danger', emphasis: true },
+          { cues: ['Pyrexia'], dx: 'FIP · neutrophilic cholangitis · sepsis', tone: 'warning' },
+          { cues: ['Hepatomegaly'], dx: 'Lipidosis · lymphocytic cholangitis · neoplasia', tone: 'green' },
+          { cues: ['Cranial abdominal pain'], dx: 'Pancreatitis · acute cholangitis · cholecystitis', tone: 'danger' },
+          { cues: ['Ascites'], dx: 'Lymphocytic cholangitis · FIP · neoplasia', tone: 'info' },
+          { cues: ['Respiratory compromise (pleural effusion)'], dx: 'FIP · neoplasia', tone: 'info' },
         ],
       }, '🔍'),
 

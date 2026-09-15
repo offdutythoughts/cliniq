@@ -39,6 +39,41 @@ export type DxGridTableBlock = {
   gap?: number
 }
 
+/** One pattern in a `patterns` block: the discriminating findings, and the
+ *  diagnosis they point at. `cues` holds the findings **one concept per entry**
+ *  — the renderer separates them with a dim `·`, so never pack several into one
+ *  string with `+`/`·`. `tone` colours the diagnosis and the card's left rail;
+ *  `emphasis` marks a can't-miss pattern (the card takes the tone's tint);
+ *  `note` is a short qualifier shown after the diagnosis in muted type. */
+export type PatternRow = {
+  cues: string[]
+  dx: string
+  tone?: Tone
+  note?: string
+  emphasis?: boolean
+}
+
+/** A pattern list row: either a pattern, or a `section` separator that opens a
+ *  collapsible group (matching `TableRow`'s section convention). Sections are
+ *  collapsed on arrival; `open` expands one from the start. */
+export type PatternListRow = PatternRow | { section: string; open?: boolean }
+
+/** The finding → most-likely-diagnosis list behind a "PATTERN RECOGNITION"
+ *  step. A `gridTable` says the same thing in two columns, but at phone width a
+ *  dozen `+`-joined findings wrap into a wall: here each pattern is its own
+ *  card (cues, then the diagnosis behind a tone-coloured rail) and `section`
+ *  rows collapse the list into a short menu of presentations. Reach for
+ *  `gridTable` when the columns are genuinely comparable values, and for this
+ *  when the second column is a conclusion drawn from the first.
+ *  `caption` overrides the default legend; pass `''` to drop it. */
+export type DxPatternsBlock = {
+  kind: 'patterns'
+  rows: PatternListRow[]
+  label?: string
+  caption?: string
+  gap?: number
+}
+
 /** One breed → clue entry inside a `breedClues` block. `breeds` are the chip
  *  labels the reader picks from; a breed may appear in several entries (Cocker
  *  is both a glaucoma and a cataract breed) and every match is shown. */
@@ -96,8 +131,10 @@ export type DxBlock = DxArrowCtl & (
    *  style to the box (a few checks carry e.g. `font-size:10.5px;`). */
   | { kind: 'check'; html: string; style?: string }
   /** `.dx-row c{cols}` — a row of cards. `itemKind` selects the card class:
-   *  'test' (default, teal `.dx-test`) or 'check' (dark `.dx-check`). */
-  | { kind: 'row'; cols?: number; items: DxCard[]; itemKind?: 'test' | 'check' }
+   *  'test' (default, teal `.dx-test`) or 'check' (dark `.dx-check`).
+   *  `label` is the same quiet teal caption `gridTable` takes — use it when
+   *  consecutive rows are separate questions rather than one wrapped set. */
+  | { kind: 'row'; cols?: number; items: DxCard[]; itemKind?: 'test' | 'check'; label?: string }
   /** `.dx-alert` — the "Practical pearls" box at the foot of a tab (html body).
    *  Named `pearls`, not `alert`: the flowcharts already have an `alert`, and it
    *  is a different thing entirely — a structured DON'T-MISS list of
@@ -121,6 +158,8 @@ export type DxBlock = DxArrowCtl & (
   | { kind: 'accordion'; items: { title: string; html: string }[]; cols?: number }
   /** Compact grid comparison table (same renderer as the flowchart tables). */
   | DxGridTableBlock
+  /** Finding → most-likely-diagnosis pattern list (see DxPatternsBlock). */
+  | DxPatternsBlock
   /** Breed / signalment picker (see DxBreedCluesBlock). */
   | DxBreedCluesBlock
   /** Canine-vs-feline feature cards (see DxSpeciesDiffBlock). */

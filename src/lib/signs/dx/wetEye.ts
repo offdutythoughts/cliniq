@@ -3,7 +3,7 @@
 // ../wetEye.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable, numBadge } from './shared/dxHelpers'
+import { stepTable, stepPatterns, numBadge } from './shared/dxHelpers'
 
 export const wetEyeDx: DxApproach = {
   sign: 'wet-eye',
@@ -14,12 +14,18 @@ export const wetEyeDx: DxApproach = {
     title: 'History: Wet Eye',
     blocks: [
       { kind: 'goal', text: 'CHARACTERISE THE EPIPHORA' },
+
+      // Two independent questions, not three peer cards. Pain IS the
+      // production-vs-drainage fork, so its arms are a matched pair carrying
+      // the same blue/teal the flowchart gives INCREASED PRODUCTION / REDUCED
+      // DRAINAGE. Discharge character is a separate axis and gets its own band.
       {
         kind: 'row',
-        cols: 3,
+        cols: 2,
+        label: 'Painful or not — production vs drainage',
         items: [
           {
-            style: 'text-align:left;font-size:9px;',
+            style: 'text-align:left;background:rgba(var(--tone-info),var(--tile-bg-a));border:1px solid rgba(var(--tone-info),var(--tile-bd-a));color:var(--tone-info-fg);font-size:9px;',
             html: `<strong style="font-size:10px;">😣 Painful?</strong><br>
       Blepharospasm · rubbing<br>
       Photophobia · lacrimation<br>
@@ -32,11 +38,16 @@ export const wetEyeDx: DxApproach = {
       No squint, no rubbing<br>
       <span style="opacity:.75;">→ Drainage: NLS / conformational</span>`,
           },
+        ],
+      },
+      {
+        kind: 'row',
+        cols: 1,
+        label: 'Discharge character',
+        items: [
           {
             style: 'text-align:left;font-size:9px;',
-            html: `<strong style="font-size:10px;">🧪 Discharge character</strong><br>
-      Serous (clear) vs mucoid vs mucopurulent<br>
-      Unilateral vs bilateral<br>
+            html: `<strong style="font-size:10px;">🧪 Serous (clear) vs mucoid vs mucopurulent</strong> · unilateral vs bilateral<br>
       <span style="opacity:.75;">Mucopurulent → bacterial / dacryocystitis</span>`,
           },
         ],
@@ -132,21 +143,22 @@ export const wetEyeDx: DxApproach = {
         ],
       }, '👁️'),
 
-      ...stepTable(3, 'PATTERN RECOGNITION', {
-        cols: '1fr 1.2fr',
-        dividers: true,
-        headers: ['Finding', { text: 'Most likely', tone: 'teal' }],
+      ...stepPatterns(3, 'PATTERN RECOGNITION', {
         rows: [
-          ['Unilateral acute serous epiphora + blepharospasm + FB visible', { text: 'Conjunctival / corneal FB · ectopic cilia', tone: 'danger' }],
-          ['Unilateral acute + fluorescein-positive defect + reflex miosis', { text: 'Ulcerative keratitis (with reflex uveitis)', tone: 'danger' }],
-          ['Bilateral mucopurulent + lower STT + dull cornea', { text: 'Keratoconjunctivitis sicca (KCS)', tone: 'warning' }],
-          ['Bilateral serous + chemosis + atopic dermatitis', { text: 'Allergic conjunctivitis', tone: 'green' }],
-          ['Bilateral serous + sneezing + nasal discharge + young cat', { text: 'Feline URTI (FHV-1 · FCV · Chlamydia)', tone: 'green' }],
-          ['Unilateral chronic mucopurulent + medial canthal swelling + reflux on lacrimal sac press', { text: 'Dacryocystitis', tone: 'warning' }],
-          ['Chronic bilateral wet eye in young dog + no discomfort + small / absent puncta', { text: 'Congenital puncta atresia / micropuncta', tone: 'info' }],
-          ['Chronic unilateral wet eye + epistaxis ± facial deformity + older animal', { text: 'Nasal / orbital neoplasia', tone: 'danger' }],
-          ['Concurrent entropion + ectropion + macroblepharon (large eyelid opening)', { text: 'Diamond eye conformation', tone: 'warning' }],
-          ['Photophobia + blepharospasm but no surface lesion identified', { text: 'Anterior uveitis — rule out flare + IOP', tone: 'danger' }],
+          { section: 'Acute · unilateral' },
+          { cues: ['Unilateral acute serous epiphora', 'blepharospasm', 'FB visible'], dx: 'Conjunctival / corneal FB · ectopic cilia', tone: 'danger' },
+          { cues: ['Unilateral acute', 'fluorescein-positive defect', 'reflex miosis'], dx: 'Ulcerative keratitis', note: '(with reflex uveitis)', tone: 'danger' },
+          { section: 'Bilateral' },
+          { cues: ['Bilateral mucopurulent', 'lower STT', 'dull cornea'], dx: 'Keratoconjunctivitis sicca (KCS)', tone: 'warning' },
+          { cues: ['Bilateral serous', 'chemosis', 'atopic dermatitis'], dx: 'Allergic conjunctivitis', tone: 'green' },
+          { cues: ['Bilateral serous', 'sneezing', 'nasal discharge', 'young cat'], dx: 'Feline URTI (FHV-1 · FCV · Chlamydia)', tone: 'green' },
+          { section: 'Chronic' },
+          { cues: ['Unilateral chronic mucopurulent', 'medial canthal swelling', 'reflux on lacrimal sac press'], dx: 'Dacryocystitis', tone: 'warning' },
+          { cues: ['Chronic bilateral wet eye in young dog', 'no discomfort', 'small / absent puncta'], dx: 'Congenital puncta atresia / micropuncta', tone: 'info' },
+          { cues: ['Chronic unilateral wet eye', 'epistaxis ± facial deformity', 'older animal'], dx: 'Nasal / orbital neoplasia', tone: 'danger', emphasis: true },
+          { section: 'Other patterns' },
+          { cues: ['Concurrent entropion', 'ectropion', 'macroblepharon (large eyelid opening)'], dx: 'Diamond eye conformation', tone: 'warning' },
+          { cues: ['Photophobia', 'blepharospasm but no surface lesion identified'], dx: 'Anterior uveitis — rule out flare + IOP', tone: 'danger' },
         ],
       }, '🔍'),
 

@@ -4,7 +4,7 @@
 // Pilot for the Dx-view migration.
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable, numBadge } from './shared/dxHelpers'
+import { stepTable, stepPatterns, numBadge } from './shared/dxHelpers'
 
 export const epistaxisDx: DxApproach = {
   sign: 'epistaxis',
@@ -164,19 +164,18 @@ export const epistaxisDx: DxApproach = {
         ],
       }, '👁️'),
 
-      ...stepTable(5, 'PATTERN RECOGNITION', {
-        cols: '1fr 1.1fr',
-        dividers: true,
-        headers: ['Finding', { text: 'Most likely', tone: 'teal' }],
+      ...stepPatterns(5, 'PATTERN RECOGNITION', {
         rows: [
-          ['Chronic unilateral signs + facial deformity + ↓ retropulsion + submandibular LN', { text: 'Nasal neoplasia', tone: 'violet' }],
-          ['Nasal planum depigmentation / ulceration + marked nasal pain + fungal plaques', { text: 'Aspergillosis', tone: 'green' }],
-          ['Peracute violent sneezing + pawing at nose, outdoor dog', { text: 'Nasal foreign body', tone: 'warning' }],
-          ['Petechiae + ecchymoses + multiple-site mucosal bleeding', { text: 'Thrombocytopenia / IMTP', tone: 'danger' }],
-          ['Mucosal bleeding + normal platelet count (predisposed breed)', { text: 'vWD / thrombocytopathia', tone: 'warning' }],
-          ['Cavity bleed / haematoma + access to bait', { text: 'Anticoagulant rodenticide', tone: 'info' }],
-          ['Hyperglobulinaemia + hyperviscosity signs (retinal · neuro)', { text: 'Myeloma / hyperviscosity', tone: 'violet' }],
-          ['Retinal haemorrhage + thrombocytopenia + tick exposure', { text: 'Vector-borne disease', tone: 'violet' }],
+          { section: 'Local — nasal cavity' },
+          { cues: ['Chronic unilateral signs', 'facial deformity', '↓ retropulsion', 'submandibular LN'], dx: 'Nasal neoplasia', tone: 'violet', emphasis: true },
+          { cues: ['Nasal planum depigmentation / ulceration', 'marked nasal pain', 'fungal plaques'], dx: 'Aspergillosis', tone: 'green' },
+          { cues: ['Peracute violent sneezing', 'pawing at nose, outdoor dog'], dx: 'Nasal foreign body', tone: 'warning' },
+          { section: 'Systemic — haemostatic · vascular' },
+          { cues: ['Petechiae', 'ecchymoses', 'multiple-site mucosal bleeding'], dx: 'Thrombocytopenia / IMTP', tone: 'danger', emphasis: true },
+          { cues: ['Mucosal bleeding', 'normal platelet count (predisposed breed)'], dx: 'vWD / thrombocytopathia', tone: 'warning' },
+          { cues: ['Cavity bleed / haematoma', 'access to bait'], dx: 'Anticoagulant rodenticide', tone: 'info' },
+          { cues: ['Hyperglobulinaemia', 'hyperviscosity signs (retinal · neuro)'], dx: 'Myeloma / hyperviscosity', tone: 'violet' },
+          { cues: ['Retinal haemorrhage', 'thrombocytopenia', 'tick exposure'], dx: 'Vector-borne disease', tone: 'violet' },
         ],
       }, '🔍'),
     ],
