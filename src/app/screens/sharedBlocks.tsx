@@ -53,3 +53,33 @@ export const DISCLAIMER: ReactNode = (
 export function AuthoredHtml({ html, onNav }: { html: string; onNav: Nav }) {
   return <div className="flow-authored scroll-x"><Raw html={html} onNav={onNav} /></div>
 }
+
+/** The body of a `callout`, on both surfaces: either the `html` paragraph or
+ *  the `items` bullet list.
+ *
+ *  The bullets are a flex row per item rather than a `<ul>` with a marker,
+ *  because a red-flag bullet wraps to two or three lines on a phone and the
+ *  wrapped lines have to align under the first word, not under the dot — that
+ *  hanging indent is what lets the eye count the scenarios down the left edge.
+ *  The marker is aria-hidden: it is punctuation the list role already conveys.
+ *
+ *  `center` stays with the call sites (the two surfaces centre different
+ *  elements); the list only has to undo an inherited centring, because bullets
+ *  centred as a block lose the left edge they are counted down. */
+export function CalloutBody({ html, items, onNav }: {
+  html?: string; items?: string[]; onNav: Nav
+}) {
+  if (items?.length) {
+    return (
+      <div role="list" style={s('display:flex;flex-direction:column;gap:5px;text-align:left;')}>
+        {items.map((it, i) => (
+          <div key={i} role="listitem" style={s('display:flex;gap:7px;align-items:baseline;')}>
+            <span aria-hidden="true" style={s('flex:none;opacity:.6;')}>•</span>
+            <span style={s('flex:1;min-width:0;')}><Raw html={it} onNav={onNav} /></span>
+          </div>
+        ))}
+      </div>
+    )
+  }
+  return <Raw html={html ?? ''} onNav={onNav} />
+}

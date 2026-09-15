@@ -58,6 +58,13 @@ const { fail, note, done } = lint('prose')
 const strip = (s: string) => s.replace(/<[^>]+>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim()
 const words = (s: string) => (strip(s) ? strip(s).split(' ').length : 0)
 
+/** A callout carries EITHER `html` or `items` (see CalloutPayload). Bulleting a
+ *  box splits it into scenarios; it does not shorten it, so the cap has to see
+ *  the same total either way — count `items` or the rule silently stops
+ *  applying to every box that gets converted. */
+const bodyWords = (b: { html?: string; items?: string[] }) =>
+  words([String(b.html ?? ''), ...(b.items ?? [])].join(' '))
+
 // Traversal comes from lib/walk — every nesting block kind, handled in one place.
 for (const { pageId, block: b } of eachPageBlock()) {
   if (b.kind === 'fork') {
@@ -74,7 +81,7 @@ for (const { pageId, block: b } of eachPageBlock()) {
     }
   }
   if (b.kind === 'callout' || b.kind === 'infoBox' || b.kind === 'banner') {
-    const n = words(String(b.html ?? ''))
+    const n = bodyWords(b as { html?: string; items?: string[] })
     if (n > MAX_WORDS) {
       fail(`[${pageId}] ${b.kind} is ${n} words (max ${MAX_WORDS}) — turn the discriminators into a fork, a comparison table or step subItems, and keep the box for what is left.`)
     }
@@ -92,7 +99,7 @@ for (const [sign, approach] of Object.entries(DX)) {
     const blocks = [...tab.blocks, ...(tab.after ?? [])] as DxBlock[]
     for (const b of blocks) {
       if (!DX_PROSE.has(b.kind)) continue
-      const n = words(String((b as { html?: string }).html ?? ''))
+      const n = bodyWords(b as { html?: string; items?: string[] })
       if (n > MAX_WORDS) dxOffenders.push(`[${sign}/${tabKey}] ${b.kind} is ${n} words (max ${MAX_WORDS})`)
     }
   }

@@ -139,9 +139,17 @@ export const dyspnoeaDx: DxApproach = {
         kind: 'callout',
         tone: 'danger',
         title: '⚠️ RED FLAGS',
-        html: `<strong>Both:</strong> Open-mouth breathing · Cyanosis · Orthopnoea (cannot lie down) · Rapid deterioration despite O₂<br>
-      <strong>Feline:</strong> Open-mouth breathing = SEVERE (obligate nasal breather) · Cold paralysed hindlimbs + resp distress = ATE<br>
-      <strong>Canine:</strong> Exertional syncope → pulmonary hypertension · Goose-honk + cyanosis → severe collapse · Haemoptysis → PTE/coagulopathy/HW`,
+        items: [
+          `🐕🐱 Open-mouth breathing`,
+          `🐕🐱 Cyanosis`,
+          `🐕🐱 Orthopnoea (cannot lie down)`,
+          `🐕🐱 Rapid deterioration despite O₂`,
+          `🐱 Open-mouth breathing = SEVERE (obligate nasal breather)`,
+          `🐱 Cold paralysed hindlimbs + resp distress = ATE`,
+          `🐕 Exertional syncope → pulmonary hypertension`,
+          `🐕 Goose-honk + cyanosis → severe collapse`,
+          `🐕 Haemoptysis → PTE/coagulopathy/HW`,
+        ],
       },
       { kind: 'disclaimer' },
     ],
@@ -482,9 +490,18 @@ export const dyspnoeaDx: DxApproach = {
         kind: 'callout',
         tone: 'danger',
         title: '⚠️ RED FLAGS — IMMEDIATE ACTION',
-        html: `🐕🐱 Open-mouth breathing · Cyanosis (SpO₂ &lt;90%) · Orthopnoea — cannot lie down · Rapid deterioration despite O₂<br>
-      🐱 ATE (cold limbs + paralysis + resp distress) · Non-compressible cranial mediastinum<br>
-      🐕 Exertional syncope (→ pulmonary hypertension) · Goose-honk + cyanosis (→ severe tracheal collapse) · Haemoptysis (→ PTE/coagulopathy/HW) · Hyperthermia + upper airway obstruction (BOAS/laryngeal paralysis)`,
+        items: [
+          `🐕🐱 Open-mouth breathing`,
+          `🐕🐱 Cyanosis (SpO₂ &lt;90%)`,
+          `🐕🐱 Orthopnoea — cannot lie down`,
+          `🐕🐱 Rapid deterioration despite O₂`,
+          `🐱 ATE (cold limbs + paralysis + resp distress)`,
+          `🐱 Non-compressible cranial mediastinum`,
+          `🐕 Exertional syncope (→ pulmonary hypertension)`,
+          `🐕 Goose-honk + cyanosis (→ severe tracheal collapse)`,
+          `🐕 Haemoptysis (→ PTE/coagulopathy/HW)`,
+          `🐕 Hyperthermia + upper airway obstruction (BOAS/laryngeal paralysis)`,
+        ],
       },
       { kind: 'disclaimer' },
     ],

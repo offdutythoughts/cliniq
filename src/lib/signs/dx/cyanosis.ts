@@ -90,7 +90,12 @@ export const cyanosisDx: DxApproach = {
           kind: 'callout',
           tone: 'danger',
           title: ' RED FLAGS IN THE HISTORY',
-          html: `Acute distress + cyanosis = oxygen NOW, history later · Known paracetamol/benzocaine/nitrate access = methaemoglobinaemia until disproven (O2 won't fix it) · Lifelong exercise-limited cyanosis in a young animal = R→L cardiac shunt · Acute hind-limb pain + cyanotic pads in a cat = aortic thromboembolism.`,
+          items: [
+            `Acute distress + cyanosis = oxygen NOW, history later`,
+            `Known paracetamol/benzocaine/nitrate access = methaemoglobinaemia until disproven (O2 won't fix it)`,
+            `Lifelong exercise-limited cyanosis in a young animal = R→L cardiac shunt`,
+            `Acute hind-limb pain + cyanotic pads in a cat = aortic thromboembolism`,
+          ],
         },
         { kind: 'disclaimer' },
       ],

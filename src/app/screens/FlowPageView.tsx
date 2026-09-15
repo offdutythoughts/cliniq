@@ -23,7 +23,7 @@ import { NotFound } from './NotFound'
 import { ForkLines, type Nav, Raw, ToneBox } from './flowHelpers'
 import { NavCard } from './markup'
 import { Tappable, TapIf } from './Tappable'
-import { AuthoredHtml, DISCLAIMER, DiseaseGrid } from './sharedBlocks'
+import { AuthoredHtml, CalloutBody, DISCLAIMER, DiseaseGrid } from './sharedBlocks'
 import { GridTable } from './gridTable'
 
 
@@ -720,7 +720,7 @@ function CalloutBlock({ b, onNav }: { b: Extract<Block, { kind: 'callout' }>; on
   return (
     <Box tone={b.tone} extra={extra}>
       {b.title && <div style={{ ...ST_BLOCK_TITLE, color: TITLE[b.tone] ?? HUE[b.tone].color }}><Raw html={b.title} onNav={onNav} /></div>}
-      <Raw html={b.html} onNav={onNav} />
+      <CalloutBody html={b.html} items={b.items} onNav={onNav} />
     </Box>
   )
 }

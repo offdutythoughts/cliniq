@@ -80,7 +80,12 @@ export const tremorsDx: DxApproach = {
           kind: 'callout',
           tone: 'danger',
           title: ' RED FLAGS IN THE HISTORY',
-          html: `Acute generalised tremor + hyperthermia = toxic emergency (mycotoxin, metaldehyde, permethrin in a cat) — stabilise before investigating · Lactating bitch tremoring/twitching = eclampsia (ionised calcium) · Fasting/exertional collapse with tremor = hypoglycaemia/insulinoma · Anything suggesting impaired consciousness or autonomic signs = treat as a seizure.`,
+          items: [
+            `Acute generalised tremor + hyperthermia = toxic emergency (mycotoxin, metaldehyde, permethrin in a cat) — stabilise before investigating`,
+            `Lactating bitch tremoring/twitching = eclampsia (ionised calcium)`,
+            `Fasting/exertional collapse with tremor = hypoglycaemia/insulinoma`,
+            `Anything suggesting impaired consciousness or autonomic signs = treat as a seizure`,
+          ],
         },
         { kind: 'disclaimer' },
       ],

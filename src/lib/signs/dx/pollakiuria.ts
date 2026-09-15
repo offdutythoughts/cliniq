@@ -70,7 +70,11 @@ export const pollakiuriaDx: DxApproach = {
           kind: 'callout',
           tone: 'danger',
           title: '⚠️ RED FLAGS IN THE HISTORY',
-          html: `A male cat straining unproductively = treat as obstructed until disproven · LUTS + fever / PU-PD / azotaemia = ascending pyelonephritis · Persistent LUTS in an older patient not responding to antibiotics = neoplasia until excluded.`,
+          items: [
+            `A male cat straining unproductively = treat as obstructed until disproven`,
+            `LUTS + fever / PU-PD / azotaemia = ascending pyelonephritis`,
+            `Persistent LUTS in an older patient not responding to antibiotics = neoplasia until excluded`,
+          ],
         },
         { kind: 'disclaimer' },
       ],

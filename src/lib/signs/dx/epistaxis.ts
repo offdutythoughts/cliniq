@@ -106,7 +106,12 @@ export const epistaxisDx: DxApproach = {
         kind: 'callout',
         tone: 'danger',
         title: '⚠️ RED FLAGS IN THE HISTORY',
-        html: `Bleeding at multiple sites + lethargy / weight loss = systemic disease until proven otherwise · Young animal with lifelong/recurrent bleeding = inherited coagulopathy — test before any surgery · Possible rodenticide access = empirical Vitamin K1 now · Chronic unilateral nasal signs in an older dolichocephalic dog = neoplasia high on list.`,
+        items: [
+          `Bleeding at multiple sites + lethargy / weight loss = systemic disease until proven otherwise`,
+          `Young animal with lifelong/recurrent bleeding = inherited coagulopathy — test before any surgery`,
+          `Possible rodenticide access = empirical Vitamin K1 now`,
+          `Chronic unilateral nasal signs in an older dolichocephalic dog = neoplasia high on list`,
+        ],
       },
       { kind: 'disclaimer' },
     ],

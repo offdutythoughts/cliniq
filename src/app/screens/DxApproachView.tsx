@@ -16,7 +16,7 @@ import { GridTable } from './gridTable'
 import { PatternList } from './patternList'
 import { type Nav, Raw, ToneBox } from './flowHelpers'
 import { Tappable } from './Tappable'
-import { AuthoredHtml, DISCLAIMER, DiseaseGrid } from './sharedBlocks'
+import { AuthoredHtml, CalloutBody, DISCLAIMER, DiseaseGrid } from './sharedBlocks'
 
 /** The quiet teal caption above a table or a row of cards. --fs-label is the
  *  scale's "uppercase section title" role; spelling it 10px inline, as both
@@ -104,7 +104,9 @@ function DxCallout({ b, onNav }: { b: Extract<DxBlock, { kind: 'callout' }>; onN
           have to honour them — a field the type advertises and this renderer
           dropped would be a silent no-op for whoever authored it. */}
       {b.title && <div style={s(`font-size:10px;font-weight:700;color:${TITLE[b.tone] ?? h.color};margin-bottom:4px;`)}>{b.title}</div>}
-      <div style={s(`font-size:10px;color:${h.color};line-height:1.6;${b.center ? 'text-align:center;' : ''}`)}><Raw html={b.html} onNav={onNav} /></div>
+      <div style={s(`font-size:10px;color:${h.color};line-height:1.6;${b.center ? 'text-align:center;' : ''}`)}>
+        <CalloutBody html={b.html} items={b.items} onNav={onNav} />
+      </div>
     </ToneBox>
   )
 }
