@@ -140,7 +140,7 @@ export type DxRowBlock = Connectable & { kind: 'dxRow'; items: LabeledLink[] }
  *  localisation grids) instead of taking its column's tone.
  *  Rows may be a `{ section: string }` to render a full-width section divider. */
 export type TableCell = string | { text: string; tone?: Tone; dim?: boolean }
-export type TableRow = TableCell[] | { section: string }
+export type TableRow = TableCell[] | { section: string; tone?: Tone }
 export type TableBlock = Connectable & {
   kind: 'table'
   cols: string

@@ -14,6 +14,9 @@ import { type Nav, Raw } from './flowHelpers'
 
 const ST_SECTION_LABEL = s('grid-column:1/-1;padding:4px 0 2px;font-size:var(--fs-chip-sub);font-weight:700;color:var(--gray2);letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid rgba(var(--slate-muted),.08);margin-top:2px;')
 const ST_ROW_DIVIDER   = s('grid-column:1/-1;height:1px;background:rgba(var(--slate-muted),.2);')
+// A section label may carry a `tone` when the band itself is the finding (the
+// pupil-sign tables label bands "Drugs → mydriasis" instead of repeating a
+// per-row pupil cell), in which case it takes that hue instead of --gray2.
 // Section labels span the full width, so they have no pinned cell above them —
 // the text itself pins instead, keeping the band label in the frozen column.
 const ST_SECTION_STICKY = s('position:sticky;left:0;display:inline-block;')
@@ -79,7 +82,7 @@ export function GridTable({ cols, headers, rows, dividers, stickyFirstCol, scrol
             </Fragment>
           )
           : (
-            <div key={`s${ri}`} style={ST_SECTION_LABEL}>
+            <div key={`s${ri}`} style={row.tone ? { ...ST_SECTION_LABEL, color: HUE[row.tone].color } : ST_SECTION_LABEL}>
               {stickyFirstCol ? <span style={ST_SECTION_STICKY}>{row.section}</span> : row.section}
             </div>
           )

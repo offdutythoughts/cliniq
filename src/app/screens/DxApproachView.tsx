@@ -253,6 +253,8 @@ function DxSpeciesDiff({ b, onNav }: { b: Extract<DxBlock, { kind: 'speciesDiff'
   const catH = HUE.orange
   // A word, not an emoji: 🐕 and 🐈 are the same small brown shape at 9px, and
   // which species a line belongs to is the one thing that must never be guessed.
+  // Lower case, not caps — the label is a quiet gutter marker beside the finding,
+  // and the feature heading above is already the shouting row.
   const line = (label: string, hh: { rgb: string; color: string }, html: string) => (
     <div style={s('display:flex;gap:7px;align-items:baseline;')}>
       <span style={s(`flex-shrink:0;font-size:var(--fs-chip-sub);font-weight:700;letter-spacing:.06em;color:${hh.color};width:22px;`)}>{label}</span>
@@ -268,8 +270,8 @@ function DxSpeciesDiff({ b, onNav }: { b: Extract<DxBlock, { kind: 'speciesDiff'
         <div key={i} style={s('border-radius:9px;padding:8px 10px;background:var(--card);border:1px solid var(--border);font-size:var(--fs-box);line-height:1.55;color:var(--gray);')}>
           <div style={s('font-size:var(--fs-chip);font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--tone-indigo-fg);margin-bottom:5px;')}>{r.feature}</div>
           <div style={s('display:flex;flex-direction:column;gap:4px;')}>
-            {line('DOG', dogH, r.dog)}
-            {line('CAT', catH, r.cat)}
+            {line('dog', dogH, r.dog)}
+            {line('cat', catH, r.cat)}
           </div>
         </div>
       ))}
