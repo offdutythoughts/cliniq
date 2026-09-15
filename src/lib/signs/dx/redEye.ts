@@ -3,7 +3,7 @@
 // ../redEye.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable, numBadge } from './shared/dxHelpers'
+import { stepTable, stepPatterns, numBadge } from './shared/dxHelpers'
 
 export const redEyeDx: DxApproach = {
   sign: 'red-eye',
@@ -214,24 +214,26 @@ export const redEyeDx: DxApproach = {
         ],
       },
 
-      ...stepTable(4, 'KEY DISCRIMINATORS — PATTERN RECOGNITION', {
-        cols: '1fr 1fr',
-        dividers: true,
-        headers: ['Finding', { text: 'Most likely', tone: 'teal' }],
+      ...stepPatterns(4, 'KEY DISCRIMINATORS — PATTERN RECOGNITION', {
         rows: [
-          ['Conjunctival redness · normal cornea/pupil · ↑ tearing', { text: 'Conjunctivitis (allergic · bacterial · viral)', tone: 'green' }],
-          ['Conjunctival redness · mucoid discharge · dull cornea · low STT', { text: 'Keratoconjunctivitis sicca (KCS)', tone: 'warning' }],
-          ['Fluorescein +ve corneal defect · pain · neovascularisation', { text: 'Ulcerative keratitis', tone: 'danger' }],
-          ['Fluorescein +ve + stromal melt / mucopurulent', { text: 'Infected / melting ulcer — emergency', tone: 'danger' }],
-          ['Episcleral injection · miosis · aqueous flare · ↓ IOP', { text: 'Anterior uveitis', tone: 'danger' }],
-          ['Episcleral injection · mydriasis · diffuse oedema · ↑ IOP &gt;25', { text: 'Acute glaucoma — emergency', tone: 'danger' }],
-          ['Painful exophthalmos + pain on opening mouth', { text: 'Orbital cellulitis / abscess', tone: 'danger' }],
-          ['Chronic non-painful exophthalmos', { text: 'Orbital neoplasia until proven otherwise', tone: 'warning' }],
-          ['Hyphaema + bilateral · retinal detachment', { text: 'Systemic hypertension', tone: 'danger' }],
-          ['Pigmented iris lesion · ↑ IOP · raised + transilluminating?', { text: 'Iris cyst (benign) vs melanoma (solid)', tone: 'warning' }],
-          ['Black corneal plaque · cat', { text: 'Corneal sequestrum', tone: 'violet' }],
-          ['Conjunctival follicles + nasal/oral lesions + young cat', { text: 'FHV-1 / FCV viral conjunctivitis', tone: 'green' }],
-          ['GSD + bilateral lateral pigmented corneal vascularisation', { text: 'Pannus (chronic superficial keratitis)', tone: 'info' }],
+          { section: 'Conjunctiva · tear film' },
+          { cues: ['Conjunctival redness', 'normal cornea/pupil', '↑ tearing'], dx: 'Conjunctivitis (allergic · bacterial · viral)', tone: 'green' },
+          { cues: ['Conjunctival redness', 'mucoid discharge', 'dull cornea', 'low STT'], dx: 'Keratoconjunctivitis sicca (KCS)', tone: 'warning' },
+          { section: 'Cornea' },
+          { cues: ['Fluorescein +ve corneal defect', 'pain', 'neovascularisation'], dx: 'Ulcerative keratitis', tone: 'danger' },
+          { cues: ['Fluorescein +ve', 'stromal melt / mucopurulent'], dx: 'Infected / melting ulcer — emergency', tone: 'danger', emphasis: true },
+          { section: 'Intraocular' },
+          { cues: ['Episcleral injection', 'miosis', 'aqueous flare', '↓ IOP'], dx: 'Anterior uveitis', tone: 'danger' },
+          { cues: ['Episcleral injection', 'mydriasis', 'diffuse oedema', '↑ IOP &gt;25'], dx: 'Acute glaucoma — emergency', tone: 'danger', emphasis: true },
+          { section: 'Orbit' },
+          { cues: ['Painful exophthalmos', 'pain on opening mouth'], dx: 'Orbital cellulitis / abscess', tone: 'danger' },
+          { cues: ['Chronic non-painful exophthalmos'], dx: 'Orbital neoplasia until proven otherwise', tone: 'warning' },
+          { section: 'Other patterns' },
+          { cues: ['Hyphaema + bilateral', 'retinal detachment'], dx: 'Systemic hypertension', tone: 'danger', emphasis: true },
+          { cues: ['Pigmented iris lesion', '↑ IOP', 'raised + transilluminating?'], dx: 'Iris cyst (benign) vs melanoma (solid)', tone: 'warning' },
+          { cues: ['Black corneal plaque', 'cat'], dx: 'Corneal sequestrum', tone: 'violet' },
+          { cues: ['Conjunctival follicles', 'nasal/oral lesions', 'young cat'], dx: 'FHV-1 / FCV viral conjunctivitis', tone: 'green' },
+          { cues: ['GSD', 'bilateral lateral pigmented corneal vascularisation'], dx: 'Pannus (chronic superficial keratitis)', tone: 'info' },
         ],
       }, '🔍'),
     ],

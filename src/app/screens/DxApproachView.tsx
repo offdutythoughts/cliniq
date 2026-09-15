@@ -13,6 +13,7 @@ import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s, toneBox } from './style'
 import { NotFound } from './NotFound'
 import { GridTable } from './gridTable'
+import { PatternList } from './patternList'
 import { type Nav, Raw, ToneBox } from './flowHelpers'
 import { Tappable } from './Tappable'
 import { AuthoredHtml, DISCLAIMER, DiseaseGrid } from './sharedBlocks'
@@ -280,6 +281,7 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
         </Tappable>
       )
     }
+    case 'patterns': return <PatternList rows={b.rows} label={b.label} caption={b.caption} gap={b.gap} onNav={onNav} />
     case 'gridTable': return (
       <div style={s(`margin-top:${b.gap ?? 10}px;width:100%;`)}>
         {b.label && (

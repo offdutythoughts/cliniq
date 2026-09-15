@@ -1,7 +1,7 @@
 // ── Diagnostic-approach authoring helpers ────────────────────────────────────
 // Small utilities that reduce boilerplate when building DxTab block arrays.
 
-import type { DxBlock, DxGridTableBlock } from '../../dxTypes'
+import type { DxBlock, DxGridTableBlock, DxPatternsBlock } from '../../dxTypes'
 
 /**
  * Returns a `[step, check]` pair for a numbered diagnostic step.
@@ -55,6 +55,38 @@ export function stepTable(
   return [
     { kind: 'step', text: `${icon ? `${icon} ` : ''}STEP ${n} — ${title}`, noArrowAfter: true },
     { kind: 'gridTable', ...table },
+  ]
+}
+
+/**
+ * The pattern-list sibling of `stepTable` — returns a `[step, patterns]` pair.
+ *
+ * Use it where the second column is a *conclusion* rather than a comparable
+ * value ("finding → most likely"): the cards read better than two columns at
+ * phone width, and `section` rows fold a long list into a menu.
+ *
+ * ```ts
+ * blocks: [
+ *   ...stepPatterns(3, 'PATTERN RECOGNITION', {
+ *     rows: [
+ *       { section: 'Acute · unilateral' },
+ *       { cues: ['Unilateral acute', 'fluorescein-positive defect'], dx: 'Ulcerative keratitis', tone: 'danger' },
+ *     ],
+ *   }, '🔍'),
+ * ]
+ * ```
+ *
+ * `icon` behaves exactly as it does in `stepPair`.
+ */
+export function stepPatterns(
+  n: number,
+  title: string,
+  list: Omit<DxPatternsBlock, 'kind'>,
+  icon?: string,
+): [DxBlock, DxBlock] {
+  return [
+    { kind: 'step', text: `${icon ? `${icon} ` : ''}STEP ${n} — ${title}`, noArrowAfter: true },
+    { kind: 'patterns', ...list },
   ]
 }
 
