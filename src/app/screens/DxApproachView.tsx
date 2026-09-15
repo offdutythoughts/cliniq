@@ -207,7 +207,27 @@ function DxBreedClues({ b, onNav }: { b: Extract<DxBlock, { kind: 'breedClues' }
         )}
       </select>
 
-      {shown.length > 0 && (
+      {/* With a breed picked, the breed is named once and its clues sit under it:
+        * the other breeds sharing each clue are noise you did not ask for, and a
+        * box per differential makes two diseases of one patient look unrelated.
+        * "Show all" has no single subject, so there each clue keeps its breeds. */}
+      {shown.length > 0 && (sel ? (
+        <div style={s(`margin-top:7px;border-radius:8px;padding:7px 9px;font-size:10px;line-height:1.55;background:rgba(${h.rgb},var(--tile-bg-a));color:var(--gray);border-left:2px solid rgba(${h.rgb},var(--tile-bd-a));`)}>
+          <span style={s(`font-weight:700;color:${h.color};`)}>{sel}</span>
+          {shown.length === 1
+            ? <>{' — '}<Raw html={shown[0].html} onNav={onNav} /></>
+            : (
+              <div style={s('display:flex;flex-direction:column;gap:3px;margin-top:4px;')}>
+                {shown.map((c, i) => (
+                  <div key={i} style={s('display:flex;gap:6px;')}>
+                    <span style={s(`flex-shrink:0;color:${h.color};`)}>·</span>
+                    <span style={s('flex:1;min-width:0;')}><Raw html={c.html} onNav={onNav} /></span>
+                  </div>
+                ))}
+              </div>
+            )}
+        </div>
+      ) : (
         <div style={s('display:flex;flex-direction:column;gap:5px;margin-top:7px;')}>
           {shown.map((c, i) => {
             const ch = HUE[c.tone ?? 'teal']
@@ -219,7 +239,7 @@ function DxBreedClues({ b, onNav }: { b: Extract<DxBlock, { kind: 'breedClues' }
             )
           })}
         </div>
-      )}
+      ))}
     </ToneBox>
   )
 }
