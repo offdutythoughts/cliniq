@@ -58,9 +58,18 @@ const NavCtx = createContext<Nav | null>(null)
 /** Which bottom-nav tab a screen belongs under. A deep link arrives with no
  *  history behind it, so the tab has to be inferred or the reader lands with
  *  the wrong section highlighted. Mirrors KIND_SECTION in view.ts. */
-const TAB_FOR_KIND: Record<View['kind'], Tab> = {
-  tab: 0, flow: 0, dx: 1, disease: 2, protocol: 4,
+const TAB_FOR_KIND: Record<Exclude<View['kind'], 'tab'>, Tab> = {
+  flow: 0, dx: 1, disease: 2, protocol: 4,
   lesionLoc: 0, subTypeDetail: 0, diff: 0,
+}
+
+/** A tab root already names its own tab; only the other kinds have to be
+ *  inferred. The table used to carry a `tab: 0` row and every caller looked the
+ *  tab root up by kind, which pinned it to 0 — so popping back to a tab root
+ *  from a dx or disease page dropped the reader on Clinical whatever tab they
+ *  had actually come from. */
+function tabForView(v: View): Tab {
+  return v.kind === 'tab' ? v.tab : TAB_FOR_KIND[v.kind] ?? 0
 }
 
 /** What we keep on each history entry: the back trail as of that entry. */
@@ -83,7 +92,7 @@ export function NavProvider({ children, initialView }: { children: ReactNode; in
   const [st, setSt] = useState<NavState>(() => {
     const v = initialView ?? { kind: 'tab' as const, tab: 0 as Tab }
     return {
-      tab: TAB_FOR_KIND[v.kind] ?? 0,
+      tab: tabForView(v),
       // A deep link opens ON its screen, so it is the whole trail. Back from
       // there leaves for wherever the reader came from, which is correct — the
       // app never had that page's parent in this session.
@@ -137,10 +146,10 @@ export function NavProvider({ children, initialView }: { children: ReactNode; in
     if (saved) {
       const top = saved.length ? saved[saved.length - 1] : undefined
       // eslint-disable-next-line react-hooks/set-state-in-effect -- see above
-      commit('none', saved, top ? TAB_FOR_KIND[top.kind] ?? st.tab : st.tab, 'right')
+      commit('none', saved, top ? tabForView(top) : st.tab, 'right')
       return
     }
-    commit('replace', v.kind === 'tab' ? [] : [v], TAB_FOR_KIND[v.kind] ?? 0, 'right')
+    commit('replace', v.kind === 'tab' ? [] : [v], tabForView(v), 'right')
     // Once, for the entry we mounted on.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -160,7 +169,7 @@ export function NavProvider({ children, initialView }: { children: ReactNode; in
       const top = stack.length ? stack[stack.length - 1] : fromUrl
       // 'none': the browser has already moved the URL — writing it again here
       // would add an entry on top of the one we just went back to.
-      commit('none', stack, top ? TAB_FOR_KIND[top.kind] ?? 0 : 0, 'left')
+      commit('none', stack, top ? tabForView(top) : 0, 'left')
     }
     window.addEventListener('popstate', onPopState, { capture: true })
     return () => window.removeEventListener('popstate', onPopState, { capture: true })
@@ -172,11 +181,11 @@ export function NavProvider({ children, initialView }: { children: ReactNode; in
     if ('flowId' in v) props.content_id = v.flowId
     if ('sign' in v) props.content_id = v.sign
     track('content_navigated', props)
-    commit('push', [...stackRef.current, v], TAB_FOR_KIND[v.kind] ?? 0, 'right')
+    commit('push', [...stackRef.current, v], tabForView(v), 'right')
   }, [commit])
   const replace = useCallback((v: View) => {
     const cur = stackRef.current
-    commit('replace', cur.length ? [...cur.slice(0, -1), v] : [v], TAB_FOR_KIND[v.kind] ?? 0, 'right')
+    commit('replace', cur.length ? [...cur.slice(0, -1), v] : [v], tabForView(v), 'right')
   }, [commit])
   // Let the browser drive: history.back() fires the popstate handler above,
   // which restores that entry's trail and its URL together. Moving the state
