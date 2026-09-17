@@ -3,7 +3,7 @@
 // the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable, numBadge } from './shared/dxHelpers'
+import { stepTable, numBadge, bullets } from './shared/dxHelpers'
 
 export const weaknessDx: DxApproach = {
   sign: 'weakness',
@@ -20,8 +20,8 @@ export const weaknessDx: DxApproach = {
         dividers: true,
         headers: ['Course', { text: 'Differential', tone: 'teal' }],
         rows: [
-          ['<strong>Episodic + rapid full recovery</strong>', { text: 'Syncope · arrhythmia · myasthenia gravis (fatigable) · episodic hypoglycaemia · narcolepsy', tone: 'teal' }],
-          ['<strong>Persistent / progressive</strong>', { text: 'Neuromuscular disease · metabolic · anaemia · cardiorespiratory', tone: 'teal' }],
+          ['<strong>Episodic + rapid full recovery</strong>', { text: bullets(['Syncope', 'Arrhythmia', 'Myasthenia gravis (fatigable)', 'Episodic hypoglycaemia', 'Narcolepsy']), tone: 'teal' }],
+          ['<strong>Persistent / progressive</strong>', { text: bullets(['Neuromuscular disease', 'Metabolic', 'Anaemia', 'Cardiorespiratory']), tone: 'teal' }],
         ],
       },
       { kind: 'note', html: `<strong>The single most useful history question:</strong> is it episodic (normal between events) or persistent / progressive?` },
@@ -31,10 +31,10 @@ export const weaknessDx: DxApproach = {
         dividers: true,
         headers: ['Pattern', 'Key history features', { text: 'Differential & next step', tone: 'teal' }],
         rows: [
-          ['<strong>Episodic + rapid full recovery</strong>', 'Exercise/excitement trigger; normal between', { text: '<strong>Syncope (arrhythmia) · MG · hypoglycaemia</strong>', tone: 'teal' }],
-          ['<strong>Episodic + post-exercise stiffness</strong>', 'Fit dog, hot conditions', { text: '<strong>EIC · heat stroke</strong>', tone: 'teal' }],
-          ['<strong>Peracute generalised flaccid paralysis</strong>', 'Tick exposure; raw meat access; ascending LMN', { text: '<strong>Tick paralysis · Botulism · Polyradiculoneuritis</strong>', tone: 'teal' }],
-          ['<strong>Progressive + exercise-worsening</strong>', 'Worsens over weeks; 🐱 ventroflexion', { text: '<strong>Myasthenia gravis · Hypothyroid neuropathy</strong>', tone: 'teal' }],
+          ['<strong>Episodic + rapid full recovery</strong>', 'Exercise/excitement trigger; normal between', { text: bullets(['<strong>Syncope (arrhythmia)</strong>', '<strong>MG</strong>', '<strong>Hypoglycaemia</strong>']), tone: 'teal' }],
+          ['<strong>Episodic + post-exercise stiffness</strong>', 'Fit dog, hot conditions', { text: bullets(['<strong>EIC</strong>', '<strong>Heat stroke</strong>']), tone: 'teal' }],
+          ['<strong>Peracute generalised flaccid paralysis</strong>', 'Tick exposure; raw meat access; ascending LMN', { text: bullets(['<strong>Tick paralysis</strong>', '<strong>Botulism</strong>', '<strong>Polyradiculoneuritis</strong>']), tone: 'teal' }],
+          ['<strong>Progressive + exercise-worsening</strong>', 'Worsens over weeks; 🐱 ventroflexion', { text: bullets(['<strong>Myasthenia gravis</strong>', '<strong>Hypothyroid neuropathy</strong>']), tone: 'teal' }],
           ['<strong>Chronic progressive + waxing/waning GI</strong>', 'GI signs, stress episodes', { text: '<strong>Hypoadrenocorticism (Addison\'s)</strong>', tone: 'teal' }],
           ['<strong>Acute + systemic signs</strong>', 'PU/PD, polyphagia, or weight loss', { text: '<strong>Metabolic (DM, HAC, hypokalaemia)</strong>', tone: 'teal' }],
         ],
@@ -47,10 +47,10 @@ export const weaknessDx: DxApproach = {
         rows: [
           ['<strong>Trigger — exercise / excitement</strong>', { text: 'Syncope or MG', tone: 'teal' }],
           ['<strong>Trigger — fasting</strong>', { text: 'Hypoglycaemia', tone: 'teal' }],
-          ['<strong>Post-exercise collapse in a fit dog</strong>', { text: 'EIC · cardiac', tone: 'teal' }],
-          ['<strong>Worse with exercise, better with rest</strong>', { text: 'Myasthenia gravis (fatigability) · cardiorespiratory', tone: 'teal' }],
+          ['<strong>Post-exercise collapse in a fit dog</strong>', { text: bullets(['EIC', 'Cardiac']), tone: 'teal' }],
+          ['<strong>Worse with exercise, better with rest</strong>', { text: bullets(['Myasthenia gravis (fatigability)', 'Cardiorespiratory']), tone: 'teal' }],
           ['<strong>Loss of consciousness?</strong>', { text: 'True LOC favours syncope / seizure over neuromuscular weakness', tone: 'teal' }],
-          ['<strong>Peracute generalised LMN paralysis</strong>', { text: 'Tick paralysis · botulism · polyradiculoneuritis (coonhound)', tone: 'teal' }],
+          ['<strong>Peracute generalised LMN paralysis</strong>', { text: bullets(['Tick paralysis', 'Botulism', 'Polyradiculoneuritis (coonhound)']), tone: 'teal' }],
         ],
       }, '📋'),
 
@@ -59,11 +59,11 @@ export const weaknessDx: DxApproach = {
         dividers: true,
         headers: ['Clue', { text: 'Points to', tone: 'teal' }],
         rows: [
-          ['<strong>🐱 Ventroflexion of the neck</strong>', { text: 'Hypokalaemia · thiamine deficiency · MG', tone: 'teal' }],
+          ['<strong>🐱 Ventroflexion of the neck</strong>', { text: bullets(['Hypokalaemia', 'Thiamine deficiency', 'MG']), tone: 'teal' }],
           ['<strong>🐕 Waxing/waning GI signs + weakness</strong>', { text: 'Hypoadrenocorticism (Addison\'s)', tone: 'teal' }],
-          ['<strong>PU/PD + weakness</strong>', { text: 'Endocrine (DM · HAC · hypoadrenocorticism) · electrolyte disturbance', tone: 'teal' }],
-          ['<strong>Tick exposure / raw-meat or carrion access</strong>', { text: 'Tick paralysis · botulism', tone: 'teal' }],
-          ['<strong>Drugs</strong>', { text: 'Recent anaesthesia / aminoglycosides (unmask MG) · beta-blockers · insulin overdose', tone: 'teal' }],
+          ['<strong>PU/PD + weakness</strong>', { text: bullets(['Endocrine (DM · HAC · hypoadrenocorticism)', 'Electrolyte disturbance']), tone: 'teal' }],
+          ['<strong>Tick exposure / raw-meat or carrion access</strong>', { text: bullets(['Tick paralysis', 'Botulism']), tone: 'teal' }],
+          ['<strong>Drugs</strong>', { text: bullets(['Recent anaesthesia / aminoglycosides (unmask MG)', 'Beta-blockers', 'Insulin overdose']), tone: 'teal' }],
         ],
       }, '💊'),
 
@@ -101,7 +101,7 @@ export const weaknessDx: DxApproach = {
         dividers: true,
         headers: ['Assess', { text: 'Why', tone: 'teal' }],
         rows: [
-          ['<strong>Perfusion</strong> — HR · pulse quality · CRT · MM colour; respiratory effort; mentation', { text: 'Collapse can be a shock / anaemia / arrhythmia emergency, not a neurological problem', tone: 'danger' }],
+          [bullets(['HR', 'Pulse quality', 'CRT', 'MM colour; respiratory effort; mentation'], { lead: '<strong>Perfusion</strong>' }), { text: 'Collapse can be a shock / anaemia / arrhythmia emergency, not a neurological problem', tone: 'danger' }],
           ['<strong>Respiratory effort and tidal volume</strong>', { text: 'Intercostal weakness or diaphragm involvement → hypoventilation in tick paralysis, botulism and polyradiculoneuritis — may need oxygen supplementation or ventilatory support', tone: 'danger' }],
           ['<strong>Rate of progression</strong>', { text: 'Ascending paralysis developing overnight = <strong>emergency</strong> — full coat tick search immediately, before any further workup', tone: 'danger' }],
         ],
@@ -112,14 +112,14 @@ export const weaknessDx: DxApproach = {
         dividers: true,
         headers: ['System', { text: 'Looking for', tone: 'teal' }],
         rows: [
-          ['<strong>Cardiovascular</strong>', { text: 'Murmur · arrhythmia · pulse deficits · jugular distension · pale or cyanotic MM', tone: 'teal' }],
-          ['<strong>Respiratory</strong>', { text: 'Increased effort · cyanosis → hypoxaemia', tone: 'teal' }],
-          ['<strong>Metabolic clues</strong>', { text: 'Dehydration · bradycardia (hyperkalaemia of Addison\'s) · hepatomegaly', tone: 'teal' }],
+          ['<strong>Cardiovascular</strong>', { text: bullets(['Murmur', 'Arrhythmia', 'Pulse deficits', 'Jugular distension', 'Pale or cyanotic MM']), tone: 'teal' }],
+          ['<strong>Respiratory</strong>', { text: bullets(['Increased effort', 'Cyanosis → hypoxaemia']), tone: 'teal' }],
+          ['<strong>Metabolic clues</strong>', { text: bullets(['Dehydration', 'Bradycardia (hyperkalaemia of Addison\'s)', 'Hepatomegaly']), tone: 'teal' }],
           ['<strong>Anaemia</strong>', { text: 'Pale MM → weakness from poor oxygen delivery', tone: 'teal' }],
-          ['<strong>Blood pressure</strong>', { text: 'Hypotension → hypoadrenocorticism or poor cardiac output · hypertension → HAC · CKD · phaeochromocytoma', tone: 'teal' }],
-          ['<strong>Abdominal palpation</strong>', { text: 'Splenomegaly (neoplasia · EMH) · hepatomegaly (HAC · hepatic disease) · uterine distension (pyometra in intact females)', tone: 'teal' }],
+          ['<strong>Blood pressure</strong>', { text: bullets(['Hypotension → hypoadrenocorticism or poor cardiac output', 'Hypertension → HAC', 'CKD', 'Phaeochromocytoma']), tone: 'teal' }],
+          ['<strong>Abdominal palpation</strong>', { text: bullets(['Splenomegaly (neoplasia · EMH)', 'Hepatomegaly (HAC · hepatic disease)', 'Uterine distension (pyometra in intact females)']), tone: 'teal' }],
           ['<strong>Lymphadenopathy</strong>', { text: 'Generalised → neoplasia or tick-borne disease', tone: 'teal' }],
-          ['<strong>Full tick search</strong>', { text: 'Systematically part all coat — between toes · inside ear canals · axillae · groin · perianal region. <strong>A single attached tick can cause complete paralysis</strong>', tone: 'danger' }],
+          ['<strong>Full tick search</strong>', { text: bullets(['Systematically part all coat — between toes', 'Inside ear canals', 'Axillae', 'Groin', 'Perianal region. <strong>A single attached tick can cause complete paralysis</strong>']), tone: 'danger' }],
         ],
       }, '🔍'),
 
@@ -152,8 +152,8 @@ export const weaknessDx: DxApproach = {
         dividers: true,
         headers: ['Test', { text: 'Interpretation', tone: 'teal' }],
         rows: [
-          ['<strong>Fatigability test</strong>', { text: 'Walk / exercise the patient — myasthenia gravis worsens dramatically and recovers with brief rest. The patellar reflex fatigues with rapid repetition', tone: 'teal' }],
-          ['<strong>Spinal pain check</strong>', { text: 'Palpate the vertebral column — pain or guarding → myelopathy (see the Myelopathy approach). Proprioception absent with weakness = spinal cord origin, not peripheral neuromuscular', tone: 'teal' }],
+          ['<strong>Fatigability test</strong>', { text: bullets(['Walk / exercise the patient — myasthenia gravis worsens dramatically and recovers with brief rest', 'The patellar reflex fatigues with rapid repetition']), tone: 'teal' }],
+          ['<strong>Spinal pain check</strong>', { text: bullets(['Palpate the vertebral column — pain or guarding → myelopathy (see the Myelopathy approach)', 'Proprioception absent with weakness = spinal cord origin, not peripheral neuromuscular']), tone: 'teal' }],
         ],
       },
 
@@ -166,8 +166,8 @@ export const weaknessDx: DxApproach = {
           ['<strong>🐱 Generalised muscle pain on palpation + elevated CK</strong>', { text: 'Polymyositis', tone: 'teal' }],
           ['<strong>🐱 Plantigrade stance</strong> (hocks touching ground)', { text: 'Diabetic neuropathy — assess blood glucose', tone: 'teal' }],
           ['<strong>🐱 Ventral neck palpation</strong>', { text: 'Thyroid nodule — hyperthyroid myopathy can cause generalised weakness and muscle wasting', tone: 'teal' }],
-          ['<strong>🐕 Masticatory muscles</strong>', { text: 'Temporal and masseter atrophy → masticatory muscle myositis (MMM); anti-2M antibody titre; affected dogs may be unable to open the mouth fully under sedation', tone: 'teal' }],
-          ['<strong>🐕 Eyes</strong>', { text: 'Horner syndrome — oculo-sympathetic lesion → carotid plexus · anterior thorax mass · cervical cord', tone: 'teal' }],
+          ['<strong>🐕 Masticatory muscles</strong>', { text: bullets(['Temporal and masseter atrophy → masticatory muscle myositis (MMM)', 'anti-2M antibody titre', 'Affected dogs may be unable to open the mouth fully under sedation']), tone: 'teal' }],
+          ['<strong>🐕 Eyes</strong>', { text: bullets(['Horner syndrome — oculo-sympathetic lesion → carotid plexus', 'Anterior thorax mass', 'Cervical cord']), tone: 'teal' }],
           ['<strong>🐕 Full tick search</strong>', { text: 'Every square centimetre of coat including between toes, inside the pinnae canal, perianal and axillae — remove the tick with a rocking motion (not twisting / crushing)', tone: 'teal' }],
         ],
       }, '🐾'),
@@ -186,7 +186,7 @@ export const weaknessDx: DxApproach = {
         headers: ['Screen', { text: 'Why', tone: 'teal' }],
         rows: [
           ['<strong>Cardiovascular first</strong>', { text: 'ECG before any other workup in episodic collapse — arrhythmia (AV block · sick sinus syndrome · WPW) is frequently misdiagnosed as seizure or neuromuscular weakness, and treating with anti-epileptics is dangerous', tone: 'danger' }],
-          ['<strong>Metabolic screen</strong>', { text: 'Blood glucose · electrolytes (especially potassium) · cortisol — all cause weakness without any neurological deficit', tone: 'teal' }],
+          ['<strong>Metabolic screen</strong>', { text: bullets(['Blood glucose', 'Electrolytes (especially potassium)', 'Cortisol — all cause weakness without any neurological deficit']), tone: 'teal' }],
           ['<strong>Respiratory</strong>', { text: 'SpO₂ and respiratory effort — hypoxaemia from any cause produces generalised weakness', tone: 'teal' }],
           ['<strong>Anaemia</strong>', { text: 'PCV/TS — cerebral and muscle hypoxia from anaemia presents as generalised weakness or collapse', tone: 'teal' }],
         ],
@@ -199,10 +199,10 @@ export const weaknessDx: DxApproach = {
         headers: ['Feature', { text: '⚡ Cardiogenic', tone: 'danger' }, { text: '🔄 Non-cardiogenic', tone: 'info' }],
         rows: [
           ['<strong>Trigger</strong>', { text: 'Exertion / excitement; ± no trigger', tone: 'danger' }, { text: 'Clear reflex trigger (cough, micturition, swallowing, pain) or fasting', tone: 'info' }],
-          ['<strong>Cardiac exam</strong>', { text: 'Murmur, gallop, arrhythmia, pulse deficits, jugular distension', tone: 'danger' }, { text: 'Structurally normal heart on PE; normal rhythm in-clinic', tone: 'info' }],
-          ['<strong>History clues</strong>', { text: 'Prior heart disease; sudden death in breed (Boxer ARVC, Dobermann DCM)', tone: 'danger' }, { text: 'GI signs or fasting (Addison / hypoglycaemia); young Boxer excitement syncope (vasovagal)', tone: 'info' }],
-          ['<strong>Key tests</strong>', { text: 'ECG → Holter / event recorder → echo; NT-proBNP', tone: 'danger' }, { text: 'Blood glucose · Na:K ratio · ACTH stim; rule out airway disease (tussive syncope)', tone: 'info' }],
-          ['<strong>Urgent risk</strong>', { text: 'Sudden cardiac death — treat as cardiac until proven otherwise if exertional + murmur', tone: 'danger' }, { text: 'Addisonian crisis · hypoglycaemia — both rapidly reversible if caught early', tone: 'info' }],
+          ['<strong>Cardiac exam</strong>', { text: 'Murmur, gallop, arrhythmia, pulse deficits, jugular distension', tone: 'danger' }, { text: bullets(['Structurally normal heart on PE', 'Normal rhythm in-clinic']), tone: 'info' }],
+          ['<strong>History clues</strong>', { text: bullets(['Prior heart disease', 'Sudden death in breed (Boxer ARVC, Dobermann DCM)']), tone: 'danger' }, { text: bullets(['GI signs or fasting (Addison / hypoglycaemia)', 'Young Boxer excitement syncope (vasovagal)']), tone: 'info' }],
+          ['<strong>Key tests</strong>', { text: 'ECG → Holter / event recorder → echo; NT-proBNP', tone: 'danger' }, { text: bullets(['Blood glucose', 'Na:K ratio', 'ACTH stim; rule out airway disease (tussive syncope)']), tone: 'info' }],
+          ['<strong>Urgent risk</strong>', { text: 'Sudden cardiac death — treat as cardiac until proven otherwise if exertional + murmur', tone: 'danger' }, { text: bullets(['Addisonian crisis', 'Hypoglycaemia — both rapidly reversible if caught early']), tone: 'info' }],
         ],
       },
       {
@@ -217,10 +217,10 @@ export const weaknessDx: DxApproach = {
         dividers: true,
         headers: ['Test', { text: 'What it rules in / out', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>Blood glucose</strong>`, { text: 'Hypoglycaemia → insulinoma · PSS · Addison\'s · hepatic failure — all cause episodic or progressive weakness', tone: 'teal' }],
-          [`${numBadge(2)}<strong>PCV / TS</strong>`, { text: 'Anaemia → cerebral and muscle hypoxia; a TS drop suggests protein-losing disease or haemorrhage', tone: 'teal' }],
-          [`${numBadge(3)}<strong>ECG</strong>`, { text: 'Arrhythmia — AV block · sick sinus syndrome · WPW → episodic collapse and weakness. <strong>Must be excluded before any neurological diagnosis is assigned</strong>', tone: 'danger' }],
-          [`${numBadge(4)}<strong>Blood pressure</strong>`, { text: 'Hypotension = hypoadrenocorticism or poor cardiac output · hypertension = HAC · CKD · phaeochromocytoma', tone: 'teal' }],
+          [`${numBadge(1)}<strong>Blood glucose</strong>`, { text: bullets(['Hypoglycaemia → insulinoma', 'PSS', 'Addison\'s', 'Hepatic failure — all cause episodic or progressive weakness']), tone: 'teal' }],
+          [`${numBadge(2)}<strong>PCV / TS</strong>`, { text: bullets(['Anaemia → cerebral and muscle hypoxia', 'A TS drop suggests protein-losing disease or haemorrhage']), tone: 'teal' }],
+          [`${numBadge(3)}<strong>ECG</strong>`, { text: bullets(['Arrhythmia — AV block', 'Sick sinus syndrome', 'WPW → episodic collapse and weakness. <strong>Must be excluded before any neurological diagnosis is assigned</strong>']), tone: 'danger' }],
+          [`${numBadge(4)}<strong>Blood pressure</strong>`, { text: bullets(['Hypotension = hypoadrenocorticism or poor cardiac output', 'Hypertension = HAC', 'CKD', 'Phaeochromocytoma']), tone: 'teal' }],
           [`${numBadge(5)}<strong>Potassium</strong>`, { text: 'Hypokalaemia → 🐱 cervical ventroflexion and paralysis (CKD · hyperaldosteronism · loop diuretics); also seen in dogs with vomiting / diarrhoea', tone: 'teal' }],
         ],
       }, '⚡'),
@@ -230,9 +230,9 @@ export const weaknessDx: DxApproach = {
         dividers: true,
         headers: ['Test', { text: 'Interpretation', tone: 'teal' }],
         rows: [
-          ['<strong>CBC</strong>', { text: 'Anaemia type (regenerative vs non-regenerative) · eosinophilia (eosinophilic myositis or parasitic) · absent stress leukogram in a systemically sick dog → <strong>atypical Addison\'s</strong> (electrolyte-normal hypoadrenocorticism)', tone: 'teal' }],
-          ['<strong>Biochemistry</strong>', { text: 'Na:K ratio &lt;27 → classical hypoadrenocorticism · CK elevated → myopathy (polymyositis · hypokalaemic myopathy · dystrophy — CK may exceed 10,000 IU/L) · ALP and cholesterol elevated with normal T4 → hypothyroid neuropathy (🐕) · T4 in all 🐱 &gt;7 years · fasted bile acids (hepatic encephalopathy)', tone: 'teal' }],
-          ['<strong>Urinalysis</strong>', { text: 'Glucosuria (DM) · specific gravity (hypoadrenocorticism → inability to concentrate urine; isosthenuria)', tone: 'teal' }],
+          ['<strong>CBC</strong>', { text: bullets(['Anaemia type (regenerative vs non-regenerative)', 'Eosinophilia (eosinophilic myositis or parasitic)', 'Absent stress leukogram in a systemically sick dog → <strong>atypical Addison\'s</strong> (electrolyte-normal hypoadrenocorticism)']), tone: 'teal' }],
+          ['<strong>Biochemistry</strong>', { text: bullets(['Na:K ratio &lt;27 → classical hypoadrenocorticism', 'CK elevated → myopathy (polymyositis · hypokalaemic myopathy · dystrophy — CK may exceed 10,000 IU/L)', 'ALP and cholesterol elevated with normal T4 → hypothyroid neuropathy (🐕)', 'T4 in all 🐱 &gt;7 years', 'Fasted bile acids (hepatic encephalopathy)']), tone: 'teal' }],
+          ['<strong>Urinalysis</strong>', { text: bullets(['Glucosuria (DM)', 'Specific gravity (hypoadrenocorticism → inability to concentrate urine; isosthenuria)']), tone: 'teal' }],
         ],
       }, '🧪'),
 
@@ -255,7 +255,7 @@ export const weaknessDx: DxApproach = {
         dividers: true,
         headers: ['Test', { text: 'Finding → diagnosis', tone: 'teal' }],
         rows: [
-          ['<strong>EMG</strong>', { text: 'Fibrillation potentials and positive sharp waves → denervation (neuropathy) · myotonic discharges → myotonia congenita · complex repetitive discharges → inflammatory myopathy or hypothyroid neuropathy', tone: 'teal' }],
+          ['<strong>EMG</strong>', { text: bullets(['Fibrillation potentials and positive sharp waves → denervation (neuropathy)', 'Myotonic discharges → myotonia congenita', 'Complex repetitive discharges → inflammatory myopathy or hypothyroid neuropathy']), tone: 'teal' }],
           ['<strong>Motor nerve conduction velocity</strong>', { text: 'Reduced velocity → demyelinating neuropathy (hypothyroid · inherited HMSN)', tone: 'teal' }],
           ['<strong>Repetitive nerve stimulation</strong>', { text: '&gt;10% decremental response → NMJ disease (botulism / tick = presynaptic defect; MG = postsynaptic defect)', tone: 'teal' }],
         ],
@@ -267,9 +267,9 @@ export const weaknessDx: DxApproach = {
         dividers: true,
         headers: ['Test', { text: 'Finding → diagnosis', tone: 'teal' }],
         rows: [
-          ['<strong>Muscle biopsy</strong><br>biceps femoris or epaxial — avoid severely atrophied muscle', { text: 'Inflammatory infiltrate and fibre necrosis → polymyositis · type II fibre atrophy → glucocorticoid myopathy, disuse or HAC · dystrophin immunostaining → muscular dystrophy', tone: 'teal' }],
+          ['<strong>Muscle biopsy</strong><br>biceps femoris or epaxial — avoid severely atrophied muscle', { text: bullets(['Inflammatory infiltrate and fibre necrosis → polymyositis', 'Type II fibre atrophy → glucocorticoid myopathy, disuse or HAC', 'Dystrophin immunostaining → muscular dystrophy']), tone: 'teal' }],
           ['<strong>MRI spine</strong>', { text: 'If proprioceptive deficits or spinal pain coexist — use the Myelopathy approach for full localisation and imaging pathway', tone: 'teal' }],
-          ['<strong>MRI thigh muscles</strong>', { text: 'Focal T2 hyperintensity in inflammatory myopathy · necrotic myositis · masticatory muscle myositis (masseter and temporalis)', tone: 'teal' }],
+          ['<strong>MRI thigh muscles</strong>', { text: bullets(['Focal T2 hyperintensity in inflammatory myopathy', 'Necrotic myositis', 'Masticatory muscle myositis (masseter and temporalis)']), tone: 'teal' }],
         ],
       }, '🧬'),
     ],

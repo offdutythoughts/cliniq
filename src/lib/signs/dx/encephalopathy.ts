@@ -4,7 +4,7 @@
 // Three-tab standard (history / exam / dx).
 
 import type { DxApproach } from '../dxTypes'
-import { numBadge } from './shared/dxHelpers'
+import { numBadge, bullets } from './shared/dxHelpers'
 
 export const encephalopathyDx: DxApproach = {
   sign: 'encephalopathy',
@@ -27,9 +27,9 @@ export const encephalopathyDx: DxApproach = {
         dividers: true,
         headers: ['Onset speed', { text: 'Differential', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>Peracute</strong><br>seconds–minutes`, { text: 'Cerebrovascular accident (stroke) · seizure · toxin · severe metabolic crisis (hypoglycaemia · hypocalcaemia)', tone: 'teal' }],
-          [`${numBadge(2)}<strong>Acute</strong><br>hours–days`, { text: 'Toxin · metabolic encephalopathy (hepatic · uraemic) · TBI · acute encephalitis · hypertensive encephalopathy', tone: 'teal' }],
-          [`${numBadge(3)}<strong>Subacute–chronic</strong><br>weeks–months`, { text: 'Neoplasia · MUO / encephalitis · cognitive dysfunction · chronic metabolic disease (PSS · hypothyroidism)', tone: 'teal' }],
+          [`${numBadge(1)}<strong>Peracute</strong><br>seconds–minutes`, { text: bullets(['Cerebrovascular accident (stroke)', 'Seizure', 'Toxin', 'Severe metabolic crisis (hypoglycaemia · hypocalcaemia)']), tone: 'teal' }],
+          [`${numBadge(2)}<strong>Acute</strong><br>hours–days`, { text: bullets(['Toxin', 'Metabolic encephalopathy (hepatic · uraemic)', 'TBI', 'Acute encephalitis', 'Hypertensive encephalopathy']), tone: 'teal' }],
+          [`${numBadge(3)}<strong>Subacute–chronic</strong><br>weeks–months`, { text: bullets(['Neoplasia', 'MUO / encephalitis', 'Cognitive dysfunction', 'Chronic metabolic disease (PSS · hypothyroidism)']), tone: 'teal' }],
         ],
       },
       {
@@ -87,8 +87,8 @@ export const encephalopathyDx: DxApproach = {
           ['<strong>Metaldehyde</strong> (slug bait)', { text: 'Acute tremors', tone: 'teal' }],
           ['<strong>Organophosphates</strong>', { text: 'Cholinergic crisis', tone: 'teal' }],
           ['<strong>Bromethalin</strong> (rodenticide)', { text: 'Cerebral oedema — delayed onset 12 h–5 d', tone: 'teal' }],
-          ['<strong>Lead</strong>', { text: 'Young dogs · pica + vomiting', tone: 'teal' }],
-          ['<strong>Cannabinoids</strong>', { text: 'CNS depression · miosis · ataxia · urine incontinence', tone: 'teal' }],
+          ['<strong>Lead</strong>', { text: bullets(['Young dogs', 'Pica + vomiting']), tone: 'teal' }],
+          ['<strong>Cannabinoids</strong>', { text: bullets(['CNS depression', 'Miosis', 'Ataxia', 'Urine incontinence']), tone: 'teal' }],
         ],
       },
       {
@@ -99,7 +99,7 @@ export const encephalopathyDx: DxApproach = {
         headers: ['Drug', { text: 'Signs', tone: 'teal' }],
         rows: [
           ['<strong>Opioids</strong>', { text: 'Depressed mentation + miosis → rapid reversal with naloxone', tone: 'teal' }],
-          ['<strong>Benzodiazepines · muscle relaxants</strong>', { text: 'CNS depression', tone: 'teal' }],
+          [bullets(['<strong>Benzodiazepines</strong>', '<strong>Muscle relaxants</strong>']), { text: 'CNS depression', tone: 'teal' }],
           ['<strong>Anticholinergics</strong>', { text: 'Disorientation + mydriasis + hyperthermia', tone: 'teal' }],
           ['<strong>Macrocyclic lactones</strong>', { text: 'MDR1 breeds', tone: 'teal' }],
           ['<strong>Metronidazole</strong>', { text: 'Especially cats — vestibular signs + ataxia + seizures', tone: 'teal' }],
@@ -115,12 +115,12 @@ export const encephalopathyDx: DxApproach = {
           ['<strong>🐱 Fish / thiaminase-containing food or sulphite-preserved meat</strong>', { text: 'Thiamine deficiency', tone: 'teal' }],
           ['<strong>🐱 Irradiated diet</strong>', { text: 'Leukoencephalomyelopathy (Wallerian degeneration)', tone: 'teal' }],
           ['<strong>Liver disease / PSS</strong>', { text: 'Hepatic encephalopathy', tone: 'teal' }],
-          ['<strong>Diabetes</strong>', { text: 'Hypoglycaemia · DKA · HONK', tone: 'teal' }],
+          ['<strong>Diabetes</strong>', { text: bullets(['Hypoglycaemia', 'DKA', 'HONK']), tone: 'teal' }],
           ['<strong>CKD / AKI</strong>', { text: 'Uraemic encephalopathy', tone: 'teal' }],
           ['<strong>HAC</strong>', { text: 'Pituitary macroadenoma', tone: 'teal' }],
           ['<strong>Addison\'s</strong>', { text: 'Hyponatraemia', tone: 'teal' }],
           ['<strong>Hypothyroidism</strong>', { text: 'Myxoedema coma — rare', tone: 'teal' }],
-          ['<strong>Recent trauma</strong>', { text: 'Traumatic brain injury (TBI) · intracranial haemorrhage', tone: 'danger' }],
+          ['<strong>Recent trauma</strong>', { text: bullets(['Traumatic brain injury (TBI)', 'Intracranial haemorrhage']), tone: 'danger' }],
         ],
       },
     ],
@@ -144,11 +144,11 @@ export const encephalopathyDx: DxApproach = {
         dividers: true,
         headers: ['Do', { text: 'Detail', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>Secure airway</strong>`, { text: 'Sternal recumbency · extend head · suction if needed', tone: 'danger' }],
+          [`${numBadge(1)}<strong>Secure airway</strong>`, { text: bullets(['Sternal recumbency', 'Extend head', 'Suction if needed']), tone: 'danger' }],
           [`${numBadge(2)}<strong>High-flow O₂</strong>`, { text: 'Immediately', tone: 'danger' }],
           [`${numBadge(3)}<strong>IV access</strong>`, { text: 'Establish early', tone: 'teal' }],
           [`${numBadge(4)}<strong>Blood glucose</strong>`, { text: 'Check immediately', tone: 'teal' }],
-          [`${numBadge(5)}<strong>Vital signs</strong>`, { text: 'HR · RR · SpO₂ · T° · blood pressure', tone: 'teal' }],
+          [`${numBadge(5)}<strong>Vital signs</strong>`, { text: bullets(['HR', 'RR', 'SpO₂', 'T°', 'Blood pressure']), tone: 'teal' }],
           [`${numBadge(6)}<strong>Control active seizures</strong>`, { text: 'A crashing brain patient is resuscitated <em>before</em> examination', tone: 'danger' }],
         ],
       },
@@ -183,9 +183,9 @@ Limb withdrawal from noxious stimulus = SPINAL REFLEX, not consciousness — lim
         dividers: true,
         headers: ['Localisation', { text: 'Findings', tone: 'teal' }],
         rows: [
-          ['<strong>Forebrain</strong><br>cortical / diencephalic', { text: 'Altered behaviour / mentation · compulsive circling <em>toward</em> the lesion · contralateral menace deficit with normal PLR · focal seizures · central blindness. Consciousness variably affected', tone: 'info' }],
-          ['<strong>Brainstem</strong><br>midbrain / pons / medulla', { text: 'Multiple cranial nerve deficits · abnormal respiratory pattern · vestibular signs · severely depressed consciousness (stupor / coma). More ominous prognosis', tone: 'danger' }],
-          ['<strong>Diffuse / symmetric</strong><br>metabolic', { text: 'No lateralising signs · bilateral symmetric findings · small reactive pupils · waxing–waning course · post-prandial worsening — chase systemic causes first', tone: 'green' }],
+          ['<strong>Forebrain</strong><br>cortical / diencephalic', { text: bullets(['Altered behaviour / mentation', 'Compulsive circling <em>toward</em> the lesion', 'Contralateral menace deficit with normal PLR', 'Focal seizures', 'Central blindness. Consciousness variably affected']), tone: 'info' }],
+          ['<strong>Brainstem</strong><br>midbrain / pons / medulla', { text: bullets(['Multiple cranial nerve deficits', 'Abnormal respiratory pattern', 'Vestibular signs', 'Severely depressed consciousness (stupor / coma). More ominous prognosis']), tone: 'danger' }],
+          ['<strong>Diffuse / symmetric</strong><br>metabolic', { text: bullets(['No lateralising signs', 'Bilateral symmetric findings', 'Small reactive pupils', 'Waxing–waning course', 'Post-prandial worsening — chase systemic causes first']), tone: 'green' }],
         ],
       },
       { kind: 'step', text: '👁 PUPIL SIGNS BY LESION LOCATION' },
@@ -204,7 +204,7 @@ Limb withdrawal from noxious stimulus = SPINAL REFLEX, not consciousness — lim
         headers: ['Sign', { text: 'Means', tone: 'teal' }],
         rows: [
           ['<strong>Cushing reflex</strong><br>systemic hypertension + reflex bradycardia', { text: 'Cerebral ischaemic response to a severe acute ICP rise → <strong>life-threatening intracranial hypertension with imminent herniation — treat immediately</strong>', tone: 'danger' }],
-          ['<strong>Other ↑ICP signs</strong>', { text: 'Obtundation / stupor / coma · bilateral mydriasis with poor PLR · head pressing · opisthotonos', tone: 'danger' }],
+          ['<strong>Other ↑ICP signs</strong>', { text: bullets(['Obtundation / stupor / coma', 'Bilateral mydriasis with poor PLR', 'Head pressing', 'Opisthotonos']), tone: 'danger' }],
         ],
       },
       {
@@ -228,7 +228,7 @@ Limb withdrawal from noxious stimulus = SPINAL REFLEX, not consciousness — lim
         dividers: true,
         headers: ['Posture', { text: 'Localises to', tone: 'teal' }],
         rows: [
-          ['<strong>Decerebrate</strong> — extensor rigidity all 4 limbs', { text: 'Midbrain / rostral pons or bilateral cerebral hemispheric dysfunction; stupor / coma present', tone: 'danger' }],
+          ['<strong>Decerebrate</strong> — extensor rigidity all 4 limbs', { text: bullets(['Midbrain / rostral pons or bilateral cerebral hemispheric dysfunction', 'Stupor / coma present']), tone: 'danger' }],
           ['<strong>Decerebellate</strong> — opisthotonos + forelimb extension + hindlimb flexion', { text: 'Does <strong>NOT</strong> affect consciousness', tone: 'teal' }],
         ],
       },
@@ -239,20 +239,20 @@ Limb withdrawal from noxious stimulus = SPINAL REFLEX, not consciousness — lim
         dividers: true,
         headers: ['Finding', { text: 'Points to', tone: 'teal' }],
         rows: [
-          ['<strong>HR · rhythm · pulse quality · CRT</strong>', { text: 'Cardiovascular status and perfusion', tone: 'info' }],
-          ['<strong>Pale MM</strong>', { text: 'Anaemia · shock · hypovolaemia', tone: 'info' }],
-          ['<strong>Brick-red MM</strong>', { text: 'Polycythaemia · sepsis · CO', tone: 'info' }],
+          [bullets(['<strong>HR</strong>', '<strong>Rhythm</strong>', '<strong>Pulse quality</strong>', '<strong>CRT</strong>']), { text: 'Cardiovascular status and perfusion', tone: 'info' }],
+          ['<strong>Pale MM</strong>', { text: bullets(['Anaemia', 'Shock', 'Hypovolaemia']), tone: 'info' }],
+          ['<strong>Brick-red MM</strong>', { text: bullets(['Polycythaemia', 'Sepsis', 'CO']), tone: 'info' }],
           ['<strong>Core–extremity temperature difference</strong>', { text: 'Shock', tone: 'info' }],
           ['<strong>Pot belly + muscle wasting + alopecia</strong>', { text: 'HAC — pituitary macroadenoma compressing the brain', tone: 'warning' }],
-          ['<strong>Cachexia</strong>', { text: 'Neoplasia · chronic disease', tone: 'warning' }],
+          ['<strong>Cachexia</strong>', { text: bullets(['Neoplasia', 'Chronic disease']), tone: 'warning' }],
           ['<strong>Non-pitting skin oedema + bradycardia + hypothermia</strong>', { text: 'Myxoedema coma (hypothyroid)', tone: 'warning' }],
           ['<strong>Fundoscopy — perform in every case:</strong> papilloedema (blurred disc margins)', { text: '↑ICP', tone: 'danger' }],
-          ['<strong>Chorioretinitis</strong>', { text: 'Toxoplasma · CDV · FIP', tone: 'danger' }],
+          ['<strong>Chorioretinitis</strong>', { text: bullets(['Toxoplasma', 'CDV', 'FIP']), tone: 'danger' }],
           ['<strong>Retinal haemorrhage / detachment</strong>', { text: 'Hypertension → <strong>check BP immediately</strong>', tone: 'danger' }],
-          ['<strong>T° &gt;41°C</strong>', { text: 'Heatstroke · post-SE hyperthermia · permethrin (🐱) → active cooling', tone: 'violet' }],
-          ['<strong>T° &lt;37°C + bradycardia + obtundation</strong>', { text: 'Myxoedema coma · hypothermia · severe shock', tone: 'violet' }],
-          ['<strong>Small liver</strong>', { text: 'PSS · chronic hepatopathy', tone: 'green' }],
-          ['<strong>Jaundice</strong>', { text: 'Hepatic · haemolytic disease', tone: 'green' }],
+          ['<strong>T° &gt;41°C</strong>', { text: bullets(['Heatstroke', 'post-SE hyperthermia', 'Permethrin (🐱) → active cooling']), tone: 'violet' }],
+          ['<strong>T° &lt;37°C + bradycardia + obtundation</strong>', { text: bullets(['Myxoedema coma', 'Hypothermia', 'Severe shock']), tone: 'violet' }],
+          ['<strong>Small liver</strong>', { text: bullets(['PSS', 'Chronic hepatopathy']), tone: 'green' }],
+          ['<strong>Jaundice</strong>', { text: bullets(['Hepatic', 'Haemolytic disease']), tone: 'green' }],
         ],
       },
     ],

@@ -6,7 +6,7 @@
 import type { DxApproach } from '../dxTypes'
 import { CN_EXAM_ACCORDION } from './shared/neuroExam'
 import { NEURO_LOC_COLS, NEURO_LOC_HEADERS, NEURO_LOC_MIN_WIDTH, NEURO_LOC_ROWS } from '../neuroLocalisation'
-import { stepTable, numBadge } from './shared/dxHelpers'
+import { stepTable, numBadge, bullets } from './shared/dxHelpers'
 
 export const myelopathyDx: DxApproach = {
   sign: 'myelopathy',
@@ -25,10 +25,10 @@ export const myelopathyDx: DxApproach = {
         dividers: true,
         headers: ['Onset', 'Clinical pattern', { text: 'Differential & next step', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>Peracute</strong><br>seconds`, 'Lateralised · non-painful', { text: '<strong>FCE / ANNPE</strong><br>MRI — non-surgical', tone: 'teal' }],
-          [`${numBadge(2)}<strong>Acute</strong><br>hours`, 'Progressive · spinal pain', { text: '<strong>IVDD Type I</strong><br>CT/MRI → surgery?', tone: 'teal' }],
+          [`${numBadge(1)}<strong>Peracute</strong><br>seconds`, bullets(['Lateralised', 'Non-painful']), { text: '<strong>FCE / ANNPE</strong><br>MRI — non-surgical', tone: 'teal' }],
+          [`${numBadge(2)}<strong>Acute</strong><br>hours`, bullets(['Progressive', 'Spinal pain']), { text: '<strong>IVDD Type I</strong><br>CT/MRI → surgery?', tone: 'teal' }],
           [`${numBadge(3)}<strong>Trauma</strong><br>known event`, 'Spinal pain', { text: '<strong>Fracture / luxation</strong><br>Spinal rads, CT', tone: 'teal' }],
-          [`${numBadge(4)}<strong>Chronic</strong><br>weeks–months`, 'Slowly progressive', { text: '<strong>Neoplasia · DM · CCSM</strong><br>MRI', tone: 'teal' }],
+          [`${numBadge(4)}<strong>Chronic</strong><br>weeks–months`, 'Slowly progressive', { text: bullets(['<strong>Neoplasia</strong>', '<strong>DM</strong>', '<strong>CCSM</strong>'], { foot: 'MRI' }), tone: 'teal' }],
         ],
       },
 
@@ -39,10 +39,10 @@ export const myelopathyDx: DxApproach = {
         dividers: true,
         headers: ['Signalment', 'Clues', { text: 'Differential diagnosis', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>Chondrodystrophic</strong>`, 'Dachshund · French Bulldog · Beagle · Cocker; young–middle-aged', { text: '<strong>IVDD Type I</strong>', tone: 'teal' }],
+          [`${numBadge(1)}<strong>Chondrodystrophic</strong>`, bullets(['Dachshund', 'French Bulldog', 'Beagle', 'Cocker; young–middle-aged']), { text: '<strong>IVDD Type I</strong>', tone: 'teal' }],
           [`${numBadge(2)}<strong>Large breed, older</strong>`, 'GSD ≥8 yr; non-painful, slowly progressive', { text: '<strong>Degenerative myelopathy</strong>', tone: 'teal' }],
-          [`${numBadge(3)}<strong>Large / giant breed</strong>`, 'Dobermann · Great Dane; cervical pain, tetraparesis', { text: '<strong>CCSM / Wobbler</strong>', tone: 'teal' }],
-          [`${numBadge(4)}<strong>Large, non-chondrodystrophic</strong>`, 'Labrador · GSD · Border Collie; peracute during exercise, non-painful', { text: '<strong>FCE / ANNPE</strong>', tone: 'teal' }],
+          [`${numBadge(3)}<strong>Large / giant breed</strong>`, bullets(['Dobermann', 'Great Dane; cervical pain, tetraparesis']), { text: '<strong>CCSM / Wobbler</strong>', tone: 'teal' }],
+          [`${numBadge(4)}<strong>Large, non-chondrodystrophic</strong>`, bullets(['Labrador', 'GSD', 'Border Collie; peracute during exercise, non-painful']), { text: '<strong>FCE / ANNPE</strong>', tone: 'teal' }],
         ],
       },
 
@@ -55,7 +55,7 @@ export const myelopathyDx: DxApproach = {
         headers: ['Lost in this order', { text: 'What you see', tone: 'teal' }],
         rows: [
           [`${numBadge(1)}<strong>Ambulation</strong>`, { text: 'Ambulatory → ataxic → non-ambulatory', tone: 'teal' }],
-          [`${numBadge(2)}<strong>Proprioception</strong>`, { text: 'Knuckling · scuffing · delayed placing', tone: 'teal' }],
+          [`${numBadge(2)}<strong>Proprioception</strong>`, { text: bullets(['Knuckling', 'Scuffing', 'Delayed placing']), tone: 'teal' }],
           [`${numBadge(3)}<strong>Deep pain</strong>`, { text: 'Last to go — absent = surgical emergency', tone: 'teal' }],
         ],
       },
@@ -66,7 +66,7 @@ export const myelopathyDx: DxApproach = {
         headers: ['Also ask', { text: 'Why it changes the plan', tone: 'teal' }],
         rows: [
           ['<strong>Urinary / faecal continence</strong>', { text: 'Sacral (S1–S3) involvement — changes nursing, bladder management and prognosis', tone: 'teal' }],
-          ['<strong>Spinal pain</strong><br>reluctance to jump · yelping', { text: 'Painful → compressive or inflammatory · non-painful → FCE / ANNPE / DM', tone: 'teal' }],
+          ['<strong>Spinal pain</strong><br>reluctance to jump · yelping', { text: bullets(['Painful → compressive or inflammatory', 'Non-painful → FCE / ANNPE / DM']), tone: 'teal' }],
           ['<strong>Prior episodes</strong>', { text: 'Recurrent IVDD, or a progressive degenerative course', tone: 'teal' }],
         ],
       },
@@ -96,33 +96,33 @@ export const myelopathyDx: DxApproach = {
         rows: [
           { section: '1 · Mentation' },
           ['<strong>Alert</strong>', 'Normal mentation despite spinal signs', { text: 'Expected for a <strong>pure spinal cord lesion</strong> — cord caudal to the foramen magnum does not alter mentation', tone: 'teal' }],
-          ['<strong>Obtunded → stupor → coma</strong>', 'Altered mentation <em>with</em> spinal signs', { text: '<strong>Intracranial or foramen magnum</strong> — forebrain (metabolic / toxic, MUO, neoplasia) · brainstem (infarct, trauma, herniation)', tone: 'teal' }],
+          ['<strong>Obtunded → stupor → coma</strong>', 'Altered mentation <em>with</em> spinal signs', { text: bullets(['Forebrain (metabolic / toxic, MUO, neoplasia)', 'Brainstem (infarct, trauma, herniation)'], { lead: '<strong>Intracranial or foramen magnum</strong>' }), tone: 'teal' }],
 
           { section: '2 · Posture' },
-          ['<strong>Head tilt</strong>', 'One ear carried low; constant at rest', { text: '<strong>Vestibular.</strong> Peripheral — otitis media/interna, idiopathic (old dog, cat), nasopharyngeal polyp (cat), ototoxicity · Central — MUO, brainstem infarct, neoplasia, thiamine deficiency.<br><em>CP deficits ± obtundation = central; tilt <strong>away</strong> from the lesion = paradoxical (cerebellar flocculonodular)</em>', tone: 'teal' }],
-          ['<strong>Low head carriage</strong>', 'Nose down, stiff neck, reluctant to look up, yelps on movement', { text: '<strong>Cervical pain</strong> — IVDD C2–C5 (most common) · SRMA (young dog, pyrexic) · discospondylitis · atlantoaxial instability (toy breed &lt;2 yr) · CCSM/Wobbler (large breed).<br><em>Cat, non-painful ventroflexion → hypokalaemia · thiamine deficiency · myasthenia gravis</em>', tone: 'teal' }],
-          ['<strong>Kyphosis</strong>', 'Arched thoracolumbar spine, tense epaxials, guarding on palpation', { text: '<strong>T3–L3 pain</strong> — IVDD Type I (most common) · discospondylitis · vertebral fracture / luxation · vertebral neoplasia.<br><em>Abdominal pain mimics it — always palpate the abdomen</em>', tone: 'teal' }],
-          ['<strong>Scoliosis</strong>', 'Fixed lateral deviation of the spine; usually chronic / congenital', { text: 'Syringomyelia · Chiari-like malformation (Cavalier KCS) · hemivertebra (French Bulldog, Pug, Boston — screw-tail breeds) · spinal dysraphism (Weimaraner) · intramedullary lesion', tone: 'teal' }],
-          ['<strong>Wide-based stance</strong>', 'Feet planted wide at rest to stay upright', { text: 'Compensation for ataxia — <strong>proprioceptive</strong> (myelopathy) · <strong>cerebellar</strong> (+ hypermetria, intention tremor) · <strong>bilateral vestibular</strong> (+ side-to-side head sway, <em>no</em> tilt)', tone: 'teal' }],
+          ['<strong>Head tilt</strong>', 'One ear carried low; constant at rest', { text: bullets(['<strong>Peripheral</strong> — otitis media/interna, idiopathic (old dog, cat), nasopharyngeal polyp (cat), ototoxicity', '<strong>Central</strong> — MUO, brainstem infarct, neoplasia, thiamine deficiency'], { lead: '<strong>Vestibular</strong>', foot: '<em>CP deficits ± obtundation = central; tilt <strong>away</strong> from the lesion = paradoxical (cerebellar flocculonodular)</em>' }), tone: 'teal' }],
+          ['<strong>Low head carriage</strong>', 'Nose down, stiff neck, reluctant to look up, yelps on movement', { text: bullets(['IVDD C2–C5 (most common)', 'SRMA (young dog, pyrexic)', 'Discospondylitis', 'Atlantoaxial instability (toy breed &lt;2 yr)', 'CCSM / Wobbler (large breed)'], { lead: '<strong>Cervical pain</strong>', foot: '<em>Cat, non-painful ventroflexion → hypokalaemia, thiamine deficiency or myasthenia gravis</em>' }), tone: 'teal' }],
+          ['<strong>Kyphosis</strong>', 'Arched thoracolumbar spine, tense epaxials, guarding on palpation', { text: bullets(['IVDD Type I (most common)', 'Discospondylitis', 'Vertebral fracture / luxation', 'Vertebral neoplasia'], { lead: '<strong>T3–L3 pain</strong>', foot: '<em>Abdominal pain mimics it — always palpate the abdomen</em>' }), tone: 'teal' }],
+          ['<strong>Scoliosis</strong>', 'Fixed lateral deviation of the spine; usually chronic / congenital', { text: bullets(['Syringomyelia', 'Chiari-like malformation (Cavalier KCS)', 'Hemivertebra (French Bulldog, Pug, Boston — screw-tail breeds)', 'Spinal dysraphism (Weimaraner)', 'Intramedullary lesion']), tone: 'teal' }],
+          ['<strong>Wide-based stance</strong>', 'Feet planted wide at rest to stay upright', { text: bullets(['Compensation for ataxia — <strong>proprioceptive</strong> (myelopathy)', '<strong>Cerebellar</strong> (+ hypermetria, intention tremor)', '<strong>Bilateral vestibular</strong> (+ side-to-side head sway, <em>no</em> tilt)']), tone: 'teal' }],
 
           { section: '3 · Gait' },
-          ['<strong>Spinal (proprioceptive) ataxia</strong>', 'Crossing over, delayed protraction, scuffing, ± paresis', { text: 'Myelopathy — IVDD · FCE / ANNPE · degenerative myelopathy · CCSM · neoplasia', tone: 'teal' }],
+          ['<strong>Spinal (proprioceptive) ataxia</strong>', 'Crossing over, delayed protraction, scuffing, ± paresis', { text: bullets(['Myelopathy — IVDD', 'FCE / ANNPE', 'Degenerative myelopathy', 'CCSM', 'Neoplasia']), tone: 'teal' }],
           ['<strong>Vestibular ataxia</strong>', 'Leaning, falling or rolling to one side, with head tilt', { text: 'Peripheral vs central vestibular — separate on CP deficits and mentation (see head tilt)', tone: 'teal' }],
-          ['<strong>Cerebellar ataxia</strong>', 'Hypermetria + intention tremor, <strong>strength preserved</strong>', { text: 'Cerebellar abiotrophy (young) · cerebellitis / MUO · infarct · neoplasia', tone: 'teal' }],
-          ['<strong>Monoparesis / asymmetry</strong>', 'One limb; ± root signature (pain on limb traction)', { text: 'Nerve root or brachial plexus nerve sheath tumour · lateralised disc extrusion · FCE · peripheral nerve trauma', tone: 'teal' }],
-          ['<strong>Toe-dragging · dorsal paw scuffing</strong>', 'Nail wear on the <em>dorsal</em> surface', { text: 'Earliest proprioceptive deficit — the limbs affected give the cord segment', tone: 'teal' }],
+          ['<strong>Cerebellar ataxia</strong>', 'Hypermetria + intention tremor, <strong>strength preserved</strong>', { text: bullets(['Cerebellar abiotrophy (young)', 'Cerebellitis / MUO', 'Infarct', 'Neoplasia']), tone: 'teal' }],
+          ['<strong>Monoparesis / asymmetry</strong>', 'One limb; ± root signature (pain on limb traction)', { text: bullets(['Nerve root or brachial plexus nerve sheath tumour', 'Lateralised disc extrusion', 'FCE', 'Peripheral nerve trauma']), tone: 'teal' }],
+          [bullets(['<strong>Toe-dragging</strong>', '<strong>Dorsal paw scuffing</strong>']), 'Nail wear on the <em>dorsal</em> surface', { text: 'Earliest proprioceptive deficit — the limbs affected give the cord segment', tone: 'teal' }],
 
           { section: '4 · Head & face' },
-          ['<strong>Nystagmus</strong>', 'Note type, direction, and whether it changes with head position', { text: 'Peripheral — horizontal or rotary, <strong>fixed</strong> direction, fast phase away from the lesion · <strong>Vertical or direction-changing = central</strong>', tone: 'teal' }],
+          ['<strong>Nystagmus</strong>', 'Note type, direction, and whether it changes with head position', { text: bullets(['Peripheral — horizontal or rotary, <strong>fixed</strong> direction, fast phase away from the lesion', '<strong>Vertical or direction-changing = central</strong>']), tone: 'teal' }],
           ['<strong>Strabismus</strong>', 'Ventrolateral, <em>positional</em> — appears on head extension', { text: 'Vestibular (CN VIII) — distinguish from a fixed CN III / IV / VI deficit (cavernous sinus syndrome, brainstem lesion)', tone: 'teal' }],
-          ['<strong>Circling</strong>', 'Tight vs wide circles; toward or away from the lesion', { text: 'Tight circles + head tilt = <strong>vestibular</strong> (toward lesion) · wide circles ± pacing, behaviour change = <strong>forebrain</strong> (toward lesion)', tone: 'teal' }],
-          ['<strong>Facial asymmetry</strong><br>lip · ear · nostril', 'Drooped lip, widened palpebral fissure, absent palpebral reflex', { text: '<strong>CN VII</strong> — otitis media/interna · idiopathic facial paralysis · hypothyroidism · MUO or brainstem lesion.<br><em>CN VII + head tilt = middle/inner ear until proven otherwise</em>', tone: 'teal' }],
-          ['<strong>Ptosis + miosis + enophthalmos + 3rd eyelid</strong>', 'Horner syndrome — one side', { text: '<strong>Preganglionic T1–T3</strong> — brachial plexus avulsion, cranial mediastinal mass, cervical/cranial thoracic cord lesion · <strong>postganglionic</strong> — middle ear disease · idiopathic (Golden Retriever)', tone: 'teal' }],
+          ['<strong>Circling</strong>', 'Tight vs wide circles; toward or away from the lesion', { text: bullets(['Tight circles + head tilt = <strong>vestibular</strong> (toward lesion)', 'Wide circles ± pacing, behaviour change = <strong>forebrain</strong> (toward lesion)']), tone: 'teal' }],
+          ['<strong>Facial asymmetry</strong><br>lip · ear · nostril', 'Drooped lip, widened palpebral fissure, absent palpebral reflex', { text: bullets(['Otitis media / interna', 'Idiopathic facial paralysis', 'Hypothyroidism', 'MUO or brainstem lesion'], { lead: '<strong>CN VII</strong>', foot: '<em>CN VII + head tilt = middle / inner ear until proven otherwise</em>' }), tone: 'teal' }],
+          ['<strong>Ptosis + miosis + enophthalmos + 3rd eyelid</strong>', 'Horner syndrome — one side', { text: bullets(['<strong>Preganglionic T1–T3</strong> — brachial plexus avulsion, cranial mediastinal mass, cervical/cranial thoracic cord lesion', '<strong>Postganglionic</strong> — middle ear disease', 'Idiopathic (Golden Retriever)']), tone: 'teal' }],
 
           { section: '5 · Muscle bulk' },
-          ['<strong>Temporal / masseter wasting — bilateral</strong>', '± painful jaw, restricted jaw opening', { text: 'Masticatory muscle myositis (2M antibody) · chronic bilateral trigeminal neuropathy · cachexia or chronic steroids', tone: 'teal' }],
+          ['<strong>Temporal / masseter wasting — bilateral</strong>', '± painful jaw, restricted jaw opening', { text: bullets(['Masticatory muscle myositis (2M antibody)', 'Chronic bilateral trigeminal neuropathy', 'Cachexia or chronic steroids']), tone: 'teal' }],
           ['<strong>Masticatory wasting — unilateral</strong>', 'One side only, ± dropped jaw if bilateral motor loss', { text: '<strong>CN V motor</strong> — trigeminal nerve sheath tumour', tone: 'teal' }],
-          ['<strong>Focal limb atrophy</strong>', 'Rapid (&lt;1 week) neurogenic wasting, visible at rest', { text: '<strong>LMN lesion in that segment</strong> — C6–T2 (forelimb, supraspinatus / infraspinatus) · L4–S3 (hindlimb).<br><em>Slow, symmetric wasting = disuse or orthopaedic disease</em>', tone: 'teal' }],
+          ['<strong>Focal limb atrophy</strong>', 'Rapid (&lt;1 week) neurogenic wasting, visible at rest', { text: bullets(['C6–T2 (forelimb, supraspinatus / infraspinatus)', 'L4–S3 (hindlimb)'], { lead: '<strong>LMN lesion in that segment</strong>', foot: '<em>Slow, symmetric wasting = disuse or orthopaedic disease</em>' }), tone: 'teal' }],
         ],
       },
 
@@ -134,7 +134,7 @@ export const myelopathyDx: DxApproach = {
         dividers: true,
         headers: ['Do', { text: 'Looking for', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>Palpate</strong> the vertebral column, occiput → sacrum`, { text: 'Site(s) of pain · muscle guarding · rigidity', tone: 'teal' }],
+          [`${numBadge(1)}<strong>Palpate</strong> the vertebral column, occiput → sacrum`, { text: bullets(['Site(s) of pain', 'Muscle guarding', 'Rigidity']), tone: 'teal' }],
           [`${numBadge(2)}<strong>Assess supraspinatus / infraspinatus bulk</strong>`, { text: 'C6–T2 LMN atrophy in forelimb monoparesis', tone: 'teal' }],
         ],
       }, '👋'),
@@ -145,7 +145,7 @@ export const myelopathyDx: DxApproach = {
         headers: ['', { text: 'Detail', tone: 'teal' }],
         rows: [
           [`${numBadge(1)}<strong>Technique</strong>`, { text: 'Gently pinch the dorsal skin with haemostats, bilaterally, moving caudal → cranial', tone: 'teal' }],
-          [`${numBadge(2)}<strong>Pathway</strong>`, { text: 'Afferent enters the cord locally; efferent exits via the lateral thoracic nerve (C8–T1) to the cutaneus trunci', tone: 'teal' }],
+          [`${numBadge(2)}<strong>Pathway</strong>`, { text: bullets(['Afferent enters the cord locally', 'Efferent exits via the lateral thoracic nerve (C8–T1) to the cutaneus trunci']), tone: 'teal' }],
           [`${numBadge(3)}<strong>Interpret</strong>`, { text: 'Skin twitch lost caudal to a level → lesion ≈ <strong>1–2 segments cranial</strong> to the cutoff — most useful for T3–L3', tone: 'teal' }],
         ],
       }, '👆'),
@@ -194,7 +194,7 @@ export const myelopathyDx: DxApproach = {
         dividers: true,
         headers: ['Test', { text: 'What it rules in / out', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>CBC · biochemistry · UA</strong>`, { text: 'Metabolic / infectious contributors (hypocalcaemia, toxoplasmosis, distemper); anaesthetic safety before imaging', tone: 'teal' }],
+          [`${numBadge(1)}<strong>CBC · biochemistry · UA</strong>`, { text: bullets(['Metabolic / infectious contributors (hypocalcaemia, toxoplasmosis, distemper)', 'Anaesthetic safety before imaging']), tone: 'teal' }],
           [`${numBadge(2)}<strong>Blood pressure</strong>`, { text: 'Hypertension → ischaemic myelopathy', tone: 'teal' }],
           [`${numBadge(3)}<strong>Thoracic radiographs</strong>`, { text: 'Primary pulmonary neoplasia — exclude before attributing spinal signs to metastasis', tone: 'teal' }],
         ],
@@ -243,7 +243,7 @@ export const myelopathyDx: DxApproach = {
         dividers: true,
         headers: ['Indication', { text: 'What you are looking for', tone: 'teal' }],
         rows: [
-          ['<strong>FCE / ANNPE</strong>', { text: 'T2 hyperintense intraparenchymal lesion; no compressive material', tone: 'teal' }],
+          ['<strong>FCE / ANNPE</strong>', { text: bullets(['T2 hyperintense intraparenchymal lesion', 'No compressive material']), tone: 'teal' }],
           ['<strong>Degenerative myelopathy</strong>', { text: 'Diagnosis of exclusion — MRI rules out compression', tone: 'teal' }],
           ['<strong>Neoplasia / infiltrative</strong>', { text: 'Cord signal change, contrast enhancement', tone: 'teal' }],
           ['<strong>CCSM (Wobbler)</strong>', { text: 'Cervical cord compression mapping for surgical planning', tone: 'teal' }],
@@ -256,8 +256,8 @@ export const myelopathyDx: DxApproach = {
         headers: ['', { text: 'Detail', tone: 'teal' }],
         rows: [
           [`${numBadge(1)}<strong>Timing</strong>`, { text: 'Collect <strong>after MRI</strong> — exclude obstructive hydrocephalus / herniation risk before tapping', tone: 'danger' }],
-          [`${numBadge(2)}<strong>Indications</strong>`, { text: 'Infectious / inflammatory myelopathy (GME · meningomyelitis · distemper) · neoplastic infiltration · progressive non-compressive myelopathy with no imaging diagnosis', tone: 'teal' }],
-          [`${numBadge(3)}<strong>Interpret</strong>`, { text: 'Cell count · differential · protein · cytology ± infectious PCR (Toxoplasma, Neospora, CDV; 🐱 FIV/FeLV)', tone: 'teal' }],
+          [`${numBadge(2)}<strong>Indications</strong>`, { text: bullets(['Infectious / inflammatory myelopathy (GME · meningomyelitis · distemper)', 'Neoplastic infiltration', 'Progressive non-compressive myelopathy with no imaging diagnosis']), tone: 'teal' }],
+          [`${numBadge(3)}<strong>Interpret</strong>`, { text: bullets(['Cell count', 'Differential', 'Protein', 'Cytology ± infectious PCR (Toxoplasma, Neospora, CDV; 🐱 FIV/FeLV)']), tone: 'teal' }],
         ],
       }, '💧'),
     ],

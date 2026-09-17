@@ -7,7 +7,7 @@
 
 import type { DxApproach } from '../dxTypes'
 import { CN_EXAM_ACCORDION } from './shared/neuroExam'
-import { numBadge } from './shared/dxHelpers'
+import { numBadge, bullets } from './shared/dxHelpers'
 
 export const seizuresDx: DxApproach = {
   sign: 'seizures',
@@ -24,9 +24,9 @@ export const seizuresDx: DxApproach = {
         dividers: true,
         headers: ['Feature', { text: 'What it means', tone: 'teal' }],
         rows: [
-          ['<strong>Focal onset?</strong>', { text: 'One body region or one side — facial twitching · lip smacking · fly-catching · one limb jerking. Consciousness may be preserved. Focal onset (including focal-to-bilateral) → <strong>structural until proven otherwise</strong>', tone: 'info' }],
-          ['<strong>Generalised?</strong>', { text: 'Both sides at once — tonic-clonic · tonic · atonic; consciousness lost; autonomic signs (urination · defaecation · hypersalivation). Any category still possible', tone: 'warning' }],
-          ['<strong>Postictal recovery</strong>', { text: 'Disorientation · transient blindness · ataxia · polyphagia — normally minutes to a few hours. <strong>Prolonged (&gt;24 h) or not improving = structural</strong>', tone: 'green' }],
+          ['<strong>Focal onset?</strong>', { text: bullets(['One body region or one side — facial twitching', 'Lip smacking', 'Fly-catching', 'One limb jerking. Consciousness may be preserved. Focal onset (including focal-to-bilateral) → <strong>structural until proven otherwise</strong>']), tone: 'info' }],
+          ['<strong>Generalised?</strong>', { text: bullets(['Both sides at once — tonic-clonic', 'Tonic', 'Atonic; consciousness lost; autonomic signs (urination · defaecation · hypersalivation). Any category still possible']), tone: 'warning' }],
+          ['<strong>Postictal recovery</strong>', { text: bullets(['Disorientation', 'Transient blindness', 'Ataxia', 'Polyphagia — normally minutes to a few hours. <strong>Prolonged (&gt;24 h) or not improving = structural</strong>']), tone: 'green' }],
         ],
       },
       { kind: 'note', html: `<strong>Ask owners to video future episodes.</strong> The description is the diagnostic tool — the findings above redirect the whole workup.` },
@@ -43,7 +43,7 @@ export const seizuresDx: DxApproach = {
           ['<strong>Age at first seizure &lt;6 months</strong>', { text: 'Structural (anomalous · storage) or reactive (hypoglycaemia · PSS · toxin)', tone: 'teal' }],
           ['<strong>6 months–6 years</strong>', { text: 'Idiopathic epilepsy most likely — <em>if</em> bloods and interictal exam are normal', tone: 'teal' }],
           ['<strong>&gt;6 years</strong>', { text: 'Structural (neoplasia · CVA · MUO) or reactive — idiopathic rare', tone: 'teal' }],
-          ['<strong>Interictal behaviour</strong>', { text: 'Completely normal between episodes? Head pressing · circling · personality or vision change → <strong>structural</strong>. Note the frequency trend — stable, increasing, decreasing', tone: 'teal' }],
+          ['<strong>Interictal behaviour</strong>', { text: bullets(['Completely normal between episodes? Head pressing', 'Circling', 'Personality or vision change → <strong>structural</strong>. Note the frequency trend — stable, increasing, decreasing']), tone: 'teal' }],
         ],
       },
 
@@ -54,8 +54,8 @@ export const seizuresDx: DxApproach = {
         dividers: true,
         headers: ['Ask every seizure patient', { text: 'Detail', tone: 'teal' }],
         rows: [
-          ['<strong>1. Any possible toxin access?</strong>', { text: 'Slug bait · rodenticide · antifreeze · mouldy food · chocolate · lead · farm chemicals', tone: 'teal' }],
-          ['<strong>2. Any medication started or changed?</strong>', { text: '🐱 ask specifically about <strong>5-FU cream in the household</strong> (trace exposure is fatal) · permethrin spot-ons · metronidazole', tone: 'danger' }],
+          ['<strong>1. Any possible toxin access?</strong>', { text: bullets(['Slug bait', 'Rodenticide', 'Antifreeze', 'Mouldy food', 'Chocolate', 'Lead', 'Farm chemicals']), tone: 'teal' }],
+          ['<strong>2. Any medication started or changed?</strong>', { text: bullets(['🐱 Ask specifically about <strong>5-FU cream in the household</strong> (trace exposure is fatal)', 'Permethrin spot-ons', 'Metronidazole']), tone: 'danger' }],
           ['<strong>3. Any missed AED doses?</strong>', { text: '<strong>Abrupt phenobarbitone or KBr withdrawal is a major cause of breakthrough seizures and SE</strong>', tone: 'danger' }],
         ],
       },
@@ -105,7 +105,7 @@ export const seizuresDx: DxApproach = {
         dividers: true,
         headers: ['Do', { text: 'Detail', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>Airway</strong>`, { text: 'Sternal recumbency · head extended · suction if needed', tone: 'danger' }],
+          [`${numBadge(1)}<strong>Airway</strong>`, { text: bullets(['Sternal recumbency', 'Head extended', 'Suction if needed']), tone: 'danger' }],
           [`${numBadge(2)}<strong>High-flow O₂</strong>`, { text: '5–10 L/min mask or flow-by', tone: 'danger' }],
           [`${numBadge(3)}<strong>IV access</strong>`, { text: 'Cephalic or saphenous', tone: 'teal' }],
           [`${numBadge(4)}<strong>Point-of-care BG immediately</strong>`, { text: 'Dextrose if &lt;3.5 mmol/L', tone: 'teal' }],
@@ -148,13 +148,13 @@ export const seizuresDx: DxApproach = {
         headers: ['Finding', { text: 'Implication', tone: 'danger' }, { text: 'Action', tone: 'teal' }],
         rows: [
           { section: 'Lateralising — a focal lesion until proven otherwise' },
-          ['<strong>Unilateral CP deficit</strong> · asymmetric hopping', { text: 'Forebrain lesion, <strong>ipsilateral</strong> to the deficit', tone: 'danger' }, { text: 'MRI brain', tone: 'teal' }],
+          [bullets(['<strong>Unilateral CP deficit</strong>', 'Asymmetric hopping']), { text: 'Forebrain lesion, <strong>ipsilateral</strong> to the deficit', tone: 'danger' }, { text: 'MRI brain', tone: 'teal' }],
           ['<strong>Unilateral menace loss</strong> (PLR intact)', { text: 'Forebrain lesion, <strong>contralateral</strong> to the loss', tone: 'danger' }, { text: 'MRI brain', tone: 'teal' }],
-          ['<strong>Circling · head turn</strong>', { text: 'Forebrain, ipsilateral to the turn', tone: 'danger' }, { text: 'MRI brain', tone: 'teal' }],
+          [bullets(['<strong>Circling</strong>', '<strong>Head turn</strong>']), { text: 'Forebrain, ipsilateral to the turn', tone: 'danger' }, { text: 'MRI brain', tone: 'teal' }],
           ['<strong>Hemiparesis</strong>', { text: 'Contralateral forebrain, or brainstem', tone: 'danger' }, { text: 'MRI brain', tone: 'teal' }],
           { section: 'Raised ICP / herniation — emergency' },
           ['<strong>Fixed dilated pupil</strong>', { text: 'CN III compression / brainstem herniation', tone: 'danger' }, { text: 'Mannitol or hypertonic saline — PROT-SEIZ', tone: 'teal' }],
-          ['<strong>Head pressing</strong> · deteriorating mentation', { text: 'Raised ICP (or hepatic encephalopathy)', tone: 'danger' }, { text: 'Treat ICP; check ammonia / bile acids', tone: 'teal' }],
+          [bullets(['<strong>Head pressing</strong>', 'Deteriorating mentation']), { text: 'Raised ICP (or hepatic encephalopathy)', tone: 'danger' }, { text: 'Treat ICP; check ammonia / bile acids', tone: 'teal' }],
           ['<strong>Papilloedema</strong> on fundoscopy', { text: 'Raised ICP', tone: 'danger' }, { text: 'Treat before GA for imaging', tone: 'teal' }],
           { section: 'Points to the underlying cause' },
           ['<strong>Chorioretinitis</strong>', { text: 'Infectious / immune — Toxo, CDV, FIP, Crypto', tone: 'danger' }, { text: 'Serology / PCR + CSF', tone: 'teal' }],
@@ -174,10 +174,10 @@ export const seizuresDx: DxApproach = {
         dividers: true,
         headers: ['Assess', { text: 'Why it changes the workup', tone: 'teal' }],
         rows: [
-          ['<strong>Cardiac auscultation + pulse quality</strong>', { text: 'Murmur · arrhythmia · weak pulses reopen <strong>syncope</strong> as the diagnosis. Collapse without a postictal phase is not a seizure', tone: 'info' }],
-          ['<strong>Blood pressure</strong>', { text: 'Hypertensive encephalopathy is treatable and easily missed — older cat · CKD · hyperthyroid', tone: 'warning' }],
-          ['<strong>Fundus</strong>', { text: 'The only place you see the CNS directly — papilloedema · chorioretinitis · retinal detachment', tone: 'violet' }],
-          ['<strong>Liver + body size</strong>', { text: 'Small liver · poor growth · copper-coloured irises in a toy breed &lt;1 yr → <strong>PSS</strong>', tone: 'green' }],
+          ['<strong>Cardiac auscultation + pulse quality</strong>', { text: bullets(['Murmur', 'Arrhythmia', 'Weak pulses reopen <strong>syncope</strong> as the diagnosis. Collapse without a postictal phase is not a seizure']), tone: 'info' }],
+          ['<strong>Blood pressure</strong>', { text: bullets(['Hypertensive encephalopathy is treatable and easily missed — older cat', 'CKD', 'Hyperthyroid']), tone: 'warning' }],
+          ['<strong>Fundus</strong>', { text: bullets(['The only place you see the CNS directly — papilloedema', 'Chorioretinitis', 'Retinal detachment']), tone: 'violet' }],
+          ['<strong>Liver + body size</strong>', { text: bullets(['Small liver', 'Poor growth', 'Copper-coloured irises in a toy breed &lt;1 yr → <strong>PSS</strong>']), tone: 'green' }],
         ],
       },
       { kind: 'note', html: `Only these four things on the general exam change the seizure workup.` },
@@ -235,14 +235,14 @@ export const seizuresDx: DxApproach = {
         dividers: true,
         headers: ['Finding', { text: 'Diagnosis', tone: 'danger' }, { text: 'Next step', tone: 'teal' }],
         rows: [
-          ['<strong>BG &lt;3.5 mmol/L</strong>', { text: 'Hypoglycaemia', tone: 'danger' }, { text: 'Dextrose now → fasted insulin:glucose (insulinoma) · PSS · Addison\'s · hepatic failure', tone: 'teal' }],
-          ['<strong>↑ bile acids / ↑ ammonia</strong>', { text: 'Hepatic encephalopathy', tone: 'danger' }, { text: 'Abdominal US ± scintigraphy (PSS); liver biopsy if diffuse', tone: 'teal' }],
-          ['<strong>iCa &lt;1.0 mmol/L</strong>', { text: 'Hypocalcaemia', tone: 'danger' }, { text: 'Ca gluconate IV with ECG · eclampsia? hypoparathyroidism? ethylene glycol?', tone: 'teal' }],
-          ['<strong>Na &lt;120 or &gt;170 mmol/L</strong>', { text: 'Electrolyte encephalopathy', tone: 'danger' }, { text: "Na:K &lt;27 → Addison's · DI · SIADH — correct slowly", tone: 'teal' }],
+          ['<strong>BG &lt;3.5 mmol/L</strong>', { text: 'Hypoglycaemia', tone: 'danger' }, { text: bullets(['Dextrose now → fasted insulin:glucose (insulinoma)', 'PSS', 'Addison\'s', 'Hepatic failure']), tone: 'teal' }],
+          ['<strong>↑ bile acids / ↑ ammonia</strong>', { text: 'Hepatic encephalopathy', tone: 'danger' }, { text: bullets(['Abdominal US ± scintigraphy (PSS)', 'Liver biopsy if diffuse']), tone: 'teal' }],
+          ['<strong>iCa &lt;1.0 mmol/L</strong>', { text: 'Hypocalcaemia', tone: 'danger' }, { text: bullets(['Ca gluconate IV with ECG', 'Eclampsia? hypoparathyroidism? ethylene glycol?']), tone: 'teal' }],
+          ['<strong>Na &lt;120 or &gt;170 mmol/L</strong>', { text: 'Electrolyte encephalopathy', tone: 'danger' }, { text: bullets(['Na:K &lt;27 → Addison\'s', 'DI', 'SIADH — correct slowly']), tone: 'teal' }],
           ['<strong>Marked ↑ BUN / creatinine</strong>', { text: 'Uraemic encephalopathy', tone: 'danger' }, { text: 'Fluids, phosphate binders, treat the renal cause', tone: 'teal' }],
-          ['<strong>PCV &gt;60%</strong>', { text: 'Polycythaemia / hyperviscosity', tone: 'danger' }, { text: 'Phlebotomy · check SpO₂, EPO', tone: 'teal' }],
-          ['<strong>Hypertension + retinal change</strong>', { text: 'Hypertensive encephalopathy', tone: 'danger' }, { text: 'Amlodipine · T4 in cats · investigate CKD', tone: 'teal' }],
-          ['<strong>Toxin / drug history</strong>', { text: 'Intoxication', tone: 'danger' }, { text: 'Decontaminate if &lt;2 h · toxicology · specific antidote', tone: 'teal' }],
+          ['<strong>PCV &gt;60%</strong>', { text: 'Polycythaemia / hyperviscosity', tone: 'danger' }, { text: bullets(['Phlebotomy', 'Check SpO₂, EPO']), tone: 'teal' }],
+          ['<strong>Hypertension + retinal change</strong>', { text: 'Hypertensive encephalopathy', tone: 'danger' }, { text: bullets(['Amlodipine', 'T4 in cats', 'Investigate CKD']), tone: 'teal' }],
+          ['<strong>Toxin / drug history</strong>', { text: 'Intoxication', tone: 'danger' }, { text: bullets(['Decontaminate if &lt;2 h', 'Toxicology', 'Specific antidote']), tone: 'teal' }],
         ],
       },
       {
@@ -290,8 +290,8 @@ export const seizuresDx: DxApproach = {
         dividers: true,
         headers: ['Result', { text: 'Diagnosis', tone: 'danger' }, { text: 'Next step', tone: 'teal' }],
         rows: [
-          ['<strong>Extra-axial, contrast-enhancing mass</strong>', { text: 'Meningioma', tone: 'danger' }, { text: 'Older cats · dolichocephalic dogs — surgical candidate', tone: 'teal' }],
-          ['<strong>Intra-axial mass + peri-lesional oedema</strong>', { text: 'Glioma', tone: 'danger' }, { text: 'Brachycephalics · older dogs — RT / palliation', tone: 'teal' }],
+          ['<strong>Extra-axial, contrast-enhancing mass</strong>', { text: 'Meningioma', tone: 'danger' }, { text: bullets(['Older cats', 'Dolichocephalic dogs — surgical candidate']), tone: 'teal' }],
+          ['<strong>Intra-axial mass + peri-lesional oedema</strong>', { text: 'Glioma', tone: 'danger' }, { text: bullets(['Brachycephalics', 'Older dogs — RT / palliation']), tone: 'teal' }],
           ['<strong>↑ TNCC + ↑ protein</strong>', { text: 'MUO or infectious encephalitis', tone: 'danger' }, { text: 'Serology / PCR: Toxo, Neospora, CDV, Crypto, FIP, Ehrlichia', tone: 'teal' }],
           ['<strong>Vascular-territory lesion, peracute</strong>', { text: 'CVA (stroke)', tone: 'danger' }, { text: 'Hunt the cause: BP, T4 (cats), cardiac, coagulation', tone: 'teal' }],
           ['<strong>Multifocal T2 lesions, eosinophilic CSF</strong>', { text: 'Eosinophilic meningoencephalitis', tone: 'danger' }, { text: 'Parasitic / fungal / idiopathic', tone: 'teal' }],

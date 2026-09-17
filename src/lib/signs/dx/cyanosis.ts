@@ -10,7 +10,7 @@
 // the emergency protocols. (Ettinger Ch 27)
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable, numBadge } from './shared/dxHelpers'
+import { stepTable, numBadge, bullets } from './shared/dxHelpers'
 
 export const cyanosisDx: DxApproach = {
   sign: 'cyanosis',
@@ -43,7 +43,7 @@ export const cyanosisDx: DxApproach = {
           rows: [
             ['<strong>Central cyanosis + respiratory distress</strong>', { text: 'An emergency — <strong>give oxygen and minimise stress before any history-taking is completed</strong>', tone: 'danger' }],
             ['<strong>Take the history</strong>', { text: 'From the owner <em>while</em> the patient is in an oxygen cage', tone: 'teal' }],
-            ['<strong>Ask about</strong>', { text: 'Speed of onset · exercise tolerance · any toxin access', tone: 'teal' }],
+            ['<strong>Ask about</strong>', { text: bullets(['Speed of onset', 'Exercise tolerance', 'Any toxin access']), tone: 'teal' }],
           ],
         },
 
@@ -52,10 +52,10 @@ export const cyanosisDx: DxApproach = {
           dividers: true,
           headers: ['Pattern', { text: 'Points to', tone: 'teal' }],
           rows: [
-            ['<strong>Peracute</strong>', { text: 'Toxin (paracetamol · benzocaine · nitrate → methaemoglobinaemia) · pulmonary thromboembolism · aortic thromboembolism · pneumothorax · airway crisis', tone: 'teal' }],
+            ['<strong>Peracute</strong>', { text: bullets(['Toxin (paracetamol · benzocaine · nitrate → methaemoglobinaemia)', 'Pulmonary thromboembolism', 'Aortic thromboembolism', 'Pneumothorax', 'Airway crisis']), tone: 'teal' }],
             ['<strong>Chronic / lifelong, worse on exercise, young animal</strong>', { text: 'Cyanotic congenital heart disease (R→L shunt) with secondary erythrocytosis', tone: 'teal' }],
             ['<strong>Differential cyanosis</strong><br>caudal end blue, cranial pink, worse with light exercise', { text: '<strong>Reverse PDA</strong>', tone: 'teal' }],
-            ['<strong>Cough · wheeze · stridor · honking</strong>', { text: 'Parenchymal vs lower- vs upper-airway disease', tone: 'teal' }],
+            [bullets(['<strong>Cough</strong>', '<strong>Wheeze</strong>', '<strong>Stridor</strong>', '<strong>Honking</strong>']), { text: 'Parenchymal vs lower- vs upper-airway disease', tone: 'teal' }],
           ],
         }, '⏱️'),
 
@@ -66,7 +66,7 @@ export const cyanosisDx: DxApproach = {
           rows: [
             ['<strong>Paracetamol (acetaminophen)</strong>', { text: 'Highly toxic, especially to cats', tone: 'danger' }],
             ['<strong>Benzocaine / topical local anaesthetics</strong>', { text: 'Oxidant exposure', tone: 'teal' }],
-            ['<strong>Nitrates / nitrites · hydroxyurea · skunk musk</strong>', { text: 'Oxidant exposure', tone: 'teal' }],
+            [bullets(['<strong>Nitrates / nitrites</strong>', '<strong>Hydroxyurea</strong>', '<strong>Skunk musk</strong>']), { text: 'Oxidant exposure', tone: 'teal' }],
             ['<strong>Effect of these oxidants</strong>', { text: '<strong>Acute cyanosis with a normal PaO₂</strong>, often with a concurrent Heinz-body haemolytic anaemia', tone: 'teal' }],
             ['<strong>Hereditary methaemoglobinaemia</strong><br>cytochrome-b5 reductase deficiency', { text: 'Mild, persistent cyanosis with erythrocytosis', tone: 'teal' }],
           ],
@@ -80,7 +80,7 @@ export const cyanosisDx: DxApproach = {
             ['<strong>Brachycephalic dog</strong>', { text: 'BOAS / upper-airway obstruction', tone: 'teal' }],
             ['<strong>Older large-breed dog with stridor</strong>', { text: 'Laryngeal paralysis', tone: 'teal' }],
             ['<strong>Toy breed with a honking cough</strong>', { text: 'Tracheal collapse', tone: 'teal' }],
-            ['<strong>🐱 Cat with acute distress</strong>', { text: 'Feline asthma · pleural effusion · congestive heart failure', tone: 'teal' }],
+            ['<strong>🐱 Cat with acute distress</strong>', { text: bullets(['Feline asthma', 'Pleural effusion', 'Congestive heart failure']), tone: 'teal' }],
             ['<strong>🐱 Cat with painful pulseless hind limbs</strong>', { text: 'Aortic thromboembolism', tone: 'danger' }],
           ],
         }, '🐾'),
@@ -122,9 +122,9 @@ export const cyanosisDx: DxApproach = {
           dividers: true,
           headers: ['Finding', { text: 'Points to', tone: 'teal' }],
           rows: [
-            ['<strong>Inspiratory effort / stridor</strong>', { text: 'Upper-airway obstruction — BOAS · laryngeal paralysis · tracheal collapse', tone: 'teal' }],
+            ['<strong>Inspiratory effort / stridor</strong>', { text: bullets(['Upper-airway obstruction — BOAS', 'Laryngeal paralysis', 'Tracheal collapse']), tone: 'teal' }],
             ['<strong>Expiratory effort / wheeze</strong>', { text: 'Lower-airway disease — feline asthma', tone: 'teal' }],
-            ['<strong>Increased lung sounds / crackles</strong>', { text: 'Parenchymal disease — pneumonia · oedema', tone: 'teal' }],
+            ['<strong>Increased lung sounds / crackles</strong>', { text: bullets(['Parenchymal disease — pneumonia', 'Oedema']), tone: 'teal' }],
             ['<strong>Muffled / absent lung sounds ventrally or dorsally</strong>', { text: 'Pleural space disease (effusion · pneumothorax) — <strong>this patient needs a thoracocentesis, not a delay</strong>', tone: 'danger' }],
           ],
         }, '👂'),
@@ -134,7 +134,7 @@ export const cyanosisDx: DxApproach = {
           dividers: true,
           headers: ['Assess', { text: 'Means', tone: 'teal' }],
           rows: [
-            ['<strong>Murmur</strong>', { text: 'Congenital shunt · MVD; assess for signs of congestive failure', tone: 'teal' }],
+            ['<strong>Murmur</strong>', { text: bullets(['Congenital shunt', 'MVD; assess for signs of congestive failure']), tone: 'teal' }],
             ['<strong>Young cyanotic animal + murmur + exercise intolerance + high PCV (erythrocytosis)</strong>', { text: '<strong>R→L shunt</strong>', tone: 'teal' }],
             ['<strong>🐱 Femoral pulses + footpads</strong>', { text: 'Absent pulses + cold cyanotic pads + pain = <strong>aortic thromboembolism</strong>', tone: 'danger' }],
           ],
@@ -176,7 +176,7 @@ export const cyanosisDx: DxApproach = {
           headers: ['', { text: 'Detail', tone: 'teal' }],
           rows: [
             ['<strong>Normal</strong>', { text: 'SpO₂ &gt;95%', tone: 'teal' }],
-            ['<strong>Limitations</strong>', { text: 'Fast non-invasive screen, but <strong>overestimates</strong> SaO₂ at low ranges (&lt;70–80%); degraded by pigmentation, poor perfusion and severe anaemia', tone: 'teal' }],
+            ['<strong>Limitations</strong>', { text: bullets(['Fast non-invasive screen, but <strong>overestimates</strong> SaO₂ at low ranges (&lt;70–80%)', 'Degraded by pigmentation, poor perfusion and severe anaemia']), tone: 'teal' }],
             ['<strong>Methaemoglobinaemia</strong>', { text: 'SpO₂ is <strong>falsely pinned at ~85%</strong> regardless of true oxygenation — a clinically cyanotic patient with an "85%" pulse-ox that won\'t move is a red flag for metHb', tone: 'danger' }],
           ],
         }, '📟'),
@@ -186,7 +186,7 @@ export const cyanosisDx: DxApproach = {
           dividers: true,
           headers: ['Test', { text: 'Interpretation', tone: 'teal' }],
           rows: [
-            ['<strong>Arterial blood gas</strong>', { text: 'Gold standard for PaO₂ — normal 80–100 mmHg on room air at sea level; severe hypoxaemia = PaO₂ &lt;60 mmHg / SaO₂ &lt;90%', tone: 'teal' }],
+            ['<strong>Arterial blood gas</strong>', { text: bullets(['Gold standard for PaO₂ — normal 80–100 mmHg on room air at sea level', 'Severe hypoxaemia = PaO₂ &lt;60 mmHg / SaO₂ &lt;90%']), tone: 'teal' }],
             ['<strong>Normal PaO₂ with clinical cyanosis</strong>', { text: 'Indicts a <strong>dyshaemoglobinaemia</strong>', tone: 'danger' }],
             ['<strong>Pulse CO-oximetry</strong>', { text: 'Multiple wavelengths neutralise the effect of dyshaemoglobins (quantifies metHb directly) and estimates haemoglobin concentration — the test of choice when methaemoglobinaemia is suspected', tone: 'teal' }],
           ],
@@ -198,7 +198,7 @@ export const cyanosisDx: DxApproach = {
           headers: ['Test', { text: 'Detail', tone: 'teal' }],
           rows: [
             ['<strong>Thoracic radiography</strong>', { text: 'Characterises parenchymal, airway, pleural-space and cardiac disease', tone: 'teal' }],
-            ['<strong>Muffled lung sounds + unstable patient</strong>', { text: '<strong>Thoracocentesis comes BEFORE radiographs</strong> — diagnostic and immediately therapeutic for pleural effusion / pneumothorax (see the thoracocentesis protocol). Defer GA/CT until stable', tone: 'danger' }],
+            ['<strong>Muffled lung sounds + unstable patient</strong>', { text: bullets(['<strong>Thoracocentesis comes BEFORE radiographs</strong> — diagnostic and immediately therapeutic for pleural effusion / pneumothorax (see the thoracocentesis protocol)', 'Defer GA/CT until stable']), tone: 'danger' }],
             ['<strong>Thoracic CT</strong>', { text: 'Sensitive for pulmonary thromboembolism and other respiratory causes of hypoxaemia — once the patient can tolerate it', tone: 'teal' }],
           ],
         }, '📊'),
@@ -220,8 +220,8 @@ export const cyanosisDx: DxApproach = {
           headers: ['Step', { text: 'Detail', tone: 'teal' }],
           rows: [
             [`${numBadge(1)}<strong>Technique</strong>`, { text: 'Place 1–3 drops of blood on white filter paper', tone: 'teal' }],
-            [`${numBadge(2)}<strong>Interpret</strong>`, { text: '<strong>Chocolate-brown that stays brown against the white background = methaemoglobinaemia</strong>; hypoxaemic blood is dark red / violet and turns bright red as it oxygenates. metHb &gt;2–3% of total Hb is abnormal', tone: 'teal' }],
-            [`${numBadge(3)}<strong>Confirm &amp; treat</strong>`, { text: 'Confirm with co-oximetry, then remove the oxidant and give <strong>methylene blue</strong> + N-acetylcysteine (or transfusion) for acquired metHb — see the metHb protocol. <strong>Oxygen alone will not work</strong>', tone: 'danger' }],
+            [`${numBadge(2)}<strong>Interpret</strong>`, { text: bullets(['<strong>Chocolate-brown that stays brown against the white background = methaemoglobinaemia</strong>', 'Hypoxaemic blood is dark red / violet and turns bright red as it oxygenates. metHb &gt;2–3% of total Hb is abnormal']), tone: 'teal' }],
+            [`${numBadge(3)}<strong>Confirm &amp; treat</strong>`, { text: bullets(['Confirm with co-oximetry, then remove the oxidant and give <strong>methylene blue</strong> + N-acetylcysteine (or transfusion) for acquired metHb — see the metHb protocol', '<strong>Oxygen alone will not work</strong>']), tone: 'danger' }],
           ],
         }, '🟤'),
       ],

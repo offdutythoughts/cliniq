@@ -3,7 +3,7 @@
 // in the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable, numBadge } from './shared/dxHelpers'
+import { stepTable, numBadge, bullets } from './shared/dxHelpers'
 
 export const paleGumsDx: DxApproach = {
   sign: 'pale-gums',
@@ -31,10 +31,10 @@ export const paleGumsDx: DxApproach = {
         dividers: true,
         headers: ['History', { text: 'Points to', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>Acute collapse</strong>`, { text: 'Haemorrhage (trauma · splenic mass rupture) · haemolytic crisis · shock', tone: 'teal' }],
-          [`${numBadge(2)}<strong>Evidence of blood loss</strong>`, { text: 'Melena · haematochezia · haematuria · epistaxis · trauma · recent surgery', tone: 'teal' }],
+          [`${numBadge(1)}<strong>Acute collapse</strong>`, { text: bullets(['Haemorrhage (trauma · splenic mass rupture)', 'Haemolytic crisis', 'Shock']), tone: 'teal' }],
+          [`${numBadge(2)}<strong>Evidence of blood loss</strong>`, { text: bullets(['Melena', 'Haematochezia', 'Haematuria', 'Epistaxis', 'Trauma', 'Recent surgery']), tone: 'teal' }],
           [`${numBadge(3)}<strong>Red–brown urine</strong> (haemoglobinuria) + pallor`, { text: '<strong>Intravascular haemolysis</strong>', tone: 'teal' }],
-          [`${numBadge(4)}<strong>Chronic, gradual</strong>`, { text: 'CKD (renal anaemia) · chronic disease · marrow disease · occult bleeding', tone: 'teal' }],
+          [`${numBadge(4)}<strong>Chronic, gradual</strong>`, { text: bullets(['CKD (renal anaemia)', 'Chronic disease', 'Marrow disease', 'Occult bleeding']), tone: 'teal' }],
         ],
       }, '📋'),
 
@@ -46,7 +46,7 @@ export const paleGumsDx: DxApproach = {
           ['<strong>Oxidant access</strong><br>onion/garlic (Allium) · zinc (coins, hardware) · paracetamol (🐱)', { text: 'Heinz-body haemolysis', tone: 'teal' }],
           ['<strong>Rodenticide access</strong>', { text: 'Haemorrhage', tone: 'teal' }],
           ['<strong>NSAIDs / steroids</strong>', { text: 'GI ulceration and bleeding', tone: 'teal' }],
-          ['<strong>Tick exposure / travel</strong>', { text: 'Babesia · Mycoplasma · Cytauxzoon · Ehrlichia', tone: 'teal' }],
+          ['<strong>Tick exposure / travel</strong>', { text: bullets(['Babesia', 'Mycoplasma', 'Cytauxzoon', 'Ehrlichia']), tone: 'teal' }],
           ['<strong>FeLV / FIV status (🐱)</strong>', { text: 'Marrow suppression', tone: 'teal' }],
           ['<strong>Young, acute</strong>', { text: '<strong>IMHA</strong> — predisposed breeds: Cocker, Springer', tone: 'teal' }],
         ],
@@ -70,7 +70,7 @@ export const paleGumsDx: DxApproach = {
         dividers: true,
         headers: ['Assess', { text: 'Pattern', tone: 'teal' }],
         rows: [
-          ['<strong>Parameters to record</strong>', { text: 'MM colour · CRT · heart rate · pulse quality · extremity temperature · mentation', tone: 'teal' }],
+          ['<strong>Parameters to record</strong>', { text: bullets(['MM colour', 'CRT', 'Heart rate', 'Pulse quality', 'Extremity temperature', 'Mentation']), tone: 'teal' }],
           ['<strong>Anaemia</strong>', { text: 'Pale, but normal / bounding pulse and normal CRT (unless concurrent shock)', tone: 'teal' }],
           ['<strong>Hypoperfusion / shock</strong>', { text: 'Pale + prolonged CRT + weak pulses + tachycardia (🐕) — or <strong>bradycardia + hypothermia in a cat</strong> (decompensated)', tone: 'danger' }],
         ],
@@ -82,7 +82,7 @@ export const paleGumsDx: DxApproach = {
         headers: ['Finding', { text: 'Points to', tone: 'teal' }],
         rows: [
           ['<strong>Icterus</strong> (with pallor)', { text: 'Haemolysis', tone: 'teal' }],
-          ['<strong>Petechiae / ecchymoses</strong>', { text: 'Thrombocytopenia · coagulopathy', tone: 'teal' }],
+          ['<strong>Petechiae / ecchymoses</strong>', { text: bullets(['Thrombocytopenia', 'Coagulopathy']), tone: 'teal' }],
           ['<strong>Abdominal distension / fluid wave</strong>', { text: 'Haemoabdomen (splenic mass)', tone: 'teal' }],
           ['<strong>Rectal exam</strong>', { text: 'Melena', tone: 'teal' }],
           ['<strong>Muffled heart + jugular distension</strong>', { text: 'Pericardial effusion', tone: 'teal' }],
@@ -95,8 +95,8 @@ export const paleGumsDx: DxApproach = {
         dividers: true,
         headers: ['If', { text: 'Then', tone: 'teal' }],
         rows: [
-          ['Pale + blood loss / icterus / petechiae', { text: '<strong>Anaemia path</strong> — PCV/TS · smear · reticulocytes', tone: 'teal' }],
-          ['Pale + shock parameters, PCV normal', { text: '<strong>Perfusion path</strong> — lactate · BP · FAST · ECG', tone: 'teal' }],
+          ['Pale + blood loss / icterus / petechiae', { text: bullets(['PCV/TS', 'Smear', 'Reticulocytes'], { lead: '<strong>Anaemia path</strong>' }), tone: 'teal' }],
+          ['Pale + shock parameters, PCV normal', { text: bullets(['Lactate', 'BP', 'FAST', 'ECG'], { lead: '<strong>Perfusion path</strong>' }), tone: 'teal' }],
         ],
       }, '⚡'),
       { kind: 'note', html: `The Diagnostics tab branches on PCV.` },

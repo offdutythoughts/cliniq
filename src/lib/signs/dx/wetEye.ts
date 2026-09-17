@@ -3,7 +3,7 @@
 // ../wetEye.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable, stepPatterns, numBadge } from './shared/dxHelpers'
+import { stepTable, stepPatterns, numBadge, bullets } from './shared/dxHelpers'
 
 export const wetEyeDx: DxApproach = {
   sign: 'wet-eye',
@@ -58,10 +58,10 @@ export const wetEyeDx: DxApproach = {
         dividers: true,
         headers: ['Onset', { text: 'Differential', tone: 'teal' }],
         rows: [
-          ['<strong>Acute</strong><br>hours–days', { text: 'Ulcer · foreign body · conjunctivitis · acute uveitis (with concurrent miosis + flare) · ectopic cilia (often acute presentation despite chronic anatomy)', tone: 'teal' }],
-          ['<strong>Subacute</strong><br>days–weeks', { text: 'Dacryocystitis · KCS-related reflex tearing · persistent FB (grass awn under TEL) · early uveitis · viral / allergic conjunctivitis', tone: 'teal' }],
-          ['<strong>Chronic / lifelong</strong><br>months–years', { text: 'Congenital NLS atresia / micropuncta (puppy · kitten) · distichiasis (often well-tolerated) · brachycephalic ocular surface disease · ectropion / euryblepharon with poor drainage · pannus / plasmoma · idiopathic dacryocystitis (intermittent)', tone: 'teal' }],
-          ['<strong>Chronic with discharge change</strong>', { text: 'Dacryocystitis (mucopurulent, waxing/waning) · orbital or nasal neoplasia (unilateral, progressive ± epistaxis)', tone: 'teal' }],
+          ['<strong>Acute</strong><br>hours–days', { text: bullets(['Ulcer', 'Foreign body', 'Conjunctivitis', 'Acute uveitis (with concurrent miosis + flare)', 'Ectopic cilia (often acute presentation despite chronic anatomy)']), tone: 'teal' }],
+          ['<strong>Subacute</strong><br>days–weeks', { text: bullets(['Dacryocystitis', 'KCS-related reflex tearing', 'Persistent FB (grass awn under TEL)', 'Early uveitis', 'Viral / allergic conjunctivitis']), tone: 'teal' }],
+          ['<strong>Chronic / lifelong</strong><br>months–years', { text: bullets(['Congenital NLS atresia / micropuncta (puppy · kitten)', 'Distichiasis (often well-tolerated)', 'Brachycephalic ocular surface disease', 'Ectropion / euryblepharon with poor drainage', 'Pannus / plasmoma', 'Idiopathic dacryocystitis (intermittent)']), tone: 'teal' }],
+          ['<strong>Chronic with discharge change</strong>', { text: bullets(['Dacryocystitis (mucopurulent, waxing/waning)', 'Orbital or nasal neoplasia (unilateral, progressive ± epistaxis)']), tone: 'teal' }],
         ],
       }, '📋'),
 
@@ -91,8 +91,8 @@ export const wetEyeDx: DxApproach = {
         dividers: true,
         headers: ['Ask about', { text: 'Significance', tone: 'teal' }],
         rows: [
-          ['<strong>Drugs / topicals</strong>', { text: 'Recent topical anaesthetic or NSAID (reflex tearing as confounder) · sulfonamides, etodolac (drug-induced KCS — paradoxical tearing as KCS evolves) · recent dental / nasal surgery (post-op NLS damage)', tone: 'teal' }],
-          ['<strong>Trauma</strong>', { text: 'Facial or eyelid trauma can lacerate the canaliculi or puncta → persistent epiphora; corneal abrasion produces acute reflex tearing', tone: 'teal' }],
+          ['<strong>Drugs / topicals</strong>', { text: bullets(['Recent topical anaesthetic or NSAID (reflex tearing as confounder)', 'Sulfonamides, etodolac (drug-induced KCS — paradoxical tearing as KCS evolves)', 'Recent dental / nasal surgery (post-op NLS damage)']), tone: 'teal' }],
+          ['<strong>Trauma</strong>', { text: bullets(['Facial or eyelid trauma can lacerate the canaliculi or puncta → persistent epiphora', 'Corneal abrasion produces acute reflex tearing']), tone: 'teal' }],
           ['<strong>Concurrent dermatitis</strong>', { text: 'Atopy / food allergy → allergic conjunctivitis with bilateral serous tearing', tone: 'teal' }],
           ['<strong>Recent grooming / scenting</strong>', { text: 'Chemical irritation or grass-seed exposure — often unilateral acute wet eye with blepharospasm', tone: 'teal' }],
           ['<strong>Owner-perceived tear-staining vs true epiphora</strong>', { text: 'Cosmetic discoloration of fur without active disease is common — examine carefully before recommending treatment', tone: 'teal' }],
@@ -125,12 +125,12 @@ export const wetEyeDx: DxApproach = {
         dividers: true,
         headers: ['Observe', { text: 'What to note', tone: 'teal' }],
         rows: [
-          ['<strong>Tear track location</strong>', { text: 'Medial canthus (early epiphora — overflow) · full face track (chronic / severe)', tone: 'teal' }],
-          ['<strong>Discharge character</strong>', { text: 'Serous · mucoid · mucopurulent · sanguineous', tone: 'teal' }],
+          ['<strong>Tear track location</strong>', { text: bullets(['Medial canthus (early epiphora — overflow)', 'Full face track (chronic / severe)']), tone: 'teal' }],
+          ['<strong>Discharge character</strong>', { text: bullets(['Serous', 'Mucoid', 'Mucopurulent', 'Sanguineous']), tone: 'teal' }],
           ['<strong>Blepharospasm / photophobia</strong>', { text: 'Pain → production cause', tone: 'teal' }],
-          ['<strong>Eyelid conformation</strong>', { text: 'Entropion · ectropion · macroblepharon (visible sclera) · eyelid coloboma · diamond eye (entropion + ectropion + macroblepharon)', tone: 'teal' }],
-          ['<strong>Globe position</strong>', { text: 'Exophthalmos (orbital mass / NLS compression) · proptosis history', tone: 'teal' }],
-          ['<strong>Facial symmetry</strong>', { text: 'Unilateral facial swelling → dacryocystitis · abscess · neoplasia', tone: 'teal' }],
+          ['<strong>Eyelid conformation</strong>', { text: bullets(['Entropion', 'Ectropion', 'Macroblepharon (visible sclera)', 'Eyelid coloboma', 'Diamond eye (entropion + ectropion + macroblepharon)']), tone: 'teal' }],
+          ['<strong>Globe position</strong>', { text: bullets(['Exophthalmos (orbital mass / NLS compression)', 'Proptosis history']), tone: 'teal' }],
+          ['<strong>Facial symmetry</strong>', { text: bullets(['Unilateral facial swelling → dacryocystitis', 'Abscess', 'Neoplasia']), tone: 'teal' }],
         ],
       }, '🩺'),
 
@@ -139,13 +139,13 @@ export const wetEyeDx: DxApproach = {
         dividers: true,
         headers: ['Structure', { text: 'Looking for', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>Eyelids</strong>`, { text: 'Evert upper + lower with magnification — distichiasis (extra hairs from Meibomian gland openings) · ectopic cilia (through palpebral conjunctiva — usually dorsal corneal linear ulcer) · trichiasis (normal-position hairs contacting cornea) · entropion / ectropion · eyelid mass', tone: 'teal' }],
-          [`${numBadge(2)}<strong>Third eyelid (TEL)</strong>`, { text: 'Evert under topical anaesthetic — FB classically hides here (grass awn, plant material) · follicular hyperplasia · cherry eye · plasmoma', tone: 'teal' }],
-          [`${numBadge(3)}<strong>Conjunctiva</strong>`, { text: 'Hyperaemia distribution · chemosis · FB · neoplasia', tone: 'teal' }],
-          [`${numBadge(4)}<strong>Cornea</strong>`, { text: 'Ulceration (fluorescein) · neovascularisation pattern (superficial branching vs deep brush) · sequestrum (🐱) · pannus (GSD)', tone: 'teal' }],
-          [`${numBadge(5)}<strong>Lacrimal puncta</strong>`, { text: 'Identify upper and lower puncta with magnification ± brief sedation — atresia · micropuncta · scarring · FB (a grass-awn fragment lodged in the punctum is easy to miss)', tone: 'teal' }],
+          [`${numBadge(1)}<strong>Eyelids</strong>`, { text: bullets(['Evert upper + lower with magnification — distichiasis (extra hairs from Meibomian gland openings)', 'Ectopic cilia (through palpebral conjunctiva — usually dorsal corneal linear ulcer)', 'Trichiasis (normal-position hairs contacting cornea)', 'Entropion / ectropion', 'Eyelid mass']), tone: 'teal' }],
+          [`${numBadge(2)}<strong>Third eyelid (TEL)</strong>`, { text: bullets(['Evert under topical anaesthetic — FB classically hides here (grass awn, plant material)', 'Follicular hyperplasia', 'Cherry eye', 'Plasmoma']), tone: 'teal' }],
+          [`${numBadge(3)}<strong>Conjunctiva</strong>`, { text: bullets(['Hyperaemia distribution', 'Chemosis', 'FB', 'Neoplasia']), tone: 'teal' }],
+          [`${numBadge(4)}<strong>Cornea</strong>`, { text: bullets(['Ulceration (fluorescein)', 'Neovascularisation pattern (superficial branching vs deep brush)', 'Sequestrum (🐱)', 'Pannus (GSD)']), tone: 'teal' }],
+          [`${numBadge(5)}<strong>Lacrimal puncta</strong>`, { text: bullets(['Identify upper and lower puncta with magnification ± brief sedation — atresia', 'Micropuncta', 'Scarring', 'FB (a grass-awn fragment lodged in the punctum is easy to miss)']), tone: 'teal' }],
           [`${numBadge(6)}<strong>Iris / pupil / AC</strong>`, { text: 'Miosis + flare = uveitis (reflex tearing common) — <strong>rule out before steroids</strong>', tone: 'danger' }],
-          [`${numBadge(7)}<strong>NLS region</strong>`, { text: 'Palpate medial canthus and rostromedial maxilla for swelling (dacryocystitis) · fluctuance (abscess) · firm mass (neoplasia). Expressing the lacrimal sac may produce purulent material from the upper punctum — diagnostic of dacryocystitis', tone: 'teal' }],
+          [`${numBadge(7)}<strong>NLS region</strong>`, { text: bullets(['Palpate medial canthus and rostromedial maxilla for swelling (dacryocystitis)', 'Fluctuance (abscess)', 'Firm mass (neoplasia). Expressing the lacrimal sac may produce purulent material from the upper punctum — diagnostic of dacryocystitis']), tone: 'teal' }],
         ],
       }, '👁️'),
 
@@ -175,7 +175,7 @@ export const wetEyeDx: DxApproach = {
         rows: [
           ['<strong>Spasm resolves</strong>', { text: 'Painful surface disease (ulcer · FB · ectopic cilia · distichiasis · KCS irritation) → re-examine for the source now the eyelid is relaxed', tone: 'teal' }],
           ['<strong>Spasm persists</strong>', { text: 'Likely true entropion or deeper pain (uveitis · orbital · dental) → surgical correction or further workup', tone: 'teal' }],
-          ['<strong>Spastic vs true entropion</strong>', { text: 'Spastic entropion is secondary to surface pain and resolves with relief; true entropion persists and requires Hotz-Celsus or similar correction', tone: 'teal' }],
+          ['<strong>Spastic vs true entropion</strong>', { text: bullets(['Spastic entropion is secondary to surface pain and resolves with relief', 'True entropion persists and requires Hotz-Celsus or similar correction']), tone: 'teal' }],
         ],
       }, '🧪'),
       { kind: 'note', html: `Apply one drop of topical anaesthetic and observe blepharospasm + tearing over 2–3 minutes.` },
@@ -192,10 +192,10 @@ export const wetEyeDx: DxApproach = {
         headers: ['Test', { text: 'Detail', tone: 'teal' }],
         rows: [
           [`${numBadge(1)}<strong>Schirmer Tear Test (STT-1) FIRST</strong>`, { text: 'Before any drops — KCS with paradoxical mucoid epiphora is the classical pitfall', tone: 'danger' }],
-          [`${numBadge(2)}<strong>Conjunctival cytology / swab</strong>`, { text: 'If mucopurulent — Gram stain · culture + sensitivity · PCR (Chlamydia / Mycoplasma in cats)', tone: 'teal' }],
+          [`${numBadge(2)}<strong>Conjunctival cytology / swab</strong>`, { text: bullets(['If mucopurulent — Gram stain', 'Culture + sensitivity', 'PCR (Chlamydia / Mycoplasma in cats)']), tone: 'teal' }],
           [`${numBadge(3)}<strong>Fluorescein stain</strong>`, { text: 'Rule out ulcer + perform the <strong>Jones test</strong> simultaneously (no rinse; watch nostril ≤4 min)', tone: 'teal' }],
           [`${numBadge(4)}<strong>Tonometry</strong>`, { text: 'Exclude uveitis (↓ IOP) and glaucoma (↑ IOP) as occult drivers', tone: 'teal' }],
-          [`${numBadge(5)}<strong>Topical anaesthetic + magnified eyelid exam</strong>`, { text: 'Evert lids and TEL — distichiasis · ectopic cilia · conjunctival FB · puncta atresia', tone: 'teal' }],
+          [`${numBadge(5)}<strong>Topical anaesthetic + magnified eyelid exam</strong>`, { text: bullets(['Evert lids and TEL — distichiasis', 'Ectopic cilia', 'Conjunctival FB', 'Puncta atresia']), tone: 'teal' }],
           [`${numBadge(6)}<strong>Direct + indirect ophthalmoscopy</strong>`, { text: 'After pupil dilation (tropicamide 1% — after IOP)', tone: 'teal' }],
         ],
       }, '👁️'),
@@ -205,15 +205,15 @@ export const wetEyeDx: DxApproach = {
         dividers: true,
         headers: ['Test / result', { text: 'Detail', tone: 'teal' }],
         rows: [
-          ['<strong>Jones test — technique</strong>', { text: 'Apply fluorescein into the lateral conjunctival fornix without rinsing; observe the ipsilateral nostril (or oropharynx in brachycephalics) for ≤4 min', tone: 'teal' }],
+          ['<strong>Jones test — technique</strong>', { text: bullets(['Apply fluorescein into the lateral conjunctival fornix without rinsing', 'Observe the ipsilateral nostril (or oropharynx in brachycephalics) for ≤4 min']), tone: 'teal' }],
           ['<strong>Stain at nostril</strong>', { text: 'Patent system (Jones positive) — focus on increased-production differentials', tone: 'teal' }],
           ['<strong>No stain</strong>', { text: 'Does <strong>NOT</strong> confirm obstruction — many normal dogs (especially brachycephalics) are Jones-negative', tone: 'danger' }],
-          ['<strong>NLS flush — technique</strong>', { text: 'Under topical anaesthetic (± sedation in cats / fractious dogs) cannulate the upper punctum with a 22–24 G blunt-ended cannula; inject 3–5 mL warm sterile saline', tone: 'teal' }],
+          ['<strong>NLS flush — technique</strong>', { text: bullets(['Under topical anaesthetic (± sedation in cats / fractious dogs) cannulate the upper punctum with a 22–24 G blunt-ended cannula', 'Inject 3–5 mL warm sterile saline']), tone: 'teal' }],
           ['<strong>Free flow from nostril and/or lower punctum</strong>', { text: 'Patent NLS', tone: 'teal' }],
-          ['<strong>No flow or backflow</strong>', { text: 'Obstruction — submit fluid for cytology / culture if mucopurulent; consider grass-awn or other FB', tone: 'teal' }],
+          ['<strong>No flow or backflow</strong>', { text: bullets(['Obstruction — submit fluid for cytology / culture if mucopurulent', 'Consider grass-awn or other FB']), tone: 'teal' }],
           ['<strong>Excessive resistance</strong>', { text: 'Consider dacryolith or stricture', tone: 'teal' }],
-          ['<strong>Dacryocystorhinography</strong>', { text: 'Inject iohexol into the upper punctum and image with x-ray / fluoroscopy — identifies strictures · dacryoliths · fistulas · neoplastic compression', tone: 'teal' }],
-          ['<strong>Lacrimal sac expression</strong>', { text: 'Gentle pressure over the medial canthus / lacrimal sac, watching the upper punctum for purulent reflux — diagnostic of dacryocystitis. Submit material for cytology + C&amp;S', tone: 'teal' }],
+          ['<strong>Dacryocystorhinography</strong>', { text: bullets(['Inject iohexol into the upper punctum and image with x-ray / fluoroscopy — identifies strictures', 'Dacryoliths', 'Fistulas', 'Neoplastic compression']), tone: 'teal' }],
+          ['<strong>Lacrimal sac expression</strong>', { text: bullets(['Gentle pressure over the medial canthus / lacrimal sac, watching the upper punctum for purulent reflux — diagnostic of dacryocystitis', 'Submit material for cytology + C&amp;S']), tone: 'teal' }],
         ],
       }, '💧'),
 
@@ -222,8 +222,8 @@ export const wetEyeDx: DxApproach = {
         dividers: true,
         headers: ['Modality', { text: 'What it shows', tone: 'teal' }],
         rows: [
-          ['<strong>CT of skull / orbit</strong><br>gold standard for NLS / orbital pathology in adult–senior patients', { text: 'Confirms patency or obstruction at any level along the NLS · defines neoplasia (orbital · nasal · paranasal sinus) compressing the NLS ("Bonny disease") · identifies dental disease causing maxillary / lacrimal sac involvement · identifies dacryolith or FB causing chronic dacryocystitis', tone: 'teal' }],
-          ['<strong>MRI</strong>', { text: 'Better soft-tissue resolution for orbital / retrobulbar mass · optic nerve sheath disease', tone: 'teal' }],
+          ['<strong>CT of skull / orbit</strong><br>gold standard for NLS / orbital pathology in adult–senior patients', { text: bullets(['Confirms patency or obstruction at any level along the NLS', 'Defines neoplasia (orbital · nasal · paranasal sinus) compressing the NLS ("Bonny disease")', 'Identifies dental disease causing maxillary / lacrimal sac involvement', 'Identifies dacryolith or FB causing chronic dacryocystitis']), tone: 'teal' }],
+          ['<strong>MRI</strong>', { text: bullets(['Better soft-tissue resolution for orbital / retrobulbar mass', 'Optic nerve sheath disease']), tone: 'teal' }],
           ['<strong>Rhinoscopy + nasal biopsy</strong>', { text: 'Chronic unilateral epiphora + nasal signs (epistaxis · sneezing · facial deformity)', tone: 'teal' }],
           ['<strong>Dental imaging</strong>', { text: 'Caudal maxillary tooth root disease can erode into the NLS or lacrimal sac and present as chronic epiphora ± dacryocystitis', tone: 'teal' }],
         ],
@@ -237,13 +237,13 @@ export const wetEyeDx: DxApproach = {
         dividers: true,
         headers: ['Cause', { text: 'Treatment', tone: 'teal' }],
         rows: [
-          ['<strong>Ulcer / FB</strong>', { text: 'Remove FB · topical broad-spectrum antibiotic · topical atropine if reflex uveitis · E-collar (LOC-RE-CORNEA-SUP)', tone: 'teal' }],
-          ['<strong>Distichiasis</strong>', { text: 'Cryoepilation · electroepilation · surgical excision', tone: 'teal' }],
+          ['<strong>Ulcer / FB</strong>', { text: bullets(['Remove FB', 'Topical broad-spectrum antibiotic', 'Topical atropine if reflex uveitis', 'E-collar (LOC-RE-CORNEA-SUP)']), tone: 'teal' }],
+          ['<strong>Distichiasis</strong>', { text: bullets(['Cryoepilation', 'Electroepilation', 'Surgical excision']), tone: 'teal' }],
           ['<strong>Ectopic cilia</strong>', { text: 'En-bloc surgical resection — recurrent dorsal ulcer in a young dog', tone: 'teal' }],
-          ['<strong>Entropion</strong>', { text: 'Hotz-Celsus or breed-specific procedure; rule out spastic entropion with proxymetacaine first', tone: 'teal' }],
-          ['<strong>Trichiasis</strong>', { text: 'Trim hairs (medial canthal trichiasis in brachycephalics); medial canthoplasty if structural', tone: 'teal' }],
-          ['<strong>KCS</strong>', { text: 'Topical cyclosporine 0.2–2% BID lifelong; treat secondary bacterial infection (LOC-RE-CONJ-KCS)', tone: 'teal' }],
-          ['<strong>Conjunctivitis</strong>', { text: 'Cytology-guided topical antibiotic; systemic doxycycline for Chlamydia / Mycoplasma in cats', tone: 'teal' }],
+          ['<strong>Entropion</strong>', { text: bullets(['Hotz-Celsus or breed-specific procedure', 'Rule out spastic entropion with proxymetacaine first']), tone: 'teal' }],
+          ['<strong>Trichiasis</strong>', { text: bullets(['Trim hairs (medial canthal trichiasis in brachycephalics)', 'Medial canthoplasty if structural']), tone: 'teal' }],
+          ['<strong>KCS</strong>', { text: bullets(['Topical cyclosporine 0.2–2% BID lifelong', 'Treat secondary bacterial infection (LOC-RE-CONJ-KCS)']), tone: 'teal' }],
+          ['<strong>Conjunctivitis</strong>', { text: bullets(['Cytology-guided topical antibiotic', 'Systemic doxycycline for Chlamydia / Mycoplasma in cats']), tone: 'teal' }],
           ['<strong>Anterior uveitis</strong>', { text: 'Topical steroid + atropine + treat the underlying cause (LOC-RE-UVEA)', tone: 'teal' }],
         ],
       },
@@ -256,9 +256,9 @@ export const wetEyeDx: DxApproach = {
         rows: [
           ['<strong>Lacrimal puncta atresia</strong>', { text: 'Surgical resection of the membrane covering the punctum', tone: 'teal' }],
           ['<strong>Micropuncta</strong>', { text: 'Surgical enlargement — snip / canthoplasty', tone: 'teal' }],
-          ['<strong>Dacryocystitis</strong>', { text: 'NLS flush + topical antibiotic; consider an indwelling silicone NLS catheter for 2–4 weeks; investigate for occult FB', tone: 'teal' }],
-          ['<strong>Entropion / ectropion / euryblepharon / diamond eye</strong>', { text: 'Surgical correction — Hotz-Celsus · modified Kuhnt-Szymanowski · lateral canthoplasty', tone: 'teal' }],
-          ['<strong>Orbital / nasal neoplasia</strong>', { text: 'Refer for staging + oncology — CT · biopsy · radiation / chemotherapy / palliation', tone: 'teal' }],
+          ['<strong>Dacryocystitis</strong>', { text: bullets(['NLS flush + topical antibiotic', 'Consider an indwelling silicone NLS catheter for 2–4 weeks', 'Investigate for occult FB']), tone: 'teal' }],
+          ['<strong>Entropion / ectropion / euryblepharon / diamond eye</strong>', { text: bullets(['Surgical correction — Hotz-Celsus', 'Modified Kuhnt-Szymanowski', 'Lateral canthoplasty']), tone: 'teal' }],
+          ['<strong>Orbital / nasal neoplasia</strong>', { text: bullets(['Refer for staging + oncology — CT', 'Biopsy', 'Radiation / chemotherapy / palliation']), tone: 'teal' }],
         ],
       },
     ],

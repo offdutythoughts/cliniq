@@ -6,7 +6,7 @@
 // intermittent) + echocardiography. Links to the cardiac / metabolic DIS-* pages.
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable } from './shared/dxHelpers'
+import { stepTable, bullets } from './shared/dxHelpers'
 
 export const syncopeDx: DxApproach = {
   sign: 'syncope',
@@ -38,10 +38,10 @@ export const syncopeDx: DxApproach = {
           headers: ['Trigger / feature', { text: 'Points to', tone: 'teal' }],
           rows: [
             ['<strong>Exertional / excitement-induced collapse</strong>', { text: 'Structural heart disease with limited output (HCM · DCM · pulmonary hypertension · heartworm) or a tachyarrhythmia', tone: 'teal' }],
-            ['<strong>Reflex / situational triggers</strong>', { text: 'Vasovagal syncope (young Boxers, triggered by excitement — Bezold–Jarisch reflex) · tussive / situational syncope (coughing · vomiting · sneezing · micturition · defecation · swallowing · visceral pain)', tone: 'teal' }],
+            ['<strong>Reflex / situational triggers</strong>', { text: bullets(['Vasovagal syncope (young Boxers, triggered by excitement — Bezold–Jarisch reflex)', 'Tussive / situational syncope (coughing · vomiting · sneezing · micturition · defecation · swallowing · visceral pain)']), tone: 'teal' }],
             ['<strong>Cough first, then collapse</strong>', { text: 'Tussive syncope — advanced airway / cardiac disease', tone: 'teal' }],
             ['<strong>Colour</strong>', { text: 'Note cyanosis vs pallor', tone: 'teal' }],
-            ['<strong>Recovery</strong>', { text: 'Truly <strong>instant</strong> = syncope; slow post-ictal recovery = seizure <span style="opacity:.7">(Ettinger Ch 40)</span>', tone: 'teal' }],
+            ['<strong>Recovery</strong>', { text: bullets(['Truly <strong>instant</strong> = syncope', 'Slow post-ictal recovery = seizure <span style="opacity:.7">(Ettinger Ch 40)</span>']), tone: 'teal' }],
           ],
         }, '⏱️'),
 
@@ -50,13 +50,13 @@ export const syncopeDx: DxApproach = {
           dividers: true,
           headers: ['Clue', { text: 'Points to', tone: 'teal' }],
           rows: [
-            ['<strong>Young Boxer</strong>', { text: 'Vasovagal syncope · ARVC', tone: 'teal' }],
+            ['<strong>Young Boxer</strong>', { text: bullets(['Vasovagal syncope', 'ARVC']), tone: 'teal' }],
             ['<strong>Small-breed dog with a murmur</strong>', { text: 'MMVD ± pulmonary hypertension', tone: 'teal' }],
             ['<strong>Large-breed dog</strong>', { text: 'DCM', tone: 'teal' }],
             ['<strong>🐱 Cat</strong>', { text: 'HCM ± arterial thromboembolism', tone: 'teal' }],
             ['<strong>Episodic weakness with GI signs / waxing–waning illness</strong>', { text: 'Hypoadrenocorticism (Addison)', tone: 'teal' }],
-            ['<strong>Fasting / post-exercise weakness · toy or juvenile · possible xylitol exposure</strong>', { text: 'Hypoglycaemia — insulinoma in older dogs', tone: 'teal' }],
-            ['<strong>Medications</strong>', { text: 'Sedatives · negative chronotropes / inotropes · vasodilators · diuretics can all precipitate hypotension / bradycardia <span style="opacity:.7">(Ettinger Ch 40)</span>', tone: 'teal' }],
+            [bullets(['<strong>Fasting / post-exercise weakness</strong>', '<strong>Toy or juvenile</strong>', '<strong>Possible xylitol exposure</strong>']), { text: 'Hypoglycaemia — insulinoma in older dogs', tone: 'teal' }],
+            ['<strong>Medications</strong>', { text: bullets(['Sedatives', 'Negative chronotropes / inotropes', 'Vasodilators', 'Diuretics can all precipitate hypotension / bradycardia <span style="opacity:.7">(Ettinger Ch 40)</span>']), tone: 'teal' }],
           ],
         }, '🐾'),
       ],
@@ -86,11 +86,11 @@ export const syncopeDx: DxApproach = {
           dividers: true,
           headers: ['Finding', { text: 'Points to', tone: 'teal' }],
           rows: [
-            ['<strong>Murmur</strong>', { text: 'MMVD · dynamic LVOT obstruction in feline HCM · congenital outflow obstruction', tone: 'teal' }],
+            ['<strong>Murmur</strong>', { text: bullets(['MMVD', 'Dynamic LVOT obstruction in feline HCM', 'Congenital outflow obstruction']), tone: 'teal' }],
             ['<strong>Gallop</strong>', { text: 'Cardiomyopathy', tone: 'teal' }],
             ['<strong>Muffled heart sounds</strong>', { text: 'Pericardial effusion', tone: 'teal' }],
-            ['<strong>Bradycardia</strong>', { text: 'AV block · sick sinus syndrome', tone: 'teal' }],
-            ['<strong>Fast / irregular rhythm with pulse deficits</strong>', { text: 'Tachyarrhythmia · AF', tone: 'teal' }],
+            ['<strong>Bradycardia</strong>', { text: bullets(['AV block', 'Sick sinus syndrome']), tone: 'teal' }],
+            ['<strong>Fast / irregular rhythm with pulse deficits</strong>', { text: bullets(['Tachyarrhythmia', 'AF']), tone: 'teal' }],
           ],
         }, '❤️'),
         { kind: 'note', html: `A single in-clinic exam can be entirely normal between episodes.` },
@@ -100,8 +100,8 @@ export const syncopeDx: DxApproach = {
           dividers: true,
           headers: ['Finding', { text: 'Points to', tone: 'teal' }],
           rows: [
-            ['<strong>Jugular distension / pulsation · ascites · weak femoral pulses · pulsus paradoxus</strong>', { text: 'Pericardial effusion / tamponade · right-sided failure', tone: 'teal' }],
-            ['<strong>Split or loud S2 · right-apical murmur · exertional cyanosis</strong>', { text: 'Pulmonary hypertension (64% present with syncope in one study) · heartworm disease', tone: 'teal' }],
+            [bullets(['<strong>Jugular distension / pulsation</strong>', '<strong>Ascites</strong>', '<strong>Weak femoral pulses</strong>', '<strong>Pulsus paradoxus</strong>']), { text: bullets(['Pericardial effusion / tamponade', 'Right-sided failure']), tone: 'teal' }],
+            [bullets(['<strong>Split or loud S2</strong>', '<strong>Right-apical murmur</strong>', '<strong>Exertional cyanosis</strong>']), { text: bullets(['Pulmonary hypertension (64% present with syncope in one study)', 'Heartworm disease']), tone: 'teal' }],
             ['<strong>Mucous membrane colour + CRT</strong>', { text: 'Pallor (low output / anaemia) vs cyanosis (hypoxaemia) <span style="opacity:.7">(Ettinger Ch 40)</span>', tone: 'teal' }],
           ],
         }, '🫀'),
@@ -113,7 +113,7 @@ export const syncopeDx: DxApproach = {
           rows: [
             ['<strong>Brief neuro exam</strong>', { text: 'Interictal deficits favour a structural / neurological episodic cause rather than syncope', tone: 'teal' }],
             ['<strong>Upper-airway noise</strong><br>stertor / stridor · laryngeal paralysis · BUAS · tracheal collapse', { text: 'Hypoxaemic / tussive collapse rather than cardiogenic syncope', tone: 'teal' }],
-            ['<strong>Metabolic mimic clues</strong>', { text: 'Weakness · weight loss · bradycardia · poor perfusion (Addison) · post-exertional disorientation that resolves with feeding (hypoglycaemia)', tone: 'teal' }],
+            ['<strong>Metabolic mimic clues</strong>', { text: bullets(['Weakness', 'Weight loss', 'Bradycardia', 'Poor perfusion (Addison)', 'Post-exertional disorientation that resolves with feeding (hypoglycaemia)']), tone: 'teal' }],
           ],
         }, '🧠'),
       ],
@@ -130,9 +130,9 @@ export const syncopeDx: DxApproach = {
           dividers: true,
           headers: ['Test', { text: 'What it rules in / out', tone: 'teal' }],
           rows: [
-            ['<strong>Blood glucose</strong>', { text: 'Hypoglycaemia — insulinoma · xylitol · juvenile / toy · sepsis', tone: 'teal' }],
+            ['<strong>Blood glucose</strong>', { text: bullets(['Hypoglycaemia — insulinoma', 'Xylitol', 'Juvenile / toy', 'Sepsis']), tone: 'teal' }],
             ['<strong>Serum electrolytes</strong>', { text: 'Na⁺ / K⁺ — a low Na:K ratio suggests hypoadrenocorticism', tone: 'teal' }],
-            ['<strong>CBC + serum biochemistry</strong>', { text: 'Anaemia · organ disease', tone: 'teal' }],
+            ['<strong>CBC + serum biochemistry</strong>', { text: bullets(['Anaemia', 'Organ disease']), tone: 'teal' }],
             ['<strong>Thyroid status</strong>', { text: 'Check in every case', tone: 'teal' }],
             ['<strong>ACTH stimulation test</strong>', { text: 'If Addison is suspected', tone: 'teal' }],
           ],
@@ -145,8 +145,8 @@ export const syncopeDx: DxApproach = {
           headers: ['Test', { text: 'Detail', tone: 'teal' }],
           rows: [
             ['<strong>Resting ECG</strong>', { text: '<strong>Always indicated</strong>, but a normal resting ECG does <strong>NOT</strong> exclude an intermittent arrhythmia — arrhythmias are paroxysmal, so the diagnostic yield of a snapshot is low', tone: 'danger' }],
-            ['<strong>Holter</strong>', { text: 'Continuous recording for 24 or 48 h; quantifies rhythm but may miss infrequent events — syncope often needs 5–7 days of monitoring', tone: 'teal' }],
-            ['<strong>External cardiac event recorder</strong>', { text: 'Owner-activated · battery life ~5–7 days · <strong>75.5%</strong> success rate in correlating rhythm with an episode', tone: 'teal' }],
+            ['<strong>Holter</strong>', { text: bullets(['Continuous recording for 24 or 48 h', 'Quantifies rhythm but may miss infrequent events — syncope often needs 5–7 days of monitoring']), tone: 'teal' }],
+            ['<strong>External cardiac event recorder</strong>', { text: bullets(['Owner-activated', 'Battery life ~5–7 days', '<strong>75.5%</strong> success rate in correlating rhythm with an episode']), tone: 'teal' }],
             ['<strong>Implantable loop recorder (ILR)</strong>', { text: 'Diagnostic yield <strong>48–58%</strong> (up to 66%) in dogs with intermittent weakness / syncope — reserved for rare events', tone: 'teal' }],
           ],
         }, '📈'),
@@ -157,8 +157,8 @@ export const syncopeDx: DxApproach = {
           dividers: true,
           headers: ['Test', { text: 'What it shows', tone: 'teal' }],
           rows: [
-            ['<strong>Echocardiography</strong> — nearly always indicated', { text: 'Structural disease (HCM · DCM · RCM · MMVD) · dynamic LVOT obstruction · pericardial effusion / tamponade · estimated pulmonary artery pressure (pulmonary hypertension)', tone: 'teal' }],
-            ['<strong>Thoracic radiographs</strong>', { text: 'Cardiomegaly · congestion · pulmonary patterns · screening for heartworm and airway disease as a tussive-syncope substrate', tone: 'teal' }],
+            ['<strong>Echocardiography</strong> — nearly always indicated', { text: bullets(['Structural disease (HCM · DCM · RCM · MMVD)', 'Dynamic LVOT obstruction', 'Pericardial effusion / tamponade', 'Estimated pulmonary artery pressure (pulmonary hypertension)']), tone: 'teal' }],
+            ['<strong>Thoracic radiographs</strong>', { text: bullets(['Cardiomegaly', 'Congestion', 'Pulmonary patterns', 'Screening for heartworm and airway disease as a tussive-syncope substrate']), tone: 'teal' }],
             ['<strong>Heartworm antigen / microfilaria testing</strong>', { text: 'Where endemic <span style="opacity:.7">(Ettinger Ch 40)</span>', tone: 'teal' }],
           ],
         }, '🫁'),
@@ -168,7 +168,7 @@ export const syncopeDx: DxApproach = {
           dividers: true,
           headers: ['Test', { text: 'Interpretation', tone: 'teal' }],
           rows: [
-            ['<strong>Blood pressure</strong> (Doppler / oscillometric)', { text: 'Hypotension supports a haemodynamic mechanism; severe hypertension exacerbates rather than causes syncope', tone: 'teal' }],
+            ['<strong>Blood pressure</strong> (Doppler / oscillometric)', { text: bullets(['Hypotension supports a haemodynamic mechanism', 'Severe hypertension exacerbates rather than causes syncope']), tone: 'teal' }],
             ['<strong>NT-proBNP</strong>', { text: 'Supports the presence of significant cardiac disease — helps decide whether to pursue echo', tone: 'teal' }],
             ['<strong>Cardiac troponin I (cTnI)</strong>', { text: 'Sensitivity 75% / specificity 80% for cardiogenic syncope vs epileptic seizures, but with significant overlap and <strong>low discriminatory value in the individual</strong> — supportive only', tone: 'teal' }],
             ['<strong>Still unexplained + neurological cause suspected</strong>', { text: 'Pursue the seizure work-up — see the Weakness / Collapse approach <span style="opacity:.7">(Ettinger Ch 40)</span>', tone: 'teal' }],

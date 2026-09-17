@@ -132,7 +132,7 @@ export type GridTableProps = {
 
 export function GridTable({ cols, headers, rows, dividers, stickyFirstCol, scroll, minWidth, fontSize, collapsibleSections, onNav }: GridTableProps) {
   const lastIdx = rows.length - 1
-  const rowGap = dividers ? 9 : 3
+  const rowGap = dividers ? 7 : 3
   const pinned = stickyFirstCol ? stickyCol(rowGap) : undefined
   const gridStyle = s(`display:grid;grid-template-columns:${cols};gap:${rowGap}px 6px;font-size:${fontSize ?? '9.5px'};line-height:1.4;${minWidth ? `min-width:${minWidth}px;` : ''}`)
 

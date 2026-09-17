@@ -4,7 +4,7 @@
 // renderDxApproach. Non-standard 4-tab nav (adds 💉 Desmopressin).
 
 import type { DxApproach } from '../dxTypes'
-import { numBadge } from './shared/dxHelpers'
+import { numBadge, bullets } from './shared/dxHelpers'
 
 export const pupdDx: DxApproach = {
   sign: 'pupd',
@@ -27,9 +27,9 @@ export const pupdDx: DxApproach = {
         dividers: true,
         headers: ['Presentation', { text: 'Means', tone: 'teal' }],
         rows: [
-          ['<strong>Pollakiuria</strong>', { text: 'Small frequent voids · urgency · straining → lower urinary tract disease (UTI · urolithiasis · FLUTD). <strong>Not polyuria</strong>', tone: 'warning' }],
-          ['<strong>Urinary incontinence</strong>', { text: 'Involuntary leakage during sleep or rest → hormonal · neurological · anatomical. <strong>Not polydipsia</strong>', tone: 'warning' }],
-          ['<strong>True PU/PD</strong>', { text: 'Large-volume voiding · increased frequency <em>with</em> large volumes · owner reports drinking excessively', tone: 'teal' }],
+          ['<strong>Pollakiuria</strong>', { text: bullets(['Small frequent voids', 'Urgency', 'Straining → lower urinary tract disease (UTI · urolithiasis · FLUTD). <strong>Not polyuria</strong>']), tone: 'warning' }],
+          ['<strong>Urinary incontinence</strong>', { text: bullets(['Involuntary leakage during sleep or rest → hormonal', 'Neurological', 'Anatomical. <strong>Not polydipsia</strong>']), tone: 'warning' }],
+          ['<strong>True PU/PD</strong>', { text: bullets(['Large-volume voiding', 'Increased frequency <em>with</em> large volumes', 'Owner reports drinking excessively']), tone: 'teal' }],
         ],
       },
       {
@@ -39,7 +39,7 @@ export const pupdDx: DxApproach = {
         dividers: true,
         headers: ['Definition', { text: 'Threshold', tone: 'teal' }],
         rows: [
-          ['<strong>Polydipsia</strong>', { text: 'Water intake &gt;100 mL/kg/day (🐕; normal usually &lt;80) · &gt;50 mL/kg/day (🐱, ≈&gt;200 mL/cat/day)', tone: 'teal' }],
+          ['<strong>Polydipsia</strong>', { text: bullets(['Water intake &gt;100 mL/kg/day (🐕; normal usually &lt;80)', '&gt;50 mL/kg/day (🐱, ≈&gt;200 mL/cat/day)']), tone: 'teal' }],
           ['<strong>Polyuria</strong>', { text: 'Urine output &gt;50 mL/kg/day (both species)', tone: 'teal' }],
         ],
       },
@@ -51,9 +51,9 @@ export const pupdDx: DxApproach = {
         dividers: true,
         headers: ['Onset', { text: 'Differential', tone: 'teal' }],
         rows: [
-          ['<strong>Acute (&lt;1–2 weeks)</strong>', { text: 'AKI (toxin · leptospirosis · lily · NSAID — severe azotaemia possible) · pyometra (intact female, post-oestrus; may present in shock) · DKA · hepatic toxin · acute pancreatitis · recent glucocorticoid or diuretic administration', tone: 'green' }],
+          ['<strong>Acute (&lt;1–2 weeks)</strong>', { text: bullets(['AKI (toxin · leptospirosis · lily · NSAID — severe azotaemia possible)', 'Pyometra (intact female, post-oestrus; may present in shock)', 'DKA', 'Hepatic toxin', 'Acute pancreatitis', 'Recent glucocorticoid or diuretic administration']), tone: 'green' }],
           ['<strong>Acute severe PU/PD</strong>', { text: '<strong>Check for emergency flags first</strong>', tone: 'danger' }],
-          ['<strong>Chronic / insidious</strong>', { text: 'CKD (gradual; owners notice weight loss and the water bowl refilling) · hyperadrenocorticism (pot-belly · panting · polyphagia · hair loss over months–years) · DM (weight loss despite polyphagia; cataracts in 🐕; hind-limb weakness in 🐱) · CDI / primary polydipsia (profound dilute urine, otherwise well) · hyperthyroidism (🐱 — weight loss · tachycardia · often concurrent CKD)', tone: 'warning' }],
+          ['<strong>Chronic / insidious</strong>', { text: bullets(['CKD (gradual; owners notice weight loss and the water bowl refilling)', 'Hyperadrenocorticism (pot-belly · panting · polyphagia · hair loss over months–years)', 'DM (weight loss despite polyphagia; cataracts in 🐕; hind-limb weakness in 🐱)', 'CDI / primary polydipsia (profound dilute urine, otherwise well)', 'Hyperthyroidism (🐱 — weight loss · tachycardia · often concurrent CKD)']), tone: 'warning' }],
         ],
       },
 
@@ -64,13 +64,13 @@ export const pupdDx: DxApproach = {
         dividers: true,
         headers: ['Signalment', { text: 'Points to', tone: 'teal' }],
         rows: [
-          ['<strong>Young (&lt;2 yr)</strong>', { text: 'CDI · primary NDI (rare) · PSS · congenital DM — consider a heritable cause', tone: 'green' }],
-          ['<strong>Middle-aged dog</strong>', { text: 'HAC (typically 7–12 yr) · DM', tone: 'green' }],
-          ['<strong>Older cat (&gt;8 yr)</strong>', { text: 'Hyperthyroidism · CKD · DM — <strong>always check T4</strong>', tone: 'green' }],
-          ['<strong>Poodle · Dachshund · Boxer · Beagle · Boston Terrier</strong>', { text: 'HAC', tone: 'warning' }],
-          ['<strong>WHWT · Nova Scotia Duck Tolling Retriever · Great Dane</strong>', { text: 'Addison\'s', tone: 'warning' }],
+          ['<strong>Young (&lt;2 yr)</strong>', { text: bullets(['CDI', 'Primary NDI (rare)', 'PSS', 'Congenital DM — consider a heritable cause']), tone: 'green' }],
+          ['<strong>Middle-aged dog</strong>', { text: bullets(['HAC (typically 7–12 yr)', 'DM']), tone: 'green' }],
+          ['<strong>Older cat (&gt;8 yr)</strong>', { text: bullets(['Hyperthyroidism', 'CKD', 'DM — <strong>always check T4</strong>']), tone: 'green' }],
+          [bullets(['<strong>Poodle</strong>', '<strong>Dachshund</strong>', '<strong>Boxer</strong>', '<strong>Beagle</strong>', '<strong>Boston Terrier</strong>']), { text: 'HAC', tone: 'warning' }],
+          [bullets(['<strong>WHWT</strong>', '<strong>Nova Scotia Duck Tolling Retriever</strong>', '<strong>Great Dane</strong>']), { text: 'Addison\'s', tone: 'warning' }],
           ['<strong>Young large-breed dog</strong>', { text: 'Primary polydipsia (psychogenic)', tone: 'warning' }],
-          ['<strong>Siamese · Burmese</strong>', { text: 'DM (🐱)', tone: 'warning' }],
+          [bullets(['<strong>Siamese</strong>', '<strong>Burmese</strong>']), { text: 'DM (🐱)', tone: 'warning' }],
           ['<strong>Intact female dog</strong> — mid-cycle or 4–8 wks post-oestrus', { text: '<strong>Pyometra — emergency</strong>', tone: 'danger' }],
           ['<strong>Female dog 4–8 yr</strong>', { text: 'HAC slightly overrepresented in females', tone: 'danger' }],
         ],
@@ -84,9 +84,9 @@ export const pupdDx: DxApproach = {
         dividers: true,
         headers: ['Agent', { text: 'Effect', tone: 'teal' }],
         rows: [
-          ['<strong>Glucocorticoids</strong> — oral · injectable · topical · ear drops', { text: 'Secondary NDI — <strong>the most common iatrogenic cause</strong>', tone: 'danger' }],
+          [bullets(['Oral', 'Injectable', 'Topical', 'Ear drops'], { lead: '<strong>Glucocorticoids</strong>' }), { text: 'Secondary NDI — <strong>the most common iatrogenic cause</strong>', tone: 'danger' }],
           ['<strong>Phenobarbitone / primidone</strong> (🐕)', { text: 'Hepatotoxicity + secondary PU/PD', tone: 'danger' }],
-          ['<strong>Diuretics</strong> — frusemide · spironolactone', { text: 'Obligatory diuresis', tone: 'danger' }],
+          [bullets(['Frusemide', 'Spironolactone'], { lead: '<strong>Diuretics</strong>' }), { text: 'Obligatory diuresis', tone: 'danger' }],
           ['<strong>Lithium</strong>', { text: 'Primary NDI', tone: 'danger' }],
           ['<strong>Recent megestrol acetate</strong> (🐱)', { text: 'DM induction', tone: 'danger' }],
         ],
@@ -98,11 +98,11 @@ export const pupdDx: DxApproach = {
         dividers: true,
         headers: ['Exposure', { text: 'Effect', tone: 'teal' }],
         rows: [
-          ['<strong>Ethylene glycol</strong>', { text: 'AKI — acute, severe · crystalluria', tone: 'warning' }],
+          ['<strong>Ethylene glycol</strong>', { text: bullets(['AKI — acute, severe', 'Crystalluria']), tone: 'warning' }],
           ['<strong>Lily ingestion</strong> (🐱)', { text: 'AKI', tone: 'warning' }],
-          ['<strong>Jerky treats · copper hepatopathy</strong>', { text: 'Fanconi / glucosuria with normoglycaemia', tone: 'warning' }],
+          [bullets(['<strong>Jerky treats</strong>', '<strong>Copper hepatopathy</strong>']), { text: 'Fanconi / glucosuria with normoglycaemia', tone: 'warning' }],
           ['<strong>Grapes / raisins</strong> (🐕)', { text: 'AKI', tone: 'warning' }],
-          ['<strong>Unvaccinated · outdoor · water access</strong>', { text: '<strong>Leptospirosis</strong> — zoonotic, PPE!', tone: 'danger' }],
+          [bullets(['<strong>Unvaccinated</strong>', '<strong>Outdoor</strong>', '<strong>Water access</strong>']), { text: '<strong>Leptospirosis</strong> — zoonotic, PPE!', tone: 'danger' }],
         ],
       },
 
@@ -113,16 +113,16 @@ export const pupdDx: DxApproach = {
         dividers: true,
         headers: ['Concurrent sign', { text: 'Points to', tone: 'teal' }],
         rows: [
-          ['<strong>Polyphagia + PU/PD</strong>', { text: 'HAC (🐕) · DM · hyperthyroidism (🐱)', tone: 'danger' }],
-          ['<strong>Weight loss + polyphagia</strong>', { text: 'DM · hyperthyroidism (🐱) · acromegaly (🐱)', tone: 'danger' }],
+          ['<strong>Polyphagia + PU/PD</strong>', { text: bullets(['HAC (🐕)', 'DM', 'Hyperthyroidism (🐱)']), tone: 'danger' }],
+          ['<strong>Weight loss + polyphagia</strong>', { text: bullets(['DM', 'Hyperthyroidism (🐱)', 'Acromegaly (🐱)']), tone: 'danger' }],
           ['<strong>Pot-belly + panting</strong>', { text: 'HAC — high suspicion', tone: 'warning' }],
-          ['<strong>Waxing/waning illness</strong>', { text: 'Hypoadrenocorticism · CKD · PSS', tone: 'warning' }],
+          ['<strong>Waxing/waning illness</strong>', { text: bullets(['Hypoadrenocorticism', 'CKD', 'PSS']), tone: 'warning' }],
           ['<strong>Intact female + systemic signs</strong>', { text: 'Pyometra — rule out immediately', tone: 'green' }],
           ['<strong>Young + stunted + neurological</strong>', { text: 'PSS (portosystemic shunt)', tone: 'green' }],
           ['<strong>Constipation + weakness</strong>', { text: 'Hypercalcaemia', tone: 'info' }],
-          ['<strong>Hind-limb weakness</strong> (🐱)', { text: 'Hypokalaemia · acromegaly (DM)', tone: 'info' }],
-          ['<strong>Profound PU/PD — otherwise well</strong>', { text: 'CDI · primary polydipsia', tone: 'violet' }],
-          ['<strong>Nocturia · preference for cold water</strong>', { text: 'CDI — high suspicion', tone: 'violet' }],
+          ['<strong>Hind-limb weakness</strong> (🐱)', { text: bullets(['Hypokalaemia', 'Acromegaly (DM)']), tone: 'info' }],
+          ['<strong>Profound PU/PD — otherwise well</strong>', { text: bullets(['CDI', 'Primary polydipsia']), tone: 'violet' }],
+          [bullets(['<strong>Nocturia</strong>', '<strong>Preference for cold water</strong>']), { text: 'CDI — high suspicion', tone: 'violet' }],
         ],
       },
     ],
@@ -142,10 +142,10 @@ export const pupdDx: DxApproach = {
         dividers: true,
         headers: ['Finding', { text: 'Points to', tone: 'teal' }],
         rows: [
-          ['<strong>Dehydration</strong> — skin tent · dry MM · sunken eyes', { text: 'Obligate losses — DM · CKD · HAC', tone: 'green' }],
-          ['<strong>Tachycardia + weak pulses</strong>', { text: 'Septic shock (pyometra) · haemorrhage · Addisonian crisis', tone: 'green' }],
+          [bullets(['Skin tent', 'Dry MM', 'Sunken eyes'], { lead: '<strong>Dehydration</strong>' }), { text: bullets(['Obligate losses — DM', 'CKD', 'HAC']), tone: 'green' }],
+          ['<strong>Tachycardia + weak pulses</strong>', { text: bullets(['Septic shock (pyometra)', 'Haemorrhage', 'Addisonian crisis']), tone: 'green' }],
           ['<strong>Bradycardia</strong>', { text: 'Hyperkalaemia → <strong>classical Addison\'s disease</strong> (Na:K &lt;27)', tone: 'danger' }],
-          ['<strong>Hypertension on indirect BP</strong>', { text: 'CKD · HAC · DM · hyperthyroidism (🐱) — <strong>check in all PU/PD patients</strong>', tone: 'green' }],
+          ['<strong>Hypertension on indirect BP</strong>', { text: bullets(['CKD', 'HAC', 'DM', 'Hyperthyroidism (🐱) — <strong>check in all PU/PD patients</strong>']), tone: 'green' }],
         ],
       },
       {
@@ -156,8 +156,8 @@ export const pupdDx: DxApproach = {
         headers: ['Finding', { text: 'Points to', tone: 'teal' }],
         rows: [
           ['<strong>Pot-belly + muscle wasting + overweight</strong>', { text: 'HAC — the classic presentation', tone: 'warning' }],
-          ['<strong>Weight loss + muscle wasting</strong>', { text: 'DM · CKD · hyperthyroidism (🐱) · lymphoma · acromegaly', tone: 'warning' }],
-          ['<strong>Large body frame</strong> (🐱)', { text: 'Acromegaly — broad head · large paws · prognathia', tone: 'warning' }],
+          ['<strong>Weight loss + muscle wasting</strong>', { text: bullets(['DM', 'CKD', 'Hyperthyroidism (🐱)', 'Lymphoma', 'Acromegaly']), tone: 'warning' }],
+          ['<strong>Large body frame</strong> (🐱)', { text: bullets(['Acromegaly — broad head', 'Large paws', 'Prognathia']), tone: 'warning' }],
           ['<strong>Young + stunted growth</strong>', { text: 'PSS (portosystemic shunt)', tone: 'warning' }],
         ],
       },
@@ -171,7 +171,7 @@ export const pupdDx: DxApproach = {
           ['<strong>Truncal alopecia</strong> — symmetrical, non-pruritic', { text: 'HAC', tone: 'danger' }],
           ['<strong>Calcinosis cutis</strong> — white/yellow firm plaques, neck / groin', { text: 'HAC — specific but not sensitive', tone: 'danger' }],
           ['<strong>Thin, inelastic skin</strong>', { text: 'HAC — collagen loss from cortisol excess', tone: 'danger' }],
-          ['<strong>Unkempt, poor coat quality</strong>', { text: 'Hyperthyroidism (🐱) · malnutrition (CKD · PSS)', tone: 'danger' }],
+          ['<strong>Unkempt, poor coat quality</strong>', { text: bullets(['Hyperthyroidism (🐱)', 'Malnutrition (CKD · PSS)']), tone: 'danger' }],
         ],
       },
       {
@@ -181,12 +181,12 @@ export const pupdDx: DxApproach = {
         dividers: true,
         headers: ['Finding', { text: 'Points to', tone: 'teal' }],
         rows: [
-          ['<strong>Hepatomegaly</strong>', { text: 'HAC (vacuolar hepatopathy) · DM · hyperthyroidism · PSS', tone: 'warning' }],
-          ['<strong>Renomegaly / irregular kidneys</strong>', { text: 'CKD (end-stage: small kidneys) · lymphoma · PKD (🐱)', tone: 'warning' }],
-          ['<strong>Painful kidneys</strong>', { text: 'AKI (toxin · leptospirosis) · pyelonephritis', tone: 'warning' }],
+          ['<strong>Hepatomegaly</strong>', { text: bullets(['HAC (vacuolar hepatopathy)', 'DM', 'Hyperthyroidism', 'PSS']), tone: 'warning' }],
+          ['<strong>Renomegaly / irregular kidneys</strong>', { text: bullets(['CKD (end-stage: small kidneys)', 'Lymphoma', 'PKD (🐱)']), tone: 'warning' }],
+          ['<strong>Painful kidneys</strong>', { text: bullets(['AKI (toxin · leptospirosis)', 'Pyelonephritis']), tone: 'warning' }],
           ['<strong>Uterine distension</strong> (intact female)', { text: '<strong>Pyometra</strong> — may be subtle in closed pyometra', tone: 'danger' }],
-          ['<strong>Fluid wave</strong>', { text: 'Ascites — PSS · hepatic failure · hypoalbuminaemia', tone: 'warning' }],
-          ['<strong>Microhepatica</strong>', { text: 'PSS · hepatic atrophy', tone: 'warning' }],
+          ['<strong>Fluid wave</strong>', { text: bullets(['Ascites — PSS', 'Hepatic failure', 'Hypoalbuminaemia']), tone: 'warning' }],
+          ['<strong>Microhepatica</strong>', { text: bullets(['PSS', 'Hepatic atrophy']), tone: 'warning' }],
         ],
       },
       {
@@ -197,14 +197,14 @@ export const pupdDx: DxApproach = {
         headers: ['Finding', { text: 'Points to', tone: 'teal' }],
         rows: [
           ['<strong>Cataracts</strong> (🐕)', { text: 'DM — bilateral, rapidly progressive with poorly regulated DM', tone: 'info' }],
-          ['<strong>Retinal haemorrhage / detachment</strong>', { text: 'Systemic hypertension — CKD · HAC · DM · hyperthyroidism', tone: 'info' }],
-          ['<strong>Uveitis</strong>', { text: 'Leptospirosis · lymphoma (paraneoplastic) · hypertension · DM', tone: 'info' }],
+          ['<strong>Retinal haemorrhage / detachment</strong>', { text: bullets(['Systemic hypertension — CKD', 'HAC', 'DM', 'Hyperthyroidism']), tone: 'info' }],
+          ['<strong>Uveitis</strong>', { text: bullets(['Leptospirosis', 'Lymphoma (paraneoplastic)', 'Hypertension', 'DM']), tone: 'info' }],
           ['<strong>Dilated unresponsive pupils</strong> (🐱)', { text: 'Hypertensive retinopathy — <strong>measure BP immediately</strong>', tone: 'danger' }],
-          ['<strong>Palpable thyroid nodule(s)</strong> — ventral neck, 🐱', { text: 'Hyperthyroidism — most cats &gt;8 yr. Bilateral = toxic multinodular goitre (most common) · unilateral = adenoma or carcinoma', tone: 'green' }],
+          ['<strong>Palpable thyroid nodule(s)</strong> — ventral neck, 🐱', { text: bullets(['Hyperthyroidism — most cats &gt;8 yr. Bilateral = toxic multinodular goitre (most common)', 'Unilateral = adenoma or carcinoma']), tone: 'green' }],
           ['<strong>Rectal exam — mandatory in all PU/PD dogs:</strong> anal sac mass', { text: '<strong>AGASACA</strong> — 27–53% cause paraneoplastic hypercalcaemia → secondary NDI. <strong>Examine even without perineal swelling</strong> — small masses are easily missed', tone: 'danger' }],
           ['<strong>Peripheral lymphadenopathy</strong>', { text: 'Lymphoma — T-cell with hypercalcaemia most common', tone: 'danger' }],
-          ['<strong>Altered mentation / hepatic encephalopathy signs</strong>', { text: 'PSS · hepatic failure', tone: 'violet' }],
-          ['<strong>Generalised muscle weakness</strong>', { text: 'Hypokalaemia (🐱: ventroflexion) · hypoadrenocorticism', tone: 'violet' }],
+          ['<strong>Altered mentation / hepatic encephalopathy signs</strong>', { text: bullets(['PSS', 'Hepatic failure']), tone: 'violet' }],
+          ['<strong>Generalised muscle weakness</strong>', { text: bullets(['Hypokalaemia (🐱: ventroflexion)', 'Hypoadrenocorticism']), tone: 'violet' }],
           ['<strong>Plantigrade stance</strong> (🐱)', { text: 'Diabetic neuropathy', tone: 'violet' }],
           ['<strong>Neurological signs + head trauma history</strong>', { text: 'CDI — hypothalamic damage', tone: 'violet' }],
         ],
@@ -227,9 +227,9 @@ export const pupdDx: DxApproach = {
         headers: ['USG', 'Interpretation', { text: 'Consider', tone: 'teal' }],
         rows: [
           [{ text: '<strong>&gt;1.030 🐕<br>&gt;1.035 🐱</strong>', tone: 'green' }, 'Concentrated — not obligate PU/PD', { text: 'Glucosuria? DM can raise USG artificially. ≥1 concentrated sample → primary polydipsia possible', tone: 'teal' }],
-          [{ text: '<strong>1.013–1.029</strong>', tone: 'warning' }, 'Partially concentrated', { text: 'HAC · early CKD · primary polydipsia', tone: 'teal' }],
-          [{ text: '<strong>1.008–1.012</strong>', tone: 'warning' }, 'Isosthenuric', { text: 'CKD · HAC · Addison\'s medullary washout · pyelonephritis', tone: 'teal' }],
-          [{ text: '<strong>&lt;1.008</strong>', tone: 'danger' }, 'Hyposthenuric', { text: 'CDI · NDI · primary polydipsia · severe HAC', tone: 'teal' }],
+          [{ text: '<strong>1.013–1.029</strong>', tone: 'warning' }, 'Partially concentrated', { text: bullets(['HAC', 'Early CKD', 'Primary polydipsia']), tone: 'teal' }],
+          [{ text: '<strong>1.008–1.012</strong>', tone: 'warning' }, 'Isosthenuric', { text: bullets(['CKD', 'HAC', 'Addison\'s medullary washout', 'Pyelonephritis']), tone: 'teal' }],
+          [{ text: '<strong>&lt;1.008</strong>', tone: 'danger' }, 'Hyposthenuric', { text: bullets(['CDI', 'NDI', 'Primary polydipsia', 'Severe HAC']), tone: 'teal' }],
         ],
       },
       {
@@ -239,9 +239,9 @@ export const pupdDx: DxApproach = {
         dividers: true,
         headers: ['Finding', { text: 'Points to', tone: 'teal' }],
         rows: [
-          ['<strong>Glucosuria + <em>hyperglycaemia</em></strong>', { text: 'DM — osmotic diuresis; glucose &gt;180 mg/dL 🐕 · &gt;270 mg/dL 🐱', tone: 'teal' }],
-          ['<strong>Glucosuria + <em>normoglycaemia</em></strong>', { text: 'Renal glucosuria / Fanconi — jerky treats · copper hepatopathy', tone: 'teal' }],
-          ['<strong>Active sediment</strong> — WBC casts · bacteriuria', { text: 'Pyelonephritis — <strong>culture regardless</strong>', tone: 'teal' }],
+          ['<strong>Glucosuria + <em>hyperglycaemia</em></strong>', { text: bullets(['DM — osmotic diuresis; glucose &gt;180 mg/dL 🐕', '&gt;270 mg/dL 🐱']), tone: 'teal' }],
+          ['<strong>Glucosuria + <em>normoglycaemia</em></strong>', { text: bullets(['Renal glucosuria / Fanconi — jerky treats', 'Copper hepatopathy']), tone: 'teal' }],
+          [bullets(['WBC casts', 'Bacteriuria'], { lead: '<strong>Active sediment</strong>' }), { text: 'Pyelonephritis — <strong>culture regardless</strong>', tone: 'teal' }],
           ['<strong>Ammonium biurate crystals</strong>', { text: 'PSS — young dog', tone: 'teal' }],
         ],
       },
@@ -253,12 +253,12 @@ export const pupdDx: DxApproach = {
         dividers: true,
         headers: ['Test', { text: 'Detail', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>Biochemistry</strong>`, { text: 'BUN · Cr · SDMA · phosphate · Ca²⁺ · K⁺ · Na⁺ · glucose · ALP · ALT · albumin · cholesterol', tone: 'warning' }],
-          [`${numBadge(2)}<strong>Haematology</strong>`, { text: 'CBC — absent stress leukogram in a sick dog → Addison\'s · leucocytosis + left shift → infectious', tone: 'warning' }],
+          [`${numBadge(1)}<strong>Biochemistry</strong>`, { text: bullets(['BUN', 'Cr', 'SDMA', 'Phosphate', 'Ca²⁺', 'K⁺', 'Na⁺', 'Glucose', 'ALP', 'ALT', 'Albumin', 'Cholesterol']), tone: 'warning' }],
+          [`${numBadge(2)}<strong>Haematology</strong>`, { text: bullets(['CBC — absent stress leukogram in a sick dog → Addison\'s', 'Leucocytosis + left shift → infectious']), tone: 'warning' }],
           [`${numBadge(3)}<strong>T4</strong>`, { text: '<strong>ALL cats &gt;7 yr.</strong> Free T4 by equilibrium dialysis if total T4 equivocal', tone: 'warning' }],
           [`${numBadge(4)}<strong>Blood pressure</strong>`, { text: 'Indirect measurement — all PU/PD patients', tone: 'warning' }],
           [`${numBadge(5)}<strong>Urine culture</strong>`, { text: 'All PU/PD patients — pyelonephritis often presents without localising signs', tone: 'warning' }],
-          [`${numBadge(6)}<strong>Abdominal US</strong>`, { text: 'Adrenal size · uterus (closed pyometra) · kidney architecture · hepatic pattern · lymph nodes', tone: 'warning' }],
+          [`${numBadge(6)}<strong>Abdominal US</strong>`, { text: bullets(['Adrenal size', 'Uterus (closed pyometra)', 'Kidney architecture', 'Hepatic pattern', 'Lymph nodes']), tone: 'warning' }],
         ],
       },
       {
@@ -453,7 +453,7 @@ export const pupdDx: DxApproach = {
         dividers: true,
         headers: ['Prerequisite', { text: 'Why', tone: 'teal' }],
         rows: [
-          ['<strong>Minimum database complete</strong>', { text: 'Biochemistry · haematology · urinalysis', tone: 'danger' }],
+          ['<strong>Minimum database complete</strong>', { text: bullets(['Biochemistry', 'Haematology', 'Urinalysis']), tone: 'danger' }],
           ['<strong>Hyperadrenocorticism excluded</strong>', { text: 'Some HAC dogs partially respond to DDAVP → <strong>false CDI diagnosis</strong>', tone: 'danger' }],
           ['<strong>Pyometra excluded</strong>', { text: 'Ultrasound, or confirmed spayed', tone: 'danger' }],
           ['<strong>Hypercalcaemia excluded</strong>', { text: 'Total Ca²⁺ checked', tone: 'danger' }],
@@ -472,7 +472,7 @@ export const pupdDx: DxApproach = {
         rows: [
           ['<strong>Serial USG</strong>', { text: 'Minimum 3–5 samples on different days — confirm all are &lt;1.007 for the CDI/NDI workup', tone: 'teal' }],
           ['<strong>Plasma sodium</strong>', { text: 'Baseline — repeat at Day 5–7', tone: 'teal' }],
-          ['<strong>Water intake</strong>', { text: 'Owner to measure daily (mL/kg/day) — <strong>the most sensitive response indicator</strong>; instruct them to record it carefully', tone: 'teal' }],
+          ['<strong>Water intake</strong>', { text: bullets(['Owner to measure daily (mL/kg/day) — <strong>the most sensitive response indicator</strong>', 'Instruct them to record it carefully']), tone: 'teal' }],
           ['<strong>Bodyweight</strong>', { text: 'Monitor for water retention', tone: 'teal' }],
         ],
       },
@@ -488,7 +488,7 @@ export const pupdDx: DxApproach = {
           ['<strong>🐕 Conjunctival drops (ophthalmic)</strong>', { text: '1–2 drops into the conjunctival sac q12–24h — 0.01% solution = 10 µg/drop', tone: 'warning' }],
           ['<strong>🐕 Intranasal solution used conjunctivally</strong>', { text: '1–2 drops q12h — if the ophthalmic preparation is not available', tone: 'warning' }],
           ['<strong>🐱 Conjunctival drops</strong>', { text: '1–2 drops q12–24h. Oral DDAVP is less predictable in cats — <strong>conjunctival route preferred</strong>', tone: 'warning' }],
-          ['<strong>Duration</strong>', { text: '<strong>5–7 days</strong> for full response assessment. USG checked Days 3–4, then Day 7', tone: 'teal' }],
+          ['<strong>Duration</strong>', { text: bullets(['<strong>5–7 days</strong> for full response assessment', 'USG checked Days 3–4, then Day 7']), tone: 'teal' }],
         ],
       },
 
@@ -500,9 +500,9 @@ export const pupdDx: DxApproach = {
         headers: ['USG response', 'Water intake', { text: 'Interpretation', tone: 'teal' }],
         rows: [
           [{ text: 'USG increases to &gt;1.015<br>(ideally &gt;1.025)', tone: 'green' }, { text: '↓ significantly (&gt;50%)', tone: 'green' }, { text: '<strong>CDI confirmed</strong> — ADH-responsive collecting duct → commence long-term DDAVP', tone: 'teal' }],
-          [{ text: 'USG remains &lt;1.007<br>No change', tone: 'danger' }, { text: 'No change', tone: 'danger' }, { text: '<strong>Primary NDI</strong> — collecting duct unresponsive to ADH; treat the underlying cause', tone: 'teal' }],
-          [{ text: 'USG already &gt;1.030 (🐕)<br>/ &gt;1.035 (🐱)', tone: 'warning' }, { text: '↓ or unchanged', tone: 'warning' }, { text: '<strong>Primary polydipsia</strong> — the patient was concentrating urine all along; medullary washout may blur earlier readings', tone: 'teal' }],
-          [{ text: 'Partial response<br>(USG 1.008–1.015)', tone: 'violet' }, { text: 'Mild ↓', tone: 'violet' }, { text: '<strong>Partial CDI</strong> or secondary NDI — rule out HAC (the most common secondary NDI); treat the underlying cause and retest', tone: 'teal' }],
+          [{ text: 'USG remains &lt;1.007<br>No change', tone: 'danger' }, { text: 'No change', tone: 'danger' }, { text: bullets(['Collecting duct unresponsive to ADH', 'Treat the underlying cause'], { lead: '<strong>Primary NDI</strong>' }), tone: 'teal' }],
+          [{ text: 'USG already &gt;1.030 (🐕)<br>/ &gt;1.035 (🐱)', tone: 'warning' }, { text: '↓ or unchanged', tone: 'warning' }, { text: bullets(['The patient was concentrating urine all along', 'Medullary washout may blur earlier readings'], { lead: '<strong>Primary polydipsia</strong>' }), tone: 'teal' }],
+          [{ text: 'Partial response<br>(USG 1.008–1.015)', tone: 'violet' }, { text: 'Mild ↓', tone: 'violet' }, { text: bullets(['<strong>Partial CDI</strong> or secondary NDI — rule out HAC (the most common secondary NDI)', 'Treat the underlying cause and retest']), tone: 'teal' }],
         ],
       },
 
@@ -515,7 +515,7 @@ export const pupdDx: DxApproach = {
         rows: [
           ['<strong>Bodyweight daily</strong>', { text: 'Weight gain &gt;5% → water retention → reduce dose or discontinue', tone: 'teal' }],
           ['<strong>Plasma sodium Day 5–7</strong>', { text: 'Developing hyponatraemia → primary polydipsia (overdrinking + ADH effect) → <strong>stop immediately</strong>', tone: 'danger' }],
-          ['<strong>Oedema / ascites</strong>', { text: 'Rare with physiological DDAVP doses; more likely if primary polydipsia has been misclassified', tone: 'teal' }],
+          ['<strong>Oedema / ascites</strong>', { text: bullets(['Rare with physiological DDAVP doses', 'More likely if primary polydipsia has been misclassified']), tone: 'teal' }],
         ],
       },
       {

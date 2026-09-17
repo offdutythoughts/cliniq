@@ -3,6 +3,7 @@
 // in the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
+import { bullets } from './shared/dxHelpers'
 import { VEST_LOC_COLS, VEST_LOC_HEADERS, VEST_LOC_ROWS } from '../vestibularLocalisation'
 
 export const vestibularDx: DxApproach = {
@@ -21,7 +22,7 @@ export const vestibularDx: DxApproach = {
         dividers: true,
         headers: ['', { text: 'What to do with it', tone: 'teal' }],
         rows: [
-          ['<strong>Owner says</strong><br><em>"he had a stroke"</em>', { text: 'Head tilt · falling or rolling to one side · tight circling · nausea, inappetence · nystagmus', tone: 'teal' }],
+          ['<strong>Owner says</strong><br><em>"he had a stroke"</em>', { text: bullets(['Head tilt', 'Falling or rolling to one side', 'Tight circling', 'Nausea, inappetence', 'Nystagmus']), tone: 'teal' }],
           ['<strong>Confirm first</strong>', { text: 'Loss of balance <strong>to one side</strong> — not generalised weakness, and not a seizure', tone: 'teal' }],
         ],
       },
@@ -35,7 +36,7 @@ export const vestibularDx: DxApproach = {
           ['<strong>Peracute</strong> — young cat', { text: '<strong>Idiopathic feline</strong> vestibular', tone: 'teal' }, 'Exclude otitis media/interna + nasopharyngeal polyp'],
           ['<strong>Chronic</strong> + recurrent otitis', { text: '<strong>Otitis media / interna</strong>', tone: 'teal' }, 'Otoscopy → CT bullae'],
           ['<strong>Drug history</strong> (aminoglycosides, chlorhexidine)', { text: '<strong>Ototoxicity</strong>', tone: 'teal' }, 'Stop drug; supportive care'],
-          ['<strong>Multifocal CNS signs</strong> · ↓ mentation', { text: '<strong>Central</strong> (neoplasia / encephalitis / stroke)', tone: 'teal' }, 'MRI brain + CSF analysis'],
+          [bullets(['<strong>Multifocal CNS signs</strong>', '↓ Mentation']), { text: '<strong>Central</strong> (neoplasia / encephalitis / stroke)', tone: 'teal' }, 'MRI brain + CSF analysis'],
         ],
       },
       { kind: 'step', text: '💊 DRUGS, EARS & SYSTEMIC HISTORY' },
@@ -45,10 +46,10 @@ export const vestibularDx: DxApproach = {
         dividers: true,
         headers: ['Ask about', 'Specifics', { text: 'Points to', tone: 'teal' }],
         rows: [
-          ['<strong>Ototoxic drugs</strong>', 'Topical or systemic aminoglycosides · chlorhexidine flushed into a perforated bulla', { text: 'Peripheral — stop the drug', tone: 'green' }],
-          ['<strong>Ear disease</strong>', 'Chronic otitis · prior ear surgery or TECA · head shaking', { text: 'Peripheral — middle / inner ear', tone: 'green' }],
+          ['<strong>Ototoxic drugs</strong>', bullets(['Topical or systemic aminoglycosides', 'Chlorhexidine flushed into a perforated bulla']), { text: 'Peripheral — stop the drug', tone: 'green' }],
+          ['<strong>Ear disease</strong>', bullets(['Chronic otitis', 'Prior ear surgery or TECA', 'Head shaking']), { text: 'Peripheral — middle / inner ear', tone: 'green' }],
           ['<strong>Hypothyroidism</strong> — 🐕', 'Middle-aged to older, larger breeds', { text: 'Peripheral vestibular ± CN VII', tone: 'green' }],
-          ['<strong>Systemic illness</strong>', 'Pyrexia · multifocal signs', { text: '<strong>Central</strong> — encephalitis, neoplasia', tone: 'danger' }],
+          ['<strong>Systemic illness</strong>', bullets(['Pyrexia', 'Multifocal signs']), { text: '<strong>Central</strong> — encephalitis, neoplasia', tone: 'danger' }],
         ],
       },
     ],
@@ -178,7 +179,7 @@ export const vestibularDx: DxApproach = {
         dividers: true,
         headers: ['Modality', { text: 'Shows', tone: 'teal' }, 'Choose it when'],
         rows: [
-          ['<strong>CT bullae</strong>', { text: 'Fluid density within the bulla · bony thickening or lysis · nasopharyngeal polyp (young cat with stertor)', tone: 'teal' }, 'Faster and widely available — first choice for bony disease'],
+          ['<strong>CT bullae</strong>', { text: bullets(['Fluid density within the bulla', 'Bony thickening or lysis', 'Nasopharyngeal polyp (young cat with stertor)']), tone: 'teal' }, 'Faster and widely available — first choice for bony disease'],
           ['<strong>MRI bullae</strong>', { text: 'Superior soft-tissue detail', tone: 'teal' }, 'CT is non-diagnostic, or soft-tissue extension is suspected'],
         ],
       },
