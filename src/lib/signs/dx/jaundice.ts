@@ -3,7 +3,7 @@
 // the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable, stepPatterns, numBadge } from './shared/dxHelpers'
+import { stepTable, stepPatterns, numBadge, bullets } from './shared/dxHelpers'
 
 export const jaundiceDx: DxApproach = {
   sign: 'jaundice',
@@ -20,8 +20,8 @@ export const jaundiceDx: DxApproach = {
         dividers: true,
         headers: ['First', { text: 'Detail', tone: 'teal' }],
         rows: [
-          ['<strong>Confirm true icterus</strong>', { text: 'Distinguish from lipaemic serum and carotenaemia. Owner often reports yellow gums / sclera, dark urine, or "off colour"', tone: 'teal' }],
-          ['<strong>Three-bucket framing</strong>', { text: '<strong>Pre-hepatic</strong> (haemolysis) · <strong>hepatic</strong> · <strong>post-hepatic</strong> (biliary obstruction)', tone: 'teal' }],
+          ['<strong>Confirm true icterus</strong>', { text: bullets(['Distinguish from lipaemic serum and carotenaemia', 'Owner often reports yellow gums / sclera, dark urine, or "off colour"']), tone: 'teal' }],
+          ['<strong>Three-bucket framing</strong>', { text: bullets(['<strong>Pre-hepatic</strong> (haemolysis)', '<strong>Hepatic</strong>', '<strong>Post-hepatic</strong> (biliary obstruction)']), tone: 'teal' }],
         ],
       },
 
@@ -30,11 +30,11 @@ export const jaundiceDx: DxApproach = {
         dividers: true,
         headers: ['Signalment', { text: 'Differential diagnosis', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>Young 🐱</strong>`, { text: '<strong>FIP</strong> (6 months–3 years) · <strong>lymphocytic cholangitis</strong> (1–5 years)', tone: 'teal' }],
-          [`${numBadge(2)}<strong>Young–middle-aged 🐱</strong>`, { text: 'Pancreatitis · neutrophilic cholangitis · hepatic lipidosis', tone: 'teal' }],
-          [`${numBadge(3)}<strong>Older 🐱</strong>`, { text: 'Neutrophilic cholangitis · hepatic lipidosis · pancreatitis · neoplasia', tone: 'teal' }],
-          [`${numBadge(4)}<strong>Siamese / Oriental</strong>`, { text: 'FIP · amyloidosis', tone: 'teal' }],
-          [`${numBadge(5)}<strong>Persian</strong>`, { text: 'FIP · lymphocytic cholangitis — any pedigree → consider FIP', tone: 'teal' }],
+          [`${numBadge(1)}<strong>Young 🐱</strong>`, { text: bullets(['<strong>FIP</strong> (6 months–3 years)', '<strong>Lymphocytic cholangitis</strong> (1–5 years)']), tone: 'teal' }],
+          [`${numBadge(2)}<strong>Young–middle-aged 🐱</strong>`, { text: bullets(['Pancreatitis', 'Neutrophilic cholangitis', 'Hepatic lipidosis']), tone: 'teal' }],
+          [`${numBadge(3)}<strong>Older 🐱</strong>`, { text: bullets(['Neutrophilic cholangitis', 'Hepatic lipidosis', 'Pancreatitis', 'Neoplasia']), tone: 'teal' }],
+          [`${numBadge(4)}<strong>Siamese / Oriental</strong>`, { text: bullets(['FIP', 'Amyloidosis']), tone: 'teal' }],
+          [`${numBadge(5)}<strong>Persian</strong>`, { text: bullets(['FIP', 'Lymphocytic cholangitis — any pedigree → consider FIP']), tone: 'teal' }],
         ],
       }, '🐾'),
 
@@ -45,8 +45,8 @@ export const jaundiceDx: DxApproach = {
         rows: [
           ['<strong>Overweight cat, recent anorexia / weight loss</strong>', { text: 'Hepatic lipidosis', tone: 'teal' }],
           ['<strong>Weight loss despite a good appetite</strong>', { text: 'Lymphocytic cholangitis', tone: 'teal' }],
-          ['<strong>Cranial abdominal pain</strong>', { text: 'Pancreatitis · acute neutrophilic cholangitis · cholecystitis', tone: 'teal' }],
-          ['<strong>Current medications</strong>', { text: 'Hepatotoxicity — paracetamol · azoles · lomustine · phenobarbital', tone: 'teal' }],
+          ['<strong>Cranial abdominal pain</strong>', { text: bullets(['Pancreatitis', 'Acute neutrophilic cholangitis', 'Cholecystitis']), tone: 'teal' }],
+          ['<strong>Current medications</strong>', { text: bullets(['Hepatotoxicity — paracetamol', 'Azoles', 'Lomustine', 'Phenobarbital']), tone: 'teal' }],
           ['<strong>Anorexia + vomiting + lethargy</strong>', { text: 'Non-specific — common to all three categories', tone: 'teal' }],
         ],
       }, '📋'),
@@ -58,9 +58,9 @@ export const jaundiceDx: DxApproach = {
         rows: [
           ['<strong>Pallor or collapse</strong>', { text: 'Known or observed', tone: 'teal' }],
           ['<strong>Pigmenturia</strong>', { text: 'Red–brown urine = haemoglobinuria', tone: 'teal' }],
-          ['<strong>Toxin access</strong>', { text: 'Onion / garlic (Allium) · zinc (coins, hardware) · paracetamol (🐱)', tone: 'teal' }],
-          ['<strong>Tick exposure / travel</strong>', { text: 'Babesia · Mycoplasma haemofelis', tone: 'teal' }],
-          ['<strong>Other</strong>', { text: 'Recent transfusion (neonatal isoerythrolysis in kittens) · drugs · known immune-mediated history', tone: 'teal' }],
+          ['<strong>Toxin access</strong>', { text: bullets(['Onion / garlic (Allium)', 'Zinc (coins, hardware)', 'Paracetamol (🐱)']), tone: 'teal' }],
+          ['<strong>Tick exposure / travel</strong>', { text: bullets(['Babesia', 'Mycoplasma haemofelis']), tone: 'teal' }],
+          ['<strong>Other</strong>', { text: bullets(['Recent transfusion (neonatal isoerythrolysis in kittens)', 'Drugs', 'Known immune-mediated history']), tone: 'teal' }],
         ],
       }, '🩸'),
     ],
@@ -82,7 +82,7 @@ export const jaundiceDx: DxApproach = {
         dividers: true,
         headers: ['Do', { text: 'Detail', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>Where to look</strong>`, { text: 'Sclera · mucous membranes · soft palate · pinnae · ventral abdomen · non-pigmented skin', tone: 'teal' }],
+          [`${numBadge(1)}<strong>Where to look</strong>`, { text: bullets(['Sclera', 'Mucous membranes', 'Soft palate', 'Pinnae', 'Ventral abdomen', 'Non-pigmented skin']), tone: 'teal' }],
           [`${numBadge(2)}<strong>Threshold</strong>`, { text: 'Tissue jaundice is generally only visible once serum bilirubin exceeds <strong>~50 µmol/L</strong> (reference 0–15)', tone: 'teal' }],
           [`${numBadge(3)}<strong>Grade it</strong>`, { text: 'The higher the bilirubin, the more likely complete post-hepatic obstruction — often <strong>&gt;250 µmol/L → surgical emergency</strong>', tone: 'danger' }],
         ],
@@ -153,12 +153,12 @@ export const jaundiceDx: DxApproach = {
         dividers: true,
         headers: ['Lab pattern', { text: 'Suggests', tone: 'teal' }],
         rows: [
-          ['<strong>ALT &gt; ALP</strong>', { text: 'Hepatotoxicity · amyloidosis · hepatic neoplasia', tone: 'teal' }],
-          ['<strong>ALP &gt; ALT</strong>', { text: 'Post-hepatic jaundice · cholangitis · hepatic lipidosis', tone: 'teal' }],
+          ['<strong>ALT &gt; ALP</strong>', { text: bullets(['Hepatotoxicity', 'Amyloidosis', 'Hepatic neoplasia']), tone: 'teal' }],
+          ['<strong>ALP &gt; ALT</strong>', { text: bullets(['Post-hepatic jaundice', 'Cholangitis', 'Hepatic lipidosis']), tone: 'teal' }],
           ['<strong>Markedly ↑ ALP, only mildly ↑ GGT</strong>', { text: 'Hepatic lipidosis', tone: 'teal' }],
-          ['<strong>Mild hyperbilirubinaemia, normal ALT &amp; ALP</strong>', { text: 'FIP · pancreatitis', tone: 'teal' }],
-          ['<strong>Marked hyperglobulinaemia</strong>', { text: 'Lymphocytic cholangitis · FIP', tone: 'teal' }],
-          ['<strong>Hypocalcaemia</strong>', { text: 'Pancreatitis · sepsis', tone: 'teal' }],
+          ['<strong>Mild hyperbilirubinaemia, normal ALT &amp; ALP</strong>', { text: bullets(['FIP', 'Pancreatitis']), tone: 'teal' }],
+          ['<strong>Marked hyperglobulinaemia</strong>', { text: bullets(['Lymphocytic cholangitis', 'FIP']), tone: 'teal' }],
+          ['<strong>Hypocalcaemia</strong>', { text: bullets(['Pancreatitis', 'Sepsis']), tone: 'teal' }],
           ['<strong>Bilirubin &gt;100 µmol/L</strong>', { text: 'Abdominal ultrasound is critical — identify extrahepatic biliary obstruction', tone: 'danger' }],
         ],
       },

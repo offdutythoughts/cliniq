@@ -7,7 +7,7 @@
 // (Ettinger Ch 50)
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable } from './shared/dxHelpers'
+import { stepTable, bullets } from './shared/dxHelpers'
 
 export const melenaDx: DxApproach = {
   sign: 'melena',
@@ -24,8 +24,8 @@ export const melenaDx: DxApproach = {
           dividers: true,
           headers: ['Sign', { text: 'Localises to', tone: 'teal' }],
           rows: [
-            ['<strong>Melena</strong><br>black, tarry, digested blood', { text: '<strong>Proximal / upper GI</strong> — stomach · small intestine · swallowed blood. ≥50–100 mL blood must be ingested before stool turns melanic', tone: 'teal' }],
-            ['<strong>Haematochezia</strong><br>bright-red fresh blood', { text: '<strong>Distal colon · rectum · anus</strong> — occasionally small intestine with rapid transit', tone: 'teal' }],
+            ['<strong>Melena</strong><br>black, tarry, digested blood', { text: bullets(['Stomach', 'Small intestine', 'Swallowed blood. ≥50–100 mL blood must be ingested before stool turns melanic'], { lead: '<strong>Proximal / upper GI</strong>' }), tone: 'teal' }],
+            ['<strong>Haematochezia</strong><br>bright-red fresh blood', { text: bullets(['<strong>Distal colon</strong>', '<strong>Rectum</strong>', '<strong>Anus</strong> — occasionally small intestine with rapid transit']), tone: 'teal' }],
             ['<strong>Surface blood only</strong>', { text: 'Anorectal lesion', tone: 'teal' }],
             ['<strong>Red-maroon "raspberry-jam" stool throughout</strong>', { text: 'Proximal colonic / AHDS <span style="opacity:.7">(Ettinger Ch 50)</span>', tone: 'teal' }],
           ],
@@ -36,10 +36,10 @@ export const melenaDx: DxApproach = {
           dividers: true,
           headers: ['Mimic / test', { text: 'Detail', tone: 'teal' }],
           rows: [
-            ['<strong>Melena mimics</strong>', { text: 'Activated charcoal · iron supplements · bismuth-containing medications · large amounts of blueberries', tone: 'teal' }],
-            ['<strong>Haematochezia mimics</strong>', { text: 'Red food colouring · beets · perineal bite wound · anal-sac abscess', tone: 'teal' }],
+            ['<strong>Melena mimics</strong>', { text: bullets(['Activated charcoal', 'Iron supplements', 'Bismuth-containing medications', 'Large amounts of blueberries']), tone: 'teal' }],
+            ['<strong>Haematochezia mimics</strong>', { text: bullets(['Red food colouring', 'Beets', 'Perineal bite wound', 'Anal-sac abscess']), tone: 'teal' }],
             ['<strong>Faecal occult-blood test</strong>', { text: 'If uncertain — avoid meat-containing diet for 72 h to prevent false positives', tone: 'teal' }],
-            ['<strong>Swallowed blood</strong>', { text: 'Epistaxis · oral / pharyngeal or pulmonary lesions · raw diet — can produce melena with <strong>no true GI bleed</strong>', tone: 'teal' }],
+            ['<strong>Swallowed blood</strong>', { text: bullets(['Epistaxis', 'Oral / pharyngeal or pulmonary lesions', 'Raw diet — can produce melena with <strong>no true GI bleed</strong>']), tone: 'teal' }],
           ],
         }, '🔍'),
 
@@ -48,9 +48,9 @@ export const melenaDx: DxApproach = {
           dividers: true,
           headers: ['Exposure', { text: 'Detail', tone: 'teal' }],
           rows: [
-            ['<strong>Ulcerogenic drugs</strong>', { text: 'NSAIDs and corticosteroids (<strong>highest risk when combined</strong>) · anticoagulants · platelet inhibitors · thrombolytics — ask specifically and discontinue', tone: 'danger' }],
-            ['<strong>Anticoagulant rodenticide</strong>', { text: 'Assess potential access; treat empirically with Vitamin K1 if suspected', tone: 'danger' }],
-            ['<strong>Recent surgery</strong>', { text: 'Enterotomy · post-GDV · PEG-tube placement can cause melena', tone: 'teal' }],
+            ['<strong>Ulcerogenic drugs</strong>', { text: bullets(['NSAIDs and corticosteroids (<strong>highest risk when combined</strong>)', 'Anticoagulants', 'Platelet inhibitors', 'Thrombolytics — ask specifically and discontinue']), tone: 'danger' }],
+            ['<strong>Anticoagulant rodenticide</strong>', { text: bullets(['Assess potential access', 'Treat empirically with Vitamin K1 if suspected']), tone: 'danger' }],
+            ['<strong>Recent surgery</strong>', { text: bullets(['Enterotomy', 'post-GDV', 'PEG-tube placement can cause melena']), tone: 'teal' }],
           ],
         }, '💊'),
 
@@ -59,10 +59,10 @@ export const melenaDx: DxApproach = {
           dividers: true,
           headers: ['Picture', { text: 'Points to', tone: 'teal' }],
           rows: [
-            ['<strong>Young / unvaccinated dog</strong> + fever · vomiting · fetid bloody diarrhoea', { text: 'Parvovirus', tone: 'teal' }],
+            [bullets(['<strong>Young / unvaccinated dog</strong> + fever', 'Vomiting', 'Fetid bloody diarrhoea']), { text: 'Parvovirus', tone: 'teal' }],
             ['<strong>Small-breed dog, peracute "raspberry-jam" bloody diarrhoea ± shock</strong>', { text: 'AHDS', tone: 'danger' }],
             ['<strong>Boxer / French Bulldog, young, large-bowel diarrhoea + weight loss</strong>', { text: 'Granulomatous colitis', tone: 'teal' }],
-            ['<strong>Older dog · weight loss · tenesmus · large-bowel signs</strong>', { text: 'Colorectal neoplasia / polyp', tone: 'teal' }],
+            [bullets(['<strong>Older dog</strong>', '<strong>Weight loss</strong>', '<strong>Tenesmus</strong>', '<strong>Large-bowel signs</strong>']), { text: 'Colorectal neoplasia / polyp', tone: 'teal' }],
             ['<strong>Episodic GI signs + waxing–waning lethargy / collapse</strong>', { text: 'Consider hypoadrenocorticism', tone: 'teal' }],
             ['<strong>Vomiting / haematemesis alongside melena</strong>', { text: 'Upper GI — see the <strong>Vomiting</strong> approach', tone: 'teal' }],
           ],
@@ -95,7 +95,7 @@ export const melenaDx: DxApproach = {
           dividers: true,
           headers: ['Assess', { text: 'Interpretation', tone: 'teal' }],
           rows: [
-            ['<strong>MM colour (pallor) · CRT · pulse quality · heart rate · mentation</strong>', { text: 'Quantify the haemorrhage', tone: 'teal' }],
+            [bullets(['<strong>MM colour (pallor)</strong>', '<strong>CRT</strong>', '<strong>Pulse quality</strong>', '<strong>Heart rate</strong>', '<strong>Mentation</strong>']), { text: 'Quantify the haemorrhage', tone: 'teal' }],
             ['<strong>Bradycardia + waterhammer collapse in a hypovolaemic patient</strong>', { text: 'Classic for an <strong>Addisonian crisis</strong> — a tachycardia would be expected with true hypovolaemia', tone: 'danger' }],
             ['<strong>Estimate acute blood loss</strong>', { text: 'Decide whether the patient needs stabilising before any work-up', tone: 'teal' }],
           ],
@@ -106,7 +106,7 @@ export const melenaDx: DxApproach = {
           dividers: true,
           headers: ['Examine', { text: 'Looking for', tone: 'teal' }],
           rows: [
-            ['<strong>Mouth · pharynx · gingiva · nasal planum</strong>', { text: 'Bleeding lesions', tone: 'teal' }],
+            [bullets(['<strong>Mouth</strong>', '<strong>Pharynx</strong>', '<strong>Gingiva</strong>', '<strong>Nasal planum</strong>']), { text: 'Bleeding lesions', tone: 'teal' }],
             ['<strong>Chest auscultation</strong>', { text: '<strong>Swallowed blood</strong> from sinonasal, oral / pharyngeal or pulmonary disease can produce melena without a primary GI bleed', tone: 'teal' }],
             ['<strong>Petechiae / ecchymoses / venepuncture bruising</strong>', { text: 'A <strong>primary haemostatic defect</strong>', tone: 'danger' }],
           ],
@@ -117,10 +117,10 @@ export const melenaDx: DxApproach = {
           dividers: true,
           headers: ['Palpate for', { text: 'Significance', tone: 'teal' }],
           rows: [
-            ['<strong>Mass</strong>', { text: 'Neoplasia · intussusception ("sausage")', tone: 'teal' }],
-            ['<strong>Foreign body · thickened bowel loops · organomegaly</strong>', { text: 'Structural GI disease', tone: 'teal' }],
+            ['<strong>Mass</strong>', { text: bullets(['Neoplasia', 'Intussusception ("sausage")']), tone: 'teal' }],
+            [bullets(['<strong>Foreign body</strong>', '<strong>Thickened bowel loops</strong>', '<strong>Organomegaly</strong>']), { text: 'Structural GI disease', tone: 'teal' }],
             ['<strong>Marked abdominal pain ± fever</strong>', { text: '<strong>Perforation / septic peritonitis</strong>', tone: 'danger' }],
-            ['<strong>Hydration · fluid wave</strong>', { text: 'Effusion', tone: 'teal' }],
+            [bullets(['<strong>Hydration</strong>', '<strong>Fluid wave</strong>']), { text: 'Effusion', tone: 'teal' }],
           ],
         }, '🤲'),
 
@@ -130,8 +130,8 @@ export const melenaDx: DxApproach = {
           headers: ['Assess', { text: 'Detail', tone: 'teal' }],
           rows: [
             ['<strong>Stool character</strong>', { text: 'Melena vs frank blood vs mucus — always inspect the gloved finger for blood colour', tone: 'teal' }],
-            ['<strong>Rectal / colorectal lesions</strong>', { text: 'Masses · polyps · strictures · pelvic-canal lesions', tone: 'teal' }],
-            ['<strong>Anal sacs</strong> — express and palpate', { text: 'Abscess = haematochezia mimic · firm / fixed mass ± hypercalcaemia → <strong>apocrine anal-sac adenocarcinoma (AGASACA)</strong>', tone: 'teal' }],
+            ['<strong>Rectal / colorectal lesions</strong>', { text: bullets(['Masses', 'Polyps', 'Strictures', 'Pelvic-canal lesions']), tone: 'teal' }],
+            ['<strong>Anal sacs</strong> — express and palpate', { text: bullets(['Abscess = haematochezia mimic', 'Firm / fixed mass ± hypercalcaemia → <strong>apocrine anal-sac adenocarcinoma (AGASACA)</strong>']), tone: 'teal' }],
           ],
         }, '👆'),
       ],
@@ -162,7 +162,7 @@ export const melenaDx: DxApproach = {
           rows: [
             ['<strong>Faecal occult-blood test</strong>', { text: 'Off meat-containing diet for 72 h — when the stool colour is equivocal', tone: 'teal' }],
             ['<strong>Separates true GI bleeding from</strong>', { text: '<strong>Melena mimics</strong> (charcoal · iron · bismuth · blueberries) and <strong>haematochezia mimics</strong> (red dye · beets)', tone: 'teal' }],
-            ['<strong>Re-confirm localisation</strong>', { text: 'Digested black / tarry → upper · bright-red fresh → lower', tone: 'teal' }],
+            ['<strong>Re-confirm localisation</strong>', { text: bullets(['Digested black / tarry → upper', 'Bright-red fresh → lower']), tone: 'teal' }],
           ],
         }, '🔬'),
 
@@ -174,7 +174,7 @@ export const melenaDx: DxApproach = {
             ['<strong>CBC + blood smear</strong>', { text: 'Degree and regenerativeness of anaemia (blood loss is expected to become regenerative; peracute loss may be pre-regenerative)', tone: 'teal' }],
             ['<strong>Platelet count</strong>', { text: 'Confirm thrombocytopenia on a fresh smear', tone: 'teal' }],
             ['<strong>Neutropenia</strong>', { text: 'Parvovirus hallmark — present by the time haemorrhagic diarrhoea appears', tone: 'teal' }],
-            ['<strong>Coagulation panel — PT / aPTT</strong>', { text: 'Rodenticide prolongs <strong>PT first</strong>; ± buccal-mucosal bleeding time; ± D-dimers / FDPs for <strong>DIC</strong>', tone: 'teal' }],
+            ['<strong>Coagulation panel — PT / aPTT</strong>', { text: bullets(['Rodenticide prolongs <strong>PT first</strong>', '± Buccal-mucosal bleeding time', '± D-dimers / FDPs for <strong>DIC</strong>']), tone: 'teal' }],
             ['<strong>Timing</strong>', { text: 'Run this <strong>before</strong> any biopsy or endoscopy', tone: 'danger' }],
           ],
         }, '🩸'),
@@ -185,9 +185,9 @@ export const melenaDx: DxApproach = {
           headers: ['Test', { text: 'Interpretation', tone: 'teal' }],
           rows: [
             ['<strong>BUN:creatinine ratio</strong>', { text: '<strong>&gt;30 (mg/dL)</strong> — or <strong>&gt;27:1</strong> in a well-hydrated dog not on a high-protein diet — supports upper-GI haemorrhage (low sensitivity)', tone: 'teal' }],
-            ['<strong>Serum chemistry</strong>', { text: 'Liver (portal hypertension / PSS) · kidney (uraemic gastropathy) · calcium (hypercalcaemia → AGASACA / lymphoma)', tone: 'teal' }],
-            ['<strong>Electrolytes — Na:K ratio</strong>', { text: 'Hyponatraemia + hyperkalaemia, Na:K &lt;27 → <strong>hypoadrenocorticism</strong>; confirm with baseline cortisol / ACTH-stimulation test. <strong>Whipworm can mimic this</strong>', tone: 'danger' }],
-            ['<strong>Faecal</strong>', { text: 'Flotation + centrifugation (hookworm · whipworm / <em>Trichuris</em> · coccidia) · parvovirus antigen ELISA · PCR / culture for <em>Clostridium</em> · <em>Campylobacter</em> · <em>Salmonella</em>', tone: 'teal' }],
+            ['<strong>Serum chemistry</strong>', { text: bullets(['Liver (portal hypertension / PSS)', 'Kidney (uraemic gastropathy)', 'Calcium (hypercalcaemia → AGASACA / lymphoma)']), tone: 'teal' }],
+            ['<strong>Electrolytes — Na:K ratio</strong>', { text: bullets(['Hyponatraemia + hyperkalaemia, Na:K &lt;27 → <strong>hypoadrenocorticism</strong>', 'Confirm with baseline cortisol / ACTH-stimulation test. <strong>Whipworm can mimic this</strong>']), tone: 'danger' }],
+            ['<strong>Faecal</strong>', { text: bullets(['Flotation + centrifugation (hookworm · whipworm / <em>Trichuris</em> · coccidia)', 'Parvovirus antigen ELISA', 'PCR / culture for <em>Clostridium</em>', '<em>Campylobacter</em>', '<em>Salmonella</em>']), tone: 'teal' }],
           ],
         }, '🧪'),
 
@@ -196,9 +196,9 @@ export const melenaDx: DxApproach = {
           dividers: true,
           headers: ['Modality', { text: 'What it shows', tone: 'teal' }],
           rows: [
-            ['<strong>Abdominal radiographs / ultrasound</strong>', { text: 'Masses · bowel-wall thickening or loss of layering · intussusception · foreign body · lymphadenopathy · <strong>free gas / effusion</strong> (perforation)', tone: 'teal' }],
+            ['<strong>Abdominal radiographs / ultrasound</strong>', { text: bullets(['Masses', 'Bowel-wall thickening or loss of layering', 'Intussusception', 'Foreign body', 'Lymphadenopathy', '<strong>Free gas / effusion</strong> (perforation)']), tone: 'teal' }],
             ['<strong>Aspirate any abdominal effusion</strong>', { text: 'Septic / degenerate neutrophils with intracellular bacteria, or a fluid:blood-glucose gradient, confirm <strong>septic peritonitis</strong> — surgical emergency', tone: 'danger' }],
-            ['<strong>Thoracic radiographs</strong>', { text: 'Metastasis (colorectal / anal-sac carcinoma) · aspiration', tone: 'teal' }],
+            ['<strong>Thoracic radiographs</strong>', { text: bullets(['Metastasis (colorectal / anal-sac carcinoma)', 'Aspiration']), tone: 'teal' }],
           ],
         }, '📊'),
 
@@ -207,8 +207,8 @@ export const melenaDx: DxApproach = {
           dividers: true,
           headers: ['Procedure', { text: 'What it shows / does', tone: 'teal' }],
           rows: [
-            ['<strong>Upper GI endoscopy</strong> — for melena', { text: 'Visualise and biopsy gastroduodenal ulcers / erosions · masses (adenocarcinoma · GIST · lymphoma · mast-cell tumour · gastrinoma) · sample for <em>Helicobacter</em>', tone: 'teal' }],
-            ['<strong>Colonoscopy</strong> — for haematochezia', { text: 'Biopsy colitis · colorectal neoplasia / polyps · <strong>granulomatous (histiocytic ulcerative) colitis</strong> — PAS-positive macrophages + FISH / culture for adherent-invasive <em>E. coli</em>; treat with <strong>enrofloxacin 5 mg/kg PO q12h × 6–8 weeks</strong>', tone: 'teal' }],
+            ['<strong>Upper GI endoscopy</strong> — for melena', { text: bullets(['Visualise and biopsy gastroduodenal ulcers / erosions', 'Masses (adenocarcinoma · GIST · lymphoma · mast-cell tumour · gastrinoma)', 'Sample for <em>Helicobacter</em>']), tone: 'teal' }],
+            ['<strong>Colonoscopy</strong> — for haematochezia', { text: bullets(['Biopsy colitis', 'Colorectal neoplasia / polyps', '<strong>Granulomatous (histiocytic ulcerative) colitis</strong> — PAS-positive macrophages + FISH / culture for adherent-invasive <em>E. coli</em>; treat with <strong>enrofloxacin 5 mg/kg PO q12h × 6–8 weeks</strong>']), tone: 'teal' }],
             ['<strong>Biopsy / histopathology</strong>', { text: 'Required for definitive diagnosis of infiltrative and neoplastic disease', tone: 'teal' }],
           ],
         }, '🔬'),

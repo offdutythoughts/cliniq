@@ -4,7 +4,7 @@
 // urinalysis + culture + imaging. Links to the LUT disease pages (DIS-URO-*).
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable } from './shared/dxHelpers'
+import { stepTable, bullets } from './shared/dxHelpers'
 
 export const pollakiuriaDx: DxApproach = {
   sign: 'pollakiuria',
@@ -36,8 +36,8 @@ export const pollakiuriaDx: DxApproach = {
           dividers: true,
           headers: ['Finding', { text: 'Action', tone: 'teal' }],
           rows: [
-            ['<strong>Repeated unproductive trips to the litter tray · vocalising · large turgid painful bladder · systemic collapse or bradycardia</strong>', { text: '<strong>Urethral obstruction</strong> — a hyperkalaemic emergency. Go straight to ECG + serum potassium; see <strong>Urethral obstruction</strong>', tone: 'danger' }],
-            ['<strong>Highest-risk signalment</strong>', { text: 'Male cats · male dogs (os penis calculus)', tone: 'danger' }],
+            [bullets(['<strong>Repeated unproductive trips to the litter tray</strong>', '<strong>Vocalising</strong>', '<strong>Large turgid painful bladder</strong>', '<strong>Systemic collapse or bradycardia</strong>']), { text: bullets(['A hyperkalaemic emergency. Go straight to ECG + serum potassium', 'See <strong>Urethral obstruction</strong>'], { lead: '<strong>Urethral obstruction</strong>' }), tone: 'danger' }],
+            ['<strong>Highest-risk signalment</strong>', { text: bullets(['Male cats', 'Male dogs (os penis calculus)']), tone: 'danger' }],
           ],
         },
 
@@ -48,9 +48,9 @@ export const pollakiuriaDx: DxApproach = {
           rows: [
             ['<strong>Young–middle-aged cat, indoor, multi-cat or stressed household</strong>', { text: '<strong>Feline idiopathic cystitis (FIC)</strong> — the commonest cause of feline LUTS', tone: 'teal' }],
             ['<strong>Spayed female dog</strong>', { text: 'Bacterial cystitis is common — 2× the risk of intact males', tone: 'teal' }],
-            ['<strong>Entire male dog</strong>', { text: 'Prostatic disease — BPH · prostatitis', tone: 'teal' }],
+            ['<strong>Entire male dog</strong>', { text: bullets(['Prostatic disease — BPH', 'Prostatitis']), tone: 'teal' }],
             ['<strong>Older dog, any sex, persistent signs</strong>', { text: 'Urothelial carcinoma', tone: 'teal' }],
-            ['<strong>Breed clues</strong>', { text: 'Dalmatian / PSS → urate · Miniature Schnauzer / Bichon → oxalate · Mastiff / Bulldog (intact male) → cystine', tone: 'teal' }],
+            ['<strong>Breed clues</strong>', { text: bullets(['Dalmatian / PSS → urate', 'Miniature Schnauzer / Bichon → oxalate', 'Mastiff / Bulldog (intact male) → cystine']), tone: 'teal' }],
           ],
         }, '🐾'),
 
@@ -59,9 +59,9 @@ export const pollakiuriaDx: DxApproach = {
           dividers: true,
           headers: ['History', { text: 'What it means', tone: 'teal' }],
           rows: [
-            ['<strong>Recurrent or relapsing signs</strong>', { text: 'Look for an underlying cause — urolith · anatomical anomaly · prostatic disease · neoplasia · endocrinopathy', tone: 'teal' }],
+            ['<strong>Recurrent or relapsing signs</strong>', { text: bullets(['Look for an underlying cause — urolith', 'Anatomical anomaly', 'Prostatic disease', 'Neoplasia', 'Endocrinopathy']), tone: 'teal' }],
             ['<strong>Failure to respond to appropriate antibiotics</strong>', { text: 'Reconsider the diagnosis (sterile FIC · urolith · neoplasia) rather than escalating antibiotics', tone: 'teal' }],
-            ['<strong>Also ask</strong>', { text: 'Diet and water intake · prior episodes · any catheterisation history (stricture risk)', tone: 'teal' }],
+            ['<strong>Also ask</strong>', { text: bullets(['Diet and water intake', 'Prior episodes', 'Any catheterisation history (stricture risk)']), tone: 'teal' }],
           ],
         }, '🔁'),
       ],
@@ -102,8 +102,8 @@ export const pollakiuriaDx: DxApproach = {
           dividers: true,
           headers: ['Assess', { text: 'Interpretation', tone: 'teal' }],
           rows: [
-            ['<strong>Prostate</strong> — size · symmetry · pain · mobility', { text: 'Symmetrical non-painful enlargement → <strong>BPH</strong> · painful → <strong>prostatitis</strong> · asymmetric / fixed / firm → <strong>carcinoma</strong>', tone: 'teal' }],
-            ['<strong>Pelvic urethra</strong>', { text: 'Calculi · masses', tone: 'teal' }],
+            [bullets(['Size', 'Symmetry', 'Pain', 'Mobility'], { lead: '<strong>Prostate</strong>' }), { text: bullets(['Symmetrical non-painful enlargement → <strong>BPH</strong>', 'Painful → <strong>prostatitis</strong>', 'Asymmetric / fixed / firm → <strong>carcinoma</strong>']), tone: 'teal' }],
+            ['<strong>Pelvic urethra</strong>', { text: bullets(['Calculi', 'Masses']), tone: 'teal' }],
             ['<strong>Sublumbar lymph nodes</strong>', { text: 'Enlarged with prostatic / urothelial carcinoma', tone: 'teal' }],
           ],
         }, '👆'),
@@ -113,7 +113,7 @@ export const pollakiuriaDx: DxApproach = {
           dividers: true,
           headers: ['Examine', { text: 'Looking for', tone: 'teal' }],
           rows: [
-            ['<strong>Vulva / penis and prepuce</strong>', { text: 'Conformation · discharge · masses · a palpable urethral calculus at the os penis', tone: 'teal' }],
+            ['<strong>Vulva / penis and prepuce</strong>', { text: bullets(['Conformation', 'Discharge', 'Masses', 'A palpable urethral calculus at the os penis']), tone: 'teal' }],
             ['<strong>Perivulvar / perineal skin</strong>', { text: 'Urine scald suggests chronic dribbling or incontinence overlapping the LUTS', tone: 'teal' }],
           ],
         }, '🔬'),
@@ -143,7 +143,7 @@ export const pollakiuriaDx: DxApproach = {
           dividers: true,
           headers: ['Test', { text: 'Detail', tone: 'teal' }],
           rows: [
-            ['<strong>Cystocentesis urinalysis</strong>', { text: 'The single most useful first test — USG · pH · sediment (RBC · WBC · bacteria · crystals)', tone: 'teal' }],
+            ['<strong>Cystocentesis urinalysis</strong>', { text: bullets(['The single most useful first test — USG', 'pH', 'Sediment (RBC · WBC · bacteria · crystals)']), tone: 'teal' }],
             ['<strong>Culture &amp; susceptibility</strong> (cystocentesis sample)', { text: 'Gold standard for UTI — ISCAID advises culturing only with an active sediment <em>plus</em> clinical signs, <strong>not</strong> subclinical bacteriuria', tone: 'teal' }],
             ['<strong>Crystalluria</strong>', { text: 'Suggests, but does not prove, urolithiasis — and is influenced by storage and temperature', tone: 'teal' }],
           ],
@@ -155,7 +155,7 @@ export const pollakiuriaDx: DxApproach = {
           headers: ['Modality', { text: 'What it shows', tone: 'teal' }],
           rows: [
             ['<strong>Radiography</strong>', { text: 'Radiopaque uroliths (struvite · oxalate). <strong>Cystine and urate are radiolucent</strong> — need ultrasound / contrast', tone: 'teal' }],
-            ['<strong>Ultrasound</strong>', { text: 'Bladder wall · mucosal / mural masses · prostate · proximal urethra; screens the upper tract (renal pelvic dilation → pyelonephritis / ureteral obstruction)', tone: 'teal' }],
+            ['<strong>Ultrasound</strong>', { text: bullets(['Bladder wall', 'Mucosal / mural masses', 'Prostate', 'Proximal urethra; screens the upper tract (renal pelvic dilation → pyelonephritis / ureteral obstruction)']), tone: 'teal' }],
             ['<strong>Contrast cystourethrography</strong>', { text: 'Urethral lesions and strictures', tone: 'teal' }],
             ['<strong>CT</strong>', { text: 'Staging neoplasia', tone: 'teal' }],
           ],
@@ -169,7 +169,7 @@ export const pollakiuriaDx: DxApproach = {
             ['<strong>Quantitative urolith analysis</strong>', { text: 'On any retrieved stone — directs dissolution and prevention', tone: 'teal' }],
             ['<strong>Free-catch urine BRAF (V595E) mutation</strong>', { text: 'High specificity for urothelial / prostatic carcinoma — <strong>avoid traumatic cystotomy or needle sampling</strong> (seeding)', tone: 'danger' }],
             ['<strong>Prostatic wash / ejaculate cytology + culture</strong>', { text: 'For prostatic disease', tone: 'teal' }],
-            ['<strong>Bloodwork ± endocrine testing</strong>', { text: 'If recurrent UTI — screen for diabetes · hyperadrenocorticism · CKD', tone: 'teal' }],
+            ['<strong>Bloodwork ± endocrine testing</strong>', { text: bullets(['If recurrent UTI — screen for diabetes', 'Hyperadrenocorticism', 'CKD']), tone: 'teal' }],
           ],
         }, '🎯'),
       ],

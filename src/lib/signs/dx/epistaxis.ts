@@ -4,7 +4,7 @@
 // Pilot for the Dx-view migration.
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable, stepPatterns, numBadge } from './shared/dxHelpers'
+import { stepTable, stepPatterns, numBadge, bullets } from './shared/dxHelpers'
 
 export const epistaxisDx: DxApproach = {
   sign: 'epistaxis',
@@ -55,7 +55,7 @@ export const epistaxisDx: DxApproach = {
         dividers: true,
         headers: ['Exposure', { text: 'Effect', tone: 'teal' }],
         rows: [
-          ['<strong>Drugs increasing bleeding tendency</strong>', { text: 'Aspirin / other NSAIDs · clopidogrel · rivaroxaban — ask specifically and consider discontinuing', tone: 'teal' }],
+          ['<strong>Drugs increasing bleeding tendency</strong>', { text: bullets(['Aspirin / other NSAIDs', 'Clopidogrel', 'Rivaroxaban — ask specifically and consider discontinuing']), tone: 'teal' }],
           ['<strong>Topical nasal sprays / inhaled medications</strong>', { text: 'May locally irritate the nasal mucosa', tone: 'teal' }],
           ['<strong>Anticoagulant rodenticide</strong>', { text: 'Assess potential access in any patient with other signs of haemorrhage — treat empirically with Vitamin K1 if suspected', tone: 'danger' }],
           ['<strong>Chemotherapy / oestrogens</strong>', { text: 'Marrow suppression → thrombocytopenia', tone: 'teal' }],
@@ -67,7 +67,7 @@ export const epistaxisDx: DxApproach = {
         dividers: true,
         headers: ['History', { text: 'Means', tone: 'teal' }],
         rows: [
-          ['<strong>Systemic signs</strong> — lethargy · inappetence · weight loss', { text: 'More common with systemic causes', tone: 'teal' }],
+          [bullets(['Lethargy', 'Inappetence', 'Weight loss'], { lead: '<strong>Systemic signs</strong>' }), { text: 'More common with systemic causes', tone: 'teal' }],
           ['<strong>Bleeding at other (extra-nasal) sites</strong>', { text: 'Strongly favours systemic disease — most likely with severe thrombocytopenia', tone: 'teal' }],
           ['<strong>Historical bleeding tendency, especially in a young patient</strong><br>umbilical · deciduous-tooth · post-neuter or post-surgical bleeding', { text: 'Inherited coagulopathy / von Willebrand disease', tone: 'teal' }],
           ['<strong>Melena</strong>', { text: 'May simply be swallowed blood — do not over-interpret as a GI / systemic bleed', tone: 'teal' }],
@@ -81,8 +81,8 @@ export const epistaxisDx: DxApproach = {
         dividers: true,
         headers: ['Factor', { text: 'Risk', tone: 'teal' }],
         rows: [
-          ['<strong>Tick exposure · preventive history · geography · travel</strong>', { text: 'Vector-borne disease — ehrlichiosis · leishmaniosis · anaplasmosis · babesiosis · RMSF', tone: 'teal' }],
-          ['<strong>Geography</strong>', { text: 'Also drives fungal rhinitis risk — <em>Aspergillus</em> · <em>Cryptococcus</em>', tone: 'teal' }],
+          [bullets(['<strong>Tick exposure</strong>', '<strong>Preventive history</strong>', '<strong>Geography</strong>', '<strong>Travel</strong>']), { text: bullets(['Vector-borne disease — ehrlichiosis', 'Leishmaniosis', 'Anaplasmosis', 'Babesiosis', 'RMSF']), tone: 'teal' }],
+          ['<strong>Geography</strong>', { text: bullets(['Also drives fungal rhinitis risk — <em>Aspergillus</em>', '<em>Cryptococcus</em>']), tone: 'teal' }],
           ['<strong>Outdoor / free-roaming</strong>', { text: 'Higher chance of a traumatic or infectious cause', tone: 'teal' }],
           ['<strong>Concurrent dermatologic disease</strong>', { text: 'More common in dogs with idiopathic rhinitis', tone: 'teal' }],
         ],
@@ -94,10 +94,10 @@ export const epistaxisDx: DxApproach = {
         dividers: true,
         headers: ['Breed', { text: 'Predisposition', tone: 'teal' }],
         rows: [
-          ['Doberman · Pembroke Welsh Corgi · Scottish Terrier · Shetland Sheepdog · Chesapeake Bay Retriever · Pointer', { text: '<strong>von Willebrand disease</strong>', tone: 'teal' }],
+          [bullets(['Doberman', 'Pembroke Welsh Corgi', 'Scottish Terrier', 'Shetland Sheepdog', 'Chesapeake Bay Retriever', 'Pointer']), { text: '<strong>von Willebrand disease</strong>', tone: 'teal' }],
           ['Greater Swiss Mountain Dog', { text: 'P2Y12 platelet-receptor mutation (thrombocytopathia)', tone: 'teal' }],
-          ['Otterhound · Great Pyrenees', { text: 'Glanzmann thrombasthenia', tone: 'teal' }],
-          ['Dolichocephalic breeds — Collie · GSD · Greyhound', { text: 'Predisposed to nasal neoplasia / aspergillosis', tone: 'teal' }],
+          [bullets(['Otterhound', 'Great Pyrenees']), { text: 'Glanzmann thrombasthenia', tone: 'teal' }],
+          [bullets(['Dolichocephalic breeds — Collie', 'GSD', 'Greyhound']), { text: 'Predisposed to nasal neoplasia / aspergillosis', tone: 'teal' }],
         ],
       },
     ],
@@ -138,10 +138,10 @@ export const epistaxisDx: DxApproach = {
         dividers: true,
         headers: ['Finding', { text: 'Detail', tone: 'teal' }],
         rows: [
-          ['<strong>Nasal signs</strong>', { text: 'Sneezing · stertor · mucopurulent nasal discharge · unilateral epiphora · nasal planum depigmentation · facial pain or rubbing', tone: 'teal' }],
+          ['<strong>Nasal signs</strong>', { text: bullets(['Sneezing', 'Stertor', 'Mucopurulent nasal discharge', 'Unilateral epiphora', 'Nasal planum depigmentation', 'Facial pain or rubbing']), tone: 'teal' }],
           ['<strong>Reduced ocular retropulsion</strong>', { text: 'Retrobulbar extension', tone: 'teal' }],
           ['<strong>Regional (submandibular) lymphadenopathy</strong>', { text: 'In one study seen <em>only</em> with intranasal disease', tone: 'teal' }],
-          ['<strong>Dental disease</strong>', { text: 'Assess closely for periodontal disease · periapical infection · palate erosion / oronasal fistula', tone: 'teal' }],
+          ['<strong>Dental disease</strong>', { text: bullets(['Assess closely for periodontal disease', 'Periapical infection', 'Palate erosion / oronasal fistula']), tone: 'teal' }],
         ],
       }, '🔵'),
 
@@ -150,9 +150,9 @@ export const epistaxisDx: DxApproach = {
         dividers: true,
         headers: ['Pattern', { text: 'Findings', tone: 'teal' }],
         rows: [
-          ['<strong>Primary haemostatic</strong> — mucosal / cutaneous', { text: 'Petechiae · ecchymoses · gingival haemorrhage · increased bruising at venepuncture sites · melena (caution — may be swallowed blood)', tone: 'teal' }],
-          ['<strong>Secondary haemostatic</strong>', { text: 'Cavity bleeding (haemoperitoneum · haemothorax · haemarthrosis) · haematomas', tone: 'teal' }],
-          ['<strong>Generalised lymphadenopathy</strong>', { text: 'Consider lymphoma · ehrlichiosis · leishmaniosis', tone: 'teal' }],
+          ['<strong>Primary haemostatic</strong> — mucosal / cutaneous', { text: bullets(['Petechiae', 'Ecchymoses', 'Gingival haemorrhage', 'Increased bruising at venepuncture sites', 'Melena (caution — may be swallowed blood)']), tone: 'teal' }],
+          ['<strong>Secondary haemostatic</strong>', { text: bullets(['Cavity bleeding (haemoperitoneum · haemothorax · haemarthrosis)', 'Haematomas']), tone: 'teal' }],
+          ['<strong>Generalised lymphadenopathy</strong>', { text: bullets(['Consider lymphoma', 'Ehrlichiosis', 'Leishmaniosis']), tone: 'teal' }],
         ],
       }, '🩸'),
 
@@ -161,8 +161,8 @@ export const epistaxisDx: DxApproach = {
         dividers: true,
         headers: ['Finding', { text: 'Points to', tone: 'teal' }],
         rows: [
-          ['<strong>Uveitis</strong> (aqueous flare)', { text: 'Neoplastic / infectious disease — fungal · leishmaniosis', tone: 'teal' }],
-          ['<strong>Focal retinal haemorrhage</strong>', { text: 'Vasculitis · vector-borne disease · fungal disease · systemic hypertension · any bleeding diathesis', tone: 'teal' }],
+          ['<strong>Uveitis</strong> (aqueous flare)', { text: bullets(['Neoplastic / infectious disease — fungal', 'Leishmaniosis']), tone: 'teal' }],
+          ['<strong>Focal retinal haemorrhage</strong>', { text: bullets(['Vasculitis', 'Vector-borne disease', 'Fungal disease', 'Systemic hypertension', 'Any bleeding diathesis']), tone: 'teal' }],
           ['<strong>Hyphaema</strong>', { text: 'Systemic bleeding disorder', tone: 'teal' }],
           ['<strong>Retinal detachment</strong>', { text: 'Exudative (ehrlichiosis) or serous (panuveitis: lymphoma · systemic fungal) — also classic for hypertension', tone: 'teal' }],
           ['<strong>Neurologic abnormalities</strong>', { text: 'Intracranial extension of nasal disease, or concurrent intracranial bleeding (more common with systemic causes)', tone: 'teal' }],
@@ -197,11 +197,11 @@ export const epistaxisDx: DxApproach = {
         dividers: true,
         headers: ['Do', { text: 'Detail', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>Triage</strong>`, { text: 'Epistaxis is <strong>rarely</strong> a true emergency — but severe haemorrhage can cause anaemia · hypovolaemia · upper-airway obstruction', tone: 'teal' }],
-          [`${numBadge(2)}<strong>Transfuse / fluid resuscitate</strong>`, { text: 'Whole blood / pRBC for symptomatic anaemia; fluids for hypovolaemia — especially to stabilise <strong>before GA</strong> for CT / rhinoscopy', tone: 'danger' }],
-          [`${numBadge(3)}<strong>Plasma transfusion</strong>`, { text: 'Severe haemorrhage with suspected factor deficiency or antagonism — haemophilia · rodenticide', tone: 'danger' }],
-          [`${numBadge(4)}<strong>Protect the airway</strong>`, { text: 'Consider intubation if there is risk of obstruction or aspiration; interventional control is ideally performed on an anaesthetised, intubated patient', tone: 'danger' }],
-          [`${numBadge(5)}<strong>Sampling technique</strong>`, { text: 'Minimise venepuncture sites · small-gauge needles · prolonged pressure if a coagulopathy is suspected', tone: 'teal' }],
+          [`${numBadge(1)}<strong>Triage</strong>`, { text: bullets(['Epistaxis is <strong>rarely</strong> a true emergency — but severe haemorrhage can cause anaemia', 'Hypovolaemia', 'Upper-airway obstruction']), tone: 'teal' }],
+          [`${numBadge(2)}<strong>Transfuse / fluid resuscitate</strong>`, { text: bullets(['Whole blood / pRBC for symptomatic anaemia', 'Fluids for hypovolaemia — especially to stabilise <strong>before GA</strong> for CT / rhinoscopy']), tone: 'danger' }],
+          [`${numBadge(3)}<strong>Plasma transfusion</strong>`, { text: bullets(['Severe haemorrhage with suspected factor deficiency or antagonism — haemophilia', 'Rodenticide']), tone: 'danger' }],
+          [`${numBadge(4)}<strong>Protect the airway</strong>`, { text: bullets(['Consider intubation if there is risk of obstruction or aspiration', 'Interventional control is ideally performed on an anaesthetised, intubated patient']), tone: 'danger' }],
+          [`${numBadge(5)}<strong>Sampling technique</strong>`, { text: bullets(['Minimise venepuncture sites', 'Small-gauge needles', 'Prolonged pressure if a coagulopathy is suspected']), tone: 'teal' }],
         ],
       },
 
@@ -212,9 +212,9 @@ export const epistaxisDx: DxApproach = {
         dividers: true,
         headers: ['Test', { text: 'Interpretation', tone: 'teal' }],
         rows: [
-          ['<strong>Platelet count</strong>', { text: 'Clinical bleeding usually needs <strong>severe</strong> thrombocytopenia (&lt;30–50 ×10⁹/L). Confirm on a fresh smear — manual estimate = mean platelets/100× field × 15 ×10⁹/L. Check the feathered edge for clumping. <strong>Platelet count does NOT reliably separate local from systemic disease</strong>', tone: 'teal' }],
+          ['<strong>Platelet count</strong>', { text: bullets(['Clinical bleeding usually needs <strong>severe</strong> thrombocytopenia (&lt;30–50 ×10⁹/L)', 'Confirm on a fresh smear — manual estimate = mean platelets/100× field × 15 ×10⁹/L. Check the feathered edge for clumping', '<strong>Platelet count does NOT reliably separate local from systemic disease</strong>']), tone: 'teal' }],
           ['<strong>Anaemia</strong>', { text: 'Blood loss is expected to be <strong>regenerative</strong> (reticulocytosis · polychromasia) — but peracute loss may be pre-regenerative', tone: 'teal' }],
-          ['<strong>Serum chemistry</strong>', { text: 'Azotaemia · ↑ liver enzymes · hypercalcaemia. <strong>Hyperglobulinaemia</strong> is key — moderate–severe with ehrlichiosis · leishmaniosis · myeloma → follow with protein electrophoresis (mono- vs polyclonal). Rarely <em>cryoglobulinaemia</em>', tone: 'teal' }],
+          ['<strong>Serum chemistry</strong>', { text: bullets(['Azotaemia', '↑ Liver enzymes', 'Hypercalcaemia. <strong>Hyperglobulinaemia</strong> is key — moderate–severe with ehrlichiosis', 'Leishmaniosis', 'Myeloma → follow with protein electrophoresis (mono- vs polyclonal). Rarely <em>cryoglobulinaemia</em>']), tone: 'teal' }],
           ['<strong>Urinalysis</strong>', { text: 'Underlying renal disease + haematuria (wider mucosal haemorrhage)', tone: 'teal' }],
           ['<strong>Blood pressure</strong> (ideally Doppler)', { text: 'Hypertension exacerbates bleeding — measure especially with retinal haemorrhage or neuro signs', tone: 'teal' }],
         ],
@@ -225,12 +225,12 @@ export const epistaxisDx: DxApproach = {
         dividers: true,
         headers: ['Modality', { text: 'Detail', tone: 'teal' }],
         rows: [
-          ['<strong>CT — the modality of choice</strong>', { text: 'Cross-sectional · fine bony detail · faster than skull radiographs. Image <em>before</em> rhinoscopy / biopsy — blood obscures the scan', tone: 'teal' }],
+          ['<strong>CT — the modality of choice</strong>', { text: bullets(['Cross-sectional', 'Fine bony detail', 'Faster than skull radiographs. Image <em>before</em> rhinoscopy / biopsy — blood obscures the scan']), tone: 'teal' }],
           ['<strong>Rhinoscopy</strong>', { text: 'Complementary — direct mucosal assessment + biopsy, but cannot assess bony involvement', tone: 'teal' }],
           ['<strong>Radiography</strong>', { text: 'Limited by superimposition — largely superseded by CT', tone: 'teal' }],
           ['<strong>MRI</strong>', { text: 'Superior soft-tissue / intracranial-extension detail', tone: 'teal' }],
           [{ text: '⚠️ <strong>Imaging cannot distinguish tumour from benign disease</strong>', tone: 'danger' }, { text: 'Radiopacity, bony lysis and frontal-sinus involvement occur with <strong>both</strong> malignant and benign disease (fungal · FB · lymphoplasmacytic) — <strong>biopsy / histopathology is required</strong>', tone: 'danger' }],
-          ['<strong>Fungal + parasite testing</strong>', { text: 'Cytology · fungal plaques on rhinoscopy · serology / PCR, as indicated', tone: 'teal' }],
+          ['<strong>Fungal + parasite testing</strong>', { text: bullets(['Cytology', 'Fungal plaques on rhinoscopy', 'Serology / PCR, as indicated']), tone: 'teal' }],
         ],
       }, '📊'),
 
@@ -243,8 +243,8 @@ export const epistaxisDx: DxApproach = {
         headers: ['Test', { text: 'Detail', tone: 'teal' }],
         rows: [
           ['<strong>Platelet count + smear estimate</strong>', { text: 'As above', tone: 'teal' }],
-          ['<strong>Platelet function</strong>', { text: 'BMBT (point-of-care screen; normal dog &lt;3 min) · point-of-care analysers · aggregometry · flow cytometry', tone: 'teal' }],
-          ['<strong>vWF:Ag</strong>', { text: 'If normal platelet count + mucosal bleeding, especially in predisposed breeds — &gt;70% normal · &lt;50% at risk · &lt;25% severely affected', tone: 'teal' }],
+          ['<strong>Platelet function</strong>', { text: bullets(['BMBT (point-of-care screen; normal dog &lt;3 min)', 'Point-of-care analysers', 'Aggregometry', 'Flow cytometry']), tone: 'teal' }],
+          ['<strong>vWF:Ag</strong>', { text: bullets(['If normal platelet count + mucosal bleeding, especially in predisposed breeds — &gt;70% normal', '&lt;50% at risk', '&lt;25% severely affected']), tone: 'teal' }],
         ],
       },
       {
@@ -254,8 +254,8 @@ export const epistaxisDx: DxApproach = {
         dividers: true,
         headers: ['Pattern', { text: 'Means', tone: 'teal' }],
         rows: [
-          ['<strong>Both prolonged</strong>', { text: 'Common pathway · vitamin K antagonism · liver disease · DIC', tone: 'teal' }],
-          ['<strong>aPTT only</strong>', { text: 'Haemophilia A (VIII) · B (IX) · C (XI) · contact factors', tone: 'teal' }],
+          ['<strong>Both prolonged</strong>', { text: bullets(['Common pathway', 'Vitamin K antagonism', 'Liver disease', 'DIC']), tone: 'teal' }],
+          ['<strong>aPTT only</strong>', { text: bullets(['Haemophilia A (VIII)', 'B (IX)', 'C (XI)', 'Contact factors']), tone: 'teal' }],
           ['<strong>PT only</strong>', { text: 'Factor VII deficiency or <em>early</em> vitamin K antagonism (shortest half-life)', tone: 'teal' }],
           ['<strong>Both normal</strong>', { text: 'PT/aPTT are normal in primary haemostatic disorders — and were normal in all 35 dogs in one epistaxis series', tone: 'teal' }],
         ],
@@ -268,8 +268,8 @@ export const epistaxisDx: DxApproach = {
         headers: ['Test', { text: 'Detail', tone: 'teal' }],
         rows: [
           ['<strong>D-dimers / FDPs</strong>', { text: 'Sensitive, not specific', tone: 'teal' }],
-          ['<strong>Viscoelastic testing (TEG / ROTEM)</strong>', { text: 'Hyperfibrinolysis — DIC · hepatic failure · <em>Angiostrongylus</em> · greyhound post-op bleeding', tone: 'teal' }],
-          ['<strong>Infectious / vector-borne testing</strong>', { text: 'Ehrlichia · Anaplasma · Babesia · Leishmania · RMSF, per geography', tone: 'teal' }],
+          ['<strong>Viscoelastic testing (TEG / ROTEM)</strong>', { text: bullets(['Hyperfibrinolysis — DIC', 'Hepatic failure', '<em>Angiostrongylus</em>', 'Greyhound post-op bleeding']), tone: 'teal' }],
+          ['<strong>Infectious / vector-borne testing</strong>', { text: bullets(['Ehrlichia', 'Anaplasma', 'Babesia', 'Leishmania', 'RMSF, per geography']), tone: 'teal' }],
         ],
       },
 
@@ -282,12 +282,12 @@ export const epistaxisDx: DxApproach = {
         headers: ['Step', { text: 'Detail', tone: 'teal' }],
         rows: [
           [`${numBadge(1)}<strong>Compression</strong>`, { text: 'Firm compression of the soft nose for 5–15 min — use a timer', tone: 'teal' }],
-          [`${numBadge(2)}<strong>Topical vasoconstrictor</strong>`, { text: 'Dilute epinephrine 1:10,000 or phenylephrine 1 mg/mL on packing — <strong>caution: systemic absorption; avoid in cardiac / hypertensive patients</strong>', tone: 'danger' }],
-          [`${numBadge(3)}<strong>Cooling</strong>`, { text: 'Ice pack on the nasal bridge · chilled-saline flush (anaesthetised, packed)', tone: 'teal' }],
+          [`${numBadge(2)}<strong>Topical vasoconstrictor</strong>`, { text: bullets(['Dilute epinephrine 1:10,000 or phenylephrine 1 mg/mL on packing — <strong>caution: systemic absorption</strong>', '<strong>Avoid in cardiac / hypertensive patients</strong>']), tone: 'danger' }],
+          [`${numBadge(3)}<strong>Cooling</strong>`, { text: bullets(['Ice pack on the nasal bridge', 'Chilled-saline flush (anaesthetised, packed)']), tone: 'teal' }],
           [`${numBadge(4)}<strong>Cautery</strong>`, { text: 'Silver-nitrate or electrocautery under visualisation', tone: 'teal' }],
           [`${numBadge(5)}<strong>Nasal packing</strong>`, { text: 'Resorbable (Surgicel / Gelfoam) if a bleeding disorder, or non-resorbable', tone: 'teal' }],
-          [`${numBadge(6)}<strong>Antifibrinolytics</strong>`, { text: 'Topical or oral tranexamic acid · aminocaproic acid ± Yunnan Baiyao (topical evidence stronger than oral)', tone: 'teal' }],
-          [`${numBadge(7)}<strong>Refractory</strong>`, { text: 'Sphenopalatine artery ligation · endovascular maxillary-artery embolisation · Foley-balloon tamponade · (last resort) carotid ligation — <strong>refer</strong>', tone: 'danger' }],
+          [`${numBadge(6)}<strong>Antifibrinolytics</strong>`, { text: bullets(['Topical or oral tranexamic acid', 'Aminocaproic acid ± Yunnan Baiyao (topical evidence stronger than oral)']), tone: 'teal' }],
+          [`${numBadge(7)}<strong>Refractory</strong>`, { text: bullets(['Sphenopalatine artery ligation', 'Endovascular maxillary-artery embolisation', 'Foley-balloon tamponade', '(Last resort) carotid ligation — <strong>refer</strong>']), tone: 'danger' }],
         ],
       },
       {

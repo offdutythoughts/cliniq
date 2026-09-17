@@ -3,6 +3,7 @@
 // the deleted cliniqApp.ts) to the typed DxApproach model. Rendered by renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
+import { bullets } from './shared/dxHelpers'
 import { ATAXIA_COLS, ATAXIA_HEADERS, ATAXIA_ROWS } from '../ataxiaClassification'
 
 export const ataxiaDx: DxApproach = {
@@ -40,8 +41,8 @@ export const ataxiaDx: DxApproach = {
         dividers: true,
         headers: ['Ask', 'Detail', { text: 'If yes', tone: 'danger' }],
         rows: [
-          ['<strong>Drugs</strong>', 'Metronidazole (🐕 &gt;40 mg/kg/day · 🐱 lower threshold, slower clearance) · phenytoin · aminoglycosides · ivermectin (MDR1 breeds)', { text: '<strong>Reversible</strong> cerebellovestibular ataxia — stop the drug', tone: 'danger' }],
-          ['<strong>Diet</strong> — 🐱', 'All-fish · homemade · sulphite-preserved canned food', { text: '<strong>Thiamine deficiency</strong> — cervical ventroflexion + ataxia + dilated pupils', tone: 'danger' }],
+          ['<strong>Drugs</strong>', bullets(['Metronidazole (🐕 &gt;40 mg/kg/day · 🐱 lower threshold, slower clearance)', 'Phenytoin', 'Aminoglycosides', 'Ivermectin (MDR1 breeds)']), { text: '<strong>Reversible</strong> cerebellovestibular ataxia — stop the drug', tone: 'danger' }],
+          ['<strong>Diet</strong> — 🐱', bullets(['All-fish', 'Homemade', 'Sulphite-preserved canned food']), { text: '<strong>Thiamine deficiency</strong> — cervical ventroflexion + ataxia + dilated pupils', tone: 'danger' }],
           ['<strong>Vaccination</strong> — 🐕', 'Unvaccinated + oculonasal discharge + GI signs + hard pad', { text: '<strong>CDV</strong> until proven otherwise — isolate + RT-PCR', tone: 'danger' }],
         ],
       },
@@ -53,9 +54,9 @@ export const ataxiaDx: DxApproach = {
         dividers: true,
         headers: ['Onset', { text: 'Mechanism', tone: 'teal' }],
         rows: [
-          ['<strong>Peracute</strong>, non-progressive', { text: 'Vascular — cerebellar infarct · FCE', tone: 'teal' }],
-          ['<strong>Acute</strong>, progressive', { text: 'Inflammatory · compressive · toxic', tone: 'teal' }],
-          ['<strong>Chronic</strong>, progressive', { text: 'Degenerative · neoplastic', tone: 'teal' }],
+          ['<strong>Peracute</strong>, non-progressive', { text: bullets(['Vascular — cerebellar infarct', 'FCE']), tone: 'teal' }],
+          ['<strong>Acute</strong>, progressive', { text: bullets(['Inflammatory', 'Compressive', 'Toxic']), tone: 'teal' }],
+          ['<strong>Chronic</strong>, progressive', { text: bullets(['Degenerative', 'Neoplastic']), tone: 'teal' }],
         ],
       },
       { kind: 'step', text: '🐾 SIGNALMENT & BREED — species-specific clues' },
@@ -79,7 +80,7 @@ export const ataxiaDx: DxApproach = {
           ['Young purebred terrier (JRT / Parson / Fox), progressive cerebellar signs ± myokymia or skin rippling', { text: 'Spinocerebellar ataxia (SAM — KCNJ10 / CAPN1) — breed-specific DNA test', tone: 'teal' }],
           ['Belgian Malinois / Belgian Shepherd puppy, severe ataxia at 4–8 weeks', { text: 'SDCA1 / SDCA2 — DNA test', tone: 'teal' }],
           ['Young pup, rigid pelvic-limb hyperextension', { text: 'Congenital <em>Neospora caninum</em>', tone: 'teal' }],
-          ['Italian Spinone · Coton de Tulear · Norwegian Buhund · Australian Kelpie · Beagle puppy, progressive cerebellar signs', { text: 'Breed-specific abiotrophy / SCA', tone: 'teal' }],
+          [bullets(['Italian Spinone', 'Coton de Tulear', 'Norwegian Buhund', 'Australian Kelpie', 'Beagle puppy, progressive cerebellar signs']), { text: 'Breed-specific abiotrophy / SCA', tone: 'teal' }],
           ['Geriatric dog, peracute non-progressive vestibular', { text: 'Idiopathic vestibular or cerebellar infarct', tone: 'teal' }],
           ['Chondrodystrophic or large breed, spinal pain', { text: 'IVDD / compressive myelopathy', tone: 'teal' }],
           ['CKCS / Greyhound, peracute ataxia', { text: 'Ischaemic stroke — both breeds predisposed', tone: 'teal' }],
@@ -93,10 +94,10 @@ export const ataxiaDx: DxApproach = {
         dividers: true,
         headers: ['Associated sign', { text: 'Points to', tone: 'teal' }],
         rows: [
-          ['Head tilt · nystagmus · rolling', { text: '<strong>Vestibular</strong>', tone: 'teal' }],
-          ['Intention tremor · hypermetria, <strong>no weakness</strong>', { text: '<strong>Cerebellar</strong>', tone: 'teal' }],
+          [bullets(['Head tilt', 'Nystagmus', 'Rolling']), { text: '<strong>Vestibular</strong>', tone: 'teal' }],
+          [bullets(['Intention tremor', 'Hypermetria, <strong>no weakness</strong>']), { text: '<strong>Cerebellar</strong>', tone: 'teal' }],
           ['Weakness + knuckling / scuffing', { text: '<strong>Proprioceptive</strong> — spinal', tone: 'teal' }],
-          ['Seizures · behaviour change · blindness', { text: '<strong>Forebrain</strong> or multifocal disease', tone: 'teal' }],
+          [bullets(['Seizures', 'Behaviour change', 'Blindness']), { text: '<strong>Forebrain</strong> or multifocal disease', tone: 'teal' }],
           ['🐕 Myoclonus — rhythmic chewing-gum twitch', { text: '<strong>CDV</strong> — persists during sleep, pathognomonic', tone: 'danger' }],
           ['🐕 Myokymia (rippling skin) / neuromyotonia', { text: 'KCNJ10 SCA — terrier or Belgian Malinois', tone: 'teal' }],
           ['🐱 Cervical ventroflexion', { text: 'Check K⁺, thiamine, myasthenia — <strong>not</strong> cerebellar', tone: 'danger' }],
@@ -132,7 +133,7 @@ export const ataxiaDx: DxApproach = {
         dividers: true,
         headers: ['Ask', { text: 'What the answer tells you', tone: 'teal' }],
         rows: [
-          ['<strong>Is there paresis?</strong>', { text: 'Cerebellar disease has <strong>NONE</strong> — it coordinates movement, it does not initiate it. Proprioceptive ataxia <strong>ALWAYS</strong> has weakness', tone: 'teal' }],
+          ['<strong>Is there paresis?</strong>', { text: bullets(['Cerebellar disease has <strong>NONE</strong> — it coordinates movement, it does not initiate it', 'Proprioceptive ataxia <strong>ALWAYS</strong> has weakness']), tone: 'teal' }],
           ['<strong>Postural reactions</strong><br>proprioceptive placing', { text: 'Deficits localise to spinal cord / brainstem — or central vestibular', tone: 'teal' }],
           ['<strong>Cranial nerves &amp; mentation</strong>', { text: 'Any abnormality indicates brainstem / central disease', tone: 'teal' }],
           ['<strong>Menace response</strong>', { text: 'Can be reduced by cerebellar disease <em>with intact vision and PLR</em>', tone: 'teal' }],
@@ -146,7 +147,7 @@ export const ataxiaDx: DxApproach = {
         dividers: true,
         headers: ['Question', { text: 'Answer', tone: 'teal' }],
         rows: [
-          ['<strong>Central or peripheral?</strong>', { text: 'CP deficits · vertical or positional nystagmus · multiple CN deficits · ↓ consciousness = <strong>central</strong>. Otherwise peripheral — see the Vestibular approach for the full battery', tone: 'teal' }],
+          ['<strong>Central or peripheral?</strong>', { text: bullets(['CP deficits', 'Vertical or positional nystagmus', 'Multiple CN deficits', '↓ Consciousness = <strong>central</strong>. Otherwise peripheral — see the Vestibular approach for the full battery']), tone: 'teal' }],
           ['<strong>Which side?</strong>', { text: 'Fast phase beats <strong>away</strong> from the lesion, slow phase drifts toward it with the head tilt — reliable only if peripheral', tone: 'teal' }],
           ['<strong>⚠️ On metronidazole?</strong>', { text: 'Vertical nystagmus in a patient on metronidazole is <strong>drug toxicity until proven otherwise</strong> — stop the drug first', tone: 'danger' }],
         ],
@@ -161,7 +162,7 @@ export const ataxiaDx: DxApproach = {
           ['<strong>Palpate the vertebral column</strong><br>occiput to sacrum', { text: 'Spinal pain separates spinal / compressive causes from central cerebellar or vestibular disease', tone: 'teal' }],
           ['<strong>CK</strong> — creatine kinase', { text: 'Elevated CK points to myopathy or polymyositis mimicking weakness / ataxia', tone: 'teal' }],
           ['<strong>Blood pressure</strong><br>all cats, geriatric dogs', { text: 'Hypertensive encephalopathy and retinal detachment present as acute CNS signs', tone: 'teal' }],
-          ['<strong>Fundoscopy</strong><br>especially 🐱', { text: 'Hypertensive retinopathy · uveitis / chorioretinitis (Toxoplasma, FIP, fungal) · papilloedema', tone: 'teal' }],
+          ['<strong>Fundoscopy</strong><br>especially 🐱', { text: bullets(['Hypertensive retinopathy', 'Uveitis / chorioretinitis (Toxoplasma, FIP, fungal)', 'Papilloedema']), tone: 'teal' }],
         ],
       },
       { kind: 'step', text: 'SPECIES-SPECIFIC EXAM TIPS' },
@@ -177,7 +178,7 @@ export const ataxiaDx: DxApproach = {
           ['Pup with stiff hyperextended pelvic limbs that cannot be flexed', { text: 'Congenital <em>Neospora</em>', tone: 'teal' }],
           ['Hard pad + ocular discharge + cerebellar signs', { text: 'CDV', tone: 'teal' }],
           { section: 'Feline' },
-          ['<strong>Always ophthalmoscopy</strong> — uveitis / chorioretinitis', { text: 'Toxoplasma · FIP · fungal · hypertensive disease', tone: 'teal' }],
+          ['<strong>Always ophthalmoscopy</strong> — uveitis / chorioretinitis', { text: bullets(['Toxoplasma', 'FIP', 'Fungal', 'Hypertensive disease']), tone: 'teal' }],
           ['<strong>Always BP</strong> — older hypertensive cat (CKD, hyperthyroid) with acute CNS signs', { text: 'Hypertensive encephalopathy or stroke', tone: 'teal' }],
           ['<strong>Check menace, pupils and retina BEFORE manipulating</strong>', { text: 'Handling can deteriorate a critically ill cat', tone: 'danger' }],
         ],
@@ -196,8 +197,8 @@ export const ataxiaDx: DxApproach = {
         dividers: true,
         headers: ['Run', { text: 'Looking for', tone: 'teal' }],
         rows: [
-          ['<strong>CBC</strong>', { text: 'Leukogram · PCV/TS · platelets', tone: 'teal' }],
-          ['<strong>Biochemistry</strong>', { text: 'Glucose · iCa · K⁺ · Na⁺ · BUN/Cr · ALP/ALT · globulins and A:G (🐱 FIP screen) · CK (myopathy)', tone: 'teal' }],
+          ['<strong>CBC</strong>', { text: bullets(['Leukogram', 'PCV/TS', 'Platelets']), tone: 'teal' }],
+          ['<strong>Biochemistry</strong>', { text: bullets(['Glucose', 'iCa', 'K⁺', 'Na⁺', 'BUN/Cr', 'ALP/ALT', 'Globulins and A:G (🐱 FIP screen)', 'CK (myopathy)']), tone: 'teal' }],
           ['<strong>Blood pressure</strong>', { text: 'All cats and geriatric dogs', tone: 'teal' }],
           ['<strong>FIV / FeLV + T4</strong>', { text: 'All cats', tone: 'teal' }],
         ],
@@ -217,11 +218,11 @@ export const ataxiaDx: DxApproach = {
         ],
         rows: [
           ['Clinical signs', { text: 'Hypermetria / intention tremor / no paresis', tone: 'teal' }, { text: 'Head tilt / nystagmus / rolling', tone: 'teal' }, { text: 'Knuckling / scuffing / paresis', tone: 'teal' }],
-          ['Nystagmus fast phase', { text: 'Usually absent (± positional)', tone: 'teal' }, { text: 'Beats <strong>away</strong> from the lesion if peripheral; either way if central', tone: 'teal' }, { text: 'Absent', tone: 'teal' }],
+          ['Nystagmus fast phase', { text: 'Usually absent (± positional)', tone: 'teal' }, { text: bullets(['Beats <strong>away</strong> from the lesion if peripheral', 'Either way if central']), tone: 'teal' }, { text: 'Absent', tone: 'teal' }],
           ['Next imaging', { text: 'MRI brain (cerebellum)', tone: 'teal' }, { text: 'Otoscopy + CT/MRI bullae (periph) / MRI brain + CSF (central)', tone: 'teal' }, { text: 'Spinal rads → CT/MRI spine', tone: 'teal' }],
-          ['Key infectious tests', { text: 'CDV PCR (🐕) · FIP globulins (🐱) · Toxoplasma/Neospora', tone: 'teal' }, { text: 'Ear swab · Brucella if chronic', tone: 'teal' }, { text: 'CK · protozoal serology · CSF', tone: 'teal' }],
-          ['Key metabolic', { text: 'Thiamine (🐱 fish diet); metronidazole → STOP', tone: 'teal' }, { text: 'Hypothyroid T4 (🐕 CN VII + vestibular)', tone: 'teal' }, { text: 'Spinal CSF protein (polyradiculo)', tone: 'teal' }],
-          ['Key hereditary/breed', { text: 'Abiotrophy/SCA → DNA test (breed)', tone: 'teal' }, { text: 'Idiopathic (excl. by elimination)', tone: 'teal' }, { text: 'DM (GSD, older); CCSM (Dobermann)', tone: 'teal' }],
+          ['Key infectious tests', { text: bullets(['CDV PCR (🐕)', 'FIP globulins (🐱)', 'Toxoplasma/Neospora']), tone: 'teal' }, { text: bullets(['Ear swab', 'Brucella if chronic']), tone: 'teal' }, { text: bullets(['CK', 'Protozoal serology', 'CSF']), tone: 'teal' }],
+          ['Key metabolic', { text: bullets(['Thiamine (🐱 fish diet)', 'Metronidazole → STOP']), tone: 'teal' }, { text: 'Hypothyroid T4 (🐕 CN VII + vestibular)', tone: 'teal' }, { text: 'Spinal CSF protein (polyradiculo)', tone: 'teal' }],
+          ['Key hereditary/breed', { text: 'Abiotrophy/SCA → DNA test (breed)', tone: 'teal' }, { text: 'Idiopathic (excl. by elimination)', tone: 'teal' }, { text: bullets(['DM (GSD, older)', 'CCSM (Dobermann)']), tone: 'teal' }],
         ],
       },
       { kind: 'step', text: 'STEP 2 — CEREBELLAR BRANCH: MRI BRAIN + CSF' },
@@ -252,7 +253,7 @@ export const ataxiaDx: DxApproach = {
         headers: ['If', { text: 'Do', tone: 'teal' }],
         rows: [
           ['<strong>Peripheral signs</strong> — no CP deficits', { text: 'Otoscopy + CT bullae — fluid, thickening, lysis, polyp', tone: 'green' }],
-          ['<strong>Central signs</strong> — CP deficits · vertical nystagmus · ↓ mentation', { text: 'MRI brain + CSF', tone: 'danger' }],
+          [bullets(['CP deficits', 'Vertical nystagmus', '↓ Mentation'], { lead: '<strong>Central signs</strong>' }), { text: 'MRI brain + CSF', tone: 'danger' }],
           ['Dog with vestibular signs + CN VII palsy', { text: 'Hypothyroid T4', tone: 'teal' }],
           ['🐱 Young cat, stertor', { text: 'Retroflex the pharynx under GA for a nasopharyngeal polyp', tone: 'teal' }],
         ],

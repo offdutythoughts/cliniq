@@ -4,7 +4,7 @@
 // renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable, numBadge } from './shared/dxHelpers'
+import { stepTable, numBadge, bullets } from './shared/dxHelpers'
 
 export const coughingDx: DxApproach = {
   sign: 'coughing',
@@ -86,9 +86,9 @@ export const coughingDx: DxApproach = {
         dividers: true,
         headers: ['Observe', { text: 'What it means', tone: 'teal' }],
         rows: [
-          ['<strong>Rate · effort · posture · cyanosis</strong>', { text: 'A cyanotic patient is an emergency — <strong>stabilise first</strong>, before any further examination', tone: 'danger' }],
-          ['<strong>Inspiratory stridor</strong>', { text: 'Upper airway obstruction — laryngeal · tracheal · nasopharyngeal', tone: 'teal' }],
-          ['<strong>Expiratory effort / push</strong>', { text: 'Lower airway / dynamic collapse — bronchitis · asthma · intrathoracic collapse', tone: 'teal' }],
+          [bullets(['<strong>Rate</strong>', '<strong>Effort</strong>', '<strong>Posture</strong>', '<strong>Cyanosis</strong>']), { text: 'A cyanotic patient is an emergency — <strong>stabilise first</strong>, before any further examination', tone: 'danger' }],
+          ['<strong>Inspiratory stridor</strong>', { text: bullets(['Upper airway obstruction — laryngeal', 'Tracheal', 'Nasopharyngeal']), tone: 'teal' }],
+          ['<strong>Expiratory effort / push</strong>', { text: bullets(['Lower airway / dynamic collapse — bronchitis', 'Asthma', 'Intrathoracic collapse']), tone: 'teal' }],
           ['<strong>Paradoxical abdominal movement</strong>', { text: 'Diaphragmatic dysfunction or severe respiratory distress', tone: 'teal' }],
         ],
       }, '🩺'),
@@ -99,9 +99,9 @@ export const coughingDx: DxApproach = {
         headers: ['Listen', { text: 'Interpretation', tone: 'teal' }],
         rows: [
           ['<strong>Tracheal auscultation</strong>', { text: 'Referred upper airway sound loud over trachea vs lung fields = upper vs lower airway origin', tone: 'teal' }],
-          ['<strong>Dynamic tracheal collapse</strong>', { text: 'Induced by gentle tracheal palpation; confirmed on fluoroscopy (dynamic study)', tone: 'teal' }],
-          ['<strong>Lung fields</strong>', { text: 'Crackles (oedema · pneumonia · fibrosis) · wheezes (bronchoconstriction — asthma · bronchitis · collapse) · dull ventrally (effusion · mass · consolidation)', tone: 'teal' }],
-          ['<strong>Heart</strong>', { text: 'Grade + location + radiation of murmur · gallop rhythm · arrhythmia. A cough with a normal heart and no murmur makes cardiogenic cough unlikely', tone: 'teal' }],
+          ['<strong>Dynamic tracheal collapse</strong>', { text: bullets(['Induced by gentle tracheal palpation', 'Confirmed on fluoroscopy (dynamic study)']), tone: 'teal' }],
+          ['<strong>Lung fields</strong>', { text: bullets(['Crackles (oedema · pneumonia · fibrosis)', 'Wheezes (bronchoconstriction — asthma · bronchitis · collapse)', 'Dull ventrally (effusion · mass · consolidation)']), tone: 'teal' }],
+          ['<strong>Heart</strong>', { text: bullets(['Grade + location + radiation of murmur', 'Gallop rhythm', 'Arrhythmia. A cough with a normal heart and no murmur makes cardiogenic cough unlikely']), tone: 'teal' }],
           ['<strong>Upper airway</strong>', { text: 'Stertor / stridor → nasopharyngeal or laryngeal disease', tone: 'teal' }],
         ],
       }, '👂'),
@@ -112,12 +112,12 @@ export const coughingDx: DxApproach = {
         headers: ['Finding', { text: 'Points to', tone: 'teal' }],
         rows: [
           ['<strong>Pyrexia</strong>', { text: 'Pneumonia / infectious', tone: 'teal' }],
-          ['<strong>Weight loss / cachexia</strong>', { text: 'Neoplasia · chronic disease', tone: 'teal' }],
-          ['<strong>Jugular distension</strong>', { text: 'Right heart failure · cranial mediastinal mass', tone: 'teal' }],
-          ['<strong>Ascites</strong>', { text: 'Right-sided cardiac failure · hypoproteinaemia', tone: 'teal' }],
-          ['<strong>Peripheral oedema</strong>', { text: 'Hypoproteinaemia · severe cardiac disease', tone: 'teal' }],
-          ['<strong>Lymphadenopathy</strong>', { text: 'Neoplasia · fungal · infectious disease', tone: 'teal' }],
-          ['<strong>Pulse quality</strong>', { text: 'Weak / thready → poor cardiac output · bounding → early sepsis or patent ductus', tone: 'teal' }],
+          ['<strong>Weight loss / cachexia</strong>', { text: bullets(['Neoplasia', 'Chronic disease']), tone: 'teal' }],
+          ['<strong>Jugular distension</strong>', { text: bullets(['Right heart failure', 'Cranial mediastinal mass']), tone: 'teal' }],
+          ['<strong>Ascites</strong>', { text: bullets(['Right-sided cardiac failure', 'Hypoproteinaemia']), tone: 'teal' }],
+          ['<strong>Peripheral oedema</strong>', { text: bullets(['Hypoproteinaemia', 'Severe cardiac disease']), tone: 'teal' }],
+          ['<strong>Lymphadenopathy</strong>', { text: bullets(['Neoplasia', 'Fungal', 'Infectious disease']), tone: 'teal' }],
+          ['<strong>Pulse quality</strong>', { text: bullets(['Weak / thready → poor cardiac output', 'Bounding → early sepsis or patent ductus']), tone: 'teal' }],
         ],
       }, '🔍'),
 
@@ -127,9 +127,9 @@ export const coughingDx: DxApproach = {
         headers: ['Species finding', { text: 'Interpretation', tone: 'teal' }],
         rows: [
           ['<strong>🐱 Coughing cat</strong>', { text: 'Almost never cardiac — a coughing cat = airway / lung disease', tone: 'teal' }],
-          ['<strong>🐱 Diaphragmatic breathing at rest</strong>', { text: 'Pleural effusion — effusive FIP · chylothorax · cardiac (HCM effusion)', tone: 'teal' }],
+          ['<strong>🐱 Diaphragmatic breathing at rest</strong>', { text: bullets(['Pleural effusion — effusive FIP', 'Chylothorax', 'Cardiac (HCM effusion)']), tone: 'teal' }],
           ['<strong>🐱 Expiratory push</strong>', { text: 'Bronchoconstriction — asthma / bronchitis', tone: 'teal' }],
-          ['<strong>🐕 General</strong>', { text: 'Both cardiac and respiratory common. A cough with no murmur and no cardiomegaly on CXR → almost never cardiac', tone: 'teal' }],
+          ['<strong>🐕 General</strong>', { text: bullets(['Both cardiac and respiratory common', 'A cough with no murmur and no cardiomegaly on CXR → almost never cardiac']), tone: 'teal' }],
           ['<strong>🐕 Cavalier, grade ≥3/6 MVD + enlarged LA</strong>', { text: 'Cardiogenic cough likely', tone: 'teal' }],
           ['<strong>🐕 Toy breed, honk on leash</strong>', { text: 'Tracheal collapse', tone: 'teal' }],
         ],
@@ -148,7 +148,7 @@ export const coughingDx: DxApproach = {
         dividers: true,
         headers: ['Species', { text: 'Key rule', tone: 'teal' }],
         rows: [
-          ['<strong>🐱 Cat</strong>', { text: 'A coughing cat → primary respiratory cause (asthma / bronchitis is #1). Cardiac disease in cats causes dyspnoea and pleural effusion, <strong>not cough</strong>', tone: 'teal' }],
+          ['<strong>🐱 Cat</strong>', { text: bullets(['A coughing cat → primary respiratory cause (asthma / bronchitis is #1)', 'Cardiac disease in cats causes dyspnoea and pleural effusion, <strong>not cough</strong>']), tone: 'teal' }],
           ['<strong>🐕 Dog</strong>', { text: 'Both cardiac and respiratory causes are common', tone: 'teal' }],
         ],
       },
@@ -158,7 +158,7 @@ export const coughingDx: DxApproach = {
         dividers: true,
         headers: ['Test', { text: 'What it rules in / out', tone: 'teal' }],
         rows: [
-          [`${numBadge(1)}<strong>CBC + biochemistry</strong>`, { text: 'Leukocytosis / left shift (pneumonia · pyothorax) · eosinophilia (eosinophilic bronchopneumopathy · parasites · heartworm) · anaemia (chronic lung disease)', tone: 'teal' }],
+          [`${numBadge(1)}<strong>CBC + biochemistry</strong>`, { text: bullets(['Leukocytosis / left shift (pneumonia · pyothorax)', 'Eosinophilia (eosinophilic bronchopneumopathy · parasites · heartworm)', 'Anaemia (chronic lung disease)']), tone: 'teal' }],
           [`${numBadge(2)}<strong>Blood pressure</strong>`, { text: 'Hypertensive pulmonary disease', tone: 'teal' }],
           [`${numBadge(3)}<strong>🐱 FIV / FeLV</strong>`, { text: 'If status not known', tone: 'teal' }],
           [`${numBadge(4)}<strong>Faecal Baermann</strong>`, { text: 'Lungworm larvae (<em>Angiostrongylus</em>, <em>Crenosoma</em>) — young outdoor dogs', tone: 'teal' }],
@@ -170,12 +170,12 @@ export const coughingDx: DxApproach = {
         dividers: true,
         headers: ['Assess', { text: 'Suggests', tone: 'teal' }],
         rows: [
-          ['<strong>Bronchial pattern</strong>', { text: 'Bronchitis · asthma · collapse', tone: 'teal' }],
-          ['<strong>Alveolar / interstitial pattern</strong>', { text: 'Pneumonia · oedema · neoplasia', tone: 'teal' }],
-          ['<strong>Vascular pattern</strong>', { text: 'Heartworm · PTE', tone: 'teal' }],
-          ['<strong>Pleural effusion · masses</strong>', { text: 'Effusion · primary or metastatic mass', tone: 'teal' }],
+          ['<strong>Bronchial pattern</strong>', { text: bullets(['Bronchitis', 'Asthma', 'Collapse']), tone: 'teal' }],
+          ['<strong>Alveolar / interstitial pattern</strong>', { text: bullets(['Pneumonia', 'Oedema', 'Neoplasia']), tone: 'teal' }],
+          ['<strong>Vascular pattern</strong>', { text: bullets(['Heartworm', 'PTE']), tone: 'teal' }],
+          [bullets(['<strong>Pleural effusion</strong>', '<strong>Masses</strong>']), { text: bullets(['Effusion', 'Primary or metastatic mass']), tone: 'teal' }],
           ['<strong>Tracheal diameter</strong>', { text: 'Collapse — best seen on the inspiratory lateral', tone: 'teal' }],
-          ['<strong>Cardiac size + LA enlargement</strong>', { text: 'Caudal displacement of trachea · carinal angle &gt;70°', tone: 'teal' }],
+          ['<strong>Cardiac size + LA enlargement</strong>', { text: bullets(['Caudal displacement of trachea', 'Carinal angle &gt;70°']), tone: 'teal' }],
         ],
       }, '📊'),
       { kind: 'note', html: `The single most important diagnostic test for coughing.` },
@@ -197,8 +197,8 @@ export const coughingDx: DxApproach = {
         dividers: true,
         headers: ['', { text: 'Detail', tone: 'teal' }],
         rows: [
-          ['<strong>Indicated when</strong>', { text: 'CXR abnormal without a clear diagnosis · chronic cough unresponsive to empirical therapy · suspected eosinophilic bronchopneumopathy · fungal / parasitic bronchitis · neoplastic airway disease', tone: 'teal' }],
-          ['<strong>BAL cytology</strong>', { text: 'Eosinophils → EBP / feline asthma / parasites · neutrophils → bacterial (submit C&amp;S) or chronic bronchitis · macrophages dominant → chronic disease', tone: 'teal' }],
+          ['<strong>Indicated when</strong>', { text: bullets(['CXR abnormal without a clear diagnosis', 'Chronic cough unresponsive to empirical therapy', 'Suspected eosinophilic bronchopneumopathy', 'Fungal / parasitic bronchitis', 'Neoplastic airway disease']), tone: 'teal' }],
+          ['<strong>BAL cytology</strong>', { text: bullets(['Eosinophils → EBP / feline asthma / parasites', 'Neutrophils → bacterial (submit C&amp;S) or chronic bronchitis', 'Macrophages dominant → chronic disease']), tone: 'teal' }],
           ['<strong>PCR</strong>', { text: 'CIRD agents (<em>B. bronchiseptica</em> · CIV · CAV-2) on tracheal wash if kennels exposure', tone: 'teal' }],
         ],
       }, '🔬'),
@@ -208,7 +208,7 @@ export const coughingDx: DxApproach = {
         dividers: true,
         headers: ['', { text: 'Detail', tone: 'teal' }],
         rows: [
-          ['<strong>Indicated for</strong>', { text: 'Significant murmur + CXR cardiomegaly · suspected pulmonary hypertension (paradoxical septal motion · RA/RV dilation · tricuspid regurgitation jet &gt;3 m/s) · unexplained right-sided signs', tone: 'teal' }],
+          ['<strong>Indicated for</strong>', { text: bullets(['Significant murmur + CXR cardiomegaly', 'Suspected pulmonary hypertension (paradoxical septal motion · RA/RV dilation · tricuspid regurgitation jet &gt;3 m/s)', 'Unexplained right-sided signs']), tone: 'teal' }],
           ['<strong>🐕 LA:Ao &gt;1.6</strong>', { text: 'Confirms LA enlargement consistent with cardiogenic cough in MMVD', tone: 'teal' }],
           ['<strong>🐱 Cats</strong>', { text: 'Always echo before concluding asthma — HCM may cause cough indirectly via pleural effusion', tone: 'teal' }],
         ],

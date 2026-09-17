@@ -4,6 +4,7 @@
 // renderDxApproach.
 
 import type { DxApproach } from '../dxTypes'
+import { bullets } from './shared/dxHelpers'
 
 export const abnormalPupilDx: DxApproach = {
   sign: 'abnormal-pupil',
@@ -25,17 +26,17 @@ export const abnormalPupilDx: DxApproach = {
         rows: [
           [
             '<strong>👁️ Visible pupil change</strong>',
-            'Anisocoria · dyscoria · a persistently large or small pupil; owner notices asymmetry or a fixed pupil',
+            bullets(['Anisocoria', 'Dyscoria', 'A persistently large or small pupil; owner notices asymmetry or a fixed pupil']),
             { text: 'Iris / lens, or EFFERENT arm (CN III · sympathetic) — vision usually preserved', tone: 'teal' },
           ],
           [
             '<strong>👀 Vision change</strong>',
-            'Bumping into objects · hesitant in new places · sudden vs gradual onset',
-            { text: 'AFFERENT arm — retina, optic nerve or cortex; usually the chief complaint', tone: 'teal' },
+            bullets(['Bumping into objects', 'Hesitant in new places', 'Sudden vs gradual onset']),
+            { text: bullets(['AFFERENT arm — retina, optic nerve or cortex', 'Usually the chief complaint']), tone: 'teal' },
           ],
           [
             '<strong>🧠 Systemic / neuro signs</strong>',
-            'Mentation change · ataxia · CN deficits · megaoesophagus · PU/PD · autonomic signs',
+            bullets(['Mentation change', 'Ataxia', 'CN deficits', 'Megaoesophagus', 'PU/PD', 'Autonomic signs']),
             { text: 'Central or systemic — intracranial disease, dysautonomia, SARDS / HAC', tone: 'teal' },
           ],
         ],
@@ -57,7 +58,7 @@ export const abnormalPupilDx: DxApproach = {
           ],
           [
             { text: '<strong>Acute</strong><br>days', tone: 'warning' },
-            { text: 'BP + fundus + chromatic PLR; MRI/CSF if central', tone: 'warning' },
+            { text: bullets(['BP + fundus + chromatic PLR', 'MRI/CSF if central']), tone: 'warning' },
             "Optic neuritis · MUA · retinal detachment · SARDS · infectious uveitis · idiopathic Horner's (Golden Retriever)",
           ],
           [
@@ -86,13 +87,13 @@ export const abnormalPupilDx: DxApproach = {
           ],
           [
             'Think',
-            { text: "Horner's · uveitis · glaucoma · trauma · lens luxation · iris atrophy", tone: 'info' },
-            { text: 'SARDS · optic neuritis · dysautonomia · central blindness', tone: 'violet' },
+            { text: bullets(['Horner\'s', 'Uveitis', 'Glaucoma', 'Trauma', 'Lens luxation', 'Iris atrophy']), tone: 'info' },
+            { text: bullets(['SARDS', 'Optic neuritis', 'Dysautonomia', 'Central blindness']), tone: 'violet' },
           ],
           [
             'Also ask',
             { text: 'Which eye is the abnormal one? (light vs dark room rule)', tone: 'info' },
-            { text: 'Any drug? atropine · opioids · ketamine · sympathomimetics', tone: 'violet' },
+            { text: bullets(['Any drug? atropine', 'Opioids', 'Ketamine', 'Sympathomimetics']), tone: 'violet' },
           ],
         ],
       },
@@ -110,20 +111,20 @@ export const abnormalPupilDx: DxApproach = {
         headers: ['Agent', { text: 'Clue / what to ask', tone: 'teal' }],
         rows: [
           { section: 'Drugs → mydriasis', tone: 'violet' },
-          ['Topical <strong>atropine</strong> · tropicamide · phenylephrine · cyclopentolate', 'Any recent eye exam or drops? Tropicamide wears off in hours, atropine in days'],
-          ['Systemic <strong>atropine</strong> (premed) · glycopyrrolate', "<strong>Bilateral</strong> — check today's anaesthetic record"],
+          [bullets(['Topical <strong>atropine</strong>', 'Tropicamide', 'Phenylephrine', 'Cyclopentolate']), 'Any recent eye exam or drops? Tropicamide wears off in hours, atropine in days'],
+          [bullets(['Systemic <strong>atropine</strong> (premed)', 'Glycopyrrolate']), "<strong>Bilateral</strong> — check today's anaesthetic record"],
           ['<strong>Opioids</strong> — 🐱 cat', '<strong>Paradoxical</strong> — the opposite of the dog; see the miosis band below'],
-          ['Ketamine · amphetamines · cocaine', 'Dissociative / sympathomimetic'],
-          ['Tricyclic antidepressants · antihistamines', "Anticholinergic — ask what is in the owner's medicine cabinet"],
+          [bullets(['Ketamine', 'Amphetamines', 'Cocaine']), 'Dissociative / sympathomimetic'],
+          [bullets(['Tricyclic antidepressants', 'Antihistamines']), "Anticholinergic — ask what is in the owner's medicine cabinet"],
           { section: 'Drugs → miosis', tone: 'info' },
           ['<strong>Opioids</strong> — 🐕 dog (morphine · fentanyl)', 'Species-split: the same drugs dilate the cat'],
-          ['Topical pilocarpine · demecarium', "Glaucoma / KCS therapy — ask before calling it Horner's"],
+          [bullets(['Topical pilocarpine', 'Demecarium']), "Glaucoma / KCS therapy — ask before calling it Horner's"],
           ['Latanoprost', 'Also <strong>↓ IOP</strong> — prostaglandin analogue, ineffective in cats (no FP receptors)'],
           { section: 'Toxins → mydriasis', tone: 'violet' },
           ['Jimson weed / <em>Datura</em> (atropine)', 'Outdoor or rural plant access'],
-          ['Strychnine', 'Tonic convulsions · opisthotonus · hypersensitive to touch and sound'],
+          ['Strychnine', bullets(['Tonic convulsions', 'Opisthotonus', 'Hypersensitive to touch and sound'])],
           { section: 'Toxins → miosis', tone: 'info' },
-          ['Organophosphates · carbamates', '<strong>SLUDGE</strong> — salivation · lacrimation · urination · defecation · GI upset · emesis'],
+          [bullets(['Organophosphates', 'Carbamates']), bullets(['Salivation', 'Lacrimation', 'Urination', 'Defecation', 'GI upset', 'Emesis'], { lead: '<strong>SLUDGE</strong>' })],
           { section: 'Toxins → no pupil sign' },
           ['Lilies — 🐱', 'Causes AKI, not pupillary change — do not pin anisocoria on it'],
           { section: 'Trauma → mydriasis', tone: 'danger' },
@@ -149,21 +150,21 @@ export const abnormalPupilDx: DxApproach = {
           [
             'Diabetic dog, cataract progressing fast — 🐕',
             { text: 'Lens-induced uveitis → posterior synechia → distorted pupil', tone: 'teal' },
-            'Slit-lamp: aqueous flare + synechiae · IOP',
+            bullets(['Slit-lamp: aqueous flare + synechiae', 'IOP']),
           ],
           [
             'FIV / FeLV / FIP positive — 🐱',
             { text: 'Chronic uveitis → posterior synechiae → dyscoria', tone: 'teal' },
-            'Retroviral status · full uveitis work-up',
+            bullets(['Retroviral status', 'Full uveitis work-up']),
           ],
           [
-            'Vomiting · regurgitation · dry mucous membranes · urinary retention ± megaoesophagus',
-            { text: "<strong>Dysautonomia</strong> — bilateral mydriasis · ↓ tear production · ± Horner's-like signs · multi-system autonomic failure", tone: 'teal' },
-            'STT · thoracic radiographs. 🐕 rural / outdoor, midwest USA endemic',
+            bullets(['Vomiting', 'Regurgitation', 'Dry mucous membranes', 'Urinary retention ± megaoesophagus']),
+            { text: bullets(['Bilateral mydriasis', '↓ Tear production', '± Horner\'s-like signs', 'Multi-system autonomic failure'], { lead: '<strong>Dysautonomia</strong>' }), tone: 'teal' },
+            bullets(['STT', 'Thoracic radiographs. 🐕 rural / outdoor, midwest USA endemic']),
           ],
           [
-            'Seizures · behavioural change · circling · hemiparesis + anisocoria',
-            { text: 'Intracranial mass · inflammatory CNS disease · CVA', tone: 'danger' },
+            bullets(['Seizures', 'Behavioural change', 'Circling', 'Hemiparesis + anisocoria']),
+            { text: bullets(['Intracranial mass', 'Inflammatory CNS disease', 'CVA']), tone: 'danger' },
             { text: '<strong>MRI + CSF</strong>', tone: 'danger' },
           ],
           [
@@ -259,8 +260,8 @@ export const abnormalPupilDx: DxApproach = {
           ],
           [
             '<strong>Iris atrophy</strong>',
-            { text: 'Very common in senior small breeds — moth-eaten ragged margin, transillumination defects; masquerades as neurological mydriasis', tone: 'info' },
-            { text: 'Uncommon and usually secondary (chronic uveitis, glaucoma); blue irises are thinner and more prone — always retroilluminate before calling it primary degenerative', tone: 'warning' },
+            { text: bullets(['Very common in senior small breeds — moth-eaten ragged margin, transillumination defects', 'Masquerades as neurological mydriasis']), tone: 'info' },
+            { text: bullets(['Uncommon and usually secondary (chronic uveitis, glaucoma)', 'Blue irises are thinner and more prone — always retroilluminate before calling it primary degenerative']), tone: 'warning' },
           ],
         ],
       },
@@ -288,8 +289,8 @@ export const abnormalPupilDx: DxApproach = {
           ],
           [
             '<strong>Causes</strong>',
-            { text: 'CN III · iris atrophy · pharmacological mydriasis · glaucoma · sympathetic discharge', tone: 'violet' },
-            { text: "Horner's (sympathetic denervation) · uveitis · pharmacological miotic · posterior synechiae", tone: 'info' },
+            { text: bullets(['CN III', 'Iris atrophy', 'Pharmacological mydriasis', 'Glaucoma', 'Sympathetic discharge']), tone: 'violet' },
+            { text: bullets(['Horner\'s (sympathetic denervation)', 'Uveitis', 'Pharmacological miotic', 'Posterior synechiae']), tone: 'info' },
           ],
         ],
       },
@@ -319,11 +320,11 @@ export const abnormalPupilDx: DxApproach = {
         dividers: true,
         headers: ['Lesion site', 'Pupil R at rest', 'Pupil L at rest', 'Direct PLR', 'Indirect PLR'],
         rows: [
-          ['<strong>1.</strong> Pre-chiasmal (R)', { text: 'Dilated', tone: 'violet' }, 'Normal', 'R: absent', 'R→L: present · L→R: absent'],
+          ['<strong>1.</strong> Pre-chiasmal (R)', { text: 'Dilated', tone: 'violet' }, 'Normal', 'R: absent', bullets(['R→L: present', 'L→R: absent'])],
           ['<strong>2.</strong> Focal optic tract (R)', 'Normal', 'Normal', { text: 'Both present', tone: 'green' }, { text: 'Both present', tone: 'green' }],
           ['<strong>3.</strong> Chiasmal', { text: 'Dilated', tone: 'violet' }, { text: 'Dilated', tone: 'violet' }, { text: 'Both absent', tone: 'danger' }, { text: 'Both absent', tone: 'danger' }],
-          ['<strong>4.</strong> CN III (L)', 'Normal', { text: 'Dilated', tone: 'violet' }, 'R: present · L: absent', 'R→L: absent · L→R: present'],
-          ['<strong>5.</strong> Parasympathetic nucleus of CN III (R)', { text: 'Dilated', tone: 'violet' }, 'Normal', 'R: absent · L: present', 'R→L: present · L→R: absent'],
+          ['<strong>4.</strong> CN III (L)', 'Normal', { text: 'Dilated', tone: 'violet' }, bullets(['R: present', 'L: absent']), bullets(['R→L: absent', 'L→R: present'])],
+          ['<strong>5.</strong> Parasympathetic nucleus of CN III (R)', { text: 'Dilated', tone: 'violet' }, 'Normal', bullets(['R: absent', 'L: present']), bullets(['R→L: present', 'L→R: absent'])],
         ],
       },
       {
@@ -338,8 +339,8 @@ export const abnormalPupilDx: DxApproach = {
         dividers: true,
         headers: ['Reflex', 'Pathway', { text: 'What it tells you', tone: 'teal' }],
         rows: [
-          ['<strong>Dazzle</strong>', 'Subcortical — CN II → colliculus → CN VII', { text: 'Present even in a cortically blind animal. Absent = retina / optic nerve / midbrain', tone: 'teal' }],
-          ['<strong>Menace</strong>', 'Cortical — CN II → cortex → CN VII', { text: 'Tests the vision pathway. Not developed until <strong>10–12 weeks</strong> of age', tone: 'teal' }],
+          ['<strong>Dazzle</strong>', 'Subcortical — CN II → colliculus → CN VII', { text: bullets(['Present even in a cortically blind animal', 'Absent = retina / optic nerve / midbrain']), tone: 'teal' }],
+          ['<strong>Menace</strong>', 'Cortical — CN II → cortex → CN VII', { text: bullets(['Tests the vision pathway', 'Not developed until <strong>10–12 weeks</strong> of age']), tone: 'teal' }],
         ],
       },
       {
@@ -351,7 +352,7 @@ export const abnormalPupilDx: DxApproach = {
         rows: [
           [{ text: 'Absent', tone: 'danger' }, { text: 'Intact', tone: 'green' }, { text: 'Intact', tone: 'green' }, { text: '<strong>Cortical blindness</strong> — forebrain (MUA · neoplasia · hepatic or hypertensive encephalopathy)', tone: 'teal' }],
           [{ text: 'Absent', tone: 'danger' }, { text: 'Intact', tone: 'green' }, { text: 'Absent in the affected eye', tone: 'danger' }, { text: '<strong>Optic nerve / chiasmal lesion</strong>', tone: 'teal' }],
-          [{ text: 'Absent', tone: 'danger' }, { text: 'Absent', tone: 'danger' }, { text: 'Absent', tone: 'danger' }, { text: '<strong>Retinal disease</strong> — SARDS · retinal detachment · end-stage PRA — or a pre-geniculate lesion', tone: 'teal' }],
+          [{ text: 'Absent', tone: 'danger' }, { text: 'Absent', tone: 'danger' }, { text: 'Absent', tone: 'danger' }, { text: bullets(['SARDS', 'Retinal detachment', 'End-stage PRA — or a pre-geniculate lesion'], { lead: '<strong>Retinal disease</strong>' }), tone: 'teal' }],
           [{ text: 'Absent', tone: 'danger' }, { text: 'Absent', tone: 'danger' }, { text: 'Present with <strong>BLUE light only</strong>', tone: 'warning' }, { text: '<strong>SARDS</strong> — intrinsically photosensitive retinal ganglion cells are preserved', tone: 'teal' }],
         ],
       },
@@ -363,7 +364,7 @@ export const abnormalPupilDx: DxApproach = {
           { section: 'Pupil shape · iris structure' },
           { cues: ['Dyscoria — D-shape or irregular pupil'], dx: 'Posterior synechiae · iris atrophy · congenital · iris coloboma', tone: 'warning' },
           { cues: ['Ragged margin that transilluminates'], dx: 'Senile iris atrophy — mistaken for true mydriasis', tone: 'info' },
-          { cues: ['Iris-to-iris · iris-to-lens · iris-to-cornea strand'], dx: 'Persistent pupillary membranes (PPMs)', tone: 'violet' },
+          { cues: [bullets(['Iris-to-iris', 'Iris-to-lens', 'Iris-to-cornea strand'])], dx: 'Persistent pupillary membranes (PPMs)', tone: 'violet' },
           { section: 'Iris masses' },
           { cues: ['Round free-floating pigmented sphere in the AC'], dx: 'Uveal cyst — transilluminates · benign · Golden Retriever', tone: 'green' },
           { cues: ['Solid pigmented iris mass'], dx: 'Iris melanoma · diffuse iris melanoma (🐱)', tone: 'danger', emphasis: true },
@@ -389,17 +390,17 @@ export const abnormalPupilDx: DxApproach = {
         rows: [
           [
             { text: '<strong>1st</strong> central<br><em>brainstem · cervical cord to T1</em>', tone: 'danger' },
-            { text: 'Rare. <strong>Concurrent neurological deficits</strong> — ataxia, paresis, hemineglect, vestibular signs. Cervical IVDD · fibrocartilaginous embolism · CVA · neoplasia', tone: 'teal' },
+            { text: bullets(['Rare. <strong>Concurrent neurological deficits</strong> — ataxia, paresis, hemineglect, vestibular signs. Cervical IVDD', 'Fibrocartilaginous embolism', 'CVA', 'Neoplasia']), tone: 'teal' },
             { text: 'MRI + CSF', tone: 'danger' },
           ],
           [
             { text: '<strong>2nd</strong> preganglionic<br><em>T1–T3 → cervical sympathetic chain</em>', tone: 'warning' },
-            { text: 'Look in the <strong>chest and neck</strong> — mediastinal mass, thymoma, lymphoma; brachial plexus avulsion; cervical neoplasia; recent head or neck surgery', tone: 'teal' },
+            { text: bullets(['Look in the <strong>chest and neck</strong> — mediastinal mass, thymoma, lymphoma', 'Brachial plexus avulsion', 'Cervical neoplasia', 'Recent head or neck surgery']), tone: 'teal' },
             { text: 'Thoracic radiographs ± CT', tone: 'warning' },
           ],
           [
             { text: '<strong>3rd</strong> postganglionic<br><em>after the cranial cervical ganglion</em>', tone: 'green' },
-            { text: 'Middle / inner ear disease · retrobulbar mass · <strong>idiopathic</strong> (most common — Golden Retriever; resolves spontaneously over weeks to months, median ~15 weeks, range 11–20, up to 6 months)', tone: 'teal' },
+            { text: bullets(['Middle / inner ear disease', 'Retrobulbar mass', '<strong>Idiopathic</strong> (most common — Golden Retriever; resolves spontaneously over weeks to months, median ~15 weeks, range 11–20, up to 6 months)']), tone: 'teal' },
             { text: 'Otoscopy + CT/MRI bullae and orbit', tone: 'green' },
           ],
         ],
@@ -419,7 +420,7 @@ export const abnormalPupilDx: DxApproach = {
         rows: [
           [
             { text: '<strong>3rd</strong> postganglionic', tone: 'green' },
-            { text: '<strong>Dilates in ≤20 min</strong> — denervation hypersensitivity; the normal eye does not', tone: 'green' },
+            { text: bullets(['Denervation hypersensitivity', 'The normal eye does not'], { lead: '<strong>Dilates in ≤20 min</strong>' }), tone: 'green' },
             { text: 'Not needed', dim: true },
           ],
           [
@@ -446,12 +447,12 @@ export const abnormalPupilDx: DxApproach = {
         dividers: true,
         headers: ['Document', 'What to record', { text: 'Why it matters', tone: 'teal' }],
         rows: [
-          ['<strong>Mentation · postural reactions · gait</strong>', 'Forebrain function, any UMN sign', { text: 'Places the lesion centrally', tone: 'teal' }],
-          ['<strong>CN II–VII</strong>', 'Palpebral · corneal · facial sensation; CN III/IV/VI eye movement', { text: 'Ophthalmoparesis suggests a CN III lesion', tone: 'teal' }],
-          ['<strong>CN VIII</strong>', 'Head tilt · nystagmus — name the fast phase', { text: 'Anisocoria + vestibular signs = central rostral brainstem until proven otherwise. Fast phase beats away from the lesion if peripheral, either way if central', tone: 'teal' }],
+          [bullets(['<strong>Mentation</strong>', '<strong>Postural reactions</strong>', '<strong>Gait</strong>']), 'Forebrain function, any UMN sign', { text: 'Places the lesion centrally', tone: 'teal' }],
+          ['<strong>CN II–VII</strong>', bullets(['Palpebral', 'Corneal', 'Facial sensation; CN III/IV/VI eye movement']), { text: 'Ophthalmoparesis suggests a CN III lesion', tone: 'teal' }],
+          ['<strong>CN VIII</strong>', bullets(['Head tilt', 'Nystagmus — name the fast phase']), { text: bullets(['Anisocoria + vestibular signs = central rostral brainstem until proven otherwise', 'Fast phase beats away from the lesion if peripheral, either way if central']), tone: 'teal' }],
           ['<strong>Facial symmetry</strong>', 'Facial muscles, ear and eyelid position', { text: "A CN VII deficit alongside 3rd-order Horner's points to the middle ear", tone: 'teal' }],
-          ['<strong>Autonomic signs</strong>', 'Dry mucous membranes · ↓ tear production · bradycardia · urinary retention · megaoesophagus', { text: '<strong>Dysautonomia</strong>', tone: 'teal' }],
-          ['<strong>Trauma signs</strong>', 'External wounds · scleral haemorrhage · fundic haemorrhage', { text: 'Head trauma with anisocoria = <strong>rising ICP</strong> until proven otherwise', tone: 'danger' }],
+          ['<strong>Autonomic signs</strong>', bullets(['Dry mucous membranes', '↓ Tear production', 'Bradycardia', 'Urinary retention', 'Megaoesophagus']), { text: '<strong>Dysautonomia</strong>', tone: 'teal' }],
+          ['<strong>Trauma signs</strong>', bullets(['External wounds', 'Scleral haemorrhage', 'Fundic haemorrhage']), { text: 'Head trauma with anisocoria = <strong>rising ICP</strong> until proven otherwise', tone: 'danger' }],
         ],
       },
     ],
@@ -470,7 +471,7 @@ export const abnormalPupilDx: DxApproach = {
         rows: [
           ['<strong>1. Tonometry</strong><br>rebound preferred', { text: 'Mid-fixed mydriasis + IOP <strong>&gt;25 mmHg</strong>', tone: 'danger' }, 'Acute glaucoma → refer <strong>same day</strong>'],
           ['<strong>2. Slit-lamp / focal light</strong>', { text: 'Lens sitting in the anterior chamber', tone: 'danger' }, 'Anterior lens luxation → emergency lensectomy referral'],
-          ['<strong>3. Mentation + neuro exam</strong>', { text: 'Anisocoria + obtundation · hemiparesis · ataxia · CN deficits', tone: 'danger' }, 'Central emergency → MRI within hours if possible'],
+          ['<strong>3. Mentation + neuro exam</strong>', { text: bullets(['Anisocoria + obtundation', 'Hemiparesis', 'Ataxia', 'CN deficits']), tone: 'danger' }, 'Central emergency → MRI within hours if possible'],
           ['<strong>4. Trauma evaluation</strong>', { text: 'Head trauma + ipsilateral mydriasis', tone: 'danger' }, 'Rising ICP / CN III herniation → <strong>mannitol 0.5–1 g/kg IV slow</strong> + emergent imaging'],
           ['<strong>5. Drug / toxin history</strong>', { text: 'Any mydriatic or miotic exposure', tone: 'danger' }, 'Exclude pharmacological causes before a lengthy work-up'],
         ],
@@ -488,7 +489,7 @@ export const abnormalPupilDx: DxApproach = {
           ['<strong>Fluorescein stain</strong>', 'Corneal ulcer', { text: 'Reflex miosis from its uveitis component — rule out before any topical steroid', tone: 'teal' }],
           ['<strong>Tonometry</strong>', '↓ IOP + miosis + aqueous flare', { text: 'Anterior uveitis', tone: 'teal' }],
           ['<strong>Tonometry</strong>', '↑ IOP + mid-mydriasis', { text: 'Glaucoma', tone: 'teal' }],
-          ['<strong>Slit-lamp</strong>', 'Aqueous flare · KP · synechiae · lens position · iris detail · fibrin in the AC', { text: 'Localises within the anterior segment', tone: 'teal' }],
+          ['<strong>Slit-lamp</strong>', bullets(['Aqueous flare', 'KP', 'Synechiae', 'Lens position', 'Iris detail', 'Fibrin in the AC']), { text: 'Localises within the anterior segment', tone: 'teal' }],
           ['<strong>Mydriatic challenge</strong><br>tropicamide 1%', 'Fails to dilate, or dilates only partially, in an otherwise normal eye', { text: 'Posterior synechiae — a chronic uveitis sequela', tone: 'teal' }],
         ],
       },
@@ -500,10 +501,10 @@ export const abnormalPupilDx: DxApproach = {
         dividers: true,
         headers: ['Test', 'Protocol', { text: 'Interpretation', tone: 'teal' }],
         rows: [
-          ["<strong>1% phenylephrine</strong><br>Horner's localisation", 'Both eyes, time to dilation — always run the contralateral control (full protocol in Exam step 5)', { text: 'Rapid ≤20 min = <strong>3rd order</strong> · intermediate = <strong>2nd</strong> · slow = <strong>1st</strong>', tone: 'teal' }],
-          ['<strong>Dilute pilocarpine</strong><br>0.05–0.1%', 'Watch for constriction within 30 min', { text: 'Constricts = <strong>parasympathetic denervation</strong> (dysautonomia, CN III parasympathetic nucleus lesion). A normal pupil does not constrict', tone: 'teal' }],
+          ["<strong>1% phenylephrine</strong><br>Horner's localisation", 'Both eyes, time to dilation — always run the contralateral control (full protocol in Exam step 5)', { text: bullets(['Rapid ≤20 min = <strong>3rd order</strong>', 'Intermediate = <strong>2nd</strong>', 'Slow = <strong>1st</strong>']), tone: 'teal' }],
+          ['<strong>Dilute pilocarpine</strong><br>0.05–0.1%', 'Watch for constriction within 30 min', { text: bullets(['Constricts = <strong>parasympathetic denervation</strong> (dysautonomia, CN III parasympathetic nucleus lesion)', 'A normal pupil does not constrict']), tone: 'teal' }],
           ['<strong>Atropine response</strong>', '0.04 mg/kg SC, monitor heart rate', { text: '<strong>No rise in HR</strong> = failed parasympathetic blockade — supports dysautonomia', tone: 'teal' }],
-          ['<strong>Cocaine 10%</strong> · <strong>apraclonidine 0.5%</strong>', "The classical human Horner's confirmation tests", { text: 'Limited availability and not routine in veterinary practice — phenylephrine is the practical choice', dim: true }],
+          [bullets(['<strong>Cocaine 10%</strong>', '<strong>Apraclonidine 0.5%</strong>']), "The classical human Horner's confirmation tests", { text: 'Limited availability and not routine in veterinary practice — phenylephrine is the practical choice', dim: true }],
         ],
       },
       {
@@ -552,14 +553,14 @@ export const abnormalPupilDx: DxApproach = {
         dividers: true,
         headers: ['Scenario', { text: 'Work-up', tone: 'teal' }],
         rows: [
-          ["<strong>2nd-order Horner's</strong>", { text: 'Thoracic radiographs ± thoracic CT (mediastinal mass · lymphoma · thymoma · lung mass at the thoracic inlet) · cervical exam · brachial plexus palpation · ± CT/MRI neck for cervical neoplasia', tone: 'teal' }],
+          ["<strong>2nd-order Horner's</strong>", { text: bullets(['Thoracic radiographs ± thoracic CT (mediastinal mass · lymphoma · thymoma · lung mass at the thoracic inlet)', 'Cervical exam', 'Brachial plexus palpation', '± CT/MRI neck for cervical neoplasia']), tone: 'teal' }],
           ["<strong>3rd-order Horner's</strong>", { text: 'Otoscopy + CT/MRI of the bullae and retrobulbar space — otitis media/interna, polyp (🐱), retrobulbar mass', tone: 'teal' }],
           ["<strong>Central anisocoria</strong><br>1st-order Horner's · CN III lesion · parasympathetic nucleus · cortical blindness", { text: 'MRI brain + CSF analysis — MUA, neoplasia, CVA, infectious encephalitis', tone: 'teal' }],
-          ['<strong>Cataract + posterior synechiae</strong>', { text: 'Ocular ultrasound for posterior segment integrity before phacoemulsification referral; recheck IOP repeatedly', tone: 'teal' }],
-          ['<strong>Hyphaema / retinal detachment + mydriasis</strong>', { text: 'Blood pressure (calm, × 3) · CBC · biochemistry · urinalysis · coagulation · FeLV/FIV (🐱) · endocrine work-up (HAC, hyperthyroid)', tone: 'teal' }],
-          ['<strong>SARDS</strong>', { text: 'ACTH stim / LDDST — the HAC look-alike phenotype is common · urinalysis · full biochemistry. Counsel on irreversibility, but rule out treatable mimics first', tone: 'teal' }],
-          ['<strong>Dysautonomia</strong>', { text: 'Chest radiographs (megaoesophagus) · abdominal radiographs (atonic bladder, megacolon) · pilocarpine + atropine tests · Schirmer · full autonomic battery', tone: 'teal' }],
-          ['<strong>Infectious uveitis + posterior synechiae</strong>', { text: 'Toxoplasma IgG/IgM · FeLV/FIV/FCoV titre · tick-borne panel (region-dependent) · fungal serology · BP', tone: 'teal' }],
+          ['<strong>Cataract + posterior synechiae</strong>', { text: bullets(['Ocular ultrasound for posterior segment integrity before phacoemulsification referral', 'Recheck IOP repeatedly']), tone: 'teal' }],
+          ['<strong>Hyphaema / retinal detachment + mydriasis</strong>', { text: bullets(['Blood pressure (calm, × 3)', 'CBC', 'Biochemistry', 'Urinalysis', 'Coagulation', 'FeLV/FIV (🐱)', 'Endocrine work-up (HAC, hyperthyroid)']), tone: 'teal' }],
+          ['<strong>SARDS</strong>', { text: bullets(['ACTH stim / LDDST — the HAC look-alike phenotype is common', 'Urinalysis', 'Full biochemistry. Counsel on irreversibility, but rule out treatable mimics first']), tone: 'teal' }],
+          ['<strong>Dysautonomia</strong>', { text: bullets(['Chest radiographs (megaoesophagus)', 'Abdominal radiographs (atonic bladder, megacolon)', 'Pilocarpine + atropine tests', 'Schirmer', 'Full autonomic battery']), tone: 'teal' }],
+          ['<strong>Infectious uveitis + posterior synechiae</strong>', { text: bullets(['Toxoplasma IgG/IgM', 'FeLV/FIV/FCoV titre', 'Tick-borne panel (region-dependent)', 'Fungal serology', 'BP']), tone: 'teal' }],
         ],
       },
     ],
@@ -572,13 +573,13 @@ export const abnormalPupilDx: DxApproach = {
         dividers: true,
         headers: ['Condition', { text: 'While you investigate', tone: 'warning' }],
         rows: [
-          ['<strong>Acute glaucoma</strong> — 🐕', { text: 'Topical latanoprost 0.005% q6h + dorzolamide 2% + timolol 0.5%; mannitol 1 g/kg IV slow if vision-threatening — <strong>refer same day</strong>', tone: 'warning' }],
+          ['<strong>Acute glaucoma</strong> — 🐕', { text: bullets(['Topical latanoprost 0.005% q6h + dorzolamide 2% + timolol 0.5%', 'Mannitol 1 g/kg IV slow if vision-threatening — <strong>refer same day</strong>']), tone: 'warning' }],
           ['<strong>Acute glaucoma</strong> — 🐱', { text: '<strong>Latanoprost is ineffective</strong> (no functional FP prostanoid receptors in the feline ciliary body) — use dorzolamide + timolol ± an oral carbonic anhydrase inhibitor', tone: 'warning' }],
           ['<strong>Anterior uveitis with miosis</strong>', { text: 'Topical 1% atropine (only if IOP is not elevated) + topical 1% prednisolone acetate q6–8h (no ulcer) — treat the underlying cause aggressively', tone: 'warning' }],
-          ['<strong>Optic neuritis</strong><br>suspected MUA', { text: 'Aggressive immunosuppression — prednisolone 2 mg/kg/day + a cytotoxic adjunct. Refer for MRI + CSF before committing to chronic therapy', tone: 'warning' }],
-          ["<strong>Idiopathic Horner's</strong><br>Golden Retriever", { text: 'Reassure; phenylephrine 1% q6h temporarily improves cosmesis. Most resolve over weeks to months (median ~15 weeks, up to 6 months)', tone: 'warning' }],
-          ['<strong>Dysautonomia</strong>', { text: 'Supportive care · dilute pilocarpine drops to maintain pupil function · artificial tears. Guarded prognosis', tone: 'warning' }],
-          ['<strong>SARDS</strong>', { text: 'No proven specific therapy; manage the HAC-like phenotype if present; counsel on blindness and quality of life', tone: 'warning' }],
+          ['<strong>Optic neuritis</strong><br>suspected MUA', { text: bullets(['Aggressive immunosuppression — prednisolone 2 mg/kg/day + a cytotoxic adjunct', 'Refer for MRI + CSF before committing to chronic therapy']), tone: 'warning' }],
+          ["<strong>Idiopathic Horner's</strong><br>Golden Retriever", { text: bullets(['Reassure; phenylephrine 1% q6h temporarily improves cosmesis', 'Most resolve over weeks to months (median ~15 weeks, up to 6 months)']), tone: 'warning' }],
+          ['<strong>Dysautonomia</strong>', { text: bullets(['Supportive care', 'Dilute pilocarpine drops to maintain pupil function', 'Artificial tears. Guarded prognosis']), tone: 'warning' }],
+          ['<strong>SARDS</strong>', { text: bullets(['No proven specific therapy', 'Manage the HAC-like phenotype if present', 'Counsel on blindness and quality of life']), tone: 'warning' }],
         ],
       },
       { kind: 'disclaimer' },

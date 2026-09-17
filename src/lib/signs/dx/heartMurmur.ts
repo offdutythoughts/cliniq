@@ -6,7 +6,7 @@
 // further work-up. Links to the cardiac disease pages (DIS-CARD-*, DIS-HCM).
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable } from './shared/dxHelpers'
+import { stepTable, bullets } from './shared/dxHelpers'
 
 export const heartMurmurDx: DxApproach = {
   sign: 'heart-murmur',
@@ -23,8 +23,8 @@ export const heartMurmurDx: DxApproach = {
           dividers: true,
           headers: ['Category', { text: 'Causes', tone: 'teal' }],
           rows: [
-            ['<strong>Pathologic structural</strong>', { text: 'Acquired MMVD · HCM · DCM · congenital PDA · SAS · PS · VSD', tone: 'teal' }],
-            ['<strong>Functional / innocent</strong>', { text: 'Puppy / kitten innocent murmur · anaemia · fever · hyperthyroidism · high-output states', tone: 'teal' }],
+            ['<strong>Pathologic structural</strong>', { text: bullets(['Acquired MMVD', 'HCM', 'DCM', 'Congenital PDA', 'SAS', 'PS', 'VSD']), tone: 'teal' }],
+            ['<strong>Functional / innocent</strong>', { text: bullets(['Puppy / kitten innocent murmur', 'Anaemia', 'Fever', 'Hyperthyroidism', 'High-output states']), tone: 'teal' }],
           ],
         },
         { kind: 'note', html: `A murmur is turbulent flow — it tells you something is moving fast, not <em>what</em>. <span style="opacity:.7">(Ettinger Ch 38)</span>` },
@@ -35,7 +35,7 @@ export const heartMurmurDx: DxApproach = {
           headers: ['Signalment', { text: 'Points to', tone: 'teal' }],
           rows: [
             ['<strong>Puppy / kitten, soft murmur</strong>', { text: 'Innocent murmur likely — but a <strong>loud</strong> or persisting (beyond ~16 weeks) murmur → congenital disease (PDA · SAS · PS · VSD)', tone: 'teal' }],
-            ['<strong>Older small-breed dog</strong>', { text: '<strong>MMVD</strong> — the commonest acquired murmur; left apical systolic', tone: 'teal' }],
+            ['<strong>Older small-breed dog</strong>', { text: bullets(['The commonest acquired murmur', 'Left apical systolic'], { lead: '<strong>MMVD</strong>' }), tone: 'teal' }],
             ['<strong>Large / giant breed</strong><br>Doberman · Great Dane · Irish Wolfhound · Boxer', { text: '<strong>DCM</strong> — the murmur is often soft or absent', tone: 'teal' }],
             ['<strong>🐱 Cat of any age</strong>', { text: 'Cardiomyopathy (HCM / RCM), but many feline murmurs are dynamic / physiologic — and <strong>HCM may have no murmur</strong>', tone: 'danger' }],
           ],
@@ -46,7 +46,7 @@ export const heartMurmurDx: DxApproach = {
           dividers: true,
           headers: ['Ask about', { text: 'Significance', tone: 'teal' }],
           rows: [
-            ['<strong>Exercise intolerance · cough · tachypnoea / dyspnoea · syncope or collapse</strong>', { text: 'Cough in 🐕 reflects LA enlargement compressing the bronchus', tone: 'teal' }],
+            [bullets(['<strong>Exercise intolerance</strong>', '<strong>Cough</strong>', '<strong>Tachypnoea / dyspnoea</strong>', '<strong>Syncope or collapse</strong>']), { text: 'Cough in 🐕 reflects LA enlargement compressing the bronchus', tone: 'teal' }],
             ['<strong>Syncope on exertion in a young dog</strong>', { text: '<strong>SAS or PS</strong> until proven otherwise', tone: 'danger' }],
             ['<strong>🐱 Cats do NOT cough from cardiac disease</strong>', { text: 'Feline CHF presents as dyspnoea / tachypnoea, not cough', tone: 'teal' }],
             ['<strong>Resting / sleeping respiratory rate</strong>', { text: 'A rising RR is an early sign of decompensation', tone: 'teal' }],
@@ -58,9 +58,9 @@ export const heartMurmurDx: DxApproach = {
           dividers: true,
           headers: ['Screen for', { text: 'Detail', tone: 'teal' }],
           rows: [
-            ['<strong>Anaemia</strong>', { text: 'Pallor · lethargy — HCT &lt;20% 🐕 / &lt;15% 🐱', tone: 'teal' }],
-            ['<strong>Fever / sepsis · pregnancy · high sympathetic tone</strong>', { text: 'High-output / hyperdynamic states producing a functional murmur', tone: 'teal' }],
-            ['<strong>Hyperthyroidism</strong>', { text: 'Older cat — weight loss · polyphagia · goitre', tone: 'teal' }],
+            ['<strong>Anaemia</strong>', { text: bullets(['Pallor', 'Lethargy — HCT &lt;20% 🐕 / &lt;15% 🐱']), tone: 'teal' }],
+            [bullets(['<strong>Fever / sepsis</strong>', '<strong>Pregnancy</strong>', '<strong>High sympathetic tone</strong>']), { text: 'High-output / hyperdynamic states producing a functional murmur', tone: 'teal' }],
+            ['<strong>Hyperthyroidism</strong>', { text: bullets(['Older cat — weight loss', 'Polyphagia', 'Goitre']), tone: 'teal' }],
             ['<strong>New or changing murmur + fever, lethargy or shifting lameness</strong>', { text: '<strong>Infective endocarditis</strong> — think <em>Bartonella</em>', tone: 'danger' }],
           ],
         }, '🔍'),
@@ -106,10 +106,10 @@ export const heartMurmurDx: DxApproach = {
           dividers: true,
           headers: ['Timing', { text: 'Causes', tone: 'teal' }],
           rows: [
-            ['<strong>Systolic</strong><br>between S1 and S2', { text: 'By far the commonest — MMVD · HCM · SAS · PS · VSD · tricuspid insufficiency · functional murmurs', tone: 'teal' }],
-            ['<strong>Diastolic</strong><br>after S2', { text: 'Uncommon — aortic insufficiency (endocarditis in adults; SAS / VSD in young dogs) · pulmonic insufficiency', tone: 'teal' }],
+            ['<strong>Systolic</strong><br>between S1 and S2', { text: bullets(['By far the commonest — MMVD', 'HCM', 'SAS', 'PS', 'VSD', 'Tricuspid insufficiency', 'Functional murmurs']), tone: 'teal' }],
+            ['<strong>Diastolic</strong><br>after S2', { text: bullets(['Uncommon — aortic insufficiency (endocarditis in adults; SAS / VSD in young dogs)', 'Pulmonic insufficiency']), tone: 'teal' }],
             ['<strong>Continuous "machinery"</strong><br>throughout the cycle, peaking near S2', { text: '<strong>PDA</strong> — the diastolic component disappears if pulmonary hypertension develops', tone: 'teal' }],
-            ['<strong>Gallop sounds (S3 / S4) · systolic clicks</strong>', { text: 'A gallop in a cat strongly suggests cardiomyopathy', tone: 'teal' }],
+            [bullets(['<strong>Gallop sounds (S3 / S4)</strong>', '<strong>Systolic clicks</strong>']), { text: 'A gallop in a cat strongly suggests cardiomyopathy', tone: 'teal' }],
           ],
         }, '⏱️'),
 
@@ -132,12 +132,12 @@ export const heartMurmurDx: DxApproach = {
           dividers: true,
           headers: ['Finding', { text: 'Points to', tone: 'teal' }],
           rows: [
-            ['<strong>Hyperkinetic / bounding ("waterhammer") pulse</strong>', { text: '<strong>PDA</strong> — diastolic runoff widens pulse pressure; also aortic insufficiency · anaemia · hyperthyroidism', tone: 'teal' }],
+            ['<strong>Hyperkinetic / bounding ("waterhammer") pulse</strong>', { text: bullets(['Diastolic runoff widens pulse pressure; also aortic insufficiency', 'Anaemia', 'Hyperthyroidism'], { lead: '<strong>PDA</strong>' }), tone: 'teal' }],
             ['<strong>Weak pulse, slow upstroke</strong> (pulsus parvus et tardus)', { text: 'Severe <strong>SAS</strong>', tone: 'teal' }],
             ['<strong>Weak pulse ± pulsus alternans</strong>', { text: 'Poor contractility — DCM', tone: 'teal' }],
             ['<strong>Pulse deficits</strong>', { text: 'Arrhythmia — auscultate while palpating the femoral pulse', tone: 'teal' }],
             ['<strong>Precordial thrill</strong>', { text: 'Grade ≥ V', tone: 'teal' }],
-            ['<strong>Jugular distension / pulsation · ascites · oedema</strong>', { text: 'Right-sided CHF', tone: 'teal' }],
+            [bullets(['<strong>Jugular distension / pulsation</strong>', '<strong>Ascites</strong>', '<strong>Oedema</strong>']), { text: 'Right-sided CHF', tone: 'teal' }],
           ],
         }, '👋'),
       ],
@@ -154,8 +154,8 @@ export const heartMurmurDx: DxApproach = {
           dividers: true,
           headers: ['What echo delivers', { text: 'Detail', tone: 'teal' }],
           rows: [
-            ['<strong>Confirms the structural lesion</strong>', { text: 'MMVD prolapse / regurgitation · HCM wall thickness + SAM · DCM dilation + poor FS/EF · congenital defects', tone: 'teal' }],
-            ['<strong>Quantifies severity</strong>', { text: 'Chamber size (LA:Ao) · estimated pulmonary artery pressure (TR / PI velocity)', tone: 'teal' }],
+            ['<strong>Confirms the structural lesion</strong>', { text: bullets(['MMVD prolapse / regurgitation', 'HCM wall thickness + SAM', 'DCM dilation + poor FS/EF', 'Congenital defects']), tone: 'teal' }],
+            ['<strong>Quantifies severity</strong>', { text: bullets(['Chamber size (LA:Ao)', 'Estimated pulmonary artery pressure (TR / PI velocity)']), tone: 'teal' }],
             ['<strong>Doppler</strong>', { text: 'Maps the regurgitant / stenotic jet to the murmur', tone: 'teal' }],
             ['<strong>Why it is definitive</strong>', { text: 'The only way to reliably separate a structural lesion from a functional murmur <span style="opacity:.7">(Ettinger Ch 38)</span>', tone: 'teal' }],
           ],
@@ -180,7 +180,7 @@ export const heartMurmurDx: DxApproach = {
           headers: ['What it shows', { text: 'Detail', tone: 'teal' }],
           rows: [
             ['<strong>Rhythm and chamber-enlargement patterns</strong>', { text: 'Tall / wide P or R waves', tone: 'teal' }],
-            ['<strong>Arrhythmias accompanying structural disease</strong>', { text: 'Atrial fibrillation in DCM / MMVD · VPCs in cardiomyopathy / Boxer ARVC', tone: 'teal' }],
+            ['<strong>Arrhythmias accompanying structural disease</strong>', { text: bullets(['Atrial fibrillation in DCM / MMVD', 'VPCs in cardiomyopathy / Boxer ARVC']), tone: 'teal' }],
             ['<strong>Limitation</strong>', { text: 'It does not size the heart — pair with imaging', tone: 'teal' }],
           ],
         }, '📈'),
@@ -204,7 +204,7 @@ export const heartMurmurDx: DxApproach = {
           rows: [
             ['<strong>CBC</strong>', { text: 'Anaemia', tone: 'teal' }],
             ['<strong>Total T4</strong>', { text: 'Older cat — hyperthyroidism', tone: 'teal' }],
-            ['<strong>Temperature / inflammatory screen · pregnancy</strong>', { text: 'Fever · sepsis · pregnancy', tone: 'teal' }],
+            [bullets(['<strong>Temperature / inflammatory screen</strong>', '<strong>Pregnancy</strong>']), { text: bullets(['Fever', 'Sepsis', 'Pregnancy']), tone: 'teal' }],
             ['<strong>New / changing murmur + fever</strong>', { text: 'Blood cultures + <em>Bartonella</em> serology / PCR + echo for endocarditis vegetations', tone: 'danger' }],
           ],
         }, '🧪'),

@@ -7,7 +7,7 @@
 // (Ettinger Ch 51). Links to the relevant disease pages.
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable, numBadge } from './shared/dxHelpers'
+import { stepTable, numBadge, bullets } from './shared/dxHelpers'
 
 export const constipationDx: DxApproach = {
   sign: 'constipation',
@@ -41,7 +41,7 @@ export const constipationDx: DxApproach = {
           headers: ['Finding', { text: 'Means', tone: 'teal' }],
           rows: [
             ['<strong>Owner report</strong>', { text: 'Owners cannot reliably tell tenesmus from stranguria — watch the patient and palpate the bladder', tone: 'teal' }],
-            ['<strong>Large turgid painful bladder</strong> + unproductive straining', { text: '<strong>Urethral obstruction</strong> — a hyperkalaemic emergency (male cats, male dogs with os-penis calculus). Go straight to ECG + potassium', tone: 'danger' }],
+            ['<strong>Large turgid painful bladder</strong> + unproductive straining', { text: bullets(['<strong>Urethral obstruction</strong> — a hyperkalaemic emergency (male cats, male dogs with os-penis calculus)', 'Go straight to ECG + potassium']), tone: 'danger' }],
             ['<strong>Faeces seen / colon packed with stool</strong>', { text: 'Confirms a defecation problem', tone: 'teal' }],
           ],
         },
@@ -51,12 +51,12 @@ export const constipationDx: DxApproach = {
           dividers: true,
           headers: ['Signalment / history', { text: 'Points to', tone: 'teal' }],
           rows: [
-            ['<strong>Cat with recurrent constipation → obstipation</strong>', { text: 'Feline idiopathic megacolon; congenital sacral cord anomaly in <strong>Manx</strong> cats', tone: 'teal' }],
-            ['<strong>Entire male dog</strong> + tenesmus + thin tape-shaped faeces', { text: 'Prostatomegaly — BPH · prostatitis', tone: 'teal' }],
-            ['<strong>Older dog, either sex</strong>, persistent tenesmus', { text: 'Prostatic carcinoma · rectal / colonic mass · sublumbar AGASACA', tone: 'teal' }],
+            ['<strong>Cat with recurrent constipation → obstipation</strong>', { text: bullets(['Feline idiopathic megacolon', 'Congenital sacral cord anomaly in <strong>Manx</strong> cats']), tone: 'teal' }],
+            ['<strong>Entire male dog</strong> + tenesmus + thin tape-shaped faeces', { text: bullets(['Prostatomegaly — BPH', 'Prostatitis']), tone: 'teal' }],
+            ['<strong>Older dog, either sex</strong>, persistent tenesmus', { text: bullets(['Prostatic carcinoma', 'Rectal / colonic mass', 'Sublumbar AGASACA']), tone: 'teal' }],
             ['<strong>Prior pelvic / lumbosacral trauma</strong>', { text: 'Healed-fracture pelvic-canal narrowing', tone: 'teal' }],
             ['<strong>GSD with painful dyschezia</strong>', { text: 'Perianal fistula', tone: 'teal' }],
-            ['<strong>PU/PD · weight loss · prior CKD</strong>', { text: 'Metabolic / dehydration causes — CKD · hypercalcaemia · hypokalaemia · hypothyroidism', tone: 'teal' }],
+            [bullets(['<strong>PU/PD</strong>', '<strong>Weight loss</strong>', '<strong>Prior CKD</strong>']), { text: bullets(['Metabolic / dehydration causes — CKD', 'Hypercalcaemia', 'Hypokalaemia', 'Hypothyroidism']), tone: 'teal' }],
           ],
         }, '🐾'),
 
@@ -66,10 +66,10 @@ export const constipationDx: DxApproach = {
           headers: ['Ask / observe', { text: 'Significance', tone: 'teal' }],
           rows: [
             ['<strong>Low-insoluble-fibre diet</strong>', { text: 'Predisposes to impaction', tone: 'teal' }],
-            ['<strong>Pica</strong> — bones · hair · wool · cat litter · plant material', { text: 'Predisposes to impaction', tone: 'teal' }],
-            ['<strong>Thin / ribbon-like (tape-shaped) faeces</strong>', { text: 'Narrowed pelvic canal · extraluminal compression (prostate, mass)', tone: 'teal' }],
+            [bullets(['Bones', 'Hair', 'Wool', 'Cat litter', 'Plant material'], { lead: '<strong>Pica</strong>' }), { text: 'Predisposes to impaction', tone: 'teal' }],
+            ['<strong>Thin / ribbon-like (tape-shaped) faeces</strong>', { text: bullets(['Narrowed pelvic canal', 'Extraluminal compression (prostate, mass)']), tone: 'teal' }],
             ['<strong>Hard dry pellets</strong>', { text: 'Dehydration / colonic stasis', tone: 'teal' }],
-            ['<strong>Also ask</strong>', { text: 'Water intake · activity level · obesity · drug history · haematochezia or mucus (large-bowel inflammation)', tone: 'teal' }],
+            ['<strong>Also ask</strong>', { text: bullets(['Water intake', 'Activity level', 'Obesity', 'Drug history', 'Haematochezia or mucus (large-bowel inflammation)']), tone: 'teal' }],
           ],
         }, '🍽️'),
       ],
@@ -100,12 +100,12 @@ export const constipationDx: DxApproach = {
           headers: ['Assess', { text: 'Looking for', tone: 'teal' }],
           rows: [
             [`${numBadge(1)}<strong>Pelvic canal width</strong>`, { text: 'Healed-fracture narrowing', tone: 'teal' }],
-            [`${numBadge(2)}<strong>Prostate</strong>`, { text: 'Symmetric non-painful → <strong>BPH</strong> · painful → <strong>prostatitis</strong> · asymmetric / fixed / firm → <strong>carcinoma</strong>', tone: 'teal' }],
+            [`${numBadge(2)}<strong>Prostate</strong>`, { text: bullets(['Symmetric non-painful → <strong>BPH</strong>', 'Painful → <strong>prostatitis</strong>', 'Asymmetric / fixed / firm → <strong>carcinoma</strong>']), tone: 'teal' }],
             [`${numBadge(3)}<strong>Masses</strong>`, { text: 'Intraluminal or extraluminal', tone: 'teal' }],
-            [`${numBadge(4)}<strong>Rectal wall</strong>`, { text: 'Stricture · diverticulum', tone: 'teal' }],
+            [`${numBadge(4)}<strong>Rectal wall</strong>`, { text: bullets(['Stricture', 'Diverticulum']), tone: 'teal' }],
             [`${numBadge(5)}<strong>Perianal region</strong>`, { text: 'Fistulae', tone: 'teal' }],
-            [`${numBadge(6)}<strong>Anal sacs</strong>`, { text: 'Sacculitis · AGASACA', tone: 'teal' }],
-            [`${numBadge(7)}<strong>Stool</strong>`, { text: 'Character on the glove · faecal-pellet hardness', tone: 'teal' }],
+            [`${numBadge(6)}<strong>Anal sacs</strong>`, { text: bullets(['Sacculitis', 'AGASACA']), tone: 'teal' }],
+            [`${numBadge(7)}<strong>Stool</strong>`, { text: bullets(['Character on the glove', 'Faecal-pellet hardness']), tone: 'teal' }],
           ],
         }, '👆'),
 
@@ -125,9 +125,9 @@ export const constipationDx: DxApproach = {
           dividers: true,
           headers: ['Assess', { text: 'Means', tone: 'teal' }],
           rows: [
-            ['<strong>Anal tone · perineal reflex · tail / hindlimb function</strong>', { text: 'Reduced tone + dyschezia → lumbosacral disease (degenerative lumbosacral stenosis · IVDD · sacrocaudal "tail-pull")', tone: 'teal' }],
-            ['<strong>Other autonomic signs</strong>', { text: '<strong>Dysautonomia</strong> — dry mucous membranes · mydriasis · bradycardia · megaoesophagus', tone: 'teal' }],
-            ['<strong>Perineum</strong>', { text: 'Perineal hernia · pseudocoprostasis (matted perianal hair occluding the anus)', tone: 'teal' }],
+            [bullets(['<strong>Anal tone</strong>', '<strong>Perineal reflex</strong>', '<strong>Tail / hindlimb function</strong>']), { text: 'Reduced tone + dyschezia → lumbosacral disease (degenerative lumbosacral stenosis · IVDD · sacrocaudal "tail-pull")', tone: 'teal' }],
+            ['<strong>Other autonomic signs</strong>', { text: bullets(['Dry mucous membranes', 'Mydriasis', 'Bradycardia', 'Megaoesophagus'], { lead: '<strong>Dysautonomia</strong>' }), tone: 'teal' }],
+            ['<strong>Perineum</strong>', { text: bullets(['Perineal hernia', 'Pseudocoprostasis (matted perianal hair occluding the anus)']), tone: 'teal' }],
           ],
         }, '🧠'),
       ],
@@ -155,7 +155,7 @@ export const constipationDx: DxApproach = {
           headers: ['Test', { text: 'What it shows', tone: 'teal' }],
           rows: [
             ['<strong>Digital rectal exam</strong>', { text: 'The single most useful first test — see the Exam tab', tone: 'teal' }],
-            ['<strong>Abdominal radiographs</strong>', { text: '<strong>Faecal load</strong> and colonic calibre (megacolon = colon diameter &gt; ~1.48× the length of the L5 vertebral body in cats) · <strong>narrowed pelvic canal</strong> (healed fracture malunion) · <strong>sublumbar mass / lymphadenopathy</strong> · prostatomegaly and prostatic mineralisation · radiopaque ingested foreign material', tone: 'teal' }],
+            ['<strong>Abdominal radiographs</strong>', { text: bullets(['<strong>Faecal load</strong> and colonic calibre (megacolon = colon diameter &gt; ~1.48× the length of the L5 vertebral body in cats)', '<strong>Narrowed pelvic canal</strong> (healed fracture malunion)', '<strong>Sublumbar mass / lymphadenopathy</strong>', 'Prostatomegaly and prostatic mineralisation', 'Radiopaque ingested foreign material']), tone: 'teal' }],
           ],
         }, '👆'),
 
@@ -165,10 +165,10 @@ export const constipationDx: DxApproach = {
           headers: ['Test', { text: 'What it rules in / out', tone: 'teal' }],
           rows: [
             [`${numBadge(1)}<strong>CBC / serum chemistry</strong>`, { text: 'Systemic / metabolic disease and dehydration', tone: 'teal' }],
-            [`${numBadge(2)}<strong>Electrolytes</strong>`, { text: '<strong>Hypokalaemia</strong> — K⁺ 2.5–3.0 mEq/L causes weakness + constipation · hypomagnesaemia', tone: 'teal' }],
+            [`${numBadge(2)}<strong>Electrolytes</strong>`, { text: bullets(['K⁺ 2.5–3.0 mEq/L causes weakness + constipation', 'Hypomagnesaemia'], { lead: '<strong>Hypokalaemia</strong>' }), tone: 'teal' }],
             [`${numBadge(3)}<strong>Ionised calcium</strong>`, { text: '<strong>Hypercalcaemia</strong> reduces colonic motility — screen for AGASACA, lymphoma', tone: 'teal' }],
             [`${numBadge(4)}<strong>Renal values + USG</strong>`, { text: 'CKD-related dehydration', tone: 'teal' }],
-            [`${numBadge(5)}<strong>Total T4</strong>`, { text: 'Hypothyroid dogs · congenital hypothyroid kittens', tone: 'teal' }],
+            [`${numBadge(5)}<strong>Total T4</strong>`, { text: bullets(['Hypothyroid dogs', 'Congenital hypothyroid kittens']), tone: 'teal' }],
           ],
         }, '🧪'),
 
@@ -177,9 +177,9 @@ export const constipationDx: DxApproach = {
           dividers: true,
           headers: ['Test', { text: 'Indication', tone: 'teal' }],
           rows: [
-            ['<strong>Ultrasound / CT</strong>', { text: 'Characterise a prostate · sublumbar or anal-sac mass (AGASACA) · colonic mass; stage regional lymph nodes', tone: 'teal' }],
-            ['<strong>Colonoscopy + biopsy</strong>', { text: 'Intraluminal masses · strictures · large-bowel inflammatory / infectious causes of tenesmus (CIE · <em>Trichuris</em> · <em>Tritrichomonas foetus</em> in cats)', tone: 'teal' }],
-            ['<strong>Cytology / histopathology</strong>', { text: 'Submit any anal-sac mass / regional node. Check ionised calcium pre- and post-resection (AGASACA paraneoplastic hypercalcaemia)', tone: 'teal' }],
+            ['<strong>Ultrasound / CT</strong>', { text: bullets(['Characterise a prostate', 'Sublumbar or anal-sac mass (AGASACA)', 'Colonic mass; stage regional lymph nodes']), tone: 'teal' }],
+            ['<strong>Colonoscopy + biopsy</strong>', { text: bullets(['Intraluminal masses', 'Strictures', 'Large-bowel inflammatory / infectious causes of tenesmus (CIE · <em>Trichuris</em> · <em>Tritrichomonas foetus</em> in cats)']), tone: 'teal' }],
+            ['<strong>Cytology / histopathology</strong>', { text: bullets(['Submit any anal-sac mass / regional node', 'Check ionised calcium pre- and post-resection (AGASACA paraneoplastic hypercalcaemia)']), tone: 'teal' }],
           ],
         }, '🔍'),
 
@@ -192,7 +192,7 @@ export const constipationDx: DxApproach = {
             [`${numBadge(2)}<strong>Deobstipation / enemas</strong>`, { text: 'Warm-water enemas 5–10 mL/kg ± manual evacuation under sedation / GA. <strong>AVOID phosphate-containing enemas in cats</strong> — fatal hyperphosphataemia / hypocalcaemia', tone: 'danger' }],
             [`${numBadge(3)}<strong>Lactulose</strong>`, { text: '0.5 mL/kg PO q8–12h, titrate to 2–3 soft stools/day', tone: 'teal' }],
             [`${numBadge(4)}<strong>Prokinetics</strong>`, { text: '<strong>Cisapride</strong> 2.5 mg/cat (not mg/kg) or 0.1–0.5 mg/kg PO q8–12h', tone: 'teal' }],
-            [`${numBadge(5)}<strong>Dietary fibre ± water intake</strong>`, { text: 'Treat the underlying cause — correct K⁺ / Ca²⁺ · castrate or treat the prostate · address pelvic narrowing. Refractory feline megacolon → <strong>subtotal colectomy</strong>', tone: 'teal' }],
+            [`${numBadge(5)}<strong>Dietary fibre ± water intake</strong>`, { text: bullets(['Treat the underlying cause — correct K⁺ / Ca²⁺', 'Castrate or treat the prostate', 'Address pelvic narrowing. Refractory feline megacolon → <strong>subtotal colectomy</strong>']), tone: 'teal' }],
           ],
         }, '🪜'),
       ],

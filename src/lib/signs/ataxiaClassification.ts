@@ -14,7 +14,7 @@
 // directly above it, so the reader picks a tile and reads across. (The
 // transposed layout — one row per exam finding, types as columns — tested
 // worse: it forces a column-scan to answer the question the box is titled
-// with.) Gait / head / tremor / mentation are kept as separate lines inside
+// with.) Gait / head / tremor / mentation are kept as separate bullets inside
 // the hallmark cell rather than as their own columns, so no fact is lost.
 //
 // NOT shared with the dx tab's "CLASSIFY ATAXIA TYPE" table: that one answers a
@@ -23,6 +23,7 @@
 // these discriminators.
 
 import type { TableCell, TableRow } from './flowTypes'
+import { bullets } from './dx/shared/dxHelpers'
 
 /** Type + paresis size to their content; the hallmark column takes the rest. */
 export const ATAXIA_COLS = '0.52fr 0.8fr 1.75fr 0.7fr'
@@ -39,10 +40,11 @@ export const ATAXIA_ROWS: TableRow[] = [
     { text: 'Cerebellar', tone: 'info' },
     { text: '✗ NONE — the cerebellum <em>coordinates</em> movement, it does not initiate it' },
     {
-      text:
-        'Hypermetria (dysmetria) · wide-based stance<br>' +
-        'Intention tremor · truncal sway<br>' +
+      text: bullets([
+        'Hypermetria (dysmetria) · wide-based stance',
+        'Intention tremor · truncal sway',
         'Mentation normal',
+      ]),
     },
     { text: 'Cerebellum' },
   ],
@@ -50,10 +52,11 @@ export const ATAXIA_ROWS: TableRow[] = [
     { text: 'Vestibular', tone: 'warning' },
     { text: '± only if CENTRAL' },
     {
-      text:
-        'Asymmetric — falls, leans, rolls or circles tightly <strong>to one side</strong><br>' +
-        'Head tilt · nystagmus until proven otherwise — fast phase beats <strong>away</strong> from the lesion if peripheral, either way if central<br>' +
+      text: bullets([
+        'Asymmetric — falls, leans, rolls or circles tightly <strong>to one side</strong>',
+        'Head tilt · nystagmus until proven otherwise — fast phase beats <strong>away</strong> from the lesion if peripheral, either way if central',
         'Mentation ± ↓ if central',
+      ]),
     },
     { text: 'Inner ear, or brainstem / cerebellum' },
   ],
@@ -61,9 +64,10 @@ export const ATAXIA_ROWS: TableRow[] = [
     { text: 'Proprioceptive', tone: 'danger' },
     { text: '✓ ALWAYS — weakness <strong>and</strong> incoordination together' },
     {
-      text:
-        'Knuckling · crossing over · scuffing toes · delayed CP placing<br>' +
+      text: bullets([
+        'Knuckling · crossing over · scuffing toes · delayed CP placing',
         'Mentation normal',
+      ]),
     },
     { text: 'Spinal cord' },
   ],

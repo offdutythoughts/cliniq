@@ -8,7 +8,7 @@
 // (imaging). Numbers verbatim from Ettinger Ch 30 (Fig 30.1) and Ch 60.
 
 import type { DxApproach } from '../dxTypes'
-import { stepTable } from './shared/dxHelpers'
+import { stepTable, bullets } from './shared/dxHelpers'
 
 export const oedemaDx: DxApproach = {
   sign: 'oedema',
@@ -26,7 +26,7 @@ export const oedemaDx: DxApproach = {
           headers: ['Distribution', { text: 'Mechanism', tone: 'teal' }],
           rows: [
             ['<strong>Generalised / ventral pitting oedema</strong>', { text: 'A systemic mechanism — go straight to <strong>serum albumin</strong>', tone: 'teal' }],
-            ['<strong>Localised single-limb or regional swelling</strong>', { text: 'Venous / lymphatic obstruction · hypersensitivity · trauma', tone: 'teal' }],
+            ['<strong>Localised single-limb or regional swelling</strong>', { text: bullets(['Venous / lymphatic obstruction', 'Hypersensitivity', 'Trauma']), tone: 'teal' }],
           ],
         },
         { kind: 'note', html: `Peripheral oedema appears when interstitial-matrix tension and lymphatic uptake are overwhelmed (Starling equation). <span style="opacity:.7">(Ettinger Ch 30)</span>` },
@@ -36,10 +36,10 @@ export const oedemaDx: DxApproach = {
           dividers: true,
           headers: ['Distribution / onset', { text: 'Points to', tone: 'teal' }],
           rows: [
-            ['<strong>Generalised / ventral</strong>', { text: 'Hypoalbuminaemia · right-sided CHF · increased vascular permeability (sepsis · vasculitis · myxedema)', tone: 'teal' }],
-            ['<strong>Single forelimb + ventral cervical / thoracic</strong>', { text: 'Cranial vena cava obstruction — mediastinal mass · thrombus · pacing lead', tone: 'teal' }],
-            ['<strong>Single hindlimb + ventral caudal abdomen</strong>', { text: 'Caudal vena cava obstruction — caudal abdominal mass · thrombus', tone: 'teal' }],
-            ['<strong>Acute onset after a drug / vaccine / sting / snakebite</strong>', { text: 'Hypersensitivity · angioedema · envenomation', tone: 'teal' }],
+            ['<strong>Generalised / ventral</strong>', { text: bullets(['Hypoalbuminaemia', 'Right-sided CHF', 'Increased vascular permeability (sepsis · vasculitis · myxedema)']), tone: 'teal' }],
+            ['<strong>Single forelimb + ventral cervical / thoracic</strong>', { text: bullets(['Cranial vena cava obstruction — mediastinal mass', 'Thrombus', 'Pacing lead']), tone: 'teal' }],
+            ['<strong>Single hindlimb + ventral caudal abdomen</strong>', { text: bullets(['Caudal vena cava obstruction — caudal abdominal mass', 'Thrombus']), tone: 'teal' }],
+            ['<strong>Acute onset after a drug / vaccine / sting / snakebite</strong>', { text: bullets(['Hypersensitivity', 'Angioedema', 'Envenomation']), tone: 'teal' }],
             ['<strong>Chronic single-limb</strong>', { text: 'Lymphoedema <span style="opacity:.7">(Ettinger Ch 30)</span>', tone: 'teal' }],
           ],
         }, '📍'),
@@ -49,11 +49,11 @@ export const oedemaDx: DxApproach = {
           dividers: true,
           headers: ['Systemic sign', { text: 'Points to', tone: 'teal' }],
           rows: [
-            ['<strong>GI signs</strong> — diarrhoea · weight loss', { text: 'Protein-losing enteropathy', tone: 'teal' }],
-            ['<strong>PU/PD · proteinuria history</strong>', { text: 'Protein-losing nephropathy', tone: 'teal' }],
-            ['<strong>Icterus · encephalopathy · stunting / young animal</strong>', { text: 'Hepatic failure · portosystemic shunt', tone: 'teal' }],
-            ['<strong>Cough · exercise intolerance · syncope · abdominal distension (ascites)</strong>', { text: 'Right-sided congestive heart failure', tone: 'teal' }],
-            ['<strong>Fever · lethargy · collapse</strong>', { text: 'SIRS / sepsis · immune-mediated or vector-borne vasculitis', tone: 'teal' }],
+            [bullets(['Diarrhoea', 'Weight loss'], { lead: '<strong>GI signs</strong>' }), { text: 'Protein-losing enteropathy', tone: 'teal' }],
+            [bullets(['<strong>PU/PD</strong>', '<strong>Proteinuria history</strong>']), { text: 'Protein-losing nephropathy', tone: 'teal' }],
+            [bullets(['<strong>Icterus</strong>', '<strong>Encephalopathy</strong>', '<strong>Stunting / young animal</strong>']), { text: bullets(['Hepatic failure', 'Portosystemic shunt']), tone: 'teal' }],
+            [bullets(['<strong>Cough</strong>', '<strong>Exercise intolerance</strong>', '<strong>Syncope</strong>', '<strong>Abdominal distension (ascites)</strong>']), { text: 'Right-sided congestive heart failure', tone: 'teal' }],
+            [bullets(['<strong>Fever</strong>', '<strong>Lethargy</strong>', '<strong>Collapse</strong>']), { text: bullets(['SIRS / sepsis', 'Immune-mediated or vector-borne vasculitis']), tone: 'teal' }],
           ],
         }, '🔍'),
 
@@ -62,10 +62,10 @@ export const oedemaDx: DxApproach = {
           dividers: true,
           headers: ['History', { text: 'Points to', tone: 'teal' }],
           rows: [
-            ['<strong>Envenomation · vaccination · drugs · toxins · burns · trauma</strong>', { text: 'Hypersensitivity or permeability oedema <span style="opacity:.7">(Ettinger Ch 30, Fig 30.1)</span>', tone: 'teal' }],
+            [bullets(['<strong>Envenomation</strong>', '<strong>Vaccination</strong>', '<strong>Drugs</strong>', '<strong>Toxins</strong>', '<strong>Burns</strong>', '<strong>Trauma</strong>']), { text: 'Hypersensitivity or permeability oedema <span style="opacity:.7">(Ettinger Ch 30, Fig 30.1)</span>', tone: 'teal' }],
             ['<strong>Tick exposure &amp; travel</strong>', { text: 'Vector-borne vasculitis — e.g. ehrlichiosis, peripheral oedema in the acute phase', tone: 'teal' }],
             ['<strong>Young animal, hindlimb swelling from the first weeks / months of life</strong>', { text: 'Congenital lymphoedema — lymph-node hypoplasia / aplasia', tone: 'teal' }],
-            ['<strong>Prior surgery · trauma · radiation · neoplasia</strong>', { text: 'Acquired (obstructive) lymphoedema', tone: 'teal' }],
+            [bullets(['<strong>Prior surgery</strong>', '<strong>Trauma</strong>', '<strong>Radiation</strong>', '<strong>Neoplasia</strong>']), { text: 'Acquired (obstructive) lymphoedema', tone: 'teal' }],
           ],
         }, '💊'),
       ],
@@ -96,7 +96,7 @@ export const oedemaDx: DxApproach = {
           headers: ['Character', { text: 'Means', tone: 'teal' }],
           rows: [
             ['<strong>Pitting</strong><br>persistent depression after digital pressure', { text: 'Fluid displaced within the interstitium — most mechanisms (hypoalbuminaemia · hydrostatic · early permeability)', tone: 'teal' }],
-            ['<strong>Non-pitting</strong>', { text: 'Fluid within cells / clotted fibrinogen — angioedema (deeper subdermal) · post-surgical or traumatic · lymphangiosarcoma · myxedema. <strong>Chronic lymphoedema becomes non-pitting</strong> (collagen deposition, interstitial fibrosis)', tone: 'teal' }],
+            ['<strong>Non-pitting</strong>', { text: bullets(['Fluid within cells / clotted fibrinogen — angioedema (deeper subdermal)', 'Post-surgical or traumatic', 'Lymphangiosarcoma', 'Myxedema. <strong>Chronic lymphoedema becomes non-pitting</strong> (collagen deposition, interstitial fibrosis)']), tone: 'teal' }],
             ['<strong>Warm, erythematous swelling</strong>', { text: 'Increased vascular permeability / inflammation (vasculitis · cellulitis · AV fistula) — distinct from the cool, non-tender oedema of oncotic / hydrostatic causes <span style="opacity:.7">(Ettinger Ch 30)</span>', tone: 'teal' }],
           ],
         }, '👆'),
@@ -106,8 +106,8 @@ export const oedemaDx: DxApproach = {
           dividers: true,
           headers: ['Finding', { text: 'Points to', tone: 'teal' }],
           rows: [
-            ['<strong>Jugular venous distension or positive hepatojugular reflux · heart murmur · arrhythmia ± ascites</strong>', { text: 'Right-sided CHF — go to echocardiography', tone: 'teal' }],
-            ['<strong>Muffled heart sounds · weak pulses · pulsus paradoxus</strong>', { text: 'Pericardial effusion / tamponade', tone: 'danger' }],
+            [bullets(['<strong>Jugular venous distension or positive hepatojugular reflux</strong>', '<strong>Heart murmur</strong>', '<strong>Arrhythmia ± ascites</strong>']), { text: 'Right-sided CHF — go to echocardiography', tone: 'teal' }],
+            [bullets(['<strong>Muffled heart sounds</strong>', '<strong>Weak pulses</strong>', '<strong>Pulsus paradoxus</strong>']), { text: 'Pericardial effusion / tamponade', tone: 'danger' }],
             ['<strong>Warm focal swelling with a bruit</strong>', { text: 'Arteriovenous fistula — test with US, angiogram', tone: 'teal' }],
           ],
         }, '❤️'),
@@ -117,9 +117,9 @@ export const oedemaDx: DxApproach = {
           dividers: true,
           headers: ['Finding', { text: 'Points to', tone: 'teal' }],
           rows: [
-            ['<strong>Fever · petechiae / ecchymoses · skin necrosis or ulceration</strong>', { text: 'Vasculitis — early signs petechiae, ecchymoses, oedema → then necrosis, pain, systemic signs', tone: 'teal' }],
+            [bullets(['<strong>Fever</strong>', '<strong>Petechiae / ecchymoses</strong>', '<strong>Skin necrosis or ulceration</strong>']), { text: 'Vasculitis — early signs petechiae, ecchymoses, oedema → then necrosis, pain, systemic signs', tone: 'teal' }],
             ['<strong>Localised non-pitting swelling with signs of infection</strong>', { text: 'Cellulitis — aspirate for organisms / inflammatory cells', tone: 'teal' }],
-            ['<strong>Non-pitting skin oedema · lethargy · bradycardia · dermatologic change</strong>', { text: 'Myxedema (hypothyroidism) — combined ↑ permeability + hypoproteinaemia + ↓ lymphatic drainage', tone: 'teal' }],
+            [bullets(['<strong>Non-pitting skin oedema</strong>', '<strong>Lethargy</strong>', '<strong>Bradycardia</strong>', '<strong>Dermatologic change</strong>']), { text: 'Myxedema (hypothyroidism) — combined ↑ permeability + hypoproteinaemia + ↓ lymphatic drainage', tone: 'teal' }],
           ],
         }, '🌡️'),
       ],
@@ -151,8 +151,8 @@ export const oedemaDx: DxApproach = {
             ['<strong>Physiology</strong>', { text: 'Albumin provides ~80% of colloid oncotic pressure', tone: 'teal' }],
             ['<strong>&lt;2.0 g/dL (&lt;20 g/L)</strong>', { text: 'Threshold for overt oedema from hypoalbuminaemia alone', tone: 'teal' }],
             ['<strong>&lt;1.5 g/dL (&lt;15 g/L)</strong>', { text: 'Risk of effusions, oedema and thromboembolism <span style="opacity:.7">(Ettinger Ch 30 · Ch 60)</span>', tone: 'danger' }],
-            ['<strong>Grading</strong>', { text: 'Mildly low 2.1–2.5 g/dL (21–25 g/L) · moderately low 1.5–2.0 g/dL (15–20 g/L) · severely low &lt;1.5 g/dL (&lt;15 g/L)', tone: 'teal' }],
-            ['<strong>Run alongside</strong>', { text: 'Baseline minimum database — <strong>CBC · chemistry · urinalysis</strong> <span style="opacity:.7">(Ettinger Ch 30, Fig 30.1)</span>', tone: 'teal' }],
+            ['<strong>Grading</strong>', { text: bullets(['Mildly low 2.1–2.5 g/dL (21–25 g/L)', 'Moderately low 1.5–2.0 g/dL (15–20 g/L)', 'Severely low &lt;1.5 g/dL (&lt;15 g/L)']), tone: 'teal' }],
+            ['<strong>Run alongside</strong>', { text: bullets(['Baseline minimum database — <strong>CBC</strong>', '<strong>Chemistry</strong>', '<strong>Urinalysis</strong> <span style="opacity:.7">(Ettinger Ch 30, Fig 30.1)</span>']), tone: 'teal' }],
           ],
         }, '🧪'),
 
@@ -163,9 +163,9 @@ export const oedemaDx: DxApproach = {
           dividers: true,
           headers: ['Test result', { text: 'Diagnosis', tone: 'teal' }],
           rows: [
-            ['<strong>UPC (urine protein:creatinine) ↑</strong>', { text: '<strong>Protein-losing nephropathy</strong> — glomerular loss; note concurrent antithrombin loss → thromboembolism', tone: 'teal' }],
-            ['<strong>Faecal α₁-proteinase inhibitor (α₁-PI) ↑</strong>', { text: '<strong>Protein-losing enteropathy</strong> — GI loss; typically panhypoproteinaemia', tone: 'teal' }],
-            ['<strong>Bile acids ± ammonia abnormal</strong>', { text: '<strong>Hepatic failure / portosystemic shunt</strong> — reduced synthesis; needs &gt;80% hepatocyte loss <span style="opacity:.7">(Ettinger Ch 30, Fig 30.1)</span>', tone: 'teal' }],
+            ['<strong>UPC (urine protein:creatinine) ↑</strong>', { text: bullets(['Glomerular loss', 'Note concurrent antithrombin loss → thromboembolism'], { lead: '<strong>Protein-losing nephropathy</strong>' }), tone: 'teal' }],
+            ['<strong>Faecal α₁-proteinase inhibitor (α₁-PI) ↑</strong>', { text: bullets(['GI loss', 'Typically panhypoproteinaemia'], { lead: '<strong>Protein-losing enteropathy</strong>' }), tone: 'teal' }],
+            ['<strong>Bile acids ± ammonia abnormal</strong>', { text: bullets(['Reduced synthesis', 'Needs &gt;80% hepatocyte loss <span style="opacity:.7">(Ettinger Ch 30, Fig 30.1)</span>'], { lead: '<strong>Hepatic failure / portosystemic shunt</strong>' }), tone: 'teal' }],
           ],
         },
 
@@ -176,8 +176,8 @@ export const oedemaDx: DxApproach = {
           dividers: true,
           headers: ['Finding / test', { text: 'Detail', tone: 'teal' }],
           rows: [
-            ['<strong>Jugular distension · murmur · arrhythmia</strong> with normal albumin', { text: '<strong>Echocardiography</strong> for right-sided CHF or pericardial disease — R-CHF is rare in small animals and is almost always accompanied by cavitary effusions', tone: 'teal' }],
-            ['<strong>Thoracic radiographs / ultrasound / CT</strong>', { text: 'Pericardial effusion · heartworm / caval disease · cranial mediastinal mass causing cranial vena cava obstruction <span style="opacity:.7">(Ettinger Ch 30, Fig 30.1)</span>', tone: 'teal' }],
+            [bullets(['<strong>Jugular distension</strong>', '<strong>Murmur</strong>', '<strong>Arrhythmia</strong> with normal albumin']), { text: '<strong>Echocardiography</strong> for right-sided CHF or pericardial disease — R-CHF is rare in small animals and is almost always accompanied by cavitary effusions', tone: 'teal' }],
+            ['<strong>Thoracic radiographs / ultrasound / CT</strong>', { text: bullets(['Pericardial effusion', 'Heartworm / caval disease', 'Cranial mediastinal mass causing cranial vena cava obstruction <span style="opacity:.7">(Ettinger Ch 30, Fig 30.1)</span>']), tone: 'teal' }],
           ],
         },
 
@@ -186,12 +186,12 @@ export const oedemaDx: DxApproach = {
           dividers: true,
           headers: ['Scenario', { text: 'Work-up', tone: 'teal' }],
           rows: [
-            ['<strong>Fever or circulatory shock</strong><br>normal albumin, no cardiac cause', { text: 'SIRS / sepsis or vasculitis — <strong>CBC · chemistry · UA · thoracic and abdominal imaging · infectious-disease testing</strong>; consider an immune-mediated panel', tone: 'teal' }],
+            ['<strong>Fever or circulatory shock</strong><br>normal albumin, no cardiac cause', { text: bullets(['SIRS / sepsis or vasculitis — <strong>CBC</strong>', '<strong>Chemistry</strong>', '<strong>UA</strong>', '<strong>Thoracic and abdominal imaging</strong>', '<strong>Infectious-disease testing</strong>; consider an immune-mediated panel']), tone: 'teal' }],
             ['<strong>Hypothyroid (↓T4)</strong>', { text: 'Myxedema — thyroid panel + imaging', tone: 'teal' }],
-            ['<strong>Localised forelimb</strong>', { text: 'Thoracic rads / US / CT — cranial mediastinal mass · cranial vena cava', tone: 'teal' }],
-            ['<strong>Localised hindlimb</strong>', { text: 'Abdominal rads / US / CT — caudal abdominal mass · caudal vena cava', tone: 'teal' }],
-            ['<strong>Warm swelling with a bruit</strong>', { text: 'AV fistula — US · angiogram', tone: 'teal' }],
-            ['<strong>Non-pitting single limb</strong>', { text: 'Lymphoedema or lymphangiosarcoma — aspirate / biopsy · CBC · chemistry · lymphatic imaging if needed', tone: 'teal' }],
+            ['<strong>Localised forelimb</strong>', { text: bullets(['Thoracic rads / US / CT — cranial mediastinal mass', 'Cranial vena cava']), tone: 'teal' }],
+            ['<strong>Localised hindlimb</strong>', { text: bullets(['Abdominal rads / US / CT — caudal abdominal mass', 'Caudal vena cava']), tone: 'teal' }],
+            ['<strong>Warm swelling with a bruit</strong>', { text: bullets(['AV fistula — US', 'Angiogram']), tone: 'teal' }],
+            ['<strong>Non-pitting single limb</strong>', { text: bullets(['Lymphoedema or lymphangiosarcoma — aspirate / biopsy', 'CBC', 'Chemistry', 'Lymphatic imaging if needed']), tone: 'teal' }],
             ['<strong>Non-pitting with infection</strong>', { text: 'Cellulitis — aspirate the area', tone: 'teal' }],
           ],
         }, '🔬'),
