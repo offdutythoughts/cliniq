@@ -322,6 +322,7 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
           </div>
         )}
         <GridTable cols={b.cols} headers={b.headers} rows={b.rows} dividers={b.dividers}
+          collapsibleSections={b.collapsibleSections}
           stickyFirstCol={b.stickyFirstCol} scroll={b.scroll} minWidth={b.minWidth} fontSize={b.fontSize} onNav={onNav} />
       </div>
     )

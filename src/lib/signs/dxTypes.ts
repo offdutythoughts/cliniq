@@ -27,6 +27,11 @@ export type DxGridTableBlock = {
   headers: TableCell[]
   rows: TableRow[]
   dividers?: boolean
+  /** Fold each `section` band into a collapsible <details> — for a long lookup
+   *  table (a dozen signalments split feline / canine) the reader arrives at a
+   *  short menu of bands and opens the one matching the patient. No effect on a
+   *  table without `section` rows. */
+  collapsibleSections?: boolean
   scroll?: boolean
   /** Pin the first column while the rest scrolls sideways — only with `scroll`,
    *  and only where the table sits on the page background (the pinned cells
