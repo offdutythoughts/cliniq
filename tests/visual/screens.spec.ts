@@ -78,6 +78,19 @@ const SCREENS: Screen[] = [
   { name: 'dx-bleeding-dx', nav: { fn: 'renderDxId', args: ['bleeding', 'dx'] } },
   { name: 'dx-pupd-dx', nav: { fn: 'renderDxId', args: ['pupd', 'dx'] } },
   { name: 'dx-diarrhoea-history', nav: { fn: 'renderDxId', args: ['diarrhoea', 'history'] } },
+  // The only screen covering `kind:'patterns'` (src/app/screens/patternList.tsx).
+  // Both pages that use the block put it on the `exam` tab, and the table above
+  // reached neither exam tab, so the whole .pat-* family — rails, emphasis tint,
+  // cue separators, the hanging → gutter, the section chrome it shares with
+  // GridTable's collapsibleSections bands — was rendering unguarded.
+  //
+  // openAllDetails is what makes it a guardrail rather than a picture of four
+  // closed headers: every section here defaults to `open: false`.
+  {
+    name: 'dx-abnormal-pupil-exam',
+    nav: { fn: 'renderDxId', args: ['abnormal-pupil', 'exam'] },
+    prep: openAllDetails,
+  },
   // Disease pages, protocols, and a lesion-location list (category tiles + tag-*).
   { name: 'disease-hcm', nav: { fn: 'renderDiseasePage', args: ['DIS-HCM'] } },
   { name: 'disease-aa', nav: { fn: 'renderDiseasePage', args: ['DIS-AA'] } },
@@ -134,6 +147,36 @@ function toView(nav: Nav): unknown {
     case 'renderSubTypeDetail': return { kind: 'subTypeDetail', id: nav.args[0] }
     case 'renderDiffDetail': return { kind: 'diff', id: nav.args[0] }
   }
+}
+
+/**
+ * Opens every <details> on the current screen, for screens whose content is
+ * folded away by default.
+ *
+ * PatternList sections and GridTable's `collapsibleSections` bands both render
+ * closed unless the data says otherwise, so a shot of a page carrying them
+ * captures a menu of summary headers and none of the rows underneath — the part
+ * the baseline is actually for. Opening them keeps the summary chrome in frame
+ * too (an open section still shows its header), so one shot covers both halves
+ * of the control; only the caret's closed rotation is left unguarded, which is
+ * not worth a second 4000px PNG.
+ *
+ * Sets `.open` rather than clicking: a click scrolls the summary into view and
+ * moves the page under the shot, while the property assignment fires the same
+ * `toggle` event — and that event is what drives the caret's React state, so the
+ * carets are what we wait on before returning.
+ */
+async function openAllDetails(page: Page) {
+  const total = await page.evaluate(() => {
+    const all = Array.from(document.querySelectorAll('details'))
+    for (const d of all) d.open = true
+    return all.length
+  })
+  // A screen listed with this prep and no <details> has silently stopped
+  // covering what it was added for — fail rather than shoot the same page twice.
+  expect(total, 'openAllDetails: screen has no <details>').toBeGreaterThan(0)
+  await expect(page.locator('details:not([open])')).toHaveCount(0)
+  await expect(page.locator('.pat-caret:not(.open)')).toHaveCount(0)
 }
 
 async function boot(page: Page, theme: string) {
