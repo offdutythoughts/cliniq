@@ -101,3 +101,29 @@ export function stepPatterns(
 export function numBadge(n: number): string {
   return `<span style="display:inline-block;width:15px;height:15px;border-radius:50%;background:rgba(var(--tone-teal),0.18);color:var(--tone-teal-fg);font-size:9px;font-weight:700;text-align:center;line-height:15px;margin-right:6px;">${n}</span>`
 }
+
+/**
+ * A bulleted list for a `gridTable` cell — one idea per line.
+ *
+ * The house style for these tables is ONE CONCEPT PER BULLET: a cell that packs
+ * several distinct findings into a `·`-joined run ("azotaemia · ↑ liver enzymes ·
+ * glucose + ketones") reads as a wall at phone width and hides the fact that
+ * each item is a separate rule-in / rule-out. Give each its own line instead.
+ *
+ * ```ts
+ * { text: bullets(['<strong>Azotaemia</strong> → uraemia', '<strong>Hypercalcaemia</strong>']), tone: 'teal' }
+ * ```
+ *
+ * `lead` is a line above the list (the shared stem — "Appetite suppression or
+ * nausea:"), `foot` a line below it (a qualifier that applies to the whole set).
+ * Uses only RichText-allowed tags (div/span), so it renders inside any authored
+ * `html:`/cell field.
+ */
+export function bullets(items: string[], opts?: { lead?: string; foot?: string }): string {
+  const rows = items
+    .map(i => `<div style="display:flex;gap:6px;align-items:flex-start;"><span style="opacity:.45;">•</span><span>${i}</span></div>`)
+    .join('')
+  const lead = opts?.lead ? `<div style="margin-bottom:4px;">${opts.lead}</div>` : ''
+  const foot = opts?.foot ? `<div style="margin-top:4px;opacity:.85;">${opts.foot}</div>` : ''
+  return `${lead}<div style="display:flex;flex-direction:column;gap:4px;">${rows}</div>${foot}`
+}
