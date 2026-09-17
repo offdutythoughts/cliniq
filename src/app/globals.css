@@ -901,6 +901,39 @@ details.ref-fold[open] > summary::after{content:" ▾";}
 .dx-row.c3{grid-template-columns:repeat(3,minmax(0,1fr));}
 .dx-connector{display:flex;width:100%;align-items:flex-start;}
 .dx-connector .dx-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0 3px;}
+
+/* ── PATTERN LIST (dx `kind:'patterns'`) ─────────────────────────────────────
+   A hairline-ruled index, not a stack of filled cards. It sits on the same
+   pages as `gridTable`, so it borrows that table's vocabulary — no fills, one
+   hairline between rows, tone carried by text — and adds a 2px rail per row.
+   The rails abut (rows are flush, the hairline is inset past the rail), so a
+   section reads as one continuous spine that changes colour at each pattern
+   instead of a dozen separately-boxed tiles. Tone colours stay inline in
+   patternList.tsx; everything static and stateful lives here.
+
+   `.pat-sec-sum`/`.pat-count`/`.pat-caret` are also worn by GridTable's
+   `collapsibleSections` bands, so a folded table and a folded pattern list are
+   the same control. They are a ruled heading, not a filled pill: the rule under
+   a band header is the same hairline the tables draw between rows, which is
+   what keeps the header reading as part of the page's typography rather than a
+   widget dropped onto it. */
+.pat-sec-sum{display:flex;align-items:center;gap:7px;cursor:pointer;list-style:none;
+  padding:7px 2px 5px;border-bottom:1px solid rgba(var(--slate-muted),.3);
+  font-size:var(--fs-chip);font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--gray);}
+.pat-sec-sum::-webkit-details-marker{display:none;}
+.pat-sec-sum:hover{color:var(--white);}
+.pat-sec-sum:hover .pat-caret{opacity:.9;}
+/* Count as a bare mono numeral: "3 patterns · 2 patterns · 1 pattern" down the
+   left of four headers is noise; the digit is the whole message. The word is
+   kept for screen readers via aria-label on the summary. */
+.pat-count{margin-left:auto;font-family:var(--mono);font-size:var(--fs-chip-sub);
+  font-weight:400;letter-spacing:0;text-transform:none;color:var(--gray2);}
+.pat-caret{flex:none;opacity:.6;transition:transform .16s ease,opacity .16s ease;}
+.pat-caret.open{transform:rotate(90deg);}
+.pat-row{position:relative;padding:8px 2px 9px 11px;}
+/* Divider between rows only, inset past the rail so the spine stays unbroken. */
+.pat-row + .pat-row::before{content:'';position:absolute;left:11px;right:0;top:0;height:1px;
+  background:rgba(var(--slate-muted),.18);}
 /* ── NOTES SIDEBAR ── the panel/toolbar chrome is now Tailwind utilities in
    NotesPanel.tsx; only these pseudo-elements (which utilities can't express) remain. */
 input[type="color"]::-webkit-color-swatch-wrapper{padding:0;}

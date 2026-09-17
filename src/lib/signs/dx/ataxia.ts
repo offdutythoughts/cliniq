@@ -13,6 +13,10 @@ export const ataxiaDx: DxApproach = {
   history: {
     title: 'History: Ataxia',
     blocks: [
+      {
+        kind: 'note',
+        html: `💡 Classify the ataxia type first (cerebellar vs vestibular vs proprioceptive) — it dictates which imaging and tests come next. Drug, diet, and vaccination history change the differential dramatically.`,
+      },
       { kind: 'goal', text: 'ONSET, PROGRESSION & DRUG HISTORY' },
       {
         kind: 'gridTable',
@@ -61,14 +65,17 @@ export const ataxiaDx: DxApproach = {
         kind: 'gridTable',
         cols: '1.1fr 1fr',
         dividers: true,
+        // Twelve signalments is a scroll, and the reader only ever needs the
+        // half that matches the species in front of them — so each band folds.
+        collapsibleSections: true,
         headers: ['Patient in front of you', { text: 'Think', tone: 'teal' }],
         rows: [
-          { section: 'Feline' },
+          { section: '🐱 Feline' },
           ['Kitten, non-progressive cerebellar signs from first ambulation', { text: 'Cerebellar hypoplasia (in utero FPV) — <strong>reassure</strong>', tone: 'teal' }],
           ['Young cat, multi-cat household, multifocal CNS signs', { text: 'Neurological FIP — high globulins, low A:G, periventricular MRI lesions', tone: 'teal' }],
           ['FIV / FeLV+ or immunosuppressed, multifocal disease', { text: 'Toxoplasma reactivation', tone: 'teal' }],
           ['Any age, peracute non-progressive vestibular (often summer / outdoor)', { text: 'Idiopathic feline vestibular', tone: 'teal' }],
-          { section: 'Canine' },
+          { section: '🐕 Canine' },
           ['Young purebred terrier (JRT / Parson / Fox), progressive cerebellar signs ± myokymia or skin rippling', { text: 'Spinocerebellar ataxia (SAM — KCNJ10 / CAPN1) — breed-specific DNA test', tone: 'teal' }],
           ['Belgian Malinois / Belgian Shepherd puppy, severe ataxia at 4–8 weeks', { text: 'SDCA1 / SDCA2 — DNA test', tone: 'teal' }],
           ['Young pup, rigid pelvic-limb hyperextension', { text: 'Congenital <em>Neospora caninum</em>', tone: 'teal' }],
@@ -101,11 +108,6 @@ export const ataxiaDx: DxApproach = {
       },
     ],
     after: [
-      {
-        kind: 'note',
-        style: 'margin-top:10px;',
-        html: `💡 Classify the ataxia type first (cerebellar vs vestibular vs proprioceptive) — it dictates which imaging and tests come next. Drug, diet, and vaccination history change the differential dramatically.`,
-      },
       { kind: 'disclaimer' },
     ],
   },
