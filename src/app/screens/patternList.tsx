@@ -22,6 +22,7 @@ import { styleStringToObject as s } from './style'
 import { type Nav, Raw } from './flowHelpers'
 
 const ST_CUES = s('font-size:var(--fs-box);line-height:1.5;color:var(--gray);')
+const ST_CUES_EM = s('font-size:var(--fs-box);line-height:1.5;color:var(--white);')
 const ST_SEP = s('color:rgba(var(--slate-muted),0.7);padding:0 5px;')
 const ST_ARROW = s('opacity:.45;font-weight:400;padding-right:5px;')
 const ST_NOTE = s('font-weight:400;font-size:var(--fs-chip-sub);color:rgba(var(--slate-muted),0.9);padding-left:5px;')
@@ -46,16 +47,20 @@ export function Caret({ open }: { open: boolean }) {
 
 // One pattern. Colour appears exactly twice — the rail and the diagnosis — and
 // means the same thing in both. `emphasis` (the must-not-miss ones: acute
-// glaucoma, lens luxation) solidifies the rail and adds a tint that fades out
-// across the row, so it stands out without re-drawing the row as a box.
+// glaucoma, lens luxation) carries on ink, not on fill: the rail goes solid and
+// a third wider, and the cue line rises from --gray to the page's own text
+// colour, so the whole row reads darker than its neighbours. A tint was tried
+// here and dropped — a washed band is the card look this block just lost, and
+// fading it out across the row only added a soft edge with nothing behind it.
+// The rail widens into the padding (10px + 3px = the same 13px text offset as
+// 11px + 2px), so an emphasised row doesn't shift its text out of the column.
 function PatternCard({ r, onNav }: { r: PatternRow; onNav: Nav }) {
   const rgb = r.tone ? HUE[r.tone].rgb : 'var(--slate-muted)'
   const fg = r.tone ? HUE[r.tone].color : 'var(--white)'
-  const rail = r.emphasis ? fg : `rgba(${rgb},var(--tile-bd-a))`
-  const tint = r.emphasis ? `background:linear-gradient(90deg,rgba(${rgb},var(--tile-bg-a)),rgba(${rgb},0) 78%);` : ''
+  const rail = r.emphasis ? `3px solid ${fg};padding-left:10px` : `2px solid rgba(${rgb},var(--tile-bd-a))`
   return (
-    <div className="pat-row" style={s(`border-left:2px solid ${rail};${tint}`)}>
-      <div style={ST_CUES}>
+    <div className="pat-row" style={s(`border-left:${rail};`)}>
+      <div style={r.emphasis ? ST_CUES_EM : ST_CUES}>
         {r.cues.map((c, i) => (
           <Fragment key={i}>
             {i > 0 && <span style={ST_SEP}>·</span>}
@@ -69,7 +74,7 @@ function PatternCard({ r, onNav }: { r: PatternRow; onNav: Nav }) {
           The negative text-indent hangs the → in its own gutter, so a diagnosis
           that wraps (they do at 375px) keeps its second line under the first
           rather than flush against the rail where a new cue would start. */}
-      <div style={s(`font-size:var(--fs-box);font-weight:600;line-height:1.45;margin-top:3px;padding-left:14px;text-indent:-14px;color:${fg};`)}>
+      <div style={s(`font-size:var(--fs-box);font-weight:${r.emphasis ? 700 : 600};line-height:1.45;margin-top:3px;padding-left:14px;text-indent:-14px;color:${fg};`)}>
         <span style={ST_ARROW}>→</span>
         <Raw html={r.dx} onNav={onNav} />
         {r.note && <span style={ST_NOTE}><Raw html={r.note} onNav={onNav} /></span>}
