@@ -120,6 +120,17 @@
      (slate) on the mono-arthropathy grids, and two neutrals read as one column. */
   --cat-trauma: 146,64,14;         --cat-trauma-fg: #7C2D12;
   --cat-anomalous: 236,72,153;     --cat-anomalous-fg: #9D174D;
+  /* Mix & Match taxonomy adds four groups the flow CatLabels don't have. Three
+     reuse an existing triplet because the concept is the same one under another
+     name and the two labels never appear in one list: Structural absorbs the
+     trauma/foreign-body/obstruction causes (brown), Neuromuscular is the
+     neurological family (indigo), Congenital/Inherited is Anomalous (pink).
+     Other is the deliberate non-category — slate-400, a step lighter than
+     Degenerative's slate-500 so it reads as unclassified rather than as a hue. */
+  --cat-structural: 146,64,14;     --cat-structural-fg: #7C2D12;
+  --cat-neuromuscular: 79,70,229;  --cat-neuromuscular-fg: #3730A3;
+  --cat-congenital: 236,72,153;    --cat-congenital-fg: #9D174D;
+  --cat-other: 148,163,184;        --cat-other-fg: #475569;
 
   /* Flow-node / flow-endpoint location foregrounds: a deep shade on light that
      flips to a bright shade on dark (overridden in the dark block — no per-class
@@ -200,6 +211,8 @@ html[data-theme="dark"]{
   --cat-endocrine-fg: #6EE7B7; --cat-neurological-fg: #A5B4FC;
   --cat-toxic-fg: #FB923C;     --cat-trauma-fg: #E7B48A;
   --cat-anomalous-fg: #F9A8D4;
+  --cat-structural-fg: #E7B48A; --cat-neuromuscular-fg: #A5B4FC;
+  --cat-congenital-fg: #F9A8D4; --cat-other-fg: #94A3B8;
   --tone-slate-fg: #CBD5E1;
   /* Location foregrounds flip deep→bright; per-class dark rules no longer needed. */
   --fg-blue-deep: var(--fg-blue-bright);     --fg-teal-deep: var(--fg-teal-bright);
