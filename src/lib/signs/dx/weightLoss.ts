@@ -1,5 +1,5 @@
 // ── Weight Loss — diagnostic approach (data) ────────────────────────────────
-// Confirm TRUE weight loss (serial weights, >5% over <12 mo) and an ADEQUATE diet
+// Confirm TRUE weight loss (serial weights, >=5% over <=12 mo) and an ADEQUATE diet
 // first; then frame by APPETITE (normal/↑ vs ↓). Minimum database + TT4 (cat),
 // faecal/parasite, TLI/cobalamin/folate (EPI/malabsorption), retroviral test
 // (cat), imaging, GI biopsy, and a search for occult neoplasia. Numbers from
@@ -24,7 +24,9 @@ export const weightLossDx: DxApproach = {
           headers: ['Step', { text: 'Detail', tone: 'teal' }],
           rows: [
             ['<strong>Confirm true weight loss</strong>', { text: 'Compare <strong>recorded serial weights</strong> — not owner impression or a single visit', tone: 'teal' }],
-            ['<strong>Threshold worth investigating</strong>', { text: '<strong>~5% body weight over &lt;12 months</strong> <span style="opacity:.7">(Ettinger Ch 18)</span>', tone: 'teal' }],
+            ['<strong>Threshold worth investigating</strong>', { text: '<strong>≥5% body weight over ≤12 months</strong>, unintentional — the threshold that defines cardiac cachexia in dogs, where it independently predicted shorter survival <span style="opacity:.7">(Ettinger Ch 18 · Ineson 2019 JVIM)</span>', tone: 'teal' }],
+            ['<strong>Why not 10%</strong>', { text: bullets(['In the human criteria 10% is a <em>6-month</em> figure, not a monthly one', 'Chronic disease erodes weight far too slowly for a 10%-per-month rule to catch — cats lose a median <strong>8.9%</strong> in the year before CKD is diagnosed <span style="opacity:.7">(White 2012 JPEN · Freeman 2016 JVIM)</span>']), tone: 'teal' }],
+            ['<strong>Rate is a separate alarm</strong>', { text: '≥5% in a <strong>single month</strong> — or loss faster than the maximum safe <em>intentional</em> rate (dog 1–2%/week · cat 0.5–1%/week) — means work it up now, not at a three-month re-weigh', tone: 'teal' }],
           ],
         },
 
@@ -89,6 +91,7 @@ export const weightLossDx: DxApproach = {
             ['<strong>Weigh on calibrated scales</strong>', { text: 'Objective baseline for the trend', tone: 'teal' }],
             ['<strong>Body condition score (BCS)</strong>', { text: 'Fat stores', tone: 'teal' }],
             ['<strong>Muscle condition score (MCS)</strong> — score separately', { text: 'Generalised muscle wasting out of proportion to fat loss → <strong>cachexia</strong> (chronic inflammation · cancer · cardiac · end-stage renal disease) <span style="opacity:.7">(Ettinger Ch 18)</span>', tone: 'teal' }],
+            ['<strong>A normal BCS does not exclude significant loss</strong>', { text: 'Of 462 hyperthyroid cats, <strong>92%</strong> had lost weight but only <strong>35%</strong> scored thin — while <strong>77%</strong> had detectable muscle loss. Trust the serial weight and the MCS over the BCS <span style="opacity:.7">(Peterson 2016 JVIM)</span>', tone: 'teal' }],
           ],
         }, '⚖️'),
 
@@ -126,9 +129,10 @@ export const weightLossDx: DxApproach = {
           dividers: true,
           headers: ['Do', { text: 'Detail', tone: 'teal' }],
           rows: [
-            ['<strong>Document the loss objectively</strong>', { text: 'Serial weights — &gt;5% over &lt;12 months', tone: 'teal' }],
+            ['<strong>Document the loss objectively</strong>', { text: 'Serial weights — <strong>≥5% over ≤12 months</strong>', tone: 'teal' }],
             ['<strong>Confirm the diet is adequate</strong>', { text: 'In quality and quantity', tone: 'teal' }],
             ['<strong>Then</strong>', { text: bullets(['Inadequate intake is corrected and re-weighed', 'Adequate intake with ongoing loss earns the full work-up below <span style="opacity:.7">(Ettinger Ch 18)</span>']), tone: 'teal' }],
+            ['<strong>Why 5% and not 10%</strong>', { text: bullets(['<strong>Dogs, CHF</strong> — ≥5% loss in ≤12 months defined cardiac cachexia and was independently associated with shorter survival <span style="opacity:.7">(Ineson 2019 JVIM)</span>', '<strong>Cats, CKD</strong> — median <strong>8.9%</strong> of body weight lost in the 12 months before diagnosis, detectable up to 3 years out <span style="opacity:.7">(Freeman 2016 JVIM)</span>', '<strong>Cats, hyperthyroidism</strong> — presented ~1 kg below a premorbid weight recorded only 1–2 years earlier <span style="opacity:.7">(Peterson 2016 JVIM)</span>'], { lead: 'The observed rate of loss in chronic disease sits well under <strong>2% per month</strong> — a 10%-per-month rule would miss nearly every case', foot: 'If anything the threshold is moving <em>down</em>: the human ≥5%/12-month criterion is itself criticised for missing early cachexia, which is why MCS is scored independently of weight <span style="opacity:.7">(Freeman 2012 JVIM)</span>' }), tone: 'teal' }],
           ],
         }, '⚖️'),
 

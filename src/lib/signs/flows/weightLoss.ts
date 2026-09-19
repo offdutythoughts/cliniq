@@ -14,7 +14,8 @@ const weightLossEntry: FlowPage = {
       variant: 'step',
       text: 'CONFIRM THE LOSS AND THE DIET — THEN ASK ABOUT APPETITE',
       subItems: [
-        'Confirm TRUE loss against recorded serial weights — ~5% of body weight in <12 months warrants investigation',
+        'Confirm TRUE loss against recorded serial weights — ≥5% of body weight over ≤12 months warrants investigation, not 10%',
+        'Faster than ~5% in one month · work it up now rather than at a three-month re-weigh',
         'Confirm the diet is adequate in quality AND quantity before working the case up',
         'Exclude underfeeding, poor-quality food, competition or limited access (Ettinger Ch 18)',
       ],
