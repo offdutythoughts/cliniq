@@ -157,10 +157,29 @@ export type DxBlock = DxArrowCtl & (
   /** A tappable navigation link to a lesion-location view. Renders as a
    *  `.dx-dx` button; `tone` selects a tint variant ('primary' default, 'secondary'). */
   | { kind: 'lesionLink'; loc: string; name: string; tone?: 'primary' | 'secondary' }
-  /** Collapsible accordion list — each item has a visible title row and an
-   *  html body that expands on tap. Rendered as native `<details>/<summary>`
-   *  (no RichText boundary — body is plain JSX via RichText component). */
-  | { kind: 'accordion'; items: { title: string; html: string }[]; cols?: number }
+  /** Collapsible accordion list — each item has a visible title row and a body
+   *  that expands on tap. Rendered as native `<details>/<summary>` (no RichText
+   *  boundary — body is plain JSX via RichText component). `label` is the quiet
+   *  teal caption above the list, as on `gridTable`; `gap` is its margin-top
+   *  (px, default 10). Reach for this over a `gridTable` when each left-hand
+   *  value owns a list the reader only wants for the one row matching their
+   *  patient.
+   *
+   *  An item carries either `lines` (one differential per entry — the renderer
+   *  bullets them and puts the count in the header) or `html` (free markup, no
+   *  count). `variant` picks the chrome: 'box' (default) is the tinted teal
+   *  card with "tap to expand"; 'section' borrows the collapsible-band chrome
+   *  `patterns` and `gridTable` already share — caret, uppercase label, count,
+   *  hairline rule — so a folded list reads as page typography rather than a
+   *  stack of widgets. */
+  | {
+      kind: 'accordion'
+      items: { title: string; html?: string; lines?: string[] }[]
+      cols?: number
+      label?: string
+      gap?: number
+      variant?: 'box' | 'section'
+    }
   /** Compact grid comparison table (same renderer as the flowchart tables). */
   | DxGridTableBlock
   /** Finding → most-likely-diagnosis pattern list (see DxPatternsBlock). */
