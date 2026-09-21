@@ -5,7 +5,7 @@
 // ranked differential list grouped by aetiology.
 
 import { useState, useMemo, useRef, useCallback } from 'react'
-import { searchDiseases, type SearchInputs, type SearchCategory, type AgeCategory, type SexFilter, type NeuterFilter, type Species } from '../../lib/search/diseaseSearch'
+import { searchDiseases, topDifferentials, type SearchInputs, type SearchCategory, type AgeCategory, type SexFilter, type NeuterFilter, type Species } from '../../lib/search/diseaseSearch'
 import { useNav } from '../nav/NavContext'
 import { SpTag } from './tags'
 import { Tappable } from './Tappable'
@@ -139,6 +139,11 @@ export function MixMatchScreen() {
 
   const totalCount = results.reduce((n, g) => n + g.items.length, 0)
   const hasAnyInput = breedQuery.trim() || ageCategory || sex || neuter || signKeywords.length > 0 || diagKeywords.length > 0
+
+  // The grouped list below is ordered by aetiology, so the single best match can
+  // sit six categories down. This is the same results, globally ranked.
+  const top = useMemo(() => topDifferentials(results, 5), [results])
+  const termCount = signKeywords.length + diagKeywords.length
 
   return (
     <div style={s('padding-bottom:24px;')}>
@@ -294,6 +299,41 @@ export function MixMatchScreen() {
           <div style={s('font-size:11px;color:var(--gray2);margin-bottom:12px;')}>
             {totalCount} {totalCount === 1 ? 'disease' : 'diseases'} across {results.length} {results.length === 1 ? 'category' : 'categories'} — sorted by relevance
           </div>
+
+          {/* ── Top differentials — the grouped list below is by aetiology, not rank ── */}
+          {top.length >= 2 && (
+            <div style={s('background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin-bottom:18px;')}>
+              <div style={s('font-size:10px;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;')}>
+                Top differentials
+              </div>
+
+              {top.map((item, i) => {
+                const d = item.disease
+                const tint = MIXMATCH_CAT[item.category] ?? MIXMATCH_CAT['Other']
+                const hits = item.matchedSignTerms.length + item.matchedDiagTerms.length
+
+                return (
+                  <Tappable
+                    key={d.id as string}
+                    style={s(`display:flex;align-items:center;gap:9px;padding:7px 0;cursor:pointer;${i > 0 ? 'border-top:1px solid var(--border);' : ''}`)}
+                    onTap={() => nav.navigate({ kind: 'disease', id: d.id as string })}
+                  >
+                    <span style={s(`font-size:11px;font-weight:700;color:${tint.col};width:12px;flex-shrink:0;`)}>{i + 1}</span>
+                    <div style={s('flex:1;min-width:0;')}>
+                      <div style={s('font-size:13px;font-weight:600;color:var(--white);')}>{d.name as string}</div>
+                      <div style={s('font-size:10px;color:var(--gray2);margin-top:1px;')}>
+                        {CAT_EMOJI[item.category] ?? '📋'} {item.category}
+                        {termCount > 0 && ` · ${hits} of ${termCount} ${termCount === 1 ? 'term' : 'terms'}`}
+                      </div>
+                    </div>
+                    <span style={s(`font-size:var(--fs-chip);font-weight:700;padding:1px 6px;border-radius:6px;background:${tint.bg};color:${tint.col};border:1px solid ${tint.border};flex-shrink:0;`)}>
+                      {item.score}pt
+                    </span>
+                  </Tappable>
+                )
+              })}
+            </div>
+          )}
 
           {results.map(group => {
             const tint = MIXMATCH_CAT[group.name] ?? MIXMATCH_CAT['Other']
