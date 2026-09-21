@@ -102,7 +102,10 @@ export const PREVALENCE: Record<string, Partial<Record<PrevSpecies, PrevTier>>> 
   'DIS-CARD-MVD':           { dog: 'common' },      // commonest canine cardiac disease
   'DIS-CARD-DCM':           { dog: 'uncommon',  cat: 'rare' },   // feline DCM rare post-taurine
   'DIS-CARD-ATE':           { cat: 'uncommon' },
-  'DIS-CARD-IE':            { dog: 'rare',      cat: 'very-rare' },
+  // Rare in cats, but a can't-miss diagnosis: at very-rare it fell from 4th to
+  // 9th on a fever-plus-murmur history, which is not where endocarditis belongs.
+  // Rarity is a reason to rank it below the common causes, not to bury it.
+  'DIS-CARD-IE':            { dog: 'rare',      cat: 'rare' },
   'DIS-CARD-TOF':           { dog: 'very-rare', cat: 'very-rare' },
   'DIS-CARD-SAS':           { dog: 'uncommon' },
   'DIS-CARD-PDA':           { dog: 'uncommon',  cat: 'rare' },
@@ -122,7 +125,12 @@ export const PREVALENCE: Record<string, Partial<Record<PrevSpecies, PrevTier>>> 
   'DIS-NEO-ETC':            { dog: 'very-rare' },
 
   // ── Infectious ─────────────────────────────────────────────────────────────
-  'DIS-INFECT-LEPTO':       { dog: 'uncommon',  cat: 'very-rare' }, // cats relatively resistant
+  // Cats are relatively resistant and clinical disease is uncommon, but it is
+  // under-recognised rather than absent, and exposure tracks lifestyle: an
+  // outdoor hunting cat is not an indoor cat. The tier cannot express that, so
+  // it is set for the cat that could plausibly have it. Zoonotic, which is a
+  // second reason not to take the deepest demotion — a miss reaches the owner.
+  'DIS-INFECT-LEPTO':       { dog: 'uncommon',  cat: 'rare' },
   'DIS-GI-PARVO':           { dog: 'common' },      // unvaccinated populations
   'DIS-GI-FPV':             { cat: 'uncommon' },
 
