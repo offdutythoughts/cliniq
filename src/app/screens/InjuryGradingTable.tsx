@@ -8,7 +8,7 @@ import { styleStringToObject as s } from './style'
 const T3 = 'var(--tone-warning-fg)'   // grade 3 / thoracolumbar column — dark amber on light, bright on dark
 const C1 = 'var(--tone-green-fg)'     // cervical column — dark green on light, bright on dark
 
-const WRAP_LABEL = s('font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;margin-top:8px;')
+const WRAP_LABEL = s('font-size:var(--fs-label);font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;margin-top:8px;')
 const SCROLL = s('margin-bottom:8px;')
 const TABLE = s('width:100%;border-collapse:collapse;font-size:var(--fs-chip-sub);min-width:360px;')
 const TH_GRADE = s('padding:5px 5px;font-size:var(--fs-chip-sub);font-weight:700;color:var(--gray2);border-bottom:1.5px solid rgba(148,163,184,0.3);text-align:center;width:28px;')

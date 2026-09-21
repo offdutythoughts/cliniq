@@ -16,7 +16,7 @@ const RED = 'var(--tone-danger-fg)'
 const BORDER = 'rgba(var(--slate-muted),0.2)'
 const HEAD_BORDER = 'rgba(var(--slate-muted),0.35)'
 
-const LABEL = s('font-size:10px;font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;margin-top:10px;')
+const LABEL = s('font-size:var(--fs-label);font-weight:700;color:var(--teal-light);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;margin-top:10px;')
 const SCROLL = s('margin-bottom:4px;')
 const TABLE = s('width:100%;border-collapse:collapse;font-size:var(--fs-chip-sub);min-width:340px;')
 const FOOT = s('font-size:var(--fs-chip-sub);opacity:.75;line-height:1.5;margin-top:2px;')

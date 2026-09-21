@@ -13,7 +13,8 @@ const anorexiaEntry: FlowPage = {
       text: 'CAN\'T EAT (pseudo-anorexia) vs WON\'T EAT (true anorexia)?',
       subItems: [
         'Offer food and watch — kibble <em>and</em> soft food',
-        '<strong>CAN\'T EAT</strong> (pseudo-anorexia): goes to the food but <strong>drops it · drools · pain on prehension · paws at the mouth · gags / regurgitates</strong>; may take soft food but refuse kibble',
+        '<strong>CAN\'T EAT</strong> (pseudo-anorexia): goes to the food but <strong>drops it · drools · paws at the mouth · gags / regurgitates</strong>',
+        '<strong>Pain on prehension</strong> — may take soft food but refuse kibble',
         '<strong>WON\'T EAT</strong> (true anorexia): <strong>no interest in food at all</strong>, any texture — usually with lethargy, vomiting, PU/PD or fever',
         'Traps: nausea also causes drooling / lip-licking; long-standing oral pain becomes a learned food aversion',
       ],
