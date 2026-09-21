@@ -7,6 +7,7 @@
 
 import type { DiseaseRow } from '../../data/db'
 import { DB } from '../../data/db'
+import { prevalenceFactor } from './prevalence'
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -27,7 +28,12 @@ export interface SearchInputs {
 
 export interface DiseaseResult {
   disease: DiseaseRow
+  /** Ranking score: `evidence` scaled by the species prevalence prior. */
   score: number
+  /** How well the history fits, before prevalence. Decides inclusion. */
+  evidence: number
+  /** Species prevalence multiplier applied to `evidence`; 1 = neutral. */
+  prevalence: number
   breakdown: {
     breed: number
     age: number
@@ -311,14 +317,22 @@ const SYNONYM_GROUPS: string[][] = [
 const synonymMap = new Map<string, string[]>()
 for (const group of SYNONYM_GROUPS) {
   for (const term of group) {
-    synonymMap.set(term.toLowerCase(), group.map(t => t.toLowerCase()))
+    synonymMap.set(synKey(term), group.map(t => t.toLowerCase()))
   }
+}
+
+// Separator spelling must not decide whether a term finds its synonym group.
+// termRegex already treats "pu/pd", "pu-pd" and "pu / pd" as the same text, but
+// the lookup here was exact, so only the one spelling that happened to be in
+// SYNONYM_GROUPS expanded to polyuria/polydipsia — the other two silently
+// searched for their own literal string and returned a shorter list.
+function synKey(s: string): string {
+  return s.toLowerCase().trim().replace(/[\s\-/]+/g, ' ')
 }
 
 /** Expand a keyword to include all its synonyms (including itself). */
 function expandKeyword(kw: string): string[] {
-  const k = kw.toLowerCase()
-  return synonymMap.get(k) ?? [k]
+  return synonymMap.get(synKey(kw)) ?? [kw.toLowerCase()]
 }
 
 // ── Text matching helper ──────────────────────────────────────────────────────
@@ -327,12 +341,42 @@ function fieldText(d: DiseaseRow, ...keys: string[]): string {
   return keys.map(k => (d[k] as string | undefined) ?? '').join(' ').toLowerCase()
 }
 
+// Whole-term matching. A plain `text.includes(term)` is catastrophic on a short
+// clinical abbreviation: "uti" matched `calcinosis cutis`, `caution` and
+// `routine` (43 of 389 pages, only 9 of them real), and "pu" matched `puppy`,
+// `pupil` and `pulmonary` (214 of 389). Every one of those spurious hits scored
+// the same as a genuine one, which is how a phantom "uti" on the feline
+// hyperadrenocorticism page outranked diabetes mellitus on a classic DM history.
+//
+// The term is anchored at both ends against non-alphanumerics, and any run of
+// space / hyphen / slash inside it matches any such run in the text, so "pu/pd"
+// also matches "pu / pd" and "pu-pd", and "weight loss" matches "weight-loss".
+//
+// Deliberately NOT a lookbehind: iOS Safari only gained those in 16.4, and this
+// is a phone-first app.
+const rxCache = new Map<string, RegExp>()
+const NEVER = /(?!)/
+
+function termRegex(term: string): RegExp {
+  let r = rxCache.get(term)
+  if (!r) {
+    const body = term
+      .split(/[\s\-/]+/)
+      .filter(Boolean)
+      .map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+      .join('[\\s\\-/]+')
+    r = body ? new RegExp(`(^|[^a-z0-9])${body}($|[^a-z0-9])`, 'i') : NEVER
+    rxCache.set(term, r)
+  }
+  return r
+}
+
 function keywordHits(text: string, keywords: string[]): string[] {
   const matched: string[] = []
   for (const kw of keywords) {
     if (kw.length < 2) continue
     const expanded = expandKeyword(kw)
-    if (expanded.some(term => text.includes(term))) matched.push(kw)
+    if (expanded.some(term => termRegex(term).test(text))) matched.push(kw)
   }
   return matched
 }
@@ -357,6 +401,26 @@ export interface SearchCategory {
   items: DiseaseResult[]
 }
 
+/** Smallest weight any matched term can carry — see the IDF note in searchDiseases. */
+const IDF_FLOOR = 0.5
+
+const round1 = (n: number) => Math.round(n * 10) / 10
+
+/**
+ * The highest-scoring differentials across every category.
+ *
+ * The grouped view orders by aetiology (CAT_ORDER), so Endocrine renders sixth
+ * of ten and the single best match on a classic endocrine history sits below the
+ * fold. This flattens the groups back into one globally ranked list for the
+ * summary row at the top of the screen.
+ */
+export function topDifferentials(groups: SearchCategory[], n = 5): DiseaseResult[] {
+  return groups
+    .flatMap(g => g.items)
+    .sort((a, b) => b.score - a.score || (a.disease.name as string).localeCompare(b.disease.name as string))
+    .slice(0, n)
+}
+
 export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
   const { species, breedQuery, ageCategory, sex, neuter, signKeywords, diagKeywords } = inputs
 
@@ -365,7 +429,16 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
 
   if (!hasSignalment && !hasKeywords) return []
 
-  const results: DiseaseResult[] = []
+  // ── Pass 1: species filter, then match every keyword once ──
+  // The match result is kept so pass 2 can score without re-running the regexes,
+  // and the document frequencies are accumulated on the way through.
+  const candidates: {
+    d: DiseaseRow
+    signHits: string[]
+    diagHits: string[]
+  }[] = []
+  const signDf = new Map<string, number>()
+  const diagDf = new Map<string, number>()
 
   for (const d of DB.disease_page) {
     // ── Species filter (hard exclude) ──
@@ -375,6 +448,31 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
       if (species === 'cat' && !sp.includes('cat')) continue
     }
 
+    const signHits = keywordHits(fieldText(d, 'signs', 'severe', 'synonyms', 'path', 'etiology'), signKeywords)
+    const diagHits = keywordHits(fieldText(d, 'conf', 'supp'), diagKeywords)
+    for (const t of signHits) signDf.set(t, (signDf.get(t) ?? 0) + 1)
+    for (const t of diagHits) diagDf.set(t, (diagDf.get(t) ?? 0) + 1)
+    candidates.push({ d, signHits, diagHits })
+  }
+
+  // ── Term weights: inverse document frequency over the filtered corpus ──
+  // A flat 2 points per matched term let a disease win by matching MORE terms
+  // rather than better ones. Across the 303 cat pages `lethargy` appears in 78
+  // and `polyphagia` in 7 — polyphagia is an order of magnitude more
+  // discriminating and used to be worth exactly the same. Weighting by log(N/df)
+  // makes a common sign cheap and a rare one decisive, and it derives entirely
+  // from the corpus, so it needs no authoring on the 389 disease pages.
+  //
+  // The floor keeps a near-universal sign (df → N, where the raw weight goes to
+  // zero or negative) worth a token amount rather than silently free.
+  const N = candidates.length
+  const idf = (df: number) => Math.max(IDF_FLOOR, Math.log(N / (1 + df)))
+  const weigh = (terms: string[], df: Map<string, number>) =>
+    terms.reduce((sum, t) => sum + idf(df.get(t) ?? 0), 0)
+
+  const results: DiseaseResult[] = []
+
+  for (const { d, signHits, diagHits } of candidates) {
     // ── Breed ──
     const bScore = breedScore(d.breed as string | undefined, breedQuery)
 
@@ -403,28 +501,41 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
       }
     }
 
-    // ── Clinical signs ──
-    const signText = fieldText(d, 'signs', 'severe', 'synonyms', 'path', 'etiology')
-    const matchedSignTerms = keywordHits(signText, signKeywords)
-    const signScore = matchedSignTerms.length * 2
+    // ── Clinical signs + diagnostics (IDF-weighted) ──
+    const matchedSignTerms = signHits
+    const signScore = weigh(matchedSignTerms, signDf)
+    const matchedDiagTerms = diagHits
+    const diagScore = weigh(matchedDiagTerms, diagDf)
 
-    // ── Diagnostics ──
-    const diagText = fieldText(d, 'conf', 'supp')
-    const matchedDiagTerms = keywordHits(diagText, diagKeywords)
-    const diagScore = matchedDiagTerms.length * 2
-
-    const score = bScore + aScore + sxScore + signScore + diagScore
+    // How well the history fits, before prevalence is considered at all.
+    const evidence = bScore + aScore + sxScore + signScore + diagScore
 
     // Must have at least one keyword hit if keywords were provided,
-    // or at least some signalment match if only signalment provided
+    // or at least some signalment match if only signalment provided.
+    //
+    // Both tests read the EVIDENCE score, never the prevalence-adjusted one, so
+    // the prior can reorder the differential list but can never shorten it — a
+    // rare disease that fits the history is always still on it.
     if (hasKeywords && matchedSignTerms.length === 0 && matchedDiagTerms.length === 0) continue
-    if (!hasKeywords && score === 0) continue
+    if (!hasKeywords && evidence === 0) continue
+
+    // ── Species prevalence (ranking only) ──
+    const prev = prevalenceFactor(d.id as string, species)
+    const score = round1(evidence * prev)
 
     const rawCat = (d['cat'] as string | undefined) ?? inferCat(d)
     results.push({
       disease: d,
       score,
-      breakdown: { breed: bScore, age: aScore, sex: sxScore, signs: signScore, diag: diagScore },
+      evidence: round1(evidence),
+      prevalence: prev,
+      breakdown: {
+        breed: bScore,
+        age: aScore,
+        sex: sxScore,
+        signs: round1(signScore),
+        diag: round1(diagScore),
+      },
       matchedSignTerms,
       matchedDiagTerms,
       category: normCat(rawCat),

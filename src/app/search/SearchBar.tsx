@@ -1,14 +1,32 @@
 'use client'
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, useState } from 'react'
 import React from 'react'
 import { useSearch } from './SearchContext'
 import { useNav } from '../nav/NavContext'
 import { DB } from '../../data/db'
 import { FLOW_SIGNS, DX_HOME_CARDS } from '../../lib/signs/registry'
+import { TABS } from '../nav/view'
 import type { View } from '../nav/view'
 
 type Result = { label: string; sub: string; snippet?: string; icon?: string; view: View }
-type Group = { title: string; results: Result[] }
+type Group = { key: FilterKey; results: Result[] }
+
+/** Content categories the dropdown can be narrowed to. `all` is the default.
+ *
+ *  Each chip is named after the bottom-nav tab its results live under, and takes
+ *  that name from TABS rather than repeating the string — view.ts warns that a
+ *  second, hand-synced copy of these labels drifts without anything catching it.
+ *  Mix & Match (3) and Settings (5) hold no searchable content, so no chip. */
+type FilterKey = 'signs' | 'dx' | 'disease' | 'protocol'
+const FILTERS: { key: FilterKey; label: string }[] = [
+  { key: 'signs',    label: TABS[0].label },  // Clinical
+  { key: 'dx',       label: TABS[1].label },  // Diagnostic
+  { key: 'disease',  label: TABS[2].label },  // Disease
+  { key: 'protocol', label: TABS[4].label },  // Protocols
+]
+/** One label per category, used for both the chip and the result-group header
+ *  so the two can never disagree about what a section is called. */
+const FILTER_LABEL = Object.fromEntries(FILTERS.map(f => [f.key, f.label])) as Record<FilterKey, string>
 
 /** Render text with every occurrence of `term` wrapped in a yellow highlight mark. */
 function Highlight({ text, term }: { text: string; term: string }) {
@@ -63,17 +81,20 @@ function buildGroups(lower: string): Group[] {
   const flows = FLOW_SIGNS
     .filter(s => s.title.toLowerCase().includes(lower) || s.sub.toLowerCase().includes(lower) || kwHit(s.keywords, lower))
     .map(s => ({ label: s.title, sub: s.sub, icon: s.icon, view: { kind: 'flow' as const, flowId: s.flowId } }))
-  if (flows.length) groups.push({ title: 'Clinical Signs', results: flows })
+  if (flows.length) groups.push({ key: 'signs', results: flows })
 
   // ── Diagnostic approaches ─────────────────────────────────────────────────
   const dx = DX_HOME_CARDS
     .filter(c => c.title.toLowerCase().includes(lower) || c.sub.toLowerCase().includes(lower) || kwHit(c.keywords, lower))
     .map(c => ({ label: c.title, sub: c.sub, icon: c.icon, view: { kind: 'dx' as const, sign: c.sign as string, tab: 'history' } }))
-  if (dx.length) groups.push({ title: 'Diagnostic Approaches', results: dx })
+  if (dx.length) groups.push({ key: 'dx', results: dx })
 
-  // ── Disease pages — full content search ───────────────────────────────────
-  const nameMatchDiseases: Result[] = []
-  const contentMatchDiseases: Result[] = []
+  // ── Disease pages + lesion sub-types — full content search ────────────────
+  // Both render as a disease-style reference page, so they share one group: a
+  // vet searching a term does not care whether the page hangs off the disease
+  // list or off a sign flow's localisation drill-down.
+  const nameMatches: Result[] = []
+  const contentMatches: Result[] = []
 
   for (const d of DB.disease_page) {
     const nameHit  = (d.name || '').toLowerCase().includes(lower) ||
@@ -87,21 +108,12 @@ function buildGroups(lower: string): Group[] {
     const snip = nameHit ? '' : snippet(d as Record<string, unknown>, lower, DISEASE_SKIP)
 
     const result: Result = { label: d.name, sub, snippet: snip || undefined, view: { kind: 'disease' as const, id: d.id } }
-    if (nameHit) nameMatchDiseases.push(result)
-    else contentMatchDiseases.push(result)
+    if (nameHit) nameMatches.push(result)
+    else contentMatches.push(result)
   }
 
-  // Name/synonym matches first, then content matches — all matches surfaced
-  // (the dropdown scrolls), so nothing relevant is hidden behind a cap.
-  const allDiseases = [...nameMatchDiseases, ...contentMatchDiseases]
-  if (allDiseases.length) groups.push({ title: 'Disease Pages', results: allDiseases })
-
-  // ── Lesion sub-types — full content search ────────────────────────────────
-  // `directDis` sub-types render the disease page itself, which the Disease
-  // Pages group already surfaces — listing them here would duplicate every hit.
-  const nameMatchLesions: Result[] = []
-  const contentMatchLesions: Result[] = []
-
+  // `directDis` sub-types render the disease page itself, which the loop above
+  // already surfaced — listing them again would duplicate every hit.
   for (const l of DB.lesion_type) {
     if (l.directDis && l.dis) continue
     const nameHit = l.sub.toLowerCase().includes(lower) || l.loc_name.toLowerCase().includes(lower)
@@ -112,12 +124,14 @@ function buildGroups(lower: string): Group[] {
     const snip = nameHit ? '' : snippet(l as Record<string, unknown>, lower, LESION_SKIP)
 
     const result: Result = { label: l.sub, sub, snippet: snip || undefined, view: { kind: 'subTypeDetail' as const, id: l.id } }
-    if (nameHit) nameMatchLesions.push(result)
-    else contentMatchLesions.push(result)
+    if (nameHit) nameMatches.push(result)
+    else contentMatches.push(result)
   }
 
-  const allLesions = [...nameMatchLesions, ...contentMatchLesions]
-  if (allLesions.length) groups.push({ title: 'Lesion Sub-types', results: allLesions })
+  // Name/synonym matches first, then content matches — all matches surfaced
+  // (the dropdown scrolls), so nothing relevant is hidden behind a cap.
+  const allDiseases = [...nameMatches, ...contentMatches]
+  if (allDiseases.length) groups.push({ key: 'disease', results: allDiseases })
 
   // ── Protocols — full content search (name + trigger + steps) ─────────────
   const protocols: Result[] = []
@@ -151,9 +165,8 @@ function buildGroups(lower: string): Group[] {
       }
     }
     protocols.push({ label: p.name, sub: p.sp, snippet: snip || undefined, view: { kind: 'protocol' as const, id: p.id } })
-    if (protocols.length >= 6) break
   }
-  if (protocols.length) groups.push({ title: 'Protocols', results: protocols })
+  if (protocols.length) groups.push({ key: 'protocol', results: protocols })
 
   return groups
 }
@@ -162,11 +175,26 @@ export default function SearchBar() {
   const { query, setQuery } = useSearch()
   const nav = useNav()
   const inputRef = useRef<HTMLInputElement>(null)
+  // `null` = no filter, every category shown. Kept across queries so a vet who
+  // is only after protocols stays in protocols while trying several terms.
+  const [filter, setFilter] = useState<FilterKey | null>(null)
 
   const lower = query.trim().toLowerCase()
   const groups = useMemo(() => (lower.length >= 2 ? buildGroups(lower) : []), [lower])
   const hasResults = groups.some(g => g.results.length > 0)
   const showDropdown = lower.length >= 2
+
+  // Counts come from the unfiltered groups, so every chip keeps showing how
+  // much it holds even while another chip is active.
+  const counts = useMemo(() => {
+    const c = {} as Record<FilterKey, number>
+    for (const g of groups) c[g.key] = g.results.length
+    return c
+  }, [groups])
+  const total = groups.reduce((n, g) => n + g.results.length, 0)
+
+  const shown = filter ? groups.filter(g => g.key === filter) : groups
+  const filteredOut = hasResults && shown.length === 0
 
   const handleSelect = (view: View) => {
     if (view.kind === 'tab') nav.navTo(view.tab)
@@ -201,9 +229,37 @@ export default function SearchBar() {
       )}
       {showDropdown && hasResults && (
         <div className="global-search-dropdown">
-          {groups.map(group => (
-            <div key={group.title} className="global-search-group">
-              <div className="global-search-group-title">{group.title}</div>
+          <div className="global-search-filters" role="group" aria-label="Filter results by section">
+            <button
+              className={'global-search-filter' + (filter === null ? ' is-active' : '')}
+              onClick={() => setFilter(null)}
+              aria-pressed={filter === null}
+            >
+              All <span className="global-search-filter-count">{total}</span>
+            </button>
+            {FILTERS.map(f => (
+              <button
+                key={f.key}
+                className={'global-search-filter' + (filter === f.key ? ' is-active' : '')}
+                onClick={() => setFilter(filter === f.key ? null : f.key)}
+                aria-pressed={filter === f.key}
+                disabled={!counts[f.key]}
+              >
+                {f.label} <span className="global-search-filter-count">{counts[f.key] || 0}</span>
+              </button>
+            ))}
+          </div>
+          {filteredOut && (
+            <div className="global-search-empty">
+              No matches in this section.
+              <button className="global-search-empty-reset" onClick={() => setFilter(null)}>
+                Show all {total} results
+              </button>
+            </div>
+          )}
+          {shown.map(group => (
+            <div key={group.key} className="global-search-group">
+              <div className="global-search-group-title">{FILTER_LABEL[group.key]}</div>
               {group.results.map((r, i) => (
                 <button key={i} className="global-search-result" onClick={() => handleSelect(r.view)}>
                   {r.icon && <span className="global-search-result-icon">{r.icon}</span>}

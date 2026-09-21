@@ -15,10 +15,11 @@ export const wetEyeDx: DxApproach = {
     blocks: [
       { kind: 'goal', text: 'CHARACTERISE THE EPIPHORA' },
 
-      // Two independent questions, not three peer cards. Pain IS the
-      // production-vs-drainage fork, so its arms are a matched pair carrying
-      // the same blue/teal the flowchart gives INCREASED PRODUCTION / REDUCED
-      // DRAINAGE. Discharge character is a separate axis and gets its own band.
+      // Pain IS the production-vs-drainage fork, so its arms are a matched pair
+      // carrying the same blue/teal the flowchart gives INCREASED PRODUCTION /
+      // REDUCED DRAINAGE. Discharge character and laterality are two further
+      // independent axes — each narrows the differential on its own, so each
+      // gets a finding → points-to table rather than a one-line banner.
       {
         kind: 'row',
         cols: 2,
@@ -41,14 +42,81 @@ export const wetEyeDx: DxApproach = {
         ],
       },
       {
-        kind: 'row',
-        cols: 1,
+        kind: 'accordion',
+        variant: 'section',
         label: 'Discharge character',
+        cols: 2,
         items: [
           {
-            style: 'text-align:left;font-size:9px;',
-            html: `<strong style="font-size:10px;">🧪 Serous (clear) vs mucoid vs mucopurulent</strong> · unilateral vs bilateral<br>
-      <span style="opacity:.75;">Mucopurulent → bacterial / dacryocystitis</span>`,
+            title: 'Serous / clear',
+            lines: [
+              '<strong>Reflex tearing</strong> from pain — ulcer, FB, ectopic cilium',
+              'Pure <strong>drainage failure</strong> — NLS obstruction, puncta atresia (clear tears spilling, no discomfort)',
+              'Early viral conjunctivitis',
+              'Allergic conjunctivitis',
+            ],
+          },
+          {
+            title: 'Mucoid / ropy',
+            lines: [
+              '<strong>KCS</strong> — paradoxical epiphora with tacky grey mucus',
+              'Chronic conjunctivitis',
+              'Brachycephalic ocular surface disease',
+            ],
+          },
+          {
+            title: 'Mucopurulent',
+            lines: [
+              '<strong>Dacryocystitis</strong> — waxing/waning, reflux on lacrimal sac pressure',
+              'Bacterial conjunctivitis',
+              'Feline URTI (Chlamydia · Mycoplasma · FHV-1)',
+              'KCS with secondary infection',
+              'Infected / deep ulcer',
+            ],
+          },
+          {
+            title: 'Haemorrhagic',
+            lines: [
+              '<strong>Nasal or orbital neoplasia</strong> — especially with epistaxis · facial deformity',
+              'Trauma — eyelid, canalicular or punctal laceration',
+              'Fungal rhinitis eroding the NLS',
+              'Severe FHV-1 (🐱)',
+              'Coagulopathy',
+            ],
+          },
+        ],
+      },
+      {
+        kind: 'accordion',
+        variant: 'section',
+        label: 'Laterality',
+        items: [
+          {
+            title: 'Unilateral',
+            lines: [
+              'A <strong>focal, mechanical cause</strong> until proven otherwise',
+              'Foreign body (grass awn under the TEL) · ectopic cilium · ulcer',
+              'Dacryocystitis · NLS obstruction (dacryolith, stricture)',
+              'Nasal / orbital neoplasia in an older patient',
+              'Trauma to the puncta or canaliculi',
+            ],
+          },
+          {
+            title: 'Bilateral',
+            lines: [
+              'A <strong>surface, conformational or systemic cause</strong>',
+              'KCS · allergic conjunctivitis',
+              'Infectious — FHV-1 · FCV · Chlamydia (🐱); CIRD (🐕)',
+              'Brachycephalic conformation · macroblepharon · entropion · distichiasis',
+              'Congenital puncta atresia / micropuncta (young, lifelong)',
+            ],
+          },
+          {
+            title: 'Unilateral → bilateral',
+            lines: [
+              'Infectious conjunctivitis spreading to the second eye',
+              'KCS that began asymmetrically',
+            ],
           },
         ],
       },

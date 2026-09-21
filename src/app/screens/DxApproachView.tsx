@@ -13,7 +13,7 @@ import { useNav } from '../nav/NavContext'
 import { styleStringToObject as s, toneBox } from './style'
 import { NotFound } from './NotFound'
 import { GridTable } from './gridTable'
-import { PatternList } from './patternList'
+import { Caret, PatternList } from './patternList'
 import { type Nav, Raw, ToneBox } from './flowHelpers'
 import { Tappable } from './Tappable'
 import { AuthoredHtml, CalloutBody, DISCLAIMER, DiseaseGrid } from './sharedBlocks'
@@ -119,11 +119,59 @@ function DxCallout({ b, onNav }: { b: Extract<DxBlock, { kind: 'callout' }>; onN
   )
 }
 
-function DxAccordion({ b, onNav }: { b: Extract<DxBlock, { kind: 'accordion' }>; onNav: Nav }) {
-  const grid = b.cols ? `display:grid;grid-template-columns:repeat(${b.cols},minmax(0,1fr));gap:6px;align-items:start;` : 'display:flex;flex-direction:column;gap:6px;'
+type DxAccordionItem = Extract<DxBlock, { kind: 'accordion' }>['items'][number]
+
+/** The body of one accordion item: `lines` become a bulleted list, `html` is
+ *  authored markup passed through the RichText boundary. */
+function DxAccordionBody({ item, onNav }: { item: DxAccordionItem; onNav: Nav }) {
+  if (item.lines) {
+    return (
+      <div style={s('display:flex;flex-direction:column;gap:4px;')}>
+        {item.lines.map((l, i) => (
+          <div key={i} style={s('display:flex;gap:6px;align-items:flex-start;')}>
+            <span style={s('opacity:.45;')}>•</span>
+            <span><Raw html={l} onNav={onNav} /></span>
+          </div>
+        ))}
+      </div>
+    )
+  }
+  return <Raw html={item.html ?? ''} onNav={onNav} />
+}
+
+/** The 'section' variant — the same caret / uppercase label / count / hairline
+ *  band that `patterns` and a folded `gridTable` wear, so all three folded
+ *  lists on a page are one control rather than three. */
+function DxAccordionSection({ item, onNav }: { item: DxAccordionItem; onNav: Nav }) {
+  const [open, setOpen] = useState(false)
+  const n = item.lines?.length
   return (
+    <details onToggle={e => setOpen((e.currentTarget as HTMLDetailsElement).open)} style={s('width:100%;')}>
+      <summary className="pat-sec-sum" aria-label={n === undefined ? item.title : `${item.title} — ${n} item${n === 1 ? '' : 's'}`}>
+        <Caret open={open} />
+        {item.title}
+        {n !== undefined && <span className="pat-count" aria-hidden="true">{n}</span>}
+      </summary>
+      <div style={s('padding:8px 2px 9px 14px;font-size:var(--fs-chip);line-height:1.6;color:var(--gray);')}>
+        <DxAccordionBody item={item} onNav={onNav} />
+      </div>
+    </details>
+  )
+}
+
+function DxAccordion({ b, onNav }: { b: Extract<DxBlock, { kind: 'accordion' }>; onNav: Nav }) {
+  const section = b.variant === 'section'
+  // The section variant's bands are ruled headings, so they stack flush — a
+  // 6px gap between them would break the run of hairlines into floating rows.
+  const gap = section ? 0 : 6
+  const grid = b.cols
+    ? `display:grid;grid-template-columns:repeat(${b.cols},minmax(0,1fr));gap:${gap}px ${section ? 18 : 6}px;align-items:start;`
+    : `display:flex;flex-direction:column;gap:${gap}px;`
+  const list = (
     <div style={s(grid)}>
-      {b.items.map((item, i) => (
+      {b.items.map((item, i) => section
+        ? <DxAccordionSection key={i} item={item} onNav={onNav} />
+        : (
         <ToneBox key={i} tone="teal" extra="overflow:hidden;">
           <details>
             <summary style={s('padding:10px 12px;font-size:11px;font-weight:700;color:var(--tone-teal-fg);cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;')}>
@@ -131,11 +179,20 @@ function DxAccordion({ b, onNav }: { b: Extract<DxBlock, { kind: 'accordion' }>;
               <span style={s('font-size:10px;opacity:.6;flex-shrink:0;margin-left:8px;')}>▸ tap to expand</span>
             </summary>
             <div style={s('padding:8px 12px 10px;font-size:10.5px;line-height:1.6;color:var(--gray);border-top:1px solid rgba(var(--tone-teal),0.15);')}>
-              <Raw html={item.html} onNav={onNav} />
+              <DxAccordionBody item={item} onNav={onNav} />
             </div>
           </details>
         </ToneBox>
       ))}
+    </div>
+  )
+  // A caption turns the list into a named band, the way `gridTable`'s label
+  // does — without it two accordions back to back read as one long list.
+  if (!b.label && b.gap === undefined) return list
+  return (
+    <div style={s(`margin-top:${b.gap ?? 10}px;width:100%;`)}>
+      {b.label && <div style={CAPTION}>{b.label}</div>}
+      {list}
     </div>
   )
 }
