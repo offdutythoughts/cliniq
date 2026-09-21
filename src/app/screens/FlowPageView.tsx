@@ -12,6 +12,7 @@ import type {
   AlertItem,
 } from '../../lib/signs/flowTypes'
 import { HUE, TITLE } from '../../lib/signs/tone'
+import { CAT_STYLE, type CatTint } from './catPalette'
 import { FLOWS } from '../../lib/signs/flows'
 import { DX } from '../../lib/signs/dx'
 import { SIGNS } from '../../lib/signs/registry'
@@ -528,33 +529,14 @@ function CategoryBlock({ columns, cols, preset, lead, onNav }: { columns: CatCol
 }
 
 // ── Category columns (CAT_STYLE) ──────────────────────────────────────────────
-const catStyle = (v: string) => ({ bg: `rgba(var(--cat-${v}),var(--tile-bg-a))`, border: `rgba(var(--cat-${v}),var(--tile-bd-a))`, col: `var(--cat-${v}-fg)` })
-// One lesion category → one colour, everywhere. Keys are the `CatLabel` union in
-// flowTypes; `lint:cats` fails any category column whose label is neither a key
-// here nor a reviewed page-specific (anatomical / mechanism) column.
-const CAT_STYLE: Record<string, { bg: string; border: string; col: string }> = {
-  'Vascular': catStyle('vascular'),
-  'Inflammatory': catStyle('inflammatory'),
-  'Infectious': catStyle('infectious'),
-  'Neoplastic': catStyle('neoplastic'),
-  'Immune-mediated': catStyle('immune'),
-  'Degenerative': catStyle('degenerative'),
-  'Metabolic / Endocrine': catStyle('metabolic'),
-  'Metabolic': catStyle('metabolic'),
-  'Endocrine': catStyle('endocrine'),
-  'Neurological': catStyle('neurological'),
-  'Toxic': catStyle('toxic'),
-  // Drug-induced disease is iatrogenic toxicity — same palette, distinct label.
-  'Drug-induced': catStyle('toxic'),
-  'Trauma': catStyle('trauma'),
-  'Anomalous': catStyle('anomalous'),
-}
+// The table itself lives in catPalette, shared with the Mix & Match result
+// groups so one category is one colour on both screens.
 const FALLBACK_TONES: Tone[] = ['slate', 'indigo', 'violet', 'teal', 'orange', 'green']
 // Single source of truth for a category's tinted style triple, shared by both
 // category blocks so headers/tiles can never diverge: an explicit `tone` (HUE)
 // wins, else a CAT_STYLE label, else an index-cycled fallback tone. Alphas are
 // always tokenised (--tile-bg-a / --tile-bd-a) so light mode stays legible.
-function resolveCatStyle(cat: string, tone?: Tone, i = 0): { bg: string; border: string; col: string } {
+function resolveCatStyle(cat: string, tone?: Tone, i = 0): CatTint {
   const h = tone ? HUE[tone] : null
   if (h) return { bg: `rgba(${h.rgb},var(--tile-bg-a))`, border: `rgba(${h.rgb},var(--tile-bd-a))`, col: h.color }
   if (CAT_STYLE[cat]) return CAT_STYLE[cat]

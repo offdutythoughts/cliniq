@@ -10,7 +10,11 @@ import { useNav } from '../nav/NavContext'
 import { SpTag } from './tags'
 import { Tappable } from './Tappable'
 import { styleStringToObject as s } from './style'
+import { MIXMATCH_CAT } from './catPalette'
 
+// Emoji and colour are the two group signals; the colour comes from the shared
+// aetiology palette (catPalette) so Infectious is the same crimson here as on a
+// flow page. Keys match CAT_ORDER in diseaseSearch.
 const CAT_EMOJI: Record<string, string> = {
   'Inflammatory':        '🔥',
   'Infectious':          '🦠',
@@ -291,9 +295,11 @@ export function MixMatchScreen() {
             {totalCount} {totalCount === 1 ? 'disease' : 'diseases'} across {results.length} {results.length === 1 ? 'category' : 'categories'} — sorted by relevance
           </div>
 
-          {results.map(group => (
+          {results.map(group => {
+            const tint = MIXMATCH_CAT[group.name] ?? MIXMATCH_CAT['Other']
+            return (
             <div key={group.name} style={s('margin-bottom:18px;')}>
-              <div style={s('font-size:11px;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;')}>
+              <div style={s(`font-size:11px;font-weight:700;color:${tint.col};text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;`)}>
                 {CAT_EMOJI[group.name] ?? '📋'} {group.name} ({group.items.length})
               </div>
 
@@ -305,6 +311,8 @@ export function MixMatchScreen() {
                   <Tappable
                     key={d.id as string}
                     className="card"
+                    // Inline, so it survives `.card:hover`'s border-color.
+                    style={s(`border-left:3px solid ${tint.border};`)}
                     onTap={() => nav.navigate({ kind: 'disease', id: d.id as string })}
                   >
                     <div className="card-row">
@@ -331,7 +339,8 @@ export function MixMatchScreen() {
                 )
               })}
             </div>
-          ))}
+            )
+          })}
         </>
       )}
     </div>

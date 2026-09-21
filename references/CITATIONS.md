@@ -336,6 +336,61 @@ externally. Author attribution is provisional.
 
 ---
 
+## Journal articles cited in the sign flows and Dx views
+
+Primary literature cited inline in the sign flows and diagnostic-approach views, where a
+textbook alone could not settle a number. Distinct from **Journal sources cited in app data**
+above, which covers `diseaseReferences.tsx` and is held to a two-registry standard: the
+citations below were checked against the publisher's own record and PubMed, **not** against
+both Crossref and Europe PMC. Treat the DOIs as publisher-confirmed rather than
+registry-cross-verified, and promote an entry into the Verified section once it has been. **AMA journal format:** `Author AA, Author BB, Author CC. Title of article.
+*Abbrev Journal*. Year;vol(issue):pages. doi:xx.xxxx/yyyy` — up to 6 authors, then `et al`.
+
+The inline shorthand in app data is `(FirstAuthor Year Journal)`, matching the existing
+`(Ettinger Ch NN)` convention. **App copy carries no hyperlinks** — `RichText` drops `<a>`
+and `href` by design (`src/components/RichText.tsx`), so the DOIs live here only.
+
+### Weight-loss thresholds (`src/lib/signs/dx/weightLoss.ts`, `src/lib/signs/flows/weightLoss.ts`)
+
+> Ineson DL, Freeman LM, Rush JE. Clinical and laboratory findings and survival time associated with cardiac cachexia in dogs with congestive heart failure. *J Vet Intern Med*. 2019;33(5):1902-1908. doi:10.1111/jvim.15566
+
+Defines cachexia as muscle loss **or** weight loss ≥5% in ≤12 months; cachexia so defined was
+independently associated with shorter survival on multivariable analysis (P = .05). This is
+the load-bearing citation for the ≥5%/≤12-month threshold.
+
+> Freeman LM, Lachaud MP, Matthews S, Rhodes L, Zollers B. Evaluation of weight loss over time in cats with chronic kidney disease. *J Vet Intern Med*. 2016;30(5):1661-1666. doi:10.1111/jvim.14561
+
+569 cats, 6 US centres. Median 8.9% of body weight lost in the 12 months before diagnosis;
+growth-curve analysis put the onset up to 3 years before diagnosis; rate accelerated after.
+Median body weight at diagnosis 4.2 kg, and cats <4.2 kg had shorter survival (P < .0001).
+
+> Peterson ME, Castellano CA, Rishniw M. Evaluation of body weight, body condition, and muscle condition in cats with hyperthyroidism. *J Vet Intern Med*. 2016;30(6):1780-1789. doi:10.1111/jvim.14591
+
+462 untreated hyperthyroid cats. Pretreatment weight median 4.36 kg vs premorbid 5.45 kg
+recorded 1–2 years earlier (P < .0001); 92.0% had lost weight, but only 35.3% scored thin or
+emaciated while 77.3% had muscle loss. The BCS-insensitivity point on the Exam tab.
+
+> Freeman LM. Cachexia and sarcopenia: emerging syndromes of importance in dogs and cats. *J Vet Intern Med*. 2012;26(1):3-17. doi:10.1111/j.1939-1676.2011.00838.x
+
+Review. Notes the human ≥5%/12-month cachexia criterion is criticised for **missing early
+cachexia**, and argues for muscle condition scoring independent of total weight. Cites Michel
+et al: of dogs with prediagnosis weights before a cancer diagnosis, 31% had lost <5%, 14%
+5–10%, and 23% >10% of body weight over 12 months.
+
+> White JV, Guenter P, Jensen G, Malone A, Schofield M; Academy of Nutrition and Dietetics Malnutrition Work Group; A.S.P.E.N. Board of Directors. Consensus statement: Academy of Nutrition and Dietetics and American Society for Parenteral and Enteral Nutrition: characteristics recommended for the identification and documentation of adult malnutrition (undernutrition). *JPEN J Parenter Enteral Nutr*. 2012;36(3):275-283. doi:10.1177/0148607112440285
+
+Human. Source of the 10% figure and of its **time window**: in chronic illness, non-severe
+malnutrition = 5%/1 mo, 7.5%/3 mo, 10%/6 mo, 20%/1 y; severe = the same figures exceeded.
+10% is a **6-month** number, never a monthly one.
+
+> Wallace JI, Schwartz RS, LaCroix AZ, Uhlmann RF, Pearlman RA. Involuntary weight loss in older outpatients: incidence and clinical significance. *J Am Geriatr Soc*. 1995;43(4):329-337. doi:10.1111/j.1532-5415.1995.tb05803.x
+
+Human, 247 outpatients ≥65 y, 4-year prospective cohort. Involuntary loss of ≥4% of body
+weight over a year carried a 2-year mortality of 28% vs 11% (RR 2.43, 95% CI 1.34–4.41) —
+the origin of the low single-digit *annual* threshold Ettinger Ch 18 imports.
+
+---
+
 ## Using citations inside app data
 
 `src/data/db.ts` has no citation field; entries cite inline in prose instead —

@@ -170,14 +170,17 @@ export const ataxiaDx: DxApproach = {
         kind: 'gridTable',
         cols: '1fr 1.1fr',
         dividers: true,
+        // Same fold as the signalment table: the reader needs the band for the
+        // species in front of them, not both.
+        collapsibleSections: true,
         headers: ['Look for', { text: 'Think', tone: 'teal' }],
         rows: [
-          { section: 'Canine' },
+          { section: '🐕 Canine' },
           ['<strong>Myoclonus</strong> — rhythmic chewing-gum twitch that <strong>persists during sleep</strong>', { text: 'CDV — pathognomonic', tone: 'teal' }],
           ['<strong>Myokymia / neuromyotonia</strong> — rippling skin, episodes triggered by heat or excitement', { text: 'KCNJ10 SCA — terriers, Belgian Malinois', tone: 'teal' }],
           ['Pup with stiff hyperextended pelvic limbs that cannot be flexed', { text: 'Congenital <em>Neospora</em>', tone: 'teal' }],
           ['Hard pad + ocular discharge + cerebellar signs', { text: 'CDV', tone: 'teal' }],
-          { section: 'Feline' },
+          { section: '🐱 Feline' },
           ['<strong>Always ophthalmoscopy</strong> — uveitis / chorioretinitis', { text: bullets(['Toxoplasma', 'FIP', 'Fungal', 'Hypertensive disease']), tone: 'teal' }],
           ['<strong>Always BP</strong> — older hypertensive cat (CKD, hyperthyroid) with acute CNS signs', { text: 'Hypertensive encephalopathy or stroke', tone: 'teal' }],
           ['<strong>Check menace, pupils and retina BEFORE manipulating</strong>', { text: 'Handling can deteriorate a critically ill cat', tone: 'danger' }],

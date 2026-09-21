@@ -120,6 +120,26 @@
      (slate) on the mono-arthropathy grids, and two neutrals read as one column. */
   --cat-trauma: 146,64,14;         --cat-trauma-fg: #7C2D12;
   --cat-anomalous: 236,72,153;     --cat-anomalous-fg: #9D174D;
+  /* Mix & Match taxonomy adds four groups the flow CatLabels don't have. All
+     thirteen of its groups can appear in one result list, so these four are
+     picked for distance from the twelve above, not by family resemblance —
+     the near-neighbour each one would "naturally" take is already spoken for:
+       Structural      brown, reusing trauma's triplet (it absorbs the
+                       trauma / foreign-body / obstruction causes; Trauma is
+                       not a Mix & Match label, so the two never co-occur).
+       Neuromuscular   lime. NOT neurological's indigo — indigo sits within
+                       ΔE 6 of both Immune-mediated's blue and Neoplastic's
+                       violet, which are both in the list (same reason the
+                       LesionLocView CT table has no indigo).
+       Congenital/     cyan, matching CT's 'Congenital'. NOT anomalous's pink:
+       Inherited       #9D174D and Infectious's #9F1239 are the same colour to
+                       the eye, and Infectious is in the list.
+       Other           stone — the deliberate non-category. Warm grey, so it
+                       reads apart from Degenerative's cool slate. */
+  --cat-structural: 146,64,14;     --cat-structural-fg: #7C2D12;
+  --cat-neuromuscular: 132,204,22; --cat-neuromuscular-fg: #365314;
+  --cat-congenital: 6,182,212;     --cat-congenital-fg: #155E75;
+  --cat-other: 120,113,108;        --cat-other-fg: #57534E;
 
   /* Flow-node / flow-endpoint location foregrounds: a deep shade on light that
      flips to a bright shade on dark (overridden in the dark block — no per-class
@@ -200,6 +220,8 @@ html[data-theme="dark"]{
   --cat-endocrine-fg: #6EE7B7; --cat-neurological-fg: #A5B4FC;
   --cat-toxic-fg: #FB923C;     --cat-trauma-fg: #E7B48A;
   --cat-anomalous-fg: #F9A8D4;
+  --cat-structural-fg: #E7B48A; --cat-neuromuscular-fg: #A3E635;
+  --cat-congenital-fg: #A5F3FC; --cat-other-fg: #A8A29E;
   --tone-slate-fg: #CBD5E1;
   /* Location foregrounds flip deep→bright; per-class dark rules no longer needed. */
   --fg-blue-deep: var(--fg-blue-bright);     --fg-teal-deep: var(--fg-teal-bright);
