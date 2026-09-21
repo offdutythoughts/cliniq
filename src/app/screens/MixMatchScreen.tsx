@@ -159,7 +159,7 @@ export function MixMatchScreen() {
 
       {/* ── Signalment ── */}
       <div style={s('background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px;')}>
-        <div style={s('font-size:10px;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;')}>
+        <div style={s('font-size:var(--fs-label);font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;')}>
           Signalment
         </div>
 
@@ -259,7 +259,7 @@ export function MixMatchScreen() {
 
       {/* ── Clinical signs ── */}
       <div style={s('margin-bottom:10px;')}>
-        <div style={s('font-size:10px;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;')}>
+        <div style={s('font-size:var(--fs-label);font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;')}>
           Clinical Signs
         </div>
         <KeywordInput
@@ -273,7 +273,7 @@ export function MixMatchScreen() {
 
       {/* ── Diagnostics ── */}
       <div style={s('margin-bottom:14px;')}>
-        <div style={s('font-size:10px;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;')}>
+        <div style={s('font-size:var(--fs-label);font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;')}>
           Diagnostics
         </div>
         <KeywordInput
@@ -303,7 +303,7 @@ export function MixMatchScreen() {
           {/* ── Top differentials — the grouped list below is by aetiology, not rank ── */}
           {top.length >= 2 && (
             <div style={s('background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin-bottom:18px;')}>
-              <div style={s('font-size:10px;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;')}>
+              <div style={s('font-size:var(--fs-label);font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;')}>
                 Top differentials
               </div>
 
@@ -318,10 +318,10 @@ export function MixMatchScreen() {
                     style={s(`display:flex;align-items:center;gap:9px;padding:7px 0;cursor:pointer;${i > 0 ? 'border-top:1px solid var(--border);' : ''}`)}
                     onTap={() => nav.navigate({ kind: 'disease', id: d.id as string })}
                   >
-                    <span style={s(`font-size:11px;font-weight:700;color:${tint.col};width:12px;flex-shrink:0;`)}>{i + 1}</span>
+                    <span style={s(`font-size:var(--fs-box);font-weight:700;color:${tint.col};width:12px;flex-shrink:0;`)}>{i + 1}</span>
                     <div style={s('flex:1;min-width:0;')}>
                       <div style={s('font-size:13px;font-weight:600;color:var(--white);')}>{d.name as string}</div>
-                      <div style={s('font-size:10px;color:var(--gray2);margin-top:1px;')}>
+                      <div style={s('font-size:var(--fs-chip-sub);color:var(--gray2);margin-top:1px;')}>
                         {CAT_EMOJI[item.category] ?? '📋'} {item.category}
                         {termCount > 0 && ` · ${hits} of ${termCount} ${termCount === 1 ? 'term' : 'terms'}`}
                       </div>

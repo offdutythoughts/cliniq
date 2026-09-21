@@ -54,7 +54,7 @@ export const anorexiaDx: DxApproach = {
         },
         {
           kind: 'note',
-          html: `The most useful single question: <strong>does the animal go to the food?</strong> An animal that approaches, tries and fails is a <strong>can\'t-eat</strong> until the mouth is examined under sedation. Two traps: <strong>drooling is not specific</strong> — nausea causes ptyalism too; and <strong>chronic oral pain becomes a learned food aversion</strong>, so a long-standing pseudo-anorexic may eventually stop approaching food at all.`,
+          html: `The most useful single question: <strong>does the animal go to the food?</strong> Trap: <strong>chronic oral pain becomes a learned food aversion</strong> — a long-standing pseudo-anorexic stops approaching food at all, and then reads as a true anorexia.`,
         },
 
         { kind: 'step', tone: 'danger', text: '🐱 STEP 2 — IS THIS AN ANOREXIC CAT? (lipidosis clock)', noArrowAfter: true },
@@ -102,11 +102,11 @@ export const anorexiaDx: DxApproach = {
           tone: 'danger',
           title: 'RED FLAGS IN THE HISTORY',
           items: [
-            `An anorexic cat (especially overweight) = hepatic lipidosis risk — feed early`,
-            `Wants to eat but can't (drops food, drools, paws at mouth, gags) = pseudo-anorexia — examine the mouth under sedation before any systemic work-up`,
-            `Waxing/waning anorexia ± GI signs / collapse = rule out hypoadrenocorticism`,
-            `Acute febrile anorexia with rapid deterioration = sepsis/SIRS`,
-            `Persistent anorexia + weight loss in an older patient = neoplasia until excluded`,
+            `Overweight anorexic cat = hepatic lipidosis — feed early`,
+            `Wants to eat but can't = pseudo-anorexia — sedated oral exam`,
+            `Waxing/waning anorexia ± GI signs / collapse = hypoadrenocorticism`,
+            `Febrile anorexia, deteriorating fast = sepsis / SIRS`,
+            `Persistent anorexia, weight loss, older patient = neoplasia`,
           ],
         },
         { kind: 'disclaimer' },
@@ -119,7 +119,7 @@ export const anorexiaDx: DxApproach = {
         { kind: 'step', tone: 'teal', text: 'A complete PE is imperative — include ORAL, NASAL, OCULAR + RECTAL exam' },
         {
           kind: 'note',
-          html: `Start by <strong>offering food and watching</strong>: dropping food · drooling · pain on prehension · pawing at the mouth · gagging or regurgitating = <strong>pseudo-anorexia</strong> (go to the mouth, Step 1). Simply <strong>not interested</strong> in food = <strong>true anorexia</strong> — still examine the mouth, then work up systemically.`,
+          html: `Start by <strong>offering food and watching</strong>. Approaches but fails — drops food · drools · gags = <strong>pseudo-anorexia</strong> (Step 1). Simply <strong>not interested</strong> = <strong>true anorexia</strong> — still examine the mouth, then work up systemically.`,
         },
 
         ...stepTable(1, 'ORAL / PHARYNGEAL EXAM (rule out pseudo-anorexia)', {
@@ -166,7 +166,7 @@ export const anorexiaDx: DxApproach = {
       title: 'Dx: Anorexia / Hyporexia — Diagnostics',
       blocks: [
         { kind: 'step', tone: 'danger', text: '👄 STEP 1 — CONFIRM/EXCLUDE PSEUDO-ANOREXIA' },
-        { kind: 'note', html: `Before an extensive systemic work-up, settle whether the patient <strong>can</strong> eat. <strong>Wants food but can\'t manage it</strong> (drops food · drooling · pain on prehension · pawing at the mouth · gags / regurgitates) = <strong>pseudo-anorexia</strong> → the work-up is the mouth, pharynx and oesophagus. <strong>No interest in food at all</strong> = <strong>true anorexia</strong> → skip to Step 2.`, noArrowAfter: true },
+        { kind: 'note', html: `Before an extensive systemic work-up, settle whether the patient <strong>can</strong> eat. <strong>Wants food but can\'t manage it</strong> (drops food · drools · gags) = <strong>pseudo-anorexia</strong> → work up the mouth, pharynx and oesophagus. <strong>No interest at all</strong> = <strong>true anorexia</strong> → skip to Step 2.`, noArrowAfter: true },
         {
           kind: 'gridTable',
           cols: '0.8fr 1.35fr',
