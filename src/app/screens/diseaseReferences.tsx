@@ -147,6 +147,338 @@ const GUPTA_BOOK =
 const VETGIRL_TOX =
   'Lee J, ed. The Ultimate Guide to Toxicology. VETgirl / ASPCA Animal Poison Control Center; 2023'
 
+// ── Primary literature behind the first five disease pages ───────────────────
+// Sourced through the Consensus connector (2026-09-21) and verified against
+// BOTH Crossref and Europe PMC, per the two-registry rule in
+// references/CITATIONS.md. Where the registries disagreed, the fuller record
+// won: Crossref carries the full page ranges Europe PMC truncates (S244-S257,
+// not S244-57), Europe PMC carries the PRINT year where Crossref deposits the
+// online-first one (Greci 2014 not 2013, Janssens 2017 not 2016, Lo 2022 not
+// 2021, Langlois 2020 not 2019) and the full Hoppers page range (385-e102).
+// The year in each inline marker is the print year, which is what the
+// reference-block test asserts.
+
+// Feline HCM — genetics, epidemiology, outcome and thromboprophylaxis. These
+// are the primary sources behind the figures Ettinger Ch 234 only summarises.
+const MEURS_MAINE_COON =
+  'Meurs KM, Sanchez X, David RM, et al. A cardiac myosin binding protein C mutation in the Maine Coon cat with familial hypertrophic cardiomyopathy. Hum Mol Genet. 2005;14(23):3587-3593. doi:10.1093/hmg/ddi386'
+const MEURS_RAGDOLL =
+  'Meurs KM, Norgard MM, Ederer MM, Hendrix KP, Kittleson MD. A substitution mutation in the myosin binding protein C gene in ragdoll hypertrophic cardiomyopathy. Genomics. 2007;90(2):261-264. doi:10.1016/j.ygeno.2007.04.007'
+const LONGERI_MYBPC3 =
+  'Longeri M, Ferrari P, Knafelz P, et al. Myosin-binding protein C DNA variants in domestic cats (A31P, A74T, R820W) and their association with hypertrophic cardiomyopathy. J Vet Intern Med. 2013;27(2):275-285. doi:10.1111/jvim.12031'
+const PAYNE_CATSCAN =
+  'Payne JR, Brodbelt DC, Luis Fuentes V. Cardiomyopathy prevalence in 780 apparently healthy cats in rehoming centres (the CatScan study). J Vet Cardiol. 2015;17(suppl 1):S244-S257. doi:10.1016/j.jvc.2015.03.008'
+const PAYNE_PROGNOSTIC =
+  'Payne JR, Borgeat K, Connolly DJ, et al. Prognostic indicators in cats with hypertrophic cardiomyopathy. J Vet Intern Med. 2013;27(6):1427-1436. doi:10.1111/jvim.12215'
+const PAYNE_POPULATION =
+  'Payne J, Luis Fuentes V, Boswood A, Connolly D, Koffas H, Brodbelt D. Population characteristics and survival in 127 referred cats with hypertrophic cardiomyopathy (1997 to 2005). J Small Anim Pract. 2010;51(10):540-547. doi:10.1111/j.1748-5827.2010.00989.x'
+const STEELE_IGF1 =
+  'Steele MM, Borgeat K, Payne JR, et al. Increased insulin-like growth factor 1 concentrations in a retrospective population of non-diabetic cats diagnosed with hypertrophic cardiomyopathy. J Feline Med Surg. 2021;23(10):952-958. doi:10.1177/1098612x20987995'
+const RUSH_HCM =
+  'Rush JE, Freeman LM, Fenollosa NK, Brown DJ. Population and survival characteristics of cats with hypertrophic cardiomyopathy: 260 cases (1990-1999). J Am Vet Med Assoc. 2002;220(2):202-207. doi:10.2460/javma.2002.220.202'
+const FOX_REVEAL =
+  'Fox PR, Keene BW, Lamb K, et al. International collaborative study to assess cardiovascular risk and evaluate long-term health in cats with preclinical hypertrophic cardiomyopathy and apparently healthy cats: the REVEAL study. J Vet Intern Med. 2018;32(3):930-943. doi:10.1111/jvim.15122'
+const HOGAN_FAT_CAT =
+  'Hogan DF, Fox PR, Jacob K, et al. Secondary prevention of cardiogenic arterial thromboembolism in the cat: the double-blind, randomized, positive-controlled feline arterial thromboembolism; clopidogrel vs. aspirin trial (FAT CAT). J Vet Cardiol. 2015;17(suppl 1):S306-S317. doi:10.1016/j.jvc.2015.10.004'
+const LO_DUAL_THERAPY =
+  'Lo ST, Walker AL, Georges CJ, Li RH, Stern JA. Dual therapy with clopidogrel and rivaroxaban in cats with thromboembolic disease. J Feline Med Surg. 2022;24(4):277-283. doi:10.1177/1098612x211013736'
+
+// Added with the content-enrichment pass. Two of these were misattributed by
+// the search connector and corrected against both registries: the 2015
+// genotype/phenotype cohort is GRANSTRÖM (Godiksen is second author) and the
+// 90-case polyneuropathy study is BOOKBINDER (Flanders is second). Mary 2010
+// turned out to be the actual source of the "RR 9.9" figure the breed field
+// had been carrying uncited.
+const MARY_A31P =
+  'Mary J, Chetboul V, Sampedrano CC, et al. Prevalence of the MYBPC3-A31P mutation in a large European feline population and association with hypertrophic cardiomyopathy in the Maine Coon breed. J Vet Cardiol. 2010;12(3):155-161. doi:10.1016/j.jvc.2010.06.004'
+const GRANSTROM_A31P =
+  'Granström S, Godiksen MT, Christiansen M, et al. Genotype-phenotype correlation between the cardiac myosin binding protein C mutation A31P and hypertrophic cardiomyopathy in a cohort of Maine Coon cats: a longitudinal study. J Vet Cardiol. 2015;17(suppl 1):S268-S281. doi:10.1016/j.jvc.2015.10.005'
+const BOEYKENS_ACMG =
+  'Boeykens F, Abitbol M, Anderson H, et al. Classification of feline hypertrophic cardiomyopathy-associated gene variants according to the American College of Medical Genetics and Genomics guidelines. Front Vet Sci. 2024;11:1327081. doi:10.3389/fvets.2024.1327081'
+const BRAINARD_SUPERCAT =
+  'Brainard BM, Coleman AE, Kurosawa A, et al. Therapy with clopidogrel or rivaroxaban has equivalent impacts on recurrence of thromboembolism and survival in cats following cardiogenic thromboembolism: the SUPERCAT study. J Am Vet Med Assoc. 2025;263(4):1-10. doi:10.2460/javma.24.09.0584'
+const BOOKBINDER_LP =
+  'Bookbinder LC, Flanders J, Bookbinder PF, Harvey HJ, Barry JS, Cheetham J. Idiopathic canine laryngeal paralysis as one sign of a diffuse polyneuropathy: an observational study of 90 cases (2007-2013). Vet Surg. 2016;45(2):254-260. doi:10.1111/vsu.12444'
+const MILOVANCEV_METOCLOPRAMIDE =
+  'Milovancev M, Townsend K, Spina J, et al. Effect of metoclopramide on the incidence of early postoperative aspiration pneumonia in dogs with acquired idiopathic laryngeal paralysis. Vet Surg. 2016;45(5):577-581. doi:10.1111/vsu.12491'
+const OGDEN_CISAPRIDE =
+  'Ogden J, Ovbey D, Saile K. Effects of preoperative cisapride on postoperative aspiration pneumonia in dogs with laryngeal paralysis. J Small Anim Pract. 2019;60(3):183-190. doi:10.1111/jsap.12940'
+
+// Laryngeal paralysis / GOLPP. Stanley is the controlled cohort that turned
+// "idiopathic LP" into GOLPP; Tobias and Miller are the doxapram evidence
+// behind the laryngoscopy protocol; Wilson and MacPhail are the surgical
+// outcome cohorts.
+const STANLEY_GOLPP =
+  'Stanley BJ, Hauptman JG, Fritz MC, Rosenstein DS, Kinns J. Esophageal dysfunction in dogs with idiopathic laryngeal paralysis: a controlled cohort study. Vet Surg. 2010;39(2):139-149. doi:10.1111/j.1532-950x.2009.00626.x'
+const TOBIAS_DOXAPRAM =
+  'Tobias KM, Jackson AM, Harvey RC. Effects of doxapram HCl on laryngeal function of normal dogs and dogs with naturally occurring laryngeal paralysis. Vet Anaesth Analg. 2004;31(4):258-263. doi:10.1111/j.1467-2995.2004.00168.x'
+const MILLER_DOXAPRAM =
+  'Miller CJ, McKiernan BC, Pace J, Fettman MJ. The effects of doxapram hydrochloride (dopram-V) on laryngeal function in healthy dogs. J Vet Intern Med. 2002;16(5):524-528. doi:10.1111/j.1939-1676.2002.tb02381.x'
+const WILSON_TIEBACK_AP =
+  'Wilson D, Monnet E. Risk factors for the development of aspiration pneumonia after unilateral arytenoid lateralization in dogs with laryngeal paralysis: 232 cases (1987-2012). J Am Vet Med Assoc. 2016;248(2):188-194. doi:10.2460/javma.248.2.188'
+const MACPHAIL_LP =
+  'MacPhail CM, Monnet E. Outcome of and postoperative complications in dogs undergoing surgical treatment of laryngeal paralysis: 140 cases (1985-1998). J Am Vet Med Assoc. 2001;218(12):1949-1956. doi:10.2460/javma.2001.218.1949'
+const JEFFERY_LP =
+  'Jeffery ND, Talbot CE, Smith PM, Bacon NJ. Acquired idiopathic laryngeal paralysis as a prominent feature of generalised neuromuscular disease in 39 dogs. Vet Rec. 2006;158(1):17-21. doi:10.1136/vr.158.1.17'
+
+// Feline inflammatory polyps. Anderson is the source for post-traction
+// prednisolone; Wainberg is the 282-cat multicentre VBO series behind the
+// staging rule; the rest are the per-technique recurrence figures.
+// Anderson carries NO DOI in either registry (PMID 11132674) — it predates
+// the Vet Rec DOI deposit, and 10.1136/vr.147.24.684 does not resolve. It is
+// the one entry here cited without one; do not invent a DOI for it.
+const ANDERSON_POLYPS =
+  'Anderson DM, Robinson RK, White RA. Management of inflammatory polyps in 37 cats. Vet Rec. 2000;147(24):684-687'
+const VEIR_POLYPS =
+  'Veir JK, Lappin MR, Foley JE, Getzy DM. Feline inflammatory polyps: historical, clinical, and PCR findings for feline calici virus and feline herpes virus-1 in 28 cases. J Feline Med Surg. 2002;4(4):195-199. doi:10.1053/jfms.2002.0172'
+const GRECI_PTT =
+  'Greci V, Vernia E, Mortellaro CM. Per-endoscopic trans-tympanic traction for the management of feline aural inflammatory polyps: a case review of 37 cats. J Feline Med Surg. 2014;16(8):645-650. doi:10.1177/1098612x13516620'
+const JANSSENS_TALA =
+  'Janssens SD, Haagsman AN, Ter Haar G. Middle ear polyps: results of traction avulsion after a lateral approach to the ear canal in 62 cats (2004-2014). J Feline Med Surg. 2017;19(8):803-808. doi:10.1177/1098612x16660356'
+const WAINBERG_VBO =
+  'Wainberg SH, Selmic LE, Haagsman AN, et al. Comparison of complications and outcome following unilateral, staged bilateral, and single-stage bilateral ventral bulla osteotomy in cats. J Am Vet Med Assoc. 2019;255(7):828-836. doi:10.2460/javma.255.7.828'
+const HOPPERS_BILATERAL =
+  'Hoppers SE, May ER, Frank LA. Feline bilateral inflammatory aural polyps: a descriptive retrospective study. Vet Dermatol. 2020;31(5):385-e102. doi:10.1111/vde.12877'
+const ANDERS_VBO_BAER =
+  'Anders BB, Hoelzler MG, Scavelli TD, Fulcher RP, Bastian RP. Analysis of auditory and neurologic effects associated with ventral bulla osteotomy for removal of inflammatory polyps or nasopharyngeal masses in cats. J Am Vet Med Assoc. 2008;233(4):580-585. doi:10.2460/javma.233.4.580'
+const BOHIN_COMPARTMENTS =
+  'Bohin C, Garcia M, Bertinot C, Graille M, Bernardé A. Compartmental location of middle ear inflammatory polyps in cats: 9 cases (2021-2023). J Small Anim Pract. 2025;66(3):197-202. doi:10.1111/jsap.13811'
+
+// Pyothorax. Barrs is the paper that overturned the bite-wound orthodoxy in
+// cats; Rooney and Boothe are the canine medical-vs-surgical cohorts.
+const BARRS_PYOTHORAX =
+  'Barrs VR, Allan GS, Martin P, Beatty JA, Malik R. Feline pyothorax: a retrospective study of 27 cases in Australia. J Feline Med Surg. 2005;7(4):211-222. doi:10.1016/j.jfms.2004.12.004'
+const DEMETRIOU_PYOTHORAX =
+  'Demetriou JL, Foale RD, Ladlow J, McGrotty Y, Faulkner J, Kirby BM. Canine and feline pyothorax: a retrospective study of 50 cases in the UK and Ireland. J Small Anim Pract. 2002;43(9):388-394. doi:10.1111/j.1748-5827.2002.tb00089.x'
+const STILLION_PYOTHORAX =
+  'Stillion JR, Letendre J. A clinical review of the pathophysiology, diagnosis, and treatment of pyothorax in dogs and cats. J Vet Emerg Crit Care. 2015;25(1):113-129. doi:10.1111/vec.12274'
+const ROONEY_PYOTHORAX =
+  'Rooney MB, Monnet E. Medical and surgical treatment of pyothorax in dogs: 26 cases (1991-2001). J Am Vet Med Assoc. 2002;221(1):86-92. doi:10.2460/javma.2002.221.86'
+const BOOTHE_PYOTHORAX =
+  'Boothe HW, Howe LM, Boothe DM, Reynolds LA, Carpenter M. Evaluation of outcomes in dogs treated for pyothorax: 46 cases (1983-2001). J Am Vet Med Assoc. 2010;236(6):657-663. doi:10.2460/javma.236.6.657'
+const EIRAS_DIAZ_CT =
+  'Eiras-Diaz A, Frykfors von Hekkel A, Hanot E, et al. CT findings, management and short-term outcome of dogs with pyothorax: 101 cases (2010-2019). J Small Anim Pract. 2021;62(11):959-966. doi:10.1111/jsap.13374'
+const JOHNSON_PYOTHORAX =
+  'Johnson LR, Epstein SE, Reagan KL. Etiology and effusion characteristics in 29 cats and 60 dogs with pyothorax (2010-2020). J Vet Intern Med. 2023;37(3):1155-1165. doi:10.1111/jvim.16699'
+
+// Acute vomiting and diarrhoea. Ramsey is the maropitant registration trial;
+// Shmalberg, Rudinsky and Langlois are the metronidazole evidence base, which
+// does NOT support routine use — see the qualifier bullet on DIS-GAST-DIET.
+const RAMSEY_MAROPITANT =
+  'Ramsey DS, Kincaid K, Watkins JA, et al. Safety and efficacy of injectable and oral maropitant, a selective neurokinin1 receptor antagonist, in a randomized clinical trial for treatment of vomiting in dogs. J Vet Pharmacol Ther. 2008;31(6):538-543. doi:10.1111/j.1365-2885.2008.00992.x'
+const SHMALBERG_METRONIDAZOLE =
+  'Shmalberg J, Montalbano C, Morelli G, Buckley GJ. A randomized double blinded placebo-controlled clinical trial of a probiotic or metronidazole for acute canine diarrhea. Front Vet Sci. 2019;6:163. doi:10.3389/fvets.2019.00163'
+const RUDINSKY_COLITIS =
+  'Rudinsky AJ, Parker VJ, Winston J, et al. Randomized controlled trial demonstrates nutritional management is superior to metronidazole for treatment of acute colitis in dogs. J Am Vet Med Assoc. 2022;260(S3):S23-S32. doi:10.2460/javma.22.08.0349'
+const LANGLOIS_METRONIDAZOLE =
+  'Langlois DK, Koenigshof AM, Mani R. Metronidazole treatment of acute diarrhea in dogs: a randomized double blinded placebo-controlled clinical trial. J Vet Intern Med. 2020;34(1):98-104. doi:10.1111/jvim.15664'
+
+// ── Primary literature behind disease pages 6-10 ─────────────────────────────
+// Consensus connector, 2026-09-21, verified against Crossref AND Europe PMC.
+// Three first-author corrections the connector forced again: the four-assay cPL
+// comparison is CRIDGE (MacLeod is second), the canine CKD survival study is
+// Rudinsky 2018 (a different Rudinsky paper from the 2022 colitis trial already
+// here), and Venn's print year is 2017 where Crossref deposited 2016.
+
+// Canine parvovirus. Venn is the randomised inpatient-vs-outpatient trial the
+// outpatient card is built on; Mohr and de Mari are the two interventions with
+// real trial evidence behind them.
+const VENN_OUTPATIENT =
+  'Venn EC, Preisner K, Boscan PL, Twedt DC, Sullivan LA. Evaluation of an outpatient protocol in the treatment of canine parvoviral enteritis. J Vet Emerg Crit Care. 2017;27(1):52-65. doi:10.1111/vec.12561'
+const SARPONG_OUTPATIENT =
+  'Sarpong KJ, Lukowski JM, Knapp CG. Evaluation of mortality rate and predictors of outcome in dogs receiving outpatient treatment for parvoviral enteritis. J Am Vet Med Assoc. 2017;251(9):1035-1041. doi:10.2460/javma.251.9.1035'
+const PERLEY_SHELTER =
+  'Perley K, Burns CC, Maguire C, et al. Retrospective evaluation of outpatient canine parvovirus treatment in a shelter-based low-cost urban clinic. J Vet Emerg Crit Care. 2020;30(2):202-208. doi:10.1111/vec.12941'
+const CHALIFOUX_PROGNOSTIC =
+  'Chalifoux NV, Parker SE, Cosford KL. Prognostic indicators at presentation for canine parvoviral enteritis: 322 cases (2001-2018). J Vet Emerg Crit Care. 2021;31(3):402-413. doi:10.1111/vec.13052'
+const PEREIRA_FMT =
+  'Pereira GQ, Gomes LA, Santos IS, Alfieri AF, Weese JS, Costa MC. Fecal microbiota transplantation in puppies with canine parvovirus infection. J Vet Intern Med. 2018;32(2):707-711. doi:10.1111/jvim.15072'
+const HOEL_ORAL_FMT =
+  'Hoel ME, Gimenez AR, Elbe A, Horecka K, Alvarez E, Lashnits E. Oral fecal microbial transplant for parvovirus in the outpatient setting: a randomized controlled trial to evaluate a practical and low-cost intervention. J Am Vet Med Assoc. 2026;264(10):1301-1307. doi:10.2460/javma.26.01.0051'
+const MOHR_EEN =
+  'Mohr AJ, Leisewitz AL, Jacobson LS, Steiner JM, Ruaux CG, Williams DA. Effect of early enteral nutrition on intestinal permeability, intestinal protein loss, and outcome in dogs with severe parvoviral enteritis. J Vet Intern Med. 2003;17(6):791-798. doi:10.1111/j.1939-1676.2003.tb02516.x'
+const DE_MARI_INTERFERON =
+  'de Mari K, Maynard L, Eun HM, Lebreux B. Treatment of canine parvoviral enteritis with interferon-omega in a placebo-controlled field trial. Vet Rec. 2003;152(4):105-108. doi:10.1136/vr.152.4.105'
+const ACCIACCA_PLASMA =
+  'Acciacca RA, Sullivan LA, Webb TL, Johnson V, Dow SW. Clinical evaluation of hyperimmune plasma for treatment of dogs with naturally occurring parvoviral enteritis. J Vet Emerg Crit Care. 2020;30(5):525-533. doi:10.1111/vec.12987'
+
+// Chronic kidney disease. Elliott is the diet-survival trial; Syme, King and
+// Chakrabarti are the prognostic cohorts; Scobie is the systematic review that
+// tempers the SDMA claim.
+const HALL_SDMA =
+  'Hall JA, Yerramilli M, Obare E, Yerramilli M, Jewell DE. Comparison of serum concentrations of symmetric dimethylarginine and creatinine as kidney function biomarkers in cats with chronic kidney disease. J Vet Intern Med. 2014;28(6):1676-1683. doi:10.1111/jvim.12445'
+const NABITY_SDMA =
+  'Nabity MB, Lees GE, Boggess MM, et al. Symmetric dimethylarginine assay validation, stability, and evaluation as a marker for the early detection of chronic kidney disease in dogs. J Vet Intern Med. 2015;29(4):1036-1044. doi:10.1111/jvim.12835'
+const SCOBIE_SDMA_REVIEW =
+  'Scobie C, Dean R, Stavisky J, Plüddemann A. Diagnostic accuracy of symmetric dimethylarginine for chronic kidney disease in cats and dogs: a systematic review. Vet Rec. 2026;198(7):e299-e314. doi:10.1002/vetr.70216'
+const SYME_PROTEINURIA =
+  'Syme HM, Markwell PJ, Pfeiffer D, Elliott J. Survival of cats with naturally occurring chronic renal failure is related to severity of proteinuria. J Vet Intern Med. 2006;20(3):528-535. doi:10.1111/j.1939-1676.2006.tb02892.x'
+const KING_PROGNOSTIC =
+  'King JN, Tasker S, Gunn-Moore DA, Strehlau G. Prognostic factors in cats with chronic kidney disease. J Vet Intern Med. 2007;21(5):906-916. doi:10.1111/j.1939-1676.2007.tb03042.x'
+const CHAKRABARTI_PROGRESSION =
+  'Chakrabarti S, Syme HM, Elliott J. Clinicopathological variables predicting progression of azotemia in cats with chronic kidney disease. J Vet Intern Med. 2012;26(2):275-281. doi:10.1111/j.1939-1676.2011.00874.x'
+const ELLIOTT_RENAL_DIET =
+  'Elliott J, Rawlings JM, Markwell PJ, Barber PJ. Survival of cats with naturally occurring chronic renal failure: effect of dietary management. J Small Anim Pract. 2000;41(6):235-242. doi:10.1111/j.1748-5827.2000.tb03932.x'
+const QUIMBY_MIRTAZAPINE =
+  'Quimby JM, Lunn KF. Mirtazapine as an appetite stimulant and anti-emetic in cats with chronic kidney disease: a masked placebo-controlled crossover clinical trial. Vet J. 2013;197(3):651-655. doi:10.1016/j.tvjl.2013.05.048'
+const SPENCER_OMEPRAZOLE =
+  'Spencer A, Quimby JM, Price JM, et al. Appetite-stimulating effects of once-daily omeprazole in cats with chronic kidney disease: double-blind, placebo-controlled, randomized, crossover trial. J Vet Intern Med. 2021;35(6):2705-2712. doi:10.1111/jvim.16268'
+const RUDINSKY_CKD =
+  'Rudinsky AJ, Harjes LM, Byron J, et al. Factors associated with survival in dogs with chronic kidney disease. J Vet Intern Med. 2018;32(6):1977-1982. doi:10.1111/jvim.15322'
+const MORTIER_PROTEINURIA =
+  'Mortier F, Daminet S, Marynissen S, Verbeke J, Paepe D. Clinical importance of borderline proteinuria in nonazotemic cats and evaluation of other risk factors for the development of chronic kidney disease. J Vet Intern Med. 2025;39(1):e17257. doi:10.1111/jvim.17257'
+
+// Hypoadrenocorticism. Gold is the largest basal-cortisol cohort; Vincent is
+// the randomised trial behind the sub-label DOCP dose the page recommends.
+const GOLD_BASAL_CORTISOL =
+  'Gold AJ, Langlois DK, Refsal KR. Evaluation of basal serum or plasma cortisol concentrations for the diagnosis of hypoadrenocorticism in dogs. J Vet Intern Med. 2016;30(6):1798-1805. doi:10.1111/jvim.14589'
+const BOVENS_BASAL_CORTISOL =
+  'Bovens C, Tennant K, Reeve J, Murphy KF. Basal serum cortisol concentration as a screening test for hypoadrenocorticism in dogs. J Vet Intern Med. 2014;28(5):1541-1545. doi:10.1111/jvim.12415'
+const LENNON_BASAL_CORTISOL =
+  'Lennon EM, Boyle TE, Hutchins RG, et al. Use of basal serum or plasma cortisol concentrations to rule out a diagnosis of hypoadrenocorticism in dogs: 123 cases (2000-2005). J Am Vet Med Assoc. 2007;231(3):413-416. doi:10.2460/javma.231.3.413'
+const VINCENT_LOW_DOSE_DOCP =
+  'Vincent AM, Okonkowski LK, Brudvig JM, et al. Low-dose desoxycorticosterone pivalate treatment of hypoadrenocorticism in dogs: a randomized controlled clinical trial. J Vet Intern Med. 2021;35(4):1720-1728. doi:10.1111/jvim.16195'
+
+// Canine pancreatitis. Kook is the DGGR/cPL agreement study the >216 U/L cut-off
+// comes from; Trivedi and Haworth are why no lipase assay stands alone.
+const KOOK_DGGR =
+  'Kook PH, Kohler N, Hartnack S, Riond B, Reusch CE. Agreement of serum Spec cPL with the 1,2-o-dilauryl-rac-glycero glutaric acid-(6′-methylresorufin) ester (DGGR) lipase assay and with pancreatic ultrasonography in dogs with suspected pancreatitis. J Vet Intern Med. 2014;28(3):863-870. doi:10.1111/jvim.12334'
+const CRIDGE_CPL_ASSAYS =
+  'Cridge H, MacLeod AG, Pachtinger GE, et al. Evaluation of SNAP cPL, Spec cPL, VetScan cPL Rapid Test, and Precision PSL assays for the diagnosis of clinical pancreatitis in dogs. J Vet Intern Med. 2018;32(2):658-664. doi:10.1111/jvim.15039'
+const HAWORTH_CPL =
+  'Haworth MD, Hosgood G, Swindells KL, Mansfield CS. Diagnostic accuracy of the SNAP and Spec canine pancreatic lipase tests for pancreatitis in dogs presenting with clinical signs of acute abdominal disease. J Vet Emerg Crit Care. 2014;24(2):135-143. doi:10.1111/vec.12158'
+const TRIVEDI_CPL =
+  'Trivedi S, Marks SL, Kass PH, et al. Sensitivity and specificity of canine pancreas-specific lipase (cPL) and other markers for pancreatitis in 70 dogs with and without histopathologic evidence of pancreatitis. J Vet Intern Med. 2011;25(6):1241-1247. doi:10.1111/j.1939-1676.2011.00793.x'
+const HARRIS_EEN_PANCREATITIS =
+  'Harris JP, Parnell NK, Griffith EH, Saker KE. Retrospective evaluation of the impact of early enteral nutrition on clinical outcomes in dogs with pancreatitis: 34 cases (2010-2013). J Vet Emerg Crit Care. 2017;27(4):425-433. doi:10.1111/vec.12612'
+const MANSFIELD_EEN =
+  'Mansfield CS, James FE, Steiner JM, Suchodolski JS, Robertson ID, Hosgood G. A pilot study to assess tolerability of early enteral nutrition via esophagostomy tube feeding in dogs with severe acute pancreatitis. J Vet Intern Med. 2011;25(3):419-425. doi:10.1111/j.1939-1676.2011.0703.x'
+
+// Intussusception. Larose is the modern 153-dog series; Oakes and Applewhite
+// are the two halves of the enteroplication argument and disagree, which is
+// why the page now carries both rather than recommending it flatly.
+const LAROSE_INTUSS =
+  'Larose PC, Singh A, Giuffrida MA, et al. Clinical findings and outcomes of 153 dogs surgically treated for intestinal intussusceptions. Vet Surg. 2020;49(5):870-878. doi:10.1111/vsu.13442'
+const APPLEWHITE_ENTEROPLICATION =
+  'Applewhite AA, Hawthorne JC, Cornell KK. Complications of enteroplication for the prevention of intussusception recurrence in dogs: 35 cases (1989-1999). J Am Vet Med Assoc. 2001;219(10):1415-1418. doi:10.2460/javma.2001.219.1415'
+const OAKES_ENTEROPLICATION =
+  'Oakes MG, Lewis DD, Hosgood G, Beale BS. Enteroplication for the prevention of intussusception recurrence in dogs: 31 cases (1978-1992). J Am Vet Med Assoc. 1994;205(1):72-75. doi:10.2460/javma.1994.205.01.72'
+const RALLIS_INTUSS =
+  'Rallis TS, Papazoglou LG, Adamama-Moraitou KK, Prassinos NN. Acute enteritis or gastroenteritis in young dogs as a predisposing factor for intestinal intussusception: a retrospective study. J Vet Med A Physiol Pathol Clin Med. 2000;47(8):507-511. doi:10.1046/j.1439-0442.2000.00318.x'
+
+// ── Primary literature behind disease pages 11-15 ────────────────────────────
+// Consensus connector (its monthly search quota ran out partway through this
+// pass — the last two pages were discovered through Crossref's bibliographic
+// search instead, which is free). Everything verified against Crossref AND
+// Europe PMC as usual, and the registries again disagreed with the connector:
+// Watkins is J Small Anim Pract 2025;66(2):110-120 (Crossref's top hit was a
+// BSAVA congress ABSTRACT under a different DOI, and the connector said 2024),
+// and McCord's print year is 2026, not 2025.
+
+// GDV. de Papp is the paper the ">6 mmol/L" rule comes from; Green is the study
+// that failed to reproduce it, which is why the page now carries both.
+const DE_PAPP_LACTATE =
+  'de Papp E, Drobatz KJ, Hughes D. Plasma lactate concentration as a predictor of gastric necrosis and survival among dogs with gastric dilatation-volvulus: 102 cases (1995-1998). J Am Vet Med Assoc. 1999;215(1):49-52. doi:10.2460/javma.1999.215.01.49'
+const ZACHER_LACTATE =
+  'Zacher LA, Berg J, Shaw SP, Kudej RK. Association between outcome and changes in plasma lactate concentration during presurgical treatment in dogs with gastric dilatation-volvulus: 64 cases (2002-2008). J Am Vet Med Assoc. 2010;236(8):892-897. doi:10.2460/javma.236.8.892'
+const GREEN_LACTATE =
+  'Green TI, Tonozzi CC, Kirby R, Rudloff E. Evaluation of initial plasma lactate values as a predictor of gastric necrosis and initial and subsequent plasma lactate values as a predictor of survival in dogs with gastric dilatation-volvulus: 84 dogs (2003-2007). J Vet Emerg Crit Care. 2011;21(1):36-44. doi:10.1111/j.1476-4431.2010.00599.x'
+const WARD_GASTROPEXY =
+  'Ward MP, Patronek GJ, Glickman LT. Benefits of prophylactic gastropexy for dogs at risk of gastric dilatation-volvulus. Prev Vet Med. 2003;60(4):319-329. doi:10.1016/s0167-5877(03)00142-9'
+const GLICKMAN_NONDIETARY =
+  'Glickman LT, Glickman NW, Schellenberg DB, Raghavan M, Lee T. Non-dietary risk factors for gastric dilatation-volvulus in large and giant breed dogs. J Am Vet Med Assoc. 2000;217(10):1492-1499. doi:10.2460/javma.2000.217.1492'
+const GLICKMAN_RISK_1994 =
+  'Glickman LT, Glickman NW, Pérez CM, Schellenberg DB, Lantz GC. Analysis of risk factors for gastric dilatation and dilatation-volvulus in dogs. J Am Vet Med Assoc. 1994;204(9):1465-1471. doi:10.2460/javma.1994.204.09.1465'
+const ONEILL_GDV =
+  'O’Neill DG, Case J, Boag AK, et al. Gastric dilation-volvulus in dogs attending UK emergency-care veterinary practices: prevalence, risk factors and survival. J Small Anim Pract. 2017;58(11):629-638. doi:10.1111/jsap.12723'
+const ALLEN_GASTROPEXY =
+  'Allen P, Paul A. Gastropexy for prevention of gastric dilatation-volvulus in dogs: history and techniques. Top Companion Anim Med. 2014;29(3):77-80. doi:10.1053/j.tcam.2014.09.001'
+const MCCORD_GDV =
+  'McCord MA, O’Brien J, Ryave J, et al. Gastric dilatation-volvulus is associated with Poodle breeds, increased body size, and male sex, but not primary diet type or anxiety in the Dog Aging Project cohort. J Am Vet Med Assoc. 2026;264(4):1-9. doi:10.2460/javma.25.09.0609'
+
+// Gastric ulceration. Marks is the ACVIM consensus and is keyed on the AUTHOR,
+// not on "ACVIM <year>" — 2018 is already taken in ACVIM_BY_YEAR by the
+// systemic-hypertension statement, so a "(ACVIM 2018)" marker here would have
+// printed a blood-pressure guideline on the ulcer page.
+const MARKS_GI_PROTECTANTS =
+  'Marks SL, Kook PH, Papich MG, Tolbert MK, Willard MD. ACVIM consensus statement: support for rational administration of gastrointestinal protectants to dogs and cats. J Vet Intern Med. 2018;32(6):1823-1840. doi:10.1111/jvim.15337'
+const SHAEVITZ_PIROXICAM =
+  'Shaevitz MH, Moore GE, Fulkerson CM. A prospective, randomized, placebo-controlled, double-blinded clinical trial comparing the incidence and severity of gastrointestinal adverse events in dogs with cancer treated with piroxicam alone or in combination with omeprazole or famotidine. J Am Vet Med Assoc. 2021;259(4):385-391. doi:10.2460/javma.259.4.385'
+const BAZELLE_CYTOPROTECTIVE =
+  'Bazelle J, Threlfall A, Whitley N. Gastroprotectants in small animal veterinary practice — a review of the evidence. Part 1: cyto-protective drugs. J Small Anim Pract. 2018;59(10):587-602. doi:10.1111/jsap.12867'
+
+// Hiatal hernia. Phillips is the 31-cat series every feline figure on the page
+// comes from; Mayhew 2022 is the study that undercuts the assumption that
+// fixing the airway fixes the hernia.
+const PHILLIPS_FELINE_HH =
+  'Phillips H, Corrie J, Engel DM, et al. Clinical findings, diagnostic test results, and treatment outcome in cats with hiatal hernia: 31 cases (1995-2018). J Vet Intern Med. 2019;33(5):1970-1976. doi:10.1111/jvim.15583'
+const REEVE_BRACHY_HH =
+  'Reeve EJ, Sutton D, Friend EJ, Warren-Smith CMR. Documenting the prevalence of hiatal hernia and oesophageal abnormalities in brachycephalic dogs using fluoroscopy. J Small Anim Pract. 2017;58(12):703-708. doi:10.1111/jsap.12734'
+const MAYHEW_LAPAROSCOPIC =
+  'Mayhew PD, Balsa IM, Marks SL, et al. Clinical and videofluoroscopic outcomes of laparoscopic treatment for sliding hiatal hernia and associated gastroesophageal reflux in brachycephalic dogs. Vet Surg. 2021;50(suppl 1):O67-O77. doi:10.1111/vsu.13622'
+const MAYHEW_BOAS_SURGERY =
+  'Mayhew PD, Marks SL, Pollard R, Balsa IM, Culp WTN, Giuffrida MA. Effect of conventional multilevel brachycephalic obstructive airway syndrome surgery on clinical and videofluoroscopic evidence of hiatal herniation and gastroesophageal reflux in dogs. Vet Surg. 2022;52(2):238-248. doi:10.1111/vsu.13906'
+const WATKINS_HH_GASTROPEXY =
+  'Watkins M, Shales C, Thomas G, Rossanese M, Sparks T, White R. Comparison of outcomes in dogs undergoing hiatal hernia repair with and without use of a gastropexy: 41 cases (2012-2022). J Small Anim Pract. 2025;66(2):110-120. doi:10.1111/jsap.13797'
+
+// Chronic enteropathy and pyloric outflow obstruction.
+const ALLENSPACH_RISK =
+  'Allenspach K, Wieland B, Gröne A, Gaschen F. Chronic enteropathies in dogs: evaluation of risk factors for negative outcome. J Vet Intern Med. 2007;21(4):700-708. doi:10.1111/j.1939-1676.2007.tb03011.x'
+const ALLENSPACH_LONGTERM =
+  'Allenspach K, Culverwell C, Chan D. Long-term outcome in dogs with chronic enteropathies: 203 cases. Vet Rec. 2016;178(15):368. doi:10.1136/vr.103557'
+const BELLENGER_PYLORIC =
+  'Bellenger CR, Maddison JE, MacPherson GC, Ilkiw JE. Chronic hypertrophic pyloric gastropathy in 14 dogs. Aust Vet J. 1990;67(9):317-320. doi:10.1111/j.1751-0813.1990.tb07813.x'
+
+// ── Primary literature behind disease pages 16-20 ────────────────────────────
+// Discovered entirely through Crossref's bibliographic search — the Consensus
+// connector's monthly quota was still exhausted. Verified against Crossref AND
+// Europe PMC as usual. Europe PMC again carried the print year and the fuller
+// initials where Crossref had the online-first date and truncated given names
+// (Daniaux is 2014 not 2013; Behrend is Behrend EN, Arenas is Pérez-Alenza MD).
+
+// Feline GI eosinophilic sclerosing fibroplasia. Craig is the paper that named
+// the entity; Linton is the case series every figure on the page comes from.
+const CRAIG_FGESF =
+  'Craig LE, Hardam EE, Hertzke DM, Flatland B, Rohrbach BW, Moore RR. Feline gastrointestinal eosinophilic sclerosing fibroplasia. Vet Pathol. 2009;46(1):63-70. doi:10.1354/vp.46-1-63'
+const LINTON_FGESF =
+  'Linton M, Nimmo JS, Norris JM, et al. Feline gastrointestinal eosinophilic sclerosing fibroplasia: 13 cases and review of an emerging clinical entity. J Feline Med Surg. 2015;17(5):392-404. doi:10.1177/1098612x14568170'
+
+// Alimentary lymphoma. Kiselow is the outcome series behind the ">2 years"
+// figure; Sabattini and Daniaux are the two ways of separating low-grade
+// lymphoma from IBD when histology alone will not.
+const KISELOW_LOWGRADE =
+  'Kiselow MA, Rassnick KM, McDonough SP, et al. Outcome of cats with low-grade lymphocytic lymphoma: 41 cases (1995-2005). J Am Vet Med Assoc. 2008;232(3):405-410. doi:10.2460/javma.232.3.405'
+const SABATTINI_IBD_LSA =
+  'Sabattini S, Bottero E, Turba ME, Vicchi F, Bo S, Bettini G. Differentiating feline inflammatory bowel disease from alimentary lymphoma in duodenal endoscopic biopsies. J Small Anim Pract. 2016;57(8):396-401. doi:10.1111/jsap.12494'
+const DANIAUX_MUSCULARIS =
+  'Daniaux LA, Laurenson MP, Marks SL, et al. Ultrasonographic thickening of the muscularis propria in feline small intestinal small cell T-cell lymphoma and inflammatory bowel disease. J Feline Med Surg. 2014;16(2):89-98. doi:10.1177/1098612x13498596'
+const RUSSELL_LOWGRADE_FREQ =
+  'Russell KJ, Beatty JA, Dhand N, et al. Feline low-grade alimentary lymphoma: how common is it? J Feline Med Surg. 2012;14(12):910-912. doi:10.1177/1098612x12454861'
+
+// Canine hyperadrenocorticism. Behrend is the ACVIM diagnostic consensus and is
+// keyed on the AUTHOR, not "ACVIM 2013" — keeping every ACVIM statement on one
+// year-keyed map was becoming the thing most likely to mis-route a marker.
+const BEHREND_HAC_DIAGNOSIS =
+  'Behrend EN, Kooistra HS, Nelson R, Reusch CE, Scott-Moncrieff JC. Diagnosis of spontaneous canine hyperadrenocorticism: 2012 ACVIM consensus statement (small animal). J Vet Intern Med. 2013;27(6):1292-1304. doi:10.1111/jvim.12192'
+const ARENAS_TRILOSTANE_BID =
+  'Arenas C, Melián C, Pérez-Alenza MD. Evaluation of 2 trilostane protocols for the treatment of canine pituitary-dependent hyperadrenocorticism: twice daily versus once daily. J Vet Intern Med. 2013;27(6):1478-1485. doi:10.1111/jvim.12207'
+const ARENAS_ADH_SURVIVAL =
+  'Arenas C, Melián C, Pérez-Alenza MD. Long-term survival of dogs with adrenal-dependent hyperadrenocorticism: a comparison between mitotane and twice daily trilostane treatment. J Vet Intern Med. 2014;28(2):473-480. doi:10.1111/jvim.12303'
+// No Europe PMC record — it predates that index's JVIM coverage, so this is
+// the second entry in this file (after Daley 1993) verified against Crossref
+// alone. The DOI is registered and resolves; Wiley returns 403 to a bare
+// content-negotiation request, which is a publisher block, not a bad DOI.
+const BARKER_TRILOSTANE_SURVIVAL =
+  'Barker E, Campbell S, Tebb A, et al. A comparison of the survival times of dogs treated with mitotane or trilostane for pituitary-dependent hyperadrenocorticism. J Vet Intern Med. 2005;19(6):810-815. doi:10.1111/j.1939-1676.2005.tb02769.x'
+const NAGATA_PDH_SURVIVAL =
+  'Nagata N, Kojima K, Yuki M. Comparison of survival times for dogs with pituitary-dependent hyperadrenocorticism in a primary-care hospital: treated with trilostane versus untreated. J Vet Intern Med. 2017;31(1):22-28. doi:10.1111/jvim.14617'
+
+// Diabetes insipidus.
+const HARB_CDI =
+  'Harb MF, Nelson RW, Feldman EC, Scott-Moncrieff JC, Griffey SM. Central diabetes insipidus in dogs: 20 cases (1986-1995). J Am Vet Med Assoc. 1996;209(11):1884-1888. doi:10.2460/javma.1996.209.11.1884'
+const MADDENS_PYOMETRA =
+  'Maddens B, Daminet S, Smets P, Meyer E. Escherichia coli pyometra induces transient glomerular and tubular dysfunction in dogs. J Vet Intern Med. 2010;24(6):1263-1270. doi:10.1111/j.1939-1676.2010.0603.x'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -163,6 +495,43 @@ const SOURCE_NAMES = [
   'Romaneck',
   'Farias',
   'Gould',
+  // Added 2026-09-21 with the first five disease pages' primary literature.
+  // NOTE two prefix traps in this list, both handled by ordering in
+  // parseSources, not here: 'Anderson' must be tested before 'Anders', and
+  // 'Longeri' before 'Lo', or the shorter name swallows the longer one's
+  // marker. The alternation below is only used to RECOGNISE a parenthetical
+  // as a citation, so its own order is immaterial.
+  'Meurs', 'Longeri', 'Payne', 'Steele', 'Rush', 'Fox', 'Hogan', 'Lo',
+  'Mary', 'Granström', 'Boeykens', 'Brainard',
+  'Stanley', 'Tobias', 'Miller', 'Wilson', 'MacPhail', 'Jeffery',
+  'Bookbinder', 'Milovancev', 'Ogden',
+  // Disease pages 6-10. Two MORE prefix pairs to keep apart, both handled by
+  // ordering in parseSources: 'Anders' before 'Anderson' is already noted, and
+  // now 'Hall' vs 'Hardy', 'Gold' vs 'Gould', 'Perley' vs 'Pereira' — none of
+  // those is a prefix of the other, so order is free for them; the ones that
+  // MATTER are still only Anderson/Anders and Longeri/Lo.
+  'Venn', 'Sarpong', 'Perley', 'Chalifoux', 'Pereira', 'Hoel', 'Mohr',
+  'de Mari', 'Acciacca',
+  'Hall', 'Nabity', 'Scobie', 'Syme', 'King', 'Chakrabarti', 'Elliott',
+  'Quimby', 'Spencer', 'Mortier',
+  'Gold', 'Bovens', 'Lennon', 'Vincent',
+  'Kook', 'Haworth', 'Trivedi', 'Harris', 'Mansfield',
+  'Larose', 'Applewhite', 'Oakes', 'Rallis',
+  // Disease pages 11-15. NEW PREFIX TRAP: 'Allen' is a prefix of
+  // 'Allenspach', so parseSources must test Allenspach FIRST or the
+  // chronic-enteropathy markers resolve to a GDV gastropexy review.
+  'de Papp', 'Zacher', 'Green', 'Ward', 'Glickman', 'O\u2019Neill', 'Allen',
+  'Allenspach', 'McCord',
+  'Marks', 'Shaevitz', 'Bazelle',
+  'Phillips', 'Reeve', 'Mayhew', 'Watkins',
+  'Bellenger',
+  // Disease pages 16-20.
+  'Craig', 'Linton', 'Kiselow', 'Sabattini', 'Daniaux', 'Russell',
+  'Behrend', 'Arenas', 'Barker', 'Nagata', 'Harb', 'Maddens',
+  'Anderson', 'Veir', 'Greci', 'Janssens', 'Wainberg', 'Hoppers', 'Anders',
+  'Bohin',
+  'Barrs', 'Demetriou', 'Stillion', 'Rooney', 'Boothe', 'Eiras', 'Johnson',
+  'Ramsey', 'Shmalberg', 'Rudinsky', 'Langlois',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -173,6 +542,59 @@ const ACVIM_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'acvim-hypertension', text: ACVIM_HYPERTENSION },
   '2019': { id: 'acvim-imha-tx', text: ACVIM_IMHA_TX },
   '2020': { id: 'acvim-feline-cm', text: ACVIM_FELINE_CM },
+}
+
+/** Two authors cited more than once across these pages, disambiguated on the
+ *  year exactly as ACVIM is above: Meurs found a different MYBPC3 mutation in
+ *  each breed, and Payne has three separate feline-HCM cohorts on DIS-HCM
+ *  (prevalence 2015, prognosis 2013, population/breed survival 2010). An
+ *  unmapped year yields no source, so the marker prints verbatim rather than
+ *  being attributed to the wrong paper. */
+const MEURS_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2005': { id: 'meurs-maine-coon', text: MEURS_MAINE_COON },
+  '2007': { id: 'meurs-ragdoll', text: MEURS_RAGDOLL },
+}
+/** Cridge and Rudinsky each now cover two unrelated works — Cridge has the
+ *  2021 neostigmine paper on the myasthenia page and the 2018 cPL assay
+ *  comparison on the pancreatitis page; Rudinsky has the 2022 acute-colitis
+ *  trial and the 2018 canine CKD survival study. Both are keyed on the year
+ *  for exactly the reason ACVIM is: a bare prefix match would silently print
+ *  the wrong paper on a page nobody thought to write a test for. */
+const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
+  '2021': { id: 'cridge-neostigmine', text: CRIDGE_NEOSTIGMINE },
+}
+const RUDINSKY_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2018': { id: 'rudinsky-ckd', text: RUDINSKY_CKD },
+  '2022': { id: 'rudinsky-colitis', text: RUDINSKY_COLITIS },
+}
+
+/** Three more names covering two works each, keyed on the year for the same
+ *  reason as ACVIM, Meurs, Payne, Cridge and Rudinsky. */
+const GLICKMAN_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '1994': { id: 'glickman-risk-1994', text: GLICKMAN_RISK_1994 },
+  '2000': { id: 'glickman-nondietary', text: GLICKMAN_NONDIETARY },
+}
+const MAYHEW_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2021': { id: 'mayhew-laparoscopic', text: MAYHEW_LAPAROSCOPIC },
+  '2022': { id: 'mayhew-boas-surgery', text: MAYHEW_BOAS_SURGERY },
+}
+const ALLENSPACH_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2007': { id: 'allenspach-risk', text: ALLENSPACH_RISK },
+  '2016': { id: 'allenspach-longterm', text: ALLENSPACH_LONGTERM },
+}
+
+/** Arenas published the trilostane-protocol trial and the adrenal-dependent
+ *  survival study a year apart; keyed on the year like the rest. */
+const ARENAS_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2013': { id: 'arenas-trilostane-bid', text: ARENAS_TRILOSTANE_BID },
+  '2014': { id: 'arenas-adh-survival', text: ARENAS_ADH_SURVIVAL },
+}
+
+const PAYNE_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2010': { id: 'payne-population', text: PAYNE_POPULATION },
+  '2013': { id: 'payne-prognostic', text: PAYNE_PROGNOSTIC },
+  '2015': { id: 'payne-catscan', text: PAYNE_CATSCAN },
 }
 
 /** Matches an inline source-citation parenthetical whose content starts with a
@@ -252,7 +674,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Berent/.test(part)) { out.push({ id: 'berent-sub', text: BERENT_SUB }); continue }
     if (/^Shelton/.test(part)) { out.push({ id: 'shelton-remission', text: SHELTON_REMISSION }); continue }
     if (/^Forgash/.test(part)) { out.push({ id: 'forgash-mg', text: FORGASH_MG }); continue }
-    if (/^Cridge/.test(part)) { out.push({ id: 'cridge-neostigmine', text: CRIDGE_NEOSTIGMINE }); continue }
+    if (/^Cridge/.test(part)) {
+      const hit = CRIDGE_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Dewey/.test(part)) { out.push({ id: 'dewey-mmf', text: DEWEY_MMF }); continue }
     if (/^Quintavalla/.test(part)) { out.push({ id: 'quintavalla-sildenafil', text: QUINTAVALLA_SILDENAFIL }); continue }
     if (/^Cook/.test(part)) { out.push({ id: 'cook-cushingoid', text: COOK_CUSHINGOID }); continue }
@@ -278,6 +704,147 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Romaneck/.test(part)) { out.push({ id: 'romaneck-ek', text: ROMANECK_EK }); continue }
     if (/^Farias/.test(part)) { out.push({ id: 'farias-pll', text: FARIAS_PLL }); continue }
     if (/^Gould/.test(part)) { out.push({ id: 'gould-pll', text: GOULD_PLL }); continue }
+    // ── First five disease pages' primary literature (added 2026-09-21) ──
+    // Year-keyed where one author name covers several works, per ACVIM above.
+    if (/^Meurs/.test(part)) {
+      const hit = MEURS_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    // Longeri MUST be tested before Lo, and Anderson before Anders — the
+    // shorter name is a prefix of the longer one, so the wrong order sends
+    // "(Longeri 2013)" to the rivaroxaban paper and "(Anderson 2000)" to the
+    // BAER study. Both would print a plausible-looking wrong reference, which
+    // is exactly how the bare /^ACVIM/ match survived review for so long.
+    if (/^Longeri/.test(part)) { out.push({ id: 'longeri-mybpc3', text: LONGERI_MYBPC3 }); continue }
+    if (/^Payne/.test(part)) {
+      const hit = PAYNE_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^Mary/.test(part)) { out.push({ id: 'mary-a31p', text: MARY_A31P }); continue }
+    if (/^Granström/.test(part)) { out.push({ id: 'granstrom-a31p', text: GRANSTROM_A31P }); continue }
+    if (/^Boeykens/.test(part)) { out.push({ id: 'boeykens-acmg', text: BOEYKENS_ACMG }); continue }
+    if (/^Brainard/.test(part)) { out.push({ id: 'brainard-supercat', text: BRAINARD_SUPERCAT }); continue }
+    if (/^Bookbinder/.test(part)) { out.push({ id: 'bookbinder-lp', text: BOOKBINDER_LP }); continue }
+    if (/^Milovancev/.test(part)) { out.push({ id: 'milovancev-metoclopramide', text: MILOVANCEV_METOCLOPRAMIDE }); continue }
+    if (/^Ogden/.test(part)) { out.push({ id: 'ogden-cisapride', text: OGDEN_CISAPRIDE }); continue }
+    if (/^Steele/.test(part)) { out.push({ id: 'steele-igf1', text: STEELE_IGF1 }); continue }
+    if (/^Rush/.test(part)) { out.push({ id: 'rush-hcm', text: RUSH_HCM }); continue }
+    if (/^Fox/.test(part)) { out.push({ id: 'fox-reveal', text: FOX_REVEAL }); continue }
+    if (/^Hogan/.test(part)) { out.push({ id: 'hogan-fat-cat', text: HOGAN_FAT_CAT }); continue }
+    if (/^Lo\b/.test(part)) { out.push({ id: 'lo-dual-therapy', text: LO_DUAL_THERAPY }); continue }
+    if (/^Stanley/.test(part)) { out.push({ id: 'stanley-golpp', text: STANLEY_GOLPP }); continue }
+    if (/^Tobias/.test(part)) { out.push({ id: 'tobias-doxapram', text: TOBIAS_DOXAPRAM }); continue }
+    if (/^Miller/.test(part)) { out.push({ id: 'miller-doxapram', text: MILLER_DOXAPRAM }); continue }
+    if (/^Wilson/.test(part)) { out.push({ id: 'wilson-tieback-ap', text: WILSON_TIEBACK_AP }); continue }
+    if (/^MacPhail/.test(part)) { out.push({ id: 'macphail-lp', text: MACPHAIL_LP }); continue }
+    if (/^Jeffery/.test(part)) { out.push({ id: 'jeffery-lp', text: JEFFERY_LP }); continue }
+    if (/^Anderson/.test(part)) { out.push({ id: 'anderson-polyps', text: ANDERSON_POLYPS + '.' }); continue }
+    if (/^Anders\b/.test(part)) { out.push({ id: 'anders-vbo-baer', text: ANDERS_VBO_BAER }); continue }
+    if (/^Veir/.test(part)) { out.push({ id: 'veir-polyps', text: VEIR_POLYPS }); continue }
+    if (/^Greci/.test(part)) { out.push({ id: 'greci-ptt', text: GRECI_PTT }); continue }
+    if (/^Janssens/.test(part)) { out.push({ id: 'janssens-tala', text: JANSSENS_TALA }); continue }
+    if (/^Wainberg/.test(part)) { out.push({ id: 'wainberg-vbo', text: WAINBERG_VBO }); continue }
+    if (/^Hoppers/.test(part)) { out.push({ id: 'hoppers-bilateral', text: HOPPERS_BILATERAL }); continue }
+    if (/^Bohin/.test(part)) { out.push({ id: 'bohin-compartments', text: BOHIN_COMPARTMENTS }); continue }
+    if (/^Barrs/.test(part)) { out.push({ id: 'barrs-pyothorax', text: BARRS_PYOTHORAX }); continue }
+    if (/^Demetriou/.test(part)) { out.push({ id: 'demetriou-pyothorax', text: DEMETRIOU_PYOTHORAX }); continue }
+    if (/^Stillion/.test(part)) { out.push({ id: 'stillion-pyothorax', text: STILLION_PYOTHORAX }); continue }
+    if (/^Rooney/.test(part)) { out.push({ id: 'rooney-pyothorax', text: ROONEY_PYOTHORAX }); continue }
+    if (/^Boothe/.test(part)) { out.push({ id: 'boothe-pyothorax', text: BOOTHE_PYOTHORAX }); continue }
+    if (/^Eiras/.test(part)) { out.push({ id: 'eiras-diaz-ct', text: EIRAS_DIAZ_CT }); continue }
+    if (/^Johnson/.test(part)) { out.push({ id: 'johnson-pyothorax', text: JOHNSON_PYOTHORAX }); continue }
+    if (/^Ramsey/.test(part)) { out.push({ id: 'ramsey-maropitant', text: RAMSEY_MAROPITANT }); continue }
+    if (/^Shmalberg/.test(part)) { out.push({ id: 'shmalberg-metronidazole', text: SHMALBERG_METRONIDAZOLE }); continue }
+    if (/^Rudinsky/.test(part)) {
+      const hit = RUDINSKY_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^Langlois/.test(part)) { out.push({ id: 'langlois-metronidazole', text: LANGLOIS_METRONIDAZOLE }); continue }
+    // ── Disease pages 6-10 ──
+    if (/^Venn/.test(part)) { out.push({ id: 'venn-outpatient', text: VENN_OUTPATIENT }); continue }
+    if (/^Sarpong/.test(part)) { out.push({ id: 'sarpong-outpatient', text: SARPONG_OUTPATIENT }); continue }
+    if (/^Perley/.test(part)) { out.push({ id: 'perley-shelter', text: PERLEY_SHELTER }); continue }
+    if (/^Chalifoux/.test(part)) { out.push({ id: 'chalifoux-prognostic', text: CHALIFOUX_PROGNOSTIC }); continue }
+    if (/^Pereira/.test(part)) { out.push({ id: 'pereira-fmt', text: PEREIRA_FMT }); continue }
+    if (/^Hoel/.test(part)) { out.push({ id: 'hoel-oral-fmt', text: HOEL_ORAL_FMT }); continue }
+    if (/^Mohr/.test(part)) { out.push({ id: 'mohr-een', text: MOHR_EEN }); continue }
+    if (/^de Mari/.test(part)) { out.push({ id: 'de-mari-interferon', text: DE_MARI_INTERFERON }); continue }
+    if (/^Acciacca/.test(part)) { out.push({ id: 'acciacca-plasma', text: ACCIACCA_PLASMA }); continue }
+    if (/^Hall/.test(part)) { out.push({ id: 'hall-sdma', text: HALL_SDMA }); continue }
+    if (/^Nabity/.test(part)) { out.push({ id: 'nabity-sdma', text: NABITY_SDMA }); continue }
+    if (/^Scobie/.test(part)) { out.push({ id: 'scobie-sdma-review', text: SCOBIE_SDMA_REVIEW }); continue }
+    if (/^Syme/.test(part)) { out.push({ id: 'syme-proteinuria', text: SYME_PROTEINURIA }); continue }
+    if (/^King/.test(part)) { out.push({ id: 'king-prognostic', text: KING_PROGNOSTIC }); continue }
+    if (/^Chakrabarti/.test(part)) { out.push({ id: 'chakrabarti-progression', text: CHAKRABARTI_PROGRESSION }); continue }
+    if (/^Elliott/.test(part)) { out.push({ id: 'elliott-renal-diet', text: ELLIOTT_RENAL_DIET }); continue }
+    if (/^Quimby/.test(part)) { out.push({ id: 'quimby-mirtazapine', text: QUIMBY_MIRTAZAPINE }); continue }
+    if (/^Spencer/.test(part)) { out.push({ id: 'spencer-omeprazole', text: SPENCER_OMEPRAZOLE }); continue }
+    if (/^Mortier/.test(part)) { out.push({ id: 'mortier-proteinuria', text: MORTIER_PROTEINURIA }); continue }
+    if (/^Gold/.test(part)) { out.push({ id: 'gold-basal-cortisol', text: GOLD_BASAL_CORTISOL }); continue }
+    if (/^Bovens/.test(part)) { out.push({ id: 'bovens-basal-cortisol', text: BOVENS_BASAL_CORTISOL }); continue }
+    if (/^Lennon/.test(part)) { out.push({ id: 'lennon-basal-cortisol', text: LENNON_BASAL_CORTISOL }); continue }
+    if (/^Vincent/.test(part)) { out.push({ id: 'vincent-low-dose-docp', text: VINCENT_LOW_DOSE_DOCP }); continue }
+    if (/^Kook/.test(part)) { out.push({ id: 'kook-dggr', text: KOOK_DGGR }); continue }
+    if (/^Haworth/.test(part)) { out.push({ id: 'haworth-cpl', text: HAWORTH_CPL }); continue }
+    if (/^Trivedi/.test(part)) { out.push({ id: 'trivedi-cpl', text: TRIVEDI_CPL }); continue }
+    if (/^Harris/.test(part)) { out.push({ id: 'harris-een-pancreatitis', text: HARRIS_EEN_PANCREATITIS }); continue }
+    if (/^Mansfield/.test(part)) { out.push({ id: 'mansfield-een', text: MANSFIELD_EEN }); continue }
+    if (/^Larose/.test(part)) { out.push({ id: 'larose-intuss', text: LAROSE_INTUSS }); continue }
+    if (/^Applewhite/.test(part)) { out.push({ id: 'applewhite-enteroplication', text: APPLEWHITE_ENTEROPLICATION }); continue }
+    if (/^Oakes/.test(part)) { out.push({ id: 'oakes-enteroplication', text: OAKES_ENTEROPLICATION }); continue }
+    if (/^Rallis/.test(part)) { out.push({ id: 'rallis-intuss', text: RALLIS_INTUSS }); continue }
+    // ── Disease pages 11-15 ──
+    if (/^de Papp/.test(part)) { out.push({ id: 'de-papp-lactate', text: DE_PAPP_LACTATE }); continue }
+    if (/^Zacher/.test(part)) { out.push({ id: 'zacher-lactate', text: ZACHER_LACTATE }); continue }
+    if (/^Green/.test(part)) { out.push({ id: 'green-lactate', text: GREEN_LACTATE }); continue }
+    if (/^Ward/.test(part)) { out.push({ id: 'ward-gastropexy', text: WARD_GASTROPEXY }); continue }
+    if (/^Glickman/.test(part)) {
+      const hit = GLICKMAN_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^O\u2019Neill/.test(part)) { out.push({ id: 'oneill-gdv', text: ONEILL_GDV }); continue }
+    // Allenspach BEFORE Allen — 'Allen' is a prefix of 'Allenspach', so the
+    // reverse order sends "(Allenspach 2007)" to the gastropexy review.
+    if (/^Allenspach/.test(part)) {
+      const hit = ALLENSPACH_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^Allen\b/.test(part)) { out.push({ id: 'allen-gastropexy', text: ALLEN_GASTROPEXY }); continue }
+    if (/^McCord/.test(part)) { out.push({ id: 'mccord-gdv', text: MCCORD_GDV }); continue }
+    if (/^Marks/.test(part)) { out.push({ id: 'marks-gi-protectants', text: MARKS_GI_PROTECTANTS }); continue }
+    if (/^Shaevitz/.test(part)) { out.push({ id: 'shaevitz-piroxicam', text: SHAEVITZ_PIROXICAM }); continue }
+    if (/^Bazelle/.test(part)) { out.push({ id: 'bazelle-cytoprotective', text: BAZELLE_CYTOPROTECTIVE }); continue }
+    if (/^Phillips/.test(part)) { out.push({ id: 'phillips-feline-hh', text: PHILLIPS_FELINE_HH }); continue }
+    if (/^Reeve/.test(part)) { out.push({ id: 'reeve-brachy-hh', text: REEVE_BRACHY_HH }); continue }
+    if (/^Mayhew/.test(part)) {
+      const hit = MAYHEW_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^Watkins/.test(part)) { out.push({ id: 'watkins-hh-gastropexy', text: WATKINS_HH_GASTROPEXY }); continue }
+    if (/^Bellenger/.test(part)) { out.push({ id: 'bellenger-pyloric', text: BELLENGER_PYLORIC }); continue }
+    // ── Disease pages 16-20 ──
+    if (/^Craig/.test(part)) { out.push({ id: 'craig-fgesf', text: CRAIG_FGESF }); continue }
+    if (/^Linton/.test(part)) { out.push({ id: 'linton-fgesf', text: LINTON_FGESF }); continue }
+    if (/^Kiselow/.test(part)) { out.push({ id: 'kiselow-lowgrade', text: KISELOW_LOWGRADE }); continue }
+    if (/^Sabattini/.test(part)) { out.push({ id: 'sabattini-ibd-lsa', text: SABATTINI_IBD_LSA }); continue }
+    if (/^Daniaux/.test(part)) { out.push({ id: 'daniaux-muscularis', text: DANIAUX_MUSCULARIS }); continue }
+    if (/^Russell/.test(part)) { out.push({ id: 'russell-lowgrade-freq', text: RUSSELL_LOWGRADE_FREQ }); continue }
+    if (/^Behrend/.test(part)) { out.push({ id: 'behrend-hac-diagnosis', text: BEHREND_HAC_DIAGNOSIS }); continue }
+    if (/^Arenas/.test(part)) {
+      const hit = ARENAS_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^Barker/.test(part)) { out.push({ id: 'barker-trilostane-survival', text: BARKER_TRILOSTANE_SURVIVAL }); continue }
+    if (/^Nagata/.test(part)) { out.push({ id: 'nagata-pdh-survival', text: NAGATA_PDH_SURVIVAL }); continue }
+    if (/^Harb/.test(part)) { out.push({ id: 'harb-cdi', text: HARB_CDI }); continue }
+    if (/^Maddens/.test(part)) { out.push({ id: 'maddens-pyometra', text: MADDENS_PYOMETRA }); continue }
     // Only an Ettinger part reaches the Ettinger fallback. This used to be a
     // bare `else`, so ANY unrecognised part became a book-level Ettinger
     // reference — which credited Ettinger with "Farias et al. 2010, Gould et al.
