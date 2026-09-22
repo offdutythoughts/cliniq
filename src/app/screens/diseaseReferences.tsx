@@ -529,6 +529,14 @@ const KU_RTA_NDI =
 const CRIDGE_PYTHIOSIS =
   'Cridge H. Pythiosis in dogs. Vet Clin North Am Small Anim Pract. 2025;55(2):225-236. doi:10.1016/j.cvsm.2024.11.008'
 
+// Molecular mechanism of congenital NDI. NOTE: this is a HUMAN AQP2 variant
+// (G215S, described in a boy) characterised in MDCK canine kidney CELLS — not
+// a canine disease study. It supports the mechanism only, which is why the page
+// says so inline. It was briefly miscredited to Ku's case report; see
+// references/CITATIONS.md.
+const LI_AQP2 =
+  'Li Q, Lu B, Yang J, et al. Molecular characterization of an aquaporin-2 mutation causing nephrogenic diabetes insipidus. Front Endocrinol (Lausanne). 2021;12:665145. doi:10.3389/fendo.2021.665145'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -582,6 +590,10 @@ const SOURCE_NAMES = [
   // a prefix of the other, so order is free for that pair.
   'Černá', 'Thieme', 'Duclos', 'Porras', 'Sattasathuchana', 'Beaumier',
   'Tanaka', 'Teshima', 'Croton', 'Bellis', 'Evenhuis', 'Paulin', 'Etish', 'Ku',
+  // 'Li' is a prefix of Lien, Linton, Lemmons... — the \b in its branch is
+  // what keeps them apart, so it is safe in any order, but it is by far the
+  // most fragile marker in this file. Pinned by test.
+  'Li',
   'Anderson', 'Veir', 'Greci', 'Janssens', 'Wainberg', 'Hoppers', 'Anders',
   'Bohin',
   'Barrs', 'Demetriou', 'Stillion', 'Rooney', 'Boothe', 'Eiras', 'Johnson',
@@ -915,6 +927,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Paulin/.test(part)) { out.push({ id: 'paulin-feline-pthp', text: PAULIN_FELINE_PTHP + '.' }); continue }
     if (/^Etish/.test(part)) { out.push({ id: 'etish-lepto-ndi', text: ETISH_LEPTO_NDI }); continue }
     if (/^Ku\b/.test(part)) { out.push({ id: 'ku-rta-ndi', text: KU_RTA_NDI }); continue }
+    // Deliberately last among the L-names: \b stops 'Li' matching Lien,
+    // Linton, Lemmons, LeVine, Longeri, Langlois, Larose or Lennon.
+    if (/^Li\b/.test(part)) { out.push({ id: 'li-aqp2', text: LI_AQP2 }); continue }
     // Only an Ettinger part reaches the Ettinger fallback. This used to be a
     // bare `else`, so ANY unrecognised part became a book-level Ettinger
     // reference — which credited Ettinger with "Farias et al. 2010, Gould et al.

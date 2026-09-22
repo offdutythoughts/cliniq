@@ -935,6 +935,49 @@ the origin of the low single-digit *annual* threshold Ettinger Ch 18 imports.
 
 ---
 
+## Evidence quality bar (set 2026-09-22)
+
+Every citation added to app data must clear three bars:
+
+1. **Peer-reviewed.** No preprints or conference abstracts. The one legacy exception, flagged
+   where it appears, is the Miceli ECVIM-CA presentation on the feline-HAC page.
+2. **Sample large enough for the specific claim.** A single case report cannot carry a general
+   statement; a 10-dog pilot cannot carry an efficacy claim.
+3. **As current as the literature allows.** Prefer the newest adequately powered study, and
+   where a recent larger series disagrees with an older classic, the recent one wins *and the
+   page says so* — as with Černá 2024 (60 cats) versus the older FGESF case series, and
+   Green 2011 versus de Papp 1999 on the GDV lactate threshold.
+
+**Where the sample does not support the strength of the claim, the page text must say so** —
+"Some clinicians reported…", or the sample size stated inline ("in a 21-dog series…", "a
+10-dog pilot, underpowered for outcome", "all 9 cats of a small prospective series"). A bare
+superscript reads as authority; an n=1 finding written as established fact misleads a
+clinician at the point of care *more* than no citation would, because the number signals that
+someone checked. Sample sizes under roughly 30 animals are stated inline whenever the figure
+is load-bearing.
+
+Applied retroactively on 2026-09-22 to the claims resting on single case reports or pilots:
+`DIS-PUPD-CDI` (Croton, Evenhuis, Bellis, Paulin), `DIS-PUPD-NDI` (Etish, Ku),
+`DIS-GI-FGESF` (Thieme, Duclos, Porras), `DIS-GI-EOGAST` (Beaumier),
+`DIS-SEC-PAN-DOG` (Mansfield), `DIS-GI-PYL` (Tanaka) and `DIS-POLYP` (Bohin).
+
+### Second misattribution caught — Li 2021, not Ku 2023
+
+> Li Q, Lu B, Yang J, et al. Molecular characterization of an aquaporin-2 mutation causing nephrogenic diabetes insipidus. Front Endocrinol (Lausanne). 2021;12:665145. doi:10.3389/fendo.2021.665145
+
+`DIS-PUPD-NDI` carried "mutant aquaporin-2 is retained in the endoplasmic reticulum and never
+reaches the apical membrane" credited to **Ku 2023** — a case report of transient NDI after
+anaesthesia that says nothing about AQP2 mutations. The mechanism is Li 2021's, and Li comes
+with a caveat the page now states inline: it is a **human** variant (G215S, described in a
+boy) characterised in MDCK **canine kidney cells**, not a study of dogs. It supports the
+mechanism only.
+
+That is the second error of this shape after Bellenger, and both had the same cause — writing
+a plausible sentence and attaching the nearest citation rather than the one that says it. The
+marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton, Lemmons,
+LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
+`\b` in its branch. Every one of those eight is asserted in the test suite.
+
 ## Using citations inside app data
 
 `src/data/db.ts` has no citation field; entries cite inline in prose instead —

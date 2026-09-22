@@ -155,6 +155,18 @@ describe('parseSources', () => {
     expect(parseSources('Ku 2023').map(s => s.id)).toEqual(['ku-rta-ndi'])
     // Diacritic in the marker must round-trip.
     expect(parseSources('Černá 2024').map(s => s.id)).toEqual(['cerna-gesf'])
+    // 'Li' is a prefix of EIGHT other surnames in this file. The word boundary
+    // in its branch is the only thing keeping them apart, so every one of them
+    // is asserted here — this is the most fragile marker in the file.
+    expect(parseSources('Li 2021').map(s => s.id)).toEqual(['li-aqp2'])
+    expect(parseSources('Lien 2006').map(s => s.id)).toEqual(['lien-iatrogenic'])
+    expect(parseSources('Linton 2015').map(s => s.id)).toEqual(['linton-fgesf'])
+    expect(parseSources('Lo 2022').map(s => s.id)).toEqual(['lo-dual-therapy'])
+    expect(parseSources('Longeri 2013').map(s => s.id)).toEqual(['longeri-mybpc3'])
+    expect(parseSources('Langlois 2020').map(s => s.id)).toEqual(['langlois-metronidazole'])
+    expect(parseSources('Larose 2020').map(s => s.id)).toEqual(['larose-intuss'])
+    expect(parseSources('Lennon 2007').map(s => s.id)).toEqual(['lennon-basal-cortisol'])
+    expect(parseSources('LeVine 2024 diagnosis').map(s => s.id)).toEqual(['acvim-itp-dx'])
   })
 
   it('routes the year-keyed Meurs and Payne markers to the right cohort', () => {
@@ -288,6 +300,7 @@ describe('parseSources', () => {
       ['Etish 2014', 'etish-lepto-ndi', 'Ir Vet J. 2014;67(1):7'],
       ['Ku 2023', 'ku-rta-ndi', 'Vet Med Sci. 2023;9(4):1483-1487'],
       ['Cridge 2025', 'cridge-pythiosis', 'Vet Clin North Am Small Anim Pract. 2025;55(2):225-236'],
+      ['Li 2021', 'li-aqp2', 'Front Endocrinol (Lausanne). 2021;12:665145'],
     ]
     for (const [marker, id, fragment] of cases) {
       const [source] = parseSources(marker)
@@ -489,7 +502,7 @@ describe('reference block', () => {
       ['DIS-GI-LYMP', 5, ['low-grade lymphocytic lymphoma', 'muscularis propria', 'duodenal endoscopic biopsies']],
       ['DIS-PUPD-HAC', 7, ['2012 ACVIM consensus statement', 'trilostane protocols', 'mitotane']],
       ['DIS-PUPD-CDI', 6, ['Central diabetes insipidus in dogs', 'transsphenoidal surgery', 'traumatic brain injury', 'pituitary cyst']],
-      ['DIS-PUPD-NDI', 3, ['pyometra induces transient glomerular', 'leptospirosis', 'renal tubular acidosis']],
+      ['DIS-PUPD-NDI', 4, ['pyometra induces transient glomerular', 'leptospirosis', 'renal tubular acidosis', 'aquaporin-2 mutation']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
