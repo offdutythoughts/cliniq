@@ -737,6 +737,105 @@ series for canine CDI thirty years on. The claims on those pages that go beyond 
 the `1.001–1.007` USG range) are **still uncited** and were left that way rather than
 attached to a paper that does not actually say them.
 
+**PubMed pass — strengthening the thin pages (2026-09-22)**
+
+Found through the **PubMed connector**, which is what should have been used from the start.
+Crossref's bibliographic search only finds papers you already suspect exist; PubMed searches
+the literature and returns abstracts. The abstracts are the point — they are what caught the
+Bellenger misreading recorded below. Verified against PubMed **and** Crossref.
+
+Reference counts on the five thinnest pages after this pass: FGESF 2→7, CDI 1→6, EOGAST 2→4,
+NDI 1→3, pyloric stenosis 2→3.
+
+⚠️⚠️ **A correction to this file's own previous entry.** When `DIS-GI-PYL` was written up from
+Bellenger's *bibliographic record alone*, the page was given:
+
+> "Pyloromyotomy alone is inadequate for ACQUIRED mucosal hypertrophy — the redundant mucosa
+> must be resected, so pyloroplasty or antrectomy is required (Bellenger 1990)"
+
+**Bellenger says close to the opposite.** The abstract concludes that "relatively minor
+surgery (pyloromyotomy) may have a place in the treatment of a selected subgroup of cases":
+1 of 7 pyloromyotomy dogs relapsed, and the one fatal complication in the series followed a
+**pyloroplasty**. That sentence was general surgical knowledge attached to a citation that
+did not support it — exactly the failure mode this whole file exists to prevent, and it got
+through because a Crossref record has no abstract to check against. The page now carries
+Bellenger's actual findings. **Do not cite from a bibliographic record alone.**
+
+Bellenger also supplies detail the page was asserting uncited: 10/14 male, mean age 8.2 years,
+mean weight 6.5 kg, Shih Tzu and Maltese commonest, hypokalaemia 11/12, hypochloraemia 10/11,
+metabolic alkalosis 5/6, and a mean symptom-free survival of 20 months in the 11 survivors.
+
+*FGESF (`DIS-GI-FGESF`)*
+
+> Černá P, Lopez-Jimenez C, Fukushima K, et al. Clinicopathological findings, treatment, and outcome in 60 cats with gastrointestinal eosinophilic sclerosing fibroplasia. J Vet Intern Med. 2024;38(2):1005-1012. doi:10.1111/jvim.16992
+
+> Thieme ME, Olsen AM, Woolcock AD, Miller MA, Simons MC. Diagnosis and management of a case of retroperitoneal eosinophilic sclerosing fibroplasia in a cat. JFMS Open Rep. 2019;5(2):2055116919867178. doi:10.1177/2055116919867178
+
+> Duclos AA, Wolfe A, Mooney CT. Intrathoracic eosinophilic sclerosing fibroplasia with intralesional bacteria in a cat. JFMS Open Rep. 2023;9(2):20551169231199447. doi:10.1177/20551169231199447
+
+> Porras N, Rebollada-Merino A, Rodríguez-Franco F, Calvo-Ibbitson A, Rodríguez-Bertos A. Feline gastrointestinal eosinophilic sclerosing fibroplasia — extracellular matrix proteins and TGF-β1 immunoexpression. Vet Sci. 2022;9(6):291. doi:10.3390/vetsci9060291
+
+> Cridge H. Pythiosis in dogs. Vet Clin North Am Small Anim Pract. 2025;55(2):225-236. doi:10.1016/j.cvsm.2024.11.008
+
+⚠️ **Černá revises two things the page had settled.** The page said the multimodal approach
+was "most common and most effective"; in 60 cats survival did **not** differ significantly
+between surgical resection and medical therapy alone, and only 37% were resected while 98%
+got corticosteroids. It also said outcomes were "variable... poor with delayed management";
+Černá reports **88% still alive** and states plainly that the prognosis is better than
+previously reported. Both page lines were rewritten. Thieme is the `day 732` case the page
+was already quoting; Porras is the source for the TGF-β1 claim.
+
+Cridge 2025 is a **third** Cridge paper in this file (with the 2018 cPL comparison and the
+2021 neostigmine study) — the year keying already in place absorbed it without change.
+
+*Eosinophilic gastroenteritis (`DIS-GI-EOGAST`)*
+
+> Sattasathuchana P, Steiner JM. Canine eosinophilic gastrointestinal disorders. Anim Health Res Rev. 2014;15(1):76-86. doi:10.1017/s1466252314000012
+
+> Beaumier A, Batista Linhares M, Rush JE, Piedra-Mora C. Hypereosinophilic syndrome with cardiac infiltration and congestive heart failure in a cat. J Vet Cardiol. 2022;41:11-17. doi:10.1016/j.jvc.2021.12.009
+
+Sattasathuchana is the authoritative review the page lacked, and supports the page's own
+claim that response and prognosis are worse than for other chronic gastroenteritides — in
+**dogs**, not only cats, which the page had implied was a feline-only problem.
+
+*Pyloric lesions (`DIS-GI-PYL`)*
+
+> Tanaka T, Wada Y, Noguchi S, Nishida H, Akiyoshi H. Contrast-enhanced CT features of pyloric lesions in 17 dogs: case series. Vet Radiol Ultrasound. 2022;64(2):262-270. doi:10.1111/vru.13193
+
+Gives a usable benign-versus-malignant discriminator: hyperplasia, adenoma and polyposis
+involve the mucosal layer; adenocarcinoma involves the outer layer with lymphomegaly.
+
+*Central diabetes insipidus (`DIS-PUPD-CDI`)*
+
+> Teshima T, Hara Y, Taoda T, Teramoto A, Tagawa M. Central diabetes insipidus after transsphenoidal surgery in dogs with Cushing’s disease. J Vet Med Sci. 2011;73(1):33-39. doi:10.1292/jvms.10-0129
+
+> Croton C, Purcell S, Schoep A, Haworth M. Successful treatment of transient central diabetes insipidus following traumatic brain injury in a dog. Case Rep Vet Med. 2019;2019:3563675. doi:10.1155/2019/3563675
+
+> Bellis T, Daly M, Davidson B. Central diabetes insipidus following cardiopulmonary arrest in a dog. J Vet Emerg Crit Care. 2015;25(6):745-750. doi:10.1111/vec.12398
+
+> Evenhuis J, Epstein SE, Della-Maggiore A, Reagan KL. Congenital pituitary cyst resulting in adipsic central diabetes insipidus and secondary hypernatremia in a cat. JFMS Open Rep. 2021;7(1):2055116921990294. doi:10.1177/2055116921990294
+
+> Paulin MV, Gleasure S, Snead EC. Multiple pituitary hormone deficiencies in a kitten: hyposomatotropism, hypothyroidism, central diabetes insipidus and hypogonadism. Can Vet J. 2023;64(3):245-251.
+
+Paulin carries **no DOI** — *Can Vet J* is PMC-deposited without one (PMC9979728). It is the
+third entry in this file without a DOI, after Anderson 2000 and the Miceli conference
+abstract. Do not construct one.
+
+These five are case reports and a small cohort, which is what the canine/feline CDI
+literature consists of. They are cited for what each one actually shows — a mechanism, a
+transient course, a species difference — not as evidence of frequency. The page's claim that
+**post-traumatic and post-arrest CDI can be transient** is new and load-bearing: it argues
+for trialling withdrawal of desmopressin rather than assuming lifelong treatment.
+
+*Nephrogenic diabetes insipidus (`DIS-PUPD-NDI`)*
+
+> Etish JL, Chapman PS, Klag AR. Acquired nephrogenic diabetes insipidus in a dog with leptospirosis. Ir Vet J. 2014;67(1):7. doi:10.1186/2046-0481-67-7
+
+> Ku D, Lee D, Yun T, et al. Transient distal renal tubular acidosis with nephrogenic diabetes insipidus after general anaesthesia in a dog. Vet Med Sci. 2023;9(4):1483-1487. doi:10.1002/vms3.1165
+
+Etish matters clinically beyond the citation: hyposthenuria was the **first** sign, weeks
+before azotaemia, and the dog was a zoonotic risk the whole time.
+
 #### Corrections made when these were verified
 
 Seven strings were wrong before this pass. Six truncated the author list to `et al` while

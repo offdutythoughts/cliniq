@@ -479,6 +479,56 @@ const HARB_CDI =
 const MADDENS_PYOMETRA =
   'Maddens B, Daminet S, Smets P, Meyer E. Escherichia coli pyometra induces transient glomerular and tubular dysfunction in dogs. J Vet Intern Med. 2010;24(6):1263-1270. doi:10.1111/j.1939-1676.2010.0603.x'
 
+// ── PubMed pass: strengthening the pages Crossref discovery left thin ────────
+// Found through the PubMed connector (2026-09-22), which is what should have
+// been used from the start — Crossref's bibliographic search only finds papers
+// you already suspect exist, and PubMed's abstracts are what caught the
+// Bellenger misreading below. Verified against PubMed AND Crossref.
+// Where they disagree on the year, both agreed here after checking: Teshima is
+// 2011 (PubMed's 2010 is the online date), Beaumier 2022, Tanaka 2022.
+
+// FGESF. Černá is the 60-cat series — by far the largest, and it revises the
+// prognosis and the surgery-versus-medical question the page had settled.
+const CERNA_GESF =
+  'Černá P, Lopez-Jimenez C, Fukushima K, et al. Clinicopathological findings, treatment, and outcome in 60 cats with gastrointestinal eosinophilic sclerosing fibroplasia. J Vet Intern Med. 2024;38(2):1005-1012. doi:10.1111/jvim.16992'
+const THIEME_RETROPERITONEAL =
+  'Thieme ME, Olsen AM, Woolcock AD, Miller MA, Simons MC. Diagnosis and management of a case of retroperitoneal eosinophilic sclerosing fibroplasia in a cat. JFMS Open Rep. 2019;5(2):2055116919867178. doi:10.1177/2055116919867178'
+const DUCLOS_INTRATHORACIC =
+  'Duclos AA, Wolfe A, Mooney CT. Intrathoracic eosinophilic sclerosing fibroplasia with intralesional bacteria in a cat. JFMS Open Rep. 2023;9(2):20551169231199447. doi:10.1177/20551169231199447'
+const PORRAS_TGFB1 =
+  'Porras N, Rebollada-Merino A, Rodríguez-Franco F, Calvo-Ibbitson A, Rodríguez-Bertos A. Feline gastrointestinal eosinophilic sclerosing fibroplasia — extracellular matrix proteins and TGF-β1 immunoexpression. Vet Sci. 2022;9(6):291. doi:10.3390/vetsci9060291'
+
+// Eosinophilic gastrointestinal disease.
+const SATTASATHUCHANA_EOSINOPHILIC =
+  'Sattasathuchana P, Steiner JM. Canine eosinophilic gastrointestinal disorders. Anim Health Res Rev. 2014;15(1):76-86. doi:10.1017/s1466252314000012'
+const BEAUMIER_HES_CARDIAC =
+  'Beaumier A, Batista Linhares M, Rush JE, Piedra-Mora C. Hypereosinophilic syndrome with cardiac infiltration and congestive heart failure in a cat. J Vet Cardiol. 2022;41:11-17. doi:10.1016/j.jvc.2021.12.009'
+
+// Pyloric lesions.
+const TANAKA_PYLORIC_CT =
+  'Tanaka T, Wada Y, Noguchi S, Nishida H, Akiyoshi H. Contrast-enhanced CT features of pyloric lesions in 17 dogs: case series. Vet Radiol Ultrasound. 2022;64(2):262-270. doi:10.1111/vru.13193'
+
+// Diabetes insipidus — the two pages Crossref discovery could barely serve.
+const TESHIMA_POSTOP_CDI =
+  'Teshima T, Hara Y, Taoda T, Teramoto A, Tagawa M. Central diabetes insipidus after transsphenoidal surgery in dogs with Cushing’s disease. J Vet Med Sci. 2011;73(1):33-39. doi:10.1292/jvms.10-0129'
+const CROTON_TRAUMA_CDI =
+  'Croton C, Purcell S, Schoep A, Haworth M. Successful treatment of transient central diabetes insipidus following traumatic brain injury in a dog. Case Rep Vet Med. 2019;2019:3563675. doi:10.1155/2019/3563675'
+const BELLIS_CPA_CDI =
+  'Bellis T, Daly M, Davidson B. Central diabetes insipidus following cardiopulmonary arrest in a dog. J Vet Emerg Crit Care. 2015;25(6):745-750. doi:10.1111/vec.12398'
+const EVENHUIS_PITUITARY_CYST =
+  'Evenhuis J, Epstein SE, Della-Maggiore A, Reagan KL. Congenital pituitary cyst resulting in adipsic central diabetes insipidus and secondary hypernatremia in a cat. JFMS Open Rep. 2021;7(1):2055116921990294. doi:10.1177/2055116921990294'
+const PAULIN_FELINE_PTHP =
+  'Paulin MV, Gleasure S, Snead EC. Multiple pituitary hormone deficiencies in a kitten: hyposomatotropism, hypothyroidism, central diabetes insipidus and hypogonadism. Can Vet J. 2023;64(3):245-251'
+const ETISH_LEPTO_NDI =
+  'Etish JL, Chapman PS, Klag AR. Acquired nephrogenic diabetes insipidus in a dog with leptospirosis. Ir Vet J. 2014;67(1):7. doi:10.1186/2046-0481-67-7'
+const KU_RTA_NDI =
+  'Ku D, Lee D, Yun T, et al. Transient distal renal tubular acidosis with nephrogenic diabetes insipidus after general anaesthesia in a dog. Vet Med Sci. 2023;9(4):1483-1487. doi:10.1002/vms3.1165'
+
+// Pythiosis — listed in the FGESF differential, and the modern review revises
+// the "uniformly fatal" reputation it still carries in older sources.
+const CRIDGE_PYTHIOSIS =
+  'Cridge H. Pythiosis in dogs. Vet Clin North Am Small Anim Pract. 2025;55(2):225-236. doi:10.1016/j.cvsm.2024.11.008'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -528,6 +578,10 @@ const SOURCE_NAMES = [
   // Disease pages 16-20.
   'Craig', 'Linton', 'Kiselow', 'Sabattini', 'Daniaux', 'Russell',
   'Behrend', 'Arenas', 'Barker', 'Nagata', 'Harb', 'Maddens',
+  // PubMed pass. 'Bellis' and 'Bellenger' share four characters but neither is
+  // a prefix of the other, so order is free for that pair.
+  'Černá', 'Thieme', 'Duclos', 'Porras', 'Sattasathuchana', 'Beaumier',
+  'Tanaka', 'Teshima', 'Croton', 'Bellis', 'Evenhuis', 'Paulin', 'Etish', 'Ku',
   'Anderson', 'Veir', 'Greci', 'Janssens', 'Wainberg', 'Hoppers', 'Anders',
   'Bohin',
   'Barrs', 'Demetriou', 'Stillion', 'Rooney', 'Boothe', 'Eiras', 'Johnson',
@@ -563,6 +617,7 @@ const MEURS_BY_YEAR: Record<string, { id: string; text: string }> = {
 const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
   '2021': { id: 'cridge-neostigmine', text: CRIDGE_NEOSTIGMINE },
+  '2025': { id: 'cridge-pythiosis', text: CRIDGE_PYTHIOSIS },
 }
 const RUDINSKY_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'rudinsky-ckd', text: RUDINSKY_CKD },
@@ -845,6 +900,21 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Nagata/.test(part)) { out.push({ id: 'nagata-pdh-survival', text: NAGATA_PDH_SURVIVAL }); continue }
     if (/^Harb/.test(part)) { out.push({ id: 'harb-cdi', text: HARB_CDI }); continue }
     if (/^Maddens/.test(part)) { out.push({ id: 'maddens-pyometra', text: MADDENS_PYOMETRA }); continue }
+    // ── PubMed pass ──
+    if (/^Černá/.test(part)) { out.push({ id: 'cerna-gesf', text: CERNA_GESF }); continue }
+    if (/^Thieme/.test(part)) { out.push({ id: 'thieme-retroperitoneal', text: THIEME_RETROPERITONEAL }); continue }
+    if (/^Duclos/.test(part)) { out.push({ id: 'duclos-intrathoracic', text: DUCLOS_INTRATHORACIC }); continue }
+    if (/^Porras/.test(part)) { out.push({ id: 'porras-tgfb1', text: PORRAS_TGFB1 }); continue }
+    if (/^Sattasathuchana/.test(part)) { out.push({ id: 'sattasathuchana-eosinophilic', text: SATTASATHUCHANA_EOSINOPHILIC }); continue }
+    if (/^Beaumier/.test(part)) { out.push({ id: 'beaumier-hes-cardiac', text: BEAUMIER_HES_CARDIAC }); continue }
+    if (/^Tanaka/.test(part)) { out.push({ id: 'tanaka-pyloric-ct', text: TANAKA_PYLORIC_CT }); continue }
+    if (/^Teshima/.test(part)) { out.push({ id: 'teshima-postop-cdi', text: TESHIMA_POSTOP_CDI }); continue }
+    if (/^Croton/.test(part)) { out.push({ id: 'croton-trauma-cdi', text: CROTON_TRAUMA_CDI }); continue }
+    if (/^Bellis/.test(part)) { out.push({ id: 'bellis-cpa-cdi', text: BELLIS_CPA_CDI }); continue }
+    if (/^Evenhuis/.test(part)) { out.push({ id: 'evenhuis-pituitary-cyst', text: EVENHUIS_PITUITARY_CYST }); continue }
+    if (/^Paulin/.test(part)) { out.push({ id: 'paulin-feline-pthp', text: PAULIN_FELINE_PTHP + '.' }); continue }
+    if (/^Etish/.test(part)) { out.push({ id: 'etish-lepto-ndi', text: ETISH_LEPTO_NDI }); continue }
+    if (/^Ku\b/.test(part)) { out.push({ id: 'ku-rta-ndi', text: KU_RTA_NDI }); continue }
     // Only an Ettinger part reaches the Ettinger fallback. This used to be a
     // bare `else`, so ANY unrecognised part became a book-level Ettinger
     // reference — which credited Ettinger with "Farias et al. 2010, Gould et al.
