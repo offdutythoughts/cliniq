@@ -573,6 +573,74 @@ const CLARK_F7_AUTOPSY =
 const GOOKIN_FELINE_FX =
   'Gookin JL, Brooks MB, Catalfamo JL, Bunch SE, Muñana KR. Factor X deficiency in a cat. J Am Vet Med Assoc. 1997;211(5):576-579. doi:10.2460/javma.1997.211.05.576'
 
+// ── Primary literature behind disease pages 26-30 ────────────────────────────
+// PubMed-first, verified against Crossref. Garden is keyed on the AUTHOR, not
+// "ACVIM 2019" — that year is already taken in ACVIM_BY_YEAR by Swann's IMHA
+// TREATMENT statement, and the page cites both. Same decision as Marks and
+// Behrend.
+
+// IMHA. The diagnosis half of the ACVIM pair; the treatment half (Swann 2019)
+// was already in this file and the page already cited it.
+const GARDEN_IMHA_DX =
+  'Garden OA, Kidd L, Mexas AM, et al. ACVIM consensus statement on the diagnosis of immune-mediated hemolytic anemia in dogs and cats. J Vet Intern Med. 2019;33(2):313-334. doi:10.1111/jvim.15441'
+
+// Haemophilia A. Aslanian is the 39-dog series the prognosis field quotes —
+// note it is a SURVEY of respondents, not a clinical cohort, which the page
+// now states. The gene-therapy papers are colony model dogs, not patients.
+const ASLANIAN_HEMA =
+  'Aslanian ME, Sharp CR, Rozanski EA, de Laforcade AM, Rishniw M, Brooks MB. Clinical outcome after diagnosis of hemophilia A in dogs. J Am Vet Med Assoc. 2014;245(6):677-683. doi:10.2460/javma.245.6.677'
+const NGUYEN_AAV_CLONAL =
+  'Nguyen GN, Everett JK, Kafle S, et al. A long-term study of AAV gene therapy in dogs with hemophilia A identifies clonal expansions of transduced liver cells. Nat Biotechnol. 2020;39(1):47-55. doi:10.1038/s41587-020-0741-7'
+const BATTY_AAV_INTEGRATION =
+  'Batty P, Fong S, Franco M, et al. Vector integration and fate in the hemophilia dog liver multiple years after AAV-FVIII gene transfer. Blood. 2024;143(23):2373-2385. doi:10.1182/blood.2023022589'
+const FOWLER_HEMA_SPINAL =
+  'Fowler KM, Bolton TA, Rossmeisl JH, et al. Clinical, diagnostic, and imaging findings in three juvenile dogs with paraspinal hyperesthesia or myelopathy as a consequence of hemophilia A: a case report. Front Vet Sci. 2022;9:871029. doi:10.3389/fvets.2022.871029'
+
+// Immune-mediated neutropenia. Devine is the only cohort of any size; Scott is
+// the differential that can be indistinguishable on marrow.
+const DEVINE_IMN =
+  'Devine L, Armstrong PJ, Whittemore JC, et al. Presumed primary immune-mediated neutropenia in 35 dogs: a retrospective study. J Small Anim Pract. 2017;58(6):307-313. doi:10.1111/jsap.12636'
+const SCOTT_PHENOBARB_MARROW =
+  'Scott TN, Bailin HG, Jutkowitz LA, Scott MA, Lucidi CA. Bone marrow, blood, and clinical findings in dogs treated with phenobarbital. Vet Clin Pathol. 2021;50(1):122-131. doi:10.1111/vcp.13013'
+
+// Leptospirosis. The 2023 ACVIM update is the current statement and supersedes
+// the 2010 one the page was written against. Knöpfler is the largest single
+// cohort (99 dogs) and is where the organ-involvement and outcome frequencies
+// come from; Buser is 41 dogs, so its CRP finding is hedged on the page.
+const SYKES_LEPTO =
+  'Sykes JE, Francey T, Schuller S, Stoddard RA, Cowgill LD, Moore GE. Updated ACVIM consensus statement on leptospirosis in dogs. J Vet Intern Med. 2023;37(6):1966-1982. doi:10.1111/jvim.16903'
+const KNOPFLER_LEPTO =
+  'Knöpfler S, Mayer-Scholl A, Luge E, et al. Evaluation of clinical, laboratory, imaging findings and outcome in 99 dogs with leptospirosis. J Small Anim Pract. 2017;58(10):582-588. doi:10.1111/jsap.12718'
+const BUSER_LEPTO_CRP =
+  'Buser FC, Schweighauser A, Im Hof-Gut M, et al. Evaluation of C-reactive protein and its kinetics as a prognostic indicator in canine leptospirosis. J Small Anim Pract. 2019;60(8):477-485. doi:10.1111/jsap.13004'
+
+// Ehrlichiosis. Chochlios is the large one (850 dogs) and carries the
+// seroprevalence and clinicopathological-association data. Christodoulou is 35
+// CME vs 29 ITP, so the discriminators it reports are hedged on the page.
+// Mind the print year: PubMed dates it 2022 (epub), the volume is 2023.
+// Mylonakis 2011 is 56 dogs and is the source of the pancytopenia odds ratio.
+const CHOCHLIOS_ECANIS =
+  'Chochlios TA, Angelidou E, Kritsepi-Konstantinou M, Koutinas CK, Mylonakis ME. Seroprevalence and risk factors associated with Ehrlichia canis in a hospital canine population. Vet Clin Pathol. 2019;48(2):305-309. doi:10.1111/vcp.12736'
+const CHRISTODOULOU_CME_ITP =
+  'Christodoulou V, Meletis E, Kostoulas P, et al. Clinical and clinicopathologic discriminators between canine acute monocytic ehrlichiosis and primary immune thrombocytopenia. Top Companion Anim Med. 2023;52:100750. doi:10.1016/j.tcam.2022.100750'
+const MYLONAKIS_CME_APP =
+  'Mylonakis ME, Ceron JJ, Leontides L, et al. Serum acute phase proteins as clinical phase indicators and outcome predictors in naturally occurring canine monocytic ehrlichiosis. J Vet Intern Med. 2011;25(4):811-817. doi:10.1111/j.1939-1676.2011.0728.x'
+
+// FIP antivirals. Taylor is the big one (307 cats) and the only series on
+// LEGALLY sourced, known-composition product, which is why it carries the
+// survival and relapse figures the page quotes. Pedersen is the original
+// field trial (31 cats) and is where the 12-week floor comes from. Lv is 46
+// cats on the GS + GC376 combination; Dickinson is FOUR cats and is the only
+// evidence for the higher neurological dose, so the page hedges it.
+const TAYLOR_FIP_307 =
+  'Taylor SS, Coggins S, Barker EN, et al. Retrospective study and outcome of 307 cats with feline infectious peritonitis treated with legally sourced veterinary compounded preparations of remdesivir and GS-441524 (2020-2022). J Feline Med Surg. 2023;25(9):1098612X231194460. doi:10.1177/1098612X231194460'
+const PEDERSEN_GS441524 =
+  'Pedersen NC, Perron M, Bannasch M, et al. Efficacy and safety of the nucleoside analog GS-441524 for treatment of cats with naturally occurring feline infectious peritonitis. J Feline Med Surg. 2019;21(4):271-281. doi:10.1177/1098612X19825701'
+const LV_GS_GC376 =
+  'Lv J, Bai Y, Wang Y, Yang L, Jin Y, Dong J. Effect of GS-441524 in combination with the 3C-like protease inhibitor GC376 on the treatment of naturally transmitted feline infectious peritonitis. Front Vet Sci. 2022;9:1002488. doi:10.3389/fvets.2022.1002488'
+const DICKINSON_NEURO_FIP =
+  'Dickinson PJ, Bannasch M, Thomasy SM, et al. Antiviral treatment using the adenosine nucleoside analogue GS-441524 in cats with clinically diagnosed neurological feline infectious peritonitis. J Vet Intern Med. 2020;34(4):1587-1593. doi:10.1111/jvim.15780'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -632,10 +700,21 @@ const SOURCE_NAMES = [
   'Li',
   // Disease pages 21-25.
   'Mignan', 'Grobman', 'Wiinberg', 'Estrin', 'Callan', 'Clark', 'Gookin',
+  // Disease pages 26-30. 'Scott' and 'Scobie' share three characters; neither
+  // is a prefix of the other, but both are asserted in the tests.
+  'Garden', 'Aslanian', 'Nguyen', 'Batty', 'Fowler', 'Devine', 'Scott',
   'Anderson', 'Veir', 'Greci', 'Janssens', 'Wainberg', 'Hoppers', 'Anders',
   'Bohin',
   'Barrs', 'Demetriou', 'Stillion', 'Rooney', 'Boothe', 'Eiras', 'Johnson',
   'Ramsey', 'Shmalberg', 'Rudinsky', 'Langlois',
+  // Leptospirosis and ehrlichiosis. 'Chochlios' and 'Christodoulou' share a
+  // two-letter head and neither is a prefix of the other; both are asserted
+  // in the tests so a future rename cannot quietly collapse them.
+  'Sykes', 'Knöpfler', 'Buser', 'Chochlios', 'Christodoulou', 'Mylonakis',
+  // FIP. 'Taylor' sits beside the existing 'Tanaka' and 'Trivedi'; 'Lv' is
+  // two letters and is a prefix of nothing here, but it is pinned in the
+  // tests for the same reason 'Lo' is.
+  'Taylor', 'Pedersen', 'Lv', 'Dickinson',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -876,6 +955,16 @@ export function parseSources(inner: string): { id: string; text: string }[] {
       continue
     }
     if (/^Langlois/.test(part)) { out.push({ id: 'langlois-metronidazole', text: LANGLOIS_METRONIDAZOLE }); continue }
+    if (/^Sykes/.test(part)) { out.push({ id: 'sykes-lepto', text: SYKES_LEPTO }); continue }
+    if (/^Knöpfler/.test(part)) { out.push({ id: 'knopfler-lepto', text: KNOPFLER_LEPTO }); continue }
+    if (/^Buser/.test(part)) { out.push({ id: 'buser-lepto-crp', text: BUSER_LEPTO_CRP }); continue }
+    if (/^Chochlios/.test(part)) { out.push({ id: 'chochlios-ecanis', text: CHOCHLIOS_ECANIS }); continue }
+    if (/^Christodoulou/.test(part)) { out.push({ id: 'christodoulou-cme-itp', text: CHRISTODOULOU_CME_ITP }); continue }
+    if (/^Mylonakis/.test(part)) { out.push({ id: 'mylonakis-cme-app', text: MYLONAKIS_CME_APP }); continue }
+    if (/^Taylor/.test(part)) { out.push({ id: 'taylor-fip-307', text: TAYLOR_FIP_307 }); continue }
+    if (/^Pedersen/.test(part)) { out.push({ id: 'pedersen-gs441524', text: PEDERSEN_GS441524 }); continue }
+    if (/^Lv/.test(part)) { out.push({ id: 'lv-gs-gc376', text: LV_GS_GC376 }); continue }
+    if (/^Dickinson/.test(part)) { out.push({ id: 'dickinson-neuro-fip', text: DICKINSON_NEURO_FIP }); continue }
     // ── Disease pages 6-10 ──
     if (/^Venn/.test(part)) { out.push({ id: 'venn-outpatient', text: VENN_OUTPATIENT }); continue }
     if (/^Sarpong/.test(part)) { out.push({ id: 'sarpong-outpatient', text: SARPONG_OUTPATIENT }); continue }
@@ -988,6 +1077,14 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Callan/.test(part)) { out.push({ id: 'callan-f7-mutation', text: CALLAN_F7_MUTATION }); continue }
     if (/^Clark/.test(part)) { out.push({ id: 'clark-f7-autopsy', text: CLARK_F7_AUTOPSY }); continue }
     if (/^Gookin/.test(part)) { out.push({ id: 'gookin-feline-fx', text: GOOKIN_FELINE_FX }); continue }
+    // ── Disease pages 26-30 ──
+    if (/^Garden/.test(part)) { out.push({ id: 'garden-imha-dx', text: GARDEN_IMHA_DX }); continue }
+    if (/^Aslanian/.test(part)) { out.push({ id: 'aslanian-hema', text: ASLANIAN_HEMA }); continue }
+    if (/^Nguyen/.test(part)) { out.push({ id: 'nguyen-aav-clonal', text: NGUYEN_AAV_CLONAL }); continue }
+    if (/^Batty/.test(part)) { out.push({ id: 'batty-aav-integration', text: BATTY_AAV_INTEGRATION }); continue }
+    if (/^Fowler/.test(part)) { out.push({ id: 'fowler-hema-spinal', text: FOWLER_HEMA_SPINAL }); continue }
+    if (/^Devine/.test(part)) { out.push({ id: 'devine-imn', text: DEVINE_IMN }); continue }
+    if (/^Scott/.test(part)) { out.push({ id: 'scott-phenobarb-marrow', text: SCOTT_PHENOBARB_MARROW }); continue }
     // Only an Ettinger part reaches the Ettinger fallback. This used to be a
     // bare `else`, so ANY unrecognised part became a book-level Ettinger
     // reference — which credited Ettinger with "Farias et al. 2010, Gould et al.

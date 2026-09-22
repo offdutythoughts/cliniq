@@ -1016,6 +1016,122 @@ transfusion effect remain **uncited**, and were not propped up on a factor VII o
 paper that does not cover them. The reference-count test asserts zero for that page so the
 gap stays visible rather than being quietly filled later.
 
+**Disease pages 26-30 — primary literature (added 2026-09-23)**
+
+*IMHA (`DIS-BD-IMHA`)*
+
+> Garden OA, Kidd L, Mexas AM, et al. ACVIM consensus statement on the diagnosis of immune-mediated hemolytic anemia in dogs and cats. J Vet Intern Med. 2019;33(2):313-334. doi:10.1111/jvim.15441
+
+The **diagnosis** half of the ACVIM pair. The treatment half (Swann 2019) was already in this
+file and the page already cited it as `(ACVIM 2019)`; the diagnosis half was missing while the
+page's entire `conf` section — the diagnostic triad, saline agglutination, DAT, baseline
+testing before immunosuppression — and its graded comorbidity language ("B. gibsoni
+intermediate-high evidence", "Mycoplasma haemofelis high evidence") came straight out of it.
+
+⚠️ **Garden is keyed on the AUTHOR, not `ACVIM 2019`.** That year is taken in `ACVIM_BY_YEAR`
+by the treatment statement, and this page cites both. Third instance of this decision, after
+Marks and Behrend. Both resolutions are pinned by test.
+
+*Haemophilia A (`DIS-BD-HEMA`)*
+
+> Aslanian ME, Sharp CR, Rozanski EA, de Laforcade AM, Rishniw M, Brooks MB. Clinical outcome after diagnosis of hemophilia A in dogs. J Am Vet Med Assoc. 2014;245(6):677-683. doi:10.2460/javma.245.6.677
+
+> Nguyen GN, Everett JK, Kafle S, et al. A long-term study of AAV gene therapy in dogs with hemophilia A identifies clonal expansions of transduced liver cells. Nat Biotechnol. 2020;39(1):47-55. doi:10.1038/s41587-020-0741-7
+
+> Batty P, Fong S, Franco M, et al. Vector integration and fate in the hemophilia dog liver multiple years after AAV-FVIII gene transfer. Blood. 2024;143(23):2373-2385. doi:10.1182/blood.2023022589
+
+> Fowler KM, Bolton TA, Rossmeisl JH, et al. Clinical, diagnostic, and imaging findings in three juvenile dogs with paraspinal hyperesthesia or myelopathy as a consequence of hemophilia A: a case report. Front Vet Sci. 2022;9:871029. doi:10.3389/fvets.2022.871029
+
+Aslanian is the 39-dog series the prognosis field was already quoting. Its **design is now
+stated on the page**: a survey of clinicians, not a clinical cohort, so ascertainment is
+uneven. Fowler is **n=3** and hedged as "some clinicians reported".
+
+⚠️ **The gene-therapy line was overstated and is rewritten.** The page said "investigational,
+>90% reduction in bleeds in dogs" — a figure not found in either long-term study. Nguyen
+followed 9 dogs up to 10 years and reports factor VIII corrected to **1.9-11.3% of normal**,
+together with **clonal expansion of transduced liver cells** (44% of integration sites near
+growth-related genes) and an explicit call for genotoxicity monitoring. Batty's decade-long
+cohort found predominantly episomal vector and no tumours. Both are on the page, and it now
+says plainly that these are **purpose-bred colony dogs, not patients**.
+
+*Immune-mediated neutropenia (`DIS-IMNP`)*
+
+> Devine L, Armstrong PJ, Whittemore JC, et al. Presumed primary immune-mediated neutropenia in 35 dogs: a retrospective study. J Small Anim Pract. 2017;58(6):307-313. doi:10.1111/jsap.12636
+
+> Scott TN, Bailin HG, Jutkowitz LA, Scott MA, Lucidi CA. Bone marrow, blood, and clinical findings in dogs treated with phenobarbital. Vet Clin Pathol. 2021;50(1):122-131. doi:10.1111/vcp.13013
+
+Devine is the only cohort of any size and is the source of the page's "all 33 resolved within
+a month" and "~one third relapse". Scott is cited as a **differential warning**: the marrow
+picture of phenobarbital-induced cytopenia can be indistinguishable from immune-mediated
+neutropenia, so the drug history matters before treating.
+
+⚠️ **`DIS-BD-HEMB` and `DIS-BD-HEMC` have no references and are deliberately left that way.**
+Their breed-specific variant claims are precise — German wirehaired pointer 1.5-kb intron 5
+insertion, Lhasa apso nt 772-777 deletion, Rhodesian ridgeback c.731G>A, Kerry blue terrier
+90 bp exonic SINE, Maine Coon F11 c.1546G>A — and precise enough that a source must exist,
+but nothing was found through PubMed or Crossref in this pass. They remain **uncited** rather
+than attached to a haemophilia A paper that does not cover them. The reference-count test
+asserts zero for both, as it does for `DIS-BD-FII`, so the gap stays visible. These three
+pages are the obvious target for a dedicated search pass.
+
+### Pages 31-34 — Evans syndrome, leptospirosis, ehrlichiosis (2026-09-23)
+
+The first batch of the "every disease page cites at least one peer-reviewed paper" pass.
+
+**`DIS-BD-EVANS`** needed no new verification: the ACVIM IMHA diagnosis (Garden 2019),
+IMHA treatment (Swann 2019) and ITP diagnosis/treatment (LeVine 2024) statements were all
+already in `diseaseReferences.tsx`, attached to other pages, and each covers one arm of the
+Evans diagnosis. Both arms now have to be proven independently on the page, which is what the
+consensus criteria actually require.
+
+**`DIS-INFECT-LEPTO`** — three sources:
+
+> Sykes JE, Francey T, Schuller S, Stoddard RA, Cowgill LD, Moore GE. Updated ACVIM consensus statement on leptospirosis in dogs. J Vet Intern Med. 2023;37(6):1966-1982. doi:10.1111/jvim.16903
+
+> Knöpfler S, Mayer-Scholl A, Luge E, et al. Evaluation of clinical, laboratory, imaging findings and outcome in 99 dogs with leptospirosis. J Small Anim Pract. 2017;58(10):582-588. doi:10.1111/jsap.12718
+
+> Buser FC, Schweighauser A, Im Hof-Gut M, et al. Evaluation of C-reactive protein and its kinetics as a prognostic indicator in canine leptospirosis. J Small Anim Pract. 2019;60(8):477-485. doi:10.1111/jsap.13004
+
+The 2023 statement **supersedes the 2010 one the page was written against**, and two of its
+changes contradicted the page as it stood: the "large outdoor working dog" risk picture is
+retired (small urban dogs, puppies from 11 weeks and geriatric dogs are all affected, as are
+dogs vaccinated with 2-serovar products), and vaccination is now recommended broadly in
+endemic regions rather than by lifestyle risk. Both were written in. The statement also says
+the MAT does not reliably identify the infecting serogroup — the page previously implied the
+titre pattern was informative about serovar, which is now corrected.
+
+Knöpfler is the largest single cohort and supplies the frequency data (renal 95%, hepatic 92%,
+pulmonary 58%, multi-organ 98/99; lethargy 96%, anorexia 88%, vomiting 85%) and the outcome
+figure (32/99 died). Buser is **41 dogs**, so its CRP-kinetics finding is hedged on the page as
+"Some clinicians reported…" per the evidence bar below.
+
+**`DIS-INFECT-EHRLICH`** and **`DIS-BD-EHRL`** share three sources:
+
+> Chochlios TA, Angelidou E, Kritsepi-Konstantinou M, Koutinas CK, Mylonakis ME. Seroprevalence and risk factors associated with Ehrlichia canis in a hospital canine population. Vet Clin Pathol. 2019;48(2):305-309. doi:10.1111/vcp.12736
+
+> Christodoulou V, Meletis E, Kostoulas P, et al. Clinical and clinicopathologic discriminators between canine acute monocytic ehrlichiosis and primary immune thrombocytopenia. Top Companion Anim Med. 2023;52:100750. doi:10.1016/j.tcam.2022.100750
+
+> Mylonakis ME, Ceron JJ, Leontides L, et al. Serum acute phase proteins as clinical phase indicators and outcome predictors in naturally occurring canine monocytic ehrlichiosis. J Vet Intern Med. 2011;25(4):811-817. doi:10.1111/j.1939-1676.2011.0728.x
+
+Registry disagreement on Christodoulou: **PubMed dates it 2022** (epub 28 Nov 2022), Crossref
+gives the print volume as **2023;52**. The print year wins, so the marker is `Christodoulou 2023`.
+
+Chochlios is the large one (850 dogs) and carries the finding that actually changes practice:
+in-clinic kits disagree with each other on the same dogs (ImmunoComb vs SNAP 3Dx/4Dx), so a
+clinically important negative needs a second method. It also gives the endemic-area base rates
+(54.9% of sick dogs seropositive, 33.9% of healthy) — which is why a positive titre alone is
+not a diagnosis there, a caveat the page did not previously carry.
+
+Christodoulou is **35 CME vs 29 ITP**, small enough that its discriminator list is hedged as
+"some clinicians reported". Mylonakis is 56 dogs; its pancytopenia odds ratio for death (22.7,
+neutropenia alone 7.7) is quoted with the sample size inline. Mylonakis is also cited **against**
+a natural assumption: the acute-phase proteins stage the disease but did **not** predict survival,
+so the page says so rather than implying they are prognostic.
+
+A note on the new source names: `Chochlios` and `Christodoulou` share a two-letter head and sit
+alongside the existing `Chalifoux` and `Chirayath`. None is a prefix of another, but the resolver
+matches on `/^Name/` with no word boundary, so all four are pinned in the prefix-trap test.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

@@ -172,6 +172,21 @@ describe('parseSources', () => {
     expect(parseSources('Clark 2022').map(s => s.id)).toEqual(['clark-f7-autopsy'])
     expect(parseSources('Gookin 1997').map(s => s.id)).toEqual(['gookin-feline-fx'])
     expect(parseSources('Gould 2011').map(s => s.id)).toEqual(['gould-pll'])
+    // Garden is keyed on the author; ACVIM 2019 stays with Swann's IMHA
+    // TREATMENT statement. Both appear on DIS-BD-IMHA, so both are pinned.
+    expect(parseSources('Garden 2019').map(s => s.id)).toEqual(['garden-imha-dx'])
+    expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
+    // Scott vs Scobie — three shared characters, neither a prefix.
+    expect(parseSources('Scott 2021').map(s => s.id)).toEqual(['scott-phenobarb-marrow'])
+    expect(parseSources('Scobie 2026').map(s => s.id)).toEqual(['scobie-sdma-review'])
+    // Fowler vs Forgash vs Fox.
+    expect(parseSources('Fowler 2022').map(s => s.id)).toEqual(['fowler-hema-spinal'])
+    expect(parseSources('Forgash 2021').map(s => s.id)).toEqual(['forgash-mg'])
+    expect(parseSources('Fox 2018').map(s => s.id)).toEqual(['fox-reveal'])
+    // Devine vs Dewey, Batty vs Barker/Barrs.
+    expect(parseSources('Devine 2017').map(s => s.id)).toEqual(['devine-imn'])
+    expect(parseSources('Dewey 2010').map(s => s.id)).toEqual(['dewey-mmf'])
+    expect(parseSources('Batty 2024').map(s => s.id)).toEqual(['batty-aav-integration'])
     expect(parseSources('Gold 2016').map(s => s.id)).toEqual(['gold-basal-cortisol'])
     expect(parseSources('Lien 2006').map(s => s.id)).toEqual(['lien-iatrogenic'])
     expect(parseSources('Linton 2015').map(s => s.id)).toEqual(['linton-fgesf'])
@@ -181,6 +196,20 @@ describe('parseSources', () => {
     expect(parseSources('Larose 2020').map(s => s.id)).toEqual(['larose-intuss'])
     expect(parseSources('Lennon 2007').map(s => s.id)).toEqual(['lennon-basal-cortisol'])
     expect(parseSources('LeVine 2024 diagnosis').map(s => s.id)).toEqual(['acvim-itp-dx'])
+    // Chochlios vs Christodoulou vs Chalifoux vs Chirayath — four names
+    // sharing 'Ch', none a prefix of another. Sykes sits next to Scott and
+    // Scobie; Buser next to Barker, Barrs and Batty.
+    expect(parseSources('Chochlios 2019').map(s => s.id)).toEqual(['chochlios-ecanis'])
+    expect(parseSources('Christodoulou 2023').map(s => s.id)).toEqual(['christodoulou-cme-itp'])
+    expect(parseSources('Mylonakis 2011').map(s => s.id)).toEqual(['mylonakis-cme-app'])
+    expect(parseSources('Sykes 2023').map(s => s.id)).toEqual(['sykes-lepto'])
+    expect(parseSources('Knöpfler 2017').map(s => s.id)).toEqual(['knopfler-lepto'])
+    expect(parseSources('Buser 2019').map(s => s.id)).toEqual(['buser-lepto-crp'])
+    // 'Lv' is two characters; 'Taylor' sits beside 'Tanaka' and 'Trivedi'.
+    expect(parseSources('Taylor 2023').map(s => s.id)).toEqual(['taylor-fip-307'])
+    expect(parseSources('Pedersen 2019').map(s => s.id)).toEqual(['pedersen-gs441524'])
+    expect(parseSources('Lv 2022').map(s => s.id)).toEqual(['lv-gs-gc376'])
+    expect(parseSources('Dickinson 2020').map(s => s.id)).toEqual(['dickinson-neuro-fip'])
   })
 
   it('routes the year-keyed Meurs and Payne markers to the right cohort', () => {
@@ -322,6 +351,14 @@ describe('parseSources', () => {
       ['Callan 2006', 'callan-f7-mutation', 'J Thromb Haemost. 2006;4(12):2616-2622'],
       ['Clark 2022', 'clark-f7-autopsy', 'J Vet Diagn Invest. 2022;34(5):806-812'],
       ['Gookin 1997', 'gookin-feline-fx', 'J Am Vet Med Assoc. 1997;211(5):576-579'],
+      // Pages 26-30.
+      ['Garden 2019', 'garden-imha-dx', 'J Vet Intern Med. 2019;33(2):313-334'],
+      ['Aslanian 2014', 'aslanian-hema', 'J Am Vet Med Assoc. 2014;245(6):677-683'],
+      ['Nguyen 2020', 'nguyen-aav-clonal', 'Nat Biotechnol. 2020;39(1):47-55'],
+      ['Batty 2024', 'batty-aav-integration', 'Blood. 2024;143(23):2373-2385'],
+      ['Fowler 2022', 'fowler-hema-spinal', 'Front Vet Sci. 2022;9:871029'],
+      ['Devine 2017', 'devine-imn', 'J Small Anim Pract. 2017;58(6):307-313'],
+      ['Scott 2021', 'scott-phenobarb-marrow', 'Vet Clin Pathol. 2021;50(1):122-131'],
     ]
     for (const [marker, id, fragment] of cases) {
       const [source] = parseSources(marker)
@@ -531,6 +568,24 @@ describe('reference block', () => {
       ['DIS-BD-DIC', 4, ['scoring system for diagnosis of canine disseminated', 'Thromboelastographic', 'coagulation in cats']],
       ['DIS-BD-FX', 1, ['Factor X deficiency in a cat']],
       ['DIS-BD-FVII', 2, ['missense mutation responsible for factor VII', 'unexplained bleeding on autopsy']],
+      // Pages 26-30. DIS-BD-HEMB and DIS-BD-HEMC are deliberately at zero, for
+      // the same reason DIS-BD-FII is: nothing citable was found for their
+      // breed-specific F9/F11 variants, and the pages were left uncited rather
+      // than propped up on a haemophilia A paper that does not cover them.
+      ['DIS-BD-HEMA', 4, ['Clinical outcome after diagnosis of hemophilia A', 'clonal expansions', 'paraspinal hyperesthesia']],
+      ['DIS-BD-HEMB', 0, []],
+      ['DIS-BD-HEMC', 0, []],
+      ['DIS-BD-IMHA', 2, ['diagnosis of immune-mediated hemolytic anemia', 'treatment of immune-mediated hemolytic anemia']],
+      ['DIS-IMNP', 2, ['immune-mediated neutropenia in 35 dogs', 'treated with phenobarbital']],
+      // Evans syndrome, then the tick-borne and spirochaetal pages. Both
+      // Ehrlichia pages resolve the same two papers, so a prefix collapse
+      // between 'Chochlios' and 'Christodoulou' would show up here as a count
+      // change on DIS-INFECT-EHRLICH.
+      ['DIS-BD-EVANS', 6, ['diagnosis of immune-mediated hemolytic anemia', 'immune thrombocytopenia in dogs']],
+      ['DIS-INFECT-LEPTO', 3, ['Updated ACVIM consensus statement on leptospirosis', '99 dogs with leptospirosis', 'C-reactive protein']],
+      ['DIS-INFECT-EHRLICH', 3, ['Seroprevalence and risk factors', 'clinicopathologic discriminators', 'Serum acute phase proteins']],
+      ['DIS-BD-EHRL', 2, ['Seroprevalence and risk factors', 'Serum acute phase proteins']],
+      ['DIS-INFECT-FIP', 4, ['307 cats with feline infectious peritonitis', 'nucleoside analog GS-441524', '3C-like protease inhibitor', 'neurological feline infectious peritonitis']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -543,13 +598,16 @@ describe('reference block', () => {
   // Every marker on those pages has to RESOLVE. An unmapped one yields no id,
   // and <Cite> then falls back to printing the raw "(Author 2015)" text — the
   // exact failure this whole pass was meant to remove.
-  it('leaves no unresolved citation marker on the first twenty-five disease pages', () => {
+  it('leaves no unresolved citation marker on the first thirty disease pages', () => {
     const offenders: string[] = []
     for (const id of ['DIS-HCM', 'DIS-LP', 'DIS-POLYP', 'DIS-PYOTHORAX', 'DIS-GAST-DIET',
       'DIS-GI-PARVO', 'DIS-SEC-CKD', 'DIS-SEC-HYPO', 'DIS-SEC-PAN-DOG', 'DIS-GI-INTUSS',
       'DIS-GI-EOGAST', 'DIS-GI-ULC', 'DIS-GI-GDV', 'DIS-GI-HH', 'DIS-GI-PYL',
       'DIS-GI-FGESF', 'DIS-GI-LYMP', 'DIS-PUPD-HAC', 'DIS-PUPD-CDI', 'DIS-PUPD-NDI',
-      'DIS-OES-MEGA', 'DIS-BD-DIC', 'DIS-BD-FX', 'DIS-BD-FII', 'DIS-BD-FVII']) {
+      'DIS-OES-MEGA', 'DIS-BD-DIC', 'DIS-BD-FX', 'DIS-BD-FII', 'DIS-BD-FVII',
+      'DIS-BD-HEMA', 'DIS-BD-HEMB', 'DIS-BD-HEMC', 'DIS-BD-IMHA', 'DIS-IMNP',
+      'DIS-BD-EVANS', 'DIS-INFECT-LEPTO', 'DIS-INFECT-EHRLICH', 'DIS-BD-EHRL',
+      'DIS-INFECT-FIP']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)
