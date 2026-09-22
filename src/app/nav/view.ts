@@ -21,7 +21,7 @@ import { encodeView } from './viewUrl'
 export type Tab = 0 | 1 | 2 | 3 | 4 | 5
 
 export type View =
-  | { kind: 'tab'; tab: Tab }                                                    // navTo(0..4)
+  | { kind: 'tab'; tab: Tab }                                                    // navTo(0..5)
   | { kind: 'flow'; flowId: string }                                             // renderFlowId
   | { kind: 'dx'; sign: string; tab: string }                                    // renderDxId (tab: history|exam|dx|extras)
   // `sp` pins which species the page opens on — set when the link that got here

@@ -56,8 +56,17 @@ const SCREENS: Screen[] = [
     },
     mask: ['.stitle'],
   },
-  { name: 'tab-3-protocols', nav: { fn: 'navTo', args: [3] } },
-  { name: 'tab-4-settings', nav: { fn: 'navTo', args: [4] } },
+  // navTo takes an INDEX, and these names have to track TAB_SLUGS in
+  // src/app/nav/viewUrl.ts. Mix & Match was inserted at index 3 and the names
+  // here did not follow it, so for a while `tab-3-protocols` screenshotted Mix
+  // & Match and `tab-4-settings` screenshotted Protocols. Both shots were real
+  // guardrails under the wrong label, which sends a failure to whoever last
+  // touched the screen the NAME points at — and Settings, at index 5, had no
+  // baseline at all. Rename these together with TAB_SLUGS or the same drift
+  // starts over.
+  { name: 'tab-3-mixmatch', nav: { fn: 'navTo', args: [3] } },
+  { name: 'tab-4-protocols', nav: { fn: 'navTo', args: [4] } },
+  { name: 'tab-5-settings', nav: { fn: 'navTo', args: [5] } },
   // Flowcharts — chosen for block-type variety (endpoints, branch, choices,
   // categoryColumns, decisionTree, compareBox, table).
   { name: 'flow-dyspnoea', nav: { fn: 'renderFlowId', args: ['dyspnoea'] } },
