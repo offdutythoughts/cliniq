@@ -537,6 +537,42 @@ const CRIDGE_PYTHIOSIS =
 const LI_AQP2 =
   'Li Q, Lu B, Yang J, et al. Molecular characterization of an aquaporin-2 mutation causing nephrogenic diabetes insipidus. Front Endocrinol (Lausanne). 2021;12:665145. doi:10.3389/fendo.2021.665145'
 
+// ── Primary literature behind disease pages 21-25 ────────────────────────────
+// PubMed-first discovery, verified against Crossref (and Europe PMC where
+// Crossref does not hold the record — Estrin's bracketed DOI is one of those).
+// Two print-year corrections: Wiinberg's TEG/bleeding paper is 2009 not 2007,
+// and the scoring-system paper is 2010 not 2009. PubMed carries the online
+// dates; Crossref and Europe PMC agree on the print years used here.
+
+// Megaoesophagus. Mignan is the classification the "focal MG" language rests
+// on; Grobman reframes aspiration as one of a family of aerodigestive problems.
+const MIGNAN_MG_CLASSIFICATION =
+  'Mignan T, Targett M, Lowrie M. Classification of myasthenia gravis and congenital myasthenic syndromes in dogs and cats. J Vet Intern Med. 2020;34(5):1707-1717. doi:10.1111/jvim.15855'
+const GROBMAN_AERODIGESTIVE =
+  'Grobman M. Aerodigestive disease in dogs. Vet Clin North Am Small Anim Pract. 2021;51(1):17-32. doi:10.1016/j.cvsm.2020.09.003'
+
+// DIC. Three Wiinberg papers — year-keyed. Note the years: 2008 is the TEG
+// cohort, 2009 the TEG-versus-bleeding case-control, 2010 the scoring system.
+const WIINBERG_TEG_DIC =
+  'Wiinberg B, Jensen AL, Johansson PI, Rozanski E, Tranholm M, Kristensen AT. Thromboelastographic evaluation of hemostatic function in dogs with disseminated intravascular coagulation. J Vet Intern Med. 2008;22(2):357-365. doi:10.1111/j.1939-1676.2008.0058.x'
+const WIINBERG_TEG_BLEEDING =
+  'Wiinberg B, Jensen AL, Rozanski E, et al. Tissue factor activated thromboelastography correlates to clinical signs of bleeding in dogs. Vet J. 2009;179(1):121-129. doi:10.1016/j.tvjl.2007.08.022'
+const WIINBERG_DIC_SCORE =
+  'Wiinberg B, Jensen AL, Johansson PI, et al. Development of a model based scoring system for diagnosis of canine disseminated intravascular coagulation with independent assessment of sensitivity and specificity. Vet J. 2010;185(3):292-298. doi:10.1016/j.tvjl.2009.06.003'
+// Crossref does not hold this DOI (the bracketed 1892/… form predates their
+// coverage of that JVIM series); PubMed and Europe PMC both do and agree.
+const ESTRIN_FELINE_DIC =
+  'Estrin MA, Wehausen CE, Jessen CR, Lee JA. Disseminated intravascular coagulation in cats. J Vet Intern Med. 2006;20(6):1334-1339. doi:10.1892/0891-6640(2006)20[1334:dicic]2.0.co;2'
+
+// Coagulation factor deficiencies. Callan is the causative F7 mutation; Clark
+// is the negative study that limits how far the genetic test should be pushed.
+const CALLAN_F7_MUTATION =
+  'Callan MB, Aljamali MN, Margaritis P, et al. A novel missense mutation responsible for factor VII deficiency in research Beagle colonies. J Thromb Haemost. 2006;4(12):2616-2622. doi:10.1111/j.1538-7836.2006.02203.x'
+const CLARK_F7_AUTOPSY =
+  'Clark JA, Hooser SB, Dreger DL, Burcham GN, Ekenstedt KJ. Investigation of a common canine factor VII deficiency variant in dogs with unexplained bleeding on autopsy. J Vet Diagn Invest. 2022;34(5):806-812. doi:10.1177/10406387221118581'
+const GOOKIN_FELINE_FX =
+  'Gookin JL, Brooks MB, Catalfamo JL, Bunch SE, Muñana KR. Factor X deficiency in a cat. J Am Vet Med Assoc. 1997;211(5):576-579. doi:10.2460/javma.1997.211.05.576'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -594,6 +630,8 @@ const SOURCE_NAMES = [
   // what keeps them apart, so it is safe in any order, but it is by far the
   // most fragile marker in this file. Pinned by test.
   'Li',
+  // Disease pages 21-25.
+  'Mignan', 'Grobman', 'Wiinberg', 'Estrin', 'Callan', 'Clark', 'Gookin',
   'Anderson', 'Veir', 'Greci', 'Janssens', 'Wainberg', 'Hoppers', 'Anders',
   'Bohin',
   'Barrs', 'Demetriou', 'Stillion', 'Rooney', 'Boothe', 'Eiras', 'Johnson',
@@ -653,6 +691,14 @@ const ALLENSPACH_BY_YEAR: Record<string, { id: string; text: string }> = {
 
 /** Arenas published the trilostane-protocol trial and the adrenal-dependent
  *  survival study a year apart; keyed on the year like the rest. */
+/** Three Wiinberg DIC papers. Mind the print years — PubMed carries the
+ *  online dates, which are a year or two earlier for two of them. */
+const WIINBERG_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2008': { id: 'wiinberg-teg-dic', text: WIINBERG_TEG_DIC },
+  '2009': { id: 'wiinberg-teg-bleeding', text: WIINBERG_TEG_BLEEDING },
+  '2010': { id: 'wiinberg-dic-score', text: WIINBERG_DIC_SCORE },
+}
+
 const ARENAS_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2013': { id: 'arenas-trilostane-bid', text: ARENAS_TRILOSTANE_BID },
   '2014': { id: 'arenas-adh-survival', text: ARENAS_ADH_SURVIVAL },
@@ -930,6 +976,18 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     // Deliberately last among the L-names: \b stops 'Li' matching Lien,
     // Linton, Lemmons, LeVine, Longeri, Langlois, Larose or Lennon.
     if (/^Li\b/.test(part)) { out.push({ id: 'li-aqp2', text: LI_AQP2 }); continue }
+    // ── Disease pages 21-25 ──
+    if (/^Mignan/.test(part)) { out.push({ id: 'mignan-mg-classification', text: MIGNAN_MG_CLASSIFICATION }); continue }
+    if (/^Grobman/.test(part)) { out.push({ id: 'grobman-aerodigestive', text: GROBMAN_AERODIGESTIVE }); continue }
+    if (/^Wiinberg/.test(part)) {
+      const hit = WIINBERG_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^Estrin/.test(part)) { out.push({ id: 'estrin-feline-dic', text: ESTRIN_FELINE_DIC }); continue }
+    if (/^Callan/.test(part)) { out.push({ id: 'callan-f7-mutation', text: CALLAN_F7_MUTATION }); continue }
+    if (/^Clark/.test(part)) { out.push({ id: 'clark-f7-autopsy', text: CLARK_F7_AUTOPSY }); continue }
+    if (/^Gookin/.test(part)) { out.push({ id: 'gookin-feline-fx', text: GOOKIN_FELINE_FX }); continue }
     // Only an Ettinger part reaches the Ettinger fallback. This used to be a
     // bare `else`, so ANY unrecognised part became a book-level Ettinger
     // reference — which credited Ettinger with "Farias et al. 2010, Gould et al.

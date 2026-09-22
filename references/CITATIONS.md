@@ -935,6 +935,87 @@ the origin of the low single-digit *annual* threshold Ettinger Ch 18 imports.
 
 ---
 
+**Disease pages 21-25 — primary literature (added 2026-09-22)**
+
+PubMed-first discovery under the evidence bar below. Verified against Crossref, and against
+Europe PMC where Crossref does not hold the record.
+
+Two **print-year corrections**, both because PubMed carries the online-first date:
+
+- Wiinberg's TEG-versus-bleeding paper is **2009**;179(1):121-129, not 2007.
+- Wiinberg's scoring-system paper is **2010**;185(3):292-298, not 2009.
+
+Three Wiinberg papers now sit in the file, so the marker is year-keyed. Note also that
+**Wainberg** (feline ventral bulla osteotomy, 2019) and **Wiinberg** (canine DIC) are
+different authors whose names differ by two letters; both are asserted in the test suite.
+
+*Megaoesophagus (`DIS-OES-MEGA`)*
+
+> Mignan T, Targett M, Lowrie M. Classification of myasthenia gravis and congenital myasthenic syndromes in dogs and cats. J Vet Intern Med. 2020;34(5):1707-1717. doi:10.1111/jvim.15855
+
+> Grobman M. Aerodigestive disease in dogs. Vet Clin North Am Small Anim Pract. 2021;51(1):17-32. doi:10.1016/j.cvsm.2020.09.003
+
+This page was carrying **no citations at all** while five directly relevant papers were
+already in this file from the myasthenia/megaoesophagus work — Shelton 2001, Forgash 2021,
+Cridge 2021, Dewey 2010 and Quintavalla 2017. All five are now wired in; the page went from
+0 to 7 references, only two of which are new to the file.
+
+Quintavalla is the sildenafil RCT and its numbers are now on the page with its **sample size
+stated** — 21 puppies. Real randomised evidence, but small, and it acts on sphincter tone
+rather than restoring peristalsis, which the page now says.
+
+*DIC (`DIS-BD-DIC`)*
+
+> Wiinberg B, Jensen AL, Johansson PI, Rozanski E, Tranholm M, Kristensen AT. Thromboelastographic evaluation of hemostatic function in dogs with disseminated intravascular coagulation. J Vet Intern Med. 2008;22(2):357-365. doi:10.1111/j.1939-1676.2008.0058.x
+
+> Wiinberg B, Jensen AL, Rozanski E, et al. Tissue factor activated thromboelastography correlates to clinical signs of bleeding in dogs. Vet J. 2009;179(1):121-129. doi:10.1016/j.tvjl.2007.08.022
+
+> Wiinberg B, Jensen AL, Johansson PI, et al. Development of a model based scoring system for diagnosis of canine disseminated intravascular coagulation with independent assessment of sensitivity and specificity. Vet J. 2010;185(3):292-298. doi:10.1016/j.tvjl.2009.06.003
+
+> Estrin MA, Wehausen CE, Jessen CR, Lee JA. Disseminated intravascular coagulation in cats. J Vet Intern Med. 2006;20(6):1334-1339. doi:10.1892/0891-6640(2006)20[1334:dicic]2.0.co;2
+
+⚠️ Estrin's bracketed DOI is **not in Crossref** — that DOI series predates their coverage of
+it. PubMed and Europe PMC both hold it and agree, so the two-registry rule is met without
+Crossref. Do not read its absence there as a bad DOI.
+
+⚠️ **The page's `~91% sensitive, ~90% specific` is the DEVELOPMENT cohort.** On independent
+prospective validation Wiinberg's model fell to 83% sensitive and 77% specific. The page now
+carries both, because the first pair alone reads like a rule-in test.
+
+⚠️ **The page's `~63% mortality overt versus ~13% nonovert` does not match Wiinberg 2008**,
+which gives 64% fatality in hypocoagulable versus 32% in hypercoagulable dogs. The page keeps
+its own figures and states Wiinberg's beside them, flagging that the percentages depend on how
+the phase was defined. The source of the 63/13 pair is still untraced.
+
+Estrin is the whole basis for the feline prognosis: **46 cats, 3 survived, 43 died**, and
+prolonged PT was the only variable separating them. Haemorrhage in just 7 of 46 — the reason
+"dogs bleed, cats clot" is on the page. Estrin also found **no** association between outcome
+and either transfusion or heparin, which is now stated next to the heparin/ATIII line.
+
+*Coagulation factor deficiencies (`DIS-BD-FX`, `DIS-BD-FII`, `DIS-BD-FVII`)*
+
+> Callan MB, Aljamali MN, Margaritis P, et al. A novel missense mutation responsible for factor VII deficiency in research Beagle colonies. J Thromb Haemost. 2006;4(12):2616-2622. doi:10.1111/j.1538-7836.2006.02203.x
+
+> Clark JA, Hooser SB, Dreger DL, Burcham GN, Ekenstedt KJ. Investigation of a common canine factor VII deficiency variant in dogs with unexplained bleeding on autopsy. J Vet Diagn Invest. 2022;34(5):806-812. doi:10.1177/10406387221118581
+
+> Gookin JL, Brooks MB, Catalfamo JL, Bunch SE, Muñana KR. Factor X deficiency in a cat. J Am Vet Med Assoc. 1997;211(5):576-579. doi:10.2460/javma.1997.211.05.576
+
+Callan confirms the page's `c.407G>A` as the G96E substitution, with activity ≤4% in affected
+Beagles and a 31% mutant allele frequency in one research colony. Clark is cited for a
+**negative** result that limits the test: in 67 autopsied dogs with unexplained haemorrhage,
+every one was homozygous wild-type, so the variant explained none of them and screening for it
+alone is low-yield post mortem.
+
+Gookin is **n=1** and every claim drawn from it is hedged as "some clinicians reported" — the
+seizure association in particular is anecdotal from a single cat.
+
+⚠️ **`DIS-BD-FII` has no references and is deliberately left that way.** Nothing citable was
+found for canine factor II deficiency — it is genuinely that rare. The page's claims about the
+boxer dysfunctional-prothrombin form, the autosomal inheritance and the 3-day duration of
+transfusion effect remain **uncited**, and were not propped up on a factor VII or factor X
+paper that does not cover them. The reference-count test asserts zero for that page so the
+gap stays visible rather than being quietly filled later.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
