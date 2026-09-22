@@ -145,6 +145,28 @@ describe('parseSources', () => {
     expect(parseSources('Rush 2002').map(s => s.id)).toEqual(['rush-hcm'])
     expect(parseSources('Barker 2005').map(s => s.id)).toEqual(['barker-trilostane-survival'])
     expect(parseSources('Barrs 2005').map(s => s.id)).toEqual(['barrs-pyothorax'])
+    // PubMed pass: Cridge now covers THREE works, and Bellis/Bellenger share
+    // four leading characters without either being a prefix of the other.
+    expect(parseSources('Cridge 2025').map(s => s.id)).toEqual(['cridge-pythiosis'])
+    expect(parseSources('Bellis 2015').map(s => s.id)).toEqual(['bellis-cpa-cdi'])
+    expect(parseSources('Bellenger 1990').map(s => s.id)).toEqual(['bellenger-pyloric'])
+    // 'Ku' is only two characters — the word boundary is what stops it
+    // matching a longer surname that happens to start Ku.
+    expect(parseSources('Ku 2023').map(s => s.id)).toEqual(['ku-rta-ndi'])
+    // Diacritic in the marker must round-trip.
+    expect(parseSources('Černá 2024').map(s => s.id)).toEqual(['cerna-gesf'])
+    // 'Li' is a prefix of EIGHT other surnames in this file. The word boundary
+    // in its branch is the only thing keeping them apart, so every one of them
+    // is asserted here — this is the most fragile marker in the file.
+    expect(parseSources('Li 2021').map(s => s.id)).toEqual(['li-aqp2'])
+    expect(parseSources('Lien 2006').map(s => s.id)).toEqual(['lien-iatrogenic'])
+    expect(parseSources('Linton 2015').map(s => s.id)).toEqual(['linton-fgesf'])
+    expect(parseSources('Lo 2022').map(s => s.id)).toEqual(['lo-dual-therapy'])
+    expect(parseSources('Longeri 2013').map(s => s.id)).toEqual(['longeri-mybpc3'])
+    expect(parseSources('Langlois 2020').map(s => s.id)).toEqual(['langlois-metronidazole'])
+    expect(parseSources('Larose 2020').map(s => s.id)).toEqual(['larose-intuss'])
+    expect(parseSources('Lennon 2007').map(s => s.id)).toEqual(['lennon-basal-cortisol'])
+    expect(parseSources('LeVine 2024 diagnosis').map(s => s.id)).toEqual(['acvim-itp-dx'])
   })
 
   it('routes the year-keyed Meurs and Payne markers to the right cohort', () => {
@@ -262,6 +284,23 @@ describe('parseSources', () => {
       ['Nagata 2017', 'nagata-pdh-survival', 'J Vet Intern Med. 2017;31(1):22-28'],
       ['Harb 1996', 'harb-cdi', 'J Am Vet Med Assoc. 1996;209(11):1884-1888'],
       ['Maddens 2010', 'maddens-pyometra', 'J Vet Intern Med. 2010;24(6):1263-1270'],
+      // PubMed pass.
+      ['Černá 2024', 'cerna-gesf', 'J Vet Intern Med. 2024;38(2):1005-1012'],
+      ['Thieme 2019', 'thieme-retroperitoneal', 'JFMS Open Rep. 2019;5(2)'],
+      ['Duclos 2023', 'duclos-intrathoracic', 'JFMS Open Rep. 2023;9(2)'],
+      ['Porras 2022', 'porras-tgfb1', 'Vet Sci. 2022;9(6):291'],
+      ['Sattasathuchana 2014', 'sattasathuchana-eosinophilic', 'Anim Health Res Rev. 2014;15(1):76-86'],
+      ['Beaumier 2022', 'beaumier-hes-cardiac', 'J Vet Cardiol. 2022;41:11-17'],
+      ['Tanaka 2022', 'tanaka-pyloric-ct', 'Vet Radiol Ultrasound. 2022;64(2):262-270'],
+      ['Teshima 2011', 'teshima-postop-cdi', 'J Vet Med Sci. 2011;73(1):33-39'],
+      ['Croton 2019', 'croton-trauma-cdi', 'Case Rep Vet Med. 2019;2019:3563675'],
+      ['Bellis 2015', 'bellis-cpa-cdi', 'J Vet Emerg Crit Care. 2015;25(6):745-750'],
+      ['Evenhuis 2021', 'evenhuis-pituitary-cyst', 'JFMS Open Rep. 2021;7(1)'],
+      ['Paulin 2023', 'paulin-feline-pthp', 'Can Vet J. 2023;64(3):245-251'],
+      ['Etish 2014', 'etish-lepto-ndi', 'Ir Vet J. 2014;67(1):7'],
+      ['Ku 2023', 'ku-rta-ndi', 'Vet Med Sci. 2023;9(4):1483-1487'],
+      ['Cridge 2025', 'cridge-pythiosis', 'Vet Clin North Am Small Anim Pract. 2025;55(2):225-236'],
+      ['Li 2021', 'li-aqp2', 'Front Endocrinol (Lausanne). 2021;12:665145'],
     ]
     for (const [marker, id, fragment] of cases) {
       const [source] = parseSources(marker)
@@ -453,17 +492,17 @@ describe('reference block', () => {
       ['DIS-SEC-PAN-DOG', 7, ['DGGR', 'SNAP cPL', 'early enteral nutrition']],
       ['DIS-GI-INTUSS', 5, ['intestinal intussusceptions', 'Enteroplication', 'predisposing factor']],
       // Pages 11-15.
-      ['DIS-GI-EOGAST', 2, ['Chronic enteropathies in dogs', 'Long-term outcome in dogs']],
+      ['DIS-GI-EOGAST', 4, ['Chronic enteropathies in dogs', 'eosinophilic gastrointestinal disorders', 'Hypereosinophilic syndrome']],
       ['DIS-GI-ULC', 4, ['gastrointestinal protectants', 'cyto-protective drugs', 'piroxicam']],
       ['DIS-GI-GDV', 10, ['prophylactic gastropexy', 'Plasma lactate concentration', 'Dog Aging Project']],
       ['DIS-GI-HH', 6, ['cats with hiatal hernia', 'brachycephalic dogs using fluoroscopy', 'without use of a gastropexy']],
-      ['DIS-GI-PYL', 2, ['hypertrophic pyloric gastropathy']],
+      ['DIS-GI-PYL', 3, ['hypertrophic pyloric gastropathy', 'CT features of pyloric lesions']],
       // Pages 16-20.
-      ['DIS-GI-FGESF', 2, ['eosinophilic sclerosing fibroplasia', '13 cases']],
+      ['DIS-GI-FGESF', 7, ['eosinophilic sclerosing fibroplasia', '13 cases', '60 cats', 'Pythiosis']],
       ['DIS-GI-LYMP', 5, ['low-grade lymphocytic lymphoma', 'muscularis propria', 'duodenal endoscopic biopsies']],
       ['DIS-PUPD-HAC', 7, ['2012 ACVIM consensus statement', 'trilostane protocols', 'mitotane']],
-      ['DIS-PUPD-CDI', 1, ['Central diabetes insipidus in dogs']],
-      ['DIS-PUPD-NDI', 1, ['pyometra induces transient glomerular']],
+      ['DIS-PUPD-CDI', 6, ['Central diabetes insipidus in dogs', 'transsphenoidal surgery', 'traumatic brain injury', 'pituitary cyst']],
+      ['DIS-PUPD-NDI', 4, ['pyometra induces transient glomerular', 'leptospirosis', 'renal tubular acidosis', 'aquaporin-2 mutation']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
