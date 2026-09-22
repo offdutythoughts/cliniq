@@ -588,6 +588,29 @@ html[data-theme="dark"]{
   max-height:60vh;overflow-y:auto;
   box-shadow:0 8px 32px rgba(0,0,0,0.4);
 }
+/* Mix & Match sign typeahead — the same surface as the global search dropdown
+   above, so the app has one dropdown language rather than two. Structure only:
+   row typography stays inline with the rest of MixMatchScreen. */
+.mm-typeahead{
+  position:absolute;top:calc(100% + 4px);left:0;right:0;z-index:200;
+  background:var(--navy2);border:1px solid var(--border2);
+  border-radius:10px;
+  max-height:46vh;overflow-y:auto;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+}
+.mm-typeahead-row{
+  display:flex;align-items:baseline;gap:8px;
+  padding:7px 10px;cursor:pointer;
+}
+.mm-typeahead-row + .mm-typeahead-row{border-top:1px solid var(--border);}
+.mm-typeahead-row[aria-selected="true"]{
+  background:var(--navy3);
+  /* The tint alone is near-invisible on white; the keyboard path needs the
+     highlighted row to be unmistakable, so it also takes the teal the
+     species and age buttons use for selection. */
+  box-shadow:inset 2px 0 0 var(--teal);
+}
+
 /* Section filter chips — pinned to the top of the dropdown so the row stays
    reachable while the result list scrolls underneath it. */
 .global-search-filters{

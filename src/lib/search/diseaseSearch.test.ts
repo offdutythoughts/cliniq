@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { searchDiseases, topDifferentials, type SearchInputs } from './diseaseSearch'
+import { searchDiseases, topDifferentials, suggestSignTerms, type SearchInputs } from './diseaseSearch'
 import { PREVALENCE, prevalenceFactor } from './prevalence'
 import { DB } from '../../data/db'
 
@@ -163,5 +163,74 @@ describe('input hygiene', () => {
 
   it('returns nothing for a term that matches no page', () => {
     expect(search({ species: 'cat', signKeywords: ['zzzznotasign'] })).toEqual([])
+  })
+})
+
+describe('suggestSignTerms', () => {
+  const terms = (q: string, over: Parameters<typeof suggestSignTerms>[1] = { species: 'cat' }) =>
+    suggestSignTerms(q, over).map(s => s.term)
+
+  it('stays quiet until there is something to go on', () => {
+    expect(suggestSignTerms('p', { species: 'cat' })).toEqual([])
+    expect(suggestSignTerms('', { species: 'cat' })).toEqual([])
+  })
+
+  it('offers one row per synonym group, not one per spelling', () => {
+    const t = terms('poly')
+    expect(t).toContain('polyuria')
+    expect(t).toContain('polydipsia')
+    expect(t).toContain('polyphagia')
+    // "excessive urination" is the same search as "polyuria" — one row, not two.
+    expect(t).not.toContain('excessive urination')
+  })
+
+  it('never prints the same term twice', () => {
+    // "twitching" sits in both the seizure group and the tremor group.
+    const t = terms('itch')
+    expect(t.filter(x => x === 'twitching')).toHaveLength(1)
+    expect(new Set(t).size).toBe(t.length)
+  })
+
+  it('prefers the spelling the content actually uses', () => {
+    // Both are in the vocabulary and "diarrhea" is a character shorter, so only
+    // corpus presence puts the UK spelling on top.
+    const t = terms('di')
+    expect(t).toContain('diarrhoea')
+    expect(t).not.toContain('diarrhea')
+  })
+
+  it('drops terms already added to the query', () => {
+    expect(terms('poly')).toContain('polyphagia')
+    expect(terms('poly', { species: 'cat', exclude: ['polyphagia'] })).not.toContain('polyphagia')
+  })
+
+  it('honours the species filter', () => {
+    const cat = suggestSignTerms('polyphagia', { species: 'cat' })[0]
+    const all = suggestSignTerms('polyphagia', { species: 'all' })[0]
+    expect(all.count).toBeGreaterThan(cat.count)
+  })
+
+  it('never offers a term that would return nothing', () => {
+    for (const q of ['poly', 'weight', 'di', 'murmur', 'seiz', 'pu']) {
+      for (const s of suggestSignTerms(q, { species: 'cat' })) expect(s.count).toBeGreaterThan(0)
+    }
+  })
+
+  it('promises a count the search actually delivers', () => {
+    // The whole value of the number is that it is true. If the dropdown and the
+    // engine ever read different fields, this is what catches it.
+    for (const q of ['poly', 'weight', 'murmur', 'vomi']) {
+      for (const sg of suggestSignTerms(q, { species: 'cat' })) {
+        const got = searchDiseases({
+          species: 'cat', breedQuery: '', signKeywords: [sg.term], diagKeywords: [],
+        }).reduce((n, g) => n + g.items.length, 0)
+        expect(`${sg.term}=${got}`).toBe(`${sg.term}=${sg.count}`)
+      }
+    }
+  })
+
+  it('does not advertise a spelling variant as something else it covers', () => {
+    const d = suggestSignTerms('di', { species: 'cat' }).find(s => s.term === 'diarrhoea')!
+    expect(d.alsoCovers).not.toContain('diarrhea')
   })
 })
