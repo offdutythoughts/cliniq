@@ -292,6 +292,451 @@ tidy argument for checking both.
 
 > Bugbee A, Rucinsky R, Cazabon S, et al. 2023 AAHA Selected Endocrinopathies of Dogs and Cats Guidelines. J Am Anim Hosp Assoc. 2023;59(3):113-135. doi:10.5326/jaaha-ms-7368
 
+**First five disease pages — primary literature (added 2026-09-21)**
+
+Found through the Consensus connector and verified against Crossref **and** Europe PMC,
+then confirmed to resolve through `doi.org`. Where the registries disagreed the fuller
+record won, in both directions as usual: Crossref carries the full page ranges Europe PMC
+truncates (`S244-S257`, not `S244-57`), while Europe PMC carries the **print** year where
+Crossref deposits the online-first one — Greci is 2014 not 2013, Janssens 2017 not 2016,
+Lo 2022 not 2021, Langlois 2020 not 2019 — and the full Hoppers page range `385-e102`
+where Crossref deposited only `385`. The inline marker in `db.ts` carries the print year,
+which is what the year-bearing-marker test in `diseaseReferences.test.ts` asserts.
+
+*Feline hypertrophic cardiomyopathy (`DIS-HCM`)*
+
+> Meurs KM, Sanchez X, David RM, et al. A cardiac myosin binding protein C mutation in the Maine Coon cat with familial hypertrophic cardiomyopathy. Hum Mol Genet. 2005;14(23):3587-3593. doi:10.1093/hmg/ddi386
+
+> Meurs KM, Norgard MM, Ederer MM, Hendrix KP, Kittleson MD. A substitution mutation in the myosin binding protein C gene in ragdoll hypertrophic cardiomyopathy. Genomics. 2007;90(2):261-264. doi:10.1016/j.ygeno.2007.04.007
+
+> Longeri M, Ferrari P, Knafelz P, et al. Myosin-binding protein C DNA variants in domestic cats (A31P, A74T, R820W) and their association with hypertrophic cardiomyopathy. J Vet Intern Med. 2013;27(2):275-285. doi:10.1111/jvim.12031
+
+> Payne JR, Brodbelt DC, Luis Fuentes V. Cardiomyopathy prevalence in 780 apparently healthy cats in rehoming centres (the CatScan study). J Vet Cardiol. 2015;17(suppl 1):S244-S257. doi:10.1016/j.jvc.2015.03.008
+
+> Payne JR, Borgeat K, Connolly DJ, et al. Prognostic indicators in cats with hypertrophic cardiomyopathy. J Vet Intern Med. 2013;27(6):1427-1436. doi:10.1111/jvim.12215
+
+> Payne J, Luis Fuentes V, Boswood A, Connolly D, Koffas H, Brodbelt D. Population characteristics and survival in 127 referred cats with hypertrophic cardiomyopathy (1997 to 2005). J Small Anim Pract. 2010;51(10):540-547. doi:10.1111/j.1748-5827.2010.00989.x
+
+> Steele MM, Borgeat K, Payne JR, et al. Increased insulin-like growth factor 1 concentrations in a retrospective population of non-diabetic cats diagnosed with hypertrophic cardiomyopathy. J Feline Med Surg. 2021;23(10):952-958. doi:10.1177/1098612x20987995
+
+> Rush JE, Freeman LM, Fenollosa NK, Brown DJ. Population and survival characteristics of cats with hypertrophic cardiomyopathy: 260 cases (1990-1999). J Am Vet Med Assoc. 2002;220(2):202-207. doi:10.2460/javma.2002.220.202
+
+> Fox PR, Keene BW, Lamb K, et al. International collaborative study to assess cardiovascular risk and evaluate long-term health in cats with preclinical hypertrophic cardiomyopathy and apparently healthy cats: the REVEAL study. J Vet Intern Med. 2018;32(3):930-943. doi:10.1111/jvim.15122
+
+> Hogan DF, Fox PR, Jacob K, et al. Secondary prevention of cardiogenic arterial thromboembolism in the cat: the double-blind, randomized, positive-controlled feline arterial thromboembolism; clopidogrel vs. aspirin trial (FAT CAT). J Vet Cardiol. 2015;17(suppl 1):S306-S317. doi:10.1016/j.jvc.2015.10.004
+
+> Lo ST, Walker AL, Georges CJ, Li RH, Stern JA. Dual therapy with clopidogrel and rivaroxaban in cats with thromboembolic disease. J Feline Med Surg. 2022;24(4):277-283. doi:10.1177/1098612x211013736
+
+Meurs and Payne each appear more than once on `DIS-HCM`, so their markers are keyed on the
+year in `parseSources`, exactly as ACVIM is. Crossref's top hit for the REVEAL study is its
+**abstract** record (`10.1111/jvim.15285`, 32(6):2310) — the paper is `10.1111/jvim.15122`.
+A bibliographic title search is a lead, not an answer; check what the DOI actually points at.
+
+> Mary J, Chetboul V, Sampedrano CC, et al. Prevalence of the MYBPC3-A31P mutation in a large European feline population and association with hypertrophic cardiomyopathy in the Maine Coon breed. J Vet Cardiol. 2010;12(3):155-161. doi:10.1016/j.jvc.2010.06.004
+
+> Granström S, Godiksen MT, Christiansen M, et al. Genotype-phenotype correlation between the cardiac myosin binding protein C mutation A31P and hypertrophic cardiomyopathy in a cohort of Maine Coon cats: a longitudinal study. J Vet Cardiol. 2015;17(suppl 1):S268-S281. doi:10.1016/j.jvc.2015.10.005
+
+> Boeykens F, Abitbol M, Anderson H, et al. Classification of feline hypertrophic cardiomyopathy-associated gene variants according to the American College of Medical Genetics and Genomics guidelines. Front Vet Sci. 2024;11:1327081. doi:10.3389/fvets.2024.1327081
+
+> Brainard BM, Coleman AE, Kurosawa A, et al. Therapy with clopidogrel or rivaroxaban has equivalent impacts on recurrence of thromboembolism and survival in cats following cardiogenic thromboembolism: the SUPERCAT study. J Am Vet Med Assoc. 2025;263(4):1-10. doi:10.2460/javma.24.09.0584
+
+Mary 2010 is where the `RR 9.9` figure on the breed field actually comes from — it was
+carried uncited until this pass. Boeykens uses **R818W** for the Ragdoll variant where the
+page and Meurs 2007 use **R820W**; they are the same variant under two numbering
+conventions, and the page now gives both.
+
+⚠️ **Two first authors the search connector got wrong.** The 2015 A31P genotype/phenotype
+cohort is **Granström** (Godiksen is second author), and the 90-case polyneuropathy study
+below is **Bookbinder** (Flanders is second). Both registries agree, and both surnames are
+now pinned by assertion in `diseaseReferences.test.ts`. A connector's author string is a
+lead, like a Crossref title search — resolve the DOI before writing the citation.
+
+The SUPERCAT page range `263(4):1-10` is what **both** registries deposited; it is not a
+truncation on our side. Its print year is 2025, not the 2024 the connector reported.
+
+*Laryngeal paralysis / GOLPP (`DIS-LP`)*
+
+> Stanley BJ, Hauptman JG, Fritz MC, Rosenstein DS, Kinns J. Esophageal dysfunction in dogs with idiopathic laryngeal paralysis: a controlled cohort study. Vet Surg. 2010;39(2):139-149. doi:10.1111/j.1532-950x.2009.00626.x
+
+> Tobias KM, Jackson AM, Harvey RC. Effects of doxapram HCl on laryngeal function of normal dogs and dogs with naturally occurring laryngeal paralysis. Vet Anaesth Analg. 2004;31(4):258-263. doi:10.1111/j.1467-2995.2004.00168.x
+
+> Miller CJ, McKiernan BC, Pace J, Fettman MJ. The effects of doxapram hydrochloride (dopram-V) on laryngeal function in healthy dogs. J Vet Intern Med. 2002;16(5):524-528. doi:10.1111/j.1939-1676.2002.tb02381.x
+
+> Wilson D, Monnet E. Risk factors for the development of aspiration pneumonia after unilateral arytenoid lateralization in dogs with laryngeal paralysis: 232 cases (1987-2012). J Am Vet Med Assoc. 2016;248(2):188-194. doi:10.2460/javma.248.2.188
+
+> MacPhail CM, Monnet E. Outcome of and postoperative complications in dogs undergoing surgical treatment of laryngeal paralysis: 140 cases (1985-1998). J Am Vet Med Assoc. 2001;218(12):1949-1956. doi:10.2460/javma.2001.218.1949
+
+> Jeffery ND, Talbot CE, Smith PM, Bacon NJ. Acquired idiopathic laryngeal paralysis as a prominent feature of generalised neuromuscular disease in 39 dogs. Vet Rec. 2006;158(1):17-21. doi:10.1136/vr.158.1.17
+
+> Bookbinder LC, Flanders J, Bookbinder PF, Harvey HJ, Barry JS, Cheetham J. Idiopathic canine laryngeal paralysis as one sign of a diffuse polyneuropathy: an observational study of 90 cases (2007-2013). Vet Surg. 2016;45(2):254-260. doi:10.1111/vsu.12444
+
+> Milovancev M, Townsend K, Spina J, et al. Effect of metoclopramide on the incidence of early postoperative aspiration pneumonia in dogs with acquired idiopathic laryngeal paralysis. Vet Surg. 2016;45(5):577-581. doi:10.1111/vsu.12491
+
+> Ogden J, Ovbey D, Saile K. Effects of preoperative cisapride on postoperative aspiration pneumonia in dogs with laryngeal paralysis. J Small Anim Pract. 2019;60(3):183-190. doi:10.1111/jsap.12940
+
+Ogden's print issue is 2019, not the 2018 the connector reported. Milovancev and Ogden are
+cited for a **negative** and a **weak** result respectively — the page says so rather than
+presenting prokinetic prophylaxis as established.
+
+*Feline inflammatory polyps (`DIS-POLYP`)*
+
+> Anderson DM, Robinson RK, White RA. Management of inflammatory polyps in 37 cats. Vet Rec. 2000;147(24):684-687.
+
+> Veir JK, Lappin MR, Foley JE, Getzy DM. Feline inflammatory polyps: historical, clinical, and PCR findings for feline calici virus and feline herpes virus-1 in 28 cases. J Feline Med Surg. 2002;4(4):195-199. doi:10.1053/jfms.2002.0172
+
+> Greci V, Vernia E, Mortellaro CM. Per-endoscopic trans-tympanic traction for the management of feline aural inflammatory polyps: a case review of 37 cats. J Feline Med Surg. 2014;16(8):645-650. doi:10.1177/1098612x13516620
+
+> Janssens SD, Haagsman AN, Ter Haar G. Middle ear polyps: results of traction avulsion after a lateral approach to the ear canal in 62 cats (2004-2014). J Feline Med Surg. 2017;19(8):803-808. doi:10.1177/1098612x16660356
+
+> Wainberg SH, Selmic LE, Haagsman AN, et al. Comparison of complications and outcome following unilateral, staged bilateral, and single-stage bilateral ventral bulla osteotomy in cats. J Am Vet Med Assoc. 2019;255(7):828-836. doi:10.2460/javma.255.7.828
+
+> Hoppers SE, May ER, Frank LA. Feline bilateral inflammatory aural polyps: a descriptive retrospective study. Vet Dermatol. 2020;31(5):385-e102. doi:10.1111/vde.12877
+
+> Anders BB, Hoelzler MG, Scavelli TD, Fulcher RP, Bastian RP. Analysis of auditory and neurologic effects associated with ventral bulla osteotomy for removal of inflammatory polyps or nasopharyngeal masses in cats. J Am Vet Med Assoc. 2008;233(4):580-585. doi:10.2460/javma.233.4.580
+
+> Bohin C, Garcia M, Bertinot C, Graille M, Bernardé A. Compartmental location of middle ear inflammatory polyps in cats: 9 cases (2021-2023). J Small Anim Pract. 2025;66(3):197-202. doi:10.1111/jsap.13811
+
+⚠️ **Anderson 2000 is the one entry here with no DOI.** Neither registry holds one, and the
+plausible-looking `10.1136/vr.147.24.684` returns 404 — it does not exist. The PMID is
+**11132674**. Do not "complete" this citation with a constructed DOI.
+
+Note also the prefix collision in the marker set: `Anders` is a prefix of `Anderson`, so
+`parseSources` must test **Anderson first**. The same applies to `Lo` and `Longeri` on the
+HCM page. Both orderings are pinned by a test.
+
+*Pyothorax (`DIS-PYOTHORAX`)*
+
+> Barrs VR, Allan GS, Martin P, Beatty JA, Malik R. Feline pyothorax: a retrospective study of 27 cases in Australia. J Feline Med Surg. 2005;7(4):211-222. doi:10.1016/j.jfms.2004.12.004
+
+> Demetriou JL, Foale RD, Ladlow J, McGrotty Y, Faulkner J, Kirby BM. Canine and feline pyothorax: a retrospective study of 50 cases in the UK and Ireland. J Small Anim Pract. 2002;43(9):388-394. doi:10.1111/j.1748-5827.2002.tb00089.x
+
+> Stillion JR, Letendre J. A clinical review of the pathophysiology, diagnosis, and treatment of pyothorax in dogs and cats. J Vet Emerg Crit Care. 2015;25(1):113-129. doi:10.1111/vec.12274
+
+> Rooney MB, Monnet E. Medical and surgical treatment of pyothorax in dogs: 26 cases (1991-2001). J Am Vet Med Assoc. 2002;221(1):86-92. doi:10.2460/javma.2002.221.86
+
+> Boothe HW, Howe LM, Boothe DM, Reynolds LA, Carpenter M. Evaluation of outcomes in dogs treated for pyothorax: 46 cases (1983-2001). J Am Vet Med Assoc. 2010;236(6):657-663. doi:10.2460/javma.236.6.657
+
+> Eiras-Diaz A, Frykfors von Hekkel A, Hanot E, et al. CT findings, management and short-term outcome of dogs with pyothorax: 101 cases (2010-2019). J Small Anim Pract. 2021;62(11):959-966. doi:10.1111/jsap.13374
+
+> Johnson LR, Epstein SE, Reagan KL. Etiology and effusion characteristics in 29 cats and 60 dogs with pyothorax (2010-2020). J Vet Intern Med. 2023;37(3):1155-1165. doi:10.1111/jvim.16699
+
+*Acute dietary gastritis (`DIS-GAST-DIET`)*
+
+> Ramsey DS, Kincaid K, Watkins JA, et al. Safety and efficacy of injectable and oral maropitant, a selective neurokinin1 receptor antagonist, in a randomized clinical trial for treatment of vomiting in dogs. J Vet Pharmacol Ther. 2008;31(6):538-543. doi:10.1111/j.1365-2885.2008.00992.x
+
+> Shmalberg J, Montalbano C, Morelli G, Buckley GJ. A randomized double blinded placebo-controlled clinical trial of a probiotic or metronidazole for acute canine diarrhea. Front Vet Sci. 2019;6:163. doi:10.3389/fvets.2019.00163
+
+> Rudinsky AJ, Parker VJ, Winston J, et al. Randomized controlled trial demonstrates nutritional management is superior to metronidazole for treatment of acute colitis in dogs. J Am Vet Med Assoc. 2022;260(S3):S23-S32. doi:10.2460/javma.22.08.0349
+
+> Langlois DK, Koenigshof AM, Mani R. Metronidazole treatment of acute diarrhea in dogs: a randomized double blinded placebo-controlled clinical trial. J Vet Intern Med. 2020;34(1):98-104. doi:10.1111/jvim.15664
+
+⚠️ The last three are cited **against** a line of the page, not for it. `DIS-GAST-DIET` tx2
+recommends metronidazole where diarrhoea suggests a bacterial component; Shmalberg found no
+benefit over placebo, and Rudinsky found an easily digestible diet beat it outright while
+metronidazole worsened the dysbiosis index. Langlois is the one trial showing a benefit
+(1.5 days shorter), and its own conclusion is that most dogs resolve regardless. The page
+carries a qualifier bullet rather than a silent rewrite — the clinical call is the author's.
+
+**Disease pages 6-10 — primary literature (added 2026-09-21)**
+
+Same two-registry rule. Three first-author corrections the Consensus connector forced this
+round, all confirmed in Crossref *and* Europe PMC:
+
+- the four-assay cPL comparison is **Cridge H**, not MacLeod (MacLeod is second author);
+- the canine CKD survival study is **Rudinsky 2018** — a different paper from the Rudinsky
+  2022 acute-colitis trial already in this file, by the same first author;
+- **Venn**'s print year is 2017 where Crossref deposited the online-first 2016.
+
+Because Cridge and Rudinsky now each cover two unrelated works, both markers are **keyed on
+the year** in `parseSources`, exactly as ACVIM, Meurs and Payne are. The pre-existing
+`(Cridge 2021)` and `(Rudinsky 2022)` markers in `db.ts` already carried years, so nothing
+had to change in the data — but a year-less marker for either would now silently resolve to
+nothing, which is the intended failure mode. Both directions are pinned by test.
+
+Also corrected: **Mortier** is 2025;39(1):e17257, not the 2024 the connector reported, and
+**Scobie** paginates as `e299-e314`.
+
+*Canine parvovirus (`DIS-GI-PARVO`)*
+
+> Venn EC, Preisner K, Boscan PL, Twedt DC, Sullivan LA. Evaluation of an outpatient protocol in the treatment of canine parvoviral enteritis. J Vet Emerg Crit Care. 2017;27(1):52-65. doi:10.1111/vec.12561
+
+> Sarpong KJ, Lukowski JM, Knapp CG. Evaluation of mortality rate and predictors of outcome in dogs receiving outpatient treatment for parvoviral enteritis. J Am Vet Med Assoc. 2017;251(9):1035-1041. doi:10.2460/javma.251.9.1035
+
+> Perley K, Burns CC, Maguire C, et al. Retrospective evaluation of outpatient canine parvovirus treatment in a shelter-based low-cost urban clinic. J Vet Emerg Crit Care. 2020;30(2):202-208. doi:10.1111/vec.12941
+
+> Chalifoux NV, Parker SE, Cosford KL. Prognostic indicators at presentation for canine parvoviral enteritis: 322 cases (2001-2018). J Vet Emerg Crit Care. 2021;31(3):402-413. doi:10.1111/vec.13052
+
+> Pereira GQ, Gomes LA, Santos IS, Alfieri AF, Weese JS, Costa MC. Fecal microbiota transplantation in puppies with canine parvovirus infection. J Vet Intern Med. 2018;32(2):707-711. doi:10.1111/jvim.15072
+
+> Hoel ME, Gimenez AR, Elbe A, Horecka K, Alvarez E, Lashnits E. Oral fecal microbial transplant for parvovirus in the outpatient setting: a randomized controlled trial to evaluate a practical and low-cost intervention. J Am Vet Med Assoc. 2026;264(10):1301-1307. doi:10.2460/javma.26.01.0051
+
+> Mohr AJ, Leisewitz AL, Jacobson LS, Steiner JM, Ruaux CG, Williams DA. Effect of early enteral nutrition on intestinal permeability, intestinal protein loss, and outcome in dogs with severe parvoviral enteritis. J Vet Intern Med. 2003;17(6):791-798. doi:10.1111/j.1939-1676.2003.tb02516.x
+
+> de Mari K, Maynard L, Eun HM, Lebreux B. Treatment of canine parvoviral enteritis with interferon-omega in a placebo-controlled field trial. Vet Rec. 2003;152(4):105-108. doi:10.1136/vr.152.4.105
+
+> Acciacca RA, Sullivan LA, Webb TL, Johnson V, Dow SW. Clinical evaluation of hyperimmune plasma for treatment of dogs with naturally occurring parvoviral enteritis. J Vet Emerg Crit Care. 2020;30(5):525-533. doi:10.1111/vec.12987
+
+Pereira (**rectal**) and Hoel (**oral capsules**) are cited together deliberately: they are
+different interventions with opposite results, and the page says so rather than letting
+"FMT works" stand on the older trial alone.
+
+*Chronic kidney disease (`DIS-SEC-CKD`)*
+
+> Hall JA, Yerramilli M, Obare E, Yerramilli M, Jewell DE. Comparison of serum concentrations of symmetric dimethylarginine and creatinine as kidney function biomarkers in cats with chronic kidney disease. J Vet Intern Med. 2014;28(6):1676-1683. doi:10.1111/jvim.12445
+
+> Nabity MB, Lees GE, Boggess MM, et al. Symmetric dimethylarginine assay validation, stability, and evaluation as a marker for the early detection of chronic kidney disease in dogs. J Vet Intern Med. 2015;29(4):1036-1044. doi:10.1111/jvim.12835
+
+> Scobie C, Dean R, Stavisky J, Plüddemann A. Diagnostic accuracy of symmetric dimethylarginine for chronic kidney disease in cats and dogs: a systematic review. Vet Rec. 2026;198(7):e299-e314. doi:10.1002/vetr.70216
+
+> Syme HM, Markwell PJ, Pfeiffer D, Elliott J. Survival of cats with naturally occurring chronic renal failure is related to severity of proteinuria. J Vet Intern Med. 2006;20(3):528-535. doi:10.1111/j.1939-1676.2006.tb02892.x
+
+> King JN, Tasker S, Gunn-Moore DA, Strehlau G. Prognostic factors in cats with chronic kidney disease. J Vet Intern Med. 2007;21(5):906-916. doi:10.1111/j.1939-1676.2007.tb03042.x
+
+> Chakrabarti S, Syme HM, Elliott J. Clinicopathological variables predicting progression of azotemia in cats with chronic kidney disease. J Vet Intern Med. 2012;26(2):275-281. doi:10.1111/j.1939-1676.2011.00874.x
+
+> Elliott J, Rawlings JM, Markwell PJ, Barber PJ. Survival of cats with naturally occurring chronic renal failure: effect of dietary management. J Small Anim Pract. 2000;41(6):235-242. doi:10.1111/j.1748-5827.2000.tb03932.x
+
+> Quimby JM, Lunn KF. Mirtazapine as an appetite stimulant and anti-emetic in cats with chronic kidney disease: a masked placebo-controlled crossover clinical trial. Vet J. 2013;197(3):651-655. doi:10.1016/j.tvjl.2013.05.048
+
+> Spencer A, Quimby JM, Price JM, et al. Appetite-stimulating effects of once-daily omeprazole in cats with chronic kidney disease: double-blind, placebo-controlled, randomized, crossover trial. J Vet Intern Med. 2021;35(6):2705-2712. doi:10.1111/jvim.16268
+
+> Rudinsky AJ, Harjes LM, Byron J, et al. Factors associated with survival in dogs with chronic kidney disease. J Vet Intern Med. 2018;32(6):1977-1982. doi:10.1111/jvim.15322
+
+> Mortier F, Daminet S, Marynissen S, Verbeke J, Paepe D. Clinical importance of borderline proteinuria in nonazotemic cats and evaluation of other risk factors for the development of chronic kidney disease. J Vet Intern Med. 2025;39(1):e17257. doi:10.1111/jvim.17257
+
+⚠️ The page's SDMA claim (`detects ~25–40% reduction in GFR`) is the assay maker's figure.
+Hall and Nabity support *earlier than creatinine*; Nabity's own number is `<20%`. Scobie's
+systematic review is cited **against** the claim — it found high risk of bias throughout and
+warns of over-diagnosis. Both sides are on the page.
+
+*Hypoadrenocorticism (`DIS-SEC-HYPO`)*
+
+> Gold AJ, Langlois DK, Refsal KR. Evaluation of basal serum or plasma cortisol concentrations for the diagnosis of hypoadrenocorticism in dogs. J Vet Intern Med. 2016;30(6):1798-1805. doi:10.1111/jvim.14589
+
+> Bovens C, Tennant K, Reeve J, Murphy KF. Basal serum cortisol concentration as a screening test for hypoadrenocorticism in dogs. J Vet Intern Med. 2014;28(5):1541-1545. doi:10.1111/jvim.12415
+
+> Lennon EM, Boyle TE, Hutchins RG, et al. Use of basal serum or plasma cortisol concentrations to rule out a diagnosis of hypoadrenocorticism in dogs: 123 cases (2000-2005). J Am Vet Med Assoc. 2007;231(3):413-416. doi:10.2460/javma.231.3.413
+
+> Vincent AM, Okonkowski LK, Brudvig JM, et al. Low-dose desoxycorticosterone pivalate treatment of hypoadrenocorticism in dogs: a randomized controlled clinical trial. J Vet Intern Med. 2021;35(4):1720-1728. doi:10.1111/jvim.16195
+
+Vincent is the randomised evidence behind the sub-label DOCP dose the page already
+recommended on FECAVA's authority; the trial used 1.1 mg/kg, the page says 1.5 mg/kg. That
+is a real discrepancy and the page now carries the trial figure alongside.
+
+*Acute pancreatitis, dog (`DIS-SEC-PAN-DOG`)*
+
+> Kook PH, Kohler N, Hartnack S, Riond B, Reusch CE. Agreement of serum Spec cPL with the DGGR lipase assay and with pancreatic ultrasonography in dogs with suspected pancreatitis. J Vet Intern Med. 2014;28(3):863-870. doi:10.1111/jvim.12334
+
+> Cridge H, MacLeod AG, Pachtinger GE, et al. Evaluation of SNAP cPL, Spec cPL, VetScan cPL Rapid Test, and Precision PSL assays for the diagnosis of clinical pancreatitis in dogs. J Vet Intern Med. 2018;32(2):658-664. doi:10.1111/jvim.15039
+
+> Haworth MD, Hosgood G, Swindells KL, Mansfield CS. Diagnostic accuracy of the SNAP and Spec canine pancreatic lipase tests for pancreatitis in dogs presenting with clinical signs of acute abdominal disease. J Vet Emerg Crit Care. 2014;24(2):135-143. doi:10.1111/vec.12158
+
+> Trivedi S, Marks SL, Kass PH, et al. Sensitivity and specificity of canine pancreas-specific lipase (cPL) and other markers for pancreatitis in 70 dogs with and without histopathologic evidence of pancreatitis. J Vet Intern Med. 2011;25(6):1241-1247. doi:10.1111/j.1939-1676.2011.00793.x
+
+> Harris JP, Parnell NK, Griffith EH, Saker KE. Retrospective evaluation of the impact of early enteral nutrition on clinical outcomes in dogs with pancreatitis: 34 cases (2010-2013). J Vet Emerg Crit Care. 2017;27(4):425-433. doi:10.1111/vec.12612
+
+> Mansfield CS, James FE, Steiner JM, Suchodolski JS, Robertson ID, Hosgood G. A pilot study to assess tolerability of early enteral nutrition via esophagostomy tube feeding in dogs with severe acute pancreatitis. J Vet Intern Med. 2011;25(3):419-425. doi:10.1111/j.1939-1676.2011.0703.x
+
+Kook is where the page's `>216 U/L` DGGR cut-off and `κ 0.80` come from — both were on the
+page uncited before this pass. Kook also found ultrasound agrees only *fairly* with either
+lipase assay (κ 0.25–0.35), which is now on the page next to the ultrasound line.
+
+*Intussusception (`DIS-GI-INTUSS`)*
+
+> Larose PC, Singh A, Giuffrida MA, et al. Clinical findings and outcomes of 153 dogs surgically treated for intestinal intussusceptions. Vet Surg. 2020;49(5):870-878. doi:10.1111/vsu.13442
+
+> Applewhite AA, Hawthorne JC, Cornell KK. Complications of enteroplication for the prevention of intussusception recurrence in dogs: 35 cases (1989-1999). J Am Vet Med Assoc. 2001;219(10):1415-1418. doi:10.2460/javma.2001.219.1415
+
+> Oakes MG, Lewis DD, Hosgood G, Beale BS. Enteroplication for the prevention of intussusception recurrence in dogs: 31 cases (1978-1992). J Am Vet Med Assoc. 1994;205(1):72-75. doi:10.2460/javma.1994.205.01.72
+
+> Rallis TS, Papazoglou LG, Adamama-Moraitou KK, Prassinos NN. Acute enteritis or gastroenteritis in young dogs as a predisposing factor for intestinal intussusception: a retrospective study. J Vet Med A Physiol Pathol Clin Med. 2000;47(8):507-511. doi:10.1046/j.1439-0442.2000.00318.x
+
+Oakes and Applewhite **disagree** about enteroplication and are cited together for that
+reason. The page previously recommended it flatly; it now states the split and gives
+Larose's 3% baseline recurrence rate so the trade-off is visible.
+
+**Disease pages 11-15 — primary literature (added 2026-09-21)**
+
+The Consensus connector's monthly search quota ran out partway through this pass, so the
+last two pages (`DIS-GI-EOGAST`, `DIS-GI-PYL`) were discovered through **Crossref's
+bibliographic search** instead, which is free and needs no quota. Verification was
+unchanged: Crossref *and* Europe PMC for everything.
+
+Registry corrections this round:
+
+- **Watkins** is J Small Anim Pract 2025;66(2):110-120, doi `10.1111/jsap.13797`. Crossref's
+  top bibliographic hit was a **BSAVA congress abstract** under a different DOI
+  (`10.22233/9781913859411.34.4`), and the connector reported 2024. Europe PMC had the
+  journal article. A title search returning *something* is not the same as it returning the
+  right thing — check the container title.
+- **McCord**'s print year is 2026, not the 2025 the connector gave.
+- **Mayhew 2021** paginates `O67-O77` in a supplement; Crossref deposited no pages at all.
+
+Three more names now cover two works each and are year-keyed: **Glickman** (1994 risk
+factors, 2000 non-dietary risk factors), **Mayhew** (2021 laparoscopic repair, 2022 BOAS
+surgery) and **Allenspach** (2007 risk factors, 2016 long-term outcome).
+
+⚠️ **A third prefix trap**: `Allen` is a prefix of `Allenspach`, so `parseSources` tests
+Allenspach first. Wrong order puts a GDV gastropexy review on the eosinophilic
+gastroenteritis page — plausible enough to survive review, which is the whole problem.
+Pinned by test, as Anderson/Anders and Longeri/Lo are.
+
+⚠️ **Marks is keyed on the author, not on `ACVIM 2018`.** The year 2018 is already taken in
+`ACVIM_BY_YEAR` by the systemic-hypertension statement, so an `(ACVIM 2018)` marker on the
+ulcer page would have printed a blood-pressure guideline. Both resolutions are pinned.
+
+*Eosinophilic gastroenteritis (`DIS-GI-EOGAST`)*
+
+> Allenspach K, Wieland B, Gröne A, Gaschen F. Chronic enteropathies in dogs: evaluation of risk factors for negative outcome. J Vet Intern Med. 2007;21(4):700-708. doi:10.1111/j.1939-1676.2007.tb03011.x
+
+> Allenspach K, Culverwell C, Chan D. Long-term outcome in dogs with chronic enteropathies: 203 cases. Vet Rec. 2016;178(15):368. doi:10.1136/vr.103557
+
+This page is the thinnest of the fifteen for primary evidence — eosinophilic gastroenteritis
+as a named entity has very little of its own literature, and these two are cited for the
+broader chronic-enteropathy claims (diet-responsive disease is the largest and best-outcome
+group; relapse is common long term) rather than for anything eosinophil-specific.
+
+*Gastric ulceration (`DIS-GI-ULC`)*
+
+> Marks SL, Kook PH, Papich MG, Tolbert MK, Willard MD. ACVIM consensus statement: support for rational administration of gastrointestinal protectants to dogs and cats. J Vet Intern Med. 2018;32(6):1823-1840. doi:10.1111/jvim.15337
+
+> Bazelle J, Threlfall A, Whitley N. Gastroprotectants in small animal veterinary practice — a review of the evidence. Part 1: cyto-protective drugs. J Small Anim Pract. 2018;59(10):587-602. doi:10.1111/jsap.12867
+
+> Shaevitz MH, Moore GE, Fulkerson CM. A prospective, randomized, placebo-controlled, double-blinded clinical trial comparing the incidence and severity of gastrointestinal adverse events in dogs with cancer treated with piroxicam alone or in combination with omeprazole or famotidine. J Am Vet Med Assoc. 2021;259(4):385-391. doi:10.2460/javma.259.4.385
+
+Shaevitz is cited for a **harm** result: adding omeprazole or famotidine to piroxicam made
+GI adverse events more frequent and more severe than placebo. The page says so next to the
+misoprostol line, because the obvious wrong inference from "PPI first-line for ulcers" is
+"PPI prophylaxis alongside NSAIDs", and the trial says otherwise.
+
+*GDV (`DIS-GI-GDV`)*
+
+> de Papp E, Drobatz KJ, Hughes D. Plasma lactate concentration as a predictor of gastric necrosis and survival among dogs with gastric dilatation-volvulus: 102 cases (1995-1998). J Am Vet Med Assoc. 1999;215(1):49-52. doi:10.2460/javma.1999.215.01.49
+
+> Zacher LA, Berg J, Shaw SP, Kudej RK. Association between outcome and changes in plasma lactate concentration during presurgical treatment in dogs with gastric dilatation-volvulus: 64 cases (2002-2008). J Am Vet Med Assoc. 2010;236(8):892-897. doi:10.2460/javma.236.8.892
+
+> Green TI, Tonozzi CC, Kirby R, Rudloff E. Evaluation of initial plasma lactate values as a predictor of gastric necrosis and initial and subsequent plasma lactate values as a predictor of survival in dogs with gastric dilatation-volvulus: 84 dogs (2003-2007). J Vet Emerg Crit Care. 2011;21(1):36-44. doi:10.1111/j.1476-4431.2010.00599.x
+
+> Ward MP, Patronek GJ, Glickman LT. Benefits of prophylactic gastropexy for dogs at risk of gastric dilatation-volvulus. Prev Vet Med. 2003;60(4):319-329. doi:10.1016/s0167-5877(03)00142-9
+
+> Glickman LT, Glickman NW, Schellenberg DB, Raghavan M, Lee T. Non-dietary risk factors for gastric dilatation-volvulus in large and giant breed dogs. J Am Vet Med Assoc. 2000;217(10):1492-1499. doi:10.2460/javma.2000.217.1492
+
+> Glickman LT, Glickman NW, Pérez CM, Schellenberg DB, Lantz GC. Analysis of risk factors for gastric dilatation and dilatation-volvulus in dogs. J Am Vet Med Assoc. 1994;204(9):1465-1471. doi:10.2460/javma.1994.204.09.1465
+
+> O'Neill DG, Case J, Boag AK, et al. Gastric dilation-volvulus in dogs attending UK emergency-care veterinary practices: prevalence, risk factors and survival. J Small Anim Pract. 2017;58(11):629-638. doi:10.1111/jsap.12723
+
+> Allen P, Paul A. Gastropexy for prevention of gastric dilatation-volvulus in dogs: history and techniques. Top Companion Anim Med. 2014;29(3):77-80. doi:10.1053/j.tcam.2014.09.001
+
+> McCord MA, O'Brien J, Ryave J, et al. Gastric dilatation-volvulus is associated with Poodle breeds, increased body size, and male sex, but not primary diet type or anxiety in the Dog Aging Project cohort. J Am Vet Med Assoc. 2026;264(4):1-9. doi:10.2460/javma.25.09.0609
+
+⚠️ **The `>6 mmol/L` lactate rule is not settled.** de Papp is where it comes from (99% vs
+58% survival either side of the cut-off, but sensitivity for necrosis only 61%). Green then
+found **no** significant relationship at that threshold in 84 dogs. Zacher shows the
+*change* in lactate after resuscitation discriminates better than the initial value. All
+three are on the page; the pearl's flat "lactate >6 = high risk" now has the contradiction
+next to it.
+
+Note also that Ward gives the Great Dane lifetime risk as **36.7%** (95% CI 25.2-44.6%)
+where the breed field says "~42%". The page keeps its figure and cites Ward's alongside
+rather than silently changing a number nobody can trace.
+
+*Hiatal hernia (`DIS-GI-HH`)*
+
+> Phillips H, Corrie J, Engel DM, et al. Clinical findings, diagnostic test results, and treatment outcome in cats with hiatal hernia: 31 cases (1995-2018). J Vet Intern Med. 2019;33(5):1970-1976. doi:10.1111/jvim.15583
+
+> Reeve EJ, Sutton D, Friend EJ, Warren-Smith CMR. Documenting the prevalence of hiatal hernia and oesophageal abnormalities in brachycephalic dogs using fluoroscopy. J Small Anim Pract. 2017;58(12):703-708. doi:10.1111/jsap.12734
+
+> Mayhew PD, Balsa IM, Marks SL, et al. Clinical and videofluoroscopic outcomes of laparoscopic treatment for sliding hiatal hernia and associated gastroesophageal reflux in brachycephalic dogs. Vet Surg. 2021;50(suppl 1):O67-O77. doi:10.1111/vsu.13622
+
+> Mayhew PD, Marks SL, Pollard R, Balsa IM, Culp WTN, Giuffrida MA. Effect of conventional multilevel brachycephalic obstructive airway syndrome surgery on clinical and videofluoroscopic evidence of hiatal herniation and gastroesophageal reflux in dogs. Vet Surg. 2022;52(2):238-248. doi:10.1111/vsu.13906
+
+> Watkins M, Shales C, Thomas G, Rossanese M, Sparks T, White R. Comparison of outcomes in dogs undergoing hiatal hernia repair with and without use of a gastropexy: 41 cases (2012-2022). J Small Anim Pract. 2025;66(2):110-120. doi:10.1111/jsap.13797
+
+Phillips is the source of essentially every feline figure the page already carried —
+`20/31 cats >3 years`, `29%` rhinitis/BOAS trigger, `77.4%` comorbidities, `2,559` vs `771`
+days — all uncited until now. Mayhew 2022 is cited **against** the page's own pearl: after
+multilevel BOAS surgery, owners reported less regurgitation but videofluoroscopy showed no
+change in herniation or reflux.
+
+*Pyloric stenosis (`DIS-GI-PYL`)*
+
+> Bellenger CR, Maddison JE, MacPherson GC, Ilkiw JE. Chronic hypertrophic pyloric gastropathy in 14 dogs. Aust Vet J. 1990;67(9):317-320. doi:10.1111/j.1751-0813.1990.tb07813.x
+
+Like the eosinophilic page, this one is thin on primary evidence. Bellenger is the classic
+description of the acquired form and is the basis for the page's new warning that
+pyloromyotomy alone does not address mucosal hypertrophy.
+
+**Disease pages 16-20 — primary literature (added 2026-09-21)**
+
+Discovered **entirely through Crossref's bibliographic search** — the Consensus connector's
+monthly quota was still exhausted. Verification was unchanged: Crossref *and* Europe PMC.
+This works, but it needs a title or author to aim at, so it finds papers you already suspect
+exist rather than surfacing ones you did not know about. That shows in the thin reference
+counts on the two diabetes-insipidus pages.
+
+Europe PMC again carried the print year and the fuller initials where Crossref had the
+online-first date and truncated given names: **Daniaux is 2014**, not the 2013 Crossref
+deposited; **Behrend EN** not "Behrend E"; **Pérez-Alenza MD** not "Pérez-Alenza M".
+
+*Feline GI eosinophilic sclerosing fibroplasia (`DIS-GI-FGESF`)*
+
+> Craig LE, Hardam EE, Hertzke DM, Flatland B, Rohrbach BW, Moore RR. Feline gastrointestinal eosinophilic sclerosing fibroplasia. Vet Pathol. 2009;46(1):63-70. doi:10.1354/vp.46-1-63
+
+> Linton M, Nimmo JS, Norris JM, et al. Feline gastrointestinal eosinophilic sclerosing fibroplasia: 13 cases and review of an emerging clinical entity. J Feline Med Surg. 2015;17(5):392-404. doi:10.1177/1098612x14568170
+
+Craig is the paper that named the entity; Linton is the series the page's figures
+(`7/13` Ragdoll, `>70%` male, median 7 years, `58%` eosinophilia) were already quoting
+without attribution.
+
+*Alimentary lymphoma (`DIS-GI-LYMP`)*
+
+> Kiselow MA, Rassnick KM, McDonough SP, et al. Outcome of cats with low-grade lymphocytic lymphoma: 41 cases (1995-2005). J Am Vet Med Assoc. 2008;232(3):405-410. doi:10.2460/javma.232.3.405
+
+> Sabattini S, Bottero E, Turba ME, Vicchi F, Bo S, Bettini G. Differentiating feline inflammatory bowel disease from alimentary lymphoma in duodenal endoscopic biopsies. J Small Anim Pract. 2016;57(8):396-401. doi:10.1111/jsap.12494
+
+> Daniaux LA, Laurenson MP, Marks SL, et al. Ultrasonographic thickening of the muscularis propria in feline small intestinal small cell T-cell lymphoma and inflammatory bowel disease. J Feline Med Surg. 2014;16(2):89-98. doi:10.1177/1098612x13498596
+
+> Russell KJ, Beatty JA, Dhand N, et al. Feline low-grade alimentary lymphoma: how common is it? J Feline Med Surg. 2012;14(12):910-912. doi:10.1177/1098612x12454861
+
+Kiselow is the source of the page's `>2 years` claim. The page already cited Marsilio 2023
+(the ACVIM chronic-enteropathy consensus) for FISH; Sabattini and Daniaux are the other two
+halves of the IBD-vs-lymphoma problem.
+
+*Canine hyperadrenocorticism (`DIS-PUPD-HAC`)*
+
+> Behrend EN, Kooistra HS, Nelson R, Reusch CE, Scott-Moncrieff JC. Diagnosis of spontaneous canine hyperadrenocorticism: 2012 ACVIM consensus statement (small animal). J Vet Intern Med. 2013;27(6):1292-1304. doi:10.1111/jvim.12192
+
+> Arenas C, Melián C, Pérez-Alenza MD. Evaluation of 2 trilostane protocols for the treatment of canine pituitary-dependent hyperadrenocorticism: twice daily versus once daily. J Vet Intern Med. 2013;27(6):1478-1485. doi:10.1111/jvim.12207
+
+> Arenas C, Melián C, Pérez-Alenza MD. Long-term survival of dogs with adrenal-dependent hyperadrenocorticism: a comparison between mitotane and twice daily trilostane treatment. J Vet Intern Med. 2014;28(2):473-480. doi:10.1111/jvim.12303
+
+> Barker E, Campbell S, Tebb A, et al. A comparison of the survival times of dogs treated with mitotane or trilostane for pituitary-dependent hyperadrenocorticism. J Vet Intern Med. 2005;19(6):810-815. doi:10.1111/j.1939-1676.2005.tb02769.x
+
+> Nagata N, Kojima K, Yuki M. Comparison of survival times for dogs with pituitary-dependent hyperadrenocorticism in a primary-care hospital: treated with trilostane versus untreated. J Vet Intern Med. 2017;31(1):22-28. doi:10.1111/jvim.14617
+
+⚠️ **Barker has no Europe PMC record** — it predates that index's JVIM coverage, so it is the
+second entry in this file (after Daley 1993) verified against Crossref alone. The DOI *is*
+registered and the Crossref record is complete; a bare content-negotiation request to
+`doi.org` returns **403**, which is Wiley blocking the request, not a bad DOI. Do not read
+that 403 as a verification failure.
+
+**Behrend is keyed on the author, not `ACVIM 2013`** — the same decision as Marks on the
+ulcer page. Keeping every ACVIM statement on one year map was becoming the single thing most
+likely to mis-route a marker, and author keying costs nothing.
+
+*Diabetes insipidus (`DIS-PUPD-CDI`, `DIS-PUPD-NDI`)*
+
+> Harb MF, Nelson RW, Feldman EC, Scott-Moncrieff JC, Griffey SM. Central diabetes insipidus in dogs: 20 cases (1986-1995). J Am Vet Med Assoc. 1996;209(11):1884-1888. doi:10.2460/javma.1996.209.11.1884
+
+> Maddens B, Daminet S, Smets P, Meyer E. Escherichia coli pyometra induces transient glomerular and tubular dysfunction in dogs. J Vet Intern Med. 2010;24(6):1263-1270. doi:10.1111/j.1939-1676.2010.0603.x
+
+One reference each. Both pages describe mechanisms rather than managed diseases with outcome
+literature, and neither has much of its own evidence base — Harb remains the reference case
+series for canine CDI thirty years on. The claims on those pages that go beyond these two
+(the CDI pearl's "pituitary neoplasia most common in dogs, head trauma most common in cats",
+the `1.001–1.007` USG range) are **still uncited** and were left that way rather than
+attached to a paper that does not actually say them.
+
 #### Corrections made when these were verified
 
 Seven strings were wrong before this pass. Six truncated the author list to `et al` while

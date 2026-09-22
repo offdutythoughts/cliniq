@@ -337,6 +337,19 @@ function expandKeyword(kw: string): string[] {
 
 // ── Text matching helper ──────────────────────────────────────────────────────
 
+// The two input boxes read different halves of a disease page. Named once, so
+// the suggestion counts below cannot drift from what the search actually
+// matches — a dropdown promising "12 diseases" that then returns 4 is worse
+// than no dropdown.
+const SIGN_FIELDS = ['signs', 'severe', 'synonyms', 'path', 'etiology'] as const
+const DIAG_FIELDS = ['conf', 'supp'] as const
+
+/** Hard species filter — shared by the search and the suggestion counts. */
+function coversSpecies(d: DiseaseRow, species: Species): boolean {
+  if (species === 'all') return true
+  return ((d.sp as string) ?? '').toLowerCase().includes(species)
+}
+
 function fieldText(d: DiseaseRow, ...keys: string[]): string {
   return keys.map(k => (d[k] as string | undefined) ?? '').join(' ').toLowerCase()
 }
@@ -401,6 +414,129 @@ export interface SearchCategory {
   items: DiseaseResult[]
 }
 
+// ── Term suggestions (typeahead) ──────────────────────────────────────────────
+//
+// The sign box was free text against a vocabulary the reader cannot see, so a
+// term the engine knows ("polyphagia") and one it does not ("eating more") look
+// identical while typing and differ completely in result. These suggestions are
+// drawn from SYNONYM_GROUPS — the terms that actually expand — and each carries
+// the number of pages it would match, which is the thing a clinician wants:
+// `lethargy` hits 78 of 303 cat pages and `polyphagia` hits 7, and the second is
+// worth far more. Free text still works; this only makes the vocabulary visible.
+
+export interface TermSuggestion {
+  /** The term added to the query when this row is chosen. */
+  term: string
+  /** How many disease pages it would match, under the current species filter. */
+  count: number
+  /** A couple of other terms the same search covers, for the hint line. */
+  alsoCovers: string[]
+}
+
+/** Flat vocabulary: every synonym term, tagged with the group it belongs to. */
+const VOCAB: { term: string; group: number }[] = SYNONYM_GROUPS.flatMap((g, i) =>
+  g.map(t => ({ term: t.toLowerCase(), group: i })),
+)
+
+// Building the corpus is 389 field joins; the dropdown re-runs on every
+// keystroke, so it is cached per species rather than rebuilt each time.
+const signCorpusCache = new Map<Species, string[]>()
+function signCorpus(species: Species): string[] {
+  let c = signCorpusCache.get(species)
+  if (!c) {
+    c = DB.disease_page.filter(d => coversSpecies(d, species)).map(d => fieldText(d, ...SIGN_FIELDS))
+    signCorpusCache.set(species, c)
+  }
+  return c
+}
+
+// Collapses the variants of one word to a single key, so a hint line cannot
+// spend both its slots saying the same thing twice: UK/US spelling
+// (diarrhoea/diarrhea, dyspnoea/dyspnea) and plural (seizure/seizures).
+function spellingKey(t: string): string {
+  return t.replace(/ae|oe/g, 'e').replace(/s$/, '')
+}
+
+/** Lower sorts first: exact, prefix, word-start, then anywhere. */
+function matchRank(term: string, q: string): number {
+  if (term === q) return 0
+  if (term.startsWith(q)) return 1
+  return new RegExp(`[\\s\\-/]${q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`).test(term) ? 2 : 3
+}
+
+/**
+ * Vocabulary terms matching what has been typed so far, best first.
+ *
+ * One row per synonym group: "polyuria" and "excessive urination" are the same
+ * search, so offering both is noise — the row shows whichever spelling the
+ * reader was typing toward, and names the rest on its hint line. Terms matching
+ * nothing under the current species are dropped rather than shown as zero.
+ */
+export function suggestSignTerms(
+  query: string,
+  opts: { species: Species; exclude?: string[]; limit?: number } = { species: 'all' },
+): TermSuggestion[] {
+  const q = synKey(query)
+  if (q.length < 2) return []
+
+  const excluded = new Set((opts.exclude ?? []).map(synKey))
+  const limit = opts.limit ?? 8
+
+  const corpus = signCorpus(opts.species)
+  /** How many pages carry this exact spelling — used only to break ties. */
+  const presence = (t: string) => {
+    const r = termRegex(t)
+    return corpus.reduce((n, text) => n + (r.test(text) ? 1 : 0), 0)
+  }
+
+  // Best row per group. Where several spellings tie on rank, the one the corpus
+  // actually uses wins: this content is written in UK spelling, so a query of
+  // "di" should offer `diarrhoea` and not the `diarrhea` that shares its group
+  // and is one character shorter.
+  const best = new Map<number, { term: string; rank: number }>()
+  for (const { term, group } of VOCAB) {
+    if (!term.includes(q) || excluded.has(synKey(term))) continue
+    const rank = matchRank(term, q)
+    const cur = best.get(group)
+    if (!cur || rank < cur.rank) { best.set(group, { term, rank }); continue }
+    if (rank > cur.rank) continue
+    const [p, c] = [presence(term), presence(cur.term)]
+    if (p > c || (p === c && term.length < cur.term.length)) best.set(group, { term, rank })
+  }
+
+  const ordered = [...best.entries()]
+    .sort(([, a], [, b]) => a.rank - b.rank || a.term.length - b.term.length || a.term.localeCompare(b.term))
+
+  // A term can sit in two groups — "twitching" is in both the seizure and the
+  // tremor group — and one dropdown must not print it twice.
+  const shown = new Set<string>()
+  const out: TermSuggestion[] = []
+  for (const [group, { term }] of ordered) {
+    if (out.length >= limit) break
+    if (shown.has(term)) continue
+    shown.add(term)
+    const rx = SYNONYM_GROUPS[group].map(t => termRegex(t))
+    const count = corpus.reduce((n, text) => n + (rx.some(r => r.test(text)) ? 1 : 0), 0)
+    if (count === 0) continue
+    // The hint names other things this search covers, so it must not list
+    // near-duplicates of the term itself ("polyuria" → "polyuria/polydipsia")
+    // nor the same word twice in two spellings ("dyspnoea" and "dyspnea").
+    const seen = new Set([spellingKey(term)])
+    const alsoCovers: string[] = []
+    for (const raw of SYNONYM_GROUPS[group]) {
+      if (alsoCovers.length >= 2) break
+      const t = raw.toLowerCase()
+      if (t === term || t.includes(term) || term.includes(t)) continue
+      const k = spellingKey(t)
+      if (seen.has(k)) continue
+      seen.add(k)
+      alsoCovers.push(t)
+    }
+    out.push({ term, count, alsoCovers })
+  }
+  return out
+}
+
 /** Smallest weight any matched term can carry — see the IDF note in searchDiseases. */
 const IDF_FLOOR = 0.5
 
@@ -441,15 +577,10 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
   const diagDf = new Map<string, number>()
 
   for (const d of DB.disease_page) {
-    // ── Species filter (hard exclude) ──
-    if (species !== 'all') {
-      const sp = ((d.sp as string) ?? '').toLowerCase()
-      if (species === 'dog' && !sp.includes('dog')) continue
-      if (species === 'cat' && !sp.includes('cat')) continue
-    }
+    if (!coversSpecies(d, species)) continue // hard exclude
 
-    const signHits = keywordHits(fieldText(d, 'signs', 'severe', 'synonyms', 'path', 'etiology'), signKeywords)
-    const diagHits = keywordHits(fieldText(d, 'conf', 'supp'), diagKeywords)
+    const signHits = keywordHits(fieldText(d, ...SIGN_FIELDS), signKeywords)
+    const diagHits = keywordHits(fieldText(d, ...DIAG_FIELDS), diagKeywords)
     for (const t of signHits) signDf.set(t, (signDf.get(t) ?? 0) + 1)
     for (const t of diagHits) diagDf.set(t, (diagDf.get(t) ?? 0) + 1)
     candidates.push({ d, signHits, diagHits })

@@ -2,8 +2,19 @@
 // Flowchart view — React port of renderFlow.ts (renderFlowPage + every block
 // renderer). Same .flow-*/.fn-* classes and inline styles → pixel-identical.
 // esc()'d text fields become plain text (React escapes); raw-HTML fields
-// (choice labels, callout/banner/compareBox/table/decision html) go through the
-// audited <RichText> boundary; links route via linkToView.
+// (choice labels, callout/banner/compareBox/table/decision html, and the
+// `subItems` bullets on step nodes and fork legs) go through the audited
+// <RichText> boundary; links route via linkToView.
+//
+// `subItems` was the one authored field left interpolating its string straight
+// into JSX, so a bullet written with <strong> rendered the tag as visible text
+// (anorexia's first discriminator shipped that way). Routing it through the
+// boundary is safe for the plain-text bullets too: six of them carry a bare
+// comparison operator — "<2 min", "Albumin must be <2.0 g/dL (<20 g/L)",
+// ">10% neutrophils" — and the parser only opens a tag on `<` + a letter, so
+// every threshold survives as text. Verified against the real parser, not
+// assumed; a bullet that ever needs a literal `<` before a LETTER must write
+// &lt; or the tokenizer will eat it.
 
 import { Fragment, useState, type ReactNode } from 'react'
 import type {
@@ -105,7 +116,7 @@ function BlockList({ blocks, fn, onNav }: { blocks: Block[]; fn?: boolean; onNav
 // The same connector, plus a label per leg and each leg's own outcome below it.
 // A `continue` leg draws no outcome: its line stretches to the bottom of the row
 // and arrows into the next spine block, keeping the primary path unbroken.
-function ForkLegHead({ l }: { l: ForkLeg }) {
+function ForkLegHead({ l, onNav }: { l: ForkLeg; onNav: Nav }) {
   // Two looks, chosen by what the leg carries:
   //  • a plain caption — a bare YES/NO gate whose answer is one short phrase
   //    ("True PU/PD"). A box around two words is noise.
@@ -135,7 +146,7 @@ function ForkLegHead({ l }: { l: ForkLeg }) {
         <div style={s(`font-size:var(--fs-chip);color:${color};opacity:.9;line-height:1.45;text-align:left;margin-top:4px;display:flex;flex-direction:column;gap:2px;`)}>
           {l.subItems.map((it, i) => (
             <div key={i} style={s('display:flex;gap:4px;align-items:flex-start;')}>
-              <span aria-hidden="true">•</span><span style={s('min-width:0;')}>{it}</span>
+              <span aria-hidden="true">•</span><span style={s('min-width:0;')}><Raw html={it} onNav={onNav} /></span>
             </div>
           ))}
         </div>
@@ -155,7 +166,7 @@ function ForkBlockView({ legs, onNav }: { legs: ForkLeg[]; onNav: Nav }) {
       <div style={grid}>
         {legs.map((l, i) => (
           <div key={i} style={s('display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;')}>
-            <ForkLegHead l={l} />
+            <ForkLegHead l={l} onNav={onNav} />
           </div>
         ))}
       </div>
@@ -179,7 +190,7 @@ function ForkBlockView({ legs, onNav }: { legs: ForkLeg[]; onNav: Nav }) {
 const Box = ToneBox
 
 // ── Node ──────────────────────────────────────────────────────────────────────
-function NodeBlock({ b }: { b: Extract<Block, { kind: 'node' }> }) {
+function NodeBlock({ b, onNav }: { b: Extract<Block, { kind: 'node' }>; onNav: Nav }) {
   if (b.variant === 'entry') {
     const tone = b.tone ? s(`background:rgba(${HUE[b.tone].rgb},var(--tile-bg-a));border-color:rgba(${HUE[b.tone].rgb},var(--tile-bd-a));color:${HUE[b.tone].color};`) : undefined
     return (
@@ -198,7 +209,7 @@ function NodeBlock({ b }: { b: Extract<Block, { kind: 'node' }> }) {
         <div className="fn-sub" style={s('font-weight:400;margin-top:4px;text-align:left;line-height:1.55;')}>
           {b.subItems.map((it, i) => (
             <div key={i} style={s('display:flex;gap:5px;align-items:flex-start;')}>
-              <span aria-hidden="true">•</span><span style={s('min-width:0;')}>{it}</span>
+              <span aria-hidden="true">•</span><span style={s('min-width:0;')}><Raw html={it} onNav={onNav} /></span>
             </div>
           ))}
         </div>
@@ -763,7 +774,7 @@ function DxRowBlock({ items, onNav }: { items: LabeledLink[]; onNav: Nav }) {
 // `splitCols` → 'self'); only the category blocks take it.
 function BlockView({ b, lead, onNav }: { b: Block; lead?: boolean; onNav: Nav }): ReactNode {
   switch (b.kind) {
-    case 'node': return <NodeBlock b={b} />
+    case 'node': return <NodeBlock b={b} onNav={onNav} />
     case 'branch': return <BranchBlock columns={b.columns} lead={lead} onNav={onNav} />
     case 'endpoints': return <div style={s('display:flex;flex-direction:column;gap:4px;width:100%;')}>{b.items.map((e, i) => <EndpointView key={i} e={e} onNav={onNav} />)}</div>
     case 'fnHeader': return <FnHeaderBlock b={b} />

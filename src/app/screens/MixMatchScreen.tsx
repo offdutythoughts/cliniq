@@ -4,8 +4,8 @@
 // and diagnostic keywords. The engine scores all disease pages and returns a
 // ranked differential list grouped by aetiology.
 
-import { useState, useMemo, useRef, useCallback } from 'react'
-import { searchDiseases, topDifferentials, type SearchInputs, type SearchCategory, type AgeCategory, type SexFilter, type NeuterFilter, type Species } from '../../lib/search/diseaseSearch'
+import { useState, useMemo, useRef, useCallback, useId } from 'react'
+import { searchDiseases, topDifferentials, suggestSignTerms, type TermSuggestion, type SearchInputs, type SearchCategory, type AgeCategory, type SexFilter, type NeuterFilter, type Species } from '../../lib/search/diseaseSearch'
 import { useNav } from '../nav/NavContext'
 import { SpTag } from './tags'
 import { Tappable } from './Tappable'
@@ -32,57 +32,122 @@ const CAT_EMOJI: Record<string, string> = {
 }
 
 // ── Keyword tag input ─────────────────────────────────────────────────────────
+//
+// With `suggest`, the box becomes a combobox over the engine's own vocabulary.
+// Free text still commits on Enter — the dropdown does not restrict what can be
+// typed, it just stops the vocabulary being invisible. Each row carries the
+// number of pages the term would match, which is what separates a discriminating
+// sign from a vague one before the reader has spent a search on it.
 function KeywordInput({
   tags,
   onAdd,
   onRemove,
   placeholder,
+  suggest,
 }: {
   tags: string[]
   onAdd: (t: string) => void
   onRemove: (t: string) => void
   placeholder: string
+  /** Omitted for the diagnostics box, which has no curated vocabulary yet. */
+  suggest?: (query: string, exclude: string[]) => TermSuggestion[]
 }) {
   const [draft, setDraft] = useState('')
+  const [active, setActive] = useState(-1)   // -1 = nothing highlighted
+  const [dismissed, setDismissed] = useState(false) // Escape closes without clearing
   const inputRef = useRef<HTMLInputElement>(null)
+  const listId = useId()
 
+  const hits = useMemo(
+    () => (suggest && !dismissed ? suggest(draft, tags) : []),
+    [suggest, dismissed, draft, tags],
+  )
+  const open = hits.length > 0
+
+  function reset() { setDraft(''); setActive(-1); setDismissed(false) }
+  function add(term: string) { if (!tags.includes(term)) onAdd(term); reset() }
   function commit() {
-    const v = draft.trim()
-    if (v && !tags.includes(v.toLowerCase())) onAdd(v.toLowerCase())
-    setDraft('')
+    const v = draft.trim().toLowerCase()
+    if (v && !tags.includes(v)) onAdd(v)
+    reset()
   }
 
   function onKey(e: React.KeyboardEvent) {
-    if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); commit() }
+    if (open && e.key === 'ArrowDown') { e.preventDefault(); setActive(i => Math.min(i + 1, hits.length - 1)); return }
+    if (open && e.key === 'ArrowUp')   { e.preventDefault(); setActive(i => Math.max(i - 1, -1)); return }
+    // Escape closes the dropdown only — it must not clear what was typed, and
+    // it must not bubble out to whatever else on the page listens for Escape.
+    if (open && e.key === 'Escape')    { e.preventDefault(); e.stopPropagation(); setDismissed(true); setActive(-1); return }
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault()
+      if (e.key === 'Enter' && active >= 0 && hits[active]) add(hits[active].term)
+      else commit()
+      return
+    }
     if (e.key === 'Backspace' && draft === '' && tags.length > 0) onRemove(tags[tags.length - 1])
   }
 
   return (
-    <div
-      onClick={() => inputRef.current?.focus()}
-      style={s('display:flex;flex-wrap:wrap;gap:5px;align-items:center;background:var(--navy3);border:1px solid var(--border);border-radius:10px;padding:6px 10px;min-height:36px;cursor:text;')}
-    >
-      {tags.map(t => (
-        <span
-          key={t}
-          style={s('display:inline-flex;align-items:center;gap:4px;background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:2px 8px;font-size:11px;color:var(--white);')}
-        >
-          {t}
-          <button
-            onMouseDown={e => { e.preventDefault(); onRemove(t) }}
-            style={s('background:none;border:none;color:var(--gray2);cursor:pointer;padding:0;font-size:13px;line-height:1;')}
-          >×</button>
-        </span>
-      ))}
-      <input
-        ref={inputRef}
-        value={draft}
-        onChange={e => setDraft(e.target.value)}
-        onKeyDown={onKey}
-        onBlur={commit}
-        placeholder={tags.length === 0 ? placeholder : ''}
-        style={s('flex:1;min-width:80px;background:transparent;border:none;outline:none;font-size:12px;color:var(--white);padding:0;')}
-      />
+    <div style={s('position:relative;')}>
+      <div
+        onClick={() => inputRef.current?.focus()}
+        style={s('display:flex;flex-wrap:wrap;gap:5px;align-items:center;background:var(--navy3);border:1px solid var(--border);border-radius:10px;padding:6px 10px;min-height:36px;cursor:text;')}
+      >
+        {tags.map(t => (
+          <span
+            key={t}
+            style={s('display:inline-flex;align-items:center;gap:4px;background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:2px 8px;font-size:11px;color:var(--white);')}
+          >
+            {t}
+            <button
+              onMouseDown={e => { e.preventDefault(); onRemove(t) }}
+              style={s('background:none;border:none;color:var(--gray2);cursor:pointer;padding:0;font-size:13px;line-height:1;')}
+            >×</button>
+          </span>
+        ))}
+        <input
+          ref={inputRef}
+          value={draft}
+          onChange={e => { setDraft(e.target.value); setActive(-1); setDismissed(false) }}
+          onKeyDown={onKey}
+          onBlur={commit}
+          placeholder={tags.length === 0 ? placeholder : ''}
+          role={suggest ? 'combobox' : undefined}
+          aria-expanded={suggest ? open : undefined}
+          aria-controls={suggest && open ? listId : undefined}
+          aria-autocomplete={suggest ? 'list' : undefined}
+          aria-activedescendant={active >= 0 ? `${listId}-${active}` : undefined}
+          style={s('flex:1;min-width:80px;background:transparent;border:none;outline:none;font-size:12px;color:var(--white);padding:0;')}
+        />
+      </div>
+
+      {open && (
+        <div className="mm-typeahead" id={listId} role="listbox">
+          {hits.map((sg, i) => (
+            <div
+              key={sg.term}
+              id={`${listId}-${i}`}
+              className="mm-typeahead-row"
+              role="option"
+              aria-selected={i === active}
+              // mousedown, not click: the input's onBlur would otherwise fire
+              // first and commit the half-typed draft as its own tag.
+              onMouseDown={e => { e.preventDefault(); add(sg.term) }}
+              onMouseEnter={() => setActive(i)}
+            >
+              <div style={s('flex:1;min-width:0;')}>
+                <div style={s('font-size:var(--fs-body);color:var(--white);')}>{sg.term}</div>
+                {sg.alsoCovers.length > 0 && (
+                  <div style={s('font-size:var(--fs-chip-sub);color:var(--gray2);margin-top:1px;')}>
+                    also {sg.alsoCovers.join(', ')}
+                  </div>
+                )}
+              </div>
+              <span style={s('font-size:var(--fs-chip-sub);color:var(--gray2);flex-shrink:0;')}>{sg.count}</span>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
@@ -120,6 +185,13 @@ export function MixMatchScreen() {
   const removeSign = useCallback((t: string) => _setSignKeywords(p => { const n = p.filter(x => x !== t); _saved.signKeywords = n; return n }), [])
   const addDiag = useCallback((t: string) => _setDiagKeywords(p => { const n = [...p, t]; _saved.diagKeywords = n; return n }), [])
   const removeDiag = useCallback((t: string) => _setDiagKeywords(p => { const n = p.filter(x => x !== t); _saved.diagKeywords = n; return n }), [])
+
+  // Memoised on species: the dropdown recomputes on every keystroke, and an
+  // inline closure here would defeat KeywordInput's useMemo entirely.
+  const suggestSigns = useCallback(
+    (q: string, exclude: string[]) => suggestSignTerms(q, { species, exclude }),
+    [species],
+  )
 
   const inputs: SearchInputs = {
     species,
@@ -266,9 +338,12 @@ export function MixMatchScreen() {
           tags={signKeywords}
           onAdd={addSign}
           onRemove={removeSign}
-          placeholder="Type a sign and press Enter (e.g. vomiting, weight loss)"
+          suggest={suggestSigns}
+          placeholder="Type a sign (e.g. vomiting, weight loss)"
         />
-        <div style={s('font-size:10px;color:var(--gray2);margin-top:4px;')}>Press Enter or comma to add each term</div>
+        <div style={s('font-size:10px;color:var(--gray2);margin-top:4px;')}>
+          Pick a suggestion, or press Enter to add what you typed. The number is how many diseases the term matches.
+        </div>
       </div>
 
       {/* ── Diagnostics ── */}
