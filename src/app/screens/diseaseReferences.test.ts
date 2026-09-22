@@ -159,6 +159,20 @@ describe('parseSources', () => {
     // in its branch is the only thing keeping them apart, so every one of them
     // is asserted here — this is the most fragile marker in the file.
     expect(parseSources('Li 2021').map(s => s.id)).toEqual(['li-aqp2'])
+    // Three Wiinberg DIC papers, year-keyed. The print years matter: PubMed
+    // carries online dates a year or two earlier for two of the three.
+    expect(parseSources('Wiinberg 2008').map(s => s.id)).toEqual(['wiinberg-teg-dic'])
+    expect(parseSources('Wiinberg 2009').map(s => s.id)).toEqual(['wiinberg-teg-bleeding'])
+    expect(parseSources('Wiinberg 2010').map(s => s.id)).toEqual(['wiinberg-dic-score'])
+    expect(parseSources('Wiinberg 2099')).toEqual([])
+    // Wainberg (feline VBO) and Wiinberg (canine DIC) are different authors.
+    expect(parseSources('Wainberg 2019').map(s => s.id)).toEqual(['wainberg-vbo'])
+    // Callan vs Clark, Gookin vs Gould/Gold.
+    expect(parseSources('Callan 2006').map(s => s.id)).toEqual(['callan-f7-mutation'])
+    expect(parseSources('Clark 2022').map(s => s.id)).toEqual(['clark-f7-autopsy'])
+    expect(parseSources('Gookin 1997').map(s => s.id)).toEqual(['gookin-feline-fx'])
+    expect(parseSources('Gould 2011').map(s => s.id)).toEqual(['gould-pll'])
+    expect(parseSources('Gold 2016').map(s => s.id)).toEqual(['gold-basal-cortisol'])
     expect(parseSources('Lien 2006').map(s => s.id)).toEqual(['lien-iatrogenic'])
     expect(parseSources('Linton 2015').map(s => s.id)).toEqual(['linton-fgesf'])
     expect(parseSources('Lo 2022').map(s => s.id)).toEqual(['lo-dual-therapy'])
@@ -301,6 +315,13 @@ describe('parseSources', () => {
       ['Ku 2023', 'ku-rta-ndi', 'Vet Med Sci. 2023;9(4):1483-1487'],
       ['Cridge 2025', 'cridge-pythiosis', 'Vet Clin North Am Small Anim Pract. 2025;55(2):225-236'],
       ['Li 2021', 'li-aqp2', 'Front Endocrinol (Lausanne). 2021;12:665145'],
+      // Pages 21-25.
+      ['Mignan 2020', 'mignan-mg-classification', 'J Vet Intern Med. 2020;34(5):1707-1717'],
+      ['Grobman 2021', 'grobman-aerodigestive', 'Vet Clin North Am Small Anim Pract. 2021;51(1):17-32'],
+      ['Estrin 2006', 'estrin-feline-dic', 'J Vet Intern Med. 2006;20(6):1334-1339'],
+      ['Callan 2006', 'callan-f7-mutation', 'J Thromb Haemost. 2006;4(12):2616-2622'],
+      ['Clark 2022', 'clark-f7-autopsy', 'J Vet Diagn Invest. 2022;34(5):806-812'],
+      ['Gookin 1997', 'gookin-feline-fx', 'J Am Vet Med Assoc. 1997;211(5):576-579'],
     ]
     for (const [marker, id, fragment] of cases) {
       const [source] = parseSources(marker)
@@ -503,6 +524,13 @@ describe('reference block', () => {
       ['DIS-PUPD-HAC', 7, ['2012 ACVIM consensus statement', 'trilostane protocols', 'mitotane']],
       ['DIS-PUPD-CDI', 6, ['Central diabetes insipidus in dogs', 'transsphenoidal surgery', 'traumatic brain injury', 'pituitary cyst']],
       ['DIS-PUPD-NDI', 4, ['pyometra induces transient glomerular', 'leptospirosis', 'renal tubular acidosis', 'aquaporin-2 mutation']],
+      // Pages 21-25. DIS-BD-FII is deliberately absent: nothing citable was
+      // found for canine factor II deficiency, and the page was left uncited
+      // rather than propped up on a paper that does not cover it.
+      ['DIS-OES-MEGA', 7, ['myasthenia gravis and congenital myasthenic', 'Sildenafil', 'Aerodigestive', 'Spontaneous remission']],
+      ['DIS-BD-DIC', 4, ['scoring system for diagnosis of canine disseminated', 'Thromboelastographic', 'coagulation in cats']],
+      ['DIS-BD-FX', 1, ['Factor X deficiency in a cat']],
+      ['DIS-BD-FVII', 2, ['missense mutation responsible for factor VII', 'unexplained bleeding on autopsy']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -515,12 +543,13 @@ describe('reference block', () => {
   // Every marker on those pages has to RESOLVE. An unmapped one yields no id,
   // and <Cite> then falls back to printing the raw "(Author 2015)" text — the
   // exact failure this whole pass was meant to remove.
-  it('leaves no unresolved citation marker on the first twenty disease pages', () => {
+  it('leaves no unresolved citation marker on the first twenty-five disease pages', () => {
     const offenders: string[] = []
     for (const id of ['DIS-HCM', 'DIS-LP', 'DIS-POLYP', 'DIS-PYOTHORAX', 'DIS-GAST-DIET',
       'DIS-GI-PARVO', 'DIS-SEC-CKD', 'DIS-SEC-HYPO', 'DIS-SEC-PAN-DOG', 'DIS-GI-INTUSS',
       'DIS-GI-EOGAST', 'DIS-GI-ULC', 'DIS-GI-GDV', 'DIS-GI-HH', 'DIS-GI-PYL',
-      'DIS-GI-FGESF', 'DIS-GI-LYMP', 'DIS-PUPD-HAC', 'DIS-PUPD-CDI', 'DIS-PUPD-NDI']) {
+      'DIS-GI-FGESF', 'DIS-GI-LYMP', 'DIS-PUPD-HAC', 'DIS-PUPD-CDI', 'DIS-PUPD-NDI',
+      'DIS-OES-MEGA', 'DIS-BD-DIC', 'DIS-BD-FX', 'DIS-BD-FII', 'DIS-BD-FVII']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

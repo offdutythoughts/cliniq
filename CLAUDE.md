@@ -66,6 +66,54 @@ memory; several filenames in `references/` carry wrong or unverifiable metadata.
 that file marked **Unverified** must have their title page checked before the citation is
 published anywhere.
 
+### Rules for citing papers
+
+These are hard rules, not preferences. They apply to every paper cited anywhere in this
+repo — disease pages, sign flows, Dx views, docs.
+
+**1. Every paper must clear three bars.**
+
+- **(a) Peer-reviewed.** No preprints, no conference abstracts, no textbook claim dressed up
+  as a paper. One legacy exception exists and is flagged where it appears (the Miceli
+  ECVIM-CA presentation on the feline-HAC page); do not add more.
+- **(b) Sample large enough for the specific claim being made.** A single case report cannot
+  carry a general statement. A ten-animal pilot cannot carry an efficacy claim.
+- **(c) As current as the literature allows.** Prefer the newest adequately powered study.
+  Where a recent larger series disagrees with an older classic, **the recent one wins and the
+  page says so** — as with Černá 2024 (60 cats) against the older FGESF case series, and
+  Green 2011 against de Papp 1999 on the GDV lactate threshold.
+
+**2. Hedge on the page when the sample cannot carry the claim.**
+
+Write **"Some clinicians reported…"**, or state the sample size inline ("in a 21-dog series",
+"a 10-dog pilot, underpowered for outcome", "all 9 cats of a small prospective series").
+Never state an n=1 finding as established fact behind a bare superscript.
+
+The reason is the superscript itself: it reads as authority. A confident sentence backed by
+one animal misleads a clinician at the point of care *more* than no citation would, because
+the number signals that somebody checked. State the sample size inline whenever it is small
+and load-bearing — under roughly 30 animals.
+
+**3. Read the abstract before you write the claim.**
+
+Never cite from a bibliographic record alone. Two claims in this repo have been attributed to
+papers that said something else, both because a plausible sentence got the nearest citation
+attached rather than the one that supports it:
+
+- `DIS-GI-PYL` had Bellenger 1990 recommending against pyloromyotomy; the paper concludes the
+  opposite.
+- `DIS-PUPD-NDI` credited the aquaporin-2 mechanism to Ku 2023, a case report that does not
+  mention it; it is Li 2021, and that is a human variant in canine cells.
+
+Both are written up in `references/CITATIONS.md`. Crossref records carry no abstract, which
+is why **PubMed is the default discovery tool** — see that file's connector notes.
+
+**4. Verify against two registries** (PubMed + Crossref, or Crossref + Europe PMC), prefer
+the fuller record and the **print** year, and record any disagreement in
+`references/CITATIONS.md`. A bibliographic search's top hit is often the wrong record — a
+congress abstract, an erratum, an abstract-only entry — so confirm the container title and
+DOI point at the paper you mean.
+
 ## Reading the PDFs
 
 The system Homebrew at `/usr/local` is owned by other user accounts and `vetic` is not an
