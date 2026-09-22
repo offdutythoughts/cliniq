@@ -87,9 +87,11 @@ describe('prevalence prior', () => {
   })
 
   it('takes the most favourable tier when species is not narrowed', () => {
-    // Leptospirosis: uncommon in dogs, very rare in cats.
-    expect(prevalenceFactor('DIS-INFECT-LEPTO', 'cat')).toBeLessThan(1)
-    expect(prevalenceFactor('DIS-INFECT-LEPTO', 'all')).toBe(1)
+    // DCM: uncommon in dogs, rare in cats. Deliberately an UNFLOORED entry —
+    // this asserts the species logic, and a floor would mask it by clamping the
+    // penalised side to neutral anyway.
+    expect(prevalenceFactor('DIS-CARD-DCM', 'cat')).toBeLessThan(1)
+    expect(prevalenceFactor('DIS-CARD-DCM', 'all')).toBe(1)
   })
 
   it('puts feline diabetes above feline Cushing\'s on the motivating history', () => {
@@ -232,5 +234,46 @@ describe('suggestSignTerms', () => {
   it('does not advertise a spelling variant as something else it covers', () => {
     const d = suggestSignTerms('di', { species: 'cat' }).find(s => s.term === 'diarrhoea')!
     expect(d.alsoCovers).not.toContain('diarrhea')
+  })
+})
+
+describe('ranking floor', () => {
+  it('raises a penalised disease to neutral without lifting it above', () => {
+    // Insulinoma is `rare` in dogs (×0.7) and floored.
+    expect(PREVALENCE['DIS-NEO-INSULINOMA'].dog).toBe('rare')
+    expect(prevalenceFactor('DIS-NEO-INSULINOMA', 'dog')).toBe(1)
+  })
+
+  it('leaves the epidemiology tier untouched — it only changes ranking', () => {
+    // The whole point: the tier still records that this is rare, so the table
+    // stays readable as a statement about prevalence.
+    expect(PREVALENCE['DIS-ENDO-HHS']).toMatchObject({ dog: 'rare', cat: 'rare', floor: 'cant-miss' })
+  })
+
+  it('never lifts a floored disease above a genuinely common one', () => {
+    // A floor is not a promotion. `common` still outranks it on equal evidence.
+    expect(prevalenceFactor('DIS-NEO-INSULINOMA', 'dog'))
+      .toBeLessThan(prevalenceFactor('DIS-ENDO-DM', 'dog'))
+  })
+
+  it('does not disturb an unfloored rare disease', () => {
+    expect(prevalenceFactor('DIS-ENDO-PHPT', 'dog')).toBeLessThan(1)
+  })
+
+  it('applies to a narrowed species as well as an unnarrowed one', () => {
+    // Leptospirosis is `rare` in cats and floored as zoonotic, so the cat-only
+    // search — the one where the penalty would otherwise bite — returns neutral.
+    expect(PREVALENCE['DIS-INFECT-LEPTO'].cat).toBe('rare')
+    expect(prevalenceFactor('DIS-INFECT-LEPTO', 'cat')).toBe(1)
+    expect(prevalenceFactor('DIS-INFECT-LEPTO', 'all')).toBe(1)
+  })
+
+  it('still cannot exclude anything', () => {
+    // The floor only ever raises, so the inclusion invariant is unchanged.
+    for (const id of Object.keys(PREVALENCE)) {
+      for (const sp of ['dog', 'cat', 'all'] as const) {
+        expect(prevalenceFactor(id, sp)).toBeGreaterThan(0)
+      }
+    }
   })
 })
