@@ -1471,6 +1471,153 @@ respiratory signs had bronchomalacia, **every one had at least one comorbid card
 disorder**, and pulmonary hypertension was more prevalent among them. That is the argument for
 scoping and echoing rather than treating the tracheal lesion alone.
 
+### Pages 67-68 — acute glaucoma, cataract (2026-09-23)
+
+> Kubo A, Ito Y. Vet Ophthalmol. 2024;27(5):452-460. doi:10.1111/vop.13189
+> Graham KL, Hall EJS, Caraguel C, White A, Billson FA, Billson FM. Vet Ophthalmol. 2018;21(5):487-497. doi:10.1111/vop.12536
+> Edelmann ML, Mohammed HO, Ledbetter EC. Vet Ophthalmol. 2022;25(5):316-325. doi:10.1111/vop.12978
+> Boss C, La Croix N, Moore PA, et al. Vet Ophthalmol. 2020;23(3):442-449. doi:10.1111/vop.12739
+
+**Ophthalmology is the largest remaining block** (58 pages), and these are the first two. Unlike
+the other clinical areas, every eye page already carries a *chapter-level* Gelatt citation, so
+the reference counts in the test table include both the book chapters and the new papers.
+
+A note on the editing mechanics rather than the evidence: the ophthalmology rows in `db.ts` span
+**many lines** with double-quoted fields, unlike the single-line rows everywhere else. The
+one-line find-and-replace used for every previous batch silently matches nothing on them. Edits
+here go through a row-range helper that walks the braces to find the row's true extent.
+
+**Kubo** is 104 Shiba eyes — breed-specific, and the page says so — but it separates the two
+things that decide whether a glaucomatous eye keeps sight, and both are actionable: presenting
+**within 72 hours** (86.7% still sighted vs 44.1% later) and getting a shunt while still sighted
+(69.2% visual retention at 12 months vs 7.7% on drops alone; median time to blindness 39.9 months
+vs 1.7). The page previously said "refer same day" without saying what the referral buys.
+
+**Graham** answers which surgery, across 83 eyes: a Baerveldt drainage device beat
+cyclophotocoagulation-plus-suture-shunt on the composite that matters — pressure controlled
+*without* losing sight, 60.7% vs 35.2% — and needed fewer adjunctive drops.
+
+**Edelmann** replaces the page's unsourced "90%+ visual outcome" with 86% of 182 eyes at last
+follow-up, and supplies the mechanism behind "refer early": eyes operated within a month needed
+less phacoemulsification energy, and higher energy tracked with post-operative glaucoma and
+blindness. **Boss** is the pug exception — corneal ulceration, not glaucoma, was their commonest
+complication, and 75% had pre-existing pigmentary keratitis.
+
+### Page 69 — superficial corneal ulcer / SCCED (2026-09-23)
+
+> Hung JH, Leidreiter K, White JS, Bernays ME. Vet Ophthalmol. 2020;23(4):764-769. doi:10.1111/vop.12772
+> Edelmann ML, Mohammed HO, Wakshlag JJ, Ledbetter EC. J Am Vet Med Assoc. 2018;253(8):1012-1021. doi:10.2460/javma.253.8.1012
+> Dees DD, Keys DA. Vet Ophthalmol. 2022;25(1):6-11. doi:10.1111/vop.12891
+
+⚠️ **`Edelmann` is now year-keyed** — the same author has the 2018 SCCED platelet-rich-plasma
+trial and the 2022 phacoemulsification series added one batch earlier. Third author after Moore
+and Johnson to need this. `DIS-EYE-CATARACT` stays pinned at 3 references.
+
+**The two randomised adjunct trials disagree, and both are cited — the negative one first.**
+Edelmann found platelet-rich plasma had *no* effect on re-epithelialisation, vascularisation or
+fibrosis in 40 dogs. Dees found a propolis/aloe/chamomile drop healed marginally faster than
+debridement alone (16 vs 20 days in 120 dogs), with autologous serum only marginal. Neither is
+strong enough to recommend, so the page says adjuncts are not established rather than picking
+the flattering result.
+
+**Hung** (341 eyes) supplies the three numbers the page was missing: 73.9% healed after a single
+diamond burr debridement, 17% needed another intervention, and complications occurred in 4.7% —
+mostly keratomalacia, which is worth a recheck rather than an assumption. It also gives the
+Boxer-specific warning: 2.3 times more likely than other breeds to develop a contralateral
+SCCED, usually within 24 months.
+
+### Page 70 — deep / melting corneal ulcer (2026-09-23)
+
+> Goss R, Adams VJ, Heinrich C, et al. Vet Ophthalmol. 2024;27(4):330-346. doi:10.1111/vop.13160
+> Verdenius CY, Broens EM, Slenter IJM, Djajadiningrat-Laanen SC. Vet Ophthalmol. 2024;27(1):7-16. doi:10.1111/vop.13080
+
+This is the most directly prescriptive pair added so far. The page named a first-line
+fluoroquinolone without saying what it was covering or what to avoid; it now carries the isolate
+list (**S. canis, P. aeruginosa, S. pseudintermedius**), the fact that Pseudomonas was **10 times
+more likely** once the ulcer was malacic, and the resistance pattern that rules three common
+topicals out: neomycin 85%, fusidic acid 78%, tetracycline 68%. Gentamicin, ofloxacin,
+ciprofloxacin and chloramphenicol held up. Goss's in vitro finding that **no single drug** reached
+90% coverage but chloramphenicol-or-gentamicin *plus* a fluoroquinolone did is the basis for the
+page's new "use two agents pending culture".
+
+Two findings support "swab before you treat" from different directions. Verdenius: significantly
+fewer cultures grew anything in animals already on topical antibiotics. Goss: only **54%** of 148
+progressive ulcers grew an organism at all, so a negative culture is the expected result in half
+of cases and should not be read as absence of infection.
+
+Verdenius also dates the advice — multi-drug-resistant canine isolates rose from **9.4% to 38.6%**
+between 2012-2015 and 2016-2019. An empirical choice that worked a decade ago cannot be assumed
+to still work, which is a caveat worth carrying on a page that will be read for years.
+
+### Pages 71-72 — SARDS, feline corneal sequestrum (2026-09-23)
+
+> Komaromy AM, Abrams KL, Heckenlively JR, et al. Vet Ophthalmol. 2016;19(4):319-331. doi:10.1111/vop.12291
+> Susanti L, Kwon D, Ahn J, Seo K, Kang S. Vet Ophthalmol. 2023;26(2):169-175. doi:10.1111/vop.13058
+> Gomez AP, Mazzucchelli S, Smith K, de Lacerda RP. Vet Rec. 2023;193(3):e2783. doi:10.1002/vetr.2783
+> Michel J, Vigan M, Douet JY. Vet Ophthalmol. 2021;24(5):491-502. doi:10.1111/vop.12930
+
+⚠️ **`Michel` IS a prefix of the existing `Michelotti`** (thoracoscopic pericardiectomy) — the
+second true prefix pair after Reeve/Reeves. The Michelotti branch sits above the Michel one in
+`parseSources`, both directions are asserted, and `DIS-CARD-PERIC` stays pinned at 2 references.
+
+**Komaromy is an ACVO Vision for Animals Foundation panel review**, and its value here is
+negative: it states that the therapies proposed on neuroendocrine and autoimmune grounds are
+**controversial** and that no pathogenesis is established. The page already said "no proven
+therapy" — it can now say who concluded that.
+
+**Susanti is five dogs and is hedged twice**, but it carries a caveat the page lacked: SARDS can
+present unilaterally. All five had a flat ERG in the blind eye and a *reduced* one in the eye
+that still saw, and those eyes went on to fail. A normal-looking fundus in the remaining eye is
+not reassurance, and the page now says to recheck rather than discharge.
+
+**Gomez** (79 eyes) replaces the page's "roughly 12-20%" with 19% recurrence at a median of 245
+days, and adds the figure that changes follow-up: **27% developed a sequestrum in the other eye**,
+at a median of 635 days. Neither surgical technique nor skull conformation altered recurrence,
+which supports what the page already said about grafting not being a guarantee. Michel (35 eyes)
+is hedged as a single-technique series, not a comparison.
+
+### Pages 73-74 — feline herpesvirus ocular disease, entropion (2026-09-23)
+
+> Thiry E, Addie D, Belak S, et al. J Feline Med Surg. 2009;11(7):547-555. doi:10.1016/j.jfms.2009.05.003
+> Ledbetter EC, Badanes ZI, Chan RX, et al. J Ocul Pharmacol Ther. 2022;38(5):339-347. doi:10.1089/jop.2022.0001
+> Asti M, Nardi S, Barsotti G. N Z Vet J. 2020;68(2):112-118. doi:10.1080/00480169.2019.1694457
+
+**The ABCD guideline is from 2009** and that is the oldest source added in this whole pass. It
+stays because it is still the operative European guidance, the same reasoning applied to LeishVet
+2011. It earns its place on one practical point the page lacked: **do not sample a cat recently
+given a modified-live vaccine**, because the vaccine virus is detectable and will read as a
+positive PCR.
+
+**Ledbetter is hedged on two counts at once** — 16 cats, and *experimental* rather than natural
+infection, which the page states explicitly. Topical ganciclovir matched oral famciclovir on
+clinical score and corneal inflammation and beat placebo on viral load, but a specific-pathogen-
+free inoculation model is not a clinical cohort and the page does not let the superscript imply
+otherwise.
+
+**Asti** is 27 dogs of one breed and is written as such. Its interest is the reasoning rather
+than the numbers: in Shar Pei with both lids rolled in, correcting the **upper lid alone** by
+forced granulation resolved 50 of 54 eyes, on the argument that much of the lower entropion is
+secondary blepharospasm that disappears once the pain does. That sits naturally beside the page's
+existing "correct in stages rather than over-correct in one attempt".
+
+### Pages 75-77 — conjunctivitis, symblepharon, ophthalmia neonatorum (2026-09-23)
+
+No new references. All three reuse **Thiry 2009** (ABCD), because feline herpesvirus drives all
+of them and the guideline's content maps onto each differently:
+
+- `DIS-EYE-CONJ` and `DIS-EYE-SYMBL` gain the **PCR interpretation** caveat — latency is common
+  in healthy cats, so a positive supports rather than confirms causation, and a cat recently
+  given modified-live vaccine cannot be interpreted at all.
+- `DIS-EYE-SYMBL` also gains the reactivation triggers, **stress and corticosteroids**, which are
+  worth removing before reaching for another antiviral cycle.
+- `DIS-EYE-NEONATAL` gains the reason litters rather than single kittens are affected: recovered
+  cats are lifelong latent carriers shedding from oronasal and conjunctival secretions under
+  stress, and the queen is the usual source.
+
+This is the same free-win pattern that worked on `DIS-BD-EVANS` at the start of the pass — a
+paper already verified in the file applying to pages nobody had wired it into. Worth looking for
+before searching, since it costs one edit rather than a literature cycle.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

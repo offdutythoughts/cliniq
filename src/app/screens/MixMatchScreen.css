@@ -1,0 +1,56 @@
+/* ── Mix & Match form + results (imported by MixMatchScreen.tsx) ──────────────────────────────────────────────
+   Borrows the public homepage's language rather than the app's card stack:
+   a serif display head, numbered steps divided by hairlines, segmented
+   controls instead of emoji tiles, and ruled lists instead of boxed cards.
+   Selection is the ink/paper inversion (--white on --navy swap in dark), so
+   it needs no tint and follows the theme for free. */
+.mm-head{padding:6px 0 18px;}
+.mm-title{font-family:var(--font-display);font-size:26px;font-weight:500;letter-spacing:-0.015em;line-height:1.1;color:var(--white);}
+.mm-lede{font-size:13px;line-height:1.5;color:var(--gray);margin-top:6px;max-width:34em;}
+
+.mm-step{border-top:1px solid var(--border2);padding:14px 0 18px;}
+.mm-step-head{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;}
+.mm-step-n{font-family:var(--font-display);font-size:15px;font-weight:500;color:var(--teal);font-variant-numeric:lining-nums;}
+.mm-step-title{font-size:14px;font-weight:600;color:var(--white);}
+.mm-step-aside{margin-left:auto;font-size:11px;color:var(--gray2);}
+.mm-hint{font-size:11px;line-height:1.45;color:var(--gray2);margin-top:6px;}
+
+.mm-field{display:grid;grid-template-columns:58px 1fr;align-items:center;gap:10px;}
+.mm-field + .mm-field{margin-top:8px;}
+.mm-field-label{font-size:12px;color:var(--gray);}
+
+.mm-seg{display:flex;border:1px solid var(--border2);border-radius:8px;overflow:hidden;background:var(--navy2);}
+.mm-seg-btn{flex:1;min-width:0;padding:7px 4px;font-size:12px;font-weight:500;color:var(--gray);text-align:center;cursor:pointer;transition:background .12s,color .12s;white-space:nowrap;}
+.mm-seg-btn + .mm-seg-btn{border-left:1px solid var(--border);}
+.mm-seg-btn:hover{background:var(--card2);}
+.mm-seg-btn[aria-pressed="true"]{background:var(--white);color:var(--navy);}
+
+.mm-input{
+  width:100%;display:flex;flex-wrap:wrap;gap:5px;align-items:center;
+  background:var(--navy2);border:1px solid var(--border2);border-radius:8px;
+  padding:6px 10px;min-height:34px;cursor:text;
+  font-size:12px;color:var(--white);outline:none;
+}
+.mm-input:focus-within,.mm-input:focus{border-color:var(--teal);}
+.mm-input input{flex:1;min-width:80px;background:transparent;border:none;outline:none;font-size:12px;color:var(--white);padding:0;}
+.mm-tag{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--border2);border-radius:5px;padding:2px 4px 2px 7px;font-size:11px;color:var(--white);}
+.mm-tag button{color:var(--gray2);cursor:pointer;font-size:13px;line-height:1;padding:0 2px;}
+.mm-tag button:hover{color:var(--white);}
+
+.mm-empty{border-top:1px solid var(--border2);padding:22px 0 8px;font-family:var(--font-display);font-style:italic;font-size:15px;line-height:1.45;color:var(--gray);}
+
+.mm-summary{border-top:1px solid var(--border2);padding-top:14px;font-size:11px;color:var(--gray2);}
+.mm-block{margin-top:14px;}
+.mm-block-title{font-family:var(--font-display);font-size:19px;font-weight:500;letter-spacing:-0.01em;color:var(--white);margin-bottom:4px;}
+.mm-group-head{display:flex;align-items:center;gap:7px;margin:22px 0 2px;font-size:var(--fs-label);font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--white);}
+.mm-group-head .mm-count{color:var(--gray2);font-weight:500;}
+.mm-dot{width:7px;height:7px;border-radius:2px;flex-shrink:0;display:inline-block;}
+
+.mm-row{display:flex;align-items:center;gap:10px;padding:10px 2px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s;}
+.mm-row:hover,.mm-row:active{background:var(--card);}
+.mm-rank-n{font-family:var(--font-display);font-size:17px;font-weight:500;color:var(--gray2);width:14px;flex-shrink:0;text-align:right;font-variant-numeric:lining-nums;}
+.mm-name{font-size:14px;font-weight:500;color:var(--white);line-height:1.3;}
+.mm-meta{display:flex;align-items:center;flex-wrap:wrap;gap:5px 7px;margin-top:3px;font-size:11px;color:var(--gray2);}
+.mm-term{border:1px solid var(--border);border-radius:4px;padding:0 5px;font-size:10px;color:var(--gray);}
+.mm-score{font-family:var(--mono);font-size:11px;color:var(--gray);font-variant-numeric:tabular-nums;flex-shrink:0;}
+.mm-score.is-strong{color:var(--teal);font-weight:500;}

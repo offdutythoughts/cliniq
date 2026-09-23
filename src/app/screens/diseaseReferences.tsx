@@ -851,6 +851,63 @@ const JOHNSON_BRONCHIECTASIS =
 const GAMRACY_BRONCHOMALACIA =
   'Gamracy J, Wiggen K, Vientos-Plotts A, Reinero C. Clinicopathologic features, comorbid diseases, and prevalence of pulmonary hypertension in dogs with bronchomalacia. J Vet Intern Med. 2022;36(2):417-428. doi:10.1111/jvim.16381'
 
+// Ophthalmology. Kubo is 104 Shiba eyes — breed-specific, so the page says so
+// — but it is the cleanest demonstration that time to presentation and having
+// a shunt both decide whether the eye keeps sight. Graham compares the two
+// surgical routes across 83 eyes. Edelmann is 182 phaco eyes and Boss is the
+// pug-specific complication profile.
+const KUBO_SHIBA_PACG =
+  'Kubo A, Ito Y. Comparison of visual outcomes between medical treatment alone and Ahmed glaucoma valve implantation in Shiba dogs with primary angle closure glaucoma. Vet Ophthalmol. 2024;27(5):452-460. doi:10.1111/vop.13189'
+const GRAHAM_TSCP_VS_GDD =
+  'Graham KL, Hall EJS, Caraguel C, White A, Billson FA, Billson FM. Comparison of diode laser trans-scleral cyclophotocoagulation versus implantation of a 350-mm2 Baerveldt glaucoma drainage device for the treatment of glaucoma in dogs (a retrospective study: 2010-2016). Vet Ophthalmol. 2018;21(5):487-497. doi:10.1111/vop.12536'
+const EDELMANN_PHACO_CDE =
+  'Edelmann ML, Mohammed HO, Ledbetter EC. Retrospective evaluation of phacoemulsification and aspiration in 182 eyes: visual outcomes and CDE-predictive value. Vet Ophthalmol. 2022;25(5):316-325. doi:10.1111/vop.12978'
+const BOSS_PUG_PHACO =
+  'Boss C, La Croix N, Moore PA, et al. Preliminary report of postoperative complications of phacoemulsification in Pugs: a multicenter retrospective study of 32 cases. Vet Ophthalmol. 2020;23(3):442-449. doi:10.1111/vop.12739'
+
+// SCCED. Hung is 341 eyes and is the outcome figure; the two randomised
+// adjunct trials point in opposite directions and are both cited, because the
+// negative one is the more useful of the pair. EDELMANN is year-keyed — the
+// same author has the 2022 phacoemulsification paper above.
+const HUNG_SCCED_DBD =
+  'Hung JH, Leidreiter K, White JS, Bernays ME. Clinical characteristics and treatment of spontaneous chronic corneal epithelial defects (SCCEDs) with diamond burr debridement. Vet Ophthalmol. 2020;23(4):764-769. doi:10.1111/vop.12772'
+const EDELMANN_SCCED_PRP =
+  'Edelmann ML, Mohammed HO, Wakshlag JJ, Ledbetter EC. Clinical trial of adjunctive autologous platelet-rich plasma treatment following diamond-burr debridement for spontaneous chronic corneal epithelial defects in dogs. J Am Vet Med Assoc. 2018;253(8):1012-1021. doi:10.2460/javma.253.8.1012'
+const DEES_SCCED_ADJUNCT =
+  'Dees DD, Keys DA. Use of autologous serum or Vizoovet to improve healing rates of spontaneous chronic corneal epithelial defects after diamond burr debridement in dogs. Vet Ophthalmol. 2022;25(1):6-11. doi:10.1111/vop.12891'
+
+// Ulcerative keratitis microbiology. Goss is 148 ulcers and Verdenius 163
+// samples; between them they give the isolate list, the resistance pattern
+// and the reason to swab BEFORE starting topicals.
+const GOSS_ULCERATIVE_KERATITIS =
+  'Goss R, Adams VJ, Heinrich C, et al. Progressive ulcerative keratitis in dogs in the United Kingdom: microbial isolates, antimicrobial sensitivity, and resistance patterns. Vet Ophthalmol. 2024;27(4):330-346. doi:10.1111/vop.13160'
+const VERDENIUS_STROMAL_ULCER =
+  'Verdenius CY, Broens EM, Slenter IJM, Djajadiningrat-Laanen SC. Corneal stromal ulcerations in a referral population of dogs and cats in the Netherlands (2012-2019): bacterial isolates and antibiotic resistance. Vet Ophthalmol. 2024;27(1):7-16. doi:10.1111/vop.13080'
+
+// SARDS and feline corneal sequestrum. Komaromy is the ACVO Vision for Animals
+// Foundation panel review — its value is the explicit statement that the
+// proposed therapies are controversial. Susanti is FIVE dogs and is hedged.
+// Gomez is 79 eyes and carries the recurrence figures; Michel is 35 eyes.
+const KOMAROMY_SARDS =
+  'Komaromy AM, Abrams KL, Heckenlively JR, et al. Sudden acquired retinal degeneration syndrome (SARDS) — a review and proposed strategies toward a better understanding of pathogenesis, early diagnosis, and therapy. Vet Ophthalmol. 2016;19(4):319-331. doi:10.1111/vop.12291'
+const SUSANTI_UNILATERAL_SARDS =
+  'Susanti L, Kwon D, Ahn J, Seo K, Kang S. Unilateral blindness presumed as sudden acquired retinal degeneration syndrome (SARDS) in one Dachshund and four Maltese dogs. Vet Ophthalmol. 2023;26(2):169-175. doi:10.1111/vop.13058'
+const GOMEZ_FCS_RECURRENCE =
+  'Gomez AP, Mazzucchelli S, Smith K, de Lacerda RP. Long-term treatment outcomes and risk factors for recurrence in feline corneal sequestrum: 72 cases (2009-2017). Vet Rec. 2023;193(3):e2783. doi:10.1002/vetr.2783'
+const MICHEL_LAMELLAR_KERATOPLASTY =
+  'Michel J, Vigan M, Douet JY. Autologous lamellar keratoplasty for the treatment of feline corneal sequestrum: a retrospective study of 35 eyes (2012-2020). Vet Ophthalmol. 2021;24(5):491-502. doi:10.1111/vop.12930'
+
+// Feline herpesvirus and entropion. The ABCD guideline is 2009 and its age is
+// stated on the page rather than hidden — it is still the operative European
+// guidance. Ledbetter is 16 SPF cats with EXPERIMENTAL infection, hedged on
+// both counts. Asti is 27 Shar Pei and is breed-specific by design.
+const THIRY_ABCD_FHV =
+  'Thiry E, Addie D, Belak S, et al. Feline herpesvirus infection: ABCD guidelines on prevention and management. J Feline Med Surg. 2009;11(7):547-555. doi:10.1016/j.jfms.2009.05.003'
+const LEDBETTER_GANCICLOVIR =
+  'Ledbetter EC, Badanes ZI, Chan RX, et al. Comparative efficacy of topical ophthalmic ganciclovir and oral famciclovir in cats with experimental ocular feline herpesvirus-1 epithelial infection. J Ocul Pharmacol Ther. 2022;38(5):339-347. doi:10.1089/jop.2022.0001'
+const ASTI_SHARPEI_ENTROPION =
+  'Asti M, Nardi S, Barsotti G. Surgical management of bilateral, upper and lower eyelid entropion in 27 Shar Pei dogs, using the Stades forced granulation procedure of the upper eyelid only. N Z Vet J. 2020;68(2):112-118. doi:10.1080/00480169.2019.1694457'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -958,6 +1015,17 @@ const SOURCE_NAMES = [
   // Thoracic surgery. 'MacIver' sits beside the existing 'MacPhail'.
   'Rossanese', 'Bleakley', 'Carroll', 'MacIver',
   'Gamracy',
+  // Ophthalmology. 'Graham' sits beside 'Granström' and 'Greci'; 'Boss'
+  // beside 'Boothe', 'Boland', 'Bohin', 'Boeykens' and 'Boswood'.
+  'Kubo', 'Graham', 'Edelmann', 'Boss',
+  'Hung', 'Dees',
+  // 'Goss' sits beside 'Gould' and 'Gold'; 'Verdenius' beside 'Venn'.
+  'Goss', 'Verdenius',
+  // 'Michel' IS a prefix of the existing 'Michelotti', so the Michelotti
+  // branch must stay ABOVE the Michel one in parseSources. Both are pinned.
+  'Komáromy', 'Susanti', 'Gómez', 'Michel',
+  // 'Asti' sits beside 'Aslanian'; 'Thiry' beside 'Thomsen' and 'Trivedi'.
+  'Thiry', 'Ledbetter', 'Asti',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1034,6 +1102,13 @@ const MOORE_BY_YEAR: Record<string, { id: string; text: string }> = {
 const JOHNSON_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2016': { id: 'johnson-bronchiectasis', text: JOHNSON_BRONCHIECTASIS },
   '2023': { id: 'johnson-pyothorax', text: JOHNSON_PYOTHORAX },
+}
+
+/** Edelmann has the SCCED platelet-rich-plasma trial and the
+ *  phacoemulsification series. Keyed on the year, as Moore and Johnson are. */
+const EDELMANN_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2018': { id: 'edelmann-scced-prp', text: EDELMANN_SCCED_PRP },
+  '2022': { id: 'edelmann-phaco-cde', text: EDELMANN_PHACO_CDE },
 }
 
 const ARENAS_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -1258,6 +1333,26 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^De Lorenzi/.test(part)) { out.push({ id: 'de-lorenzi-silicone-stent', text: DE_LORENZI_SILICONE_STENT }); continue }
     if (/^Gareis/.test(part)) { out.push({ id: 'gareis-flad-radiographs', text: GAREIS_FLAD_RADIOGRAPHS }); continue }
     if (/^Gamracy/.test(part)) { out.push({ id: 'gamracy-bronchomalacia', text: GAMRACY_BRONCHOMALACIA }); continue }
+    if (/^Kubo/.test(part)) { out.push({ id: 'kubo-shiba-pacg', text: KUBO_SHIBA_PACG }); continue }
+    if (/^Graham/.test(part)) { out.push({ id: 'graham-tscp-vs-gdd', text: GRAHAM_TSCP_VS_GDD }); continue }
+    if (/^Edelmann/.test(part)) {
+      const hit = EDELMANN_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^Boss/.test(part)) { out.push({ id: 'boss-pug-phaco', text: BOSS_PUG_PHACO }); continue }
+    if (/^Hung/.test(part)) { out.push({ id: 'hung-scced-dbd', text: HUNG_SCCED_DBD }); continue }
+    if (/^Dees/.test(part)) { out.push({ id: 'dees-scced-adjunct', text: DEES_SCCED_ADJUNCT }); continue }
+    if (/^Goss/.test(part)) { out.push({ id: 'goss-ulcerative-keratitis', text: GOSS_ULCERATIVE_KERATITIS }); continue }
+    if (/^Verdenius/.test(part)) { out.push({ id: 'verdenius-stromal-ulcer', text: VERDENIUS_STROMAL_ULCER }); continue }
+    if (/^Komáromy/.test(part)) { out.push({ id: 'komaromy-sards', text: KOMAROMY_SARDS }); continue }
+    if (/^Susanti/.test(part)) { out.push({ id: 'susanti-unilateral-sards', text: SUSANTI_UNILATERAL_SARDS }); continue }
+    if (/^Gómez/.test(part)) { out.push({ id: 'gomez-fcs-recurrence', text: GOMEZ_FCS_RECURRENCE }); continue }
+    // Placed AFTER the Michelotti branch above, which it is a prefix of.
+    if (/^Michel/.test(part)) { out.push({ id: 'michel-lamellar-keratoplasty', text: MICHEL_LAMELLAR_KERATOPLASTY }); continue }
+    if (/^Thiry/.test(part)) { out.push({ id: 'thiry-abcd-fhv', text: THIRY_ABCD_FHV }); continue }
+    if (/^Ledbetter/.test(part)) { out.push({ id: 'ledbetter-ganciclovir', text: LEDBETTER_GANCICLOVIR }); continue }
+    if (/^Asti/.test(part)) { out.push({ id: 'asti-sharpei-entropion', text: ASTI_SHARPEI_ENTROPION }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }

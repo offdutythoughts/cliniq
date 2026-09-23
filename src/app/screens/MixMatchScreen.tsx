@@ -11,6 +11,7 @@ import { SpTag } from './tags'
 import { Tappable } from './Tappable'
 import { styleStringToObject as s } from './style'
 import { MIXMATCH_CAT } from './catPalette'
+import './MixMatchScreen.css'
 
 // Colour is the group signal: a small swatch from the shared aetiology palette
 // (catPalette), so Infectious is the same crimson here as on a flow page.
