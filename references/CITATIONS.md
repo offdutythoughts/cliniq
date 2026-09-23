@@ -1343,6 +1343,34 @@ facial deformity, which is the point the page needed.
 **Sones** separates the radiation protocols within 86 intranasal sarcomas: daily-fractionated
 641 days, Monday/Wednesday/Friday 347, palliative 305. Print year 2013; PubMed dates it 2012.
 
+### Pages 55-56 — AHDS, gastrointestinal foreign body (2026-09-23)
+
+> Unterer S, Strohmeyer K, Kruse BD, Sauter-Louis C, Hartmann K. J Vet Intern Med. 2011;25(5):973-979. doi:10.1111/j.1939-1676.2011.00765.x
+> Ziese AL, Suchodolski JS, Hartmann K, et al. PLoS One. 2018;13(9):e0204691. doi:10.1371/journal.pone.0204691
+> Schwartz Z, Coolman BR. Vet Surg. 2018;47(2):285-292. doi:10.1111/vsu.12759
+> Cola V, Ferrari C, Del Magno S, et al. Vet Surg. 2024;53(7):1266-1276. doi:10.1111/vsu.14126
+
+The page already said "fluids, not antibiotics". **Unterer** is the randomised blinded trial that
+claim rests on: 60 aseptic dogs, no difference in mortality, hospitalisation or severity on any
+day. Note the authors' own hedge in the conclusion — "in **some** dogs ... antibiotics **may** not
+change the case outcome" — and the page is written not to overclaim past it.
+
+**Ziese** is cited for two things, and the smaller finding is deliberately subordinated to the
+larger one. The probiotic bought a day (recovery day 3 vs 4 in 25 dogs), which is hedged. The
+finding that matters is that **both** arms recovered rapidly on no antibiotics at all. It also
+supplies the netF point: toxin genes were present in 57% at presentation and fell over the first
+week regardless of treatment, so detecting them is not a reason to reach for antibiotics.
+
+**Schwartz** is 333 dogs and is the only GI-surgery series here large enough to give dehiscence
+*risk factors* rather than a bare rate: a linear foreign body, and more than one gastrointestinal
+incision in the same surgery. It also times the risk — dehiscence presented at a mean of **44
+hours**, which makes the second post-operative day the window to watch. Both are actionable in a
+way a percentage is not.
+
+**Cola** (81 animals) is hedged and is there to note that laparotomy-assisted endoscopic retrieval
+removed foreign bodies without an enterotomy in 35 of 40, with intestinal wall damage being what
+forced conversion.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

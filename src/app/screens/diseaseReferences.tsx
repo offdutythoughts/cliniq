@@ -788,6 +788,22 @@ const SONES_NASAL_SARCOMA =
 const ISERI_MEGAVOLTAGE =
   'Iseri T, Horikirizono H, Abe M, et al. Outcomes of megavoltage radiotherapy for canine intranasal tumors and its relationship to clinical stages. Open Vet J. 2022;12(3):383-390. doi:10.5455/OVJ.2022.v12.i3.12'
 
+// Acute haemorrhagic diarrhoea. Unterer is the randomised trial the page's
+// "fluids, not antibiotics" line rests on; note the authors' own hedge, which
+// the page mirrors — "in SOME dogs... may not change the outcome".
+const UNTERER_AHDS_ANTIBIOTICS =
+  'Unterer S, Strohmeyer K, Kruse BD, Sauter-Louis C, Hartmann K. Treatment of aseptic dogs with hemorrhagic gastroenteritis with amoxicillin/clavulanic acid: a prospective blinded study. J Vet Intern Med. 2011;25(5):973-979. doi:10.1111/j.1939-1676.2011.00765.x'
+const ZIESE_AHDS_PROBIOTIC =
+  'Ziese AL, Suchodolski JS, Hartmann K, et al. Effect of probiotic treatment on the clinical course, intestinal microbiome, and toxigenic Clostridium perfringens in dogs with acute hemorrhagic diarrhea. PLoS One. 2018;13(9):e0204691. doi:10.1371/journal.pone.0204691'
+
+// GI foreign body. Schwartz is 333 dogs and is the only series large enough to
+// give dehiscence RISK FACTORS rather than a bare rate — a linear foreign body
+// and multiple incisions in one surgery, both of which the page can act on.
+const SCHWARTZ_GI_STAPLES =
+  'Schwartz Z, Coolman BR. Disposable skin staplers for closure of linear gastrointestinal incisions in dogs. Vet Surg. 2018;47(2):285-292. doi:10.1111/vsu.12759'
+const COLA_LAER =
+  'Cola V, Ferrari C, Del Magno S, et al. Laparotomy-assisted endoscopic removal of gastrointestinal foreign bodies: evaluation of this technique and postoperative recovery in dogs and cats. Vet Surg. 2024;53(7):1266-1276. doi:10.1111/vsu.14126'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -884,6 +900,8 @@ const SOURCE_NAMES = [
   // Nasal. 'Stanton' sits beside the existing 'Stanley' — they share four
   // characters and neither is a prefix of the other. Both are pinned.
   'Stanton', 'Sones', 'Iseri',
+  // GI. 'Cola' sits beside 'Cook'; 'Schwartz' beside 'Scott'/'Scobie'.
+  'Unterer', 'Ziese', 'Schwartz', 'Cola',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1178,6 +1196,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Stanton/.test(part)) { out.push({ id: 'stanton-cribriform', text: STANTON_CRIBRIFORM }); continue }
     if (/^Sones/.test(part)) { out.push({ id: 'sones-nasal-sarcoma', text: SONES_NASAL_SARCOMA }); continue }
     if (/^Iseri/.test(part)) { out.push({ id: 'iseri-megavoltage', text: ISERI_MEGAVOLTAGE }); continue }
+    if (/^Unterer/.test(part)) { out.push({ id: 'unterer-ahds-antibiotics', text: UNTERER_AHDS_ANTIBIOTICS }); continue }
+    if (/^Ziese/.test(part)) { out.push({ id: 'ziese-ahds-probiotic', text: ZIESE_AHDS_PROBIOTIC }); continue }
+    if (/^Schwartz/.test(part)) { out.push({ id: 'schwartz-gi-staples', text: SCHWARTZ_GI_STAPLES }); continue }
+    if (/^Cola/.test(part)) { out.push({ id: 'cola-laer', text: COLA_LAER }); continue }
     // ── Disease pages 6-10 ──
     if (/^Venn/.test(part)) { out.push({ id: 'venn-outpatient', text: VENN_OUTPATIENT }); continue }
     if (/^Sarpong/.test(part)) { out.push({ id: 'sarpong-outpatient', text: SARPONG_OUTPATIENT }); continue }

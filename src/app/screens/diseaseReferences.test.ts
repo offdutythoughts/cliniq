@@ -189,6 +189,10 @@ describe('parseSources', () => {
     expect(parseSources('Stanton 2018').map(s => s.id)).toEqual(['stanton-cribriform'])
     expect(parseSources('Sones 2013').map(s => s.id)).toEqual(['sones-nasal-sarcoma'])
     expect(parseSources('Iseri 2022').map(s => s.id)).toEqual(['iseri-megavoltage'])
+    expect(parseSources('Unterer 2011').map(s => s.id)).toEqual(['unterer-ahds-antibiotics'])
+    expect(parseSources('Ziese 2018').map(s => s.id)).toEqual(['ziese-ahds-probiotic'])
+    expect(parseSources('Schwartz 2018').map(s => s.id)).toEqual(['schwartz-gi-staples'])
+    expect(parseSources('Cola 2024').map(s => s.id)).toEqual(['cola-laer'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
     // Scott vs Scobie — three shared characters, neither a prefix.
     expect(parseSources('Scott 2021').map(s => s.id)).toEqual(['scott-phenobarb-marrow'])
@@ -664,6 +668,8 @@ describe('reference block', () => {
       ['DIS-SRMA', 2, ['124 cases', 'cytosine arabinoside']],
       ['DIS-NASAL-ASP', 1, ['cribriform plate lysis']],
       ['DIS-NASAL-NEO', 3, ['megavoltage radiotherapy', 'intranasal sarcomas']],
+      ['DIS-GI-AHDS', 2, ['amoxicillin/clavulanic acid', 'probiotic treatment']],
+      ['DIS-GI-FB', 2, ['Disposable skin staplers', 'Laparotomy-assisted endoscopic removal']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -690,7 +696,8 @@ describe('reference block', () => {
       'DIS-TOX-ZN', 'DIS-TOX-ALLIUM', 'DIS-TOX-CHOLE',
       'DIS-CARD-MVD', 'DIS-CARD-DCM', 'DIS-CARD-PERIC',
       'DIS-RESP-ASTHMA', 'DIS-RESP-TRACOLL', 'DIS-RESP-ASPPNEU',
-      'DIS-NEU-IVDD', 'DIS-SRMA', 'DIS-NASAL-ASP', 'DIS-NASAL-NEO']) {
+      'DIS-NEU-IVDD', 'DIS-SRMA', 'DIS-NASAL-ASP', 'DIS-NASAL-NEO',
+      'DIS-GI-AHDS', 'DIS-GI-FB']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)
