@@ -209,6 +209,12 @@ describe('parseSources', () => {
     expect(parseSources('Bleakley 2018').map(s => s.id)).toEqual(['bleakley-lobectomy-approach'])
     expect(parseSources('Carroll 2024').map(s => s.id)).toEqual(['carroll-thoracoscopic-mediastinal'])
     expect(parseSources('MacIver 2017').map(s => s.id)).toEqual(['maciver-vats-thymoma'])
+    // Johnson is year-keyed: the same LR Johnson has the pyothorax series and
+    // the bronchiectasis one a decade apart.
+    expect(parseSources('Johnson 2016').map(s => s.id)).toEqual(['johnson-bronchiectasis'])
+    expect(parseSources('Johnson 2023').map(s => s.id)).toEqual(['johnson-pyothorax'])
+    expect(parseSources('Johnson 2099')).toEqual([])
+    expect(parseSources('Gamracy 2022').map(s => s.id)).toEqual(['gamracy-bronchomalacia'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
     // Scott vs Scobie — three shared characters, neither a prefix.
     expect(parseSources('Scott 2021').map(s => s.id)).toEqual(['scott-phenobarb-marrow'])
@@ -678,7 +684,7 @@ describe('reference block', () => {
       ['DIS-CARD-DCM', 2, ['PROTECT study']],
       ['DIS-CARD-PERIC', 2, ['pericardioscopy', 'thoracoscopic subtotal pericardiectomy']],
       ['DIS-RESP-ASTHMA', 2, ['cats with lower airway disease']],
-      ['DIS-RESP-TRACOLL', 4, ['endoluminal stent placement', 'Dumon silicone stents', 'AeroDawg spacing chamber']],
+      ['DIS-RESP-TRACOLL', 5, ['endoluminal stent placement', 'Dumon silicone stents', 'AeroDawg spacing chamber', 'bronchomalacia']],
       ['DIS-RESP-ASPPNEU', 2, ['88 cases', 'ampicillin-sulbactam versus']],
       ['DIS-NEU-IVDD', 3, ['acute thoracolumbar disc extrusion', 'Machine-learning-based prediction']],
       ['DIS-SRMA', 2, ['124 cases', 'cytosine arabinoside']],
@@ -695,6 +701,7 @@ describe('reference block', () => {
       ['DIS-RESP-PULMNEO', 1, ['Median sternotomy versus intercostal thoracotomy']],
       ['DIS-RESP-THYMOMA', 2, ['Thoracoscopic removal of cranial mediastinal masses', 'Video-assisted extirpation']],
       ['DIS-NASAL-LPR', 1, ['Antimicrobial Guidelines Working Group']],
+      ['DIS-RESP-BRONCHIECT', 2, ['dogs with bronchiectasis', 'bronchomalacia']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -724,7 +731,8 @@ describe('reference block', () => {
       'DIS-NEU-IVDD', 'DIS-SRMA', 'DIS-NASAL-ASP', 'DIS-NASAL-NEO',
       'DIS-GI-AHDS', 'DIS-GI-FB', 'DIS-RESP-PNX', 'DIS-RESP-BRONCHITIS',
       'DIS-RESP-BACPNEU', 'DIS-RESP-CIRD', 'DIS-RESP-CHYLO',
-      'DIS-RESP-LLT', 'DIS-RESP-PULMNEO', 'DIS-RESP-THYMOMA', 'DIS-NASAL-LPR']) {
+      'DIS-RESP-LLT', 'DIS-RESP-PULMNEO', 'DIS-RESP-THYMOMA', 'DIS-NASAL-LPR',
+      'DIS-RESP-BRONCHIECT']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

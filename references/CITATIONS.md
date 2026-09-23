@@ -1449,6 +1449,28 @@ page says so rather than quoting the gap as established. MacIver is **18 dogs** 
 but it is where the poor outcome with myasthenia *and* megaoesophagus together was first
 quantified (median 20 days). Presenting both, with their sizes, is more honest than picking one.
 
+### Page 66 — bronchiectasis (2026-09-23)
+
+> Johnson LR, Johnson EG, Vernau W, Kass PH, Byrne BA. J Vet Intern Med. 2016;30(1):247-254. doi:10.1111/jvim.13809
+> Gamracy J, Wiggen K, Vientos-Plotts A, Reinero C. J Vet Intern Med. 2022;36(2):417-428. doi:10.1111/jvim.16381
+
+⚠️ **`Johnson` is now year-keyed.** Both papers are by the same LR Johnson — the 2023 pyothorax
+series already in this file and this 2016 bronchiectasis one. Same author, unrelated works, a
+decade apart; a bare prefix match would have printed pyothorax on the bronchiectasis page.
+`DIS-PYOTHORAX` is pinned at 8 references, which would catch a swap.
+
+Two findings changed the page. **Radiographs miss bronchiectasis** — present on films in 60% of
+affected dogs against 92% at bronchoscopy and 100% on CT, so a clean radiograph does not exclude
+it. And **a negative culture does not mean the exacerbation is not infective**: bacteria were
+isolated in only 28% of 86 dogs. The page also now lists the three diagnoses that actually
+underlie it — pneumonia 52%, inflammatory airway disease 36%, eosinophilic bronchopneumopathy 12%
+— rather than implying chronic bronchitis is the usual cause.
+
+**Gamracy** serves bronchiectasis and tracheal collapse together: 41% of 210 dogs worked up for
+respiratory signs had bronchomalacia, **every one had at least one comorbid cardiopulmonary
+disorder**, and pulmonary hypertension was more prevalent among them. That is the argument for
+scoping and echoing rather than treating the tracheal lesion alone.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

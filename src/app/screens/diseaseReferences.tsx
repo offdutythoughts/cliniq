@@ -842,6 +842,15 @@ const CARROLL_THORACOSCOPIC_MEDIASTINAL =
 const MACIVER_VATS_THYMOMA =
   'MacIver MA, Case JB, Monnet EL, et al. Video-assisted extirpation of cranial mediastinal masses in dogs: 18 cases (2009-2014). J Am Vet Med Assoc. 2017;250(11):1283-1290. doi:10.2460/javma.250.11.1283'
 
+// Bronchiectasis and bronchomalacia. JOHNSON is now year-keyed: the same
+// author (LR Johnson) has the 2023 pyothorax series already in this file and
+// this 2016 bronchiectasis one. A bare prefix match would print pyothorax on
+// the bronchiectasis page.
+const JOHNSON_BRONCHIECTASIS =
+  'Johnson LR, Johnson EG, Vernau W, Kass PH, Byrne BA. Bronchoscopy, imaging, and concurrent diseases in dogs with bronchiectasis: (2003-2014). J Vet Intern Med. 2016;30(1):247-254. doi:10.1111/jvim.13809'
+const GAMRACY_BRONCHOMALACIA =
+  'Gamracy J, Wiggen K, Vientos-Plotts A, Reinero C. Clinicopathologic features, comorbid diseases, and prevalence of pulmonary hypertension in dogs with bronchomalacia. J Vet Intern Med. 2022;36(2):417-428. doi:10.1111/jvim.16381'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -948,6 +957,7 @@ const SOURCE_NAMES = [
   'Reeves', 'Lappin',
   // Thoracic surgery. 'MacIver' sits beside the existing 'MacPhail'.
   'Rossanese', 'Bleakley', 'Carroll', 'MacIver',
+  'Gamracy',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1017,6 +1027,13 @@ const WIINBERG_BY_YEAR: Record<string, { id: string; text: string }> = {
 const MOORE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2000': { id: 'moore-metyrapone', text: MOORE_METYRAPONE },
   '2020': { id: 'moore-ivde-review', text: MOORE_IVDE_REVIEW },
+}
+
+/** Two LR Johnson papers a decade apart — the pyothorax series and the
+ *  bronchiectasis one. Keyed on the year for the same reason as Moore. */
+const JOHNSON_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2016': { id: 'johnson-bronchiectasis', text: JOHNSON_BRONCHIECTASIS },
+  '2023': { id: 'johnson-pyothorax', text: JOHNSON_PYOTHORAX },
 }
 
 const ARENAS_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -1191,7 +1208,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Rooney/.test(part)) { out.push({ id: 'rooney-pyothorax', text: ROONEY_PYOTHORAX }); continue }
     if (/^Boothe/.test(part)) { out.push({ id: 'boothe-pyothorax', text: BOOTHE_PYOTHORAX }); continue }
     if (/^Eiras/.test(part)) { out.push({ id: 'eiras-diaz-ct', text: EIRAS_DIAZ_CT }); continue }
-    if (/^Johnson/.test(part)) { out.push({ id: 'johnson-pyothorax', text: JOHNSON_PYOTHORAX }); continue }
+    if (/^Johnson/.test(part)) {
+      const hit = JOHNSON_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Ramsey/.test(part)) { out.push({ id: 'ramsey-maropitant', text: RAMSEY_MAROPITANT }); continue }
     if (/^Shmalberg/.test(part)) { out.push({ id: 'shmalberg-metronidazole', text: SHMALBERG_METRONIDAZOLE }); continue }
     if (/^Rudinsky/.test(part)) {
@@ -1236,6 +1257,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Weisse/.test(part)) { out.push({ id: 'weisse-tracheal-stent', text: WEISSE_TRACHEAL_STENT }); continue }
     if (/^De Lorenzi/.test(part)) { out.push({ id: 'de-lorenzi-silicone-stent', text: DE_LORENZI_SILICONE_STENT }); continue }
     if (/^Gareis/.test(part)) { out.push({ id: 'gareis-flad-radiographs', text: GAREIS_FLAD_RADIOGRAPHS }); continue }
+    if (/^Gamracy/.test(part)) { out.push({ id: 'gamracy-bronchomalacia', text: GAMRACY_BRONCHOMALACIA }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
