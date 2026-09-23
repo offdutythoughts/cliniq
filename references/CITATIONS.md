@@ -1503,6 +1503,29 @@ less phacoemulsification energy, and higher energy tracked with post-operative g
 blindness. **Boss** is the pug exception — corneal ulceration, not glaucoma, was their commonest
 complication, and 75% had pre-existing pigmentary keratitis.
 
+### Page 69 — superficial corneal ulcer / SCCED (2026-09-23)
+
+> Hung JH, Leidreiter K, White JS, Bernays ME. Vet Ophthalmol. 2020;23(4):764-769. doi:10.1111/vop.12772
+> Edelmann ML, Mohammed HO, Wakshlag JJ, Ledbetter EC. J Am Vet Med Assoc. 2018;253(8):1012-1021. doi:10.2460/javma.253.8.1012
+> Dees DD, Keys DA. Vet Ophthalmol. 2022;25(1):6-11. doi:10.1111/vop.12891
+
+⚠️ **`Edelmann` is now year-keyed** — the same author has the 2018 SCCED platelet-rich-plasma
+trial and the 2022 phacoemulsification series added one batch earlier. Third author after Moore
+and Johnson to need this. `DIS-EYE-CATARACT` stays pinned at 3 references.
+
+**The two randomised adjunct trials disagree, and both are cited — the negative one first.**
+Edelmann found platelet-rich plasma had *no* effect on re-epithelialisation, vascularisation or
+fibrosis in 40 dogs. Dees found a propolis/aloe/chamomile drop healed marginally faster than
+debridement alone (16 vs 20 days in 120 dogs), with autologous serum only marginal. Neither is
+strong enough to recommend, so the page says adjuncts are not established rather than picking
+the flattering result.
+
+**Hung** (341 eyes) supplies the three numbers the page was missing: 73.9% healed after a single
+diamond burr debridement, 17% needed another intervention, and complications occurred in 4.7% —
+mostly keratomalacia, which is worth a recheck rather than an assumption. It also gives the
+Boxer-specific warning: 2.3 times more likely than other breeds to develop a contralateral
+SCCED, usually within 24 months.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

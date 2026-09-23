@@ -218,7 +218,13 @@ describe('parseSources', () => {
     // 'Graham' vs 'Granström'/'Greci'; 'Boss' vs 'Boothe'/'Boland'/'Bohin'.
     expect(parseSources('Kubo 2024').map(s => s.id)).toEqual(['kubo-shiba-pacg'])
     expect(parseSources('Graham 2018').map(s => s.id)).toEqual(['graham-tscp-vs-gdd'])
+    // Edelmann is year-keyed: the SCCED platelet-rich-plasma trial and the
+    // phacoemulsification series.
     expect(parseSources('Edelmann 2022').map(s => s.id)).toEqual(['edelmann-phaco-cde'])
+    expect(parseSources('Edelmann 2018').map(s => s.id)).toEqual(['edelmann-scced-prp'])
+    expect(parseSources('Edelmann 2099')).toEqual([])
+    expect(parseSources('Hung 2020').map(s => s.id)).toEqual(['hung-scced-dbd'])
+    expect(parseSources('Dees 2022').map(s => s.id)).toEqual(['dees-scced-adjunct'])
     expect(parseSources('Boss 2020').map(s => s.id)).toEqual(['boss-pug-phaco'])
     expect(parseSources('Boothe 2010').map(s => s.id)).toEqual(['boothe-pyothorax'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
@@ -712,6 +718,7 @@ describe('reference block', () => {
       // the papers, so the counts here include both.
       ['DIS-OPH-GLAUCOMA', 5, ['Shiba dogs with primary angle closure glaucoma', 'Baerveldt glaucoma drainage device']],
       ['DIS-EYE-CATARACT', 3, ['CDE-predictive value', 'phacoemulsification in Pugs']],
+      ['DIS-EYE-SUP-ULC', 4, ['diamond burr debridement', 'platelet-rich plasma', 'Vizoovet']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -742,7 +749,8 @@ describe('reference block', () => {
       'DIS-GI-AHDS', 'DIS-GI-FB', 'DIS-RESP-PNX', 'DIS-RESP-BRONCHITIS',
       'DIS-RESP-BACPNEU', 'DIS-RESP-CIRD', 'DIS-RESP-CHYLO',
       'DIS-RESP-LLT', 'DIS-RESP-PULMNEO', 'DIS-RESP-THYMOMA', 'DIS-NASAL-LPR',
-      'DIS-RESP-BRONCHIECT', 'DIS-OPH-GLAUCOMA', 'DIS-EYE-CATARACT']) {
+      'DIS-RESP-BRONCHIECT', 'DIS-OPH-GLAUCOMA', 'DIS-EYE-CATARACT',
+      'DIS-EYE-SUP-ULC']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

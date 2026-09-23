@@ -865,6 +865,17 @@ const EDELMANN_PHACO_CDE =
 const BOSS_PUG_PHACO =
   'Boss C, La Croix N, Moore PA, et al. Preliminary report of postoperative complications of phacoemulsification in Pugs: a multicenter retrospective study of 32 cases. Vet Ophthalmol. 2020;23(3):442-449. doi:10.1111/vop.12739'
 
+// SCCED. Hung is 341 eyes and is the outcome figure; the two randomised
+// adjunct trials point in opposite directions and are both cited, because the
+// negative one is the more useful of the pair. EDELMANN is year-keyed — the
+// same author has the 2022 phacoemulsification paper above.
+const HUNG_SCCED_DBD =
+  'Hung JH, Leidreiter K, White JS, Bernays ME. Clinical characteristics and treatment of spontaneous chronic corneal epithelial defects (SCCEDs) with diamond burr debridement. Vet Ophthalmol. 2020;23(4):764-769. doi:10.1111/vop.12772'
+const EDELMANN_SCCED_PRP =
+  'Edelmann ML, Mohammed HO, Wakshlag JJ, Ledbetter EC. Clinical trial of adjunctive autologous platelet-rich plasma treatment following diamond-burr debridement for spontaneous chronic corneal epithelial defects in dogs. J Am Vet Med Assoc. 2018;253(8):1012-1021. doi:10.2460/javma.253.8.1012'
+const DEES_SCCED_ADJUNCT =
+  'Dees DD, Keys DA. Use of autologous serum or Vizoovet to improve healing rates of spontaneous chronic corneal epithelial defects after diamond burr debridement in dogs. Vet Ophthalmol. 2022;25(1):6-11. doi:10.1111/vop.12891'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -975,6 +986,7 @@ const SOURCE_NAMES = [
   // Ophthalmology. 'Graham' sits beside 'Granström' and 'Greci'; 'Boss'
   // beside 'Boothe', 'Boland', 'Bohin', 'Boeykens' and 'Boswood'.
   'Kubo', 'Graham', 'Edelmann', 'Boss',
+  'Hung', 'Dees',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1051,6 +1063,13 @@ const MOORE_BY_YEAR: Record<string, { id: string; text: string }> = {
 const JOHNSON_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2016': { id: 'johnson-bronchiectasis', text: JOHNSON_BRONCHIECTASIS },
   '2023': { id: 'johnson-pyothorax', text: JOHNSON_PYOTHORAX },
+}
+
+/** Edelmann has the SCCED platelet-rich-plasma trial and the
+ *  phacoemulsification series. Keyed on the year, as Moore and Johnson are. */
+const EDELMANN_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2018': { id: 'edelmann-scced-prp', text: EDELMANN_SCCED_PRP },
+  '2022': { id: 'edelmann-phaco-cde', text: EDELMANN_PHACO_CDE },
 }
 
 const ARENAS_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -1277,8 +1296,14 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Gamracy/.test(part)) { out.push({ id: 'gamracy-bronchomalacia', text: GAMRACY_BRONCHOMALACIA }); continue }
     if (/^Kubo/.test(part)) { out.push({ id: 'kubo-shiba-pacg', text: KUBO_SHIBA_PACG }); continue }
     if (/^Graham/.test(part)) { out.push({ id: 'graham-tscp-vs-gdd', text: GRAHAM_TSCP_VS_GDD }); continue }
-    if (/^Edelmann/.test(part)) { out.push({ id: 'edelmann-phaco-cde', text: EDELMANN_PHACO_CDE }); continue }
+    if (/^Edelmann/.test(part)) {
+      const hit = EDELMANN_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Boss/.test(part)) { out.push({ id: 'boss-pug-phaco', text: BOSS_PUG_PHACO }); continue }
+    if (/^Hung/.test(part)) { out.push({ id: 'hung-scced-dbd', text: HUNG_SCCED_DBD }); continue }
+    if (/^Dees/.test(part)) { out.push({ id: 'dees-scced-adjunct', text: DEES_SCCED_ADJUNCT }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
