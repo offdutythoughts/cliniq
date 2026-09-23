@@ -1423,6 +1423,32 @@ cats** did. No surgical method can be declared superior, and there is **no evide
 medical therapy as a primary treatment** — which is stronger than the page's previous "seldom
 effective". Print year 2020; PubMed dates it 2019.
 
+### Pages 62-65 — lung lobe torsion, pulmonary neoplasia, thymoma, idiopathic rhinitis (2026-09-23)
+
+> Rossanese M, Wustefeld-Janssens B, Price C, et al. Vet Surg. 2020;49(4):659-667. doi:10.1111/vsu.13406
+> Bleakley S, Phipps K, Petrovsky B, Monnet E. Vet Surg. 2018;47(1):104-113. doi:10.1111/vsu.12741
+> Carroll KA, Mayhew PD, Culp WTN, et al. J Am Vet Med Assoc. 2024;262(10):1-8. doi:10.2460/javma.23.12.0679
+> MacIver MA, Case JB, Monnet EL, et al. J Am Vet Med Assoc. 2017;250(11):1283-1290. doi:10.2460/javma.250.11.1283
+
+`DIS-NASAL-LPR` reuses **Lappin** from the previous batch — chronic rhinitis is explicitly in the
+ISCAID guideline's scope, and "treat documented infection, not the discharge" is the point the
+page needed.
+
+A registry disagreement worth recording even though it did not matter: Crossref lists
+Rossanese's fifth author as **Woods**, PubMed as **Wood**. Seven authors means AMA truncates to
+the first three plus *et al*, so the disputed name never appears in the reference.
+
+**Rossanese** (80 dogs) supplies the pug figure the page asserted without one — 47.5%, with
+sighthounds a further 16.2% — and separates primary from secondary torsion by survival (median
+not reached vs 921 days). That distinction is what the owner conversation turns on.
+
+**Carroll and MacIver both bear on the same question and disagree in emphasis**, which is why
+both are cited. Carroll (49 dogs) found thymoma with pre-surgical myasthenia at a median 182 days
+against 1,102 overall, but reports that the difference **did not reach significance** — and the
+page says so rather than quoting the gap as established. MacIver is **18 dogs** and is hedged,
+but it is where the poor outcome with myasthenia *and* megaoesophagus together was first
+quantified (median 20 days). Presenting both, with their sizes, is more honest than picking one.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

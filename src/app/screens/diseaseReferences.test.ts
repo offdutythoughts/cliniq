@@ -204,6 +204,11 @@ describe('parseSources', () => {
     expect(parseSources('Reeves 2020').map(s => s.id)).toEqual(['reeves-chylothorax-sr'])
     expect(parseSources('Reeve 2017').map(s => s.id)).toEqual(['reeve-brachy-hh'])
     expect(parseSources('Lappin 2017').map(s => s.id)).toEqual(['lappin-iscaid-resp'])
+    // 'MacIver' vs the existing 'MacPhail'.
+    expect(parseSources('Rossanese 2020').map(s => s.id)).toEqual(['rossanese-llt'])
+    expect(parseSources('Bleakley 2018').map(s => s.id)).toEqual(['bleakley-lobectomy-approach'])
+    expect(parseSources('Carroll 2024').map(s => s.id)).toEqual(['carroll-thoracoscopic-mediastinal'])
+    expect(parseSources('MacIver 2017').map(s => s.id)).toEqual(['maciver-vats-thymoma'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
     // Scott vs Scobie — three shared characters, neither a prefix.
     expect(parseSources('Scott 2021').map(s => s.id)).toEqual(['scott-phenobarb-marrow'])
@@ -686,6 +691,10 @@ describe('reference block', () => {
       ['DIS-RESP-BACPNEU', 1, ['Antimicrobial Guidelines Working Group']],
       ['DIS-RESP-CIRD', 1, ['Antimicrobial Guidelines Working Group']],
       ['DIS-RESP-CHYLO', 2, ['idiopathic chylothorax in dogs and cats: a systematic review']],
+      ['DIS-RESP-LLT', 1, ['lung lobe torsion in 80 cases']],
+      ['DIS-RESP-PULMNEO', 1, ['Median sternotomy versus intercostal thoracotomy']],
+      ['DIS-RESP-THYMOMA', 2, ['Thoracoscopic removal of cranial mediastinal masses', 'Video-assisted extirpation']],
+      ['DIS-NASAL-LPR', 1, ['Antimicrobial Guidelines Working Group']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -714,7 +723,8 @@ describe('reference block', () => {
       'DIS-RESP-ASTHMA', 'DIS-RESP-TRACOLL', 'DIS-RESP-ASPPNEU',
       'DIS-NEU-IVDD', 'DIS-SRMA', 'DIS-NASAL-ASP', 'DIS-NASAL-NEO',
       'DIS-GI-AHDS', 'DIS-GI-FB', 'DIS-RESP-PNX', 'DIS-RESP-BRONCHITIS',
-      'DIS-RESP-BACPNEU', 'DIS-RESP-CIRD', 'DIS-RESP-CHYLO']) {
+      'DIS-RESP-BACPNEU', 'DIS-RESP-CIRD', 'DIS-RESP-CHYLO',
+      'DIS-RESP-LLT', 'DIS-RESP-PULMNEO', 'DIS-RESP-THYMOMA', 'DIS-NASAL-LPR']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

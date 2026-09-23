@@ -828,6 +828,20 @@ const LAPPIN_ISCAID_RESP =
 const REEVES_CHYLOTHORAX_SR =
   'Reeves LA, Anderson KM, Luther JK, Torres BT. Treatment of idiopathic chylothorax in dogs and cats: a systematic review. Vet Surg. 2020;49(1):70-79. doi:10.1111/vsu.13322'
 
+// Thoracic surgery. Rossanese is 80 dogs, the largest lung-lobe-torsion series
+// and the source of the pug over-representation. Bleakley compares the two
+// lobectomy approaches in 134 dogs. Carroll is 49 thoracoscopic mediastinal
+// resections; MacIver is 18 and is hedged, but it is where the poor outcome
+// with concurrent myasthenia and megaoesophagus was first quantified.
+const ROSSANESE_LLT =
+  'Rossanese M, Wustefeld-Janssens B, Price C, et al. Long-term survival after treatment of idiopathic lung lobe torsion in 80 cases. Vet Surg. 2020;49(4):659-667. doi:10.1111/vsu.13406'
+const BLEAKLEY_LOBECTOMY_APPROACH =
+  'Bleakley S, Phipps K, Petrovsky B, Monnet E. Median sternotomy versus intercostal thoracotomy for lung lobectomy: a comparison of short-term outcome in 134 dogs. Vet Surg. 2018;47(1):104-113. doi:10.1111/vsu.12741'
+const CARROLL_THORACOSCOPIC_MEDIASTINAL =
+  'Carroll KA, Mayhew PD, Culp WTN, et al. Thoracoscopic removal of cranial mediastinal masses in dogs is associated with a low conversion rate, excellent survival to discharge, and good long-term outcome. J Am Vet Med Assoc. 2024;262(10):1-8. doi:10.2460/javma.23.12.0679'
+const MACIVER_VATS_THYMOMA =
+  'MacIver MA, Case JB, Monnet EL, et al. Video-assisted extirpation of cranial mediastinal masses in dogs: 18 cases (2009-2014). J Am Vet Med Assoc. 2017;250(11):1283-1290. doi:10.2460/javma.250.11.1283'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -932,6 +946,8 @@ const SOURCE_NAMES = [
   // 'Lappin' beside 'Langlois'/'Larose'; 'Reeves' beside 'Reeve' — and that
   // one IS a prefix pair, so the branch order below matters. Reeves first.
   'Reeves', 'Lappin',
+  // Thoracic surgery. 'MacIver' sits beside the existing 'MacPhail'.
+  'Rossanese', 'Bleakley', 'Carroll', 'MacIver',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1237,6 +1253,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     // one below or the brachycephalic hiatal hernia paper wins the marker.
     if (/^Reeves/.test(part)) { out.push({ id: 'reeves-chylothorax-sr', text: REEVES_CHYLOTHORAX_SR }); continue }
     if (/^Lappin/.test(part)) { out.push({ id: 'lappin-iscaid-resp', text: LAPPIN_ISCAID_RESP }); continue }
+    if (/^Rossanese/.test(part)) { out.push({ id: 'rossanese-llt', text: ROSSANESE_LLT }); continue }
+    if (/^Bleakley/.test(part)) { out.push({ id: 'bleakley-lobectomy-approach', text: BLEAKLEY_LOBECTOMY_APPROACH }); continue }
+    if (/^Carroll/.test(part)) { out.push({ id: 'carroll-thoracoscopic-mediastinal', text: CARROLL_THORACOSCOPIC_MEDIASTINAL }); continue }
+    if (/^MacIver/.test(part)) { out.push({ id: 'maciver-vats-thymoma', text: MACIVER_VATS_THYMOMA }); continue }
     // ── Disease pages 6-10 ──
     if (/^Venn/.test(part)) { out.push({ id: 'venn-outpatient', text: VENN_OUTPATIENT }); continue }
     if (/^Sarpong/.test(part)) { out.push({ id: 'sarpong-outpatient', text: SARPONG_OUTPATIENT }); continue }
