@@ -1371,6 +1371,32 @@ way a percentage is not.
 removed foreign bodies without an enterotomy in 35 of 40, with intestinal wall damage being what
 forced conversion.
 
+### Pages 57-58 — pneumothorax, canine chronic bronchitis (2026-09-23)
+
+> Chan JC, Johnson LR. J Vet Intern Med. 2023;37(2):660-669. doi:10.1111/jvim.16673
+> Dickson R, Scharf VF, Michael AE, et al. J Am Vet Med Assoc. 2021;258(11):1229-1235. doi:10.2460/javma.258.11.1229
+> Seriot P, Dunie-Merigot A, Trehiou CB, et al. Vet Rec. 2021;189(4):e22. doi:10.1002/vetr.22
+
+⚠️ **`Dickson` vs the existing `Dickinson`** (neurological FIP). Neither is a prefix of the
+other, so the resolver is safe, but they are trivially misread for one another by a human
+editing this file. Both are pinned in the resolver test.
+
+**Chan** is a placebo-controlled cross-over trial and deliberately enrolled dogs with **airway
+collapse** as well as inflammatory airway disease, so it is cited on both `DIS-RESP-BRONCHITIS`
+and `DIS-RESP-TRACOLL`. Beyond the efficacy result (cough frequency, duration and severity all
+significantly reduced; quality-of-life score improved by a median 69%), it carries a practical
+finding the pages needed: feasibility of the mask *improved* with continued use and only one dog
+of 36 would not accept it, so a poor first week is not a reason to abandon the route.
+
+**Dickson** (110 dogs) contributes recurrence *timing* rather than a bare rate. Recurrence was
+13% of dogs followed beyond 30 days, clustered at a median of **9 days**, and later recurrence
+was rare (3%). The authors read that as a lesion missed at the original exploration rather than a
+new bulla forming — so the page now says to re-image rather than assume new disease.
+
+**Seriot** (37 dogs) covers the migrating plant foreign body route. Two findings made the page:
+CT agreed with surgery on 34 of 40 lobes, and where CT showed a foreign body that surgery failed
+to find, **a third later developed a draining tract** — a follow-up plan, not a closed case.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

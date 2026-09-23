@@ -804,6 +804,18 @@ const SCHWARTZ_GI_STAPLES =
 const COLA_LAER =
   'Cola V, Ferrari C, Del Magno S, et al. Laparotomy-assisted endoscopic removal of gastrointestinal foreign bodies: evaluation of this technique and postoperative recovery in dogs and cats. Vet Surg. 2024;53(7):1266-1276. doi:10.1111/vsu.14126'
 
+// Airway disease and pneumothorax. Chan is a placebo-controlled cross-over
+// trial of inhaled fluticasone in 36 dogs, so it covers BOTH the chronic
+// bronchitis and tracheal collapse pages. Dickson is 110 dogs and is where
+// the recurrence timing comes from; mind the confusable 'Dickinson' already
+// in this file for neurological FIP.
+const CHAN_INHALED_FLUTICASONE =
+  'Chan JC, Johnson LR. Prospective evaluation of the efficacy of inhaled steroids administered via the AeroDawg spacing chamber in management of dogs with chronic cough. J Vet Intern Med. 2023;37(2):660-669. doi:10.1111/jvim.16673'
+const DICKSON_PNEUMOTHORAX =
+  'Dickson R, Scharf VF, Michael AE, et al. Surgical management and outcome of dogs with primary spontaneous pneumothorax: 110 cases (2009-2019). J Am Vet Med Assoc. 2021;258(11):1229-1235. doi:10.2460/javma.258.11.1229'
+const SERIOT_MVFB_PNEUMOTHORAX =
+  'Seriot P, Dunie-Merigot A, Trehiou CB, et al. Treatment and outcome of spontaneous pneumothorax secondary to suspected migrating vegetal foreign body in 37 dogs. Vet Rec. 2021;189(4):e22. doi:10.1002/vetr.22'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -902,6 +914,9 @@ const SOURCE_NAMES = [
   'Stanton', 'Sones', 'Iseri',
   // GI. 'Cola' sits beside 'Cook'; 'Schwartz' beside 'Scott'/'Scobie'.
   'Unterer', 'Ziese', 'Schwartz', 'Cola',
+  // 'Dickson' vs the existing 'Dickinson' — easily misread for each other,
+  // though neither is a prefix of the other. Both are pinned in the tests.
+  'Chan', 'Dickson', 'Sériot',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1200,6 +1215,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Ziese/.test(part)) { out.push({ id: 'ziese-ahds-probiotic', text: ZIESE_AHDS_PROBIOTIC }); continue }
     if (/^Schwartz/.test(part)) { out.push({ id: 'schwartz-gi-staples', text: SCHWARTZ_GI_STAPLES }); continue }
     if (/^Cola/.test(part)) { out.push({ id: 'cola-laer', text: COLA_LAER }); continue }
+    if (/^Chan/.test(part)) { out.push({ id: 'chan-inhaled-fluticasone', text: CHAN_INHALED_FLUTICASONE }); continue }
+    if (/^Dickson/.test(part)) { out.push({ id: 'dickson-pneumothorax', text: DICKSON_PNEUMOTHORAX }); continue }
+    if (/^Sériot/.test(part)) { out.push({ id: 'seriot-mvfb-pneumothorax', text: SERIOT_MVFB_PNEUMOTHORAX }); continue }
     // ── Disease pages 6-10 ──
     if (/^Venn/.test(part)) { out.push({ id: 'venn-outpatient', text: VENN_OUTPATIENT }); continue }
     if (/^Sarpong/.test(part)) { out.push({ id: 'sarpong-outpatient', text: SARPONG_OUTPATIENT }); continue }
