@@ -243,6 +243,14 @@ describe('parseSources', () => {
     expect(parseSources('Carvajal 2019').map(s => s.id)).toEqual(['carvajal-pericardioscopy'])
     expect(parseSources('Michelotti 2019').map(s => s.id)).toEqual(['michelotti-tsp'])
     expect(parseSources('Miceli 2017').map(s => s.id)).toEqual(['miceli-trilostane'])
+    // 'Gareis' vs 'Garden'; 'Weisse' vs 'Wainberg'/'Ward'. 'De Lorenzi'
+    // carries a space, which the resolver matches literally.
+    expect(parseSources('Kogan 2008').map(s => s.id)).toEqual(['kogan-aspiration'])
+    expect(parseSources('Riffe 2025').map(s => s.id)).toEqual(['riffe-ap-antibiotics'])
+    expect(parseSources('Weisse 2019').map(s => s.id)).toEqual(['weisse-tracheal-stent'])
+    expect(parseSources('De Lorenzi 2024').map(s => s.id)).toEqual(['de-lorenzi-silicone-stent'])
+    expect(parseSources('Gareis 2023').map(s => s.id)).toEqual(['gareis-flad-radiographs'])
+    expect(parseSources('Garden 2019').map(s => s.id)).toEqual(['garden-imha-dx'])
   })
 
   it('routes the year-keyed Meurs and Payne markers to the right cohort', () => {
@@ -635,6 +643,9 @@ describe('reference block', () => {
       ['DIS-CARD-MVD', 3, ['myxomatous mitral valve disease in dogs', 'EPIC study']],
       ['DIS-CARD-DCM', 2, ['PROTECT study']],
       ['DIS-CARD-PERIC', 2, ['pericardioscopy', 'thoracoscopic subtotal pericardiectomy']],
+      ['DIS-RESP-ASTHMA', 2, ['cats with lower airway disease']],
+      ['DIS-RESP-TRACOLL', 3, ['endoluminal stent placement', 'Dumon silicone stents']],
+      ['DIS-RESP-ASPPNEU', 2, ['88 cases', 'ampicillin-sulbactam versus']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -659,7 +670,8 @@ describe('reference block', () => {
       'DIS-INFECT-FIP', 'DIS-INFECT-RMSF', 'DIS-BD-BABS', 'DIS-BD-ROD',
       'DIS-INFECT-LEISHM', 'DIS-BD-VWD', 'DIS-RESP-LUNGWORM',
       'DIS-TOX-ZN', 'DIS-TOX-ALLIUM', 'DIS-TOX-CHOLE',
-      'DIS-CARD-MVD', 'DIS-CARD-DCM', 'DIS-CARD-PERIC']) {
+      'DIS-CARD-MVD', 'DIS-CARD-DCM', 'DIS-CARD-PERIC',
+      'DIS-RESP-ASTHMA', 'DIS-RESP-TRACOLL', 'DIS-RESP-ASPPNEU']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

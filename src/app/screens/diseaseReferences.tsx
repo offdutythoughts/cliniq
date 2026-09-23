@@ -734,6 +734,29 @@ const CARVAJAL_PERICARDIOSCOPY =
 const MICHELOTTI_TSP =
   'Michelotti KP, Youk A, Payne JT, Anderson J. Outcomes of dogs with recurrent idiopathic pericardial effusion treated with a 3-port right-sided thoracoscopic subtotal pericardiectomy. Vet Surg. 2019;48(6):1032-1041. doi:10.1111/vsu.13223'
 
+// Respiratory. Kogan is 88 dogs and carries the aspiration-pneumonia survival
+// rate plus the two negatives worth knowing: radiographic severity and length
+// of stay did NOT predict outcome. Riffe is 58 dogs and is the stewardship
+// argument for starting on ampicillin-sulbactam alone.
+const KOGAN_ASPIRATION =
+  'Kogan DA, Johnson LR, Sturges BK, Jandrey KE, Pollard RE. Etiology and clinical outcome in dogs with aspiration pneumonia: 88 cases (2004-2006). J Am Vet Med Assoc. 2008;233(11):1748-1755. doi:10.2460/javma.233.11.1748'
+const RIFFE_AP_ANTIBIOTICS =
+  'Riffe CI, Heinz JA, Patterson CA, Cook AK, Yankin I. There is no significant difference in the treatment of aspiration pneumonia in dogs with ampicillin-sulbactam versus ampicillin-sulbactam and enrofloxacin. J Am Vet Med Assoc. 2025;263(8):1-9. doi:10.2460/javma.24.10.0673'
+
+// Tracheal collapse. Weisse is 75 dogs and 119 stents, the largest endoluminal
+// stenting series, and is the source of both the survival figure and the
+// complication rate an owner has to be warned about. De Lorenzi is 12 dogs.
+const WEISSE_TRACHEAL_STENT =
+  'Weisse C, Berent A, Violette N, McDougall R, Lamb K. Short-, intermediate-, and long-term results for endoluminal stent placement in dogs with tracheal collapse. J Am Vet Med Assoc. 2019;254(3):380-392. doi:10.2460/javma.254.3.380'
+const DE_LORENZI_SILICONE_STENT =
+  'De Lorenzi D, Maggi G, Bertoncello D, Porciello F, Marchesi MC. Dumon silicone stents can improve respiratory function in dogs with grade IV tracheal collapse: 12 cases (2019-2023). J Am Vet Med Assoc. 2024;262(7):1-7. doi:10.2460/javma.23.12.0722'
+
+// Feline lower airway disease. Gareis is 24 cats; its finding that radiographic
+// and clinical improvement do NOT correlate is the reason the page tells you to
+// track both rather than letting one stand in for the other.
+const GAREIS_FLAD_RADIOGRAPHS =
+  'Gareis H, Horner-Schmid L, Zablotski Y, Palic J, Hecht S, Schulz B. Correlation of clinical and radiographic variables in cats with lower airway disease. J Vet Intern Med. 2023;37(6):2443-2452. doi:10.1111/jvim.16874'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -820,6 +843,9 @@ const SOURCE_NAMES = [
   // Cardiology. 'Keene' sits beside the existing 'Keith'; 'Michelotti' beside
   // 'Miceli', 'Mignan' and the new 'Miro'. None is a prefix of another.
   'Keene', 'Boswood', 'Summerfield', 'Carvajal', 'Michelotti',
+  // Respiratory. 'Weisse' sits beside 'Wainberg' and 'Ward'; 'Gareis' beside
+  // 'Garden'; 'Riffe' is new. None is a prefix of another.
+  'Kogan', 'Riffe', 'Weisse', 'De Lorenzi', 'Gareis',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1091,6 +1117,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Summerfield/.test(part)) { out.push({ id: 'summerfield-protect', text: SUMMERFIELD_PROTECT }); continue }
     if (/^Carvajal/.test(part)) { out.push({ id: 'carvajal-pericardioscopy', text: CARVAJAL_PERICARDIOSCOPY }); continue }
     if (/^Michelotti/.test(part)) { out.push({ id: 'michelotti-tsp', text: MICHELOTTI_TSP }); continue }
+    if (/^Kogan/.test(part)) { out.push({ id: 'kogan-aspiration', text: KOGAN_ASPIRATION }); continue }
+    if (/^Riffe/.test(part)) { out.push({ id: 'riffe-ap-antibiotics', text: RIFFE_AP_ANTIBIOTICS }); continue }
+    if (/^Weisse/.test(part)) { out.push({ id: 'weisse-tracheal-stent', text: WEISSE_TRACHEAL_STENT }); continue }
+    if (/^De Lorenzi/.test(part)) { out.push({ id: 'de-lorenzi-silicone-stent', text: DE_LORENZI_SILICONE_STENT }); continue }
+    if (/^Gareis/.test(part)) { out.push({ id: 'gareis-flad-radiographs', text: GAREIS_FLAD_RADIOGRAPHS }); continue }
     // ── Disease pages 6-10 ──
     if (/^Venn/.test(part)) { out.push({ id: 'venn-outpatient', text: VENN_OUTPATIENT }); continue }
     if (/^Sarpong/.test(part)) { out.push({ id: 'sarpong-outpatient', text: SARPONG_OUTPATIENT }); continue }

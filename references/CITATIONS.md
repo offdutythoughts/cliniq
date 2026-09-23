@@ -1259,6 +1259,34 @@ not-reached in the other nine. Michelotti found neoplasia on histopathology in *
 Michelotti also supplies the complication to warn owners about: recurrent *pleural* effusion
 killed half the dogs after pericardiectomy.
 
+### Pages 48-50 — feline asthma, tracheal collapse, aspiration pneumonia (2026-09-23)
+
+> Gareis H, Horner-Schmid L, Zablotski Y, Palic J, Hecht S, Schulz B. J Vet Intern Med. 2023;37(6):2443-2452. doi:10.1111/jvim.16874
+> Weisse C, Berent A, Violette N, McDougall R, Lamb K. J Am Vet Med Assoc. 2019;254(3):380-392. doi:10.2460/javma.254.3.380
+> De Lorenzi D, Maggi G, Bertoncello D, Porciello F, Marchesi MC. J Am Vet Med Assoc. 2024;262(7):1-7. doi:10.2460/javma.23.12.0722
+> Kogan DA, Johnson LR, Sturges BK, Jandrey KE, Pollard RE. J Am Vet Med Assoc. 2008;233(11):1748-1755. doi:10.2460/javma.233.11.1748
+> Riffe CI, Heinz JA, Patterson CA, Cook AK, Yankin I. J Am Vet Med Assoc. 2025;263(8):1-9. doi:10.2460/javma.24.10.0673
+
+**Kogan** is 88 dogs and contributes two *negative* findings that matter more than the survival
+rate (77%): neither radiographic severity nor length of hospitalisation predicted outcome, and
+having more than one predisposing disease did not worsen it. The page previously implied a
+dramatic film was bad news. It also supplies the ranked causes — oesophageal disease 35, vomiting
+34, neurological 24, laryngeal 16, post-anaesthetic 12 — which reorders how the page lists them.
+
+**Riffe** is the stewardship point: in 58 dogs, adding enrofloxacin up front gave no advantage in
+survival or severity indices over ampicillin-sulbactam alone. Hedged at that sample size, but the
+page now says to reserve escalation for the critically ill rather than starting dual by default.
+
+**Weisse** is 75 dogs and 119 stents, the largest endoluminal series. The page already said
+"significant complications are reported" without a number; it now carries **47%** requiring a
+further stent procedure, alongside the 93% discharge rate and 1,005-day median survival. Both
+numbers belong in the same owner conversation. De Lorenzi (12 dogs) is hedged and is there only
+to say grade IV collapse refractory to medical therapy is not automatically hopeless.
+
+**Gareis** is 24 cats. Its useful finding is a *dissociation*: clinical and radiographic scores
+both improved significantly on treatment but did **not** correlate with each other. The page now
+tells you to judge response on both rather than letting one stand in for the other.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
