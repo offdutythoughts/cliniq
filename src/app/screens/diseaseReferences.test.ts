@@ -740,6 +740,11 @@ describe('reference block', () => {
       ['DIS-EYE-SEQ', 3, ['feline corneal sequestrum: 72 cases', 'Autologous lamellar keratoplasty']],
       ['DIS-EYE-FHV', 3, ['ABCD guidelines on prevention and management', 'ganciclovir']],
       ['DIS-EYE-ENTROPION', 2, ['27 Shar Pei dogs']],
+      // Three more eye pages reuse the ABCD guideline rather than needing
+      // their own paper — FHV drives all of them.
+      ['DIS-EYE-CONJ', 2, ['ABCD guidelines on prevention and management']],
+      ['DIS-EYE-SYMBL', 2, ['ABCD guidelines on prevention and management']],
+      ['DIS-EYE-NEONATAL', 3, ['ABCD guidelines on prevention and management']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -772,7 +777,8 @@ describe('reference block', () => {
       'DIS-RESP-LLT', 'DIS-RESP-PULMNEO', 'DIS-RESP-THYMOMA', 'DIS-NASAL-LPR',
       'DIS-RESP-BRONCHIECT', 'DIS-OPH-GLAUCOMA', 'DIS-EYE-CATARACT',
       'DIS-EYE-SUP-ULC', 'DIS-EYE-DEEP-ULC', 'DIS-EYE-SARDS', 'DIS-EYE-SEQ',
-      'DIS-EYE-FHV', 'DIS-EYE-ENTROPION']) {
+      'DIS-EYE-FHV', 'DIS-EYE-ENTROPION',
+      'DIS-EYE-CONJ', 'DIS-EYE-SYMBL', 'DIS-EYE-NEONATAL']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

@@ -1600,6 +1600,24 @@ forced granulation resolved 50 of 54 eyes, on the argument that much of the lowe
 secondary blepharospasm that disappears once the pain does. That sits naturally beside the page's
 existing "correct in stages rather than over-correct in one attempt".
 
+### Pages 75-77 — conjunctivitis, symblepharon, ophthalmia neonatorum (2026-09-23)
+
+No new references. All three reuse **Thiry 2009** (ABCD), because feline herpesvirus drives all
+of them and the guideline's content maps onto each differently:
+
+- `DIS-EYE-CONJ` and `DIS-EYE-SYMBL` gain the **PCR interpretation** caveat — latency is common
+  in healthy cats, so a positive supports rather than confirms causation, and a cat recently
+  given modified-live vaccine cannot be interpreted at all.
+- `DIS-EYE-SYMBL` also gains the reactivation triggers, **stress and corticosteroids**, which are
+  worth removing before reaching for another antiviral cycle.
+- `DIS-EYE-NEONATAL` gains the reason litters rather than single kittens are affected: recovered
+  cats are lifelong latent carriers shedding from oronasal and conjunctival secretions under
+  stress, and the queen is the usual source.
+
+This is the same free-win pattern that worked on `DIS-BD-EVANS` at the start of the pass — a
+paper already verified in the file applying to pages nobody had wired it into. Worth looking for
+before searching, since it costs one edit rather than a literature cycle.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
