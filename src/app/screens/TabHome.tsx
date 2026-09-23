@@ -157,10 +157,8 @@ function ProtoCard({ p }: { p: ProtocolRow }) {
       <div className="card-row">
         <div style={FLEX1}>
           <div className="card-title">{protoIcon(p)} {p.name}</div>
-          <div className="card-sub" style={s('margin-top:3px;')}>
-            <span className="tag tag-em">🚨 {p.priority}</span>
-            <span style={s('font-size:11px;color:var(--gray2);margin-left:6px;')}>{p.sp}</span>
-          </div>
+          {/* No priority chip: every protocol is IMMEDIATE, so it carried no signal. */}
+          <div className="card-sub" style={s('margin-top:3px;font-size:11px;color:var(--gray2);')}>{p.sp}</div>
         </div>
         <div className="card-arrow">›</div>
       </div>

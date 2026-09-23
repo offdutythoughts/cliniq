@@ -193,6 +193,11 @@ describe('parseSources', () => {
     expect(parseSources('Ziese 2018').map(s => s.id)).toEqual(['ziese-ahds-probiotic'])
     expect(parseSources('Schwartz 2018').map(s => s.id)).toEqual(['schwartz-gi-staples'])
     expect(parseSources('Cola 2024').map(s => s.id)).toEqual(['cola-laer'])
+    // 'Dickson' vs 'Dickinson' — easily misread for each other. Both pinned.
+    expect(parseSources('Chan 2023').map(s => s.id)).toEqual(['chan-inhaled-fluticasone'])
+    expect(parseSources('Dickson 2021').map(s => s.id)).toEqual(['dickson-pneumothorax'])
+    expect(parseSources('Dickinson 2020').map(s => s.id)).toEqual(['dickinson-neuro-fip'])
+    expect(parseSources('Sériot 2021').map(s => s.id)).toEqual(['seriot-mvfb-pneumothorax'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
     // Scott vs Scobie — three shared characters, neither a prefix.
     expect(parseSources('Scott 2021').map(s => s.id)).toEqual(['scott-phenobarb-marrow'])
@@ -662,7 +667,7 @@ describe('reference block', () => {
       ['DIS-CARD-DCM', 2, ['PROTECT study']],
       ['DIS-CARD-PERIC', 2, ['pericardioscopy', 'thoracoscopic subtotal pericardiectomy']],
       ['DIS-RESP-ASTHMA', 2, ['cats with lower airway disease']],
-      ['DIS-RESP-TRACOLL', 3, ['endoluminal stent placement', 'Dumon silicone stents']],
+      ['DIS-RESP-TRACOLL', 4, ['endoluminal stent placement', 'Dumon silicone stents', 'AeroDawg spacing chamber']],
       ['DIS-RESP-ASPPNEU', 2, ['88 cases', 'ampicillin-sulbactam versus']],
       ['DIS-NEU-IVDD', 3, ['acute thoracolumbar disc extrusion', 'Machine-learning-based prediction']],
       ['DIS-SRMA', 2, ['124 cases', 'cytosine arabinoside']],
@@ -670,6 +675,8 @@ describe('reference block', () => {
       ['DIS-NASAL-NEO', 3, ['megavoltage radiotherapy', 'intranasal sarcomas']],
       ['DIS-GI-AHDS', 2, ['amoxicillin/clavulanic acid', 'probiotic treatment']],
       ['DIS-GI-FB', 2, ['Disposable skin staplers', 'Laparotomy-assisted endoscopic removal']],
+      ['DIS-RESP-PNX', 2, ['110 cases', 'migrating vegetal foreign body']],
+      ['DIS-RESP-BRONCHITIS', 2, ['AeroDawg spacing chamber']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -697,7 +704,7 @@ describe('reference block', () => {
       'DIS-CARD-MVD', 'DIS-CARD-DCM', 'DIS-CARD-PERIC',
       'DIS-RESP-ASTHMA', 'DIS-RESP-TRACOLL', 'DIS-RESP-ASPPNEU',
       'DIS-NEU-IVDD', 'DIS-SRMA', 'DIS-NASAL-ASP', 'DIS-NASAL-NEO',
-      'DIS-GI-AHDS', 'DIS-GI-FB']) {
+      'DIS-GI-AHDS', 'DIS-GI-FB', 'DIS-RESP-PNX', 'DIS-RESP-BRONCHITIS']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)
