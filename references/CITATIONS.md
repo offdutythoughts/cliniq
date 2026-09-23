@@ -1229,6 +1229,36 @@ was done against Europe PMC rather than Crossref, per Rule 6's allowance.
 `Perry` vs the existing `Perley` is a new prefix hazard: four shared characters, neither a
 prefix of the other. Both are pinned in the resolver test.
 
+### Pages 45-47 — MMVD, DCM, pericardial effusion (2026-09-23)
+
+> Keene BW, Atkins CE, Bonagura JD, et al. J Vet Intern Med. 2019;33(3):1127-1140. doi:10.1111/jvim.15488
+> Boswood A, Haggstrom J, Gordon SG, et al. J Vet Intern Med. 2016;30(6):1765-1779. doi:10.1111/jvim.14586
+> Summerfield NJ, Boswood A, O'Grady MR, et al. J Vet Intern Med. 2012;26(6):1337-1349. doi:10.1111/j.1939-1676.2012.01026.x
+> Carvajal JL, Case JB, Mayhew PD, et al. Vet Surg. 2019;48(S1):O105-O111. doi:10.1111/vsu.13129
+> Michelotti KP, Youk A, Payne JT, Anderson J. Vet Surg. 2019;48(6):1032-1041. doi:10.1111/vsu.13223
+
+These three pages already *named* EPIC and PROTECT in their prose while citing only Ettinger for
+them. They now cite the trials themselves and quote the actual numbers.
+
+⚠️ **The MMVD consensus is keyed on `Keene`, deliberately not on `ACVIM 2019`.** That year in
+`ACVIM_BY_YEAR` already belongs to Swann's IMHA *treatment* statement. A second claim on it would
+have printed the wrong paper on whichever page lost the race, with no error anywhere. Both
+markers are asserted in the resolver test so the collision cannot be reintroduced.
+
+**PROTECT is cited with its own caveat.** The page said pimobendan "delays CHF/sudden death",
+which is true of the time-to-event result (718 vs 441 days; survival 623 vs 466). But the
+**proportion** of dogs reaching the primary endpoint was not significantly different (P = .1).
+The page now says the drug buys time rather than preventing the outcome — that distinction is in
+the paper and was missing from the page.
+
+**Both pericardial papers are small** (18 and 16 dogs) and both are hedged, but they converge on
+one message the page needed: an echocardiographically "idiopathic" effusion is not reliably
+benign. Carvajal found masses, nodules or adhesions at pericardioscopy in **9 of 18** dogs whose
+preoperative echo showed no cause, and those dogs had a median survival of 66 days against
+not-reached in the other nine. Michelotti found neoplasia on histopathology in **4 of 16**.
+Michelotti also supplies the complication to warn owners about: recurrent *pleural* effusion
+killed half the dogs after pericardiectomy.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

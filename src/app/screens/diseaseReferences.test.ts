@@ -232,6 +232,17 @@ describe('parseSources', () => {
     expect(parseSources('Gerhard 2020').map(s => s.id)).toEqual(['gerhard-vitd-25ohd'])
     expect(parseSources('Perry 2016').map(s => s.id)).toEqual(['perry-vitd-lipid'])
     expect(parseSources('Perley 2020').map(s => s.id)).toEqual(['perley-shelter'])
+    // 'Keene' vs 'Keith'; 'Michelotti' vs 'Miceli'/'Mignan'/'Miro'. The MMVD
+    // consensus must NOT be reachable as ACVIM 2019, which is Swann's IMHA
+    // treatment statement — both are asserted here.
+    expect(parseSources('Keene 2019').map(s => s.id)).toEqual(['keene-mmvd'])
+    expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
+    expect(parseSources('Keith 2016').map(s => s.id)).toEqual(['keith-trilostane'])
+    expect(parseSources('Boswood 2016').map(s => s.id)).toEqual(['boswood-epic'])
+    expect(parseSources('Summerfield 2012').map(s => s.id)).toEqual(['summerfield-protect'])
+    expect(parseSources('Carvajal 2019').map(s => s.id)).toEqual(['carvajal-pericardioscopy'])
+    expect(parseSources('Michelotti 2019').map(s => s.id)).toEqual(['michelotti-tsp'])
+    expect(parseSources('Miceli 2017').map(s => s.id)).toEqual(['miceli-trilostane'])
   })
 
   it('routes the year-keyed Meurs and Payne markers to the right cohort', () => {
@@ -618,6 +629,12 @@ describe('reference block', () => {
       ['DIS-TOX-ZN', 2, ['55 cases', 'Ultimate Guide to Toxicology']],
       ['DIS-TOX-ALLIUM', 1, ['Fatal garlic']],
       ['DIS-TOX-CHOLE', 3, ['Persistent increase in serum 25-hydroxyvitamin D', 'intravenous lipid emulsion', 'Ultimate Guide to Toxicology']],
+      // Cardiology. The MMVD consensus resolves through 'Keene', not through
+      // ACVIM 2019 — that year belongs to the IMHA treatment statement, and
+      // this count would catch a collision between them.
+      ['DIS-CARD-MVD', 3, ['myxomatous mitral valve disease in dogs', 'EPIC study']],
+      ['DIS-CARD-DCM', 2, ['PROTECT study']],
+      ['DIS-CARD-PERIC', 2, ['pericardioscopy', 'thoracoscopic subtotal pericardiectomy']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -641,7 +658,8 @@ describe('reference block', () => {
       'DIS-BD-EVANS', 'DIS-INFECT-LEPTO', 'DIS-INFECT-EHRLICH', 'DIS-BD-EHRL',
       'DIS-INFECT-FIP', 'DIS-INFECT-RMSF', 'DIS-BD-BABS', 'DIS-BD-ROD',
       'DIS-INFECT-LEISHM', 'DIS-BD-VWD', 'DIS-RESP-LUNGWORM',
-      'DIS-TOX-ZN', 'DIS-TOX-ALLIUM', 'DIS-TOX-CHOLE']) {
+      'DIS-TOX-ZN', 'DIS-TOX-ALLIUM', 'DIS-TOX-CHOLE',
+      'DIS-CARD-MVD', 'DIS-CARD-DCM', 'DIS-CARD-PERIC']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

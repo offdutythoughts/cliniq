@@ -716,6 +716,24 @@ const GERHARD_VITD_25OHD =
 const PERRY_VITD_LIPID =
   'Perry BH, McMichael M, Rick M, Jewell E. Reduction of serum 25-hydroxyvitamin D concentrations with intravenous lipid emulsion in a dog. Can Vet J. 2016;57(12):1284-1286.'
 
+// Cardiology. The MMVD consensus is keyed on KEENE, not on "ACVIM 2019" — that
+// year is already taken by Swann's IMHA treatment statement, and a second
+// claim on it would silently print the wrong paper.
+const KEENE_MMVD =
+  'Keene BW, Atkins CE, Bonagura JD, et al. ACVIM consensus guidelines for the diagnosis and treatment of myxomatous mitral valve disease in dogs. J Vet Intern Med. 2019;33(3):1127-1140. doi:10.1111/jvim.15488'
+const BOSWOOD_EPIC =
+  'Boswood A, Haggstrom J, Gordon SG, et al. Effect of pimobendan in dogs with preclinical myxomatous mitral valve disease and cardiomegaly: the EPIC study — a randomized clinical trial. J Vet Intern Med. 2016;30(6):1765-1779. doi:10.1111/jvim.14586'
+const SUMMERFIELD_PROTECT =
+  'Summerfield NJ, Boswood A, O\'Grady MR, et al. Efficacy of pimobendan in the prevention of congestive heart failure or sudden death in Doberman Pinschers with preclinical dilated cardiomyopathy (the PROTECT study). J Vet Intern Med. 2012;26(6):1337-1349. doi:10.1111/j.1939-1676.2012.01026.x'
+
+// Pericardial effusion. Both are small surgical series (18 and 16 dogs) and
+// both are hedged, but they carry the same message from two directions: an
+// echocardiographically "idiopathic" effusion is not reliably benign.
+const CARVAJAL_PERICARDIOSCOPY =
+  'Carvajal JL, Case JB, Mayhew PD, et al. Outcome in dogs with presumptive idiopathic pericardial effusion after thoracoscopic pericardectomy and pericardioscopy. Vet Surg. 2019;48(S1):O105-O111. doi:10.1111/vsu.13129'
+const MICHELOTTI_TSP =
+  'Michelotti KP, Youk A, Payne JT, Anderson J. Outcomes of dogs with recurrent idiopathic pericardial effusion treated with a 3-port right-sided thoracoscopic subtotal pericardiectomy. Vet Surg. 2019;48(6):1032-1041. doi:10.1111/vsu.13223'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -799,6 +817,9 @@ const SOURCE_NAMES = [
   // Toxicology. 'Perry' sits beside the existing 'Perley' — four shared
   // characters, neither a prefix of the other, so both are pinned.
   'Henke', 'Biasibetti', 'Gerhard', 'Perry',
+  // Cardiology. 'Keene' sits beside the existing 'Keith'; 'Michelotti' beside
+  // 'Miceli', 'Mignan' and the new 'Miro'. None is a prefix of another.
+  'Keene', 'Boswood', 'Summerfield', 'Carvajal', 'Michelotti',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1065,6 +1086,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Biasibetti/.test(part)) { out.push({ id: 'biasibetti-garlic', text: BIASIBETTI_GARLIC }); continue }
     if (/^Gerhard/.test(part)) { out.push({ id: 'gerhard-vitd-25ohd', text: GERHARD_VITD_25OHD }); continue }
     if (/^Perry/.test(part)) { out.push({ id: 'perry-vitd-lipid', text: PERRY_VITD_LIPID }); continue }
+    if (/^Keene/.test(part)) { out.push({ id: 'keene-mmvd', text: KEENE_MMVD }); continue }
+    if (/^Boswood/.test(part)) { out.push({ id: 'boswood-epic', text: BOSWOOD_EPIC }); continue }
+    if (/^Summerfield/.test(part)) { out.push({ id: 'summerfield-protect', text: SUMMERFIELD_PROTECT }); continue }
+    if (/^Carvajal/.test(part)) { out.push({ id: 'carvajal-pericardioscopy', text: CARVAJAL_PERICARDIOSCOPY }); continue }
+    if (/^Michelotti/.test(part)) { out.push({ id: 'michelotti-tsp', text: MICHELOTTI_TSP }); continue }
     // ── Disease pages 6-10 ──
     if (/^Venn/.test(part)) { out.push({ id: 'venn-outpatient', text: VENN_OUTPATIENT }); continue }
     if (/^Sarpong/.test(part)) { out.push({ id: 'sarpong-outpatient', text: SARPONG_OUTPATIENT }); continue }
