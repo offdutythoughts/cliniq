@@ -46,7 +46,7 @@ for (const [id, entry] of Object.entries(PREVALENCE)) {
   }
 
   const covered = coveredSpecies(d.sp as string)
-  const stated = Object.keys(entry) as PrevSpecies[]
+  const stated = (['dog', 'cat'] as PrevSpecies[]).filter(sp => entry[sp])
 
   for (const sp of stated) {
     if (!covered.includes(sp)) {
@@ -63,6 +63,23 @@ for (const [id, entry] of Object.entries(PREVALENCE)) {
     )
   }
 }
+
+// ── Floors ───────────────────────────────────────────────────────────────────
+// A floor raises a penalty to neutral. On an entry whose tiers are all already
+// at or above neutral it does nothing, which means either the tier is wrong or
+// the floor is decoration — both worth saying out loud.
+for (const [id, entry] of Object.entries(PREVALENCE)) {
+  if (!entry.floor) continue
+  const d = byId.get(id)
+  if (!d) continue // already failed above
+  const tiers = (['dog', 'cat'] as PrevSpecies[]).map(sp => entry[sp]).filter(Boolean) as PrevTier[]
+  if (tiers.every(t => PREV_FACTOR[t] >= 1)) {
+    fail(`${id} (${d.name}) — floor '${entry.floor}' raises nothing; every tier is already at or above neutral`)
+  }
+}
+
+const floored = Object.values(PREVALENCE).filter(e => e.floor).length
+note(`  ${floored} disease(s) carry a ranking floor (tier stays honest, ranking clamped to neutral).`)
 
 // ── Coverage report ──────────────────────────────────────────────────────────
 const rated = Object.keys(PREVALENCE).length

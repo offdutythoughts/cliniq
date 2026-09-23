@@ -573,6 +573,237 @@ const CLARK_F7_AUTOPSY =
 const GOOKIN_FELINE_FX =
   'Gookin JL, Brooks MB, Catalfamo JL, Bunch SE, Muñana KR. Factor X deficiency in a cat. J Am Vet Med Assoc. 1997;211(5):576-579. doi:10.2460/javma.1997.211.05.576'
 
+// ── Primary literature behind disease pages 26-30 ────────────────────────────
+// PubMed-first, verified against Crossref. Garden is keyed on the AUTHOR, not
+// "ACVIM 2019" — that year is already taken in ACVIM_BY_YEAR by Swann's IMHA
+// TREATMENT statement, and the page cites both. Same decision as Marks and
+// Behrend.
+
+// IMHA. The diagnosis half of the ACVIM pair; the treatment half (Swann 2019)
+// was already in this file and the page already cited it.
+const GARDEN_IMHA_DX =
+  'Garden OA, Kidd L, Mexas AM, et al. ACVIM consensus statement on the diagnosis of immune-mediated hemolytic anemia in dogs and cats. J Vet Intern Med. 2019;33(2):313-334. doi:10.1111/jvim.15441'
+
+// Haemophilia A. Aslanian is the 39-dog series the prognosis field quotes —
+// note it is a SURVEY of respondents, not a clinical cohort, which the page
+// now states. The gene-therapy papers are colony model dogs, not patients.
+const ASLANIAN_HEMA =
+  'Aslanian ME, Sharp CR, Rozanski EA, de Laforcade AM, Rishniw M, Brooks MB. Clinical outcome after diagnosis of hemophilia A in dogs. J Am Vet Med Assoc. 2014;245(6):677-683. doi:10.2460/javma.245.6.677'
+const NGUYEN_AAV_CLONAL =
+  'Nguyen GN, Everett JK, Kafle S, et al. A long-term study of AAV gene therapy in dogs with hemophilia A identifies clonal expansions of transduced liver cells. Nat Biotechnol. 2020;39(1):47-55. doi:10.1038/s41587-020-0741-7'
+const BATTY_AAV_INTEGRATION =
+  'Batty P, Fong S, Franco M, et al. Vector integration and fate in the hemophilia dog liver multiple years after AAV-FVIII gene transfer. Blood. 2024;143(23):2373-2385. doi:10.1182/blood.2023022589'
+const FOWLER_HEMA_SPINAL =
+  'Fowler KM, Bolton TA, Rossmeisl JH, et al. Clinical, diagnostic, and imaging findings in three juvenile dogs with paraspinal hyperesthesia or myelopathy as a consequence of hemophilia A: a case report. Front Vet Sci. 2022;9:871029. doi:10.3389/fvets.2022.871029'
+
+// Immune-mediated neutropenia. Devine is the only cohort of any size; Scott is
+// the differential that can be indistinguishable on marrow.
+const DEVINE_IMN =
+  'Devine L, Armstrong PJ, Whittemore JC, et al. Presumed primary immune-mediated neutropenia in 35 dogs: a retrospective study. J Small Anim Pract. 2017;58(6):307-313. doi:10.1111/jsap.12636'
+const SCOTT_PHENOBARB_MARROW =
+  'Scott TN, Bailin HG, Jutkowitz LA, Scott MA, Lucidi CA. Bone marrow, blood, and clinical findings in dogs treated with phenobarbital. Vet Clin Pathol. 2021;50(1):122-131. doi:10.1111/vcp.13013'
+
+// Leptospirosis. The 2023 ACVIM update is the current statement and supersedes
+// the 2010 one the page was written against. Knöpfler is the largest single
+// cohort (99 dogs) and is where the organ-involvement and outcome frequencies
+// come from; Buser is 41 dogs, so its CRP finding is hedged on the page.
+const SYKES_LEPTO =
+  'Sykes JE, Francey T, Schuller S, Stoddard RA, Cowgill LD, Moore GE. Updated ACVIM consensus statement on leptospirosis in dogs. J Vet Intern Med. 2023;37(6):1966-1982. doi:10.1111/jvim.16903'
+const KNOPFLER_LEPTO =
+  'Knöpfler S, Mayer-Scholl A, Luge E, et al. Evaluation of clinical, laboratory, imaging findings and outcome in 99 dogs with leptospirosis. J Small Anim Pract. 2017;58(10):582-588. doi:10.1111/jsap.12718'
+const BUSER_LEPTO_CRP =
+  'Buser FC, Schweighauser A, Im Hof-Gut M, et al. Evaluation of C-reactive protein and its kinetics as a prognostic indicator in canine leptospirosis. J Small Anim Pract. 2019;60(8):477-485. doi:10.1111/jsap.13004'
+
+// Ehrlichiosis. Chochlios is the large one (850 dogs) and carries the
+// seroprevalence and clinicopathological-association data. Christodoulou is 35
+// CME vs 29 ITP, so the discriminators it reports are hedged on the page.
+// Mind the print year: PubMed dates it 2022 (epub), the volume is 2023.
+// Mylonakis 2011 is 56 dogs and is the source of the pancytopenia odds ratio.
+const CHOCHLIOS_ECANIS =
+  'Chochlios TA, Angelidou E, Kritsepi-Konstantinou M, Koutinas CK, Mylonakis ME. Seroprevalence and risk factors associated with Ehrlichia canis in a hospital canine population. Vet Clin Pathol. 2019;48(2):305-309. doi:10.1111/vcp.12736'
+const CHRISTODOULOU_CME_ITP =
+  'Christodoulou V, Meletis E, Kostoulas P, et al. Clinical and clinicopathologic discriminators between canine acute monocytic ehrlichiosis and primary immune thrombocytopenia. Top Companion Anim Med. 2023;52:100750. doi:10.1016/j.tcam.2022.100750'
+const MYLONAKIS_CME_APP =
+  'Mylonakis ME, Ceron JJ, Leontides L, et al. Serum acute phase proteins as clinical phase indicators and outcome predictors in naturally occurring canine monocytic ehrlichiosis. J Vet Intern Med. 2011;25(4):811-817. doi:10.1111/j.1939-1676.2011.0728.x'
+
+// FIP antivirals. Taylor is the big one (307 cats) and the only series on
+// LEGALLY sourced, known-composition product, which is why it carries the
+// survival and relapse figures the page quotes. Pedersen is the original
+// field trial (31 cats) and is where the 12-week floor comes from. Lv is 46
+// cats on the GS + GC376 combination; Dickinson is FOUR cats and is the only
+// evidence for the higher neurological dose, so the page hedges it.
+const TAYLOR_FIP_307 =
+  'Taylor SS, Coggins S, Barker EN, et al. Retrospective study and outcome of 307 cats with feline infectious peritonitis treated with legally sourced veterinary compounded preparations of remdesivir and GS-441524 (2020-2022). J Feline Med Surg. 2023;25(9):1098612X231194460. doi:10.1177/1098612X231194460'
+const PEDERSEN_GS441524 =
+  'Pedersen NC, Perron M, Bannasch M, et al. Efficacy and safety of the nucleoside analog GS-441524 for treatment of cats with naturally occurring feline infectious peritonitis. J Feline Med Surg. 2019;21(4):271-281. doi:10.1177/1098612X19825701'
+const LV_GS_GC376 =
+  'Lv J, Bai Y, Wang Y, Yang L, Jin Y, Dong J. Effect of GS-441524 in combination with the 3C-like protease inhibitor GC376 on the treatment of naturally transmitted feline infectious peritonitis. Front Vet Sci. 2022;9:1002488. doi:10.3389/fvets.2022.1002488'
+const DICKINSON_NEURO_FIP =
+  'Dickinson PJ, Bannasch M, Thomasy SM, et al. Antiviral treatment using the adenosine nucleoside analogue GS-441524 in cats with clinically diagnosed neurological feline infectious peritonitis. J Vet Intern Med. 2020;34(4):1587-1593. doi:10.1111/jvim.15780'
+
+// Rocky Mountain spotted fever. Levin is the only description of the natural
+// tick-bite course in dogs from exposure to recovery, but it is a small
+// experimental group, so its prognostic markers are hedged. Foley is a review,
+// cited only for the epidemiology it aggregates.
+const LEVIN_RMSF_COURSE =
+  'Levin ML, Killmaster LF, Zemtsova GE, Ritter JM, Langham G. Clinical presentation, convalescence, and relapse of Rocky Mountain spotted fever in dogs experimentally infected via tick bite. PLoS One. 2014;9(12):e115105. doi:10.1371/journal.pone.0115105'
+const FOLEY_RMSF_URBAN =
+  'Foley J, Lopez-Perez AM, Alvarez-Hernandez G, et al. A wolf at the door: the ecology, epidemiology, and emergence of community- and urban-level Rocky Mountain spotted fever in the Americas. Am J Vet Res. 2025;86(3). doi:10.2460/ajvr.24.11.0368'
+
+// Babesiosis. Goddard is 72 dogs with PCR-confirmed B. rossi and co-infections
+// excluded, which is why its coagulation findings can be read as babesiosis
+// rather than tick-borne disease in general. Mind the print year: PubMed dates
+// it 2012, the volume is 2013.
+const GODDARD_BABESIA_DIC =
+  'Goddard A, Wiinberg B, Schoeman JP, Kristensen AT, Kjelgaard-Hansen M. Mortality in virulent canine babesiosis is associated with a consumptive coagulopathy. Vet J. 2013;196(2):213-217. doi:10.1016/j.tvjl.2012.09.009'
+
+// Anticoagulant rodenticide. Agostini is 74 animals across two hospitals and
+// is the only comparison of IV mixed-micelle vitamin K1 against plasma; the
+// page hedges it on that sample size.
+const AGOSTINI_MMP_VITK =
+  'Agostini G, Mooney ET, Wilkie ELW, White JD. Comparison of intravenous mixed micelle phytomenadione (vitamin K1) and traditional therapies for the treatment of anticoagulant rodenticide toxicosis in dogs and cats: a retrospective study. Aust Vet J. 2025;103(12):906-915. doi:10.1111/avj.70004'
+
+// Canine leishmaniosis. The 2011 LeishVet guideline is still the operative
+// staging system and is cited as such in 2026 papers, so it stays despite its
+// age. Miro 2024 is the modern randomised trial (97 dogs, two years of
+// follow-up); Kasabalis is 40 dogs and the authors themselves call it
+// underpowered, so the page hedges it.
+const SOLANO_GALLEGO_LEISHVET =
+  'Solano-Gallego L, Miro G, Koutinas A, et al. LeishVet guidelines for the practical management of canine leishmaniosis. Parasit Vectors. 2011;4:86. doi:10.1186/1756-3305-4-86'
+const MIRO_LEISH_SUPPLEMENT =
+  'Miro G, Segarra S, Ceron JJ, et al. New immunomodulatory treatment protocol for canine leishmaniosis reduces parasitemia and proteinuria. PLoS Negl Trop Dis. 2024;18(12):e0012712. doi:10.1371/journal.pntd.0012712'
+// Three seronegative dogs with amastigotes demonstrated in tissue. Cited as an
+// existence claim only — it establishes that the presentation happens, not how
+// often, and the page says nothing about frequency.
+const VILLANUEVA_SAZ_SERONEG =
+  'Villanueva-Saz S, Marteles D, Ortunez A, et al. Absence of specific humoral response in three dogs with clinical leishmaniosis. Acta Vet Scand. 2025;67(1):31. doi:10.1186/s13028-025-00814-9'
+const KASABALIS_AMINOSIDINE =
+  'Kasabalis D, Chatzis MK, Apostolidis K, et al. A randomized, blinded, controlled clinical trial comparing the efficacy of aminosidine (paromomycin)-allopurinol combination with the efficacy of meglumine antimoniate-allopurinol combination for the treatment of canine leishmaniosis due to Leishmania infantum. Exp Parasitol. 2020;214:107903. doi:10.1016/j.exppara.2020.107903'
+
+// von Willebrand disease. Both papers are about ACQUIRED loss of vWF activity,
+// which is the trap the page needed covering: a low result in a sick dog is
+// not automatically the inherited disease. McBride is 10 dogs, so it is hedged.
+const MCBRIDE_AKI_VWF =
+  'McBride D, Jepson RE, Cortellini S, Chan DL. Primary hemostatic function in dogs with acute kidney injury. J Vet Intern Med. 2019;33(5):2029-2036. doi:10.1111/jvim.15588'
+const KRUGER_AV_VWF =
+  'Kruger BT, Hamm Vinga C, Wennemuth J. Brain MRI findings and thoracic CT findings in a dog with hemiparesis and acutely diminished von Willebrand factor levels through Angiostrongylus vasorum infection. Vet Radiol Ultrasound. 2025;66(1):e13462. doi:10.1111/vru.13462'
+
+// Angiostrongylus. Thomsen is 180 dogs and is where the bleeding frequency and
+// the survival gap come from. Canonne is the BAL qPCR series; mind the print
+// year, PubMed dates it 2015 and the volume is 2016.
+const THOMSEN_AV_BLEEDING =
+  'Thomsen AS, Petersen MP, Willesen JL, et al. Clinical bleeding diathesis, laboratory haemostatic aberrations and survival in dogs infected with Angiostrongylus vasorum: 180 cases (2005-2019). J Small Anim Pract. 2024;65(4):234-242. doi:10.1111/jsap.13701'
+const CANONNE_AV_BAL =
+  'Canonne AM, Roels E, Caron Y, et al. Detection of Angiostrongylus vasorum by quantitative PCR in bronchoalveolar lavage fluid in Belgian dogs. J Small Anim Pract. 2016;57(3):130-134. doi:10.1111/jsap.12419'
+
+// Zinc. Henke is 55 dogs across six teaching hospitals and is the only series
+// big enough to carry frequencies; its AKI figure is the finding that changes
+// the workup, and the authors say so explicitly.
+const HENKE_ZINC =
+  'Henke CS, Beal MW, Walton RAL, et al. Retrospective evaluation of the clinical course and outcome of zinc toxicosis due to metallic foreign bodies in dogs (2005-2021): 55 cases. J Vet Emerg Crit Care. 2023;33(6):676-684. doi:10.1111/vec.13330'
+
+// Allium. A single fatal case, cited for one thing only: the dog died on a
+// dose well BELOW the published threshold, which is the argument for not
+// reassuring an owner on the strength of a gram-per-kilo calculation.
+const BIASIBETTI_GARLIC =
+  'Biasibetti E, Maza V, Tagliati V, et al. Fatal garlic (Allium sativum) toxicosis in a dog: gross and histopathological findings in a rare case of systemic hemolytic injury. Animals (Basel). 2026;16(11):1712. doi:10.3390/ani16111712'
+
+// Cholecalciferol. Both are single cases. They are the only published
+// follow-up of 25(OH)D after the acute phase, and the page hedges them as
+// such rather than turning one dog into a monitoring protocol.
+const GERHARD_VITD_25OHD =
+  'Gerhard C, Jaffey JA. Persistent increase in serum 25-hydroxyvitamin D concentration in a dog following cholecalciferol intoxication. Front Vet Sci. 2020;6:472. doi:10.3389/fvets.2019.00472'
+const PERRY_VITD_LIPID =
+  'Perry BH, McMichael M, Rick M, Jewell E. Reduction of serum 25-hydroxyvitamin D concentrations with intravenous lipid emulsion in a dog. Can Vet J. 2016;57(12):1284-1286.'
+
+// Cardiology. The MMVD consensus is keyed on KEENE, not on "ACVIM 2019" — that
+// year is already taken by Swann's IMHA treatment statement, and a second
+// claim on it would silently print the wrong paper.
+const KEENE_MMVD =
+  'Keene BW, Atkins CE, Bonagura JD, et al. ACVIM consensus guidelines for the diagnosis and treatment of myxomatous mitral valve disease in dogs. J Vet Intern Med. 2019;33(3):1127-1140. doi:10.1111/jvim.15488'
+const BOSWOOD_EPIC =
+  'Boswood A, Haggstrom J, Gordon SG, et al. Effect of pimobendan in dogs with preclinical myxomatous mitral valve disease and cardiomegaly: the EPIC study — a randomized clinical trial. J Vet Intern Med. 2016;30(6):1765-1779. doi:10.1111/jvim.14586'
+const SUMMERFIELD_PROTECT =
+  'Summerfield NJ, Boswood A, O\'Grady MR, et al. Efficacy of pimobendan in the prevention of congestive heart failure or sudden death in Doberman Pinschers with preclinical dilated cardiomyopathy (the PROTECT study). J Vet Intern Med. 2012;26(6):1337-1349. doi:10.1111/j.1939-1676.2012.01026.x'
+
+// Pericardial effusion. Both are small surgical series (18 and 16 dogs) and
+// both are hedged, but they carry the same message from two directions: an
+// echocardiographically "idiopathic" effusion is not reliably benign.
+const CARVAJAL_PERICARDIOSCOPY =
+  'Carvajal JL, Case JB, Mayhew PD, et al. Outcome in dogs with presumptive idiopathic pericardial effusion after thoracoscopic pericardectomy and pericardioscopy. Vet Surg. 2019;48(S1):O105-O111. doi:10.1111/vsu.13129'
+const MICHELOTTI_TSP =
+  'Michelotti KP, Youk A, Payne JT, Anderson J. Outcomes of dogs with recurrent idiopathic pericardial effusion treated with a 3-port right-sided thoracoscopic subtotal pericardiectomy. Vet Surg. 2019;48(6):1032-1041. doi:10.1111/vsu.13223'
+
+// Respiratory. Kogan is 88 dogs and carries the aspiration-pneumonia survival
+// rate plus the two negatives worth knowing: radiographic severity and length
+// of stay did NOT predict outcome. Riffe is 58 dogs and is the stewardship
+// argument for starting on ampicillin-sulbactam alone.
+const KOGAN_ASPIRATION =
+  'Kogan DA, Johnson LR, Sturges BK, Jandrey KE, Pollard RE. Etiology and clinical outcome in dogs with aspiration pneumonia: 88 cases (2004-2006). J Am Vet Med Assoc. 2008;233(11):1748-1755. doi:10.2460/javma.233.11.1748'
+const RIFFE_AP_ANTIBIOTICS =
+  'Riffe CI, Heinz JA, Patterson CA, Cook AK, Yankin I. There is no significant difference in the treatment of aspiration pneumonia in dogs with ampicillin-sulbactam versus ampicillin-sulbactam and enrofloxacin. J Am Vet Med Assoc. 2025;263(8):1-9. doi:10.2460/javma.24.10.0673'
+
+// Tracheal collapse. Weisse is 75 dogs and 119 stents, the largest endoluminal
+// stenting series, and is the source of both the survival figure and the
+// complication rate an owner has to be warned about. De Lorenzi is 12 dogs.
+const WEISSE_TRACHEAL_STENT =
+  'Weisse C, Berent A, Violette N, McDougall R, Lamb K. Short-, intermediate-, and long-term results for endoluminal stent placement in dogs with tracheal collapse. J Am Vet Med Assoc. 2019;254(3):380-392. doi:10.2460/javma.254.3.380'
+const DE_LORENZI_SILICONE_STENT =
+  'De Lorenzi D, Maggi G, Bertoncello D, Porciello F, Marchesi MC. Dumon silicone stents can improve respiratory function in dogs with grade IV tracheal collapse: 12 cases (2019-2023). J Am Vet Med Assoc. 2024;262(7):1-7. doi:10.2460/javma.23.12.0722'
+
+// Feline lower airway disease. Gareis is 24 cats; its finding that radiographic
+// and clinical improvement do NOT correlate is the reason the page tells you to
+// track both rather than letting one stand in for the other.
+const GAREIS_FLAD_RADIOGRAPHS =
+  'Gareis H, Horner-Schmid L, Zablotski Y, Palic J, Hecht S, Schulz B. Correlation of clinical and radiographic variables in cats with lower airway disease. J Vet Intern Med. 2023;37(6):2443-2452. doi:10.1111/jvim.16874'
+
+// Neurology. MOORE is now year-keyed — the metyrapone case report (2000) and
+// this IVDE evidence review (2020) are unrelated works by different Moores,
+// and a bare prefix match would have printed a feline adrenal case report on
+// the disc page. Low is 162 deep-pain-negative dogs, the largest such cohort.
+const MOORE_IVDE_REVIEW =
+  'Moore SA, Tipold A, Olby NJ, Stein V, Granger N. Current approaches to the management of acute thoracolumbar disc extrusion in dogs. Front Vet Sci. 2020;7:610. doi:10.3389/fvets.2020.00610'
+const LOW_IVDE_ML =
+  'Low D, Stables S, Kondrotaite L, Garland B, Rutherford S. Machine-learning-based prediction of functional recovery in deep-pain-negative dogs after decompressive thoracolumbar hemilaminectomy for acute intervertebral disc extrusion. Vet Surg. 2025;54(4):665-674. doi:10.1111/vsu.14250'
+
+// SRMA. Paterson is 124 dogs and carries the relapse rate. Gunther is 12 dogs
+// on cytarabine for relapse — a small series in which EVERY dog had an adverse
+// event, so the page states both halves of that.
+const PATERSON_SRMA =
+  'Paterson R, Brady S. Signalment, clinical characteristics and outcomes of an Australian population of dogs with steroid responsive meningitis-arteritis (SRMA) — 124 cases (2013-2023). Aust Vet J. 2024;102(12):630-632. doi:10.1111/avj.13371'
+const GUNTHER_SRMA_CYTARABINE =
+  'Gunther C, Steffen F, Alder DS, Beatrice L, Geigy C, Beckmann K. Evaluating the use of cytosine arabinoside for treatment for recurrent canine steroid-responsive meningitis-arteritis. Vet Rec. 2020;187(1):e7. doi:10.1136/vr.105683'
+
+// Nasal disease. Stanton is FIVE dogs and is cited for one negative finding
+// only — no dog developed neurological signs — which is not the same as
+// showing the procedure to be safe. The page says so.
+const STANTON_CRIBRIFORM =
+  'Stanton JA, Miller ML, Johnson P, Davignon DL, Barr SC. Treatment of canine sinonasal aspergillosis with clotrimazole infusion in patients with cribriform plate lysis. J Small Anim Pract. 2018;59(7):411-414. doi:10.1111/jsap.12835'
+
+// Nasal neoplasia. Sones is 86 intranasal sarcomas and separates the radiation
+// protocols; Iseri is 123 dogs and is the argument for treating early rather
+// than at the stage most dogs are presented.
+const SONES_NASAL_SARCOMA =
+  'Sones E, Smith A, Schleis S, et al. Survival times for canine intranasal sarcomas treated with radiation therapy: 86 cases (1996-2011). Vet Radiol Ultrasound. 2013;54(2):194-201. doi:10.1111/vru.12006'
+const ISERI_MEGAVOLTAGE =
+  'Iseri T, Horikirizono H, Abe M, et al. Outcomes of megavoltage radiotherapy for canine intranasal tumors and its relationship to clinical stages. Open Vet J. 2022;12(3):383-390. doi:10.5455/OVJ.2022.v12.i3.12'
+
+// Acute haemorrhagic diarrhoea. Unterer is the randomised trial the page's
+// "fluids, not antibiotics" line rests on; note the authors' own hedge, which
+// the page mirrors — "in SOME dogs... may not change the outcome".
+const UNTERER_AHDS_ANTIBIOTICS =
+  'Unterer S, Strohmeyer K, Kruse BD, Sauter-Louis C, Hartmann K. Treatment of aseptic dogs with hemorrhagic gastroenteritis with amoxicillin/clavulanic acid: a prospective blinded study. J Vet Intern Med. 2011;25(5):973-979. doi:10.1111/j.1939-1676.2011.00765.x'
+const ZIESE_AHDS_PROBIOTIC =
+  'Ziese AL, Suchodolski JS, Hartmann K, et al. Effect of probiotic treatment on the clinical course, intestinal microbiome, and toxigenic Clostridium perfringens in dogs with acute hemorrhagic diarrhea. PLoS One. 2018;13(9):e0204691. doi:10.1371/journal.pone.0204691'
+
+// GI foreign body. Schwartz is 333 dogs and is the only series large enough to
+// give dehiscence RISK FACTORS rather than a bare rate — a linear foreign body
+// and multiple incisions in one surgery, both of which the page can act on.
+const SCHWARTZ_GI_STAPLES =
+  'Schwartz Z, Coolman BR. Disposable skin staplers for closure of linear gastrointestinal incisions in dogs. Vet Surg. 2018;47(2):285-292. doi:10.1111/vsu.12759'
+const COLA_LAER =
+  'Cola V, Ferrari C, Del Magno S, et al. Laparotomy-assisted endoscopic removal of gastrointestinal foreign bodies: evaluation of this technique and postoperative recovery in dogs and cats. Vet Surg. 2024;53(7):1266-1276. doi:10.1111/vsu.14126'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -632,10 +863,45 @@ const SOURCE_NAMES = [
   'Li',
   // Disease pages 21-25.
   'Mignan', 'Grobman', 'Wiinberg', 'Estrin', 'Callan', 'Clark', 'Gookin',
+  // Disease pages 26-30. 'Scott' and 'Scobie' share three characters; neither
+  // is a prefix of the other, but both are asserted in the tests.
+  'Garden', 'Aslanian', 'Nguyen', 'Batty', 'Fowler', 'Devine', 'Scott',
   'Anderson', 'Veir', 'Greci', 'Janssens', 'Wainberg', 'Hoppers', 'Anders',
   'Bohin',
   'Barrs', 'Demetriou', 'Stillion', 'Rooney', 'Boothe', 'Eiras', 'Johnson',
   'Ramsey', 'Shmalberg', 'Rudinsky', 'Langlois',
+  // Leptospirosis and ehrlichiosis. 'Chochlios' and 'Christodoulou' share a
+  // two-letter head and neither is a prefix of the other; both are asserted
+  // in the tests so a future rename cannot quietly collapse them.
+  'Sykes', 'Knöpfler', 'Buser', 'Chochlios', 'Christodoulou', 'Mylonakis',
+  // FIP. 'Taylor' sits beside the existing 'Tanaka' and 'Trivedi'; 'Lv' is
+  // two letters and is a prefix of nothing here, but it is pinned in the
+  // tests for the same reason 'Lo' is.
+  'Taylor', 'Pedersen', 'Lv', 'Dickinson',
+  // 'Levin' vs the existing 'LeVine': held apart only by the capital V, and
+  // the resolver's /^Name/ match is case-sensitive. Both are pinned.
+  'Levin', 'Foley', 'Goddard', 'Agostini',
+  // Leishmaniosis, von Willebrand, Angiostrongylus. 'Miro' is four letters
+  // and a prefix of nothing here; 'Canonne' sits beside 'Cook' and 'Cridge'.
+  'Solano-Gallego', 'Miro', 'Villanueva-Saz', 'Kasabalis', 'McBride', 'Krüger', 'Thomsen', 'Canonne',
+  // Toxicology. 'Perry' sits beside the existing 'Perley' — four shared
+  // characters, neither a prefix of the other, so both are pinned.
+  'Henke', 'Biasibetti', 'Gerhard', 'Perry',
+  // Cardiology. 'Keene' sits beside the existing 'Keith'; 'Michelotti' beside
+  // 'Miceli', 'Mignan' and the new 'Miro'. None is a prefix of another.
+  'Keene', 'Boswood', 'Summerfield', 'Carvajal', 'Michelotti',
+  // Respiratory. 'Weisse' sits beside 'Wainberg' and 'Ward'; 'Gareis' beside
+  // 'Garden'; 'Riffe' is new. None is a prefix of another.
+  'Kogan', 'Riffe', 'Weisse', 'De Lorenzi', 'Gareis',
+  // 'Low' and the existing 'Lo': the Lo branch is written /^Lo\\b/, so the
+  // word boundary already keeps them apart whatever the order here. Both are
+  // pinned in the tests so that stays true if the branch is ever rewritten.
+  'Low', 'Paterson', 'Günther',
+  // Nasal. 'Stanton' sits beside the existing 'Stanley' — they share four
+  // characters and neither is a prefix of the other. Both are pinned.
+  'Stanton', 'Sones', 'Iseri',
+  // GI. 'Cola' sits beside 'Cook'; 'Schwartz' beside 'Scott'/'Scobie'.
+  'Unterer', 'Ziese', 'Schwartz', 'Cola',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -697,6 +963,14 @@ const WIINBERG_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2008': { id: 'wiinberg-teg-dic', text: WIINBERG_TEG_DIC },
   '2009': { id: 'wiinberg-teg-bleeding', text: WIINBERG_TEG_BLEEDING },
   '2010': { id: 'wiinberg-dic-score', text: WIINBERG_DIC_SCORE },
+}
+
+/** Two unrelated Moores: the 2000 feline metyrapone case report and the 2020
+ *  thoracolumbar IVDE evidence review. Keyed on the year for the same reason
+ *  as ACVIM — a bare prefix match printed the adrenal case on the disc page. */
+const MOORE_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2000': { id: 'moore-metyrapone', text: MOORE_METYRAPONE },
+  '2020': { id: 'moore-ivde-review', text: MOORE_IVDE_REVIEW },
 }
 
 const ARENAS_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -801,7 +1075,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Neiger/.test(part)) { out.push({ id: 'neiger-trilostane', text: NEIGER_TRILOSTANE }); continue }
     if (/^Miceli/.test(part)) { out.push({ id: 'miceli-trilostane', text: MICELI_TRILOSTANE }); continue }
     if (/^Daley/.test(part)) { out.push({ id: 'daley-metyrapone', text: DALEY_METYRAPONE }); continue }
-    if (/^Moore/.test(part)) { out.push({ id: 'moore-metyrapone', text: MOORE_METYRAPONE }); continue }
+    if (/^Moore/.test(part)) {
+      const hit = MOORE_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Duesberg/.test(part)) { out.push({ id: 'duesberg-adrenalectomy', text: DUESBERG_ADRENALECTOMY }); continue }
     if (/^Meij/.test(part)) { out.push({ id: 'meij-hypophysectomy', text: MEIJ_HYPOPHYSECTOMY }); continue }
     if (/^Benchekroun/.test(part)) { out.push({ id: 'benchekroun-acth', text: BENCHEKROUN_ACTH }); continue }
@@ -876,6 +1154,52 @@ export function parseSources(inner: string): { id: string; text: string }[] {
       continue
     }
     if (/^Langlois/.test(part)) { out.push({ id: 'langlois-metronidazole', text: LANGLOIS_METRONIDAZOLE }); continue }
+    if (/^Sykes/.test(part)) { out.push({ id: 'sykes-lepto', text: SYKES_LEPTO }); continue }
+    if (/^Knöpfler/.test(part)) { out.push({ id: 'knopfler-lepto', text: KNOPFLER_LEPTO }); continue }
+    if (/^Buser/.test(part)) { out.push({ id: 'buser-lepto-crp', text: BUSER_LEPTO_CRP }); continue }
+    if (/^Chochlios/.test(part)) { out.push({ id: 'chochlios-ecanis', text: CHOCHLIOS_ECANIS }); continue }
+    if (/^Christodoulou/.test(part)) { out.push({ id: 'christodoulou-cme-itp', text: CHRISTODOULOU_CME_ITP }); continue }
+    if (/^Mylonakis/.test(part)) { out.push({ id: 'mylonakis-cme-app', text: MYLONAKIS_CME_APP }); continue }
+    if (/^Taylor/.test(part)) { out.push({ id: 'taylor-fip-307', text: TAYLOR_FIP_307 }); continue }
+    if (/^Pedersen/.test(part)) { out.push({ id: 'pedersen-gs441524', text: PEDERSEN_GS441524 }); continue }
+    if (/^Lv/.test(part)) { out.push({ id: 'lv-gs-gc376', text: LV_GS_GC376 }); continue }
+    if (/^Dickinson/.test(part)) { out.push({ id: 'dickinson-neuro-fip', text: DICKINSON_NEURO_FIP }); continue }
+    if (/^Levin\b/.test(part)) { out.push({ id: 'levin-rmsf-course', text: LEVIN_RMSF_COURSE }); continue }
+    if (/^Foley/.test(part)) { out.push({ id: 'foley-rmsf-urban', text: FOLEY_RMSF_URBAN }); continue }
+    if (/^Goddard/.test(part)) { out.push({ id: 'goddard-babesia-dic', text: GODDARD_BABESIA_DIC }); continue }
+    if (/^Agostini/.test(part)) { out.push({ id: 'agostini-mmp-vitk', text: AGOSTINI_MMP_VITK }); continue }
+    if (/^Solano-Gallego/.test(part)) { out.push({ id: 'solano-gallego-leishvet', text: SOLANO_GALLEGO_LEISHVET }); continue }
+    if (/^Miro/.test(part)) { out.push({ id: 'miro-leish-supplement', text: MIRO_LEISH_SUPPLEMENT }); continue }
+    if (/^Villanueva-Saz/.test(part)) { out.push({ id: 'villanueva-saz-seroneg', text: VILLANUEVA_SAZ_SERONEG }); continue }
+    if (/^Kasabalis/.test(part)) { out.push({ id: 'kasabalis-aminosidine', text: KASABALIS_AMINOSIDINE }); continue }
+    if (/^McBride/.test(part)) { out.push({ id: 'mcbride-aki-vwf', text: MCBRIDE_AKI_VWF }); continue }
+    if (/^Krüger/.test(part)) { out.push({ id: 'kruger-av-vwf', text: KRUGER_AV_VWF }); continue }
+    if (/^Thomsen/.test(part)) { out.push({ id: 'thomsen-av-bleeding', text: THOMSEN_AV_BLEEDING }); continue }
+    if (/^Canonne/.test(part)) { out.push({ id: 'canonne-av-bal', text: CANONNE_AV_BAL }); continue }
+    if (/^Henke/.test(part)) { out.push({ id: 'henke-zinc', text: HENKE_ZINC }); continue }
+    if (/^Biasibetti/.test(part)) { out.push({ id: 'biasibetti-garlic', text: BIASIBETTI_GARLIC }); continue }
+    if (/^Gerhard/.test(part)) { out.push({ id: 'gerhard-vitd-25ohd', text: GERHARD_VITD_25OHD }); continue }
+    if (/^Perry/.test(part)) { out.push({ id: 'perry-vitd-lipid', text: PERRY_VITD_LIPID }); continue }
+    if (/^Keene/.test(part)) { out.push({ id: 'keene-mmvd', text: KEENE_MMVD }); continue }
+    if (/^Boswood/.test(part)) { out.push({ id: 'boswood-epic', text: BOSWOOD_EPIC }); continue }
+    if (/^Summerfield/.test(part)) { out.push({ id: 'summerfield-protect', text: SUMMERFIELD_PROTECT }); continue }
+    if (/^Carvajal/.test(part)) { out.push({ id: 'carvajal-pericardioscopy', text: CARVAJAL_PERICARDIOSCOPY }); continue }
+    if (/^Michelotti/.test(part)) { out.push({ id: 'michelotti-tsp', text: MICHELOTTI_TSP }); continue }
+    if (/^Kogan/.test(part)) { out.push({ id: 'kogan-aspiration', text: KOGAN_ASPIRATION }); continue }
+    if (/^Riffe/.test(part)) { out.push({ id: 'riffe-ap-antibiotics', text: RIFFE_AP_ANTIBIOTICS }); continue }
+    if (/^Weisse/.test(part)) { out.push({ id: 'weisse-tracheal-stent', text: WEISSE_TRACHEAL_STENT }); continue }
+    if (/^De Lorenzi/.test(part)) { out.push({ id: 'de-lorenzi-silicone-stent', text: DE_LORENZI_SILICONE_STENT }); continue }
+    if (/^Gareis/.test(part)) { out.push({ id: 'gareis-flad-radiographs', text: GAREIS_FLAD_RADIOGRAPHS }); continue }
+    if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
+    if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
+    if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
+    if (/^Stanton/.test(part)) { out.push({ id: 'stanton-cribriform', text: STANTON_CRIBRIFORM }); continue }
+    if (/^Sones/.test(part)) { out.push({ id: 'sones-nasal-sarcoma', text: SONES_NASAL_SARCOMA }); continue }
+    if (/^Iseri/.test(part)) { out.push({ id: 'iseri-megavoltage', text: ISERI_MEGAVOLTAGE }); continue }
+    if (/^Unterer/.test(part)) { out.push({ id: 'unterer-ahds-antibiotics', text: UNTERER_AHDS_ANTIBIOTICS }); continue }
+    if (/^Ziese/.test(part)) { out.push({ id: 'ziese-ahds-probiotic', text: ZIESE_AHDS_PROBIOTIC }); continue }
+    if (/^Schwartz/.test(part)) { out.push({ id: 'schwartz-gi-staples', text: SCHWARTZ_GI_STAPLES }); continue }
+    if (/^Cola/.test(part)) { out.push({ id: 'cola-laer', text: COLA_LAER }); continue }
     // ── Disease pages 6-10 ──
     if (/^Venn/.test(part)) { out.push({ id: 'venn-outpatient', text: VENN_OUTPATIENT }); continue }
     if (/^Sarpong/.test(part)) { out.push({ id: 'sarpong-outpatient', text: SARPONG_OUTPATIENT }); continue }
@@ -988,6 +1312,14 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Callan/.test(part)) { out.push({ id: 'callan-f7-mutation', text: CALLAN_F7_MUTATION }); continue }
     if (/^Clark/.test(part)) { out.push({ id: 'clark-f7-autopsy', text: CLARK_F7_AUTOPSY }); continue }
     if (/^Gookin/.test(part)) { out.push({ id: 'gookin-feline-fx', text: GOOKIN_FELINE_FX }); continue }
+    // ── Disease pages 26-30 ──
+    if (/^Garden/.test(part)) { out.push({ id: 'garden-imha-dx', text: GARDEN_IMHA_DX }); continue }
+    if (/^Aslanian/.test(part)) { out.push({ id: 'aslanian-hema', text: ASLANIAN_HEMA }); continue }
+    if (/^Nguyen/.test(part)) { out.push({ id: 'nguyen-aav-clonal', text: NGUYEN_AAV_CLONAL }); continue }
+    if (/^Batty/.test(part)) { out.push({ id: 'batty-aav-integration', text: BATTY_AAV_INTEGRATION }); continue }
+    if (/^Fowler/.test(part)) { out.push({ id: 'fowler-hema-spinal', text: FOWLER_HEMA_SPINAL }); continue }
+    if (/^Devine/.test(part)) { out.push({ id: 'devine-imn', text: DEVINE_IMN }); continue }
+    if (/^Scott/.test(part)) { out.push({ id: 'scott-phenobarb-marrow', text: SCOTT_PHENOBARB_MARROW }); continue }
     // Only an Ettinger part reaches the Ettinger fallback. This used to be a
     // bare `else`, so ANY unrecognised part became a book-level Ettinger
     // reference — which credited Ettinger with "Farias et al. 2010, Gould et al.

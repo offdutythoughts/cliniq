@@ -17,7 +17,7 @@
 // what actually appears on screen.
 
 import { DB } from '../src/data/db'
-import { hasCitation } from '../src/app/screens/diseaseReferences'
+import { hasCitation, buildDiseaseCitations } from '../src/app/screens/diseaseReferences'
 import { ratchet, setBaseline } from './lib/ratchet'
 
 // Every field the disease section stack renders (mirrors lint-disease-sections).
@@ -83,6 +83,43 @@ if (listPartial) {
   }
 }
 
+// ── Peer-reviewed coverage ────────────────────────────────────────────────────
+// A stricter question than "is this page cited at all": does it cite an actual
+// PAPER? A textbook chapter is a citation but not peer-reviewed literature, and
+// a page whose only source is "(Ettinger Ch 314)" satisfies the ratchet above
+// while resting entirely on one secondary source.
+//
+// Classifier: a reference is a paper when its rendered AMA string carries a DOI
+// or a journal volume;page locator. Books (Ettinger, Gelatt, Lemmons, Gupta),
+// the VETgirl ebook, and the URL-only guidelines (AHS, FECAVA, CDC, Minnesota
+// Urolith Center) have neither, so they fall out without needing a hand-kept
+// list of ids that would drift the moment someone adds a source.
+const isPaper = (text: string): boolean => /\bdoi:/.test(text) || /\d{4};\d+/.test(text)
+
+const noPaper: { id: string; name: string; hasAny: boolean }[] = []
+for (const r of DB.disease_page) {
+  const fields = FIELDS.map(f => {
+    const v = (r as Record<string, unknown>)[f]
+    return typeof v === 'string' ? v : ''
+  })
+  const { entries } = buildDiseaseCitations(fields)
+  if (!entries.some(e => isPaper(e.text))) {
+    noPaper.push({ id: r.id, name: r.name, hasAny: entries.length > 0 })
+  }
+}
+
+const bookOnly = noPaper.filter(r => r.hasAny).length
+console.log(`\nPeer-reviewed coverage: ${DB.disease_page.length - noPaper.length}/${DB.disease_page.length} pages cite at least one paper`)
+console.log(`  ${bookOnly} cite only textbooks or URL-only guidelines`)
+console.log(`  ${noPaper.length - bookOnly} cite nothing at all`)
+
+if (process.argv.includes('--papers')) {
+  console.log('\nPages with no peer-reviewed paper:')
+  for (const r of noPaper) {
+    console.log(`  ${r.hasAny ? 'book-only' : 'uncited  '}  ${r.id.padEnd(24)} ${r.name}`)
+  }
+}
+
 // ── Ratchet ───────────────────────────────────────────────────────────────────
 // Coverage improved from 198 uncited to 166 in one sitting, and nothing stopped it
 // sliding back — a new page ships uncited and no one notices. The count is now a
@@ -90,10 +127,21 @@ if (listPartial) {
 // lock the gain in. Same mechanism as lint:deadcontent.
 if (process.argv.includes('--write')) {
   setBaseline('uncited-disease-pages', none.length)
+  setBaseline('disease-pages-without-paper', noPaper.length)
   console.log(`\nbaseline written: uncited-disease-pages = ${none.length}`)
+  console.log(`baseline written: disease-pages-without-paper = ${noPaper.length}`)
 } else {
+  let failed = false
   const r = ratchet('uncited-disease-pages', none.length, 'disease pages carry no citation')
   console.log(`\n${r.ok ? 'ℹ' : '✗'} ${r.message}`)
-  if (!r.ok) process.exit(1)
+  if (!r.ok) failed = true
+
+  // The goal state is zero: every disease page citing at least one paper.
+  // Until then this can only go down, same as every other ratchet here.
+  const p = ratchet('disease-pages-without-paper', noPaper.length, 'disease pages cite no peer-reviewed paper')
+  console.log(`${p.ok ? 'ℹ' : '✗'} ${p.message}`)
+  if (!p.ok) failed = true
+
+  if (failed) process.exit(1)
 }
 console.log()

@@ -108,7 +108,29 @@ attached rather than the one that supports it:
 Both are written up in `references/CITATIONS.md`. Crossref records carry no abstract, which
 is why **PubMed is the default discovery tool** — see that file's connector notes.
 
-**4. Verify against two registries** (PubMed + Crossref, or Crossref + Europe PMC), prefer
+**4. Every disease page must cite at least one peer-reviewed paper.**
+
+A textbook chapter is a citation but not a paper. A page whose only source is
+`(Ettinger Ch 314)` rests entirely on one secondary source and does not satisfy this.
+`npm run report:refs` reports coverage and ratchets it — the count of pages without a paper
+can only go down. `npm run report:refs -- --papers` names them.
+
+**5. Protocols have a higher bar: an ACVIM consensus statement or equivalent.**
+
+A protocol tells someone what to do in an emergency, so its backing has to be a body's agreed
+position rather than one group's case series. Acceptable sources, in order of preference:
+
+- an **ACVIM consensus statement**;
+- an equivalent society guideline — RECOVER (CPR), CURATIVE (antithrombotics), AAHA, AAFP,
+  ISFM, ACVECC, AHS, IRIS, WSAVA;
+- failing those, a **systematic review or meta-analysis** in a peer-reviewed journal.
+
+A protocol backed only by a textbook, a single cohort or expert opinion is **not compliant**.
+Where no consensus exists for a protocol, say so on the protocol itself rather than
+substituting a weaker source silently — the clinician should know they are following practice,
+not guidance.
+
+**6. Verify against two registries** (PubMed + Crossref, or Crossref + Europe PMC), prefer
 the fuller record and the **print** year, and record any disagreement in
 `references/CITATIONS.md`. A bibliographic search's top hit is often the wrong record — a
 congress abstract, an erratum, an abstract-only entry — so confirm the container title and

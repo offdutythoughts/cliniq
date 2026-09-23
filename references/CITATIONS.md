@@ -1016,6 +1016,361 @@ transfusion effect remain **uncited**, and were not propped up on a factor VII o
 paper that does not cover them. The reference-count test asserts zero for that page so the
 gap stays visible rather than being quietly filled later.
 
+**Disease pages 26-30 — primary literature (added 2026-09-23)**
+
+*IMHA (`DIS-BD-IMHA`)*
+
+> Garden OA, Kidd L, Mexas AM, et al. ACVIM consensus statement on the diagnosis of immune-mediated hemolytic anemia in dogs and cats. J Vet Intern Med. 2019;33(2):313-334. doi:10.1111/jvim.15441
+
+The **diagnosis** half of the ACVIM pair. The treatment half (Swann 2019) was already in this
+file and the page already cited it as `(ACVIM 2019)`; the diagnosis half was missing while the
+page's entire `conf` section — the diagnostic triad, saline agglutination, DAT, baseline
+testing before immunosuppression — and its graded comorbidity language ("B. gibsoni
+intermediate-high evidence", "Mycoplasma haemofelis high evidence") came straight out of it.
+
+⚠️ **Garden is keyed on the AUTHOR, not `ACVIM 2019`.** That year is taken in `ACVIM_BY_YEAR`
+by the treatment statement, and this page cites both. Third instance of this decision, after
+Marks and Behrend. Both resolutions are pinned by test.
+
+*Haemophilia A (`DIS-BD-HEMA`)*
+
+> Aslanian ME, Sharp CR, Rozanski EA, de Laforcade AM, Rishniw M, Brooks MB. Clinical outcome after diagnosis of hemophilia A in dogs. J Am Vet Med Assoc. 2014;245(6):677-683. doi:10.2460/javma.245.6.677
+
+> Nguyen GN, Everett JK, Kafle S, et al. A long-term study of AAV gene therapy in dogs with hemophilia A identifies clonal expansions of transduced liver cells. Nat Biotechnol. 2020;39(1):47-55. doi:10.1038/s41587-020-0741-7
+
+> Batty P, Fong S, Franco M, et al. Vector integration and fate in the hemophilia dog liver multiple years after AAV-FVIII gene transfer. Blood. 2024;143(23):2373-2385. doi:10.1182/blood.2023022589
+
+> Fowler KM, Bolton TA, Rossmeisl JH, et al. Clinical, diagnostic, and imaging findings in three juvenile dogs with paraspinal hyperesthesia or myelopathy as a consequence of hemophilia A: a case report. Front Vet Sci. 2022;9:871029. doi:10.3389/fvets.2022.871029
+
+Aslanian is the 39-dog series the prognosis field was already quoting. Its **design is now
+stated on the page**: a survey of clinicians, not a clinical cohort, so ascertainment is
+uneven. Fowler is **n=3** and hedged as "some clinicians reported".
+
+⚠️ **The gene-therapy line was overstated and is rewritten.** The page said "investigational,
+>90% reduction in bleeds in dogs" — a figure not found in either long-term study. Nguyen
+followed 9 dogs up to 10 years and reports factor VIII corrected to **1.9-11.3% of normal**,
+together with **clonal expansion of transduced liver cells** (44% of integration sites near
+growth-related genes) and an explicit call for genotoxicity monitoring. Batty's decade-long
+cohort found predominantly episomal vector and no tumours. Both are on the page, and it now
+says plainly that these are **purpose-bred colony dogs, not patients**.
+
+*Immune-mediated neutropenia (`DIS-IMNP`)*
+
+> Devine L, Armstrong PJ, Whittemore JC, et al. Presumed primary immune-mediated neutropenia in 35 dogs: a retrospective study. J Small Anim Pract. 2017;58(6):307-313. doi:10.1111/jsap.12636
+
+> Scott TN, Bailin HG, Jutkowitz LA, Scott MA, Lucidi CA. Bone marrow, blood, and clinical findings in dogs treated with phenobarbital. Vet Clin Pathol. 2021;50(1):122-131. doi:10.1111/vcp.13013
+
+Devine is the only cohort of any size and is the source of the page's "all 33 resolved within
+a month" and "~one third relapse". Scott is cited as a **differential warning**: the marrow
+picture of phenobarbital-induced cytopenia can be indistinguishable from immune-mediated
+neutropenia, so the drug history matters before treating.
+
+⚠️ **`DIS-BD-HEMB` and `DIS-BD-HEMC` have no references and are deliberately left that way.**
+Their breed-specific variant claims are precise — German wirehaired pointer 1.5-kb intron 5
+insertion, Lhasa apso nt 772-777 deletion, Rhodesian ridgeback c.731G>A, Kerry blue terrier
+90 bp exonic SINE, Maine Coon F11 c.1546G>A — and precise enough that a source must exist,
+but nothing was found through PubMed or Crossref in this pass. They remain **uncited** rather
+than attached to a haemophilia A paper that does not cover them. The reference-count test
+asserts zero for both, as it does for `DIS-BD-FII`, so the gap stays visible. These three
+pages are the obvious target for a dedicated search pass.
+
+### Pages 31-34 — Evans syndrome, leptospirosis, ehrlichiosis (2026-09-23)
+
+The first batch of the "every disease page cites at least one peer-reviewed paper" pass.
+
+**`DIS-BD-EVANS`** needed no new verification: the ACVIM IMHA diagnosis (Garden 2019),
+IMHA treatment (Swann 2019) and ITP diagnosis/treatment (LeVine 2024) statements were all
+already in `diseaseReferences.tsx`, attached to other pages, and each covers one arm of the
+Evans diagnosis. Both arms now have to be proven independently on the page, which is what the
+consensus criteria actually require.
+
+**`DIS-INFECT-LEPTO`** — three sources:
+
+> Sykes JE, Francey T, Schuller S, Stoddard RA, Cowgill LD, Moore GE. Updated ACVIM consensus statement on leptospirosis in dogs. J Vet Intern Med. 2023;37(6):1966-1982. doi:10.1111/jvim.16903
+
+> Knöpfler S, Mayer-Scholl A, Luge E, et al. Evaluation of clinical, laboratory, imaging findings and outcome in 99 dogs with leptospirosis. J Small Anim Pract. 2017;58(10):582-588. doi:10.1111/jsap.12718
+
+> Buser FC, Schweighauser A, Im Hof-Gut M, et al. Evaluation of C-reactive protein and its kinetics as a prognostic indicator in canine leptospirosis. J Small Anim Pract. 2019;60(8):477-485. doi:10.1111/jsap.13004
+
+The 2023 statement **supersedes the 2010 one the page was written against**, and two of its
+changes contradicted the page as it stood: the "large outdoor working dog" risk picture is
+retired (small urban dogs, puppies from 11 weeks and geriatric dogs are all affected, as are
+dogs vaccinated with 2-serovar products), and vaccination is now recommended broadly in
+endemic regions rather than by lifestyle risk. Both were written in. The statement also says
+the MAT does not reliably identify the infecting serogroup — the page previously implied the
+titre pattern was informative about serovar, which is now corrected.
+
+Knöpfler is the largest single cohort and supplies the frequency data (renal 95%, hepatic 92%,
+pulmonary 58%, multi-organ 98/99; lethargy 96%, anorexia 88%, vomiting 85%) and the outcome
+figure (32/99 died). Buser is **41 dogs**, so its CRP-kinetics finding is hedged on the page as
+"Some clinicians reported…" per the evidence bar below.
+
+**`DIS-INFECT-EHRLICH`** and **`DIS-BD-EHRL`** share three sources:
+
+> Chochlios TA, Angelidou E, Kritsepi-Konstantinou M, Koutinas CK, Mylonakis ME. Seroprevalence and risk factors associated with Ehrlichia canis in a hospital canine population. Vet Clin Pathol. 2019;48(2):305-309. doi:10.1111/vcp.12736
+
+> Christodoulou V, Meletis E, Kostoulas P, et al. Clinical and clinicopathologic discriminators between canine acute monocytic ehrlichiosis and primary immune thrombocytopenia. Top Companion Anim Med. 2023;52:100750. doi:10.1016/j.tcam.2022.100750
+
+> Mylonakis ME, Ceron JJ, Leontides L, et al. Serum acute phase proteins as clinical phase indicators and outcome predictors in naturally occurring canine monocytic ehrlichiosis. J Vet Intern Med. 2011;25(4):811-817. doi:10.1111/j.1939-1676.2011.0728.x
+
+Registry disagreement on Christodoulou: **PubMed dates it 2022** (epub 28 Nov 2022), Crossref
+gives the print volume as **2023;52**. The print year wins, so the marker is `Christodoulou 2023`.
+
+Chochlios is the large one (850 dogs) and carries the finding that actually changes practice:
+in-clinic kits disagree with each other on the same dogs (ImmunoComb vs SNAP 3Dx/4Dx), so a
+clinically important negative needs a second method. It also gives the endemic-area base rates
+(54.9% of sick dogs seropositive, 33.9% of healthy) — which is why a positive titre alone is
+not a diagnosis there, a caveat the page did not previously carry.
+
+Christodoulou is **35 CME vs 29 ITP**, small enough that its discriminator list is hedged as
+"some clinicians reported". Mylonakis is 56 dogs; its pancytopenia odds ratio for death (22.7,
+neutropenia alone 7.7) is quoted with the sample size inline. Mylonakis is also cited **against**
+a natural assumption: the acute-phase proteins stage the disease but did **not** predict survival,
+so the page says so rather than implying they are prognostic.
+
+A note on the new source names: `Chochlios` and `Christodoulou` share a two-letter head and sit
+alongside the existing `Chalifoux` and `Chirayath`. None is a prefix of another, but the resolver
+matches on `/^Name/` with no word boundary, so all four are pinned in the prefix-trap test.
+
+### Pages 35-41 — FIP, RMSF, babesiosis, rodenticide, leishmaniosis, vWD, lungworm (2026-09-23)
+
+**`DIS-INFECT-FIP`** — Taylor 2023 is 307 cats on **legally sourced, known-composition**
+product, which is what makes its numbers usable: 84.4% alive at last follow-up, 10.8% relapse
+with roughly half of those relapsing *during* the initial course, injection pain in 47.8% of
+cats given subcutaneous remdesivir, and a complete response within 30 days predicting survival
+to the end of treatment. Pedersen 2019 supplies the 12-week floor. Dickinson is **four cats**
+and Lv 2022 is uncontrolled, so both are hedged.
+
+> Taylor SS, Coggins S, Barker EN, et al. J Feline Med Surg. 2023;25(9). doi:10.1177/1098612X231194460
+> Pedersen NC, Perron M, Bannasch M, et al. J Feline Med Surg. 2019;21(4):271-281. doi:10.1177/1098612X19825701
+> Lv J, Bai Y, Wang Y, Yang L, Jin Y, Dong J. Front Vet Sci. 2022;9:1002488. doi:10.3389/fvets.2022.1002488
+> Dickinson PJ, Bannasch M, Thomasy SM, et al. J Vet Intern Med. 2020;34(4):1587-1593. doi:10.1111/jvim.15780
+
+**`DIS-INFECT-RMSF`** — Levin 2014 is the only description of the natural tick-bite course from
+exposure to recovery. Two of its findings are cited **against** what a clinician would assume:
+neither fever height/duration nor a positive blood PCR predicts outcome, and the marker that
+does is the apex and fall of the neutrophilia. It is an experimental group, so that is hedged.
+Foley 2025 is a review, cited only for the urban-hyperendemic epidemiology it aggregates.
+
+> Levin ML, Killmaster LF, Zemtsova GE, Ritter JM, Langham G. PLoS One. 2014;9(12):e115105. doi:10.1371/journal.pone.0115105
+> Foley J, Lopez-Perez AM, Alvarez-Hernandez G, et al. Am J Vet Res. 2025;86(3). doi:10.2460/ajvr.24.11.0368
+
+**`DIS-BD-BABS`** — Goddard, 72 dogs, PCR-confirmed *B. rossi* with *B. vogeli* and *E. canis*
+co-infections **excluded**, which is what lets its coagulation findings be read as babesiosis
+rather than tick-borne disease in general. Registry disagreement: PubMed dates it 2012, the
+print volume is 2013; the print year wins.
+
+> Goddard A, Wiinberg B, Schoeman JP, Kristensen AT, Kjelgaard-Hansen M. Vet J. 2013;196(2):213-217. doi:10.1016/j.tvjl.2012.09.009
+
+**`DIS-BD-ROD`** — Agostini is 74 animals across two hospitals, the only comparison of IV
+mixed-micelle phytomenadione against plasma-based therapy. Hedged on that sample size.
+
+> Agostini G, Mooney ET, Wilkie ELW, White JD. Aust Vet J. 2025;103(12):906-915. doi:10.1111/avj.70004
+
+**`DIS-INFECT-LEISHM`** — the 2011 LeishVet guideline is 14 years old but is **still the
+operative staging system**, cited as such in 2026 survey papers, so it stays; Rule 1(c) asks for
+as current as the literature allows, not for a recent paper at any cost. Miró 2024 is the modern
+randomised trial (97 dogs, two years). Kasabalis is 40 dogs and the authors themselves call it
+underpowered, so aminosidine is written as second line, not an equal alternative.
+Villanueva-Saz is **three dogs** and is cited purely as an existence claim — that clinical
+leishmaniosis occurs in seronegative dogs — with no frequency stated.
+
+> Solano-Gallego L, Miro G, Koutinas A, et al. Parasit Vectors. 2011;4:86. doi:10.1186/1756-3305-4-86
+> Miro G, Segarra S, Ceron JJ, et al. PLoS Negl Trop Dis. 2024;18(12):e0012712. doi:10.1371/journal.pntd.0012712
+> Kasabalis D, Chatzis MK, Apostolidis K, et al. Exp Parasitol. 2020;214:107903. doi:10.1016/j.exppara.2020.107903
+> Villanueva-Saz S, Marteles D, Ortunez A, et al. Acta Vet Scand. 2025;67(1):31. doi:10.1186/s13028-025-00814-9
+
+**`DIS-BD-VWD`** — both papers are about **acquired** loss of vWF activity, which is the trap the
+page needed covering: a low vWF in a sick dog is not automatically the inherited disease. AKI
+produces a type-II-like phenotype (McBride, 10 dogs, hedged), and *Angiostrongylus* acutely
+drops vWF and caused a reversible intracranial bleed (Krüger, one dog).
+
+> McBride D, Jepson RE, Cortellini S, Chan DL. J Vet Intern Med. 2019;33(5):2029-2036. doi:10.1111/jvim.15588
+> Kruger BT, Hamm Vinga C, Wennemuth J. Vet Radiol Ultrasound. 2025;66(1):e13462. doi:10.1111/vru.13462
+
+**`DIS-RESP-LUNGWORM`** — Thomsen is 180 dogs and gives the bleeding frequency (36.1%), the
+intracranial/intraspinal subset (20 dogs) and the survival gap that makes bleeding the
+prognostic divide (76.9% vs 94.8% at discharge). Canonne supplies the BAL qPCR point, where
+Baermann missed three of five dogs qPCR caught. Canonne's print year is 2016; PubMed says 2015.
+
+> Thomsen AS, Petersen MP, Willesen JL, et al. J Small Anim Pract. 2024;65(4):234-242. doi:10.1111/jsap.13701
+> Canonne AM, Roels E, Caron Y, et al. J Small Anim Pract. 2016;57(3):130-134. doi:10.1111/jsap.12419
+
+New source-name prefix hazards pinned in the tests this batch: **`Levin` vs the existing
+`LeVine`**, held apart only by the capital V and the trailing e — the resolver's `/^Name/` match
+is case-sensitive, so both orders are asserted. Also `Chochlios`/`Christodoulou` alongside the
+existing `Chalifoux`/`Chirayath`, and `Canonne` beside `Cook`/`Cridge`.
+
+### Pages 42-44 — zinc, Allium, cholecalciferol (2026-09-23)
+
+> Henke CS, Beal MW, Walton RAL, et al. J Vet Emerg Crit Care. 2023;33(6):676-684. doi:10.1111/vec.13330
+> Biasibetti E, Maza V, Tagliati V, et al. Animals (Basel). 2026;16(11):1712. doi:10.3390/ani16111712
+> Gerhard C, Jaffey JA. Front Vet Sci. 2020;6:472. doi:10.3389/fvets.2019.00472
+> Perry BH, McMichael M, Rick M, Jewell E. Can Vet J. 2016;57(12):1284-1286.
+
+**Henke** is the only zinc series big enough to carry frequencies (55 dogs, six teaching
+hospitals). Its AKI figure — 26.9%, which the authors flag as commoner than previously
+suspected — changed the page's workup advice from "check renal values if severely haemolysing"
+to "check them in every case". It also supplies the two practical numbers: 83% of dogs reached a
+stable PCV within a median 24 h of source removal, and two-thirds needed blood products, so
+product should be available *before* anaesthetising.
+
+**Biasibetti** is one dog and is cited for one thing only: it died on **16 g of raw garlic**,
+below the published toxic threshold. The page now warns against using a gram-per-kilo
+calculation to reassure an owner. No frequency is claimed from it.
+
+**Cholecalciferol is the weakest evidence base in this batch.** Both sources are single cases
+and both are hedged as such. There is no cohort study of 25(OH)D kinetics after the acute
+phase, so the page says "some clinicians reported" and states the sample inline, rather than
+turning one dog into a monitoring protocol. Perry is the only one of the papers cited so far
+with **no DOI** — Can Vet J articles of that era are PMC-only — so the second-registry check
+was done against Europe PMC rather than Crossref, per Rule 6's allowance.
+
+`Perry` vs the existing `Perley` is a new prefix hazard: four shared characters, neither a
+prefix of the other. Both are pinned in the resolver test.
+
+### Pages 45-47 — MMVD, DCM, pericardial effusion (2026-09-23)
+
+> Keene BW, Atkins CE, Bonagura JD, et al. J Vet Intern Med. 2019;33(3):1127-1140. doi:10.1111/jvim.15488
+> Boswood A, Haggstrom J, Gordon SG, et al. J Vet Intern Med. 2016;30(6):1765-1779. doi:10.1111/jvim.14586
+> Summerfield NJ, Boswood A, O'Grady MR, et al. J Vet Intern Med. 2012;26(6):1337-1349. doi:10.1111/j.1939-1676.2012.01026.x
+> Carvajal JL, Case JB, Mayhew PD, et al. Vet Surg. 2019;48(S1):O105-O111. doi:10.1111/vsu.13129
+> Michelotti KP, Youk A, Payne JT, Anderson J. Vet Surg. 2019;48(6):1032-1041. doi:10.1111/vsu.13223
+
+These three pages already *named* EPIC and PROTECT in their prose while citing only Ettinger for
+them. They now cite the trials themselves and quote the actual numbers.
+
+⚠️ **The MMVD consensus is keyed on `Keene`, deliberately not on `ACVIM 2019`.** That year in
+`ACVIM_BY_YEAR` already belongs to Swann's IMHA *treatment* statement. A second claim on it would
+have printed the wrong paper on whichever page lost the race, with no error anywhere. Both
+markers are asserted in the resolver test so the collision cannot be reintroduced.
+
+**PROTECT is cited with its own caveat.** The page said pimobendan "delays CHF/sudden death",
+which is true of the time-to-event result (718 vs 441 days; survival 623 vs 466). But the
+**proportion** of dogs reaching the primary endpoint was not significantly different (P = .1).
+The page now says the drug buys time rather than preventing the outcome — that distinction is in
+the paper and was missing from the page.
+
+**Both pericardial papers are small** (18 and 16 dogs) and both are hedged, but they converge on
+one message the page needed: an echocardiographically "idiopathic" effusion is not reliably
+benign. Carvajal found masses, nodules or adhesions at pericardioscopy in **9 of 18** dogs whose
+preoperative echo showed no cause, and those dogs had a median survival of 66 days against
+not-reached in the other nine. Michelotti found neoplasia on histopathology in **4 of 16**.
+Michelotti also supplies the complication to warn owners about: recurrent *pleural* effusion
+killed half the dogs after pericardiectomy.
+
+### Pages 48-50 — feline asthma, tracheal collapse, aspiration pneumonia (2026-09-23)
+
+> Gareis H, Horner-Schmid L, Zablotski Y, Palic J, Hecht S, Schulz B. J Vet Intern Med. 2023;37(6):2443-2452. doi:10.1111/jvim.16874
+> Weisse C, Berent A, Violette N, McDougall R, Lamb K. J Am Vet Med Assoc. 2019;254(3):380-392. doi:10.2460/javma.254.3.380
+> De Lorenzi D, Maggi G, Bertoncello D, Porciello F, Marchesi MC. J Am Vet Med Assoc. 2024;262(7):1-7. doi:10.2460/javma.23.12.0722
+> Kogan DA, Johnson LR, Sturges BK, Jandrey KE, Pollard RE. J Am Vet Med Assoc. 2008;233(11):1748-1755. doi:10.2460/javma.233.11.1748
+> Riffe CI, Heinz JA, Patterson CA, Cook AK, Yankin I. J Am Vet Med Assoc. 2025;263(8):1-9. doi:10.2460/javma.24.10.0673
+
+**Kogan** is 88 dogs and contributes two *negative* findings that matter more than the survival
+rate (77%): neither radiographic severity nor length of hospitalisation predicted outcome, and
+having more than one predisposing disease did not worsen it. The page previously implied a
+dramatic film was bad news. It also supplies the ranked causes — oesophageal disease 35, vomiting
+34, neurological 24, laryngeal 16, post-anaesthetic 12 — which reorders how the page lists them.
+
+**Riffe** is the stewardship point: in 58 dogs, adding enrofloxacin up front gave no advantage in
+survival or severity indices over ampicillin-sulbactam alone. Hedged at that sample size, but the
+page now says to reserve escalation for the critically ill rather than starting dual by default.
+
+**Weisse** is 75 dogs and 119 stents, the largest endoluminal series. The page already said
+"significant complications are reported" without a number; it now carries **47%** requiring a
+further stent procedure, alongside the 93% discharge rate and 1,005-day median survival. Both
+numbers belong in the same owner conversation. De Lorenzi (12 dogs) is hedged and is there only
+to say grade IV collapse refractory to medical therapy is not automatically hopeless.
+
+**Gareis** is 24 cats. Its useful finding is a *dissociation*: clinical and radiographic scores
+both improved significantly on treatment but did **not** correlate with each other. The page now
+tells you to judge response on both rather than letting one stand in for the other.
+
+### Pages 51-52 — IVDD, SRMA (2026-09-23)
+
+> Moore SA, Tipold A, Olby NJ, Stein V, Granger N. Front Vet Sci. 2020;7:610. doi:10.3389/fvets.2020.00610
+> Low D, Stables S, Kondrotaite L, Garland B, Rutherford S. Vet Surg. 2025;54(4):665-674. doi:10.1111/vsu.14250
+> Paterson R, Brady S. Aust Vet J. 2024;102(12):630-632. doi:10.1111/avj.13371
+> Gunther C, Steffen F, Alder DS, Beatrice L, Geigy C, Beckmann K. Vet Rec. 2020;187(1):e7. doi:10.1136/vr.105683
+
+⚠️ **`Moore` is now year-keyed**, like ACVIM, Cridge, Rudinsky and the rest. The existing
+`moore-metyrapone` is a 2000 feline adrenal case report by a different Moore. A bare `/^Moore/`
+match would have printed that case report on the disc page, with nothing to catch it. `Moore 2000`
+and `Moore 2020` are both asserted, and an unmapped `Moore 2099` is asserted to yield nothing.
+
+`Low` vs the existing `Lo` looked like the same trap but is not: the Lo branch is written
+`/^Lo\b/`, and the word boundary already fails on "Low 2025". Both are pinned anyway so that
+stays true if the branch is ever rewritten.
+
+**Moore 2020 is cited against the page in one place and for it in three.** The page carried
+"MPSS considered ONLY within 8h of acute trauma in some protocols — highly controversial"; the
+review states flatly that high-dose MPSS and PEG are **not recommended** because randomised
+controlled trials showed no treatment effect, and that is now on the page. The review also
+supplies the 48-hour correction: there is **no evidence** that 48 h of deep-pain-negative status
+is a cut-off beyond which locomotor recovery becomes impossible, only uncertainty about how much
+timing matters past it. The page previously read as though 48 h closed the window.
+
+**Low** is the number to give an owner in that conversation: **53.1% of 162** deep-pain-negative
+dogs regained ambulation after decompressive surgery. (The paper's own subject is a machine-
+learning prognostic model; the recovery rate is its cohort description, which is what is cited.)
+
+**Paterson** makes the SRMA breed list geographical rather than universal — an Australian
+124-dog series was led by Golden Retriever, Italian Greyhound, Boxer, Cavoodle and Corgi, so the
+page now warns against discounting SRMA on an off-list breed. It also carries the relapse rate
+(37.6% with at least 6 months of follow-up). Gunther is 12 dogs and is hedged: cytarabine
+controlled 10 of 12 relapsing dogs, but **every dog had an adverse event** and three were severe,
+so the page states both halves.
+
+### Pages 53-54 — sinonasal aspergillosis, nasal neoplasia (2026-09-23)
+
+> Stanton JA, Miller ML, Johnson P, Davignon DL, Barr SC. J Small Anim Pract. 2018;59(7):411-414. doi:10.1111/jsap.12835
+> Sones E, Smith A, Schleis S, et al. Vet Radiol Ultrasound. 2013;54(2):194-201. doi:10.1111/vru.12006
+> Iseri T, Horikirizono H, Abe M, et al. Open Vet J. 2022;12(3):383-390. doi:10.5455/OVJ.2022.v12.i3.12
+
+**Stanton is five dogs and the page says so twice over.** Cribriform lysis has been treated as a
+bar to topical azole infusion. This series found no dog developing neurological signs — but *no
+event in five dogs* is not a demonstration of safety, and the page is written to say exactly
+that: enough to discuss with a specialist rather than refuse outright, not enough to call safe.
+This is the clearest case so far of Rule 2 mattering: the superscript would otherwise read as
+authority for a procedure with a catastrophic failure mode.
+
+**Iseri** (123 dogs) is cited for the stage gradient rather than the headline. Megavoltage beat
+orthovoltage overall (median 488 vs 317–325 days), but the benefit was concentrated early:
+stage 1 reached 931 days, stage 4 only 176. That is the argument for imaging and referring before
+facial deformity, which is the point the page needed.
+
+**Sones** separates the radiation protocols within 86 intranasal sarcomas: daily-fractionated
+641 days, Monday/Wednesday/Friday 347, palliative 305. Print year 2013; PubMed dates it 2012.
+
+### Pages 55-56 — AHDS, gastrointestinal foreign body (2026-09-23)
+
+> Unterer S, Strohmeyer K, Kruse BD, Sauter-Louis C, Hartmann K. J Vet Intern Med. 2011;25(5):973-979. doi:10.1111/j.1939-1676.2011.00765.x
+> Ziese AL, Suchodolski JS, Hartmann K, et al. PLoS One. 2018;13(9):e0204691. doi:10.1371/journal.pone.0204691
+> Schwartz Z, Coolman BR. Vet Surg. 2018;47(2):285-292. doi:10.1111/vsu.12759
+> Cola V, Ferrari C, Del Magno S, et al. Vet Surg. 2024;53(7):1266-1276. doi:10.1111/vsu.14126
+
+The page already said "fluids, not antibiotics". **Unterer** is the randomised blinded trial that
+claim rests on: 60 aseptic dogs, no difference in mortality, hospitalisation or severity on any
+day. Note the authors' own hedge in the conclusion — "in **some** dogs ... antibiotics **may** not
+change the case outcome" — and the page is written not to overclaim past it.
+
+**Ziese** is cited for two things, and the smaller finding is deliberately subordinated to the
+larger one. The probiotic bought a day (recovery day 3 vs 4 in 25 dogs), which is hedged. The
+finding that matters is that **both** arms recovered rapidly on no antibiotics at all. It also
+supplies the netF point: toxin genes were present in 57% at presentation and fell over the first
+week regardless of treatment, so detecting them is not a reason to reach for antibiotics.
+
+**Schwartz** is 333 dogs and is the only GI-surgery series here large enough to give dehiscence
+*risk factors* rather than a bare rate: a linear foreign body, and more than one gastrointestinal
+incision in the same surgery. It also times the risk — dehiscence presented at a mean of **44
+hours**, which makes the second post-operative day the window to watch. Both are actionable in a
+way a percentage is not.
+
+**Cola** (81 animals) is hedged and is there to note that laparotomy-assisted endoscopic retrieval
+removed foreign bodies without an enterotomy in 35 of 40, with intestinal wall damage being what
+forced conversion.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

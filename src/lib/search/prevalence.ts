@@ -47,6 +47,34 @@ export const PREV_FACTOR: Record<PrevTier, number> = {
 export type PrevSpecies = 'dog' | 'cat'
 
 /**
+ * Why a disease must not be ranked below neutral, whatever its prevalence.
+ *
+ * A tier answers one question — how common is this? — and three times now that
+ * has been the wrong instrument for what was actually meant:
+ *
+ *   · infective endocarditis is rare in cats and must not be buried (can't-miss)
+ *   · feline leptospirosis is rare and a miss reaches the owner (zoonotic)
+ *   · hypoadrenocorticism is uncommon and is classically missed (under-diagnosed)
+ *
+ * Each was being expressed by softening the tier, which corrupts the one number
+ * that is supposed to record epidemiology. The floor separates the two: the tier
+ * stays honest about how common the disease is, and the floor says the ranking
+ * must not punish it for that.
+ *
+ * It only ever raises. A floor cannot push a disease ABOVE neutral — that is
+ * what `common` is for — and it cannot help with a disease ranked too HIGH,
+ * which is a different problem needing a different tool.
+ */
+export type PrevFloor = 'cant-miss' | 'zoonotic' | 'under-diagnosed'
+
+export interface PrevEntry {
+  dog?: PrevTier
+  cat?: PrevTier
+  /** Clamps this disease's ranking multiplier to at least 1 (neutral). */
+  floor?: PrevFloor
+}
+
+/**
  * Prevalence within each species, for diseases where it is clinically material
  * and not already expressed by the `sp` field on the disease page.
  *
@@ -60,7 +88,7 @@ export type PrevSpecies = 'dog' | 'cat'
  * but they are ranking judgements on clinical content and should be read by a
  * vet before they are trusted in practice.
  */
-export const PREVALENCE: Record<string, Partial<Record<PrevSpecies, PrevTier>>> = {
+export const PREVALENCE: Record<string, PrevEntry> = {
   // ── Endocrine ──────────────────────────────────────────────────────────────
   // The cluster that motivated the prior: these all present with PU/PD and
   // weight loss, and their prevalence differs by orders of magnitude.
@@ -74,7 +102,9 @@ export const PREVALENCE: Record<string, Partial<Record<PrevSpecies, PrevTier>>> 
   'DIS-ENDO-HYPOTHY-CAT':   { cat: 'very-rare' },   // near-always iatrogenic post-radioiodine
   'DIS-ENDO-HYPERTHY-DOG':  { dog: 'rare' },        // thyroid carcinoma; rare vs the feline disease
   'DIS-ENDO-DKA':           { dog: 'uncommon',  cat: 'uncommon' },
-  'DIS-ENDO-HHS':           { dog: 'rare',      cat: 'rare' },
+  // Rare, and a metabolic emergency. The tier records the rarity; the floor
+  // stops the rarity costing it a place on a collapsed, hyperglycaemic patient.
+  'DIS-ENDO-HHS':           { dog: 'rare',      cat: 'rare',      floor: 'cant-miss' },
   'DIS-ENDO-CONN':          { cat: 'rare' },
   'DIS-ENDO-PHEO':          { dog: 'rare',      cat: 'very-rare' },
   'DIS-ENDO-PHPT':          { dog: 'rare',      cat: 'rare' },
@@ -82,7 +112,10 @@ export const PREVALENCE: Record<string, Partial<Record<PrevSpecies, PrevTier>>> 
   'DIS-ENDO-GASTRINOMA':    { dog: 'very-rare', cat: 'very-rare' },
   'DIS-ENDO-RENGLUC':       { dog: 'rare' },        // Fanconi — breed-restricted outside Basenji
   'DIS-SEC-HYPO':           { dog: 'uncommon' },    // Addison's — uncommon but a classic mimic
-  'DIS-NEO-INSULINOMA':     { dog: 'rare',      cat: 'very-rare' },
+  // Uncommon in dogs and genuinely rare in cats, but it is the commonest cause
+  // of hypoglycaemia in an adult dog, and hypoglycaemic collapse is a treatable
+  // emergency. Rare enough to rank below the common causes, not to be buried.
+  'DIS-NEO-INSULINOMA':     { dog: 'rare',      cat: 'very-rare', floor: 'cant-miss' },
   'DIS-PUPD-CDI':           { dog: 'very-rare', cat: 'very-rare' },
   'DIS-PUPD-NDI':           { dog: 'rare',      cat: 'rare' },
   // Acromegaly is deliberately NOT penalised. It is uncommon overall but is now
@@ -102,10 +135,10 @@ export const PREVALENCE: Record<string, Partial<Record<PrevSpecies, PrevTier>>> 
   'DIS-CARD-MVD':           { dog: 'common' },      // commonest canine cardiac disease
   'DIS-CARD-DCM':           { dog: 'uncommon',  cat: 'rare' },   // feline DCM rare post-taurine
   'DIS-CARD-ATE':           { cat: 'uncommon' },
-  // Rare in cats, but a can't-miss diagnosis: at very-rare it fell from 4th to
+  // Rare in cats, and a can't-miss diagnosis. At very-rare it fell from 4th to
   // 9th on a fever-plus-murmur history, which is not where endocarditis belongs.
-  // Rarity is a reason to rank it below the common causes, not to bury it.
-  'DIS-CARD-IE':            { dog: 'rare',      cat: 'rare' },
+  // The tier is the rarity; the floor is the consequence of missing it.
+  'DIS-CARD-IE':            { dog: 'rare',      cat: 'rare',      floor: 'cant-miss' },
   'DIS-CARD-TOF':           { dog: 'very-rare', cat: 'very-rare' },
   'DIS-CARD-SAS':           { dog: 'uncommon' },
   'DIS-CARD-PDA':           { dog: 'uncommon',  cat: 'rare' },
@@ -127,10 +160,10 @@ export const PREVALENCE: Record<string, Partial<Record<PrevSpecies, PrevTier>>> 
   // ── Infectious ─────────────────────────────────────────────────────────────
   // Cats are relatively resistant and clinical disease is uncommon, but it is
   // under-recognised rather than absent, and exposure tracks lifestyle: an
-  // outdoor hunting cat is not an indoor cat. The tier cannot express that, so
-  // it is set for the cat that could plausibly have it. Zoonotic, which is a
-  // second reason not to take the deepest demotion — a miss reaches the owner.
-  'DIS-INFECT-LEPTO':       { dog: 'uncommon',  cat: 'rare' },
+  // outdoor hunting cat is not an indoor cat. `rare` is the epidemiological
+  // call; the floor carries the separate reason, which is that leptospirosis is
+  // zoonotic and a miss reaches the owner and the practice, not just the cat.
+  'DIS-INFECT-LEPTO':       { dog: 'uncommon',  cat: 'rare',      floor: 'zoonotic' },
   'DIS-GI-PARVO':           { dog: 'common' },      // unvaccinated populations
   'DIS-GI-FPV':             { cat: 'uncommon' },
 
@@ -149,8 +182,13 @@ export function prevalenceFactor(diseaseId: string, species: 'all' | PrevSpecies
   const entry = PREVALENCE[diseaseId]
   if (!entry) return 1
 
-  if (species !== 'all') return PREV_FACTOR[entry[species] ?? 'uncommon']
+  const raw = species !== 'all'
+    ? PREV_FACTOR[entry[species] ?? 'uncommon']
+    : (() => {
+        const tiers = ([entry.dog, entry.cat].filter(Boolean) as PrevTier[]).map(t => PREV_FACTOR[t])
+        return tiers.length ? Math.max(...tiers) : 1
+      })()
 
-  const tiers = ([entry.dog, entry.cat].filter(Boolean) as PrevTier[]).map(t => PREV_FACTOR[t])
-  return tiers.length ? Math.max(...tiers) : 1
+  // The floor raises a penalty to neutral; it never lifts a disease above it.
+  return entry.floor ? Math.max(raw, 1) : raw
 }
