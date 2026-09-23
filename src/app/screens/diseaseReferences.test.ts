@@ -175,6 +175,16 @@ describe('parseSources', () => {
     // Garden is keyed on the author; ACVIM 2019 stays with Swann's IMHA
     // TREATMENT statement. Both appear on DIS-BD-IMHA, so both are pinned.
     expect(parseSources('Garden 2019').map(s => s.id)).toEqual(['garden-imha-dx'])
+    // 'Low' vs the existing 'Lo': the Lo branch is /^Lo\\b/, so the word
+    // boundary keeps them apart. Both directions are asserted.
+    expect(parseSources('Low 2025').map(s => s.id)).toEqual(['low-ivde-ml'])
+    expect(parseSources('Lo 2022').map(s => s.id)).toEqual(['lo-dual-therapy'])
+    // Moore is year-keyed: a feline metyrapone case report and an IVDE review.
+    expect(parseSources('Moore 2000').map(s => s.id)).toEqual(['moore-metyrapone'])
+    expect(parseSources('Moore 2020').map(s => s.id)).toEqual(['moore-ivde-review'])
+    expect(parseSources('Moore 2099')).toEqual([])
+    expect(parseSources('Paterson 2024').map(s => s.id)).toEqual(['paterson-srma'])
+    expect(parseSources('Günther 2020').map(s => s.id)).toEqual(['gunther-srma-cytarabine'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
     // Scott vs Scobie — three shared characters, neither a prefix.
     expect(parseSources('Scott 2021').map(s => s.id)).toEqual(['scott-phenobarb-marrow'])
@@ -646,6 +656,8 @@ describe('reference block', () => {
       ['DIS-RESP-ASTHMA', 2, ['cats with lower airway disease']],
       ['DIS-RESP-TRACOLL', 3, ['endoluminal stent placement', 'Dumon silicone stents']],
       ['DIS-RESP-ASPPNEU', 2, ['88 cases', 'ampicillin-sulbactam versus']],
+      ['DIS-NEU-IVDD', 3, ['acute thoracolumbar disc extrusion', 'Machine-learning-based prediction']],
+      ['DIS-SRMA', 2, ['124 cases', 'cytosine arabinoside']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -671,7 +683,8 @@ describe('reference block', () => {
       'DIS-INFECT-LEISHM', 'DIS-BD-VWD', 'DIS-RESP-LUNGWORM',
       'DIS-TOX-ZN', 'DIS-TOX-ALLIUM', 'DIS-TOX-CHOLE',
       'DIS-CARD-MVD', 'DIS-CARD-DCM', 'DIS-CARD-PERIC',
-      'DIS-RESP-ASTHMA', 'DIS-RESP-TRACOLL', 'DIS-RESP-ASPPNEU']) {
+      'DIS-RESP-ASTHMA', 'DIS-RESP-TRACOLL', 'DIS-RESP-ASPPNEU',
+      'DIS-NEU-IVDD', 'DIS-SRMA']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

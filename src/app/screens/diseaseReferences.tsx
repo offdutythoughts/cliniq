@@ -757,6 +757,23 @@ const DE_LORENZI_SILICONE_STENT =
 const GAREIS_FLAD_RADIOGRAPHS =
   'Gareis H, Horner-Schmid L, Zablotski Y, Palic J, Hecht S, Schulz B. Correlation of clinical and radiographic variables in cats with lower airway disease. J Vet Intern Med. 2023;37(6):2443-2452. doi:10.1111/jvim.16874'
 
+// Neurology. MOORE is now year-keyed — the metyrapone case report (2000) and
+// this IVDE evidence review (2020) are unrelated works by different Moores,
+// and a bare prefix match would have printed a feline adrenal case report on
+// the disc page. Low is 162 deep-pain-negative dogs, the largest such cohort.
+const MOORE_IVDE_REVIEW =
+  'Moore SA, Tipold A, Olby NJ, Stein V, Granger N. Current approaches to the management of acute thoracolumbar disc extrusion in dogs. Front Vet Sci. 2020;7:610. doi:10.3389/fvets.2020.00610'
+const LOW_IVDE_ML =
+  'Low D, Stables S, Kondrotaite L, Garland B, Rutherford S. Machine-learning-based prediction of functional recovery in deep-pain-negative dogs after decompressive thoracolumbar hemilaminectomy for acute intervertebral disc extrusion. Vet Surg. 2025;54(4):665-674. doi:10.1111/vsu.14250'
+
+// SRMA. Paterson is 124 dogs and carries the relapse rate. Gunther is 12 dogs
+// on cytarabine for relapse — a small series in which EVERY dog had an adverse
+// event, so the page states both halves of that.
+const PATERSON_SRMA =
+  'Paterson R, Brady S. Signalment, clinical characteristics and outcomes of an Australian population of dogs with steroid responsive meningitis-arteritis (SRMA) — 124 cases (2013-2023). Aust Vet J. 2024;102(12):630-632. doi:10.1111/avj.13371'
+const GUNTHER_SRMA_CYTARABINE =
+  'Gunther C, Steffen F, Alder DS, Beatrice L, Geigy C, Beckmann K. Evaluating the use of cytosine arabinoside for treatment for recurrent canine steroid-responsive meningitis-arteritis. Vet Rec. 2020;187(1):e7. doi:10.1136/vr.105683'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -846,6 +863,10 @@ const SOURCE_NAMES = [
   // Respiratory. 'Weisse' sits beside 'Wainberg' and 'Ward'; 'Gareis' beside
   // 'Garden'; 'Riffe' is new. None is a prefix of another.
   'Kogan', 'Riffe', 'Weisse', 'De Lorenzi', 'Gareis',
+  // 'Low' and the existing 'Lo': the Lo branch is written /^Lo\\b/, so the
+  // word boundary already keeps them apart whatever the order here. Both are
+  // pinned in the tests so that stays true if the branch is ever rewritten.
+  'Low', 'Paterson', 'Günther',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -907,6 +928,14 @@ const WIINBERG_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2008': { id: 'wiinberg-teg-dic', text: WIINBERG_TEG_DIC },
   '2009': { id: 'wiinberg-teg-bleeding', text: WIINBERG_TEG_BLEEDING },
   '2010': { id: 'wiinberg-dic-score', text: WIINBERG_DIC_SCORE },
+}
+
+/** Two unrelated Moores: the 2000 feline metyrapone case report and the 2020
+ *  thoracolumbar IVDE evidence review. Keyed on the year for the same reason
+ *  as ACVIM — a bare prefix match printed the adrenal case on the disc page. */
+const MOORE_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2000': { id: 'moore-metyrapone', text: MOORE_METYRAPONE },
+  '2020': { id: 'moore-ivde-review', text: MOORE_IVDE_REVIEW },
 }
 
 const ARENAS_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -1011,7 +1040,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Neiger/.test(part)) { out.push({ id: 'neiger-trilostane', text: NEIGER_TRILOSTANE }); continue }
     if (/^Miceli/.test(part)) { out.push({ id: 'miceli-trilostane', text: MICELI_TRILOSTANE }); continue }
     if (/^Daley/.test(part)) { out.push({ id: 'daley-metyrapone', text: DALEY_METYRAPONE }); continue }
-    if (/^Moore/.test(part)) { out.push({ id: 'moore-metyrapone', text: MOORE_METYRAPONE }); continue }
+    if (/^Moore/.test(part)) {
+      const hit = MOORE_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Duesberg/.test(part)) { out.push({ id: 'duesberg-adrenalectomy', text: DUESBERG_ADRENALECTOMY }); continue }
     if (/^Meij/.test(part)) { out.push({ id: 'meij-hypophysectomy', text: MEIJ_HYPOPHYSECTOMY }); continue }
     if (/^Benchekroun/.test(part)) { out.push({ id: 'benchekroun-acth', text: BENCHEKROUN_ACTH }); continue }
@@ -1122,6 +1155,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Weisse/.test(part)) { out.push({ id: 'weisse-tracheal-stent', text: WEISSE_TRACHEAL_STENT }); continue }
     if (/^De Lorenzi/.test(part)) { out.push({ id: 'de-lorenzi-silicone-stent', text: DE_LORENZI_SILICONE_STENT }); continue }
     if (/^Gareis/.test(part)) { out.push({ id: 'gareis-flad-radiographs', text: GAREIS_FLAD_RADIOGRAPHS }); continue }
+    if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
+    if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
+    if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
     // ── Disease pages 6-10 ──
     if (/^Venn/.test(part)) { out.push({ id: 'venn-outpatient', text: VENN_OUTPATIENT }); continue }
     if (/^Sarpong/.test(part)) { out.push({ id: 'sarpong-outpatient', text: SARPONG_OUTPATIENT }); continue }

@@ -1287,6 +1287,41 @@ to say grade IV collapse refractory to medical therapy is not automatically hope
 both improved significantly on treatment but did **not** correlate with each other. The page now
 tells you to judge response on both rather than letting one stand in for the other.
 
+### Pages 51-52 — IVDD, SRMA (2026-09-23)
+
+> Moore SA, Tipold A, Olby NJ, Stein V, Granger N. Front Vet Sci. 2020;7:610. doi:10.3389/fvets.2020.00610
+> Low D, Stables S, Kondrotaite L, Garland B, Rutherford S. Vet Surg. 2025;54(4):665-674. doi:10.1111/vsu.14250
+> Paterson R, Brady S. Aust Vet J. 2024;102(12):630-632. doi:10.1111/avj.13371
+> Gunther C, Steffen F, Alder DS, Beatrice L, Geigy C, Beckmann K. Vet Rec. 2020;187(1):e7. doi:10.1136/vr.105683
+
+⚠️ **`Moore` is now year-keyed**, like ACVIM, Cridge, Rudinsky and the rest. The existing
+`moore-metyrapone` is a 2000 feline adrenal case report by a different Moore. A bare `/^Moore/`
+match would have printed that case report on the disc page, with nothing to catch it. `Moore 2000`
+and `Moore 2020` are both asserted, and an unmapped `Moore 2099` is asserted to yield nothing.
+
+`Low` vs the existing `Lo` looked like the same trap but is not: the Lo branch is written
+`/^Lo\b/`, and the word boundary already fails on "Low 2025". Both are pinned anyway so that
+stays true if the branch is ever rewritten.
+
+**Moore 2020 is cited against the page in one place and for it in three.** The page carried
+"MPSS considered ONLY within 8h of acute trauma in some protocols — highly controversial"; the
+review states flatly that high-dose MPSS and PEG are **not recommended** because randomised
+controlled trials showed no treatment effect, and that is now on the page. The review also
+supplies the 48-hour correction: there is **no evidence** that 48 h of deep-pain-negative status
+is a cut-off beyond which locomotor recovery becomes impossible, only uncertainty about how much
+timing matters past it. The page previously read as though 48 h closed the window.
+
+**Low** is the number to give an owner in that conversation: **53.1% of 162** deep-pain-negative
+dogs regained ambulation after decompressive surgery. (The paper's own subject is a machine-
+learning prognostic model; the recovery rate is its cohort description, which is what is cited.)
+
+**Paterson** makes the SRMA breed list geographical rather than universal — an Australian
+124-dog series was led by Golden Retriever, Italian Greyhound, Boxer, Cavoodle and Corgi, so the
+page now warns against discounting SRMA on an off-list breed. It also carries the relapse rate
+(37.6% with at least 6 months of follow-up). Gunther is 12 dogs and is hedged: cytarabine
+controlled 10 of 12 relapsing dogs, but **every dog had an adverse event** and three were severe,
+so the page states both halves.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
