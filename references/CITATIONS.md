@@ -1576,6 +1576,30 @@ at a median of 635 days. Neither surgical technique nor skull conformation alter
 which supports what the page already said about grafting not being a guarantee. Michel (35 eyes)
 is hedged as a single-technique series, not a comparison.
 
+### Pages 73-74 — feline herpesvirus ocular disease, entropion (2026-09-23)
+
+> Thiry E, Addie D, Belak S, et al. J Feline Med Surg. 2009;11(7):547-555. doi:10.1016/j.jfms.2009.05.003
+> Ledbetter EC, Badanes ZI, Chan RX, et al. J Ocul Pharmacol Ther. 2022;38(5):339-347. doi:10.1089/jop.2022.0001
+> Asti M, Nardi S, Barsotti G. N Z Vet J. 2020;68(2):112-118. doi:10.1080/00480169.2019.1694457
+
+**The ABCD guideline is from 2009** and that is the oldest source added in this whole pass. It
+stays because it is still the operative European guidance, the same reasoning applied to LeishVet
+2011. It earns its place on one practical point the page lacked: **do not sample a cat recently
+given a modified-live vaccine**, because the vaccine virus is detectable and will read as a
+positive PCR.
+
+**Ledbetter is hedged on two counts at once** — 16 cats, and *experimental* rather than natural
+infection, which the page states explicitly. Topical ganciclovir matched oral famciclovir on
+clinical score and corneal inflammation and beat placebo on viral load, but a specific-pathogen-
+free inoculation model is not a clinical cohort and the page does not let the superscript imply
+otherwise.
+
+**Asti** is 27 dogs of one breed and is written as such. Its interest is the reasoning rather
+than the numbers: in Shar Pei with both lids rolled in, correcting the **upper lid alone** by
+forced granulation resolved 50 of 54 eyes, on the argument that much of the lower entropion is
+secondary blepharospasm that disappears once the pain does. That sits naturally beside the page's
+existing "correct in stages rather than over-correct in one attempt".
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

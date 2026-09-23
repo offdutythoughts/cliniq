@@ -236,6 +236,11 @@ describe('parseSources', () => {
     expect(parseSources('Komáromy 2016').map(s => s.id)).toEqual(['komaromy-sards'])
     expect(parseSources('Susanti 2023').map(s => s.id)).toEqual(['susanti-unilateral-sards'])
     expect(parseSources('Gómez 2023').map(s => s.id)).toEqual(['gomez-fcs-recurrence'])
+    // 'Asti' vs 'Aslanian'.
+    expect(parseSources('Thiry 2009').map(s => s.id)).toEqual(['thiry-abcd-fhv'])
+    expect(parseSources('Ledbetter 2022').map(s => s.id)).toEqual(['ledbetter-ganciclovir'])
+    expect(parseSources('Asti 2020').map(s => s.id)).toEqual(['asti-sharpei-entropion'])
+    expect(parseSources('Aslanian 2014').map(s => s.id)).toEqual(['aslanian-hema'])
     expect(parseSources('Boss 2020').map(s => s.id)).toEqual(['boss-pug-phaco'])
     expect(parseSources('Boothe 2010').map(s => s.id)).toEqual(['boothe-pyothorax'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
@@ -733,6 +738,8 @@ describe('reference block', () => {
       ['DIS-EYE-DEEP-ULC', 3, ['Progressive ulcerative keratitis', 'Corneal stromal ulcerations']],
       ['DIS-EYE-SARDS', 3, ['Sudden acquired retinal degeneration syndrome', 'Unilateral blindness']],
       ['DIS-EYE-SEQ', 3, ['feline corneal sequestrum: 72 cases', 'Autologous lamellar keratoplasty']],
+      ['DIS-EYE-FHV', 3, ['ABCD guidelines on prevention and management', 'ganciclovir']],
+      ['DIS-EYE-ENTROPION', 2, ['27 Shar Pei dogs']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -764,7 +771,8 @@ describe('reference block', () => {
       'DIS-RESP-BACPNEU', 'DIS-RESP-CIRD', 'DIS-RESP-CHYLO',
       'DIS-RESP-LLT', 'DIS-RESP-PULMNEO', 'DIS-RESP-THYMOMA', 'DIS-NASAL-LPR',
       'DIS-RESP-BRONCHIECT', 'DIS-OPH-GLAUCOMA', 'DIS-EYE-CATARACT',
-      'DIS-EYE-SUP-ULC', 'DIS-EYE-DEEP-ULC', 'DIS-EYE-SARDS', 'DIS-EYE-SEQ']) {
+      'DIS-EYE-SUP-ULC', 'DIS-EYE-DEEP-ULC', 'DIS-EYE-SARDS', 'DIS-EYE-SEQ',
+      'DIS-EYE-FHV', 'DIS-EYE-ENTROPION']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

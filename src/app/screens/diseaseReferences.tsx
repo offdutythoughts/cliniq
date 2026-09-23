@@ -897,6 +897,17 @@ const GOMEZ_FCS_RECURRENCE =
 const MICHEL_LAMELLAR_KERATOPLASTY =
   'Michel J, Vigan M, Douet JY. Autologous lamellar keratoplasty for the treatment of feline corneal sequestrum: a retrospective study of 35 eyes (2012-2020). Vet Ophthalmol. 2021;24(5):491-502. doi:10.1111/vop.12930'
 
+// Feline herpesvirus and entropion. The ABCD guideline is 2009 and its age is
+// stated on the page rather than hidden — it is still the operative European
+// guidance. Ledbetter is 16 SPF cats with EXPERIMENTAL infection, hedged on
+// both counts. Asti is 27 Shar Pei and is breed-specific by design.
+const THIRY_ABCD_FHV =
+  'Thiry E, Addie D, Belak S, et al. Feline herpesvirus infection: ABCD guidelines on prevention and management. J Feline Med Surg. 2009;11(7):547-555. doi:10.1016/j.jfms.2009.05.003'
+const LEDBETTER_GANCICLOVIR =
+  'Ledbetter EC, Badanes ZI, Chan RX, et al. Comparative efficacy of topical ophthalmic ganciclovir and oral famciclovir in cats with experimental ocular feline herpesvirus-1 epithelial infection. J Ocul Pharmacol Ther. 2022;38(5):339-347. doi:10.1089/jop.2022.0001'
+const ASTI_SHARPEI_ENTROPION =
+  'Asti M, Nardi S, Barsotti G. Surgical management of bilateral, upper and lower eyelid entropion in 27 Shar Pei dogs, using the Stades forced granulation procedure of the upper eyelid only. N Z Vet J. 2020;68(2):112-118. doi:10.1080/00480169.2019.1694457'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1013,6 +1024,8 @@ const SOURCE_NAMES = [
   // 'Michel' IS a prefix of the existing 'Michelotti', so the Michelotti
   // branch must stay ABOVE the Michel one in parseSources. Both are pinned.
   'Komáromy', 'Susanti', 'Gómez', 'Michel',
+  // 'Asti' sits beside 'Aslanian'; 'Thiry' beside 'Thomsen' and 'Trivedi'.
+  'Thiry', 'Ledbetter', 'Asti',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1337,6 +1350,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Gómez/.test(part)) { out.push({ id: 'gomez-fcs-recurrence', text: GOMEZ_FCS_RECURRENCE }); continue }
     // Placed AFTER the Michelotti branch above, which it is a prefix of.
     if (/^Michel/.test(part)) { out.push({ id: 'michel-lamellar-keratoplasty', text: MICHEL_LAMELLAR_KERATOPLASTY }); continue }
+    if (/^Thiry/.test(part)) { out.push({ id: 'thiry-abcd-fhv', text: THIRY_ABCD_FHV }); continue }
+    if (/^Ledbetter/.test(part)) { out.push({ id: 'ledbetter-ganciclovir', text: LEDBETTER_GANCICLOVIR }); continue }
+    if (/^Asti/.test(part)) { out.push({ id: 'asti-sharpei-entropion', text: ASTI_SHARPEI_ENTROPION }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
