@@ -876,6 +876,14 @@ const EDELMANN_SCCED_PRP =
 const DEES_SCCED_ADJUNCT =
   'Dees DD, Keys DA. Use of autologous serum or Vizoovet to improve healing rates of spontaneous chronic corneal epithelial defects after diamond burr debridement in dogs. Vet Ophthalmol. 2022;25(1):6-11. doi:10.1111/vop.12891'
 
+// Ulcerative keratitis microbiology. Goss is 148 ulcers and Verdenius 163
+// samples; between them they give the isolate list, the resistance pattern
+// and the reason to swab BEFORE starting topicals.
+const GOSS_ULCERATIVE_KERATITIS =
+  'Goss R, Adams VJ, Heinrich C, et al. Progressive ulcerative keratitis in dogs in the United Kingdom: microbial isolates, antimicrobial sensitivity, and resistance patterns. Vet Ophthalmol. 2024;27(4):330-346. doi:10.1111/vop.13160'
+const VERDENIUS_STROMAL_ULCER =
+  'Verdenius CY, Broens EM, Slenter IJM, Djajadiningrat-Laanen SC. Corneal stromal ulcerations in a referral population of dogs and cats in the Netherlands (2012-2019): bacterial isolates and antibiotic resistance. Vet Ophthalmol. 2024;27(1):7-16. doi:10.1111/vop.13080'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -987,6 +995,8 @@ const SOURCE_NAMES = [
   // beside 'Boothe', 'Boland', 'Bohin', 'Boeykens' and 'Boswood'.
   'Kubo', 'Graham', 'Edelmann', 'Boss',
   'Hung', 'Dees',
+  // 'Goss' sits beside 'Gould' and 'Gold'; 'Verdenius' beside 'Venn'.
+  'Goss', 'Verdenius',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1304,6 +1314,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Boss/.test(part)) { out.push({ id: 'boss-pug-phaco', text: BOSS_PUG_PHACO }); continue }
     if (/^Hung/.test(part)) { out.push({ id: 'hung-scced-dbd', text: HUNG_SCCED_DBD }); continue }
     if (/^Dees/.test(part)) { out.push({ id: 'dees-scced-adjunct', text: DEES_SCCED_ADJUNCT }); continue }
+    if (/^Goss/.test(part)) { out.push({ id: 'goss-ulcerative-keratitis', text: GOSS_ULCERATIVE_KERATITIS }); continue }
+    if (/^Verdenius/.test(part)) { out.push({ id: 'verdenius-stromal-ulcer', text: VERDENIUS_STROMAL_ULCER }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }

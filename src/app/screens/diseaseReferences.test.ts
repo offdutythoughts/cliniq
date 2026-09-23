@@ -225,6 +225,10 @@ describe('parseSources', () => {
     expect(parseSources('Edelmann 2099')).toEqual([])
     expect(parseSources('Hung 2020').map(s => s.id)).toEqual(['hung-scced-dbd'])
     expect(parseSources('Dees 2022').map(s => s.id)).toEqual(['dees-scced-adjunct'])
+    // 'Goss' vs 'Gould'/'Gold'; 'Verdenius' vs 'Venn'.
+    expect(parseSources('Goss 2024').map(s => s.id)).toEqual(['goss-ulcerative-keratitis'])
+    expect(parseSources('Verdenius 2024').map(s => s.id)).toEqual(['verdenius-stromal-ulcer'])
+    expect(parseSources('Venn 2017').map(s => s.id)).toEqual(['venn-outpatient'])
     expect(parseSources('Boss 2020').map(s => s.id)).toEqual(['boss-pug-phaco'])
     expect(parseSources('Boothe 2010').map(s => s.id)).toEqual(['boothe-pyothorax'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
@@ -719,6 +723,7 @@ describe('reference block', () => {
       ['DIS-OPH-GLAUCOMA', 5, ['Shiba dogs with primary angle closure glaucoma', 'Baerveldt glaucoma drainage device']],
       ['DIS-EYE-CATARACT', 3, ['CDE-predictive value', 'phacoemulsification in Pugs']],
       ['DIS-EYE-SUP-ULC', 4, ['diamond burr debridement', 'platelet-rich plasma', 'Vizoovet']],
+      ['DIS-EYE-DEEP-ULC', 3, ['Progressive ulcerative keratitis', 'Corneal stromal ulcerations']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -750,7 +755,7 @@ describe('reference block', () => {
       'DIS-RESP-BACPNEU', 'DIS-RESP-CIRD', 'DIS-RESP-CHYLO',
       'DIS-RESP-LLT', 'DIS-RESP-PULMNEO', 'DIS-RESP-THYMOMA', 'DIS-NASAL-LPR',
       'DIS-RESP-BRONCHIECT', 'DIS-OPH-GLAUCOMA', 'DIS-EYE-CATARACT',
-      'DIS-EYE-SUP-ULC']) {
+      'DIS-EYE-SUP-ULC', 'DIS-EYE-DEEP-ULC']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

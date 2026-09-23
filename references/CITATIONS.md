@@ -1526,6 +1526,29 @@ mostly keratomalacia, which is worth a recheck rather than an assumption. It als
 Boxer-specific warning: 2.3 times more likely than other breeds to develop a contralateral
 SCCED, usually within 24 months.
 
+### Page 70 — deep / melting corneal ulcer (2026-09-23)
+
+> Goss R, Adams VJ, Heinrich C, et al. Vet Ophthalmol. 2024;27(4):330-346. doi:10.1111/vop.13160
+> Verdenius CY, Broens EM, Slenter IJM, Djajadiningrat-Laanen SC. Vet Ophthalmol. 2024;27(1):7-16. doi:10.1111/vop.13080
+
+This is the most directly prescriptive pair added so far. The page named a first-line
+fluoroquinolone without saying what it was covering or what to avoid; it now carries the isolate
+list (**S. canis, P. aeruginosa, S. pseudintermedius**), the fact that Pseudomonas was **10 times
+more likely** once the ulcer was malacic, and the resistance pattern that rules three common
+topicals out: neomycin 85%, fusidic acid 78%, tetracycline 68%. Gentamicin, ofloxacin,
+ciprofloxacin and chloramphenicol held up. Goss's in vitro finding that **no single drug** reached
+90% coverage but chloramphenicol-or-gentamicin *plus* a fluoroquinolone did is the basis for the
+page's new "use two agents pending culture".
+
+Two findings support "swab before you treat" from different directions. Verdenius: significantly
+fewer cultures grew anything in animals already on topical antibiotics. Goss: only **54%** of 148
+progressive ulcers grew an organism at all, so a negative culture is the expected result in half
+of cases and should not be read as absence of infection.
+
+Verdenius also dates the advice — multi-drug-resistant canine isolates rose from **9.4% to 38.6%**
+between 2012-2015 and 2016-2019. An empirical choice that worked a decade ago cannot be assumed
+to still work, which is a caveat worth carrying on a page that will be read for years.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
