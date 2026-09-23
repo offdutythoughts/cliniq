@@ -804,6 +804,53 @@ const SCHWARTZ_GI_STAPLES =
 const COLA_LAER =
   'Cola V, Ferrari C, Del Magno S, et al. Laparotomy-assisted endoscopic removal of gastrointestinal foreign bodies: evaluation of this technique and postoperative recovery in dogs and cats. Vet Surg. 2024;53(7):1266-1276. doi:10.1111/vsu.14126'
 
+// Airway disease and pneumothorax. Chan is a placebo-controlled cross-over
+// trial of inhaled fluticasone in 36 dogs, so it covers BOTH the chronic
+// bronchitis and tracheal collapse pages. Dickson is 110 dogs and is where
+// the recurrence timing comes from; mind the confusable 'Dickinson' already
+// in this file for neurological FIP.
+const CHAN_INHALED_FLUTICASONE =
+  'Chan JC, Johnson LR. Prospective evaluation of the efficacy of inhaled steroids administered via the AeroDawg spacing chamber in management of dogs with chronic cough. J Vet Intern Med. 2023;37(2):660-669. doi:10.1111/jvim.16673'
+const DICKSON_PNEUMOTHORAX =
+  'Dickson R, Scharf VF, Michael AE, et al. Surgical management and outcome of dogs with primary spontaneous pneumothorax: 110 cases (2009-2019). J Am Vet Med Assoc. 2021;258(11):1229-1235. doi:10.2460/javma.258.11.1229'
+const SERIOT_MVFB_PNEUMOTHORAX =
+  'Seriot P, Dunie-Merigot A, Trehiou CB, et al. Treatment and outcome of spontaneous pneumothorax secondary to suspected migrating vegetal foreign body in 37 dogs. Vet Rec. 2021;189(4):e22. doi:10.1002/vetr.22'
+
+// The ISCAID respiratory antimicrobial guidelines cover pneumonia, CIRD,
+// bronchitis, rhinitis and pyothorax, so this one reference serves several
+// pages. It is a Working Group practice guideline in JVIM, not a textbook.
+const LAPPIN_ISCAID_RESP =
+  'Lappin MR, Blondeau J, Boothe D, et al. Antimicrobial use guidelines for treatment of respiratory tract disease in dogs and cats: Antimicrobial Guidelines Working Group of the International Society for Companion Animal Infectious Diseases. J Vet Intern Med. 2017;31(2):279-294. doi:10.1111/jvim.14627'
+
+// Chylothorax. A systematic review rather than a cohort — its value is the
+// honest verdict on how thin the evidence is, which the page now states.
+// Mind the print year: PubMed dates it 2019, the volume is 2020.
+const REEVES_CHYLOTHORAX_SR =
+  'Reeves LA, Anderson KM, Luther JK, Torres BT. Treatment of idiopathic chylothorax in dogs and cats: a systematic review. Vet Surg. 2020;49(1):70-79. doi:10.1111/vsu.13322'
+
+// Thoracic surgery. Rossanese is 80 dogs, the largest lung-lobe-torsion series
+// and the source of the pug over-representation. Bleakley compares the two
+// lobectomy approaches in 134 dogs. Carroll is 49 thoracoscopic mediastinal
+// resections; MacIver is 18 and is hedged, but it is where the poor outcome
+// with concurrent myasthenia and megaoesophagus was first quantified.
+const ROSSANESE_LLT =
+  'Rossanese M, Wustefeld-Janssens B, Price C, et al. Long-term survival after treatment of idiopathic lung lobe torsion in 80 cases. Vet Surg. 2020;49(4):659-667. doi:10.1111/vsu.13406'
+const BLEAKLEY_LOBECTOMY_APPROACH =
+  'Bleakley S, Phipps K, Petrovsky B, Monnet E. Median sternotomy versus intercostal thoracotomy for lung lobectomy: a comparison of short-term outcome in 134 dogs. Vet Surg. 2018;47(1):104-113. doi:10.1111/vsu.12741'
+const CARROLL_THORACOSCOPIC_MEDIASTINAL =
+  'Carroll KA, Mayhew PD, Culp WTN, et al. Thoracoscopic removal of cranial mediastinal masses in dogs is associated with a low conversion rate, excellent survival to discharge, and good long-term outcome. J Am Vet Med Assoc. 2024;262(10):1-8. doi:10.2460/javma.23.12.0679'
+const MACIVER_VATS_THYMOMA =
+  'MacIver MA, Case JB, Monnet EL, et al. Video-assisted extirpation of cranial mediastinal masses in dogs: 18 cases (2009-2014). J Am Vet Med Assoc. 2017;250(11):1283-1290. doi:10.2460/javma.250.11.1283'
+
+// Bronchiectasis and bronchomalacia. JOHNSON is now year-keyed: the same
+// author (LR Johnson) has the 2023 pyothorax series already in this file and
+// this 2016 bronchiectasis one. A bare prefix match would print pyothorax on
+// the bronchiectasis page.
+const JOHNSON_BRONCHIECTASIS =
+  'Johnson LR, Johnson EG, Vernau W, Kass PH, Byrne BA. Bronchoscopy, imaging, and concurrent diseases in dogs with bronchiectasis: (2003-2014). J Vet Intern Med. 2016;30(1):247-254. doi:10.1111/jvim.13809'
+const GAMRACY_BRONCHOMALACIA =
+  'Gamracy J, Wiggen K, Vientos-Plotts A, Reinero C. Clinicopathologic features, comorbid diseases, and prevalence of pulmonary hypertension in dogs with bronchomalacia. J Vet Intern Med. 2022;36(2):417-428. doi:10.1111/jvim.16381'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -902,6 +949,15 @@ const SOURCE_NAMES = [
   'Stanton', 'Sones', 'Iseri',
   // GI. 'Cola' sits beside 'Cook'; 'Schwartz' beside 'Scott'/'Scobie'.
   'Unterer', 'Ziese', 'Schwartz', 'Cola',
+  // 'Dickson' vs the existing 'Dickinson' — easily misread for each other,
+  // though neither is a prefix of the other. Both are pinned in the tests.
+  'Chan', 'Dickson', 'Sériot',
+  // 'Lappin' beside 'Langlois'/'Larose'; 'Reeves' beside 'Reeve' — and that
+  // one IS a prefix pair, so the branch order below matters. Reeves first.
+  'Reeves', 'Lappin',
+  // Thoracic surgery. 'MacIver' sits beside the existing 'MacPhail'.
+  'Rossanese', 'Bleakley', 'Carroll', 'MacIver',
+  'Gamracy',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -971,6 +1027,13 @@ const WIINBERG_BY_YEAR: Record<string, { id: string; text: string }> = {
 const MOORE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2000': { id: 'moore-metyrapone', text: MOORE_METYRAPONE },
   '2020': { id: 'moore-ivde-review', text: MOORE_IVDE_REVIEW },
+}
+
+/** Two LR Johnson papers a decade apart — the pyothorax series and the
+ *  bronchiectasis one. Keyed on the year for the same reason as Moore. */
+const JOHNSON_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2016': { id: 'johnson-bronchiectasis', text: JOHNSON_BRONCHIECTASIS },
+  '2023': { id: 'johnson-pyothorax', text: JOHNSON_PYOTHORAX },
 }
 
 const ARENAS_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -1145,7 +1208,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Rooney/.test(part)) { out.push({ id: 'rooney-pyothorax', text: ROONEY_PYOTHORAX }); continue }
     if (/^Boothe/.test(part)) { out.push({ id: 'boothe-pyothorax', text: BOOTHE_PYOTHORAX }); continue }
     if (/^Eiras/.test(part)) { out.push({ id: 'eiras-diaz-ct', text: EIRAS_DIAZ_CT }); continue }
-    if (/^Johnson/.test(part)) { out.push({ id: 'johnson-pyothorax', text: JOHNSON_PYOTHORAX }); continue }
+    if (/^Johnson/.test(part)) {
+      const hit = JOHNSON_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Ramsey/.test(part)) { out.push({ id: 'ramsey-maropitant', text: RAMSEY_MAROPITANT }); continue }
     if (/^Shmalberg/.test(part)) { out.push({ id: 'shmalberg-metronidazole', text: SHMALBERG_METRONIDAZOLE }); continue }
     if (/^Rudinsky/.test(part)) {
@@ -1190,6 +1257,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Weisse/.test(part)) { out.push({ id: 'weisse-tracheal-stent', text: WEISSE_TRACHEAL_STENT }); continue }
     if (/^De Lorenzi/.test(part)) { out.push({ id: 'de-lorenzi-silicone-stent', text: DE_LORENZI_SILICONE_STENT }); continue }
     if (/^Gareis/.test(part)) { out.push({ id: 'gareis-flad-radiographs', text: GAREIS_FLAD_RADIOGRAPHS }); continue }
+    if (/^Gamracy/.test(part)) { out.push({ id: 'gamracy-bronchomalacia', text: GAMRACY_BRONCHOMALACIA }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
@@ -1200,6 +1268,17 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Ziese/.test(part)) { out.push({ id: 'ziese-ahds-probiotic', text: ZIESE_AHDS_PROBIOTIC }); continue }
     if (/^Schwartz/.test(part)) { out.push({ id: 'schwartz-gi-staples', text: SCHWARTZ_GI_STAPLES }); continue }
     if (/^Cola/.test(part)) { out.push({ id: 'cola-laer', text: COLA_LAER }); continue }
+    if (/^Chan/.test(part)) { out.push({ id: 'chan-inhaled-fluticasone', text: CHAN_INHALED_FLUTICASONE }); continue }
+    if (/^Dickson/.test(part)) { out.push({ id: 'dickson-pneumothorax', text: DICKSON_PNEUMOTHORAX }); continue }
+    if (/^Sériot/.test(part)) { out.push({ id: 'seriot-mvfb-pneumothorax', text: SERIOT_MVFB_PNEUMOTHORAX }); continue }
+    // 'Reeve' is a prefix of 'Reeves', so this branch MUST precede the Reeve
+    // one below or the brachycephalic hiatal hernia paper wins the marker.
+    if (/^Reeves/.test(part)) { out.push({ id: 'reeves-chylothorax-sr', text: REEVES_CHYLOTHORAX_SR }); continue }
+    if (/^Lappin/.test(part)) { out.push({ id: 'lappin-iscaid-resp', text: LAPPIN_ISCAID_RESP }); continue }
+    if (/^Rossanese/.test(part)) { out.push({ id: 'rossanese-llt', text: ROSSANESE_LLT }); continue }
+    if (/^Bleakley/.test(part)) { out.push({ id: 'bleakley-lobectomy-approach', text: BLEAKLEY_LOBECTOMY_APPROACH }); continue }
+    if (/^Carroll/.test(part)) { out.push({ id: 'carroll-thoracoscopic-mediastinal', text: CARROLL_THORACOSCOPIC_MEDIASTINAL }); continue }
+    if (/^MacIver/.test(part)) { out.push({ id: 'maciver-vats-thymoma', text: MACIVER_VATS_THYMOMA }); continue }
     // ── Disease pages 6-10 ──
     if (/^Venn/.test(part)) { out.push({ id: 'venn-outpatient', text: VENN_OUTPATIENT }); continue }
     if (/^Sarpong/.test(part)) { out.push({ id: 'sarpong-outpatient', text: SARPONG_OUTPATIENT }); continue }

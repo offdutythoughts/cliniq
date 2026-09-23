@@ -1371,6 +1371,106 @@ way a percentage is not.
 removed foreign bodies without an enterotomy in 35 of 40, with intestinal wall damage being what
 forced conversion.
 
+### Pages 57-58 — pneumothorax, canine chronic bronchitis (2026-09-23)
+
+> Chan JC, Johnson LR. J Vet Intern Med. 2023;37(2):660-669. doi:10.1111/jvim.16673
+> Dickson R, Scharf VF, Michael AE, et al. J Am Vet Med Assoc. 2021;258(11):1229-1235. doi:10.2460/javma.258.11.1229
+> Seriot P, Dunie-Merigot A, Trehiou CB, et al. Vet Rec. 2021;189(4):e22. doi:10.1002/vetr.22
+
+⚠️ **`Dickson` vs the existing `Dickinson`** (neurological FIP). Neither is a prefix of the
+other, so the resolver is safe, but they are trivially misread for one another by a human
+editing this file. Both are pinned in the resolver test.
+
+**Chan** is a placebo-controlled cross-over trial and deliberately enrolled dogs with **airway
+collapse** as well as inflammatory airway disease, so it is cited on both `DIS-RESP-BRONCHITIS`
+and `DIS-RESP-TRACOLL`. Beyond the efficacy result (cough frequency, duration and severity all
+significantly reduced; quality-of-life score improved by a median 69%), it carries a practical
+finding the pages needed: feasibility of the mask *improved* with continued use and only one dog
+of 36 would not accept it, so a poor first week is not a reason to abandon the route.
+
+**Dickson** (110 dogs) contributes recurrence *timing* rather than a bare rate. Recurrence was
+13% of dogs followed beyond 30 days, clustered at a median of **9 days**, and later recurrence
+was rare (3%). The authors read that as a lesion missed at the original exploration rather than a
+new bulla forming — so the page now says to re-image rather than assume new disease.
+
+**Seriot** (37 dogs) covers the migrating plant foreign body route. Two findings made the page:
+CT agreed with surgery on 34 of 40 lobes, and where CT showed a foreign body that surgery failed
+to find, **a third later developed a draining tract** — a follow-up plan, not a closed case.
+
+### Pages 59-61 — bacterial pneumonia, CIRD, chylothorax (2026-09-23)
+
+> Lappin MR, Blondeau J, Boothe D, et al. J Vet Intern Med. 2017;31(2):279-294. doi:10.1111/jvim.14627
+> Reeves LA, Anderson KM, Luther JK, Torres BT. Vet Surg. 2020;49(1):70-79. doi:10.1111/vsu.13322
+
+⚠️ **`Reeve` IS a prefix of `Reeves`** — the first genuine prefix pair since Anders/Anderson and
+Lo/Longeri. `Reeve` is the brachycephalic hiatal hernia fluoroscopy paper on `DIS-GI-HH`. The
+`/^Reeves/` branch is placed **before** `/^Reeve/` in `parseSources`, and both directions are
+asserted in the resolver test. `DIS-GI-HH` is also still pinned at 6 references, which would
+catch a silent swap.
+
+**Lappin is the ISCAID respiratory working group guideline** and covers pneumonia, CIRD,
+bronchitis, rhinitis and pyothorax, so one reference serves several pages. It is a Working Group
+practice guideline published in JVIM — a peer-reviewed paper, not a textbook chapter. Two of its
+positions were missing from the pages and are now on them: reserve fluoroquinolones for
+culture-confirmed or genuinely severe disease rather than reaching for them first-line, and
+**withhold antibiotics for the first 10 days of uncomplicated CIRD** unless the dog is febrile,
+lethargic or inappetent. The CIRD page previously implied the choice was doxycycline-or-nothing
+without saying that "nothing" is the default for a well dog.
+
+**Reeves is cited for its verdict on the evidence, not for a result.** Of 313 papers screened,
+11 met inclusion criteria, one canine study reached a higher level of evidence and **none in
+cats** did. No surgical method can be declared superior, and there is **no evidence supporting
+medical therapy as a primary treatment** — which is stronger than the page's previous "seldom
+effective". Print year 2020; PubMed dates it 2019.
+
+### Pages 62-65 — lung lobe torsion, pulmonary neoplasia, thymoma, idiopathic rhinitis (2026-09-23)
+
+> Rossanese M, Wustefeld-Janssens B, Price C, et al. Vet Surg. 2020;49(4):659-667. doi:10.1111/vsu.13406
+> Bleakley S, Phipps K, Petrovsky B, Monnet E. Vet Surg. 2018;47(1):104-113. doi:10.1111/vsu.12741
+> Carroll KA, Mayhew PD, Culp WTN, et al. J Am Vet Med Assoc. 2024;262(10):1-8. doi:10.2460/javma.23.12.0679
+> MacIver MA, Case JB, Monnet EL, et al. J Am Vet Med Assoc. 2017;250(11):1283-1290. doi:10.2460/javma.250.11.1283
+
+`DIS-NASAL-LPR` reuses **Lappin** from the previous batch — chronic rhinitis is explicitly in the
+ISCAID guideline's scope, and "treat documented infection, not the discharge" is the point the
+page needed.
+
+A registry disagreement worth recording even though it did not matter: Crossref lists
+Rossanese's fifth author as **Woods**, PubMed as **Wood**. Seven authors means AMA truncates to
+the first three plus *et al*, so the disputed name never appears in the reference.
+
+**Rossanese** (80 dogs) supplies the pug figure the page asserted without one — 47.5%, with
+sighthounds a further 16.2% — and separates primary from secondary torsion by survival (median
+not reached vs 921 days). That distinction is what the owner conversation turns on.
+
+**Carroll and MacIver both bear on the same question and disagree in emphasis**, which is why
+both are cited. Carroll (49 dogs) found thymoma with pre-surgical myasthenia at a median 182 days
+against 1,102 overall, but reports that the difference **did not reach significance** — and the
+page says so rather than quoting the gap as established. MacIver is **18 dogs** and is hedged,
+but it is where the poor outcome with myasthenia *and* megaoesophagus together was first
+quantified (median 20 days). Presenting both, with their sizes, is more honest than picking one.
+
+### Page 66 — bronchiectasis (2026-09-23)
+
+> Johnson LR, Johnson EG, Vernau W, Kass PH, Byrne BA. J Vet Intern Med. 2016;30(1):247-254. doi:10.1111/jvim.13809
+> Gamracy J, Wiggen K, Vientos-Plotts A, Reinero C. J Vet Intern Med. 2022;36(2):417-428. doi:10.1111/jvim.16381
+
+⚠️ **`Johnson` is now year-keyed.** Both papers are by the same LR Johnson — the 2023 pyothorax
+series already in this file and this 2016 bronchiectasis one. Same author, unrelated works, a
+decade apart; a bare prefix match would have printed pyothorax on the bronchiectasis page.
+`DIS-PYOTHORAX` is pinned at 8 references, which would catch a swap.
+
+Two findings changed the page. **Radiographs miss bronchiectasis** — present on films in 60% of
+affected dogs against 92% at bronchoscopy and 100% on CT, so a clean radiograph does not exclude
+it. And **a negative culture does not mean the exacerbation is not infective**: bacteria were
+isolated in only 28% of 86 dogs. The page also now lists the three diagnoses that actually
+underlie it — pneumonia 52%, inflammatory airway disease 36%, eosinophilic bronchopneumopathy 12%
+— rather than implying chronic bronchitis is the usual cause.
+
+**Gamracy** serves bronchiectasis and tracheal collapse together: 41% of 210 dogs worked up for
+respiratory signs had bronchomalacia, **every one had at least one comorbid cardiopulmonary
+disorder**, and pulmonary hypertension was more prevalent among them. That is the argument for
+scoping and echoing rather than treating the tracheal lesion alone.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
