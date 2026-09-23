@@ -851,6 +851,20 @@ const JOHNSON_BRONCHIECTASIS =
 const GAMRACY_BRONCHOMALACIA =
   'Gamracy J, Wiggen K, Vientos-Plotts A, Reinero C. Clinicopathologic features, comorbid diseases, and prevalence of pulmonary hypertension in dogs with bronchomalacia. J Vet Intern Med. 2022;36(2):417-428. doi:10.1111/jvim.16381'
 
+// Ophthalmology. Kubo is 104 Shiba eyes — breed-specific, so the page says so
+// — but it is the cleanest demonstration that time to presentation and having
+// a shunt both decide whether the eye keeps sight. Graham compares the two
+// surgical routes across 83 eyes. Edelmann is 182 phaco eyes and Boss is the
+// pug-specific complication profile.
+const KUBO_SHIBA_PACG =
+  'Kubo A, Ito Y. Comparison of visual outcomes between medical treatment alone and Ahmed glaucoma valve implantation in Shiba dogs with primary angle closure glaucoma. Vet Ophthalmol. 2024;27(5):452-460. doi:10.1111/vop.13189'
+const GRAHAM_TSCP_VS_GDD =
+  'Graham KL, Hall EJS, Caraguel C, White A, Billson FA, Billson FM. Comparison of diode laser trans-scleral cyclophotocoagulation versus implantation of a 350-mm2 Baerveldt glaucoma drainage device for the treatment of glaucoma in dogs (a retrospective study: 2010-2016). Vet Ophthalmol. 2018;21(5):487-497. doi:10.1111/vop.12536'
+const EDELMANN_PHACO_CDE =
+  'Edelmann ML, Mohammed HO, Ledbetter EC. Retrospective evaluation of phacoemulsification and aspiration in 182 eyes: visual outcomes and CDE-predictive value. Vet Ophthalmol. 2022;25(5):316-325. doi:10.1111/vop.12978'
+const BOSS_PUG_PHACO =
+  'Boss C, La Croix N, Moore PA, et al. Preliminary report of postoperative complications of phacoemulsification in Pugs: a multicenter retrospective study of 32 cases. Vet Ophthalmol. 2020;23(3):442-449. doi:10.1111/vop.12739'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -958,6 +972,9 @@ const SOURCE_NAMES = [
   // Thoracic surgery. 'MacIver' sits beside the existing 'MacPhail'.
   'Rossanese', 'Bleakley', 'Carroll', 'MacIver',
   'Gamracy',
+  // Ophthalmology. 'Graham' sits beside 'Granström' and 'Greci'; 'Boss'
+  // beside 'Boothe', 'Boland', 'Bohin', 'Boeykens' and 'Boswood'.
+  'Kubo', 'Graham', 'Edelmann', 'Boss',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1258,6 +1275,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^De Lorenzi/.test(part)) { out.push({ id: 'de-lorenzi-silicone-stent', text: DE_LORENZI_SILICONE_STENT }); continue }
     if (/^Gareis/.test(part)) { out.push({ id: 'gareis-flad-radiographs', text: GAREIS_FLAD_RADIOGRAPHS }); continue }
     if (/^Gamracy/.test(part)) { out.push({ id: 'gamracy-bronchomalacia', text: GAMRACY_BRONCHOMALACIA }); continue }
+    if (/^Kubo/.test(part)) { out.push({ id: 'kubo-shiba-pacg', text: KUBO_SHIBA_PACG }); continue }
+    if (/^Graham/.test(part)) { out.push({ id: 'graham-tscp-vs-gdd', text: GRAHAM_TSCP_VS_GDD }); continue }
+    if (/^Edelmann/.test(part)) { out.push({ id: 'edelmann-phaco-cde', text: EDELMANN_PHACO_CDE }); continue }
+    if (/^Boss/.test(part)) { out.push({ id: 'boss-pug-phaco', text: BOSS_PUG_PHACO }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }

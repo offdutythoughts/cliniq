@@ -1471,6 +1471,38 @@ respiratory signs had bronchomalacia, **every one had at least one comorbid card
 disorder**, and pulmonary hypertension was more prevalent among them. That is the argument for
 scoping and echoing rather than treating the tracheal lesion alone.
 
+### Pages 67-68 — acute glaucoma, cataract (2026-09-23)
+
+> Kubo A, Ito Y. Vet Ophthalmol. 2024;27(5):452-460. doi:10.1111/vop.13189
+> Graham KL, Hall EJS, Caraguel C, White A, Billson FA, Billson FM. Vet Ophthalmol. 2018;21(5):487-497. doi:10.1111/vop.12536
+> Edelmann ML, Mohammed HO, Ledbetter EC. Vet Ophthalmol. 2022;25(5):316-325. doi:10.1111/vop.12978
+> Boss C, La Croix N, Moore PA, et al. Vet Ophthalmol. 2020;23(3):442-449. doi:10.1111/vop.12739
+
+**Ophthalmology is the largest remaining block** (58 pages), and these are the first two. Unlike
+the other clinical areas, every eye page already carries a *chapter-level* Gelatt citation, so
+the reference counts in the test table include both the book chapters and the new papers.
+
+A note on the editing mechanics rather than the evidence: the ophthalmology rows in `db.ts` span
+**many lines** with double-quoted fields, unlike the single-line rows everywhere else. The
+one-line find-and-replace used for every previous batch silently matches nothing on them. Edits
+here go through a row-range helper that walks the braces to find the row's true extent.
+
+**Kubo** is 104 Shiba eyes — breed-specific, and the page says so — but it separates the two
+things that decide whether a glaucomatous eye keeps sight, and both are actionable: presenting
+**within 72 hours** (86.7% still sighted vs 44.1% later) and getting a shunt while still sighted
+(69.2% visual retention at 12 months vs 7.7% on drops alone; median time to blindness 39.9 months
+vs 1.7). The page previously said "refer same day" without saying what the referral buys.
+
+**Graham** answers which surgery, across 83 eyes: a Baerveldt drainage device beat
+cyclophotocoagulation-plus-suture-shunt on the composite that matters — pressure controlled
+*without* losing sight, 60.7% vs 35.2% — and needed fewer adjunctive drops.
+
+**Edelmann** replaces the page's unsourced "90%+ visual outcome" with 86% of 182 eyes at last
+follow-up, and supplies the mechanism behind "refer early": eyes operated within a month needed
+less phacoemulsification energy, and higher energy tracked with post-operative glaucoma and
+blindness. **Boss** is the pug exception — corneal ulceration, not glaucoma, was their commonest
+complication, and 75% had pre-existing pigmentary keratitis.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

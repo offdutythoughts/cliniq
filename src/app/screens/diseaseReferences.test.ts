@@ -215,6 +215,12 @@ describe('parseSources', () => {
     expect(parseSources('Johnson 2023').map(s => s.id)).toEqual(['johnson-pyothorax'])
     expect(parseSources('Johnson 2099')).toEqual([])
     expect(parseSources('Gamracy 2022').map(s => s.id)).toEqual(['gamracy-bronchomalacia'])
+    // 'Graham' vs 'Granström'/'Greci'; 'Boss' vs 'Boothe'/'Boland'/'Bohin'.
+    expect(parseSources('Kubo 2024').map(s => s.id)).toEqual(['kubo-shiba-pacg'])
+    expect(parseSources('Graham 2018').map(s => s.id)).toEqual(['graham-tscp-vs-gdd'])
+    expect(parseSources('Edelmann 2022').map(s => s.id)).toEqual(['edelmann-phaco-cde'])
+    expect(parseSources('Boss 2020').map(s => s.id)).toEqual(['boss-pug-phaco'])
+    expect(parseSources('Boothe 2010').map(s => s.id)).toEqual(['boothe-pyothorax'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
     // Scott vs Scobie — three shared characters, neither a prefix.
     expect(parseSources('Scott 2021').map(s => s.id)).toEqual(['scott-phenobarb-marrow'])
@@ -702,6 +708,10 @@ describe('reference block', () => {
       ['DIS-RESP-THYMOMA', 2, ['Thoracoscopic removal of cranial mediastinal masses', 'Video-assisted extirpation']],
       ['DIS-NASAL-LPR', 1, ['Antimicrobial Guidelines Working Group']],
       ['DIS-RESP-BRONCHIECT', 2, ['dogs with bronchiectasis', 'bronchomalacia']],
+      // Ophthalmology pages keep their per-chapter Gelatt entries alongside
+      // the papers, so the counts here include both.
+      ['DIS-OPH-GLAUCOMA', 5, ['Shiba dogs with primary angle closure glaucoma', 'Baerveldt glaucoma drainage device']],
+      ['DIS-EYE-CATARACT', 3, ['CDE-predictive value', 'phacoemulsification in Pugs']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -732,7 +742,7 @@ describe('reference block', () => {
       'DIS-GI-AHDS', 'DIS-GI-FB', 'DIS-RESP-PNX', 'DIS-RESP-BRONCHITIS',
       'DIS-RESP-BACPNEU', 'DIS-RESP-CIRD', 'DIS-RESP-CHYLO',
       'DIS-RESP-LLT', 'DIS-RESP-PULMNEO', 'DIS-RESP-THYMOMA', 'DIS-NASAL-LPR',
-      'DIS-RESP-BRONCHIECT']) {
+      'DIS-RESP-BRONCHIECT', 'DIS-OPH-GLAUCOMA', 'DIS-EYE-CATARACT']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)
