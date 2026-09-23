@@ -774,6 +774,20 @@ const PATERSON_SRMA =
 const GUNTHER_SRMA_CYTARABINE =
   'Gunther C, Steffen F, Alder DS, Beatrice L, Geigy C, Beckmann K. Evaluating the use of cytosine arabinoside for treatment for recurrent canine steroid-responsive meningitis-arteritis. Vet Rec. 2020;187(1):e7. doi:10.1136/vr.105683'
 
+// Nasal disease. Stanton is FIVE dogs and is cited for one negative finding
+// only — no dog developed neurological signs — which is not the same as
+// showing the procedure to be safe. The page says so.
+const STANTON_CRIBRIFORM =
+  'Stanton JA, Miller ML, Johnson P, Davignon DL, Barr SC. Treatment of canine sinonasal aspergillosis with clotrimazole infusion in patients with cribriform plate lysis. J Small Anim Pract. 2018;59(7):411-414. doi:10.1111/jsap.12835'
+
+// Nasal neoplasia. Sones is 86 intranasal sarcomas and separates the radiation
+// protocols; Iseri is 123 dogs and is the argument for treating early rather
+// than at the stage most dogs are presented.
+const SONES_NASAL_SARCOMA =
+  'Sones E, Smith A, Schleis S, et al. Survival times for canine intranasal sarcomas treated with radiation therapy: 86 cases (1996-2011). Vet Radiol Ultrasound. 2013;54(2):194-201. doi:10.1111/vru.12006'
+const ISERI_MEGAVOLTAGE =
+  'Iseri T, Horikirizono H, Abe M, et al. Outcomes of megavoltage radiotherapy for canine intranasal tumors and its relationship to clinical stages. Open Vet J. 2022;12(3):383-390. doi:10.5455/OVJ.2022.v12.i3.12'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -867,6 +881,9 @@ const SOURCE_NAMES = [
   // word boundary already keeps them apart whatever the order here. Both are
   // pinned in the tests so that stays true if the branch is ever rewritten.
   'Low', 'Paterson', 'Günther',
+  // Nasal. 'Stanton' sits beside the existing 'Stanley' — they share four
+  // characters and neither is a prefix of the other. Both are pinned.
+  'Stanton', 'Sones', 'Iseri',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1158,6 +1175,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
+    if (/^Stanton/.test(part)) { out.push({ id: 'stanton-cribriform', text: STANTON_CRIBRIFORM }); continue }
+    if (/^Sones/.test(part)) { out.push({ id: 'sones-nasal-sarcoma', text: SONES_NASAL_SARCOMA }); continue }
+    if (/^Iseri/.test(part)) { out.push({ id: 'iseri-megavoltage', text: ISERI_MEGAVOLTAGE }); continue }
     // ── Disease pages 6-10 ──
     if (/^Venn/.test(part)) { out.push({ id: 'venn-outpatient', text: VENN_OUTPATIENT }); continue }
     if (/^Sarpong/.test(part)) { out.push({ id: 'sarpong-outpatient', text: SARPONG_OUTPATIENT }); continue }

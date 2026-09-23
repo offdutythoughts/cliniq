@@ -1322,6 +1322,27 @@ page now warns against discounting SRMA on an off-list breed. It also carries th
 controlled 10 of 12 relapsing dogs, but **every dog had an adverse event** and three were severe,
 so the page states both halves.
 
+### Pages 53-54 — sinonasal aspergillosis, nasal neoplasia (2026-09-23)
+
+> Stanton JA, Miller ML, Johnson P, Davignon DL, Barr SC. J Small Anim Pract. 2018;59(7):411-414. doi:10.1111/jsap.12835
+> Sones E, Smith A, Schleis S, et al. Vet Radiol Ultrasound. 2013;54(2):194-201. doi:10.1111/vru.12006
+> Iseri T, Horikirizono H, Abe M, et al. Open Vet J. 2022;12(3):383-390. doi:10.5455/OVJ.2022.v12.i3.12
+
+**Stanton is five dogs and the page says so twice over.** Cribriform lysis has been treated as a
+bar to topical azole infusion. This series found no dog developing neurological signs — but *no
+event in five dogs* is not a demonstration of safety, and the page is written to say exactly
+that: enough to discuss with a specialist rather than refuse outright, not enough to call safe.
+This is the clearest case so far of Rule 2 mattering: the superscript would otherwise read as
+authority for a procedure with a catastrophic failure mode.
+
+**Iseri** (123 dogs) is cited for the stage gradient rather than the headline. Megavoltage beat
+orthovoltage overall (median 488 vs 317–325 days), but the benefit was concentrated early:
+stage 1 reached 931 days, stage 4 only 176. That is the argument for imaging and referring before
+facial deformity, which is the point the page needed.
+
+**Sones** separates the radiation protocols within 86 intranasal sarcomas: daily-fractionated
+641 days, Monday/Wednesday/Friday 347, palliative 305. Print year 2013; PubMed dates it 2012.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

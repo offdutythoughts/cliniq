@@ -185,6 +185,10 @@ describe('parseSources', () => {
     expect(parseSources('Moore 2099')).toEqual([])
     expect(parseSources('Paterson 2024').map(s => s.id)).toEqual(['paterson-srma'])
     expect(parseSources('Günther 2020').map(s => s.id)).toEqual(['gunther-srma-cytarabine'])
+    // 'Stanton' vs the existing 'Stanley' — four shared characters, neither a prefix.
+    expect(parseSources('Stanton 2018').map(s => s.id)).toEqual(['stanton-cribriform'])
+    expect(parseSources('Sones 2013').map(s => s.id)).toEqual(['sones-nasal-sarcoma'])
+    expect(parseSources('Iseri 2022').map(s => s.id)).toEqual(['iseri-megavoltage'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
     // Scott vs Scobie — three shared characters, neither a prefix.
     expect(parseSources('Scott 2021').map(s => s.id)).toEqual(['scott-phenobarb-marrow'])
@@ -658,6 +662,8 @@ describe('reference block', () => {
       ['DIS-RESP-ASPPNEU', 2, ['88 cases', 'ampicillin-sulbactam versus']],
       ['DIS-NEU-IVDD', 3, ['acute thoracolumbar disc extrusion', 'Machine-learning-based prediction']],
       ['DIS-SRMA', 2, ['124 cases', 'cytosine arabinoside']],
+      ['DIS-NASAL-ASP', 1, ['cribriform plate lysis']],
+      ['DIS-NASAL-NEO', 3, ['megavoltage radiotherapy', 'intranasal sarcomas']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -684,7 +690,7 @@ describe('reference block', () => {
       'DIS-TOX-ZN', 'DIS-TOX-ALLIUM', 'DIS-TOX-CHOLE',
       'DIS-CARD-MVD', 'DIS-CARD-DCM', 'DIS-CARD-PERIC',
       'DIS-RESP-ASTHMA', 'DIS-RESP-TRACOLL', 'DIS-RESP-ASPPNEU',
-      'DIS-NEU-IVDD', 'DIS-SRMA']) {
+      'DIS-NEU-IVDD', 'DIS-SRMA', 'DIS-NASAL-ASP', 'DIS-NASAL-NEO']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)
