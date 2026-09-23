@@ -229,6 +229,13 @@ describe('parseSources', () => {
     expect(parseSources('Goss 2024').map(s => s.id)).toEqual(['goss-ulcerative-keratitis'])
     expect(parseSources('Verdenius 2024').map(s => s.id)).toEqual(['verdenius-stromal-ulcer'])
     expect(parseSources('Venn 2017').map(s => s.id)).toEqual(['venn-outpatient'])
+    // 'Michel' IS a prefix of 'Michelotti' — the Michelotti branch sits above
+    // it in parseSources. Both directions asserted, as for Reeve/Reeves.
+    expect(parseSources('Michel 2021').map(s => s.id)).toEqual(['michel-lamellar-keratoplasty'])
+    expect(parseSources('Michelotti 2019').map(s => s.id)).toEqual(['michelotti-tsp'])
+    expect(parseSources('Komáromy 2016').map(s => s.id)).toEqual(['komaromy-sards'])
+    expect(parseSources('Susanti 2023').map(s => s.id)).toEqual(['susanti-unilateral-sards'])
+    expect(parseSources('Gómez 2023').map(s => s.id)).toEqual(['gomez-fcs-recurrence'])
     expect(parseSources('Boss 2020').map(s => s.id)).toEqual(['boss-pug-phaco'])
     expect(parseSources('Boothe 2010').map(s => s.id)).toEqual(['boothe-pyothorax'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
@@ -724,6 +731,8 @@ describe('reference block', () => {
       ['DIS-EYE-CATARACT', 3, ['CDE-predictive value', 'phacoemulsification in Pugs']],
       ['DIS-EYE-SUP-ULC', 4, ['diamond burr debridement', 'platelet-rich plasma', 'Vizoovet']],
       ['DIS-EYE-DEEP-ULC', 3, ['Progressive ulcerative keratitis', 'Corneal stromal ulcerations']],
+      ['DIS-EYE-SARDS', 3, ['Sudden acquired retinal degeneration syndrome', 'Unilateral blindness']],
+      ['DIS-EYE-SEQ', 3, ['feline corneal sequestrum: 72 cases', 'Autologous lamellar keratoplasty']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -755,7 +764,7 @@ describe('reference block', () => {
       'DIS-RESP-BACPNEU', 'DIS-RESP-CIRD', 'DIS-RESP-CHYLO',
       'DIS-RESP-LLT', 'DIS-RESP-PULMNEO', 'DIS-RESP-THYMOMA', 'DIS-NASAL-LPR',
       'DIS-RESP-BRONCHIECT', 'DIS-OPH-GLAUCOMA', 'DIS-EYE-CATARACT',
-      'DIS-EYE-SUP-ULC', 'DIS-EYE-DEEP-ULC']) {
+      'DIS-EYE-SUP-ULC', 'DIS-EYE-DEEP-ULC', 'DIS-EYE-SARDS', 'DIS-EYE-SEQ']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

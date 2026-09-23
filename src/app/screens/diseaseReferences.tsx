@@ -884,6 +884,19 @@ const GOSS_ULCERATIVE_KERATITIS =
 const VERDENIUS_STROMAL_ULCER =
   'Verdenius CY, Broens EM, Slenter IJM, Djajadiningrat-Laanen SC. Corneal stromal ulcerations in a referral population of dogs and cats in the Netherlands (2012-2019): bacterial isolates and antibiotic resistance. Vet Ophthalmol. 2024;27(1):7-16. doi:10.1111/vop.13080'
 
+// SARDS and feline corneal sequestrum. Komaromy is the ACVO Vision for Animals
+// Foundation panel review — its value is the explicit statement that the
+// proposed therapies are controversial. Susanti is FIVE dogs and is hedged.
+// Gomez is 79 eyes and carries the recurrence figures; Michel is 35 eyes.
+const KOMAROMY_SARDS =
+  'Komaromy AM, Abrams KL, Heckenlively JR, et al. Sudden acquired retinal degeneration syndrome (SARDS) — a review and proposed strategies toward a better understanding of pathogenesis, early diagnosis, and therapy. Vet Ophthalmol. 2016;19(4):319-331. doi:10.1111/vop.12291'
+const SUSANTI_UNILATERAL_SARDS =
+  'Susanti L, Kwon D, Ahn J, Seo K, Kang S. Unilateral blindness presumed as sudden acquired retinal degeneration syndrome (SARDS) in one Dachshund and four Maltese dogs. Vet Ophthalmol. 2023;26(2):169-175. doi:10.1111/vop.13058'
+const GOMEZ_FCS_RECURRENCE =
+  'Gomez AP, Mazzucchelli S, Smith K, de Lacerda RP. Long-term treatment outcomes and risk factors for recurrence in feline corneal sequestrum: 72 cases (2009-2017). Vet Rec. 2023;193(3):e2783. doi:10.1002/vetr.2783'
+const MICHEL_LAMELLAR_KERATOPLASTY =
+  'Michel J, Vigan M, Douet JY. Autologous lamellar keratoplasty for the treatment of feline corneal sequestrum: a retrospective study of 35 eyes (2012-2020). Vet Ophthalmol. 2021;24(5):491-502. doi:10.1111/vop.12930'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -997,6 +1010,9 @@ const SOURCE_NAMES = [
   'Hung', 'Dees',
   // 'Goss' sits beside 'Gould' and 'Gold'; 'Verdenius' beside 'Venn'.
   'Goss', 'Verdenius',
+  // 'Michel' IS a prefix of the existing 'Michelotti', so the Michelotti
+  // branch must stay ABOVE the Michel one in parseSources. Both are pinned.
+  'Komáromy', 'Susanti', 'Gómez', 'Michel',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1316,6 +1332,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Dees/.test(part)) { out.push({ id: 'dees-scced-adjunct', text: DEES_SCCED_ADJUNCT }); continue }
     if (/^Goss/.test(part)) { out.push({ id: 'goss-ulcerative-keratitis', text: GOSS_ULCERATIVE_KERATITIS }); continue }
     if (/^Verdenius/.test(part)) { out.push({ id: 'verdenius-stromal-ulcer', text: VERDENIUS_STROMAL_ULCER }); continue }
+    if (/^Komáromy/.test(part)) { out.push({ id: 'komaromy-sards', text: KOMAROMY_SARDS }); continue }
+    if (/^Susanti/.test(part)) { out.push({ id: 'susanti-unilateral-sards', text: SUSANTI_UNILATERAL_SARDS }); continue }
+    if (/^Gómez/.test(part)) { out.push({ id: 'gomez-fcs-recurrence', text: GOMEZ_FCS_RECURRENCE }); continue }
+    // Placed AFTER the Michelotti branch above, which it is a prefix of.
+    if (/^Michel/.test(part)) { out.push({ id: 'michel-lamellar-keratoplasty', text: MICHEL_LAMELLAR_KERATOPLASTY }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }

@@ -1549,6 +1549,33 @@ Verdenius also dates the advice — multi-drug-resistant canine isolates rose fr
 between 2012-2015 and 2016-2019. An empirical choice that worked a decade ago cannot be assumed
 to still work, which is a caveat worth carrying on a page that will be read for years.
 
+### Pages 71-72 — SARDS, feline corneal sequestrum (2026-09-23)
+
+> Komaromy AM, Abrams KL, Heckenlively JR, et al. Vet Ophthalmol. 2016;19(4):319-331. doi:10.1111/vop.12291
+> Susanti L, Kwon D, Ahn J, Seo K, Kang S. Vet Ophthalmol. 2023;26(2):169-175. doi:10.1111/vop.13058
+> Gomez AP, Mazzucchelli S, Smith K, de Lacerda RP. Vet Rec. 2023;193(3):e2783. doi:10.1002/vetr.2783
+> Michel J, Vigan M, Douet JY. Vet Ophthalmol. 2021;24(5):491-502. doi:10.1111/vop.12930
+
+⚠️ **`Michel` IS a prefix of the existing `Michelotti`** (thoracoscopic pericardiectomy) — the
+second true prefix pair after Reeve/Reeves. The Michelotti branch sits above the Michel one in
+`parseSources`, both directions are asserted, and `DIS-CARD-PERIC` stays pinned at 2 references.
+
+**Komaromy is an ACVO Vision for Animals Foundation panel review**, and its value here is
+negative: it states that the therapies proposed on neuroendocrine and autoimmune grounds are
+**controversial** and that no pathogenesis is established. The page already said "no proven
+therapy" — it can now say who concluded that.
+
+**Susanti is five dogs and is hedged twice**, but it carries a caveat the page lacked: SARDS can
+present unilaterally. All five had a flat ERG in the blind eye and a *reduced* one in the eye
+that still saw, and those eyes went on to fail. A normal-looking fundus in the remaining eye is
+not reassurance, and the page now says to recheck rather than discharge.
+
+**Gomez** (79 eyes) replaces the page's "roughly 12-20%" with 19% recurrence at a median of 245
+days, and adds the figure that changes follow-up: **27% developed a sequestrum in the other eye**,
+at a median of 635 days. Neither surgical technique nor skull conformation altered recurrence,
+which supports what the page already said about grafting not being a guarantee. Michel (35 eyes)
+is hedged as a single-technique series, not a comparison.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
