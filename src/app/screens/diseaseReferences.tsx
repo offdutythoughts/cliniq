@@ -816,6 +816,18 @@ const DICKSON_PNEUMOTHORAX =
 const SERIOT_MVFB_PNEUMOTHORAX =
   'Seriot P, Dunie-Merigot A, Trehiou CB, et al. Treatment and outcome of spontaneous pneumothorax secondary to suspected migrating vegetal foreign body in 37 dogs. Vet Rec. 2021;189(4):e22. doi:10.1002/vetr.22'
 
+// The ISCAID respiratory antimicrobial guidelines cover pneumonia, CIRD,
+// bronchitis, rhinitis and pyothorax, so this one reference serves several
+// pages. It is a Working Group practice guideline in JVIM, not a textbook.
+const LAPPIN_ISCAID_RESP =
+  'Lappin MR, Blondeau J, Boothe D, et al. Antimicrobial use guidelines for treatment of respiratory tract disease in dogs and cats: Antimicrobial Guidelines Working Group of the International Society for Companion Animal Infectious Diseases. J Vet Intern Med. 2017;31(2):279-294. doi:10.1111/jvim.14627'
+
+// Chylothorax. A systematic review rather than a cohort — its value is the
+// honest verdict on how thin the evidence is, which the page now states.
+// Mind the print year: PubMed dates it 2019, the volume is 2020.
+const REEVES_CHYLOTHORAX_SR =
+  'Reeves LA, Anderson KM, Luther JK, Torres BT. Treatment of idiopathic chylothorax in dogs and cats: a systematic review. Vet Surg. 2020;49(1):70-79. doi:10.1111/vsu.13322'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -917,6 +929,9 @@ const SOURCE_NAMES = [
   // 'Dickson' vs the existing 'Dickinson' — easily misread for each other,
   // though neither is a prefix of the other. Both are pinned in the tests.
   'Chan', 'Dickson', 'Sériot',
+  // 'Lappin' beside 'Langlois'/'Larose'; 'Reeves' beside 'Reeve' — and that
+  // one IS a prefix pair, so the branch order below matters. Reeves first.
+  'Reeves', 'Lappin',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1218,6 +1233,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Chan/.test(part)) { out.push({ id: 'chan-inhaled-fluticasone', text: CHAN_INHALED_FLUTICASONE }); continue }
     if (/^Dickson/.test(part)) { out.push({ id: 'dickson-pneumothorax', text: DICKSON_PNEUMOTHORAX }); continue }
     if (/^Sériot/.test(part)) { out.push({ id: 'seriot-mvfb-pneumothorax', text: SERIOT_MVFB_PNEUMOTHORAX }); continue }
+    // 'Reeve' is a prefix of 'Reeves', so this branch MUST precede the Reeve
+    // one below or the brachycephalic hiatal hernia paper wins the marker.
+    if (/^Reeves/.test(part)) { out.push({ id: 'reeves-chylothorax-sr', text: REEVES_CHYLOTHORAX_SR }); continue }
+    if (/^Lappin/.test(part)) { out.push({ id: 'lappin-iscaid-resp', text: LAPPIN_ISCAID_RESP }); continue }
     // ── Disease pages 6-10 ──
     if (/^Venn/.test(part)) { out.push({ id: 'venn-outpatient', text: VENN_OUTPATIENT }); continue }
     if (/^Sarpong/.test(part)) { out.push({ id: 'sarpong-outpatient', text: SARPONG_OUTPATIENT }); continue }

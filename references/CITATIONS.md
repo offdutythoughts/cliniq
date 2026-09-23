@@ -1397,6 +1397,32 @@ new bulla forming — so the page now says to re-image rather than assume new di
 CT agreed with surgery on 34 of 40 lobes, and where CT showed a foreign body that surgery failed
 to find, **a third later developed a draining tract** — a follow-up plan, not a closed case.
 
+### Pages 59-61 — bacterial pneumonia, CIRD, chylothorax (2026-09-23)
+
+> Lappin MR, Blondeau J, Boothe D, et al. J Vet Intern Med. 2017;31(2):279-294. doi:10.1111/jvim.14627
+> Reeves LA, Anderson KM, Luther JK, Torres BT. Vet Surg. 2020;49(1):70-79. doi:10.1111/vsu.13322
+
+⚠️ **`Reeve` IS a prefix of `Reeves`** — the first genuine prefix pair since Anders/Anderson and
+Lo/Longeri. `Reeve` is the brachycephalic hiatal hernia fluoroscopy paper on `DIS-GI-HH`. The
+`/^Reeves/` branch is placed **before** `/^Reeve/` in `parseSources`, and both directions are
+asserted in the resolver test. `DIS-GI-HH` is also still pinned at 6 references, which would
+catch a silent swap.
+
+**Lappin is the ISCAID respiratory working group guideline** and covers pneumonia, CIRD,
+bronchitis, rhinitis and pyothorax, so one reference serves several pages. It is a Working Group
+practice guideline published in JVIM — a peer-reviewed paper, not a textbook chapter. Two of its
+positions were missing from the pages and are now on them: reserve fluoroquinolones for
+culture-confirmed or genuinely severe disease rather than reaching for them first-line, and
+**withhold antibiotics for the first 10 days of uncomplicated CIRD** unless the dog is febrile,
+lethargic or inappetent. The CIRD page previously implied the choice was doxycycline-or-nothing
+without saying that "nothing" is the default for a well dog.
+
+**Reeves is cited for its verdict on the evidence, not for a result.** Of 313 papers screened,
+11 met inclusion criteria, one canine study reached a higher level of evidence and **none in
+cats** did. No surgical method can be declared superior, and there is **no evidence supporting
+medical therapy as a primary treatment** — which is stronger than the page's previous "seldom
+effective". Print year 2020; PubMed dates it 2019.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

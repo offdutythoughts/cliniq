@@ -198,6 +198,12 @@ describe('parseSources', () => {
     expect(parseSources('Dickson 2021').map(s => s.id)).toEqual(['dickson-pneumothorax'])
     expect(parseSources('Dickinson 2020').map(s => s.id)).toEqual(['dickinson-neuro-fip'])
     expect(parseSources('Sériot 2021').map(s => s.id)).toEqual(['seriot-mvfb-pneumothorax'])
+    // 'Reeve' IS a prefix of 'Reeves', so the Reeves branch has to be tested
+    // first. Both directions are asserted — this is the same trap as
+    // Anders/Anderson and Lo/Longeri.
+    expect(parseSources('Reeves 2020').map(s => s.id)).toEqual(['reeves-chylothorax-sr'])
+    expect(parseSources('Reeve 2017').map(s => s.id)).toEqual(['reeve-brachy-hh'])
+    expect(parseSources('Lappin 2017').map(s => s.id)).toEqual(['lappin-iscaid-resp'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
     // Scott vs Scobie — three shared characters, neither a prefix.
     expect(parseSources('Scott 2021').map(s => s.id)).toEqual(['scott-phenobarb-marrow'])
@@ -677,6 +683,9 @@ describe('reference block', () => {
       ['DIS-GI-FB', 2, ['Disposable skin staplers', 'Laparotomy-assisted endoscopic removal']],
       ['DIS-RESP-PNX', 2, ['110 cases', 'migrating vegetal foreign body']],
       ['DIS-RESP-BRONCHITIS', 2, ['AeroDawg spacing chamber']],
+      ['DIS-RESP-BACPNEU', 1, ['Antimicrobial Guidelines Working Group']],
+      ['DIS-RESP-CIRD', 1, ['Antimicrobial Guidelines Working Group']],
+      ['DIS-RESP-CHYLO', 2, ['idiopathic chylothorax in dogs and cats: a systematic review']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -704,7 +713,8 @@ describe('reference block', () => {
       'DIS-CARD-MVD', 'DIS-CARD-DCM', 'DIS-CARD-PERIC',
       'DIS-RESP-ASTHMA', 'DIS-RESP-TRACOLL', 'DIS-RESP-ASPPNEU',
       'DIS-NEU-IVDD', 'DIS-SRMA', 'DIS-NASAL-ASP', 'DIS-NASAL-NEO',
-      'DIS-GI-AHDS', 'DIS-GI-FB', 'DIS-RESP-PNX', 'DIS-RESP-BRONCHITIS']) {
+      'DIS-GI-AHDS', 'DIS-GI-FB', 'DIS-RESP-PNX', 'DIS-RESP-BRONCHITIS',
+      'DIS-RESP-BACPNEU', 'DIS-RESP-CIRD', 'DIS-RESP-CHYLO']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

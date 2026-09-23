@@ -116,13 +116,13 @@ const SEQUENCES = [
           }
           await page.waitForTimeout(400)
         },
-        tap: { selector: 'button', text: '🐕 Dog' },
+        tap: { selector: 'button', text: 'Dog' },
       },
       {
         file: 'mix-match-results',
         // Past the filter block, so the frame leads with the scored results.
         run: (page) => scrollTo(page, 520),
-        tap: { selector: '.card-title', nth: 0 },
+        tap: { selector: '.mm-name', nth: 0 },
       },
       { file: 'mix-match-disease', tap: null },
     ],

@@ -12,23 +12,38 @@ import { Tappable } from './Tappable'
 import { styleStringToObject as s } from './style'
 import { MIXMATCH_CAT } from './catPalette'
 
-// Emoji and colour are the two group signals; the colour comes from the shared
-// aetiology palette (catPalette) so Infectious is the same crimson here as on a
-// flow page. Keys match CAT_ORDER in diseaseSearch.
-const CAT_EMOJI: Record<string, string> = {
-  'Inflammatory':        '🔥',
-  'Infectious':          '🦠',
-  'Immune-mediated':     '🛡️',
-  'Neoplastic':          '🔬',
-  'Vascular':            '🫀',
-  'Metabolic':           '⚗️',
-  'Endocrine':           '🧪',
-  'Structural':          '🏗️',
-  'Degenerative':        '📉',
-  'Neuromuscular':       '⚡',
-  'Toxic':               '☠️',
-  'Congenital/Inherited':'🧬',
-  'Other':               '📋',
+// Colour is the group signal: a small swatch from the shared aetiology palette
+// (catPalette), so Infectious is the same crimson here as on a flow page.
+
+// One segmented control for every signalment choice. Tapping the selected
+// option clears it, except where `required` (species always has a value).
+function Segmented<T extends string>({ options, value, onChange, required, label }: {
+  options: [T, string][]
+  value: T | undefined
+  onChange: (v: T | undefined) => void
+  required?: boolean
+  label: string
+}) {
+  return (
+    <div className="mm-seg" role="group" aria-label={label}>
+      {options.map(([id, text]) => {
+        const on = value === id
+        return (
+          <button key={id} type="button" className="mm-seg-btn" aria-pressed={on}
+            onClick={() => onChange(on && !required ? undefined : id)}>{text}</button>
+        )
+      })}
+    </div>
+  )
+}
+
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="mm-field">
+      <span className="mm-field-label">{label}</span>
+      {children}
+    </div>
+  )
 }
 
 // ── Keyword tag input ─────────────────────────────────────────────────────────
@@ -89,19 +104,13 @@ function KeywordInput({
 
   return (
     <div style={s('position:relative;')}>
-      <div
-        onClick={() => inputRef.current?.focus()}
-        style={s('display:flex;flex-wrap:wrap;gap:5px;align-items:center;background:var(--navy3);border:1px solid var(--border);border-radius:10px;padding:6px 10px;min-height:36px;cursor:text;')}
-      >
+      <div className="mm-input" onClick={() => inputRef.current?.focus()}>
         {tags.map(t => (
-          <span
-            key={t}
-            style={s('display:inline-flex;align-items:center;gap:4px;background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:2px 8px;font-size:11px;color:var(--white);')}
-          >
+          <span key={t} className="mm-tag">
             {t}
             <button
+              aria-label={`Remove ${t}`}
               onMouseDown={e => { e.preventDefault(); onRemove(t) }}
-              style={s('background:none;border:none;color:var(--gray2);cursor:pointer;padding:0;font-size:13px;line-height:1;')}
             >×</button>
           </span>
         ))}
@@ -117,7 +126,6 @@ function KeywordInput({
           aria-controls={suggest && open ? listId : undefined}
           aria-autocomplete={suggest ? 'list' : undefined}
           aria-activedescendant={active >= 0 ? `${listId}-${active}` : undefined}
-          style={s('flex:1;min-width:80px;background:transparent;border:none;outline:none;font-size:12px;color:var(--white);padding:0;')}
         />
       </div>
 
@@ -219,241 +227,138 @@ export function MixMatchScreen() {
 
   return (
     <div style={s('padding-bottom:24px;')}>
-      {/* ── Header ── */}
-      <div style={s('margin-bottom:14px;')}>
-        <div style={s('font-size:11px;font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;')}>
-          Mix &amp; Match
+      <header className="mm-head">
+        <h1 className="mm-title">Mix &amp; Match</h1>
+        <p className="mm-lede">Describe the patient. Each term you add re-scores every disease page into a ranked differential list.</p>
+      </header>
+
+      <section className="mm-step">
+        <div className="mm-step-head">
+          <span className="mm-step-n">1</span>
+          <h2 className="mm-step-title">Signalment</h2>
         </div>
-        <div style={s('font-size:12px;color:var(--gray);line-height:1.5;')}>
-          Enter signalment, clinical signs, and diagnostics to generate a scored differential list.
-        </div>
-      </div>
+        <Field label="Species">
+          <Segmented label="Species" required value={species} onChange={v => setSpecies(v ?? 'all')}
+            options={[['all', 'Any'], ['dog', 'Dog'], ['cat', 'Cat']]} />
+        </Field>
+        <Field label="Breed">
+          <input
+            className="mm-input"
+            placeholder="e.g. Maine Coon, Cavalier"
+            value={breedQuery}
+            onChange={e => setBreedQuery(e.target.value)}
+          />
+        </Field>
+        <Field label="Age">
+          <Segmented label="Age" value={ageCategory} onChange={setAgeCategory}
+            options={[['neonate', 'Neonate'], ['young', 'Young'], ['middleaged', 'Adult'], ['geriatric', 'Geriatric']]} />
+        </Field>
+        <Field label="Sex">
+          <Segmented label="Sex" value={sex} onChange={setSex}
+            options={[['male', 'Male'], ['female', 'Female']]} />
+        </Field>
+        <Field label="Status">
+          <Segmented label="Neuter status" value={neuter} onChange={setNeuter}
+            options={[['intact', 'Intact'], ['neutered', 'Neutered']]} />
+        </Field>
+      </section>
 
-      {/* ── Signalment ── */}
-      <div style={s('background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px;')}>
-        <div style={s('font-size:var(--fs-label);font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;')}>
-          Signalment
-        </div>
-
-        {/* Species */}
-        <div style={s('display:flex;gap:6px;margin-bottom:8px;')}>
-          {(['all', 'dog', 'cat'] as Species[]).map(sp => (
-            <button
-              key={sp}
-              onClick={() => setSpecies(sp)}
-              style={s(`flex:1;padding:5px;border-radius:8px;border:1px solid ${species === sp ? 'var(--teal)' : 'var(--border)'};background:${species === sp ? 'rgba(0,180,180,0.12)' : 'transparent'};color:${species === sp ? 'var(--teal)' : 'var(--gray)'};font-size:12px;font-weight:600;cursor:pointer;`)}
-            >
-              {sp === 'all' ? '🐾 All' : sp === 'dog' ? '🐕 Dog' : '🐈 Cat'}
-            </button>
-          ))}
-        </div>
-
-        {/* Breed */}
-        <input
-          placeholder="Breed (e.g. Maine Coon, Cavalier)"
-          value={breedQuery}
-          onChange={e => setBreedQuery(e.target.value)}
-          style={s('width:100%;background:var(--navy3);border:1px solid var(--border);border-radius:8px;padding:6px 10px;font-size:12px;color:var(--white);outline:none;box-sizing:border-box;margin-bottom:8px;')}
-        />
-
-        {/* Age */}
-        <div style={s('margin-bottom:8px;')}>
-          <div style={s('font-size:10px;color:var(--gray2);margin-bottom:5px;')}>Age</div>
-          <div style={s('display:flex;gap:5px;')}>
-            {([
-              ['neonate',    '🍼', 'Neonate'],
-              ['young',      '🐾', 'Young'],
-              ['middleaged', '🐕', 'Adult'],
-              ['geriatric',  '🦴', 'Geriatric'],
-            ] as [AgeCategory, string, string][]).map(([id, icon, label]) => {
-              const active = ageCategory === id
-              return (
-                <button
-                  key={id}
-                  onClick={() => setAgeCategory(active ? undefined : id)}
-                  style={s(`flex:1;padding:5px 4px;border-radius:8px;border:1px solid ${active ? 'var(--teal)' : 'var(--border)'};background:${active ? 'rgba(0,180,180,0.12)' : 'transparent'};cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;`)}
-                >
-                  <span style={s('font-size:14px;')}>{icon}</span>
-                  <span style={s(`font-size:10px;font-weight:700;color:${active ? 'var(--teal)' : 'var(--white)'};`)}>{label}</span>
-                </button>
-              )
-            })}
-          </div>
-        </div>
-
-        {/* Sex + neuter status — independent, one choice from each row */}
-        <div style={s('display:flex;gap:8px;')}>
-          <div style={s('flex:1;')}>
-            <div style={s('font-size:10px;color:var(--gray2);margin-bottom:5px;')}>Sex</div>
-            <div style={s('display:flex;gap:5px;')}>
-              {([
-                ['male',   '♂', 'Male'],
-                ['female', '♀', 'Female'],
-              ] as [SexFilter, string, string][]).map(([id, icon, label]) => {
-                const active = sex === id
-                return (
-                  <button
-                    key={id}
-                    onClick={() => setSex(active ? undefined : id)}
-                    style={s(`flex:1;padding:5px 4px;border-radius:8px;border:1px solid ${active ? 'var(--teal)' : 'var(--border)'};background:${active ? 'rgba(0,180,180,0.12)' : 'transparent'};cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;`)}
-                  >
-                    <span style={s(`font-size:13px;color:${active ? 'var(--teal)' : 'var(--gray2)'};`)}>{icon}</span>
-                    <span style={s(`font-size:10px;font-weight:700;color:${active ? 'var(--teal)' : 'var(--white)'};`)}>{label}</span>
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-
-          <div style={s('flex:1;')}>
-            <div style={s('font-size:10px;color:var(--gray2);margin-bottom:5px;')}>Neuter status</div>
-            <div style={s('display:flex;gap:5px;')}>
-              {([
-                ['intact',   '●', 'Intact'],
-                ['neutered', '○', 'Neutered'],
-              ] as [NeuterFilter, string, string][]).map(([id, icon, label]) => {
-                const active = neuter === id
-                return (
-                  <button
-                    key={id}
-                    onClick={() => setNeuter(active ? undefined : id)}
-                    style={s(`flex:1;padding:5px 4px;border-radius:8px;border:1px solid ${active ? 'var(--teal)' : 'var(--border)'};background:${active ? 'rgba(0,180,180,0.12)' : 'transparent'};cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;`)}
-                  >
-                    <span style={s(`font-size:13px;color:${active ? 'var(--teal)' : 'var(--gray2)'};`)}>{icon}</span>
-                    <span style={s(`font-size:10px;font-weight:700;color:${active ? 'var(--teal)' : 'var(--white)'};`)}>{label}</span>
-                  </button>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* ── Clinical signs ── */}
-      <div style={s('margin-bottom:10px;')}>
-        <div style={s('font-size:var(--fs-label);font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;')}>
-          Clinical Signs
+      <section className="mm-step">
+        <div className="mm-step-head">
+          <span className="mm-step-n">2</span>
+          <h2 className="mm-step-title">Clinical signs</h2>
+          {signKeywords.length > 0 && <span className="mm-step-aside">{signKeywords.length} added</span>}
         </div>
         <KeywordInput
           tags={signKeywords}
           onAdd={addSign}
           onRemove={removeSign}
           suggest={suggestSigns}
-          placeholder="Type a sign (e.g. vomiting, weight loss)"
+          placeholder="Type a sign, e.g. vomiting, weight loss"
         />
-        <div style={s('font-size:10px;color:var(--gray2);margin-top:4px;')}>
-          Pick a suggestion, or press Enter to add what you typed. The number is how many diseases the term matches.
-        </div>
-      </div>
+        <div className="mm-hint">Pick a suggestion or press Enter to add what you typed. The number beside a suggestion is how many diseases it matches.</div>
+      </section>
 
-      {/* ── Diagnostics ── */}
-      <div style={s('margin-bottom:14px;')}>
-        <div style={s('font-size:var(--fs-label);font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;')}>
-          Diagnostics
+      <section className="mm-step">
+        <div className="mm-step-head">
+          <span className="mm-step-n">3</span>
+          <h2 className="mm-step-title">Diagnostics</h2>
+          {diagKeywords.length > 0 && <span className="mm-step-aside">{diagKeywords.length} added</span>}
         </div>
         <KeywordInput
           tags={diagKeywords}
           onAdd={addDiag}
           onRemove={removeDiag}
-          placeholder="Type a finding and press Enter (e.g. elevated ALP, thrombocytopenia)"
+          placeholder="Type a finding, e.g. elevated ALP"
         />
-      </div>
+      </section>
 
-      {/* ── Results ── */}
       {!hasAnyInput ? (
-        <div style={s('text-align:center;padding:32px 16px;')}>
-          <div style={s('font-size:32px;margin-bottom:10px;')}>🔍</div>
-          <div style={s('font-size:13px;color:var(--gray);')}>Enter signalment, clinical signs, or diagnostic findings above to generate differentials.</div>
-        </div>
+        <p className="mm-empty">Nothing entered yet. Add a sign, a finding or any part of the signalment and the differentials appear here.</p>
       ) : results.length === 0 ? (
-        <div style={s('text-align:center;padding:32px 16px;')}>
-          <div style={s('font-size:13px;color:var(--gray);')}>No matching diseases found. Try broader terms.</div>
-        </div>
+        <p className="mm-empty">No disease matches all of that. Try broader terms.</p>
       ) : (
         <>
-          <div style={s('font-size:11px;color:var(--gray2);margin-bottom:12px;')}>
-            {totalCount} {totalCount === 1 ? 'disease' : 'diseases'} across {results.length} {results.length === 1 ? 'category' : 'categories'} — sorted by relevance
+          <div className="mm-summary">
+            {totalCount} {totalCount === 1 ? 'disease' : 'diseases'} across {results.length} {results.length === 1 ? 'category' : 'categories'}, sorted by score
           </div>
 
-          {/* ── Top differentials — the grouped list below is by aetiology, not rank ── */}
+          {/* Top differentials — the grouped list below is by aetiology, not rank */}
           {top.length >= 2 && (
-            <div style={s('background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:10px 12px;margin-bottom:18px;')}>
-              <div style={s('font-size:var(--fs-label);font-weight:700;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px;')}>
-                Top differentials
-              </div>
-
+            <section className="mm-block">
+              <h2 className="mm-block-title">Most likely</h2>
               {top.map((item, i) => {
                 const d = item.disease
                 const tint = MIXMATCH_CAT[item.category] ?? MIXMATCH_CAT['Other']
                 const hits = item.matchedSignTerms.length + item.matchedDiagTerms.length
-
                 return (
-                  <Tappable
-                    key={d.id as string}
-                    style={s(`display:flex;align-items:center;gap:9px;padding:7px 0;cursor:pointer;${i > 0 ? 'border-top:1px solid var(--border);' : ''}`)}
-                    onTap={() => nav.navigate({ kind: 'disease', id: d.id as string })}
-                  >
-                    <span style={s(`font-size:var(--fs-box);font-weight:700;color:${tint.col};width:12px;flex-shrink:0;`)}>{i + 1}</span>
+                  <Tappable key={d.id as string} className="mm-row"
+                    onTap={() => nav.navigate({ kind: 'disease', id: d.id as string })}>
+                    <span className="mm-rank-n">{i + 1}</span>
                     <div style={s('flex:1;min-width:0;')}>
-                      <div style={s('font-size:13px;font-weight:600;color:var(--white);')}>{d.name as string}</div>
-                      <div style={s('font-size:var(--fs-chip-sub);color:var(--gray2);margin-top:1px;')}>
-                        {CAT_EMOJI[item.category] ?? '📋'} {item.category}
-                        {termCount > 0 && ` · ${hits} of ${termCount} ${termCount === 1 ? 'term' : 'terms'}`}
+                      <div className="mm-name">{d.name as string}</div>
+                      <div className="mm-meta">
+                        <span style={s('display:inline-flex;align-items:center;gap:5px;')}>
+                          <i className="mm-dot" style={{ background: tint.col }} />{item.category}
+                        </span>
+                        {termCount > 0 && <span>{hits} of {termCount} {termCount === 1 ? 'term' : 'terms'}</span>}
                       </div>
                     </div>
-                    <span style={s(`font-size:var(--fs-chip);font-weight:700;padding:1px 6px;border-radius:6px;background:${tint.bg};color:${tint.col};border:1px solid ${tint.border};flex-shrink:0;`)}>
-                      {item.score}pt
-                    </span>
+                    <span className="mm-score">{item.score} pt</span>
                   </Tappable>
                 )
               })}
-            </div>
+            </section>
           )}
 
           {results.map(group => {
             const tint = MIXMATCH_CAT[group.name] ?? MIXMATCH_CAT['Other']
             return (
-            <div key={group.name} style={s('margin-bottom:18px;')}>
-              <div style={s(`font-size:11px;font-weight:700;color:${tint.col};text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;`)}>
-                {CAT_EMOJI[group.name] ?? '📋'} {group.name} ({group.items.length})
-              </div>
-
-              {group.items.map(item => {
-                const d = item.disease
-                const allMatched = [...item.matchedSignTerms, ...item.matchedDiagTerms]
-
-                return (
-                  <Tappable
-                    key={d.id as string}
-                    className="card"
-                    // Inline, so it survives `.card:hover`'s border-color.
-                    style={s(`border-left:3px solid ${tint.border};`)}
-                    onTap={() => nav.navigate({ kind: 'disease', id: d.id as string })}
-                  >
-                    <div className="card-row">
+              <section key={group.name}>
+                <div className="mm-group-head">
+                  <i className="mm-dot" style={{ background: tint.col }} />
+                  {group.name} <span className="mm-count">{group.items.length}</span>
+                </div>
+                {group.items.map(item => {
+                  const d = item.disease
+                  const allMatched = [...item.matchedSignTerms, ...item.matchedDiagTerms]
+                  return (
+                    <Tappable key={d.id as string} className="mm-row"
+                      onTap={() => nav.navigate({ kind: 'disease', id: d.id as string })}>
                       <div style={s('flex:1;min-width:0;')}>
-                        <div style={s('display:flex;align-items:center;gap:6px;flex-wrap:wrap;')}>
-                          <div className="card-title">{d.name as string}</div>
-                          <span style={s(`font-size:var(--fs-chip);font-weight:700;padding:1px 6px;border-radius:6px;background:${item.score >= 6 ? 'var(--teal)' : item.score >= 3 ? 'var(--navy3)' : 'var(--navy3)'};color:${item.score >= 6 ? '#fff' : 'var(--gray2)'};border:1px solid ${item.score >= 6 ? 'transparent' : 'var(--border)'};flex-shrink:0;`)}>
-                            {item.score}pt
-                          </span>
-                        </div>
-                        <div style={s('margin-top:4px;display:flex;align-items:center;gap:6px;flex-wrap:wrap;')}>
+                        <div className="mm-name">{d.name as string}</div>
+                        <div className="mm-meta">
                           <SpTag sp={d.sp as string} />
-                          {allMatched.slice(0, 4).map(t => (
-                            <span key={t} style={s('font-size:10px;color:var(--gray2);background:var(--navy3);border-radius:4px;padding:1px 5px;')}>{t}</span>
-                          ))}
-                          {allMatched.length > 4 && (
-                            <span style={s('font-size:10px;color:var(--gray2);')}>+{allMatched.length - 4} more</span>
-                          )}
+                          {allMatched.slice(0, 4).map(t => <span key={t} className="mm-term">{t}</span>)}
+                          {allMatched.length > 4 && <span>+{allMatched.length - 4} more</span>}
                         </div>
                       </div>
+                      <span className={`mm-score${item.score >= 6 ? ' is-strong' : ''}`}>{item.score} pt</span>
                       <div className="card-arrow">›</div>
-                    </div>
-                  </Tappable>
-                )
-              })}
-            </div>
+                    </Tappable>
+                  )
+                })}
+              </section>
             )
           })}
         </>
