@@ -696,6 +696,26 @@ const THOMSEN_AV_BLEEDING =
 const CANONNE_AV_BAL =
   'Canonne AM, Roels E, Caron Y, et al. Detection of Angiostrongylus vasorum by quantitative PCR in bronchoalveolar lavage fluid in Belgian dogs. J Small Anim Pract. 2016;57(3):130-134. doi:10.1111/jsap.12419'
 
+// Zinc. Henke is 55 dogs across six teaching hospitals and is the only series
+// big enough to carry frequencies; its AKI figure is the finding that changes
+// the workup, and the authors say so explicitly.
+const HENKE_ZINC =
+  'Henke CS, Beal MW, Walton RAL, et al. Retrospective evaluation of the clinical course and outcome of zinc toxicosis due to metallic foreign bodies in dogs (2005-2021): 55 cases. J Vet Emerg Crit Care. 2023;33(6):676-684. doi:10.1111/vec.13330'
+
+// Allium. A single fatal case, cited for one thing only: the dog died on a
+// dose well BELOW the published threshold, which is the argument for not
+// reassuring an owner on the strength of a gram-per-kilo calculation.
+const BIASIBETTI_GARLIC =
+  'Biasibetti E, Maza V, Tagliati V, et al. Fatal garlic (Allium sativum) toxicosis in a dog: gross and histopathological findings in a rare case of systemic hemolytic injury. Animals (Basel). 2026;16(11):1712. doi:10.3390/ani16111712'
+
+// Cholecalciferol. Both are single cases. They are the only published
+// follow-up of 25(OH)D after the acute phase, and the page hedges them as
+// such rather than turning one dog into a monitoring protocol.
+const GERHARD_VITD_25OHD =
+  'Gerhard C, Jaffey JA. Persistent increase in serum 25-hydroxyvitamin D concentration in a dog following cholecalciferol intoxication. Front Vet Sci. 2020;6:472. doi:10.3389/fvets.2019.00472'
+const PERRY_VITD_LIPID =
+  'Perry BH, McMichael M, Rick M, Jewell E. Reduction of serum 25-hydroxyvitamin D concentrations with intravenous lipid emulsion in a dog. Can Vet J. 2016;57(12):1284-1286.'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -776,6 +796,9 @@ const SOURCE_NAMES = [
   // Leishmaniosis, von Willebrand, Angiostrongylus. 'Miro' is four letters
   // and a prefix of nothing here; 'Canonne' sits beside 'Cook' and 'Cridge'.
   'Solano-Gallego', 'Miro', 'Villanueva-Saz', 'Kasabalis', 'McBride', 'Krüger', 'Thomsen', 'Canonne',
+  // Toxicology. 'Perry' sits beside the existing 'Perley' — four shared
+  // characters, neither a prefix of the other, so both are pinned.
+  'Henke', 'Biasibetti', 'Gerhard', 'Perry',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1038,6 +1061,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Krüger/.test(part)) { out.push({ id: 'kruger-av-vwf', text: KRUGER_AV_VWF }); continue }
     if (/^Thomsen/.test(part)) { out.push({ id: 'thomsen-av-bleeding', text: THOMSEN_AV_BLEEDING }); continue }
     if (/^Canonne/.test(part)) { out.push({ id: 'canonne-av-bal', text: CANONNE_AV_BAL }); continue }
+    if (/^Henke/.test(part)) { out.push({ id: 'henke-zinc', text: HENKE_ZINC }); continue }
+    if (/^Biasibetti/.test(part)) { out.push({ id: 'biasibetti-garlic', text: BIASIBETTI_GARLIC }); continue }
+    if (/^Gerhard/.test(part)) { out.push({ id: 'gerhard-vitd-25ohd', text: GERHARD_VITD_25OHD }); continue }
+    if (/^Perry/.test(part)) { out.push({ id: 'perry-vitd-lipid', text: PERRY_VITD_LIPID }); continue }
     // ── Disease pages 6-10 ──
     if (/^Venn/.test(part)) { out.push({ id: 'venn-outpatient', text: VENN_OUTPATIENT }); continue }
     if (/^Sarpong/.test(part)) { out.push({ id: 'sarpong-outpatient', text: SARPONG_OUTPATIENT }); continue }

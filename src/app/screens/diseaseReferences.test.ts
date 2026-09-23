@@ -226,6 +226,12 @@ describe('parseSources', () => {
     expect(parseSources('Krüger 2025').map(s => s.id)).toEqual(['kruger-av-vwf'])
     expect(parseSources('Thomsen 2024').map(s => s.id)).toEqual(['thomsen-av-bleeding'])
     expect(parseSources('Canonne 2016').map(s => s.id)).toEqual(['canonne-av-bal'])
+    // 'Perry' vs the existing 'Perley' — four shared characters, neither a prefix.
+    expect(parseSources('Henke 2023').map(s => s.id)).toEqual(['henke-zinc'])
+    expect(parseSources('Biasibetti 2026').map(s => s.id)).toEqual(['biasibetti-garlic'])
+    expect(parseSources('Gerhard 2020').map(s => s.id)).toEqual(['gerhard-vitd-25ohd'])
+    expect(parseSources('Perry 2016').map(s => s.id)).toEqual(['perry-vitd-lipid'])
+    expect(parseSources('Perley 2020').map(s => s.id)).toEqual(['perley-shelter'])
   })
 
   it('routes the year-keyed Meurs and Payne markers to the right cohort', () => {
@@ -608,6 +614,10 @@ describe('reference block', () => {
       ['DIS-INFECT-LEISHM', 4, ['LeishVet guidelines', 'reduces parasitemia and proteinuria', 'aminosidine', 'Absence of specific humoral response']],
       ['DIS-BD-VWD', 2, ['Primary hemostatic function in dogs with acute kidney injury', 'Angiostrongylus vasorum infection']],
       ['DIS-RESP-LUNGWORM', 2, ['180 cases', 'bronchoalveolar lavage fluid in Belgian dogs']],
+      // The toxicology pages keep their VETgirl entry alongside the paper.
+      ['DIS-TOX-ZN', 2, ['55 cases', 'Ultimate Guide to Toxicology']],
+      ['DIS-TOX-ALLIUM', 1, ['Fatal garlic']],
+      ['DIS-TOX-CHOLE', 3, ['Persistent increase in serum 25-hydroxyvitamin D', 'intravenous lipid emulsion', 'Ultimate Guide to Toxicology']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -630,7 +640,8 @@ describe('reference block', () => {
       'DIS-BD-HEMA', 'DIS-BD-HEMB', 'DIS-BD-HEMC', 'DIS-BD-IMHA', 'DIS-IMNP',
       'DIS-BD-EVANS', 'DIS-INFECT-LEPTO', 'DIS-INFECT-EHRLICH', 'DIS-BD-EHRL',
       'DIS-INFECT-FIP', 'DIS-INFECT-RMSF', 'DIS-BD-BABS', 'DIS-BD-ROD',
-      'DIS-INFECT-LEISHM', 'DIS-BD-VWD', 'DIS-RESP-LUNGWORM']) {
+      'DIS-INFECT-LEISHM', 'DIS-BD-VWD', 'DIS-RESP-LUNGWORM',
+      'DIS-TOX-ZN', 'DIS-TOX-ALLIUM', 'DIS-TOX-CHOLE']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

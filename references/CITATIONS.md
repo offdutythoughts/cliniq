@@ -1201,6 +1201,34 @@ New source-name prefix hazards pinned in the tests this batch: **`Levin` vs the 
 is case-sensitive, so both orders are asserted. Also `Chochlios`/`Christodoulou` alongside the
 existing `Chalifoux`/`Chirayath`, and `Canonne` beside `Cook`/`Cridge`.
 
+### Pages 42-44 — zinc, Allium, cholecalciferol (2026-09-23)
+
+> Henke CS, Beal MW, Walton RAL, et al. J Vet Emerg Crit Care. 2023;33(6):676-684. doi:10.1111/vec.13330
+> Biasibetti E, Maza V, Tagliati V, et al. Animals (Basel). 2026;16(11):1712. doi:10.3390/ani16111712
+> Gerhard C, Jaffey JA. Front Vet Sci. 2020;6:472. doi:10.3389/fvets.2019.00472
+> Perry BH, McMichael M, Rick M, Jewell E. Can Vet J. 2016;57(12):1284-1286.
+
+**Henke** is the only zinc series big enough to carry frequencies (55 dogs, six teaching
+hospitals). Its AKI figure — 26.9%, which the authors flag as commoner than previously
+suspected — changed the page's workup advice from "check renal values if severely haemolysing"
+to "check them in every case". It also supplies the two practical numbers: 83% of dogs reached a
+stable PCV within a median 24 h of source removal, and two-thirds needed blood products, so
+product should be available *before* anaesthetising.
+
+**Biasibetti** is one dog and is cited for one thing only: it died on **16 g of raw garlic**,
+below the published toxic threshold. The page now warns against using a gram-per-kilo
+calculation to reassure an owner. No frequency is claimed from it.
+
+**Cholecalciferol is the weakest evidence base in this batch.** Both sources are single cases
+and both are hedged as such. There is no cohort study of 25(OH)D kinetics after the acute
+phase, so the page says "some clinicians reported" and states the sample inline, rather than
+turning one dog into a monitoring protocol. Perry is the only one of the papers cited so far
+with **no DOI** — Can Vet J articles of that era are PMC-only — so the second-registry check
+was done against Europe PMC rather than Crossref, per Rule 6's allowance.
+
+`Perry` vs the existing `Perley` is a new prefix hazard: four shared characters, neither a
+prefix of the other. Both are pinned in the resolver test.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
