@@ -1132,6 +1132,75 @@ A note on the new source names: `Chochlios` and `Christodoulou` share a two-lett
 alongside the existing `Chalifoux` and `Chirayath`. None is a prefix of another, but the resolver
 matches on `/^Name/` with no word boundary, so all four are pinned in the prefix-trap test.
 
+### Pages 35-41 — FIP, RMSF, babesiosis, rodenticide, leishmaniosis, vWD, lungworm (2026-09-23)
+
+**`DIS-INFECT-FIP`** — Taylor 2023 is 307 cats on **legally sourced, known-composition**
+product, which is what makes its numbers usable: 84.4% alive at last follow-up, 10.8% relapse
+with roughly half of those relapsing *during* the initial course, injection pain in 47.8% of
+cats given subcutaneous remdesivir, and a complete response within 30 days predicting survival
+to the end of treatment. Pedersen 2019 supplies the 12-week floor. Dickinson is **four cats**
+and Lv 2022 is uncontrolled, so both are hedged.
+
+> Taylor SS, Coggins S, Barker EN, et al. J Feline Med Surg. 2023;25(9). doi:10.1177/1098612X231194460
+> Pedersen NC, Perron M, Bannasch M, et al. J Feline Med Surg. 2019;21(4):271-281. doi:10.1177/1098612X19825701
+> Lv J, Bai Y, Wang Y, Yang L, Jin Y, Dong J. Front Vet Sci. 2022;9:1002488. doi:10.3389/fvets.2022.1002488
+> Dickinson PJ, Bannasch M, Thomasy SM, et al. J Vet Intern Med. 2020;34(4):1587-1593. doi:10.1111/jvim.15780
+
+**`DIS-INFECT-RMSF`** — Levin 2014 is the only description of the natural tick-bite course from
+exposure to recovery. Two of its findings are cited **against** what a clinician would assume:
+neither fever height/duration nor a positive blood PCR predicts outcome, and the marker that
+does is the apex and fall of the neutrophilia. It is an experimental group, so that is hedged.
+Foley 2025 is a review, cited only for the urban-hyperendemic epidemiology it aggregates.
+
+> Levin ML, Killmaster LF, Zemtsova GE, Ritter JM, Langham G. PLoS One. 2014;9(12):e115105. doi:10.1371/journal.pone.0115105
+> Foley J, Lopez-Perez AM, Alvarez-Hernandez G, et al. Am J Vet Res. 2025;86(3). doi:10.2460/ajvr.24.11.0368
+
+**`DIS-BD-BABS`** — Goddard, 72 dogs, PCR-confirmed *B. rossi* with *B. vogeli* and *E. canis*
+co-infections **excluded**, which is what lets its coagulation findings be read as babesiosis
+rather than tick-borne disease in general. Registry disagreement: PubMed dates it 2012, the
+print volume is 2013; the print year wins.
+
+> Goddard A, Wiinberg B, Schoeman JP, Kristensen AT, Kjelgaard-Hansen M. Vet J. 2013;196(2):213-217. doi:10.1016/j.tvjl.2012.09.009
+
+**`DIS-BD-ROD`** — Agostini is 74 animals across two hospitals, the only comparison of IV
+mixed-micelle phytomenadione against plasma-based therapy. Hedged on that sample size.
+
+> Agostini G, Mooney ET, Wilkie ELW, White JD. Aust Vet J. 2025;103(12):906-915. doi:10.1111/avj.70004
+
+**`DIS-INFECT-LEISHM`** — the 2011 LeishVet guideline is 14 years old but is **still the
+operative staging system**, cited as such in 2026 survey papers, so it stays; Rule 1(c) asks for
+as current as the literature allows, not for a recent paper at any cost. Miró 2024 is the modern
+randomised trial (97 dogs, two years). Kasabalis is 40 dogs and the authors themselves call it
+underpowered, so aminosidine is written as second line, not an equal alternative.
+Villanueva-Saz is **three dogs** and is cited purely as an existence claim — that clinical
+leishmaniosis occurs in seronegative dogs — with no frequency stated.
+
+> Solano-Gallego L, Miro G, Koutinas A, et al. Parasit Vectors. 2011;4:86. doi:10.1186/1756-3305-4-86
+> Miro G, Segarra S, Ceron JJ, et al. PLoS Negl Trop Dis. 2024;18(12):e0012712. doi:10.1371/journal.pntd.0012712
+> Kasabalis D, Chatzis MK, Apostolidis K, et al. Exp Parasitol. 2020;214:107903. doi:10.1016/j.exppara.2020.107903
+> Villanueva-Saz S, Marteles D, Ortunez A, et al. Acta Vet Scand. 2025;67(1):31. doi:10.1186/s13028-025-00814-9
+
+**`DIS-BD-VWD`** — both papers are about **acquired** loss of vWF activity, which is the trap the
+page needed covering: a low vWF in a sick dog is not automatically the inherited disease. AKI
+produces a type-II-like phenotype (McBride, 10 dogs, hedged), and *Angiostrongylus* acutely
+drops vWF and caused a reversible intracranial bleed (Krüger, one dog).
+
+> McBride D, Jepson RE, Cortellini S, Chan DL. J Vet Intern Med. 2019;33(5):2029-2036. doi:10.1111/jvim.15588
+> Kruger BT, Hamm Vinga C, Wennemuth J. Vet Radiol Ultrasound. 2025;66(1):e13462. doi:10.1111/vru.13462
+
+**`DIS-RESP-LUNGWORM`** — Thomsen is 180 dogs and gives the bleeding frequency (36.1%), the
+intracranial/intraspinal subset (20 dogs) and the survival gap that makes bleeding the
+prognostic divide (76.9% vs 94.8% at discharge). Canonne supplies the BAL qPCR point, where
+Baermann missed three of five dogs qPCR caught. Canonne's print year is 2016; PubMed says 2015.
+
+> Thomsen AS, Petersen MP, Willesen JL, et al. J Small Anim Pract. 2024;65(4):234-242. doi:10.1111/jsap.13701
+> Canonne AM, Roels E, Caron Y, et al. J Small Anim Pract. 2016;57(3):130-134. doi:10.1111/jsap.12419
+
+New source-name prefix hazards pinned in the tests this batch: **`Levin` vs the existing
+`LeVine`**, held apart only by the capital V and the trailing e — the resolver's `/^Name/` match
+is case-sensitive, so both orders are asserted. Also `Chochlios`/`Christodoulou` alongside the
+existing `Chalifoux`/`Chirayath`, and `Canonne` beside `Cook`/`Cridge`.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

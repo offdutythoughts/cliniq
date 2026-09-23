@@ -641,6 +641,61 @@ const LV_GS_GC376 =
 const DICKINSON_NEURO_FIP =
   'Dickinson PJ, Bannasch M, Thomasy SM, et al. Antiviral treatment using the adenosine nucleoside analogue GS-441524 in cats with clinically diagnosed neurological feline infectious peritonitis. J Vet Intern Med. 2020;34(4):1587-1593. doi:10.1111/jvim.15780'
 
+// Rocky Mountain spotted fever. Levin is the only description of the natural
+// tick-bite course in dogs from exposure to recovery, but it is a small
+// experimental group, so its prognostic markers are hedged. Foley is a review,
+// cited only for the epidemiology it aggregates.
+const LEVIN_RMSF_COURSE =
+  'Levin ML, Killmaster LF, Zemtsova GE, Ritter JM, Langham G. Clinical presentation, convalescence, and relapse of Rocky Mountain spotted fever in dogs experimentally infected via tick bite. PLoS One. 2014;9(12):e115105. doi:10.1371/journal.pone.0115105'
+const FOLEY_RMSF_URBAN =
+  'Foley J, Lopez-Perez AM, Alvarez-Hernandez G, et al. A wolf at the door: the ecology, epidemiology, and emergence of community- and urban-level Rocky Mountain spotted fever in the Americas. Am J Vet Res. 2025;86(3). doi:10.2460/ajvr.24.11.0368'
+
+// Babesiosis. Goddard is 72 dogs with PCR-confirmed B. rossi and co-infections
+// excluded, which is why its coagulation findings can be read as babesiosis
+// rather than tick-borne disease in general. Mind the print year: PubMed dates
+// it 2012, the volume is 2013.
+const GODDARD_BABESIA_DIC =
+  'Goddard A, Wiinberg B, Schoeman JP, Kristensen AT, Kjelgaard-Hansen M. Mortality in virulent canine babesiosis is associated with a consumptive coagulopathy. Vet J. 2013;196(2):213-217. doi:10.1016/j.tvjl.2012.09.009'
+
+// Anticoagulant rodenticide. Agostini is 74 animals across two hospitals and
+// is the only comparison of IV mixed-micelle vitamin K1 against plasma; the
+// page hedges it on that sample size.
+const AGOSTINI_MMP_VITK =
+  'Agostini G, Mooney ET, Wilkie ELW, White JD. Comparison of intravenous mixed micelle phytomenadione (vitamin K1) and traditional therapies for the treatment of anticoagulant rodenticide toxicosis in dogs and cats: a retrospective study. Aust Vet J. 2025;103(12):906-915. doi:10.1111/avj.70004'
+
+// Canine leishmaniosis. The 2011 LeishVet guideline is still the operative
+// staging system and is cited as such in 2026 papers, so it stays despite its
+// age. Miro 2024 is the modern randomised trial (97 dogs, two years of
+// follow-up); Kasabalis is 40 dogs and the authors themselves call it
+// underpowered, so the page hedges it.
+const SOLANO_GALLEGO_LEISHVET =
+  'Solano-Gallego L, Miro G, Koutinas A, et al. LeishVet guidelines for the practical management of canine leishmaniosis. Parasit Vectors. 2011;4:86. doi:10.1186/1756-3305-4-86'
+const MIRO_LEISH_SUPPLEMENT =
+  'Miro G, Segarra S, Ceron JJ, et al. New immunomodulatory treatment protocol for canine leishmaniosis reduces parasitemia and proteinuria. PLoS Negl Trop Dis. 2024;18(12):e0012712. doi:10.1371/journal.pntd.0012712'
+// Three seronegative dogs with amastigotes demonstrated in tissue. Cited as an
+// existence claim only — it establishes that the presentation happens, not how
+// often, and the page says nothing about frequency.
+const VILLANUEVA_SAZ_SERONEG =
+  'Villanueva-Saz S, Marteles D, Ortunez A, et al. Absence of specific humoral response in three dogs with clinical leishmaniosis. Acta Vet Scand. 2025;67(1):31. doi:10.1186/s13028-025-00814-9'
+const KASABALIS_AMINOSIDINE =
+  'Kasabalis D, Chatzis MK, Apostolidis K, et al. A randomized, blinded, controlled clinical trial comparing the efficacy of aminosidine (paromomycin)-allopurinol combination with the efficacy of meglumine antimoniate-allopurinol combination for the treatment of canine leishmaniosis due to Leishmania infantum. Exp Parasitol. 2020;214:107903. doi:10.1016/j.exppara.2020.107903'
+
+// von Willebrand disease. Both papers are about ACQUIRED loss of vWF activity,
+// which is the trap the page needed covering: a low result in a sick dog is
+// not automatically the inherited disease. McBride is 10 dogs, so it is hedged.
+const MCBRIDE_AKI_VWF =
+  'McBride D, Jepson RE, Cortellini S, Chan DL. Primary hemostatic function in dogs with acute kidney injury. J Vet Intern Med. 2019;33(5):2029-2036. doi:10.1111/jvim.15588'
+const KRUGER_AV_VWF =
+  'Kruger BT, Hamm Vinga C, Wennemuth J. Brain MRI findings and thoracic CT findings in a dog with hemiparesis and acutely diminished von Willebrand factor levels through Angiostrongylus vasorum infection. Vet Radiol Ultrasound. 2025;66(1):e13462. doi:10.1111/vru.13462'
+
+// Angiostrongylus. Thomsen is 180 dogs and is where the bleeding frequency and
+// the survival gap come from. Canonne is the BAL qPCR series; mind the print
+// year, PubMed dates it 2015 and the volume is 2016.
+const THOMSEN_AV_BLEEDING =
+  'Thomsen AS, Petersen MP, Willesen JL, et al. Clinical bleeding diathesis, laboratory haemostatic aberrations and survival in dogs infected with Angiostrongylus vasorum: 180 cases (2005-2019). J Small Anim Pract. 2024;65(4):234-242. doi:10.1111/jsap.13701'
+const CANONNE_AV_BAL =
+  'Canonne AM, Roels E, Caron Y, et al. Detection of Angiostrongylus vasorum by quantitative PCR in bronchoalveolar lavage fluid in Belgian dogs. J Small Anim Pract. 2016;57(3):130-134. doi:10.1111/jsap.12419'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -715,6 +770,12 @@ const SOURCE_NAMES = [
   // two letters and is a prefix of nothing here, but it is pinned in the
   // tests for the same reason 'Lo' is.
   'Taylor', 'Pedersen', 'Lv', 'Dickinson',
+  // 'Levin' vs the existing 'LeVine': held apart only by the capital V, and
+  // the resolver's /^Name/ match is case-sensitive. Both are pinned.
+  'Levin', 'Foley', 'Goddard', 'Agostini',
+  // Leishmaniosis, von Willebrand, Angiostrongylus. 'Miro' is four letters
+  // and a prefix of nothing here; 'Canonne' sits beside 'Cook' and 'Cridge'.
+  'Solano-Gallego', 'Miro', 'Villanueva-Saz', 'Kasabalis', 'McBride', 'Krüger', 'Thomsen', 'Canonne',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -965,6 +1026,18 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Pedersen/.test(part)) { out.push({ id: 'pedersen-gs441524', text: PEDERSEN_GS441524 }); continue }
     if (/^Lv/.test(part)) { out.push({ id: 'lv-gs-gc376', text: LV_GS_GC376 }); continue }
     if (/^Dickinson/.test(part)) { out.push({ id: 'dickinson-neuro-fip', text: DICKINSON_NEURO_FIP }); continue }
+    if (/^Levin\b/.test(part)) { out.push({ id: 'levin-rmsf-course', text: LEVIN_RMSF_COURSE }); continue }
+    if (/^Foley/.test(part)) { out.push({ id: 'foley-rmsf-urban', text: FOLEY_RMSF_URBAN }); continue }
+    if (/^Goddard/.test(part)) { out.push({ id: 'goddard-babesia-dic', text: GODDARD_BABESIA_DIC }); continue }
+    if (/^Agostini/.test(part)) { out.push({ id: 'agostini-mmp-vitk', text: AGOSTINI_MMP_VITK }); continue }
+    if (/^Solano-Gallego/.test(part)) { out.push({ id: 'solano-gallego-leishvet', text: SOLANO_GALLEGO_LEISHVET }); continue }
+    if (/^Miro/.test(part)) { out.push({ id: 'miro-leish-supplement', text: MIRO_LEISH_SUPPLEMENT }); continue }
+    if (/^Villanueva-Saz/.test(part)) { out.push({ id: 'villanueva-saz-seroneg', text: VILLANUEVA_SAZ_SERONEG }); continue }
+    if (/^Kasabalis/.test(part)) { out.push({ id: 'kasabalis-aminosidine', text: KASABALIS_AMINOSIDINE }); continue }
+    if (/^McBride/.test(part)) { out.push({ id: 'mcbride-aki-vwf', text: MCBRIDE_AKI_VWF }); continue }
+    if (/^Krüger/.test(part)) { out.push({ id: 'kruger-av-vwf', text: KRUGER_AV_VWF }); continue }
+    if (/^Thomsen/.test(part)) { out.push({ id: 'thomsen-av-bleeding', text: THOMSEN_AV_BLEEDING }); continue }
+    if (/^Canonne/.test(part)) { out.push({ id: 'canonne-av-bal', text: CANONNE_AV_BAL }); continue }
     // ── Disease pages 6-10 ──
     if (/^Venn/.test(part)) { out.push({ id: 'venn-outpatient', text: VENN_OUTPATIENT }); continue }
     if (/^Sarpong/.test(part)) { out.push({ id: 'sarpong-outpatient', text: SARPONG_OUTPATIENT }); continue }

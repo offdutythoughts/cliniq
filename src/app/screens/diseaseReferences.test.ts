@@ -210,6 +210,22 @@ describe('parseSources', () => {
     expect(parseSources('Pedersen 2019').map(s => s.id)).toEqual(['pedersen-gs441524'])
     expect(parseSources('Lv 2022').map(s => s.id)).toEqual(['lv-gs-gc376'])
     expect(parseSources('Dickinson 2020').map(s => s.id)).toEqual(['dickinson-neuro-fip'])
+    // 'Levin' and 'LeVine' differ only by the capital V and the trailing e.
+    // Both orders are asserted so a reorder of SOURCE_NAMES cannot swap them.
+    expect(parseSources('Levin 2014').map(s => s.id)).toEqual(['levin-rmsf-course'])
+    expect(parseSources('LeVine 2024 treatment').map(s => s.id)).toEqual(['acvim-itp-tx'])
+    expect(parseSources('Foley 2025').map(s => s.id)).toEqual(['foley-rmsf-urban'])
+    expect(parseSources('Goddard 2013').map(s => s.id)).toEqual(['goddard-babesia-dic'])
+    expect(parseSources('Agostini 2025').map(s => s.id)).toEqual(['agostini-mmp-vitk'])
+    // 'Miro' is four letters and sits beside 'Miceli' and 'Mignan'.
+    expect(parseSources('Solano-Gallego 2011').map(s => s.id)).toEqual(['solano-gallego-leishvet'])
+    expect(parseSources('Miro 2024').map(s => s.id)).toEqual(['miro-leish-supplement'])
+    expect(parseSources('Villanueva-Saz 2025').map(s => s.id)).toEqual(['villanueva-saz-seroneg'])
+    expect(parseSources('Kasabalis 2020').map(s => s.id)).toEqual(['kasabalis-aminosidine'])
+    expect(parseSources('McBride 2019').map(s => s.id)).toEqual(['mcbride-aki-vwf'])
+    expect(parseSources('Krüger 2025').map(s => s.id)).toEqual(['kruger-av-vwf'])
+    expect(parseSources('Thomsen 2024').map(s => s.id)).toEqual(['thomsen-av-bleeding'])
+    expect(parseSources('Canonne 2016').map(s => s.id)).toEqual(['canonne-av-bal'])
   })
 
   it('routes the year-keyed Meurs and Payne markers to the right cohort', () => {
@@ -586,6 +602,12 @@ describe('reference block', () => {
       ['DIS-INFECT-EHRLICH', 3, ['Seroprevalence and risk factors', 'clinicopathologic discriminators', 'Serum acute phase proteins']],
       ['DIS-BD-EHRL', 2, ['Seroprevalence and risk factors', 'Serum acute phase proteins']],
       ['DIS-INFECT-FIP', 4, ['307 cats with feline infectious peritonitis', 'nucleoside analog GS-441524', '3C-like protease inhibitor', 'neurological feline infectious peritonitis']],
+      ['DIS-INFECT-RMSF', 2, ['experimentally infected via tick bite', 'A wolf at the door']],
+      ['DIS-BD-BABS', 1, ['consumptive coagulopathy']],
+      ['DIS-BD-ROD', 1, ['mixed micelle phytomenadione']],
+      ['DIS-INFECT-LEISHM', 4, ['LeishVet guidelines', 'reduces parasitemia and proteinuria', 'aminosidine', 'Absence of specific humoral response']],
+      ['DIS-BD-VWD', 2, ['Primary hemostatic function in dogs with acute kidney injury', 'Angiostrongylus vasorum infection']],
+      ['DIS-RESP-LUNGWORM', 2, ['180 cases', 'bronchoalveolar lavage fluid in Belgian dogs']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -607,7 +629,8 @@ describe('reference block', () => {
       'DIS-OES-MEGA', 'DIS-BD-DIC', 'DIS-BD-FX', 'DIS-BD-FII', 'DIS-BD-FVII',
       'DIS-BD-HEMA', 'DIS-BD-HEMB', 'DIS-BD-HEMC', 'DIS-BD-IMHA', 'DIS-IMNP',
       'DIS-BD-EVANS', 'DIS-INFECT-LEPTO', 'DIS-INFECT-EHRLICH', 'DIS-BD-EHRL',
-      'DIS-INFECT-FIP']) {
+      'DIS-INFECT-FIP', 'DIS-INFECT-RMSF', 'DIS-BD-BABS', 'DIS-BD-ROD',
+      'DIS-INFECT-LEISHM', 'DIS-BD-VWD', 'DIS-RESP-LUNGWORM']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)
