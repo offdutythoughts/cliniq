@@ -964,6 +964,23 @@ const MICHAU_THERMOKERATOPLASTY =
 const ONEILL_KCS =
   'O’Neill DG, Brodbelt DC, Keddy A, Church DB, Sanchez RF. Keratoconjunctivitis sicca in dogs under primary veterinary care in the UK: an epidemiological study. J Small Anim Pract. 2021;62(8):636-645. doi:10.1111/jsap.13382'
 
+// A SECOND O'Neill 2017 VetCompass paper, so the year alone no longer
+// disambiguates. Its marker carries a 'cornea' qualifier and the branch checks
+// for it first — the same trick LeVine's two 2024 statements use with
+// 'diagnosis' and 'treatment'.
+const ONEILL_CUD =
+  'O’Neill DG, Lee MM, Brodbelt DC, Church DB, Sanchez RF. Corneal ulcerative disease in dogs under primary veterinary care in England: epidemiology and clinical management. Canine Genet Epidemiol. 2017;4:5. doi:10.1186/s40575-017-0045-5'
+
+// Fluoroquinolone retinopathy and taurine deficiency. Both sources are old —
+// 2002 and 1987 — and both stay because the literature on these two problems
+// essentially stops there: commercial diets solved taurine deficiency, and the
+// enrofloxacin dose question was settled by the label change. Rule 1(c) asks
+// for as current as the literature ALLOWS, not for a recent paper at any cost.
+const WIEBE_FLUOROQUINOLONE_RETINA =
+  'Wiebe V, Hamilton P. Fluoroquinolone-induced retinal degeneration in cats. J Am Vet Med Assoc. 2002;221(11):1568-1571. doi:10.2460/javma.2002.221.1568'
+const JACOBSON_TAURINE_RHODOPSIN =
+  'Jacobson SG, Kemp CM, Borruat FX, Chaitin MH, Faulkner DJ. Rhodopsin topography and rod-mediated function in cats with the retinal degeneration of taurine deficiency. Exp Eye Res. 1987;45(4):481-490. doi:10.1016/s0014-4835(87)80059-3'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1092,6 +1109,8 @@ const SOURCE_NAMES = [
   // 'Michau' vs 'Michel'/'Michelotti' — they diverge at position 5, so no
   // prefix relation, but all three are trivially misread for one another.
   'Brown', 'Michau',
+  // 'Wiebe' sits beside 'Wiinberg'; 'Jacobson' beside 'Janssens'.
+  'Wiebe', 'Jacobson',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1445,6 +1464,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Gilger/.test(part)) { out.push({ id: 'gilger-proptosis', text: GILGER_PROPTOSIS }); continue }
     if (/^Brown/.test(part)) { out.push({ id: 'brown-cea-discordance', text: BROWN_CEA_DISCORDANCE }); continue }
     if (/^Michau/.test(part)) { out.push({ id: 'michau-thermokeratoplasty', text: MICHAU_THERMOKERATOPLASTY }); continue }
+    if (/^Wiebe/.test(part)) { out.push({ id: 'wiebe-fluoroquinolone-retina', text: WIEBE_FLUOROQUINOLONE_RETINA }); continue }
+    if (/^Jacobson/.test(part)) { out.push({ id: 'jacobson-taurine-rhodopsin', text: JACOBSON_TAURINE_RHODOPSIN }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
@@ -1510,6 +1531,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
       continue
     }
     if (/^O\u2019Neill/.test(part)) {
+      // Two 2017 VetCompass papers — GDV and corneal ulcerative disease — so
+      // the year is not enough on its own. The cornea marker says so.
+      if (part.includes('cornea')) { out.push({ id: 'oneill-cud', text: ONEILL_CUD }); continue }
       const hit = ONEILL_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
       if (hit) out.push(hit)
       continue

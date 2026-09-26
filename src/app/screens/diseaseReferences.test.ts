@@ -269,6 +269,12 @@ describe('parseSources', () => {
     expect(parseSources('O\u2019Neill 2017').map(s => s.id)).toEqual(['oneill-gdv'])
     expect(parseSources('O\u2019Neill 2021').map(s => s.id)).toEqual(['oneill-kcs'])
     expect(parseSources('O\u2019Neill 2099')).toEqual([])
+    // Two O'Neill 2017 papers, so the cornea one needs a qualifier in the
+    // marker — the same trick LeVine's two 2024 statements use.
+    expect(parseSources('O\u2019Neill 2017 cornea').map(s => s.id)).toEqual(['oneill-cud'])
+    // 'Wiebe' vs 'Wiinberg'; 'Jacobson' vs 'Janssens'.
+    expect(parseSources('Wiebe 2002').map(s => s.id)).toEqual(['wiebe-fluoroquinolone-retina'])
+    expect(parseSources('Jacobson 1987').map(s => s.id)).toEqual(['jacobson-taurine-rhodopsin'])
     expect(parseSources('Scobie 2026').map(s => s.id)).toEqual(['scobie-sdma-review'])
     // Fowler vs Forgash vs Fox.
     expect(parseSources('Fowler 2022').map(s => s.id)).toEqual(['fowler-hema-spinal'])
@@ -757,7 +763,7 @@ describe('reference block', () => {
       // the papers, so the counts here include both.
       ['DIS-OPH-GLAUCOMA', 5, ['Shiba dogs with primary angle closure glaucoma', 'Baerveldt glaucoma drainage device']],
       ['DIS-EYE-CATARACT', 3, ['CDE-predictive value', 'phacoemulsification in Pugs']],
-      ['DIS-EYE-SUP-ULC', 4, ['diamond burr debridement', 'platelet-rich plasma', 'Vizoovet']],
+      ['DIS-EYE-SUP-ULC', 5, ['diamond burr debridement', 'platelet-rich plasma', 'Vizoovet', 'Corneal ulcerative disease in dogs under primary']],
       ['DIS-EYE-DEEP-ULC', 3, ['Progressive ulcerative keratitis', 'Corneal stromal ulcerations']],
       ['DIS-EYE-SARDS', 3, ['Sudden acquired retinal degeneration syndrome', 'Unilateral blindness']],
       ['DIS-EYE-SEQ', 3, ['feline corneal sequestrum: 72 cases', 'Autologous lamellar keratoplasty']],
@@ -783,6 +789,8 @@ describe('reference block', () => {
       ['DIS-EYE-ONH', 2, ['NHEJ1 intronic deletion']],
       ['DIS-EYE-CORNEDEMA', 2, ['thermokeratoplasty']],
       ['DIS-EYE-KCS', 2, ['Keratoconjunctivitis sicca in dogs under primary veterinary care']],
+      ['DIS-EYE-ENRO', 2, ['Fluoroquinolone-induced retinal degeneration']],
+      ['DIS-EYE-TAUR', 2, ['Rhodopsin topography']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -820,7 +828,8 @@ describe('reference block', () => {
       'DIS-EYE-CHERRY', 'DIS-EYE-UVEITIS-ANT', 'DIS-EYE-LIU',
       'DIS-EYE-HYPHAEMA', 'DIS-EYE-RD', 'DIS-BD-ENV', 'DIS-EYE-ORBTRAUMA',
       'DIS-EYE-PRA', 'DIS-EYE-EPISCLERITIS', 'DIS-EYE-IRIS-MEL', 'DIS-EYE-PROPTOSIS',
-      'DIS-EYE-CEA', 'DIS-EYE-ONH', 'DIS-EYE-CORNEDEMA', 'DIS-EYE-KCS']) {
+      'DIS-EYE-CEA', 'DIS-EYE-ONH', 'DIS-EYE-CORNEDEMA', 'DIS-EYE-KCS',
+      'DIS-EYE-ENRO', 'DIS-EYE-TAUR']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

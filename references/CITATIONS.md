@@ -1765,6 +1765,37 @@ mesocephalic, spaniel 3.03× non-spaniel, at-or-above breed-sex mean bodyweight 
 The authors' recommendation to run a quantitative tear test at the **annual** examination in
 predisposed breeds is now in the monitoring section.
 
+### Pages 93-94 — enrofloxacin retinal toxicity, taurine-deficient retinal degeneration (2026-09-23)
+
+> Wiebe V, Hamilton P. J Am Vet Med Assoc. 2002;221(11):1568-1571. doi:10.2460/javma.2002.221.1568
+> Jacobson SG, Kemp CM, Borruat FX, Chaitin MH, Faulkner DJ. Exp Eye Res. 1987;45(4):481-490. doi:10.1016/s0014-4835(87)80059-3
+
+**These are the two oldest sources in the pass (2002 and 1987) and the reason is the same for
+both: the literature stops there.** Commercial diets solved feline taurine deficiency, and the
+enrofloxacin dose question was settled by a label change. Rule 1(c) asks for *as current as the
+literature allows*, not a recent paper at any cost — the alternative here is no paper at all.
+
+**Wiebe** supplies what the enrofloxacin page could not: the four risk factors (large dose or high
+plasma concentration, **rapid IV infusion**, prolonged course, advancing age), a concrete
+mitigation protocol for when a fluoroquinolone is genuinely needed (exact-bodyweight dosing, split
+to 2.5 mg/kg q12h, no rapid IV, reduce in geriatric or renally impaired cats), and the early sign
+— **mydriasis precedes the blindness**, so a dilated pupil in a cat on a fluoroquinolone is a
+reason to stop the drug rather than to observe.
+
+**Jacobson** is an experimental study and the page treats it as one, but it gives two things a
+clinician can use. The lesion spreads in a known order (focal central, then paracentral, then
+nasal midperipheral, with the horizontal streak preferentially lost), so examining only the area
+centralis will under-stage it. And the **rod b-wave was markedly reduced while peripheral
+rhodopsin was only mildly depleted** — a modest-looking fundus does not mean modest functional
+loss.
+
+Also this batch: a **second O'Neill 2017 VetCompass paper** (corneal ulcerative disease) landed on
+`DIS-EYE-SUP-ULC`, which broke the year key. Its marker carries a `cornea` qualifier and the
+branch tests for it before falling through to `ONEILL_BY_YEAR` — the same mechanism LeVine's two
+2024 statements use with `diagnosis` and `treatment`. It brings the conformation data (brachy-
+cephalic **11.18×** crossbreds, Pug 5.42% of the breed affected) and an uncomfortable practice
+finding: pain was recorded in 46.2% of cases but analgesia used in only 54.6%.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
