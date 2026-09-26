@@ -1796,6 +1796,30 @@ branch tests for it before falling through to `ONEILL_BY_YEAR` — the same mech
 cephalic **11.18×** crossbreds, Pug 5.42% of the breed affected) and an uncomfortable practice
 finding: pain was recorded in 46.2% of cases but analgesia used in only 54.6%.
 
+### Pages 95-96 — optic neuritis, orbital neoplasia (2026-09-23)
+
+> Bedos L, Tetas R, Crespo V, Shea A. J Small Anim Pract. 2020;61(11):676-683. doi:10.1111/jsap.13233
+> Patel K, de Lacerda RP, Mazzucchelli S, et al. Vet Rec. Published online January 5, 2026. doi:10.1002/vetr.70219
+
+Patel is an **early-view article with no volume or page numbers yet**, so its AMA string carries
+the online-publication date instead. First reference in the pass in that form; the `isPaper`
+classifier still recognises it on the DOI rather than the volume;page locator.
+
+**Bedos is cited for how often each test is negative**, which is the opposite of how a diagnostic
+list usually reads and is what the optic neuritis page needed. Across 48 affected nerves the
+fundus was abnormal in only **71%**, MRI showed enlargement in 67% and contrast enhancement in
+58%; CSF was normal more often than not, with pleocytosis in 44% and raised protein in 44% of 25
+dogs sampled. No single negative rules the diagnosis out, and the page now says so. It also
+revises the prognosis upward — 64% of dogs responded to immunosuppression and vision returned in
+24 of 48 eyes — against a page that implied treatment had to start within days to be worth trying.
+
+**Patel** supports the surgical option on `DIS-EYE-ORBNEO` with the complication profile rather
+than a survival figure: immediate complications in 60% of 35 dogs, but almost all surgical-site
+swelling that resolved untreated, and long-term complications in only 5.7%. It also carries a
+diagnostic caution — just over half of orbits taken to exenteration proved **neoplastic** (54.3%),
+the rest inflammatory disease, cyst, foreign body or pseudotumour, which reinforces the page's
+existing "biopsy rather than assume".
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

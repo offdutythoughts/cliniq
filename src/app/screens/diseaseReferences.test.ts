@@ -275,6 +275,10 @@ describe('parseSources', () => {
     // 'Wiebe' vs 'Wiinberg'; 'Jacobson' vs 'Janssens'.
     expect(parseSources('Wiebe 2002').map(s => s.id)).toEqual(['wiebe-fluoroquinolone-retina'])
     expect(parseSources('Jacobson 1987').map(s => s.id)).toEqual(['jacobson-taurine-rhodopsin'])
+    // 'Patel' vs 'Paulin'/'Payne'/'Paterson'.
+    expect(parseSources('Bedos 2020').map(s => s.id)).toEqual(['bedos-optic-neuritis'])
+    expect(parseSources('Patel 2026').map(s => s.id)).toEqual(['patel-exenteration'])
+    expect(parseSources('Paulin 2021').map(s => s.id)).toEqual(['paulin-feline-pthp'])
     expect(parseSources('Scobie 2026').map(s => s.id)).toEqual(['scobie-sdma-review'])
     // Fowler vs Forgash vs Fox.
     expect(parseSources('Fowler 2022').map(s => s.id)).toEqual(['fowler-hema-spinal'])
@@ -791,6 +795,8 @@ describe('reference block', () => {
       ['DIS-EYE-KCS', 2, ['Keratoconjunctivitis sicca in dogs under primary veterinary care']],
       ['DIS-EYE-ENRO', 2, ['Fluoroquinolone-induced retinal degeneration']],
       ['DIS-EYE-TAUR', 2, ['Rhodopsin topography']],
+      ['DIS-EYE-OPTNEUR', 2, ['Presumed optic neuritis of non-infectious origin']],
+      ['DIS-EYE-ORBNEO', 4, ['Transpalpebral exenteration']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -829,7 +835,7 @@ describe('reference block', () => {
       'DIS-EYE-HYPHAEMA', 'DIS-EYE-RD', 'DIS-BD-ENV', 'DIS-EYE-ORBTRAUMA',
       'DIS-EYE-PRA', 'DIS-EYE-EPISCLERITIS', 'DIS-EYE-IRIS-MEL', 'DIS-EYE-PROPTOSIS',
       'DIS-EYE-CEA', 'DIS-EYE-ONH', 'DIS-EYE-CORNEDEMA', 'DIS-EYE-KCS',
-      'DIS-EYE-ENRO', 'DIS-EYE-TAUR']) {
+      'DIS-EYE-ENRO', 'DIS-EYE-TAUR', 'DIS-EYE-OPTNEUR', 'DIS-EYE-ORBNEO']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

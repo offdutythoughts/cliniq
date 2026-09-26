@@ -981,6 +981,15 @@ const WIEBE_FLUOROQUINOLONE_RETINA =
 const JACOBSON_TAURINE_RHODOPSIN =
   'Jacobson SG, Kemp CM, Borruat FX, Chaitin MH, Faulkner DJ. Rhodopsin topography and rod-mediated function in cats with the retinal degeneration of taurine deficiency. Exp Eye Res. 1987;45(4):481-490. doi:10.1016/s0014-4835(87)80059-3'
 
+// Optic neuritis and orbital exenteration. Bedos is 28 dogs and 48 nerves; its
+// value is how often each test is NEGATIVE, which the page needed. Patel is 35
+// dogs and is an early-view article with no volume yet, so the reference
+// carries the online-publication date instead.
+const BEDOS_OPTIC_NEURITIS =
+  'Bedos L, Tetas R, Crespo V, Shea A. Presumed optic neuritis of non-infectious origin in dogs treated with immunosuppressive medication: 28 dogs (2000-2015). J Small Anim Pract. 2020;61(11):676-683. doi:10.1111/jsap.13233'
+const PATEL_EXENTERATION =
+  'Patel K, de Lacerda RP, Mazzucchelli S, et al. Transpalpebral exenteration in dogs: a retrospective study (2003-2023). Vet Rec. Published online January 5, 2026. doi:10.1002/vetr.70219'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1111,6 +1120,9 @@ const SOURCE_NAMES = [
   'Brown', 'Michau',
   // 'Wiebe' sits beside 'Wiinberg'; 'Jacobson' beside 'Janssens'.
   'Wiebe', 'Jacobson',
+  // 'Patel' sits beside 'Paulin', 'Payne' and 'Paterson' — all share 'Pa',
+  // none is a prefix of another.
+  'Bedos', 'Patel',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1466,6 +1478,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Michau/.test(part)) { out.push({ id: 'michau-thermokeratoplasty', text: MICHAU_THERMOKERATOPLASTY }); continue }
     if (/^Wiebe/.test(part)) { out.push({ id: 'wiebe-fluoroquinolone-retina', text: WIEBE_FLUOROQUINOLONE_RETINA }); continue }
     if (/^Jacobson/.test(part)) { out.push({ id: 'jacobson-taurine-rhodopsin', text: JACOBSON_TAURINE_RHODOPSIN }); continue }
+    if (/^Bedos/.test(part)) { out.push({ id: 'bedos-optic-neuritis', text: BEDOS_OPTIC_NEURITIS }); continue }
+    if (/^Patel/.test(part)) { out.push({ id: 'patel-exenteration', text: PATEL_EXENTERATION }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
