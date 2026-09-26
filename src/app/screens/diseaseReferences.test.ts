@@ -241,6 +241,10 @@ describe('parseSources', () => {
     expect(parseSources('Ledbetter 2022').map(s => s.id)).toEqual(['ledbetter-ganciclovir'])
     expect(parseSources('Asti 2020').map(s => s.id)).toEqual(['asti-sharpei-entropion'])
     expect(parseSources('Aslanian 2014').map(s => s.id)).toEqual(['aslanian-hema'])
+    // 'Violette' vs 'Veir'/'Venn'/'Verdenius'.
+    expect(parseSources('Guionnet 2026').map(s => s.id)).toEqual(['guionnet-nictitans-pocket'])
+    expect(parseSources('Violette 2019').map(s => s.id)).toEqual(['violette-lipemic-uveitis'])
+    expect(parseSources('Dowler 2021').map(s => s.id)).toEqual(['dowler-fibrin-web'])
     expect(parseSources('Boss 2020').map(s => s.id)).toEqual(['boss-pug-phaco'])
     expect(parseSources('Boothe 2010').map(s => s.id)).toEqual(['boothe-pyothorax'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
@@ -745,6 +749,9 @@ describe('reference block', () => {
       ['DIS-EYE-CONJ', 2, ['ABCD guidelines on prevention and management']],
       ['DIS-EYE-SYMBL', 2, ['ABCD guidelines on prevention and management']],
       ['DIS-EYE-NEONATAL', 3, ['ABCD guidelines on prevention and management']],
+      ['DIS-EYE-CHERRY', 2, ['pocket technique']],
+      ['DIS-EYE-UVEITIS-ANT', 2, ['Lipemic uveitis']],
+      ['DIS-EYE-LIU', 3, ['fibrin web', 'CDE-predictive value']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -778,7 +785,8 @@ describe('reference block', () => {
       'DIS-RESP-BRONCHIECT', 'DIS-OPH-GLAUCOMA', 'DIS-EYE-CATARACT',
       'DIS-EYE-SUP-ULC', 'DIS-EYE-DEEP-ULC', 'DIS-EYE-SARDS', 'DIS-EYE-SEQ',
       'DIS-EYE-FHV', 'DIS-EYE-ENTROPION',
-      'DIS-EYE-CONJ', 'DIS-EYE-SYMBL', 'DIS-EYE-NEONATAL']) {
+      'DIS-EYE-CONJ', 'DIS-EYE-SYMBL', 'DIS-EYE-NEONATAL',
+      'DIS-EYE-CHERRY', 'DIS-EYE-UVEITIS-ANT', 'DIS-EYE-LIU']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

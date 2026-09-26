@@ -908,6 +908,17 @@ const LEDBETTER_GANCICLOVIR =
 const ASTI_SHARPEI_ENTROPION =
   'Asti M, Nardi S, Barsotti G. Surgical management of bilateral, upper and lower eyelid entropion in 27 Shar Pei dogs, using the Stades forced granulation procedure of the upper eyelid only. N Z Vet J. 2020;68(2):112-118. doi:10.1080/00480169.2019.1694457'
 
+// Cherry eye and uveitis. Guionnet is 126 eyes with a mean 1190 days of
+// follow-up, which is what makes its recurrence figure worth quoting. Mind the
+// print year: PubMed dates it 2025, the volume is 2026. Violette is the
+// lipaemic-flare differential the uveitis page had no source for.
+const GUIONNET_NICTITANS_POCKET =
+  'Guionnet A, Weverberg F. Surgical correction of prolapse of nictitating membrane gland using a variant of the pocket technique: a retrospective study on 101 dogs and 126 eyes. Vet Ophthalmol. 2026;29(1):e70031. doi:10.1111/vop.70031'
+const VIOLETTE_LIPEMIC_UVEITIS =
+  'Violette NP, Ledbetter EC. Lipemic uveitis and its etiologies in dogs: 75 cases. Vet Ophthalmol. 2019;22(5):577-583. doi:10.1111/vop.12625'
+const DOWLER_FIBRIN_WEB =
+  'Dowler KK, Middleton JR, Dufour S, Hood MA, Giuliano EA. Characterization of postoperative "fibrin web" formation after canine cataract surgery. Vet Ophthalmol. 2021;24(1):37-47. doi:10.1111/vop.12830'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1026,6 +1037,8 @@ const SOURCE_NAMES = [
   'Komáromy', 'Susanti', 'Gómez', 'Michel',
   // 'Asti' sits beside 'Aslanian'; 'Thiry' beside 'Thomsen' and 'Trivedi'.
   'Thiry', 'Ledbetter', 'Asti',
+  // 'Violette' sits beside 'Veir', 'Venn' and 'Verdenius'.
+  'Guionnet', 'Violette', 'Dowler',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1353,6 +1366,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Thiry/.test(part)) { out.push({ id: 'thiry-abcd-fhv', text: THIRY_ABCD_FHV }); continue }
     if (/^Ledbetter/.test(part)) { out.push({ id: 'ledbetter-ganciclovir', text: LEDBETTER_GANCICLOVIR }); continue }
     if (/^Asti/.test(part)) { out.push({ id: 'asti-sharpei-entropion', text: ASTI_SHARPEI_ENTROPION }); continue }
+    if (/^Guionnet/.test(part)) { out.push({ id: 'guionnet-nictitans-pocket', text: GUIONNET_NICTITANS_POCKET }); continue }
+    if (/^Violette/.test(part)) { out.push({ id: 'violette-lipemic-uveitis', text: VIOLETTE_LIPEMIC_UVEITIS }); continue }
+    if (/^Dowler/.test(part)) { out.push({ id: 'dowler-fibrin-web', text: DOWLER_FIBRIN_WEB }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }

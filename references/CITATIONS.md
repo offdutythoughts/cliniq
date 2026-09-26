@@ -1618,6 +1618,34 @@ This is the same free-win pattern that worked on `DIS-BD-EVANS` at the start of 
 paper already verified in the file applying to pages nobody had wired it into. Worth looking for
 before searching, since it costs one edit rather than a literature cycle.
 
+### Pages 78-80 — cherry eye, anterior uveitis, lens-induced uveitis (2026-09-23)
+
+> Guionnet A, Weverberg F. Vet Ophthalmol. 2026;29(1):e70031. doi:10.1111/vop.70031
+> Violette NP, Ledbetter EC. Vet Ophthalmol. 2019;22(5):577-583. doi:10.1111/vop.12625
+> Dowler KK, Middleton JR, Dufour S, Hood MA, Giuliano EA. Vet Ophthalmol. 2021;24(1):37-47. doi:10.1111/vop.12830
+
+Registry disagreement on Guionnet: PubMed dates it **2025** (epub May), the print volume is
+**2026;29(1)**. Print year wins, as everywhere else in this pass.
+
+**Guionnet** (126 eyes, mean 1190 days of follow-up) is cited for what happens *after* the
+technique works, not just that it works. 125 of 126 eyes held after one surgery — but lacrimal
+cysts formed in 4% and needed drainage, and KCS or ulcerative keratoconjunctivitis appeared in
+13.9% of dogs over long follow-up. The authors explicitly could not establish whether the surgery
+contributed, so the page says to keep measuring Schirmer rather than treat the gland as safe once
+repositioned. That is a more useful reading than the 99.2% headline alone.
+
+**Violette** gives the uveitis page a differential it stated without a source: dense flare is not
+always protein. Lipaemic flare can be opaque enough to **abolish the menace response**, and it
+requires hyperlipidaemia *plus* uveitis — so the action is to check triglycerides and find the
+systemic driver, not escalate the anti-inflammatory. Two-thirds of affected eyes were pseudophakic
+and over half developed it within 30 days of intraocular surgery.
+
+**Dowler** is cited on the lens-induced uveitis page alongside Edelmann from the cataract batch,
+because the two converge: longer phacoemulsification time predicted **both** fibrin web (Dowler)
+and post-operative glaucoma and blindness (Edelmann). Anything that shortens surgery, including
+operating before the cataract matures, helps twice. Dowler also rules factors *out* — diabetes,
+cataract stage and surgeon were not associated.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
