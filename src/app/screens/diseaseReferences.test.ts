@@ -264,6 +264,11 @@ describe('parseSources', () => {
     // 'Michau' vs 'Michel'/'Michelotti' — confusable but not prefixes.
     expect(parseSources('Brown 2018').map(s => s.id)).toEqual(['brown-cea-discordance'])
     expect(parseSources('Michau 2003').map(s => s.id)).toEqual(['michau-thermokeratoplasty'])
+    // O'Neill is year-keyed: two VetCompass papers, GDV and KCS. Note the
+    // CURLY apostrophe, which the marker and the branch both use.
+    expect(parseSources('O\u2019Neill 2017').map(s => s.id)).toEqual(['oneill-gdv'])
+    expect(parseSources('O\u2019Neill 2021').map(s => s.id)).toEqual(['oneill-kcs'])
+    expect(parseSources('O\u2019Neill 2099')).toEqual([])
     expect(parseSources('Scobie 2026').map(s => s.id)).toEqual(['scobie-sdma-review'])
     // Fowler vs Forgash vs Fox.
     expect(parseSources('Fowler 2022').map(s => s.id)).toEqual(['fowler-hema-spinal'])
@@ -777,6 +782,7 @@ describe('reference block', () => {
       ['DIS-EYE-CEA', 2, ['NHEJ1 intronic deletion']],
       ['DIS-EYE-ONH', 2, ['NHEJ1 intronic deletion']],
       ['DIS-EYE-CORNEDEMA', 2, ['thermokeratoplasty']],
+      ['DIS-EYE-KCS', 2, ['Keratoconjunctivitis sicca in dogs under primary veterinary care']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -814,7 +820,7 @@ describe('reference block', () => {
       'DIS-EYE-CHERRY', 'DIS-EYE-UVEITIS-ANT', 'DIS-EYE-LIU',
       'DIS-EYE-HYPHAEMA', 'DIS-EYE-RD', 'DIS-BD-ENV', 'DIS-EYE-ORBTRAUMA',
       'DIS-EYE-PRA', 'DIS-EYE-EPISCLERITIS', 'DIS-EYE-IRIS-MEL', 'DIS-EYE-PROPTOSIS',
-      'DIS-EYE-CEA', 'DIS-EYE-ONH', 'DIS-EYE-CORNEDEMA']) {
+      'DIS-EYE-CEA', 'DIS-EYE-ONH', 'DIS-EYE-CORNEDEMA', 'DIS-EYE-KCS']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

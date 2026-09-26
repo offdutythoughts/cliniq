@@ -957,6 +957,13 @@ const BROWN_CEA_DISCORDANCE =
 const MICHAU_THERMOKERATOPLASTY =
   'Michau TM, Gilger BC, Maggio F, Davidson MG. Use of thermokeratoplasty for treatment of ulcerative keratitis and bullous keratopathy secondary to corneal endothelial disease in dogs: 13 cases (1994-2001). J Am Vet Med Assoc. 2003;222(5):607-612. doi:10.2460/javma.2003.222.607'
 
+// KCS epidemiology. ONEILL is now year-keyed — the same D G O'Neill runs the
+// VetCompass programme, so there are two unrelated papers by him in this file:
+// the 2017 GDV study and this 2021 KCS one. Note the CURLY apostrophe, which
+// the existing marker and branch both use.
+const ONEILL_KCS =
+  'O’Neill DG, Brodbelt DC, Keddy A, Church DB, Sanchez RF. Keratoconjunctivitis sicca in dogs under primary veterinary care in the UK: an epidemiological study. J Small Anim Pract. 2021;62(8):636-645. doi:10.1111/jsap.13382'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1176,6 +1183,13 @@ const EDELMANN_BY_YEAR: Record<string, { id: string; text: string }> = {
 const SCOTT_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2019': { id: 'scott-ocular-snakebite', text: SCOTT_OCULAR_SNAKEBITE },
   '2021': { id: 'scott-phenobarb-marrow', text: SCOTT_PHENOBARB_MARROW },
+}
+
+/** Two VetCompass papers by the same D G O'Neill — GDV and KCS. Keyed on the
+ *  year, as Moore, Johnson, Edelmann and Scott are. */
+const ONEILL_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2017': { id: 'oneill-gdv', text: ONEILL_GDV },
+  '2021': { id: 'oneill-kcs', text: ONEILL_KCS },
 }
 
 const ARENAS_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -1495,7 +1509,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
       if (hit) out.push(hit)
       continue
     }
-    if (/^O\u2019Neill/.test(part)) { out.push({ id: 'oneill-gdv', text: ONEILL_GDV }); continue }
+    if (/^O\u2019Neill/.test(part)) {
+      const hit = ONEILL_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     // Allenspach BEFORE Allen — 'Allen' is a prefix of 'Allenspach', so the
     // reverse order sends "(Allenspach 2007)" to the gastropexy review.
     if (/^Allenspach/.test(part)) {

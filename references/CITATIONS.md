@@ -1741,6 +1741,30 @@ mean 2.2 weeks and needed less topical treatment afterwards than before referral
 practical caveat is on the page too — treat the **whole** cornea, because untreated areas
 re-ulcerate.
 
+### Page 92 — keratoconjunctivitis sicca (2026-09-23)
+
+> O’Neill DG, Brodbelt DC, Keddy A, Church DB, Sanchez RF. J Small Anim Pract. 2021;62(8):636-645. doi:10.1111/jsap.13382
+
+⚠️ **`O’Neill` is now year-keyed** — fifth author after Moore, Johnson, Edelmann and Scott. Same
+D G O'Neill runs VetCompass, so there are two unrelated papers by him here: the 2017 GDV study and
+this 2021 KCS one. Note the **curly apostrophe** (U+2019) that the marker, the source name and the
+branch regex all use — an ASCII apostrophe will not match. `DIS-GI-GDV` stays pinned at 10
+references.
+
+**This is the largest denominator of any paper cited in the pass: 363,898 dogs.** The KCS page
+carried relative risks from a Gelatt table; it now also carries VetCompass odds ratios, and the
+two differ enough to be worth having both — American Cocker Spaniel at **52.3** against
+crossbreds, English Bulldog 38.0, Pug 22.1, Lhasa Apso 21.6, where the table's figures run 4 to
+11. Labrador (0.23) and Border Collie (0.30) are actively *protected*, which the table does not
+show at all.
+
+Two things went on the page that it could not previously assert. The prevalence — **0.40%**, with
+a 0.12% one-year incidence risk — which makes it a screening target rather than a referral
+curiosity. And the conformational gradient underneath the breed list: brachycephalic 3.63×
+mesocephalic, spaniel 3.03× non-spaniel, at-or-above breed-sex mean bodyweight 1.25× lighter dogs.
+The authors' recommendation to run a quantitative tear test at the **annual** examination in
+predisposed breeds is now in the monitoring section.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
