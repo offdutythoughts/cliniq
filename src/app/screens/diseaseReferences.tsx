@@ -990,6 +990,22 @@ const BEDOS_OPTIC_NEURITIS =
 const PATEL_EXENTERATION =
   'Patel K, de Lacerda RP, Mazzucchelli S, et al. Transpalpebral exenteration in dogs: a retrospective study (2003-2023). Vet Rec. Published online January 5, 2026. doi:10.1002/vetr.70219'
 
+// Golden retriever cystic uveal disease. 830 dogs over a decade, and the
+// finding that matters is a discrimination the page did not make: thin-walled
+// ATTACHED cysts progress, thick-walled free anterior chamber cysts did not.
+const HOLLY_UVEAL_CYSTS =
+  'Holly VL, Sandmeyer LS, Bauer BS, Verges L, Grahn BH. Golden retriever cystic uveal disease: a longitudinal study of iridociliary cysts, pigmentary uveitis, and pigmentary/cystic glaucoma over a decade in western Canada. Vet Ophthalmol. 2016;19(3):237-244. doi:10.1111/vop.12293'
+
+// Two single-case reports, cited for a TECHNIQUE rather than for any frequency
+// or prognosis claim. Both pages already carry the general picture from Gelatt;
+// these add a specific reconstruction and a specific imaging approach, and both
+// say "one reported dog" on the page. Erjavec has no DOI — Can Vet J is PMC
+// only — so the second-registry check went to Europe PMC.
+const KAMINSKY_LID_FLAP =
+  'Kaminsky M, Hoffman A, Ellis AE. Mucocutaneous subdermal plexus flap for complete excision of a malignant dermal and conjunctival melanoma in a dog. Vet Ophthalmol. 2023;26(3):243-249. doi:10.1111/vop.13064'
+const ERJAVEC_DACRYOSTENOSIS =
+  'Erjavec J. Left-sided dacryostenosis in a dog. Can Vet J. 2020;61(10):1111-1114.'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1123,6 +1139,8 @@ const SOURCE_NAMES = [
   // 'Patel' sits beside 'Paulin', 'Payne' and 'Paterson' — all share 'Pa',
   // none is a prefix of another.
   'Bedos', 'Patel',
+  'Holly',
+  'Kaminsky', 'Erjavec',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1480,6 +1498,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Jacobson/.test(part)) { out.push({ id: 'jacobson-taurine-rhodopsin', text: JACOBSON_TAURINE_RHODOPSIN }); continue }
     if (/^Bedos/.test(part)) { out.push({ id: 'bedos-optic-neuritis', text: BEDOS_OPTIC_NEURITIS }); continue }
     if (/^Patel/.test(part)) { out.push({ id: 'patel-exenteration', text: PATEL_EXENTERATION }); continue }
+    if (/^Holly/.test(part)) { out.push({ id: 'holly-uveal-cysts', text: HOLLY_UVEAL_CYSTS }); continue }
+    if (/^Kaminsky/.test(part)) { out.push({ id: 'kaminsky-lid-flap', text: KAMINSKY_LID_FLAP }); continue }
+    if (/^Erjavec/.test(part)) { out.push({ id: 'erjavec-dacryostenosis', text: ERJAVEC_DACRYOSTENOSIS }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }

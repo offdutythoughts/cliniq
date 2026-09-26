@@ -1820,6 +1820,35 @@ diagnostic caution — just over half of orbits taken to exenteration proved **n
 the rest inflammatory disease, cyst, foreign body or pseudotumour, which reinforces the page's
 existing "biopsy rather than assume".
 
+### Pages 97-100 — uveal cysts, conjunctival and eyelid neoplasia, nasolacrimal obstruction (2026-09-23)
+
+> Holly VL, Sandmeyer LS, Bauer BS, Verges L, Grahn BH. Vet Ophthalmol. 2016;19(3):237-244. doi:10.1111/vop.12293
+> Kaminsky M, Hoffman A, Ellis AE. Vet Ophthalmol. 2023;26(3):243-249. doi:10.1111/vop.13064
+> Erjavec J. Can Vet J. 2020;61(10):1111-1114.
+
+**Holly draws a distinction the uveal cyst page did not make**, and it changes what "monitor"
+means. Across 830 Golden Retrievers, thin-walled cysts still **attached** to the iris or ciliary
+body carried a 56.5% risk of pigmentary uveitis or pigmentary/cystic glaucoma on re-examination,
+while **none** of the thick-walled free anterior chamber cysts progressed. The page now leads with
+morphology rather than with "incidental cyst → monitor". It also supplies the progression rate to
+glaucoma (44.9%), the age gradient (12.7% of dogs over four years against 5.9% overall) and the
+inheritance pattern (autosomal dominant with partial penetrance).
+
+**Kaminsky and Erjavec are both single case reports**, and both are cited for a **technique**
+rather than for any frequency or prognosis claim — each page already carries the general picture
+from Gelatt. Kaminsky names a reconstruction (mucocutaneous subdermal plexus flap) that achieved
+complete margins on a mass straddling conjunctiva and lid margin, with its cost stated (mild
+trichiasis and epiphora). Erjavec names an imaging approach (CT plus dacryocystogram) that
+localised a stenosis a simple flush had only shown as non-patent, and a salvage
+(conjunctivobuccostomy). Both say "one reported dog" on the page.
+
+This is the pattern for the long tail of ophthalmology: many of these conditions have no cohort
+literature at all, only case reports. Rule 4 requires a paper, and Rule 2 requires the reader to
+know how thin it is — so the citation goes in and the sample size goes in with it.
+
+Erjavec has **no DOI** (Can Vet J is PMC-only), so the second-registry check went to Europe PMC.
+Third occasion in the pass, after Perry and Gilger.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
