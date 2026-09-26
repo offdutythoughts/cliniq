@@ -261,6 +261,9 @@ describe('parseSources', () => {
     expect(parseSources('Breaux 2007').map(s => s.id)).toEqual(['breaux-episcleritis'])
     expect(parseSources('Dufour 2025').map(s => s.id)).toEqual(['dufour-iridectomy'])
     expect(parseSources('Gilger 1995').map(s => s.id)).toEqual(['gilger-proptosis'])
+    // 'Michau' vs 'Michel'/'Michelotti' — confusable but not prefixes.
+    expect(parseSources('Brown 2018').map(s => s.id)).toEqual(['brown-cea-discordance'])
+    expect(parseSources('Michau 2003').map(s => s.id)).toEqual(['michau-thermokeratoplasty'])
     expect(parseSources('Scobie 2026').map(s => s.id)).toEqual(['scobie-sdma-review'])
     // Fowler vs Forgash vs Fox.
     expect(parseSources('Fowler 2022').map(s => s.id)).toEqual(['fowler-hema-spinal'])
@@ -771,6 +774,9 @@ describe('reference block', () => {
       ['DIS-EYE-EPISCLERITIS', 2, ['Immunohistochemical investigation of canine episcleritis']],
       ['DIS-EYE-IRIS-MEL', 2, ['sector iridectomy']],
       ['DIS-EYE-PROPTOSIS', 3, ['Traumatic ocular proptoses']],
+      ['DIS-EYE-CEA', 2, ['NHEJ1 intronic deletion']],
+      ['DIS-EYE-ONH', 2, ['NHEJ1 intronic deletion']],
+      ['DIS-EYE-CORNEDEMA', 2, ['thermokeratoplasty']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -807,7 +813,8 @@ describe('reference block', () => {
       'DIS-EYE-CONJ', 'DIS-EYE-SYMBL', 'DIS-EYE-NEONATAL',
       'DIS-EYE-CHERRY', 'DIS-EYE-UVEITIS-ANT', 'DIS-EYE-LIU',
       'DIS-EYE-HYPHAEMA', 'DIS-EYE-RD', 'DIS-BD-ENV', 'DIS-EYE-ORBTRAUMA',
-      'DIS-EYE-PRA', 'DIS-EYE-EPISCLERITIS', 'DIS-EYE-IRIS-MEL', 'DIS-EYE-PROPTOSIS']) {
+      'DIS-EYE-PRA', 'DIS-EYE-EPISCLERITIS', 'DIS-EYE-IRIS-MEL', 'DIS-EYE-PROPTOSIS',
+      'DIS-EYE-CEA', 'DIS-EYE-ONH', 'DIS-EYE-CORNEDEMA']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

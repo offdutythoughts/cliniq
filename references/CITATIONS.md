@@ -1717,6 +1717,30 @@ regaining vision — 18 of 66 dogs; no cat eye regaining vision in 18 cats) and 
 indicator that runs against intuition: **brachycephalic conformation is favourable**, non-
 brachycephalic unfavourable. That sits with the page's existing list of unfavourable signs.
 
+### Pages 89-91 — Collie eye anomaly, optic nerve hypoplasia, corneal oedema (2026-09-23)
+
+> Brown EA, Thomasy SM, Murphy CJ, Bannasch DL. Vet Ophthalmol. 2018;21(2):144-150. doi:10.1111/vop.12488
+> Michau TM, Gilger BC, Maggio F, Davidson MG. J Am Vet Med Assoc. 2003;222(5):607-612. doi:10.2460/javma.2003.222.607
+
+**Brown is cited against both pages, not for them.** `DIS-EYE-CEA` called the NHEJ1 genetic test
+"definitive for breeding decisions" and said genetic testing was "the only effective control
+measure". In Nova Scotia Duck Tolling Retrievers the deletion was **discordant** with optic nerve
+head coloboma, and a genome-wide scan found no locus reaching significance once population
+structure was controlled for. The authors' own conclusion is that **puppy eye examinations are a
+better guide to breeding selection than the test** in that breed. Both pages now say the genotype
+supports rather than settles the question, and `DIS-EYE-ONH` warns against using the CEA test to
+identify coloboma outside the breeds it was validated in.
+
+This is the strongest example so far of Rule 3 earning its place — the abstract does not merely
+add detail, it reverses the page's confidence. A bibliographic record alone would have read as
+"a CEA genetics paper" and been cited *in support*.
+
+**Michau is 13 dogs and from 2003**, hedged as such. It is cited on the corneal oedema page for
+the recurrent *ulcer* rather than the oedema, since that is what it treats: every eye healed in a
+mean 2.2 weeks and needed less topical treatment afterwards than before referral. The authors'
+practical caveat is on the page too — treat the **whole** cornea, because untreated areas
+re-ulcerate.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

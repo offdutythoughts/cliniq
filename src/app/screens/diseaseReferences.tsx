@@ -948,6 +948,15 @@ const DUFOUR_IRIDECTOMY =
 const GILGER_PROPTOSIS =
   'Gilger BC, Hamilton HL, Wilkie DA, van der Woerdt A, McLaughlin SA, Whitley RD. Traumatic ocular proptoses in dogs and cats: 84 cases (1980-1993). J Am Vet Med Assoc. 1995;206(8):1186-1190.'
 
+// Collie eye anomaly genetics and endothelial disease. Brown is cited AGAINST
+// the confidence both pages placed in the NHEJ1 test — it found the deletion
+// discordant with optic nerve head coloboma in one breed. Michau is 13 dogs
+// from 2003 and is hedged; it is the specific evidence for thermokeratoplasty.
+const BROWN_CEA_DISCORDANCE =
+  'Brown EA, Thomasy SM, Murphy CJ, Bannasch DL. Genetic analysis of optic nerve head coloboma in the Nova Scotia Duck Tolling Retriever identifies discordance with the NHEJ1 intronic deletion (collie eye anomaly mutation). Vet Ophthalmol. 2018;21(2):144-150. doi:10.1111/vop.12488'
+const MICHAU_THERMOKERATOPLASTY =
+  'Michau TM, Gilger BC, Maggio F, Davidson MG. Use of thermokeratoplasty for treatment of ulcerative keratitis and bullous keratopathy secondary to corneal endothelial disease in dogs: 13 cases (1994-2001). J Am Vet Med Assoc. 2003;222(5):607-612. doi:10.2460/javma.2003.222.607'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1073,6 +1082,9 @@ const SOURCE_NAMES = [
   // either by prefix — position 4 diverges.
   'Andrade', 'Breaux',
   'Dufour', 'Gilger',
+  // 'Michau' vs 'Michel'/'Michelotti' — they diverge at position 5, so no
+  // prefix relation, but all three are trivially misread for one another.
+  'Brown', 'Michau',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1417,6 +1429,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Breaux/.test(part)) { out.push({ id: 'breaux-episcleritis', text: BREAUX_EPISCLERITIS }); continue }
     if (/^Dufour/.test(part)) { out.push({ id: 'dufour-iridectomy', text: DUFOUR_IRIDECTOMY }); continue }
     if (/^Gilger/.test(part)) { out.push({ id: 'gilger-proptosis', text: GILGER_PROPTOSIS }); continue }
+    if (/^Brown/.test(part)) { out.push({ id: 'brown-cea-discordance', text: BROWN_CEA_DISCORDANCE }); continue }
+    if (/^Michau/.test(part)) { out.push({ id: 'michau-thermokeratoplasty', text: MICHAU_THERMOKERATOPLASTY }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
