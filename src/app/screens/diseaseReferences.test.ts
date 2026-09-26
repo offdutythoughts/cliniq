@@ -259,6 +259,8 @@ describe('parseSources', () => {
     // 'Andrade' vs 'Anders'/'Anderson' — diverges at position 4, not a prefix.
     expect(parseSources('Andrade 2019').map(s => s.id)).toEqual(['andrade-prcd-frequency'])
     expect(parseSources('Breaux 2007').map(s => s.id)).toEqual(['breaux-episcleritis'])
+    expect(parseSources('Dufour 2025').map(s => s.id)).toEqual(['dufour-iridectomy'])
+    expect(parseSources('Gilger 1995').map(s => s.id)).toEqual(['gilger-proptosis'])
     expect(parseSources('Scobie 2026').map(s => s.id)).toEqual(['scobie-sdma-review'])
     // Fowler vs Forgash vs Fox.
     expect(parseSources('Fowler 2022').map(s => s.id)).toEqual(['fowler-hema-spinal'])
@@ -767,6 +769,8 @@ describe('reference block', () => {
       ['DIS-EYE-ORBTRAUMA', 2, ['ocular and periocular snakebites']],
       ['DIS-EYE-PRA', 2, ['PRCD gene responsible for progressive retinal atrophy']],
       ['DIS-EYE-EPISCLERITIS', 2, ['Immunohistochemical investigation of canine episcleritis']],
+      ['DIS-EYE-IRIS-MEL', 2, ['sector iridectomy']],
+      ['DIS-EYE-PROPTOSIS', 3, ['Traumatic ocular proptoses']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -803,7 +807,7 @@ describe('reference block', () => {
       'DIS-EYE-CONJ', 'DIS-EYE-SYMBL', 'DIS-EYE-NEONATAL',
       'DIS-EYE-CHERRY', 'DIS-EYE-UVEITIS-ANT', 'DIS-EYE-LIU',
       'DIS-EYE-HYPHAEMA', 'DIS-EYE-RD', 'DIS-BD-ENV', 'DIS-EYE-ORBTRAUMA',
-      'DIS-EYE-PRA', 'DIS-EYE-EPISCLERITIS']) {
+      'DIS-EYE-PRA', 'DIS-EYE-EPISCLERITIS', 'DIS-EYE-IRIS-MEL', 'DIS-EYE-PROPTOSIS']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

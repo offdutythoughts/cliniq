@@ -1694,6 +1694,29 @@ evidence. It also supplies the split the page lacked — about half of *unilater
 resolved without long-term therapy, while almost all bilateral disease and NGE needed continuous
 treatment — hedged as "some clinicians reported" at that sample size.
 
+### Pages 87-88 — iris melanocytic lesions, traumatic proptosis (2026-09-23)
+
+> Dufour VL, Cohen JA, Assenmacher CA, et al. Vet Ophthalmol. 2025;28(2):371-385. doi:10.1111/vop.13258
+> Gilger BC, Hamilton HL, Wilkie DA, van der Woerdt A, McLaughlin SA, Whitley RD. J Am Vet Med Assoc. 1995;206(8):1186-1190.
+
+**Gilger has no DOI** — a 1995 JAVMA paper from before the practice was universal — so the
+second-registry check went to **Europe PMC** rather than Crossref, as it did for Perry on the
+cholecalciferol page. Second occasion in the pass; the `isPaper` classifier still recognises it
+because `1995;206` matches the volume;page locator pattern.
+
+**Dufour's population is unusual and the page says so** — 40 dogs aged 0.5 to 3.1 years in a
+guide-dog colony, removed from training for a pigmented iris lesion. It supports the page's
+"monitor with serial photography" advice with something concrete (25 dogs watched without surgery,
+complication-free to 4.5 years) and it supplies what to tell an owner who does opt for surgery:
+sector iridectomy kept every eye visual and comfortable to 6.2 years with no recurrence, **but
+dyscoria followed in 13/13**, focal posterior synechia in 9/13 and non-progressive cataract in
+8/13. The pupil will not look normal afterwards, which is worth saying in advance.
+
+**Gilger** attaches sources to two figures the proptosis page already quoted (about 20% of globes
+regaining vision — 18 of 66 dogs; no cat eye regaining vision in 18 cats) and adds a prognostic
+indicator that runs against intuition: **brachycephalic conformation is favourable**, non-
+brachycephalic unfavourable. That sits with the page's existing list of unfavourable signs.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

@@ -939,6 +939,15 @@ const ANDRADE_PRCD_FREQUENCY =
 const BREAUX_EPISCLERITIS =
   'Breaux CB, Sandmeyer LS, Grahn BH. Immunohistochemical investigation of canine episcleritis. Vet Ophthalmol. 2007;10(3):168-172. doi:10.1111/j.1463-5224.2007.00528.x'
 
+// Iris melanocytic lesions and proptosis. Dufour is 45 eyes in a guide-dog
+// colony, so the population is unusual and the page says so. Gilger has no
+// DOI — a 1995 JAVMA paper — so the second-registry check went to Europe PMC,
+// as it did for Perry on the cholecalciferol page.
+const DUFOUR_IRIDECTOMY =
+  'Dufour VL, Cohen JA, Assenmacher CA, et al. Clinical descriptive and long-term outcome of melanocytic uveal lesions in young dogs: 40 cases (45 eyes) including 13 cases of sector iridectomy. Vet Ophthalmol. 2025;28(2):371-385. doi:10.1111/vop.13258'
+const GILGER_PROPTOSIS =
+  'Gilger BC, Hamilton HL, Wilkie DA, van der Woerdt A, McLaughlin SA, Whitley RD. Traumatic ocular proptoses in dogs and cats: 84 cases (1980-1993). J Am Vet Med Assoc. 1995;206(8):1186-1190.'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1063,6 +1072,7 @@ const SOURCE_NAMES = [
   // 'Andrade' sits beside 'Anders' and 'Anderson' but is not related to
   // either by prefix — position 4 diverges.
   'Andrade', 'Breaux',
+  'Dufour', 'Gilger',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1405,6 +1415,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Hirashima/.test(part)) { out.push({ id: 'hirashima-vitrectomy', text: HIRASHIMA_VITRECTOMY }); continue }
     if (/^Andrade/.test(part)) { out.push({ id: 'andrade-prcd-frequency', text: ANDRADE_PRCD_FREQUENCY }); continue }
     if (/^Breaux/.test(part)) { out.push({ id: 'breaux-episcleritis', text: BREAUX_EPISCLERITIS }); continue }
+    if (/^Dufour/.test(part)) { out.push({ id: 'dufour-iridectomy', text: DUFOUR_IRIDECTOMY }); continue }
+    if (/^Gilger/.test(part)) { out.push({ id: 'gilger-proptosis', text: GILGER_PROPTOSIS }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
