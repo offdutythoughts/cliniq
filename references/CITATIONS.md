@@ -1676,6 +1676,24 @@ and lens capsule rupture on histopathology. On `DIS-BD-ENV` that is a triage poi
 bite is not cosmetic; on `DIS-EYE-ORBTRAUMA` it sets the expectation for that specific mechanism.
 Hedged as 19 dogs on both.
 
+### Pages 85-86 — progressive retinal atrophy, episcleritis / NGE (2026-09-23)
+
+> Andrade LR, Caceres AM, Trecenti AS, et al. Animals (Basel). 2019;9(10):844. doi:10.3390/ani9100844
+> Breaux CB, Sandmeyer LS, Grahn BH. Vet Ophthalmol. 2007;10(3):168-172. doi:10.1111/j.1463-5224.2007.00528.x
+
+**Andrade** (220 genotyped English Cocker Spaniels) is cited for two things the PRA page could
+not previously support. The breeding argument: the prcd allele frequency was **41% in unregistered
+dogs against 14.9% in registered** ones. And a caveat about the test itself — 8 of 10 homozygotes
+examined had visual impairment, so two did not *yet*, which is why genotyping is a breeding tool
+as much as a diagnosis. Single-breed, single-country, and the page reads as such.
+
+**Breaux is 24 cases and from 2007**, and it is cited anyway because it is the specific source
+behind a claim the page was already making: B-lymphocyte-rich lesions need ongoing therapy to hold
+remission. Attaching the source to an existing claim is different from adding a new one on thin
+evidence. It also supplies the split the page lacked — about half of *unilateral* episcleritis
+resolved without long-term therapy, while almost all bilateral disease and NGE needed continuous
+treatment — hedged as "some clinicians reported" at that sample size.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

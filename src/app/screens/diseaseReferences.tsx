@@ -930,6 +930,15 @@ const HIRASHIMA_VITRECTOMY =
 const SCOTT_OCULAR_SNAKEBITE =
   'Scott EM, Schlesener BN, Shaw GC, Teixeira LBC. Canine ocular and periocular snakebites requiring enucleation: a report of 19 cases. Vet Ophthalmol. 2019;22(5):666-673. doi:10.1111/vop.12638'
 
+// PRA genetics and episcleritis. Andrade is 220 genotyped dogs of one breed and
+// is cited for the registered/unregistered gap, which is the breeding argument.
+// Breaux is 24 cases and old (2007), but it is the specific evidence behind the
+// page's existing claim that B-cell-rich lesions need indefinite therapy.
+const ANDRADE_PRCD_FREQUENCY =
+  'Andrade LR, Caceres AM, Trecenti AS, et al. Allele frequency of the c.5G>A mutation in the PRCD gene responsible for progressive retinal atrophy in English cocker spaniel dogs. Animals (Basel). 2019;9(10):844. doi:10.3390/ani9100844'
+const BREAUX_EPISCLERITIS =
+  'Breaux CB, Sandmeyer LS, Grahn BH. Immunohistochemical investigation of canine episcleritis. Vet Ophthalmol. 2007;10(3):168-172. doi:10.1111/j.1463-5224.2007.00528.x'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1051,6 +1060,9 @@ const SOURCE_NAMES = [
   // 'Violette' sits beside 'Veir', 'Venn' and 'Verdenius'.
   'Guionnet', 'Violette', 'Dowler',
   'Jinks', 'Hirashima',
+  // 'Andrade' sits beside 'Anders' and 'Anderson' but is not related to
+  // either by prefix — position 4 diverges.
+  'Andrade', 'Breaux',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1391,6 +1403,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Dowler/.test(part)) { out.push({ id: 'dowler-fibrin-web', text: DOWLER_FIBRIN_WEB }); continue }
     if (/^Jinks/.test(part)) { out.push({ id: 'jinks-hyphaema', text: JINKS_HYPHAEMA }); continue }
     if (/^Hirashima/.test(part)) { out.push({ id: 'hirashima-vitrectomy', text: HIRASHIMA_VITRECTOMY }); continue }
+    if (/^Andrade/.test(part)) { out.push({ id: 'andrade-prcd-frequency', text: ANDRADE_PRCD_FREQUENCY }); continue }
+    if (/^Breaux/.test(part)) { out.push({ id: 'breaux-episcleritis', text: BREAUX_EPISCLERITIS }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
