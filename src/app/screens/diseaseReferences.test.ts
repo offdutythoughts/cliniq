@@ -249,7 +249,13 @@ describe('parseSources', () => {
     expect(parseSources('Boothe 2010').map(s => s.id)).toEqual(['boothe-pyothorax'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
     // Scott vs Scobie — three shared characters, neither a prefix.
+    // Scott is year-keyed: the ocular-snakebite series and the phenobarbital
+    // marrow study, by different Scotts.
     expect(parseSources('Scott 2021').map(s => s.id)).toEqual(['scott-phenobarb-marrow'])
+    expect(parseSources('Scott 2019').map(s => s.id)).toEqual(['scott-ocular-snakebite'])
+    expect(parseSources('Scott 2099')).toEqual([])
+    expect(parseSources('Jinks 2018').map(s => s.id)).toEqual(['jinks-hyphaema'])
+    expect(parseSources('Hirashima 2022').map(s => s.id)).toEqual(['hirashima-vitrectomy'])
     expect(parseSources('Scobie 2026').map(s => s.id)).toEqual(['scobie-sdma-review'])
     // Fowler vs Forgash vs Fox.
     expect(parseSources('Fowler 2022').map(s => s.id)).toEqual(['fowler-hema-spinal'])
@@ -752,6 +758,10 @@ describe('reference block', () => {
       ['DIS-EYE-CHERRY', 2, ['pocket technique']],
       ['DIS-EYE-UVEITIS-ANT', 2, ['Lipemic uveitis']],
       ['DIS-EYE-LIU', 3, ['fibrin web', 'CDE-predictive value']],
+      ['DIS-EYE-HYPHAEMA', 2, ['hyphema to a referral hospital']],
+      ['DIS-EYE-RD', 2, ['pars plana vitrectomy']],
+      ['DIS-BD-ENV', 1, ['ocular and periocular snakebites']],
+      ['DIS-EYE-ORBTRAUMA', 2, ['ocular and periocular snakebites']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -786,7 +796,8 @@ describe('reference block', () => {
       'DIS-EYE-SUP-ULC', 'DIS-EYE-DEEP-ULC', 'DIS-EYE-SARDS', 'DIS-EYE-SEQ',
       'DIS-EYE-FHV', 'DIS-EYE-ENTROPION',
       'DIS-EYE-CONJ', 'DIS-EYE-SYMBL', 'DIS-EYE-NEONATAL',
-      'DIS-EYE-CHERRY', 'DIS-EYE-UVEITIS-ANT', 'DIS-EYE-LIU']) {
+      'DIS-EYE-CHERRY', 'DIS-EYE-UVEITIS-ANT', 'DIS-EYE-LIU',
+      'DIS-EYE-HYPHAEMA', 'DIS-EYE-RD', 'DIS-BD-ENV', 'DIS-EYE-ORBTRAUMA']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

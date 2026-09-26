@@ -1646,6 +1646,36 @@ and post-operative glaucoma and blindness (Edelmann). Anything that shortens sur
 operating before the cataract matures, helps twice. Dowler also rules factors *out* — diabetes,
 cataract stage and surgeon were not associated.
 
+### Pages 81-84 — hyphaema, retinal detachment, envenomation, orbital trauma (2026-09-23)
+
+> Jinks MR, Olea-Popelka F, Freeman KS. Vet Ophthalmol. 2018;21(2):160-166. doi:10.1111/vop.12491
+> Hirashima S, Takiyama N, Umeda Y. Vet Ophthalmol. 2022;25(1):23-30. doi:10.1111/vop.12912
+> Scott EM, Schlesener BN, Shaw GC, Teixeira LBC. Vet Ophthalmol. 2019;22(5):666-673. doi:10.1111/vop.12638
+
+⚠️ **`Scott` is now year-keyed** — fourth author to need it, after Moore, Johnson and Edelmann.
+The existing 2021 paper is phenobarbital marrow suppression by a different Scott entirely.
+`DIS-IMNP` stays pinned at 2 references, which would catch a swap.
+
+**Jinks is the most immediately usable paper in the ophthalmology block so far**, because its
+prognostic factors are all free to check at the first examination: absent consensual PLR (odds
+ratio **28.6**), absent dazzle (19.4), raised IOP (9.1), retinal detachment (7.6), *unilateral*
+rather than bilateral hyphaema (5.8), complete hyphaema (3.9). It also corrects an implicit
+assumption — trauma accounted for only 26.1% of 99 dogs, against 36.4% systemic and 32.9% local
+ocular disease, so a systemic workup is warranted even when trauma looks obvious. And hyphaema
+persisting 8-30 days raised glaucoma risk more than sixfold.
+
+**Hirashima contradicts the page's pessimism about surgery.** Vitrectomy reattached all 78 eyes,
+87.2% regained or kept vision, and 73.5% still had it at a mean 690 days. The detail that changes
+management: **mean time to vision returning was 28.5 days**, so judging failure at two weeks is
+premature. Glaucoma was the commonest complication (40.3%) and caused 88.9% of post-operative
+vision loss.
+
+**Scott serves two pages from one finding.** All 19 dogs with an ocular or periocular snakebite
+lost vision and came to enucleation, with necrosis, keratomalacia, hyphaema, retinal detachment
+and lens capsule rupture on histopathology. On `DIS-BD-ENV` that is a triage point — a periocular
+bite is not cosmetic; on `DIS-EYE-ORBTRAUMA` it sets the expectation for that specific mechanism.
+Hedged as 19 dogs on both.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

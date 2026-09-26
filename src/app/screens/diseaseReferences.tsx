@@ -919,6 +919,17 @@ const VIOLETTE_LIPEMIC_UVEITIS =
 const DOWLER_FIBRIN_WEB =
   'Dowler KK, Middleton JR, Dufour S, Hood MA, Giuliano EA. Characterization of postoperative "fibrin web" formation after canine cataract surgery. Vet Ophthalmol. 2021;24(1):37-47. doi:10.1111/vop.12830'
 
+// Hyphaema, retinal detachment, ocular envenomation. SCOTT is year-keyed — the
+// existing 2021 paper is phenobarbital marrow suppression, an unrelated work by
+// a different Scott. Jinks is 120 eyes and gives prognostic odds ratios a
+// clinician can apply at the first examination.
+const JINKS_HYPHAEMA =
+  'Jinks MR, Olea-Popelka F, Freeman KS. Causes and outcomes of dogs presenting with hyphema to a referral hospital in Colorado: a retrospective analysis of 99 cases. Vet Ophthalmol. 2018;21(2):160-166. doi:10.1111/vop.12491'
+const HIRASHIMA_VITRECTOMY =
+  'Hirashima S, Takiyama N, Umeda Y. Outcome of 25-gauge pars plana vitrectomy via a lateral approach without proptosis of the globe: a retrospective study in 72 dogs (78 eyes). Vet Ophthalmol. 2022;25(1):23-30. doi:10.1111/vop.12912'
+const SCOTT_OCULAR_SNAKEBITE =
+  'Scott EM, Schlesener BN, Shaw GC, Teixeira LBC. Canine ocular and periocular snakebites requiring enucleation: a report of 19 cases. Vet Ophthalmol. 2019;22(5):666-673. doi:10.1111/vop.12638'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1039,6 +1050,7 @@ const SOURCE_NAMES = [
   'Thiry', 'Ledbetter', 'Asti',
   // 'Violette' sits beside 'Veir', 'Venn' and 'Verdenius'.
   'Guionnet', 'Violette', 'Dowler',
+  'Jinks', 'Hirashima',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1122,6 +1134,14 @@ const JOHNSON_BY_YEAR: Record<string, { id: string; text: string }> = {
 const EDELMANN_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'edelmann-scced-prp', text: EDELMANN_SCCED_PRP },
   '2022': { id: 'edelmann-phaco-cde', text: EDELMANN_PHACO_CDE },
+}
+
+/** Two unrelated Scotts: the 2019 ocular-snakebite series and the 2021
+ *  phenobarbital marrow study. Keyed on the year, as Moore, Johnson and
+ *  Edelmann are. */
+const SCOTT_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2019': { id: 'scott-ocular-snakebite', text: SCOTT_OCULAR_SNAKEBITE },
+  '2021': { id: 'scott-phenobarb-marrow', text: SCOTT_PHENOBARB_MARROW },
 }
 
 const ARENAS_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -1369,6 +1389,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Guionnet/.test(part)) { out.push({ id: 'guionnet-nictitans-pocket', text: GUIONNET_NICTITANS_POCKET }); continue }
     if (/^Violette/.test(part)) { out.push({ id: 'violette-lipemic-uveitis', text: VIOLETTE_LIPEMIC_UVEITIS }); continue }
     if (/^Dowler/.test(part)) { out.push({ id: 'dowler-fibrin-web', text: DOWLER_FIBRIN_WEB }); continue }
+    if (/^Jinks/.test(part)) { out.push({ id: 'jinks-hyphaema', text: JINKS_HYPHAEMA }); continue }
+    if (/^Hirashima/.test(part)) { out.push({ id: 'hirashima-vitrectomy', text: HIRASHIMA_VITRECTOMY }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
@@ -1509,7 +1531,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Batty/.test(part)) { out.push({ id: 'batty-aav-integration', text: BATTY_AAV_INTEGRATION }); continue }
     if (/^Fowler/.test(part)) { out.push({ id: 'fowler-hema-spinal', text: FOWLER_HEMA_SPINAL }); continue }
     if (/^Devine/.test(part)) { out.push({ id: 'devine-imn', text: DEVINE_IMN }); continue }
-    if (/^Scott/.test(part)) { out.push({ id: 'scott-phenobarb-marrow', text: SCOTT_PHENOBARB_MARROW }); continue }
+    if (/^Scott/.test(part)) {
+      const hit = SCOTT_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     // Only an Ettinger part reaches the Ettinger fallback. This used to be a
     // bare `else`, so ANY unrecognised part became a book-level Ettinger
     // reference — which credited Ettinger with "Farias et al. 2010, Gould et al.
