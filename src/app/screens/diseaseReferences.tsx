@@ -1097,6 +1097,17 @@ const BECKWITH_COHEN_FUNDUS =
 const CASTEL_SPASTIC_PUPIL =
   'Castel A, Olby NJ, Breitschwerdt EB, Thomas B, Maggi RG, Shelton GD. Co-infection with Bartonella henselae and Sarcocystis sp. in a 6-year-old male neutered domestic longhair cat with progressive multifocal neurological signs. Vet Q. 2019;39(1):168-173. doi:10.1080/01652176.2019.1697012'
 
+// Neurology block. ANDERSON is now year-keyed: the 2000 feline inflammatory
+// polyp series and this 2026 MUO cohort. The Anderson branch must STAY above
+// the /^Anders\b/ one — that ordering is the Anders/Anderson prefix fix and
+// year-keying must not disturb it.
+const ANDERSON_MUO_OLDER =
+  'Anderson FE, De Decker S, Bentley RT, Goncalves R. Clinical presentation, prognostic factors, and outcomes of meningoencephalitis of unknown origin in older dogs. J Vet Intern Med. 2026;40(3). doi:10.1093/jvimsj/aalag089'
+const BAKA_SYRINGOMYELIA =
+  'Baka RD, Savvas I, Sarpekidou E, Kazakos G, Polizopoulou Z. Epidemiological data, clinical signs, therapy and outcome evaluation in dogs with syringomyelia of different etiology. Vet Sci. 2025;12(4):376. doi:10.3390/vetsci12040376'
+const SEBESTYEN_SOD1 =
+  'Sebestyen P, Kowalska ME, Golini L. Survival and deterioration time of walking abilities in dogs homozygous for the SOD1 gene mutation with and without thoracolumbar intervertebral disc protrusion. Front Vet Sci. 2025;12:1555889. doi:10.3389/fvets.2025.1555889'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1244,6 +1255,8 @@ const SOURCE_NAMES = [
   // 'Kim' vs the existing 'King'; 'Garcia' vs 'Garden'/'Gareis'/'Gábor'.
   'Kim', 'Sypniewska', 'Garcia',
   'Chmiel', 'Diehl', 'Beckwith-Cohen', 'Castel',
+  // 'Baka' sits one character from 'Baker' and two from 'Barker'.
+  'Baka', 'Sebestyén',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1358,6 +1371,13 @@ const BEDOS_BY_YEAR: Record<string, { id: string; text: string }> = {
 const CHAN_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2022': { id: 'chan-sports-ball', text: CHAN_SPORTS_BALL },
   '2023': { id: 'chan-inhaled-fluticasone', text: CHAN_INHALED_FLUTICASONE },
+}
+
+/** The feline polyp series and the MUO cohort. Keyed on the year; the branch
+ *  that reads this must stay ABOVE the /^Anders\\b/ one. */
+const ANDERSON_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2000': { id: 'anderson-polyps', text: ANDERSON_POLYPS + '.' },
+  '2026': { id: 'anderson-muo-older', text: ANDERSON_MUO_OLDER },
 }
 
 const ARENAS_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -1518,7 +1538,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Wilson/.test(part)) { out.push({ id: 'wilson-tieback-ap', text: WILSON_TIEBACK_AP }); continue }
     if (/^MacPhail/.test(part)) { out.push({ id: 'macphail-lp', text: MACPHAIL_LP }); continue }
     if (/^Jeffery/.test(part)) { out.push({ id: 'jeffery-lp', text: JEFFERY_LP }); continue }
-    if (/^Anderson/.test(part)) { out.push({ id: 'anderson-polyps', text: ANDERSON_POLYPS + '.' }); continue }
+    if (/^Anderson/.test(part)) {
+      const hit = ANDERSON_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Anders\b/.test(part)) { out.push({ id: 'anders-vbo-baer', text: ANDERS_VBO_BAER }); continue }
     if (/^Veir/.test(part)) { out.push({ id: 'veir-polyps', text: VEIR_POLYPS }); continue }
     if (/^Greci/.test(part)) { out.push({ id: 'greci-ptt', text: GRECI_PTT }); continue }
@@ -1644,6 +1668,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Diehl/.test(part)) { out.push({ id: 'diehl-breed-screening', text: DIEHL_BREED_SCREENING }); continue }
     if (/^Beckwith-Cohen/.test(part)) { out.push({ id: 'beckwith-cohen-fundus', text: BECKWITH_COHEN_FUNDUS }); continue }
     if (/^Castel/.test(part)) { out.push({ id: 'castel-spastic-pupil', text: CASTEL_SPASTIC_PUPIL }); continue }
+    if (/^Baka/.test(part)) { out.push({ id: 'baka-syringomyelia', text: BAKA_SYRINGOMYELIA }); continue }
+    if (/^Sebestyén/.test(part)) { out.push({ id: 'sebestyen-sod1', text: SEBESTYEN_SOD1 }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }

@@ -2078,6 +2078,41 @@ cohort literature: breed-screening certification (iris coloboma, PHTVL) and syst
 presenting in the fundus (immune-mediated retinopathy, cortical blindness). Cited for framing
 rather than for figures.
 
+### Pages 127-129 — MUO, Chiari-like malformation, degenerative myelopathy (2026-09-23)
+
+First of the neurology block (45 pages).
+
+> Anderson FE, De Decker S, Bentley RT, Goncalves R. J Vet Intern Med. 2026;40(3). doi:10.1093/jvimsj/aalag089
+> Baka RD, Savvas I, Sarpekidou E, Kazakos G, Polizopoulou Z. Vet Sci. 2025;12(4):376. doi:10.3390/vetsci12040376
+> Sebestyen P, Kowalska ME, Golini L. Front Vet Sci. 2025;12:1555889. doi:10.3389/fvets.2025.1555889
+
+⚠️ **`Anderson` is now year-keyed AND is the longer half of the `Anders`/`Anderson` prefix pair**,
+so two different fixes have to coexist on one name: the `/^Anderson/` branch must stay **above**
+`/^Anders\b/`, and it now dispatches on the year inside. Eighth year-keyed author. `DIS-POLYP` is
+pinned at 8 references and `Anders 2008` is asserted separately, which would catch either fix
+breaking the other.
+
+**Anderson answers a question the MUO page did not address: does age change the decision?** The
+page was silent on older dogs, which invites treating a geriatric presentation as not worth
+immunosuppressing. Median survival was **16 months in dogs 8 years or older against 24 months in
+younger dogs, and the difference was not significant** on multivariate analysis; relapse rates also
+did not differ (41.7% vs 65.0%). The page now says not to write the older dog off on age alone. It
+also flags that older dogs presented differently — significantly more behaviour change, cranial
+nerve deficits and comorbidities — which is how MUO gets mistaken for a geriatric or neoplastic
+problem.
+
+**Baka reframes the Chiari page around a distinction it did not draw.** Syringomyelia of *other*
+aetiology behaved worse than the Chiari-associated form: more severe neurological dysfunction, and
+9 of 15 died or were euthanased against 11 of 15 still alive in the Chiari group. Age at onset
+separates them — mean 50.5 months for Chiari-associated against 97.6 months otherwise — so a young
+brachycephalic fits the malformation and an older dog warrants a wider search.
+
+**Sebestyén supplies the number owners actually ask for**, which the page did not have: median
+survival **6 months from the point of diagnosis** (13 months from onset of deficits), against the
+page's "~1.25 years from diagnosis" figure for Corgis. It also rules something out — SOD1
+homozygotes with a concurrent T3-L3 disc protrusion had a hazard ratio of 1.20, not significant, so
+a protrusion found on MRI should not be assumed to explain the deficits.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

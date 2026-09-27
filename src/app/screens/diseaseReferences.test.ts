@@ -90,7 +90,14 @@ describe('parseSources', () => {
   // — so if someone reorders those branches, this is the test that fails
   // rather than a wrong-but-plausible reference appearing on the polyp page.
   it('does not let a short author name swallow a longer one', () => {
+    // Anderson is year-keyed AND is the longer half of the Anders/Anderson
+    // prefix pair, so the ordering fix and the year key have to coexist.
     expect(parseSources('Anderson 2000').map(s => s.id)).toEqual(['anderson-polyps'])
+    expect(parseSources('Anderson 2026').map(s => s.id)).toEqual(['anderson-muo-older'])
+    expect(parseSources('Anderson 2099')).toEqual([])
+    expect(parseSources('Anders 2008').map(s => s.id)).toEqual(['anders-vbo-baer'])
+    expect(parseSources('Baka 2025').map(s => s.id)).toEqual(['baka-syringomyelia'])
+    expect(parseSources('Sebestyén 2025').map(s => s.id)).toEqual(['sebestyen-sod1'])
     expect(parseSources('Anders 2008').map(s => s.id)).toEqual(['anders-vbo-baer'])
     expect(parseSources('Longeri 2013').map(s => s.id)).toEqual(['longeri-mybpc3'])
     expect(parseSources('Lo 2022').map(s => s.id)).toEqual(['lo-dual-therapy'])
@@ -873,6 +880,10 @@ describe('reference block', () => {
       ['DIS-EYE-IMR', 2, ['systemic disease in the retina and fundus']],
       ['DIS-EYE-CORTBLIND', 2, ['systemic disease in the retina and fundus']],
       ['DIS-EYE-SPS', 2, ['Sarcocystis']],
+      // Neurology block opens here.
+      ['DIS-NEU-MUE', 2, ['meningoencephalitis of unknown origin in older dogs']],
+      ['DIS-NEU-CHIARI', 2, ['syringomyelia of different etiology']],
+      ['DIS-NEU-DM', 2, ['SOD1 gene mutation']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -920,7 +931,8 @@ describe('reference block', () => {
       'DIS-EYE-CHALAZION', 'DIS-EYE-CONJMASS',
       'DIS-EYE-IRIS-ATR', 'DIS-EYE-SYNECH', 'DIS-EYE-CHORIO',
       'DIS-EYE-OCFB', 'DIS-EYE-LIDTRAUMA', 'DIS-EYE-CONJHAEM', 'DIS-EYE-IRIS-COLOB',
-      'DIS-EYE-PHTVL', 'DIS-EYE-IMR', 'DIS-EYE-CORTBLIND', 'DIS-EYE-SPS']) {
+      'DIS-EYE-PHTVL', 'DIS-EYE-IMR', 'DIS-EYE-CORTBLIND', 'DIS-EYE-SPS',
+      'DIS-NEU-MUE', 'DIS-NEU-CHIARI', 'DIS-NEU-DM']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)
