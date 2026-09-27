@@ -98,6 +98,13 @@ describe('parseSources', () => {
     expect(parseSources('Anders 2008').map(s => s.id)).toEqual(['anders-vbo-baer'])
     expect(parseSources('Baka 2025').map(s => s.id)).toEqual(['baka-syringomyelia'])
     expect(parseSources('Sebestyén 2025').map(s => s.id)).toEqual(['sebestyen-sod1'])
+    // 'Bonelli' is the short indexed form; the reference carries the full
+    // surname 'de Albuquerque Bonelli'. 'Nye' is three letters and unrelated
+    // by prefix to 'Nguyen'/'Ng'.
+    expect(parseSources('Bonelli 2019').map(s => s.id)).toEqual(['bonelli-juvenile-csm'])
+    expect(parseSources('Nye 2020').map(s => s.id)).toEqual(['nye-oa-csm-followup'])
+    expect(parseSources('Monforte Monteiro 2025').map(s => s.id)).toEqual(['monforte-monteiro-csf'])
+    expect(parseSources('Congiusta 2024').map(s => s.id)).toEqual(['congiusta-oclacitinib-mmm'])
     expect(parseSources('Anders 2008').map(s => s.id)).toEqual(['anders-vbo-baer'])
     expect(parseSources('Longeri 2013').map(s => s.id)).toEqual(['longeri-mybpc3'])
     expect(parseSources('Lo 2022').map(s => s.id)).toEqual(['lo-dual-therapy'])
@@ -884,6 +891,9 @@ describe('reference block', () => {
       ['DIS-NEU-MUE', 2, ['meningoencephalitis of unknown origin in older dogs']],
       ['DIS-NEU-CHIARI', 2, ['syringomyelia of different etiology']],
       ['DIS-NEU-DM', 2, ['SOD1 gene mutation']],
+      ['DIS-NEU-WOBBLER', 3, ['cervical spondylomyelopathy in juvenile dogs', 'osseous-associated cervical spondylomyelopathy']],
+      ['DIS-NEU-IDVEST', 2, ['cerebrospinal fluid analysis in dogs and cats with suspected intracranial']],
+      ['DIS-NEU-MMM', 3, ['Janus kinase']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -932,7 +942,8 @@ describe('reference block', () => {
       'DIS-EYE-IRIS-ATR', 'DIS-EYE-SYNECH', 'DIS-EYE-CHORIO',
       'DIS-EYE-OCFB', 'DIS-EYE-LIDTRAUMA', 'DIS-EYE-CONJHAEM', 'DIS-EYE-IRIS-COLOB',
       'DIS-EYE-PHTVL', 'DIS-EYE-IMR', 'DIS-EYE-CORTBLIND', 'DIS-EYE-SPS',
-      'DIS-NEU-MUE', 'DIS-NEU-CHIARI', 'DIS-NEU-DM']) {
+      'DIS-NEU-MUE', 'DIS-NEU-CHIARI', 'DIS-NEU-DM',
+      'DIS-NEU-WOBBLER', 'DIS-NEU-IDVEST', 'DIS-NEU-MMM']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

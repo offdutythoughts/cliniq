@@ -1108,6 +1108,20 @@ const BAKA_SYRINGOMYELIA =
 const SEBESTYEN_SOD1 =
   'Sebestyen P, Kowalska ME, Golini L. Survival and deterioration time of walking abilities in dogs homozygous for the SOD1 gene mutation with and without thoracolumbar intervertebral disc protrusion. Front Vet Sci. 2025;12:1555889. doi:10.3389/fvets.2025.1555889'
 
+// Wobbler, vestibular disease and masticatory myositis. Monforte Monteiro is 593
+// animals and is a general neurology diagnostic finding — it will apply to more
+// than the one page it lands on here. Note the MARKER for the juvenile CSM paper
+// is 'Bonelli', the short form the author is commonly indexed under, while the
+// reference itself carries the full surname.
+const BONELLI_JUVENILE_CSM =
+  'de Albuquerque Bonelli M, da Costa RC. Clinical and magnetic resonance imaging characterization of cervical spondylomyelopathy in juvenile dogs. J Vet Intern Med. 2019;33(5):2160-2166. doi:10.1111/jvim.15602'
+const NYE_OA_CSM_FOLLOWUP =
+  'Nye C, Hostnik E, Parker E, et al. Long-term clinical and magnetic resonance imaging follow-up of dogs with osseous-associated cervical spondylomyelopathy. J Vet Intern Med. 2020;34(5):2012-2020. doi:10.1111/jvim.15866'
+const MONFORTE_MONTEIRO_CSF =
+  'Monforte Monteiro SR, De Risio L, Alves L, Vanhaesebrouck AE. Usefulness of cerebrospinal fluid analysis in dogs and cats with suspected intracranial disease and normal magnetic resonance imaging. Front Vet Sci. 2025;12:1583988. doi:10.3389/fvets.2025.1583988'
+const CONGIUSTA_OCLACITINIB_MMM =
+  'Congiusta MC, Snyder C, Soukup JW, Apostolopoulos N. Novel management of masticatory myositis in three dogs with a selective Janus kinase (JAK-1) inhibitor. J Vet Dent. 2024;41(6):620-627. doi:10.1177/08987564231219925'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1257,6 +1271,8 @@ const SOURCE_NAMES = [
   'Chmiel', 'Diehl', 'Beckwith-Cohen', 'Castel',
   // 'Baka' sits one character from 'Baker' and two from 'Barker'.
   'Baka', 'Sebestyén',
+  // 'Nye' is three letters and unrelated by prefix to 'Nguyen'/'Ng'/'Nabity'.
+  'Bonelli', 'Nye', 'Monforte Monteiro', 'Congiusta',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1670,6 +1686,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Castel/.test(part)) { out.push({ id: 'castel-spastic-pupil', text: CASTEL_SPASTIC_PUPIL }); continue }
     if (/^Baka/.test(part)) { out.push({ id: 'baka-syringomyelia', text: BAKA_SYRINGOMYELIA }); continue }
     if (/^Sebestyén/.test(part)) { out.push({ id: 'sebestyen-sod1', text: SEBESTYEN_SOD1 }); continue }
+    if (/^Bonelli/.test(part)) { out.push({ id: 'bonelli-juvenile-csm', text: BONELLI_JUVENILE_CSM }); continue }
+    if (/^Nye/.test(part)) { out.push({ id: 'nye-oa-csm-followup', text: NYE_OA_CSM_FOLLOWUP }); continue }
+    if (/^Monforte Monteiro/.test(part)) { out.push({ id: 'monforte-monteiro-csf', text: MONFORTE_MONTEIRO_CSF }); continue }
+    if (/^Congiusta/.test(part)) { out.push({ id: 'congiusta-oclacitinib-mmm', text: CONGIUSTA_OCLACITINIB_MMM }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }

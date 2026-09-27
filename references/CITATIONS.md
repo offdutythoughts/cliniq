@@ -2113,6 +2113,41 @@ page's "~1.25 years from diagnosis" figure for Corgis. It also rules something o
 homozygotes with a concurrent T3-L3 disc protrusion had a hazard ratio of 1.20, not significant, so
 a protrusion found on MRI should not be assumed to explain the deficits.
 
+### Pages 130-132 — Wobbler, idiopathic vestibular disease, masticatory myositis (2026-09-23)
+
+> de Albuquerque Bonelli M, da Costa RC. J Vet Intern Med. 2019;33(5):2160-2166. doi:10.1111/jvim.15602
+> Nye C, Hostnik E, Parker E, et al. J Vet Intern Med. 2020;34(5):2012-2020. doi:10.1111/jvim.15866
+> Monforte Monteiro SR, De Risio L, Alves L, Vanhaesebrouck AE. Front Vet Sci. 2025;12:1583988. doi:10.3389/fvets.2025.1583988
+> Congiusta MC, Snyder C, Soukup JW, Apostolopoulos N. J Vet Dent. 2024;41(6):620-627. doi:10.1177/08987564231219925
+
+The marker for the juvenile CSM paper is **`Bonelli`**, the short form the author is commonly
+indexed under, while the reference string carries the full surname *de Albuquerque Bonelli*. First
+time in the pass that the marker and the AMA surname differ deliberately; both are asserted.
+
+**Nye is cited against an assumption the Wobbler page carried.** The page said medical management
+means "many show progressive deterioration over time". On repeat MRI a median 30 months later, the
+worst site had progressed in 4 of 9 medically managed dogs, **improved in 4** and was unchanged in
+3, and all but 2 dogs were clinically unchanged or better. It also separates radiographic from
+clinical worsening — 38.9% of stenotic sites worsened morphologically while most dogs stayed
+clinically stable — so the page now warns against re-imaging a stable dog and escalating on the
+pictures.
+
+**Bonelli** widens the age range: mean 9.4 months in 20 affected dogs, 16 of them giant breeds. It
+also argues for imaging the whole cervical spine rather than the worst site, since 12 of 20 had two
+or more compressive levels.
+
+**Monforte Monteiro is 593 animals and is the most broadly useful paper in this batch** — it lands
+on `DIS-NEU-IDVEST` here but applies wherever a normal MRI precedes a decision about CSF. After an
+unremarkable brain MRI, CSF changed the diagnosis or treatment in **0.8%** of cases, and every dog
+it helped had an abnormal neurological examination. **No cat** in the cohort had abnormal CSF after
+a normal MRI. That is a concrete reason not to tap a neurologically normal animal with clean
+imaging, which the page did not say. Worth reusing on the other intracranial pages.
+
+**Congiusta is three dogs, uncontrolled**, and its interest is a dissociation: gape angle improved
+in all three on oclacitinib while 2M fibre antibody titres did **not** fall. The MMM page told the
+reader to retest titres before each dose reduction and treat a rising titre as impending relapse —
+it now also says to judge the response clinically, because the two can move independently.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
