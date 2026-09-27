@@ -227,6 +227,11 @@ describe('parseSources', () => {
     expect(parseSources('Dees 2022').map(s => s.id)).toEqual(['dees-scced-adjunct'])
     // 'Goss' vs 'Gould'/'Gold'; 'Verdenius' vs 'Venn'.
     expect(parseSources('Goss 2024').map(s => s.id)).toEqual(['goss-ulcerative-keratitis'])
+    // 'Lemle' vs the existing 'Lemmons' — one character apart at position 4.
+    expect(parseSources('Lemle 2026').map(s => s.id)).toEqual(['lemle-pug-screening'])
+    expect(parseSources('Lemmons Ch 12').map(s => s.id)).toEqual(['lemmons-ch12'])
+    expect(parseSources('Kecova 2025').map(s => s.id)).toEqual(['kecova-lateral-canthus'])
+    expect(parseSources('Enache 2025').map(s => s.id)).toEqual(['enache-zygomatic'])
     expect(parseSources('Verdenius 2024').map(s => s.id)).toEqual(['verdenius-stromal-ulcer'])
     expect(parseSources('Venn 2017').map(s => s.id)).toEqual(['venn-outpatient'])
     // 'Michel' IS a prefix of 'Michelotti' — the Michelotti branch sits above
@@ -815,6 +820,9 @@ describe('reference block', () => {
       ['DIS-EYE-CILIA', 2, ['known and presumed hereditary eye diseases']],
       ['DIS-EYE-RETDYSPL', 3, ['Czechoslovakian Wolfdog', 'known and presumed hereditary eye diseases']],
       ['DIS-EYE-LIDAGEN', 2, ['Bilateral eyelid agenesis']],
+      ['DIS-EYE-ECTROPION', 3, ['inherited eye diseases in pugs', 'Lateral canthal reconstruction']],
+      ['DIS-EYE-ZYGO', 2, ['zygomatic sialadenitis']],
+      ['DIS-EYE-DERMOID', 3, ['Lateral canthal reconstruction']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -855,7 +863,8 @@ describe('reference block', () => {
       'DIS-EYE-CEA', 'DIS-EYE-ONH', 'DIS-EYE-CORNEDEMA', 'DIS-EYE-KCS',
       'DIS-EYE-ENRO', 'DIS-EYE-TAUR', 'DIS-EYE-OPTNEUR', 'DIS-EYE-ORBNEO',
       'DIS-EYE-UVEAL-CYST', 'DIS-EYE-CONJNEO', 'DIS-EYE-LIDNEO', 'DIS-EYE-NLD',
-      'DIS-EYE-PPM', 'DIS-EYE-CILIA', 'DIS-EYE-RETDYSPL', 'DIS-EYE-LIDAGEN']) {
+      'DIS-EYE-PPM', 'DIS-EYE-CILIA', 'DIS-EYE-RETDYSPL', 'DIS-EYE-LIDAGEN',
+      'DIS-EYE-ECTROPION', 'DIS-EYE-ZYGO', 'DIS-EYE-DERMOID']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

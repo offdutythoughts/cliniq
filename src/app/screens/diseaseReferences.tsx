@@ -1021,6 +1021,21 @@ const GABOR_RETINAL_DYSPLASIA =
 const NG_EYELID_AGENESIS =
   'Ng CH, Ervedosa TB, Soler JG, Climans ME, Gonzalez-Astudillo V. Bilateral eyelid agenesis with multiple congenital ocular anomalies in an Australian Labradoodle puppy: case report and surgical management. Vet Ophthalmol. 2026;29(2):e70164. doi:10.1111/vop.70164'
 
+// Brachycephalic adnexal screening and two adnexal procedures. Lemle is 294
+// pugs from the European Eye Scheme; Kecova is 153 eyes and covers BOTH the
+// oversized-fissure page and the dermoid one, since four of its cases were
+// lateral canthal dermoids. Enache is 20 dogs and is the only series on
+// bilateral zygomatic sialadenitis.
+//
+// NOTE 'Lemle' sits one character from the existing 'Lemmons' — they diverge at
+// position 4, so neither is a prefix of the other, but both are pinned.
+const LEMLE_PUG_SCREENING =
+  'Lemle C, Koch C, Meyer-Lindenberg A. Prevalences of known and presumed inherited eye diseases in pugs in Germany. Vet Ophthalmol. 2026;29(5):e70235. doi:10.1111/vop.70235'
+const KECOVA_LATERAL_CANTHUS =
+  'Kecova H, Miller WW, Lindley DM. Lateral canthal reconstruction for the treatment of macroblepharon/diamond eye conformation in dogs. Vet Ophthalmol. 2025;28(2):341-352. doi:10.1111/vop.13239'
+const ENACHE_ZYGOMATIC =
+  'Enache AE, Maini S, Pivetta M, et al. Canine bilateral zygomatic sialadenitis: 20 cases (2000-2019). J Small Anim Pract. 2025;66(6):396-411. doi:10.1111/jsap.13844'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1158,6 +1173,8 @@ const SOURCE_NAMES = [
   'Kaminsky', 'Erjavec',
   // 'Ng' IS a prefix of the existing 'Nguyen' — held apart by \\b, not order.
   'Goossens', 'Gábor', 'Ng',
+  // 'Lemle' vs the existing 'Lemmons' — one character apart at position 4.
+  'Lemle', 'Kecova', 'Enache',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1521,6 +1538,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Goossens/.test(part)) { out.push({ id: 'goossens-ecvo-screening', text: GOOSSENS_ECVO_SCREENING }); continue }
     if (/^Gábor/.test(part)) { out.push({ id: 'gabor-retinal-dysplasia', text: GABOR_RETINAL_DYSPLASIA }); continue }
     if (/^Ng\b/.test(part)) { out.push({ id: 'ng-eyelid-agenesis', text: NG_EYELID_AGENESIS }); continue }
+    if (/^Lemle/.test(part)) { out.push({ id: 'lemle-pug-screening', text: LEMLE_PUG_SCREENING }); continue }
+    if (/^Kecova/.test(part)) { out.push({ id: 'kecova-lateral-canthus', text: KECOVA_LATERAL_CANTHUS }); continue }
+    if (/^Enache/.test(part)) { out.push({ id: 'enache-zygomatic', text: ENACHE_ZYGOMATIC }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }

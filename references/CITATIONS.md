@@ -1884,6 +1884,37 @@ first point warns that concurrent anomalies can sit deeper than the fundus exam 
 second is why lubrication does not substitute for reconstruction. It also establishes that eyelid
 agenesis is not exclusively feline.
 
+### Pages 105-107 — ectropion/macroblepharon, zygomatic mucocoele, ocular dermoid (2026-09-23)
+
+> Lemle C, Koch C, Meyer-Lindenberg A. Vet Ophthalmol. 2026;29(5):e70235. doi:10.1111/vop.70235
+> Kecova H, Miller WW, Lindley DM. Vet Ophthalmol. 2025;28(2):341-352. doi:10.1111/vop.13239
+> Enache AE, Maini S, Pivetta M, et al. J Small Anim Pract. 2025;66(6):396-411. doi:10.1111/jsap.13844
+
+Discovery again through **Europe PMC** — PubMed search still returning `API_ERROR`.
+
+⚠️ **`Lemle` sits one character from the existing `Lemmons`** (the ophthalmology textbook cited by
+chapter). They diverge at position 4 so neither is a prefix of the other, but both are pinned.
+
+**Kecova covers two pages from one paper** — the oversized-fissure page and the dermoid page,
+because four of its 153 eyes were lateral canthal dermoids resected by the same technique. Its
+strongest point is structural rather than cosmetic: operating **before** severe malformation
+develops prevented the secondary "pagoda defect" in giant breeds, while late cases needed
+concurrent pagoda resection. That is an argument for earlier referral that the page did not have.
+It also softens the page's line about lateral canthoplasty giving "unpredictable results" —
+canthal *reconstruction* achieved good-to-excellent function in all but 6 of 153 eyes.
+
+**Enache separates two conditions the zygomatic page had partly conflated.** The page said "no
+pain on opening the mouth, unlike orbital cellulitis" as a way of identifying zygomatic disease —
+but pain on opening the mouth was present in **18 of 20** dogs with bilateral zygomatic
+*sialadenitis*. The page now distinguishes the inflammatory form (painful, usually medical: 16/20
+improved on antimicrobials and anti-inflammatories, and only 2 of 9 cultures grew anything) from a
+simple mucocoele (leaking gland, surgical). It also flags that **15 of 20** had concurrent systemic
+disease, which redirects the workup outward.
+
+**Lemle** (294 pugs, European Eye Scheme) quantifies the brachycephalic adnexal burden: entropion
+72.4%, pigmentary keratopathy 36.7%, macroblepharon 24.8%, distichiasis 20.1%, and **81.3% with at
+least one adnexal disorder**.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
