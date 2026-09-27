@@ -46,12 +46,23 @@ const FIELDS = [
  *                   DIS-BD-TPATH. Before `Scott` was year-keyed this resolved to
  *                   a phenobarbital marrow paper and put a superscript on a
  *                   disease name. Keep it unresolved.
+ *    (Evans syndrome)
+ *                 — IMHA with immune thrombocytopenia, on DIS-BD-IMHA. Same trap
+ *                   as Scott: it resolved to a metronidazole paper until Evans
+ *                   was year-keyed. Caught by a reference-count test, not by a
+ *                   reader.
+ *    (Golden Retriever most common)
+ *                 — a breed note on DIS-NEU-HORNERS. 'Gold' is a source name and
+ *                   matched it, hanging a basal-cortisol superscript off a breed.
+ *                   Found by check 5 on its first run, not by a reader.
  *    (AAHA/AAFP)  — "PPI if indicated (AAHA/AAFP)" is a qualifier naming the
  *                   bodies that prefer it, not a reference to a guideline.
  *    (Librela)    — a drug brand. Matches because `Li` is a source name.
  *
  *  Anything NOT on this list that fails to resolve is a bug. */
-const PROSE_QUALIFIERS = new Set(['Scott', 'AAHA/AAFP', 'Librela'])
+const PROSE_QUALIFIERS = new Set([
+  'Scott', 'Evans syndrome', 'AAHA/AAFP', 'Librela', 'Golden Retriever most common',
+])
 
 const fail: string[] = []
 const note: string[] = []
@@ -64,6 +75,23 @@ const refCode = refSrc.replace(/^\s*\/\/.*$/gm, '')
 
 const pageFields = (r: Record<string, unknown>): string[] =>
   FIELDS.map(f => (typeof r[f] === 'string' ? (r[f] as string) : '')).filter(Boolean)
+
+// ── 0. Allowlisted prose must actually resolve to nothing ────────────────────
+// PROSE_QUALIFIERS says "this parenthetical is prose, ignore it". Every entry is
+// there because the author was year-keyed so a bare name yields nothing. If that
+// dispatch is ever loosened the phrase silently starts resolving again — and the
+// allowlist would then hide the very bug it was created for. So the allowlist
+// asserts its own premise rather than trusting it.
+for (const phrase of PROSE_QUALIFIERS) {
+  const hits = parseSources(phrase)
+  if (hits.length) {
+    fail.push(
+      `"(${phrase})" is allowlisted as prose but now resolves to ${hits.map(h => h.id).join(', ')} —` +
+      ` the page is citing a paper for a phrase that is not a citation.` +
+      `\n      Restore the year-keyed dispatch (or the \\b guard) that used to make it resolve to nothing.`,
+    )
+  }
+}
 
 // ── 1. Every citation-shaped marker resolves ─────────────────────────────────
 const unresolved = new Map<string, string[]>()
@@ -165,6 +193,73 @@ for (const p of pairs) {
 }
 
 note.push(`${pairs.length} prefix pair(s) checked, ${yearKeyed.length} year-keyed author(s) checked`)
+
+// ── 5. A year-less marker must not resolve to a journal paper ────────────────
+// The two bugs this catches were both found by hand, one of them twice:
+// "(Scott)" on DIS-BD-TPATH is Scott syndrome and "(Evans syndrome)" on
+// DIS-BD-IMHA is IMHA with thrombocytopenia. Both are DISEASE NAMES that happen
+// to be spelled like an author, both resolved to an unrelated paper, and both
+// rendered a confident superscript on a condition. Nothing above sees it: the
+// marker resolves, so check 1 is happy, and the author has one paper, so there
+// is no year map for check 2 to test.
+//
+// The signature is narrow and reliable — a parenthetical carrying NO year that
+// resolves to something with a DOI or a volume. Textbook markers are year-less
+// too ("Ettinger Ch 314", "Gelatt 6th edn Ch 20"), so this only fires on
+// journal papers, which is what makes it quiet enough to gate on.
+const looksLikePaper = (t: string) => /\bdoi:/.test(t) || /\d{4};\d+/.test(t)
+for (const r of DB.disease_page) {
+  for (const field of pageFields(r as unknown as Record<string, unknown>)) {
+    for (const seg of splitCitations(field)) {
+      if (!seg.raw) continue
+      const inner = seg.raw.trim().replace(/^\s*\(|\)\s*$/g, '')
+      if (PROSE_QUALIFIERS.has(inner) || /\b(?:19|20)\d{2}\b/.test(inner)) continue
+      for (const src of parseSources(inner)) {
+        if (!looksLikePaper(src.text)) continue
+        fail.push(
+          `"(${inner})" on ${r.id} carries no year but resolves to the paper ${src.id} —` +
+          ` almost certainly a disease name colliding with an author surname.` +
+          `\n      Year-key that author so a bare name resolves to nothing, then list the phrase in PROSE_QUALIFIERS.`,
+        )
+      }
+    }
+  }
+}
+
+// ── 6. Two years for one surname must mean two different papers ──────────────
+// When an author gains a second paper, the new branch is easy to add and easy to
+// add WITHOUT noticing the old one — `/^Phillips/` then answers for both markers
+// and the earlier page silently starts citing the newer study. That is a wrong
+// citation, not a missing one, so check 1 cannot see it either.
+const yearsByName = new Map<string, Set<string>>()
+for (const r of DB.disease_page) {
+  for (const field of pageFields(r as unknown as Record<string, unknown>)) {
+    for (const seg of splitCitations(field)) {
+      if (!seg.raw) continue
+      const inner = seg.raw.trim().replace(/^\s*\(|\)\s*$/g, '')
+      const m = inner.match(/^(.+?)\s+((?:19|20)\d{2})\b/)
+      if (!m) continue
+      if (!yearsByName.has(m[1])) yearsByName.set(m[1], new Set())
+      yearsByName.get(m[1])!.add(m[2])
+    }
+  }
+}
+for (const [name, years] of yearsByName) {
+  if (years.size < 2) continue
+  const byYear = new Map<string, string>()
+  for (const y of years) {
+    for (const src of parseSources(`${name} ${y}`)) {
+      const prev = byYear.get(src.id)
+      if (prev && prev !== y) {
+        fail.push(
+          `'${name}' is cited for ${prev} and ${y} but both resolve to ${src.id} — one of those pages cites the WRONG paper.` +
+          `\n      Add a ${name.toUpperCase().replace(/[^A-Z0-9]/g, '')}_BY_YEAR map and dispatch on the year.`,
+        )
+      }
+      byYear.set(src.id, y)
+    }
+  }
+}
 
 // ── 4. One paper, one reference id — and one text per id ─────────────────────
 const byDoi = new Map<string, Set<string>>()

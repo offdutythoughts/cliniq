@@ -2191,6 +2191,88 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Neurology batch: intracranial, stroke, trauma, ANNPE/FCE, tetanus (2026-09-27)
+
+Eleven pages closed, 244 → 234. Fifteen papers, all verified against Crossref as well as PubMed.
+
+The arithmetic is worth stating plainly: eleven pages gained a paper, and one page
+(DIS-NEU-HORNERS) *lost* the paper it appeared to have, because that citation turned out to
+be the `Gold` / "Golden Retriever" collision described below. It was never really cited. Net
+movement is therefore ten, and the ratchet in `scripts/baselines.json` should read 234.
+
+| Page | Paper | n | What it carries |
+|---|---|---|---|
+| DIS-NEU-BRAINTUM | Ruessli 2026 | 106 dogs | 76% no/mild deficits at peak RT response; function did **not** track tumour shrinkage |
+| DIS-NEU-BRAINTUM | Magalhães 2021 | 32 dogs | RT MST 524 d overall, 512 glioma, 536 meningioma; definitive ≈ palliative |
+| DIS-NEU-CVA | Thomsen 2016 | 23 dogs | All survived to discharge in 1–10 d; CKCS 9/23 |
+| DIS-NEU-CVA | Desbordes 2026 | 63 (47 dogs, 16 cats) | Complete territorial infarct + mass effect → early death; ASL hypoperfusion in all non-lacunar infarcts |
+| DIS-NEU-METRO | Evans 2003 | 21 dogs | Diazepam: response 13.4 h vs 4.25 d, recovery 38.8 h vs 11 d |
+| DIS-NEU-NME | Brewińska 2025 | 127 YST | Scales predict 7-day death only; unilateral MRI ~12×/3× better odds at 100/365 d |
+| DIS-NEU-NME | Gonçalves 2024 | 138 dogs | Lower T2 lesion load → survival; higher post-contrast T1 → relapse |
+| DIS-NEU-MENINGITIS, DIS-NEU-METABENC | Monforte Monteiro 2025 | 593 | CSF after normal MRI changed dx/tx in 0.8%; **reused**, abstract re-read first |
+| DIS-NEU-TETANUS | Dussaux 2024 | 27 cats | 78% focal/multifocal; 23/25 ambulatory at median 25 d; 8/27 sequelae |
+| DIS-NEU-ANNPE, DIS-NEU-FCE | Togawa 2024 | 31 dogs | DPP 9/14 (64%) vs DPN 1/12 (8%) regained ambulation |
+| DIS-NEU-ANNPE, DIS-NEU-FCE | Phillips 2025 | 40 dogs | No relapse in 4 weeks whether rested or exercised |
+| DIS-NEU-HEADTRAUMA | Sharma 2015 | 72 dogs | MGCS ≤11 → 84% sens / 73% spec for non-survival |
+| DIS-NEU-HEADTRAUMA | Cameron 2022 | 212 (131 dogs, 81 cats) | MGCS separates survivors in both species; admission hyperglycaemia predicts death in dogs only |
+| DIS-NEU-HEADTRAUMA | Levy 2026 | 38 dogs, 31 cats | TBICS ≈ slightly better than MGCS — not yet widely validated |
+| DIS-NEU-HORNERS | Lockhart 2022 | 120 dogs | Causative lesion in 98% with additional signs vs 3% with isolated HS; phenylephrine localisation 79% accurate; GR 16/33 of idiopathic cases |
+| DIS-NEU-HORNERS | Boydell 1995 | 62 GRs | Original prospective series; lesion localised to the preganglionic neuron |
+
+Every sample under ~30 has its n written into the page text. Two effect sizes are
+reported with very wide confidence intervals — Desbordes (OR 400, CI 14.5–11,039) and
+Togawa (OR 47.4, CI 2.09–1,074) — so those pages state the direction as established and
+the magnitude as uncertain rather than quoting the point estimate.
+
+**Registry disagreements.** Two of the same kind, both resolved to the print year per Rule 6:
+Cameron (PubMed 2021 online, Crossref print **2022**, 32(1):75-82) and Lockhart (PubMed 2021
+online, Crossref print **2022**, 25(suppl 1):51-59).
+
+**Lockhart is the repair, not just an addition.** The breed note it now supports —
+Golden Retrievers over-represented among idiopathic cases — is exactly the sentence that had
+a basal-cortisol paper wrongly hanging off it. The claim was right and the citation was
+wrong, which is the hardest version of this to notice by reading.
+
+**Deliberately old.** Evans 2003 is still the only controlled comparison of diazepam in
+metronidazole toxicosis, and the page already asserted that diazepam shortens recovery —
+the paper is what that claim rests on. Rule 1(c) asks for as current as the literature
+allows, and here it stops in 2003.
+
+**Reuse discipline.** Monforte Monteiro was reused on two further pages and its abstract
+was re-read before either marker was written, per the lesson from the Chochlios
+misattribution. Its conclusion is two-sided and both pages say so: CSF after a normal MRI
+is low-yield *especially when the neurological examination is normal*, but remains worth
+doing when the examination is abnormal or inflammatory disease is genuinely suspected.
+
+### Three wrong citations found while wiring this batch
+
+All three were the same shape — a parenthetical that is not a citation, resolving to a
+paper — and none was visible on the page as anything other than a normal superscript.
+
+- **`(Evans syndrome)` on DIS-BD-IMHA** → the metronidazole-diazepam paper. Evans
+  syndrome is IMHA with immune thrombocytopenia. Caught by a reference-count test when
+  the count went 2 → 3. Fixed by year-keying Evans. There is also a `DIS-BD-EVANS` page,
+  so this surname is permanently hazardous here.
+- **`(Phillips 2019)` on DIS-GI-HH** → the 2025 ANNPE exercise paper. I added a second
+  Phillips without noticing the first, and `/^Phillips/` answered for both. Fixed with
+  `PHILLIPS_BY_YEAR`. My own omission: I checked ten new surnames against the file for
+  collisions and left five unchecked, including this one.
+- **`(Golden Retriever most common)` on DIS-NEU-HORNERS** → a basal-cortisol paper,
+  because `Gold` is a source name and matched the breed. **Pre-existing**, found by the
+  new lint on its first run. Fixed with a `\b` guard.
+
+The lint gained three checks as a direct result, each mutation-tested against the bug
+that motivated it:
+
+- **check 5** — a parenthetical with no year that resolves to a *journal paper* is almost
+  certainly a disease name or a breed note colliding with a surname. Textbook markers are
+  year-less too, so restricting this to papers is what keeps it quiet enough to gate on.
+- **check 6** — one surname cited for two different years must resolve to two different
+  ids. This is the Phillips case exactly.
+- **check 0** — every `PROSE_QUALIFIERS` entry must still resolve to nothing. Without it
+  the allowlist would hide the bug it was created for: un-year-keying Evans made the page
+  cite a paper again while the lint stayed silent, because the phrase was simply skipped.
+
 ## Resolver integrity is now checked by a lint, not by hand (2026-09-27)
 
 `npm run lint:refs-integrity` (in `lint:content`, so it gates commits) checks the four ways a
