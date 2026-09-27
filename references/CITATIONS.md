@@ -2009,6 +2009,33 @@ conjunctival nodule. The detail that makes it worth citing is a *failure*: the n
 regress on corticosteroid even though the dog's skin lesions did, so excision was needed. That is
 more useful than the diagnosis alone.
 
+### Pages 116-118 — iris atrophy, synechia, infectious chorioretinitis (2026-09-23)
+
+**No new references.** All three reuse papers already verified for other pages, which is the
+cheapest remaining move and worth checking before every search:
+
+- `DIS-EYE-IRIS-ATR` and `DIS-EYE-SYNECH` both take **Bedos 2024** (pre-iridal membranes), because
+  that paper reports two associations neither page had a source for: uveal atrophy was commoner in
+  globes with *monocellular* membranes, and peripheral anterior synechiae commoner in globes with
+  *fibrovascular* membranes. The second is the mechanism linking chronic neovascularisation to
+  angle closure.
+- `DIS-EYE-SYNECH` also takes **Dufour 2025** for an *iatrogenic* cause the page omitted: focal
+  posterior synechia followed sector iridectomy in 9 of 13 dogs, alongside dyscoria in all 13 —
+  expected sequelae rather than complications.
+- `DIS-EYE-CHORIO` takes **Solano-Gallego 2011** (stage the leishmaniosis, do not just diagnose
+  it), **Chochlios 2019** (a positive tick-borne titre in an endemic area is not the answer — 33.9%
+  of clinically healthy dogs were seropositive) and **Dickinson 2020** (ocular FIP resolved on
+  GS-441524 on serial ocular imaging, at higher doses, in four cats).
+
+⚠️ **An error caught in draft, recorded because the class of mistake matters.** The Chochlios line
+was first written as a *Leishmania* seroprevalence point. Chochlios is the **Ehrlichia canis**
+study — 54.9% of sick and 33.9% of healthy dogs seropositive. The figure was right, the organism
+was wrong, and the page lists both organisms as causes of chorioretinitis, so it would have read
+plausibly. It was corrected before commit. This is the same failure mode as the Bellenger and
+Ku/Li errors at the start of the pass: a number attached to the nearest-looking citation. Reusing a
+paper across pages raises that risk, because the abstract is no longer in front of you — so
+re-read it, or at minimum re-read the reference string, before writing the marker.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

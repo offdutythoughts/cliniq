@@ -851,6 +851,11 @@ describe('reference block', () => {
       ['DIS-EYE-BLEPH', 2, ['dogs with atopic dermatitis']],
       ['DIS-EYE-CHALAZION', 3, ['meibomian gland dysfunction', '20-year retrospective study']],
       ['DIS-EYE-CONJMASS', 3, ['sterile granuloma/pyogranuloma syndrome', '20-year retrospective study']],
+      // These three reuse papers already verified for other pages rather than
+      // needing their own — the reference counts pin which ones.
+      ['DIS-EYE-IRIS-ATR', 2, ['pre-iridal monocellular and fibrovascular membranes']],
+      ['DIS-EYE-SYNECH', 3, ['pre-iridal monocellular and fibrovascular membranes', 'sector iridectomy']],
+      ['DIS-EYE-CHORIO', 4, ['LeishVet guidelines', 'Seroprevalence and risk factors', 'neurological feline infectious peritonitis']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -895,7 +900,8 @@ describe('reference block', () => {
       'DIS-EYE-ECTROPION', 'DIS-EYE-ZYGO', 'DIS-EYE-DERMOID',
       'DIS-EYE-PLASMOMA', 'DIS-EYE-CORNOPAC',
       'DIS-EYE-RUBEOSIS', 'DIS-EYE-HAWS', 'DIS-EYE-EFF-MYDR', 'DIS-EYE-BLEPH',
-      'DIS-EYE-CHALAZION', 'DIS-EYE-CONJMASS']) {
+      'DIS-EYE-CHALAZION', 'DIS-EYE-CONJMASS',
+      'DIS-EYE-IRIS-ATR', 'DIS-EYE-SYNECH', 'DIS-EYE-CHORIO']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)
