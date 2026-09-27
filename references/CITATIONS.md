@@ -1849,6 +1849,41 @@ know how thin it is — so the citation goes in and the sample size goes in with
 Erjavec has **no DOI** (Can Vet J is PMC-only), so the second-registry check went to Europe PMC.
 Third occasion in the pass, after Perry and Gilger.
 
+### Pages 101-104 — PPM, distichiasis, retinal dysplasia, eyelid agenesis (2026-09-23)
+
+> Goossens LT, Verbruggen AJ, Storms G, Broeckx B. Front Vet Sci. 2026;13:1841935. doi:10.3389/fvets.2026.1841935
+> Gabor M, Candrak J, Miluchova M, Zubricky P, Balicka A, Trbolova A. Vet Sci. 2025;12(2):171. doi:10.3390/vetsci12020171
+> Ng CH, Ervedosa TB, Soler JG, Climans ME, Gonzalez-Astudillo V. Vet Ophthalmol. 2026;29(2):e70164. doi:10.1111/vop.70164
+
+⚠️ **PubMed's search endpoint went down mid-batch** (trivial two-word queries returned
+`API_ERROR`; PMID fetch kept working). Discovery moved to the **Europe PMC REST API** via curl,
+which is the same registry already used for second-registry verification of DOI-less papers. It
+found all three of these, including the one that covers three pages at once. Worth knowing as a
+fallback: the connector is not the only route to the literature.
+
+⚠️ **`Ng` IS a prefix of the existing `Nguyen`** (haemophilia A gene therapy). Its branch is
+written `/^Ng\b/`, so the word boundary keeps them apart regardless of branch order — the same
+device used for `Lo` against `Longeri`, and a different fix from the ordering used for
+`Reeve`/`Reeves` and `Michel`/`Michelotti`. `DIS-BD-HEMA` stays pinned at 4 references.
+
+**Goossens is an ECVO screening cohort of 1,182 dogs and serves three pages** — iris-to-iris PPM
+(4.7%, the commonest inherited finding), distichiasis (2.5%) and multifocal retinal dysplasia
+(0.2%). Its useful twist is that **both PPM and distichiasis exceeded the progenitor breeds**,
+which the authors attribute to breeding practice rather than chance. That is a better line for the
+PPM page than "heritable in many breeds" alone.
+
+**Gabor** is cited to keep the retinal dysplasia page's breed list open rather than to add to it:
+a genome-wide scan in a breed *not previously implicated* (Czechoslovakian Wolfdog) found 5.13%
+affected and a suggestive locus near CYP27A1. The page now says a negative genetic panel does not
+exclude the diagnosis, because the causative variants are unknown in most affected breeds.
+
+**Ng is one puppy** and is cited only for what histopathology showed — bilateral Peters anomaly
+with a closed drainage angle, persistent pupillary membranes, retinal separation and aphakia
+behind a lid defect, plus complete absence of goblet cells, tarsal plate and meibomian glands. The
+first point warns that concurrent anomalies can sit deeper than the fundus exam reaches; the
+second is why lubrication does not substitute for reconstruction. It also establishes that eyelid
+agenesis is not exclusively feline.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

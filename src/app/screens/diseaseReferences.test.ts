@@ -282,6 +282,13 @@ describe('parseSources', () => {
     expect(parseSources('Holly 2016').map(s => s.id)).toEqual(['holly-uveal-cysts'])
     expect(parseSources('Kaminsky 2023').map(s => s.id)).toEqual(['kaminsky-lid-flap'])
     expect(parseSources('Erjavec 2020').map(s => s.id)).toEqual(['erjavec-dacryostenosis'])
+    // 'Ng' IS a prefix of 'Nguyen'. The Ng branch is /^Ng\\b/, so the word
+    // boundary keeps them apart regardless of order — same device as Lo/Longeri.
+    expect(parseSources('Ng 2026').map(s => s.id)).toEqual(['ng-eyelid-agenesis'])
+    expect(parseSources('Nguyen 2020').map(s => s.id)).toEqual(['nguyen-aav-clonal'])
+    expect(parseSources('Goossens 2026').map(s => s.id)).toEqual(['goossens-ecvo-screening'])
+    expect(parseSources('Gábor 2025').map(s => s.id)).toEqual(['gabor-retinal-dysplasia'])
+    expect(parseSources('Goss 2024').map(s => s.id)).toEqual(['goss-ulcerative-keratitis'])
     expect(parseSources('Scobie 2026').map(s => s.id)).toEqual(['scobie-sdma-review'])
     // Fowler vs Forgash vs Fox.
     expect(parseSources('Fowler 2022').map(s => s.id)).toEqual(['fowler-hema-spinal'])
@@ -804,6 +811,10 @@ describe('reference block', () => {
       ['DIS-EYE-CONJNEO', 2, ['Mucocutaneous subdermal plexus flap']],
       ['DIS-EYE-LIDNEO', 3, ['Mucocutaneous subdermal plexus flap']],
       ['DIS-EYE-NLD', 2, ['Left-sided dacryostenosis']],
+      ['DIS-EYE-PPM', 2, ['known and presumed hereditary eye diseases']],
+      ['DIS-EYE-CILIA', 2, ['known and presumed hereditary eye diseases']],
+      ['DIS-EYE-RETDYSPL', 3, ['Czechoslovakian Wolfdog', 'known and presumed hereditary eye diseases']],
+      ['DIS-EYE-LIDAGEN', 2, ['Bilateral eyelid agenesis']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -843,7 +854,8 @@ describe('reference block', () => {
       'DIS-EYE-PRA', 'DIS-EYE-EPISCLERITIS', 'DIS-EYE-IRIS-MEL', 'DIS-EYE-PROPTOSIS',
       'DIS-EYE-CEA', 'DIS-EYE-ONH', 'DIS-EYE-CORNEDEMA', 'DIS-EYE-KCS',
       'DIS-EYE-ENRO', 'DIS-EYE-TAUR', 'DIS-EYE-OPTNEUR', 'DIS-EYE-ORBNEO',
-      'DIS-EYE-UVEAL-CYST', 'DIS-EYE-CONJNEO', 'DIS-EYE-LIDNEO', 'DIS-EYE-NLD']) {
+      'DIS-EYE-UVEAL-CYST', 'DIS-EYE-CONJNEO', 'DIS-EYE-LIDNEO', 'DIS-EYE-NLD',
+      'DIS-EYE-PPM', 'DIS-EYE-CILIA', 'DIS-EYE-RETDYSPL', 'DIS-EYE-LIDAGEN']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

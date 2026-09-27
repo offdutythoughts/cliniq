@@ -1006,6 +1006,21 @@ const KAMINSKY_LID_FLAP =
 const ERJAVEC_DACRYOSTENOSIS =
   'Erjavec J. Left-sided dacryostenosis in a dog. Can Vet J. 2020;61(10):1111-1114.'
 
+// ECVO screening and congenital ocular anomalies. Goossens is 1,182 dogs and
+// covers THREE pages at once — PPM, distichiasis and multifocal retinal
+// dysplasia all come from the same screening cohort. Gabor is 117 dogs of one
+// breed. Ng is a single puppy and is cited only for what histopathology showed.
+//
+// NOTE 'Ng' is two letters and IS a prefix of the existing 'Nguyen', so its
+// branch is written /^Ng\b/ — the word boundary is what keeps them apart, the
+// same device used for 'Lo' against 'Longeri'.
+const GOOSSENS_ECVO_SCREENING =
+  'Goossens LT, Verbruggen AJ, Storms G, Broeckx B. Retrospective evaluation of the prevalence of known and presumed hereditary eye diseases in a population of Labradoodles referred for ophthalmic screening examinations in the Netherlands. Front Vet Sci. 2026;13:1841935. doi:10.3389/fvets.2026.1841935'
+const GABOR_RETINAL_DYSPLASIA =
+  'Gabor M, Candrak J, Miluchova M, Zubricky P, Balicka A, Trbolova A. Initial genome-wide case-control study for genetic background of retinal dysplasia in Czechoslovakian Wolfdog. Vet Sci. 2025;12(2):171. doi:10.3390/vetsci12020171'
+const NG_EYELID_AGENESIS =
+  'Ng CH, Ervedosa TB, Soler JG, Climans ME, Gonzalez-Astudillo V. Bilateral eyelid agenesis with multiple congenital ocular anomalies in an Australian Labradoodle puppy: case report and surgical management. Vet Ophthalmol. 2026;29(2):e70164. doi:10.1111/vop.70164'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1141,6 +1156,8 @@ const SOURCE_NAMES = [
   'Bedos', 'Patel',
   'Holly',
   'Kaminsky', 'Erjavec',
+  // 'Ng' IS a prefix of the existing 'Nguyen' — held apart by \\b, not order.
+  'Goossens', 'Gábor', 'Ng',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1501,6 +1518,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Holly/.test(part)) { out.push({ id: 'holly-uveal-cysts', text: HOLLY_UVEAL_CYSTS }); continue }
     if (/^Kaminsky/.test(part)) { out.push({ id: 'kaminsky-lid-flap', text: KAMINSKY_LID_FLAP }); continue }
     if (/^Erjavec/.test(part)) { out.push({ id: 'erjavec-dacryostenosis', text: ERJAVEC_DACRYOSTENOSIS }); continue }
+    if (/^Goossens/.test(part)) { out.push({ id: 'goossens-ecvo-screening', text: GOOSSENS_ECVO_SCREENING }); continue }
+    if (/^Gábor/.test(part)) { out.push({ id: 'gabor-retinal-dysplasia', text: GABOR_RETINAL_DYSPLASIA }); continue }
+    if (/^Ng\b/.test(part)) { out.push({ id: 'ng-eyelid-agenesis', text: NG_EYELID_AGENESIS }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
