@@ -1982,6 +1982,33 @@ paradoxical vestibular signs.
 dogs had an abnormal Schirmer, but 18 were *above* 25 mm/min and only 3 below 15. So the instruction
 is to measure the tear film, not to assume dryness.
 
+### Pages 114-115 — chalazion/meibomianitis, conjunctival cyst and mass (2026-09-23)
+
+> Kim G, Kang S, Seo J, Seo K. Vet Ophthalmol. 2025;28(5):847-854. doi:10.1111/vop.13326
+> Sypniewska A, Ziolkowska N. BMC Vet Res. 2026;22(1):96. doi:10.1186/s12917-026-05289-y
+> Garcia JM, Rogerio GDS, Rossatto-Junior CA, et al. Front Vet Sci. 2026;12:1717392. doi:10.3389/fvets.2025.1717392
+
+⚠️ **`Kim` sits beside the existing `King`** (CKD prognostic study) — they diverge at position 3.
+Pinned both ways, and `DIS-SEC-CKD` stays at 12 references.
+
+**Garcia serves both pages with the same argument**, and it is an argument for doing something the
+pages did not ask for: **submit the tissue**. Across 375 archived ocular specimens, neoplasia
+accounted for 80.5%, meibomian adenocarcinoma was unexpectedly frequent, and clinical suspicion
+matched the histopathological diagnosis in only **84.1%** of cases — moderate agreement by Kappa.
+On `DIS-EYE-CHALAZION` that becomes "submit the curetted tissue rather than discarding it", which
+is a real change to a procedure the page described as routine and curative.
+
+**Kim gives the chalazion page a measurement usable without meibography**: a lid margin thickness
+of **1.20 mm or more** flagged loss of over a third of the meibomian gland area (sensitivity 0.645,
+specificity 0.768, 59 dogs). The page states both operating characteristics, because a sensitivity
+of 0.645 means this rules in rather than out. Thickness also rises with age independently — 1.25 mm
+in dogs over 12 against 1.00 mm in normal eyes.
+
+**Sypniewska is one dog** and adds an immune-mediated differential for a well-circumscribed
+conjunctival nodule. The detail that makes it worth citing is a *failure*: the nodule did **not**
+regress on corticosteroid even though the dog's skin lesions did, so excision was needed. That is
+more useful than the diagnosis alone.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

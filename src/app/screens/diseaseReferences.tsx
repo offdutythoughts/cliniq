@@ -1062,6 +1062,19 @@ const DANCIU_CEREBELLAR_MYDRIASIS =
 const BAKER_ATOPIC_TEARS =
   'Baker J, Cox A, Udenberg T, Defalque VE, Leis M. Tear production as measured by Schirmer tear test-1 in dogs with atopic dermatitis. Can Vet J. 2025;66(10):1104-1110.'
 
+// Meibomian gland dysfunction, nodular conjunctivitis and ocular histopathology.
+// Garcia is 375 archived specimens and is cited on both pages for the same
+// argument: submit the tissue, because clinical suspicion and histopathology
+// agreed only moderately.
+//
+// NOTE 'Kim' sits beside the existing 'King' — they diverge at position 3.
+const KIM_MEIBOMIAN =
+  'Kim G, Kang S, Seo J, Seo K. Association of eyelid margin thickness and meibography in dogs with meibomian gland dysfunction. Vet Ophthalmol. 2025;28(5):847-854. doi:10.1111/vop.13326'
+const SYPNIEWSKA_NODULAR_CONJ =
+  'Sypniewska A, Ziolkowska N. Nodular conjunctivitis as a novel ocular manifestation of canine sterile granuloma/pyogranuloma syndrome. BMC Vet Res. 2026;22(1):96. doi:10.1186/s12917-026-05289-y'
+const GARCIA_OCULAR_PATHOLOGY =
+  'Garcia JM, Rogerio GDS, Rossatto-Junior CA, et al. Epidemiology of ocular pathology in domestic animals: insights from a 20-year retrospective study. Front Vet Sci. 2026;12:1717392. doi:10.3389/fvets.2025.1717392'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1206,6 +1219,8 @@ const SOURCE_NAMES = [
   'Read', 'Sung', 'Quantz', 'Auten',
   // 'Baker' vs the existing 'Barker' — they diverge at position 3.
   'Fruchter', 'Danciu', 'Baker',
+  // 'Kim' vs the existing 'King'; 'Garcia' vs 'Garden'/'Gareis'/'Gábor'.
+  'Kim', 'Sypniewska', 'Garcia',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1591,6 +1606,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Fruchter/.test(part)) { out.push({ id: 'fruchter-haws', text: FRUCHTER_HAWS }); continue }
     if (/^Danciu/.test(part)) { out.push({ id: 'danciu-cerebellar-mydriasis', text: DANCIU_CEREBELLAR_MYDRIASIS }); continue }
     if (/^Baker/.test(part)) { out.push({ id: 'baker-atopic-tears', text: BAKER_ATOPIC_TEARS }); continue }
+    if (/^Kim/.test(part)) { out.push({ id: 'kim-meibomian', text: KIM_MEIBOMIAN }); continue }
+    if (/^Sypniewska/.test(part)) { out.push({ id: 'sypniewska-nodular-conj', text: SYPNIEWSKA_NODULAR_CONJ }); continue }
+    if (/^Garcia/.test(part)) { out.push({ id: 'garcia-ocular-pathology', text: GARCIA_OCULAR_PATHOLOGY }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }

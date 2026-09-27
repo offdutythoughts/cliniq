@@ -297,6 +297,11 @@ describe('parseSources', () => {
     expect(parseSources('Danciu 2024').map(s => s.id)).toEqual(['danciu-cerebellar-mydriasis'])
     expect(parseSources('Baker 2025').map(s => s.id)).toEqual(['baker-atopic-tears'])
     expect(parseSources('Barker 2023').map(s => s.id)).toEqual(['barker-trilostane-survival'])
+    // 'Kim' vs the existing 'King' — diverge at position 3.
+    expect(parseSources('Kim 2025').map(s => s.id)).toEqual(['kim-meibomian'])
+    expect(parseSources('King 2022').map(s => s.id)).toEqual(['king-prognostic'])
+    expect(parseSources('Sypniewska 2026').map(s => s.id)).toEqual(['sypniewska-nodular-conj'])
+    expect(parseSources('Garcia 2026').map(s => s.id)).toEqual(['garcia-ocular-pathology'])
     expect(parseSources('Patel 2026').map(s => s.id)).toEqual(['patel-exenteration'])
     expect(parseSources('Paulin 2021').map(s => s.id)).toEqual(['paulin-feline-pthp'])
     expect(parseSources('Holly 2016').map(s => s.id)).toEqual(['holly-uveal-cysts'])
@@ -844,6 +849,8 @@ describe('reference block', () => {
       ['DIS-EYE-HAWS', 2, ['cats with haws syndrome']],
       ['DIS-EYE-EFF-MYDR', 2, ['cerebellar interposital nucleus']],
       ['DIS-EYE-BLEPH', 2, ['dogs with atopic dermatitis']],
+      ['DIS-EYE-CHALAZION', 3, ['meibomian gland dysfunction', '20-year retrospective study']],
+      ['DIS-EYE-CONJMASS', 3, ['sterile granuloma/pyogranuloma syndrome', '20-year retrospective study']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -887,7 +894,8 @@ describe('reference block', () => {
       'DIS-EYE-PPM', 'DIS-EYE-CILIA', 'DIS-EYE-RETDYSPL', 'DIS-EYE-LIDAGEN',
       'DIS-EYE-ECTROPION', 'DIS-EYE-ZYGO', 'DIS-EYE-DERMOID',
       'DIS-EYE-PLASMOMA', 'DIS-EYE-CORNOPAC',
-      'DIS-EYE-RUBEOSIS', 'DIS-EYE-HAWS', 'DIS-EYE-EFF-MYDR', 'DIS-EYE-BLEPH']) {
+      'DIS-EYE-RUBEOSIS', 'DIS-EYE-HAWS', 'DIS-EYE-EFF-MYDR', 'DIS-EYE-BLEPH',
+      'DIS-EYE-CHALAZION', 'DIS-EYE-CONJMASS']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)
