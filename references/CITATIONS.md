@@ -1943,6 +1943,45 @@ atypical".
 diagnosis before any test: Dachshund 21%, Schnauzer 11%, Pug 7%, Labrador *under*-represented, and
 **spayed females 59% against intact females 1%**.
 
+### Pages 110-113 — rubeosis iridis, Haws syndrome, efferent mydriasis, blepharitis (2026-09-23)
+
+> Bedos L, Sandmeyer L, Campbell J, Grahn BH. Front Vet Sci. 2024;11:1289283. doi:10.3389/fvets.2024.1289283
+> Fruchter B, Kuzi S, Pe'er O, Ofri R, Sebbag L. Vet Rec. 2024;195(10):e4646. doi:10.1002/vetr.4646
+> Danciu CG, Fenn J, Beltran E. J Vet Intern Med. 2024;38(5):2669-2674. doi:10.1111/jvim.17176
+> Baker J, Cox A, Udenberg T, Defalque VE, Leis M. Can Vet J. 2025;66(10):1104-1110.
+
+⚠️ **`Bedos` is now year-keyed** — sixth author to need it, after Moore, Johnson, Edelmann, Scott
+and O'Neill. Leila Bedos has both the 2020 optic neuritis series and this 2024 histopathology
+study. `DIS-EYE-OPTNEUR` stays pinned at 2 references. Also new: **`Baker` vs the existing
+`Barker`** (trilostane survival), diverging at position 3 — pinned both ways.
+
+Baker has **no DOI** (Can Vet J again), so Europe PMC did the second-registry check. Fourth such
+paper, after Perry, Gilger and Erjavec.
+
+**Bedos 2024 tells the rubeosis page that clinical examination under-detects the thing it is
+about.** Histopathology of 108 glaucomatous globes found fibrovascular membranes in 24 of 49
+secondary, 9 of 40 primary and 3 of 19 congenital glaucoma eyes — and the far commoner
+*monocellular* membranes cannot be seen on examination at all. That reframes a negative slit-lamp
+finding. It also supports the page's existing framing: secondary glaucoma was the form most likely
+to carry a fibrovascular membrane.
+
+**Fruchter upgrades the Haws page from anecdote to evidence.** The page said deworming was
+"advocated by some clinicians on the strength of the anecdotal parasite association". Giardia was
+found in 4 of 9 cats tested, and — the striking part — a newly adopted kitten with haws and
+diarrhoea was followed by the same condition in the other three cats of the household **within
+4-11 days**, which is hard to explain without transmission. It also supplies numbers for the owner
+conversation the page lacked: resolution in 9 of 10 cats at a mean 38 days, and **3 of those 9
+relapsed** 5-6 months later.
+
+**Danciu is two dogs** and is cited for one thing: an efferent mydriasis whose only lesion was a
+*cerebellar* infarct. The page's differential was CN III, orbital and pharmacological — this adds a
+localisation that would otherwise be missed, with the tell being concurrent cerebellar or
+paradoxical vestibular signs.
+
+**Baker** is cited on the blepharitis page for a finding that runs **both ways**: 21 of 47 atopic
+dogs had an abnormal Schirmer, but 18 were *above* 25 mm/min and only 3 below 15. So the instruction
+is to measure the tear film, not to assume dryness.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

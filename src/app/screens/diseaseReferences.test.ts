@@ -287,7 +287,16 @@ describe('parseSources', () => {
     expect(parseSources('Wiebe 2002').map(s => s.id)).toEqual(['wiebe-fluoroquinolone-retina'])
     expect(parseSources('Jacobson 1987').map(s => s.id)).toEqual(['jacobson-taurine-rhodopsin'])
     // 'Patel' vs 'Paulin'/'Payne'/'Paterson'.
+    // Bedos is year-keyed: the optic neuritis series and the pre-iridal
+    // membrane histopathology, both by Leila Bedos.
     expect(parseSources('Bedos 2020').map(s => s.id)).toEqual(['bedos-optic-neuritis'])
+    expect(parseSources('Bedos 2024').map(s => s.id)).toEqual(['bedos-preiridal-membranes'])
+    expect(parseSources('Bedos 2099')).toEqual([])
+    // 'Baker' vs the existing 'Barker' — they diverge at position 3.
+    expect(parseSources('Fruchter 2024').map(s => s.id)).toEqual(['fruchter-haws'])
+    expect(parseSources('Danciu 2024').map(s => s.id)).toEqual(['danciu-cerebellar-mydriasis'])
+    expect(parseSources('Baker 2025').map(s => s.id)).toEqual(['baker-atopic-tears'])
+    expect(parseSources('Barker 2023').map(s => s.id)).toEqual(['barker-trilostane-survival'])
     expect(parseSources('Patel 2026').map(s => s.id)).toEqual(['patel-exenteration'])
     expect(parseSources('Paulin 2021').map(s => s.id)).toEqual(['paulin-feline-pthp'])
     expect(parseSources('Holly 2016').map(s => s.id)).toEqual(['holly-uveal-cysts'])
@@ -831,6 +840,10 @@ describe('reference block', () => {
       ['DIS-EYE-DERMOID', 3, ['Lateral canthal reconstruction']],
       ['DIS-EYE-PLASMOMA', 3, ['nictitans plasmacytic conjunctivitis', 'Tumor-like lymphoplasmacytic conjunctivitis']],
       ['DIS-EYE-CORNOPAC', 3, ['steroid keratopathy']],
+      ['DIS-EYE-RUBEOSIS', 2, ['pre-iridal monocellular and fibrovascular membranes']],
+      ['DIS-EYE-HAWS', 2, ['cats with haws syndrome']],
+      ['DIS-EYE-EFF-MYDR', 2, ['cerebellar interposital nucleus']],
+      ['DIS-EYE-BLEPH', 2, ['dogs with atopic dermatitis']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -873,7 +886,8 @@ describe('reference block', () => {
       'DIS-EYE-UVEAL-CYST', 'DIS-EYE-CONJNEO', 'DIS-EYE-LIDNEO', 'DIS-EYE-NLD',
       'DIS-EYE-PPM', 'DIS-EYE-CILIA', 'DIS-EYE-RETDYSPL', 'DIS-EYE-LIDAGEN',
       'DIS-EYE-ECTROPION', 'DIS-EYE-ZYGO', 'DIS-EYE-DERMOID',
-      'DIS-EYE-PLASMOMA', 'DIS-EYE-CORNOPAC']) {
+      'DIS-EYE-PLASMOMA', 'DIS-EYE-CORNOPAC',
+      'DIS-EYE-RUBEOSIS', 'DIS-EYE-HAWS', 'DIS-EYE-EFF-MYDR', 'DIS-EYE-BLEPH']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

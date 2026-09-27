@@ -1049,6 +1049,19 @@ const QUANTZ_STEROID_KERATOPATHY =
 const AUTEN_SARDS_COFACTORS =
   'Auten CR, Thomasy SM, Kass PH, Good KL, Hollingsworth SR, Maggs DJ. Cofactors associated with sudden acquired retinal degeneration syndrome: 151 dogs within a reference population. Vet Ophthalmol. 2018;21(3):264-272. doi:10.1111/vop.12504'
 
+// Pre-iridal membranes, Haws syndrome, efferent mydriasis, atopic tear film.
+// BEDOS is now year-keyed — Leila Bedos has the 2020 optic neuritis series and
+// this 2024 histopathology study. Baker has no DOI (Can Vet J is PMC-only), so
+// its second-registry check went to Europe PMC.
+const BEDOS_PREIRIDAL_MEMBRANES =
+  'Bedos L, Sandmeyer L, Campbell J, Grahn BH. Prevalence of pre-iridal monocellular and fibrovascular membranes in canine globes affected with congenital glaucoma associated with anterior segment dysgenesis, primary glaucoma associated with goniodysgenesis, and secondary glaucoma. Front Vet Sci. 2024;11:1289283. doi:10.3389/fvets.2024.1289283'
+const FRUCHTER_HAWS =
+  'Fruchter B, Kuzi S, Pe\'er O, Ofri R, Sebbag L. Clinicopathological findings in cats with haws syndrome. Vet Rec. 2024;195(10):e4646. doi:10.1002/vetr.4646'
+const DANCIU_CEREBELLAR_MYDRIASIS =
+  'Danciu CG, Fenn J, Beltran E. Mydriasis associated with ischemic cerebrovascular infarct affecting the ipsilateral cerebellar interposital nucleus in 2 dogs. J Vet Intern Med. 2024;38(5):2669-2674. doi:10.1111/jvim.17176'
+const BAKER_ATOPIC_TEARS =
+  'Baker J, Cox A, Udenberg T, Defalque VE, Leis M. Tear production as measured by Schirmer tear test-1 in dogs with atopic dermatitis. Can Vet J. 2025;66(10):1104-1110.'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1191,6 +1204,8 @@ const SOURCE_NAMES = [
   // 'Read' is a common word but no other source name starts 'Rea'; 'Sung'
   // sits beside 'Susanti'.
   'Read', 'Sung', 'Quantz', 'Auten',
+  // 'Baker' vs the existing 'Barker' — they diverge at position 3.
+  'Fruchter', 'Danciu', 'Baker',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1289,6 +1304,14 @@ const SCOTT_BY_YEAR: Record<string, { id: string; text: string }> = {
 const ONEILL_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2017': { id: 'oneill-gdv', text: ONEILL_GDV },
   '2021': { id: 'oneill-kcs', text: ONEILL_KCS },
+}
+
+/** Two Leila Bedos papers — the optic neuritis series and the pre-iridal
+ *  membrane histopathology. Keyed on the year, as Moore, Johnson, Edelmann,
+ *  Scott and O'Neill are. */
+const BEDOS_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2020': { id: 'bedos-optic-neuritis', text: BEDOS_OPTIC_NEURITIS },
+  '2024': { id: 'bedos-preiridal-membranes', text: BEDOS_PREIRIDAL_MEMBRANES },
 }
 
 const ARENAS_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -1546,7 +1569,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Michau/.test(part)) { out.push({ id: 'michau-thermokeratoplasty', text: MICHAU_THERMOKERATOPLASTY }); continue }
     if (/^Wiebe/.test(part)) { out.push({ id: 'wiebe-fluoroquinolone-retina', text: WIEBE_FLUOROQUINOLONE_RETINA }); continue }
     if (/^Jacobson/.test(part)) { out.push({ id: 'jacobson-taurine-rhodopsin', text: JACOBSON_TAURINE_RHODOPSIN }); continue }
-    if (/^Bedos/.test(part)) { out.push({ id: 'bedos-optic-neuritis', text: BEDOS_OPTIC_NEURITIS }); continue }
+    if (/^Bedos/.test(part)) {
+      const hit = BEDOS_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Patel/.test(part)) { out.push({ id: 'patel-exenteration', text: PATEL_EXENTERATION }); continue }
     if (/^Holly/.test(part)) { out.push({ id: 'holly-uveal-cysts', text: HOLLY_UVEAL_CYSTS }); continue }
     if (/^Kaminsky/.test(part)) { out.push({ id: 'kaminsky-lid-flap', text: KAMINSKY_LID_FLAP }); continue }
@@ -1561,6 +1588,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Sung/.test(part)) { out.push({ id: 'sung-lymphoplasmacytic', text: SUNG_LYMPHOPLASMACYTIC }); continue }
     if (/^Quantz/.test(part)) { out.push({ id: 'quantz-steroid-keratopathy', text: QUANTZ_STEROID_KERATOPATHY }); continue }
     if (/^Auten/.test(part)) { out.push({ id: 'auten-sards-cofactors', text: AUTEN_SARDS_COFACTORS }); continue }
+    if (/^Fruchter/.test(part)) { out.push({ id: 'fruchter-haws', text: FRUCHTER_HAWS }); continue }
+    if (/^Danciu/.test(part)) { out.push({ id: 'danciu-cerebellar-mydriasis', text: DANCIU_CEREBELLAR_MYDRIASIS }); continue }
+    if (/^Baker/.test(part)) { out.push({ id: 'baker-atopic-tears', text: BAKER_ATOPIC_TEARS }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
