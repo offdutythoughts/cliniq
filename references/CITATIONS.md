@@ -2191,6 +2191,44 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Resolver integrity is now checked by a lint, not by hand (2026-09-27)
+
+`npm run lint:refs-integrity` (in `lint:content`, so it gates commits) checks the four ways a
+citation goes wrong *silently* — the page renders, the tests pass, and the superscript points
+at the wrong paper:
+
+1. **A marker resolves to nothing** and prints raw as "(Author 2015)".
+2. **An author gains a second paper** and `db.ts` uses a year the `*_BY_YEAR` map does not
+   know, so the marker yields no citation at all.
+3. **One surname is a prefix of another** and the shorter branch answers for the longer one.
+4. **The same paper sits under two reference ids**, so a page renders it twice.
+
+Every one of those had already been found by hand at least once — Bellenger, Ku/Li,
+Reeve/Reeves, Michel/Michelotti, Ng/Nguyen — which is why it is automated now. At the time of
+writing it checks **10 prefix pairs** and **18 year-keyed authors**, and passes.
+
+Check 3 is the one worth understanding, because the obvious version of it does not work. A
+swallowed marker **still resolves** — it returns the shorter name's paper, confidently, under a
+well-formed superscript. An empty-result check cannot see that. So the lint instead asserts that
+the ids reachable from the short name and from the long name are **disjoint**: two surnames
+landing on the same reference id is the signature of one eating the other. Each check was
+mutation-tested by deliberately breaking it (dropping a `\b`, hoisting a branch, orphaning a
+year, colliding two DOIs) and confirming it fails, then reverting.
+
+### `(Scott)` on DIS-BD-TPATH is not a citation
+
+Scott syndrome is a platelet membrane procoagulant defect — a **disease name**. While `Scott`
+resolved by surname alone, `/^Scott/` matched it and hung the phenobarbital-marrow paper off
+the words "membrane procoagulant (Scott)": a superscript on a condition, pointing at an
+unrelated study. Year-keying `Scott` for a second paper fixed it as a side effect, before
+anyone noticed it was broken.
+
+Two tests now hold it there — `parseSources('Scott')` must return `[]` while `Scott 2021` still
+resolves — because the natural-looking "fix" is to make a bare surname resolve again. The same
+reasoning covers the other deliberate non-citations: `(AAHA/AAFP)` on DIS-ENDO-HYPERTHY and
+`(Librela)` on DIS-MSK-OA are prose, and the lint keeps them on a named allowlist
+(`PROSE_QUALIFIERS`) so a *new* unresolved marker is still a failure rather than noise.
+
 ## Using citations inside app data
 
 `src/data/db.ts` has no citation field; entries cite inline in prose instead —

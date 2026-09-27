@@ -591,6 +591,48 @@ describe('parseSources', () => {
       expect(source.text, marker).toContain(fragment)
     }
   })
+
+  // "(Scott)" on DIS-BD-TPATH is Scott syndrome, the platelet membrane
+  // procoagulant defect — a disease name, not a citation. While `Scott` resolved
+  // by surname alone it matched here and hung the phenobarbital-marrow paper off
+  // the words "membrane procoagulant (Scott)". Year-keying the author fixed it as
+  // a side effect; this test is what keeps it fixed, because the obvious
+  // "improvement" is to make a bare surname resolve again.
+  it('leaves a bare surname with no year unresolved', () => {
+    expect(parseSources('Scott')).toEqual([])
+    expect(parseSources('Scott 2021').map(s => s.id)).toEqual(['scott-phenobarb-marrow'])
+  })
+
+  // Surnames that are prefixes of other surnames. Whichever branch parseSources
+  // tests first wins, so without a \b guard or deliberate ordering the shorter
+  // name silently answers for the longer one and the page cites a paper on a
+  // different subject entirely. lint-refs-integrity checks the whole set
+  // structurally; these pin the specific pairs with a named expectation.
+  it('keeps prefix-colliding surnames apart', () => {
+    const cases: [string, string][] = [
+      ['Ku 2023', 'ku-rta-ndi'],
+      ['Kubo 2023', 'kubo-shiba-pacg'],
+      ['Anders 2011', 'anders-vbo-baer'],
+      ['Anderson 2000', 'anderson-polyps'],
+      ['Reeve 2020', 'reeve-brachy-hh'],
+      ['Reeves 2021', 'reeves-chylothorax-sr'],
+      ['Ng 2022', 'ng-eyelid-agenesis'],
+      ['Nguyen 2019', 'nguyen-aav-clonal'],
+      ['Michel 2011', 'michel-lamellar-keratoplasty'],
+      ['Michelotti 2022', 'michelotti-tsp'],
+      ['Allen 2020', 'allen-gastropexy'],
+      ['Allenspach 2016', 'allenspach-longterm'],
+      ['Li 2021', 'li-aqp2'],
+      ['Lo 2021', 'lo-dual-therapy'],
+      ['Longeri 2013', 'longeri-mybpc3'],
+      ['Low 2020', 'low-ivde-ml'],
+      ['Lien 2006', 'lien-iatrogenic'],
+      ['Linton 2015', 'linton-fgesf'],
+    ]
+    for (const [marker, id] of cases) {
+      expect(parseSources(marker).map(s => s.id), marker).toEqual([id])
+    }
+  })
 })
 
 describe('buildDiseaseCitations', () => {
