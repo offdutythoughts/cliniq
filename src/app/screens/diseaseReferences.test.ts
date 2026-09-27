@@ -603,6 +603,26 @@ describe('parseSources', () => {
     expect(parseSources('Scott 2021').map(s => s.id)).toEqual(['scott-phenobarb-marrow'])
   })
 
+  // Three more parentheticals that read like citations and are not. Each one was
+  // resolving to a real paper on a real page: "Evans syndrome" is IMHA with
+  // thrombocytopenia, "Golden Retriever most common" is a breed note that 'Gold'
+  // matched, and both put a superscript on something that is not a claim.
+  it('does not cite a paper for a disease name or a breed note', () => {
+    expect(parseSources('Evans syndrome')).toEqual([])
+    expect(parseSources('Evans 2003').map(s => s.id)).toEqual(['evans-metro-diazepam'])
+    expect(parseSources('Golden Retriever most common')).toEqual([])
+    expect(parseSources('Gold 2016').map(s => s.id)).toEqual(['gold-basal-cortisol'])
+  })
+
+  // Phillips gained a second paper. Without the year map the 2025 ANNPE branch
+  // answered for the 2019 feline hiatal-hernia marker too, so DIS-GI-HH quietly
+  // began citing a spinal-cord study.
+  it('keeps both Phillips papers apart', () => {
+    expect(parseSources('Phillips 2019').map(s => s.id)).toEqual(['phillips-feline-hh'])
+    expect(parseSources('Phillips 2025').map(s => s.id)).toEqual(['phillips-exercise-annpe'])
+    expect(parseSources('Phillips 2099')).toEqual([])
+  })
+
   // Surnames that are prefixes of other surnames. Whichever branch parseSources
   // tests first wins, so without a \b guard or deliberate ordering the shorter
   // name silently answers for the longer one and the page cites a paper on a
@@ -988,7 +1008,13 @@ describe('reference block', () => {
       'DIS-NEU-WOBBLER', 'DIS-NEU-IDVEST', 'DIS-NEU-MMM']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
-          if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)
+          if (!seg.raw) continue
+          // Parentheticals that begin with a source name but are prose, not
+          // citations, and must keep printing as written. Kept in step with
+          // PROSE_QUALIFIERS in scripts/lint-refs-integrity.ts.
+          const inner = seg.raw.trim().replace(/^\(/, '').replace(/\)$/, '')
+          if (['Scott', 'Evans syndrome', 'AAHA/AAFP', 'Librela'].includes(inner)) continue
+          if ((seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)
         }
       }
     }

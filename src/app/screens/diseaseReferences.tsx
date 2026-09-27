@@ -1122,6 +1122,50 @@ const MONFORTE_MONTEIRO_CSF =
 const CONGIUSTA_OCLACITINIB_MMM =
   'Congiusta MC, Snyder C, Soukup JW, Apostolopoulos N. Novel management of masticatory myositis in three dogs with a selective Janus kinase (JAK-1) inhibitor. J Vet Dent. 2024;41(6):620-627. doi:10.1177/08987564231219925'
 
+// Intracranial disease, stroke, head trauma, ANNPE/FCE, tetanus and metronidazole.
+// Two Thomsen papers now exist in this file — the 2024 Angiostrongylus series and
+// the 2016 cerebellar stroke one — so Thomsen is year-keyed below.
+//
+// Several of these are small. The sample size is written into the page text
+// wherever it carries the claim: Togawa is 31 dogs, Phillips 40, Evans 21,
+// Thomsen 23, Magalhaes 32, Levy 38 dogs and 31 cats.
+const RUESSLI_RT_NEUROFUNCTION =
+  'Ruessli N, Herzig R, Staudinger C, et al. Neurologic improvement and tumor shrinkage after radiotherapy in dogs with imaging-based intracranial neoplasia. J Vet Intern Med. 2026;40(2). doi:10.1093/jvimsj/aalag069'
+const MAGALHAES_RT_SURVIVAL =
+  'Magalhães TR, Benoît J, Něčová S, North S, Queiroga FL. Outcome after radiation therapy in canine intracranial meningiomas or gliomas. In Vivo. 2021;35(2):1117-1123. doi:10.21873/invivo.12357'
+const DESBORDES_ICVA_MRI =
+  'Desbordes J, Sifouane A, Ruel Y, et al. Magnetic resonance imaging identifies prognostic features in dogs and cats with ischemic cerebrovascular accidents. Am J Vet Res. 2026:1-11. doi:10.2460/ajvr.26.06.0268'
+const THOMSEN_CEREBELLAR_STROKE =
+  'Thomsen B, Garosi L, Skerritt G, et al. Neurological signs in 23 dogs with suspected rostral cerebellar ischaemic stroke. Acta Vet Scand. 2016;58(1):40. doi:10.1186/s13028-016-0219-2'
+const EVANS_METRO_DIAZEPAM =
+  'Evans J, Levesque D, Knowles K, Longshore R, Plummer S. Diazepam as a treatment for metronidazole toxicosis in dogs: a retrospective study of 21 cases. J Vet Intern Med. 2003;17(3):304-310. doi:10.1111/j.1939-1676.2003.tb02452.x'
+const BREWINSKA_YST_SCALES =
+  'Brewińska L, Banasik A, Czopowicz M, et al. Usefulness of neurological assessment scales in prognosis of meningoencephalitis of unknown origin in Yorkshire Terriers. BMC Vet Res. 2025;21(1):112. doi:10.1186/s12917-025-04594-2'
+const GONCALVES_MUO_MRI =
+  'Gonçalves R, De Decker S, Walmsley G, Maddox TW. Magnetic resonance imaging prognostic factors for survival and relapse in dogs with meningoencephalitis of unknown origin. Front Vet Sci. 2024;11:1370882. doi:10.3389/fvets.2024.1370882'
+const DUSSAUX_FELINE_TETANUS =
+  'Dussaux A, Fuhrer L, Dorner MB, et al. Clinical findings and outcome in feline tetanus: a multicentric retrospective study of 27 cases and review of the literature. Front Vet Sci. 2024;11:1425917. doi:10.3389/fvets.2024.1425917'
+const PHILLIPS_EXERCISE_ANNPE =
+  'Phillips K, Freeman P. Exercise restriction does not change outcome in dogs after diagnosis of acute non-compressive nucleus pulposus extrusion, fibrocartilaginous embolism, or hydrated nucleus pulposus extrusion. J Vet Intern Med. 2025;39(4):e70135. doi:10.1111/jvim.70135'
+const TOGAWA_DPN_OUTCOME =
+  'Togawa G, Lewis MJ, Devathasan D. Outcome in paraplegic dogs with or without pain perception due to thoracolumbar fibrocartilaginous embolic myelopathy or acute non-compressive nucleus pulposus extrusion. Front Vet Sci. 2024;11:1406843. doi:10.3389/fvets.2024.1406843'
+const LEVY_TBICS =
+  'Levy A, Rapoport K, Klainbart S, Yagil-Kelmer E, Shamir MH, Chai O. Traumatic brain injury clinical score (TBICS) predicts survival outcomes in dogs and cats with acute traumatic brain injury. Am J Vet Res. 2026;87(7). doi:10.2460/ajvr.26.02.0039'
+// Crossref gives the print year as 2022 (32(1):75-82); PubMed shows the 2021
+// online date. Rule 6 takes the print year.
+const CAMERON_TBI_POC =
+  'Cameron S, Weltman JG, Fletcher DJ. The prognostic value of admission point-of-care testing and modified Glasgow Coma Scale score in dogs and cats with traumatic brain injuries (2007-2010): 212 cases. J Vet Emerg Crit Care (San Antonio). 2022;32(1):75-82. doi:10.1111/vec.13108'
+// Horner's syndrome. Lockhart is what the breed note on DIS-NEU-HORNERS should
+// have rested on all along — 'Gold' was matching the words "(Golden Retriever
+// most common)" and attaching a basal-cortisol paper instead. Crossref gives the
+// print year as 2022 (25 Suppl 1); PubMed shows the 2021 online date.
+const LOCKHART_HORNERS_IMAGING =
+  'Lockhart RL, Tzouganakis I, Tsvetanova A, Smith KM, Smith PM. The diagnostic yield of advanced imaging in dogs with Horner’s syndrome presenting with and without additional clinical signs: a retrospective study of 120 cases (2000-2018). Vet Ophthalmol. 2022;25(suppl 1):51-59. doi:10.1111/vop.12918'
+const BOYDELL_GR_HORNERS =
+  'Boydell P. Idiopathic Horner’s syndrome in the golden retriever. J Small Anim Pract. 1995;36(9):382-384. doi:10.1111/j.1748-5827.1995.tb02958.x'
+const SHARMA_HEAD_TRAUMA =
+  'Sharma D, Holowaychuk MK. Retrospective evaluation of prognostic indicators in dogs with head trauma: 72 cases (January-March 2011). J Vet Emerg Crit Care (San Antonio). 2015;25(5):631-639. doi:10.1111/vec.12328'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1163,7 +1207,7 @@ const SOURCE_NAMES = [
   // Disease pages 11-15. NEW PREFIX TRAP: 'Allen' is a prefix of
   // 'Allenspach', so parseSources must test Allenspach FIRST or the
   // chronic-enteropathy markers resolve to a GDV gastropexy review.
-  'de Papp', 'Zacher', 'Green', 'Ward', 'Glickman', 'O\u2019Neill', 'Allen',
+  'de Papp', 'Zacher', 'Green', 'Ward', 'Glickman', 'O’Neill', 'Allen',
   'Allenspach', 'McCord',
   'Marks', 'Shaevitz', 'Bazelle',
   'Phillips', 'Reeve', 'Mayhew', 'Watkins',
@@ -1273,6 +1317,11 @@ const SOURCE_NAMES = [
   'Baka', 'Sebestyén',
   // 'Nye' is three letters and unrelated by prefix to 'Nguyen'/'Ng'/'Nabity'.
   'Bonelli', 'Nye', 'Monforte Monteiro', 'Congiusta',
+  // 'Evans' is also a co-author on Ruessli; only the 2003 metronidazole paper is
+  // ever cited by that marker. 'Levy' is unrelated by prefix to 'Li' (guarded).
+  'Ruessli', 'Magalhães', 'Desbordes', 'Evans', 'Brewińska',
+  'Gonçalves', 'Dussaux', 'Togawa', 'Levy', 'Cameron', 'Sharma',
+  'Lockhart', 'Boydell',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1391,6 +1440,20 @@ const CHAN_BY_YEAR: Record<string, { id: string; text: string }> = {
 
 /** The feline polyp series and the MUO cohort. Keyed on the year; the branch
  *  that reads this must stay ABOVE the /^Anders\\b/ one. */
+const EVANS_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2003': { id: 'evans-metro-diazepam', text: EVANS_METRO_DIAZEPAM },
+}
+
+const PHILLIPS_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2019': { id: 'phillips-feline-hh', text: PHILLIPS_FELINE_HH },
+  '2025': { id: 'phillips-exercise-annpe', text: PHILLIPS_EXERCISE_ANNPE },
+}
+
+const THOMSEN_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2016': { id: 'thomsen-cerebellar-stroke', text: THOMSEN_CEREBELLAR_STROKE },
+  '2024': { id: 'thomsen-av-bleeding', text: THOMSEN_AV_BLEEDING },
+}
+
 const ANDERSON_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2000': { id: 'anderson-polyps', text: ANDERSON_POLYPS + '.' },
   '2026': { id: 'anderson-muo-older', text: ANDERSON_MUO_OLDER },
@@ -1605,7 +1668,30 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Kasabalis/.test(part)) { out.push({ id: 'kasabalis-aminosidine', text: KASABALIS_AMINOSIDINE }); continue }
     if (/^McBride/.test(part)) { out.push({ id: 'mcbride-aki-vwf', text: MCBRIDE_AKI_VWF }); continue }
     if (/^Krüger/.test(part)) { out.push({ id: 'kruger-av-vwf', text: KRUGER_AV_VWF }); continue }
-    if (/^Thomsen/.test(part)) { out.push({ id: 'thomsen-av-bleeding', text: THOMSEN_AV_BLEEDING }); continue }
+    if (/^Thomsen/.test(part)) {
+      const hit = THOMSEN_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^Ruessli/.test(part)) { out.push({ id: 'ruessli-rt-neurofunction', text: RUESSLI_RT_NEUROFUNCTION }); continue }
+    if (/^Magalhães/.test(part)) { out.push({ id: 'magalhaes-rt-survival', text: MAGALHAES_RT_SURVIVAL }); continue }
+    if (/^Desbordes/.test(part)) { out.push({ id: 'desbordes-icva-mri', text: DESBORDES_ICVA_MRI }); continue }
+    // Year-keyed for one paper on purpose: "(Evans syndrome)" on DIS-BD-IMHA is
+    // IMHA with immune thrombocytopenia, a disease name, and must not resolve.
+    if (/^Evans/.test(part)) {
+      const hit = EVANS_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^Brewińska/.test(part)) { out.push({ id: 'brewinska-yst-scales', text: BREWINSKA_YST_SCALES }); continue }
+    if (/^Gonçalves/.test(part)) { out.push({ id: 'goncalves-muo-mri', text: GONCALVES_MUO_MRI }); continue }
+    if (/^Dussaux/.test(part)) { out.push({ id: 'dussaux-feline-tetanus', text: DUSSAUX_FELINE_TETANUS }); continue }
+    if (/^Togawa/.test(part)) { out.push({ id: 'togawa-dpn-outcome', text: TOGAWA_DPN_OUTCOME }); continue }
+    if (/^Levy/.test(part)) { out.push({ id: 'levy-tbics', text: LEVY_TBICS }); continue }
+    if (/^Cameron/.test(part)) { out.push({ id: 'cameron-tbi-poc', text: CAMERON_TBI_POC }); continue }
+    if (/^Sharma/.test(part)) { out.push({ id: 'sharma-head-trauma', text: SHARMA_HEAD_TRAUMA }); continue }
+    if (/^Lockhart/.test(part)) { out.push({ id: 'lockhart-horners-imaging', text: LOCKHART_HORNERS_IMAGING }); continue }
+    if (/^Boydell/.test(part)) { out.push({ id: 'boydell-gr-horners', text: BOYDELL_GR_HORNERS }); continue }
     if (/^Canonne/.test(part)) { out.push({ id: 'canonne-av-bal', text: CANONNE_AV_BAL }); continue }
     if (/^Henke/.test(part)) { out.push({ id: 'henke-zinc', text: HENKE_ZINC }); continue }
     if (/^Biasibetti/.test(part)) { out.push({ id: 'biasibetti-garlic', text: BIASIBETTI_GARLIC }); continue }
@@ -1735,7 +1821,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Quimby/.test(part)) { out.push({ id: 'quimby-mirtazapine', text: QUIMBY_MIRTAZAPINE }); continue }
     if (/^Spencer/.test(part)) { out.push({ id: 'spencer-omeprazole', text: SPENCER_OMEPRAZOLE }); continue }
     if (/^Mortier/.test(part)) { out.push({ id: 'mortier-proteinuria', text: MORTIER_PROTEINURIA }); continue }
-    if (/^Gold/.test(part)) { out.push({ id: 'gold-basal-cortisol', text: GOLD_BASAL_CORTISOL }); continue }
+    // \b or this swallows "(Golden Retriever most common)" on DIS-NEU-HORNERS,
+    // putting a basal-cortisol superscript on a breed note.
+    if (/^Gold\b/.test(part)) { out.push({ id: 'gold-basal-cortisol', text: GOLD_BASAL_CORTISOL }); continue }
     if (/^Bovens/.test(part)) { out.push({ id: 'bovens-basal-cortisol', text: BOVENS_BASAL_CORTISOL }); continue }
     if (/^Lennon/.test(part)) { out.push({ id: 'lennon-basal-cortisol', text: LENNON_BASAL_CORTISOL }); continue }
     if (/^Vincent/.test(part)) { out.push({ id: 'vincent-low-dose-docp', text: VINCENT_LOW_DOSE_DOCP }); continue }
@@ -1758,7 +1846,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
       if (hit) out.push(hit)
       continue
     }
-    if (/^O\u2019Neill/.test(part)) {
+    if (/^O’Neill/.test(part)) {
       // Two 2017 VetCompass papers — GDV and corneal ulcerative disease — so
       // the year is not enough on its own. The cornea marker says so.
       if (part.includes('cornea')) { out.push({ id: 'oneill-cud', text: ONEILL_CUD }); continue }
@@ -1778,7 +1866,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Marks/.test(part)) { out.push({ id: 'marks-gi-protectants', text: MARKS_GI_PROTECTANTS }); continue }
     if (/^Shaevitz/.test(part)) { out.push({ id: 'shaevitz-piroxicam', text: SHAEVITZ_PIROXICAM }); continue }
     if (/^Bazelle/.test(part)) { out.push({ id: 'bazelle-cytoprotective', text: BAZELLE_CYTOPROTECTIVE }); continue }
-    if (/^Phillips/.test(part)) { out.push({ id: 'phillips-feline-hh', text: PHILLIPS_FELINE_HH }); continue }
+    if (/^Phillips/.test(part)) {
+      const hit = PHILLIPS_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Reeve/.test(part)) { out.push({ id: 'reeve-brachy-hh', text: REEVE_BRACHY_HH }); continue }
     if (/^Mayhew/.test(part)) {
       const hit = MAYHEW_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
