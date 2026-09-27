@@ -887,6 +887,21 @@ details.ref-fold[open] > summary::after{content:" ▾";}
   background-size:26px 100%,26px 100%,11px 100%,11px 100%;
   background-attachment:local,local,scroll,scroll;
 }
+/* Same scroller with its first column PINNED: no left edge shading. The frozen
+   column already sits on that edge and paints itself opaque, so the shadow was
+   only ever visible in the slivers it doesn't cover — the full-width section
+   labels ("CP & Muscle Tone", "Spinal Reflexes", …) and the row gaps — where it
+   read as a stray grey notch rather than an edge. The right edge still shades;
+   that is where there IS more table to swipe to. */
+.scroll-x.pinned-col{
+  background:
+    linear-gradient(to left, var(--scroll-x-bg) 40%, rgba(0,0,0,0)) right center,
+    radial-gradient(farthest-side at 100% 50%,rgba(var(--slate-muted),.30), rgba(0,0,0,0)) right center;
+  background-repeat:no-repeat;
+  background-size:26px 100%,11px 100%;
+  background-attachment:local,scroll;
+}
+
 /* Same scroller, but sitting on a --card panel: the cover has to match the
    panel, not the page, or the edges read as a pale 26px stripe. */
 .scroll-x.on-card{--scroll-x-bg:var(--card-solid);}

@@ -1618,6 +1618,536 @@ This is the same free-win pattern that worked on `DIS-BD-EVANS` at the start of 
 paper already verified in the file applying to pages nobody had wired it into. Worth looking for
 before searching, since it costs one edit rather than a literature cycle.
 
+### Pages 78-80 — cherry eye, anterior uveitis, lens-induced uveitis (2026-09-23)
+
+> Guionnet A, Weverberg F. Vet Ophthalmol. 2026;29(1):e70031. doi:10.1111/vop.70031
+> Violette NP, Ledbetter EC. Vet Ophthalmol. 2019;22(5):577-583. doi:10.1111/vop.12625
+> Dowler KK, Middleton JR, Dufour S, Hood MA, Giuliano EA. Vet Ophthalmol. 2021;24(1):37-47. doi:10.1111/vop.12830
+
+Registry disagreement on Guionnet: PubMed dates it **2025** (epub May), the print volume is
+**2026;29(1)**. Print year wins, as everywhere else in this pass.
+
+**Guionnet** (126 eyes, mean 1190 days of follow-up) is cited for what happens *after* the
+technique works, not just that it works. 125 of 126 eyes held after one surgery — but lacrimal
+cysts formed in 4% and needed drainage, and KCS or ulcerative keratoconjunctivitis appeared in
+13.9% of dogs over long follow-up. The authors explicitly could not establish whether the surgery
+contributed, so the page says to keep measuring Schirmer rather than treat the gland as safe once
+repositioned. That is a more useful reading than the 99.2% headline alone.
+
+**Violette** gives the uveitis page a differential it stated without a source: dense flare is not
+always protein. Lipaemic flare can be opaque enough to **abolish the menace response**, and it
+requires hyperlipidaemia *plus* uveitis — so the action is to check triglycerides and find the
+systemic driver, not escalate the anti-inflammatory. Two-thirds of affected eyes were pseudophakic
+and over half developed it within 30 days of intraocular surgery.
+
+**Dowler** is cited on the lens-induced uveitis page alongside Edelmann from the cataract batch,
+because the two converge: longer phacoemulsification time predicted **both** fibrin web (Dowler)
+and post-operative glaucoma and blindness (Edelmann). Anything that shortens surgery, including
+operating before the cataract matures, helps twice. Dowler also rules factors *out* — diabetes,
+cataract stage and surgeon were not associated.
+
+### Pages 81-84 — hyphaema, retinal detachment, envenomation, orbital trauma (2026-09-23)
+
+> Jinks MR, Olea-Popelka F, Freeman KS. Vet Ophthalmol. 2018;21(2):160-166. doi:10.1111/vop.12491
+> Hirashima S, Takiyama N, Umeda Y. Vet Ophthalmol. 2022;25(1):23-30. doi:10.1111/vop.12912
+> Scott EM, Schlesener BN, Shaw GC, Teixeira LBC. Vet Ophthalmol. 2019;22(5):666-673. doi:10.1111/vop.12638
+
+⚠️ **`Scott` is now year-keyed** — fourth author to need it, after Moore, Johnson and Edelmann.
+The existing 2021 paper is phenobarbital marrow suppression by a different Scott entirely.
+`DIS-IMNP` stays pinned at 2 references, which would catch a swap.
+
+**Jinks is the most immediately usable paper in the ophthalmology block so far**, because its
+prognostic factors are all free to check at the first examination: absent consensual PLR (odds
+ratio **28.6**), absent dazzle (19.4), raised IOP (9.1), retinal detachment (7.6), *unilateral*
+rather than bilateral hyphaema (5.8), complete hyphaema (3.9). It also corrects an implicit
+assumption — trauma accounted for only 26.1% of 99 dogs, against 36.4% systemic and 32.9% local
+ocular disease, so a systemic workup is warranted even when trauma looks obvious. And hyphaema
+persisting 8-30 days raised glaucoma risk more than sixfold.
+
+**Hirashima contradicts the page's pessimism about surgery.** Vitrectomy reattached all 78 eyes,
+87.2% regained or kept vision, and 73.5% still had it at a mean 690 days. The detail that changes
+management: **mean time to vision returning was 28.5 days**, so judging failure at two weeks is
+premature. Glaucoma was the commonest complication (40.3%) and caused 88.9% of post-operative
+vision loss.
+
+**Scott serves two pages from one finding.** All 19 dogs with an ocular or periocular snakebite
+lost vision and came to enucleation, with necrosis, keratomalacia, hyphaema, retinal detachment
+and lens capsule rupture on histopathology. On `DIS-BD-ENV` that is a triage point — a periocular
+bite is not cosmetic; on `DIS-EYE-ORBTRAUMA` it sets the expectation for that specific mechanism.
+Hedged as 19 dogs on both.
+
+### Pages 85-86 — progressive retinal atrophy, episcleritis / NGE (2026-09-23)
+
+> Andrade LR, Caceres AM, Trecenti AS, et al. Animals (Basel). 2019;9(10):844. doi:10.3390/ani9100844
+> Breaux CB, Sandmeyer LS, Grahn BH. Vet Ophthalmol. 2007;10(3):168-172. doi:10.1111/j.1463-5224.2007.00528.x
+
+**Andrade** (220 genotyped English Cocker Spaniels) is cited for two things the PRA page could
+not previously support. The breeding argument: the prcd allele frequency was **41% in unregistered
+dogs against 14.9% in registered** ones. And a caveat about the test itself — 8 of 10 homozygotes
+examined had visual impairment, so two did not *yet*, which is why genotyping is a breeding tool
+as much as a diagnosis. Single-breed, single-country, and the page reads as such.
+
+**Breaux is 24 cases and from 2007**, and it is cited anyway because it is the specific source
+behind a claim the page was already making: B-lymphocyte-rich lesions need ongoing therapy to hold
+remission. Attaching the source to an existing claim is different from adding a new one on thin
+evidence. It also supplies the split the page lacked — about half of *unilateral* episcleritis
+resolved without long-term therapy, while almost all bilateral disease and NGE needed continuous
+treatment — hedged as "some clinicians reported" at that sample size.
+
+### Pages 87-88 — iris melanocytic lesions, traumatic proptosis (2026-09-23)
+
+> Dufour VL, Cohen JA, Assenmacher CA, et al. Vet Ophthalmol. 2025;28(2):371-385. doi:10.1111/vop.13258
+> Gilger BC, Hamilton HL, Wilkie DA, van der Woerdt A, McLaughlin SA, Whitley RD. J Am Vet Med Assoc. 1995;206(8):1186-1190.
+
+**Gilger has no DOI** — a 1995 JAVMA paper from before the practice was universal — so the
+second-registry check went to **Europe PMC** rather than Crossref, as it did for Perry on the
+cholecalciferol page. Second occasion in the pass; the `isPaper` classifier still recognises it
+because `1995;206` matches the volume;page locator pattern.
+
+**Dufour's population is unusual and the page says so** — 40 dogs aged 0.5 to 3.1 years in a
+guide-dog colony, removed from training for a pigmented iris lesion. It supports the page's
+"monitor with serial photography" advice with something concrete (25 dogs watched without surgery,
+complication-free to 4.5 years) and it supplies what to tell an owner who does opt for surgery:
+sector iridectomy kept every eye visual and comfortable to 6.2 years with no recurrence, **but
+dyscoria followed in 13/13**, focal posterior synechia in 9/13 and non-progressive cataract in
+8/13. The pupil will not look normal afterwards, which is worth saying in advance.
+
+**Gilger** attaches sources to two figures the proptosis page already quoted (about 20% of globes
+regaining vision — 18 of 66 dogs; no cat eye regaining vision in 18 cats) and adds a prognostic
+indicator that runs against intuition: **brachycephalic conformation is favourable**, non-
+brachycephalic unfavourable. That sits with the page's existing list of unfavourable signs.
+
+### Pages 89-91 — Collie eye anomaly, optic nerve hypoplasia, corneal oedema (2026-09-23)
+
+> Brown EA, Thomasy SM, Murphy CJ, Bannasch DL. Vet Ophthalmol. 2018;21(2):144-150. doi:10.1111/vop.12488
+> Michau TM, Gilger BC, Maggio F, Davidson MG. J Am Vet Med Assoc. 2003;222(5):607-612. doi:10.2460/javma.2003.222.607
+
+**Brown is cited against both pages, not for them.** `DIS-EYE-CEA` called the NHEJ1 genetic test
+"definitive for breeding decisions" and said genetic testing was "the only effective control
+measure". In Nova Scotia Duck Tolling Retrievers the deletion was **discordant** with optic nerve
+head coloboma, and a genome-wide scan found no locus reaching significance once population
+structure was controlled for. The authors' own conclusion is that **puppy eye examinations are a
+better guide to breeding selection than the test** in that breed. Both pages now say the genotype
+supports rather than settles the question, and `DIS-EYE-ONH` warns against using the CEA test to
+identify coloboma outside the breeds it was validated in.
+
+This is the strongest example so far of Rule 3 earning its place — the abstract does not merely
+add detail, it reverses the page's confidence. A bibliographic record alone would have read as
+"a CEA genetics paper" and been cited *in support*.
+
+**Michau is 13 dogs and from 2003**, hedged as such. It is cited on the corneal oedema page for
+the recurrent *ulcer* rather than the oedema, since that is what it treats: every eye healed in a
+mean 2.2 weeks and needed less topical treatment afterwards than before referral. The authors'
+practical caveat is on the page too — treat the **whole** cornea, because untreated areas
+re-ulcerate.
+
+### Page 92 — keratoconjunctivitis sicca (2026-09-23)
+
+> O’Neill DG, Brodbelt DC, Keddy A, Church DB, Sanchez RF. J Small Anim Pract. 2021;62(8):636-645. doi:10.1111/jsap.13382
+
+⚠️ **`O’Neill` is now year-keyed** — fifth author after Moore, Johnson, Edelmann and Scott. Same
+D G O'Neill runs VetCompass, so there are two unrelated papers by him here: the 2017 GDV study and
+this 2021 KCS one. Note the **curly apostrophe** (U+2019) that the marker, the source name and the
+branch regex all use — an ASCII apostrophe will not match. `DIS-GI-GDV` stays pinned at 10
+references.
+
+**This is the largest denominator of any paper cited in the pass: 363,898 dogs.** The KCS page
+carried relative risks from a Gelatt table; it now also carries VetCompass odds ratios, and the
+two differ enough to be worth having both — American Cocker Spaniel at **52.3** against
+crossbreds, English Bulldog 38.0, Pug 22.1, Lhasa Apso 21.6, where the table's figures run 4 to
+11. Labrador (0.23) and Border Collie (0.30) are actively *protected*, which the table does not
+show at all.
+
+Two things went on the page that it could not previously assert. The prevalence — **0.40%**, with
+a 0.12% one-year incidence risk — which makes it a screening target rather than a referral
+curiosity. And the conformational gradient underneath the breed list: brachycephalic 3.63×
+mesocephalic, spaniel 3.03× non-spaniel, at-or-above breed-sex mean bodyweight 1.25× lighter dogs.
+The authors' recommendation to run a quantitative tear test at the **annual** examination in
+predisposed breeds is now in the monitoring section.
+
+### Pages 93-94 — enrofloxacin retinal toxicity, taurine-deficient retinal degeneration (2026-09-23)
+
+> Wiebe V, Hamilton P. J Am Vet Med Assoc. 2002;221(11):1568-1571. doi:10.2460/javma.2002.221.1568
+> Jacobson SG, Kemp CM, Borruat FX, Chaitin MH, Faulkner DJ. Exp Eye Res. 1987;45(4):481-490. doi:10.1016/s0014-4835(87)80059-3
+
+**These are the two oldest sources in the pass (2002 and 1987) and the reason is the same for
+both: the literature stops there.** Commercial diets solved feline taurine deficiency, and the
+enrofloxacin dose question was settled by a label change. Rule 1(c) asks for *as current as the
+literature allows*, not a recent paper at any cost — the alternative here is no paper at all.
+
+**Wiebe** supplies what the enrofloxacin page could not: the four risk factors (large dose or high
+plasma concentration, **rapid IV infusion**, prolonged course, advancing age), a concrete
+mitigation protocol for when a fluoroquinolone is genuinely needed (exact-bodyweight dosing, split
+to 2.5 mg/kg q12h, no rapid IV, reduce in geriatric or renally impaired cats), and the early sign
+— **mydriasis precedes the blindness**, so a dilated pupil in a cat on a fluoroquinolone is a
+reason to stop the drug rather than to observe.
+
+**Jacobson** is an experimental study and the page treats it as one, but it gives two things a
+clinician can use. The lesion spreads in a known order (focal central, then paracentral, then
+nasal midperipheral, with the horizontal streak preferentially lost), so examining only the area
+centralis will under-stage it. And the **rod b-wave was markedly reduced while peripheral
+rhodopsin was only mildly depleted** — a modest-looking fundus does not mean modest functional
+loss.
+
+Also this batch: a **second O'Neill 2017 VetCompass paper** (corneal ulcerative disease) landed on
+`DIS-EYE-SUP-ULC`, which broke the year key. Its marker carries a `cornea` qualifier and the
+branch tests for it before falling through to `ONEILL_BY_YEAR` — the same mechanism LeVine's two
+2024 statements use with `diagnosis` and `treatment`. It brings the conformation data (brachy-
+cephalic **11.18×** crossbreds, Pug 5.42% of the breed affected) and an uncomfortable practice
+finding: pain was recorded in 46.2% of cases but analgesia used in only 54.6%.
+
+### Pages 95-96 — optic neuritis, orbital neoplasia (2026-09-23)
+
+> Bedos L, Tetas R, Crespo V, Shea A. J Small Anim Pract. 2020;61(11):676-683. doi:10.1111/jsap.13233
+> Patel K, de Lacerda RP, Mazzucchelli S, et al. Vet Rec. Published online January 5, 2026. doi:10.1002/vetr.70219
+
+Patel is an **early-view article with no volume or page numbers yet**, so its AMA string carries
+the online-publication date instead. First reference in the pass in that form; the `isPaper`
+classifier still recognises it on the DOI rather than the volume;page locator.
+
+**Bedos is cited for how often each test is negative**, which is the opposite of how a diagnostic
+list usually reads and is what the optic neuritis page needed. Across 48 affected nerves the
+fundus was abnormal in only **71%**, MRI showed enlargement in 67% and contrast enhancement in
+58%; CSF was normal more often than not, with pleocytosis in 44% and raised protein in 44% of 25
+dogs sampled. No single negative rules the diagnosis out, and the page now says so. It also
+revises the prognosis upward — 64% of dogs responded to immunosuppression and vision returned in
+24 of 48 eyes — against a page that implied treatment had to start within days to be worth trying.
+
+**Patel** supports the surgical option on `DIS-EYE-ORBNEO` with the complication profile rather
+than a survival figure: immediate complications in 60% of 35 dogs, but almost all surgical-site
+swelling that resolved untreated, and long-term complications in only 5.7%. It also carries a
+diagnostic caution — just over half of orbits taken to exenteration proved **neoplastic** (54.3%),
+the rest inflammatory disease, cyst, foreign body or pseudotumour, which reinforces the page's
+existing "biopsy rather than assume".
+
+### Pages 97-100 — uveal cysts, conjunctival and eyelid neoplasia, nasolacrimal obstruction (2026-09-23)
+
+> Holly VL, Sandmeyer LS, Bauer BS, Verges L, Grahn BH. Vet Ophthalmol. 2016;19(3):237-244. doi:10.1111/vop.12293
+> Kaminsky M, Hoffman A, Ellis AE. Vet Ophthalmol. 2023;26(3):243-249. doi:10.1111/vop.13064
+> Erjavec J. Can Vet J. 2020;61(10):1111-1114.
+
+**Holly draws a distinction the uveal cyst page did not make**, and it changes what "monitor"
+means. Across 830 Golden Retrievers, thin-walled cysts still **attached** to the iris or ciliary
+body carried a 56.5% risk of pigmentary uveitis or pigmentary/cystic glaucoma on re-examination,
+while **none** of the thick-walled free anterior chamber cysts progressed. The page now leads with
+morphology rather than with "incidental cyst → monitor". It also supplies the progression rate to
+glaucoma (44.9%), the age gradient (12.7% of dogs over four years against 5.9% overall) and the
+inheritance pattern (autosomal dominant with partial penetrance).
+
+**Kaminsky and Erjavec are both single case reports**, and both are cited for a **technique**
+rather than for any frequency or prognosis claim — each page already carries the general picture
+from Gelatt. Kaminsky names a reconstruction (mucocutaneous subdermal plexus flap) that achieved
+complete margins on a mass straddling conjunctiva and lid margin, with its cost stated (mild
+trichiasis and epiphora). Erjavec names an imaging approach (CT plus dacryocystogram) that
+localised a stenosis a simple flush had only shown as non-patent, and a salvage
+(conjunctivobuccostomy). Both say "one reported dog" on the page.
+
+This is the pattern for the long tail of ophthalmology: many of these conditions have no cohort
+literature at all, only case reports. Rule 4 requires a paper, and Rule 2 requires the reader to
+know how thin it is — so the citation goes in and the sample size goes in with it.
+
+Erjavec has **no DOI** (Can Vet J is PMC-only), so the second-registry check went to Europe PMC.
+Third occasion in the pass, after Perry and Gilger.
+
+### Pages 101-104 — PPM, distichiasis, retinal dysplasia, eyelid agenesis (2026-09-23)
+
+> Goossens LT, Verbruggen AJ, Storms G, Broeckx B. Front Vet Sci. 2026;13:1841935. doi:10.3389/fvets.2026.1841935
+> Gabor M, Candrak J, Miluchova M, Zubricky P, Balicka A, Trbolova A. Vet Sci. 2025;12(2):171. doi:10.3390/vetsci12020171
+> Ng CH, Ervedosa TB, Soler JG, Climans ME, Gonzalez-Astudillo V. Vet Ophthalmol. 2026;29(2):e70164. doi:10.1111/vop.70164
+
+⚠️ **PubMed's search endpoint went down mid-batch** (trivial two-word queries returned
+`API_ERROR`; PMID fetch kept working). Discovery moved to the **Europe PMC REST API** via curl,
+which is the same registry already used for second-registry verification of DOI-less papers. It
+found all three of these, including the one that covers three pages at once. Worth knowing as a
+fallback: the connector is not the only route to the literature.
+
+⚠️ **`Ng` IS a prefix of the existing `Nguyen`** (haemophilia A gene therapy). Its branch is
+written `/^Ng\b/`, so the word boundary keeps them apart regardless of branch order — the same
+device used for `Lo` against `Longeri`, and a different fix from the ordering used for
+`Reeve`/`Reeves` and `Michel`/`Michelotti`. `DIS-BD-HEMA` stays pinned at 4 references.
+
+**Goossens is an ECVO screening cohort of 1,182 dogs and serves three pages** — iris-to-iris PPM
+(4.7%, the commonest inherited finding), distichiasis (2.5%) and multifocal retinal dysplasia
+(0.2%). Its useful twist is that **both PPM and distichiasis exceeded the progenitor breeds**,
+which the authors attribute to breeding practice rather than chance. That is a better line for the
+PPM page than "heritable in many breeds" alone.
+
+**Gabor** is cited to keep the retinal dysplasia page's breed list open rather than to add to it:
+a genome-wide scan in a breed *not previously implicated* (Czechoslovakian Wolfdog) found 5.13%
+affected and a suggestive locus near CYP27A1. The page now says a negative genetic panel does not
+exclude the diagnosis, because the causative variants are unknown in most affected breeds.
+
+**Ng is one puppy** and is cited only for what histopathology showed — bilateral Peters anomaly
+with a closed drainage angle, persistent pupillary membranes, retinal separation and aphakia
+behind a lid defect, plus complete absence of goblet cells, tarsal plate and meibomian glands. The
+first point warns that concurrent anomalies can sit deeper than the fundus exam reaches; the
+second is why lubrication does not substitute for reconstruction. It also establishes that eyelid
+agenesis is not exclusively feline.
+
+### Pages 105-107 — ectropion/macroblepharon, zygomatic mucocoele, ocular dermoid (2026-09-23)
+
+> Lemle C, Koch C, Meyer-Lindenberg A. Vet Ophthalmol. 2026;29(5):e70235. doi:10.1111/vop.70235
+> Kecova H, Miller WW, Lindley DM. Vet Ophthalmol. 2025;28(2):341-352. doi:10.1111/vop.13239
+> Enache AE, Maini S, Pivetta M, et al. J Small Anim Pract. 2025;66(6):396-411. doi:10.1111/jsap.13844
+
+Discovery again through **Europe PMC** — PubMed search still returning `API_ERROR`.
+
+⚠️ **`Lemle` sits one character from the existing `Lemmons`** (the ophthalmology textbook cited by
+chapter). They diverge at position 4 so neither is a prefix of the other, but both are pinned.
+
+**Kecova covers two pages from one paper** — the oversized-fissure page and the dermoid page,
+because four of its 153 eyes were lateral canthal dermoids resected by the same technique. Its
+strongest point is structural rather than cosmetic: operating **before** severe malformation
+develops prevented the secondary "pagoda defect" in giant breeds, while late cases needed
+concurrent pagoda resection. That is an argument for earlier referral that the page did not have.
+It also softens the page's line about lateral canthoplasty giving "unpredictable results" —
+canthal *reconstruction* achieved good-to-excellent function in all but 6 of 153 eyes.
+
+**Enache separates two conditions the zygomatic page had partly conflated.** The page said "no
+pain on opening the mouth, unlike orbital cellulitis" as a way of identifying zygomatic disease —
+but pain on opening the mouth was present in **18 of 20** dogs with bilateral zygomatic
+*sialadenitis*. The page now distinguishes the inflammatory form (painful, usually medical: 16/20
+improved on antimicrobials and anti-inflammatories, and only 2 of 9 cultures grew anything) from a
+simple mucocoele (leaking gland, surgical). It also flags that **15 of 20** had concurrent systemic
+disease, which redirects the workup outward.
+
+**Lemle** (294 pugs, European Eye Scheme) quantifies the brachycephalic adnexal burden: entropion
+72.4%, pigmentary keratopathy 36.7%, macroblepharon 24.8%, distichiasis 20.1%, and **81.3% with at
+least one adnexal disorder**.
+
+### Pages 108-109 — plasmoma, crystalline corneal opacity (+ SARDS enrichment) (2026-09-23)
+
+> Read RA. J Small Anim Pract. 1995;36(2):50-56. doi:10.1111/j.1748-5827.1995.tb02821.x
+> Sung H, Park J, Kim J, Kang S, Shaw GC, Seo K. J Vet Sci. 2024;25(1):e16. doi:10.4142/jvs.23222
+> Quantz KR, Jongnarangsin KK, Harman CD, et al. Cornea. 2024;43(12):1506-1515. doi:10.1097/ICO.0000000000003523
+> Auten CR, Thomasy SM, Kass PH, Good KL, Hollingsworth SR, Maggs DJ. Vet Ophthalmol. 2018;21(3):264-272. doi:10.1111/vop.12504
+
+**Quantz adds a cause the crystalline-opacity page did not list, and it is iatrogenic.** The page
+separated three entities — dystrophy, lipid keratopathy, degeneration — and sent you to a systemic
+workup. Topical **corticosteroids** are a fourth: axial stromal crystalline opacities appeared in
+25 eyes of 14 dogs after a median 141 days of ophthalmic steroid, with onset ranging 35 to 396
+days across dexamethasone, prednisolone acetate and difluprednate. So the first question is what
+has been in the eye, over months rather than weeks. It is also the one crystalline opacity that may
+**reverse** — 4 of 25 eyes cleared after stopping the drug, though it took a median over a year,
+which is worth trying before calling the deposit permanent.
+
+**Read 1995 is the only therapeutic trial on plasmoma** and stays for the same reason the taurine
+and enrofloxacin sources do. It is biopsy-controlled, which is unusual: plasma cell counts fell on
+repeat biopsy and Schirmer values *rose*. The detail worth carrying is negative — T-lymphocyte
+numbers only trended down and did not reach significance, so the plasma cell is the cell the drug
+demonstrably acts on. Sung is one dog, cited for a presentation that mimics neoplasia (a discrete
+papillary mass rather than diffuse thickening), which supports the page's existing "biopsy anything
+atypical".
+
+**Auten** enriches `DIS-EYE-SARDS`, which already had two papers, because signalment narrows the
+diagnosis before any test: Dachshund 21%, Schnauzer 11%, Pug 7%, Labrador *under*-represented, and
+**spayed females 59% against intact females 1%**.
+
+### Pages 110-113 — rubeosis iridis, Haws syndrome, efferent mydriasis, blepharitis (2026-09-23)
+
+> Bedos L, Sandmeyer L, Campbell J, Grahn BH. Front Vet Sci. 2024;11:1289283. doi:10.3389/fvets.2024.1289283
+> Fruchter B, Kuzi S, Pe'er O, Ofri R, Sebbag L. Vet Rec. 2024;195(10):e4646. doi:10.1002/vetr.4646
+> Danciu CG, Fenn J, Beltran E. J Vet Intern Med. 2024;38(5):2669-2674. doi:10.1111/jvim.17176
+> Baker J, Cox A, Udenberg T, Defalque VE, Leis M. Can Vet J. 2025;66(10):1104-1110.
+
+⚠️ **`Bedos` is now year-keyed** — sixth author to need it, after Moore, Johnson, Edelmann, Scott
+and O'Neill. Leila Bedos has both the 2020 optic neuritis series and this 2024 histopathology
+study. `DIS-EYE-OPTNEUR` stays pinned at 2 references. Also new: **`Baker` vs the existing
+`Barker`** (trilostane survival), diverging at position 3 — pinned both ways.
+
+Baker has **no DOI** (Can Vet J again), so Europe PMC did the second-registry check. Fourth such
+paper, after Perry, Gilger and Erjavec.
+
+**Bedos 2024 tells the rubeosis page that clinical examination under-detects the thing it is
+about.** Histopathology of 108 glaucomatous globes found fibrovascular membranes in 24 of 49
+secondary, 9 of 40 primary and 3 of 19 congenital glaucoma eyes — and the far commoner
+*monocellular* membranes cannot be seen on examination at all. That reframes a negative slit-lamp
+finding. It also supports the page's existing framing: secondary glaucoma was the form most likely
+to carry a fibrovascular membrane.
+
+**Fruchter upgrades the Haws page from anecdote to evidence.** The page said deworming was
+"advocated by some clinicians on the strength of the anecdotal parasite association". Giardia was
+found in 4 of 9 cats tested, and — the striking part — a newly adopted kitten with haws and
+diarrhoea was followed by the same condition in the other three cats of the household **within
+4-11 days**, which is hard to explain without transmission. It also supplies numbers for the owner
+conversation the page lacked: resolution in 9 of 10 cats at a mean 38 days, and **3 of those 9
+relapsed** 5-6 months later.
+
+**Danciu is two dogs** and is cited for one thing: an efferent mydriasis whose only lesion was a
+*cerebellar* infarct. The page's differential was CN III, orbital and pharmacological — this adds a
+localisation that would otherwise be missed, with the tell being concurrent cerebellar or
+paradoxical vestibular signs.
+
+**Baker** is cited on the blepharitis page for a finding that runs **both ways**: 21 of 47 atopic
+dogs had an abnormal Schirmer, but 18 were *above* 25 mm/min and only 3 below 15. So the instruction
+is to measure the tear film, not to assume dryness.
+
+### Pages 114-115 — chalazion/meibomianitis, conjunctival cyst and mass (2026-09-23)
+
+> Kim G, Kang S, Seo J, Seo K. Vet Ophthalmol. 2025;28(5):847-854. doi:10.1111/vop.13326
+> Sypniewska A, Ziolkowska N. BMC Vet Res. 2026;22(1):96. doi:10.1186/s12917-026-05289-y
+> Garcia JM, Rogerio GDS, Rossatto-Junior CA, et al. Front Vet Sci. 2026;12:1717392. doi:10.3389/fvets.2025.1717392
+
+⚠️ **`Kim` sits beside the existing `King`** (CKD prognostic study) — they diverge at position 3.
+Pinned both ways, and `DIS-SEC-CKD` stays at 12 references.
+
+**Garcia serves both pages with the same argument**, and it is an argument for doing something the
+pages did not ask for: **submit the tissue**. Across 375 archived ocular specimens, neoplasia
+accounted for 80.5%, meibomian adenocarcinoma was unexpectedly frequent, and clinical suspicion
+matched the histopathological diagnosis in only **84.1%** of cases — moderate agreement by Kappa.
+On `DIS-EYE-CHALAZION` that becomes "submit the curetted tissue rather than discarding it", which
+is a real change to a procedure the page described as routine and curative.
+
+**Kim gives the chalazion page a measurement usable without meibography**: a lid margin thickness
+of **1.20 mm or more** flagged loss of over a third of the meibomian gland area (sensitivity 0.645,
+specificity 0.768, 59 dogs). The page states both operating characteristics, because a sensitivity
+of 0.645 means this rules in rather than out. Thickness also rises with age independently — 1.25 mm
+in dogs over 12 against 1.00 mm in normal eyes.
+
+**Sypniewska is one dog** and adds an immune-mediated differential for a well-circumscribed
+conjunctival nodule. The detail that makes it worth citing is a *failure*: the nodule did **not**
+regress on corticosteroid even though the dog's skin lesions did, so excision was needed. That is
+more useful than the diagnosis alone.
+
+### Pages 116-118 — iris atrophy, synechia, infectious chorioretinitis (2026-09-23)
+
+**No new references.** All three reuse papers already verified for other pages, which is the
+cheapest remaining move and worth checking before every search:
+
+- `DIS-EYE-IRIS-ATR` and `DIS-EYE-SYNECH` both take **Bedos 2024** (pre-iridal membranes), because
+  that paper reports two associations neither page had a source for: uveal atrophy was commoner in
+  globes with *monocellular* membranes, and peripheral anterior synechiae commoner in globes with
+  *fibrovascular* membranes. The second is the mechanism linking chronic neovascularisation to
+  angle closure.
+- `DIS-EYE-SYNECH` also takes **Dufour 2025** for an *iatrogenic* cause the page omitted: focal
+  posterior synechia followed sector iridectomy in 9 of 13 dogs, alongside dyscoria in all 13 —
+  expected sequelae rather than complications.
+- `DIS-EYE-CHORIO` takes **Solano-Gallego 2011** (stage the leishmaniosis, do not just diagnose
+  it), **Chochlios 2019** (a positive tick-borne titre in an endemic area is not the answer — 33.9%
+  of clinically healthy dogs were seropositive) and **Dickinson 2020** (ocular FIP resolved on
+  GS-441524 on serial ocular imaging, at higher doses, in four cats).
+
+⚠️ **An error caught in draft, recorded because the class of mistake matters.** The Chochlios line
+was first written as a *Leishmania* seroprevalence point. Chochlios is the **Ehrlichia canis**
+study — 54.9% of sick and 33.9% of healthy dogs seropositive. The figure was right, the organism
+was wrong, and the page lists both organisms as causes of chorioretinitis, so it would have read
+plausibly. It was corrected before commit. This is the same failure mode as the Bellenger and
+Ku/Li errors at the start of the pass: a number attached to the nearest-looking citation. Reusing a
+paper across pages raises that risk, because the abstract is no longer in front of you — so
+re-read it, or at minimum re-read the reference string, before writing the marker.
+
+### Pages 119-126 — the last eight eye pages: ophthalmology block COMPLETE (2026-09-23)
+
+> Chmiel J, Pumphrey S, Rozanski E. J Am Anim Hosp Assoc. 2022;58(6):277-282. doi:10.5326/JAAHA-MS-7279
+> Chan RX, Ledbetter EC. Vet Ophthalmol. 2022;25(5):338-342. doi:10.1111/vop.12987
+> Diehl KA, Asif SK, Mowat F. Vet Clin North Am Small Anim Pract. 2023;53(5):965-983. doi:10.1016/j.cvsm.2023.04.003
+> Beckwith-Cohen B, Petersen-Jones SM. Front Vet Sci. 2024;11:1337062. doi:10.3389/fvets.2024.1337062
+> Castel A, Olby NJ, Breitschwerdt EB, Thomas B, Maggi RG, Shelton GD. Vet Q. 2019;39(1):168-173. doi:10.1080/01652176.2019.1697012
+
+**All 58 ophthalmology pages now cite at least one peer-reviewed paper.**
+
+⚠️ **`Chan` is year-keyed and the two papers are by DIFFERENT Chans** — Remington X Chan on
+sports-ball ocular trauma (2022) and Jennifer C Chan on inhaled fluticasone (2023). Seventh
+year-keyed author. `DIS-RESP-BRONCHITIS` stays pinned at 2 references.
+
+⚠️ **Castel is the first record in this pass where PubMed returned NO abstract.** The metadata gave
+title, journal, MeSH terms and keywords — including "spastic pupil syndrome" — which was enough to
+make it look citable. Rule 3 says never cite from a bibliographic record alone, and keywords are a
+bibliographic record. The full text was fetched from Europe PMC (PMC6913637) and read before
+anything was written. That mattered, because the paper **contradicts the page twice**:
+
+- The page says FeLV is "strongly linked — most affected cats test positive". This cat was **FeLV
+  and FIV ELISA negative**, with Bartonella henselae plus Sarcocystis as the cause found.
+- The page says SPS "is benign and does not affect vision or QoL", implying permanence. An
+  anisocoria present since kittenhood — **six years** — resolved completely once the co-infection
+  was treated.
+
+Neither point is inferable from the title or keywords. Had it been cited from the record alone it
+would have been attached in *support* of the FeLV framing it undercuts.
+
+**Chmiel and Chan cover the three trauma pages between them.** Chmiel's setting is one the pages
+did not mention at all: 161 ocular injuries noted within 24 hours of a grooming appointment —
+corneal ulceration 71%, eyelid laceration 7%, subconjunctival haemorrhage 6%, skewed to small
+breeds (71%) and Shih Tzu (34%), with reactive behaviour in a third and four enucleations. Chan
+supplies the blunt-projectile picture, where the lid is the least of it: traumatic uveitis in 91%
+of closed-globe injuries, hyphaema 45%, and 5 of 6 open-globe injuries enucleated, with small dense
+balls worst.
+
+**Diehl and Beckwith-Cohen are both reviews**, used deliberately for the two page types that had no
+cohort literature: breed-screening certification (iris coloboma, PHTVL) and systemic disease
+presenting in the fundus (immune-mediated retinopathy, cortical blindness). Cited for framing
+rather than for figures.
+
+### Pages 127-129 — MUO, Chiari-like malformation, degenerative myelopathy (2026-09-23)
+
+First of the neurology block (45 pages).
+
+> Anderson FE, De Decker S, Bentley RT, Goncalves R. J Vet Intern Med. 2026;40(3). doi:10.1093/jvimsj/aalag089
+> Baka RD, Savvas I, Sarpekidou E, Kazakos G, Polizopoulou Z. Vet Sci. 2025;12(4):376. doi:10.3390/vetsci12040376
+> Sebestyen P, Kowalska ME, Golini L. Front Vet Sci. 2025;12:1555889. doi:10.3389/fvets.2025.1555889
+
+⚠️ **`Anderson` is now year-keyed AND is the longer half of the `Anders`/`Anderson` prefix pair**,
+so two different fixes have to coexist on one name: the `/^Anderson/` branch must stay **above**
+`/^Anders\b/`, and it now dispatches on the year inside. Eighth year-keyed author. `DIS-POLYP` is
+pinned at 8 references and `Anders 2008` is asserted separately, which would catch either fix
+breaking the other.
+
+**Anderson answers a question the MUO page did not address: does age change the decision?** The
+page was silent on older dogs, which invites treating a geriatric presentation as not worth
+immunosuppressing. Median survival was **16 months in dogs 8 years or older against 24 months in
+younger dogs, and the difference was not significant** on multivariate analysis; relapse rates also
+did not differ (41.7% vs 65.0%). The page now says not to write the older dog off on age alone. It
+also flags that older dogs presented differently — significantly more behaviour change, cranial
+nerve deficits and comorbidities — which is how MUO gets mistaken for a geriatric or neoplastic
+problem.
+
+**Baka reframes the Chiari page around a distinction it did not draw.** Syringomyelia of *other*
+aetiology behaved worse than the Chiari-associated form: more severe neurological dysfunction, and
+9 of 15 died or were euthanased against 11 of 15 still alive in the Chiari group. Age at onset
+separates them — mean 50.5 months for Chiari-associated against 97.6 months otherwise — so a young
+brachycephalic fits the malformation and an older dog warrants a wider search.
+
+**Sebestyén supplies the number owners actually ask for**, which the page did not have: median
+survival **6 months from the point of diagnosis** (13 months from onset of deficits), against the
+page's "~1.25 years from diagnosis" figure for Corgis. It also rules something out — SOD1
+homozygotes with a concurrent T3-L3 disc protrusion had a hazard ratio of 1.20, not significant, so
+a protrusion found on MRI should not be assumed to explain the deficits.
+
+### Pages 130-132 — Wobbler, idiopathic vestibular disease, masticatory myositis (2026-09-23)
+
+> de Albuquerque Bonelli M, da Costa RC. J Vet Intern Med. 2019;33(5):2160-2166. doi:10.1111/jvim.15602
+> Nye C, Hostnik E, Parker E, et al. J Vet Intern Med. 2020;34(5):2012-2020. doi:10.1111/jvim.15866
+> Monforte Monteiro SR, De Risio L, Alves L, Vanhaesebrouck AE. Front Vet Sci. 2025;12:1583988. doi:10.3389/fvets.2025.1583988
+> Congiusta MC, Snyder C, Soukup JW, Apostolopoulos N. J Vet Dent. 2024;41(6):620-627. doi:10.1177/08987564231219925
+
+The marker for the juvenile CSM paper is **`Bonelli`**, the short form the author is commonly
+indexed under, while the reference string carries the full surname *de Albuquerque Bonelli*. First
+time in the pass that the marker and the AMA surname differ deliberately; both are asserted.
+
+**Nye is cited against an assumption the Wobbler page carried.** The page said medical management
+means "many show progressive deterioration over time". On repeat MRI a median 30 months later, the
+worst site had progressed in 4 of 9 medically managed dogs, **improved in 4** and was unchanged in
+3, and all but 2 dogs were clinically unchanged or better. It also separates radiographic from
+clinical worsening — 38.9% of stenotic sites worsened morphologically while most dogs stayed
+clinically stable — so the page now warns against re-imaging a stable dog and escalating on the
+pictures.
+
+**Bonelli** widens the age range: mean 9.4 months in 20 affected dogs, 16 of them giant breeds. It
+also argues for imaging the whole cervical spine rather than the worst site, since 12 of 20 had two
+or more compressive levels.
+
+**Monforte Monteiro is 593 animals and is the most broadly useful paper in this batch** — it lands
+on `DIS-NEU-IDVEST` here but applies wherever a normal MRI precedes a decision about CSF. After an
+unremarkable brain MRI, CSF changed the diagnosis or treatment in **0.8%** of cases, and every dog
+it helped had an abnormal neurological examination. **No cat** in the cohort had abnormal CSF after
+a normal MRI. That is a concrete reason not to tap a neurologically normal animal with clean
+imaging, which the page did not say. Worth reusing on the other intracranial pages.
+
+**Congiusta is three dogs, uncontrolled**, and its interest is a dissociation: gape angle improved
+in all three on oclacitinib while 2M fibre antibody titres did **not** fall. The MMM page told the
+reader to retest titres before each dose reduction and treat a rising titre as impending relapse —
+it now also says to judge the response clinically, because the two can move independently.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
@@ -1660,6 +2190,44 @@ a plausible sentence and attaching the nearest citation rather than the one that
 marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton, Lemmons,
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
+
+## Resolver integrity is now checked by a lint, not by hand (2026-09-27)
+
+`npm run lint:refs-integrity` (in `lint:content`, so it gates commits) checks the four ways a
+citation goes wrong *silently* — the page renders, the tests pass, and the superscript points
+at the wrong paper:
+
+1. **A marker resolves to nothing** and prints raw as "(Author 2015)".
+2. **An author gains a second paper** and `db.ts` uses a year the `*_BY_YEAR` map does not
+   know, so the marker yields no citation at all.
+3. **One surname is a prefix of another** and the shorter branch answers for the longer one.
+4. **The same paper sits under two reference ids**, so a page renders it twice.
+
+Every one of those had already been found by hand at least once — Bellenger, Ku/Li,
+Reeve/Reeves, Michel/Michelotti, Ng/Nguyen — which is why it is automated now. At the time of
+writing it checks **10 prefix pairs** and **18 year-keyed authors**, and passes.
+
+Check 3 is the one worth understanding, because the obvious version of it does not work. A
+swallowed marker **still resolves** — it returns the shorter name's paper, confidently, under a
+well-formed superscript. An empty-result check cannot see that. So the lint instead asserts that
+the ids reachable from the short name and from the long name are **disjoint**: two surnames
+landing on the same reference id is the signature of one eating the other. Each check was
+mutation-tested by deliberately breaking it (dropping a `\b`, hoisting a branch, orphaning a
+year, colliding two DOIs) and confirming it fails, then reverting.
+
+### `(Scott)` on DIS-BD-TPATH is not a citation
+
+Scott syndrome is a platelet membrane procoagulant defect — a **disease name**. While `Scott`
+resolved by surname alone, `/^Scott/` matched it and hung the phenobarbital-marrow paper off
+the words "membrane procoagulant (Scott)": a superscript on a condition, pointing at an
+unrelated study. Year-keying `Scott` for a second paper fixed it as a side effect, before
+anyone noticed it was broken.
+
+Two tests now hold it there — `parseSources('Scott')` must return `[]` while `Scott 2021` still
+resolves — because the natural-looking "fix" is to make a bare surname resolve again. The same
+reasoning covers the other deliberate non-citations: `(AAHA/AAFP)` on DIS-ENDO-HYPERTHY and
+`(Librela)` on DIS-MSK-OA are prose, and the lint keeps them on a named allowlist
+(`PROSE_QUALIFIERS`) so a *new* unresolved marker is still a failure rather than noise.
 
 ## Using citations inside app data
 

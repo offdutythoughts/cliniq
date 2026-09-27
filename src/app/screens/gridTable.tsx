@@ -135,6 +135,11 @@ export function GridTable({ cols, headers, rows, dividers, stickyFirstCol, scrol
   const rowGap = dividers ? 7 : 3
   const pinned = stickyFirstCol ? stickyCol(rowGap) : undefined
   const gridStyle = s(`display:grid;grid-template-columns:${cols};gap:${rowGap}px 6px;font-size:${fontSize ?? '9.5px'};line-height:1.4;${minWidth ? `min-width:${minWidth}px;` : ''}`)
+  // A pinned first column sits on the left edge and paints itself opaque, so
+  // `.scroll-x`'s left edge shading never reads as an edge — only as grey
+  // notches in the gaps the pinned cells leave (section labels, row gaps).
+  // `.pinned-col` drops it and keeps the right one.
+  const scrollClass = stickyFirstCol ? 'scroll-x pinned-col' : 'scroll-x'
 
   // Folded: header (plus any rows before the first section) in one grid, then
   // one <details> per band.
@@ -157,7 +162,7 @@ export function GridTable({ cols, headers, rows, dividers, stickyFirstCol, scrol
         ))}
       </div>
     )
-    return scroll ? <div className="scroll-x">{folded}</div> : folded
+    return scroll ? <div className={scrollClass}>{folded}</div> : folded
   }
 
   const grid = (
@@ -179,5 +184,5 @@ export function GridTable({ cols, headers, rows, dividers, stickyFirstCol, scrol
       )}
     </div>
   )
-  return scroll ? <div className="scroll-x">{grid}</div> : grid
+  return scroll ? <div className={scrollClass}>{grid}</div> : grid
 }

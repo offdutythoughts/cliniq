@@ -90,7 +90,21 @@ describe('parseSources', () => {
   // — so if someone reorders those branches, this is the test that fails
   // rather than a wrong-but-plausible reference appearing on the polyp page.
   it('does not let a short author name swallow a longer one', () => {
+    // Anderson is year-keyed AND is the longer half of the Anders/Anderson
+    // prefix pair, so the ordering fix and the year key have to coexist.
     expect(parseSources('Anderson 2000').map(s => s.id)).toEqual(['anderson-polyps'])
+    expect(parseSources('Anderson 2026').map(s => s.id)).toEqual(['anderson-muo-older'])
+    expect(parseSources('Anderson 2099')).toEqual([])
+    expect(parseSources('Anders 2008').map(s => s.id)).toEqual(['anders-vbo-baer'])
+    expect(parseSources('Baka 2025').map(s => s.id)).toEqual(['baka-syringomyelia'])
+    expect(parseSources('Sebestyén 2025').map(s => s.id)).toEqual(['sebestyen-sod1'])
+    // 'Bonelli' is the short indexed form; the reference carries the full
+    // surname 'de Albuquerque Bonelli'. 'Nye' is three letters and unrelated
+    // by prefix to 'Nguyen'/'Ng'.
+    expect(parseSources('Bonelli 2019').map(s => s.id)).toEqual(['bonelli-juvenile-csm'])
+    expect(parseSources('Nye 2020').map(s => s.id)).toEqual(['nye-oa-csm-followup'])
+    expect(parseSources('Monforte Monteiro 2025').map(s => s.id)).toEqual(['monforte-monteiro-csf'])
+    expect(parseSources('Congiusta 2024').map(s => s.id)).toEqual(['congiusta-oclacitinib-mmm'])
     expect(parseSources('Anders 2008').map(s => s.id)).toEqual(['anders-vbo-baer'])
     expect(parseSources('Longeri 2013').map(s => s.id)).toEqual(['longeri-mybpc3'])
     expect(parseSources('Lo 2022').map(s => s.id)).toEqual(['lo-dual-therapy'])
@@ -194,7 +208,15 @@ describe('parseSources', () => {
     expect(parseSources('Schwartz 2018').map(s => s.id)).toEqual(['schwartz-gi-staples'])
     expect(parseSources('Cola 2024').map(s => s.id)).toEqual(['cola-laer'])
     // 'Dickson' vs 'Dickinson' — easily misread for each other. Both pinned.
+    // Chan is year-keyed and the two papers are by DIFFERENT Chans — Remington X
+    // on sports-ball trauma, Jennifer C on inhaled fluticasone.
     expect(parseSources('Chan 2023').map(s => s.id)).toEqual(['chan-inhaled-fluticasone'])
+    expect(parseSources('Chan 2022').map(s => s.id)).toEqual(['chan-sports-ball'])
+    expect(parseSources('Chan 2099')).toEqual([])
+    expect(parseSources('Chmiel 2022').map(s => s.id)).toEqual(['chmiel-grooming-injury'])
+    expect(parseSources('Diehl 2023').map(s => s.id)).toEqual(['diehl-breed-screening'])
+    expect(parseSources('Beckwith-Cohen 2024').map(s => s.id)).toEqual(['beckwith-cohen-fundus'])
+    expect(parseSources('Castel 2019').map(s => s.id)).toEqual(['castel-spastic-pupil'])
     expect(parseSources('Dickson 2021').map(s => s.id)).toEqual(['dickson-pneumothorax'])
     expect(parseSources('Dickinson 2020').map(s => s.id)).toEqual(['dickinson-neuro-fip'])
     expect(parseSources('Sériot 2021').map(s => s.id)).toEqual(['seriot-mvfb-pneumothorax'])
@@ -227,6 +249,17 @@ describe('parseSources', () => {
     expect(parseSources('Dees 2022').map(s => s.id)).toEqual(['dees-scced-adjunct'])
     // 'Goss' vs 'Gould'/'Gold'; 'Verdenius' vs 'Venn'.
     expect(parseSources('Goss 2024').map(s => s.id)).toEqual(['goss-ulcerative-keratitis'])
+    // 'Lemle' vs the existing 'Lemmons' — one character apart at position 4.
+    expect(parseSources('Lemle 2026').map(s => s.id)).toEqual(['lemle-pug-screening'])
+    expect(parseSources('Lemmons Ch 12').map(s => s.id)).toEqual(['lemmons-ch12'])
+    expect(parseSources('Kecova 2025').map(s => s.id)).toEqual(['kecova-lateral-canthus'])
+    expect(parseSources('Enache 2025').map(s => s.id)).toEqual(['enache-zygomatic'])
+    // 'Read' — no other source name starts 'Rea'; 'Sung' vs 'Susanti'.
+    expect(parseSources('Read 1995').map(s => s.id)).toEqual(['read-plasmoma-cyclosporin'])
+    expect(parseSources('Sung 2024').map(s => s.id)).toEqual(['sung-lymphoplasmacytic'])
+    expect(parseSources('Susanti 2023').map(s => s.id)).toEqual(['susanti-unilateral-sards'])
+    expect(parseSources('Quantz 2024').map(s => s.id)).toEqual(['quantz-steroid-keratopathy'])
+    expect(parseSources('Auten 2018').map(s => s.id)).toEqual(['auten-sards-cofactors'])
     expect(parseSources('Verdenius 2024').map(s => s.id)).toEqual(['verdenius-stromal-ulcer'])
     expect(parseSources('Venn 2017').map(s => s.id)).toEqual(['venn-outpatient'])
     // 'Michel' IS a prefix of 'Michelotti' — the Michelotti branch sits above
@@ -241,11 +274,68 @@ describe('parseSources', () => {
     expect(parseSources('Ledbetter 2022').map(s => s.id)).toEqual(['ledbetter-ganciclovir'])
     expect(parseSources('Asti 2020').map(s => s.id)).toEqual(['asti-sharpei-entropion'])
     expect(parseSources('Aslanian 2014').map(s => s.id)).toEqual(['aslanian-hema'])
+    // 'Violette' vs 'Veir'/'Venn'/'Verdenius'.
+    expect(parseSources('Guionnet 2026').map(s => s.id)).toEqual(['guionnet-nictitans-pocket'])
+    expect(parseSources('Violette 2019').map(s => s.id)).toEqual(['violette-lipemic-uveitis'])
+    expect(parseSources('Dowler 2021').map(s => s.id)).toEqual(['dowler-fibrin-web'])
     expect(parseSources('Boss 2020').map(s => s.id)).toEqual(['boss-pug-phaco'])
     expect(parseSources('Boothe 2010').map(s => s.id)).toEqual(['boothe-pyothorax'])
     expect(parseSources('ACVIM 2019').map(s => s.id)).toEqual(['acvim-imha-tx'])
     // Scott vs Scobie — three shared characters, neither a prefix.
+    // Scott is year-keyed: the ocular-snakebite series and the phenobarbital
+    // marrow study, by different Scotts.
     expect(parseSources('Scott 2021').map(s => s.id)).toEqual(['scott-phenobarb-marrow'])
+    expect(parseSources('Scott 2019').map(s => s.id)).toEqual(['scott-ocular-snakebite'])
+    expect(parseSources('Scott 2099')).toEqual([])
+    expect(parseSources('Jinks 2018').map(s => s.id)).toEqual(['jinks-hyphaema'])
+    expect(parseSources('Hirashima 2022').map(s => s.id)).toEqual(['hirashima-vitrectomy'])
+    // 'Andrade' vs 'Anders'/'Anderson' — diverges at position 4, not a prefix.
+    expect(parseSources('Andrade 2019').map(s => s.id)).toEqual(['andrade-prcd-frequency'])
+    expect(parseSources('Breaux 2007').map(s => s.id)).toEqual(['breaux-episcleritis'])
+    expect(parseSources('Dufour 2025').map(s => s.id)).toEqual(['dufour-iridectomy'])
+    expect(parseSources('Gilger 1995').map(s => s.id)).toEqual(['gilger-proptosis'])
+    // 'Michau' vs 'Michel'/'Michelotti' — confusable but not prefixes.
+    expect(parseSources('Brown 2018').map(s => s.id)).toEqual(['brown-cea-discordance'])
+    expect(parseSources('Michau 2003').map(s => s.id)).toEqual(['michau-thermokeratoplasty'])
+    // O'Neill is year-keyed: two VetCompass papers, GDV and KCS. Note the
+    // CURLY apostrophe, which the marker and the branch both use.
+    expect(parseSources('O\u2019Neill 2017').map(s => s.id)).toEqual(['oneill-gdv'])
+    expect(parseSources('O\u2019Neill 2021').map(s => s.id)).toEqual(['oneill-kcs'])
+    expect(parseSources('O\u2019Neill 2099')).toEqual([])
+    // Two O'Neill 2017 papers, so the cornea one needs a qualifier in the
+    // marker — the same trick LeVine's two 2024 statements use.
+    expect(parseSources('O\u2019Neill 2017 cornea').map(s => s.id)).toEqual(['oneill-cud'])
+    // 'Wiebe' vs 'Wiinberg'; 'Jacobson' vs 'Janssens'.
+    expect(parseSources('Wiebe 2002').map(s => s.id)).toEqual(['wiebe-fluoroquinolone-retina'])
+    expect(parseSources('Jacobson 1987').map(s => s.id)).toEqual(['jacobson-taurine-rhodopsin'])
+    // 'Patel' vs 'Paulin'/'Payne'/'Paterson'.
+    // Bedos is year-keyed: the optic neuritis series and the pre-iridal
+    // membrane histopathology, both by Leila Bedos.
+    expect(parseSources('Bedos 2020').map(s => s.id)).toEqual(['bedos-optic-neuritis'])
+    expect(parseSources('Bedos 2024').map(s => s.id)).toEqual(['bedos-preiridal-membranes'])
+    expect(parseSources('Bedos 2099')).toEqual([])
+    // 'Baker' vs the existing 'Barker' — they diverge at position 3.
+    expect(parseSources('Fruchter 2024').map(s => s.id)).toEqual(['fruchter-haws'])
+    expect(parseSources('Danciu 2024').map(s => s.id)).toEqual(['danciu-cerebellar-mydriasis'])
+    expect(parseSources('Baker 2025').map(s => s.id)).toEqual(['baker-atopic-tears'])
+    expect(parseSources('Barker 2023').map(s => s.id)).toEqual(['barker-trilostane-survival'])
+    // 'Kim' vs the existing 'King' — diverge at position 3.
+    expect(parseSources('Kim 2025').map(s => s.id)).toEqual(['kim-meibomian'])
+    expect(parseSources('King 2022').map(s => s.id)).toEqual(['king-prognostic'])
+    expect(parseSources('Sypniewska 2026').map(s => s.id)).toEqual(['sypniewska-nodular-conj'])
+    expect(parseSources('Garcia 2026').map(s => s.id)).toEqual(['garcia-ocular-pathology'])
+    expect(parseSources('Patel 2026').map(s => s.id)).toEqual(['patel-exenteration'])
+    expect(parseSources('Paulin 2021').map(s => s.id)).toEqual(['paulin-feline-pthp'])
+    expect(parseSources('Holly 2016').map(s => s.id)).toEqual(['holly-uveal-cysts'])
+    expect(parseSources('Kaminsky 2023').map(s => s.id)).toEqual(['kaminsky-lid-flap'])
+    expect(parseSources('Erjavec 2020').map(s => s.id)).toEqual(['erjavec-dacryostenosis'])
+    // 'Ng' IS a prefix of 'Nguyen'. The Ng branch is /^Ng\\b/, so the word
+    // boundary keeps them apart regardless of order — same device as Lo/Longeri.
+    expect(parseSources('Ng 2026').map(s => s.id)).toEqual(['ng-eyelid-agenesis'])
+    expect(parseSources('Nguyen 2020').map(s => s.id)).toEqual(['nguyen-aav-clonal'])
+    expect(parseSources('Goossens 2026').map(s => s.id)).toEqual(['goossens-ecvo-screening'])
+    expect(parseSources('Gábor 2025').map(s => s.id)).toEqual(['gabor-retinal-dysplasia'])
+    expect(parseSources('Goss 2024').map(s => s.id)).toEqual(['goss-ulcerative-keratitis'])
     expect(parseSources('Scobie 2026').map(s => s.id)).toEqual(['scobie-sdma-review'])
     // Fowler vs Forgash vs Fox.
     expect(parseSources('Fowler 2022').map(s => s.id)).toEqual(['fowler-hema-spinal'])
@@ -501,6 +591,48 @@ describe('parseSources', () => {
       expect(source.text, marker).toContain(fragment)
     }
   })
+
+  // "(Scott)" on DIS-BD-TPATH is Scott syndrome, the platelet membrane
+  // procoagulant defect — a disease name, not a citation. While `Scott` resolved
+  // by surname alone it matched here and hung the phenobarbital-marrow paper off
+  // the words "membrane procoagulant (Scott)". Year-keying the author fixed it as
+  // a side effect; this test is what keeps it fixed, because the obvious
+  // "improvement" is to make a bare surname resolve again.
+  it('leaves a bare surname with no year unresolved', () => {
+    expect(parseSources('Scott')).toEqual([])
+    expect(parseSources('Scott 2021').map(s => s.id)).toEqual(['scott-phenobarb-marrow'])
+  })
+
+  // Surnames that are prefixes of other surnames. Whichever branch parseSources
+  // tests first wins, so without a \b guard or deliberate ordering the shorter
+  // name silently answers for the longer one and the page cites a paper on a
+  // different subject entirely. lint-refs-integrity checks the whole set
+  // structurally; these pin the specific pairs with a named expectation.
+  it('keeps prefix-colliding surnames apart', () => {
+    const cases: [string, string][] = [
+      ['Ku 2023', 'ku-rta-ndi'],
+      ['Kubo 2023', 'kubo-shiba-pacg'],
+      ['Anders 2011', 'anders-vbo-baer'],
+      ['Anderson 2000', 'anderson-polyps'],
+      ['Reeve 2020', 'reeve-brachy-hh'],
+      ['Reeves 2021', 'reeves-chylothorax-sr'],
+      ['Ng 2022', 'ng-eyelid-agenesis'],
+      ['Nguyen 2019', 'nguyen-aav-clonal'],
+      ['Michel 2011', 'michel-lamellar-keratoplasty'],
+      ['Michelotti 2022', 'michelotti-tsp'],
+      ['Allen 2020', 'allen-gastropexy'],
+      ['Allenspach 2016', 'allenspach-longterm'],
+      ['Li 2021', 'li-aqp2'],
+      ['Lo 2021', 'lo-dual-therapy'],
+      ['Longeri 2013', 'longeri-mybpc3'],
+      ['Low 2020', 'low-ivde-ml'],
+      ['Lien 2006', 'lien-iatrogenic'],
+      ['Linton 2015', 'linton-fgesf'],
+    ]
+    for (const [marker, id] of cases) {
+      expect(parseSources(marker).map(s => s.id), marker).toEqual([id])
+    }
+  })
 })
 
 describe('buildDiseaseCitations', () => {
@@ -734,9 +866,9 @@ describe('reference block', () => {
       // the papers, so the counts here include both.
       ['DIS-OPH-GLAUCOMA', 5, ['Shiba dogs with primary angle closure glaucoma', 'Baerveldt glaucoma drainage device']],
       ['DIS-EYE-CATARACT', 3, ['CDE-predictive value', 'phacoemulsification in Pugs']],
-      ['DIS-EYE-SUP-ULC', 4, ['diamond burr debridement', 'platelet-rich plasma', 'Vizoovet']],
+      ['DIS-EYE-SUP-ULC', 5, ['diamond burr debridement', 'platelet-rich plasma', 'Vizoovet', 'Corneal ulcerative disease in dogs under primary']],
       ['DIS-EYE-DEEP-ULC', 3, ['Progressive ulcerative keratitis', 'Corneal stromal ulcerations']],
-      ['DIS-EYE-SARDS', 3, ['Sudden acquired retinal degeneration syndrome', 'Unilateral blindness']],
+      ['DIS-EYE-SARDS', 4, ['Sudden acquired retinal degeneration syndrome', 'Unilateral blindness', '151 dogs within a reference population']],
       ['DIS-EYE-SEQ', 3, ['feline corneal sequestrum: 72 cases', 'Autologous lamellar keratoplasty']],
       ['DIS-EYE-FHV', 3, ['ABCD guidelines on prevention and management', 'ganciclovir']],
       ['DIS-EYE-ENTROPION', 2, ['27 Shar Pei dogs']],
@@ -745,6 +877,65 @@ describe('reference block', () => {
       ['DIS-EYE-CONJ', 2, ['ABCD guidelines on prevention and management']],
       ['DIS-EYE-SYMBL', 2, ['ABCD guidelines on prevention and management']],
       ['DIS-EYE-NEONATAL', 3, ['ABCD guidelines on prevention and management']],
+      ['DIS-EYE-CHERRY', 2, ['pocket technique']],
+      ['DIS-EYE-UVEITIS-ANT', 2, ['Lipemic uveitis']],
+      ['DIS-EYE-LIU', 3, ['fibrin web', 'CDE-predictive value']],
+      ['DIS-EYE-HYPHAEMA', 2, ['hyphema to a referral hospital']],
+      ['DIS-EYE-RD', 2, ['pars plana vitrectomy']],
+      ['DIS-BD-ENV', 1, ['ocular and periocular snakebites']],
+      ['DIS-EYE-ORBTRAUMA', 2, ['ocular and periocular snakebites']],
+      ['DIS-EYE-PRA', 2, ['PRCD gene responsible for progressive retinal atrophy']],
+      ['DIS-EYE-EPISCLERITIS', 2, ['Immunohistochemical investigation of canine episcleritis']],
+      ['DIS-EYE-IRIS-MEL', 2, ['sector iridectomy']],
+      ['DIS-EYE-PROPTOSIS', 3, ['Traumatic ocular proptoses']],
+      ['DIS-EYE-CEA', 2, ['NHEJ1 intronic deletion']],
+      ['DIS-EYE-ONH', 2, ['NHEJ1 intronic deletion']],
+      ['DIS-EYE-CORNEDEMA', 2, ['thermokeratoplasty']],
+      ['DIS-EYE-KCS', 2, ['Keratoconjunctivitis sicca in dogs under primary veterinary care']],
+      ['DIS-EYE-ENRO', 2, ['Fluoroquinolone-induced retinal degeneration']],
+      ['DIS-EYE-TAUR', 2, ['Rhodopsin topography']],
+      ['DIS-EYE-OPTNEUR', 2, ['Presumed optic neuritis of non-infectious origin']],
+      ['DIS-EYE-ORBNEO', 4, ['Transpalpebral exenteration']],
+      ['DIS-EYE-UVEAL-CYST', 2, ['Golden retriever cystic uveal disease']],
+      ['DIS-EYE-CONJNEO', 2, ['Mucocutaneous subdermal plexus flap']],
+      ['DIS-EYE-LIDNEO', 3, ['Mucocutaneous subdermal plexus flap']],
+      ['DIS-EYE-NLD', 2, ['Left-sided dacryostenosis']],
+      ['DIS-EYE-PPM', 2, ['known and presumed hereditary eye diseases']],
+      ['DIS-EYE-CILIA', 2, ['known and presumed hereditary eye diseases']],
+      ['DIS-EYE-RETDYSPL', 3, ['Czechoslovakian Wolfdog', 'known and presumed hereditary eye diseases']],
+      ['DIS-EYE-LIDAGEN', 2, ['Bilateral eyelid agenesis']],
+      ['DIS-EYE-ECTROPION', 3, ['inherited eye diseases in pugs', 'Lateral canthal reconstruction']],
+      ['DIS-EYE-ZYGO', 2, ['zygomatic sialadenitis']],
+      ['DIS-EYE-DERMOID', 3, ['Lateral canthal reconstruction']],
+      ['DIS-EYE-PLASMOMA', 3, ['nictitans plasmacytic conjunctivitis', 'Tumor-like lymphoplasmacytic conjunctivitis']],
+      ['DIS-EYE-CORNOPAC', 3, ['steroid keratopathy']],
+      ['DIS-EYE-RUBEOSIS', 2, ['pre-iridal monocellular and fibrovascular membranes']],
+      ['DIS-EYE-HAWS', 2, ['cats with haws syndrome']],
+      ['DIS-EYE-EFF-MYDR', 2, ['cerebellar interposital nucleus']],
+      ['DIS-EYE-BLEPH', 2, ['dogs with atopic dermatitis']],
+      ['DIS-EYE-CHALAZION', 3, ['meibomian gland dysfunction', '20-year retrospective study']],
+      ['DIS-EYE-CONJMASS', 3, ['sterile granuloma/pyogranuloma syndrome', '20-year retrospective study']],
+      // These three reuse papers already verified for other pages rather than
+      // needing their own — the reference counts pin which ones.
+      ['DIS-EYE-IRIS-ATR', 2, ['pre-iridal monocellular and fibrovascular membranes']],
+      ['DIS-EYE-SYNECH', 3, ['pre-iridal monocellular and fibrovascular membranes', 'sector iridectomy']],
+      ['DIS-EYE-CHORIO', 4, ['LeishVet guidelines', 'Seroprevalence and risk factors', 'neurological feline infectious peritonitis']],
+      // The last seven eye pages, closing the ophthalmology block.
+      ['DIS-EYE-OCFB', 2, ['grooming visits in dogs']],
+      ['DIS-EYE-LIDTRAUMA', 3, ['grooming visits in dogs', 'Sports ball projectile']],
+      ['DIS-EYE-CONJHAEM', 3, ['grooming visits in dogs', 'Sports ball projectile']],
+      ['DIS-EYE-IRIS-COLOB', 2, ['screening in breeding dogs']],
+      ['DIS-EYE-PHTVL', 3, ['screening in breeding dogs']],
+      ['DIS-EYE-IMR', 2, ['systemic disease in the retina and fundus']],
+      ['DIS-EYE-CORTBLIND', 2, ['systemic disease in the retina and fundus']],
+      ['DIS-EYE-SPS', 2, ['Sarcocystis']],
+      // Neurology block opens here.
+      ['DIS-NEU-MUE', 2, ['meningoencephalitis of unknown origin in older dogs']],
+      ['DIS-NEU-CHIARI', 2, ['syringomyelia of different etiology']],
+      ['DIS-NEU-DM', 2, ['SOD1 gene mutation']],
+      ['DIS-NEU-WOBBLER', 3, ['cervical spondylomyelopathy in juvenile dogs', 'osseous-associated cervical spondylomyelopathy']],
+      ['DIS-NEU-IDVEST', 2, ['cerebrospinal fluid analysis in dogs and cats with suspected intracranial']],
+      ['DIS-NEU-MMM', 3, ['Janus kinase']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -778,7 +969,23 @@ describe('reference block', () => {
       'DIS-RESP-BRONCHIECT', 'DIS-OPH-GLAUCOMA', 'DIS-EYE-CATARACT',
       'DIS-EYE-SUP-ULC', 'DIS-EYE-DEEP-ULC', 'DIS-EYE-SARDS', 'DIS-EYE-SEQ',
       'DIS-EYE-FHV', 'DIS-EYE-ENTROPION',
-      'DIS-EYE-CONJ', 'DIS-EYE-SYMBL', 'DIS-EYE-NEONATAL']) {
+      'DIS-EYE-CONJ', 'DIS-EYE-SYMBL', 'DIS-EYE-NEONATAL',
+      'DIS-EYE-CHERRY', 'DIS-EYE-UVEITIS-ANT', 'DIS-EYE-LIU',
+      'DIS-EYE-HYPHAEMA', 'DIS-EYE-RD', 'DIS-BD-ENV', 'DIS-EYE-ORBTRAUMA',
+      'DIS-EYE-PRA', 'DIS-EYE-EPISCLERITIS', 'DIS-EYE-IRIS-MEL', 'DIS-EYE-PROPTOSIS',
+      'DIS-EYE-CEA', 'DIS-EYE-ONH', 'DIS-EYE-CORNEDEMA', 'DIS-EYE-KCS',
+      'DIS-EYE-ENRO', 'DIS-EYE-TAUR', 'DIS-EYE-OPTNEUR', 'DIS-EYE-ORBNEO',
+      'DIS-EYE-UVEAL-CYST', 'DIS-EYE-CONJNEO', 'DIS-EYE-LIDNEO', 'DIS-EYE-NLD',
+      'DIS-EYE-PPM', 'DIS-EYE-CILIA', 'DIS-EYE-RETDYSPL', 'DIS-EYE-LIDAGEN',
+      'DIS-EYE-ECTROPION', 'DIS-EYE-ZYGO', 'DIS-EYE-DERMOID',
+      'DIS-EYE-PLASMOMA', 'DIS-EYE-CORNOPAC',
+      'DIS-EYE-RUBEOSIS', 'DIS-EYE-HAWS', 'DIS-EYE-EFF-MYDR', 'DIS-EYE-BLEPH',
+      'DIS-EYE-CHALAZION', 'DIS-EYE-CONJMASS',
+      'DIS-EYE-IRIS-ATR', 'DIS-EYE-SYNECH', 'DIS-EYE-CHORIO',
+      'DIS-EYE-OCFB', 'DIS-EYE-LIDTRAUMA', 'DIS-EYE-CONJHAEM', 'DIS-EYE-IRIS-COLOB',
+      'DIS-EYE-PHTVL', 'DIS-EYE-IMR', 'DIS-EYE-CORTBLIND', 'DIS-EYE-SPS',
+      'DIS-NEU-MUE', 'DIS-NEU-CHIARI', 'DIS-NEU-DM',
+      'DIS-NEU-WOBBLER', 'DIS-NEU-IDVEST', 'DIS-NEU-MMM']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

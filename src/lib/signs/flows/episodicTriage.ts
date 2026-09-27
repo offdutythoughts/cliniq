@@ -37,9 +37,12 @@ export const episodicTriageTable: TableBlock = {
   gap: 12,
   scroll: true,
   stickyFirstCol: true,
-  // Feature column + 7 disorder columns. 112 + 7×132 + 8×6 gaps ≈ 1084.
-  cols: '112px repeat(7, 132px)',
-  minWidth: 1084,
+  // Feature column + 7 disorder columns: 88 + 7×132 + 7×6 gaps = 1054. The
+  // feature column is deliberately narrow — pinned, it is charged against the
+  // ~340px a phone can show, so the two longest labels wrap to two lines rather
+  // than take a third of the viewport from the data columns.
+  cols: '88px repeat(7, 132px)',
+  minWidth: 1054,
   dividers: true,
   headers: [
     'Feature',

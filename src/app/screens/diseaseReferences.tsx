@@ -908,6 +908,220 @@ const LEDBETTER_GANCICLOVIR =
 const ASTI_SHARPEI_ENTROPION =
   'Asti M, Nardi S, Barsotti G. Surgical management of bilateral, upper and lower eyelid entropion in 27 Shar Pei dogs, using the Stades forced granulation procedure of the upper eyelid only. N Z Vet J. 2020;68(2):112-118. doi:10.1080/00480169.2019.1694457'
 
+// Cherry eye and uveitis. Guionnet is 126 eyes with a mean 1190 days of
+// follow-up, which is what makes its recurrence figure worth quoting. Mind the
+// print year: PubMed dates it 2025, the volume is 2026. Violette is the
+// lipaemic-flare differential the uveitis page had no source for.
+const GUIONNET_NICTITANS_POCKET =
+  'Guionnet A, Weverberg F. Surgical correction of prolapse of nictitating membrane gland using a variant of the pocket technique: a retrospective study on 101 dogs and 126 eyes. Vet Ophthalmol. 2026;29(1):e70031. doi:10.1111/vop.70031'
+const VIOLETTE_LIPEMIC_UVEITIS =
+  'Violette NP, Ledbetter EC. Lipemic uveitis and its etiologies in dogs: 75 cases. Vet Ophthalmol. 2019;22(5):577-583. doi:10.1111/vop.12625'
+const DOWLER_FIBRIN_WEB =
+  'Dowler KK, Middleton JR, Dufour S, Hood MA, Giuliano EA. Characterization of postoperative "fibrin web" formation after canine cataract surgery. Vet Ophthalmol. 2021;24(1):37-47. doi:10.1111/vop.12830'
+
+// Hyphaema, retinal detachment, ocular envenomation. SCOTT is year-keyed — the
+// existing 2021 paper is phenobarbital marrow suppression, an unrelated work by
+// a different Scott. Jinks is 120 eyes and gives prognostic odds ratios a
+// clinician can apply at the first examination.
+const JINKS_HYPHAEMA =
+  'Jinks MR, Olea-Popelka F, Freeman KS. Causes and outcomes of dogs presenting with hyphema to a referral hospital in Colorado: a retrospective analysis of 99 cases. Vet Ophthalmol. 2018;21(2):160-166. doi:10.1111/vop.12491'
+const HIRASHIMA_VITRECTOMY =
+  'Hirashima S, Takiyama N, Umeda Y. Outcome of 25-gauge pars plana vitrectomy via a lateral approach without proptosis of the globe: a retrospective study in 72 dogs (78 eyes). Vet Ophthalmol. 2022;25(1):23-30. doi:10.1111/vop.12912'
+const SCOTT_OCULAR_SNAKEBITE =
+  'Scott EM, Schlesener BN, Shaw GC, Teixeira LBC. Canine ocular and periocular snakebites requiring enucleation: a report of 19 cases. Vet Ophthalmol. 2019;22(5):666-673. doi:10.1111/vop.12638'
+
+// PRA genetics and episcleritis. Andrade is 220 genotyped dogs of one breed and
+// is cited for the registered/unregistered gap, which is the breeding argument.
+// Breaux is 24 cases and old (2007), but it is the specific evidence behind the
+// page's existing claim that B-cell-rich lesions need indefinite therapy.
+const ANDRADE_PRCD_FREQUENCY =
+  'Andrade LR, Caceres AM, Trecenti AS, et al. Allele frequency of the c.5G>A mutation in the PRCD gene responsible for progressive retinal atrophy in English cocker spaniel dogs. Animals (Basel). 2019;9(10):844. doi:10.3390/ani9100844'
+const BREAUX_EPISCLERITIS =
+  'Breaux CB, Sandmeyer LS, Grahn BH. Immunohistochemical investigation of canine episcleritis. Vet Ophthalmol. 2007;10(3):168-172. doi:10.1111/j.1463-5224.2007.00528.x'
+
+// Iris melanocytic lesions and proptosis. Dufour is 45 eyes in a guide-dog
+// colony, so the population is unusual and the page says so. Gilger has no
+// DOI — a 1995 JAVMA paper — so the second-registry check went to Europe PMC,
+// as it did for Perry on the cholecalciferol page.
+const DUFOUR_IRIDECTOMY =
+  'Dufour VL, Cohen JA, Assenmacher CA, et al. Clinical descriptive and long-term outcome of melanocytic uveal lesions in young dogs: 40 cases (45 eyes) including 13 cases of sector iridectomy. Vet Ophthalmol. 2025;28(2):371-385. doi:10.1111/vop.13258'
+const GILGER_PROPTOSIS =
+  'Gilger BC, Hamilton HL, Wilkie DA, van der Woerdt A, McLaughlin SA, Whitley RD. Traumatic ocular proptoses in dogs and cats: 84 cases (1980-1993). J Am Vet Med Assoc. 1995;206(8):1186-1190.'
+
+// Collie eye anomaly genetics and endothelial disease. Brown is cited AGAINST
+// the confidence both pages placed in the NHEJ1 test — it found the deletion
+// discordant with optic nerve head coloboma in one breed. Michau is 13 dogs
+// from 2003 and is hedged; it is the specific evidence for thermokeratoplasty.
+const BROWN_CEA_DISCORDANCE =
+  'Brown EA, Thomasy SM, Murphy CJ, Bannasch DL. Genetic analysis of optic nerve head coloboma in the Nova Scotia Duck Tolling Retriever identifies discordance with the NHEJ1 intronic deletion (collie eye anomaly mutation). Vet Ophthalmol. 2018;21(2):144-150. doi:10.1111/vop.12488'
+const MICHAU_THERMOKERATOPLASTY =
+  'Michau TM, Gilger BC, Maggio F, Davidson MG. Use of thermokeratoplasty for treatment of ulcerative keratitis and bullous keratopathy secondary to corneal endothelial disease in dogs: 13 cases (1994-2001). J Am Vet Med Assoc. 2003;222(5):607-612. doi:10.2460/javma.2003.222.607'
+
+// KCS epidemiology. ONEILL is now year-keyed — the same D G O'Neill runs the
+// VetCompass programme, so there are two unrelated papers by him in this file:
+// the 2017 GDV study and this 2021 KCS one. Note the CURLY apostrophe, which
+// the existing marker and branch both use.
+const ONEILL_KCS =
+  'O’Neill DG, Brodbelt DC, Keddy A, Church DB, Sanchez RF. Keratoconjunctivitis sicca in dogs under primary veterinary care in the UK: an epidemiological study. J Small Anim Pract. 2021;62(8):636-645. doi:10.1111/jsap.13382'
+
+// A SECOND O'Neill 2017 VetCompass paper, so the year alone no longer
+// disambiguates. Its marker carries a 'cornea' qualifier and the branch checks
+// for it first — the same trick LeVine's two 2024 statements use with
+// 'diagnosis' and 'treatment'.
+const ONEILL_CUD =
+  'O’Neill DG, Lee MM, Brodbelt DC, Church DB, Sanchez RF. Corneal ulcerative disease in dogs under primary veterinary care in England: epidemiology and clinical management. Canine Genet Epidemiol. 2017;4:5. doi:10.1186/s40575-017-0045-5'
+
+// Fluoroquinolone retinopathy and taurine deficiency. Both sources are old —
+// 2002 and 1987 — and both stay because the literature on these two problems
+// essentially stops there: commercial diets solved taurine deficiency, and the
+// enrofloxacin dose question was settled by the label change. Rule 1(c) asks
+// for as current as the literature ALLOWS, not for a recent paper at any cost.
+const WIEBE_FLUOROQUINOLONE_RETINA =
+  'Wiebe V, Hamilton P. Fluoroquinolone-induced retinal degeneration in cats. J Am Vet Med Assoc. 2002;221(11):1568-1571. doi:10.2460/javma.2002.221.1568'
+const JACOBSON_TAURINE_RHODOPSIN =
+  'Jacobson SG, Kemp CM, Borruat FX, Chaitin MH, Faulkner DJ. Rhodopsin topography and rod-mediated function in cats with the retinal degeneration of taurine deficiency. Exp Eye Res. 1987;45(4):481-490. doi:10.1016/s0014-4835(87)80059-3'
+
+// Optic neuritis and orbital exenteration. Bedos is 28 dogs and 48 nerves; its
+// value is how often each test is NEGATIVE, which the page needed. Patel is 35
+// dogs and is an early-view article with no volume yet, so the reference
+// carries the online-publication date instead.
+const BEDOS_OPTIC_NEURITIS =
+  'Bedos L, Tetas R, Crespo V, Shea A. Presumed optic neuritis of non-infectious origin in dogs treated with immunosuppressive medication: 28 dogs (2000-2015). J Small Anim Pract. 2020;61(11):676-683. doi:10.1111/jsap.13233'
+const PATEL_EXENTERATION =
+  'Patel K, de Lacerda RP, Mazzucchelli S, et al. Transpalpebral exenteration in dogs: a retrospective study (2003-2023). Vet Rec. Published online January 5, 2026. doi:10.1002/vetr.70219'
+
+// Golden retriever cystic uveal disease. 830 dogs over a decade, and the
+// finding that matters is a discrimination the page did not make: thin-walled
+// ATTACHED cysts progress, thick-walled free anterior chamber cysts did not.
+const HOLLY_UVEAL_CYSTS =
+  'Holly VL, Sandmeyer LS, Bauer BS, Verges L, Grahn BH. Golden retriever cystic uveal disease: a longitudinal study of iridociliary cysts, pigmentary uveitis, and pigmentary/cystic glaucoma over a decade in western Canada. Vet Ophthalmol. 2016;19(3):237-244. doi:10.1111/vop.12293'
+
+// Two single-case reports, cited for a TECHNIQUE rather than for any frequency
+// or prognosis claim. Both pages already carry the general picture from Gelatt;
+// these add a specific reconstruction and a specific imaging approach, and both
+// say "one reported dog" on the page. Erjavec has no DOI — Can Vet J is PMC
+// only — so the second-registry check went to Europe PMC.
+const KAMINSKY_LID_FLAP =
+  'Kaminsky M, Hoffman A, Ellis AE. Mucocutaneous subdermal plexus flap for complete excision of a malignant dermal and conjunctival melanoma in a dog. Vet Ophthalmol. 2023;26(3):243-249. doi:10.1111/vop.13064'
+const ERJAVEC_DACRYOSTENOSIS =
+  'Erjavec J. Left-sided dacryostenosis in a dog. Can Vet J. 2020;61(10):1111-1114.'
+
+// ECVO screening and congenital ocular anomalies. Goossens is 1,182 dogs and
+// covers THREE pages at once — PPM, distichiasis and multifocal retinal
+// dysplasia all come from the same screening cohort. Gabor is 117 dogs of one
+// breed. Ng is a single puppy and is cited only for what histopathology showed.
+//
+// NOTE 'Ng' is two letters and IS a prefix of the existing 'Nguyen', so its
+// branch is written /^Ng\b/ — the word boundary is what keeps them apart, the
+// same device used for 'Lo' against 'Longeri'.
+const GOOSSENS_ECVO_SCREENING =
+  'Goossens LT, Verbruggen AJ, Storms G, Broeckx B. Retrospective evaluation of the prevalence of known and presumed hereditary eye diseases in a population of Labradoodles referred for ophthalmic screening examinations in the Netherlands. Front Vet Sci. 2026;13:1841935. doi:10.3389/fvets.2026.1841935'
+const GABOR_RETINAL_DYSPLASIA =
+  'Gabor M, Candrak J, Miluchova M, Zubricky P, Balicka A, Trbolova A. Initial genome-wide case-control study for genetic background of retinal dysplasia in Czechoslovakian Wolfdog. Vet Sci. 2025;12(2):171. doi:10.3390/vetsci12020171'
+const NG_EYELID_AGENESIS =
+  'Ng CH, Ervedosa TB, Soler JG, Climans ME, Gonzalez-Astudillo V. Bilateral eyelid agenesis with multiple congenital ocular anomalies in an Australian Labradoodle puppy: case report and surgical management. Vet Ophthalmol. 2026;29(2):e70164. doi:10.1111/vop.70164'
+
+// Brachycephalic adnexal screening and two adnexal procedures. Lemle is 294
+// pugs from the European Eye Scheme; Kecova is 153 eyes and covers BOTH the
+// oversized-fissure page and the dermoid one, since four of its cases were
+// lateral canthal dermoids. Enache is 20 dogs and is the only series on
+// bilateral zygomatic sialadenitis.
+//
+// NOTE 'Lemle' sits one character from the existing 'Lemmons' — they diverge at
+// position 4, so neither is a prefix of the other, but both are pinned.
+const LEMLE_PUG_SCREENING =
+  'Lemle C, Koch C, Meyer-Lindenberg A. Prevalences of known and presumed inherited eye diseases in pugs in Germany. Vet Ophthalmol. 2026;29(5):e70235. doi:10.1111/vop.70235'
+const KECOVA_LATERAL_CANTHUS =
+  'Kecova H, Miller WW, Lindley DM. Lateral canthal reconstruction for the treatment of macroblepharon/diamond eye conformation in dogs. Vet Ophthalmol. 2025;28(2):341-352. doi:10.1111/vop.13239'
+const ENACHE_ZYGOMATIC =
+  'Enache AE, Maini S, Pivetta M, et al. Canine bilateral zygomatic sialadenitis: 20 cases (2000-2019). J Small Anim Pract. 2025;66(6):396-411. doi:10.1111/jsap.13844'
+
+// Plasmoma, steroid keratopathy and SARDS signalment. Read 1995 is the only
+// therapeutic trial on plasmoma and stays for the same reason the taurine and
+// enrofloxacin sources do — the literature stops there. Quantz identifies an
+// IATROGENIC cause of crystalline corneal opacity the page did not list.
+const READ_PLASMOMA_CYCLOSPORIN =
+  'Read RA. Treatment of canine nictitans plasmacytic conjunctivitis with 0.2 per cent cyclosporin ointment. J Small Anim Pract. 1995;36(2):50-56. doi:10.1111/j.1748-5827.1995.tb02821.x'
+const SUNG_LYMPHOPLASMACYTIC =
+  'Sung H, Park J, Kim J, Kang S, Shaw GC, Seo K. Tumor-like lymphoplasmacytic conjunctivitis in the third eyelid in a dog. J Vet Sci. 2024;25(1):e16. doi:10.4142/jvs.23222'
+const QUANTZ_STEROID_KERATOPATHY =
+  'Quantz KR, Jongnarangsin KK, Harman CD, et al. Development of crystalline corneal opacities (steroid keratopathy) in dogs after treatment with ophthalmic corticosteroids. Cornea. 2024;43(12):1506-1515. doi:10.1097/ICO.0000000000003523'
+const AUTEN_SARDS_COFACTORS =
+  'Auten CR, Thomasy SM, Kass PH, Good KL, Hollingsworth SR, Maggs DJ. Cofactors associated with sudden acquired retinal degeneration syndrome: 151 dogs within a reference population. Vet Ophthalmol. 2018;21(3):264-272. doi:10.1111/vop.12504'
+
+// Pre-iridal membranes, Haws syndrome, efferent mydriasis, atopic tear film.
+// BEDOS is now year-keyed — Leila Bedos has the 2020 optic neuritis series and
+// this 2024 histopathology study. Baker has no DOI (Can Vet J is PMC-only), so
+// its second-registry check went to Europe PMC.
+const BEDOS_PREIRIDAL_MEMBRANES =
+  'Bedos L, Sandmeyer L, Campbell J, Grahn BH. Prevalence of pre-iridal monocellular and fibrovascular membranes in canine globes affected with congenital glaucoma associated with anterior segment dysgenesis, primary glaucoma associated with goniodysgenesis, and secondary glaucoma. Front Vet Sci. 2024;11:1289283. doi:10.3389/fvets.2024.1289283'
+const FRUCHTER_HAWS =
+  'Fruchter B, Kuzi S, Pe\'er O, Ofri R, Sebbag L. Clinicopathological findings in cats with haws syndrome. Vet Rec. 2024;195(10):e4646. doi:10.1002/vetr.4646'
+const DANCIU_CEREBELLAR_MYDRIASIS =
+  'Danciu CG, Fenn J, Beltran E. Mydriasis associated with ischemic cerebrovascular infarct affecting the ipsilateral cerebellar interposital nucleus in 2 dogs. J Vet Intern Med. 2024;38(5):2669-2674. doi:10.1111/jvim.17176'
+const BAKER_ATOPIC_TEARS =
+  'Baker J, Cox A, Udenberg T, Defalque VE, Leis M. Tear production as measured by Schirmer tear test-1 in dogs with atopic dermatitis. Can Vet J. 2025;66(10):1104-1110.'
+
+// Meibomian gland dysfunction, nodular conjunctivitis and ocular histopathology.
+// Garcia is 375 archived specimens and is cited on both pages for the same
+// argument: submit the tissue, because clinical suspicion and histopathology
+// agreed only moderately.
+//
+// NOTE 'Kim' sits beside the existing 'King' — they diverge at position 3.
+const KIM_MEIBOMIAN =
+  'Kim G, Kang S, Seo J, Seo K. Association of eyelid margin thickness and meibography in dogs with meibomian gland dysfunction. Vet Ophthalmol. 2025;28(5):847-854. doi:10.1111/vop.13326'
+const SYPNIEWSKA_NODULAR_CONJ =
+  'Sypniewska A, Ziolkowska N. Nodular conjunctivitis as a novel ocular manifestation of canine sterile granuloma/pyogranuloma syndrome. BMC Vet Res. 2026;22(1):96. doi:10.1186/s12917-026-05289-y'
+const GARCIA_OCULAR_PATHOLOGY =
+  'Garcia JM, Rogerio GDS, Rossatto-Junior CA, et al. Epidemiology of ocular pathology in domestic animals: insights from a 20-year retrospective study. Front Vet Sci. 2026;12:1717392. doi:10.3389/fvets.2025.1717392'
+
+// Ocular trauma and two breed/systemic reviews, closing the ophthalmology block.
+// CHAN is now year-keyed and the two papers are by DIFFERENT Chans — Remington X
+// Chan on sports-ball trauma (2022) and Jennifer C Chan on inhaled fluticasone
+// (2023). Chmiel and Chan between them cover the trauma pages; Diehl and
+// Beckwith-Cohen are reviews serving the congenital and systemic pages.
+const CHAN_SPORTS_BALL =
+  'Chan RX, Ledbetter EC. Sports ball projectile ocular trauma in dogs. Vet Ophthalmol. 2022;25(5):338-342. doi:10.1111/vop.12987'
+const CHMIEL_GROOMING_INJURY =
+  'Chmiel J, Pumphrey S, Rozanski E. Ocular injuries related to grooming visits in dogs: 161 cases (2004-2020). J Am Anim Hosp Assoc. 2022;58(6):277-282. doi:10.5326/JAAHA-MS-7279'
+const DIEHL_BREED_SCREENING =
+  'Diehl KA, Asif SK, Mowat F. Ophthalmic disease and screening in breeding dogs. Vet Clin North Am Small Anim Pract. 2023;53(5):965-983. doi:10.1016/j.cvsm.2023.04.003'
+const BECKWITH_COHEN_FUNDUS =
+  'Beckwith-Cohen B, Petersen-Jones SM. Manifestations of systemic disease in the retina and fundus of cats and dogs. Front Vet Sci. 2024;11:1337062. doi:10.3389/fvets.2024.1337062'
+
+// Feline spastic pupil syndrome. ONE cat, and the paper is cited for two things
+// that cut against the page: the cat was FeLV/FIV NEGATIVE, and a six-year-old
+// anisocoria resolved completely once a treatable co-infection was addressed.
+// PubMed returned no abstract for this record, so the full text was read from
+// Europe PMC before the claim was written — Rule 3 applies to keywords too.
+const CASTEL_SPASTIC_PUPIL =
+  'Castel A, Olby NJ, Breitschwerdt EB, Thomas B, Maggi RG, Shelton GD. Co-infection with Bartonella henselae and Sarcocystis sp. in a 6-year-old male neutered domestic longhair cat with progressive multifocal neurological signs. Vet Q. 2019;39(1):168-173. doi:10.1080/01652176.2019.1697012'
+
+// Neurology block. ANDERSON is now year-keyed: the 2000 feline inflammatory
+// polyp series and this 2026 MUO cohort. The Anderson branch must STAY above
+// the /^Anders\b/ one — that ordering is the Anders/Anderson prefix fix and
+// year-keying must not disturb it.
+const ANDERSON_MUO_OLDER =
+  'Anderson FE, De Decker S, Bentley RT, Goncalves R. Clinical presentation, prognostic factors, and outcomes of meningoencephalitis of unknown origin in older dogs. J Vet Intern Med. 2026;40(3). doi:10.1093/jvimsj/aalag089'
+const BAKA_SYRINGOMYELIA =
+  'Baka RD, Savvas I, Sarpekidou E, Kazakos G, Polizopoulou Z. Epidemiological data, clinical signs, therapy and outcome evaluation in dogs with syringomyelia of different etiology. Vet Sci. 2025;12(4):376. doi:10.3390/vetsci12040376'
+const SEBESTYEN_SOD1 =
+  'Sebestyen P, Kowalska ME, Golini L. Survival and deterioration time of walking abilities in dogs homozygous for the SOD1 gene mutation with and without thoracolumbar intervertebral disc protrusion. Front Vet Sci. 2025;12:1555889. doi:10.3389/fvets.2025.1555889'
+
+// Wobbler, vestibular disease and masticatory myositis. Monforte Monteiro is 593
+// animals and is a general neurology diagnostic finding — it will apply to more
+// than the one page it lands on here. Note the MARKER for the juvenile CSM paper
+// is 'Bonelli', the short form the author is commonly indexed under, while the
+// reference itself carries the full surname.
+const BONELLI_JUVENILE_CSM =
+  'de Albuquerque Bonelli M, da Costa RC. Clinical and magnetic resonance imaging characterization of cervical spondylomyelopathy in juvenile dogs. J Vet Intern Med. 2019;33(5):2160-2166. doi:10.1111/jvim.15602'
+const NYE_OA_CSM_FOLLOWUP =
+  'Nye C, Hostnik E, Parker E, et al. Long-term clinical and magnetic resonance imaging follow-up of dogs with osseous-associated cervical spondylomyelopathy. J Vet Intern Med. 2020;34(5):2012-2020. doi:10.1111/jvim.15866'
+const MONFORTE_MONTEIRO_CSF =
+  'Monforte Monteiro SR, De Risio L, Alves L, Vanhaesebrouck AE. Usefulness of cerebrospinal fluid analysis in dogs and cats with suspected intracranial disease and normal magnetic resonance imaging. Front Vet Sci. 2025;12:1583988. doi:10.3389/fvets.2025.1583988'
+const CONGIUSTA_OCLACITINIB_MMM =
+  'Congiusta MC, Snyder C, Soukup JW, Apostolopoulos N. Novel management of masticatory myositis in three dogs with a selective Janus kinase (JAK-1) inhibitor. J Vet Dent. 2024;41(6):620-627. doi:10.1177/08987564231219925'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1026,6 +1240,39 @@ const SOURCE_NAMES = [
   'Komáromy', 'Susanti', 'Gómez', 'Michel',
   // 'Asti' sits beside 'Aslanian'; 'Thiry' beside 'Thomsen' and 'Trivedi'.
   'Thiry', 'Ledbetter', 'Asti',
+  // 'Violette' sits beside 'Veir', 'Venn' and 'Verdenius'.
+  'Guionnet', 'Violette', 'Dowler',
+  'Jinks', 'Hirashima',
+  // 'Andrade' sits beside 'Anders' and 'Anderson' but is not related to
+  // either by prefix — position 4 diverges.
+  'Andrade', 'Breaux',
+  'Dufour', 'Gilger',
+  // 'Michau' vs 'Michel'/'Michelotti' — they diverge at position 5, so no
+  // prefix relation, but all three are trivially misread for one another.
+  'Brown', 'Michau',
+  // 'Wiebe' sits beside 'Wiinberg'; 'Jacobson' beside 'Janssens'.
+  'Wiebe', 'Jacobson',
+  // 'Patel' sits beside 'Paulin', 'Payne' and 'Paterson' — all share 'Pa',
+  // none is a prefix of another.
+  'Bedos', 'Patel',
+  'Holly',
+  'Kaminsky', 'Erjavec',
+  // 'Ng' IS a prefix of the existing 'Nguyen' — held apart by \\b, not order.
+  'Goossens', 'Gábor', 'Ng',
+  // 'Lemle' vs the existing 'Lemmons' — one character apart at position 4.
+  'Lemle', 'Kecova', 'Enache',
+  // 'Read' is a common word but no other source name starts 'Rea'; 'Sung'
+  // sits beside 'Susanti'.
+  'Read', 'Sung', 'Quantz', 'Auten',
+  // 'Baker' vs the existing 'Barker' — they diverge at position 3.
+  'Fruchter', 'Danciu', 'Baker',
+  // 'Kim' vs the existing 'King'; 'Garcia' vs 'Garden'/'Gareis'/'Gábor'.
+  'Kim', 'Sypniewska', 'Garcia',
+  'Chmiel', 'Diehl', 'Beckwith-Cohen', 'Castel',
+  // 'Baka' sits one character from 'Baker' and two from 'Barker'.
+  'Baka', 'Sebestyén',
+  // 'Nye' is three letters and unrelated by prefix to 'Nguyen'/'Ng'/'Nabity'.
+  'Bonelli', 'Nye', 'Monforte Monteiro', 'Congiusta',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1109,6 +1356,44 @@ const JOHNSON_BY_YEAR: Record<string, { id: string; text: string }> = {
 const EDELMANN_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'edelmann-scced-prp', text: EDELMANN_SCCED_PRP },
   '2022': { id: 'edelmann-phaco-cde', text: EDELMANN_PHACO_CDE },
+}
+
+/** Two unrelated Scotts: the 2019 ocular-snakebite series and the 2021
+ *  phenobarbital marrow study. Keyed on the year, as Moore, Johnson and
+ *  Edelmann are. */
+const SCOTT_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2019': { id: 'scott-ocular-snakebite', text: SCOTT_OCULAR_SNAKEBITE },
+  '2021': { id: 'scott-phenobarb-marrow', text: SCOTT_PHENOBARB_MARROW },
+}
+
+/** Two VetCompass papers by the same D G O'Neill — GDV and KCS. Keyed on the
+ *  year, as Moore, Johnson, Edelmann and Scott are. */
+const ONEILL_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2017': { id: 'oneill-gdv', text: ONEILL_GDV },
+  '2021': { id: 'oneill-kcs', text: ONEILL_KCS },
+}
+
+/** Two Leila Bedos papers — the optic neuritis series and the pre-iridal
+ *  membrane histopathology. Keyed on the year, as Moore, Johnson, Edelmann,
+ *  Scott and O'Neill are. */
+const BEDOS_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2020': { id: 'bedos-optic-neuritis', text: BEDOS_OPTIC_NEURITIS },
+  '2024': { id: 'bedos-preiridal-membranes', text: BEDOS_PREIRIDAL_MEMBRANES },
+}
+
+/** Two DIFFERENT Chans: Remington X Chan on sports-ball ocular trauma and
+ *  Jennifer C Chan on inhaled fluticasone. Keyed on the year, like Moore,
+ *  Johnson, Edelmann, Scott, O'Neill and Bedos. */
+const CHAN_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2022': { id: 'chan-sports-ball', text: CHAN_SPORTS_BALL },
+  '2023': { id: 'chan-inhaled-fluticasone', text: CHAN_INHALED_FLUTICASONE },
+}
+
+/** The feline polyp series and the MUO cohort. Keyed on the year; the branch
+ *  that reads this must stay ABOVE the /^Anders\\b/ one. */
+const ANDERSON_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2000': { id: 'anderson-polyps', text: ANDERSON_POLYPS + '.' },
+  '2026': { id: 'anderson-muo-older', text: ANDERSON_MUO_OLDER },
 }
 
 const ARENAS_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -1269,7 +1554,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Wilson/.test(part)) { out.push({ id: 'wilson-tieback-ap', text: WILSON_TIEBACK_AP }); continue }
     if (/^MacPhail/.test(part)) { out.push({ id: 'macphail-lp', text: MACPHAIL_LP }); continue }
     if (/^Jeffery/.test(part)) { out.push({ id: 'jeffery-lp', text: JEFFERY_LP }); continue }
-    if (/^Anderson/.test(part)) { out.push({ id: 'anderson-polyps', text: ANDERSON_POLYPS + '.' }); continue }
+    if (/^Anderson/.test(part)) {
+      const hit = ANDERSON_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Anders\b/.test(part)) { out.push({ id: 'anders-vbo-baer', text: ANDERS_VBO_BAER }); continue }
     if (/^Veir/.test(part)) { out.push({ id: 'veir-polyps', text: VEIR_POLYPS }); continue }
     if (/^Greci/.test(part)) { out.push({ id: 'greci-ptt', text: GRECI_PTT }); continue }
@@ -1353,6 +1642,54 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Thiry/.test(part)) { out.push({ id: 'thiry-abcd-fhv', text: THIRY_ABCD_FHV }); continue }
     if (/^Ledbetter/.test(part)) { out.push({ id: 'ledbetter-ganciclovir', text: LEDBETTER_GANCICLOVIR }); continue }
     if (/^Asti/.test(part)) { out.push({ id: 'asti-sharpei-entropion', text: ASTI_SHARPEI_ENTROPION }); continue }
+    if (/^Guionnet/.test(part)) { out.push({ id: 'guionnet-nictitans-pocket', text: GUIONNET_NICTITANS_POCKET }); continue }
+    if (/^Violette/.test(part)) { out.push({ id: 'violette-lipemic-uveitis', text: VIOLETTE_LIPEMIC_UVEITIS }); continue }
+    if (/^Dowler/.test(part)) { out.push({ id: 'dowler-fibrin-web', text: DOWLER_FIBRIN_WEB }); continue }
+    if (/^Jinks/.test(part)) { out.push({ id: 'jinks-hyphaema', text: JINKS_HYPHAEMA }); continue }
+    if (/^Hirashima/.test(part)) { out.push({ id: 'hirashima-vitrectomy', text: HIRASHIMA_VITRECTOMY }); continue }
+    if (/^Andrade/.test(part)) { out.push({ id: 'andrade-prcd-frequency', text: ANDRADE_PRCD_FREQUENCY }); continue }
+    if (/^Breaux/.test(part)) { out.push({ id: 'breaux-episcleritis', text: BREAUX_EPISCLERITIS }); continue }
+    if (/^Dufour/.test(part)) { out.push({ id: 'dufour-iridectomy', text: DUFOUR_IRIDECTOMY }); continue }
+    if (/^Gilger/.test(part)) { out.push({ id: 'gilger-proptosis', text: GILGER_PROPTOSIS }); continue }
+    if (/^Brown/.test(part)) { out.push({ id: 'brown-cea-discordance', text: BROWN_CEA_DISCORDANCE }); continue }
+    if (/^Michau/.test(part)) { out.push({ id: 'michau-thermokeratoplasty', text: MICHAU_THERMOKERATOPLASTY }); continue }
+    if (/^Wiebe/.test(part)) { out.push({ id: 'wiebe-fluoroquinolone-retina', text: WIEBE_FLUOROQUINOLONE_RETINA }); continue }
+    if (/^Jacobson/.test(part)) { out.push({ id: 'jacobson-taurine-rhodopsin', text: JACOBSON_TAURINE_RHODOPSIN }); continue }
+    if (/^Bedos/.test(part)) {
+      const hit = BEDOS_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^Patel/.test(part)) { out.push({ id: 'patel-exenteration', text: PATEL_EXENTERATION }); continue }
+    if (/^Holly/.test(part)) { out.push({ id: 'holly-uveal-cysts', text: HOLLY_UVEAL_CYSTS }); continue }
+    if (/^Kaminsky/.test(part)) { out.push({ id: 'kaminsky-lid-flap', text: KAMINSKY_LID_FLAP }); continue }
+    if (/^Erjavec/.test(part)) { out.push({ id: 'erjavec-dacryostenosis', text: ERJAVEC_DACRYOSTENOSIS }); continue }
+    if (/^Goossens/.test(part)) { out.push({ id: 'goossens-ecvo-screening', text: GOOSSENS_ECVO_SCREENING }); continue }
+    if (/^Gábor/.test(part)) { out.push({ id: 'gabor-retinal-dysplasia', text: GABOR_RETINAL_DYSPLASIA }); continue }
+    if (/^Ng\b/.test(part)) { out.push({ id: 'ng-eyelid-agenesis', text: NG_EYELID_AGENESIS }); continue }
+    if (/^Lemle/.test(part)) { out.push({ id: 'lemle-pug-screening', text: LEMLE_PUG_SCREENING }); continue }
+    if (/^Kecova/.test(part)) { out.push({ id: 'kecova-lateral-canthus', text: KECOVA_LATERAL_CANTHUS }); continue }
+    if (/^Enache/.test(part)) { out.push({ id: 'enache-zygomatic', text: ENACHE_ZYGOMATIC }); continue }
+    if (/^Read/.test(part)) { out.push({ id: 'read-plasmoma-cyclosporin', text: READ_PLASMOMA_CYCLOSPORIN }); continue }
+    if (/^Sung/.test(part)) { out.push({ id: 'sung-lymphoplasmacytic', text: SUNG_LYMPHOPLASMACYTIC }); continue }
+    if (/^Quantz/.test(part)) { out.push({ id: 'quantz-steroid-keratopathy', text: QUANTZ_STEROID_KERATOPATHY }); continue }
+    if (/^Auten/.test(part)) { out.push({ id: 'auten-sards-cofactors', text: AUTEN_SARDS_COFACTORS }); continue }
+    if (/^Fruchter/.test(part)) { out.push({ id: 'fruchter-haws', text: FRUCHTER_HAWS }); continue }
+    if (/^Danciu/.test(part)) { out.push({ id: 'danciu-cerebellar-mydriasis', text: DANCIU_CEREBELLAR_MYDRIASIS }); continue }
+    if (/^Baker/.test(part)) { out.push({ id: 'baker-atopic-tears', text: BAKER_ATOPIC_TEARS }); continue }
+    if (/^Kim/.test(part)) { out.push({ id: 'kim-meibomian', text: KIM_MEIBOMIAN }); continue }
+    if (/^Sypniewska/.test(part)) { out.push({ id: 'sypniewska-nodular-conj', text: SYPNIEWSKA_NODULAR_CONJ }); continue }
+    if (/^Garcia/.test(part)) { out.push({ id: 'garcia-ocular-pathology', text: GARCIA_OCULAR_PATHOLOGY }); continue }
+    if (/^Chmiel/.test(part)) { out.push({ id: 'chmiel-grooming-injury', text: CHMIEL_GROOMING_INJURY }); continue }
+    if (/^Diehl/.test(part)) { out.push({ id: 'diehl-breed-screening', text: DIEHL_BREED_SCREENING }); continue }
+    if (/^Beckwith-Cohen/.test(part)) { out.push({ id: 'beckwith-cohen-fundus', text: BECKWITH_COHEN_FUNDUS }); continue }
+    if (/^Castel/.test(part)) { out.push({ id: 'castel-spastic-pupil', text: CASTEL_SPASTIC_PUPIL }); continue }
+    if (/^Baka/.test(part)) { out.push({ id: 'baka-syringomyelia', text: BAKA_SYRINGOMYELIA }); continue }
+    if (/^Sebestyén/.test(part)) { out.push({ id: 'sebestyen-sod1', text: SEBESTYEN_SOD1 }); continue }
+    if (/^Bonelli/.test(part)) { out.push({ id: 'bonelli-juvenile-csm', text: BONELLI_JUVENILE_CSM }); continue }
+    if (/^Nye/.test(part)) { out.push({ id: 'nye-oa-csm-followup', text: NYE_OA_CSM_FOLLOWUP }); continue }
+    if (/^Monforte Monteiro/.test(part)) { out.push({ id: 'monforte-monteiro-csf', text: MONFORTE_MONTEIRO_CSF }); continue }
+    if (/^Congiusta/.test(part)) { out.push({ id: 'congiusta-oclacitinib-mmm', text: CONGIUSTA_OCLACITINIB_MMM }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
@@ -1363,7 +1700,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Ziese/.test(part)) { out.push({ id: 'ziese-ahds-probiotic', text: ZIESE_AHDS_PROBIOTIC }); continue }
     if (/^Schwartz/.test(part)) { out.push({ id: 'schwartz-gi-staples', text: SCHWARTZ_GI_STAPLES }); continue }
     if (/^Cola/.test(part)) { out.push({ id: 'cola-laer', text: COLA_LAER }); continue }
-    if (/^Chan/.test(part)) { out.push({ id: 'chan-inhaled-fluticasone', text: CHAN_INHALED_FLUTICASONE }); continue }
+    if (/^Chan/.test(part)) {
+      const hit = CHAN_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Dickson/.test(part)) { out.push({ id: 'dickson-pneumothorax', text: DICKSON_PNEUMOTHORAX }); continue }
     if (/^Sériot/.test(part)) { out.push({ id: 'seriot-mvfb-pneumothorax', text: SERIOT_MVFB_PNEUMOTHORAX }); continue }
     // 'Reeve' is a prefix of 'Reeves', so this branch MUST precede the Reeve
@@ -1417,7 +1758,14 @@ export function parseSources(inner: string): { id: string; text: string }[] {
       if (hit) out.push(hit)
       continue
     }
-    if (/^O\u2019Neill/.test(part)) { out.push({ id: 'oneill-gdv', text: ONEILL_GDV }); continue }
+    if (/^O\u2019Neill/.test(part)) {
+      // Two 2017 VetCompass papers — GDV and corneal ulcerative disease — so
+      // the year is not enough on its own. The cornea marker says so.
+      if (part.includes('cornea')) { out.push({ id: 'oneill-cud', text: ONEILL_CUD }); continue }
+      const hit = ONEILL_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     // Allenspach BEFORE Allen — 'Allen' is a prefix of 'Allenspach', so the
     // reverse order sends "(Allenspach 2007)" to the gastropexy review.
     if (/^Allenspach/.test(part)) {
@@ -1493,7 +1841,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Batty/.test(part)) { out.push({ id: 'batty-aav-integration', text: BATTY_AAV_INTEGRATION }); continue }
     if (/^Fowler/.test(part)) { out.push({ id: 'fowler-hema-spinal', text: FOWLER_HEMA_SPINAL }); continue }
     if (/^Devine/.test(part)) { out.push({ id: 'devine-imn', text: DEVINE_IMN }); continue }
-    if (/^Scott/.test(part)) { out.push({ id: 'scott-phenobarb-marrow', text: SCOTT_PHENOBARB_MARROW }); continue }
+    if (/^Scott/.test(part)) {
+      const hit = SCOTT_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     // Only an Ettinger part reaches the Ettinger fallback. This used to be a
     // bare `else`, so ANY unrecognised part became a book-level Ettinger
     // reference — which credited Ettinger with "Farias et al. 2010, Gould et al.
