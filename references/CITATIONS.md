@@ -2036,6 +2036,48 @@ Ku/Li errors at the start of the pass: a number attached to the nearest-looking 
 paper across pages raises that risk, because the abstract is no longer in front of you — so
 re-read it, or at minimum re-read the reference string, before writing the marker.
 
+### Pages 119-126 — the last eight eye pages: ophthalmology block COMPLETE (2026-09-23)
+
+> Chmiel J, Pumphrey S, Rozanski E. J Am Anim Hosp Assoc. 2022;58(6):277-282. doi:10.5326/JAAHA-MS-7279
+> Chan RX, Ledbetter EC. Vet Ophthalmol. 2022;25(5):338-342. doi:10.1111/vop.12987
+> Diehl KA, Asif SK, Mowat F. Vet Clin North Am Small Anim Pract. 2023;53(5):965-983. doi:10.1016/j.cvsm.2023.04.003
+> Beckwith-Cohen B, Petersen-Jones SM. Front Vet Sci. 2024;11:1337062. doi:10.3389/fvets.2024.1337062
+> Castel A, Olby NJ, Breitschwerdt EB, Thomas B, Maggi RG, Shelton GD. Vet Q. 2019;39(1):168-173. doi:10.1080/01652176.2019.1697012
+
+**All 58 ophthalmology pages now cite at least one peer-reviewed paper.**
+
+⚠️ **`Chan` is year-keyed and the two papers are by DIFFERENT Chans** — Remington X Chan on
+sports-ball ocular trauma (2022) and Jennifer C Chan on inhaled fluticasone (2023). Seventh
+year-keyed author. `DIS-RESP-BRONCHITIS` stays pinned at 2 references.
+
+⚠️ **Castel is the first record in this pass where PubMed returned NO abstract.** The metadata gave
+title, journal, MeSH terms and keywords — including "spastic pupil syndrome" — which was enough to
+make it look citable. Rule 3 says never cite from a bibliographic record alone, and keywords are a
+bibliographic record. The full text was fetched from Europe PMC (PMC6913637) and read before
+anything was written. That mattered, because the paper **contradicts the page twice**:
+
+- The page says FeLV is "strongly linked — most affected cats test positive". This cat was **FeLV
+  and FIV ELISA negative**, with Bartonella henselae plus Sarcocystis as the cause found.
+- The page says SPS "is benign and does not affect vision or QoL", implying permanence. An
+  anisocoria present since kittenhood — **six years** — resolved completely once the co-infection
+  was treated.
+
+Neither point is inferable from the title or keywords. Had it been cited from the record alone it
+would have been attached in *support* of the FeLV framing it undercuts.
+
+**Chmiel and Chan cover the three trauma pages between them.** Chmiel's setting is one the pages
+did not mention at all: 161 ocular injuries noted within 24 hours of a grooming appointment —
+corneal ulceration 71%, eyelid laceration 7%, subconjunctival haemorrhage 6%, skewed to small
+breeds (71%) and Shih Tzu (34%), with reactive behaviour in a third and four enucleations. Chan
+supplies the blunt-projectile picture, where the lid is the least of it: traumatic uveitis in 91%
+of closed-globe injuries, hyphaema 45%, and 5 of 6 open-globe injuries enucleated, with small dense
+balls worst.
+
+**Diehl and Beckwith-Cohen are both reviews**, used deliberately for the two page types that had no
+cohort literature: breed-screening certification (iris coloboma, PHTVL) and systemic disease
+presenting in the fundus (immune-mediated retinopathy, cortical blindness). Cited for framing
+rather than for figures.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:

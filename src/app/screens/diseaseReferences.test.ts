@@ -194,7 +194,15 @@ describe('parseSources', () => {
     expect(parseSources('Schwartz 2018').map(s => s.id)).toEqual(['schwartz-gi-staples'])
     expect(parseSources('Cola 2024').map(s => s.id)).toEqual(['cola-laer'])
     // 'Dickson' vs 'Dickinson' — easily misread for each other. Both pinned.
+    // Chan is year-keyed and the two papers are by DIFFERENT Chans — Remington X
+    // on sports-ball trauma, Jennifer C on inhaled fluticasone.
     expect(parseSources('Chan 2023').map(s => s.id)).toEqual(['chan-inhaled-fluticasone'])
+    expect(parseSources('Chan 2022').map(s => s.id)).toEqual(['chan-sports-ball'])
+    expect(parseSources('Chan 2099')).toEqual([])
+    expect(parseSources('Chmiel 2022').map(s => s.id)).toEqual(['chmiel-grooming-injury'])
+    expect(parseSources('Diehl 2023').map(s => s.id)).toEqual(['diehl-breed-screening'])
+    expect(parseSources('Beckwith-Cohen 2024').map(s => s.id)).toEqual(['beckwith-cohen-fundus'])
+    expect(parseSources('Castel 2019').map(s => s.id)).toEqual(['castel-spastic-pupil'])
     expect(parseSources('Dickson 2021').map(s => s.id)).toEqual(['dickson-pneumothorax'])
     expect(parseSources('Dickinson 2020').map(s => s.id)).toEqual(['dickinson-neuro-fip'])
     expect(parseSources('Sériot 2021').map(s => s.id)).toEqual(['seriot-mvfb-pneumothorax'])
@@ -856,6 +864,15 @@ describe('reference block', () => {
       ['DIS-EYE-IRIS-ATR', 2, ['pre-iridal monocellular and fibrovascular membranes']],
       ['DIS-EYE-SYNECH', 3, ['pre-iridal monocellular and fibrovascular membranes', 'sector iridectomy']],
       ['DIS-EYE-CHORIO', 4, ['LeishVet guidelines', 'Seroprevalence and risk factors', 'neurological feline infectious peritonitis']],
+      // The last seven eye pages, closing the ophthalmology block.
+      ['DIS-EYE-OCFB', 2, ['grooming visits in dogs']],
+      ['DIS-EYE-LIDTRAUMA', 3, ['grooming visits in dogs', 'Sports ball projectile']],
+      ['DIS-EYE-CONJHAEM', 3, ['grooming visits in dogs', 'Sports ball projectile']],
+      ['DIS-EYE-IRIS-COLOB', 2, ['screening in breeding dogs']],
+      ['DIS-EYE-PHTVL', 3, ['screening in breeding dogs']],
+      ['DIS-EYE-IMR', 2, ['systemic disease in the retina and fundus']],
+      ['DIS-EYE-CORTBLIND', 2, ['systemic disease in the retina and fundus']],
+      ['DIS-EYE-SPS', 2, ['Sarcocystis']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -901,7 +918,9 @@ describe('reference block', () => {
       'DIS-EYE-PLASMOMA', 'DIS-EYE-CORNOPAC',
       'DIS-EYE-RUBEOSIS', 'DIS-EYE-HAWS', 'DIS-EYE-EFF-MYDR', 'DIS-EYE-BLEPH',
       'DIS-EYE-CHALAZION', 'DIS-EYE-CONJMASS',
-      'DIS-EYE-IRIS-ATR', 'DIS-EYE-SYNECH', 'DIS-EYE-CHORIO']) {
+      'DIS-EYE-IRIS-ATR', 'DIS-EYE-SYNECH', 'DIS-EYE-CHORIO',
+      'DIS-EYE-OCFB', 'DIS-EYE-LIDTRAUMA', 'DIS-EYE-CONJHAEM', 'DIS-EYE-IRIS-COLOB',
+      'DIS-EYE-PHTVL', 'DIS-EYE-IMR', 'DIS-EYE-CORTBLIND', 'DIS-EYE-SPS']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

@@ -1075,6 +1075,28 @@ const SYPNIEWSKA_NODULAR_CONJ =
 const GARCIA_OCULAR_PATHOLOGY =
   'Garcia JM, Rogerio GDS, Rossatto-Junior CA, et al. Epidemiology of ocular pathology in domestic animals: insights from a 20-year retrospective study. Front Vet Sci. 2026;12:1717392. doi:10.3389/fvets.2025.1717392'
 
+// Ocular trauma and two breed/systemic reviews, closing the ophthalmology block.
+// CHAN is now year-keyed and the two papers are by DIFFERENT Chans — Remington X
+// Chan on sports-ball trauma (2022) and Jennifer C Chan on inhaled fluticasone
+// (2023). Chmiel and Chan between them cover the trauma pages; Diehl and
+// Beckwith-Cohen are reviews serving the congenital and systemic pages.
+const CHAN_SPORTS_BALL =
+  'Chan RX, Ledbetter EC. Sports ball projectile ocular trauma in dogs. Vet Ophthalmol. 2022;25(5):338-342. doi:10.1111/vop.12987'
+const CHMIEL_GROOMING_INJURY =
+  'Chmiel J, Pumphrey S, Rozanski E. Ocular injuries related to grooming visits in dogs: 161 cases (2004-2020). J Am Anim Hosp Assoc. 2022;58(6):277-282. doi:10.5326/JAAHA-MS-7279'
+const DIEHL_BREED_SCREENING =
+  'Diehl KA, Asif SK, Mowat F. Ophthalmic disease and screening in breeding dogs. Vet Clin North Am Small Anim Pract. 2023;53(5):965-983. doi:10.1016/j.cvsm.2023.04.003'
+const BECKWITH_COHEN_FUNDUS =
+  'Beckwith-Cohen B, Petersen-Jones SM. Manifestations of systemic disease in the retina and fundus of cats and dogs. Front Vet Sci. 2024;11:1337062. doi:10.3389/fvets.2024.1337062'
+
+// Feline spastic pupil syndrome. ONE cat, and the paper is cited for two things
+// that cut against the page: the cat was FeLV/FIV NEGATIVE, and a six-year-old
+// anisocoria resolved completely once a treatable co-infection was addressed.
+// PubMed returned no abstract for this record, so the full text was read from
+// Europe PMC before the claim was written — Rule 3 applies to keywords too.
+const CASTEL_SPASTIC_PUPIL =
+  'Castel A, Olby NJ, Breitschwerdt EB, Thomas B, Maggi RG, Shelton GD. Co-infection with Bartonella henselae and Sarcocystis sp. in a 6-year-old male neutered domestic longhair cat with progressive multifocal neurological signs. Vet Q. 2019;39(1):168-173. doi:10.1080/01652176.2019.1697012'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1221,6 +1243,7 @@ const SOURCE_NAMES = [
   'Fruchter', 'Danciu', 'Baker',
   // 'Kim' vs the existing 'King'; 'Garcia' vs 'Garden'/'Gareis'/'Gábor'.
   'Kim', 'Sypniewska', 'Garcia',
+  'Chmiel', 'Diehl', 'Beckwith-Cohen', 'Castel',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1327,6 +1350,14 @@ const ONEILL_BY_YEAR: Record<string, { id: string; text: string }> = {
 const BEDOS_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2020': { id: 'bedos-optic-neuritis', text: BEDOS_OPTIC_NEURITIS },
   '2024': { id: 'bedos-preiridal-membranes', text: BEDOS_PREIRIDAL_MEMBRANES },
+}
+
+/** Two DIFFERENT Chans: Remington X Chan on sports-ball ocular trauma and
+ *  Jennifer C Chan on inhaled fluticasone. Keyed on the year, like Moore,
+ *  Johnson, Edelmann, Scott, O'Neill and Bedos. */
+const CHAN_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2022': { id: 'chan-sports-ball', text: CHAN_SPORTS_BALL },
+  '2023': { id: 'chan-inhaled-fluticasone', text: CHAN_INHALED_FLUTICASONE },
 }
 
 const ARENAS_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -1609,6 +1640,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Kim/.test(part)) { out.push({ id: 'kim-meibomian', text: KIM_MEIBOMIAN }); continue }
     if (/^Sypniewska/.test(part)) { out.push({ id: 'sypniewska-nodular-conj', text: SYPNIEWSKA_NODULAR_CONJ }); continue }
     if (/^Garcia/.test(part)) { out.push({ id: 'garcia-ocular-pathology', text: GARCIA_OCULAR_PATHOLOGY }); continue }
+    if (/^Chmiel/.test(part)) { out.push({ id: 'chmiel-grooming-injury', text: CHMIEL_GROOMING_INJURY }); continue }
+    if (/^Diehl/.test(part)) { out.push({ id: 'diehl-breed-screening', text: DIEHL_BREED_SCREENING }); continue }
+    if (/^Beckwith-Cohen/.test(part)) { out.push({ id: 'beckwith-cohen-fundus', text: BECKWITH_COHEN_FUNDUS }); continue }
+    if (/^Castel/.test(part)) { out.push({ id: 'castel-spastic-pupil', text: CASTEL_SPASTIC_PUPIL }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
@@ -1619,7 +1654,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Ziese/.test(part)) { out.push({ id: 'ziese-ahds-probiotic', text: ZIESE_AHDS_PROBIOTIC }); continue }
     if (/^Schwartz/.test(part)) { out.push({ id: 'schwartz-gi-staples', text: SCHWARTZ_GI_STAPLES }); continue }
     if (/^Cola/.test(part)) { out.push({ id: 'cola-laer', text: COLA_LAER }); continue }
-    if (/^Chan/.test(part)) { out.push({ id: 'chan-inhaled-fluticasone', text: CHAN_INHALED_FLUTICASONE }); continue }
+    if (/^Chan/.test(part)) {
+      const hit = CHAN_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Dickson/.test(part)) { out.push({ id: 'dickson-pneumothorax', text: DICKSON_PNEUMOTHORAX }); continue }
     if (/^Sériot/.test(part)) { out.push({ id: 'seriot-mvfb-pneumothorax', text: SERIOT_MVFB_PNEUMOTHORAX }); continue }
     // 'Reeve' is a prefix of 'Reeves', so this branch MUST precede the Reeve
