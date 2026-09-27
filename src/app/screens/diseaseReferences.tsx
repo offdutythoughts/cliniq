@@ -1036,6 +1036,19 @@ const KECOVA_LATERAL_CANTHUS =
 const ENACHE_ZYGOMATIC =
   'Enache AE, Maini S, Pivetta M, et al. Canine bilateral zygomatic sialadenitis: 20 cases (2000-2019). J Small Anim Pract. 2025;66(6):396-411. doi:10.1111/jsap.13844'
 
+// Plasmoma, steroid keratopathy and SARDS signalment. Read 1995 is the only
+// therapeutic trial on plasmoma and stays for the same reason the taurine and
+// enrofloxacin sources do — the literature stops there. Quantz identifies an
+// IATROGENIC cause of crystalline corneal opacity the page did not list.
+const READ_PLASMOMA_CYCLOSPORIN =
+  'Read RA. Treatment of canine nictitans plasmacytic conjunctivitis with 0.2 per cent cyclosporin ointment. J Small Anim Pract. 1995;36(2):50-56. doi:10.1111/j.1748-5827.1995.tb02821.x'
+const SUNG_LYMPHOPLASMACYTIC =
+  'Sung H, Park J, Kim J, Kang S, Shaw GC, Seo K. Tumor-like lymphoplasmacytic conjunctivitis in the third eyelid in a dog. J Vet Sci. 2024;25(1):e16. doi:10.4142/jvs.23222'
+const QUANTZ_STEROID_KERATOPATHY =
+  'Quantz KR, Jongnarangsin KK, Harman CD, et al. Development of crystalline corneal opacities (steroid keratopathy) in dogs after treatment with ophthalmic corticosteroids. Cornea. 2024;43(12):1506-1515. doi:10.1097/ICO.0000000000003523'
+const AUTEN_SARDS_COFACTORS =
+  'Auten CR, Thomasy SM, Kass PH, Good KL, Hollingsworth SR, Maggs DJ. Cofactors associated with sudden acquired retinal degeneration syndrome: 151 dogs within a reference population. Vet Ophthalmol. 2018;21(3):264-272. doi:10.1111/vop.12504'
+
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
 
@@ -1175,6 +1188,9 @@ const SOURCE_NAMES = [
   'Goossens', 'Gábor', 'Ng',
   // 'Lemle' vs the existing 'Lemmons' — one character apart at position 4.
   'Lemle', 'Kecova', 'Enache',
+  // 'Read' is a common word but no other source name starts 'Rea'; 'Sung'
+  // sits beside 'Susanti'.
+  'Read', 'Sung', 'Quantz', 'Auten',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1541,6 +1557,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Lemle/.test(part)) { out.push({ id: 'lemle-pug-screening', text: LEMLE_PUG_SCREENING }); continue }
     if (/^Kecova/.test(part)) { out.push({ id: 'kecova-lateral-canthus', text: KECOVA_LATERAL_CANTHUS }); continue }
     if (/^Enache/.test(part)) { out.push({ id: 'enache-zygomatic', text: ENACHE_ZYGOMATIC }); continue }
+    if (/^Read/.test(part)) { out.push({ id: 'read-plasmoma-cyclosporin', text: READ_PLASMOMA_CYCLOSPORIN }); continue }
+    if (/^Sung/.test(part)) { out.push({ id: 'sung-lymphoplasmacytic', text: SUNG_LYMPHOPLASMACYTIC }); continue }
+    if (/^Quantz/.test(part)) { out.push({ id: 'quantz-steroid-keratopathy', text: QUANTZ_STEROID_KERATOPATHY }); continue }
+    if (/^Auten/.test(part)) { out.push({ id: 'auten-sards-cofactors', text: AUTEN_SARDS_COFACTORS }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
     if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }

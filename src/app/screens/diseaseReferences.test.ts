@@ -232,6 +232,12 @@ describe('parseSources', () => {
     expect(parseSources('Lemmons Ch 12').map(s => s.id)).toEqual(['lemmons-ch12'])
     expect(parseSources('Kecova 2025').map(s => s.id)).toEqual(['kecova-lateral-canthus'])
     expect(parseSources('Enache 2025').map(s => s.id)).toEqual(['enache-zygomatic'])
+    // 'Read' — no other source name starts 'Rea'; 'Sung' vs 'Susanti'.
+    expect(parseSources('Read 1995').map(s => s.id)).toEqual(['read-plasmoma-cyclosporin'])
+    expect(parseSources('Sung 2024').map(s => s.id)).toEqual(['sung-lymphoplasmacytic'])
+    expect(parseSources('Susanti 2023').map(s => s.id)).toEqual(['susanti-unilateral-sards'])
+    expect(parseSources('Quantz 2024').map(s => s.id)).toEqual(['quantz-steroid-keratopathy'])
+    expect(parseSources('Auten 2018').map(s => s.id)).toEqual(['auten-sards-cofactors'])
     expect(parseSources('Verdenius 2024').map(s => s.id)).toEqual(['verdenius-stromal-ulcer'])
     expect(parseSources('Venn 2017').map(s => s.id)).toEqual(['venn-outpatient'])
     // 'Michel' IS a prefix of 'Michelotti' — the Michelotti branch sits above
@@ -784,7 +790,7 @@ describe('reference block', () => {
       ['DIS-EYE-CATARACT', 3, ['CDE-predictive value', 'phacoemulsification in Pugs']],
       ['DIS-EYE-SUP-ULC', 5, ['diamond burr debridement', 'platelet-rich plasma', 'Vizoovet', 'Corneal ulcerative disease in dogs under primary']],
       ['DIS-EYE-DEEP-ULC', 3, ['Progressive ulcerative keratitis', 'Corneal stromal ulcerations']],
-      ['DIS-EYE-SARDS', 3, ['Sudden acquired retinal degeneration syndrome', 'Unilateral blindness']],
+      ['DIS-EYE-SARDS', 4, ['Sudden acquired retinal degeneration syndrome', 'Unilateral blindness', '151 dogs within a reference population']],
       ['DIS-EYE-SEQ', 3, ['feline corneal sequestrum: 72 cases', 'Autologous lamellar keratoplasty']],
       ['DIS-EYE-FHV', 3, ['ABCD guidelines on prevention and management', 'ganciclovir']],
       ['DIS-EYE-ENTROPION', 2, ['27 Shar Pei dogs']],
@@ -823,6 +829,8 @@ describe('reference block', () => {
       ['DIS-EYE-ECTROPION', 3, ['inherited eye diseases in pugs', 'Lateral canthal reconstruction']],
       ['DIS-EYE-ZYGO', 2, ['zygomatic sialadenitis']],
       ['DIS-EYE-DERMOID', 3, ['Lateral canthal reconstruction']],
+      ['DIS-EYE-PLASMOMA', 3, ['nictitans plasmacytic conjunctivitis', 'Tumor-like lymphoplasmacytic conjunctivitis']],
+      ['DIS-EYE-CORNOPAC', 3, ['steroid keratopathy']],
     ]
     for (const [id, count, phrases] of cases) {
       const { entries } = buildDiseaseCitations(pageFields(id))
@@ -864,7 +872,8 @@ describe('reference block', () => {
       'DIS-EYE-ENRO', 'DIS-EYE-TAUR', 'DIS-EYE-OPTNEUR', 'DIS-EYE-ORBNEO',
       'DIS-EYE-UVEAL-CYST', 'DIS-EYE-CONJNEO', 'DIS-EYE-LIDNEO', 'DIS-EYE-NLD',
       'DIS-EYE-PPM', 'DIS-EYE-CILIA', 'DIS-EYE-RETDYSPL', 'DIS-EYE-LIDAGEN',
-      'DIS-EYE-ECTROPION', 'DIS-EYE-ZYGO', 'DIS-EYE-DERMOID']) {
+      'DIS-EYE-ECTROPION', 'DIS-EYE-ZYGO', 'DIS-EYE-DERMOID',
+      'DIS-EYE-PLASMOMA', 'DIS-EYE-CORNOPAC']) {
       for (const field of pageFields(id)) {
         for (const seg of splitCitations(field)) {
           if (seg.raw && (seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)

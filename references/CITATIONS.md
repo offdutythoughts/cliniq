@@ -1915,6 +1915,34 @@ disease, which redirects the workup outward.
 72.4%, pigmentary keratopathy 36.7%, macroblepharon 24.8%, distichiasis 20.1%, and **81.3% with at
 least one adnexal disorder**.
 
+### Pages 108-109 — plasmoma, crystalline corneal opacity (+ SARDS enrichment) (2026-09-23)
+
+> Read RA. J Small Anim Pract. 1995;36(2):50-56. doi:10.1111/j.1748-5827.1995.tb02821.x
+> Sung H, Park J, Kim J, Kang S, Shaw GC, Seo K. J Vet Sci. 2024;25(1):e16. doi:10.4142/jvs.23222
+> Quantz KR, Jongnarangsin KK, Harman CD, et al. Cornea. 2024;43(12):1506-1515. doi:10.1097/ICO.0000000000003523
+> Auten CR, Thomasy SM, Kass PH, Good KL, Hollingsworth SR, Maggs DJ. Vet Ophthalmol. 2018;21(3):264-272. doi:10.1111/vop.12504
+
+**Quantz adds a cause the crystalline-opacity page did not list, and it is iatrogenic.** The page
+separated three entities — dystrophy, lipid keratopathy, degeneration — and sent you to a systemic
+workup. Topical **corticosteroids** are a fourth: axial stromal crystalline opacities appeared in
+25 eyes of 14 dogs after a median 141 days of ophthalmic steroid, with onset ranging 35 to 396
+days across dexamethasone, prednisolone acetate and difluprednate. So the first question is what
+has been in the eye, over months rather than weeks. It is also the one crystalline opacity that may
+**reverse** — 4 of 25 eyes cleared after stopping the drug, though it took a median over a year,
+which is worth trying before calling the deposit permanent.
+
+**Read 1995 is the only therapeutic trial on plasmoma** and stays for the same reason the taurine
+and enrofloxacin sources do. It is biopsy-controlled, which is unusual: plasma cell counts fell on
+repeat biopsy and Schirmer values *rose*. The detail worth carrying is negative — T-lymphocyte
+numbers only trended down and did not reach significance, so the plasma cell is the cell the drug
+demonstrably acts on. Sung is one dog, cited for a presentation that mimics neoplasia (a discrete
+papillary mass rather than diffuse thickening), which supports the page's existing "biopsy anything
+atypical".
+
+**Auten** enriches `DIS-EYE-SARDS`, which already had two papers, because signalment narrows the
+diagnosis before any test: Dachshund 21%, Schnauzer 11%, Pug 7%, Labrador *under*-represented, and
+**spayed females 59% against intact females 1%**.
+
 ## Evidence quality bar (set 2026-09-22)
 
 Every citation added to app data must clear three bars:
