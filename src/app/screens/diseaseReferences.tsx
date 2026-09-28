@@ -1172,6 +1172,13 @@ const CAMERON_TBI_POC =
 // 'ACVIM 2018' because ACVIM_BY_YEAR already maps 2018 to the hypertension
 // statement. Its PubMed abstract is purely procedural, so the claims on the page
 // were taken from the open-access full text (PMC5980284), not the record.
+// The ISCAID urinary guidelines. Three pages named "ISCAID 2019" in prose while
+// citing a textbook for it, and the only ISCAID reference in this file was the
+// RESPIRATORY one. Not open access, so claims here stay at the level the abstract
+// supports — what the document covers and how it classifies infection — and the
+// antibiotic durations keep their existing textbook citation.
+const WEESE_ISCAID_URINARY =
+  'Weese JS, Blondeau J, Boothe D, et al. International Society for Companion Animal Infectious Diseases (ISCAID) guidelines for the diagnosis and management of bacterial urinary tract infections in dogs and cats. Vet J. 2019;247:8-25. doi:10.1016/j.tvjl.2019.02.008'
 const LITTMAN_ACVIM_LYME =
   'Littman MP, Gerber B, Goldstein RE, Labato MA, Lappin MR, Moore GE. ACVIM consensus update on Lyme borreliosis in dogs and cats. J Vet Intern Med. 2018;32(3):887-903. doi:10.1111/jvim.15085'
 const EPSTEIN_DDIMER_PE =
@@ -1347,7 +1354,7 @@ const SOURCE_NAMES = [
   'Ruessli', 'Magalhães', 'Desbordes', 'Evans', 'Brewińska',
   'Gonçalves', 'Dussaux', 'Togawa', 'Levy', 'Cameron', 'Sharma',
   'Lockhart', 'Boydell',
-  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman',
+  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1720,6 +1727,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Toresson/.test(part)) { out.push({ id: 'toresson-oral-cobalamin', text: TORESSON_ORAL_COBALAMIN }); continue }
     if (/^Epstein/.test(part)) { out.push({ id: 'epstein-ddimer-pe', text: EPSTEIN_DDIMER_PE }); continue }
     if (/^Littman/.test(part)) { out.push({ id: 'littman-acvim-lyme', text: LITTMAN_ACVIM_LYME }); continue }
+    if (/^Weese/.test(part)) { out.push({ id: 'weese-iscaid-urinary', text: WEESE_ISCAID_URINARY }); continue }
     if (/^Manchester/.test(part)) { out.push({ id: 'manchester-gc-frenchie', text: MANCHESTER_GC_FRENCHIE }); continue }
     if (/^Moser/.test(part)) { out.push({ id: 'moser-feline-panc-us', text: MOSER_FELINE_PANC_US }); continue }
     if (/^Bruet/.test(part)) { out.push({ id: 'bruet-perianal-consensus', text: BRUET_PERIANAL_CONSENSUS }); continue }

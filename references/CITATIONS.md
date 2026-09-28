@@ -2191,6 +2191,61 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Urinary batch: stones and urinary infection (2026-09-28)
+
+Five pages, 222 → 217, uncited 63 → 62. **One new reference for five pages**, because two
+consensus statements already in the file were not reaching pages they plainly cover.
+
+| Page | Source | How |
+|---|---|---|
+| DIS-URO-UROLITH-URATE | Lulich 2016 (ACVIM) | **reuse** — Recs 1.2a, 3.4, 3.4.A |
+| DIS-URO-UROLITH-CYST | Lulich 2016 (ACVIM) | **reuse** — Recs 1.2b, 3.5, 3.5.A |
+| DIS-URO-UTI | Weese 2019 (ISCAID) | new — attribution corrected |
+| DIS-URO-PYELO | Weese 2019 (ISCAID) | new |
+| DIS-URO-PROSTATITIS | Weese 2019 (ISCAID) | new |
+
+### The ISCAID guideline was named in prose and credited to a textbook
+
+`DIS-URO-UTI` referenced "ISCAID 2019" **three times** — for the sporadic/recurrent/subclinical
+classification, for the 3–5 day course, and in its pearl — while every one of those bullets
+cited `(Ettinger Ch 307)`. The only ISCAID reference in the file was the **respiratory**
+guideline. So the page knew its source, named it on screen, and cited a secondary summary of it.
+
+Weese 2019 is **not open access**, so claims were held to what the abstract supports: what the
+document covers (sporadic cystitis, recurrent cystitis, pyelonephritis, bacterial prostatitis,
+subclinical bacteriuria) and that it revises the 2011 guidelines. That is enough to carry the
+classification bullet and to tell a clinician which document governs on all three pages. **The
+antibiotic durations keep their Ettinger citation** — moving them onto Weese would assert a
+primary source I have not read, which is the Bellenger failure mode.
+
+### Lulich covers urate and cystine, checked before reuse
+
+Lulich's PubMed abstract is generic — it promises "recommendations for the treatment and
+prevention of uroliths" without naming a stone type, and its MeSH terms list only calcium
+oxalate and struvite. On the abstract alone, reusing it for urate and cystine would have been a
+guess. The paper is open access (PMC5032870), and the full text carries named recommendations
+for both:
+
+- urate — **1.2a** dissolution before removal, **3.4** dilute urine, alkalinise, limit purine,
+  **3.4.A** xanthine oxidase inhibitor reserved for homozygous hyperuricosuric dogs that have
+  already failed a therapeutic diet;
+- cystine — **1.2b** dissolution before removal, **3.5** dilute urine, limit animal protein,
+  limit sodium, raise pH, neuter, **3.5.A** tiopronin added on top for recurrent formers.
+
+Two of those sharpen what the pages said rather than merely backing it. The urate page listed
+allopurinol among first-line prevention, where the consensus positions a xanthine oxidase
+inhibitor as a **reserve** after diet failure in homozygous dogs. The cystine page omitted
+**sodium restriction** from prevention altogether.
+
+### A tripwire test that fired for the right reason
+
+`numbers the real prostatitis page as a single Ettinger chapter` asserted that page cited
+`ettinger-ch314` and nothing else — a deliberate guard that it was single-source. Adding the
+ISCAID guideline broke it, which is the test doing its job. Rewritten as *collapses a repeated
+Ettinger marker to one entry*, which is the behaviour actually worth pinning: that page repeats
+the same marker on nearly every field, so it is the best check that duplicates dedup to one
+numbered entry. The assertion now expects both sources.
+
 ## Rendered-text audit (2026-09-28)
 
 A class not previously checked: defects a clinician sees on the page. The typechecker, 387
