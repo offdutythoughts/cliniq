@@ -2191,6 +2191,68 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Error audit (2026-09-28)
+
+Ran after the GI batch. Mechanical checks were clean — 387 tests, 28 lints, typecheck,
+resolver integrity. Three substantive audits were then run over content rather than
+structure, and two found real errors.
+
+### Audit 1 — same analyte, two units (the cobalamin bug generalised)
+
+Grouped every measurement in `db.ts` by nearby analyte name and flagged analytes carrying
+more than one unit. Nine flagged, **one real**: `DIS-RESP-PTE` gave D-dimer thresholds in
+**ng/dL** where `DIS-BD-VASC` and the literature use **ng/mL**.
+
+The other eight were legitimate or artefacts of the audit: cortisol, glucose, albumin and
+lactate are all written in both SI and conventional units in this file by design; the
+cobalamin `µg/L` hit was a **dose** in µg, not a concentration; the creatinine `g/dL` hit was
+the adjacent albumin figure caught by a 130-character context window.
+
+**And the PTE bullet had a second, worse error.** It read "<100 ng/dL = PTE unlikely (high
+NPV)". Epstein 2013 measured the NPV at **60%**, with specificity 30%, and concludes
+explicitly that PE still occurs in dogs with a normal D-dimer. "High NPV" was the wrong
+statistic pointing the wrong way — the 100% figure in that paper is *sensitivity*, below
+about 100 ng/mL, in a series with only 10 confirmed cases. The bullet now gives the real
+operating characteristics with the sample size, and that page has its first paper.
+
+### Audit 2 — my own numeric claims against the abstracts
+
+Re-checked all 21 numeric claims written in this session against the abstracts. Twenty were
+accurate. **One was mine and wrong**: I wrote that cobalamin <200 ng/L and albumin <20 g/L
+were "independent risk factors" in Allenspach 2007. The abstract says *univariate analysis*
+identified them. "Independent" claims an adjusted model that the abstract does not report.
+Corrected on DIS-GI-COBAL, DIS-GI-PLE and DIS-GI-IBD to say univariate.
+
+Worth naming the failure mode: this is not a transcription slip but an upgrade in strength
+while paraphrasing. It reads more authoritative and is harder to catch than a wrong number,
+because nothing in the sentence looks copied.
+
+### Audit 3 — pasted-wrong DOIs
+
+A wrong DOI is the worst citation error available: the reference string reads perfectly and
+resolves to a different paper. Cross-checked all 308 DOI-bearing references by publisher
+prefix against journal. Fifteen flagged, **zero real** — every one was my rule being wrong,
+not the data:
+
+- Vet Surg and J Feline Med Surg carried Elsevier prefixes because both were Elsevier titles
+  before moving to Wiley and SAGE; the older references are correct.
+- `Vet J\b` matched **Ir** Vet J (BMC) and **N Z** Vet J (Taylor & Francis). Both confirmed
+  correct against Crossref, including Asti 2020 at N Z Vet J 68(2):112-118.
+- Nine "unknown prefix" flags were simply publishers absent from my table.
+
+### What was codified
+
+`npm run lint:units` (in `lint:content`, so it gates) asserts canonical units for analytes
+where the unit is not a matter of taste — currently cobalamin (ng/L) and D-dimer (ng/mL).
+Mutation-tested by reintroducing both real errors.
+
+Glucose, lactate, albumin, calcium and cortisol are deliberately **excluded**: they are
+legitimately written both ways here, and a lint that fires on them would be noise, which is
+how a real failure gets scrolled past. The first version of the check also required a `<` or
+`>` before the number and so missed "at a 250 ng/mL cut-off" — the exact phrasing of the
+corrected bullet. It now matches any number carrying a concentration unit, which is safe
+because doses are written "250 µg", never "250 µg/L".
+
 ## GI batch: chronic enteropathy, cobalamin, colitis, perianal fistulae (2026-09-28)
 
 Nine pages closed, 234 → 225. Only four new papers were needed — three already in the
