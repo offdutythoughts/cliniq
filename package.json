@@ -42,6 +42,7 @@
     "report:refs": "tsx scripts/report-refs.ts",
     "lint:refs-integrity": "tsx scripts/lint-refs-integrity.ts",
     "lint:units": "tsx scripts/lint-units.ts",
+    "lint:render": "tsx scripts/lint-render.ts",
     "start": "next start",
     "test": "vitest run"
   },

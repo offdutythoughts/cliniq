@@ -2191,6 +2191,64 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Rendered-text audit (2026-09-28)
+
+A class not previously checked: defects a clinician sees on the page. The typechecker, 387
+tests and 28 lints were all green with four of these live, because every one is valid
+TypeScript and structurally well-formed content.
+
+Scanned 22,168 bullets across 389 disease pages for stray backslashes, empty bullets,
+whitespace-padded bullets and unbalanced parentheses. Eight hits, **four real**.
+
+### The serious one: DIS-RESP-PTE rendered dog doses with no species label
+
+The antithrombotic section used `" | "` as a **cat/dog column separator**. But `|` is the
+bullet delimiter, so the table rendered as:
+
+    • #Antithrombotic — Table 219.1 (cat
+    •  dog) (Ettinger Ch 219)
+    • Clopidogrel: 18.75 mg/cat PO q24h
+    •  1–3 mg/kg PO q24h          ← unlabelled. This is the DOG dose.
+    • Dalteparin: 150 U/kg SC q8–24h
+    •  75–150 U/kg SC q12–24h     ← unlabelled. DOG.
+    • Rivaroxaban: 2.5 mg/cat PO q24h
+    •  1–2 mg/kg PO q24h          ← unlabelled. DOG.
+
+Three drugs produced an orphan dose bullet carrying no species. A reader could take
+clopidogrel "1–3 mg/kg q24h" for a cat, which gets a flat 18.75 mg — a mg/kg reading of that
+bullet overdoses a 5 kg cat. Now written as one bullet per drug with both doses labelled in
+words. **No number was changed**; the cat-then-dog order was stated by the header the page
+already carried, and unfractionated heparin already spelled out "cat …, dog …", which
+confirmed the order.
+
+### The other three
+
+- **DIS-BD-ENV** rendered `F(ab\'\\)₂` instead of `F(ab')₂` — an over-escaped source string
+  leaking backslashes into clinical text.
+- **DIS-NEU-TICKPARAL** had a `|` inside a parenthetical, breaking one sentence across two
+  bullets, the first ending `"(esp"`.
+- **DIS-NEU-POLYP** had a `#heading` bullet that had swallowed its first list item, with the
+  remaining items carrying leading spaces.
+
+### What was codified
+
+`npm run lint:render` (in `lint:content`, so it gates — 29 lints now). Four checks, each
+mutation-tested by reintroducing the real defect it was written for:
+
+- a backslash in rendered text, which clinical copy never legitimately contains;
+- a bullet padded with whitespace, which is the cheap and reliable tell that `|` was used to
+  separate columns rather than items — it is what catches the PTE class;
+- an empty, leading or trailing `|`;
+- unbalanced parentheses, which would also make a citation marker print raw. `"1) Induction…"`
+  enumeration legitimately carries a bare `)`, so a bullet opening with one is allowed its
+  extra close paren — DIS-NEU-THIAMINE uses that style and is not a defect.
+
+**A trap worth recording.** Fixing the antivenin string, I replaced it with a bare `F(ab')₂`.
+That field is **single-quoted**, so the apostrophe closed the string and `tsc` failed — the
+same mistake made an hour earlier on the Lyme page. Fields in `db.ts` use both quote styles,
+and a repr of a matched field shows Python's choice of quote, not the file's. Check the
+file, not the repr, before inserting an apostrophe.
+
 ## Infectious batch: cat flu and Lyme (2026-09-28)
 
 Two pages, 224 → 222, and uncited pages 64 → 63.
