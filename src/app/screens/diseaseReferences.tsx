@@ -1159,6 +1159,19 @@ const CAMERON_TBI_POC =
 // have rested on all along — 'Gold' was matching the words "(Golden Retriever
 // most common)" and attaching a basal-cortisol paper instead. Crossref gives the
 // print year as 2022 (25 Suppl 1); PubMed shows the 2021 online date.
+// Chronic enteropathy, cobalamin, colitis and perianal fistulae. Three of these
+// four disagree with PubMed on the year and are cited by Crossref's PRINT year:
+// Toresson (PubMed 2018 online / print 2019), Manchester (PubMed 2012 / print
+// 2013) and Moser (PubMed 2019 / print 2018, where the print year is the EARLIER
+// one). Manchester is 6 dogs and says so on the page.
+const TORESSON_ORAL_COBALAMIN =
+  'Toresson L, Steiner JM, Spodsberg E, et al. Effects of oral versus parenteral cobalamin supplementation on methylmalonic acid and homocysteine concentrations in dogs with chronic enteropathies and low cobalamin concentrations. Vet J. 2019;243:8-14. doi:10.1016/j.tvjl.2018.11.004'
+const MANCHESTER_GC_FRENCHIE =
+  'Manchester AC, Hill S, Sabatino B, et al. Association between granulomatous colitis in French Bulldogs and invasive Escherichia coli and response to fluoroquinolone antimicrobials. J Vet Intern Med. 2013;27(1):56-61. doi:10.1111/jvim.12020'
+const MOSER_FELINE_PANC_US =
+  'Moser K, Mitze S, Teske E, Stockhaus C. Evaluation of sonographic parameters as prognostic risk factors in cats with pancreatitis — a retrospective study in 42 cats. Tierarztl Prax Ausg K Kleintiere Heimtiere. 2018;46(6):386-392. doi:10.1055/s-0038-1677391'
+const BRUET_PERIANAL_CONSENSUS =
+  'Bruet V, Buendia E, Cadiergues MC, et al. Literature review and authors’ consensus recommendations for the medical management of perianal fistulae in dogs. Vet Dermatol. 2025;36(5):566-580. doi:10.1111/vde.13354'
 const LOCKHART_HORNERS_IMAGING =
   'Lockhart RL, Tzouganakis I, Tsvetanova A, Smith KM, Smith PM. The diagnostic yield of advanced imaging in dogs with Horner’s syndrome presenting with and without additional clinical signs: a retrospective study of 120 cases (2000-2018). Vet Ophthalmol. 2022;25(suppl 1):51-59. doi:10.1111/vop.12918'
 const BOYDELL_GR_HORNERS =
@@ -1322,6 +1335,7 @@ const SOURCE_NAMES = [
   'Ruessli', 'Magalhães', 'Desbordes', 'Evans', 'Brewińska',
   'Gonçalves', 'Dussaux', 'Togawa', 'Levy', 'Cameron', 'Sharma',
   'Lockhart', 'Boydell',
+  'Toresson', 'Manchester', 'Moser', 'Bruet',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1691,6 +1705,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Cameron/.test(part)) { out.push({ id: 'cameron-tbi-poc', text: CAMERON_TBI_POC }); continue }
     if (/^Sharma/.test(part)) { out.push({ id: 'sharma-head-trauma', text: SHARMA_HEAD_TRAUMA }); continue }
     if (/^Lockhart/.test(part)) { out.push({ id: 'lockhart-horners-imaging', text: LOCKHART_HORNERS_IMAGING }); continue }
+    if (/^Toresson/.test(part)) { out.push({ id: 'toresson-oral-cobalamin', text: TORESSON_ORAL_COBALAMIN }); continue }
+    if (/^Manchester/.test(part)) { out.push({ id: 'manchester-gc-frenchie', text: MANCHESTER_GC_FRENCHIE }); continue }
+    if (/^Moser/.test(part)) { out.push({ id: 'moser-feline-panc-us', text: MOSER_FELINE_PANC_US }); continue }
+    if (/^Bruet/.test(part)) { out.push({ id: 'bruet-perianal-consensus', text: BRUET_PERIANAL_CONSENSUS }); continue }
     if (/^Boydell/.test(part)) { out.push({ id: 'boydell-gr-horners', text: BOYDELL_GR_HORNERS }); continue }
     if (/^Canonne/.test(part)) { out.push({ id: 'canonne-av-bal', text: CANONNE_AV_BAL }); continue }
     if (/^Henke/.test(part)) { out.push({ id: 'henke-zinc', text: HENKE_ZINC }); continue }
