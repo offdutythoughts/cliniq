@@ -1164,6 +1164,12 @@ const CAMERON_TBI_POC =
 // Toresson (PubMed 2018 online / print 2019), Manchester (PubMed 2012 / print
 // 2013) and Moser (PubMed 2019 / print 2018, where the print year is the EARLIER
 // one). Manchester is 6 dogs and says so on the page.
+// Pulmonary thromboembolism. Found while auditing units: DIS-RESP-PTE gave the
+// D-dimer thresholds in ng/dL where every other page and the literature use
+// ng/mL, and called a low value a "high NPV" rule-out. Epstein measured the NPV
+// at 60%. Only 10 dogs had confirmed PE, which the page now states.
+const EPSTEIN_DDIMER_PE =
+  'Epstein SE, Hopper K, Mellema MS, Johnson LR. Diagnostic utility of D-dimer concentrations in dogs with pulmonary embolism. J Vet Intern Med. 2013;27(6):1646-1649. doi:10.1111/jvim.12177'
 const TORESSON_ORAL_COBALAMIN =
   'Toresson L, Steiner JM, Spodsberg E, et al. Effects of oral versus parenteral cobalamin supplementation on methylmalonic acid and homocysteine concentrations in dogs with chronic enteropathies and low cobalamin concentrations. Vet J. 2019;243:8-14. doi:10.1016/j.tvjl.2018.11.004'
 const MANCHESTER_GC_FRENCHIE =
@@ -1335,7 +1341,7 @@ const SOURCE_NAMES = [
   'Ruessli', 'Magalhães', 'Desbordes', 'Evans', 'Brewińska',
   'Gonçalves', 'Dussaux', 'Togawa', 'Levy', 'Cameron', 'Sharma',
   'Lockhart', 'Boydell',
-  'Toresson', 'Manchester', 'Moser', 'Bruet',
+  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1706,6 +1712,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Sharma/.test(part)) { out.push({ id: 'sharma-head-trauma', text: SHARMA_HEAD_TRAUMA }); continue }
     if (/^Lockhart/.test(part)) { out.push({ id: 'lockhart-horners-imaging', text: LOCKHART_HORNERS_IMAGING }); continue }
     if (/^Toresson/.test(part)) { out.push({ id: 'toresson-oral-cobalamin', text: TORESSON_ORAL_COBALAMIN }); continue }
+    if (/^Epstein/.test(part)) { out.push({ id: 'epstein-ddimer-pe', text: EPSTEIN_DDIMER_PE }); continue }
     if (/^Manchester/.test(part)) { out.push({ id: 'manchester-gc-frenchie', text: MANCHESTER_GC_FRENCHIE }); continue }
     if (/^Moser/.test(part)) { out.push({ id: 'moser-feline-panc-us', text: MOSER_FELINE_PANC_US }); continue }
     if (/^Bruet/.test(part)) { out.push({ id: 'bruet-perianal-consensus', text: BRUET_PERIANAL_CONSENSUS }); continue }
