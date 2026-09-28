@@ -674,7 +674,11 @@ describe('buildDiseaseCitations', () => {
     expect(entries.map(e => e.id)).toEqual(['ettinger-ch314'])
   })
 
-  it('numbers the real prostatitis page as a single Ettinger chapter', () => {
+  // This page repeats "(Ettinger Ch 314)" on nearly every field, so it is the
+  // clearest check that a marker seen many times collapses to ONE numbered entry.
+  // It used to cite that chapter and nothing else; the ISCAID urinary guideline
+  // now sits alongside it, and the dedup behaviour is what the test is for.
+  it('collapses a repeated Ettinger marker to one entry on the prostatitis page', () => {
     const d = DB.disease_page.find(x => x.id === 'DIS-URO-PROSTATITIS')!
     const str = (v: unknown): string => (typeof v === 'string' ? v : '')
     const { entries } = buildDiseaseCitations([
@@ -682,8 +686,9 @@ describe('buildDiseaseCitations', () => {
       str(d.sex), str(d.risk), str(d.path), str(d.signs), str(d.conf), str(d.supp),
       str(d.tx1), str(d.tx2), str(d.outpatient), str(d.monitor), str(d.prog), str(d.ddx), str(d.pearl),
     ])
-    expect(entries.map(e => e.id)).toEqual(['ettinger-ch314'])
+    expect(entries.map(e => e.id)).toEqual(['ettinger-ch314', 'weese-iscaid-urinary'])
     expect(entries[0].text).toContain(': chap 314.')
+    expect(entries[1].text).toContain('ISCAID')
   })
 
   it('numbers the feline HAC page across its many primary sources, in render order', () => {
