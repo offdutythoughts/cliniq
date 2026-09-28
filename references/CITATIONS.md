@@ -2191,6 +2191,55 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Infectious batch: cat flu and Lyme (2026-09-28)
+
+Two pages, 224 → 222, and uncited pages 64 → 63.
+
+**DIS-INFECT-URTI — Thiry 2009, reused.** The ABCD feline herpesvirus guideline was already
+in the file, cited on four *eye* pages, and not on the page about FHV as an upper respiratory
+disease, which is what the guideline is actually about. Added the shedding duration and
+contact requirement, the mucolytic/antibiotic supportive detail, and the vaccination schedule
+(9 and 12 weeks, booster at a year, then annual for at-risk and 3-yearly for indoor-only,
+including cats that have already recovered).
+
+**DIS-INFECT-LYME — Littman 2018, the ACVIM consensus.** Marked as `Littman` rather than
+`ACVIM 2018` because `ACVIM_BY_YEAR` already maps 2018 to the hypertension statement; using
+the surname avoids needing a keyword qualifier in the resolver.
+
+Its **PubMed abstract is purely procedural** — it states that a consensus statement exists
+and what it covers, with no findings. Citing it from that record would have meant attaching
+the page's existing thresholds to a source I had not read, which is the Bellenger failure
+mode. The paper is open access, so the claims were taken from the full text (PMC5980284)
+instead. That turned a thin scope-level citation into real content, and it confirmed rather
+than contradicted what the page already said:
+
+- Most Bb-seropositive dogs **and cats** never become ill — unchanged across experimental
+  tick-exposure models and field data. The page asserted this against a textbook.
+- The 4-week course reflects the organism's protracted behaviour, and doxycycline is the
+  panel's first choice for dosing ease, coinfection cover and anti-inflammatory effect.
+
+And it added several things the page did not have:
+
+- 4 weeks at 10 mg/kg q12h **did not clear the organism in every dog** — so treatment is not
+  assumed curative.
+- Quantitative C6 **magnitude does not predict illness**, and in a seropositive dog that is
+  neither clinical nor proteinuric there is no evidence it helps the treatment decision. The
+  page previously gave only a post-treatment decline target, which reads as though the number
+  carries more weight than the consensus grants it.
+- Whole-cell ELISA, IFA and Western blot are **not recommended** (spirochaete cross-reaction),
+  nor IgM-versus-IgG testing, since dogs do not present acutely.
+- Cefovecin, 2 injections 14 days apart, was as efficacious as 4 weeks of doxycycline or
+  amoxicillin — an option for dogs intolerant of tetracyclines.
+- Bb is generally not transmitted for at least 36–48 hours after attachment, year-round
+  prevention is advised because ticks activate above about 4 °C, and **selamectin does not
+  kill ticks** so it is not recommended for tick control.
+
+**A syntax error I caused.** The inserted Lyme text contained "the organism's protracted
+behaviour". `db.ts` fields are single-quoted TypeScript strings, so a bare apostrophe ends the
+string — `tsc` failed on three counts at that line. Escaped to `\'`. Worth noting the tell:
+the shell `&&` chain printed "tsc clean" after a `head` that had already consumed the error
+output, so the pass looked green. Read the typecheck's own exit status, not the tail of a pipe.
+
 ## Error audit (2026-09-28)
 
 Ran after the GI batch. Mechanical checks were clean — 387 tests, 28 lints, typecheck,

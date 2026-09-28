@@ -1168,6 +1168,12 @@ const CAMERON_TBI_POC =
 // D-dimer thresholds in ng/dL where every other page and the literature use
 // ng/mL, and called a low value a "high NPV" rule-out. Epstein measured the NPV
 // at 60%. Only 10 dogs had confirmed PE, which the page now states.
+// Lyme borreliosis. The ACVIM consensus, and the marker is 'Littman' rather than
+// 'ACVIM 2018' because ACVIM_BY_YEAR already maps 2018 to the hypertension
+// statement. Its PubMed abstract is purely procedural, so the claims on the page
+// were taken from the open-access full text (PMC5980284), not the record.
+const LITTMAN_ACVIM_LYME =
+  'Littman MP, Gerber B, Goldstein RE, Labato MA, Lappin MR, Moore GE. ACVIM consensus update on Lyme borreliosis in dogs and cats. J Vet Intern Med. 2018;32(3):887-903. doi:10.1111/jvim.15085'
 const EPSTEIN_DDIMER_PE =
   'Epstein SE, Hopper K, Mellema MS, Johnson LR. Diagnostic utility of D-dimer concentrations in dogs with pulmonary embolism. J Vet Intern Med. 2013;27(6):1646-1649. doi:10.1111/jvim.12177'
 const TORESSON_ORAL_COBALAMIN =
@@ -1341,7 +1347,7 @@ const SOURCE_NAMES = [
   'Ruessli', 'Magalhães', 'Desbordes', 'Evans', 'Brewińska',
   'Gonçalves', 'Dussaux', 'Togawa', 'Levy', 'Cameron', 'Sharma',
   'Lockhart', 'Boydell',
-  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein',
+  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1713,6 +1719,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Lockhart/.test(part)) { out.push({ id: 'lockhart-horners-imaging', text: LOCKHART_HORNERS_IMAGING }); continue }
     if (/^Toresson/.test(part)) { out.push({ id: 'toresson-oral-cobalamin', text: TORESSON_ORAL_COBALAMIN }); continue }
     if (/^Epstein/.test(part)) { out.push({ id: 'epstein-ddimer-pe', text: EPSTEIN_DDIMER_PE }); continue }
+    if (/^Littman/.test(part)) { out.push({ id: 'littman-acvim-lyme', text: LITTMAN_ACVIM_LYME }); continue }
     if (/^Manchester/.test(part)) { out.push({ id: 'manchester-gc-frenchie', text: MANCHESTER_GC_FRENCHIE }); continue }
     if (/^Moser/.test(part)) { out.push({ id: 'moser-feline-panc-us', text: MOSER_FELINE_PANC_US }); continue }
     if (/^Bruet/.test(part)) { out.push({ id: 'bruet-perianal-consensus', text: BRUET_PERIANAL_CONSENSUS }); continue }
