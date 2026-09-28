@@ -2191,6 +2191,68 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## GI batch: chronic enteropathy, cobalamin, colitis, perianal fistulae (2026-09-28)
+
+Nine pages closed, 234 → 225. Only four new papers were needed — three already in the
+file covered five of the nine pages once someone looked at what they actually said.
+
+| Page | Paper | n | What it carries |
+|---|---|---|---|
+| DIS-GI-IBD | Allenspach 2007 | 70 dogs | **reuse** — the paper that defined CCECAI; 18% euthanased over 3 years |
+| DIS-GI-DRD | Allenspach 2007 | 70 dogs | **reuse** — diet-first-then-steroids was the tested sequence |
+| DIS-GI-PLE | Allenspach 2007 | 70 dogs | **reuse** — albumin <20 g/L an independent risk factor |
+| DIS-GI-COBAL | Allenspach 2007 | 70 dogs | **reuse** — cobalamin <200 ng/L predicts negative outcome |
+| DIS-GI-COBAL | Toresson 2019 | 36 dogs | Randomised: oral matched parenteral on MMA at every timepoint |
+| DIS-GI-ARD | Rudinsky 2022 | 59 dogs | **reuse** — metronidazole lengthened remission and worsened dysbiosis |
+| DIS-GI-COLITIS | Rudinsky 2022 | 59 dogs | **reuse** — diet 5 d vs 8.5 d with metronidazole added |
+| DIS-GI-GRANCOL | Manchester 2013 | 6 dogs | Invasive *E. coli* in all 6; fluoroquinolone remission 3–30 months |
+| DIS-GI-PANCAT | Moser 2018 | 42 cats | 21% had NO sonographic change; sonographic severity did not predict survival |
+| DIS-GI-PERIANAL | Bruet 2025 | 20 studies | SoRT-graded consensus: ciclosporin first-line, evidence weak throughout |
+
+**Three registry disagreements, all resolved to the print year per Rule 6.** Toresson
+(PubMed 2018 online, Crossref print **2019**), Manchester (PubMed 2012, print **2013**) and
+Moser (PubMed 2019, print **2018** — here the print year is the *earlier* one, which is the
+opposite of the usual direction and easy to get backwards).
+
+### A units error found while citing, and fixed
+
+Two pages gave the canine cobalamin threshold as **`<200 ng/mL`** — DIS-GI-COBAL and the
+cobalamin block on DIS-GI-IBD. It is **ng/L**. DIS-GI-EPI already had it right (`<400 ng/L`),
+so the app contradicted itself on the same analyte, and `200 ng/mL` is a thousandfold off:
+the reference interval Toresson worked to is 244–959 ng/L and Allenspach's risk-factor
+threshold is <200 ng/L. Both are now `ng/L`. Worth noting that the wrong unit had a textbook
+citation behind it, so the superscript was no protection.
+
+### Allenspach 2016 was left where it is, deliberately
+
+`Allenspach 2016` (203 dogs, long-term outcome) has **no abstract** in either PubMed or
+Europe PMC — the record is title, journal and pages only. It would have been the obvious
+paper for the chronic-enteropathy pages, and Rule 3 forbids it: a claim cannot be written
+from a bibliographic record. It stays on DIS-GI-EOGAST, where it already was, and
+Allenspach 2007 — which has a full abstract and is the stronger paper for these pages
+anyway, being the origin of CCECAI — carries the new claims instead. If the Vet Rec full
+text becomes reachable, 203 dogs is worth coming back for.
+
+### Claims deliberately not made
+
+- **Allenspach 2007 PLE subgroup.** The abstract gives 70 dogs across three groups but no
+  subgroup sizes, so the PLE page cites it for the whole-cohort albumin threshold and for
+  how the PLE dogs were treated, not for any PLE-specific proportion.
+- **Allenspach 2007 food-responsive proportion.** The trial escalated diet → steroids but
+  the abstract never says what fraction responded to diet, so the DRD page says only that
+  the sequence was tested, not that most dogs stopped at diet.
+- **Moser 2018 and fPLI prognosis.** The abstract contradicts itself — it states there was
+  no significant fPLI difference between survivors and non-survivors, then that fPLI
+  correlated significantly with prognosis. The page therefore uses only the internally
+  consistent findings (sonographic change absent in 21%, and severity not predicting
+  30-day survival) and makes no fPLI prognostic claim.
+- **Rudinsky 2022 is about ACUTE colitis.** DIS-GI-COLITIS is the chronic page, so the
+  bullet says "acute, not chronic" on its face rather than letting the reader assume the
+  trial transfers.
+- **DIS-GI-TRICHO was skipped.** The only *Tritrichomonas foetus* papers surfacing are
+  single case reports, which cannot carry that page's general claims. Left uncited pending a
+  treatment or prevalence cohort.
+
 ## Neurology batch: intracranial, stroke, trauma, ANNPE/FCE, tetanus (2026-09-27)
 
 Eleven pages closed, 244 → 234. Fifteen papers, all verified against Crossref as well as PubMed.
