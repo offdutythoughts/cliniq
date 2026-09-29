@@ -298,6 +298,26 @@ for (const [id, texts] of byId) {
   }
 }
 
+// ── 7. No stray control characters in the source ─────────────────────────────
+// Twice now, generating these files through a shell heredoc into Python has
+// written a control character where an escape was intended: a NUL byte in place
+// of a space (which made `grep` treat the file as binary and silently match
+// nothing), and 0x08 backspaces in place of `\b` in a year-matching regex.
+//
+// The backspace case is the nastier one. `tsc` accepts it, the regex is valid,
+// the branch is reachable, and it simply never matches — so the author sees a
+// marker that resolves to nothing with no indication why. It cost two debugging
+// passes before the bytes were dumped. Checking for them is one line.
+for (const [label, text] of [['diseaseReferences.tsx', refSrc], ['db.ts', dbSrc]] as const) {
+  for (const m of text.matchAll(/[\x00-\x08\x0b\x0c\x0e-\x1f]/g)) {
+    const line = text.slice(0, m.index).split('\n').length
+    fail.push(
+      `${label}:${line} contains a stray control character (0x${m[0].charCodeAt(0).toString(16).padStart(2, '0')}).` +
+      `\n      Almost certainly an escape that was consumed a layer too early — \\b became a backspace, or a space became NUL.`,
+    )
+  }
+}
+
 // ── Report ───────────────────────────────────────────────────────────────────
 if (fail.length) {
   console.error(`✗ ${fail.length} citation-resolver integrity problem(s):`)

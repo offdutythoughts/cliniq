@@ -1190,6 +1190,17 @@ const CAMERON_TBI_POC =
 // poison. They are cited for ILE as a modality, and the pages say so. Notably
 // DIS-TOX-STRYCH is deliberately NOT cited here: it states ILE has no role
 // because strychnine is not appreciably lipophilic, and that stays true.
+// Intestinal parasite prevalence. Two Zoetis Reference Laboratories datasets from
+// the same 2023 US submissions, one canine and one feline, by the same first
+// author — so Nagamori is year-keyed (2025 dogs, 2026 cats).
+//
+// These are animals SUBMITTED for faecal examination in the United States, not a
+// random population sample, and every page using them says so. The numbers are
+// denominators for "how often do I actually see this", not true prevalence.
+const NAGAMORI_CANINE_PARASITES =
+  'Nagamori Y, Warren Z, Houma M, Samarakoon N. Regional and seasonal variability in canine parasitism across the United States. Vet Parasitol. 2025;339:110579. doi:10.1016/j.vetpar.2025.110579'
+const NAGAMORI_FELINE_PARASITES =
+  'Nagamori Y, Whittle A, Warren Z, et al. Prevalence and epidemiologic patterns of feline parasitism detected by fecal examination in the United States, 2023. Vet Parasitol. 2026;346:110807. doi:10.1016/j.vetpar.2026.110807'
 const MARKERT_ILE_COHORT =
   'Markert C, Heilmann RM, Kiwitz D, Doerfelt R. Intravenous lipid emulsion for the treatment of poisonings in 313 dogs and 100 cats (2016-2020). Front Vet Sci. 2023;10:1272705. doi:10.3389/fvets.2023.1272705'
 const KIWITZ_ILE_ADVERSE =
@@ -1377,7 +1388,7 @@ const SOURCE_NAMES = [
   'Ruessli', 'Magalhães', 'Desbordes', 'Evans', 'Brewińska',
   'Gonçalves', 'Dussaux', 'Togawa', 'Levy', 'Cameron', 'Sharma',
   'Lockhart', 'Boydell',
-  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz',
+  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1498,6 +1509,11 @@ const CHAN_BY_YEAR: Record<string, { id: string; text: string }> = {
  *  that reads this must stay ABOVE the /^Anders\\b/ one. */
 const EVANS_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2003': { id: 'evans-metro-diazepam', text: EVANS_METRO_DIAZEPAM },
+}
+
+const NAGAMORI_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2025': { id: 'nagamori-canine-parasites', text: NAGAMORI_CANINE_PARASITES },
+  '2026': { id: 'nagamori-feline-parasites', text: NAGAMORI_FELINE_PARASITES },
 }
 
 const PHILLIPS_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -1752,6 +1768,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Littman/.test(part)) { out.push({ id: 'littman-acvim-lyme', text: LITTMAN_ACVIM_LYME }); continue }
     if (/^Weese/.test(part)) { out.push({ id: 'weese-iscaid-urinary', text: WEESE_ISCAID_URINARY }); continue }
     if (/^Kiupel/.test(part)) { out.push({ id: 'kiupel-mct-2tier', text: KIUPEL_MCT_2TIER }); continue }
+    if (/^Nagamori/.test(part)) {
+      const hit = NAGAMORI_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Markert/.test(part)) { out.push({ id: 'markert-ile-cohort', text: MARKERT_ILE_COHORT }); continue }
     if (/^Kiwitz/.test(part)) { out.push({ id: 'kiwitz-ile-adverse', text: KIWITZ_ILE_ADVERSE }); continue }
     if (/^Marconato/.test(part)) { out.push({ id: 'marconato-osa-vaccine', text: MARCONATO_OSA_VACCINE }); continue }
