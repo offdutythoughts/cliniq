@@ -2191,6 +2191,32 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Feline cholangitis and primary hyperparathyroidism (2026-09-29)
+
+Two pages, 187 → 185.
+
+- **Watson 2025** on DIS-HEP-CHOLANGITIS. Establishes that cholangitis is the **commonest liver
+  disease in cats**, and adds the point the page most needed: "lymphocytic cholangitis" may not be
+  a single disease — histology, clinical picture and treatment response are all heterogeneous.
+  That is the likeliest explanation when a case refuses to behave like the textbook, and a page
+  that presents a clean neutrophilic/lymphocytic dichotomy actively obscures it. The chronic
+  neutrophilic form overlapping both categories is now noted too.
+- **Rosa-Padilla 2026** on DIS-ENDO-PHPT — 202 surgically treated dogs across three hospitals.
+
+Three findings the hyperparathyroidism page gains:
+
+- Only **68%** had hypercalcaemia-associated signs, so a third are found on biochemistry rather
+  than because they look ill.
+- Persistent hypercalcaemia after surgery in **12.4%** (25/202), mostly from removing the wrong
+  tissue or multiglandular disease, with 15 dogs needing a second operation. The page previously
+  said "usually curative" and named only transient hypocalcaemia as the risk.
+- **Neither preoperative ionised calcium nor PTH distinguished** the dogs whose hypercalcaemia
+  persisted from those it resolved in — so nothing measurable beforehand identifies who will need
+  a second look, which is worth saying explicitly rather than leaving a clinician to assume a
+  higher calcium means a harder case.
+
+True recurrence was rare by contrast: 1 of 79 dogs followed past 6 months.
+
 ## Gingivostomatitis and hepatic lipidosis (2026-09-29)
 
 Two pages, 189 → 187.

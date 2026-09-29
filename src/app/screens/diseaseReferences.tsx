@@ -1215,6 +1215,11 @@ const CAMERON_TBI_POC =
 // its controls are HEALTHY cats rather than other liver disease, which its own
 // authors flag. The page says both, because a 92%/88% test that has never been
 // run against cholangitis is not yet a diagnostic test.
+// Feline cholangitis and primary hyperparathyroidism.
+const WATSON_FELINE_CHOLANGITIS =
+  'Watson P. Feline cholangitis. Vet Clin North Am Small Anim Pract. 2025;55(4):627-646. doi:10.1016/j.cvsm.2025.03.001'
+const ROSAPADILLA_PHPT_SURGERY =
+  'Rosa-Padilla NL, Fuller B, Schumacher C, et al. Persistent and recurrent hypercalcemia are uncommon in dogs undergoing surgical treatment for primary hyperparathyroidism. Am J Vet Res. 2026;87(8). doi:10.2460/ajvr.26.03.0104'
 const RIVAS_FCGS_MSC =
   'Rivas IL, Soltero-Rivera M, Vapniarsky N, Arzi B. Stromal cell therapy in cats with feline chronic gingivostomatitis: current perspectives and future direction. J Feline Med Surg. 2023;25(8):1098612X231185395. doi:10.1177/1098612X231185395'
 const XU_FHL_METABOLOMICS =
@@ -1430,7 +1435,7 @@ const SOURCE_NAMES = [
   'Ruessli', 'Magalhães', 'Desbordes', 'Evans', 'Brewińska',
   'Gonçalves', 'Dussaux', 'Togawa', 'Levy', 'Cameron', 'Sharma',
   'Lockhart', 'Boydell',
-  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu',
+  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu', 'Watson', 'Rosa-Padilla',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1820,6 +1825,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Jaffey/.test(part)) { out.push({ id: 'jaffey-cocci-remission', text: JAFFEY_COCCI_REMISSION }); continue }
     if (/^Sparkes/.test(part)) { out.push({ id: 'sparkes-isfm-diabetes', text: SPARKES_ISFM_DIABETES }); continue }
     if (/^Rivas/.test(part)) { out.push({ id: 'rivas-fcgs-msc', text: RIVAS_FCGS_MSC }); continue }
+    if (/^Watson/.test(part)) { out.push({ id: 'watson-feline-cholangitis', text: WATSON_FELINE_CHOLANGITIS }); continue }
+    if (/^Rosa-Padilla/.test(part)) { out.push({ id: 'rosapadilla-phpt-surgery', text: ROSAPADILLA_PHPT_SURGERY }); continue }
     if (/^Xu\b/.test(part)) { out.push({ id: 'xu-fhl-metabolomics', text: XU_FHL_METABOLOMICS }); continue }
     if (/^Pagani/.test(part)) { out.push({ id: 'pagani-gbm-mortality', text: PAGANI_GBM_MORTALITY }); continue }
     if (/^Berlin/.test(part)) { out.push({ id: 'berlin-fluconazole-liver', text: BERLIN_FLUCONAZOLE_LIVER }); continue }
