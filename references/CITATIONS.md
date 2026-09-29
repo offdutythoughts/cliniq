@@ -2191,6 +2191,53 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Parasitology batch: intestinal parasite prevalence (2026-09-28)
+
+Six pages from two papers, 207 → 201, uncited 61 → 59. Both are Zoetis Reference Laboratories
+datasets from the same 2023 US submissions — one canine, one feline, same first author, so
+`Nagamori` is year-keyed (2025 dogs, 2026 cats).
+
+| Parasite | Dogs (n=48,510) | Cats (n=15,395) | Page |
+|---|---|---|---|
+| *Giardia* | 5.27% | 4.82% | DIS-GI-GIARDIA |
+| *Ancylostoma* | 3.14% | 0.61% | DIS-GI-HOOK |
+| *Toxocara* | 2.07% (*T. canis*) | 4.75% (*T. cati*) | DIS-GI-ROUND |
+| *Cystoisospora* | 1.95% | 3.40% | DIS-GI-COCCI |
+| *Trichuris* | 0.88% | 0.01% | DIS-GI-WHIP |
+| *Cryptosporidium* | — | 0.75% | DIS-GI-CRYPTO |
+
+Overall, at least one parasite in 12.27% of canine and 13.52% of feline submissions.
+
+The species contrasts are what make these worth citing rather than just the raw numbers:
+*Giardia* outranks every helminth in **both** species; hookworm is five times commoner in dogs
+than cats; roundworm runs the other way; and **whipworm is effectively canine-only** at 0.88%
+against 0.01%. Also recorded on the whipworm page: regional differences were significant but,
+unlike hookworm and roundworm, there was **no** significant region-by-season interaction, so
+whipworm risk does not track the seasons the same way.
+
+**Stated inline on every page**: these are US submissions for faecal examination in 2023, so
+they are the odds of finding a parasite in an animal someone decided to test — not true
+population prevalence. Without that, a superscript turns a selected denominator into an
+epidemiological fact.
+
+### A bug worth a lint: control characters from escape layering
+
+The Nagamori branch resolved to nothing and the lint caught it, but the cause took two passes to
+find. Generating the file through a shell heredoc into Python had written **0x08 backspace
+bytes** where `\b` was intended, so the year regex read `/<BS>(?:19|20)\d{2}<BS>/` and could
+never match. `tsc` accepts it, the regex is valid, the branch is reachable, and `grep` displayed
+it as though it were correct — only dumping the raw bytes revealed it.
+
+This is the second time: an earlier pass wrote a **NUL byte** in place of a space in
+`lint-refs-integrity.ts` itself, which made `grep` treat the whole file as binary and silently
+match nothing.
+
+`lint-refs-integrity` gained **check 7**, which scans both source files for stray control
+characters and says what the likely cause is (an escape consumed a layer too early).
+Mutation-tested by reintroducing the backspace: check 1 reports the symptom (markers resolving
+to nothing) and check 7 names the cause with a line number. A full sweep of both files found no
+other control characters.
+
 ## Toxicology batch: intravenous lipid emulsion (2026-09-28)
 
 Seven pages from two papers, 214 → 207, uncited 62 → 61. Nine pages recommended ILE with
