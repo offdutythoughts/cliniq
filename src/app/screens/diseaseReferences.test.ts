@@ -617,6 +617,17 @@ describe('parseSources', () => {
   // Phillips gained a second paper. Without the year map the 2025 ANNPE branch
   // answered for the 2019 feline hiatal-hernia marker too, so DIS-GI-HH quietly
   // began citing a spinal-cord study.
+  // O'Neill now has FOUR VetCompass papers across two colliding years: GDV and
+  // corneal ulcerative disease both 2017, KCS and periodontal disease both 2021.
+  // The year map cannot separate same-year pairs, so each collision is broken by a
+  // keyword in the marker. Without these the periodontal page would cite dry eye.
+  it('separates all four O\u2019Neill papers, including both same-year pairs', () => {
+    expect(parseSources('O\u2019Neill 2017').map(s => s.id)).toEqual(['oneill-gdv'])
+    expect(parseSources('O\u2019Neill 2017 cornea').map(s => s.id)).toEqual(['oneill-cud'])
+    expect(parseSources('O\u2019Neill 2021').map(s => s.id)).toEqual(['oneill-kcs'])
+    expect(parseSources('O\u2019Neill 2021 periodontal').map(s => s.id)).toEqual(['oneill-periodontal'])
+  })
+
   it('keeps both Phillips papers apart', () => {
     expect(parseSources('Phillips 2019').map(s => s.id)).toEqual(['phillips-feline-hh'])
     expect(parseSources('Phillips 2025').map(s => s.id)).toEqual(['phillips-exercise-annpe'])
