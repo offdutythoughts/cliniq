@@ -2191,6 +2191,59 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Oncology batch: MCT grading, osteosarcoma, anal sac carcinoma (2026-09-28)
+
+Three pages, 217 → 214.
+
+| Page | Paper | n | What it carries |
+|---|---|---|---|
+| DIS-NEO-MCT | Kiupel 2011 | 95 tumours, 28 pathologists | The 2-tier criteria, the concordance failure that motivated them, and the survival split |
+| DIS-NEO-OSA | Marconato 2022 | 34 SOC, 20 vaccinated | Standard-of-care benchmark; vaccine effect reported but flagged as non-randomised |
+| DIS-NEO-AGASACA | Martin 2025 | 25 dogs | Nodal SBRT outcomes, its late toxicity, and that the primary still needs treating |
+
+**Kiupel was named on the page and credited to a textbook.** The MCT pearl already read "Grade
+with both Patnaik (I–III) and Kiupel (low/high)" against `(Ettinger Ch 327)`. Kiupel 2011 is
+where the second of those systems comes from. Its print year is **2011** (48(1):147-155) though
+PubMed shows the 2010 online date — Rule 6 again.
+
+Two things it contributes that the page did not have:
+
+- The four high-grade criteria in full, any **one** of which suffices: ≥7 mitotic figures/10 hpf,
+  ≥3 multinucleated cells/10 hpf, ≥3 bizarre nuclei/10 hpf, or karyomegaly with nuclear diameter
+  varying ≥two-fold in 10% of cells.
+- **Why the 2-tier system exists**: 28 pathologists across 16 institutions agreed on Patnaik
+  grade 3 in 75% of cases but on grades 1 and 2 in **under 64%**. That is a reason to treat a
+  grade I/II report as softer than it looks, and it is the kind of fact a grading table alone
+  never conveys.
+
+The page's separate claim that "MI <9 confers lower recurrence" was **left alone**. Kiupel's
+mitotic threshold is ≥7 per 10 hpf, which is a different number from a different analysis, and
+merging them would have manufactured a figure neither source states.
+
+**Osteosarcoma — a vaccine trial used for its control arm.** Marconato's interest is a
+peptide-based vaccine, but its 34-dog standard-of-care group (amputation plus adjuvant
+carboplatin) is a clean contemporary benchmark: median time to metastasis 240 days,
+tumour-specific survival 278 days. That sits a little below the page's textbook figure of
+10–11 months, and both are now on the page.
+
+The vaccine result (TTM 308 vs 240 days, survival 621 vs 278) is reported with the reason to
+discount its magnitude stated inline: the control dogs were treated **before the vaccine
+existed**, so this is a sequential comparison, not a randomised one, with 20 dogs in the treated
+arm.
+
+**AGASACA — the toxicity is the point.** Martin's 25 dogs given stereotactic radiation to
+metastatic sublumbar nodes reached median survival 451 days, but **12 of 25 developed hind-limb
+gait changes** in the late-effects period and hypercalcaemia resolution was inconsistent and
+transient. A survival figure alone would have made this look like a straightforwardly good
+option. Also recorded: stage did not affect survival in that cohort, and 8 of 25 (32%) recurred
+at the untreated primary — irradiating nodes does not remove the need to treat the mass.
+
+**Europe PMC was down (503) throughout this batch**, so discovery ran on PubMed alone. Its
+query translation ANDs every term and buries specific papers, and the workaround that found
+Kiupel was field-tagged search (`Kiupel M[Author] AND grading[Title] AND mast cell[Title]`)
+rather than natural language. Worth remembering: when PubMed returns 0 results for a paper that
+certainly exists, the query is over-constrained, not the index empty.
+
 ## Urinary batch: stones and urinary infection (2026-09-28)
 
 Five pages, 222 → 217, uncited 63 → 62. **One new reference for five pages**, because two

@@ -1177,6 +1177,16 @@ const CAMERON_TBI_POC =
 // RESPIRATORY one. Not open access, so claims here stay at the level the abstract
 // supports — what the document covers and how it classifies infection — and the
 // antibiotic durations keep their existing textbook citation.
+// Oncology. Kiupel is the paper the MCT page already named in its pearl while
+// citing a textbook for it; its print year is 2011 though PubMed shows the 2010
+// online date. Martin is 25 dogs and Marconato's vaccine arm is 20 against a
+// sequential rather than randomised control, and both pages say so.
+const KIUPEL_MCT_2TIER =
+  'Kiupel M, Webster JD, Bailey KL, et al. Proposal of a 2-tier histologic grading system for canine cutaneous mast cell tumors to more accurately predict biological behavior. Vet Pathol. 2011;48(1):147-155. doi:10.1177/0300985810386469'
+const MARCONATO_OSA_VACCINE =
+  'Marconato L, Melacarne A, Aralla M, et al. A target animal effectiveness study on adjuvant peptide-based vaccination in dogs with non-metastatic appendicular osteosarcoma undergoing amputation and chemotherapy. Cancers (Basel). 2022;14(5):1347. doi:10.3390/cancers14051347'
+const MARTIN_AGASACA_SBRT =
+  'Martin TW, Chang T, Boss MK, Janssens B, LaRue SM. Retrospective study evaluating the outcome and efficacy of stereotactic body radiation therapy for the treatment of metastatic abdominal lymph nodes in dogs with apocrine gland anal sac adenocarcinoma. Vet Comp Oncol. 2025;23(2):257-266. doi:10.1111/vco.13052'
 const WEESE_ISCAID_URINARY =
   'Weese JS, Blondeau J, Boothe D, et al. International Society for Companion Animal Infectious Diseases (ISCAID) guidelines for the diagnosis and management of bacterial urinary tract infections in dogs and cats. Vet J. 2019;247:8-25. doi:10.1016/j.tvjl.2019.02.008'
 const LITTMAN_ACVIM_LYME =
@@ -1354,7 +1364,7 @@ const SOURCE_NAMES = [
   'Ruessli', 'Magalhães', 'Desbordes', 'Evans', 'Brewińska',
   'Gonçalves', 'Dussaux', 'Togawa', 'Levy', 'Cameron', 'Sharma',
   'Lockhart', 'Boydell',
-  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese',
+  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1728,6 +1738,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Epstein/.test(part)) { out.push({ id: 'epstein-ddimer-pe', text: EPSTEIN_DDIMER_PE }); continue }
     if (/^Littman/.test(part)) { out.push({ id: 'littman-acvim-lyme', text: LITTMAN_ACVIM_LYME }); continue }
     if (/^Weese/.test(part)) { out.push({ id: 'weese-iscaid-urinary', text: WEESE_ISCAID_URINARY }); continue }
+    if (/^Kiupel/.test(part)) { out.push({ id: 'kiupel-mct-2tier', text: KIUPEL_MCT_2TIER }); continue }
+    if (/^Marconato/.test(part)) { out.push({ id: 'marconato-osa-vaccine', text: MARCONATO_OSA_VACCINE }); continue }
+    if (/^Martin/.test(part)) { out.push({ id: 'martin-agasaca-sbrt', text: MARTIN_AGASACA_SBRT }); continue }
     if (/^Manchester/.test(part)) { out.push({ id: 'manchester-gc-frenchie', text: MANCHESTER_GC_FRENCHIE }); continue }
     if (/^Moser/.test(part)) { out.push({ id: 'moser-feline-panc-us', text: MOSER_FELINE_PANC_US }); continue }
     if (/^Bruet/.test(part)) { out.push({ id: 'bruet-perianal-consensus', text: BRUET_PERIANAL_CONSENSUS }); continue }
