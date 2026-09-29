@@ -1204,6 +1204,18 @@ const CAMERON_TBI_POC =
 // Coccidioidomycosis, heartworm and cytauxzoonosis. Reichard is SEVEN cats, so it
 // carries the presentation and the range expansion and nothing about frequency or
 // outcome; the page states the number.
+// Periodontal disease, feline diabetes and gallbladder mucocele.
+//
+// O'Neill 2021 is the THIRD O'Neill collision in this file: 2021 was already the
+// KCS paper, so the periodontal one needs a keyword qualifier exactly as the two
+// 2017 papers needed 'cornea'. Pagani is 41 dogs and its own authors caution
+// about the sample size, which the page repeats.
+const ONEILL_PERIODONTAL =
+  "O’Neill DG, Mitchell CE, Humphrey J, Church DB, Brodbelt DC, Pegram C. Epidemiology of periodontal disease in dogs in the UK primary-care veterinary setting. J Small Anim Pract. 2021;62(12):1051-1061. doi:10.1111/jsap.13405"
+const SPARKES_ISFM_DIABETES =
+  'Sparkes AH, Cannon M, Church D, et al. ISFM consensus guidelines on the practical management of diabetes mellitus in cats. J Feline Med Surg. 2015;17(3):235-250. doi:10.1177/1098612X15571880'
+const PAGANI_GBM_MORTALITY =
+  'Pagani G, Ferraris EI, Montinaro V, et al. Short-term outcomes and mortality predictors in 41 dogs undergoing cholecystectomy for gallbladder mucocele: a single referral centre study. BMC Vet Res. 2026;22:214. doi:10.1186/s12917-026-05648-9'
 const JAFFEY_COCCI_REMISSION =
   'Jaffey JA, Hanzlicek AS, Rayhel LH, Hostnik ET, Irwin C, Chittick L. A treatment monitoring protocol to determine clinical remission in dogs with pulmonary coccidioidomycosis. J Vet Intern Med. 2026;40(1). doi:10.1093/jvimsj/aalaf064'
 const BERLIN_FLUCONAZOLE_LIVER =
@@ -1409,7 +1421,7 @@ const SOURCE_NAMES = [
   'Ruessli', 'Magalhães', 'Desbordes', 'Evans', 'Brewińska',
   'Gonçalves', 'Dussaux', 'Togawa', 'Levy', 'Cameron', 'Sharma',
   'Lockhart', 'Boydell',
-  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard',
+  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1797,6 +1809,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Markert/.test(part)) { out.push({ id: 'markert-ile-cohort', text: MARKERT_ILE_COHORT }); continue }
     if (/^Little/.test(part)) { out.push({ id: 'little-aafp-retrovirus', text: LITTLE_AAFP_RETROVIRUS }); continue }
     if (/^Jaffey/.test(part)) { out.push({ id: 'jaffey-cocci-remission', text: JAFFEY_COCCI_REMISSION }); continue }
+    if (/^Sparkes/.test(part)) { out.push({ id: 'sparkes-isfm-diabetes', text: SPARKES_ISFM_DIABETES }); continue }
+    if (/^Pagani/.test(part)) { out.push({ id: 'pagani-gbm-mortality', text: PAGANI_GBM_MORTALITY }); continue }
     if (/^Berlin/.test(part)) { out.push({ id: 'berlin-fluconazole-liver', text: BERLIN_FLUCONAZOLE_LIVER }); continue }
     if (/^Maerz/.test(part)) { out.push({ id: 'maerz-melarsomine', text: MAERZ_MELARSOMINE }); continue }
     if (/^Reichard/.test(part)) { out.push({ id: 'reichard-cytaux-indiana', text: REICHARD_CYTAUX_INDIANA }); continue }
@@ -1967,6 +1981,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
       // Two 2017 VetCompass papers — GDV and corneal ulcerative disease — so
       // the year is not enough on its own. The cornea marker says so.
       if (part.includes('cornea')) { out.push({ id: 'oneill-cud', text: ONEILL_CUD }); continue }
+      // And two 2021 papers — KCS and periodontal disease — so 2021 needs a
+      // qualifier too. The map keeps KCS; periodontal says so in the marker.
+      if (part.includes('periodont')) { out.push({ id: 'oneill-periodontal', text: ONEILL_PERIODONTAL }); continue }
       const hit = ONEILL_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
       if (hit) out.push(hit)
       continue

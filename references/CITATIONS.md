@@ -2191,6 +2191,45 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Periodontal disease, feline diabetes, gallbladder mucocele (2026-09-29)
+
+Three pages, 192 → 189, uncited 58 → 56.
+
+- **O'Neill 2021 (periodontal)** on DIS-DENT-PERIO — 22,333 UK primary-care dogs. One-year
+  period prevalence 12.52%; 18 breeds above crossbreds, highest Toy Poodle OR 3.97, King Charles
+  Spaniel 2.63, Greyhound 2.58, CKCS 2.39. Brachycephalic 1.25× mesocephalic, spaniels 1.63×
+  non-spaniels, and odds **fall** as adult bodyweight rises — so small size is the risk, which is
+  the opposite of the intuition for most diseases.
+- **Sparkes 2015 (ISFM consensus)** on DIS-ENDO-DM. Supports what the page already advised for
+  cats, and the page now also carries the panel's own caveat: substantial data are lacking in
+  many areas, so these are practical recommendations rather than trial results.
+- **Pagani 2026** on DIS-HEP-MUCOCELE — 41 dogs, 30-day mortality after cholecystectomy 14.6%.
+  Three predictors are identifiable **before** surgery (leukopenia, CRP >0.8 mg/dL, abdominal
+  effusion on ultrasound); necrotising cholecystitis also predicted death but only from
+  histopathology afterwards, which the page says so the reader does not look for it preoperatively.
+
+### The fourth O'Neill paper, and the third collision
+
+O'Neill now has four VetCompass papers across **two colliding years** — GDV and corneal
+ulcerative disease both 2017, KCS and periodontal disease both 2021. A `*_BY_YEAR` map cannot
+separate a same-year pair, so each collision is broken by a keyword in the marker (`cornea`,
+`periodont`) tested before the year lookup. Without the new qualifier the periodontal page would
+have cited the dry-eye paper — the Phillips failure mode, one year later.
+
+A test now pins all four resolutions together, because the map alone looks complete and gives no
+hint that two of its four papers are unreachable through it.
+
+### Two records deliberately not cited
+
+- **AAFP 2016 feline hyperthyroidism guidelines** (PMID 27562983) is indexed as a **Letter with
+  no abstract** — it is the erratum/notice, not the guidelines paper. Rule 6 warns that a search's
+  top hit is often the wrong record, and Rule 3 forbids writing from a record with no abstract.
+  DIS-ENDO-HYPERTHY stays uncited until the actual guidelines paper is read.
+- **Pagani's paired percentages** ("abdominal effusion 5/6 [83.3%] vs 26/35 [74.3%]") are
+  ambiguous in the abstract — they read as the proportion carrying the factor rather than
+  mortality within it. Only the unambiguous findings were used: the 14.6% mortality and the
+  identity of the preoperative predictors.
+
 ## Coccidioidomycosis, heartworm, cytauxzoonosis, feline lower urinary (2026-09-28)
 
 Five pages, 197 → 192. Four new papers plus one reuse.
