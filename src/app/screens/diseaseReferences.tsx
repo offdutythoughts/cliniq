@@ -1210,6 +1210,15 @@ const CAMERON_TBI_POC =
 // KCS paper, so the periodontal one needs a keyword qualifier exactly as the two
 // 2017 papers needed 'cornea'. Pagani is 41 dogs and its own authors caution
 // about the sample size, which the page repeats.
+// Feline chronic gingivostomatitis and hepatic lipidosis. Xu is a PRELIMINARY
+// metabolomics study — 7 cats for the liver work and 10 for the 3-HB assay, and
+// its controls are HEALTHY cats rather than other liver disease, which its own
+// authors flag. The page says both, because a 92%/88% test that has never been
+// run against cholangitis is not yet a diagnostic test.
+const RIVAS_FCGS_MSC =
+  'Rivas IL, Soltero-Rivera M, Vapniarsky N, Arzi B. Stromal cell therapy in cats with feline chronic gingivostomatitis: current perspectives and future direction. J Feline Med Surg. 2023;25(8):1098612X231185395. doi:10.1177/1098612X231185395'
+const XU_FHL_METABOLOMICS =
+  'Xu R, Yang Y, Bu F, et al. Preliminary metabolic characterization of hepatic lipidosis in cats using liquid chromatography-mass spectrometry and gas chromatography-mass spectrometry: pathway insights and candidate biomarkers. J Vet Intern Med. 2026;40(1). doi:10.1093/jvimsj/aalaf091'
 const ONEILL_PERIODONTAL =
   "O’Neill DG, Mitchell CE, Humphrey J, Church DB, Brodbelt DC, Pegram C. Epidemiology of periodontal disease in dogs in the UK primary-care veterinary setting. J Small Anim Pract. 2021;62(12):1051-1061. doi:10.1111/jsap.13405"
 const SPARKES_ISFM_DIABETES =
@@ -1421,7 +1430,7 @@ const SOURCE_NAMES = [
   'Ruessli', 'Magalhães', 'Desbordes', 'Evans', 'Brewińska',
   'Gonçalves', 'Dussaux', 'Togawa', 'Levy', 'Cameron', 'Sharma',
   'Lockhart', 'Boydell',
-  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani',
+  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1810,6 +1819,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Little/.test(part)) { out.push({ id: 'little-aafp-retrovirus', text: LITTLE_AAFP_RETROVIRUS }); continue }
     if (/^Jaffey/.test(part)) { out.push({ id: 'jaffey-cocci-remission', text: JAFFEY_COCCI_REMISSION }); continue }
     if (/^Sparkes/.test(part)) { out.push({ id: 'sparkes-isfm-diabetes', text: SPARKES_ISFM_DIABETES }); continue }
+    if (/^Rivas/.test(part)) { out.push({ id: 'rivas-fcgs-msc', text: RIVAS_FCGS_MSC }); continue }
+    if (/^Xu\b/.test(part)) { out.push({ id: 'xu-fhl-metabolomics', text: XU_FHL_METABOLOMICS }); continue }
     if (/^Pagani/.test(part)) { out.push({ id: 'pagani-gbm-mortality', text: PAGANI_GBM_MORTALITY }); continue }
     if (/^Berlin/.test(part)) { out.push({ id: 'berlin-fluconazole-liver', text: BERLIN_FLUCONAZOLE_LIVER }); continue }
     if (/^Maerz/.test(part)) { out.push({ id: 'maerz-melarsomine', text: MAERZ_MELARSOMINE }); continue }

@@ -2191,6 +2191,37 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Gingivostomatitis and hepatic lipidosis (2026-09-29)
+
+Two pages, 189 → 187.
+
+- **Rivas 2023** on DIS-DENT-STOMAT. Confirms full-mouth extraction as the standard of care, and
+  adds what the page lacked about the refractory fifth: those cats may face lifelong medical
+  management or euthanasia, and adipose-derived mesenchymal stromal cells are the most promising
+  option for them — with the honest caveat that giving MSCs *immediately* after extraction rather
+  than after failure has not been tested.
+- **Xu 2026** on DIS-HEP-LIPIDOSIS, scoped tightly on purpose.
+
+### A promising test that is not yet a test
+
+Xu reports serum 3-hydroxybutyrate above 2.43 mmol/L separating affected cats from controls with
+92% sensitivity and 88% specificity, AUC 0.86. Quoted bare, that reads as a usable diagnostic.
+But the controls were **healthy** cats, and the authors themselves say future work must include
+disease controls such as cholangitis and hepatitis to establish specificity. A cat being worked
+up for lipidosis is precisely a cat that might have cholangitis instead, so the comparison that
+matters has not been done. The page carries the numbers **and** that limitation in the same
+bullet, and labels the metabolomic findings (7 cats) mechanistic rather than diagnostic.
+
+This is the same failure shape as the D-dimer "high NPV" claim found earlier: an impressive
+operating characteristic against the wrong comparator.
+
+### Two papers rejected as too basic-science for a clinical page
+
+`Soltero-Rivera 2026` (CD8+ T-cell exhaustion transcriptomics in FCGS) and
+`Soltero-Rivera 2024` (transcriptomic biomarkers) are real peer-reviewed work but offer nothing a
+clinician can act on, and citing them would have decorated the page rather than supporting a
+claim. Rule 4 asks for a paper the page *rests* on, not merely a paper about the disease.
+
 ## Periodontal disease, feline diabetes, gallbladder mucocele (2026-09-29)
 
 Three pages, 192 → 189, uncited 58 → 56.
