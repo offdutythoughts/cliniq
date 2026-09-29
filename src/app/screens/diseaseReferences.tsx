@@ -1197,6 +1197,16 @@ const CAMERON_TBI_POC =
 // These are animals SUBMITTED for faecal examination in the United States, not a
 // random population sample, and every page using them says so. The numbers are
 // denominators for "how often do I actually see this", not true prevalence.
+// Retroviruses, blastomycosis and panleukopenia. Little covers BOTH FeLV and FIV,
+// so it serves two pages. Reinhart is 14 dogs and Naseri 30 cats, and both pages
+// say so — Naseri's survival figure also sits well below the one already on the
+// panleukopenia page, which is written up there rather than quietly replaced.
+const LITTLE_AAFP_RETROVIRUS =
+  'Little S, Levy J, Hartmann K, et al. 2020 AAFP Feline Retrovirus Testing and Management Guidelines. J Feline Med Surg. 2020;22(1):5-30. doi:10.1177/1098612X19895940'
+const REINHART_ITRACONAZOLE_TDM =
+  'Reinhart JM, Leduc F, Hanzlicek A, et al. Therapeutic drug monitoring of itraconazole in treatment of blastomycosis in dogs. J Vet Intern Med. 2026;40(1). doi:10.1093/jvimsj/aalag029'
+const NASERI_FPL_BIOMARKERS =
+  'Naseri A, Ider M, Erol BB, et al. Feline panleukopenia-associated clinicopathological abnormalities: first evaluation of diagnostic and prognostic roles of endothelial glycocalyx degradation biomarkers. Vet Q. 2025;45(1):2573815. doi:10.1080/01652176.2025.2573815'
 const NAGAMORI_CANINE_PARASITES =
   'Nagamori Y, Warren Z, Houma M, Samarakoon N. Regional and seasonal variability in canine parasitism across the United States. Vet Parasitol. 2025;339:110579. doi:10.1016/j.vetpar.2025.110579'
 const NAGAMORI_FELINE_PARASITES =
@@ -1388,7 +1398,7 @@ const SOURCE_NAMES = [
   'Ruessli', 'Magalhães', 'Desbordes', 'Evans', 'Brewińska',
   'Gonçalves', 'Dussaux', 'Togawa', 'Levy', 'Cameron', 'Sharma',
   'Lockhart', 'Boydell',
-  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori',
+  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1774,6 +1784,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
       continue
     }
     if (/^Markert/.test(part)) { out.push({ id: 'markert-ile-cohort', text: MARKERT_ILE_COHORT }); continue }
+    if (/^Little/.test(part)) { out.push({ id: 'little-aafp-retrovirus', text: LITTLE_AAFP_RETROVIRUS }); continue }
+    if (/^Reinhart/.test(part)) { out.push({ id: 'reinhart-itraconazole-tdm', text: REINHART_ITRACONAZOLE_TDM }); continue }
+    if (/^Naseri/.test(part)) { out.push({ id: 'naseri-fpl-biomarkers', text: NASERI_FPL_BIOMARKERS }); continue }
     if (/^Kiwitz/.test(part)) { out.push({ id: 'kiwitz-ile-adverse', text: KIWITZ_ILE_ADVERSE }); continue }
     if (/^Marconato/.test(part)) { out.push({ id: 'marconato-osa-vaccine', text: MARCONATO_OSA_VACCINE }); continue }
     if (/^Martin/.test(part)) { out.push({ id: 'martin-agasaca-sbrt', text: MARTIN_AGASACA_SBRT }); continue }

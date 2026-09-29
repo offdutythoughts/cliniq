@@ -2191,6 +2191,47 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Retrovirus, blastomycosis, panleukopenia (2026-09-28)
+
+Four pages, 201 → 197, uncited 59 → 58.
+
+- **Little 2020** (2020 AAFP retrovirus guidelines) serves **both** DIS-INFECT-FELV and
+  DIS-INFECT-FIV. Adds that one test at one moment may not settle status (repeat by a different
+  method; test at acquisition, after exposure, before FeLV or FIV vaccination, and whenever
+  illness occurs), and that the guidelines describe a **paucity of data** on antiretroviral and
+  immunomodulatory drugs — which reframes the antiviral options already listed on the FIV page
+  as poorly evidenced rather than established.
+- **Reinhart 2026** (14 dogs) on DIS-INFECT-BLASTO. The page already said itraconazole needs
+  therapeutic drug monitoring; this is why. There was **no correlation between dose and serum
+  concentration**, 12 of 14 dogs needed at least one adjustment to reach the 2–7 µg/mL trough,
+  and 9 needed further adjustment even after reaching it. The dose required also **falls** over
+  treatment — median 2.8 mg/kg/day at remission against 4.9 initially over a median 7.9 months.
+- **Naseri 2025** (30 cats) on DIS-GI-FPV.
+
+### A recent cohort disagreeing with the page, kept rather than hidden
+
+The panleukopenia page said "aggressive in-hospital care >90% survival". Naseri's 30 cats had
+**63.3% survival and 36.7% mortality**. Rather than overwrite either figure, both are now on the
+page with the reason they differ stated — outcome depends on the population and on what
+intensive support is actually available. Overwriting the optimistic number would have been as
+misleading as ignoring the pessimistic one.
+
+Its glycocalyx biomarkers (syndecan-1, endothelin-1) did predict mortality, and the page says
+plainly that these are **research assays rather than tests you can order** — otherwise the
+superscript implies an available test.
+
+### Two self-inflicted errors, caught by the gates
+
+Inserting a bullet immediately **before** a `#Salvage:` header on the blastomycosis page left
+that header with no content beneath it. `lint-blocks` and a `blocks.test.ts` case both failed,
+naming the field. Moved below the header. The lesson is positional: on this schema a `#header`
+bullet must be followed by its content, so new bullets go *after* the block they belong to, not
+before the header that introduces it.
+
+Also `tx2:'#Salvage:` is the **start** of a field, not preceded by `|`, so the first anchor
+attempt missed. `dbedit.py` raising on a miss rather than silently doing nothing is what made
+that obvious immediately.
+
 ## Parasitology batch: intestinal parasite prevalence (2026-09-28)
 
 Six pages from two papers, 207 → 201, uncited 61 → 59. Both are Zoetis Reference Laboratories
