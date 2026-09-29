@@ -2191,6 +2191,46 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Toxicology batch: intravenous lipid emulsion (2026-09-28)
+
+Seven pages from two papers, 214 → 207, uncited 62 → 61. Nine pages recommended ILE with
+nothing behind it; these are the two largest bodies of evidence on the modality.
+
+- **Markert 2023** — 313 dogs and 100 cats. Positive effect 74%, no discernible effect 22%,
+  worsening 4%, overall survival 96%. Median total dose 8.0 mL/kg in dogs and 15.8 mL/kg in
+  cats, started a median of 6 h after exposure.
+- **Kiwitz 2024** — 82 animals monitored hourly on a fixed protocol. Triglycerides rose about
+  ten-fold by 3 h; bicarbonate, base excess, sodium, potassium and ionised calcium all fell
+  significantly; animals whose consciousness worsened had the larger triglyceride and lactate
+  rises.
+
+### The two papers disagree, and that disagreement is the finding
+
+Suspected adverse effects were **6%** in Markert and **54%** in Kiwitz. Same research group,
+overlapping authors, different method: Markert reviewed records, Kiwitz examined patients every
+hour and ran serial blood gases. The honest reading is not that one is wrong but that the rate
+depends entirely on how hard you look — and all of Kiwitz's were reversible within 33 hours.
+That is written onto the pages as a single bullet citing both, because either number alone
+misleads: 6% reads as "safe enough not to monitor", 54% reads as "avoid".
+
+### Where it was NOT added, deliberately
+
+**DIS-TOX-STRYCH says ILE has no role** because strychnine is not appreciably lipophilic. That
+page mentions lipid emulsion, so a blanket pass over every page mentioning it would have
+attached an efficacy cohort to a statement that ILE does not work — the citation would have
+argued against the sentence carrying it. It remains uncited, correctly.
+
+DIS-TOX-CHOLE was also left alone: its ILE claim is already explicitly hedged to a single dog,
+and a general cohort does not support that specific vitamin D claim.
+
+### Both are mixed-toxicant cohorts, and the pages say so
+
+Markert's toxicants were mostly unidentified (48%), then rodenticides (8%), recreational drugs
+and nuts (7% each). Neither paper establishes efficacy for permethrin, ivermectin, bromethalin
+or any other single poison. The bullet therefore states inline that it "supports ILE as a
+modality rather than for this poison specifically" — without that, a superscript on a
+permethrin page would imply evidence that does not exist.
+
 ## Oncology batch: MCT grading, osteosarcoma, anal sac carcinoma (2026-09-28)
 
 Three pages, 217 → 214.

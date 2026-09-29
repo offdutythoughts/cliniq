@@ -1181,6 +1181,19 @@ const CAMERON_TBI_POC =
 // citing a textbook for it; its print year is 2011 though PubMed shows the 2010
 // online date. Martin is 25 dogs and Marconato's vaccine arm is 20 against a
 // sequential rather than randomised control, and both pages say so.
+// Intravenous lipid emulsion. Nine pages recommended ILE with nothing behind it.
+// These two are from the same group and disagree sharply on how often ILE causes
+// harm — 6% on retrospective record review against 54% with hourly monitoring —
+// which is a finding in itself and is written onto the pages as such.
+//
+// Both are MIXED-toxicant cohorts, so neither establishes efficacy for any single
+// poison. They are cited for ILE as a modality, and the pages say so. Notably
+// DIS-TOX-STRYCH is deliberately NOT cited here: it states ILE has no role
+// because strychnine is not appreciably lipophilic, and that stays true.
+const MARKERT_ILE_COHORT =
+  'Markert C, Heilmann RM, Kiwitz D, Doerfelt R. Intravenous lipid emulsion for the treatment of poisonings in 313 dogs and 100 cats (2016-2020). Front Vet Sci. 2023;10:1272705. doi:10.3389/fvets.2023.1272705'
+const KIWITZ_ILE_ADVERSE =
+  'Kiwitz D, Markert C, Dörfelt R. Clinical effects and adverse effects of intravenous lipid emulsion treatment in dogs and cats with suspected poisoning. PLoS One. 2024;19(5):e0298828. doi:10.1371/journal.pone.0298828'
 const KIUPEL_MCT_2TIER =
   'Kiupel M, Webster JD, Bailey KL, et al. Proposal of a 2-tier histologic grading system for canine cutaneous mast cell tumors to more accurately predict biological behavior. Vet Pathol. 2011;48(1):147-155. doi:10.1177/0300985810386469'
 const MARCONATO_OSA_VACCINE =
@@ -1364,7 +1377,7 @@ const SOURCE_NAMES = [
   'Ruessli', 'Magalhães', 'Desbordes', 'Evans', 'Brewińska',
   'Gonçalves', 'Dussaux', 'Togawa', 'Levy', 'Cameron', 'Sharma',
   'Lockhart', 'Boydell',
-  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin',
+  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1739,6 +1752,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Littman/.test(part)) { out.push({ id: 'littman-acvim-lyme', text: LITTMAN_ACVIM_LYME }); continue }
     if (/^Weese/.test(part)) { out.push({ id: 'weese-iscaid-urinary', text: WEESE_ISCAID_URINARY }); continue }
     if (/^Kiupel/.test(part)) { out.push({ id: 'kiupel-mct-2tier', text: KIUPEL_MCT_2TIER }); continue }
+    if (/^Markert/.test(part)) { out.push({ id: 'markert-ile-cohort', text: MARKERT_ILE_COHORT }); continue }
+    if (/^Kiwitz/.test(part)) { out.push({ id: 'kiwitz-ile-adverse', text: KIWITZ_ILE_ADVERSE }); continue }
     if (/^Marconato/.test(part)) { out.push({ id: 'marconato-osa-vaccine', text: MARCONATO_OSA_VACCINE }); continue }
     if (/^Martin/.test(part)) { out.push({ id: 'martin-agasaca-sbrt', text: MARTIN_AGASACA_SBRT }); continue }
     if (/^Manchester/.test(part)) { out.push({ id: 'manchester-gc-frenchie', text: MANCHESTER_GC_FRENCHIE }); continue }
