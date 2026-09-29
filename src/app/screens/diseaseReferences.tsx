@@ -1201,6 +1201,17 @@ const CAMERON_TBI_POC =
 // so it serves two pages. Reinhart is 14 dogs and Naseri 30 cats, and both pages
 // say so — Naseri's survival figure also sits well below the one already on the
 // panleukopenia page, which is written up there rather than quietly replaced.
+// Coccidioidomycosis, heartworm and cytauxzoonosis. Reichard is SEVEN cats, so it
+// carries the presentation and the range expansion and nothing about frequency or
+// outcome; the page states the number.
+const JAFFEY_COCCI_REMISSION =
+  'Jaffey JA, Hanzlicek AS, Rayhel LH, Hostnik ET, Irwin C, Chittick L. A treatment monitoring protocol to determine clinical remission in dogs with pulmonary coccidioidomycosis. J Vet Intern Med. 2026;40(1). doi:10.1093/jvimsj/aalaf064'
+const BERLIN_FLUCONAZOLE_LIVER =
+  'Berlin D, Jaffey JA, Bolch C, Zhou T, Rayhel LH, Hanzlicek AS. Serial evaluation of liver enzyme activities in dogs with pulmonary coccidioidomycosis administered fluconazole. Front Vet Sci. 2024;11:1402572. doi:10.3389/fvets.2024.1402572'
+const MAERZ_MELARSOMINE =
+  'Maerz I, Rütjes S, Genz S, Žagar P. Adulticide treatment with melarsomine: outcome in 283 heartworm-positive dogs in Germany. Parasit Vectors. 2026;19(1):404. doi:10.1186/s13071-026-07404-2'
+const REICHARD_CYTAUX_INDIANA =
+  'Reichard MV, Cotey SR, Dangoudoubiyam S, et al. Cytauxzoonosis in Indiana, USA: a case series of cats infected with Cytauxzoon felis (2018-2022). J Feline Med Surg. 2024;26(5):1098612X231224139. doi:10.1177/1098612X231224139'
 const LITTLE_AAFP_RETROVIRUS =
   'Little S, Levy J, Hartmann K, et al. 2020 AAFP Feline Retrovirus Testing and Management Guidelines. J Feline Med Surg. 2020;22(1):5-30. doi:10.1177/1098612X19895940'
 const REINHART_ITRACONAZOLE_TDM =
@@ -1398,7 +1409,7 @@ const SOURCE_NAMES = [
   'Ruessli', 'Magalhães', 'Desbordes', 'Evans', 'Brewińska',
   'Gonçalves', 'Dussaux', 'Togawa', 'Levy', 'Cameron', 'Sharma',
   'Lockhart', 'Boydell',
-  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri',
+  'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1785,6 +1796,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     }
     if (/^Markert/.test(part)) { out.push({ id: 'markert-ile-cohort', text: MARKERT_ILE_COHORT }); continue }
     if (/^Little/.test(part)) { out.push({ id: 'little-aafp-retrovirus', text: LITTLE_AAFP_RETROVIRUS }); continue }
+    if (/^Jaffey/.test(part)) { out.push({ id: 'jaffey-cocci-remission', text: JAFFEY_COCCI_REMISSION }); continue }
+    if (/^Berlin/.test(part)) { out.push({ id: 'berlin-fluconazole-liver', text: BERLIN_FLUCONAZOLE_LIVER }); continue }
+    if (/^Maerz/.test(part)) { out.push({ id: 'maerz-melarsomine', text: MAERZ_MELARSOMINE }); continue }
+    if (/^Reichard/.test(part)) { out.push({ id: 'reichard-cytaux-indiana', text: REICHARD_CYTAUX_INDIANA }); continue }
     if (/^Reinhart/.test(part)) { out.push({ id: 'reinhart-itraconazole-tdm', text: REINHART_ITRACONAZOLE_TDM }); continue }
     if (/^Naseri/.test(part)) { out.push({ id: 'naseri-fpl-biomarkers', text: NASERI_FPL_BIOMARKERS }); continue }
     if (/^Kiwitz/.test(part)) { out.push({ id: 'kiwitz-ile-adverse', text: KIWITZ_ILE_ADVERSE }); continue }

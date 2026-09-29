@@ -2191,6 +2191,36 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Coccidioidomycosis, heartworm, cytauxzoonosis, feline lower urinary (2026-09-28)
+
+Five pages, 197 → 192. Four new papers plus one reuse.
+
+- **Jaffey 2026 + Berlin 2024** on DIS-INFECT-COCCI. Jaffey (31 dogs): 84% reached remission at a
+  mean 259 days, relapse in 4 of 26 (15%). Both clinical scores and IgG titres improve sharply by
+  the first 3-month visit and then barely move — so the page now says a plateau is expected
+  rather than treatment failure, which is the sort of thing that otherwise reads as a stalled
+  case. Berlin (32 dogs) justifies the monthly liver check already on the page: 15 of 32 developed
+  a raised liver enzyme on fluconazole, ALP 34% and ALT 25%, **all mild**, and none predicted by
+  dose, duration, age, weight or concurrent prednisone.
+- **Maerz 2026** (283 dogs) on DIS-CARD-HW. None of the 221 retested at 6 months remained antigen
+  positive. Complications were mild and *eased* with successive injections — injection-site
+  soreness 9.2% after the first dose against 2.1% after the third. Two dogs (0.7%) died, neither
+  conclusively from melarsomine. The page now names the clinical use of this: fear of melarsomine
+  complications is the usual reason owners are offered slow-kill instead, and this cohort finds
+  that fear largely unsupported.
+- **Reichard 2024** on DIS-INFECT-CYTAUX is **seven cats**, so it carries only what a case series
+  can — the presentation list and documented range expansion into Indiana, plus that acaricides
+  are the best protection available. Nothing about frequency or outcome, and the page states the
+  number.
+- **Weese 2019 reused** on DIS-URO-FIC and DIS-URO-URETHRAL-OBS. Both pages already said not to
+  reflexively treat a positive culture; subclinical bacteriuria and urinary catheters are two of
+  the things the ISCAID urinary guidelines explicitly cover, which is exactly the authority those
+  statements were missing.
+
+**Tooling note.** Europe PMC went down mid-batch (503) for the second time today, so discovery
+switched to PubMed field-tagged queries. Its bracketed year-range syntax (`PUB_YEAR:[2015 TO
+2026]`) is also what broke two Europe PMC queries earlier — worth avoiding.
+
 ## Retrovirus, blastomycosis, panleukopenia (2026-09-28)
 
 Four pages, 201 → 197, uncited 59 → 58.
