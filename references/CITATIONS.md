@@ -2191,6 +2191,28 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Oncology: lymphoma tumour lysis, urothelial carcinoma (2026-09-29)
+
+**176 → 174.**
+
+**Yamazaki 2026** on DIS-NEO-LSA. The CHOP protocol on that page opens with L-asparaginase in
+week 1, and the page said nothing about tumour lysis. Among 24 dogs with high-grade B-cell
+multicentric lymphoma, laboratory tumour lysis occurred in 5 (21%) and clinical tumour lysis in 2
+(8%), associated with **the initial L-asparaginase dose**, pre-existing CKD, weight loss and
+metabolic acidosis.
+
+All four are checkable before week 1 begins, which is the practical value. With 24 dogs it
+identifies whom to watch rather than providing a validated risk score, and the page says so.
+
+**Maeda 2026** on DIS-NEO-TCC — sorafenib added to piroxicam in 43 dogs with muscle-invasive
+disease: 62.8% response rate, median progression-free survival 175 days, overall survival 407 days.
+The page notes the comparison was against **historical controls rather than a randomised arm**, so
+the size of the gain is unconfirmed — the same caveat applied to the osteosarcoma vaccine trial
+earlier, and for the same reason.
+
+Tolerability is recorded too (three grade 3 events, no grade 4–5), because a survival figure
+without a toxicity figure makes a treatment look easier to give than it is.
+
 ## Haematology: hypercoagulability, CRGV, feline ATE (2026-09-29)
 
 **179 → 176.**
