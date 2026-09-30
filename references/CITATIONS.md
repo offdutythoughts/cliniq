@@ -2191,6 +2191,79 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Protocols complete: all 56 Rule 5 compliant (2026-09-29)
+
+**17 → 0.** Final state:
+
+| | count |
+|---|---|
+| consensus or guideline cited | 17 |
+| no consensus, and says so | 39 |
+| cites only a weaker source | 0 |
+| no citation at all | 0 |
+
+### Three more guidelines that would have been disclosed away
+
+The pattern held to the end. Searching before disclosing found three documents I had assumed did
+not exist:
+
+- **Pardo 2024** — AAHA fluid therapy guidelines, which explicitly cover fluid administration for
+  **resuscitation**. That is the core of PROT-SHOCK, and of the fluid step on several others.
+- **Odunayo 2021** — AVHTM TRACS Part 3, the transfusion-reaction consensus, defining 14 reaction
+  types with diagnostic and treatment algorithms. Cited on PROT-BLEED-HEMABD.
+- **IRIS grading of acute kidney injury**, 2026 revision. PROT-REN-AKI uses the I–V grading
+  throughout, so disclosing "no consensus exists" there would have been false about a scheme the
+  protocol is built on.
+
+Counting from the start of the protocol work, **five** guidelines were found only because the
+disclosure was checked rather than asserted: ACVIM IVDE, RECOVER first aid, RECOVER anaphylaxis,
+AAHA fluids and IRIS. That is the single most useful thing learned here.
+
+### Citing IRIS without composing it
+
+IRIS is web-published with no DOI. Rather than write the citation from memory — which Rule 6
+forbids and which is how wrong metadata enters a repo — the organisation's full name
+("International Renal Interest Society"), the document title ("IRIS grading of acute kidney
+injury"), the 2026 revision and the PDF path were read off the IRIS site. The page also records
+that the scheme was provisionally adopted in 2012 and finally adopted in 2013, which is now on the
+protocol.
+
+Worth restating: **a URL-only society guideline is compliant for a protocol but would not count as
+a paper for a disease page.** Rule 5 accepts guidelines; Rule 4 wants papers. `report-refs` and
+`report-protocol-refs` disagree about IRIS on purpose.
+
+### Partly guideline-backed protocols say so
+
+PROT-GI-GDV, PROT-REPRO-PYO and PROT-URO-OBS have consensus backing for their **fluid
+resuscitation** and none for the condition-specific management that follows. Both facts are on the
+page. The report counts them as compliant because they do cite a guideline, so the page text is
+what carries the distinction — a protocol that cited AAHA fluids and said nothing else would imply
+the surgical decisions were guideline-backed too.
+
+### What the disclosures rest on
+
+39 protocols carry the disclosure, each preceded by a title-scoped search of the relevant cluster:
+
+| Cluster | Searched for | Applicable result |
+|---|---|---|
+| toxicology (22) | consensus/guidelines + toxicosis, poisoning, intoxication, decontamination; recommendations + rodenticide, acetaminophen, organophosphate, lead | none |
+| ophthalmology (7) | consensus/guidelines + glaucoma, uveitis, retinal detachment, ophthalmology | none — hits were human ISCEV standards and Korean veterinary education guidelines |
+| emergency and neuro | consensus/guidelines + GDV, pyometra, intervertebral disc, snake envenomation, heat stroke, anaphylaxis; and + DIC, transfusion, haemoabdomen, spinal cord injury | ACVIM IVDE, RECOVER first aid, RECOVER anaphylaxis, TRACS — all now cited |
+| shock | fluid therapy guidelines | AAHA fluid therapy — now cited |
+
+Recording the queries is the point: the disclosure is a factual claim about the literature, and
+this is what makes it auditable rather than merely asserted.
+
+### Uniform caveat across the emergency literature
+
+Every consensus cited on a protocol rates its own evidence as weak, and each page says so — the
+RECOVER anaphylaxis guidelines have all 12 recommendations on low or very low evidence or expert
+opinion; RECOVER first aid 15 of 38 low/very low and 18 expert opinion; RECOVER monitoring
+predominantly very low; ACVIM IVDE mostly observational with the timing of decompression
+unresolved; TRACS with significant self-identified knowledge gaps; ISFM diabetes with substantial
+data lacking. A protocol read during an arrest should not imply more certainty than its source
+claims.
+
 ## Protocols: eye, IVDD, heat stroke, anaphylaxis (2026-09-29)
 
 **28 → 17** protocols short of a consensus-grade source. 11 now cite one, 28 disclose that none

@@ -1233,6 +1233,20 @@ const CAMERON_TBI_POC =
 //
 // Marked by SURNAME, not 'RECOVER': there are now three RECOVER documents, and a
 // bare (RECOVER 2026) must not silently resolve to the 2024 monitoring guidelines.
+// A third and fourth guideline that would have been wrongly disclosed away. The
+// AAHA fluid therapy guidelines explicitly cover RESUSCITATION, which is the core
+// of the shock protocol; TRACS is the transfusion-reaction consensus.
+//
+// IRIS is a web-published society guideline with no DOI. That is fine for a
+// protocol — Rule 5 accepts society guidelines — though report-refs would not count
+// it as a paper for a disease page. Title, organisation name and the 2026 version
+// were read off the IRIS site rather than composed from memory.
+const IRIS_AKI_GRADING =
+  'International Renal Interest Society. IRIS grading of acute kidney injury. IRIS; 2026. http://www.iris-kidney.com/s/IRIS-AKI-Grading_2026.pdf'
+const PARDO_AAHA_FLUIDS =
+  'Pardo M, Spencer E, Odunayo A, et al. 2024 AAHA fluid therapy guidelines for dogs and cats. J Am Anim Hosp Assoc. 2024;60(4):131-163. doi:10.5326/JAAHA-MS-7444'
+const ODUNAYO_TRACS_TREATMENT =
+  'Odunayo A, Nash KJ, Davidow EB, et al. Association of Veterinary Hematology and Transfusion Medicine (AVHTM) transfusion reaction small animal consensus statement (TRACS). Part 3: diagnosis and treatment. J Vet Emerg Crit Care (San Antonio). 2021;31(2):189-203. doi:10.1111/vec.13043'
 const OLBY_ACVIM_IVDE =
   'Olby NJ, Moore SA, Brisson B, et al. ACVIM consensus statement on diagnosis and management of acute canine thoracolumbar intervertebral disc extrusion. J Vet Intern Med. 2022;36(5):1570-1596. doi:10.1111/jvim.16480'
 const THAWLEY_RECOVER_FIRSTAID =
@@ -1468,7 +1482,7 @@ const SOURCE_NAMES = [
   'Lockhart', 'Boydell',
   'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu', 'Watson', 'Rosa-Padilla',
   // Protocol guideline sources.
-  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon',
+  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1872,6 +1886,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
       continue
     }
     if (/^Olby/.test(part)) { out.push({ id: 'olby-acvim-ivde', text: OLBY_ACVIM_IVDE }); continue }
+    if (/^IRIS/.test(part)) { out.push({ id: 'iris-aki-grading', text: IRIS_AKI_GRADING }); continue }
+    if (/^Pardo/.test(part)) { out.push({ id: 'pardo-aaha-fluids', text: PARDO_AAHA_FLUIDS }); continue }
+    if (/^Odunayo/.test(part)) { out.push({ id: 'odunayo-tracs-treatment', text: ODUNAYO_TRACS_TREATMENT }); continue }
     if (/^Thawley/.test(part)) { out.push({ id: 'thawley-recover-firstaid', text: THAWLEY_RECOVER_FIRSTAID }); continue }
     if (/^Burkitt-Creedon/.test(part)) { out.push({ id: 'burkittcreedon-recover-anaphylaxis', text: BURKITTCREEDON_RECOVER_ANAPHYLAXIS }); continue }
     if (/^Goggs/.test(part)) { out.push({ id: 'goggs-septic-shock', text: GOGGS_SEPTIC_SHOCK }); continue }
