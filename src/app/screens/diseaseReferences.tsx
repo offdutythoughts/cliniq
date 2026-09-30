@@ -1223,6 +1223,10 @@ const CAMERON_TBI_POC =
 // RECOVER is marked as 'RECOVER', not 'Brainard': the protocol already writes it
 // that way, it is how the guidelines are known, and 'Brainard' is already taken by
 // the feline thromboembolism paper.
+// Marked 'Goggs' — a consensus statement AND a systematic review, so it clears
+// Rule 5 twice over.
+const GOGGS_SEPTIC_SHOCK =
+  'Goggs R, Cortellini S, DeClue AE, et al. Septic shock and prognosis in dogs and cats with sepsis: consensus definition and clinical criteria. J Vet Emerg Crit Care (San Antonio). 2026;36(4):470-488. doi:10.1111/vec.70130'
 const BRAINARD_RECOVER_MONITORING =
   'Brainard BM, Lane SL, Burkitt-Creedon JM, et al. 2024 RECOVER guidelines: monitoring. Evidence and knowledge gap analysis with treatment recommendations for small animal CPR. J Vet Emerg Crit Care (San Antonio). 2024;34(suppl 1):76-103. doi:10.1111/vec.13390'
 const HOEHNE_PCA_OUTCOMES =
@@ -1450,7 +1454,7 @@ const SOURCE_NAMES = [
   'Lockhart', 'Boydell',
   'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu', 'Watson', 'Rosa-Padilla',
   // Protocol guideline sources.
-  'RECOVER', 'Hoehne',
+  'RECOVER', 'Hoehne', 'Goggs',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1845,6 +1849,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Rivas/.test(part)) { out.push({ id: 'rivas-fcgs-msc', text: RIVAS_FCGS_MSC }); continue }
     if (/^Watson/.test(part)) { out.push({ id: 'watson-feline-cholangitis', text: WATSON_FELINE_CHOLANGITIS }); continue }
     if (/^RECOVER/.test(part)) { out.push({ id: 'recover-monitoring', text: BRAINARD_RECOVER_MONITORING }); continue }
+    if (/^Goggs/.test(part)) { out.push({ id: 'goggs-septic-shock', text: GOGGS_SEPTIC_SHOCK }); continue }
     if (/^Hoehne/.test(part)) { out.push({ id: 'hoehne-pca-outcomes', text: HOEHNE_PCA_OUTCOMES }); continue }
     if (/^Rosa-Padilla/.test(part)) { out.push({ id: 'rosapadilla-phpt-surgery', text: ROSAPADILLA_PHPT_SURGERY }); continue }
     if (/^Xu\b/.test(part)) { out.push({ id: 'xu-fhl-metabolomics', text: XU_FHL_METABOLOMICS }); continue }

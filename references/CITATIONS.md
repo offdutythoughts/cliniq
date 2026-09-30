@@ -2191,6 +2191,61 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Protocols: sepsis, and the toxicology disclosures (2026-09-29)
+
+**50 → 28** protocols short of a consensus-grade source. One real consensus added and 21
+disclosures written under Rule 5's "say so" clause.
+
+### Sepsis
+
+**Goggs 2026** — a consensus statement *and* a systematic review, so it clears Rule 5 twice.
+Two things now on PROT-SEPSIS:
+
+- Septic shock is defined as the subset of sepsis with cardiovascular instability and metabolic
+  evidence of impaired perfusion **persisting despite adequate fluid resuscitation** — clinically
+  hyperlactataemia, persistent hypotension, progressive organ dysfunction.
+- 🐱 The consensus reached **far fewer conclusions for cats**, because the data are thinner. Said
+  plainly on the page, so a reader does not take the canine recommendations as equally supported
+  in cats.
+
+### The 21 toxicology disclosures, and the searches behind them
+
+Rule 5 says that where no consensus exists the protocol must **say so** rather than quietly rest
+on something weaker. That is the honest answer for veterinary toxicology, but "no consensus
+exists" is itself a claim, so it was checked rather than assumed. Two title-scoped searches:
+
+- consensus **or** guidelines in the title, with toxicosis / poisoning / intoxication /
+  decontamination — **0 results**;
+- recommendations **or** management guidelines in the title, with rodenticide / acetaminophen /
+  organophosphate / lead poisoning — 3 results, none applicable.
+
+Recording the queries matters more than the conclusion: it makes the claim auditable, and someone
+finding a guideline later can see exactly what was searched and why it was missed.
+
+Each of the 21 now carries two bullets — that no consensus or society guideline covers the
+toxicosis, and that the protocol therefore follows poison-control reference data and published
+case series, which is current practice rather than agreed guidance.
+
+**PROT-TOX-METALD moved category rather than gaining a citation.** It cited the VETgirl eBook and
+nothing else, which the report classified as *cites only a weaker source* — the one protocol in
+that state. With the disclosure it is now correctly *no consensus, and says so*, while still
+citing the reference data it actually uses. "Cites only a weaker source" is now zero.
+
+### Two lints shaped the work rather than just checking it
+
+- **`lint-protocol-actions` caps notes at 200 characters unless bulleted.** The disclosure came to
+  232 characters and, on the six protocols whose last step had an empty note, became one
+  unbroken run. It is naturally two statements, so it was split on a pipe into two bullets —
+  better to read, and the lint was right to object.
+- Earlier the same lint caps `action` at 130 characters, which is what stopped citations going
+  into step headlines.
+
+### Independent confirmation the block renders
+
+Mid-batch, vetic's CI regenerated the **PROT-CPR** visual baselines; the screenshots grew by about
+9 KB, which is the new References section appearing on a protocol page. A second regeneration
+request covers the rest of this batch.
+
 ## Protocols: the machinery, and the first six (2026-09-29)
 
 Rule 5 sets a higher bar than Rule 4 — an ACVIM consensus or equivalent society guideline, not a
