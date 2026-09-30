@@ -19,6 +19,7 @@ import { Bul, Linkify, str } from './markup'
 import { ProtocolCards, protocolsForDisease } from './protocolCards'
 import { ClinicalBody, ClinicalSections } from './diseaseSections'
 import { buildDiseaseCitations, CitationContext, type RefEntry } from './diseaseReferences'
+import { References } from './referencesBlock'
 import { NotFound } from './NotFound'
 import { TAG_ROW, PAGE_TITLE, FIELD_LABEL } from './styles'
 
@@ -28,9 +29,6 @@ const TOP_ALERT = s('background:rgba(var(--tone-danger),0.18);border:1.5px solid
 const ZOO_ALERT = s('background:var(--hi-bg);border:1.5px solid rgba(var(--amber-rgb),0.5);border-radius:10px;padding:10px 14px;margin-bottom:12px;font-size:var(--fs-body);font-weight:700;color:var(--amber-text);letter-spacing:.01em;')
 const SIG_VALUE = s('font-size:var(--fs-body);color:var(--gray);line-height:var(--lh-body);margin-bottom:8px;')
 const EM_ALERT_HEAD = s('font-weight:700;margin-bottom:6px;')
-const REFERENCES = s('margin-top:18px;padding-top:12px;border-top:1px solid var(--border);color:var(--gray2);font-size:var(--fs-label);line-height:1.55;')
-const REFERENCES_TITLE = s('font-size:var(--fs-label);font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px;')
-const REFERENCE_ITEM = s('margin-left:18px;padding-left:2px;margin-bottom:4px;')
 
 const pip = (v: unknown): boolean => typeof v === 'string' && v.includes('|')
 
@@ -45,32 +43,6 @@ function stripAlertPrefix(text: string): string {
     // "." belongs in the separator class: DIS-CARD-ATE authors the prefix as
     // "⚠ Emergency. Five Ps…", which otherwise rendered as "🚨 Emergency: . Five Ps…".
     .replace(/^EMERGENCY\s*[:—.-]?\s*/i, '')
-}
-
-/** Pages citing more than this many sources collapse the footnote behind a toggle. */
-const REF_COLLAPSE_THRESHOLD = 4
-
-function References({ entries }: { entries: RefEntry[] }) {
-  if (entries.length === 0) return null
-  const list = (
-    <ol>
-      {entries.map(entry => <li key={entry.id} id={`ref-${entry.n}`} style={REFERENCE_ITEM}>{entry.text}</li>)}
-    </ol>
-  )
-  if (entries.length > REF_COLLAPSE_THRESHOLD) {
-    return (
-      <details className="ref-fold" style={REFERENCES}>
-        <summary style={REFERENCES_TITLE}>References ({entries.length})</summary>
-        {list}
-      </details>
-    )
-  }
-  return (
-    <section aria-label="References" style={REFERENCES}>
-      <div style={REFERENCES_TITLE}>References</div>
-      {list}
-    </section>
-  )
 }
 
 export function DiseasePageView({ id, sp }: { id: string; sp?: Species }) {

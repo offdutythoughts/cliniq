@@ -40,6 +40,7 @@
     "promote": "bash scripts/promote.sh",
     "report:groups": "tsx scripts/report-groups.ts",
     "report:refs": "tsx scripts/report-refs.ts",
+    "report:protocol-refs": "tsx scripts/report-protocol-refs.ts",
     "lint:refs-integrity": "tsx scripts/lint-refs-integrity.ts",
     "lint:units": "tsx scripts/lint-units.ts",
     "lint:render": "tsx scripts/lint-render.ts",
