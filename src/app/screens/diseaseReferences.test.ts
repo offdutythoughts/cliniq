@@ -628,6 +628,18 @@ describe('parseSources', () => {
     expect(parseSources('O\u2019Neill 2021 periodontal').map(s => s.id)).toEqual(['oneill-periodontal'])
   })
 
+  // Protocols brought in three RECOVER documents — the 2024 monitoring guidelines
+  // and two 2026 first-aid ones. The 2026 pair are marked by surname, and RECOVER
+  // is year-keyed so a bare "(RECOVER 2026)" resolves to NOTHING rather than
+  // silently citing the 2024 monitoring paper. That silent-wrong-paper outcome is
+  // the whole failure mode this file keeps having to defend against.
+  it('does not let a RECOVER marker fall through to the wrong document', () => {
+    expect(parseSources('RECOVER 2024').map(s => s.id)).toEqual(['recover-monitoring'])
+    expect(parseSources('RECOVER 2026')).toEqual([])
+    expect(parseSources('Thawley 2026').map(s => s.id)).toEqual(['thawley-recover-firstaid'])
+    expect(parseSources('Burkitt-Creedon 2026').map(s => s.id)).toEqual(['burkittcreedon-recover-anaphylaxis'])
+  })
+
   it('keeps both Phillips papers apart', () => {
     expect(parseSources('Phillips 2019').map(s => s.id)).toEqual(['phillips-feline-hh'])
     expect(parseSources('Phillips 2025').map(s => s.id)).toEqual(['phillips-exercise-annpe'])

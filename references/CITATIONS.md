@@ -2191,6 +2191,68 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Protocols: eye, IVDD, heat stroke, anaphylaxis (2026-09-29)
+
+**28 → 17** protocols short of a consensus-grade source. 11 now cite one, 28 disclose that none
+exists, and *cites only a weaker source* stays at zero.
+
+### The due-diligence search stopped two false statements
+
+I expected the neurology and emergency protocols to need disclosures like the toxicology ones. A
+title-scoped search for a consensus or guideline on GDV, pyometra, intervertebral disc, snake
+envenomation, heat stroke or anaphylaxis returned **two documents that plainly govern protocols in
+this app**:
+
+- **Olby 2022** — ACVIM consensus statement on acute canine thoracolumbar intervertebral disc
+  extrusion. Writing "no consensus exists" on PROT-NEU-IVDD would have been flatly false.
+- **Thawley 2026** — RECOVER first-aid guidelines, which cover heat stroke among prehospital
+  conditions, and whose abstract mentions that allergy and anaphylaxis are "reported elsewhere".
+  Following that pointer found **Burkitt-Creedon 2026**, the RECOVER acute allergy and anaphylaxis
+  guidelines, with a published Acute Hypersensitivity Reaction Algorithm.
+
+This is the argument for searching before disclosing. The disclosure clause is a legitimate Rule 5
+outcome, but it is a factual claim about the literature, and asserting it without looking would
+have put a false statement on a protocol read during an emergency.
+
+### The eye protocols
+
+A title-scoped search for a veterinary consensus or guideline on glaucoma, uveitis, retinal
+detachment or ophthalmology returned 27 records; sampling them found human-medicine documents
+(ISCEV electrophysiology calibration standards) and veterinary **education** guidelines from
+Korea — nothing on emergency ocular management. Seven eye protocols therefore carry the
+disclosure.
+
+**PROT-EYE-HTNRD is the exception, and did not need a search.** It is a hypertension protocol that
+happens to present through the eye, so the ACVIM hypertension consensus governs it — already
+verified in this file for the disease pages. Its SBP thresholds and target-organ framing now cite
+it.
+
+### A hazard created and then closed
+
+Adding two more RECOVER documents made the existing `/^RECOVER/` branch dangerous: it ignored the
+year, so a bare `(RECOVER 2026)` would have silently resolved to the **2024 monitoring**
+guidelines. RECOVER is now year-keyed, the two 2026 documents are marked by surname, and a test
+asserts that `(RECOVER 2026)` resolves to **nothing** rather than to the wrong paper.
+
+That is the same failure this file has now defended against for Phillips, O'Neill (twice), Evans,
+Scott and Gold. The pattern is consistent enough to state as a rule: **the moment a second
+document shares a marker, the marker must dispatch on something, and the fallback must be silence
+rather than the first document.**
+
+### Every one of these guidelines rates its own evidence as weak
+
+Worth recording because it is uniform across the emergency literature, and because a protocol
+should not imply more confidence than its source:
+
+- RECOVER monitoring — predominantly very low quality, some expert opinion
+- RECOVER first aid — 15 of 38 recommendations low/very low, 18 expert opinion
+- RECOVER anaphylaxis — all 12 recommendations low/very low (7) or expert opinion (5)
+- ACVIM IVDE — mostly observational literature, low-to-moderate evidence, ideal timing of
+  surgical decompression still unresolved
+- ISFM diabetes — substantial data lacking in many areas
+
+Each of those caveats is now on the corresponding protocol page.
+
 ## Protocols: sepsis, and the toxicology disclosures (2026-09-29)
 
 **50 → 28** protocols short of a consensus-grade source. One real consensus added and 21

@@ -1225,6 +1225,20 @@ const CAMERON_TBI_POC =
 // the feline thromboembolism paper.
 // Marked 'Goggs' — a consensus statement AND a systematic review, so it clears
 // Rule 5 twice over.
+// Three more protocol guidelines. Two of these exist despite my expecting they
+// would not — the ACVIM IVDE consensus and the RECOVER first-aid set — which is
+// why every "no consensus exists" disclosure in this pass is preceded by a search
+// rather than an assumption. Writing that sentence on the IVDD protocol would
+// have been simply false.
+//
+// Marked by SURNAME, not 'RECOVER': there are now three RECOVER documents, and a
+// bare (RECOVER 2026) must not silently resolve to the 2024 monitoring guidelines.
+const OLBY_ACVIM_IVDE =
+  'Olby NJ, Moore SA, Brisson B, et al. ACVIM consensus statement on diagnosis and management of acute canine thoracolumbar intervertebral disc extrusion. J Vet Intern Med. 2022;36(5):1570-1596. doi:10.1111/jvim.16480'
+const THAWLEY_RECOVER_FIRSTAID =
+  'Thawley VJ, Mandell DC, Burkitt-Creedon JM, et al. RECOVER guidelines: first aid in dogs and cats. Evidence and knowledge gap analysis with treatment recommendations. J Vet Emerg Crit Care (San Antonio). 2026;36(suppl 1):S3-S35. doi:10.1111/vec.70139'
+const BURKITTCREEDON_RECOVER_ANAPHYLAXIS =
+  'Burkitt-Creedon JM, Mandell DC, Thawley VJ, et al. RECOVER guidelines: first aid. Evidence, treatment recommendations, knowledge gap analysis, and clinical guidelines for acute allergy and anaphylaxis in dogs and cats. J Vet Emerg Crit Care (San Antonio). 2026;36(suppl 1):S63-S89. doi:10.1111/vec.70137'
 const GOGGS_SEPTIC_SHOCK =
   'Goggs R, Cortellini S, DeClue AE, et al. Septic shock and prognosis in dogs and cats with sepsis: consensus definition and clinical criteria. J Vet Emerg Crit Care (San Antonio). 2026;36(4):470-488. doi:10.1111/vec.70130'
 const BRAINARD_RECOVER_MONITORING =
@@ -1454,7 +1468,7 @@ const SOURCE_NAMES = [
   'Lockhart', 'Boydell',
   'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu', 'Watson', 'Rosa-Padilla',
   // Protocol guideline sources.
-  'RECOVER', 'Hoehne', 'Goggs',
+  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1575,6 +1589,10 @@ const CHAN_BY_YEAR: Record<string, { id: string; text: string }> = {
  *  that reads this must stay ABOVE the /^Anders\\b/ one. */
 const EVANS_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2003': { id: 'evans-metro-diazepam', text: EVANS_METRO_DIAZEPAM },
+}
+
+const RECOVER_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2024': { id: 'recover-monitoring', text: BRAINARD_RECOVER_MONITORING },
 }
 
 const NAGAMORI_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -1848,7 +1866,14 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Sparkes/.test(part)) { out.push({ id: 'sparkes-isfm-diabetes', text: SPARKES_ISFM_DIABETES }); continue }
     if (/^Rivas/.test(part)) { out.push({ id: 'rivas-fcgs-msc', text: RIVAS_FCGS_MSC }); continue }
     if (/^Watson/.test(part)) { out.push({ id: 'watson-feline-cholangitis', text: WATSON_FELINE_CHOLANGITIS }); continue }
-    if (/^RECOVER/.test(part)) { out.push({ id: 'recover-monitoring', text: BRAINARD_RECOVER_MONITORING }); continue }
+    if (/^RECOVER/.test(part)) {
+      const hit = RECOVER_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^Olby/.test(part)) { out.push({ id: 'olby-acvim-ivde', text: OLBY_ACVIM_IVDE }); continue }
+    if (/^Thawley/.test(part)) { out.push({ id: 'thawley-recover-firstaid', text: THAWLEY_RECOVER_FIRSTAID }); continue }
+    if (/^Burkitt-Creedon/.test(part)) { out.push({ id: 'burkittcreedon-recover-anaphylaxis', text: BURKITTCREEDON_RECOVER_ANAPHYLAXIS }); continue }
     if (/^Goggs/.test(part)) { out.push({ id: 'goggs-septic-shock', text: GOGGS_SEPTIC_SHOCK }); continue }
     if (/^Hoehne/.test(part)) { out.push({ id: 'hoehne-pca-outcomes', text: HOEHNE_PCA_OUTCOMES }); continue }
     if (/^Rosa-Padilla/.test(part)) { out.push({ id: 'rosapadilla-phpt-surgery', text: ROSAPADILLA_PHPT_SURGERY }); continue }
