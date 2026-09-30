@@ -1241,6 +1241,10 @@ const CAMERON_TBI_POC =
 // protocol — Rule 5 accepts society guidelines — though report-refs would not count
 // it as a paper for a disease page. Title, organisation name and the 2026 version
 // were read off the IRIS site rather than composed from memory.
+// Pairs with the IRIS grading scheme: the frequency of anaemia rises with IRIS
+// grade even though its severity does not.
+const LIPPI_AKI_ANAEMIA =
+  'Lippi I, Perondi F, Ghiselli G, Santini S, Habermaass V, Marchetti V. Anemia in dogs with acute kidney injury. Vet Sci. 2024;11(5):212. doi:10.3390/vetsci11050212'
 const IRIS_AKI_GRADING =
   'International Renal Interest Society. IRIS grading of acute kidney injury. IRIS; 2026. http://www.iris-kidney.com/s/IRIS-AKI-Grading_2026.pdf'
 const PARDO_AAHA_FLUIDS =
@@ -1482,7 +1486,7 @@ const SOURCE_NAMES = [
   'Lockhart', 'Boydell',
   'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu', 'Watson', 'Rosa-Padilla',
   // Protocol guideline sources.
-  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo',
+  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1887,6 +1891,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     }
     if (/^Olby/.test(part)) { out.push({ id: 'olby-acvim-ivde', text: OLBY_ACVIM_IVDE }); continue }
     if (/^IRIS/.test(part)) { out.push({ id: 'iris-aki-grading', text: IRIS_AKI_GRADING }); continue }
+    if (/^Lippi/.test(part)) { out.push({ id: 'lippi-aki-anaemia', text: LIPPI_AKI_ANAEMIA }); continue }
     if (/^Pardo/.test(part)) { out.push({ id: 'pardo-aaha-fluids', text: PARDO_AAHA_FLUIDS }); continue }
     if (/^Odunayo/.test(part)) { out.push({ id: 'odunayo-tracs-treatment', text: ODUNAYO_TRACS_TREATMENT }); continue }
     if (/^Thawley/.test(part)) { out.push({ id: 'thawley-recover-firstaid', text: THAWLEY_RECOVER_FIRSTAID }); continue }

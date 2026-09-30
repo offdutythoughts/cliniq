@@ -2191,6 +2191,41 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Back to disease pages: shock, heat stroke, AKI (2026-09-29)
+
+**185 → 179.** Six pages, and five of them came free from the protocol work: the guidelines found
+for protocols govern the matching disease pages too.
+
+| Page | Source | How |
+|---|---|---|
+| DIS-SHOCK-SEPTIC | Goggs 2026 | **reuse** — consensus definition of septic shock |
+| DIS-SHOCK-HYPOVOL | Pardo 2024 | **reuse** — AAHA fluid therapy |
+| DIS-SHOCK-TRAUMA | Pardo 2024 | **reuse** |
+| DIS-ENV-HEAT | Thawley 2026 | **reuse** — RECOVER first aid covers heat stroke |
+| DIS-SEC-AKI | IRIS 2026 + Lippi 2024 | reuse + new |
+| DIS-BD-NRA | Lippi 2024 | new |
+
+### The Rule 4 / Rule 5 split showed up in the numbers
+
+Adding IRIS to DIS-SEC-AKI moved the **uncited** count but not the **without-a-paper** count: IRIS
+is a URL-only society guideline, so `isPaper` is false. The page went from citing nothing to citing
+the scheme it is built on, and still did not satisfy Rule 4.
+
+That is the distinction working as designed rather than a defect — Rule 5 accepts guidelines, Rule
+4 wants papers — but it means a guideline alone cannot close a disease page. Lippi 2024 was added
+for that reason, and it is a good pairing anyway: the frequency of anaemia in AKI rises with IRIS
+grade (72% of 120 dogs, 88% non-regenerative), so the paper and the grading scheme speak to each
+other on the page.
+
+**DIS-SEC-AKI never said whose grading scheme it rendered.** The page has always shown an
+`{{IRIS_AKI_TABLE}}`; it now names IRIS, with the adoption history.
+
+### DIS-BD-NRA gained a cause it was missing
+
+Its non-regeneration differential listed marrow disease, iron deficiency and inflammation. AKI
+belongs there — 72% of AKI dogs anaemic, 88% non-regeneratively — and CKD was the only renal
+cause the page acknowledged.
+
 ## Protocols complete: all 56 Rule 5 compliant (2026-09-29)
 
 **17 → 0.** Final state:
