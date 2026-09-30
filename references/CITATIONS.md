@@ -2191,6 +2191,47 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Haematology: hypercoagulability, CRGV, feline ATE (2026-09-29)
+
+**179 → 176.**
+
+- **Sharp 2019 (CURATIVE Domain 4)** on DIS-BD-HYPERCOAG and DIS-CARD-ATE.
+- **Stevens 2018** and **Pisco 2021** on DIS-BD-CRGV.
+
+### A consensus that qualifies the page rather than confirming it
+
+DIS-BD-HYPERCOAG advised "anti-Xa activity to individualise LMWH/DOAC dosing" on a textbook
+citation. CURATIVE Domain 4 found evidence sufficient to **recommend** therapeutic monitoring only
+for **warfarin and unfractionated heparin**, and **insufficient** to recommend it for aspirin or
+LMWH — most of the underlying literature being experimental models or pharmacokinetics in healthy
+animals. Anti-Xa monitoring of LMWH is now labelled reasonable practice rather than established.
+The same qualification is on DIS-CARD-ATE, which lists dalteparin.
+
+This is the more useful kind of citation: it changes what the page claims rather than decorating
+what it already said.
+
+### CRGV already contained its source, uncited
+
+The etiology field read ">91% Nov–May; woodland walks; warmer wetter winters" — which is Stevens
+2018's result, unattributed. Now cited, with the parts the page omitted: habitat was the strongest
+single predictor (20.3% relative contribution), the number of reporting regions grew between 2012
+and 2017, and two space-time clusters sat in and beside the New Forest with a weaker one near
+Manchester.
+
+### Two statements that looked contradictory, and were not
+
+The page also said "No livestock / raw-feeding association in UK series", while Stevens found cases
+clustering where **cattle and sheep density is lower**. Side by side those read as a contradiction.
+They answer different questions — one is an individual dog's exposure, the other a landscape
+covariate — and the page now says so explicitly rather than leaving a reader to reconcile them.
+
+### Pisco is two dogs and says so
+
+Cerebral microangiopathy in CRGV, with fibrinoid necrosis of brain arterioles resembling human
+complement-mediated haemolytic uraemic syndrome. Useful because neurological signs in a CRGV dog
+would otherwise be unexplained, and because it implicates the alternative complement pathway — but
+it is **two reported dogs**, so the page frames it as a caution, not a frequency.
+
 ## Back to disease pages: shock, heat stroke, AKI (2026-09-29)
 
 **185 → 179.** Six pages, and five of them came free from the protocol work: the guidelines found

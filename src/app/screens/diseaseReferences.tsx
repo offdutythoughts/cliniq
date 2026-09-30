@@ -1243,6 +1243,15 @@ const CAMERON_TBI_POC =
 // were read off the IRIS site rather than composed from memory.
 // Pairs with the IRIS grading scheme: the frequency of anaemia rises with IRIS
 // grade even though its severity does not.
+// Haematology. Stevens is the source of the CRGV seasonality and woodland
+// association the page already stated without attribution. Pisco is TWO dogs and
+// carries only the narrow finding that CRGV can involve the brain.
+const SHARP_CURATIVE_MONITORING =
+  'Sharp CR, deLaforcade AM, Koenigshof AM, Lynch AM, Thomason JM. Consensus on the rational use of antithrombotics in veterinary critical care (CURATIVE): domain 4 — refining and monitoring antithrombotic therapies. J Vet Emerg Crit Care (San Antonio). 2019;29(1):75-87. doi:10.1111/vec.12794'
+const STEVENS_CRGV_EPI =
+  'Stevens KB, Jepson R, Holm LP, Walker DJ, Cardwell JM. Spatiotemporal patterns and agroecological risk factors for cutaneous and renal glomerular vasculopathy (Alabama Rot) in dogs in the UK. Vet Rec. 2018;183(16):502. doi:10.1136/vr.104892'
+const PISCO_CRGV_BRAIN =
+  'Pisco V, Beck S, Walker JJ, Lopes B, Ives E, Holm LP, Walker DJ. Cerebral microangiopathy in two dogs with cutaneous and renal glomerular vasculopathy. J Comp Pathol. 2021;184:95-100. doi:10.1016/j.jcpa.2021.03.001'
 const LIPPI_AKI_ANAEMIA =
   'Lippi I, Perondi F, Ghiselli G, Santini S, Habermaass V, Marchetti V. Anemia in dogs with acute kidney injury. Vet Sci. 2024;11(5):212. doi:10.3390/vetsci11050212'
 const IRIS_AKI_GRADING =
@@ -1486,7 +1495,7 @@ const SOURCE_NAMES = [
   'Lockhart', 'Boydell',
   'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu', 'Watson', 'Rosa-Padilla',
   // Protocol guideline sources.
-  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi',
+  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi', 'Sharp', 'Stevens', 'Pisco',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1892,6 +1901,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Olby/.test(part)) { out.push({ id: 'olby-acvim-ivde', text: OLBY_ACVIM_IVDE }); continue }
     if (/^IRIS/.test(part)) { out.push({ id: 'iris-aki-grading', text: IRIS_AKI_GRADING }); continue }
     if (/^Lippi/.test(part)) { out.push({ id: 'lippi-aki-anaemia', text: LIPPI_AKI_ANAEMIA }); continue }
+    if (/^Sharp/.test(part)) { out.push({ id: 'sharp-curative-monitoring', text: SHARP_CURATIVE_MONITORING }); continue }
+    if (/^Stevens/.test(part)) { out.push({ id: 'stevens-crgv-epi', text: STEVENS_CRGV_EPI }); continue }
+    if (/^Pisco/.test(part)) { out.push({ id: 'pisco-crgv-brain', text: PISCO_CRGV_BRAIN }); continue }
     if (/^Pardo/.test(part)) { out.push({ id: 'pardo-aaha-fluids', text: PARDO_AAHA_FLUIDS }); continue }
     if (/^Odunayo/.test(part)) { out.push({ id: 'odunayo-tracs-treatment', text: ODUNAYO_TRACS_TREATMENT }); continue }
     if (/^Thawley/.test(part)) { out.push({ id: 'thawley-recover-firstaid', text: THAWLEY_RECOVER_FIRSTAID }); continue }
