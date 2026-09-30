@@ -2191,6 +2191,94 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Protocols: the machinery, and the first six (2026-09-29)
+
+Rule 5 sets a higher bar than Rule 4 — an ACVIM consensus or equivalent society guideline, not a
+textbook or a single cohort. Starting the protocols turned up something that had to be fixed
+before any citing was worth doing.
+
+### Protocols rendered no citations at all
+
+`ProtocolDetailView` was 19 lines and had no reference machinery: no numbering context, no
+References block. Yet protocols already named their guidelines in prose — `(RECOVER 2024)` three
+times on CPR, `(AAHA 2023)` five times on the Addisonian crisis, `(IRIS …)` on AKI. Adding a
+citation marker to a protocol would have produced exactly the defect this whole pass has been
+correcting: a page that names its source without citing it.
+
+So the References block was extracted from `DiseasePageView` into `referencesBlock.tsx` and wired
+into `ProtocolDetailView`. Protocol steps already render superscripts, because `ProtocolStep` uses
+the shared `Bul` markup renderer, which calls `splitCitations`. Only the numbering context and
+the footnote were missing.
+
+**Wiring it alone made PROT-ENDO-ADDISON compliant** — its two `(AAHA 2023)` / `(FECAVA 2023)`
+parentheticals had been resolving to real references all along with nowhere to display them.
+
+### A different compliance test from disease pages
+
+`report-protocol-refs` is deliberately NOT a variant of `report-refs`, for two reasons:
+
+- **`isPaper` is the wrong test here.** A society guideline published only on the web — IRIS
+  grading, the AHS heartworm guidelines — has no DOI and no volume, so `report-refs` would not
+  count it as a paper. For a protocol it is fully compliant: Rule 5 accepts guidelines, Rule 4
+  wants papers.
+- **A peer-reviewed paper can be non-compliant.** A single cohort is a paper but not a body's
+  position. `PROT-TOX-METALD` is the worked example: it cites the VETgirl toxicology eBook and
+  nothing else, and the report classifies it as *cites only a weaker source* rather than counting
+  it as covered.
+
+Rule 5's "where no consensus exists, say so" is a first-class outcome in the report, matched on a
+fixed phrase so it cannot be satisfied by vague hedging.
+
+Starting position: **6 of 56 compliant, 50 short**, ratcheted as `protocols-without-consensus`.
+
+### Also extended: the integrity lint now scans protocols
+
+`lint-refs-integrity` only ever walked `DB.disease_page`, so protocol markers had none of the
+guarantees disease pages do. Extending it found **five unresolved protocol markers** immediately:
+`(AAHA)`, `(AAHA first-choice)`, `(AAHA 2018 DM guidelines)` on the DKA protocol and
+`(ACVIM/IVAPM)` on the hypertensive-crisis one.
+
+### Two attributions corrected
+
+- **`(ACVIM/IVAPM)` → `(ACVIM 2018)`.** The long-term BP targets (SBP <150 dog, <160 cat) come
+  from the ACVIM hypertension consensus. IVAPM is a pain-management academy and does not publish
+  blood-pressure targets, so that half of the attribution was wrong rather than merely unresolved.
+- **`(AAHA 2018 DM guidelines)`.** Superseded. The 2026 AAHA diabetes guidelines cover diagnosing
+  and treating ketoacidosis and explicitly retain what still holds from the 2018 edition — but
+  they are written **for cats only**, which the protocol now states rather than letting a
+  cat-specific document silently back a dog-and-cat protocol.
+
+### `doses` was missing from every citable-field reader
+
+The most citation-worthy text on a protocol is the drug regimen, and `ProtocolStep` has a
+separate `doses` field that I omitted from the view, the integrity lint and the report. Fixed in
+all three. It surfaced only because two citations landed in notes whose steps also had `doses`.
+
+### A constraint worth recording: citations go in `note`, never `action`
+
+`lint-protocol-actions` caps `action` at 130 characters because it renders as the step headline.
+My first attempt appended citations there and failed the lint on two protocols. Citations belong
+in the step's `note` — which is also the better place for them, since a headline should say what
+to do, not where it came from.
+
+### The first six
+
+| Protocol | Source | Tier |
+|---|---|---|
+| PROT-CPR | Brainard 2024 RECOVER monitoring guidelines | society guideline |
+| PROT-SEIZ | Charalambous 2024 ACVIM status epilepticus consensus | ACVIM consensus |
+| PROT-BLEED-IMTP | LeVine 2024 ACVIM ITP diagnosis **and** treatment | ACVIM consensus ×2 |
+| PROT-VASC-HYPERT | Acierno 2018 ACVIM hypertension consensus | ACVIM consensus |
+| PROT-ENDO-DKA | AAHA 2023 endocrinopathies + AAHA 2026 diabetes (cats) | society guideline |
+| PROT-ENDO-ADDISON | AAHA 2023 endocrinopathies + FECAVA hypoadrenocorticism | society guideline |
+
+Five of these six needed **no new literature search** — the consensus statements were already
+verified in the file for disease pages and simply were not reaching the protocols they govern.
+
+On CPR the page now also carries what RECOVER says about itself: the monitoring recommendations
+were graded **predominantly very low quality evidence**, some of it expert opinion. A protocol
+followed in an arrest should not imply more certainty than its source claims.
+
 ## Feline cholangitis and primary hyperparathyroidism (2026-09-29)
 
 Two pages, 187 → 185.

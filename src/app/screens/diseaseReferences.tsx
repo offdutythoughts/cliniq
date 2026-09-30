@@ -1216,6 +1216,19 @@ const CAMERON_TBI_POC =
 // authors flag. The page says both, because a 92%/88% test that has never been
 // run against cholangitis is not yet a diagnostic test.
 // Feline cholangitis and primary hyperparathyroidism.
+// PROTOCOL sources. Protocols answer to a higher bar than disease pages — an
+// ACVIM consensus or equivalent society guideline — so these are guideline
+// documents rather than cohorts.
+//
+// RECOVER is marked as 'RECOVER', not 'Brainard': the protocol already writes it
+// that way, it is how the guidelines are known, and 'Brainard' is already taken by
+// the feline thromboembolism paper.
+const BRAINARD_RECOVER_MONITORING =
+  'Brainard BM, Lane SL, Burkitt-Creedon JM, et al. 2024 RECOVER guidelines: monitoring. Evidence and knowledge gap analysis with treatment recommendations for small animal CPR. J Vet Emerg Crit Care (San Antonio). 2024;34(suppl 1):76-103. doi:10.1111/vec.13390'
+const HOEHNE_PCA_OUTCOMES =
+  'Hoehne SN, Murthy VD, Epstein SE, Hopper K, Martin LG, Kantyka ME. Post-cardiopulmonary arrest care and functional outcomes in dogs and cats surviving to hospital discharge since publication of the RECOVER guidelines: 2012-2022. J Vet Emerg Crit Care (San Antonio). 2025;35(2):142-155. doi:10.1111/vec.13457'
+const BUGBEE_AAHA_DM_CATS =
+  'Bugbee A, Rucinsky R, Alvarez E, Cook A, Lathan P, Panning C. 2026 AAHA diabetes management guidelines for cats. J Am Anim Hosp Assoc. 2026;62(3):65-93. doi:10.5326/JAAHA-MS-7572'
 const WATSON_FELINE_CHOLANGITIS =
   'Watson P. Feline cholangitis. Vet Clin North Am Small Anim Pract. 2025;55(4):627-646. doi:10.1016/j.cvsm.2025.03.001'
 const ROSAPADILLA_PHPT_SURGERY =
@@ -1436,6 +1449,8 @@ const SOURCE_NAMES = [
   'Gonçalves', 'Dussaux', 'Togawa', 'Levy', 'Cameron', 'Sharma',
   'Lockhart', 'Boydell',
   'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu', 'Watson', 'Rosa-Padilla',
+  // Protocol guideline sources.
+  'RECOVER', 'Hoehne',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1638,6 +1653,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     // year leaves those printing verbatim.
     if (/^AAHA/.test(part)) {
       if (/\b2023\b/.test(part)) out.push({ id: 'aaha-endocrine', text: AAHA_ENDOCRINE })
+      // The 2026 diabetes guidelines are CATS ONLY and supersede the 2018 edition;
+      // pages using this marker say which species it speaks for.
+      if (/\b2026\b/.test(part)) out.push({ id: 'aaha-dm-cats', text: BUGBEE_AAHA_DM_CATS })
       continue
     }
     if (/^CDC/.test(part)) { out.push({ id: 'cdc-bartonella', text: CDC_BARTONELLA }); continue }
@@ -1826,6 +1844,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Sparkes/.test(part)) { out.push({ id: 'sparkes-isfm-diabetes', text: SPARKES_ISFM_DIABETES }); continue }
     if (/^Rivas/.test(part)) { out.push({ id: 'rivas-fcgs-msc', text: RIVAS_FCGS_MSC }); continue }
     if (/^Watson/.test(part)) { out.push({ id: 'watson-feline-cholangitis', text: WATSON_FELINE_CHOLANGITIS }); continue }
+    if (/^RECOVER/.test(part)) { out.push({ id: 'recover-monitoring', text: BRAINARD_RECOVER_MONITORING }); continue }
+    if (/^Hoehne/.test(part)) { out.push({ id: 'hoehne-pca-outcomes', text: HOEHNE_PCA_OUTCOMES }); continue }
     if (/^Rosa-Padilla/.test(part)) { out.push({ id: 'rosapadilla-phpt-surgery', text: ROSAPADILLA_PHPT_SURGERY }); continue }
     if (/^Xu\b/.test(part)) { out.push({ id: 'xu-fhl-metabolomics', text: XU_FHL_METABOLOMICS }); continue }
     if (/^Pagani/.test(part)) { out.push({ id: 'pagani-gbm-mortality', text: PAGANI_GBM_MORTALITY }); continue }

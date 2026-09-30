@@ -62,6 +62,11 @@ const FIELDS = [
  *  Anything NOT on this list that fails to resolve is a bug. */
 const PROSE_QUALIFIERS = new Set([
   'Scott', 'Evans syndrome', 'AAHA/AAFP', 'Librela', 'Golden Retriever most common',
+  // On PROT-ENDO-DKA these name whose preference is being reported — "PZI in dogs
+  // (AAHA first-choice)" — rather than pointing at a document. A matched
+  // parenthetical is replaced by its superscript, so resolving them would delete
+  // the words that carry the meaning.
+  'AAHA', 'AAHA first-choice',
 ])
 
 const fail: string[] = []
@@ -75,6 +80,22 @@ const refCode = refSrc.replace(/^\s*\/\/.*$/gm, '')
 
 const pageFields = (r: Record<string, unknown>): string[] =>
   FIELDS.map(f => (typeof r[f] === 'string' ? (r[f] as string) : '')).filter(Boolean)
+
+/** Protocol steps carry markers too, and answer to a HIGHER bar than disease
+ *  pages (ACVIM consensus or equivalent), so they need the same guarantees. Until
+ *  protocols rendered a References block none of this was reachable, which is
+ *  exactly how five unresolved protocol markers went unnoticed. */
+const protocolFields = (p: { trigger: string; steps: { action: string; doses?: string; note?: string; branch?: string; flag?: string }[] }): string[] => {
+  const out = [p.trigger]
+  for (const st of p.steps) out.push(st.action, st.doses ?? '', st.note ?? '', st.branch ?? '', st.flag ?? '')
+  return out.filter(Boolean)
+}
+
+/** Every citable surface in the DB: disease pages and protocols together. */
+const allSurfaces: { id: string; fields: string[] }[] = [
+  ...DB.disease_page.map(r => ({ id: String(r.id), fields: pageFields(r as unknown as Record<string, unknown>) })),
+  ...DB.protocols.map(p => ({ id: p.id, fields: protocolFields(p) })),
+]
 
 // ── 0. Allowlisted prose must actually resolve to nothing ────────────────────
 // PROSE_QUALIFIERS says "this parenthetical is prose, ignore it". Every entry is
@@ -95,14 +116,14 @@ for (const phrase of PROSE_QUALIFIERS) {
 
 // ── 1. Every citation-shaped marker resolves ─────────────────────────────────
 const unresolved = new Map<string, string[]>()
-for (const r of DB.disease_page) {
-  for (const field of pageFields(r as unknown as Record<string, unknown>)) {
+for (const surface of allSurfaces) {
+  for (const field of surface.fields) {
     for (const seg of splitCitations(field)) {
       if (!seg.raw || (seg.citeIds ?? []).length > 0) continue
       const inner = seg.raw.trim().replace(/^\s*\(|\)\s*$/g, '')
       if (PROSE_QUALIFIERS.has(inner)) continue
       if (!unresolved.has(inner)) unresolved.set(inner, [])
-      unresolved.get(inner)!.push(r.id)
+      unresolved.get(inner)!.push(surface.id)
     }
   }
 }
