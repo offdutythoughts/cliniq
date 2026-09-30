@@ -30,9 +30,16 @@ type Step = { action: string; doses?: string; note?: string; branch?: string; fl
 /** Rule 5's accepted tiers, as they appear in a reference string. */
 const CONSENSUS = /consensus|guideline|RECOVER|\bIRIS\b|\bACVIM\b|\bAAHA\b|\bAAFP\b|\bISFM\b|\bACVECC\b|\bAHS\b|\bWSAVA\b|ISCAID|CURATIVE|American Heartworm Society|systematic review|meta-analys/i
 
-/** The disclosure Rule 5 requires when no consensus exists. Deliberately a fixed
- *  phrase so it cannot be satisfied by vague hedging. */
-const NO_CONSENSUS_DISCLOSURE = /no (?:published )?consensus (?:statement |guideline )?(?:exists|covers|is available)/i
+/** The disclosure Rule 5 requires when no consensus exists.
+ *
+ *  Deliberately narrow: it must open with "no ... consensus" and reach an explicit
+ *  verb, so ordinary hedging ("evidence is limited", "practice varies") does not
+ *  satisfy it. The gap allows the naming of what was searched for — "no published
+ *  consensus statement or society guideline covers …" — which the first version of
+ *  this pattern rejected because it demanded the verb immediately after
+ *  "statement". Bending the sentence to fit the regex would have been the wrong
+ *  way round. */
+const NO_CONSENSUS_DISCLOSURE = /\bno (?:published |known )?consensus\b[^.|]{0,80}?\b(?:exists|covers|is available|has been published|addresses)/i
 
 function fieldsOf(p: { trigger: string; steps: Step[] }): string[] {
   const out = [p.trigger]
