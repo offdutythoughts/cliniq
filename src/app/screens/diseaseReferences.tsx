@@ -1246,6 +1246,12 @@ const CAMERON_TBI_POC =
 // Haematology. Stevens is the source of the CRGV seasonality and woodland
 // association the page already stated without attribution. Pisco is TWO dogs and
 // carries only the narrow finding that CRGV can involve the brain.
+// Oncology. Yamazaki is 24 dogs and Maeda compares against HISTORICAL controls
+// rather than a randomised arm — both stated on their pages.
+const YAMAZAKI_TLS_RISK =
+  'Yamazaki H, Nagai K, Wada Y, et al. A potential risk factor associated with acute tumor lysis syndrome in dogs with multicentric lymphoma receiving chemotherapy. J Vet Intern Med. 2026;40(1). doi:10.1093/jvimsj/aalaf088'
+const MAEDA_SORAFENIB_UC =
+  'Maeda S, Yokota S, Komori M, et al. Sorafenib/piroxicam therapy with biomarker-defined survival benefit in canine muscle-invasive urothelial carcinoma. Sci Rep. 2026;16(1):64955. doi:10.1038/s41598-026-64955-1'
 const SHARP_CURATIVE_MONITORING =
   'Sharp CR, deLaforcade AM, Koenigshof AM, Lynch AM, Thomason JM. Consensus on the rational use of antithrombotics in veterinary critical care (CURATIVE): domain 4 — refining and monitoring antithrombotic therapies. J Vet Emerg Crit Care (San Antonio). 2019;29(1):75-87. doi:10.1111/vec.12794'
 const STEVENS_CRGV_EPI =
@@ -1495,7 +1501,7 @@ const SOURCE_NAMES = [
   'Lockhart', 'Boydell',
   'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu', 'Watson', 'Rosa-Padilla',
   // Protocol guideline sources.
-  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi', 'Sharp', 'Stevens', 'Pisco',
+  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi', 'Sharp', 'Stevens', 'Pisco', 'Yamazaki', 'Maeda',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1902,6 +1908,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^IRIS/.test(part)) { out.push({ id: 'iris-aki-grading', text: IRIS_AKI_GRADING }); continue }
     if (/^Lippi/.test(part)) { out.push({ id: 'lippi-aki-anaemia', text: LIPPI_AKI_ANAEMIA }); continue }
     if (/^Sharp/.test(part)) { out.push({ id: 'sharp-curative-monitoring', text: SHARP_CURATIVE_MONITORING }); continue }
+    if (/^Yamazaki/.test(part)) { out.push({ id: 'yamazaki-tls-risk', text: YAMAZAKI_TLS_RISK }); continue }
+    if (/^Maeda/.test(part)) { out.push({ id: 'maeda-sorafenib-uc', text: MAEDA_SORAFENIB_UC }); continue }
     if (/^Stevens/.test(part)) { out.push({ id: 'stevens-crgv-epi', text: STEVENS_CRGV_EPI }); continue }
     if (/^Pisco/.test(part)) { out.push({ id: 'pisco-crgv-brain', text: PISCO_CRGV_BRAIN }); continue }
     if (/^Pardo/.test(part)) { out.push({ id: 'pardo-aaha-fluids', text: PARDO_AAHA_FLUIDS }); continue }
