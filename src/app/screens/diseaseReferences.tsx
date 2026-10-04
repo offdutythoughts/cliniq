@@ -1407,6 +1407,12 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const HEBERT_OES_STRICTURE =
+  'Hebert MK, Liu CC, Gaschen FP. Management of benign esophageal strictures in dogs and cats: long-term follow-up of 32 cases (2006-2022). J Vet Intern Med. 2026;40(1):aalaf041. doi:10.1093/jvimsj/aalaf041'
+const DEPORTE_TRACHEOES_FISTULA =
+  'De Porte H, Van Goethem B. Diagnosis and surgical management of an acquired cervical tracheoesophageal fistula in a Shih Tzu following foreign body removal. Acta Vet Scand. 2025;67(1):56. doi:10.1186/s13028-025-00842-5'
+const WOERDE_CASR_HYPERCALCAEMIA =
+  'Woerde DJ, Palm CA, Cosaro EC, Minor KM, Westropp JL, Furrow E. A novel missense variant in the calcium-sensing receptor gene in a dog with hypercalcemia. J Vet Intern Med. 2026;40(1):aalaf046. doi:10.1093/jvimsj/aalaf046'
 const PLANCHAMP_AAI_CUTOFFS =
   'Planchamp B, Forterre F, Vidondo B, et al. Determination of cutoff values on computed tomography and magnetic resonance images for the diagnosis of atlantoaxial instability in small-breed dogs. Vet Surg. 2022;51(4):620-630. doi:10.1111/vsu.13799'
 const FORTERRE_AAI_AUGMENTATION =
@@ -1608,6 +1614,7 @@ const SOURCE_NAMES = [
   'Kennedy', 'Engdahl', 'Son',
   'Teng', 'Gualtieri', 'Treekhunrungruang', 'Teh',
   'Planchamp', 'Forterre', 'Van Hoof', 'Grapes',
+  'Hebert', 'De Porte', 'Woerde',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -2032,6 +2039,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Hebert/.test(part)) { out.push({ id: 'hebert-oes-stricture', text: HEBERT_OES_STRICTURE }); continue }
+    if (/^De Porte/.test(part)) { out.push({ id: 'deporte-tracheoes-fistula', text: DEPORTE_TRACHEOES_FISTULA }); continue }
+    if (/^Woerde/.test(part)) { out.push({ id: 'woerde-casr-hypercalcaemia', text: WOERDE_CASR_HYPERCALCAEMIA }); continue }
     if (/^Planchamp/.test(part)) { out.push({ id: 'planchamp-aai-cutoffs', text: PLANCHAMP_AAI_CUTOFFS }); continue }
     if (/^Forterre/.test(part)) { out.push({ id: 'forterre-aai-augmentation', text: FORTERRE_AAI_AUGMENTATION }); continue }
     if (/^Van Hoof/.test(part)) { out.push({ id: 'vanhoof-discospondylitis', text: VANHOOF_DISCOSPONDYLITIS }); continue }

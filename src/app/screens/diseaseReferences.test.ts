@@ -1158,6 +1158,16 @@ describe('reference block', () => {
     expect(parseSources('Forterre 2023')[0].id).not.toBe(parseSources('Planchamp 2022')[0].id)
   })
 
+  it('resolves the oesophageal and hypercalcaemia papers', () => {
+    expect(parseSources('Hebert 2026')[0].text).toContain('benign esophageal strictures')
+    // Second two-word surname; also guards against 'De Risio' being hit first.
+    const dp = parseSources('De Porte 2025')
+    expect(dp).toHaveLength(1)
+    expect(dp[0].text).toContain('tracheoesophageal fistula')
+    expect(dp[0].id).not.toBe(parseSources('De Risio 2015')[0]?.id)
+    expect(parseSources('Woerde 2026')[0].text).toContain('calcium-sensing receptor')
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.
