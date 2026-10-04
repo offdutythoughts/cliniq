@@ -2191,6 +2191,32 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Rhabdomyolysis and maxillofacial trauma — reuse only (2026-09-29)
+
+**167 → 165**, with no new literature search. Both closed by references already in the file.
+
+- **DIS-MUSC-RHAB → Pardo 2024.** The treatment cornerstone on that page *is* fluid therapy —
+  aggressive diuresis at 2–3× maintenance targeting 3–5 mL/kg/h of urine. The AAHA guidelines cover
+  resuscitation, rehydration and strategies for specific disorders, and their framing (fluids are
+  drugs with their own capacity for harm) matters most exactly where volumes are large and
+  sustained.
+- **DIS-NASAL-TRAUMA → Sharma 2015 and Pardo 2024.** The page already names concussive head trauma
+  among the causes, so the validated TBI tool belongs beside it: MGCS ≤11 predicted non-survival
+  with 84% sensitivity and 73% specificity in 72 dogs, the strongest single predictor in that
+  cohort. Fluid resuscitation takes the AAHA guidelines.
+
+### Two candidates declined
+
+The matcher also proposed the ACVIM status epilepticus consensus for **DIS-MUSC-RHAB** (status
+epilepticus can cause rhabdomyolysis) and for **DIS-MET-HYPOGLY** (hypoglycaemia causes seizures).
+Both were rejected. That consensus governs *how to manage status epilepticus*; it is not a source
+for the sequelae of status epilepticus, nor for the management of a metabolic cause of seizures.
+Citing it on either page would have been a plausible-looking association rather than support for
+the sentence carrying it — the Bellenger failure mode, reached by keyword rather than by reading.
+
+Both pages remain uncited until a paper that actually addresses them turns up. A near-miss
+suggestion from a matcher is still a suggestion, not evidence.
+
 ## Epilepsy, vitamin K coagulopathy, GME — found by a reuse matcher (2026-09-29)
 
 **170 → 167.** Three pages, two of them closed entirely by references already in the file.
