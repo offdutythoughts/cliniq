@@ -2191,6 +2191,43 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Polyradiculoneuritis and copper-associated hepatitis (2026-09-29)
+
+**165 → 163.** Back to per-page searching now the reuse seam is worked out.
+
+**Halstead 2022** on DIS-NEU-POLYRADIC — 175 affected dogs against 112 with other nerve or
+neuromuscular disease and 226 normals, which is a proper diagnostic-accuracy design rather than
+cases-versus-healthy. Print year is **2022** (63(2):104-112) against PubMed's 2021 online date.
+
+The page's work-up was electrodiagnostics, CSF and clinical pattern, with no serology. It now has
+a biomarker, and the two caveats that make the number usable:
+
+- anti-GM2 IgG at **65% sensitivity, 90% specificity** (anti-GalNAc-GD1a 62% / 89%, often
+  concomitant);
+- at 65% sensitivity roughly **a third of affected dogs test negative**, so it supports the
+  diagnosis rather than excluding it;
+- **anti-GA1 was found in affected and control dogs alike**, so that target does not discriminate
+  despite an earlier pilot suggesting it would. A negative finding published against the authors'
+  own prior work is worth carrying.
+
+**Ullal 2025** on DIS-HEP-CHRONHEP, which contributes three things the page lacked:
+
+- **Genetics may matter less than the bowl.** Unlike human Wilson disease, which arises from
+  inherited ATP7B mutations, canine copper-associated hepatitis appears more driven by excess
+  *dietary* copper, with ATP7B playing a lesser role. The page listed copper accumulation as
+  "genetic, e.g. Bedlington/Labrador" first.
+- Dogs accumulate copper **centrilobularly**; Wilson disease patients periportally at first — worth
+  knowing when reading a report.
+- Biopsy stays necessary because the non-invasive monitoring tools used in human Wilson disease
+  **do not exist for dogs**.
+
+### A search that returned the wrong species
+
+"chronic hepatitis AND dogs AND survival" returned a **human hepatitis B** drug-development paper
+as a top hit — dogs appeared only as a pharmacokinetic species. It took re-reading the abstract to
+see it. Re-running with canine-specific terms found Ullal. A reminder that species filtering in
+PubMed is weaker than it looks when the animal appears anywhere in the methods.
+
 ## Rhabdomyolysis and maxillofacial trauma — reuse only (2026-09-29)
 
 **167 → 165**, with no new literature search. Both closed by references already in the file.

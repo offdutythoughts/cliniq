@@ -1261,6 +1261,13 @@ const CAMERON_TBI_POC =
 // from the DIAGNOSTIC proposal, the drug choices from the TREATMENT proposal.
 // Citing the better-known terminology paper (Berendt 2015) for the tiers would
 // have been a misattribution of exactly the kind Rule 3 exists to prevent.
+// Acute canine polyradiculoneuritis. Crossref gives the print year as 2022
+// (63(2):104-112); PubMed shows the 2021 online date.
+// Copper-associated chronic hepatitis, compared against human Wilson disease.
+const ULLAL_COPPER_HEPATITIS =
+  'Ullal T, Choi EA, Gui D, Medici V. Comparative review of copper-associated chronic hepatitis in dogs and Wilson disease in humans. Front Vet Sci. 2025;12:1692603. doi:10.3389/fvets.2025.1692603'
+const HALSTEAD_ACP_ANTIBODIES =
+  'Halstead SK, Gourlay DS, Penderis J, et al. Serum anti-GM2 and anti-GalNAc-GD1a IgG antibodies are biomarkers for acute canine polyradiculoneuritis. J Small Anim Pract. 2022;63(2):104-112. doi:10.1111/jsap.13439'
 const DERISIO_IVETF_DIAGNOSIS =
   'De Risio L, Bhatti S, Muñana K, et al. International veterinary epilepsy task force consensus proposal: diagnostic approach to epilepsy in dogs. BMC Vet Res. 2015;11:148. doi:10.1186/s12917-015-0462-1'
 const BHATTI_IVETF_TREATMENT =
@@ -1522,7 +1529,7 @@ const SOURCE_NAMES = [
   'Lockhart', 'Boydell',
   'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu', 'Watson', 'Rosa-Padilla',
   // Protocol guideline sources.
-  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi', 'Sharp', 'Stevens', 'Pisco', 'Yamazaki', 'Maeda', 'Holland', 'De Risio', 'Bhatti',
+  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi', 'Sharp', 'Stevens', 'Pisco', 'Yamazaki', 'Maeda', 'Holland', 'De Risio', 'Bhatti', 'Halstead', 'Ullal',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1936,6 +1943,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Lippi/.test(part)) { out.push({ id: 'lippi-aki-anaemia', text: LIPPI_AKI_ANAEMIA }); continue }
     if (/^Sharp/.test(part)) { out.push({ id: 'sharp-curative-monitoring', text: SHARP_CURATIVE_MONITORING }); continue }
     if (/^De Risio/.test(part)) { out.push({ id: 'derisio-ivetf-diagnosis', text: DERISIO_IVETF_DIAGNOSIS }); continue }
+    if (/^Halstead/.test(part)) { out.push({ id: 'halstead-acp-antibodies', text: HALSTEAD_ACP_ANTIBODIES }); continue }
+    if (/^Ullal/.test(part)) { out.push({ id: 'ullal-copper-hepatitis', text: ULLAL_COPPER_HEPATITIS }); continue }
     if (/^Bhatti/.test(part)) { out.push({ id: 'bhatti-ivetf-treatment', text: BHATTI_IVETF_TREATMENT }); continue }
     if (/^Holland/.test(part)) {
       const hit = HOLLAND_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
