@@ -1264,6 +1264,14 @@ const CAMERON_TBI_POC =
 // Acute canine polyradiculoneuritis. Crossref gives the print year as 2022
 // (63(2):104-112); PubMed shows the 2021 online date.
 // Copper-associated chronic hepatitis, compared against human Wilson disease.
+// Two deliberately hedged papers. Carballo's AUC of 0.89 did NOT survive
+// adjustment for age and weight, and Collgros is 11 dogs with no control group —
+// both pages carry those limits rather than the headline figures alone.
+// Collgros print year is 2023 (261(2):229-236) against PubMed's 2022.
+const CARBALLO_DLSS_CT =
+  'Carballo O, Frederick SW, Keys DA, Moore SA, Giles JT. Preliminary evaluation of a novel method for computed tomography quantification of lumbosacral articular process displacement in dogs with and without degenerative lumbosacral stenosis. Front Vet Sci. 2024;11:1436299. doi:10.3389/fvets.2024.1436299'
+const COLLGROS_INSULINOMA_GLUCOSE =
+  'Collgros NC, Bray JP. Blood glucose monitoring during surgery in dogs to assess completeness of surgical resection of insulinoma: 11 cases. J Am Vet Med Assoc. 2023;261(2):229-236. doi:10.2460/javma.22.07.0282'
 const ULLAL_COPPER_HEPATITIS =
   'Ullal T, Choi EA, Gui D, Medici V. Comparative review of copper-associated chronic hepatitis in dogs and Wilson disease in humans. Front Vet Sci. 2025;12:1692603. doi:10.3389/fvets.2025.1692603'
 const HALSTEAD_ACP_ANTIBODIES =
@@ -1529,7 +1537,7 @@ const SOURCE_NAMES = [
   'Lockhart', 'Boydell',
   'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu', 'Watson', 'Rosa-Padilla',
   // Protocol guideline sources.
-  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi', 'Sharp', 'Stevens', 'Pisco', 'Yamazaki', 'Maeda', 'Holland', 'De Risio', 'Bhatti', 'Halstead', 'Ullal',
+  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi', 'Sharp', 'Stevens', 'Pisco', 'Yamazaki', 'Maeda', 'Holland', 'De Risio', 'Bhatti', 'Halstead', 'Ullal', 'Carballo', 'Collgros',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1945,6 +1953,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^De Risio/.test(part)) { out.push({ id: 'derisio-ivetf-diagnosis', text: DERISIO_IVETF_DIAGNOSIS }); continue }
     if (/^Halstead/.test(part)) { out.push({ id: 'halstead-acp-antibodies', text: HALSTEAD_ACP_ANTIBODIES }); continue }
     if (/^Ullal/.test(part)) { out.push({ id: 'ullal-copper-hepatitis', text: ULLAL_COPPER_HEPATITIS }); continue }
+    if (/^Carballo/.test(part)) { out.push({ id: 'carballo-dlss-ct', text: CARBALLO_DLSS_CT }); continue }
+    if (/^Collgros/.test(part)) { out.push({ id: 'collgros-insulinoma-glucose', text: COLLGROS_INSULINOMA_GLUCOSE }); continue }
     if (/^Bhatti/.test(part)) { out.push({ id: 'bhatti-ivetf-treatment', text: BHATTI_IVETF_TREATMENT }); continue }
     if (/^Holland/.test(part)) {
       const hit = HOLLAND_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']

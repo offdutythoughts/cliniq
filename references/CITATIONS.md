@@ -2191,6 +2191,33 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Lumbosacral stenosis and insulinoma — two papers worth citing for their limits (2026-09-29)
+
+**163 → 161.** Both of these are more useful for what they *fail* to establish than for their
+headline numbers, and both pages say so.
+
+**Carballo 2024** on DIS-NEU-DLSS proposes a dynamic CT measure — lumbosacral articular process
+displacement on dorsal-plane CT in flexion, cut-offs 1.2 mm or a 9% ratio, inter-observer
+reliability excellent, **AUC 0.89**. Quoted there, it reads like a new diagnostic test.
+
+But the association **did not survive adjustment for age and weight**, which the authors attribute
+to sample size. So the page says the measure is reliable and promising and explicitly says *do not
+yet rely on it*. A clinician who saw only "AUC 0.89" would reasonably start using a cut-off the
+study does not support.
+
+**Collgros 2023** on DIS-NEO-INSULINOMA (print year 2023, against PubMed's 2022) gives a practical
+intraoperative endpoint: keep exploring and resecting until blood glucose rises, which it did in
+all 11 dogs by a mean of 6.35 mmol/L. That technique is the citable contribution.
+
+Its outcome figures are labelled **descriptive, not comparative** — 11 dogs, no control group,
+median survival 762 days. The paper's own conclusion that the method "resulted in improved
+outcomes in all cases" cannot be supported by an uncontrolled series of eleven, so the page reports
+the numbers without the causal claim.
+
+Two further findings from it that are useful regardless of sample size: tumour stage was **not**
+associated with outcome in that cohort, and three dogs had a second surgery for recurrence with
+further disease-free prolongation — so recurrence is not automatically the end of surgical options.
+
 ## Polyradiculoneuritis and copper-associated hepatitis (2026-09-29)
 
 **165 → 163.** Back to per-page searching now the reuse seam is worked out.
