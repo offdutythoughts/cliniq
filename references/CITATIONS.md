@@ -2191,6 +2191,52 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Epilepsy, vitamin K coagulopathy, GME — found by a reuse matcher (2026-09-29)
+
+**170 → 167.** Three pages, two of them closed entirely by references already in the file.
+
+### A reuse matcher, and its real signal-to-noise
+
+With 170 pages left and 371 reference strings in the file, I wrote a one-off matcher scoring term
+overlap between each uncited page and every existing reference. It proposed candidates for 169
+pages, and most were spurious — *Thrombocytosis* matched a feline-diabetes-remission paper on the
+words "diabetes, hyperadrenocorticism"; *GIST* matched a cardiomyopathy paper on "large, breed".
+
+But four were real, and two of those I would not have thought of:
+
+- **DIS-GME → the MUO papers.** GME is a subtype of MUO, so Gonçalves and Brewińska apply exactly
+  as they already do on DIS-NEU-NME, the other subtype.
+- **DIS-BD-VITK → Agostini 2025**, already cited on DIS-BD-ROD. Vitamin K deficiency coagulopathy
+  and anticoagulant rodenticide toxicosis are the same therapy question from opposite sides.
+- **DIS-WK-EPILEPSY → the ACVIM status epilepticus consensus.**
+- DIS-TOX-METHB → the garlic toxicosis case report (declined — one dog).
+
+The matcher is not worth committing as a lint at that noise level, but it paid for itself in one
+run. Worth keeping the technique in mind for the remaining pages.
+
+### The epilepsy page named IVETF throughout and cited a textbook
+
+`DIS-WK-EPILEPSY` invokes "IVETF Tier I criterion" for its onset window and renders a block headed
+"#IVETF confidence tiers for idiopathic epilepsy" — all against `(Ettinger Ch 247)`.
+
+**There are two IVETF documents here and they are not interchangeable.** The confidence tiers come
+from the **diagnostic** proposal (De Risio 2015); the drug choices from the **treatment** proposal
+(Bhatti 2015). The best-known IVETF paper is Berendt 2015 on definition, classification and
+terminology — which does **not** contain the tiers. Citing Berendt because it is the obvious IVETF
+reference would have been a misattribution of precisely the kind Rule 3 exists to prevent, so each
+document went to the field it actually governs, and the ACVIM status epilepticus consensus went to
+the cluster-seizure sentence.
+
+That page now carries three papers where it had none.
+
+### A tooling bug found in passing
+
+`dbedit.py` could not find `DIS-WK-EPILEPSY` at all. The row is written `{id:"DIS-WK-EPILEPSY"`
+with **double** quotes while most rows use single quotes, and the helper matched only the
+single-quoted form — so it raised "row not found" on a row that exists. Fixed to accept both. Any
+page written in double-quoted style has been invisible to that helper for this whole pass, which is
+worth knowing: it fails loudly rather than silently, but it fails for the wrong reason.
+
 ## GI: exocrine pancreatic insufficiency, septic peritonitis (2026-09-29)
 
 **172 → 170.**

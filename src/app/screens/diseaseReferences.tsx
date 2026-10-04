@@ -1255,6 +1255,16 @@ const CAMERON_TBI_POC =
 // Tick paralysis. BOTH Holland papers are Australian Ixodes holocyclus cohorts,
 // and the page separates that from North American Dermacentor paralysis — so these
 // are attached to the I. holocyclus bullets only. Two papers, so year-keyed.
+// IVETF. The epilepsy page invokes "IVETF Tier I/II/III" and the IVETF onset
+// window repeatedly while citing a textbook for all of it. There are two separate
+// IVETF documents here and they are NOT interchangeable: the confidence tiers come
+// from the DIAGNOSTIC proposal, the drug choices from the TREATMENT proposal.
+// Citing the better-known terminology paper (Berendt 2015) for the tiers would
+// have been a misattribution of exactly the kind Rule 3 exists to prevent.
+const DERISIO_IVETF_DIAGNOSIS =
+  'De Risio L, Bhatti S, Muñana K, et al. International veterinary epilepsy task force consensus proposal: diagnostic approach to epilepsy in dogs. BMC Vet Res. 2015;11:148. doi:10.1186/s12917-015-0462-1'
+const BHATTI_IVETF_TREATMENT =
+  'Bhatti SF, De Risio L, Muñana K, et al. International Veterinary Epilepsy Task Force consensus proposal: medical treatment of canine epilepsy in Europe. BMC Vet Res. 2015;11:176. doi:10.1186/s12917-015-0464-z'
 const HOLLAND_TP_FOCAL =
   'Holland CT. Asymmetrical focal neurological deficits in dogs and cats with naturally occurring tick paralysis (Ixodes holocyclus): 27 cases (1999-2006). Aust Vet J. 2008;86(10):377-384. doi:10.1111/j.1751-0813.2008.00346.x'
 const HOLLAND_TP_ANISOCORIA =
@@ -1512,7 +1522,7 @@ const SOURCE_NAMES = [
   'Lockhart', 'Boydell',
   'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu', 'Watson', 'Rosa-Padilla',
   // Protocol guideline sources.
-  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi', 'Sharp', 'Stevens', 'Pisco', 'Yamazaki', 'Maeda', 'Holland',
+  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi', 'Sharp', 'Stevens', 'Pisco', 'Yamazaki', 'Maeda', 'Holland', 'De Risio', 'Bhatti',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1925,6 +1935,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^IRIS/.test(part)) { out.push({ id: 'iris-aki-grading', text: IRIS_AKI_GRADING }); continue }
     if (/^Lippi/.test(part)) { out.push({ id: 'lippi-aki-anaemia', text: LIPPI_AKI_ANAEMIA }); continue }
     if (/^Sharp/.test(part)) { out.push({ id: 'sharp-curative-monitoring', text: SHARP_CURATIVE_MONITORING }); continue }
+    if (/^De Risio/.test(part)) { out.push({ id: 'derisio-ivetf-diagnosis', text: DERISIO_IVETF_DIAGNOSIS }); continue }
+    if (/^Bhatti/.test(part)) { out.push({ id: 'bhatti-ivetf-treatment', text: BHATTI_IVETF_TREATMENT }); continue }
     if (/^Holland/.test(part)) {
       const hit = HOLLAND_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
       if (hit) out.push(hit)
