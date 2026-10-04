@@ -526,6 +526,10 @@ const KU_RTA_NDI =
 
 // Pythiosis — listed in the FGESF differential, and the modern review revises
 // the "uniformly fatal" reputation it still carries in older sources.
+// A FOURTH Cridge paper. Crossref gives the print year as 2024 (262(2):246-255);
+// PubMed shows the 2023 online date, so the map key is 2024.
+const CRIDGE_EPI =
+  'Cridge H, Williams DA, Barko PC. Exocrine pancreatic insufficiency in dogs and cats. J Am Vet Med Assoc. 2024;262(2):246-255. doi:10.2460/javma.23.09.0505'
 const CRIDGE_PYTHIOSIS =
   'Cridge H. Pythiosis in dogs. Vet Clin North Am Small Anim Pract. 2025;55(2):225-236. doi:10.1016/j.cvsm.2024.11.008'
 
@@ -1540,6 +1544,7 @@ const MEURS_BY_YEAR: Record<string, { id: string; text: string }> = {
 const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
   '2021': { id: 'cridge-neostigmine', text: CRIDGE_NEOSTIGMINE },
+  '2024': { id: 'cridge-epi', text: CRIDGE_EPI },
   '2025': { id: 'cridge-pythiosis', text: CRIDGE_PYTHIOSIS },
 }
 const RUDINSKY_BY_YEAR: Record<string, { id: string; text: string }> = {
