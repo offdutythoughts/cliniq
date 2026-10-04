@@ -4305,3 +4305,129 @@ This is the third time an apostrophe has done this (`organism's`, `F(ab')₂`).
 Added a guard to the scratchpad row-editor that raises on any word-internal
 unescaped `'` in replacement text before writing, so the failure now names the
 phrase instead of burying it in parser noise.
+
+## Batch — DIS-AA, DIS-DISCO (147 → 145, uncited 40 → 38)
+
+### DIS-AA — Atlantoaxial Instability
+
+**Planchamp B, Forterre F, Vidondo B, et al. Determination of cutoff values on
+computed tomography and magnetic resonance images for the diagnosis of
+atlantoaxial instability in small-breed dogs. Vet Surg. 2022;51(4):620-630.
+doi:10.1111/vsu.13799**
+
+- Retrospective multicentre, **123 client-owned dogs + 28 cadavers**, split into
+  control, "potentially unstable" and AAI-affected groups. Nine measurements
+  compared by ROC in flexed (≥25°) and extended (<25°) head positions.
+- **Ventral compression index (ratio of ventral to dorsal atlantodental
+  interval): ≥0.16 extended and ≥0.2 flexed, sensitivity 100%/100%, specificity
+  94.54%/96.67%.** All other measurements reached only 75–96% sensitivity and
+  70–97% specificity, and combining them did not improve on VCI alone.
+- This **demotes the page's only objective criterion.** `conf` said
+  "Atlas-to-axis angle >10° = diagnostic" and nothing else. The C1–C2 angle is
+  one of the "other measurements" in this study's lower-performing group. The
+  page now gives the VCI with its cut-offs and defines it, and says where the
+  angle sits.
+- Two caveats written onto the page:
+  - **Incorporation bias.** Groups were assigned "according to imaging findings
+    and clinical signs", so the reference standard was not independent of the
+    imaging being evaluated. A sensitivity of 100% should be read in that light.
+    The abstract does not hide this, but a page quoting "100% sensitive" without
+    it would mislead.
+  - The authors' own closing caution, carried verbatim in substance: the
+    cut-offs make the *diagnosis* objective, but the decision to operate should
+    still rest on clinical and imaging findings together.
+- Rule 6: Crossref print 2022-05, 51(4):620-630; PubMed epub 2022-03-16. Print
+  year used. 8 authors → first 3 + et al.
+
+**Forterre F, Zorgevica-Pockevica L, Precht C, Haenssgen K, Stein V, Düver P.
+Clinical evaluation of a new surgical augmentation technique for transarticular
+atlantoaxial fixation for treatment of atlantoaxial instability. Animals (Basel).
+2023;13(11):1780. doi:10.3390/ani13111780**
+
+- 11 dogs, new augmentation of ventral fixation (wire/suture through a
+  transverse hole in the axis, anchored by screws in the alae atlantis or plate
+  ends). 10 improved and returned to normal life within 3–6 months. **1 developed
+  aphonia and dysphagia and died of aspiration pneumonia 3 days after surgery.**
+- Used **only** for the complication, not for efficacy. The page's `monitor`
+  already listed "upper airway / respiratory problems, respiratory arrest" as
+  things to watch; this names the actual sequence — voice change and swallowing
+  failure leading to aspiration, in the first few days after a ventral approach.
+  The page says one death in 11 dogs cannot give a mortality rate.
+- The novel technique itself is deliberately not recommended on the page: n=11,
+  single centre, and the page's existing text already describes ventral fixation
+  generally.
+- Rule 6: online-only (MDPI), Crossref 2023-05-26, 13(11):1780; PubMed agrees.
+  6 authors → all listed.
+
+### DIS-DISCO — Diskospondylitis
+
+**Van Hoof C, Davis NA, Carrera-Justiz S, et al. Clinical features, comparative
+imaging findings, treatment, and outcome in dogs with discospondylitis: a
+multi-institutional retrospective study. J Vet Intern Med. 2023;37(4):1438-1446.
+doi:10.1111/jvim.16785**
+
+- **386 dogs**, multi-institutional. Males 236/386. L7-S1 commonest site
+  (97/386). *Staphylococcus* spp in 23/38 positive blood cultures.
+- **Imaging agreement on the PRESENCE of disease: fair between radiographs and
+  CT (κ = 0.22), poor between radiographs and MRI (κ = 0.05).** Good agreement on
+  location.
+- Trauma → relapse (OR 9.0, 95% CI 2.2–37.0, P = .01). Prior steroid therapy →
+  progressive neurological dysfunction (OR 4.7, 95% CI 1.2–18.6, P = .04).
+
+Four uses, three of which sharpen existing claims:
+
+1. `conf` said radiographs may be normal early and to repeat them. The κ values
+   turn that into something much stronger — a normal radiograph carries very
+   little weight against MRI. Added with the useful converse: agreement on
+   *location* was good, so radiographs tell you where to look rather than
+   whether disease is present.
+2. `sex` said "2:1 ratio". 236/386 is about 61%, nearer 1.6:1. Both now stand,
+   with the larger series' figure given.
+3. `tx1` already said to avoid corticosteroids. The OR of 4.7 supports it — and
+   the page immediately says the 95% CI of 1.2–18.6 rests on few events, so the
+   *size* is uncertain even though the direction supports existing advice.
+4. `prog` listed premature antimicrobial withdrawal as the relapse risk. Trauma
+   is now added, again with the interval spelled out in words (a fourfold to
+   nearly fortyfold increase) so it reads as "follow these cases longer", not as
+   a usable risk multiple.
+- *Staphylococcus* "most common overall" now carries 23/38 blood cultures.
+- Rule 6: Crossref 2023-07-01, 37(4):1438-1446; PubMed epub 2023-06-08. Agree on
+  year. 14 authors → first 3 + et al.
+
+**Grapes N, Bertram S, Gonçalves R, De Decker S. Prevalence of discospondylitis
+and association with congenital vertebral body malformations in English and
+French bulldogs. J Vet Intern Med. 2024;38(6):3138-3143. doi:10.1111/jvim.17209**
+
+- 108 dogs, multi-institutional, 2010–2020. Diskospondylitis **3.4× more common
+  in French Bulldogs (95% CI 1.6–6.7) and 4.3× in English Bulldogs (1.7–9.8)**
+  than the overall hospital cohort, both P < .001.
+- Vertebral malformations in 12/13 French Bulldogs (92.3%) and 6/8 English
+  Bulldogs (75.0%), vs 1/89 "other" breed dogs (1.1%). The infected disc was
+  adjacent to a malformation in 80% of French Bulldog discs and 50% of English
+  Bulldog discs.
+- **Median age at presentation 1.1 years (French Bulldog) and 1.0 years (English
+  Bulldog) vs 7.3 years in other breeds, both P < .001.**
+- This is the batch's most consequential correction. The page's `age` field said
+  "Middle-aged to older most commonly affected" with no exception. In the two
+  breeds now at highest risk, presentation is at about one year old — so the page
+  would have steered a clinician away from the diagnosis in exactly the dogs most
+  likely to have it. `age` now carries the exception and the action: a young
+  bulldog with spinal pain belongs on this page, particularly with a vertebral
+  malformation on imaging.
+- `breed` listed large-breed purebreds and the German Shepherd fungal
+  association; the bulldogs and the structural reason are now there too.
+- Rule 6: Crossref 2024-11-01, 38(6):3138-3143; PubMed epub 2024-10-03. Agree on
+  year. 4 authors → all listed.
+
+### Resolver
+
+New source names: Planchamp, Forterre, Van Hoof, Grapes. No prefix collisions
+(checked `pla`, `for`, `van`, `gra`; the existing 'Forgash' diverges from
+'Forterre' at the fourth character and 'Graham' from 'Grapes' likewise). Checked
+db.ts for `(Grape…` parentheticals — grape/raisin toxicity would have been a
+prose collision of the Jones-test kind — and there are none.
+
+**'Van Hoof' is the first two-word surname added in a while**, so the test
+asserts it resolves, since `SOURCE_ALT` has to match the space. Also asserted
+that Forterre 2023 and Planchamp 2022 resolve to different ids: Forterre is the
+second author on Planchamp, and markers are first-author only.
