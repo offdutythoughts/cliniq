@@ -1391,6 +1391,12 @@ const TEDDY_MM_MELPHALAN =
   'Teddy L, Sylvester SR, O’Connor KS, Hume KR. Cyclical 10-day dosing of melphalan for canine multiple myeloma. Vet Comp Oncol. 2023;21(3):533-540. doi:10.1111/vco.12916'
 const CICCARELLI_MM_THALIDOMIDE =
   'Ciccarelli S, Leo C, Perrone C, Franchini D, Bonazzi I, Finotello R. Thalidomide as a rescue protocol for treatment of multiple myeloma in dogs: preliminary data from a multicentre retrospective study. Front Vet Sci. 2026;12:1695122. doi:10.3389/fvets.2025.1695122'
+const AALTO_LEUKAEMIA_ALP =
+  'Aalto M, Yoshimoto J, Nolan J, et al. Utility of cytochemical and flow cytometry detection of alkaline phosphatase for differential diagnosis of CD34+ acute leukaemia in canines. Vet Comp Oncol. 2026;24(1):41-50. doi:10.1111/vco.70024'
+const SILVA_BOTULISM_ANTITOXIN =
+  'Silva ROS, Martins RA, Assis RA, Oliveira Junior CA, Lobato FCF. Type C botulism in domestic chickens, dogs and black-pencilled marmoset (Callithrix penicillata) in Minas Gerais, Brazil. Anaerobe. 2018;51:47-49. doi:10.1016/j.anaerobe.2018.03.013'
+const VIEGAS_BOTULISM_RAW =
+  'Viegas FM, Oliveira PF, Campos MCO, et al. Botulism in a dog fed a raw meat-based diet: a case report. Microorganisms. 2026;14(1):192. doi:10.3390/microorganisms14010192'
 
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
@@ -1554,6 +1560,7 @@ const SOURCE_NAMES = [
   // 'Sharma' is a strict PREFIX of 'Sharman' — the Sharma branch carries a \\b
   // guard so the head-trauma paper can never swallow the Helicobacter one.
   'Sharman', 'Wyatt', 'Teddy', 'Ciccarelli',
+  'Aalto', 'Silva', 'Viegas',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1944,6 +1951,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Wyatt/.test(part)) { out.push({ id: 'wyatt-mm-mri', text: WYATT_MM_MRI }); continue }
     if (/^Teddy/.test(part)) { out.push({ id: 'teddy-mm-melphalan', text: TEDDY_MM_MELPHALAN }); continue }
     if (/^Ciccarelli/.test(part)) { out.push({ id: 'ciccarelli-mm-thalidomide', text: CICCARELLI_MM_THALIDOMIDE }); continue }
+    if (/^Aalto/.test(part)) { out.push({ id: 'aalto-leukaemia-alp', text: AALTO_LEUKAEMIA_ALP }); continue }
+    if (/^Silva/.test(part)) { out.push({ id: 'silva-botulism-antitoxin', text: SILVA_BOTULISM_ANTITOXIN }); continue }
+    if (/^Viegas/.test(part)) { out.push({ id: 'viegas-botulism-raw', text: VIEGAS_BOTULISM_RAW }); continue }
     if (/^Lockhart/.test(part)) { out.push({ id: 'lockhart-horners-imaging', text: LOCKHART_HORNERS_IMAGING }); continue }
     if (/^Toresson/.test(part)) { out.push({ id: 'toresson-oral-cobalamin', text: TORESSON_ORAL_COBALAMIN }); continue }
     if (/^Epstein/.test(part)) { out.push({ id: 'epstein-ddimer-pe', text: EPSTEIN_DDIMER_PE }); continue }

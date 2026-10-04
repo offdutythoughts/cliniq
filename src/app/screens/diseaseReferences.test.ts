@@ -1078,6 +1078,12 @@ describe('reference block', () => {
     expect(parseSources('Ciccarelli 2026')[0].text).toContain('Thalidomide')
   })
 
+  it('resolves the new leukaemia and botulism papers', () => {
+    expect(parseSources('Aalto 2026')[0].text).toContain('alkaline phosphatase')
+    expect(parseSources('Silva 2018')[0].text).toContain('Type C botulism')
+    expect(parseSources('Viegas 2026')[0].text).toContain('raw meat-based diet')
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.
