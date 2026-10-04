@@ -4431,3 +4431,102 @@ prose collision of the Jones-test kind — and there are none.
 asserts it resolves, since `SOURCE_ALT` has to match the space. Also asserted
 that Forterre 2023 and Planchamp 2022 resolve to different ids: Forterre is the
 second author on Planchamp, and markers are first-author only.
+
+## Batch — DIS-GI-OESFB, DIS-ENDO-HCALC (145 → 143, uncited 38 → 36)
+
+### DIS-GI-OESFB — Oesophageal Foreign Body
+
+**Hebert MK, Liu CC, Gaschen FP. Management of benign esophageal strictures in
+dogs and cats: long-term follow-up of 32 cases (2006-2022). J Vet Intern Med.
+2026;40(1):aalaf041. doi:10.1093/jvimsj/aalaf041**
+
+- 28 dogs + 4 cats with benign oesophageal stricture treated by
+  esophagoscopy-guided balloon dilation. Causes: peri-anaesthetic regurgitation
+  (20 dogs, 3 cats), **oesophageal foreign body (6 dogs, 1 cat)**, vomiting
+  (6 dogs). Median 2 dilation sessions. Submucosal triamcinolone in 22 dogs and
+  3 cats at a median 0.45 mg/kg.
+- **MST 2746 days in 25 dogs (95% CI 1860–3297).** Only **7 of 28 dogs and 1 of
+  4 cats could eat kibble** at follow-up.
+- Cited on the FB page because stricture is the complication the page tells you
+  to watch for, and `monitor` previously said only "→ balloon dilation" with no
+  sense of what that commits the owner to. Three things now stated: it is
+  typically more than one session, survival afterwards is long, and the diet
+  usually stays modified.
+- **The authors' headline claim is flagged, not repeated.** They conclude dilation
+  was "apparently associated with prolonged survival... with a MST 3.2-3.8 times
+  longer than reported in previous studies". That comparison is against the
+  historical literature, not a control group in this study, so the page says the
+  figure is reached by comparison with earlier reports rather than against
+  controls. Quoting "3.2–3.8× longer" as a treatment effect would be wrong.
+- The shift in triamcinolone timing (before → after dilation over the study
+  period) is a description of changing practice at one institution with no
+  comparison, so it is not on the page.
+- Rule 6: Crossref and PubMed both 2026, 40(1), article aalaf041. 3 authors → all.
+
+**De Porte H, Van Goethem B. Diagnosis and surgical management of an acquired
+cervical tracheoesophageal fistula in a Shih Tzu following foreign body removal.
+Acta Vet Scand. 2025;67(1):56. doi:10.1186/s13028-025-00842-5**
+
+- 6.5-year-old Shih Tzu, persistent hyporexia, vomiting and moist cough after
+  endoscopic removal of a bone at the thoracic inlet. Managed as oesophagitis and
+  aspiration pneumonia; deteriorated with recurrent pneumonia. Cervical
+  tracheoesophageal fistula confirmed endoscopically, repaired via ventral
+  midline with a bipedicle sternohyoid muscle flap. Asymptomatic at 12 months.
+- Kept despite n=1 for the same reason as the cryptococcal postzone case: the
+  default assumption is wrong in a way that costs time. `severe` listed
+  perforation, mediastinitis, pyothorax, aspiration pneumonia and stricture —
+  not fistula. A dog with repeated post-retrieval pneumonias gets treated as
+  plain aspiration, which is exactly what happened here.
+- Two actionable details carried: cough provoked by **drinking liquids and by
+  tracheal palpation**, and that endoscopy confirmed the diagnosis while avoiding
+  the aspiration risk of a contrast study. The page already preferred iohexol to
+  barium when perforation is suspected; this adds the endoscopy-first point for
+  suspected fistula.
+- Rule 6: online-only; Crossref 2025-12-13, 67(1), article 56; PubMed agrees.
+  2 authors → both listed. Crossref renders the surname "De porte"; PubMed and
+  the paper itself use **De Porte**, which is what the citation uses.
+
+### DIS-ENDO-HCALC — Hypercalcaemia
+
+**Woerde DJ, Palm CA, Cosaro EC, Minor KM, Westropp JL, Furrow E. A novel
+missense variant in the calcium-sensing receptor gene in a dog with
+hypercalcemia. J Vet Intern Med. 2026;40(1):aalaf046.
+doi:10.1093/jvimsj/aalaf046**
+
+- 5-year-old spayed Border Collie cross, **3-year** history of hypercalcaemia,
+  normal physical examination. PTH at the upper end of the reference interval,
+  no enlarged or ectopic parathyroid tissue on imaging. **Urine calcium excretion
+  inappropriately low** — the pattern of familial hypocalciuric hypercalcaemia in
+  people. Homozygous for a CASR missense variant (Glu649Lys) with predicted
+  pathogenicity, **absent from whole-genome variant calls on 2782 dogs including
+  43 Border Collies**.
+- Hypercalcaemia persisted through **unilateral parathyroidectomy, bisphosphonates
+  and calcimimetics**.
+- Three uses, all filling a specific hole in the page:
+  - `conf` gains urine calcium. The page listed ionised calcium, PTH, PTHrP and
+    25-OH vitamin D — a complete panel for every cause except this one, which is
+    identified by what the urine is doing.
+  - `tx1` gains the refractoriness warning next to bisphosphonates. The clinical
+    value is avoiding a futile parathyroid exploration in a young dog whose
+    imaging is already negative.
+  - `etiology` reframes the **I** in HARDIONS: a refractory case may be genetic
+    rather than truly idiopathic.
+- Rule 2: n=1 and the variant's pathogenicity is **predicted, not functionally
+  confirmed**. The page says so and frames it as a differential to test for
+  rather than an established canine disease.
+- **Edit error caught and reverted.** The first attempt inserted the new text
+  inside the HARDIONS bullet, between "Idiopathic (cats)" and "Osteolysis",
+  splitting the mnemonic across two bullets and leaving "Osteolysis, Neoplasia,
+  Spurious/Granulomatous" orphaned as its own bullet. tsc and every lint passed —
+  the mnemonic was simply broken. Reverted and appended after the whole
+  mnemonic instead. Worth recording because no automated check covers it: a
+  comma-separated list inside one bullet cannot take a mid-list insertion.
+- Rule 6: Crossref and PubMed both 2026, 40(1), article aalaf046. 6 authors → all.
+
+### Resolver
+
+New source names: Hebert, De Porte, Woerde. No prefix collisions. **'De Porte'
+is the second two-word surname**, and sits in the same `De ` space as the
+existing 'De Risio' — neither is a prefix of the other, but the test asserts
+they resolve to different ids, since a mistake there would put an IVETF
+epilepsy document on an oesophageal page.
