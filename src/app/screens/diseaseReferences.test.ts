@@ -1147,6 +1147,17 @@ describe('reference block', () => {
     expect(new Set(ids.filter(Boolean)).size).toBe(ids.filter(Boolean).length)
   })
 
+  it('resolves the new spinal papers, including a two-word surname', () => {
+    expect(parseSources('Planchamp 2022')[0].text).toContain('atlantoaxial instability')
+    expect(parseSources('Forterre 2023')[0].text).toContain('augmentation technique')
+    // 'Van Hoof' has a space; SOURCE_ALT must match the whole surname.
+    expect(parseSources('Van Hoof 2023')[0].text).toContain('discospondylitis')
+    expect(parseSources('Grapes 2024')[0].text).toContain('bulldogs')
+    // Forterre is also a co-author on Planchamp 2022; the marker is first-author
+    // only, so these must stay distinct.
+    expect(parseSources('Forterre 2023')[0].id).not.toBe(parseSources('Planchamp 2022')[0].id)
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.
