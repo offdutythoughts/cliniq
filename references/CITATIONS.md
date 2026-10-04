@@ -3538,3 +3538,126 @@ If citations need to surface in the UI, that shorthand is the existing conventio
 it for now, and reserve the full AMA strings above for external or printed output. Adding a
 structured `refs` field to the entry type would be the clean fix, but it is a schema change
 and hasn't been requested.
+
+## Batch — DIS-GI-HELICO, DIS-NEO-MM (161 → 157 after the previous batch's 2)
+
+Counted 159 → 157.
+
+### DIS-GI-HELICO — Helicobacter-associated Gastritis
+
+**Sharman M, Bacci B, Simpson K, Mansfield C. Comparison of in vivo confocal
+endomicroscopy with other diagnostic modalities to detect intracellular
+helicobacters. Vet J. 2016;213:78-83. doi:10.1016/j.tvjl.2016.03.014**
+
+- 14 **clinically healthy** dogs, standard gastroduodenoscopy then confocal
+  endomicroscopy with topical acriflavine; biopsies for histopathology, PCR, FISH.
+- Non-*H. pylori* helicobacters: 13/14 on confocal, 11/14 on histopathology.
+  FISH placed organisms **intracellularly in 13/14**; confocal could not see
+  intracellular organisms with the fluorophore protocol used.
+- Distribution was diffuse and multifocal through the stomach.
+- Rule 2: n=14, stated inline in all three bullets. The page's central claim is
+  that colonisation is common in healthy animals, and 13 of 14 *healthy* dogs is
+  a strong datum for exactly that claim even at n=14 — the hedging is about not
+  reading the detection percentages as validated sensitivities.
+- Rule 3 care point: "intracellular colonisation may serve as a protected niche
+  where organisms evade effective treatment" is the authors' **framing in the
+  introduction**, not a result of this study. Written as "the authors propose
+  that intracellular niche as a shelter from treatment — a hypothesis, not a
+  demonstrated mechanism". The page already said relapse is common; this gives a
+  candidate reason without claiming it was shown.
+- Rule 6: PubMed and Crossref agree. Crossref gives print 2016-07, no separate
+  online date; PubMed's 2016-04-13 is the epub. Print year used.
+
+**Declined for this page:** Heilmann RM et al, BMC Vet Res. 2017;13(1):321
+(n=231 chronic-enteropathy dogs) reports that serum gastrin did **not** correlate
+with the presence or numbers of spiral bacteria in gastric biopsies. Real,
+adequately powered, and it does support "colonisation ≠ disease" — but it is a
+secondary endpoint of a gastrin biological-variation study, and the Helicobacter
+page says nothing about gastrin. Adding it would have put a gastrin bullet on a
+page that has no gastrin context. Noted here in case the page ever gains one.
+
+### DIS-NEO-MM — Multiple Myeloma
+
+Page was Ettinger Ch 322 only, with no imaging guidance at all and nothing for
+melphalan-refractory dogs.
+
+**Wyatt S, De Risio L, Driver C, José-López R, Pivetta M, Beltran E. Neurological
+signs and MRI findings in 12 dogs with multiple myeloma. Vet Radiol Ultrasound.
+2019;60(4):409-415. doi:10.1111/vru.12759**
+
+- Multicentre retrospective, 4 referral hospitals, 12 dogs with pathologically
+  confirmed MM that presented with spinal pain or other neurological signs and
+  had spinal MRI.
+- Spinal pain in **all 12**; 8/12 chronic progressive; proprioceptive ataxia or
+  paresis in 11/12.
+- The discriminating feature: multiple expansile vertebral lesions **not**
+  extending beyond the outer cortical limits of the affected vertebrae, with
+  extradural material compressing the cord. Hyper- to isointense on T2 in 12/12,
+  homogeneously contrast-enhancing in 12/12.
+- Rule 2: n=12 stated inline, and the third bullet says explicitly this is "a
+  pattern worth recognising, not a validated set of criteria" — 12 dogs with no
+  control group cannot establish specificity against other vertebral lesions.
+- Placed at the END of `conf`, after `Author preference:`, under a
+  `#Dogs — spinal MRI pattern (Wyatt 2019)` header. First attempt inserted it
+  mid-list after `Bence-Jones proteinuria`, which orphaned `Author preference:`
+  under the new header. The `#Dogs —` form also gives the section a headerSp, so
+  `scopeToSpecies` drops the whole dog-only block on the Cat tab and
+  `dropBareHeaders` takes the header with it — without that the two bullets
+  showed up as cross-talk on the Cat tab in lint-species.
+- Rule 6: both registries agree; print 2019;60(4):409-415, epub 2019-05-06.
+  Print year used. 6 authors → all listed (AMA truncates at 7+).
+
+**Teddy L, Sylvester SR, O'Connor KS, Hume KR. Cyclical 10-day dosing of
+melphalan for canine multiple myeloma. Vet Comp Oncol. 2023;21(3):533-540.
+doi:10.1111/vco.12916**
+
+- Retrospective case series, 17 dogs, Cornell. Repeated 10-day cyclical melphalan
+  rather than the continuous low-dose schedule the page already gives.
+- CR 10/17 (59%), PR 3/17 (18%), ORR 76%. Median OS 512 days (range 39-1065).
+  Diarrhoea commonest AE (6/17).
+- The authors' own conclusion is the point worth carrying: better tolerated than
+  other reported protocols **but a lower response rate**, which they attribute to
+  lower dose intensity. That trade-off is split into its own bullet rather than
+  tail-ended onto the outcome bullet.
+- Deliberately NOT written as a contradiction of the page's Ettinger figure
+  (MST 1.5-2.5 years). 512 days is shorter, but this is a lower-intensity
+  schedule in 17 dogs; stating the figure with its protocol attached is honest,
+  rewriting `prog` off a 17-dog series would not be.
+- Rule 2: n=17 inline. Multivariate associations the paper reports (retinal
+  detachment, maximum response CR/PR) are NOT carried — two covariates on 17 dogs
+  is not something to put on a clinical page.
+- Rule 6: both registries agree; print 2023-09, 21(3):533-540, epub 2023-06-05.
+
+**Ciccarelli S, Leo C, Perrone C, Franchini D, Bonazzi I, Finotello R.
+Thalidomide as a rescue protocol for treatment of multiple myeloma in dogs:
+preliminary data from a multicentre retrospective study. Front Vet Sci.
+2026;12:1695122. doi:10.3389/fvets.2025.1695122**
+
+- 7 dogs, three referral centres, all melphalan-exposed (4 also cyclophosphamide),
+  refractory or intolerant. CR achieved or maintained in 5/7 (71%). Median PFS
+  490 days on thalidomide vs 180 days during prior melphalan. AEs limited to
+  grade II lethargy in 2; no haematologic, GI or urinary AEs.
+- Rule 2: n=7 is small enough that it governs the wording. Written as
+  "preliminary support as rescue" and closed with "7 dogs is reason to consider
+  it when melphalan fails, not evidence to prefer it first-line". The PFS
+  comparison is within-dog sequential, not randomised, and reads as such.
+- Kept because the page's `tx2` offered nothing at all for a melphalan-refractory
+  or -intolerant dog, so the alternative was silence rather than a better source.
+- Rule 6 disagreement worth recording: the DOI slug reads `fvets.2025.1695122`
+  but **both** PubMed and Crossref date it 2026-01-22 in volume 12, and Crossref
+  has no print date (online-only journal). Cited as 2026 on the registries, not
+  the slug.
+
+### Resolver
+
+New source names: Sharman, Wyatt, Teddy, Ciccarelli.
+
+**Prefix trap caught before it shipped:** `Sharma` (head trauma, 2015) is a
+strict prefix of `Sharman`, and the existing branch was an unguarded
+`/^Sharma/`. Unfixed, `(Sharman 2016)` on the Helicobacter page would have
+resolved to the head-trauma paper — a page citing something real and wrong,
+which is worse than an unresolved marker because nothing visibly breaks. Fixed
+with a `\b` guard on the Sharma branch (order-independent) plus the new Sharman
+branch. Locked by a test asserting the two ids differ and that each text
+contains its own subject; `lint-refs-integrity` check 3 now reports 16 prefix
+pairs, up from 15.

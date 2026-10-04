@@ -1059,6 +1059,25 @@ describe('reference block', () => {
     expect(offenders).toEqual([])
   })
 
+  // 'Sharma' is a strict PREFIX of 'Sharman': an unguarded /^Sharma/ branch
+  // sent (Sharman 2016) to the head-trauma paper, which is a different species
+  // of error from a missing citation — the page cites something real and wrong.
+  it('keeps Sharma and Sharman on separate papers', () => {
+    const sharma = parseSources('Sharma 2015')
+    const sharman = parseSources('Sharman 2016')
+    expect(sharma).toHaveLength(1)
+    expect(sharman).toHaveLength(1)
+    expect(sharma[0].id).not.toBe(sharman[0].id)
+    expect(sharma[0].text).toContain('head trauma')
+    expect(sharman[0].text).toContain('helicobacters')
+  })
+
+  it('resolves the new multiple myeloma papers', () => {
+    expect(parseSources('Wyatt 2019')[0].text).toContain('12 dogs with multiple myeloma')
+    expect(parseSources('Teddy 2023')[0].text).toContain('Cyclical 10-day dosing of melphalan')
+    expect(parseSources('Ciccarelli 2026')[0].text).toContain('Thalidomide')
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.
