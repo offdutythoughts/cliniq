@@ -1397,6 +1397,16 @@ const SILVA_BOTULISM_ANTITOXIN =
   'Silva ROS, Martins RA, Assis RA, Oliveira Junior CA, Lobato FCF. Type C botulism in domestic chickens, dogs and black-pencilled marmoset (Callithrix penicillata) in Minas Gerais, Brazil. Anaerobe. 2018;51:47-49. doi:10.1016/j.anaerobe.2018.03.013'
 const VIEGAS_BOTULISM_RAW =
   'Viegas FM, Oliveira PF, Campos MCO, et al. Botulism in a dog fed a raw meat-based diet: a case report. Microorganisms. 2026;14(1):192. doi:10.3390/microorganisms14010192'
+const GILLIAM_KCNJ10_SCA =
+  'Gilliam D, O’Brien DP, Coates JR, et al. A homozygous KCNJ10 mutation in Jack Russell Terriers and related breeds with spinocerebellar ataxia with myokymia, seizures, or both. J Vet Intern Med. 2014;28(3):871-877. doi:10.1111/jvim.12355'
+const ROHDIN_KCNJ10_FOXTERRIER =
+  'Rohdin C, Gilliam D, O’Leary CA, et al. A KCNJ10 mutation previously identified in the Russell group of terriers also occurs in Smooth-Haired Fox Terriers with hereditary ataxia and in related breeds. Acta Vet Scand. 2015;57:26. doi:10.1186/s13028-015-0115-1'
+const STEE_KCNJ10_BOUVIER =
+  'Stee K, Van Poucke M, Pumarola M, et al. Spinocerebellar ataxia in the Bouvier des Ardennes breed is caused by a KCNJ10 missense variant. J Vet Intern Med. 2023;37(1):216-222. doi:10.1111/jvim.16594'
+const UNO_SPINAL_MENINGIOMA_RT =
+  'Uno A, Iwasaki R, Mori T. Treatment outcomes and tolerability of postoperative radiotherapy in 10 dogs with spinal meningiomas. J Am Anim Hosp Assoc. 2026;62(3):108-114. doi:10.5326/JAAHA-MS-7498'
+const WARD_SPINAL_MENINGIOMA_GRADE2 =
+  'Ward K, Morimoto C, Faissler D. Hypofractionated palliative-intent radiation therapy for a postsurgical recurrent grade II cervical spinal meningioma in a dog. Can Vet J. 2026;67(2):167-173.'
 
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
@@ -1561,6 +1571,8 @@ const SOURCE_NAMES = [
   // guard so the head-trauma paper can never swallow the Helicobacter one.
   'Sharman', 'Wyatt', 'Teddy', 'Ciccarelli',
   'Aalto', 'Silva', 'Viegas',
+  // 'Stee' is a strict PREFIX of 'Steele' — its branch carries a \\b guard.
+  'Gilliam', 'Rohdin', 'Stee', 'Uno',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1594,6 +1606,14 @@ const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2021': { id: 'cridge-neostigmine', text: CRIDGE_NEOSTIGMINE },
   '2024': { id: 'cridge-epi', text: CRIDGE_EPI },
   '2025': { id: 'cridge-pythiosis', text: CRIDGE_PYTHIOSIS },
+}
+// 'Ward' carries the 2003 gastropexy paper and the 2026 spinal meningioma case
+// report. Year-keyed from the moment the second one arrived — an unmapped year
+// resolves to nothing, which the integrity lint turns into a failure rather
+// than a silently wrong citation.
+const WARD_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2003': { id: 'ward-gastropexy', text: WARD_GASTROPEXY },
+  '2026': { id: 'ward-spinal-meningioma-grade2', text: WARD_SPINAL_MENINGIOMA_GRADE2 },
 }
 const RUDINSKY_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'rudinsky-ckd', text: RUDINSKY_CKD },
@@ -1954,6 +1974,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Aalto/.test(part)) { out.push({ id: 'aalto-leukaemia-alp', text: AALTO_LEUKAEMIA_ALP }); continue }
     if (/^Silva/.test(part)) { out.push({ id: 'silva-botulism-antitoxin', text: SILVA_BOTULISM_ANTITOXIN }); continue }
     if (/^Viegas/.test(part)) { out.push({ id: 'viegas-botulism-raw', text: VIEGAS_BOTULISM_RAW }); continue }
+    if (/^Gilliam/.test(part)) { out.push({ id: 'gilliam-kcnj10-sca', text: GILLIAM_KCNJ10_SCA }); continue }
+    if (/^Rohdin/.test(part)) { out.push({ id: 'rohdin-kcnj10-foxterrier', text: ROHDIN_KCNJ10_FOXTERRIER }); continue }
+    if (/^Stee\b/.test(part)) { out.push({ id: 'stee-kcnj10-bouvier', text: STEE_KCNJ10_BOUVIER }); continue }
+    if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Lockhart/.test(part)) { out.push({ id: 'lockhart-horners-imaging', text: LOCKHART_HORNERS_IMAGING }); continue }
     if (/^Toresson/.test(part)) { out.push({ id: 'toresson-oral-cobalamin', text: TORESSON_ORAL_COBALAMIN }); continue }
     if (/^Epstein/.test(part)) { out.push({ id: 'epstein-ddimer-pe', text: EPSTEIN_DDIMER_PE }); continue }
@@ -2166,7 +2190,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^de Papp/.test(part)) { out.push({ id: 'de-papp-lactate', text: DE_PAPP_LACTATE }); continue }
     if (/^Zacher/.test(part)) { out.push({ id: 'zacher-lactate', text: ZACHER_LACTATE }); continue }
     if (/^Green/.test(part)) { out.push({ id: 'green-lactate', text: GREEN_LACTATE }); continue }
-    if (/^Ward/.test(part)) { out.push({ id: 'ward-gastropexy', text: WARD_GASTROPEXY }); continue }
+    if (/^Ward/.test(part)) {
+      const hit = WARD_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Glickman/.test(part)) {
       const hit = GLICKMAN_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
       if (hit) out.push(hit)
