@@ -1084,6 +1084,24 @@ describe('reference block', () => {
     expect(parseSources('Viegas 2026')[0].text).toContain('raw meat-based diet')
   })
 
+  // 'Stee' is a strict PREFIX of 'Steele', and 'Ward' already belonged to the
+  // 2003 gastropexy paper before the 2026 spinal meningioma case report arrived.
+  it('keeps Stee off Steele and splits Ward by year', () => {
+    expect(parseSources('Stee 2023')[0].text).toContain('Bouvier des Ardennes')
+    expect(parseSources('Steele 2021')[0].text).toContain('insulin-like growth factor')
+    expect(parseSources('Ward 2003')[0].text).toContain('gastropexy')
+    expect(parseSources('Ward 2026')[0].text).toContain('spinal meningioma')
+    // An unmapped year must resolve to nothing rather than to the wrong Ward.
+    expect(parseSources('Ward 2015')).toEqual([])
+    expect(parseSources('Ward')).toEqual([])
+  })
+
+  it('resolves the new ataxia and spinal meningioma papers', () => {
+    expect(parseSources('Gilliam 2014')[0].text).toContain('KCNJ10')
+    expect(parseSources('Rohdin 2015')[0].text).toContain('Smooth-Haired Fox Terriers')
+    expect(parseSources('Uno 2026')[0].text).toContain('postoperative radiotherapy')
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.

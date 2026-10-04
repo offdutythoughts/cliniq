@@ -3759,3 +3759,146 @@ New source names: Aalto, Silva, Viegas. No prefix collisions (checked against
 nearby, and it is unrelated). 'Silva' is a common surname and is now claimed by
 the botulism outbreak paper; a second Silva will need a `SILVA_BY_YEAR` map,
 which `lint-refs-integrity` check 6 will force.
+
+## Batch — DIS-NEU-SCA, DIS-NEU-SPINEO (155 → 153)
+
+### DIS-NEU-SCA — Hereditary Canine Spinocerebellar Ataxia
+
+The page already listed exact variants (KCNJ10 c.627C>G, c.986T>C, CAPN1,
+ITPR1, SCN8A, RALGAPA1, GRM1, PNPLA8, KCNIP4) with no primary source behind any
+of them. These three papers anchor the KCNJ10 forms, which are the ones a
+clinician actually meets.
+
+**Gilliam D, O'Brien DP, Coates JR, et al. A homozygous KCNJ10 mutation in Jack
+Russell Terriers and related breeds with spinocerebellar ataxia with myokymia,
+seizures, or both. J Vet Intern Med. 2014;28(3):871-877. doi:10.1111/jvim.12355**
+
+- Case-control: **16 affected Russell group terriers, 640 control RGTs, 383 dogs
+  from 144 other breeds**; KCNJ10 c.627C>G associated at P < .001. Variant found
+  by whole-genome sequencing of one affected RGT against 81 other canids.
+- Two claims carried. Onset in that cohort spanned **2 to 12 months**, wider than
+  the page's "2–6 months" figure, which is now stated alongside rather than
+  replacing it (the page's narrower range may well come from a different series).
+- The clinically important one: **every homozygote had ataxia, but myokymia and
+  seizures occurred in varying combinations**. The page's `pearl` reads
+  "ataxia + myokymia (skin rippling) ... = SAM or SDCA", which risks not testing
+  the dog that has ataxia alone. The new `signs` bullet says explicitly not to
+  require myokymia before testing.
+- Rule 6: Crossref 871-877, PubMed abbreviates to "871-7". Crossref range used.
+  9 authors → first 3 + et al.
+
+**Rohdin C, Gilliam D, O'Leary CA, et al. A KCNJ10 mutation previously identified
+in the Russell group of terriers also occurs in Smooth-Haired Fox Terriers with
+hereditary ataxia and in related breeds. Acta Vet Scand. 2015;57:26.
+doi:10.1186/s13028-015-0115-1**
+
+- 3 Smooth-Haired Fox Terriers and 2 Toy Fox Terriers with the phenotype, all
+  homozygous for the same c.627C>G variant; heterozygous in 5 clinically
+  unaffected Tenterfield Terriers.
+- Rule 2 is satisfied by what the claim IS: genotype identity in named dogs, not
+  a prevalence or a response rate. Numbers stated inline anyway.
+- **Precision gained, not just a citation:** the page listed Tenterfield Terrier
+  alongside the fox terriers as though affected dogs were known. The only
+  Tenterfield data are heterozygotes with no clinical signs, so a second bullet
+  now says the breed carries the variant but an affected Tenterfield has not been
+  confirmed. That distinction decides whether a Tenterfield with ataxia should be
+  worked up for something else.
+- Rule 6: Crossref print 2015-12, article 26, no page range; PubMed 57(1):26.
+  Cited as 57:26. 7 authors → first 3 + et al.
+
+**Stee K, Van Poucke M, Pumarola M, et al. Spinocerebellar ataxia in the Bouvier
+des Ardennes breed is caused by a KCNJ10 missense variant. J Vet Intern Med.
+2023;37(1):216-222. doi:10.1111/jvim.16594**
+
+- 5 affected Bouvier des Ardennes puppies, 8 healthy relatives, 63 healthy
+  unrelated dogs of the breed. All 5 homozygous for KCNJ10 c.986T>C
+  (p.Leu329Pro) — the Belgian Malinois SDCA1 variant. All sampled parents
+  heterozygous; no healthy dog homozygous. **Allele frequency 15% in the 63
+  healthy unrelated dogs.**
+- **Corrected a factual error on the page.** `prog` said "SDCA1 in Bouvier des
+  Ardennes (heterozygous KCNJ10 with another variant): more variable". The
+  affected dogs were HOMOZYGOUS for a single variant; the heterozygotes were the
+  clinically normal parents. As written the page implied a heterozygote could be
+  a mildly affected dog, which inverts the counselling advice for the breed.
+  Rewritten so the variability sits where the paper puts it — in presentation and
+  tempo (1 puppy severe from 6 weeks, euthanised by 8 weeks; 4 milder from 7–10
+  weeks, reaching up to 11 months) — and the genotype statement is now correct.
+- The 15% allele frequency went to `monitor`: in this breed, screening cannot
+  stop at the litter and the breeding line.
+- Rule 6: **registries disagree on year and it changes the citation.** PubMed
+  dates it 2022-11-25 (epub); Crossref gives print 2023-01-01, 37(1):216-222.
+  Cited as **Stee 2023** per the print-year rule. 8 authors → first 3 + et al.
+
+### DIS-NEU-SPINEO — Spinal Meningioma
+
+**Uno A, Iwasaki R, Mori T. Treatment outcomes and tolerability of postoperative
+radiotherapy in 10 dogs with spinal meningiomas. J Am Anim Hosp Assoc.
+2026;62(3):108-114. doi:10.5326/JAAHA-MS-7498**
+
+- 10 dogs, all operated with histopathological confirmation; 9 received adjuvant
+  fractionated RT (32–55 Gy in 12–21 fractions, 5×/week), the tenth at
+  recurrence. 3 of the 4 cases with assessed margins were incomplete.
+- Median survival **568 days** (165–1823). **Local recurrence in 6/10**, at 95,
+  99, 153, 367, 433 and 1086 days. One suspected radiation complication
+  (worsening limb paralysis) on day 1679; nothing else recorded.
+- Rule 1(b) handled carefully. The page already asserted "RT adjunctive
+  significantly extends survival" — an uncited claim that a 10-dog single-arm
+  series cannot support. Rather than reinforce it, the new bullets give the
+  absolute figures, state that recurrence happened in 6 of 10 **despite** adjuvant
+  RT, and then say in plain terms that with 10 dogs and no untreated comparison
+  group this describes the course after surgery plus RT and does not measure what
+  the RT added. The pre-existing "significantly extends" wording is left as it
+  was found and is flagged here as unsourced.
+- The recurrence timings also validate an existing recommendation: two of the six
+  recurrences were found at 95 and 99 days, which is exactly the page's 3-month
+  post-op MRI. That went into `monitor`.
+- Rule 6: both registries give 2026, 62(3):108-114 (Crossref print 2026-05-01).
+  3 authors → all listed.
+
+**Ward K, Morimoto C, Faissler D. Hypofractionated palliative-intent radiation
+therapy for a postsurgical recurrent grade II cervical spinal meningioma in a
+dog. Can Vet J. 2026;67(2):167-173.**
+
+- Single case: 10-year-old Golden Retriever, C4–C5 IDEM mass, hemilaminectomy
+  with marginal excision. **Initial histopathology read as metastatic carcinoma**;
+  revised to grade II metaplastic meningioma on immunohistochemistry plus absence
+  of a primary tumour on CT. Regrowth confirmed 54 days post-surgery; 5 Gy weekly
+  × 4 did not control it; euthanised day 159. Necropsy showed increased mitotic
+  activity after irradiation.
+- Used for two things the page did not say. `conf` claimed meningiomas are
+  "usually WHO grade I (benign) in both species" with nothing about the
+  exceptions; the histopathology trap is now stated, with the reason it matters
+  spelled out — the error runs in the direction that ends treatment, because an
+  owner told "metastatic carcinoma" stops. `tx1` gains that a palliative
+  hypofractionated protocol failed here and that the authors suggest higher-dose
+  or stereotactic protocols, and earlier adjuvant therapy, for grade II–III.
+- Rule 2: n=1 is stated in the text of the `conf` bullet ("one case, but the
+  mistake runs in the direction that ends treatment").
+- **No DOI** — Can Vet J does not mint them for all articles. Rule 6 satisfied via
+  PubMed (PMID 41716511, PMC12915442) and **Europe PMC**, which both give
+  Can Vet J 2026;67(2):167-173; Crossref has no record at all. Rule 4's `isPaper`
+  test still passes on the `2026;67` volume pattern, so the page counts as having
+  a paper without a DOI being present.
+- `lint-render`'s balanced-parenthesis check and the escaped inner quotes in
+  `"Usually grade I" is not always` both passed; the double quotes sit inside a
+  single-quoted db.ts field so no escaping was needed.
+
+### Resolver
+
+New source names: Gilliam, Rohdin, Stee, Uno. Two traps, both caught before
+shipping:
+
+1. **'Stee' is a strict prefix of 'Steele'** (the feline HCM IGF-1 paper). An
+   unguarded `/^Stee/` branch would have sent `(Steele 2021)` on DIS-CARD-HCM to
+   the Bouvier des Ardennes ataxia paper. Guarded with `/^Stee\b/`, which is
+   order-independent. 17 prefix pairs now checked, up from 16.
+2. **'Ward' was already taken** by Ward 2003 (prophylactic gastropexy, cited
+   twice on DIS-GI-GDV). Converted to `WARD_BY_YEAR` with 2003 and 2026, which is
+   the rule for any surname gaining a second paper. Both existing markers already
+   carried the year, so nothing broke; verified by rendering DIS-GI-GDV and
+   confirming Ward 2003 still resolves to the gastropexy paper at reference 10.
+   Year-keyed authors now 25.
+
+Tests added for both, including `parseSources('Ward 2015')` and
+`parseSources('Ward')` resolving to nothing — an unmapped year must fail safe
+rather than pick a Ward.
