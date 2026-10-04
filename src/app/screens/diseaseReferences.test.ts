@@ -640,6 +640,16 @@ describe('parseSources', () => {
     expect(parseSources('Burkitt-Creedon 2026').map(s => s.id)).toEqual(['burkittcreedon-recover-anaphylaxis'])
   })
 
+  // Two Holland tick-paralysis papers, both Ixodes holocyclus. Year-keyed, and an
+  // unmapped year must yield nothing — the page separates I. holocyclus from
+  // Dermacentor paralysis, so a marker landing on the wrong Holland would attach
+  // Australian data to a different disease course.
+  it('keeps both Holland tick paralysis papers apart', () => {
+    expect(parseSources('Holland 2008').map(s => s.id)).toEqual(['holland-tp-focal'])
+    expect(parseSources('Holland 2023').map(s => s.id)).toEqual(['holland-tp-anisocoria'])
+    expect(parseSources('Holland 2099')).toEqual([])
+  })
+
   it('keeps both Phillips papers apart', () => {
     expect(parseSources('Phillips 2019').map(s => s.id)).toEqual(['phillips-feline-hh'])
     expect(parseSources('Phillips 2025').map(s => s.id)).toEqual(['phillips-exercise-annpe'])
