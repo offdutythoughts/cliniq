@@ -2191,6 +2191,37 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## GI: exocrine pancreatic insufficiency, septic peritonitis (2026-09-29)
+
+**172 → 170.**
+
+**Cridge 2024** on DIS-GI-EPI — a **fourth** Cridge paper, added to the existing year map. Its
+Crossref print year is **2024** (262(2):246-255) while PubMed shows the 2023 online date, so the
+map key is 2024; getting that wrong would have put a marker on a year the map does not know and
+produced silence.
+
+Two things it contributes:
+
+- The page's pearl already said failure to respond to enzymes is "often unaddressed B12 deficiency
+  or concurrent IBD". Cridge extends that: persistent signs despite correct enzyme replacement are
+  increasingly attributed to **enteric microbiota dysbiosis or a concurrent chronic enteropathy**,
+  so the instruction is now to look there before escalating the enzyme dose.
+- Why cTLI/fTLI is diagnostic rather than merely suggestive — the concentration **directly reflects
+  the mass of functioning acinar tissue**, which is also why a borderline value warrants a repeat
+  rather than a different test. The page already said to repeat; now it says why.
+
+**DIS-GI-SEPTPERIT — Goggs 2026 and Pardo 2024 reused.** Septic peritonitis is a cause of sepsis,
+so the consensus definition of septic shock and the AAHA fluid guidelines both govern it. No new
+search needed.
+
+### A case report declined
+
+`Hartmann 2025` describes retroperitoneal T-cell lymphoma causing megacolon in one FeLV-positive
+cat. It is a legitimate differential-diagnosis curiosity but a single animal, and DIS-GI-MEGA is
+about feline megacolon as a condition — mostly idiopathic. Citing it there would have put a
+superscript from one cat behind statements about a common entity, so DIS-GI-MEGA stays uncited
+until a proper series is found.
+
 ## Neurology: tick paralysis and aural polyps (2026-09-29)
 
 **174 → 172.**
