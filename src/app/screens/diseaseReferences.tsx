@@ -1403,6 +1403,12 @@ const ROHDIN_KCNJ10_FOXTERRIER =
   'Rohdin C, Gilliam D, O’Leary CA, et al. A KCNJ10 mutation previously identified in the Russell group of terriers also occurs in Smooth-Haired Fox Terriers with hereditary ataxia and in related breeds. Acta Vet Scand. 2015;57:26. doi:10.1186/s13028-015-0115-1'
 const STEE_KCNJ10_BOUVIER =
   'Stee K, Van Poucke M, Pumarola M, et al. Spinocerebellar ataxia in the Bouvier des Ardennes breed is caused by a KCNJ10 missense variant. J Vet Intern Med. 2023;37(1):216-222. doi:10.1111/jvim.16594'
+const ZEUGSWETTER_FELINE_DKA_GLARGINE =
+  'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
+const GANT_DKA_INFUSION =
+  'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const JONES_PYOMETRA_OUTCOME =
+  'Jones AE, Rishniw M, Raux IL, et al. Sepsis and elevated creatinine predict poor outcomes in uncomplicated canine pyometra, and empirically prescribed antibiotics do not match bacterial susceptibility or improve survival. J Am Vet Med Assoc. 2026:1-10. doi:10.2460/javma.26.05.0367'
 const UNO_SPINAL_MENINGIOMA_RT =
   'Uno A, Iwasaki R, Mori T. Treatment outcomes and tolerability of postoperative radiotherapy in 10 dogs with spinal meningiomas. J Am Anim Hosp Assoc. 2026;62(3):108-114. doi:10.5326/JAAHA-MS-7498'
 const WARD_SPINAL_MENINGIOMA_GRADE2 =
@@ -1573,6 +1579,7 @@ const SOURCE_NAMES = [
   'Aalto', 'Silva', 'Viegas',
   // 'Stee' is a strict PREFIX of 'Steele' — its branch carries a \\b guard.
   'Gilliam', 'Rohdin', 'Stee', 'Uno',
+  'Zeugswetter', 'Gant', 'Jones',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1611,6 +1618,13 @@ const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
 // report. Year-keyed from the moment the second one arrived — an unmapped year
 // resolves to nothing, which the integrity lint turns into a failure rather
 // than a silently wrong citation.
+// 'Jones' is NOT only an author. DIS-EYE-NLD writes "Fluorescein dye passage
+// (Jones) test" — the Jones test for nasolacrimal patency. Year-keyed so the
+// bare name resolves to nothing and that parenthetical keeps printing as text,
+// instead of silently citing a pyometra paper on an eye page.
+const JONES_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2026': { id: 'jones-pyometra-outcome', text: JONES_PYOMETRA_OUTCOME },
+}
 const WARD_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2003': { id: 'ward-gastropexy', text: WARD_GASTROPEXY },
   '2026': { id: 'ward-spinal-meningioma-grade2', text: WARD_SPINAL_MENINGIOMA_GRADE2 },
@@ -1978,6 +1992,13 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Rohdin/.test(part)) { out.push({ id: 'rohdin-kcnj10-foxterrier', text: ROHDIN_KCNJ10_FOXTERRIER }); continue }
     if (/^Stee\b/.test(part)) { out.push({ id: 'stee-kcnj10-bouvier', text: STEE_KCNJ10_BOUVIER }); continue }
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
+    if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
+    if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Jones/.test(part)) {
+      const hit = JONES_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Lockhart/.test(part)) { out.push({ id: 'lockhart-horners-imaging', text: LOCKHART_HORNERS_IMAGING }); continue }
     if (/^Toresson/.test(part)) { out.push({ id: 'toresson-oral-cobalamin', text: TORESSON_ORAL_COBALAMIN }); continue }
     if (/^Epstein/.test(part)) { out.push({ id: 'epstein-ddimer-pe', text: EPSTEIN_DDIMER_PE }); continue }

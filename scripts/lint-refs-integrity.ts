@@ -67,6 +67,8 @@ const PROSE_QUALIFIERS = new Set([
   // parenthetical is replaced by its superscript, so resolving them would delete
   // the words that carry the meaning.
   'AAHA', 'AAHA first-choice',
+  // The Jones test (fluorescein dye passage) on DIS-EYE-NLD, not an author.
+  'Jones',
 ])
 
 const fail: string[] = []

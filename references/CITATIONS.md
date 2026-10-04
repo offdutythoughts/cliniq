@@ -3902,3 +3902,141 @@ shipping:
 Tests added for both, including `parseSources('Ward 2015')` and
 `parseSources('Ward')` resolving to nothing — an unmapped year must fail safe
 rather than pick a Ward.
+
+## Batch — DIS-ENDO-DKA, DIS-REPRO-PYO (153 → 151, uncited 46 → 44)
+
+Both pages were textbook-free as well as paper-free — DIS-ENDO-DKA and
+DIS-REPRO-PYO carried no citation of any kind, so the `uncited-disease-pages`
+ratchet moves too (47 → 44, the third being DIS-NEU-SCA from the previous
+batch, which should have been lowered then).
+
+### DIS-ENDO-DKA — Diabetic Ketoacidosis
+
+Two **randomised trials**, which is the strongest evidence class anything on
+this page has had.
+
+**Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus
+regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care
+(San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062**
+
+- Prospective, block-randomised, 20 cats: regular-insulin CRI (n=10) vs
+  basal-bolus SC + IM glargine (n=10). Primary endpoint time to
+  β-hydroxybutyrate < 2.55 mmol/L.
+- 17/20 (85%) survived to discharge, **no survival difference** (P = 1.0).
+- **Primary endpoint not met**: 30h (glargine) vs 42h (CRI), P = 0.114.
+  Significant only on secondaries — first improvement of hyperglycaemia 2h vs 6h
+  (P = 0.018) and time to discharge 140h vs 174h (P = 0.033).
+- Rule 1(b)/Rule 2 both bite here, and the page says so explicitly. The bullet
+  order puts survival first, then states that the **primary** endpoint did not
+  differ, then that with 10 cats per arm and several secondary comparisons those
+  p-values near 0.02–0.03 are fragile. Conclusion written as "a simpler
+  alternative that performed acceptably", not "better". Reporting only the two
+  significant secondaries would have been the easy and misleading version.
+- Rule 6: Crossref print 2021-07, 31(4):459-468; PubMed epub 2021-05-04. Print
+  year used. 4 authors → all listed.
+
+**Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for
+management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care
+(San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354**
+
+- Randomised, Jan 2019 – Jul 2020, 20 dogs and 16 cats. Fixed-rate IV neutral
+  insulin at 0.01 IU/kg/h vs variable rate adjusted to glucose. Entry: venous
+  pH < 7.3, glucose > 11 mmol/L (198 mg/dL), BHB > 3 mmol/L. Resolution defined
+  as BHB < 0.6 mmol/L.
+- Dogs: ketosis resolved in 19/20 (95%); **no difference in time to resolution**
+  (P = 0.89) despite a 25% higher mean insulin rate on the fixed protocol
+  (P = 0.04). Shorter hospitalisation on FRI (P = 0.01), survival unchanged.
+  **6/20 dogs (30%) did not survive to discharge even though all had resolved
+  ketosis.**
+- Cats: ketosis resolved in only 9/16 (56.3%), too few to compare protocols. All
+  5 cats that died did so within 78 hours, none with resolved ketosis.
+- The 30%-mortality-with-resolved-ketosis finding is the one that changes
+  bedside judgement, and it went on `prog` rather than being buried in `tx1`:
+  the biochemical endpoint and the outcome come apart. The feline mirror image —
+  deaths happened early and with ketosis unresolved — went beside it.
+- `monitor` now says to track **blood** β-OHB if you want to compare against
+  these numbers, and gives both trials' thresholds. Deliberately did NOT add the
+  familiar "urine dipsticks measure acetoacetate and lag behind" explanation:
+  true, standard, and **not in either abstract**, so under Rule 3 it is not
+  something these citations can carry.
+- The entry criteria went to `conf` labelled as trial entry criteria, not
+  diagnostic cut-offs — the page's own definition is unchanged.
+- Rule 6: **print year differs from epub and changes the citation.** PubMed
+  2023-11-21; Crossref print 2024-01, 34(1):23-30. Cited as **Gant 2024**.
+  3 authors → all listed.
+
+### DIS-REPRO-PYO — Pyometra
+
+**Jones AE, Rishniw M, Raux IL, et al. Sepsis and elevated creatinine predict
+poor outcomes in uncomplicated canine pyometra, and empirically prescribed
+antibiotics do not match bacterial susceptibility or improve survival.
+J Am Vet Med Assoc. 2026:1-10. doi:10.2460/javma.26.05.0367**
+
+- Retrospective, **625 dogs**, 8 tertiary referral centres, Dec 2008 – Dec 2023,
+  all ovariohysterectomised. 604/625 (96.6%) survived to discharge; 40 (6.4%)
+  major short-term complications.
+- Elevated preoperative creatinine and sepsis increased risk of non-survival.
+  Those two, plus the interaction of elevated creatinine with altered mentation,
+  increased hospitalisation duration.
+- **At least one inappropriate outpatient antibiotic in 34.4% (116/337), of which
+  102/116 (87.9%) were amoxicillin-clavulanate.** In non-septic dogs, survival to
+  discharge did not differ with or without pre-/intra-operative antibiotics.
+- Rule 1(b): 625 dogs across 8 centres carries all of this comfortably. Two
+  limits are written onto the page rather than left here. First, 96.6% is a
+  **tertiary referral** figure over 2008–2023, so it is framed as the ceiling with
+  specialist support rather than a general expectation. Second — the one that
+  could do harm if left unqualified — the antibiotic comparison is observational,
+  not randomised, so the bullet says it argues for culturing and for questioning
+  the reflex, explicitly **not** for withholding antibiotics from a dog you
+  believe is septic.
+- Creatinine also went into `supp`: the page already listed biochemistry for
+  azotaemia, but not that creatinine is one of only two preoperative variables
+  that predicted death.
+- Rule 6: JAVMA ahead-of-print. Crossref and PubMed agree on 2026 and pages
+  1-10; **no volume or issue assigned yet**, so the AMA string is
+  `2026:1-10`. 16 authors → first 3 + et al.
+
+**Declined for this page:**
+- *Hagman R. Pyometra in small animals 2.0. Vet Clin North Am Small Anim Pract.
+  2022;52(3):631-657.* The authoritative review by the field's leading author,
+  and `isPaper` would accept it — but it is a narrative review, not primary data,
+  and under Rule 1 that is closer in character to the textbook chapter the rule
+  excludes. Jones 2026 gives the same clinical territory with 625 dogs behind it.
+- *Paudel M et al, Heliyon 2023;9(12):e22368* (45 bitches, Nepal): *E. coli*
+  35.6%, *Proteus* 26.7%, multidrug resistance in 26 isolates. The *E. coli*
+  share is well below the European figures the page's "E. coli most common"
+  claim rests on, and the antibiogram is local. Importing it would have put a
+  non-generalisable susceptibility pattern on a reference page; Jones 2026
+  already carries the resistance message from 8 centres.
+- *Rocha L et al, Animals 2025;15(24):3531* — 10 bitches, redox and acute-phase
+  markers during aglepristone ± cloprostenol. Too small and too mechanistic for a
+  clinical page, and its own conclusion is that the combination confounded
+  efficacy assessment.
+
+### Resolver — a collision the lint caught in the act
+
+New source names: Zeugswetter, Gant, Jones. No prefix collisions (checked `jon`,
+`gan`, `zeu`; 'Johnson' and 'Garcia'/'Garden'/'Gareis' are near but unrelated by
+prefix).
+
+**'Jones' is not only an author.** `lint-refs-integrity` check 5 failed
+immediately on adding it:
+
+```
+• "(Jones)" on DIS-EYE-NLD carries no year but resolves to the paper
+  jones-pyometra-outcome — almost certainly a disease name colliding with an
+  author surname.
+```
+
+DIS-EYE-NLD writes **"Fluorescein dye passage (Jones) test"** — the Jones test
+for nasolacrimal patency. Unfixed, an ophthalmology page would have carried a
+superscript pointing at a canine pyometra paper, and the words "(Jones)" would
+have been *replaced* by that superscript, so the test would have lost its name
+on the page as well. Fixed by year-keying Jones (2026 only), adding `'Jones'` to
+`PROSE_QUALIFIERS` in the lint, and adding it to the test's prose-qualifier list.
+Locked by a test asserting `parseSources('Jones')` is empty and that
+`splitCitations` leaves `(Jones)` as its raw text. Year-keyed authors now 26.
+
+This is the fourth prose-collision of the same shape after Scott, Evans syndrome
+and "Golden Retriever most common" — a parenthetical that reads like a citation
+but is a test, eponym or disease name.
