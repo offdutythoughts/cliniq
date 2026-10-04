@@ -2191,6 +2191,29 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Hydrocephalus shunting and splenic haemangiosarcoma (2026-09-29)
+
+**161 → 159.**
+
+**Schmidt 2024** on DIS-NEU-HYDRO. The page gave the VP shunt success figure (72% improvement) and
+listed first-6-month complications, which together read as a procedure with manageable risks. The
+review's own emphasis is different: **shunt failure remains the major problem** and commonly leads
+to repeat hospital admissions. The page now frames shunting as an ongoing commitment rather than a
+single operation, which is what an owner needs to hear before consenting.
+
+**Valenti 2026** on DIS-NEO-HSA — 66 dogs with splenic haemangiosarcoma, and the finding is one the
+staging system actively conceals:
+
+- **Not all stage III is equal.** Hepatic metastasis carried significantly shorter survival, while
+  **muscular and pulmonary metastases did not correlate with a worse outcome at all**. Current
+  staging lumps every metastatic site into stage III.
+- Where there *is* liver metastasis, protocol choice matters most: anthracycline-based chemotherapy
+  gave **255 days against 65** for metronomic therapy.
+- Overall median tumour-specific survival 132 days, with 42% already stage III at diagnosis.
+
+That first point is the kind a page can only get from the literature — a clinician reading "stage
+III" off a staging table has no way to know the sites differ this much in what they predict.
+
 ## Lumbosacral stenosis and insulinoma — two papers worth citing for their limits (2026-09-29)
 
 **163 → 161.** Both of these are more useful for what they *fail* to establish than for their

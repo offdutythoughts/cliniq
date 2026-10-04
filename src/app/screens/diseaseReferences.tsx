@@ -1268,6 +1268,11 @@ const CAMERON_TBI_POC =
 // adjustment for age and weight, and Collgros is 11 dogs with no control group —
 // both pages carry those limits rather than the headline figures alone.
 // Collgros print year is 2023 (261(2):229-236) against PubMed's 2022.
+// Hydrocephalus shunting, and splenic haemangiosarcoma metastatic site.
+const SCHMIDT_VPS_REVIEW =
+  'Schmidt MJ, Farke D. Surgical management of primary and idiopathic internal hydrocephalus in dogs and cats. Front Vet Sci. 2024;11:1435982. doi:10.3389/fvets.2024.1435982'
+const VALENTI_SHSA_METASTASIS =
+  'Valenti P, Bacci B, Catalucci C, et al. Frequency, distribution, and prognostic impact of metastatic site in dogs with splenic hemangiosarcoma. J Vet Intern Med. 2026;40(1). doi:10.1093/jvimsj/aalag027'
 const CARBALLO_DLSS_CT =
   'Carballo O, Frederick SW, Keys DA, Moore SA, Giles JT. Preliminary evaluation of a novel method for computed tomography quantification of lumbosacral articular process displacement in dogs with and without degenerative lumbosacral stenosis. Front Vet Sci. 2024;11:1436299. doi:10.3389/fvets.2024.1436299'
 const COLLGROS_INSULINOMA_GLUCOSE =
@@ -1537,7 +1542,7 @@ const SOURCE_NAMES = [
   'Lockhart', 'Boydell',
   'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu', 'Watson', 'Rosa-Padilla',
   // Protocol guideline sources.
-  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi', 'Sharp', 'Stevens', 'Pisco', 'Yamazaki', 'Maeda', 'Holland', 'De Risio', 'Bhatti', 'Halstead', 'Ullal', 'Carballo', 'Collgros',
+  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi', 'Sharp', 'Stevens', 'Pisco', 'Yamazaki', 'Maeda', 'Holland', 'De Risio', 'Bhatti', 'Halstead', 'Ullal', 'Carballo', 'Collgros', 'Schmidt', 'Valenti',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1954,6 +1959,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Halstead/.test(part)) { out.push({ id: 'halstead-acp-antibodies', text: HALSTEAD_ACP_ANTIBODIES }); continue }
     if (/^Ullal/.test(part)) { out.push({ id: 'ullal-copper-hepatitis', text: ULLAL_COPPER_HEPATITIS }); continue }
     if (/^Carballo/.test(part)) { out.push({ id: 'carballo-dlss-ct', text: CARBALLO_DLSS_CT }); continue }
+    if (/^Schmidt/.test(part)) { out.push({ id: 'schmidt-vps-review', text: SCHMIDT_VPS_REVIEW }); continue }
+    if (/^Valenti/.test(part)) { out.push({ id: 'valenti-shsa-metastasis', text: VALENTI_SHSA_METASTASIS }); continue }
     if (/^Collgros/.test(part)) { out.push({ id: 'collgros-insulinoma-glucose', text: COLLGROS_INSULINOMA_GLUCOSE }); continue }
     if (/^Bhatti/.test(part)) { out.push({ id: 'bhatti-ivetf-treatment', text: BHATTI_IVETF_TREATMENT }); continue }
     if (/^Holland/.test(part)) {
