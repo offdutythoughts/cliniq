@@ -4040,3 +4040,147 @@ Locked by a test asserting `parseSources('Jones')` is empty and that
 This is the fourth prose-collision of the same shape after Scott, Evans syndrome
 and "Golden Retriever most common" — a parenthetical that reads like a citation
 but is a test, eponym or disease name.
+
+## Batch — DIS-ENDO-ACRO, DIS-MSK-PATLUX (151 → 149, uncited 44 → 42)
+
+Both pages were entirely uncited despite carrying very specific numbers
+("50–70% achieve diabetic remission", "roughly 8–48% reluxation",
+"~25–35% of insulin-resistant diabetic cats"). None of those figures are
+touched below — they stay as found, now sitting next to sourced ones.
+
+### DIS-ENDO-ACRO — Acromegaly (Feline Hypersomatotropism)
+
+**Kennedy A, White J, Lam A, Kenny P. Hypersomatotropism in diabetic cats in
+Australia. J Feline Med Surg. 2025;27(11):1098612X251379726.
+doi:10.1177/1098612X251379726**
+
+- Residual serum from 87 diabetic cats, hypersomatotropism defined as
+  IGF-1 ≥ 1000 ng/mL. 14 cats positive → **16% (95% CI 9.5–24.9%)**, in line with
+  the 17.8–26% reported from the UK, Switzerland and the Netherlands.
+- No difference between positive and negative cats by breed (pedigree vs
+  domestic), sex, age, or metropolitan vs regional location. **Glucose
+  (P = 0.9) and fructosamine (P = 0.57) did not differ either.** The authors'
+  conclusion: clinical features cannot be used to distinguish them, so IGF-1
+  screening is necessary.
+- Rule 2 handled in two directions at once. The prevalence estimate is fine at
+  n = 87 and is quoted with its CI. The **negative** findings are the fragile
+  part — 14 affected cats cannot exclude modest differences — so the page says
+  that explicitly and then states what does follow: the assay separates the
+  groups, the history does not.
+- **Denominator trap written onto the page.** This is 16% of *all* diabetic cats.
+  The page's existing pearl says "~25–35% of insulin-resistant diabetic cats in
+  referral populations" — a different and much more selected denominator. Left
+  both figures standing with a bullet saying they are not measuring the same
+  population. Also noted that these were residual laboratory submissions from
+  cats already flagged by a raised glucose or fructosamine, which is its own
+  selection.
+- Rule 6: Crossref print 2025-11, 27(11), article 1098612X251379726; PubMed
+  epub 2025-11-10. Agree. 4 authors → all listed.
+
+**Shelton E, Jepson R, Church D, Fenn J, Scudder C. Owner points of view and
+perceived quality of life of diabetic cats pre- and post-hypophysectomy for
+hypersomatotropism. J Vet Intern Med. 2026;40(1):aalaf006.
+doi:10.1093/jvimsj/aalaf006**
+
+- 27 cats retrospectively + 13 prospectively, hypophysectomy 2012–2022 at the
+  RVC. Adapted DIAQoL-Pet questionnaire.
+- **22/24 retrospective and 10/10 prospective respondents would definitely
+  request hypophysectomy again.** Paired prospective scores significantly less
+  negative for worry (P = .02), pet unwell (P = .03), worry about hypoglycaemia
+  (P = .01) and worry about vision (P = .04); median AWIS improved (P = .02).
+- Rule 3 care point: the paper **opens** with "Hypophysectomy provides the most
+  favorable long-term outcome for cats with HST and concurrent DM". That is the
+  authors' background framing, not a result of this study, and it is NOT carried
+  onto the page as evidence. What is carried is what they measured — owner view
+  and owner-perceived QoL.
+- Rule 2: owner-perceived, unblinded, no comparison group, and the paired
+  analysis rests on 10 cats. The page says so in the same breath and places the
+  finding where it actually belongs — the consent conversation, not a measure of
+  surgical efficacy.
+- Rule 6: Crossref and PubMed both 2026, 40(1), article aalaf006. 5 authors → all.
+
+**Declined:** *Meij BP, van Stee LL. Transsphenoidal surgery for pituitary
+tumors. Vet Clin North Am Small Anim Pract. 2024;55(1):95-118.* A review, and by
+the same reasoning applied to Hagman on the pyometra page, a narrative review is
+closer in character to the textbook chapter Rule 1 excludes.
+
+### DIS-MSK-PATLUX — Patellar Luxation
+
+**Engdahl K, Bergström A, Höglund O, Hanson J. The epidemiology of patellar
+luxation in an insured Swedish dog population. Prev Vet Med. 2023;220:106034.
+doi:10.1016/j.prevetmed.2023.106034**
+
+- **Just over 600,000 insured dogs** (Agria, Sweden, 2011–2016); 2726 with
+  patellar luxation. The largest denominator of anything cited in this work so
+  far — Rule 1(b) is not in question.
+- Direction: medial 90%, lateral 5.9%, bidirectional 2.4%, unspecified 1.6%.
+- Median age at first diagnosis 2.8y (medial), 2.7y (lateral), 1.5y
+  (bidirectional).
+- **Cruciate ligament rupture in 168/2726 (6.2%).**
+- Breeds at increased medial risk almost all small; several at increased lateral
+  risk large — confirms the page's existing breed structure.
+- **Females: increased risk of medial luxation (RR 1.2, 95% CI 1.1–1.3,
+  p < 0.001) but DECREASED risk of lateral luxation (RR 0.72, 95% CI 0.51–1.0,
+  p = 0.042).**
+- 116 dogs euthanised because of patellar luxation, median age 2.2 years;
+  highest-risk breeds Pyrenean Mountain Dog, Dogue de Bordeaux, German Pinscher.
+
+Four places this sharpened rather than merely sourced the page:
+
+1. `age` said "most affected animals are lame before 1 year of age". Median age
+   at first *recorded diagnosis* was 2.8 years. These measure different things,
+   so both now stand with a bullet saying so — and noting the practical
+   implication, that most affected dogs are not being picked up in year one.
+2. `path` called cruciate rupture "a common reason a stable, low-grade patient
+   suddenly deteriorates". 6.2% is real but not "common"; the page now carries
+   the number next to the claim.
+3. `sex` said "females slightly over-represented in several reports". The effect
+   is small **and reverses direction** between medial and lateral luxation, which
+   the page did not say.
+4. `prog` had nothing about euthanasia. 116 dogs died of this condition at a
+   median of 2.2 years, concentrated in large breeds — the same place lateral
+   luxation concentrates. The grading scale conveys none of that.
+
+**Son Y, Keller MD, Williamson P, Taylor RM. Prevalence and grade of patellar
+luxation in Cavalier King Charles Spaniels attending primary-care veterinary
+practices in Australia. Vet Med Sci. 2026;12(4):e71026. doi:10.1002/vms3.71026**
+
+- VetCompass Australia, 321,517 patient records. **10-year prevalence of patellar
+  luxation in CKCS 12.5% (95% CI 12–13%).** Bilaterally affected dogs more likely
+  to carry a higher grade than unilateral ones.
+- Two figures from this paper were **deliberately left out**, and the reason is
+  the point:
+  - *Neutered dogs OR 3.00 (95% CI 1.97–4.71).* In a primary-care database
+    neutered status tracks age, body weight and frequency of veterinary contact.
+    Putting that odds ratio on a reference page invites the reading "neutering
+    causes patellar luxation", which the design cannot support and which would
+    change real advice to owners. Not included.
+  - *Ruby-coloured dogs OR 2.04.* A coat-colour association within one breed in
+    one country, with no mechanism offered. Low value, high noise.
+  - Dogs ≥10 years had the *lowest* risk (OR 0.44) — almost certainly survival
+    and ascertainment rather than protection, so also left out.
+- Rule 6: Crossref print 2026-07, 12(4), article e71026; PubMed 2026 Jul. Agree.
+  4 authors → all listed.
+
+**Declined for this page:** *Nicetto T, Longo F. Trochlear ridge prostheses...
+Vet Comp Orthop Traumatol. 2024;37(2):98-106* — 60 trochleae with good results,
+but a custom 3D-planned implant with a mean radiographic follow-up of only 3.8
+months, which is short for judging an implant and too niche for a general page.
+*Carrera 2024* (5 juvenile dogs) and *Kimura 2026* (3 trochlear ridge fractures)
+are both too small to carry anything this page needs.
+
+### Resolver
+
+New source names: Kennedy, Engdahl, Son. Two more of the now-familiar traps:
+
+1. **'Son' is a strict prefix of 'Sones'** (already cited as "(Sones 2013)").
+   Guarded with `/^Son\b/`. 18 prefix pairs now checked.
+2. **'Shelton' was already taken** by Shelton 2001 (canine myasthenia gravis
+   spontaneous remission, cited twice on DIS-WK-MG). Converted to
+   `SHELTON_BY_YEAR`. Verified by rendering DIS-WK-MG and confirming Shelton 2001
+   still resolves to the myasthenia paper at reference 9. Year-keyed authors
+   now 27.
+
+Also checked `(English` ×3 and `(Kennel` ×1 in db.ts as prose parentheticals —
+neither is matched by `/^Engdahl/` or `/^Kennedy/`, so no new prose qualifier was
+needed.

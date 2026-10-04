@@ -1117,6 +1117,25 @@ describe('reference block', () => {
     expect(parseSources('Gant 2024')[0].text).toContain('insulin infusion protocols')
   })
 
+  // 'Son' is a strict PREFIX of 'Sones', and 'Shelton' already carried the 2001
+  // myasthenia remission paper before the 2026 hypophysectomy study arrived.
+  it('keeps Son off Sones and splits Shelton by year', () => {
+    const son = parseSources('Son 2026')
+    const sones = parseSources('Sones 2013')
+    expect(son).toHaveLength(1)
+    expect(son[0].text).toContain('Cavalier King Charles Spaniels')
+    expect(sones).toHaveLength(1)
+    expect(sones[0].id).not.toBe(son[0].id)
+    expect(parseSources('Shelton 2001')[0].text).toContain('myasthenia')
+    expect(parseSources('Shelton 2026')[0].text).toContain('hypophysectomy')
+    expect(parseSources('Shelton')).toEqual([])
+  })
+
+  it('resolves the new acromegaly and patellar luxation papers', () => {
+    expect(parseSources('Kennedy 2025')[0].text).toContain('Hypersomatotropism')
+    expect(parseSources('Engdahl 2023')[0].text).toContain('insured Swedish dog population')
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.
