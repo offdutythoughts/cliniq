@@ -1051,7 +1051,7 @@ describe('reference block', () => {
           // citations, and must keep printing as written. Kept in step with
           // PROSE_QUALIFIERS in scripts/lint-refs-integrity.ts.
           const inner = seg.raw.trim().replace(/^\(/, '').replace(/\)$/, '')
-          if (['Scott', 'Evans syndrome', 'AAHA/AAFP', 'Librela'].includes(inner)) continue
+          if (['Scott', 'Evans syndrome', 'AAHA/AAFP', 'Librela', 'Jones'].includes(inner)) continue
           if ((seg.citeIds ?? []).length === 0) offenders.push(`${id}: ${seg.raw.trim()}`)
         }
       }
@@ -1100,6 +1100,21 @@ describe('reference block', () => {
     expect(parseSources('Gilliam 2014')[0].text).toContain('KCNJ10')
     expect(parseSources('Rohdin 2015')[0].text).toContain('Smooth-Haired Fox Terriers')
     expect(parseSources('Uno 2026')[0].text).toContain('postoperative radiotherapy')
+  })
+
+  // "(Jones)" on DIS-EYE-NLD is the Jones test (fluorescein dye passage), not an
+  // author. Before year-keying, an eye page cited a pyometra paper.
+  it('leaves the Jones test as text and resolves Jones 2026', () => {
+    expect(parseSources('Jones')).toEqual([])
+    expect(parseSources('Jones 2026')[0].text).toContain('pyometra')
+    const seg = splitCitations('Fluorescein dye passage (Jones) test: place fluorescein').find(x => x.citeIds)
+    expect(seg?.citeIds).toEqual([])
+    expect(seg?.raw?.trim()).toBe('(Jones)')
+  })
+
+  it('resolves the new DKA trial papers', () => {
+    expect(parseSources('Zeugswetter 2021')[0].text).toContain('Glargine versus regular insulin')
+    expect(parseSources('Gant 2024')[0].text).toContain('insulin infusion protocols')
   })
 
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
