@@ -2191,6 +2191,48 @@ marker `Li` is also the most fragile in the file: it is a prefix of Lien, Linton
 LeVine, Longeri, Langlois, Larose and Lennon, and is kept apart from all eight only by the
 `\b` in its branch. Every one of those eight is asserted in the test suite.
 
+## Neurology: tick paralysis and aural polyps (2026-09-29)
+
+**174 → 172.**
+
+**Holland 2008 and 2023** on DIS-NEU-TICKPARAL, year-keyed. Both are Australian *Ixodes
+holocyclus* cohorts and the page separates that from North American *Dermacentor* paralysis, which
+has a different course — so these are attached to the *I. holocyclus* bullets only. Applying an
+Australian cohort to the Dermacentor statements would have been a species-of-tick error of exactly
+the kind the species-marker lint exists to catch for dogs and cats.
+
+Three findings the page gains:
+
+- Focal asymmetrical deficits occur alongside the generalised paralysis — 17 of 197 dogs and 10 of
+  89 cats — most often unilateral facial paralysis or anisocoria.
+- Where there was facial paralysis or anisocoria the tick was **invariably on the head or neck and
+  always ipsilateral** to the facial paralysis. That is a place to search.
+- **But a remote tick does not exclude it**: anisocoria occurred in about 10% of animals whose only
+  tick was away from the head and neck, so the toxin acts systemically. Without that second point
+  the first could be read as a rule-out.
+- Facial paralysis resolves significantly more slowly than the generalised signs, so a persisting
+  facial deficit after the limbs recover is expected rather than a new problem.
+
+**Veir 2002 reused** on DIS-NEU-POLYP. It was already cited on DIS-POLYP for the same entity.
+
+### Two pages cover the same disease
+
+`DIS-POLYP` ("Nasopharyngeal Polyp", 9,135 chars) and `DIS-NEU-POLYP` ("Aural & Nasopharyngeal
+Inflammatory Polyps", 10,387 chars) describe the same condition, with near-identical opening
+etiology sentences. Veir legitimately applies to both, so citing it was not the problem — but the
+duplication is worth a decision by someone who knows which is canonical, and it is **not** a
+citation question, so nothing was merged here.
+
+### A ratchet that fired for an instructive reason
+
+Adding bullets to the tick paralysis `signs` field pushed `crammed-bullets` from 1031 to 1032. The
+offending bullet was **pre-existing** — the generalised signs and the *I. holocyclus* signs were
+one unbroken run joined by a semicolon. While the field had no pipes at all the lint treated it as
+prose; adding pipes made it evaluate the bullets individually and the old semicolon became visible.
+
+So the ratchet was right, and the fix was the one the content wanted anyway: split at the semicolon
+so the generalised picture and the Australian-specific picture are separate bullets. Back to 1031.
+
 ## Oncology: lymphoma tumour lysis, urothelial carcinoma (2026-09-29)
 
 **176 → 174.**

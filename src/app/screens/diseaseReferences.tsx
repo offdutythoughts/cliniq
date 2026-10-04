@@ -1248,6 +1248,13 @@ const CAMERON_TBI_POC =
 // carries only the narrow finding that CRGV can involve the brain.
 // Oncology. Yamazaki is 24 dogs and Maeda compares against HISTORICAL controls
 // rather than a randomised arm — both stated on their pages.
+// Tick paralysis. BOTH Holland papers are Australian Ixodes holocyclus cohorts,
+// and the page separates that from North American Dermacentor paralysis — so these
+// are attached to the I. holocyclus bullets only. Two papers, so year-keyed.
+const HOLLAND_TP_FOCAL =
+  'Holland CT. Asymmetrical focal neurological deficits in dogs and cats with naturally occurring tick paralysis (Ixodes holocyclus): 27 cases (1999-2006). Aust Vet J. 2008;86(10):377-384. doi:10.1111/j.1751-0813.2008.00346.x'
+const HOLLAND_TP_ANISOCORIA =
+  'Holland CT. Static anisocoria in cats and dogs with naturally occurring tick paralysis (Ixodes holocyclus). Aust Vet J. 2023;101(10):383-390. doi:10.1111/avj.13276'
 const YAMAZAKI_TLS_RISK =
   'Yamazaki H, Nagai K, Wada Y, et al. A potential risk factor associated with acute tumor lysis syndrome in dogs with multicentric lymphoma receiving chemotherapy. J Vet Intern Med. 2026;40(1). doi:10.1093/jvimsj/aalaf088'
 const MAEDA_SORAFENIB_UC =
@@ -1501,7 +1508,7 @@ const SOURCE_NAMES = [
   'Lockhart', 'Boydell',
   'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu', 'Watson', 'Rosa-Padilla',
   // Protocol guideline sources.
-  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi', 'Sharp', 'Stevens', 'Pisco', 'Yamazaki', 'Maeda',
+  'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi', 'Sharp', 'Stevens', 'Pisco', 'Yamazaki', 'Maeda', 'Holland',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1622,6 +1629,11 @@ const CHAN_BY_YEAR: Record<string, { id: string; text: string }> = {
  *  that reads this must stay ABOVE the /^Anders\\b/ one. */
 const EVANS_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2003': { id: 'evans-metro-diazepam', text: EVANS_METRO_DIAZEPAM },
+}
+
+const HOLLAND_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2008': { id: 'holland-tp-focal', text: HOLLAND_TP_FOCAL },
+  '2023': { id: 'holland-tp-anisocoria', text: HOLLAND_TP_ANISOCORIA },
 }
 
 const RECOVER_BY_YEAR: Record<string, { id: string; text: string }> = {
@@ -1908,6 +1920,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^IRIS/.test(part)) { out.push({ id: 'iris-aki-grading', text: IRIS_AKI_GRADING }); continue }
     if (/^Lippi/.test(part)) { out.push({ id: 'lippi-aki-anaemia', text: LIPPI_AKI_ANAEMIA }); continue }
     if (/^Sharp/.test(part)) { out.push({ id: 'sharp-curative-monitoring', text: SHARP_CURATIVE_MONITORING }); continue }
+    if (/^Holland/.test(part)) {
+      const hit = HOLLAND_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Yamazaki/.test(part)) { out.push({ id: 'yamazaki-tls-risk', text: YAMAZAKI_TLS_RISK }); continue }
     if (/^Maeda/.test(part)) { out.push({ id: 'maeda-sorafenib-uc', text: MAEDA_SORAFENIB_UC }); continue }
     if (/^Stevens/.test(part)) { out.push({ id: 'stevens-crgv-epi', text: STEVENS_CRGV_EPI }); continue }
