@@ -1383,6 +1383,14 @@ const BOYDELL_GR_HORNERS =
   'Boydell P. Idiopathic Horner’s syndrome in the golden retriever. J Small Anim Pract. 1995;36(9):382-384. doi:10.1111/j.1748-5827.1995.tb02958.x'
 const SHARMA_HEAD_TRAUMA =
   'Sharma D, Holowaychuk MK. Retrospective evaluation of prognostic indicators in dogs with head trauma: 72 cases (January-March 2011). J Vet Emerg Crit Care (San Antonio). 2015;25(5):631-639. doi:10.1111/vec.12328'
+const SHARMAN_HELICOBACTER_DETECT =
+  'Sharman M, Bacci B, Simpson K, Mansfield C. Comparison of in vivo confocal endomicroscopy with other diagnostic modalities to detect intracellular helicobacters. Vet J. 2016;213:78-83. doi:10.1016/j.tvjl.2016.03.014'
+const WYATT_MM_MRI =
+  'Wyatt S, De Risio L, Driver C, José-López R, Pivetta M, Beltran E. Neurological signs and MRI findings in 12 dogs with multiple myeloma. Vet Radiol Ultrasound. 2019;60(4):409-415. doi:10.1111/vru.12759'
+const TEDDY_MM_MELPHALAN =
+  'Teddy L, Sylvester SR, O’Connor KS, Hume KR. Cyclical 10-day dosing of melphalan for canine multiple myeloma. Vet Comp Oncol. 2023;21(3):533-540. doi:10.1111/vco.12916'
+const CICCARELLI_MM_THALIDOMIDE =
+  'Ciccarelli S, Leo C, Perrone C, Franchini D, Bonazzi I, Finotello R. Thalidomide as a rescue protocol for treatment of multiple myeloma in dogs: preliminary data from a multicentre retrospective study. Front Vet Sci. 2026;12:1695122. doi:10.3389/fvets.2025.1695122'
 
 /** A numbered reference-list entry: `n` is its AMA number on this page. */
 export interface RefEntry { n: number; id: string; text: string }
@@ -1543,6 +1551,9 @@ const SOURCE_NAMES = [
   'Toresson', 'Manchester', 'Moser', 'Bruet', 'Epstein', 'Littman', 'Weese', 'Kiupel', 'Marconato', 'Martin', 'Markert', 'Kiwitz', 'Nagamori', 'Little', 'Reinhart', 'Naseri', 'Jaffey', 'Berlin', 'Maerz', 'Reichard', 'Sparkes', 'Pagani', 'Rivas', 'Xu', 'Watson', 'Rosa-Padilla',
   // Protocol guideline sources.
   'RECOVER', 'Hoehne', 'Goggs', 'Olby', 'Thawley', 'Burkitt-Creedon', 'IRIS', 'Pardo', 'Odunayo', 'Lippi', 'Sharp', 'Stevens', 'Pisco', 'Yamazaki', 'Maeda', 'Holland', 'De Risio', 'Bhatti', 'Halstead', 'Ullal', 'Carballo', 'Collgros', 'Schmidt', 'Valenti',
+  // 'Sharma' is a strict PREFIX of 'Sharman' — the Sharma branch carries a \\b
+  // guard so the head-trauma paper can never swallow the Helicobacter one.
+  'Sharman', 'Wyatt', 'Teddy', 'Ciccarelli',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1928,7 +1939,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Togawa/.test(part)) { out.push({ id: 'togawa-dpn-outcome', text: TOGAWA_DPN_OUTCOME }); continue }
     if (/^Levy/.test(part)) { out.push({ id: 'levy-tbics', text: LEVY_TBICS }); continue }
     if (/^Cameron/.test(part)) { out.push({ id: 'cameron-tbi-poc', text: CAMERON_TBI_POC }); continue }
-    if (/^Sharma/.test(part)) { out.push({ id: 'sharma-head-trauma', text: SHARMA_HEAD_TRAUMA }); continue }
+    if (/^Sharma\b/.test(part)) { out.push({ id: 'sharma-head-trauma', text: SHARMA_HEAD_TRAUMA }); continue }
+    if (/^Sharman\b/.test(part)) { out.push({ id: 'sharman-helicobacter-detect', text: SHARMAN_HELICOBACTER_DETECT }); continue }
+    if (/^Wyatt/.test(part)) { out.push({ id: 'wyatt-mm-mri', text: WYATT_MM_MRI }); continue }
+    if (/^Teddy/.test(part)) { out.push({ id: 'teddy-mm-melphalan', text: TEDDY_MM_MELPHALAN }); continue }
+    if (/^Ciccarelli/.test(part)) { out.push({ id: 'ciccarelli-mm-thalidomide', text: CICCARELLI_MM_THALIDOMIDE }); continue }
     if (/^Lockhart/.test(part)) { out.push({ id: 'lockhart-horners-imaging', text: LOCKHART_HORNERS_IMAGING }); continue }
     if (/^Toresson/.test(part)) { out.push({ id: 'toresson-oral-cobalamin', text: TORESSON_ORAL_COBALAMIN }); continue }
     if (/^Epstein/.test(part)) { out.push({ id: 'epstein-ddimer-pe', text: EPSTEIN_DDIMER_PE }); continue }
