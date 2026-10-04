@@ -1136,6 +1136,17 @@ describe('reference block', () => {
     expect(parseSources('Engdahl 2023')[0].text).toContain('insured Swedish dog population')
   })
 
+  it('resolves the new melanoma and cryptococcosis papers', () => {
+    expect(parseSources('Teng 2026')[0].text).toContain('Survival of dogs with melanoma')
+    expect(parseSources('Gualtieri 2024')[0].text).toContain('stereotactic body radiation')
+    expect(parseSources('Treekhunrungruang 2025')[0].text).toContain('latex agglutination')
+    expect(parseSources('Teh 2024')[0].text).toContain('postzone')
+    // Three surnames share a 'Te' stem across four papers; none may collide.
+    const ids = ['Teng 2026', 'Teh 2024', 'Teddy 2023', 'Teshima 2011']
+      .map(m => parseSources(m)[0]?.id)
+    expect(new Set(ids.filter(Boolean)).size).toBe(ids.filter(Boolean).length)
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.

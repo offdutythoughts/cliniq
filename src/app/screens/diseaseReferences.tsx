@@ -1407,6 +1407,14 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const TENG_MELANOMA_SURVIVAL =
+  'Teng KT, Ohta H, Deguchi T, et al. Survival of dogs with melanoma from a referral veterinary hospital in Japan. J Vet Med Sci. 2026;88(4):624-631. doi:10.1292/jvms.25-0209'
+const GUALTIERI_ORAL_SBRT =
+  'Gualtieri P, Lee BI, Beeney A, et al. Response of spontaneous oral tumors in canine cancer patients treated with stereotactic body radiation therapy (SBRT). Radiat Res. 2024;202(6):807-824. doi:10.1667/RADE-24-00079.1'
+const TREEKHUNRUNGRUANG_CRYPTO_CALAS =
+  'Treekhunrungruang S, Yurayart C, Thitiyanaporn C, Jaroensong T. Clinicopathological features, treatment outcome, and the cryptococcal antigen latex agglutination system titer in feline cryptococcosis treated with amphotericin B and fluconazole. Vet Sci. 2025;12(12):1211. doi:10.3390/vetsci12121211'
+const TEH_CRYPTO_POSTZONE =
+  'Teh A, Pritchard E, Donahoe SL, Malik R, Krockenberger M. A case of disseminated cryptococcosis with abdominal involvement due to Cryptococcus neoformans species complex in a Ragdoll cat and false-negative cryptococcal antigen lateral flow tests due to the postzone phenomenon. Aust Vet J. 2024;102(6):306-312. doi:10.1111/avj.13329'
 const KENNEDY_FELINE_HST_PREVALENCE =
   'Kennedy A, White J, Lam A, Kenny P. Hypersomatotropism in diabetic cats in Australia. J Feline Med Surg. 2025;27(11):1098612X251379726. doi:10.1177/1098612X251379726'
 const SHELTON_HYPOPHYSECTOMY_QOL =
@@ -1590,6 +1598,7 @@ const SOURCE_NAMES = [
   'Zeugswetter', 'Gant', 'Jones',
   // 'Son' is a strict PREFIX of 'Sones' — its branch carries a \\b guard.
   'Kennedy', 'Engdahl', 'Son',
+  'Teng', 'Gualtieri', 'Treekhunrungruang', 'Teh',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -2014,6 +2023,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Teng/.test(part)) { out.push({ id: 'teng-melanoma-survival', text: TENG_MELANOMA_SURVIVAL }); continue }
+    if (/^Gualtieri/.test(part)) { out.push({ id: 'gualtieri-oral-sbrt', text: GUALTIERI_ORAL_SBRT }); continue }
+    if (/^Treekhunrungruang/.test(part)) { out.push({ id: 'treekhunrungruang-crypto-calas', text: TREEKHUNRUNGRUANG_CRYPTO_CALAS }); continue }
+    if (/^Teh\b/.test(part)) { out.push({ id: 'teh-crypto-postzone', text: TEH_CRYPTO_POSTZONE }); continue }
     if (/^Kennedy/.test(part)) { out.push({ id: 'kennedy-feline-hst-prevalence', text: KENNEDY_FELINE_HST_PREVALENCE }); continue }
     if (/^Engdahl/.test(part)) { out.push({ id: 'engdahl-patellar-epi', text: ENGDAHL_PATELLAR_EPI }); continue }
     if (/^Son\b/.test(part)) { out.push({ id: 'son-ckcs-patellar', text: SON_CKCS_PATELLAR }); continue }
