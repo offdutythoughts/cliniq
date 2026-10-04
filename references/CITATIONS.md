@@ -4184,3 +4184,124 @@ New source names: Kennedy, Engdahl, Son. Two more of the now-familiar traps:
 Also checked `(English` ×3 and `(Kennel` ×1 in db.ts as prose parentheticals —
 neither is matched by `/^Engdahl/` or `/^Kennedy/`, so no new prose qualifier was
 needed.
+
+## Batch — DIS-NEO-ORAL-MEL, DIS-RESP-CRYPTO (149 → 147, uncited 42 → 40)
+
+### DIS-NEO-ORAL-MEL — Oral Melanoma
+
+**Teng KT, Ohta H, Deguchi T, et al. Survival of dogs with melanoma from a
+referral veterinary hospital in Japan. J Vet Med Sci. 2026;88(4):624-631.
+doi:10.1292/jvms.25-0209**
+
+- 123 dogs with melanoma at any site, one Japanese teaching hospital,
+  2004–2023. Kaplan-Meier plus a log-logistic parametric survival model.
+- Overall MST 244 days. **Oral melanoma had 66% shorter survival than non-oral,
+  median 191 vs 663 days (P = 0.019)** — the page asserted oral melanoma is
+  biologically distinct and aggressive; this quantifies the site penalty.
+- Surgery vs no surgery: 294 vs 93 days (P < 0.001).
+- Stage, against stage I: time ratio 0.42 for stage IV (95% CI 0.22–0.77,
+  P = 0.006) and **0.60 for stage III with a CI crossing 1 (0.33–1.07,
+  P = 0.084)**.
+- Breed: Miniature Schnauzer 3.36× and Toy Poodle 4.80× longer survival than
+  Golden Retriever.
+
+Three confounds written onto the page rather than only recorded here:
+
+1. The surgery figure is observational — the tumours that get resected are the
+   ones that were resectable. Quoting 294 vs 93 days without that reads as a
+   treatment effect.
+2. The stage gradient is supported but **not every step of it**. The page already
+   carried stage-wise survival (511/163/83/36 days); this cohort's stage III
+   estimate is not statistically distinguishable from stage I. Said plainly,
+   because a reader comparing the two sources would otherwise assume both agree
+   throughout.
+3. The breed effects are large but plausibly stand in for tumour site and size.
+   The page says not to prognosticate on breed alone.
+- Rule 6: Crossref print 2026, 88(4):624-631 (no month); PubMed 2026-02-11.
+  Agree on year. 8 authors → first 3 + et al.
+
+**Gualtieri P, Lee BI, Beeney A, et al. Response of spontaneous oral tumors in
+canine cancer patients treated with stereotactic body radiation therapy (SBRT).
+Radiat Res. 2024;202(6):807-824. doi:10.1667/RADE-24-00079.1**
+
+- Single-institution retrospective, 98 dogs: **oral malignant melanoma n = 37**,
+  SCC n = 18, soft tissue sarcoma n = 43. SBRT 1–6 fractions, 12–40 Gy total.
+- Local PFS 187 days for melanoma. Overall PFS 152 days, MST 270 days, no
+  significant difference between tumour types.
+- **Osteoradionecrosis or oronasal fistula in 23/81 (28.4%)**; severe acute
+  toxicity to organs at risk in 10/85 (11.8%).
+- Nodal metastasis and the **use of** elective nodal irradiation both associated
+  with shorter PFS and MST.
+
+Two readings this paper invites and the page blocks:
+
+- **28.4% is not the melanoma figure.** The complication was significantly
+  associated with SCC (P = 0.006) and the melanoma-specific rate was not
+  reported. The page states the cohort figure, then says explicitly that it is
+  not melanoma's rate. Attaching it to a melanoma page unqualified would
+  misinform a consent conversation in the direction of refusing treatment.
+- **ENI "causing" harm.** Elective nodal irradiation predicting worse survival
+  almost certainly reflects which dogs were selected for it. Flagged as
+  selection, not effect.
+- Rule 6: Crossref print 2024-10-31, 202(6) but **no page range**; PubMed gives
+  807-824. Took the fuller record per Rule 6. 7 authors → first 3 + et al.
+
+### DIS-RESP-CRYPTO — Cryptococcosis
+
+**Teh A, Pritchard E, Donahoe SL, Malik R, Krockenberger M. A case of
+disseminated cryptococcosis ... and false-negative cryptococcal antigen lateral
+flow tests due to the postzone phenomenon. Aust Vet J. 2024;102(6):306-312.
+doi:10.1111/avj.13329**
+
+- 13-year-old cat, disseminated *C. neoformans* with peritonitis and abdominal
+  organ involvement, plus thoracic, sinonasal and CNS involvement at autopsy.
+- **Serum and abdominal fluid tested FALSE-NEGATIVE on neat specimen by lateral
+  flow, and positive only at 1:64 dilution — a postzone effect.**
+- The page's `conf` described the latex antigen test as "sensitive & specific"
+  with no failure mode. A single case normally would not earn a place, but this
+  one is kept because the error runs in the dangerous direction: the animals
+  with enough antigen to cause postzone are the sickest ones, so the test fails
+  exactly where it matters most. The page says n=1 in words and gives the
+  action — ask the laboratory to repeat on dilutions when the clinical picture
+  is strong and the test is negative.
+- Rule 6: Crossref print 2024-06, 102(6):306-312; PubMed epub 2024-04-03. Print
+  year used. 5 authors → all listed.
+
+**Treekhunrungruang S, Yurayart C, Thitiyanaporn C, Jaroensong T.
+Clinicopathological features, treatment outcome, and the cryptococcal antigen
+latex agglutination system titer in feline cryptococcosis treated with
+amphotericin B and fluconazole. Vet Sci. 2025;12(12):1211.
+doi:10.3390/vetsci12121211**
+
+- 35 cats, single centre, 2014–2023. Amphotericin B + fluconazole ~3–4 months,
+  then fluconazole maintenance. Monthly CALAS, a six-domain clinical score
+  (0–18), haematology and biochemistry; mixed-effects models.
+- Mean log CALAS fell 12.00 → 6.79; clinical score 3.83 → 0.68. Leukocytes
+  16.85 → 10.90 ×10⁹/L. ALT stable.
+- **7/35 cats became azotaemic on amphotericin B. The drug was stopped in all 7;
+  renal values normalised in 3 and 4 were still azotaemic at last follow-up.**
+- This fills a real gap: the page's `monitor` said to watch **liver** enzymes on
+  azoles and said nothing about renal monitoring, despite recommending
+  amphotericin B for severe disease in `tx2`. Now says to check kidneys too.
+- Rule 2: the page states that 35 cats at one centre is enough to justify monthly
+  creatinine but **not** enough to quote a nephrotoxicity rate — so 7/35 is given
+  as what happened in this cohort, not as "20% of cats".
+- Rule 6: Crossref online-only 2025-12-18, 12(12):1211; PubMed agrees. 4 authors
+  → all listed.
+
+### Resolver and tooling
+
+New source names: Teng, Gualtieri, Treekhunrungruang, Teh. Four papers now share
+a `Te` stem with the existing Teddy and Teshima; none is a prefix of another
+(`Ted`/`Teh`/`Ten`/`Tes` diverge at the third character), so no new guard was
+needed beyond a defensive `\b` on the three-letter `Teh`. Locked by a test that
+resolves all four markers and asserts the ids are distinct.
+
+**Tooling fix after a self-inflicted break.** The phrase "melanoma's share"
+went into a single-quoted db.ts field and the bare ASCII apostrophe closed the
+string, producing ~500 cascading `TS1005` errors starting at line 1281 col 3519
+— none of them at the actual fault, and all of them in a 8000-character line.
+This is the third time an apostrophe has done this (`organism's`, `F(ab')₂`).
+Added a guard to the scratchpad row-editor that raises on any word-internal
+unescaped `'` in replacement text before writing, so the failure now names the
+phrase instead of burying it in parser noise.
