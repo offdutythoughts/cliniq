@@ -3661,3 +3661,101 @@ with a `\b` guard on the Sharma branch (order-independent) plus the new Sharman
 branch. Locked by a test asserting the two ids differ and that each text
 contains its own subject; `lint-refs-integrity` check 3 now reports 16 prefix
 pairs, up from 15.
+
+## Batch — DIS-NEO-LEUK, DIS-NEU-BOTULISM (157 → 155)
+
+### DIS-NEO-LEUK — Leukaemia (ALL / AML / CLL)
+
+**Aalto M, Yoshimoto J, Nolan J, et al. Utility of cytochemical and flow
+cytometry detection of alkaline phosphatase for differential diagnosis of CD34+
+acute leukaemia in canines. Vet Comp Oncol. 2026;24(1):41-50.
+doi:10.1111/vco.70024**
+
+- Prospective arm: peripheral blood from **64 dogs with CD34+ acute leukaemia**,
+  10 with B-cell CLL, 10 healthy controls, ALP by cytochemical staining (subset
+  also by flow cytometry). Retrospective arm: 67 archived tissue/effusion
+  specimens — 27 CD34+ AL, 22 T-cell lymphoma, 18 B-cell lymphoma.
+- ALP positive (>3% ALP+ neoplastic cells, cut-off from ROC) in **61/64 (95.3%)**
+  CD34+ AL; **all** B-cell CLL and all lymphoma specimens ALP-negative.
+- No difference between AML, ALL and acute unclassifiable leukaemia (p > 0.05) —
+  so ALP does **not** mark myeloid lineage in CD34+ disease, which is the point
+  that contradicts the standing assumption.
+- Flow-cytometry ALP showed poor concordance with cytochemistry and only weak
+  correlation with %ALP+ neoplastic cells (Spearman ρ = 0.25) — written as
+  "ask the laboratory for ALP by CYTOCHEMISTRY", because the distinction decides
+  whether the result means anything.
+- Rule 1(b): 64 + 10 + 10 prospectively and 67 archived specimens carries all
+  four claims; no hedging needed beyond stating the numbers.
+- **Scope limit written onto the page, not just recorded here:** the study
+  enrolled only CD34+ leukaemias, so it says nothing about ALP in the
+  CD34-negative quarter the page already warns about. Without that bullet the
+  new ALP advice reads as a general rule and would be used exactly where it has
+  not been tested.
+- Precision fix during drafting: first draft said "all 40 nodal lymphomas". The
+  specimens were tissue **or effusion**, not nodal by definition. Rewritten to
+  "all 40 lymphoma specimens (22 T-cell, 18 B-cell, from tissue or effusion)".
+- Rule 6: registries disagree on year — PubMed dates it 2025-10-25 (epub),
+  Crossref gives print **2026-03**, vol 24(1):41-50. Print year used, per rule.
+  8 authors → first 3 + et al.
+
+**Declined:** Blockeel 2025 (CD94 immunophenotyping, Front Vet Sci) — 11 dogs
+and 2 controls, and the authors themselves call for larger studies. Moreira 2025
+(transient leukaemia in a Beagle with cutaneous T-cell lymphoma, Vet Clin Pathol)
+— a single case, and its lesson (don't misclassify a leukaemic phase as acute
+leukaemia) is already covered by the page's existing CD34/PARR guidance.
+
+### DIS-NEU-BOTULISM — Botulism
+
+The entire canine botulism literature is case reports and small outbreaks; there
+is no cohort to cite. Both papers below are therefore used for claims that are
+case-level by construction — "this has been documented", "the obstacle is X" —
+and each bullet says how many dogs it rests on. This differs from DIS-GI-TRICHO
+and DIS-GI-MEGA, where the only available case reports would have had to carry
+*quantitative* or *prognostic* claims; those pages stay uncited.
+
+**Silva ROS, Martins RA, Assis RA, Oliveira Junior CA, Lobato FCF. Type C
+botulism in domestic chickens, dogs and black-pencilled marmoset (Callithrix
+penicillata) in Minas Gerais, Brazil. Anaerobe. 2018;51:47-49.
+doi:10.1016/j.anaerobe.2018.03.013**
+
+- An outbreak that simultaneously affected domestic chickens, dogs and a
+  marmoset — carried onto `etiology` to extend the page's existing
+  "multiple animals in the same household" line across species. Sick birds on
+  the property become part of the history.
+- Describes the **successful use of C and D antitoxin in an affected dog**. The
+  page's `tx2` said antitoxin is "generally NOT useful for dogs" because
+  available products are type A/B. That statement is about product availability,
+  not about the toxin, and the two new bullets say exactly that: a C+D antitoxin
+  exists because bovine botulism is endemic in Brazil, it worked in this dog, and
+  one dog means "find out what is stocked locally", not a change of standard
+  care. The original claim is refined rather than reversed.
+- Rule 6: Crossref print 2018-06, 51:47-49; PubMed epub 2018-04-03. Print used.
+  5 authors → all listed.
+
+**Viegas FM, Oliveira PF, Campos MCO, et al. Botulism in a dog fed a raw
+meat-based diet: a case report. Microorganisms. 2026;14(1):192.
+doi:10.3390/microorganisms14010192**
+
+- 3-year-old, 37 kg female Labrador fed exclusively a raw meat-based diet; acute
+  flaccid limb paralysis ~48h after probable ingestion of decomposing raw meat
+  from household waste; **type C neurotoxin confirmed in serum** by mouse
+  neutralisation. Died of progressive respiratory failure despite fluids,
+  nutritional support and mechanical ventilation.
+- Two uses. `etiology` gains RMBD explicitly — the page said "rancid meat" but
+  not raw feeding, which is the version an owner will volunteer. `prog` gains the
+  caveat that the page's "excellent with adequate supportive care" is not
+  unconditional, with the second bullet stating plainly that one dog does not
+  change the overall prognosis and giving the actual clinical consequence: have
+  the ventilation conversation early.
+- Rule 2: n=1, and both bullets say so in words rather than leaving the reader to
+  infer it.
+- Rule 6: online-only (MDPI). Crossref and PubMed both 2026-01-15, 14(1):192;
+  Crossref has no print date. 8 authors → first 3 + et al.
+
+### Resolver
+
+New source names: Aalto, Silva, Viegas. No prefix collisions (checked against
+`aal`, `sil`, `vie`, `al` — only the already-pinned Allen/Allenspach pair is
+nearby, and it is unrelated). 'Silva' is a common surname and is now claimed by
+the botulism outbreak paper; a second Silva will need a `SILVA_BY_YEAR` map,
+which `lint-refs-integrity` check 6 will force.
