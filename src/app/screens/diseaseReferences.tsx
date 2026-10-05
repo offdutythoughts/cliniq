@@ -1407,6 +1407,10 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const HORTA_FELINE_LOPH =
+  'Horta RS, Souza LM, Sena BV, et al. LOPH: a novel chemotherapeutic protocol for feline high-grade multicentric or mediastinal lymphoma, developed in an area endemic for feline leukemia virus. J Feline Med Surg. 2021;23(2):86-97. doi:10.1177/1098612X20926893'
+const JAROENSONG_MEDLYM_COP =
+  'Jaroensong T, Piamwaree J, Sattasathuchana P. Effects of chemotherapy on hematological parameters and CD4+/CD8+ ratio in cats with mediastinal lymphoma and seropositive to feline leukemia virus. Animals (Basel). 2022;12(3):223. doi:10.3390/ani12030223'
 const KANG_NPS_CT =
   'Kang K, Brash R. CT features of confirmed nasopharyngeal stenosis in 12 cats. J Feline Med Surg. 2025;27(2):1098612X241305932. doi:10.1177/1098612X241305932'
 const POLLACK_NPS_BALLOON =
@@ -1622,6 +1626,7 @@ const SOURCE_NAMES = [
   'Planchamp', 'Forterre', 'Van Hoof', 'Grapes',
   'Hebert', 'De Porte', 'Woerde',
   'Kang', 'Pollack', 'Feigin',
+  'Horta', 'Jaroensong',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -2046,6 +2051,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Horta/.test(part)) { out.push({ id: 'horta-feline-loph', text: HORTA_FELINE_LOPH }); continue }
+    if (/^Jaroensong/.test(part)) { out.push({ id: 'jaroensong-medlym-cop', text: JAROENSONG_MEDLYM_COP }); continue }
     if (/^Kang/.test(part)) { out.push({ id: 'kang-nps-ct', text: KANG_NPS_CT }); continue }
     if (/^Pollack/.test(part)) { out.push({ id: 'pollack-nps-balloon', text: POLLACK_NPS_BALLOON }); continue }
     if (/^Feigin/.test(part)) { out.push({ id: 'feigin-desmoplastic-amelo', text: FEIGIN_DESMOPLASTIC_AMELO }); continue }

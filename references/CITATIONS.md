@@ -4630,3 +4630,85 @@ New source names: Kang, Pollack, Feigin. No prefix collisions — checked `kan`,
 `bal`, `fei`, `pol`; the nearby existing names are 'Kaminsky'/'Kasabalis',
 'Baka'/'Baker'/'Barker' and 'Porras', none of which is a prefix relation. Also
 checked db.ts for `(Ball…`, `(Kang…` and `(Feig…` prose parentheticals: none.
+
+## Batch — DIS-RESP-MEDLYM (141 → 140, uncited 34 → 33)
+
+Single page this round. Two searches for feline/canine clinical toxoplasmosis
+returned only zoo-animal and horse material (see declined, below), so
+DIS-INFECT-TOXO stays uncited rather than taking a weaker source.
+
+### DIS-RESP-MEDLYM — Mediastinal Lymphoma
+
+**Horta RS, Souza LM, Sena BV, et al. LOPH: a novel chemotherapeutic protocol
+for feline high-grade multicentric or mediastinal lymphoma, developed in an area
+endemic for feline leukemia virus. J Feline Med Surg. 2021;23(2):86-97.
+doi:10.1177/1098612X20926893**
+
+- Prospective, 21 cats with cytologically diagnosed high-grade multicentric or
+  mediastinal lymphoma. **19/21 (90.5%) FeLV-positive.** LOPH = lomustine,
+  vincristine, prednisolone, doxorubicin.
+- Complete response 17/21 (81%). **MST 214 days overall and 214 days for the 13
+  mediastinal cats; not reached for the 8 multicentric cats (P = 0.9). MST 171
+  days among cats with persistent FeLV antigenaemia.**
+- Only 7 cats finished induction (20–31 weeks, median 20); all 7 went on to
+  maintenance.
+- **Haematologic toxicity in 100% at some point, mostly grade I–II:
+  thrombocytopenia 21/21, neutropenia 16/21, anaemia 15/21.** Grade I anorexia
+  and vomiting in 4/21.
+- The page's `prog` said FeLV-positive cats do worse and to test early — correct
+  but with no numbers. It now carries mediastinal-specific survival and the
+  figure to quote when the FeLV test comes back positive.
+- Three things stated rather than glossed:
+  - **Response rate and completion rate are different conversations.** 81% CR
+    against 7 of 21 finishing induction is the gap an owner needs to hear about.
+  - The mediastinal-vs-multicentric comparison was not significant, but with 13
+    and 8 cats the study had little power — so "no difference" is not evidence of
+    equivalence.
+  - The authors conclude LOPH "resulted in a better MST than similar studies with
+    other protocols". That is a comparison **across published series**, not a
+    controlled trial, and the page says so. They themselves call for controlled
+    trials.
+- The toxicity profile went to `monitor` next to the existing "haematology before
+  each dose" line, framed as what to expect rather than what to react to —
+  thrombocytopenia in every cat, mostly low grade.
+- Rule 6: **registries disagree and it changes the citation.** PubMed epub
+  2020-07-20; Crossref print **2021-02**, 23(2):86-97. Cited as **Horta 2021**.
+  7 authors → first 3 + et al.
+
+**Jaroensong T, Piamwaree J, Sattasathuchana P. Effects of chemotherapy on
+hematological parameters and CD4+/CD8+ ratio in cats with mediastinal lymphoma
+and seropositive to feline leukemia virus. Animals (Basel). 2022;12(3):223.
+doi:10.3390/ani12030223**
+
+- 18 client-owned FeLV-infected cats with mediastinal lymphoma on COP; CBC,
+  creatinine, ALT and CD4/CD8 ratio measured before each of the first four
+  inductions. WBC, neutrophils and PCV all fell significantly from week 1;
+  CD4/CD8 ratio unchanged (P = 0.74). Authors conclude COP was safe.
+- Used only to corroborate the myelosuppression pattern from a second protocol
+  and a second population, which is all 18 cats can carry here.
+- **Deliberately omitted:** the MST of 134 days for cats with a CD4/CD8 ratio
+  below 1 after the first week. That is a subgroup of 18 with no stated
+  comparator, and putting it on a reference page would imply the ratio is a usable
+  prognostic test. The paper does not establish that.
+- Rule 6: MDPI, online-only. Crossref 2022-01-18, 12(3):223; PubMed agrees. Note
+  the title — PubMed renders it "CD4/CD8" (the superscript plus signs are lost in
+  its text), Crossref and the paper itself have **CD4+/CD8+**. Corrected to the
+  Crossref form after noticing the discrepancy. 3 authors → all listed.
+
+**Declined — DIS-INFECT-TOXO found nothing usable:** searches for clinical
+toxoplasmosis/neosporosis series in cats and dogs surfaced *Denk 2022* (126 zoo
+animal cases across 31 species — ring-tailed lemurs, meerkats, Pallas' cats),
+*Scuotto 2025* (an experimental intranasal vaccine in 784 captive wild animals
+across 20 zoos) and *Shams 2024* (seroprevalence in 487 Iranian horses). All are
+real papers and none is about the domestic cat or dog in front of a clinician.
+The page stays uncited; it needs a dedicated search of the older canine
+neosporosis literature, which these query shapes are not reaching.
+
+**Process note from this batch.** The new Jaroensong test asserted
+`toContain('Hematological Parameters')` in Title Case, while the AMA reference
+string is sentence case. It failed — but the first run of the gate was
+`npx tsc --noEmit && npx vitest run --silent 2>&1 | tail -3`, and `tail -3`
+showed only the timing lines, so the failure was invisible until the full chain
+was re-run reading exit status. This is the second time in this work that piping
+test output through `head`/`tail` has hidden a real failure. Read the exit
+status; do not read the tail of a pipe.
