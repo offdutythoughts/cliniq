@@ -4530,3 +4530,103 @@ is the second two-word surname**, and sits in the same `De ` space as the
 existing 'De Risio' — neither is a prefix of the other, but the test asserts
 they resolve to different ids, since a mistake there would put an IVETF
 epilepsy document on an oesophageal page.
+
+## Batch — DIS-NASAL-NPS, DIS-NEO-ORAL-AME (143 → 141, uncited 36 → 34)
+
+### DIS-NASAL-NPS — Nasopharyngeal Stenosis
+
+**Kang K, Brash R. CT features of confirmed nasopharyngeal stenosis in 12 cats.
+J Feline Med Surg. 2025;27(2):1098612X241305932. doi:10.1177/1098612X241305932**
+
+- 12 cats with NPS confirmed by retroflex nasopharyngoscopy, 2011–2023; CT
+  reviewed retrospectively. One cat had two stenoses, so 13 lesions.
+- **All 13 in the caudal third of the nasopharynx**, as focal abrupt narrowing by
+  a homogeneous soft-tissue band. Concentric in 11/13, lateral-to-lateral in 2.
+- Mild homogeneous contrast enhancement in 8/11 (73%). **Soft palate focally
+  deviated dorsally at the stenosis site in 8/12 (67%), best seen on sagittal.**
+- Concurrent: non-enhancing soft tissue in the nasal cavity 7/12, tympanic bullae
+  4/12, mild medial retropharyngeal lymphadenomegaly 2/12.
+- The page's `conf` said CT "defines the location, thickness and length" — true
+  but useless at the scanner. It now says where in the nasopharynx to look, which
+  plane shows the most useful secondary sign, and that **mild** enhancement is
+  expected so a strongly enhancing or mass-like lesion should redirect you to
+  polyp or neoplasia. The bullae/nasal findings are added because they are on the
+  same study and change what else gets treated.
+- Rule 2: the page states that 12 cats shows where to look but cannot give CT a
+  sensitivity, and keeps the authors' requirement for nasopharyngoscopy to
+  confirm.
+- Rule 6: Crossref print 2025-02, 27(2), article 1098612X241305932; PubMed 2025
+  Feb. Agree. 2 authors → both listed.
+
+**Pollack SZ, Chapman PS, Klag A. Balloon dilation for the treatment of
+nasopharyngeal stenosis in seven cats. JFMS Open Rep. 2017;3(2):2055116917729987.
+doi:10.1177/2055116917729987**
+
+- 7 cats, balloon dilation under endoscopic guidance. **All 7 had acceptable
+  short-term control (median 14 days). Only 2 of 6 had successful long-term
+  control after one dilation, with a further 2 of 6 after a second.** Recurrence
+  of stenosis was the main complication.
+- The page already said "expect to repeat the procedure; a single dilation rarely
+  gives a durable result" — correct but unsourced and unquantified. Now carries
+  the numbers.
+- **The limitation that matters most is the follow-up window, not the sample
+  size.** The study's "long-term" control has a median of **34 days**, so the
+  4-of-6 figure describes weeks rather than years. Stated on the page in those
+  words, because quoting "4 of 6 achieved long-term control" without it would
+  substantially overstate what is known about durability.
+- Rule 6: Crossref gives print 2017-07 with online 2017-09-19 — the print date
+  precedes the online date, an artefact of how this journal dates volumes. Both
+  registries agree on 2017. 3 authors → all listed.
+
+**Declined for this page, both on species grounds:** *Ball E, Chase D, Coomer A.
+N Z Vet J. 2022;70(5):279-286* (2 dogs, traumatic NPS treated by three balloon
+dilations each at 5–9 day intervals) and *Saver A et al. J Am Vet Med Assoc.
+2021;259(2):190-196* (one dog, osseous choanal atresia with NPS managed by
+ventral rhinotomy and overlapping covered stents). Both are reasonable papers
+and the "multiple dilations required" message agrees with Pollack — but
+DIS-NASAL-NPS is `sp:'Cat'`, so dog data would render on a cat-only page with
+no species marker available to scope it. Recorded here in case the page is ever
+widened to dogs, where traumatic NPS is a distinct aetiology it does not
+currently mention.
+
+### DIS-NEO-ORAL-AME — Acanthomatous Ameloblastoma
+
+**Feigin K, Bell C. Desmoplastic histological subtype of ameloblastoma in 16
+dogs. Front Vet Sci. 2024;11:1362237. doi:10.3389/fvets.2024.1362237**
+
+- First thorough case series of desmoplastic ameloblastoma in dogs, 16 cases.
+  Presents as a mass or swelling of the rostral mandible or maxilla in
+  middle-aged to older dogs. Radiolucent or mixed radiographic pattern with
+  well-defined borders and variable loculation. **A solid, fibrous tumour with
+  obscured odontogenic epithelium that is challenging to diagnose histologically
+  and can mimic several other oral tumours, both benign and malignant.**
+  Behaviour locally destructive but benign; prognosis favourable after excision.
+- The page's `pearl` warned against one error — confusing an acanthomatous
+  ameloblastoma with a fibrous epulis, which risks under-treatment. This paper
+  supplies the **opposite** error, which is worse: a desmoplastic ameloblastoma
+  read as a malignant fibrous tumour. That ends with an owner told their dog has
+  a sarcoma, and either a disfiguring resection or euthanasia for a tumour that
+  does not metastasise. `conf` now carries the subtype, why the histology is
+  hard, and that the imaging pattern still looks benign rather than frankly
+  destructive.
+- Rule 2: 16 dogs, descriptive, **no comparative outcome data reported**. The
+  page says the prognosis statement is a description rather than a prognosis, and
+  no survival or recurrence figure is invented — the existing "<20% recurrence"
+  on the page belongs to the acanthomatous form and is left attached to it.
+- Rule 6: online-only; Crossref 2024-04-04, vol 11, article 1362237; PubMed
+  agrees. 2 authors → both listed.
+
+**Declined:** *Zobel A, Böttcher P. Tierarztl Prax Ausg K. 2024;52(5):300-307* —
+one French Bulldog, template-guided segmental mandibulectomy with inferior
+alveolar nerve preservation and a patient-specific PEEK bridging plate.
+Genuinely interesting (orofacial sensation preserved, which traditional
+mandibulectomy sacrifices) but a single case of a bespoke 3D-printed technique
+available almost nowhere, and the page's surgical section is about margins
+rather than reconstruction.
+
+### Resolver
+
+New source names: Kang, Pollack, Feigin. No prefix collisions — checked `kan`,
+`bal`, `fei`, `pol`; the nearby existing names are 'Kaminsky'/'Kasabalis',
+'Baka'/'Baker'/'Barker' and 'Porras', none of which is a prefix relation. Also
+checked db.ts for `(Ball…`, `(Kang…` and `(Feig…` prose parentheticals: none.
