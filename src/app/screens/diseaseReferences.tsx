@@ -1407,6 +1407,10 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const ONEILL_ACUTE_DIARRHOEA =
+  'O’Neill DG, Prisk LJ, Brodbelt DC, Church DB, Allerton F. Epidemiology and clinical management of acute diarrhoea in dogs under primary veterinary care in the UK. PLoS One. 2025;20(6):e0324203. doi:10.1371/journal.pone.0324203'
+const SCAHILL_ENOVAT_DIARRHOEA =
+  'Scahill K, Jessen LR, Prior C, et al. Efficacy of antimicrobial and nutraceutical treatment for canine acute diarrhoea: a systematic review and meta-analysis for European Network for Optimization of Antimicrobial Therapy (ENOVAT) guidelines. Vet J. 2023;303:106054. doi:10.1016/j.tvjl.2023.106054'
 const HORTA_FELINE_LOPH =
   'Horta RS, Souza LM, Sena BV, et al. LOPH: a novel chemotherapeutic protocol for feline high-grade multicentric or mediastinal lymphoma, developed in an area endemic for feline leukemia virus. J Feline Med Surg. 2021;23(2):86-97. doi:10.1177/1098612X20926893'
 const JAROENSONG_MEDLYM_COP =
@@ -1627,6 +1631,7 @@ const SOURCE_NAMES = [
   'Hebert', 'De Porte', 'Woerde',
   'Kang', 'Pollack', 'Feigin',
   'Horta', 'Jaroensong',
+  'Scahill',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1747,6 +1752,7 @@ const SCOTT_BY_YEAR: Record<string, { id: string; text: string }> = {
 const ONEILL_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2017': { id: 'oneill-gdv', text: ONEILL_GDV },
   '2021': { id: 'oneill-kcs', text: ONEILL_KCS },
+  '2025': { id: 'oneill-acute-diarrhoea', text: ONEILL_ACUTE_DIARRHOEA },
 }
 
 /** Two Leila Bedos papers — the optic neuritis series and the pre-iridal
@@ -2051,6 +2057,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Scahill/.test(part)) { out.push({ id: 'scahill-enovat-diarrhoea', text: SCAHILL_ENOVAT_DIARRHOEA }); continue }
     if (/^Horta/.test(part)) { out.push({ id: 'horta-feline-loph', text: HORTA_FELINE_LOPH }); continue }
     if (/^Jaroensong/.test(part)) { out.push({ id: 'jaroensong-medlym-cop', text: JAROENSONG_MEDLYM_COP }); continue }
     if (/^Kang/.test(part)) { out.push({ id: 'kang-nps-ct', text: KANG_NPS_CT }); continue }

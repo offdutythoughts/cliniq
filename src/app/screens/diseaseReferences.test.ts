@@ -1179,6 +1179,20 @@ describe('reference block', () => {
     expect(parseSources('Jaroensong 2022')[0].text).toContain('hematological parameters')
   })
 
+  // O'Neill now has FIVE papers across four years, two of which share a year
+  // with a sibling and are disambiguated by keyword, not by year.
+  it('keeps all five O\u2019Neill papers distinct', () => {
+    const ids = ['O\u2019Neill 2017', 'O\u2019Neill 2017 cornea', 'O\u2019Neill 2021',
+      'O\u2019Neill 2021 periodontal', 'O\u2019Neill 2025'].map(m => parseSources(m)[0]?.id)
+    expect(ids.filter(Boolean)).toHaveLength(5)
+    expect(new Set(ids).size).toBe(5)
+    expect(parseSources('O\u2019Neill 2025')[0].text).toContain('acute diarrhoea')
+  })
+
+  it('resolves the ENOVAT systematic review', () => {
+    expect(parseSources('Scahill 2023')[0].text).toContain('ENOVAT')
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.
