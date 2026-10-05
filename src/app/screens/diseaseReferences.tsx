@@ -1407,6 +1407,12 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const KANG_NPS_CT =
+  'Kang K, Brash R. CT features of confirmed nasopharyngeal stenosis in 12 cats. J Feline Med Surg. 2025;27(2):1098612X241305932. doi:10.1177/1098612X241305932'
+const POLLACK_NPS_BALLOON =
+  'Pollack SZ, Chapman PS, Klag A. Balloon dilation for the treatment of nasopharyngeal stenosis in seven cats. JFMS Open Rep. 2017;3(2):2055116917729987. doi:10.1177/2055116917729987'
+const FEIGIN_DESMOPLASTIC_AMELO =
+  'Feigin K, Bell C. Desmoplastic histological subtype of ameloblastoma in 16 dogs. Front Vet Sci. 2024;11:1362237. doi:10.3389/fvets.2024.1362237'
 const HEBERT_OES_STRICTURE =
   'Hebert MK, Liu CC, Gaschen FP. Management of benign esophageal strictures in dogs and cats: long-term follow-up of 32 cases (2006-2022). J Vet Intern Med. 2026;40(1):aalaf041. doi:10.1093/jvimsj/aalaf041'
 const DEPORTE_TRACHEOES_FISTULA =
@@ -1615,6 +1621,7 @@ const SOURCE_NAMES = [
   'Teng', 'Gualtieri', 'Treekhunrungruang', 'Teh',
   'Planchamp', 'Forterre', 'Van Hoof', 'Grapes',
   'Hebert', 'De Porte', 'Woerde',
+  'Kang', 'Pollack', 'Feigin',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -2039,6 +2046,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Kang/.test(part)) { out.push({ id: 'kang-nps-ct', text: KANG_NPS_CT }); continue }
+    if (/^Pollack/.test(part)) { out.push({ id: 'pollack-nps-balloon', text: POLLACK_NPS_BALLOON }); continue }
+    if (/^Feigin/.test(part)) { out.push({ id: 'feigin-desmoplastic-amelo', text: FEIGIN_DESMOPLASTIC_AMELO }); continue }
     if (/^Hebert/.test(part)) { out.push({ id: 'hebert-oes-stricture', text: HEBERT_OES_STRICTURE }); continue }
     if (/^De Porte/.test(part)) { out.push({ id: 'deporte-tracheoes-fistula', text: DEPORTE_TRACHEOES_FISTULA }); continue }
     if (/^Woerde/.test(part)) { out.push({ id: 'woerde-casr-hypercalcaemia', text: WOERDE_CASR_HYPERCALCAEMIA }); continue }
