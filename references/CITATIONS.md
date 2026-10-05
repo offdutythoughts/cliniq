@@ -4712,3 +4712,96 @@ showed only the timing lines, so the failure was invisible until the full chain
 was re-run reading exit status. This is the second time in this work that piping
 test output through `head`/`tail` has hidden a real failure. Read the exit
 status; do not read the tail of a pipe.
+
+## Batch — DIS-INFECT-CAMPYLO (140 → 139, uncited 33 → 32)
+
+### DIS-INFECT-CAMPYLO — Bacterial Enteritis (Campylobacter / Clostridial / Salmonella)
+
+This page gets the **strongest evidence cited anywhere in this work so far**: a
+GRADE-assessed systematic review and meta-analysis underpinning a European
+antimicrobial-use guideline.
+
+**Scahill K, Jessen LR, Prior C, et al. Efficacy of antimicrobial and
+nutraceutical treatment for canine acute diarrhoea: a systematic review and
+meta-analysis for European Network for Optimization of Antimicrobial Therapy
+(ENOVAT) guidelines. Vet J. 2023;303:106054. doi:10.1016/j.tvjl.2023.106054**
+
+- PICOs set by a multidisciplinary expert panel with general-practitioner and
+  owner input; GRADE used to rate certainty. Six RCTs met criteria for
+  antimicrobials and six for nutraceuticals. Severity categorised as mild,
+  moderate or severe by systemic signs and fluid responsiveness. Outcomes:
+  duration of diarrhoea, duration of hospitalisation, disease progression,
+  mortality, adverse effects.
+- **High-certainty evidence that antimicrobial treatment had no clinically
+  relevant effect on any outcome in mild or moderate disease.** Certainty **low**
+  for severe disease.
+- **Nutraceuticals (prebiotics, probiotics, synbiotics) did not shorten the
+  duration of diarrhoea** (very low to moderate certainty). No adverse effects
+  reported in any of the twelve trials.
+- Two corrections to the page, both to statements that would otherwise drive
+  antibiotic and supplement use:
+  - `tx1` opened with "most cases self-limiting — supportive care", then listed
+    antibiotic protocols per organism with no threshold. The protocols are kept
+    but now explicitly framed as being for symptomatic, severe or
+    zoonotic-risk cases rather than routine acute diarrhoea, with the
+    high-certainty no-benefit finding stated first.
+  - `tx2` said probiotics "may reduce duration". The best available synthesis
+    says they do not. Both now appear together, and the page says the argument
+    against them is cost and false reassurance rather than harm — because the
+    review found no adverse effects, and overstating harm would be its own error.
+  - **Low certainty for severe disease is reported as unresolved, not as
+    no-benefit.** "No evidence of effect" at the severe end would be a misreading
+    of a low-certainty rating, and the severe cases are exactly the ones where a
+    clinician reaches for the protocols on this page.
+- Rule 5 note: this is a systematic review backing a society guideline (ENOVAT),
+  which is the fallback class Rule 5 names for protocols. It is cited here on a
+  **disease** page, where Rule 4 only requires a peer-reviewed paper — but it is
+  recorded as a candidate should `PROT`-side acute diarrhoea guidance ever need
+  a consensus-grade source.
+- Rule 6: Crossref and PubMed agree, 2023;303:106054 (PubMed epub 2023-12-02).
+  18 authors → first 3 + et al.
+
+**O'Neill DG, Prisk LJ, Brodbelt DC, Church DB, Allerton F. Epidemiology and
+clinical management of acute diarrhoea in dogs under primary veterinary care in
+the UK. PLoS One. 2025;20(6):e0324203. doi:10.1371/journal.pone.0324203**
+
+- VetCompass, study population **2,250,417 dogs**, random sample of 1,835
+  confirmed incident acute diarrhoea cases in 2019.
+- **One-year incidence risk 8.18% (95% CI 7.83–8.55)** — roughly 1 in 12 dogs a
+  year. **80.27% had only one physical visit** for the episode.
+- Haemorrhagic diarrhoea recorded in 29.32%. Comorbid signs: vomiting 44.25%,
+  reduced appetite 27.68%, lethargy 24.20%.
+- Management: **probiotics 59.62%, dietary management 43.98%, antibiosis 38.20%**,
+  maropitant 24.03%.
+- Used for scale and for the stewardship gap, which is what makes the Scahill
+  finding matter: 38.2% still receive antibiotics, and probiotics are the single
+  commonest intervention, for a condition where 80% need one visit.
+- The haemorrhagic figure went on `signs` with the point that blood in the stool
+  is common and does not by itself indicate a bacterial cause — the inference the
+  page's own title invites.
+- **Scope stated honestly:** this is acute diarrhoea of any cause, not
+  Campylobacter-specific. It is cited here because this is the page a clinician
+  lands on when the thought is "bacterial diarrhoea, so antibiotics", which is
+  where the reflex lives. The breed odds ratios (Maltese and Miniature Poodle
+  2.17, Cavapoo 2.07, GSD 1.69, Yorkshire Terrier 1.51, Cockapoo 1.36) are
+  **not** carried: they are for acute diarrhoea of any cause and would read on
+  this page as breed predispositions to bacterial enteritis, which the study does
+  not show.
+
+**Declined:** *Tomusiak-Plebanek 2022, BMC Vet Res 18(1):112* — in vitro
+anti-*Campylobacter* activity of canine *Lactobacillus* isolates. No clinical
+outcome, and the authors call for in vitro and in vivo work before application.
+
+### Resolver — O'Neill now has five papers
+
+`ONEILL_BY_YEAR` gains '2025'. O'Neill is the most heavily reused surname in the
+resolver: five papers across four years, with **two years carrying two papers
+each**, disambiguated by keyword rather than year (`cornea` for the 2017 corneal
+ulcerative disease paper against the 2017 GDV paper, `periodont` for the 2021
+periodontal paper against the 2021 KCS paper). Adding a fifth needed no new
+machinery because 2025 is unshared.
+
+Locked by a test that resolves all five markers and asserts five distinct ids,
+and verified by rendering DIS-GI-GDV (O'Neill 2017 GDV still at reference 8) and
+DIS-EYE-KCS (O'Neill 2021 KCS still at reference 2). Note the markers use the
+**curly** apostrophe, matching `SOURCE_NAMES`.
