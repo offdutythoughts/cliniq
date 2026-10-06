@@ -231,6 +231,10 @@ export function MixMatchScreen() {
       <header className="mm-head">
         <h1 className="mm-title">Mix &amp; Match</h1>
         <p className="mm-lede">Describe the patient. Each term you add re-scores every disease page into a ranked differential list.</p>
+        <Tappable as="span" className="mm-term" style={s('display:inline-flex;margin-top:8px;cursor:pointer;')}
+          onTap={() => nav.navigate({ kind: 'caseTriage' })}>
+          🧠 Or paste case notes in plain English →
+        </Tappable>
       </header>
 
       <section className="mm-step">
