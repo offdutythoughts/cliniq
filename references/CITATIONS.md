@@ -5400,3 +5400,90 @@ Two consequences, both deliberate:
   ratchet in someone else's unfinished work and remove the signal they need.
   `lint:content` is therefore currently red in the working tree, and will go
   green for them once those six sizes are tokenised.
+
+## Batch — DIS-ENDO-CONN, DIS-MET-HYPOK (128 → 126, uncited 23 → 21)
+
+### DIS-ENDO-CONN — Primary Hyperaldosteronism (Conn Syndrome)
+
+**Del Magno S, Foglia A, Rossanese M, et al. Surgical findings and outcomes after
+unilateral adrenalectomy for primary hyperaldosteronism in cats: a
+multi-institutional retrospective study. J Feline Med Surg.
+2023;25(1):1098612X221135124. doi:10.1177/1098612X221135124**
+
+- **29 cats** across many institutions, all treated by unilateral adrenalectomy.
+- Presentation: lethargy 20 (69%), neck ventroflexion 17 (59%), hypertension 24
+  (89%), **hypokalaemia in every cat**, CK raised in 15, hyperaldosteronism
+  documented in 24.
+- Preoperative treatment: potassium supplementation 19 (66%), spironolactone 16
+  (55%), amlodipine 11 (38%).
+- **Vascular invasion in 5 of 29** — caudal vena cava in 4, renal vein in 1.
+  Median mass 2 × 1.5 cm.
+- **97% survived to discharge.** One major intraoperative complication (3%,
+  haemorrhage removing a caval thrombus), minor postoperative complications in 4
+  (14%), one fatal (3%, likely DIC). Median hospitalisation 4 days.
+- **Potassium normalised in 24 within 3 months; hypertension resolved in 21/23.
+  Long-term medical treatment was not required.** Median survival 1082 days in
+  the 25 cats with follow-up, late deaths mostly from comorbidities.
+- The page said adrenalectomy was "potentially curative" and listed the medical
+  trio, both without numbers. It now carries the complication profile, the
+  endocrine resolution, and the survival figure — and the detail that most
+  changes a surgical conversation: **screen for vascular invasion first**, since
+  5 of 29 had it.
+- Two small corroborations worth having: the page's medical trio is exactly what
+  was used **preoperatively** in this series, and a raised CK in a ventroflexing
+  cat fits the diagnosis rather than arguing against it (15 of 29).
+- Rule 6: Crossref print 2023-01, 25(1), article 1098612X221135124; PubMed 2023
+  Jan. Agree. 16 authors → first 3 + et al.
+
+**Haynes MB, Morey AGN, Gerhard C, et al. Reversible right-sided congestive heart
+failure secondary to primary hyperaldosteronism in a cat. J Vet Cardiol.
+2024;55:26-31. doi:10.1016/j.jvc.2024.07.002**
+
+- 10-year-old Somali cat: neurological signs, severe systemic hypertension,
+  hypokalaemia, left adrenal mass, raised aldosterone. Echocardiography showed
+  biatrial enlargement with abdominal and pericardial effusion — right-sided
+  congestive heart failure. **Cardiac structure and function returned to normal
+  within 6 months of adrenalectomy.**
+- The page listed hypertensive end-organ damage (retinal detachment, CNS) but
+  nothing cardiac. One cat, so it is written as widening what the disease can
+  look like rather than as a rate — with the actionable consequence spelled out:
+  echo a hypertensive hypokalaemic cat with effusion rather than assuming primary
+  heart disease.
+- Rule 6: Crossref print 2024-10, 55:26-31; PubMed epub 2024-07-19. Print year
+  used. 8 authors → first 3 + et al.
+
+### DIS-MET-HYPOK — Hypokalemia
+
+- Del Magno 2023 reused on the `etiology` line that already named primary
+  hyperaldosteronism. The point added is why it is worth *pursuing* rather than
+  just correcting the potassium: hypokalaemia was present in all 29 cats,
+  hypertension in 89%, ventroflexion in 59%, and adrenalectomy removed the need
+  for long-term medical treatment. A single reference now carries two pages.
+
+### Declined — DIS-URO-BL-TRAUMA and the uroabdomen pages stay uncited
+
+Searched `uroperitoneum[Title]`, `uroabdomen[Title]` and a targeted query for a
+validation study of the **peritoneal-fluid-to-blood potassium and creatinine
+ratios** — the diagnostic criterion these pages rest on. The last returned
+**zero** results. What exists is case reports: *Lim 2024* (J Vet Emerg Crit Care
+34(5):497-501, uroabdomen from spontaneous bladder rupture during dystocia, which
+does apply the fluid:blood potassium ratio of 1.8 but as a diagnostic step rather
+than a validation), *Spillane 2025* (JFMS Open Rep, bilateral renal pelvic and
+parenchymal rupture in a cat) and *Tsompanidou 2015* (urothorax with
+uroperitoneum). None can support the quantitative cut-off the pages use, and a
+case report applying a threshold is not evidence for the threshold. The three
+urinary trauma pages stay uncited.
+
+Also declined: *Kooistra 2020, Vet Clin North Am Small Anim Pract
+50(5):1053-1063* — a review of feline primary hyperaldosteronism. Its framing
+(the disease is underdiagnosed because cats with hypertension or hypokalaemia are
+treated symptomatically) is good, but Del Magno supplies the same clinical
+picture with 29 cats behind it.
+
+### Resolver
+
+New source names: Del Magno, Haynes. **'Del Magno' is the third two-word surname**
+and sits in the crowded `De`/`Del` space alongside 'De Lorenzi', 'De Porte' and
+'De Risio'. None is a prefix of another, and a test asserts Del Magno 2023
+resolves distinctly from all three. 'Haynes' sits beside 'Hall', 'Halstead',
+'Harb', 'Hardy', 'Harris' and 'Haworth' — all diverge by the third character.

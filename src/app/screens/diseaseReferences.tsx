@@ -1407,6 +1407,10 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const DELMAGNO_PHA_ADRENALECTOMY =
+  'Del Magno S, Foglia A, Rossanese M, et al. Surgical findings and outcomes after unilateral adrenalectomy for primary hyperaldosteronism in cats: a multi-institutional retrospective study. J Feline Med Surg. 2023;25(1):1098612X221135124. doi:10.1177/1098612X221135124'
+const HAYNES_PHA_CHF =
+  'Haynes MB, Morey AGN, Gerhard C, et al. Reversible right-sided congestive heart failure secondary to primary hyperaldosteronism in a cat. J Vet Cardiol. 2024;55:26-31. doi:10.1016/j.jvc.2024.07.002'
 const MARTANO_ORAL_FSA_REVIEW =
   'Martano M, Iussich S, Morello E, Buracco P. Canine oral fibrosarcoma: changes in prognosis over the last 30 years? Vet J. 2018;241:1-7. doi:10.1016/j.tvjl.2018.09.005'
 const VAGT_CMO_INHERITANCE =
@@ -1665,6 +1669,7 @@ const SOURCE_NAMES = [
   'Maas', 'Gillespie', 'Henderson', 'Welch',
   // 'Vagt' is four letters; its branch carries a defensive \\b guard.
   'Martano', 'Vagt', 'Ferrarese',
+  'Del Magno', 'Haynes',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -2098,6 +2103,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Del Magno/.test(part)) { out.push({ id: 'delmagno-pha-adrenalectomy', text: DELMAGNO_PHA_ADRENALECTOMY }); continue }
+    if (/^Haynes/.test(part)) { out.push({ id: 'haynes-pha-chf', text: HAYNES_PHA_CHF }); continue }
     if (/^Martano/.test(part)) { out.push({ id: 'martano-oral-fsa-review', text: MARTANO_ORAL_FSA_REVIEW }); continue }
     if (/^Vagt\b/.test(part)) { out.push({ id: 'vagt-cmo-inheritance', text: VAGT_CMO_INHERITANCE }); continue }
     if (/^Ferrarese/.test(part)) { out.push({ id: 'ferrarese-cmo-newfoundland', text: FERRARESE_CMO_NEWFOUNDLAND }); continue }

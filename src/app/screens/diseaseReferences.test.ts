@@ -1254,6 +1254,19 @@ describe('reference block', () => {
     expect(parseSources('Mayhew 2022')).toEqual([])
   })
 
+  it('resolves the hyperaldosteronism papers', () => {
+    // 'Del Magno' is a two-word surname in the same "De"/"Del" space as
+    // De Lorenzi, De Porte and De Risio; all four must stay distinct.
+    const dm = parseSources('Del Magno 2023')
+    expect(dm).toHaveLength(1)
+    expect(dm[0].text).toContain('unilateral adrenalectomy')
+    for (const other of ['De Lorenzi 2017', 'De Porte 2025', 'De Risio 2015']) {
+      const o = parseSources(other)[0]
+      if (o) expect(o.id).not.toBe(dm[0].id)
+    }
+    expect(parseSources('Haynes 2024')[0].text).toContain('congestive heart failure')
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.
