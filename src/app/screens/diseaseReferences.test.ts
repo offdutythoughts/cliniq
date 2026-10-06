@@ -1217,6 +1217,15 @@ describe('reference block', () => {
     expect(parseSources('Grapes 2024')[0].id).not.toBe(parseSources('Graf 2025')[0].id)
   })
 
+  it('resolves the GIST and cricopharyngeal papers', () => {
+    expect(parseSources('Maas 2007')[0].text).toContain('Reclassification of small intestinal')
+    expect(parseSources('Gillespie 2011')[0].text).toContain('CD34')
+    expect(parseSources('Henderson 2026')[0].text).toContain('cricopharyngeal achalasia')
+    expect(parseSources('Welch 2023')[0].text).toContain('coton de Tulear')
+    // 'Gillespie' shares 'Gil' with 'Gilger' and 'Gill' with 'Gilliam'.
+    expect(parseSources('Gilliam 2014')[0].id).not.toBe(parseSources('Gillespie 2011')[0].id)
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.
