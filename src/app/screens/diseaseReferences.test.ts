@@ -1226,6 +1226,24 @@ describe('reference block', () => {
     expect(parseSources('Gilliam 2014')[0].id).not.toBe(parseSources('Gillespie 2011')[0].id)
   })
 
+  it('resolves the oral fibrosarcoma and CMO papers', () => {
+    expect(parseSources('Martano 2018')[0].text).toContain('oral fibrosarcoma')
+    expect(parseSources('Vagt 2018')[0].text).toContain('craniomandibular osteopathy')
+    expect(parseSources('Ferrarese 2026')[0].text).toContain('Newfoundland')
+    // 'Martano' shares 'Mart' with the existing 'Martin'.
+    expect(parseSources('Martin 2019')[0]?.id).not.toBe(parseSources('Martano 2018')[0].id)
+  })
+
+  // Two markers back to back on one bullet must yield two numbered references.
+  it('resolves adjacent citation markers on the CMO breed bullet', () => {
+    const seg = splitCitations('Deutsch Drahthaar and Newfoundland (Vagt 2018)(Ferrarese 2026)')
+      .filter(x => x.citeIds)
+    expect(seg).toHaveLength(2)
+    expect(seg[0].citeIds).toHaveLength(1)
+    expect(seg[1].citeIds).toHaveLength(1)
+    expect(seg[0].citeIds?.[0]).not.toBe(seg[1].citeIds?.[0])
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.

@@ -1407,6 +1407,12 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const MARTANO_ORAL_FSA_REVIEW =
+  'Martano M, Iussich S, Morello E, Buracco P. Canine oral fibrosarcoma: changes in prognosis over the last 30 years? Vet J. 2018;241:1-7. doi:10.1016/j.tvjl.2018.09.005'
+const VAGT_CMO_INHERITANCE =
+  'Vagt J, Distl O. Complex segregation analysis of craniomandibular osteopathy in Deutsch Drahthaar dogs. Vet J. 2018;231:30-32. doi:10.1016/j.tvjl.2017.11.008'
+const FERRARESE_CMO_NEWFOUNDLAND =
+  'Ferrarese V, Volckaert V, Kirby S. Craniomandibular osteopathy in a Newfoundland dog. J Vet Dent. 2026;43(1):85-92. doi:10.1177/08987564251379593'
 const MAAS_GIST_RECLASSIFICATION =
   'Maas CPHJ, ter Haar G, van der Gaag I, Kirpensteijn J. Reclassification of small intestinal and cecal smooth muscle tumors in 72 dogs: clinical, histologic, and immunohistochemical evaluation. Vet Surg. 2007;36(4):302-313. doi:10.1111/j.1532-950X.2007.00271.x'
 const GILLESPIE_GIST_CD34 =
@@ -1657,6 +1663,8 @@ const SOURCE_NAMES = [
   'Graf', 'Andrews',
   // 'Maas' is four letters; its branch carries a defensive \\b guard.
   'Maas', 'Gillespie', 'Henderson', 'Welch',
+  // 'Vagt' is four letters; its branch carries a defensive \\b guard.
+  'Martano', 'Vagt', 'Ferrarese',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -2089,6 +2097,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Martano/.test(part)) { out.push({ id: 'martano-oral-fsa-review', text: MARTANO_ORAL_FSA_REVIEW }); continue }
+    if (/^Vagt\b/.test(part)) { out.push({ id: 'vagt-cmo-inheritance', text: VAGT_CMO_INHERITANCE }); continue }
+    if (/^Ferrarese/.test(part)) { out.push({ id: 'ferrarese-cmo-newfoundland', text: FERRARESE_CMO_NEWFOUNDLAND }); continue }
     if (/^Maas\b/.test(part)) { out.push({ id: 'maas-gist-reclassification', text: MAAS_GIST_RECLASSIFICATION }); continue }
     if (/^Gillespie/.test(part)) { out.push({ id: 'gillespie-gist-cd34', text: GILLESPIE_GIST_CD34 }); continue }
     if (/^Henderson/.test(part)) { out.push({ id: 'henderson-cpa-spaniels', text: HENDERSON_CPA_SPANIELS }); continue }
