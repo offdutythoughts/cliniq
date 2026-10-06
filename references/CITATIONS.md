@@ -5198,3 +5198,108 @@ and Gillespie 2011 resolve to different ids. 'Henderson' sits beside 'Hebert' an
 fired on "the authors' suggestion" as intended. Avoiding it by writing "the
 authors suggestion" produced a sentence that read as a typo; the fix is to
 reword ("the suggestion by its authors") rather than to drop the apostrophe.
+
+## Batch — DIS-NEO-ORAL-FSA, DIS-NEU-CMO (133 → 131, uncited 26 → 24)
+
+### DIS-NEO-ORAL-FSA — Oral Fibrosarcoma
+
+**Gualtieri 2024 reused.** The 98-dog SBRT cohort already cited on
+DIS-NEO-ORAL-MEL includes **43 soft tissue sarcomas** with a local
+progression-free survival of 161 days — primary data that applies directly to
+this page's non-resectable section. No new reference constant was needed, and
+the complication caveat travels with it in the opposite direction from the
+melanoma page: the 28.4% osteoradionecrosis/oronasal fistula rate was
+significantly associated with **squamous cell carcinoma**, so on a fibrosarcoma
+page it *overstates* the risk. This is the first genuine reuse hit in several
+batches.
+
+**Martano M, Iussich S, Morello E, Buracco P. Canine oral fibrosarcoma: changes
+in prognosis over the last 30 years? Vet J. 2018;241:1-7.
+doi:10.1016/j.tvjl.2018.09.005**
+
+- A **review** spanning 30 years of literature. Local recurrence **up to 57%**;
+  metastasis late in about **10–14%**; overall survival **247–743 days** in papers
+  since 2000 against **30–540 days** before, which the authors attribute largely
+  to better surgical planning. Notes that histopathology is often insufficient to
+  distinguish undifferentiated oFSA from other poorly differentiated malignant
+  mesenchymal tumours at the same site, especially on small biopsies. The tumour
+  was once thought radioresistant; surgery plus radiotherapy is now the most
+  promising modality.
+- **A reasoned exception to the review-declining precedent.** Hagman (pyometra)
+  and Meij (hypophysectomy) were declined because primary data covered the same
+  ground — Jones 2026 with 625 dogs, for instance. For oral fibrosarcoma
+  *specifically*, a PubMed title search returns **two** papers, and no single
+  cohort reports recurrence or survival across this disease. Rather than
+  stretch Gualtieri's 43 mixed soft tissue sarcomas to cover prognosis, the
+  review is cited **and labelled on the page** as ranges synthesised across
+  published series rather than measurements from one cohort. Rule 4 is satisfied
+  independently by Gualtieri, which is primary data.
+- **Discrepancy recorded rather than resolved.** Martano gives late metastasis in
+  10–14%; the page already says "metastasis to LN ~25%" in `path` and `supp`.
+  These are very likely counting different things (nodal metastasis detected at
+  staging versus metastatic disease over the course). The page now says the two
+  figures count different things and both are approximate, rather than silently
+  overwriting either. Similarly the page's "locally recurrent in 50–80%" sits
+  above Martano's "up to 57%" and both now stand.
+- Rule 6: Crossref print 2018-11, 241:1-7 (no online date); PubMed epub
+  2018-09-05. Print year used. 4 authors → all listed.
+
+### DIS-NEU-CMO — Craniomandibular Osteopathy
+
+**Vagt J, Distl O. Complex segregation analysis of craniomandibular osteopathy in
+Deutsch Drahthaar dogs. Vet J. 2018;231:30-32. doi:10.1016/j.tvjl.2017.11.008**
+
+- **16 Deutsch Drahthaars** with CMO, diagnosed clinically plus radiography or CT.
+  **All 16 shared one common ancestor.** Complex segregation analysis **rejected**
+  random environmental variation, monogenic inheritance, and an additive sex
+  effect; **polygenic and mixed major-gene models fitted best**. The
+  **SLC37A2:c.1332C>T variant was found in neither affected nor control** Deutsch
+  Drahthaars.
+- This corrects a statement on the page. `etiology` read "Sporadic non-heritable
+  forms in non-terrier breeds" — that line is now **removed** and replaced,
+  because in the one non-terrier breed studied properly the disease was clearly
+  familial. The page also now says the inheritance is not simple there, so the
+  West Highland White Terrier autosomal recessive pattern does not generalise.
+- `conf` gains the practically important corollary: **a negative SLC37A2 test does
+  not exclude CMO.** The page previously named the WHWT mutation without saying
+  what a negative result means in another breed, which invites exactly the wrong
+  inference in a young non-terrier with a lion jaw.
+- Rule 6: **print year differs from epub.** PubMed 2017-11-22; Crossref print
+  **2018-01**, 231:30-32. Cited as **Vagt 2018**. 2 authors → both listed.
+
+**Ferrarese V, Volckaert V, Kirby S. Craniomandibular osteopathy in a
+Newfoundland dog. J Vet Dent. 2026;43(1):85-92.
+doi:10.1177/08987564251379593**
+
+- First report in a Newfoundland. 5-month-old with lethargy and bilateral
+  mandibular and maxillary enlargement; diagnosed on signs, examination and CT.
+  Managed with **meloxicam and paracetamol**; followed at 1, 2, 6 and 16 weeks.
+  By 16 weeks comfort was markedly improved, the maxillary protuberances were
+  nearly normal and the mandibular widening had decreased.
+- Used for two narrow things: widening the breed list, and **documenting the
+  self-limiting course under analgesia alone** — which the page asserts
+  ("disease is self-limiting in most cases") without a source. The page states it
+  is one dog and that this illustrates the expected course rather than
+  establishing that analgesia alone suffices.
+- Rule 6: Crossref print **2026-01**, 43(1):85-92; PubMed epub 2025-09-19. Print
+  year used → **Ferrarese 2026**. 3 authors → all listed.
+
+### Resolver
+
+New source names: Martano, Vagt, Ferrarese. **'Martano' shares `Mart` with the
+existing 'Martin'**, diverging at the fifth character, so a test asserts they
+resolve to different ids. 'Vagt' is four letters with a defensive `\b` guard; the
+nearby 'Valenti'/'Valentin'/'Van Hoof' cluster diverges at the third character.
+'Ferrarese' sits beside 'Feigin' and 'FECAVA', diverging at the third.
+
+**New shape locked by a test: two adjacent markers on one bullet.** The CMO
+`breed` bullet ends `(Vagt 2018)(Ferrarese 2026)`, which had not appeared before.
+A test asserts `splitCitations` yields two separate segments each resolving to
+one distinct id, so the pair renders as two superscripts rather than one marker
+swallowing the other.
+
+**Lint caught my own regression.** A new `tx1` bullet joined two ideas with a
+semicolon ("once considered RADIORESISTANT; surgery combined with radiotherapy
+is now…"), pushing `crammed-bullets` from 1031 to 1032. Split into two bullets,
+which reads better anyway. Third time a semicolon in new prose has tripped that
+ratchet — when writing a bullet, a semicolon is a signal to split.
