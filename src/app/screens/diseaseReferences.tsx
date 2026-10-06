@@ -417,7 +417,7 @@ const REEVE_BRACHY_HH =
 const MAYHEW_LAPAROSCOPIC =
   'Mayhew PD, Balsa IM, Marks SL, et al. Clinical and videofluoroscopic outcomes of laparoscopic treatment for sliding hiatal hernia and associated gastroesophageal reflux in brachycephalic dogs. Vet Surg. 2021;50(suppl 1):O67-O77. doi:10.1111/vsu.13622'
 const MAYHEW_BOAS_SURGERY =
-  'Mayhew PD, Marks SL, Pollard R, Balsa IM, Culp WTN, Giuffrida MA. Effect of conventional multilevel brachycephalic obstructive airway syndrome surgery on clinical and videofluoroscopic evidence of hiatal herniation and gastroesophageal reflux in dogs. Vet Surg. 2022;52(2):238-248. doi:10.1111/vsu.13906'
+  'Mayhew PD, Marks SL, Pollard R, Balsa IM, Culp WTN, Giuffrida MA. Effect of conventional multilevel brachycephalic obstructive airway syndrome surgery on clinical and videofluoroscopic evidence of hiatal herniation and gastroesophageal reflux in dogs. Vet Surg. 2023;52(2):238-248. doi:10.1111/vsu.13906'
 const WATKINS_HH_GASTROPEXY =
   'Watkins M, Shales C, Thomas G, Rossanese M, Sparks T, White R. Comparison of outcomes in dogs undergoing hiatal hernia repair with and without use of a gastropexy: 41 cases (2012-2022). J Small Anim Pract. 2025;66(2):110-120. doi:10.1111/jsap.13797'
 
@@ -1740,7 +1740,8 @@ const GLICKMAN_BY_YEAR: Record<string, { id: string; text: string }> = {
 }
 const MAYHEW_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2021': { id: 'mayhew-laparoscopic', text: MAYHEW_LAPAROSCOPIC },
-  '2022': { id: 'mayhew-boas-surgery', text: MAYHEW_BOAS_SURGERY },
+  // Crossref print 2023-02; the epub was 2022-10-23. Print year per Rule 6.
+  '2023': { id: 'mayhew-boas-surgery', text: MAYHEW_BOAS_SURGERY },
 }
 const ALLENSPACH_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2007': { id: 'allenspach-risk', text: ALLENSPACH_RISK },

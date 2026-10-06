@@ -5303,3 +5303,100 @@ semicolon ("once considered RADIORESISTANT; surgery combined with radiotherapy
 is now…"), pushing `crammed-bullets` from 1031 to 1032. Split into two bullets,
 which reads better anyway. Third time a semicolon in new prose has tripped that
 ratchet — when writing a bullet, a semicolon is a signal to split.
+
+## Batch — reuse sweep: DIS-RESP-BOAS, DIS-TOX-FQ, DIS-NEU-CNEMP (131 → 128, uncited 24 → 23)
+
+No new literature searches this batch. A re-run of the reuse matcher — worth
+repeating now that roughly 70 references have been added since the last sweep —
+scored page keywords against every reference title already in the resolver.
+114 of the 131 paperless pages produced a candidate; almost all were spurious
+(the matcher happily pairs "disseminated intravascular coagulation" with
+amphetamine toxicosis). **Three were real, and all three were pages asserting a
+paper's content with no citation while that paper already sat in the resolver.**
+
+### DIS-RESP-BOAS — Mayhew 2023 (already in the resolver, cited only on DIS-GI-HH)
+
+- Prospective clinical trial, **16 dogs** with BOAS plus sliding hiatal hernia
+  and gastro-oesophageal reflux, treated with conventional multilevel surgery
+  (soft palate resection, laryngeal ventriculectomy, alaplasty). Owner Dog SAT
+  questionnaire pre- and postoperatively; videofluoroscopic swallow studies pre-
+  and, in a subset, postoperatively.
+- **Owner-assigned scores improved** for regurgitation after eating (P = .012)
+  and during increased activity (P = .002). **Masked VFSS assessment showed no
+  improvement** in reflux frequency (P = .46) or severity (P = .79), or hernia
+  frequency (P = .082) or severity (P = .34).
+- The page's `path` said "aerodigestive (GI) disorders are very common and worsen
+  outcomes" and stopped there — saying nothing about whether airway surgery fixes
+  them. It now carries the divergence between owner perception and objective
+  measurement, and the counselling line that follows: signs may improve while the
+  hernia and reflux persist.
+- Stated on the page: 16 dogs, with only a subset re-imaged, so this shows airway
+  surgery **cannot be relied on** to resolve the GI component rather than proving
+  it never helps.
+
+### DIS-TOX-FQ — Wiebe 2002 (already in the resolver, cited on three other pages)
+
+- The page already asserted, unsourced, that feline enrofloxacin must not exceed
+  5 mg/kg/day and that retinal toxicity has been reported even at the recommended
+  dose. **That claim is Wiebe's.** Adding the marker is a traceability fix rather
+  than new evidence.
+- Two further things from the same source are now on the page: the risk factors
+  beyond dose (large doses or plasma concentrations, **rapid IV infusion**,
+  prolonged courses, advanced age), and the concrete mitigations — dose on exact
+  body weight, split dosing at 2.5 mg/kg PO q12h, avoid rapid IV infusion,
+  consider reduction in geriatric or renally impaired cats, monitor for mydriasis.
+- Honest about its class: Wiebe 2002 is a **review** (PubMed types it Journal
+  Article, Review). It is used here because the page's existing claims are
+  already its claims, and because it is the standard reference for this toxicity.
+
+### DIS-NEU-CNEMP — Graf 2025 (added to DIS-NEU-OTINTERNA earlier in this pass)
+
+- The page's `conf` lists "meningeal enhancement" among the MRI findings. Graf
+  2025 is precisely about which T1 sequence detects it, so the sequence advice
+  now appears on both pages.
+- **Scope limit stated:** Graf studied otitis media-interna, not established
+  empyema, and its authors warn normal meninges can be over-read. The page says
+  the sequence raises sensitivity for the precursor rather than confirming
+  empyema — otogenic extension being the commonest route to this diagnosis.
+
+### Rule 6 correction found while checking: Mayhew 2022 → **Mayhew 2023**
+
+The resolver carried `Vet Surg. 2022;52(2):238-248` and keyed the paper on 2022.
+Crossref gives **print 2023-02** with the epub on 2022-10-23, so under Rule 6 the
+print year governs. Fixed in three places — the AMA string, the `MAYHEW_BY_YEAR`
+key, and the `(Mayhew 2022)` marker on DIS-GI-HH — plus the new marker on
+DIS-RESP-BOAS.
+
+**A pre-existing test caught the change**, asserting
+`parseSources('Mayhew 2022')` resolved to `mayhew-boas-surgery`; it was updated
+to 2023, and a new test additionally pins the AMA string's year and asserts the
+**old** year now resolves to nothing rather than falling through to the 2021
+laparoscopic paper. Rendering DIS-GI-HH confirms Mayhew 2023 at reference 4 and
+Mayhew 2021 at reference 5.
+
+**This raises a question beyond this batch.** Mayhew was cited on its epub year
+because the reference predates the point in this pass where print-year checking
+became routine. A background audit of all **406** references carrying both a DOI
+and a year against the Crossref print year is running; results will be recorded
+in a follow-up entry. Any further mismatches are citation errors of the same
+shape and should be fixed the same way.
+
+### Working-tree note — not my change
+
+While running the content lints, `hardcoded-font-sizes` reported **104 against a
+baseline of 98**. None of it is from this work: `git stash` of the untracked and
+modified files returned the count to exactly 98. The extra six come from vetic's
+in-progress case-triage feature (`convex/caseAnalysis.ts`,
+`src/app/screens/CaseTriageScreen.tsx`, `src/lib/caseTriage/`, plus edits to the
+nav and screen files), which arrived in the working tree after the previous
+commit. The stash was popped immediately and that work is intact and
+uncommitted.
+
+Two consequences, both deliberate:
+- **This commit names its files explicitly instead of using `git add -A`**, so
+  none of vetic's work is swept into a citation commit. Earlier commits in this
+  pass were checked and contain only citation files.
+- The `hardcoded-font-sizes` baseline is **left at 98**. Raising it to 104 would
+  ratchet in someone else's unfinished work and remove the signal they need.
+  `lint:content` is therefore currently red in the working tree, and will go
+  green for them once those six sizes are tokenised.

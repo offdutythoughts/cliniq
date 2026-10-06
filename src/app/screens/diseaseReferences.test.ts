@@ -140,7 +140,7 @@ describe('parseSources', () => {
     expect(parseSources('Glickman 1994').map(s => s.id)).toEqual(['glickman-risk-1994'])
     expect(parseSources('Glickman 2000').map(s => s.id)).toEqual(['glickman-nondietary'])
     expect(parseSources('Mayhew 2021').map(s => s.id)).toEqual(['mayhew-laparoscopic'])
-    expect(parseSources('Mayhew 2022').map(s => s.id)).toEqual(['mayhew-boas-surgery'])
+    expect(parseSources('Mayhew 2023').map(s => s.id)).toEqual(['mayhew-boas-surgery'])
     // Marks is keyed on the AUTHOR, not "ACVIM 2018" — that year is already
     // taken by the systemic-hypertension statement in ACVIM_BY_YEAR.
     expect(parseSources('Marks 2018').map(s => s.id)).toEqual(['marks-gi-protectants'])
@@ -1242,6 +1242,16 @@ describe('reference block', () => {
     expect(seg[0].citeIds).toHaveLength(1)
     expect(seg[1].citeIds).toHaveLength(1)
     expect(seg[0].citeIds?.[0]).not.toBe(seg[1].citeIds?.[0])
+  })
+
+  // Mayhew's BOAS paper was cited as 2022 (the epub year); Crossref print is
+  // 2023-02, so the map key, the AMA string and the db markers all moved.
+  it('keys the Mayhew BOAS paper on its print year', () => {
+    expect(parseSources('Mayhew 2023')[0].text).toContain('brachycephalic obstructive airway')
+    expect(parseSources('Mayhew 2023')[0].text).toContain('2023;52(2):238-248')
+    expect(parseSources('Mayhew 2021')[0].text).toContain('aparoscopic')
+    // The old year must now resolve to nothing rather than silently to the 2021 paper.
+    expect(parseSources('Mayhew 2022')).toEqual([])
   })
 
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
