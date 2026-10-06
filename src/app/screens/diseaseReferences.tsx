@@ -1407,6 +1407,12 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const ALF_KOOIKER_POLYMYOSITIS =
+  'Alf V, Opmeer Y, Shelton GD, et al. Pathologic changes in and immunophenotyping of polymyositis in the Dutch Kooiker dog. Animals (Basel). 2024;14(17):2519. doi:10.3390/ani14172519'
+const PERILLO_THYMOMA_POLYMYOSITIS =
+  'Perillo R, Menchetti M, Giannuzzi PA, Marchiori A, Rondena M, Gasparini S. Acquired myasthenia gravis with concurrent polymyositis and myocarditis secondary to a thymoma in a dog. Open Vet J. 2021;11(3):436-440. doi:10.5455/OVJ.2021.v11.i3.16'
+const FREIRE_CDV_NEURO =
+  'Freire HL, Iara IHN, Ribeiro LSR, Gonçalves PAO, Matta DH, Torres BBJ. Neurological manifestation of canine distemper virus: increased risk in young Shih Tzu and Lhasa Apso with seasonal prevalence in autumn. Viruses. 2025;17(6):820. doi:10.3390/v17060820'
 const ONEILL_ACUTE_DIARRHOEA =
   'O’Neill DG, Prisk LJ, Brodbelt DC, Church DB, Allerton F. Epidemiology and clinical management of acute diarrhoea in dogs under primary veterinary care in the UK. PLoS One. 2025;20(6):e0324203. doi:10.1371/journal.pone.0324203'
 const SCAHILL_ENOVAT_DIARRHOEA =
@@ -1632,6 +1638,8 @@ const SOURCE_NAMES = [
   'Kang', 'Pollack', 'Feigin',
   'Horta', 'Jaroensong',
   'Scahill',
+  // 'Alf' is only three letters, so its branch carries a defensive \\b guard.
+  'Alf', 'Perillo', 'Freire',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -2057,6 +2065,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Alf\b/.test(part)) { out.push({ id: 'alf-kooiker-polymyositis', text: ALF_KOOIKER_POLYMYOSITIS }); continue }
+    if (/^Perillo/.test(part)) { out.push({ id: 'perillo-thymoma-polymyositis', text: PERILLO_THYMOMA_POLYMYOSITIS }); continue }
+    if (/^Freire/.test(part)) { out.push({ id: 'freire-cdv-neuro', text: FREIRE_CDV_NEURO }); continue }
     if (/^Scahill/.test(part)) { out.push({ id: 'scahill-enovat-diarrhoea', text: SCAHILL_ENOVAT_DIARRHOEA }); continue }
     if (/^Horta/.test(part)) { out.push({ id: 'horta-feline-loph', text: HORTA_FELINE_LOPH }); continue }
     if (/^Jaroensong/.test(part)) { out.push({ id: 'jaroensong-medlym-cop', text: JAROENSONG_MEDLYM_COP }); continue }

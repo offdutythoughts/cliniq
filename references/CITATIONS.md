@@ -4805,3 +4805,144 @@ Locked by a test that resolves all five markers and asserts five distinct ids,
 and verified by rendering DIS-GI-GDV (O'Neill 2017 GDV still at reference 8) and
 DIS-EYE-KCS (O'Neill 2021 KCS still at reference 2). Note the markers use the
 **curly** apostrophe, matching `SOURCE_NAMES`.
+
+## Scope decision — the DIS-BD pages stay uncited (owner's call, 2026-10-06)
+
+The seven uncited DIS-BD pages are **out of scope for the citation pass** and are
+not to be revisited by lowering the evidence bar. This is a decision by vetic,
+recorded here so it is not re-opened.
+
+Pages: `DIS-BD-FII` (Factor II / prothrombin deficiency), `DIS-BD-HEMB`
+(Haemophilia B / Factor IX), `DIS-BD-HEMC` (Haemophilia C / Factor XI),
+`DIS-BD-FXII` (Factor XII / Hageman trait), `DIS-BD-ICT` (infectious cyclic
+thrombocytopenia), `DIS-BD-TCS` (thrombocytosis), `DIS-BD-VASC`
+(cutaneous/systemic vasculitis).
+
+**Why.** For the single-factor coagulopathies the available literature is
+variant-identification papers and case reports — typically one family in one
+breed. Citing those would satisfy Rule 4 on a technicality while putting
+evidence on the page that is thinner than anything else cited in this work, and
+Rule 2 hedging would reduce each claim to "this variant has been described in
+one family", which the pages already imply. The bar stays where it is and the
+pages stay uncited. They are **not** a backlog item.
+
+**One caveat recorded for completeness, not as a reason to act.** Three of the
+seven — `DIS-BD-ICT`, `DIS-BD-TCS` and `DIS-BD-VASC` — are not single-factor
+coagulopathies, and the reasoning above is weaker for them: thrombocytosis and
+vasculitis in particular may have citable cohort literature that was never
+searched for. They are included in the exclusion because the instruction was
+"the DIS-BD pages", and they will stay excluded unless vetic says otherwise.
+
+Consequence for the ratchets: `uncited-disease-pages` cannot go below 7 from
+these pages alone, and `disease-pages-without-paper` carries the same floor.
+Neither baseline should ever be written in a way that implies they are reachable.
+
+## Batch — DIS-NEU-POLYMYOSITIS, DIS-INFECT-CDV (139 → 137, uncited 32 → 30)
+
+### DIS-NEU-POLYMYOSITIS — Polymyositis
+
+**Alf V, Opmeer Y, Shelton GD, et al. Pathologic changes in and immunophenotyping
+of polymyositis in the Dutch Kooiker dog. Animals (Basel). 2024;14(17):2519.
+doi:10.3390/ani14172519**
+
+- **39 purebred Dutch Kooiker dogs**, FFPE muscle biopsies graded against a
+  tailored classification scheme for skeletal muscle inflammation.
+- Multifocal, mixed, predominantly mononuclear infiltration invading viable
+  myofibres and surrounding stroma. Immunophenotype: **CD3+ T cells predominant
+  with CD8+ cytotoxic T cells**, CD20+ B cells present but fewer, IBA-1+
+  macrophages frequent. **MHC class II expressed on the myofibres themselves.**
+- Presenting signs in the breed: difficulty walking, muscle weakness, exercise
+  intolerance and/or dysphagia; **CK raised in nearly all**.
+- The page's `etiology` already asserted "CD8+ T-cell and macrophage infiltration
+  of myofibres" with no source. This supplies the immunophenotyping behind that
+  claim on 39 dogs, plus the MHC-II finding the page did not have — which the
+  authors read as muscle participating in sustaining inflammation rather than
+  only being its target.
+- Two smaller uses: `breed` gains the Kooiker, and `conf` now says a raised CK
+  **supports** the diagnosis rather than settling it, since even in a cohort
+  where CK was raised in nearly all dogs the diagnosis rested on graded biopsy.
+  `signs` flags dysphagia as the complaint most easily attributed elsewhere.
+- Rule 2: 39 biopsies is adequate for the descriptive and immunophenotypic
+  claims, which is all that is carried. **No prevalence or outcome figure is
+  taken** — the study reports none.
+- Scope stated: this is a breed-specific subtype, and the page says the histology
+  matches other breed-related polymyositides rather than being a separate disease,
+  which is the authors' own conclusion.
+- Rule 6: MDPI, online-only. Crossref 2024-08-29, 14(17):2519; PubMed agrees.
+  7 authors → first 3 + et al. (G. Diane Shelton is third author here; the
+  resolver marker is first-author only, so this does not touch `SHELTON_BY_YEAR`.)
+
+**Perillo R, Menchetti M, Giannuzzi PA, Marchiori A, Rondena M, Gasparini S.
+Acquired myasthenia gravis with concurrent polymyositis and myocarditis secondary
+to a thymoma in a dog. Open Vet J. 2021;11(3):436-440.
+doi:10.5455/OVJ.2021.v11.i3.16**
+
+- 4-year-old dog, thymoma-associated MG confirmed by ACHR antibodies.
+  **Developed third-degree AV block 24 hours after thymectomy**, with severe
+  arrhythmia and raised troponin; arrested. Histopathology of heart, oesophagus
+  and diaphragm showed myocarditis and polymyositis, with scattered giant
+  multinucleated cells in the myocardium.
+- The page's `etiology` listed "Paraneoplastic" as a bare word under Other. It
+  now says what that can mean and gives an action: ECG and troponin before
+  thymectomy in a myasthenic dog, rather than treating the weakness as the whole
+  problem. The page's `severe` section mentions dysphagia, jaw and respiratory
+  involvement but nothing cardiac.
+- Rule 2: n=1, stated in the bullet, with "no rate attaches to it".
+- Rule 6: Crossref print 2021, 11(3):436; PubMed gives 436-440. Took the fuller
+  page range per Rule 6. 6 authors → all listed.
+
+### DIS-INFECT-CDV — Canine Distemper Virus Encephalitis
+
+**Freire HL, Iara IHN, Ribeiro LSR, Gonçalves PAO, Matta DH, Torres BBJ.
+Neurological manifestation of canine distemper virus: increased risk in young
+Shih Tzu and Lhasa Apso with seasonal prevalence in autumn. Viruses.
+2025;17(6):820. doi:10.3390/v17060820**
+
+- Retrospective, single Brazilian centre. CDV-positive dogs with neurological
+  signs (immunochromatography, RT-PCR or organism identification) compared with
+  dogs having **non-CDV CNS disease** as controls. Logistic regression with log
+  odds ratios.
+- Younger dogs at increased risk. **Shih Tzu (LOR 1.54, P = 0.00007) and Lhasa
+  Apso (LOR 1.76, P = 0.000264)** significantly more likely. Most infected dogs
+  had multifocal CNS involvement plus extra-neural signs. Prevalence 4.72%,
+  mortality 1.94%, **lethality 47.06%**. Autumn peak.
+- **The finding that changes clinical behaviour: "many infected dogs had an
+  updated vaccination protocol."** The page's `topAlert` framed CDV as the
+  suspicion in an *unvaccinated or incompletely vaccinated* dog. That phrasing
+  invites dropping CDV when the vaccination record is current. The alert now says
+  a current record does not exclude it. Reported qualitatively, because the
+  abstract gives no number — inventing a percentage here would have been easy and
+  wrong.
+- `breed` said "No breed predisposition". The two breed signals are added with
+  the caveat that this is one centre and that which breeds appear depends on local
+  breed demographics, so it is a signal rather than an established predisposition.
+- `prog` gains the 47.1% lethality as an independent figure consistent with the
+  page's existing 50% adult estimate.
+
+Two figures deliberately **not** carried:
+- **The median survival time of 754 days.** The abstract reports it without
+  stating which group it describes, and a median survival of 754 days alongside
+  47% lethality cannot be read without knowing the denominator. Rule 3 forbids
+  writing a claim off a record you cannot interpret.
+- **The autumn seasonality.** Real in that population, but it is southern
+  hemisphere and reflects local CDV circulation. On a reference page used
+  elsewhere it would read as a general rule about when to suspect distemper.
+- Rule 6: MDPI, online-only. Crossref 2025-06-06, 17(6):820; PubMed agrees.
+  6 authors → all listed.
+
+**Declined:** *Scherer 2026, Nat Commun 17(1):103* — a dual-epitope synthetic
+antibody protecting ferrets against lethal CDV challenge at 1 mg/kg. Excellent
+work and a plausible future therapeutic, but an experimental ferret challenge
+model with no canine clinical data, so it cannot support anything on a page about
+managing distemper in dogs.
+
+### Resolver
+
+New source names: Alf, Perillo, Freire. **'Alf' is only three letters**, so its
+branch carries a defensive `\b` guard even though no existing name begins "Alf"
+— the nearby cluster is 'Allen'/'Allenspach', which diverges at the third
+character. The test asserts Alf 2024 resolves to its own paper *and* that Allen
+and Allenspach still resolve elsewhere, so the guard cannot have over- or
+under-matched. 'Perillo' sits beside the existing 'Pereira', 'Perley' and
+'Perry', all diverging by the fourth character; 'Freire' beside 'Fruchter'.
+No prose parentheticals begin with any of the three.

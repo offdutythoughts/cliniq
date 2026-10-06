@@ -1193,6 +1193,16 @@ describe('reference block', () => {
     expect(parseSources('Scahill 2023')[0].text).toContain('ENOVAT')
   })
 
+  it('resolves the polymyositis and distemper papers', () => {
+    // 'Alf' is three letters; the \\b guard must not stop it matching its own marker.
+    expect(parseSources('Alf 2024')[0].text).toContain('Dutch Kooiker')
+    expect(parseSources('Perillo 2021')[0].text).toContain('myasthenia gravis')
+    expect(parseSources('Freire 2025')[0].text).toContain('canine distemper virus')
+    // Nearby surnames that must not be swallowed by the new three-letter name.
+    expect(parseSources('Allen 2017')[0].id).not.toBe(parseSources('Alf 2024')[0].id)
+    expect(parseSources('Allenspach 2007')[0].id).not.toBe(parseSources('Alf 2024')[0].id)
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.
