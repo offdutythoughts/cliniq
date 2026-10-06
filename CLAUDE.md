@@ -94,6 +94,31 @@ one animal misleads a clinician at the point of care *more* than no citation wou
 the number signals that somebody checked. State the sample size inline whenever it is small
 and load-bearing — under roughly 30 animals.
 
+**2b. An efficacy claim is either sourced, hedged, or carries a number — never none of the three.**
+
+Set by vetic, 2026-10-06. Superlatives and absolutes about treatment are the specific target:
+"excellent results", "treatment of choice", "curative", "significantly improves", "most
+effective", "superior to". Written bare, those read as settled fact, and a clinician cannot
+tell whether they rest on a trial, a textbook sentence, or somebody's impression. Several in
+this repo were the last of those.
+
+Any ONE of three fixes is enough, because each makes the basis legible:
+
+- a citation on that bullet;
+- a hedge — **"some clinicians have success with…"**, "some clinicians reported…", "appears to";
+- a number — "11 of 18 dogs", "62%", which is self-evidencing even without a marker.
+
+Where the evidence is single-arm, say so rather than borrowing the word "significantly" from
+it: DIS-NEU-SPINEO said "RT adjunctive significantly extends survival" on the strength of a
+10-dog uncontrolled series, which cannot support the word.
+
+`scripts/lint-unhedged-claims.ts` enforces this and is ratcheted. It deliberately does **not**
+fire on clinical imperatives ("always confirm a low platelet count on a smear"), on
+"definitive" about a diagnostic test, on negated statements ("no evidence that combination
+therapy is superior"), or on imaging-modality comparisons ("CT is superior to MRI for bone") —
+84, 48 and a further handful of hits respectively, none of them efficacy claims. A noisy lint
+is how a real failure gets scrolled past.
+
 **3. Read the abstract before you write the claim.**
 
 Never cite from a bibliographic record alone. Two claims in this repo have been attributed to

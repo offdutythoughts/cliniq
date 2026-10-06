@@ -14,17 +14,26 @@
 //                     rows' own authored `signs`/`conf`/`supp` fields, not
 //                     invented from scratch.
 //
-// Uses Gemini (free tier) via plain `fetch` — no SDK, no "use node" needed.
-// Requires GEMINI_API_KEY as a Convex env var (`npx convex env set
-// GEMINI_API_KEY ...`), not read from .env.local (that only configures the
-// Next.js side).
+// Uses Groq (free tier, OpenAI-compatible chat API) via plain `fetch` — no
+// SDK, no "use node" needed. Requires GROQ_API_KEY as a Convex env var
+// (`npx convex env set GROQ_API_KEY ...`, from console.groq.com), not read
+// from .env.local (that only configures the Next.js side).
+//
+// Groq's API has no native JSON-schema enforcement (unlike Gemini's
+// responseSchema) — `response_format: json_object` only guarantees valid
+// JSON, not a particular shape. Each prompt below spells out the exact shape
+// as a literal example instead, and every field is still defensively
+// re-validated/clamped after parsing (enum membership, array length, dropping
+// any diseaseId the model didn't actually get handed) before it's trusted.
 
 import { getAuthUserId } from "@convex-dev/auth/server";
 import { ConvexError, v } from "convex/values";
 import { action } from "./_generated/server";
 
-const MODEL = "gemini-3.8-flash";
-const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
+const MODEL = "llama-3.3-70b-versatile";
+const ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
+const SYSTEM_PROMPT =
+  "You are a JSON API. Respond with ONLY a single valid JSON object matching the shape the user describes — no prose, no markdown code fences, no commentary before or after it.";
 
 // Bounds on what we'll send, independent of the model's own output limits —
 // these cap OUR request size (and therefore cost/latency), not the model's.
@@ -32,17 +41,17 @@ const MAX_CASE_TEXT = 4000;
 const MAX_CANDIDATES = 8;
 const MAX_FIELD = 600;
 
-// Gemini's 503 ("high demand... usually temporary") is the one failure mode
-// worth a same-request retry — a couple of short backoffs cover the spikes
-// without masking a real problem (a bad key, a malformed schema) behind a
-// retry loop, since those come back as 4xx and are never retried here.
+// 503 ("service unavailable") is the one failure mode worth a same-request
+// retry — a couple of short backoffs cover a transient blip without masking a
+// real problem (a bad key, a rate limit) behind a retry loop, since those come
+// back as 4xx and are never retried here.
 const RETRY_DELAYS_MS = [800, 2000];
 
-async function callGemini(prompt: string, schema: Record<string, unknown>): Promise<unknown> {
-  const apiKey = process.env.GEMINI_API_KEY;
+async function callGroq(prompt: string): Promise<unknown> {
+  const apiKey = process.env.GROQ_API_KEY;
   if (!apiKey) {
     throw new ConvexError(
-      "Case Triage isn't configured yet — GEMINI_API_KEY is not set on this Convex deployment.",
+      "Case Triage isn't configured yet — GROQ_API_KEY is not set on this Convex deployment.",
     );
   }
 
@@ -51,14 +60,15 @@ async function callGemini(prompt: string, schema: Record<string, unknown>): Prom
   for (let attempt = 0; ; attempt++) {
     res = await fetch(ENDPOINT, {
       method: "POST",
-      headers: { "content-type": "application/json", "x-goog-api-key": apiKey },
+      headers: { "content-type": "application/json", authorization: `Bearer ${apiKey}` },
       body: JSON.stringify({
-        contents: [{ role: "user", parts: [{ text: prompt }] }],
-        generationConfig: {
-          responseMimeType: "application/json",
-          responseSchema: schema,
-          temperature: 0.2,
-        },
+        model: MODEL,
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          { role: "user", content: prompt },
+        ],
+        response_format: { type: "json_object" },
+        temperature: 0.2,
       }),
     });
     if (res.ok || res.status !== 503 || attempt >= RETRY_DELAYS_MS.length) break;
@@ -69,10 +79,8 @@ async function callGemini(prompt: string, schema: Record<string, unknown>): Prom
     const body = (await res.text().catch(() => "")) || lastBody;
     throw new ConvexError(`Case Triage model call failed (${res.status}): ${body.slice(0, 300)}`);
   }
-  const data = (await res.json()) as {
-    candidates?: { content?: { parts?: { text?: string }[] } }[];
-  };
-  const text = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  const data = (await res.json()) as { choices?: { message?: { content?: string } }[] };
+  const text = data.choices?.[0]?.message?.content;
   if (!text) throw new ConvexError("Case Triage model returned no content.");
   try {
     return JSON.parse(text);
@@ -109,21 +117,6 @@ export type ExtractedSignals = {
   caseSummary: string;
 };
 
-const EXTRACT_SCHEMA = {
-  type: "OBJECT",
-  properties: {
-    species: { type: "STRING", enum: SPECIES_VALUES as unknown as string[] },
-    breedQuery: { type: "STRING" },
-    ageCategory: { type: "STRING", enum: AGE_VALUES as unknown as string[] },
-    sex: { type: "STRING", enum: SEX_VALUES as unknown as string[] },
-    neuter: { type: "STRING", enum: NEUTER_VALUES as unknown as string[] },
-    signKeywords: { type: "ARRAY", items: { type: "STRING" } },
-    diagKeywords: { type: "ARRAY", items: { type: "STRING" } },
-    caseSummary: { type: "STRING" },
-  },
-  required: ["species", "breedQuery", "signKeywords", "diagKeywords", "caseSummary"],
-};
-
 function extractPrompt(caseText: string): string {
   return `You are extracting structured search parameters from free-text veterinary case notes, for a deterministic differential-diagnosis search engine. You are NOT diagnosing the case — only extracting what is already stated.
 
@@ -135,12 +128,17 @@ ${caseText}
 Extract:
 - species: "dog", "cat", or "all" if unclear.
 - breedQuery: the breed verbatim if stated, else "".
-- ageCategory, sex, neuter: only if the notes state them; omit otherwise.
+- ageCategory: one of "neonate", "young", "middleaged", "geriatric" — omit the key entirely if not stated.
+- sex: one of "male", "female" — omit the key entirely if not stated.
+- neuter: one of "intact", "neutered" — omit the key entirely if not stated.
 - signKeywords: short, canonical clinical sign terms (e.g. "vomiting", "weight loss", "PU/PD") — one concept per entry, prefer standard clinical terminology over the owner's exact phrasing. Only signs actually present in the notes.
 - diagKeywords: diagnostic/lab findings already reported in the notes (e.g. "elevated ALP", "anemia"). Empty array if none were mentioned.
 - caseSummary: one plain sentence paraphrasing the case.
 
-Do not invent anything not present in the text.`;
+Do not invent anything not present in the text.
+
+Respond with ONLY a JSON object of exactly this shape (omit ageCategory/sex/neuter keys if unknown, don't include them as null):
+{"species":"dog","breedQuery":"Cavalier King Charles Spaniel","ageCategory":"geriatric","sex":"male","neuter":"neutered","signKeywords":["exercise intolerance","cough"],"diagKeywords":[],"caseSummary":"..."}`;
 }
 
 export const extractSignals = action({
@@ -150,7 +148,7 @@ export const extractSignals = action({
     const caseText = args.caseText.trim().slice(0, MAX_CASE_TEXT);
     if (!caseText) throw new ConvexError("Case notes are empty.");
 
-    const raw = (await callGemini(extractPrompt(caseText), EXTRACT_SCHEMA)) as Record<string, unknown>;
+    const raw = (await callGroq(extractPrompt(caseText))) as Record<string, unknown>;
 
     const species = SPECIES_VALUES.includes(raw.species as never) ? (raw.species as ExtractedSignals["species"]) : "all";
     const ageCategory = AGE_VALUES.includes(raw.ageCategory as never) ? (raw.ageCategory as ExtractedSignals["ageCategory"]) : undefined;
@@ -189,34 +187,6 @@ export type CaseSynthesis = {
   diagnostics: { label: string; tier: "minimum" | "confirmatory"; note?: string }[];
 };
 
-const SYNTHESIS_SCHEMA = {
-  type: "OBJECT",
-  properties: {
-    rationales: {
-      type: "ARRAY",
-      items: {
-        type: "OBJECT",
-        properties: { diseaseId: { type: "STRING" }, rationale: { type: "STRING" } },
-        required: ["diseaseId", "rationale"],
-      },
-    },
-    historyQuestions: { type: "ARRAY", items: { type: "STRING" } },
-    diagnostics: {
-      type: "ARRAY",
-      items: {
-        type: "OBJECT",
-        properties: {
-          label: { type: "STRING" },
-          tier: { type: "STRING", enum: ["minimum", "confirmatory"] },
-          note: { type: "STRING" },
-        },
-        required: ["label", "tier"],
-      },
-    },
-  },
-  required: ["rationales", "historyQuestions", "diagnostics"],
-};
-
 function synthesisPrompt(caseText: string, candidates: SynthesisCandidate[]): string {
   const rows = candidates
     .map(
@@ -239,7 +209,10 @@ For EACH differential above (by its exact diseaseId), write one sentence tying s
 
 Then propose 3-6 ADDITIONAL history questions that would help discriminate between these specific top differentials — each should plausibly separate at least two of them, not a generic question.
 
-Then propose a prioritized diagnostics list drawn ONLY from the "confirmatory dx"/"supportive dx" fields given above, deduplicated across differentials, each tagged tier "minimum" (first-line/inexpensive) or "confirmatory" (definitive), with a short note on which differential(s) it helps confirm or rule out.`;
+Then propose a prioritized diagnostics list drawn ONLY from the "confirmatory dx"/"supportive dx" fields given above, deduplicated across differentials, each tagged tier "minimum" (first-line/inexpensive) or "confirmatory" (definitive), with a short note on which differential(s) it helps confirm or rule out.
+
+Respond with ONLY a JSON object of exactly this shape:
+{"rationales":[{"diseaseId":"DIS-EXAMPLE","rationale":"..."}],"historyQuestions":["..."],"diagnostics":[{"label":"...","tier":"minimum","note":"..."}]}`;
 }
 
 export const synthesizeCase = action({
@@ -274,10 +247,7 @@ export const synthesizeCase = action({
       return { rationales: [], historyQuestions: [], diagnostics: [] };
     }
 
-    const raw = (await callGemini(synthesisPrompt(caseText, candidates), SYNTHESIS_SCHEMA)) as Record<
-      string,
-      unknown
-    >;
+    const raw = (await callGroq(synthesisPrompt(caseText, candidates))) as Record<string, unknown>;
     const validIds = new Set(candidates.map((c) => c.diseaseId));
 
     const rationales = (Array.isArray(raw.rationales) ? raw.rationales : [])

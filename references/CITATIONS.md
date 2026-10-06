@@ -5487,3 +5487,99 @@ and sits in the crowded `De`/`Del` space alongside 'De Lorenzi', 'De Porte' and
 'De Risio'. None is a prefix of another, and a test asserts Del Magno 2023
 resolves distinctly from all three. 'Haynes' sits beside 'Hall', 'Halstead',
 'Harb', 'Hardy', 'Harris' and 'Haworth' — all diverge by the third character.
+
+## Print-year audit of all 406 references — complete
+
+Prompted by finding Mayhew cited on its epub year. Every reference const carrying
+both a DOI and a year was checked against the Crossref **print** year.
+
+**First attempt was a false pass and is worth recording.** It reported
+"0 mismatches, 406 errors" — Python's `urllib` has no CA bundle in this
+environment, so every request failed with `CERTIFICATE_VERIFY_FAILED` and the
+script counted each failure as "no print date available". A check where every
+probe fails is not a clean result. Re-run through `curl`.
+
+Final: **353 of 406 had a Crossref print date. 4 disagreed with the cited year.
+1 DOI could not be queried. 52 are online-only with no print date.**
+
+### Three real errors, fixed
+
+| Reference | Cited | Print | Fix |
+|---|---|---|---|
+| `TANAKA_PYLORIC_CT` | 2022 | **2023** | Vet Radiol Ultrasound 64(2) is 2023 |
+| `NGUYEN_AAV_CLONAL` | 2020 | **2021** | Nat Biotechnol 39(1) is Jan 2021 |
+| `SCAHILL_ENOVAT_DIARRHOEA` | 2023 | **2024** | Vet J 303 is Feb 2024 |
+
+All three had their AMA string, their db.ts markers (1, 2 and 5 markers
+respectively) and their pinned tests updated.
+
+**The Scahill error was mine, made in this pass.** The ENOVAT entry above records
+"Crossref and PubMed agree, 2023" — that is wrong, and the entry is superseded by
+this one. I read PubMed's epub date (2023-12-02) as the publication year without
+checking Crossref's print field, which is the exact failure Rule 6 exists to
+prevent. Europe PMC independently confirms print 2024-02-01.
+
+### One case where Crossref is wrong — `THOMSEN_CEREBELLAR_STROKE` stays 2016
+
+Crossref reports `published-print 2015-12` with `published-online 2016-06-07`.
+That is impossible: nothing is printed six months before it is published. PubMed
+gives 2016, the volume (Acta Vet Scand **58**) is the 2016 volume, and the DOI
+slug itself contains `-016-`. Crossref's print field is a publisher metadata
+error. **The 2016 key is correct and a comment above `THOMSEN_BY_YEAR` now says
+so**, so nobody "corrects" it back on the strength of a single registry.
+
+This is the counter-example to Rule 6 taken mechanically: prefer the print year,
+but not when the print year is impossible.
+
+### One not machine-checkable — `ESTRIN_FELINE_DIC`
+
+DOI `10.1892/0891-6640(2006)20[1334:dicic]2.0.co;2` — a legacy JVIM format whose
+square brackets defeat URL encoding for the Crossref endpoint. Verified by hand
+against Europe PMC instead: J Vet Intern Med 20, 1334-1339, 2006. JVIM volume 20
+issue 6 is Nov/Dec 2006, so the cited year is right.
+
+## New lint — `lint-unhedged-claims`
+
+Implements vetic's instruction of 2026-10-06 that an efficacy claim must be
+evidence-based, or else hedged ("some clinicians have success with…") or carry a
+percentage. Recorded as Rule 2b in CLAUDE.md. Ratcheted at **28**.
+
+The design work was in making it quiet enough to be trusted. Three passes:
+
+1. **169 hits.** Included `\balways\b`, which caught 84 clinical imperatives
+   ("always confirm a low automated count on a smear", "always image BEFORE
+   biopsy") — safety instructions needing no citation — and also caught hedges
+   ("not always present"). Included bare `definitive`, which caught 48
+   statements about *diagnostic* tests ("biopsy + histopathology (definitive)").
+   Both patterns removed, with the reason written into the file.
+2. **47 hits.** Still fired on negations ("**no evidence** that combination
+   therapy is superior to prednisone monotherapy", "do **NOT** guarantee
+   unaffected offspring", "**no** pharmacological treatment reliably prevents
+   episodes") — careful writing, the opposite of the problem — and on
+   imaging-modality comparisons ("superior to MRI for bony integrity"), which are
+   technical capability statements. Added `NEGATED` and `MODALITY` exclusions.
+3. **33 hits**, all genuine. Five fixed immediately, leaving 28.
+
+### The five fixed
+
+- **DIS-NEU-SPINEO** — both claims I had already flagged to vetic as unsourced.
+  `prog` said "RT adjunctive **significantly** extends survival" and `tx1` said it
+  "significantly extends disease-free interval", on the strength of Uno 2026, a
+  **10-dog single-arm series that cannot support the word**. Reworded to say RT is
+  standard adjunctive practice, that no controlled comparison exists, and that the
+  figures describe surgery plus RT together. "Excellent outcomes" became "the best
+  outcomes when complete excision is achieved" with the citation attached.
+- **DIS-NEO-ORAL-FSA** — `tx1` said adjuvant radiation "significantly improves
+  local control". Martano 2018 says surgery plus radiotherapy is *the most
+  promising modality*, from a literature overview, not a controlled trial. The
+  page now says that, and says which.
+- **DIS-ENDO-CONN** — "(potentially curative)" now carries the numbers that
+  justify it: potassium normalised in 24 of 29, hypertension resolved in 21 of 23.
+- **DIS-NEU-CRICOPHARYNGEAL** — "Excellent results if there is no underlying
+  neuromuscular disease" became "Good results…" with 11 of 18 complete and 5
+  partial resolutions, which is what Henderson 2026 actually found. The lint
+  caught this on content **I wrote two batches ago** — I had added the tempering
+  bullets after the superlative instead of fixing the superlative itself.
+
+The remaining 28 are real and need either a paper or a hedge; they are now a
+ratcheted backlog rather than invisible.
