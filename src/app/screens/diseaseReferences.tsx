@@ -1407,6 +1407,12 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const JACOBSON_FELINE_OMI_VBO =
+  'Jacobson LS, Janke KJ, Kennedy SK, et al. A Pandora’s box in feline medicine: presenting signs and surgical outcomes in 58 previously hoarded cats with chronic otitis media-interna. J Feline Med Surg. 2023;25(9):1098612X231197089. doi:10.1177/1098612X231197089'
+const GRAF_OMI_MENINGEAL_MRI =
+  'Graf F, Dennler M, Beckmann K, et al. Comparative study of meningeal enhancement in canine and feline otitis media-interna: 3D-gradient-echo vs. fat-suppressed turbo-spin-echo-T1-weighted sequences in MRI. Front Vet Sci. 2025;12:1664006. doi:10.3389/fvets.2025.1664006'
+const ANDREWS_MESENTERIC_VOLVULUS =
+  'Andrews SJ, Thomas TM, Hauptman JG, Stanley BJ. Investigation of potential risk factors for mesenteric volvulus in military working dogs. J Am Vet Med Assoc. 2018;253(7):877-885. doi:10.2460/javma.253.7.877'
 const ALF_KOOIKER_POLYMYOSITIS =
   'Alf V, Opmeer Y, Shelton GD, et al. Pathologic changes in and immunophenotyping of polymyositis in the Dutch Kooiker dog. Animals (Basel). 2024;14(17):2519. doi:10.3390/ani14172519'
 const PERILLO_THYMOMA_POLYMYOSITIS =
@@ -1640,6 +1646,7 @@ const SOURCE_NAMES = [
   'Scahill',
   // 'Alf' is only three letters, so its branch carries a defensive \\b guard.
   'Alf', 'Perillo', 'Freire',
+  'Graf', 'Andrews',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1684,6 +1691,13 @@ const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
 // instead of silently citing a pyometra paper on an eye page.
 // 'Shelton' is the classic 2001 canine myasthenia remission paper AND the 2026
 // hypophysectomy quality-of-life study. Year-keyed the moment the second landed.
+// Two DIFFERENT Jacobsons: Samuel G Jacobson on taurine-deficiency rhodopsin
+// topography (1987) and Linda S Jacobson on feline otitis media-interna (2023).
+// Keyed on the year, like the two Chans.
+const JACOBSON_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '1987': { id: 'jacobson-taurine-rhodopsin', text: JACOBSON_TAURINE_RHODOPSIN },
+  '2023': { id: 'jacobson-feline-omi-vbo', text: JACOBSON_FELINE_OMI_VBO },
+}
 const SHELTON_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2001': { id: 'shelton-remission', text: SHELTON_REMISSION },
   '2026': { id: 'shelton-hypophysectomy-qol', text: SHELTON_HYPOPHYSECTOMY_QOL },
@@ -2065,6 +2079,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Graf\b/.test(part)) { out.push({ id: 'graf-omi-meningeal-mri', text: GRAF_OMI_MENINGEAL_MRI }); continue }
+    if (/^Andrews/.test(part)) { out.push({ id: 'andrews-mesenteric-volvulus', text: ANDREWS_MESENTERIC_VOLVULUS }); continue }
     if (/^Alf\b/.test(part)) { out.push({ id: 'alf-kooiker-polymyositis', text: ALF_KOOIKER_POLYMYOSITIS }); continue }
     if (/^Perillo/.test(part)) { out.push({ id: 'perillo-thymoma-polymyositis', text: PERILLO_THYMOMA_POLYMYOSITIS }); continue }
     if (/^Freire/.test(part)) { out.push({ id: 'freire-cdv-neuro', text: FREIRE_CDV_NEURO }); continue }
@@ -2205,7 +2221,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Brown/.test(part)) { out.push({ id: 'brown-cea-discordance', text: BROWN_CEA_DISCORDANCE }); continue }
     if (/^Michau/.test(part)) { out.push({ id: 'michau-thermokeratoplasty', text: MICHAU_THERMOKERATOPLASTY }); continue }
     if (/^Wiebe/.test(part)) { out.push({ id: 'wiebe-fluoroquinolone-retina', text: WIEBE_FLUOROQUINOLONE_RETINA }); continue }
-    if (/^Jacobson/.test(part)) { out.push({ id: 'jacobson-taurine-rhodopsin', text: JACOBSON_TAURINE_RHODOPSIN }); continue }
+    if (/^Jacobson/.test(part)) {
+      const hit = JACOBSON_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Bedos/.test(part)) {
       const hit = BEDOS_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
       if (hit) out.push(hit)

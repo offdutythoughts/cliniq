@@ -1203,6 +1203,20 @@ describe('reference block', () => {
     expect(parseSources('Allenspach 2007')[0].id).not.toBe(parseSources('Alf 2024')[0].id)
   })
 
+  // Two DIFFERENT Jacobsons — Samuel G (1987, taurine) and Linda S (2023, OMI).
+  it('splits the two Jacobsons by year', () => {
+    expect(parseSources('Jacobson 1987')[0].text).toContain('Rhodopsin topography')
+    expect(parseSources('Jacobson 2023')[0].text).toContain('otitis media-interna')
+    expect(parseSources('Jacobson')).toEqual([])
+  })
+
+  it('resolves the otitis and mesenteric volvulus papers', () => {
+    expect(parseSources('Graf 2025')[0].text).toContain('meningeal enhancement')
+    expect(parseSources('Andrews 2018')[0].text).toContain('mesenteric volvulus')
+    // 'Graf' is four letters with a \\b guard; 'Graham'/'Grapes' must be untouched.
+    expect(parseSources('Grapes 2024')[0].id).not.toBe(parseSources('Graf 2025')[0].id)
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.
