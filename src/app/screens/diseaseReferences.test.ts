@@ -332,7 +332,7 @@ describe('parseSources', () => {
     // 'Ng' IS a prefix of 'Nguyen'. The Ng branch is /^Ng\\b/, so the word
     // boundary keeps them apart regardless of order — same device as Lo/Longeri.
     expect(parseSources('Ng 2026').map(s => s.id)).toEqual(['ng-eyelid-agenesis'])
-    expect(parseSources('Nguyen 2020').map(s => s.id)).toEqual(['nguyen-aav-clonal'])
+    expect(parseSources('Nguyen 2021').map(s => s.id)).toEqual(['nguyen-aav-clonal'])
     expect(parseSources('Goossens 2026').map(s => s.id)).toEqual(['goossens-ecvo-screening'])
     expect(parseSources('Gábor 2025').map(s => s.id)).toEqual(['gabor-retinal-dysplasia'])
     expect(parseSources('Goss 2024').map(s => s.id)).toEqual(['goss-ulcerative-keratitis'])
@@ -533,7 +533,7 @@ describe('parseSources', () => {
       ['Porras 2022', 'porras-tgfb1', 'Vet Sci. 2022;9(6):291'],
       ['Sattasathuchana 2014', 'sattasathuchana-eosinophilic', 'Anim Health Res Rev. 2014;15(1):76-86'],
       ['Beaumier 2022', 'beaumier-hes-cardiac', 'J Vet Cardiol. 2022;41:11-17'],
-      ['Tanaka 2022', 'tanaka-pyloric-ct', 'Vet Radiol Ultrasound. 2022;64(2):262-270'],
+      ['Tanaka 2023', 'tanaka-pyloric-ct', 'Vet Radiol Ultrasound. 2023;64(2):262-270'],
       ['Teshima 2011', 'teshima-postop-cdi', 'J Vet Med Sci. 2011;73(1):33-39'],
       ['Croton 2019', 'croton-trauma-cdi', 'Case Rep Vet Med. 2019;2019:3563675'],
       ['Bellis 2015', 'bellis-cpa-cdi', 'J Vet Emerg Crit Care. 2015;25(6):745-750'],
@@ -553,7 +553,7 @@ describe('parseSources', () => {
       // Pages 26-30.
       ['Garden 2019', 'garden-imha-dx', 'J Vet Intern Med. 2019;33(2):313-334'],
       ['Aslanian 2014', 'aslanian-hema', 'J Am Vet Med Assoc. 2014;245(6):677-683'],
-      ['Nguyen 2020', 'nguyen-aav-clonal', 'Nat Biotechnol. 2020;39(1):47-55'],
+      ['Nguyen 2021', 'nguyen-aav-clonal', 'Nat Biotechnol. 2021;39(1):47-55'],
       ['Batty 2024', 'batty-aav-integration', 'Blood. 2024;143(23):2373-2385'],
       ['Fowler 2022', 'fowler-hema-spinal', 'Front Vet Sci. 2022;9:871029'],
       ['Devine 2017', 'devine-imn', 'J Small Anim Pract. 2017;58(6):307-313'],
@@ -1190,7 +1190,7 @@ describe('reference block', () => {
   })
 
   it('resolves the ENOVAT systematic review', () => {
-    expect(parseSources('Scahill 2023')[0].text).toContain('ENOVAT')
+    expect(parseSources('Scahill 2024')[0].text).toContain('ENOVAT')
   })
 
   it('resolves the polymyositis and distemper papers', () => {

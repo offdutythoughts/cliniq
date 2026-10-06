@@ -506,7 +506,7 @@ const BEAUMIER_HES_CARDIAC =
 
 // Pyloric lesions.
 const TANAKA_PYLORIC_CT =
-  'Tanaka T, Wada Y, Noguchi S, Nishida H, Akiyoshi H. Contrast-enhanced CT features of pyloric lesions in 17 dogs: case series. Vet Radiol Ultrasound. 2022;64(2):262-270. doi:10.1111/vru.13193'
+  'Tanaka T, Wada Y, Noguchi S, Nishida H, Akiyoshi H. Contrast-enhanced CT features of pyloric lesions in 17 dogs: case series. Vet Radiol Ultrasound. 2023;64(2):262-270. doi:10.1111/vru.13193'
 
 // Diabetes insipidus — the two pages Crossref discovery could barely serve.
 const TESHIMA_POSTOP_CDI =
@@ -594,7 +594,7 @@ const GARDEN_IMHA_DX =
 const ASLANIAN_HEMA =
   'Aslanian ME, Sharp CR, Rozanski EA, de Laforcade AM, Rishniw M, Brooks MB. Clinical outcome after diagnosis of hemophilia A in dogs. J Am Vet Med Assoc. 2014;245(6):677-683. doi:10.2460/javma.245.6.677'
 const NGUYEN_AAV_CLONAL =
-  'Nguyen GN, Everett JK, Kafle S, et al. A long-term study of AAV gene therapy in dogs with hemophilia A identifies clonal expansions of transduced liver cells. Nat Biotechnol. 2020;39(1):47-55. doi:10.1038/s41587-020-0741-7'
+  'Nguyen GN, Everett JK, Kafle S, et al. A long-term study of AAV gene therapy in dogs with hemophilia A identifies clonal expansions of transduced liver cells. Nat Biotechnol. 2021;39(1):47-55. doi:10.1038/s41587-020-0741-7'
 const BATTY_AAV_INTEGRATION =
   'Batty P, Fong S, Franco M, et al. Vector integration and fate in the hemophilia dog liver multiple years after AAV-FVIII gene transfer. Blood. 2024;143(23):2373-2385. doi:10.1182/blood.2023022589'
 const FOWLER_HEMA_SPINAL =
@@ -1440,7 +1440,7 @@ const FREIRE_CDV_NEURO =
 const ONEILL_ACUTE_DIARRHOEA =
   'O’Neill DG, Prisk LJ, Brodbelt DC, Church DB, Allerton F. Epidemiology and clinical management of acute diarrhoea in dogs under primary veterinary care in the UK. PLoS One. 2025;20(6):e0324203. doi:10.1371/journal.pone.0324203'
 const SCAHILL_ENOVAT_DIARRHOEA =
-  'Scahill K, Jessen LR, Prior C, et al. Efficacy of antimicrobial and nutraceutical treatment for canine acute diarrhoea: a systematic review and meta-analysis for European Network for Optimization of Antimicrobial Therapy (ENOVAT) guidelines. Vet J. 2023;303:106054. doi:10.1016/j.tvjl.2023.106054'
+  'Scahill K, Jessen LR, Prior C, et al. Efficacy of antimicrobial and nutraceutical treatment for canine acute diarrhoea: a systematic review and meta-analysis for European Network for Optimization of Antimicrobial Therapy (ENOVAT) guidelines. Vet J. 2024;303:106054. doi:10.1016/j.tvjl.2023.106054'
 const HORTA_FELINE_LOPH =
   'Horta RS, Souza LM, Sena BV, et al. LOPH: a novel chemotherapeutic protocol for feline high-grade multicentric or mediastinal lymphoma, developed in an area endemic for feline leukemia virus. J Feline Med Surg. 2021;23(2):86-97. doi:10.1177/1098612X20926893'
 const JAROENSONG_MEDLYM_COP =
@@ -1842,6 +1842,10 @@ const PHILLIPS_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2025': { id: 'phillips-exercise-annpe', text: PHILLIPS_EXERCISE_ANNPE },
 }
 
+// DO NOT "correct" the 2016 key to 2015. Crossref reports published-print
+// 2015-12 for the cerebellar stroke paper, which is impossible — its online
+// date is 2016-06-07 and you cannot print six months before publication.
+// PubMed and the volume (Acta Vet Scand 58) both give 2016. Crossref is wrong.
 const THOMSEN_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2016': { id: 'thomsen-cerebellar-stroke', text: THOMSEN_CEREBELLAR_STROKE },
   '2024': { id: 'thomsen-av-bleeding', text: THOMSEN_AV_BLEEDING },
