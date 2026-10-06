@@ -4946,3 +4946,127 @@ and Allenspach still resolve elsewhere, so the guard cannot have over- or
 under-matched. 'Perillo' sits beside the existing 'Pereira', 'Perley' and
 'Perry', all diverging by the fourth character; 'Freire' beside 'Fruchter'.
 No prose parentheticals begin with any of the three.
+
+## Batch — DIS-NEU-OTINTERNA, DIS-GI-MVOL (137 → 135, uncited 30 → 28)
+
+### DIS-NEU-OTINTERNA — Otitis Interna / Otitis Media Interna
+
+**Graf F, Dennler M, Beckmann K, et al. Comparative study of meningeal
+enhancement in canine and feline otitis media-interna: 3D-gradient-echo vs.
+fat-suppressed turbo-spin-echo-T1-weighted sequences in MRI. Front Vet Sci.
+2025;12:1664006. doi:10.3389/fvets.2025.1664006**
+
+- Retrospective, 2017–2023: **46 dogs, 74 cats** with otitis media-interna plus
+  **21 controls**, all with both sequences. Five observers scored meningeal
+  enhancement twice, independently, blinded to diagnosis.
+- Enhancement detected significantly more often on **FS-TSE-T1W** than
+  3D-GRE-T1W (P < 0.01). **Significant in cats but not dogs.** Substantial
+  inter-observer agreement on both (κ 0.701 and 0.735) and substantial
+  intra-observer agreement regardless of sequence.
+- The page's `conf` had a good CT/MRI comparison but said nothing about **which**
+  T1 sequence to request when the question is otogenic intracranial extension —
+  the question that decides whether a deep ear flush is safe. It now does.
+- Three qualifications on the page: the effect reached significance only in cats;
+  the authors warn normal meninges can be over-interpreted, so the sequence
+  improves **detection, not certainty**; and because observer agreement was
+  substantial either way, the difference is in the sequence rather than the
+  reader.
+- Rule 6: online-only; Crossref 2025-09-30, vol 12, article 1664006; PubMed
+  agrees. 6 authors → first 3 + et al.
+
+**Jacobson LS, Janke KJ, Kennedy SK, et al. A Pandora's box in feline medicine:
+presenting signs and surgical outcomes in 58 previously hoarded cats with
+chronic otitis media-interna. J Feline Med Surg. 2023;25(9):1098612X231197089.
+doi:10.1177/1098612X231197089**
+
+- **58 cats** from an institutional hoarding environment, all treated by ventral
+  bulla osteotomy.
+- Presenting: otitis externa 79%, pruritus/alopecia 50%, nasopharyngeal signs
+  45%, otitis interna 40%, purulent aural discharge 36%, polyps 26%. Inappetence
+  uncommon (16%). **Bulla wall moderately or severely thickened radiographically
+  in only 38/108 ears (35%).** *Streptococcus equi* subsp. *zooepidemicus* in
+  26/48 (54%).
+- **Complications after the first VBO in 40/58 (69%) and after a second in 19/30
+  (63%). Of 101 complications, 56 (55%) were serious** — life-threatening
+  perioperative events in 7, new otitis interna in 8, prolonged anorexia in 6,
+  worsening pruritus/alopecia in 9. Xerostomia in 3 cats after a second VBO.
+- **Full resolution of the otitis interna component was uncommon**, though
+  pruritus/alopecia, nasopharyngeal signs, otitis externa and purulent discharge
+  all resolved in a statistically significant proportion. Pre-existing otitis
+  interna (OR 4.35, 95% CI 1.21–15.70) and surgery by a generalist rather than a
+  specialist (OR 3.64, 95% CI 1.03–12.87) predicted otitis externa at recheck.
+  **Nothing tested predicted serious complications or euthanasia.**
+- The page listed ventral bulla osteotomy under `tx2` as an indication list with
+  no complication figures at all. It now carries consent-grade numbers, and
+  `prog` gains a section on what surgery does and does not fix — vestibular signs
+  being the part least likely to resolve.
+- The authors' own summary is carried almost verbatim in substance: surgery was
+  successful in most cases but was **neither benign nor always beneficial**.
+- Rule 2 / selection stated on the page twice over: the cohort is
+  hoarding-derived, so chronicity and severity sit at the extreme end, and the
+  *S. zooepidemicus* rate reflects a shelter setting rather than feline OMI
+  generally. Without that second caveat the page would imply an organism choice
+  that does not generalise.
+- Rule 6: Crossref print 2023-09, 25(9), article 1098612X231197089; PubMed 2023
+  Sep. Agree. 7 authors → first 3 + et al.
+
+### DIS-GI-MVOL — Mesenteric Volvulus
+
+**Andrews SJ, Thomas TM, Hauptman JG, Stanley BJ. Investigation of potential
+risk factors for mesenteric volvulus in military working dogs. J Am Vet Med
+Assoc. 2018;253(7):877-885. doi:10.2460/javma.253.7.877**
+
+- Retrospective case-control, **211 military working dogs** (54 with mesenteric
+  volvulus, 157 without). Records plus necropsy reports for cases.
+- Associated: **German Shepherd Dog (OR 11.5), increasing age (OR 2.0), history
+  of prophylactic gastropexy (OR 65.9), other abdominal surgery (OR 16.9),
+  gastrointestinal disease (OR 5.4).**
+- Post hoc within the gastropexy subset: **postoperative complications** tracked
+  with volvulus; type of gastropexy and surgeon experience level did not.
+- The page's `etiology` said "secondary to prior GI surgery or anatomical
+  predisposition" — this quantifies it, and the gastropexy association is
+  genuinely surprising.
+- **This is the citation in this whole pass with the clearest potential to cause
+  harm if written carelessly**, so three guards sit on the page:
+  - The authors' own position is stated immediately after the odds ratio: they
+    **remain supportive of prophylactic gastropexy**, because it prevents the far
+    commoner GDV. A reader who took OR 65.9 at face value and stopped
+    recommending gastropexy would trade a rare disease for a common one.
+  - **No confidence intervals accompany those odds ratios** in the record, and
+    military working dogs are a highly selected population under unusual
+    surveillance (including routine necropsy of cases). The page says to treat
+    the magnitudes as signals rather than estimates.
+  - The within-subgroup finding is given, because "postoperative complications,
+    not the gastropexy technique" is the more actionable reading.
+- Rule 6: Crossref print 2018-10-01, 253(7):877-885; PubMed 2018 Oct. Agree.
+  4 authors → all listed.
+
+**Declined:** *Diamantino 2025, J Comp Pathol 221:45-49* — a single necropsy case
+of mesenteric volvulus with left hepatic hypoplasia in a German Shepherd Dog.
+The suggestion that hepatic hypoplasia predisposed to the volvulus is the
+authors' speculation on one animal, and the page already names anatomical
+predisposition generically.
+
+### Resolver — two different Jacobsons
+
+New source names: Graf, Andrews. `Jacobson` becomes year-keyed, and this is the
+second instance in the resolver of **two different people sharing a surname**
+(after the two Chans): **Samuel G Jacobson** on taurine-deficiency rhodopsin
+topography (1987) and **Linda S Jacobson** on feline otitis media-interna (2023).
+Year-keyed authors now 28.
+
+Verified by rendering `DIS-EYE-TAUR`, the only page citing "(Jacobson 1987)",
+and confirming it still resolves to the rhodopsin paper at reference 2.
+
+'Graf' is four letters and carries a defensive `\b` guard; 'Graham' and the
+recently added 'Grapes' both diverge at the fourth character, and a test asserts
+Grapes 2024 and Graf 2025 stay distinct. 'Andrews' sits beside the already-pinned
+'Anders'/'Anderson' pair and 'Andrade' — none is a prefix of 'Andrews', which
+diverges from all three at the fourth character.
+
+**Process note.** A new test again asserted a lower-case fragment
+(`toContain('rhodopsin')`) against a reference string where the word begins the
+title (`Rhodopsin topography…`). Caught on the first gate run this time, because
+the chain read the exit status instead of piping vitest through `tail`. Same
+class of error as the Jaroensong title assertion in the previous batch — when
+asserting on an AMA string, match the case as it appears in the reference.
