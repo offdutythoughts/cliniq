@@ -1407,6 +1407,10 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const KIM_PRIMARY_POLYDIPSIA =
+  'Kim J, Yoon S, Kim M, Lee S, Song W, Yun Y. Primary polydipsia in a cat. JFMS Open Rep. 2025;11(1):20551169241311680. doi:10.1177/20551169241311680'
+const CHAPMAN_IMHA_BILIRUBIN =
+  'Chapman S, Angles JM, Griebsch C, Yu J. Hyperbilirubinemia and neurologic signs in dogs with non-associative immune-mediated hemolytic anemia: 81 cases (2015-2024). J Vet Intern Med. 2026;40(1):aalaf034. doi:10.1093/jvimsj/aalaf034'
 const DELMAGNO_PHA_ADRENALECTOMY =
   'Del Magno S, Foglia A, Rossanese M, et al. Surgical findings and outcomes after unilateral adrenalectomy for primary hyperaldosteronism in cats: a multi-institutional retrospective study. J Feline Med Surg. 2023;25(1):1098612X221135124. doi:10.1177/1098612X221135124'
 const HAYNES_PHA_CHF =
@@ -1670,6 +1674,7 @@ const SOURCE_NAMES = [
   // 'Vagt' is four letters; its branch carries a defensive \\b guard.
   'Martano', 'Vagt', 'Ferrarese',
   'Del Magno', 'Haynes',
+  'Chapman',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -2107,6 +2112,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Chapman/.test(part)) { out.push({ id: 'chapman-imha-bilirubin', text: CHAPMAN_IMHA_BILIRUBIN }); continue }
     if (/^Del Magno/.test(part)) { out.push({ id: 'delmagno-pha-adrenalectomy', text: DELMAGNO_PHA_ADRENALECTOMY }); continue }
     if (/^Haynes/.test(part)) { out.push({ id: 'haynes-pha-chf', text: HAYNES_PHA_CHF }); continue }
     if (/^Martano/.test(part)) { out.push({ id: 'martano-oral-fsa-review', text: MARTANO_ORAL_FSA_REVIEW }); continue }
@@ -2285,7 +2291,14 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Fruchter/.test(part)) { out.push({ id: 'fruchter-haws', text: FRUCHTER_HAWS }); continue }
     if (/^Danciu/.test(part)) { out.push({ id: 'danciu-cerebellar-mydriasis', text: DANCIU_CEREBELLAR_MYDRIASIS }); continue }
     if (/^Baker/.test(part)) { out.push({ id: 'baker-atopic-tears', text: BAKER_ATOPIC_TEARS }); continue }
-    if (/^Kim/.test(part)) { out.push({ id: 'kim-meibomian', text: KIM_MEIBOMIAN }); continue }
+    if (/^Kim/.test(part)) {
+      // Kim G (meibomian gland dysfunction) and Kim J (primary polydipsia) are
+      // different authors who both published in 2025, so the year alone cannot
+      // separate them. The polydipsia marker says which, as the O'Neill markers do.
+      if (part.includes('polydipsia')) { out.push({ id: 'kim-primary-polydipsia', text: KIM_PRIMARY_POLYDIPSIA }); continue }
+      out.push({ id: 'kim-meibomian', text: KIM_MEIBOMIAN })
+      continue
+    }
     if (/^Sypniewska/.test(part)) { out.push({ id: 'sypniewska-nodular-conj', text: SYPNIEWSKA_NODULAR_CONJ }); continue }
     if (/^Garcia/.test(part)) { out.push({ id: 'garcia-ocular-pathology', text: GARCIA_OCULAR_PATHOLOGY }); continue }
     if (/^Chmiel/.test(part)) { out.push({ id: 'chmiel-grooming-injury', text: CHMIEL_GROOMING_INJURY }); continue }

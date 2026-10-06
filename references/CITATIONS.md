@@ -5583,3 +5583,109 @@ The design work was in making it quiet enough to be trusted. Three passes:
 
 The remaining 28 are real and need either a paper or a hedge; they are now a
 ratcheted backlog rather than invisible.
+
+## Batch — DIS-PUPD-PRIM, DIS-BD-IMHA (126 → 125, uncited 21 → 20)
+
+### DIS-PUPD-PRIM — Primary (Psychogenic) Polydipsia
+
+**Kim J, Yoon S, Kim M, Lee S, Song W, Yun Y. Primary polydipsia in a cat. JFMS
+Open Rep. 2025;11(1):20551169241311680. doi:10.1177/20551169241311680**
+
+- 2-year-old cat with PU/PD. Full exclusion workup, then a modified water
+  deprivation test giving **USG > 1.036**, a normal cranial MRI, and finally
+  **desmopressin that failed either to reduce water consumption or to raise USG
+  above the untreated level** — which is what confirmed primary polydipsia.
+- The page described itself as "a diagnosis of exclusion" and referred to "a
+  supervised water-deprivation/desmopressin work-up" without saying what result
+  confirms it. The **desmopressin arm is the confirming step**, and that is now
+  explicit — a non-response is the finding, which is easy to misread as a failed
+  test rather than a positive result.
+- Also carries the thresholds that paper uses (USG consistently < 1.035, intake
+  > 100 mL/kg/day) and the authors' own point: this cat had **no pituitary
+  structural abnormality**, so normal imaging does not argue against the
+  diagnosis.
+- Rule 2: n=1, stated — "illustrates the sequence rather than validating it".
+- Rule 6: Crossref print 2025-01, 11(1), article 20551169241311680; PubMed
+  2025-03-23 epub. Print year used. 6 authors → all listed.
+
+### DIS-BD-IMHA — Immune-Mediated Haemolytic Anaemia
+
+**Chapman S, Angles JM, Griebsch C, Yu J. Hyperbilirubinemia and neurologic signs
+in dogs with non-associative immune-mediated hemolytic anemia: 81 cases
+(2015-2024). J Vet Intern Med. 2026;40(1):aalaf034.
+doi:10.1093/jvimsj/aalaf034**
+
+- Multicentre retrospective, **81 dogs** with non-associative IMHA and
+  hyperbilirubinaemia. **16 (20%) developed neurological signs** — stupor,
+  non-ambulatory tetraparesis, generalised seizures.
+- Odds of neurological signs **12.2 (95% CI 3.1–48.2)** at baseline bilirubin
+  ≥ 3.3 mg/dL (57.5 µmol/L), and **93.3 (95% CI 11.0–795.5)** at peak ≥ 13.9
+  mg/dL (239.5 µmol/L).
+- The page's `monitor` tracked PCV, CBC and liver values on azathioprine, with
+  nothing about bilirubin as a neurological risk marker. It now says to track it
+  alongside the PCV.
+- **Written so the odds ratios cannot be over-read.** A 95% CI running to 795 is
+  not a usable magnitude, and the authors state plainly they cannot attribute the
+  neurological signs to bilirubin alone. The page says both — direction, not
+  magnitude.
+- This page already had two ACVIM consensus statements, so it does not move the
+  paperless count. Added because a 20% rate of serious neurological complication
+  with a checkable threshold changes monitoring.
+- Rule 6: Crossref and PubMed both 2026, 40(1), article aalaf034. 4 authors → all.
+
+### Unhedged-claim fix on the same page
+
+`conf` read "Pre-hepatic jaundice **ALWAYS** comes with a significant anaemia".
+The clinical point is right and worth keeping, but the absolute is doing no work —
+icterus without anaemia pointing elsewhere is the useful half. Reworded without
+"always". (The lint does not fire on `always` — that pattern was removed as noise
+— so this one was caught by reading, not by the tool.)
+
+### Resolver — two different Kims, same year
+
+`Kim` was already a source name for **Kim G 2025** (meibomian gland dysfunction,
+Vet Ophthalmol, cited on DIS-EYE-CHALAZION). The new paper is **Kim J 2025**
+(primary polydipsia). Same surname, same year: **year-keying cannot separate
+them**, so the polydipsia marker carries a keyword and the bare `Kim 2025` keeps
+resolving to the ophthalmology paper — exactly the pattern used for the two 2017
+O'Neill papers.
+
+Locked by a test asserting both markers resolve, to different ids, with the right
+text, and that `Kim` still does not swallow the existing `King`. Verified by
+rendering DIS-EYE-CHALAZION: Kim G 2025 remains reference 2.
+
+A pinned reference-count test for DIS-BD-IMHA (expected 2) caught the new
+citation and was updated to 3.
+
+### Process note — a piped exit status, again
+
+The gate for this batch was first run as `npx vitest run --silent | tail -3`
+inside a backgrounded command. It reported exit 0 while the output showed a
+failing test, because the exit status came from `tail`. The run had also been
+starved by a concurrent vitest instance (1801s duration against a normal 2s), so
+the "failure" was a timeout rather than a defect: re-run unpiped, all 416 tests
+pass, and the named test passes in isolation.
+
+Both halves are worth recording. **Never read a pipeline's exit status for the
+command at its head** — this is the third occurrence in this work. And a test
+failure under obvious resource starvation deserves a clean re-run before it is
+believed or reported.
+
+**Addendum — a pre-existing crammed bullet surfaced by adding citations.**
+`crammed-bullets` went 1031 → 1032 on DIS-PUPD-PRIM. The offending bullet was
+**not new**: `conf` previously held a single semicolon-joined line ("Documents a
+USG >1.030 on at least one occasion; low-normal/low plasma sodium; concentrates
+appropriately…"), and as the field's only bullet the lint treated it as
+PSS-style prose. Adding bullets after it made the lint evaluate bullets
+individually, which exposed it. Split into its three criteria; back to 1031.
+
+This is the same mechanism as DIS-NEU-TICKPARAL earlier in this work. It is a
+feature rather than a nuisance — citing a page makes its existing formatting
+debt visible — but it means a batch that adds bullets to a single-bullet field
+should expect this lint to move.
+
+**Gate for this batch, read unpiped and with no competing processes:** tsc 0,
+416 tests, resolver consistent (18 prefix pairs, 28 year-keyed authors), 30 of
+31 content lints green. The one red lint is `hardcoded-font-sizes` at 104
+against a baseline of 98, which belongs to vetic's Case Triage work and is
+deliberately not ratcheted.

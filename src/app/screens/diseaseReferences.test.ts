@@ -874,7 +874,7 @@ describe('reference block', () => {
       ['DIS-BD-HEMA', 4, ['Clinical outcome after diagnosis of hemophilia A', 'clonal expansions', 'paraspinal hyperesthesia']],
       ['DIS-BD-HEMB', 0, []],
       ['DIS-BD-HEMC', 0, []],
-      ['DIS-BD-IMHA', 2, ['diagnosis of immune-mediated hemolytic anemia', 'treatment of immune-mediated hemolytic anemia']],
+      ['DIS-BD-IMHA', 3, ['diagnosis of immune-mediated hemolytic anemia', 'treatment of immune-mediated hemolytic anemia']],
       ['DIS-IMNP', 2, ['immune-mediated neutropenia in 35 dogs', 'treated with phenobarbital']],
       // Evans syndrome, then the tick-borne and spirochaetal pages. Both
       // Ehrlichia pages resolve the same two papers, so a prefix collapse
@@ -1265,6 +1265,24 @@ describe('reference block', () => {
       if (o) expect(o.id).not.toBe(dm[0].id)
     }
     expect(parseSources('Haynes 2024')[0].text).toContain('congestive heart failure')
+  })
+
+  // Two DIFFERENT Kims publishing in the SAME year, so the year cannot split
+  // them — the polydipsia marker carries a keyword, like the two 2017 O'Neills.
+  it('splits the two 2025 Kims by keyword', () => {
+    const eye = parseSources('Kim 2025')
+    const pupd = parseSources('Kim 2025 polydipsia')
+    expect(eye).toHaveLength(1)
+    expect(pupd).toHaveLength(1)
+    expect(eye[0].text).toContain('meibomian')
+    expect(pupd[0].text).toContain('Primary polydipsia')
+    expect(eye[0].id).not.toBe(pupd[0].id)
+    // 'Kim' must still not swallow 'King'.
+    expect(parseSources('King 2021')[0]?.id).not.toBe(eye[0].id)
+  })
+
+  it('resolves the IMHA bilirubin paper', () => {
+    expect(parseSources('Chapman 2026')[0].text).toContain('Hyperbilirubinemia')
   })
 
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
