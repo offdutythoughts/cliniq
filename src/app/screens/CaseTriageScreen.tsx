@@ -17,6 +17,7 @@
 
 import { useState } from 'react'
 import { useAction } from 'convex/react'
+import { ConvexError } from 'convex/values'
 import { api } from '../../../convex/_generated/api'
 import { searchDiseases, topDifferentials, type SearchInputs } from '../../lib/search/diseaseSearch'
 import { buildCaseApproach } from '../../lib/caseTriage/buildApproach'
@@ -36,6 +37,18 @@ const STAGE_LABEL: Record<Stage, string> = {
   synthesizing: 'Matching and ranking differentials…',
   done: '',
   error: '',
+}
+
+/** Non-dev Convex deployments redact a thrown error's `.message` down to a
+ *  generic "Server Error" — ConvexError's `.data` is the one thing that still
+ *  reaches the client on every deployment type, so it's what the two actions'
+ *  `throw new ConvexError('...')` calls actually need to be read through. */
+function caseTriageErrorMessage(e: unknown): string {
+  if (e instanceof ConvexError) {
+    return typeof e.data === 'string' ? e.data : JSON.stringify(e.data)
+  }
+  if (e instanceof Error) return e.message
+  return 'Something went wrong analyzing this case.'
 }
 
 const TEXTAREA_STYLE = s(
@@ -126,7 +139,7 @@ export function CaseTriageScreen() {
       setActiveTab('differentials')
       setStage('done')
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Something went wrong analyzing this case.')
+      setError(caseTriageErrorMessage(e))
       setStage('error')
     }
   }
