@@ -1407,6 +1407,14 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const MAAS_GIST_RECLASSIFICATION =
+  'Maas CPHJ, ter Haar G, van der Gaag I, Kirpensteijn J. Reclassification of small intestinal and cecal smooth muscle tumors in 72 dogs: clinical, histologic, and immunohistochemical evaluation. Vet Surg. 2007;36(4):302-313. doi:10.1111/j.1532-950X.2007.00271.x'
+const GILLESPIE_GIST_CD34 =
+  'Gillespie V, Baer K, Farrelly J, Craft D, Luong R. Canine gastrointestinal stromal tumors: immunohistochemical expression of CD34 and examination of prognostic indicators including proliferation markers Ki67 and AgNOR. Vet Pathol. 2011;48(1):283-291. doi:10.1177/0300985810380397'
+const HENDERSON_CPA_SPANIELS =
+  'Henderson C, Rossanese M, Salmoral A, Murgia D. Surgical management of cricopharyngeal achalasia in Spaniels results in favorable outcomes, with persistence or recurrence of mild signs documented in some dogs. J Am Vet Med Assoc. 2026;264(2):1-6. doi:10.2460/javma.25.06.0415'
+const WELCH_CPA_MYECTOMY =
+  'Welch B, Ogilvie A, Porter I, Bourassi E. Cricopharyngeal and thyropharyngeal myectomy for management of cricopharyngeal achalasia in a 6-month-old coton de Tulear dog. Can Vet J. 2023;64(7):633-638.'
 const JACOBSON_FELINE_OMI_VBO =
   'Jacobson LS, Janke KJ, Kennedy SK, et al. A Pandora’s box in feline medicine: presenting signs and surgical outcomes in 58 previously hoarded cats with chronic otitis media-interna. J Feline Med Surg. 2023;25(9):1098612X231197089. doi:10.1177/1098612X231197089'
 const GRAF_OMI_MENINGEAL_MRI =
@@ -1647,6 +1655,8 @@ const SOURCE_NAMES = [
   // 'Alf' is only three letters, so its branch carries a defensive \\b guard.
   'Alf', 'Perillo', 'Freire',
   'Graf', 'Andrews',
+  // 'Maas' is four letters; its branch carries a defensive \\b guard.
+  'Maas', 'Gillespie', 'Henderson', 'Welch',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -2079,6 +2089,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Maas\b/.test(part)) { out.push({ id: 'maas-gist-reclassification', text: MAAS_GIST_RECLASSIFICATION }); continue }
+    if (/^Gillespie/.test(part)) { out.push({ id: 'gillespie-gist-cd34', text: GILLESPIE_GIST_CD34 }); continue }
+    if (/^Henderson/.test(part)) { out.push({ id: 'henderson-cpa-spaniels', text: HENDERSON_CPA_SPANIELS }); continue }
+    if (/^Welch/.test(part)) { out.push({ id: 'welch-cpa-myectomy', text: WELCH_CPA_MYECTOMY }); continue }
     if (/^Graf\b/.test(part)) { out.push({ id: 'graf-omi-meningeal-mri', text: GRAF_OMI_MENINGEAL_MRI }); continue }
     if (/^Andrews/.test(part)) { out.push({ id: 'andrews-mesenteric-volvulus', text: ANDREWS_MESENTERIC_VOLVULUS }); continue }
     if (/^Alf\b/.test(part)) { out.push({ id: 'alf-kooiker-polymyositis', text: ALF_KOOIKER_POLYMYOSITIS }); continue }

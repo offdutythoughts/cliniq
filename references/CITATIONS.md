@@ -5070,3 +5070,131 @@ title (`Rhodopsin topography…`). Caught on the first gate run this time, becau
 the chain read the exit status instead of piping vitest through `tail`. Same
 class of error as the Jaroensong title assertion in the previous batch — when
 asserting on an AMA string, match the case as it appears in the reference.
+
+## Batch — DIS-GI-GIST, DIS-NEU-CRICOPHARYNGEAL (135 → 133, uncited 28 → 26)
+
+### DIS-GI-GIST — GIST / Leiomyosarcoma
+
+**Maas CPHJ, ter Haar G, van der Gaag I, Kirpensteijn J. Reclassification of
+small intestinal and cecal smooth muscle tumors in 72 dogs: clinical, histologic,
+and immunohistochemical evaluation. Vet Surg. 2007;36(4):302-313.
+doi:10.1111/j.1532-950X.2007.00271.x**
+
+- **72 dogs**: 47 small intestinal (40 LMS, 7 LM) and 25 caecal (23 LMS, 2 LM)
+  tumours, re-examined for malignancy criteria and stained for SMA, desmin,
+  vimentin, S-100 and CD117 (KIT).
+- Reclassified: small intestine 2 LM, 9 LMS, **19 GIST and 17 "GIST-like"**;
+  caecum 23 GIST and 2 GIST-like. **GIST-like tumours were morphologically and
+  immunohistochemically identical to GIST but lacked KIT expression.**
+- **No significant survival difference by tumour type, location, histologic or
+  immunohistochemical characteristics.** Recurrence-free after excision: 80.1% at
+  1 year and 67.2% at 2 years (small intestine), 83.3% and 61.9% (caecum).
+- Caecal tumours: dogs significantly older, **more often presenting with
+  intestinal perforation and peritonitis**, less often with weight loss; more
+  histologic malignancy criteria.
+- This qualifies the page's own pearl rather than merely supporting it. The page
+  said "Ask the pathologist for c-KIT (CD117) immunohistochemistry — a positive
+  GIST may respond to toceranib/imatinib, unlike a leiomyosarcoma", which is
+  sound advice about **therapy** but reads as though KIT settles the diagnosis.
+  It does not: a KIT-negative tumour can still be GIST-like. And since survival
+  tracked none of these characteristics, the page now says the KIT result guides
+  tyrosine-kinase candidacy rather than prognosis.
+- The caecal perforation finding went to `severe`, which listed perforation
+  generically without saying where it concentrates.
+- Rule 1(c): 2007 is old, but this is the reclassification-and-outcome series for
+  canine intestinal mesenchymal tumours and the newer literature is case reports
+  (see declined). Gillespie 2011 attempted prognostic correlation and **could not
+  do it** for want of follow-up, which is itself evidence that Maas remains the
+  outcome source.
+- Rule 6: Crossref print 2007-06, 36(4):302-313; PubMed 2007 Jun, "302-13".
+  Crossref's fuller range used. 4 authors → all listed. Crossref renders the
+  names in capitals (MAAS, TER HAAR…); the paper's own form is used.
+
+**Gillespie V, Baer K, Farrelly J, Craft D, Luong R. Canine gastrointestinal
+stromal tumors: immunohistochemical expression of CD34 and examination of
+prognostic indicators including proliferation markers Ki67 and AgNOR. Vet Pathol.
+2011;48(1):283-291. doi:10.1177/0300985810380397**
+
+- 49 canine gastrointestinal mesenchymal neoplasms. **55% of cases previously
+  diagnosed as smooth muscle tumours were reclassified as GIST** on KIT
+  immunoreactivity. First demonstration of CD34 immunoreactivity in canine GIST.
+  Mitotic index, AgNOR and Ki67 differed significantly by location (small vs
+  large intestine).
+- **Explicitly carried with its own negative finding:** statistical correlation
+  with survival was not possible because follow-up was insufficient. The page
+  says so, because otherwise listing Ki67 and AgNOR implies they are prognostic
+  markers — which this study could not show.
+- Rule 6: **print year differs from epub and changes the citation.** PubMed epub
+  2010-09-08; Crossref print **2011-01**, 48(1):283-291. Cited as
+  **Gillespie 2011**. 5 authors → all listed.
+
+**Declined:** *Blaxill 2022, BMC Vet Res 18(1):415* (first canine multilocular
+cystic GIST; the suggestion that the cystic form carries a favourable prognosis
+is extrapolated from human data and the paper says it remains unclear in dogs)
+and *Serpa 2021, Vet Clin Pathol 50 Suppl 1:70-75* (a GIST found incidentally at
+necropsy in a dog dying of ethylene glycol toxicity). Both single cases that add
+nothing the page needs.
+
+### DIS-NEU-CRICOPHARYNGEAL — Cricopharyngeal / Pharyngeal Dysphagia
+
+**Henderson C, Rossanese M, Salmoral A, Murgia D. Surgical management of
+cricopharyngeal achalasia in Spaniels results in favorable outcomes, with
+persistence or recurrence of mild signs documented in some dogs. J Am Vet Med
+Assoc. 2026;264(2):1-6. doi:10.2460/javma.25.06.0415**
+
+- **18 Spaniels** treated surgically 2003–2022. Dysphagia (13) and coughing when
+  eating or drinking (10) were the commonest owner reports. Median age at surgery
+  6 months (range **5 to 59 months**); median age at onset 3 months.
+- Procedures: cricopharyngeal **myectomy** 10, myectomy + thyropharyngeal
+  myotomy 5, myectomy + thyropharyngeal myectomy 2, cricopharyngeal **myotomy
+  alone 1**.
+- 17/18 survived to discharge: **11 immediate complete resolution, 5 partial, 1
+  no improvement. Signs recurred in 3 dogs** after an initial myectomy.
+- Two things this changes on the page:
+  - `tx1` named the procedure as "cricopharyngeal myotomy … definitive". In this
+    series myotomy alone was done once in 18 dogs; the operation is usually a
+    **myectomy**. The page now says so.
+  - "Definitive" and "excellent results" are tempered with the actual
+    distribution of outcomes. The paper's own title is the honest framing and the
+    page uses it: favourable outcomes, with persistence or recurrence of mild
+    signs in some dogs.
+- `age` said "congenital — signs at weaning". True of onset, but the surgical age
+  range reaching 59 months means an older dog with lifelong dysphagia still fits,
+  which is now stated.
+- Rule 6: **registries disagree.** PubMed 2025-10-03; Crossref print
+  **2026-02-01**, 264(2):1-6. Cited as **Henderson 2026** per the print-year rule.
+  4 authors → all listed.
+
+**Welch B, Ogilvie A, Porter I, Bourassi E. Cricopharyngeal and thyropharyngeal
+myectomy for management of cricopharyngeal achalasia in a 6-month-old coton de
+Tulear dog. Can Vet J. 2023;64(7):633-638.**
+
+- Dysphagia from birth; a **PEG tube bypassed the upper oesophageal sphincter**
+  for nutritional support until the dog was large enough to operate at 6 months.
+  Combined cricopharyngeal and thyropharyngeal myectomy gave marked immediate
+  improvement, sustained at 1 year.
+- Used for the sequencing point, which the page did not make: in a patient too
+  small to operate, feed first. The page's `tx2` mentions feeding tubes for
+  aspiration risk but not as a bridge to surgery.
+- The authors also suggest the combined procedure may outperform alternatives.
+  That is **speculation from one dog with no comparison group**, and the page says
+  exactly that rather than carrying the suggestion as a recommendation.
+- Rule 6: **no DOI** (Can Vet J mints none for this article). Verified against
+  PubMed (PMID 37397703) and **Europe PMC**, both giving Can Vet J
+  2023;64(7):633-638; Crossref has no record. Rule 4's `isPaper` test passes on
+  the `2023;64` volume pattern. 4 authors → all listed.
+
+### Resolver
+
+New source names: Maas, Gillespie, Henderson, Welch. 'Maas' is four letters and
+carries a defensive `\b` guard; the nearby 'Maddens'/'Maeda'/'Maerz' cluster
+diverges at the third character. **'Gillespie' is the closer call** — it shares
+`Gill` with the existing 'Gilliam' (the KCNJ10 ataxia paper added earlier in this
+pass) and diverges only at the fifth character, so a test asserts Gilliam 2014
+and Gillespie 2011 resolve to different ids. 'Henderson' sits beside 'Hebert' and
+'Henke', 'Welch' beside 'Weese' and 'Weisse' — no prefix relations.
+
+**Process note.** While drafting, the scratchpad editor's bare-apostrophe guard
+fired on "the authors' suggestion" as intended. Avoiding it by writing "the
+authors suggestion" produced a sentence that read as a typo; the fix is to
+reword ("the suggestion by its authors") rather than to drop the apostrophe.
