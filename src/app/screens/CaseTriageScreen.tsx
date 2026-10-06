@@ -4,11 +4,11 @@
 // diagnostic keywords as structured chips). Here the reader pastes a case in
 // plain English; the pipeline is:
 //
-//   1. extractSignals (Convex action, Gemini) — case text → the SearchInputs
+//   1. extractSignals (Convex action, Groq) — case text → the SearchInputs
 //      shape Mix & Match's engine already takes.
 //   2. searchDiseases (same deterministic engine, run locally) — ranks real
 //      disease_page rows. The model never ranks differentials itself.
-//   3. synthesizeCase (Convex action, Gemini) — case text + the top-ranked
+//   3. synthesizeCase (Convex action, Groq) — case text + the top-ranked
 //      rows' own authored fields → a rationale per match, discriminating
 //      history questions, and a prioritized diagnostics list. Grounded in the
 //      rows given, not invented.
