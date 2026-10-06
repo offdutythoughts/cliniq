@@ -125,6 +125,11 @@ const CODECS: { [K in ViewKind]: Codec<K> } = {
     to: v => ({ path: `diff/${v.id}` }),
     from: ([id]) => (id && DB.differentials.some(d => d.id === id) ? { kind: 'diff', id } : null),
   },
+  caseTriage: {
+    slug: 'case-triage',
+    to: () => ({ path: 'case-triage' }),
+    from: () => ({ kind: 'caseTriage' }),
+  },
 }
 
 const BY_SLUG = new Map<string, Codec<ViewKind>>(

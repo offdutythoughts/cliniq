@@ -11,6 +11,7 @@
 import type * as accounts from "../accounts.js";
 import type * as annotations from "../annotations.js";
 import type * as auth from "../auth.js";
+import type * as caseAnalysis from "../caseAnalysis.js";
 import type * as emailVerification from "../emailVerification.js";
 import type * as emails from "../emails.js";
 import type * as http from "../http.js";
@@ -31,6 +32,7 @@ declare const fullApi: ApiFromModules<{
   accounts: typeof accounts;
   annotations: typeof annotations;
   auth: typeof auth;
+  caseAnalysis: typeof caseAnalysis;
   emailVerification: typeof emailVerification;
   emails: typeof emails;
   http: typeof http;

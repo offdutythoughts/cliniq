@@ -6,7 +6,7 @@
 // linkToView. Same .dx-* classes / inline styles → pixel-identical.
 
 import { Fragment, useMemo, useState } from 'react'
-import type { DxApproach, DxBlock, DxNavItem } from '../../lib/signs/dxTypes'
+import type { DxApproach, DxBlock, DxNavItem, DxTab } from '../../lib/signs/dxTypes'
 import { HUE, TITLE } from '../../lib/signs/tone'
 import { DX } from '../../lib/signs/dx'
 import { useNav } from '../nav/NavContext'
@@ -388,6 +388,27 @@ function DxBlockView({ b, onNav }: { b: DxBlock; onNav: Nav }) {
   }
 }
 
+/** The arrow-connected `.dx-wrap` spine for one tab's blocks, plus its
+ *  un-connected `after` blocks — the part of a Dx tab that doesn't care how it
+ *  got shown (the sign's own tab strip calling `router.replace`, or a
+ *  locally-generated approach like Case Triage keeping its own tab state).
+ *  `DxApproachView` below is one caller; `CaseTriageScreen` is the other. */
+export function DxTabBody({ tab, onNav }: { tab: DxTab; onNav: Nav }) {
+  return (
+    <>
+      <div className="dx-wrap">
+        {tab.blocks.map((b, i) => (
+          <Fragment key={i}>
+            {i > 0 && !tab.blocks[i - 1].noArrowAfter && <div className="dx-arrow">↓</div>}
+            <DxBlockView b={b} onNav={onNav} />
+          </Fragment>
+        ))}
+      </div>
+      {(tab.after ?? []).map((b, i) => <DxBlockView key={i} b={b} onNav={onNav} />)}
+    </>
+  )
+}
+
 export function DxApproachView({ sign, active }: { sign: string; active: string }) {
   const router = useNav()
   const onNav: Nav = v => router.navigate(v)
@@ -398,15 +419,7 @@ export function DxApproachView({ sign, active }: { sign: string; active: string 
   return (
     <>
       <DxTabs sign={sign} nav={nav} active={active} />
-      <div className="dx-wrap">
-        {tab.blocks.map((b, i) => (
-          <Fragment key={i}>
-            {i > 0 && !tab.blocks[i - 1].noArrowAfter && <div className="dx-arrow">↓</div>}
-            <DxBlockView b={b} onNav={onNav} />
-          </Fragment>
-        ))}
-      </div>
-      {(tab.after ?? []).map((b, i) => <DxBlockView key={i} b={b} onNav={onNav} />)}
+      <DxTabBody tab={tab} onNav={onNav} />
     </>
   )
 }

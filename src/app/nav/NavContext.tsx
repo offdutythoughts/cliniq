@@ -60,7 +60,7 @@ const NavCtx = createContext<Nav | null>(null)
  *  the wrong section highlighted. Mirrors KIND_SECTION in view.ts. */
 const TAB_FOR_KIND: Record<Exclude<View['kind'], 'tab'>, Tab> = {
   flow: 0, dx: 1, disease: 2, protocol: 4,
-  lesionLoc: 0, subTypeDetail: 0, diff: 0,
+  lesionLoc: 0, subTypeDetail: 0, diff: 0, caseTriage: 3,
 }
 
 /** A tab root already names its own tab; only the other kinds have to be

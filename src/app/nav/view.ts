@@ -32,6 +32,7 @@ export type View =
   | { kind: 'lesionLoc'; loc: string; name: string; filter?: 'acute' | 'chronic' } // goLesionTab
   | { kind: 'subTypeDetail'; id: string }                                        // renderSubTypeDetail
   | { kind: 'diff'; id: string }                                                 // renderDiffDetail
+  | { kind: 'caseTriage' }                                                       // CaseTriageScreen
 
 export type ViewKind = View['kind']
 
@@ -162,6 +163,9 @@ export function screenMeta(v: View): ScreenMeta {
       const name = diffById.get(v.id)?.name ?? ''
       return { topbarTitle: trunc(name, 30), noteKey: `diff:${v.id}`, noteTitle: name }
     }
+    case 'caseTriage':
+      // Ephemeral, per-session result — nothing to persist a note against.
+      return { topbarTitle: 'Case Triage', noteKey: 'caseTriage', noteTitle: 'Case Triage' }
   }
 }
 
@@ -219,6 +223,7 @@ const KIND_SECTION: Record<Exclude<ViewKind, 'tab'>, string> = {
   lesionLoc: 'Lesions',
   subTypeDetail: 'Lesions',
   diff: 'Differentials',
+  caseTriage: 'Mix & Match',
 }
 
 export function sectionName(v: View): string {
