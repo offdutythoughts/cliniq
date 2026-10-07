@@ -1407,6 +1407,8 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const WIBERG_LEONBERGER_VA =
+  'Wiberg M, Niskanen JE, Hytönen M, et al. Ventricular arrhythmia and sudden cardiac death in young Leonbergers. J Vet Cardiol. 2020;27:10-22. doi:10.1016/j.jvc.2019.11.006'
 const KIM_PRIMARY_POLYDIPSIA =
   'Kim J, Yoon S, Kim M, Lee S, Song W, Yun Y. Primary polydipsia in a cat. JFMS Open Rep. 2025;11(1):20551169241311680. doi:10.1177/20551169241311680'
 const CHAPMAN_IMHA_BILIRUBIN =
@@ -1675,6 +1677,8 @@ const SOURCE_NAMES = [
   'Martano', 'Vagt', 'Ferrarese',
   'Del Magno', 'Haynes',
   'Chapman',
+  // 'Wiberg' sits beside 'Wiebe' and 'Wiinberg'; all three diverge at position 3.
+  'Wiberg',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -2112,6 +2116,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Wiberg/.test(part)) { out.push({ id: 'wiberg-leonberger-va', text: WIBERG_LEONBERGER_VA }); continue }
     if (/^Chapman/.test(part)) { out.push({ id: 'chapman-imha-bilirubin', text: CHAPMAN_IMHA_BILIRUBIN }); continue }
     if (/^Del Magno/.test(part)) { out.push({ id: 'delmagno-pha-adrenalectomy', text: DELMAGNO_PHA_ADRENALECTOMY }); continue }
     if (/^Haynes/.test(part)) { out.push({ id: 'haynes-pha-chf', text: HAYNES_PHA_CHF }); continue }
