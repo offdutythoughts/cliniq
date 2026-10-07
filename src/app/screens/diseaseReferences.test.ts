@@ -1285,6 +1285,15 @@ describe('reference block', () => {
     expect(parseSources('Chapman 2026')[0].text).toContain('Hyperbilirubinemia')
   })
 
+  it('resolves the Leonberger arrhythmia paper', () => {
+    expect(parseSources('Wiberg 2020')[0].text).toContain('young Leonbergers')
+    // 'Wiberg' sits between 'Wiebe' and 'Wiinberg'.
+    for (const m of ['Wiebe 2002', 'Wiinberg 2008', 'Wiinberg 2010']) {
+      const o = parseSources(m)[0]
+      if (o) expect(o.id).not.toBe(parseSources('Wiberg 2020')[0].id)
+    }
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.

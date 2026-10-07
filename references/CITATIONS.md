@@ -5689,3 +5689,64 @@ should expect this lint to move.
 31 content lints green. The one red lint is `hardcoded-font-sizes` at 104
 against a baseline of 98, which belongs to vetic's Case Triage work and is
 deliberately not ratcheted.
+
+## Batch — DIS-CARD-ARRHYTHMIA + five unhedged-claim fixes (125 → 124, uncited 20 → 19, unhedged 28 → 24)
+
+### DIS-CARD-ARRHYTHMIA — Cardiac Arrhythmia
+
+**Wiberg M, Niskanen JE, Hytönen M, et al. Ventricular arrhythmia and sudden
+cardiac death in young Leonbergers. J Vet Cardiol. 2020;27:10-22.
+doi:10.1016/j.jvc.2019.11.006**
+
+- **21 necropsied Leonbergers** dying suddenly under 3 years, plus **46
+  apparently healthy** dogs screened prospectively with physical exam, 5-minute
+  ECG, 24-hour Holter, echocardiography and bloods. Pedigrees examined.
+- SCD at a **median age of 12 months** (range 2–32), **usually at rest, with no
+  preceding clinical signs and no structural cardiac disease** on necropsy.
+- **Ventricular arrhythmia in 14 of the 46 healthy dogs.** Severity ranged from
+  infrequent couplets and triplets to frequent complex polymorphic forms; the
+  **2 dogs that died in follow-up had polymorphic VT**.
+- Three things on the page:
+  - `breed` gains the Leonberger. The page listed ARVC breeds (Boxer, English
+    Bulldog) but no inherited VA in a giant breed presenting this young.
+  - `conf` said "ECG (resting + 24h Holter…)" without saying which does the work.
+    A 5-minute ECG plus Holter found VA in 14 of 46 and the authors place the
+    diagnosis **on the Holter**. Added, with the marker of malignancy being
+    **complexity and polymorphology rather than frequency**.
+  - `severe` listed sudden cardiac death; it now says that in a predisposed breed
+    this can be the **first** sign.
+- Mode of inheritance could **not** be determined from the available pedigrees —
+  the paper says only that the pattern suggests a familial disease, so the page
+  claims nothing more.
+- Rule 6: Crossref print **2020-02**, 27:10-22, no online date; PubMed epub
+  2019-11-30. Print year used → **Wiberg 2020**. 7 authors → first 3 + et al.
+
+**Declined:** *Yu 2017, Heart Rhythm 14(6):912-919* — renal sympathetic
+stimulation and ablation in a **cesium-induced long QT canine model**. An
+experimental preparation in laboratory dogs, not clinical disease.
+
+### Five unhedged efficacy claims fixed (Rule 2b)
+
+The new lint flagged these; none had a source, and none could be given one
+without inventing a figure, so each was hedged or attributed rather than deleted.
+
+| Page | Was | Now |
+|---|---|---|
+| DIS-CARD-ARRHYTHMIA `pearl` | "Pacemakers **are curative** for symptomatic bradyarrhythmias" | "resolves the signs… in most dogs, though no outcome series is cited on this page" |
+| DIS-DENT-RETRO `prog` | "Carnassial extraction has an **excellent outcome**" | "**Some clinicians report** excellent outcomes…, though no outcome series is cited here" |
+| DIS-NEO-SJOINT `tx2` | "wide excision; **excellent prognosis**" | "prognosis **reported as** good to excellent **on case material rather than a cohort**" |
+| DIS-NEU-SPFX `prog` | "**Excellent prognosis** for recovery regardless of surgical vs medical management" | "**reported as** good… **on uncontrolled case material**" |
+| DIS-NEU-HEADTRAUMA `prog` | "Maxillofacial fractures: **excellent prognosis** with appropriate fixation" | "prognosis **is reported as** very good…" |
+
+The clinical direction is preserved in every case — these are probably all true.
+What changes is that the reader can now see the claim rests on clinical
+impression rather than a measured outcome, which is the whole point of Rule 2b.
+
+Ratchet: **28 → 24**.
+
+### Gate
+
+Read unpiped with no competing processes: tsc 0, 417 tests, resolver consistent
+(18 prefix pairs, 28 year-keyed authors), **30 of 31 content lints green**. The
+one red remains `hardcoded-font-sizes` (104 vs 98) from vetic's Case Triage work,
+deliberately not ratcheted.
