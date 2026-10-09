@@ -30,7 +30,7 @@ import { getAuthUserId } from "@convex-dev/auth/server";
 import { ConvexError, v } from "convex/values";
 import { action } from "./_generated/server";
 
-const MODEL = "llama-3.3-70b-versatile";
+const MODEL = "openai/gpt-oss-120b";
 const ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
 const SYSTEM_PROMPT =
   "You are a JSON API. Respond with ONLY a single valid JSON object matching the shape the user describes — no prose, no markdown code fences, no commentary before or after it.";
