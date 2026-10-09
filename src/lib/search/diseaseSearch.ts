@@ -157,7 +157,7 @@ const SYNONYM_GROUPS: string[][] = [
   // ── GI signs ─────────────────────────────────────────────────────────────
   ['diarrhea', 'diarrhoea', 'loose stools', 'loose stool', 'soft stool', 'soft stools', 'runny stool', 'watery stool', 'liquid stool'],
   ['vomiting', 'vomit', 'throwing up', 'emesis', 'regurgitation', 'regurgitating'],
-  ['blood in stool', 'melena', 'melaena', 'hematochezia', 'haematochezia', 'bloody stool', 'bloody diarrhea', 'bloody diarrhoea', 'rectal bleeding'],
+  ['blood in stool', 'melena', 'melaena', 'hematochezia', 'haematochezia', 'bloody stool', 'bloody diarrhea', 'bloody diarrhoea', 'haemorrhagic diarrhoea', 'hemorrhagic diarrhea', 'rectal bleeding'],
   ['vomiting blood', 'hematemesis', 'haematemesis', 'bloody vomit'],
   ['not eating', 'anorexia', 'hyporexia', 'inappetence', 'reduced appetite', 'loss of appetite', 'off food'],
   ['straining to defecate', 'tenesmus', 'constipation', 'straining', 'difficulty defecating'],
