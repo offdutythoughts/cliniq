@@ -5863,3 +5863,72 @@ New source names: Kunchur, Hoe, White, Xie. Two structural changes:
   but **not cited anywhere in db.ts**, so no markers needed updating; a test now
   pins both years and asserts the bare surname resolves to nothing. Year-keyed
   authors rose to **29**.
+
+## Batch — DIS-VASC-HYPERVSC, DIS-GI-DIVERTICULUM (121 → 119, uncited 16 → 14)
+
+The last two never-attempted uncited pages. **All five now have a paper**, so every
+uncited page that had not been searched has been searched.
+
+### DIS-VASC-HYPERVSC — Hyperglobulinaemia / Hyperviscosity Syndrome
+
+**Spyropoulou M, Montanes-Sancho I, Gow AG, Bussey S. Cryoglobulinemia associated
+with multiple myeloma in a dog presenting with epistaxis and skin lesions. Vet
+Med Sci. 2024;10(6):e70084. doi:10.1002/vms3.70084**
+
+- 10-year-old Labrador: epistaxis, nasal discoloration and crusting, necrotic lip
+  lesion. Pancytopenia, azotaemia, hypoalbuminaemia, hyperglobulinaemia.
+- **The two bench observations are the whole test.** Amorphous basophilic
+  aggregates on a room-temperature blood smear that **disappeared after warming to
+  37°C**, and a gross cryoprecipitate in serum held at **4°C**. Both cost nothing.
+- Multiple myeloma confirmed — 38% marrow plasma cells, monoclonal gamma spike,
+  splenic plasma cell infiltration. The authors attribute the presentation to
+  cryoglobulin precipitation **combined with** hyperviscosity rather than either
+  alone, which is why it belongs on this page rather than only on the myeloma one.
+- The page's `signs` listed epistaxis and mucosal bleeding under haemostatic
+  effects of an M-protein, with no mention of cold-dependent mechanisms. Added
+  with the trigger: bleeding **plus cold-dependent skin lesions**.
+- Rule 2: n=1, and cryoglobulinaemia is described as extremely rare — written as a
+  differential for the atypical presentation, explicitly not a routine test.
+- Rule 6: Crossref print 2024-11, 10(6):e70084; PubMed 2024 Nov. 4 authors → all.
+
+### DIS-GI-DIVERTICULUM — Colonic / Rectal Diverticulum
+
+**Hatch AL, Wallace ML, Carroll KA, et al. Dogs neutered prior to perineal
+herniorrhaphy or that develop postoperative fecal incontinence are at an
+increased risk for perineal hernia recurrence. J Am Vet Med Assoc.
+2025;263(4):1-6. doi:10.2460/javma.24.07.0487**
+
+- **84 male dogs**, perineal herniorrhaphy 2008–2023, single institution, minimum
+  12 months follow-up. Recurrence **13/84 (15%)**, surgical site infection
+  **6/84 (7%)**, with **no identifiable risk factor for infection**.
+- **Dogs neutered before repair were 4.4× as likely to recur** as those neutered
+  at the time of repair. **Postoperative faecal incontinence → 3.4× recurrence.**
+- Two things this does for the page:
+  - `tx1` already said "castration at time of hernia repair (reduces recurrence)"
+    — correct but unsourced. Now quantified, with the inversion that matters at
+    the consult: **an already-castrated dog is not the reassuring case**, it is the
+    higher-risk group, and the owner should hear that before surgery.
+  - `monitor` said to watch for recurrence and faecal continence without saying
+    why continence matters. It is not only a complication but a **warning sign**
+    for recurrence.
+- **Rule 1(b) caveat written onto the page:** the abstract states the analysis was
+  "a combination of univariable analyses", so neither figure is adjusted for
+  confounding. The page says to read them as signals to act on rather than
+  independent effect sizes. This is the same trap as the Allenspach univariate
+  overstatement corrected earlier in this work.
+- Rule 6: Crossref print 2025-04-01, 263(4):1-6; PubMed epub 2025-01-08. Print
+  year used. 6 authors → first 3 + et al.
+
+### Status of the uncited set
+
+14 remain uncited. **7 are the out-of-scope DIS-BD pages.** The other 7 have all
+been searched and failed, each recorded above with the queries tried:
+DIS-URO-BL-TRAUMA, DIS-URO-RENAL-TRAUMA, DIS-URO-URETH-TRAUMA (no validation
+study exists for the fluid:blood potassium and creatinine ratios they rest on),
+DIS-INFECT-TOXO (only zoo-animal and equine material surfaced), DIS-ENV-BURN
+(two query shapes, the second returning zero results), DIS-NASAL-FB (two queries,
+both zero), DIS-MET-HYPOGLY (declined reuse-matcher suggestion).
+
+Those 7 need a different approach than PubMed title/keyword queries — older
+pre-indexing literature, textbook-cited primary sources chased by hand, or
+non-PubMed databases. They are not simply unattempted.
