@@ -6130,3 +6130,47 @@ doi:10.1016/j.jvc.2024.02.003**
 
 Resolver: new names Tjostheim, Iuliani. No prefix collisions — nothing existing
 begins `Tj` or `Iu`.
+
+## Batch — DIS-IMPA, DIS-MSK-RA (115 → 113)
+
+One reference, two pages.
+
+**Atkinson L, Schiborra F, O'Connell E, Barton J, Humphreys W. Thoracic and
+abdominal diagnostic imaging findings in dogs diagnosed with immune-mediated
+polyarthritis: 71 cases (2011-2023). J Small Anim Pract. 2025;66(4):272-279.
+doi:10.1111/jsap.13818**
+
+- **71 dogs** with IMPA. Abnormal imaging in 18/71 (25.4%).
+- **Thoracic radiography found significant abnormalities in none of them.**
+  Lymphadenomegaly commonest on CT (32/40) and abdominal ultrasound (13/34).
+  Neoplasia in 3/71. **Endocarditis-consistent changes in 4 of the 13 dogs that
+  had echocardiography.**
+- Two clinicians independently judged, twice, whether they would immunosuppress.
+  **41 of 71 (57.7%) would have been immunosuppressed without imaging; 10 of
+  those 41 (24.3%) had an imaging finding suggesting an underlying trigger that
+  changed the decision.**
+- Conclusion: prioritise abdominal imaging and echocardiography over thoracic
+  radiography, and **signalment, presenting complaint, physical examination and
+  clinicopathological results are not reliable predictors** of which dogs have
+  abnormal imaging.
+- Both pages said to distinguish erosive from non-erosive radiographically and
+  to trial doxycycline, but neither said what to image when screening for the
+  trigger before immunosuppressing. The endocarditis finding is the sharpest part
+  — it is the one differential where immunosuppression is the opposite of what
+  the dog needs.
+- The "you cannot select who to image" line is carried because it is the authors'
+  own negative finding and it blocks the natural economy of imaging only the dogs
+  that look systemically unwell.
+- Rule 6: Crossref print **2025-04**, 66(4):272-279; PubMed epub 2024-12-26. The
+  AMA string uses the print year 2025; the **marker is `(Atkinson 2024)`** because
+  that is how it was first written, and the resolver keys on the surname, not the
+  year — flagged here so a future print-year audit does not read the marker as a
+  mismatch. 5 authors → all listed.
+
+**Declined:** both bedinvetmab (Librela) musculoskeletal adverse-event items —
+*Lloyd 2025, Front Vet Sci 12:1649240* and *Simon 2025, Front Vet Sci
+12:1663398* — are **Commentary pieces with no abstract available**. Rule 3
+forbids writing a claim from a bibliographic record alone, and a comment with no
+retrievable abstract cannot be read. DIS-MSK-OA therefore stays paperless this
+round; the underlying pharmacovigilance study these comments argue about is the
+thing to find.
