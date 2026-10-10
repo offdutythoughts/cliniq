@@ -6161,11 +6161,28 @@ doi:10.1111/jsap.13818**
 - The "you cannot select who to image" line is carried because it is the authors'
   own negative finding and it blocks the natural economy of imaging only the dogs
   that look systemically unwell.
-- Rule 6: Crossref print **2025-04**, 66(4):272-279; PubMed epub 2024-12-26. The
-  AMA string uses the print year 2025; the **marker is `(Atkinson 2024)`** because
-  that is how it was first written, and the resolver keys on the surname, not the
-  year — flagged here so a future print-year audit does not read the marker as a
-  mismatch. 5 authors → all listed.
+- Rule 6: Crossref print **2025-04**, 66(4):272-279; PubMed epub 2024-12-26.
+  Cited and marked as **Atkinson 2025**. 5 authors → all listed.
+
+**Correction to the first version of this entry.** It originally said the marker
+read `(Atkinson 2024)` while the AMA string used 2025, and claimed this was
+harmless because "the resolver keys on the surname, not the year". That was
+wrong, and the repo already knew it: the test
+`resolves every year-bearing marker to a source printing that year` enforces
+that a marker's year matches the year printed in the reference it resolves to.
+It failed on all six markers. They are now 2025.
+
+**And the test failure was pushed before being read.** The gate for that batch
+was written as `npx tsc --noEmit && npx vitest … > /tmp/v.txt; echo "vitest=$?"`
+followed by the commit and push as separate `;`-joined commands, so a non-zero
+vitest status printed to the screen and the push went ahead regardless. `vitest=1`
+is visible in that run. The commit `Cite IMPA imaging yield on two polyarthritis
+pages` reached main and production with a failing test, and was fixed in the
+commit immediately after.
+
+Two standing lessons, both already recorded in this file and both broken again
+here: **read the exit status before acting on it**, and **chain the gate to the
+commit with `&&` rather than `;`** so a red gate physically cannot push.
 
 **Declined:** both bedinvetmab (Librela) musculoskeletal adverse-event items —
 *Lloyd 2025, Front Vet Sci 12:1649240* and *Simon 2025, Front Vet Sci

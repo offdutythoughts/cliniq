@@ -1335,7 +1335,7 @@ describe('reference block', () => {
   })
 
   it('resolves the IMPA imaging paper', () => {
-    expect(parseSources('Atkinson 2024')[0].text).toContain('immune-mediated polyarthritis')
+    expect(parseSources('Atkinson 2025')[0].text).toContain('immune-mediated polyarthritis')
   })
 
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
