@@ -1407,6 +1407,10 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const SPYROPOULOU_CRYOGLOBULIN =
+  'Spyropoulou M, Montanes-Sancho I, Gow AG, Bussey S. Cryoglobulinemia associated with multiple myeloma in a dog presenting with epistaxis and skin lesions. Vet Med Sci. 2024;10(6):e70084. doi:10.1002/vms3.70084'
+const HATCH_PERINEAL_HERNIA =
+  'Hatch AL, Wallace ML, Carroll KA, et al. Dogs neutered prior to perineal herniorrhaphy or that develop postoperative fecal incontinence are at an increased risk for perineal hernia recurrence. J Am Vet Med Assoc. 2025;263(4):1-6. doi:10.2460/javma.24.07.0487'
 const FARIAS_BASENJI_FANCONI =
   'Farias FHG, Mhlanga-Mutangadura T, Guo J, Hansen L, Johnson GS, Katz ML. Deletion variant in Basenji dogs with Fanconi syndrome. Genes (Basel). 2024;15(11):1469. doi:10.3390/genes15111469'
 const KUNCHUR_RTA_REVIEW =
@@ -1691,6 +1695,7 @@ const SOURCE_NAMES = [
   'Wiberg',
   // 'Hoe' is a strict PREFIX of 'Hoehne' and 'Hoel' — its branch carries a \\b guard.
   'Kunchur', 'Hoe', 'White', 'Xie',
+  'Spyropoulou', 'Hatch',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -2138,6 +2143,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Spyropoulou/.test(part)) { out.push({ id: 'spyropoulou-cryoglobulin', text: SPYROPOULOU_CRYOGLOBULIN }); continue }
+    if (/^Hatch/.test(part)) { out.push({ id: 'hatch-perineal-hernia', text: HATCH_PERINEAL_HERNIA }); continue }
     if (/^Kunchur/.test(part)) { out.push({ id: 'kunchur-rta-review', text: KUNCHUR_RTA_REVIEW }); continue }
     if (/^Hoe\b/.test(part)) { out.push({ id: 'hoe-gei-puppy', text: HOE_GEI_PUPPY }); continue }
     if (/^White/.test(part)) { out.push({ id: 'white-gei-transient', text: WHITE_GEI_TRANSIENT }); continue }
