@@ -113,9 +113,50 @@ function normCat(raw: string): string {
   return 'Other'
 }
 
+// Explicit overrides for ids the regex heuristics below can't reliably place.
+// Mostly DIS-BD-* (blood disorders): that id prefix alone spans nearly every
+// aetiology category (inherited factor deficiencies, infectious, immune,
+// toxic, vascular, neoplastic), so no single substring rule could bucket it —
+// and several of these ids collide with substrings used by OTHER diseases'
+// regex rules (e.g. bare `PV` would also match DIS-GI-FPV; bare `ICT` would
+// also match DIS-OES-STRICT), so a loose new rule would misfile those too.
+// An exact-id map has none of that collision risk and is easy to extend.
+// Entries deliberately left OUT (not oversights): DIS-BD-IMHA/IMTP already
+// resolve correctly through the existing /IMHA|IMT/ rule below; DIS-BD-TCP/
+// TCS/NRA are genuinely multi-causal umbrella pages ('Thrombocytopenia' can
+// be immune, infectious, neoplastic or marrow-primary) where 'Other' is the
+// honest answer, not a gap.
+const ID_CATEGORY_OVERRIDES: Record<string, string> = {
+  'DIS-BD-FX': 'Congenital/Inherited',
+  'DIS-BD-FII': 'Congenital/Inherited',
+  'DIS-BD-FVII': 'Congenital/Inherited',
+  'DIS-BD-FXII': 'Congenital/Inherited',
+  'DIS-BD-HEMA': 'Congenital/Inherited',
+  'DIS-BD-HEMB': 'Congenital/Inherited',
+  'DIS-BD-HEMC': 'Congenital/Inherited',
+  'DIS-BD-VWD': 'Congenital/Inherited',
+  'DIS-BD-TPATH': 'Congenital/Inherited', // predominantly named inherited defects (Glanzmann, Bernard-Soulier, Chediak-Higashi…)
+  'DIS-BD-EVANS': 'Immune-mediated', // combined IMHA + ITP
+  'DIS-BD-VASC': 'Immune-mediated', // vasculitis — immune-complex reaction pattern, never primary
+  'DIS-BD-APS': 'Immune-mediated', // antiphospholipid antibody syndrome
+  'DIS-BD-ICT': 'Infectious', // Anaplasma platys (infectious cyclic thrombocytopenia)
+  'DIS-BD-BABS': 'Infectious',
+  'DIS-BD-EHRL': 'Infectious',
+  'DIS-BD-ROD': 'Toxic', // anticoagulant rodenticide toxicosis
+  'DIS-BD-ENV': 'Toxic', // snake/spider envenomation
+  'DIS-BD-VITK': 'Metabolic', // nutritional/biliary vitamin K deficiency
+  'DIS-BD-DIC': 'Vascular',
+  'DIS-BD-CRGV': 'Vascular', // Alabama Rot — vascular endothelial injury
+  'DIS-BD-VASCLH': 'Vascular',
+  'DIS-BD-HYPERCOAG': 'Vascular', // would otherwise false-match the Endocrine /HYPER/ rule below
+  'DIS-BD-PV': 'Neoplastic', // polycythaemia vera is a myeloproliferative neoplasm
+}
+
 // Infer category from disease id prefix when no explicit cat field
 function inferCat(disease: DiseaseRow): string {
   const id = disease.id
+  const override = ID_CATEGORY_OVERRIDES[id]
+  if (override) return override
   if (/CARD|HCM|DCM|MVD|ARVC/.test(id)) return 'Vascular'
   if (/NEO|LSA|HSA|MCT|OSA|MEL/.test(id)) return 'Neoplastic'
   if (/INFECT|LEPTO|PARVO|LEISHM|BABESIA|LYME/.test(id)) return 'Infectious'
@@ -157,7 +198,7 @@ const SYNONYM_GROUPS: string[][] = [
   // ── GI signs ─────────────────────────────────────────────────────────────
   ['diarrhea', 'diarrhoea', 'loose stools', 'loose stool', 'soft stool', 'soft stools', 'runny stool', 'watery stool', 'liquid stool'],
   ['vomiting', 'vomit', 'throwing up', 'emesis', 'regurgitation', 'regurgitating'],
-  ['blood in stool', 'melena', 'melaena', 'hematochezia', 'haematochezia', 'bloody stool', 'bloody diarrhea', 'bloody diarrhoea', 'rectal bleeding'],
+  ['blood in stool', 'melena', 'melaena', 'hematochezia', 'haematochezia', 'bloody stool', 'bloody diarrhea', 'bloody diarrhoea', 'haemorrhagic diarrhoea', 'hemorrhagic diarrhea', 'rectal bleeding'],
   ['vomiting blood', 'hematemesis', 'haematemesis', 'bloody vomit'],
   ['not eating', 'anorexia', 'hyporexia', 'inappetence', 'reduced appetite', 'loss of appetite', 'off food'],
   ['straining to defecate', 'tenesmus', 'constipation', 'straining', 'difficulty defecating'],

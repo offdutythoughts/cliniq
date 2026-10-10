@@ -1407,6 +1407,16 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const FARIAS_BASENJI_FANCONI =
+  'Farias FHG, Mhlanga-Mutangadura T, Guo J, Hansen L, Johnson GS, Katz ML. Deletion variant in Basenji dogs with Fanconi syndrome. Genes (Basel). 2024;15(11):1469. doi:10.3390/genes15111469'
+const KUNCHUR_RTA_REVIEW =
+  'Kunchur MG, Mauch TJ, Parkanzky M, Rahilly LJ. A review of renal tubular acidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(4):325-355. doi:10.1111/vec.13407'
+const HOE_GEI_PUPPY =
+  'Hoe S, Bryenton K, Hoddinott K. Gastroesophageal intussusception in a 4-week-old German shepherd puppy. Can Vet J. 2022;63(8):841-844.'
+const WHITE_GEI_TRANSIENT =
+  'White M, Lau M. Spontaneous onset and resolution of gastroesophageal intussusception during contrast-enhanced computed tomography. Open Vet J. 2025;15(10):5400-5407. doi:10.5455/OVJ.2025.v15.i10.58'
+const XIE_COLONIC_STENOSIS =
+  'Xie Y, Deng Y, Mai J, Li H, Chen Y. An apparently healthy female British shorthair cat with a rare complication of colonic stenosis after flank approach ovariohysterectomy. BMC Vet Res. 2024;20(1):470. doi:10.1186/s12917-024-04328-w'
 const WIBERG_LEONBERGER_VA =
   'Wiberg M, Niskanen JE, Hytönen M, et al. Ventricular arrhythmia and sudden cardiac death in young Leonbergers. J Vet Cardiol. 2020;27:10-22. doi:10.1016/j.jvc.2019.11.006'
 const KIM_PRIMARY_POLYDIPSIA =
@@ -1679,6 +1689,8 @@ const SOURCE_NAMES = [
   'Chapman',
   // 'Wiberg' sits beside 'Wiebe' and 'Wiinberg'; all three diverge at position 3.
   'Wiberg',
+  // 'Hoe' is a strict PREFIX of 'Hoehne' and 'Hoel' — its branch carries a \\b guard.
+  'Kunchur', 'Hoe', 'White', 'Xie',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1726,6 +1738,12 @@ const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
 // Two DIFFERENT Jacobsons: Samuel G Jacobson on taurine-deficiency rhodopsin
 // topography (1987) and Linda S Jacobson on feline otitis media-interna (2023).
 // Keyed on the year, like the two Chans.
+// Fabiana H G Farias, same author, two papers: the 2010 ADAMTS17 primary lens
+// luxation mutation and the 2024 Basenji Fanconi deletion.
+const FARIAS_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2010': { id: 'farias-pll', text: FARIAS_PLL },
+  '2024': { id: 'farias-basenji-fanconi', text: FARIAS_BASENJI_FANCONI },
+}
 const JACOBSON_BY_YEAR: Record<string, { id: string; text: string }> = {
   '1987': { id: 'jacobson-taurine-rhodopsin', text: JACOBSON_TAURINE_RHODOPSIN },
   '2023': { id: 'jacobson-feline-omi-vbo', text: JACOBSON_FELINE_OMI_VBO },
@@ -1992,7 +2010,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Marsilio/.test(part)) { out.push({ id: 'acvim-fce', text: ACVIM_FCE }); continue }
     if (/^Chirayath/.test(part)) { out.push({ id: 'chirayath-iatrogenic', text: CHIRAYATH_IATROGENIC }); continue }
     if (/^Romaneck/.test(part)) { out.push({ id: 'romaneck-ek', text: ROMANECK_EK }); continue }
-    if (/^Farias/.test(part)) { out.push({ id: 'farias-pll', text: FARIAS_PLL }); continue }
+    if (/^Farias/.test(part)) {
+      const hit = FARIAS_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Gould/.test(part)) { out.push({ id: 'gould-pll', text: GOULD_PLL }); continue }
     // ── First five disease pages' primary literature (added 2026-09-21) ──
     // Year-keyed where one author name covers several works, per ACVIM above.
@@ -2116,6 +2138,10 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Kunchur/.test(part)) { out.push({ id: 'kunchur-rta-review', text: KUNCHUR_RTA_REVIEW }); continue }
+    if (/^Hoe\b/.test(part)) { out.push({ id: 'hoe-gei-puppy', text: HOE_GEI_PUPPY }); continue }
+    if (/^White/.test(part)) { out.push({ id: 'white-gei-transient', text: WHITE_GEI_TRANSIENT }); continue }
+    if (/^Xie/.test(part)) { out.push({ id: 'xie-colonic-stenosis', text: XIE_COLONIC_STENOSIS }); continue }
     if (/^Wiberg/.test(part)) { out.push({ id: 'wiberg-leonberger-va', text: WIBERG_LEONBERGER_VA }); continue }
     if (/^Chapman/.test(part)) { out.push({ id: 'chapman-imha-bilirubin', text: CHAPMAN_IMHA_BILIRUBIN }); continue }
     if (/^Del Magno/.test(part)) { out.push({ id: 'delmagno-pha-adrenalectomy', text: DELMAGNO_PHA_ADRENALECTOMY }); continue }

@@ -5750,3 +5750,116 @@ Read unpiped with no competing processes: tsc 0, 417 tests, resolver consistent
 (18 prefix pairs, 28 year-keyed authors), **30 of 31 content lints green**. The
 one red remains `hardcoded-font-sizes` (104 vs 98) from vetic's Case Triage work,
 deliberately not ratcheted.
+
+## Batch — DIS-ENDO-RENGLUC, DIS-GI-GOESINTUSS, DIS-GI-RECTALSTRICT (124 → 121, uncited 19 → 16)
+
+Three of the five never-attempted uncited pages. All three now have a paper.
+
+### DIS-ENDO-RENGLUC — Primary Renal Glucosuria / Fanconi Syndrome
+
+**Farias FHG, Mhlanga-Mutangadura T, Guo J, Hansen L, Johnson GS, Katz ML.
+Deletion variant in Basenji dogs with Fanconi syndrome. Genes (Basel).
+2024;15(11):1469. doi:10.3390/genes15111469**
+
+- Linkage within a large Basenji family localised the disease to CFA3, fine-mapped
+  to 2.7 Mb; whole-genome sequencing of an affected dog found a **homozygous
+  317 bp deletion in the last exon of FAN1**. **78 Basenjis** of known status
+  genotyped, with almost complete genotype-phenotype concordance.
+- The page said "Hereditary (Basenji Fanconi)" with no molecular basis. It now
+  has the variant, and three things that follow:
+  - **The one discordant dog is on the page.** One animal was homozygous for the
+    deletion and showed no signs. Reporting "almost complete concordance" without
+    naming the exception would overstate the test.
+  - **Why selective mating failed**: the disease is late-onset, so affected dogs
+    are bred before they declare themselves — which is the actual argument for
+    genotyping before breeding.
+  - The proposed mechanism (FAN1 repairs DNA interstrand crosslinks, so its loss
+    may sensitise proximal tubule cells to toxin-mediated damage, and differing
+    toxin exposure would explain the wide age at onset) is carried **explicitly as
+    unproven**. The authors say the mechanism remains to be elucidated.
+- Rule 6: MDPI, online-only. Crossref 2024-11-14, 15(11):1469; PubMed agrees.
+  6 authors → all listed.
+
+**Kunchur MG, Mauch TJ, Parkanzky M, Rahilly LJ. A review of renal tubular
+acidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(4):325-355.
+doi:10.1111/vec.13407**
+
+- Places the page in the acid-base classification it was missing: **Fanconi
+  syndrome is proximal (type 2) RTA plus additional proximal tubular defects**,
+  and all RTAs give a **normal-anion-gap hyperchloraemic** metabolic acidosis.
+  Characterisation rests on urine pH plus renal handling of substances that
+  should alter acid or bicarbonate excretion.
+- Also the epidemiological correction: the Basenji is the **only** companion-animal
+  species with a known causative mutation, and secondary RTA (immune-mediated,
+  toxic, infectious) is far commoner than the genetic form.
+- Labelled on the page as a literature synthesis rather than primary data. Rule 4
+  is satisfied independently by Farias.
+- Rule 6: Crossref print 2024-07, 34(4):325-355; PubMed epub 2024-07-18. 4 authors
+  → all listed.
+
+### DIS-GI-GOESINTUSS — Gastro-oesophageal Intussusception
+
+**White M, Lau M. Spontaneous onset and resolution of gastroesophageal
+intussusception during contrast-enhanced computed tomography. Open Vet J.
+2025;15(10):5400-5407. doi:10.5455/OVJ.2025.v15.i10.58**
+
+- 10-year-old dog with an untreated sliding hiatal hernia. On venous-phase CT the
+  gastric fundus had herniated into the caudal oesophageal lumen; pre-contrast and
+  delayed images showed the stomach in normal position. **First tomographic
+  demonstration of a self-resolving GEI.**
+- The page described GEI as acute, rapidly deteriorating and potentially fatal
+  within hours — true of the classic presentation, but it left no room for the
+  intermittent form. Two consequences now stated: it is not always the acute
+  catastrophe, and **a single normal CT acquisition does not exclude it**, which
+  is the practical trap.
+- Rule 6: Crossref print 2025, 15(10) p 5400; PubMed gives 5400-5407. Fuller
+  range used. 2 authors → both listed.
+
+**Hoe S, Bryenton K, Hoddinott K. Gastroesophageal intussusception in a 4-week-old
+German shepherd puppy. Can Vet J. 2022;63(8):841-844.**
+
+- 4-week-old GSD, bilateral gastropexy (incisional right, gastrostomy-tube left),
+  thriving long-term with no persistent megaoesophagus.
+- Carries the mortality figures the page lacked: **~95% in the older literature
+  against ~65% long-term survival in newer series.**
+- **Rule 3 care point, stated on the page:** both figures come from the literature
+  this case report cites, not from the single case. Written as the range the
+  published experience spans rather than as measured rates — a case report cannot
+  establish either number.
+- Rule 6: **no DOI** (Can Vet J). Verified against PubMed (PMID 35919469) and
+  **Europe PMC**, both Can Vet J 2022;63(8):841-844. 3 authors → all listed.
+
+### DIS-GI-RECTALSTRICT — Rectal / Colonic Stricture
+
+**Xie Y, Deng Y, Mai J, Li H, Chen Y. An apparently healthy female British
+shorthair cat with a rare complication of colonic stenosis after flank approach
+ovariohysterectomy. BMC Vet Res. 2024;20(1):470.
+doi:10.1186/s12917-024-04328-w**
+
+- 1-year-old cat, dyschezia and reduced faecal diameter **three weeks after
+  flank-approach ovariohysterectomy**. An annular tissue band encircling the
+  descending colon caused severe stenosis; signs resolved rapidly after excision.
+- **Radiography, barium proctography, colonoscopy and CT all failed to show the
+  cause** — the diagnosis was made at exploratory laparotomy. That negative-imaging
+  detail is the most useful part and is on the page.
+- The page's `etiology` listed post-surgical anastomotic stricture but nothing
+  arising remote from the bowel. One cat, so written as a differential to hold
+  rather than a frequency, with the actionable line: ask about a recent spey before
+  calling a stricture idiopathic.
+- Rule 6: BMC, online-only. Crossref 2024-10-16, 20(1):470; PubMed agrees.
+  5 authors → all listed.
+
+### Resolver
+
+New source names: Kunchur, Hoe, White, Xie. Two structural changes:
+
+- **'Hoe' is a strict prefix of both 'Hoehne' and 'Hoel'** — guarded with
+  `/^Hoe\b/`, and a test asserts Hoe 2022 resolves to its own paper while Hoehne
+  and Hoel resolve elsewhere. Prefix pairs checked rose from 18 to **21**.
+- **'Farias' became year-keyed.** `FARIAS_PLL` (2010 ADAMTS17 primary lens
+  luxation) and the new Basenji Fanconi paper are by the **same author**, Fabiana
+  H G Farias of the Missouri canine genetics laboratory — so this is a genuine
+  two-paper author rather than a name collision. The 2010 reference was defined
+  but **not cited anywhere in db.ts**, so no markers needed updating; a test now
+  pins both years and asserts the bare surname resolves to nothing. Year-keyed
+  authors rose to **29**.
