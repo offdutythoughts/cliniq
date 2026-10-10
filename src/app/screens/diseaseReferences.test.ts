@@ -1294,6 +1294,30 @@ describe('reference block', () => {
     }
   })
 
+  // 'Hoe' is a strict PREFIX of both 'Hoehne' and 'Hoel'.
+  it('keeps Hoe off Hoehne and Hoel', () => {
+    const hoe = parseSources('Hoe 2022')
+    expect(hoe).toHaveLength(1)
+    expect(hoe[0].text).toContain('German shepherd puppy')
+    for (const m of ['Hoehne 2019', 'Hoel 2022']) {
+      const o = parseSources(m)[0]
+      if (o) expect(o.id).not.toBe(hoe[0].id)
+    }
+  })
+
+  // Farias FHG now has two papers, so the surname is year-keyed.
+  it('splits the two Farias papers by year', () => {
+    expect(parseSources('Farias 2010')[0].text).toContain('ADAMTS17')
+    expect(parseSources('Farias 2024')[0].text).toContain('Basenji')
+    expect(parseSources('Farias')).toEqual([])
+  })
+
+  it('resolves the renal glucosuria, GEI and colonic stenosis papers', () => {
+    expect(parseSources('Kunchur 2024')[0].text).toContain('renal tubular acidosis')
+    expect(parseSources('White 2025')[0].text).toContain('gastroesophageal intussusception')
+    expect(parseSources('Xie 2024')[0].text).toContain('colonic stenosis')
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.
