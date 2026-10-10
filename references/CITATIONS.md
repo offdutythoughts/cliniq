@@ -6077,3 +6077,56 @@ doi:10.1016/j.jvc.2024.08.009**
 Resolver: new names Saavedra, Huynh, Yoo. No prefix collisions — the nearest
 existing names are 'Sabattini'/'Sarpong' and 'Hung', all diverging by the third
 character.
+
+## Batch — DIS-CARD-SAS, DIS-CARD-IE (117 → 115)
+
+### DIS-CARD-SAS — Subaortic Stenosis
+
+**Tjostheim SS, Showers A, Obernberger C, Shear M. Association of sotalol versus
+atenolol therapy with survival in dogs with severe subaortic stenosis. J Vet
+Cardiol. 2023;48:19-30. doi:10.1016/j.jvc.2023.05.003**
+
+- Retrospective cohort, **43 dogs** with severe SAS (PG ≥ 80 mmHg), 2003–2020.
+  Sotalol n=14 against atenolol n=29.
+- **No difference** in all-cause (p=0.172) or cardiac-related (p=0.157) mortality.
+  **Among dogs that died suddenly, survival was significantly shorter on sotalol
+  (p=0.046)**, and multivariable analysis in that subgroup identified pressure
+  gradient (p=0.002) and sotalol (p=0.050) as negatively influencing survival.
+- The page said atenolol has no proven survival benefit but is commonly used,
+  which invites the reasoning "then use sotalol, it adds class III action". This
+  is the paper that answers that, and the answer is **don't**.
+- Rule 1(b)/Rule 2 handled explicitly. The page says to treat it as a reason not
+  to substitute sotalol **rather than as demonstrated harm**: retrospective, only
+  14 dogs in the sotalol arm, the finding sits in a **subgroup** (dogs that died
+  suddenly), and p=0.050 is as marginal as a result can be. Writing "sotalol
+  increases sudden death" off a subgroup p-value of exactly 0.050 would be the
+  easy overstatement.
+- Not carried: the paper's background line that survival is not improved by pure
+  β-blockers. That is its introduction citing others, not its own finding — the
+  page already says the same thing from Ettinger.
+- Rule 6: Crossref print 2023-08, 48:19-30; PubMed epub 2023-05-06. Print year
+  used. 4 authors → all listed.
+
+### DIS-CARD-IE — Infective Endocarditis
+
+**Iuliani K, Lawler A, Schrope D, Locke E. Echocardiographic and pathologic
+identification of an aorto-left atrial fistula secondary to infective
+endocarditis in a canine patient. J Vet Cardiol. 2024;52:61-67.
+doi:10.1016/j.jvc.2024.02.003**
+
+- Dog with lameness, fever and lethargy; new murmur, arrhythmia and joint
+  effusion, none present two months earlier. Septic suppurative polyarthritis
+  confirmed. Echocardiography showed aortic valvular endocarditis **plus a
+  fistulous communication from below the sinotubular junction into the left
+  atrium**, confirmed at necropsy. Euthanised on prognosis.
+- The page's `signs` listed "new or changing heart murmur" and attributed murmurs
+  to valve insufficiency. This adds that a new murmur in confirmed endocarditis
+  can mean a **structural communication**, which is worth looking for rather than
+  assuming.
+- Rule 2: one dog, stated, and the outcome (euthanasia on prognosis) stated with
+  it so the finding is not read as a manageable complication.
+- Rule 6: Crossref print 2024-04, 52:61-67; PubMed epub 2024-02-08. Print year
+  used. 4 authors → all listed.
+
+Resolver: new names Tjostheim, Iuliani. No prefix collisions — nothing existing
+begins `Tj` or `Iu`.
