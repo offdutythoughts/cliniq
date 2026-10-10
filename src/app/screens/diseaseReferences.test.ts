@@ -1329,6 +1329,11 @@ describe('reference block', () => {
     expect(parseSources('Yoo 2026')[0].text).toContain('thrombotic occlusion')
   })
 
+  it('resolves the SAS and endocarditis papers', () => {
+    expect(parseSources('Tjostheim 2023')[0].text).toContain('subaortic stenosis')
+    expect(parseSources('Iuliani 2024')[0].text).toContain('aorto-left atrial fistula')
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.

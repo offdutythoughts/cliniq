@@ -1407,6 +1407,10 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const TJOSTHEIM_SAS_SOTALOL =
+  'Tjostheim SS, Showers A, Obernberger C, Shear M. Association of sotalol versus atenolol therapy with survival in dogs with severe subaortic stenosis. J Vet Cardiol. 2023;48:19-30. doi:10.1016/j.jvc.2023.05.003'
+const IULIANI_IE_FISTULA =
+  'Iuliani K, Lawler A, Schrope D, Locke E. Echocardiographic and pathologic identification of an aorto-left atrial fistula secondary to infective endocarditis in a canine patient. J Vet Cardiol. 2024;52:61-67. doi:10.1016/j.jvc.2024.02.003'
 const SAAVEDRA_CONTRAST_PRESSURES =
   'Saavedra AD, Karnia J, Leach SB, et al. Effect of non-ionic contrast media on invasive pressure measurements during minimally invasive occlusion of patent ductus arteriosus and balloon valvuloplasty for valvular pulmonic stenosis in dogs. J Vet Cardiol. 2026;65:51-62. doi:10.1016/j.jvc.2026.02.003'
 const HUYNH_PLCVC_PBV =
@@ -1703,6 +1707,7 @@ const SOURCE_NAMES = [
   'Kunchur', 'Hoe', 'White', 'Xie',
   'Spyropoulou', 'Hatch',
   'Saavedra', 'Huynh', 'Yoo',
+  'Tjostheim', 'Iuliani',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -2150,6 +2155,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Tjostheim/.test(part)) { out.push({ id: 'tjostheim-sas-sotalol', text: TJOSTHEIM_SAS_SOTALOL }); continue }
+    if (/^Iuliani/.test(part)) { out.push({ id: 'iuliani-ie-fistula', text: IULIANI_IE_FISTULA }); continue }
     if (/^Saavedra/.test(part)) { out.push({ id: 'saavedra-contrast-pressures', text: SAAVEDRA_CONTRAST_PRESSURES }); continue }
     if (/^Huynh/.test(part)) { out.push({ id: 'huynh-plcvc-pbv', text: HUYNH_PLCVC_PBV }); continue }
     if (/^Yoo/.test(part)) { out.push({ id: 'yoo-pda-thrombosis', text: YOO_PDA_THROMBOSIS }); continue }
