@@ -90,7 +90,11 @@ function splitCols(b: Block): Fork | 'self' | null {
   }
 }
 
-function BlockList({ blocks, fn, onNav }: { blocks: Block[]; fn?: boolean; onNav: Nav }) {
+/** Exported so a runtime-generated `Block[]` (Case Triage's flowchart, built
+ *  from a Convex action's output rather than an authored flow file) can be
+ *  rendered by the exact same spine/connector logic every sign's flow page
+ *  uses, without registering a synthetic entry in the global `FLOWS` map. */
+export function BlockList({ blocks, fn, onNav }: { blocks: Block[]; fn?: boolean; onNav: Nav }) {
   const connector = (b: Block) => {
     if (fn) return <div className="fn-arrow">↓</div>
     const split = splitCols(b)

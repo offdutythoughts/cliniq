@@ -68,6 +68,11 @@ async function callGroq(prompt: string): Promise<unknown> {
           { role: "user", content: prompt },
         ],
         response_format: { type: "json_object" },
+        // gpt-oss is a reasoning model — its thinking tokens can otherwise
+        // leak into (or in place of) the JSON content, which is what Groq's
+        // own "Failed to validate JSON" 400 turned out to be. `hidden` drops
+        // the reasoning channel entirely; we only want the final JSON.
+        reasoning_format: "hidden",
         temperature: 0.2,
       }),
     });
@@ -184,7 +189,7 @@ export type SynthesisCandidate = {
 export type CaseSynthesis = {
   rationales: { diseaseId: string; rationale: string }[];
   historyQuestions: string[];
-  diagnostics: { label: string; tier: "minimum" | "confirmatory"; note?: string }[];
+  diagnostics: { label: string; tier: "minimum" | "confirmatory"; diseaseIds: string[] }[];
 };
 
 function synthesisPrompt(caseText: string, candidates: SynthesisCandidate[]): string {
@@ -209,10 +214,10 @@ For EACH differential above (by its exact diseaseId), write one sentence tying s
 
 Then propose 3-6 ADDITIONAL history questions that would help discriminate between these specific top differentials — each should plausibly separate at least two of them, not a generic question.
 
-Then propose a prioritized diagnostics list drawn ONLY from the "confirmatory dx"/"supportive dx" fields given above, deduplicated across differentials, each tagged tier "minimum" (first-line/inexpensive) or "confirmatory" (definitive), with a short note on which differential(s) it helps confirm or rule out.
+Then propose a prioritized diagnostics list drawn ONLY from the "confirmatory dx"/"supportive dx" fields given above, deduplicated across differentials, each tagged tier "minimum" (first-line/inexpensive) or "confirmatory" (definitive), and tagged with the exact diseaseId(s) (from the list above) it helps confirm or rule out — this is what groups diagnostics under the right category in the flowchart, so it must be accurate, not a guess.
 
 Respond with ONLY a JSON object of exactly this shape:
-{"rationales":[{"diseaseId":"DIS-EXAMPLE","rationale":"..."}],"historyQuestions":["..."],"diagnostics":[{"label":"...","tier":"minimum","note":"..."}]}`;
+{"rationales":[{"diseaseId":"DIS-EXAMPLE","rationale":"..."}],"historyQuestions":["..."],"diagnostics":[{"label":"...","tier":"minimum","diseaseIds":["DIS-EXAMPLE"]}]}`;
 }
 
 export const synthesizeCase = action({
@@ -261,9 +266,9 @@ export const synthesizeCase = action({
       .map((d) => ({
         label: clampStr(d.label, 120),
         tier: d.tier === "confirmatory" ? ("confirmatory" as const) : ("minimum" as const),
-        note: d.note ? clampStr(d.note, 200) : undefined,
+        diseaseIds: clampArr(d.diseaseIds, MAX_CANDIDATES).filter((id) => validIds.has(id)),
       }))
-      .filter((d) => d.label.length > 0)
+      .filter((d) => d.label.length > 0 && d.diseaseIds.length > 0)
       .slice(0, 16);
 
     return {

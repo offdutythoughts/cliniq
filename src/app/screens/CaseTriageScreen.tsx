@@ -1,5 +1,5 @@
 'use client'
-// ── Case Triage: free-text case notes → ranked differentials + history/dx ────
+// ── Case Triage: free-text case notes → ranked-differential flowchart ───────
 // The NLP counterpart to Mix & Match (which takes the same signalment + sign/
 // diagnostic keywords as structured chips). Here the reader pastes a case in
 // plain English; the pipeline is:
@@ -10,20 +10,25 @@
 //      disease_page rows. The model never ranks differentials itself.
 //   3. synthesizeCase (Convex action, Groq) — case text + the top-ranked
 //      rows' own authored fields → a rationale per match, discriminating
-//      history questions, and a prioritized diagnostics list. Grounded in the
-//      rows given, not invented.
-//   4. buildCaseApproach assembles a DxApproach from the result, rendered by
-//      the same DxTabBody every sign's diagnostic-approach page uses.
+//      history questions, and a diagnostics list grounded in and tagged back
+//      to those rows.
+//   4. buildCaseFlow assembles a `Block[]` — history Y/N questions, then one
+//      branch arm per aetiology category present in the results, each arm
+//      holding its differentials and that category's own diagnostics —
+//      rendered by the exact same spine/connector engine (`BlockList`) every
+//      authored sign flow uses, so this reads as one more flowchart in the
+//      app rather than a bespoke results widget.
 
 import { useState } from 'react'
 import { useAction } from 'convex/react'
 import { ConvexError } from 'convex/values'
 import { api } from '../../../convex/_generated/api'
 import { searchDiseases, topDifferentials, type SearchInputs } from '../../lib/search/diseaseSearch'
-import { buildCaseApproach } from '../../lib/caseTriage/buildApproach'
-import type { DxApproach, DxNavItem } from '../../lib/signs/dxTypes'
+import { buildCaseFlow } from '../../lib/caseTriage/buildFlow'
+import type { Block } from '../../lib/signs/flowTypes'
 import { useNav } from '../nav/NavContext'
-import { DxTabBody } from './DxApproachView'
+import { BlockList } from './FlowPageView'
+import { DISCLAIMER } from './sharedBlocks'
 import { type Nav } from './flowHelpers'
 import { styleStringToObject as s } from './style'
 
@@ -62,24 +67,6 @@ const BUTTON_STYLE = (disabled: boolean) => s(
   + `background:var(--teal);color:var(--navy);`,
 )
 
-function LocalTabs({ nav, active, onPick }: { nav: DxNavItem[]; active: string; onPick: (k: string) => void }) {
-  return (
-    <div className="dx-tabs">
-      {nav.map(t => (
-        <button
-          key={t.key}
-          type="button"
-          className="dx-tab"
-          aria-current={t.key === active ? 'page' : undefined}
-          onClick={() => onPick(t.key)}
-        >
-          {t.label}
-        </button>
-      ))}
-    </div>
-  )
-}
-
 export function CaseTriageScreen() {
   const router = useNav()
   const onNav: Nav = v => router.navigate(v)
@@ -89,9 +76,8 @@ export function CaseTriageScreen() {
   const [caseText, setCaseText] = useState('')
   const [stage, setStage] = useState<Stage>('idle')
   const [error, setError] = useState<string | null>(null)
-  const [approach, setApproach] = useState<DxApproach | null>(null)
+  const [flow, setFlow] = useState<Block[] | null>(null)
   const [caseSummary, setCaseSummary] = useState('')
-  const [activeTab, setActiveTab] = useState('differentials')
 
   const busy = stage === 'extracting' || stage === 'synthesizing'
 
@@ -100,7 +86,7 @@ export function CaseTriageScreen() {
     if (!text || busy) return
     setStage('extracting')
     setError(null)
-    setApproach(null)
+    setFlow(null)
     try {
       const signals = await extractSignals({ caseText: text })
       const inputs: SearchInputs = {
@@ -117,8 +103,7 @@ export function CaseTriageScreen() {
       setCaseSummary(signals.caseSummary)
 
       if (top.length === 0) {
-        setApproach(buildCaseApproach([], { rationales: [], historyQuestions: [], diagnostics: [] }))
-        setActiveTab('differentials')
+        setFlow(buildCaseFlow([], { rationales: [], historyQuestions: [], diagnostics: [] }))
         setStage('done')
         return
       }
@@ -135,8 +120,7 @@ export function CaseTriageScreen() {
         score: t.score,
       }))
       const synthesis = await synthesizeCase({ caseText: text, candidates })
-      setApproach(buildCaseApproach(top, synthesis))
-      setActiveTab('differentials')
+      setFlow(buildCaseFlow(top, synthesis))
       setStage('done')
     } catch (e) {
       setError(caseTriageErrorMessage(e))
@@ -149,7 +133,7 @@ export function CaseTriageScreen() {
       <header style={s('margin-bottom:14px;')}>
         <h1 style={s('font-size:18px;font-weight:700;color:var(--white);margin:0 0 4px;')}>Case Triage</h1>
         <p style={s('font-size:12px;color:var(--gray2);line-height:1.5;margin:0;')}>
-          Describe the patient and presentation in your own words. The same differential-matching engine as Mix &amp; Match ranks real disease pages against it, then the model explains the ranking and suggests history and diagnostics.
+          Describe the patient and presentation in your own words. The same differential-matching engine as Mix &amp; Match ranks real disease pages against it, then the model explains the ranking and lays out a flowchart of history, differentials by category, and diagnostics.
         </p>
       </header>
 
@@ -170,15 +154,15 @@ export function CaseTriageScreen() {
         </div>
       )}
 
-      {approach && (
+      {flow && (
         <div style={s('margin-top:18px;')}>
           {caseSummary && (
             <div style={s('margin-bottom:12px;padding:9px 12px;border-radius:9px;background:var(--card);border:1px solid var(--border);color:var(--gray2);font-size:11.5px;line-height:1.5;')}>
               <span style={s('font-weight:700;color:var(--gray);')}>Parsed as: </span>{caseSummary}
             </div>
           )}
-          <LocalTabs nav={approach.nav ?? []} active={activeTab} onPick={setActiveTab} />
-          <DxTabBody tab={approach.tabs[activeTab] ?? approach.tabs.differentials} onNav={onNav} />
+          <div className="flow-wrap"><BlockList blocks={flow.filter(b => b.kind !== 'disclaimer')} onNav={onNav} /></div>
+          {flow.some(b => b.kind === 'disclaimer') && DISCLAIMER}
         </div>
       )}
     </div>
