@@ -1407,6 +1407,12 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const SAAVEDRA_CONTRAST_PRESSURES =
+  'Saavedra AD, Karnia J, Leach SB, et al. Effect of non-ionic contrast media on invasive pressure measurements during minimally invasive occlusion of patent ductus arteriosus and balloon valvuloplasty for valvular pulmonic stenosis in dogs. J Vet Cardiol. 2026;65:51-62. doi:10.1016/j.jvc.2026.02.003'
+const HUYNH_PLCVC_PBV =
+  'Huynh J, Benjamin EJ, Degarmo K, Baumwart R. Persistent left cranial vena cava and right cranial vena cava aplasia in a French bulldog and a Cavalier King Charles spaniel with severe pulmonic stenosis. J Vet Cardiol. 2024;56:50-55. doi:10.1016/j.jvc.2024.08.009'
+const YOO_PDA_THROMBOSIS =
+  'Yoo J, Seung Y, Chang D, Lee N. Spontaneous thrombotic occlusion of a patent ductus arteriosus in an adult dog. J Vet Intern Med. 2026;40(1):aalaf042. doi:10.1093/jvimsj/aalaf042'
 const SPYROPOULOU_CRYOGLOBULIN =
   'Spyropoulou M, Montanes-Sancho I, Gow AG, Bussey S. Cryoglobulinemia associated with multiple myeloma in a dog presenting with epistaxis and skin lesions. Vet Med Sci. 2024;10(6):e70084. doi:10.1002/vms3.70084'
 const HATCH_PERINEAL_HERNIA =
@@ -1696,6 +1702,7 @@ const SOURCE_NAMES = [
   // 'Hoe' is a strict PREFIX of 'Hoehne' and 'Hoel' — its branch carries a \\b guard.
   'Kunchur', 'Hoe', 'White', 'Xie',
   'Spyropoulou', 'Hatch',
+  'Saavedra', 'Huynh', 'Yoo',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -2143,6 +2150,9 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Saavedra/.test(part)) { out.push({ id: 'saavedra-contrast-pressures', text: SAAVEDRA_CONTRAST_PRESSURES }); continue }
+    if (/^Huynh/.test(part)) { out.push({ id: 'huynh-plcvc-pbv', text: HUYNH_PLCVC_PBV }); continue }
+    if (/^Yoo/.test(part)) { out.push({ id: 'yoo-pda-thrombosis', text: YOO_PDA_THROMBOSIS }); continue }
     if (/^Spyropoulou/.test(part)) { out.push({ id: 'spyropoulou-cryoglobulin', text: SPYROPOULOU_CRYOGLOBULIN }); continue }
     if (/^Hatch/.test(part)) { out.push({ id: 'hatch-perineal-hernia', text: HATCH_PERINEAL_HERNIA }); continue }
     if (/^Kunchur/.test(part)) { out.push({ id: 'kunchur-rta-review', text: KUNCHUR_RTA_REVIEW }); continue }

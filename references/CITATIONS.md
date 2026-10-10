@@ -6012,3 +6012,68 @@ that the edit reported success.
 
 `crammed-bullets` fell **1031 → 1029**: two of the rewrites split semicolon-joined
 bullets as a by-product. Baseline lowered.
+
+## Batch — DIS-CARD-PDA, DIS-CARD-PS (119 → 117)
+
+Both pages served partly by one reference.
+
+**Saavedra AD, Karnia J, Leach SB, et al. Effect of non-ionic contrast media on
+invasive pressure measurements during minimally invasive occlusion of patent
+ductus arteriosus and balloon valvuloplasty for valvular pulmonic stenosis in
+dogs. J Vet Cardiol. 2026;65:51-62. doi:10.1016/j.jvc.2026.02.003**
+
+- Prospective observational: **14 dogs** having PDA occlusion, **12** having
+  balloon valvuloplasty. Invasive pressures before iohexol, 60–90 s after, and
+  5 min after.
+- PDA group: diastolic and mean aortic pressure changed at t1, diastolic aortic
+  and peripheral arterial pressure at t2. PS group: main pulmonary artery
+  systolic pressure at t1. **Mean changes mostly did not reach significance, but
+  the 95% tolerance intervals were often clinically meaningful.**
+- The actionable conclusion is a sequencing one and goes on both pages: **take
+  invasive pressures before injecting contrast** if they will inform an
+  intra-operative decision.
+- Rule 2: the authors list their own limitations — small population, no
+  anaesthetic standardisation, no control group, one contrast brand — and the page
+  repeats them, framing this as a precaution rather than a measured effect size.
+  Reporting "iohexol raises aortic pressure by X" would misread a study whose own
+  point is the width of the tolerance interval.
+- Rule 6: Crossref print 2026-06, 65:51-62, no online date; PubMed 2026-02-23.
+  Print year used. 7 authors → first 3 + et al.
+
+**Yoo J, Seung Y, Chang D, Lee N. Spontaneous thrombotic occlusion of a patent
+ductus arteriosus in an adult dog. J Vet Intern Med. 2026;40(1):aalaf042.
+doi:10.1093/jvimsj/aalaf042**
+
+- 7-year-old Pomeranian with known PDA, presented with acute hindlimb paralysis.
+  Aortic thrombosis suspected; **spontaneous PDA thrombus found incidentally** on
+  echocardiography and CT, with protein-losing nephropathy as the hypercoagulable
+  driver. Died of progressive aortic thrombosis with renal infarction and AKI.
+- The page's `conf` said a reversed PDA has no continuous murmur. This adds the
+  other reason a known PDA can lose its murmur, and the page says plainly that the
+  finding was **a marker of the hypercoagulable state rather than a cure** — the
+  dog died. One case, framed as a consideration in a PDA dog with prothrombotic
+  disease and no audible murmur.
+- Rule 6: Crossref and PubMed both 2026, 40(1), article aalaf042. 4 authors → all.
+
+**Huynh J, Benjamin EJ, Degarmo K, Baumwart R. Persistent left cranial vena cava
+and right cranial vena cava aplasia in a French bulldog and a Cavalier King
+Charles spaniel with severe pulmonic stenosis. J Vet Cardiol. 2024;56:50-55.
+doi:10.1016/j.jvc.2024.08.009**
+
+- Two dogs referred for balloon valvuloplasty. A **dilated coronary sinus** on
+  transthoracic echocardiography suggested persistent left cranial vena cava; with
+  right cranial vena cava aplasia this defeats the standard right jugular
+  approach. **In both dogs the anomaly was missed despite a complete preoperative
+  workup** and found only after catheterisation.
+- The page's `conf` already flagged coronary arteriography in English Bulldogs and
+  Boxers (for the R2A coronary anomaly) but said nothing about **venous** anomalies
+  obstructing access. Added, with the specific echo tell.
+- Rule 2: two dogs, stated — recognising it beforehand would have changed the
+  approach and shortened anaesthesia, which is the claim, rather than any
+  frequency.
+- Rule 6: Crossref print 2024-12, 56:50-55; PubMed epub 2024-09-03. Print year
+  used. 4 authors → all listed.
+
+Resolver: new names Saavedra, Huynh, Yoo. No prefix collisions — the nearest
+existing names are 'Sabattini'/'Sarpong' and 'Hung', all diverging by the third
+character.
