@@ -1338,6 +1338,19 @@ describe('reference block', () => {
     expect(parseSources('Atkinson 2025')[0].text).toContain('immune-mediated polyarthritis')
   })
 
+  // Two DIFFERENT Steeles: feline HCM IGF-1 (2021) and canine pheochromocytoma (2025).
+  it('splits the two Steeles by year', () => {
+    expect(parseSources('Steele 2021')[0].text).toContain('insulin-like growth factor')
+    expect(parseSources('Steele 2025')[0].text).toContain('pheochromocytoma')
+    expect(parseSources('Steele')).toEqual([])
+    // 'Stee' must still not be swallowed by 'Steele'.
+    expect(parseSources('Stee 2023')[0].text).toContain('Bouvier des Ardennes')
+  })
+
+  it('resolves the thiamazole dosing paper', () => {
+    expect(parseSources('Tang 2026')[0].text).toContain('thiamazole')
+  })
+
   // "(AAHA/AAFP)" and "(ACVIM-preferred)" are prose qualifiers. A matched
   // parenthetical is replaced by its superscript, so treating one as a citation
   // deleted the text behind it.

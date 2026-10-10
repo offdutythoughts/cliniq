@@ -6191,3 +6191,74 @@ forbids writing a claim from a bibliographic record alone, and a comment with no
 retrievable abstract cannot be read. DIS-MSK-OA therefore stays paperless this
 round; the underlying pharmacovigilance study these comments argue about is the
 thing to find.
+
+## Batch — DIS-ENDO-HYPERTHY, DIS-ENDO-PHEO (113 → 111)
+
+### DIS-ENDO-HYPERTHY — Hyperthyroidism (cat)
+
+Previously left uncited because the only AAFP hit was a Letter with no abstract.
+
+**Tang PK, Lötter N, Geddes RF, et al. A predictive algorithm for the optimal
+daily dosage of thiamazole to control cats with hyperthyroidism. J Vet Intern
+Med. 2026;40(1):aalag009. doi:10.1093/jvimsj/aalag009**
+
+- **188 cats** for development (2011–2021), **45** for validation (2022–2024).
+  Outcome: controlled dose ≤5 mg vs >5 mg daily.
+- Independent predictors of needing **>5 mg**: higher baseline total T4
+  (OR 1.29 per 10 nmol/L, P<.001) and **lower** creatinine (OR 0.83 per
+  0.1 mg/dL, P=.02). AUC **0.92**. Validation accuracy 91.1%, sensitivity 84.2%,
+  specificity 96.2%.
+- The page already said to start low and titrate. This adds who will not stay
+  low, and the page flags **the counter-intuitive direction of the creatinine
+  term**: it is the cats with *better* renal values that tend to need the higher
+  dose, which runs against the instinct to go gently wherever there is any renal
+  concern. Written as a steer on the starting dose, not a replacement for
+  titration.
+- Rule 6: Crossref print 2026-01-21 with online 2026-02-03, 40(1), article
+  aalag009; PubMed 2026. 7 authors → first 3 + et al.
+
+### DIS-ENDO-PHEO — Phaeochromocytoma
+
+**Steele MME, van den Berg MF, Galac S, et al. A multicenter, retrospective
+analysis of long-term survival in 255 dogs with pheochromocytoma treated with
+alpha-adrenoreceptor antagonists or surgery (2010-2021). J Vet Intern Med.
+2025;39(5):e70220. doi:10.1111/jvim.70220**
+
+- **255 dogs**, 40 authors, many centres. Alpha-blocker without adrenalectomy
+  n=75; adrenalectomy ± alpha-blocker n=128; neither n=52.
+- Median overall survival **854 days** overall; **927 days** with adrenalectomy
+  against **247 days** on alpha-blockade alone (P<0.001).
+- **Presurgical alpha-blockade: 88/92 (97.8%) survived to discharge vs 23/27
+  (85.2%) without (P=0.03)** — which corroborates the page's existing "6× more
+  likely to survive" claim from a different and much larger dataset.
+- Absence of clinical signs at presentation predicted longer survival, overall
+  (HR 0.5, 95% CI 0.3–0.9) and within the surgical group (HR 0.3, 95% CI 0.1–0.7).
+- **The survival comparison is the part that needs care and the page says so.**
+  It is retrospective and not randomised, and dogs fit enough for adrenalectomy
+  are not the same dogs as those managed medically. The page frames 927 vs 247
+  days as the ceiling surgery can reach rather than the gain surgery produces.
+  The authors' own conclusion states the association, not causation.
+- Rule 6: Crossref print 2025-09-01, 39(5), article jvim70220; PubMed 2025,
+  e70220. 40 authors → first 3 + et al.
+
+### Resolver — a third same-surname pair
+
+`Steele` is now year-keyed: **Steele MM** on feline HCM IGF-1 (2021) and
+**Steele MME** on canine phaeochromocytoma (2025) are different authors. Locked
+by a test that also re-asserts the existing `Stee`/`Steele` prefix guard still
+holds, since that pair was added earlier in this pass. Year-keyed authors now 30.
+
+### Process note — two misses in one batch, both from script ordering
+
+The first attempt bundled both pages into one editor script. The DIS-ENDO-HYPERTHY
+pair targeted `|Radioiodine (I-131)…`, but that text begins `#Radioiodine` at the
+**start of tx2**, so there is no preceding pipe — the editor raised `MISS`. Because
+it raised on the first page, **the DIS-ENDO-PHEO edits in the same script never
+ran**, and the failure was silent in the sense that the following commands
+proceeded: the baseline was lowered to 111 while only one page had actually
+changed, and `report-refs` then failed with "112 — up from the baseline of 111".
+
+The ratchet caught it. Two habits worth keeping: put each page's edits in their
+own script invocation so one miss cannot swallow another page's work, and treat a
+ratchet that reads *above* the baseline just after lowering it as evidence the
+edit did not apply, rather than as a count to adjust.

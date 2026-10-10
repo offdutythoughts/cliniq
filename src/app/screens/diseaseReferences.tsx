@@ -1407,6 +1407,10 @@ const ZEUGSWETTER_FELINE_DKA_GLARGINE =
   'Zeugswetter FK, Luckschander-Zeller N, Karlovits S, Rand JS. Glargine versus regular insulin protocol in feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2021;31(4):459-468. doi:10.1111/vec.13062'
 const GANT_DKA_INFUSION =
   'Gant P, Barfield D, Florey J. Comparison of insulin infusion protocols for management of canine and feline diabetic ketoacidosis. J Vet Emerg Crit Care (San Antonio). 2024;34(1):23-30. doi:10.1111/vec.13354'
+const TANG_THIAMAZOLE_DOSE =
+  'Tang PK, Lötter N, Geddes RF, et al. A predictive algorithm for the optimal daily dosage of thiamazole to control cats with hyperthyroidism. J Vet Intern Med. 2026;40(1):aalag009. doi:10.1093/jvimsj/aalag009'
+const STEELE_PHEO_SURVIVAL =
+  'Steele MME, van den Berg MF, Galac S, et al. A multicenter, retrospective analysis of long-term survival in 255 dogs with pheochromocytoma treated with alpha-adrenoreceptor antagonists or surgery (2010-2021). J Vet Intern Med. 2025;39(5):e70220. doi:10.1111/jvim.70220'
 const ATKINSON_IMPA_IMAGING =
   'Atkinson L, Schiborra F, O’Connell E, Barton J, Humphreys W. Thoracic and abdominal diagnostic imaging findings in dogs diagnosed with immune-mediated polyarthritis: 71 cases (2011-2023). J Small Anim Pract. 2025;66(4):272-279. doi:10.1111/jsap.13818'
 const TJOSTHEIM_SAS_SOTALOL =
@@ -1711,6 +1715,7 @@ const SOURCE_NAMES = [
   'Saavedra', 'Huynh', 'Yoo',
   'Tjostheim', 'Iuliani',
   'Atkinson',
+  'Tang',
 ] as const
 const SOURCE_ALT = SOURCE_NAMES.join('|')
 
@@ -1760,6 +1765,12 @@ const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
 // Keyed on the year, like the two Chans.
 // Fabiana H G Farias, same author, two papers: the 2010 ADAMTS17 primary lens
 // luxation mutation and the 2024 Basenji Fanconi deletion.
+// Two DIFFERENT Steeles: Steele MM on feline HCM IGF-1 (2021) and Steele MME on
+// canine pheochromocytoma survival (2025). Keyed on the year.
+const STEELE_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2021': { id: 'steele-igf1', text: STEELE_IGF1 },
+  '2025': { id: 'steele-pheo-survival', text: STEELE_PHEO_SURVIVAL },
+}
 const FARIAS_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2010': { id: 'farias-pll', text: FARIAS_PLL },
   '2024': { id: 'farias-basenji-fanconi', text: FARIAS_BASENJI_FANCONI },
@@ -2061,7 +2072,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Bookbinder/.test(part)) { out.push({ id: 'bookbinder-lp', text: BOOKBINDER_LP }); continue }
     if (/^Milovancev/.test(part)) { out.push({ id: 'milovancev-metoclopramide', text: MILOVANCEV_METOCLOPRAMIDE }); continue }
     if (/^Ogden/.test(part)) { out.push({ id: 'ogden-cisapride', text: OGDEN_CISAPRIDE }); continue }
-    if (/^Steele/.test(part)) { out.push({ id: 'steele-igf1', text: STEELE_IGF1 }); continue }
+    if (/^Steele/.test(part)) {
+      const hit = STEELE_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Rush/.test(part)) { out.push({ id: 'rush-hcm', text: RUSH_HCM }); continue }
     if (/^Fox/.test(part)) { out.push({ id: 'fox-reveal', text: FOX_REVEAL }); continue }
     if (/^Hogan/.test(part)) { out.push({ id: 'hogan-fat-cat', text: HOGAN_FAT_CAT }); continue }
@@ -2158,6 +2173,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Uno/.test(part)) { out.push({ id: 'uno-spinal-meningioma-rt', text: UNO_SPINAL_MENINGIOMA_RT }); continue }
     if (/^Zeugswetter/.test(part)) { out.push({ id: 'zeugswetter-feline-dka-glargine', text: ZEUGSWETTER_FELINE_DKA_GLARGINE }); continue }
     if (/^Gant/.test(part)) { out.push({ id: 'gant-dka-infusion', text: GANT_DKA_INFUSION }); continue }
+    if (/^Tang/.test(part)) { out.push({ id: 'tang-thiamazole-dose', text: TANG_THIAMAZOLE_DOSE }); continue }
     if (/^Atkinson/.test(part)) { out.push({ id: 'atkinson-impa-imaging', text: ATKINSON_IMPA_IMAGING }); continue }
     if (/^Tjostheim/.test(part)) { out.push({ id: 'tjostheim-sas-sotalol', text: TJOSTHEIM_SAS_SOTALOL }); continue }
     if (/^Iuliani/.test(part)) { out.push({ id: 'iuliani-ie-fistula', text: IULIANI_IE_FISTULA }); continue }
