@@ -33,7 +33,11 @@ const FIELDS = ['conf', 'supp', 'tx1', 'tx2', 'monitor', 'prog', 'pearl'] as con
 const CLAIMS: { pattern: RegExp; why: string }[] = [
   { pattern: /\bexcellent (?:results?|outcomes?|prognosis|success)\b/i, why: 'superlative outcome claim' },
   { pattern: /\btreatment of choice\b/i, why: 'asserts primacy over alternatives' },
-  { pattern: /\b(?:is|are) curative\b|\bpotentially curative\b|\bdefinitive (?:treatment|therapy|cure)\b/i, why: 'cure claim' },
+  // "definitive treatment" must be ASSERTED of something, not used as a category
+  // noun. "Staging before definitive treatment", "where definitive treatment is
+  // declined" and "without definitive therapy" name a class of therapy; they
+  // claim nothing and need no source.
+  { pattern: /\b(?:is|are) curative\b|\bpotentially curative\b|(?:—\s*|\b(?:is|are|remains)\s+(?:the\s+)?)definitive (?:treatment|therapy|cure)\b/i, why: 'cure claim' },
   { pattern: /\b(?:significantly|markedly) (?:improves?|increases?|reduces?|extends?|prolongs?)\b/i, why: 'claims a significant effect' },
   { pattern: /\bmost effective\b|\bsuperior to\b|\bbest outcomes?\b/i, why: 'comparative efficacy claim' },
   { pattern: /\breliably (?:resolves?|controls?|prevents?|corrects?)\b/i, why: 'reliability claim' },
@@ -51,7 +55,10 @@ const CLAIMS: { pattern: RegExp; why: string }[] = [
 //   bare /\bdefinitive\b/ — 48 hits, overwhelmingly "definitive" about a
 //     DIAGNOSTIC test ("biopsy + histopathology (definitive)"), which is a
 //     statement about what confirms a diagnosis rather than about efficacy.
-//     Narrowed to "definitive treatment/therapy/cure".
+//     Narrowed to an ASSERTION — "is/are/remains the definitive treatment", or a
+//     dash introducing it — so that the phrase used as a category noun does not
+//     fire. Getting this wrong left one false positive on DIS-NASAL-NEO
+//     ("where definitive treatment is declined") until it was tightened.
 
 /** Any of these makes the basis of the claim legible, so the lint stands down.
  *  A number counts: "62% good outcome (10/16 dogs)" is self-evidencing even
@@ -62,8 +69,16 @@ const NUMERIC = /\d+\s*%|\b\d+\s*(?:of|\/)\s*\d+\b|\bn\s*=\s*\d+/
 /** A NEGATED claim is the opposite of the problem. "No evidence that combination
  *  therapy is superior", "do NOT guarantee unaffected offspring" and "no
  *  pharmacological treatment reliably prevents episodes" are all careful writing,
- *  and firing on them would train the reader to ignore this lint. */
-const NEGATED = /\b(?:no|not|NOT|never|without|declined|rather than)\b/
+ *  and firing on them would train the reader to ignore this lint.
+ *
+ *  Checked in the 40 characters BEFORE the claim rather than anywhere in the
+ *  bullet. A blanket search was wrong in both directions: case-sensitively it
+ *  missed sentence-initial "No evidence…", and case-insensitively it swallowed
+ *  the DIS-EYE-DEEP-ULC pearl, where an unrelated "NEVER use topical steroids"
+ *  sits in the same bullet as a genuine "most effective" claim. */
+const NEGATED = /\b(?:no|not|never|without|declined|rather than|neither)\b/i
+const negatedBefore = (text: string, at: number): boolean =>
+  NEGATED.test(text.slice(Math.max(0, at - 40), at))
 
 /** "Superior to MRI for bony integrity", "FLAIR is superior to T2W" and
  *  "inferior to CT" compare what an imaging test can RESOLVE. That is a technical
@@ -82,9 +97,10 @@ for (const row of DB.disease_page as unknown as Record<string, unknown>[]) {
       if (!text || text.startsWith('#')) continue
       bullets++
       if (hasCitation(text) || HEDGED.test(text) || NUMERIC.test(text)) continue
-      if (NEGATED.test(text) || MODALITY.test(text)) continue
+      if (MODALITY.test(text)) continue
       for (const { pattern, why } of CLAIMS) {
-        if (pattern.test(text)) {
+        const m = pattern.exec(text)
+        if (m && !negatedBefore(text, m.index)) {
           offenders.push(`[${String(row.id)}] ${f} — ${why}\n      ${text.slice(0, 120)}`)
           break
         }

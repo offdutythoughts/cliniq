@@ -5932,3 +5932,83 @@ both zero), DIS-MET-HYPOGLY (declined reuse-matcher suggestion).
 Those 7 need a different approach than PubMed title/keyword queries — older
 pre-indexing literature, textbook-cited primary sources chased by hand, or
 non-PubMed databases. They are not simply unattempted.
+
+## Unhedged efficacy claims: 24 → 0
+
+Rule 2b cleared. Every efficacy claim in `conf`, `supp`, `tx1`, `tx2`, `monitor`,
+`prog` and `pearl` across 9,837 clinical bullets now carries a citation, a hedge,
+or a number. The ratchet sits at **0**, so the next bare superlative fails the
+build rather than joining a backlog.
+
+### Four were sourced from papers already on the page
+
+- **DIS-BD-HYPERCOAG** — "Clopidogrel (superior to aspirin)". `HOGAN_FAT_CAT`
+  was already in the resolver: the double-blind, randomised, positive-controlled
+  FAT CAT trial. But it is **in cats with cardiogenic arterial thromboembolism**,
+  and the dose on this page (10 mg/kg then 1–4 mg/kg) is canine. So the page now
+  splits it by species — the superiority claim is evidenced in cats, while in dogs
+  the preference is extrapolated from that feline trial and from pharmacology
+  rather than demonstrated. Attaching the trial without that split would have
+  implied canine evidence that does not exist.
+- **DIS-REPRO-PYO** — "definitive treatment" now carries Jones 2026's 604 of 625
+  dogs (96.6%) surviving to discharge.
+- **DIS-NEU-CRICOPHARYNGEAL** — "good to excellent prognosis" became "good
+  prognosis… 11 of 18 Spaniels resolved completely and 5 partially" from
+  Henderson 2026, which is also the second half of a fix started two batches ago.
+- **DIS-CARD-MVD** — "A murmur alone carries an excellent prognosis and does not
+  warrant treatment" now cites Keene 2019: the ACVIM consensus is what places an
+  untreated dog at stage B1, so this is a guideline position rather than an
+  impression.
+
+### One was an internal contradiction, not just an unsourced claim
+
+**DIS-NEO-ORAL-MEL** `prog` said "Surgery + Oncept ± radiation gives best outcome
+for Stage I–II" while the same page's `tx1` described the Oncept survival data as
+**conflicting**. The page was arguing with itself. `prog` now says the combination
+is the usual approach but is not an evidenced best option, and points at the
+conflicting-data line.
+
+### Eighteen had no available source and were hedged or attributed
+
+Six "treatment of choice" claims became "the standard first choice" or "the usual
+first choice" (DIS-HEP-MUCOCELE, DIS-INFECT-EHRLICH, DIS-NEU-BRAINTUM,
+DIS-NEU-PNST, DIS-SRMA, DIS-TOX-EG). Comparative and superlative claims became
+"reported as", "preferred over … on pharmacological grounds", or "widely regarded
+as" (DIS-EYE-CATARACT, DIS-EYE-OPTNEUR, DIS-EYE-DEEP-ULC, DIS-GI-MEGA,
+DIS-MSK-CCL, DIS-NEU-IVDD, DIS-NEU-TETANUS, DIS-VASC-HYPERVSC, DIS-EYE-ZYGO,
+DIS-RESP-MEDLYM, DIS-NEO-CHEMO, DIS-RESP-DH).
+
+**The clinical direction is unchanged in every one.** These are mostly true, and
+several would be easy to source with a dedicated search. What changed is that the
+reader can now see which rest on measurement and which on consensus practice —
+which was the point.
+
+### Two lint corrections found by working the list
+
+Fixing the claims exposed two defects in the lint itself, both of which would have
+cost trust:
+
+1. **Negation was checked across the whole bullet, case-sensitively.** That was
+   wrong in both directions. Case-sensitively it missed sentence-initial
+   "**No** evidence that combination therapy is superior" and "**No**
+   pharmacological treatment reliably prevents episodes" — careful writing, fired
+   on as if it were a claim. Made case-insensitive and blanket, it swallowed the
+   DIS-EYE-DEEP-ULC pearl, where an unrelated "NEVER use topical steroids" sits in
+   the same bullet as a genuine "most effective anti-collagenase" claim. Now
+   anchored: negation is only honoured in the **40 characters before the match**.
+2. **"definitive treatment" fired on the phrase used as a category noun.** The
+   narrowing recorded in an earlier entry had never actually applied — the escaped
+   replacement silently did not match, so the broad pattern was live the whole
+   time. It left one false positive on DIS-NASAL-NEO ("where definitive treatment
+   is declined"). The pattern now requires an assertion — "is/are/remains the
+   definitive treatment", or a dash introducing it.
+
+The second is worth dwelling on: a lint can carry a comment describing behaviour
+it does not have. The comment said "narrowed to definitive treatment/therapy/cure"
+and the code said otherwise for several batches. Verify the count moved, not just
+that the edit reported success.
+
+### Side effect
+
+`crammed-bullets` fell **1031 → 1029**: two of the rewrites split semicolon-joined
+bullets as a by-product. Baseline lowered.
