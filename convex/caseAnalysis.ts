@@ -8,8 +8,10 @@
 //                     searchDiseases() already expects (species/breed/age/sex/
 //                     sign & diagnostic keywords).
 //   synthesizeCase    the case text + the top-N disease rows the deterministic
-//                     engine actually matched → a rationale per match, a short
-//                     list of discriminating history questions, and a
+//                     engine actually matched → the one feature that sets
+//                     each match apart from the others, a short list of
+//                     YES/NO history questions (each tagged with the
+//                     differentials either answer favours), and a
 //                     prioritized diagnostics list — grounded in the given
 //                     rows' own authored `signs`/`conf`/`supp` fields, not
 //                     invented from scratch.
@@ -73,6 +75,11 @@ async function callGroq(prompt: string): Promise<unknown> {
         // own "Failed to validate JSON" 400 turned out to be. `hidden` drops
         // the reasoning channel entirely; we only want the final JSON.
         reasoning_format: "hidden",
+        // Hidden reasoning still spends the completion budget — with no cap
+        // and default effort it could exhaust it before the JSON finished
+        // (Groq 400 "max completion tokens reached").
+        reasoning_effort: "low",
+        max_completion_tokens: 8192,
         temperature: 0.2,
       }),
     });
@@ -186,9 +193,17 @@ export type SynthesisCandidate = {
   score: number;
 };
 
+/** One YES/NO history question. `yes`/`no` are the diseaseIds that answer
+ *  makes MORE likely — what lets each fork leg narrow the differential list. */
+export type HistoryQuestion = { question: string; yes: string[]; no: string[] };
+
 export type CaseSynthesis = {
+  /** `rationale` is the differential's key DISCRIMINATOR against the other
+   *  candidates (e.g. "petechiae/ecchymoses"), not a restatement of the
+   *  case signs every candidate shares. Field name kept for compatibility. */
   rationales: { diseaseId: string; rationale: string }[];
-  historyQuestions: string[];
+  /** Plain strings come from a backend deployed before HistoryQuestion. */
+  historyQuestions: (HistoryQuestion | string)[];
   diagnostics: { label: string; tier: "minimum" | "confirmatory"; diseaseIds: string[] }[];
 };
 
@@ -210,14 +225,17 @@ ${caseText}
 Candidate differentials (already ranked most → least likely):
 ${rows}
 
-For EACH differential above (by its exact diseaseId), write one sentence tying specific details from the case notes to why it fits (or partially fits) — ground it only in the "signs"/"confirmatory dx"/"supportive dx" fields given and the case text. Never invent a fact not present in either.
+DISCRIMINATORS. For EACH differential above (by its exact diseaseId), give its single key DISCRIMINATOR: the one clinical sign, exam finding or lab finding (max 8 words) that separates it from the OTHER differentials in this list — e.g. "petechiae/ecchymoses; prolonged PT" for anticoagulant rodenticide toxicosis among GI causes of haematochezia. Never restate a sign the case already shows or that the other differentials share (hematochezia, lethargy, inappetence when every candidate has them) — that separates nothing. Ground it in the "signs"/"confirmatory dx"/"supportive dx" fields given; never invent a fact. No sentence, no "matches the case" — just the feature.
 
-Then propose 3-6 ADDITIONAL history questions that would help discriminate between these specific top differentials — each should plausibly separate at least two of them, not a generic question.
+HISTORY QUESTIONS. Then propose 3-6 YES/NO history questions that narrow THESE differentials. For each, list the diseaseIds a YES makes more likely ("yes") and the diseaseIds a NO makes more likely ("no"); every question must move at least one differential, and a diseaseId never appears on both sides.
+- Order them from MOST GENERAL to most specific. The first question should be the broadest split — systemic/concurrent signs that separate whole aetiology categories (e.g. fever → infectious; vomiting → GI involvement; watery vs bloody diarrhoea) — before exposure-specific questions about one disease.
+- Always consider, where they would separate any of these differentials: population history (large litter, littermates or other in-contact animals affected, shelter/breeder/pet-store origin, kennel or dog-park contact) and travel history (travel to or origin from a region endemic for a candidate disease).
+- Also consider vaccination/deworming status, toxin access, and recent medications where relevant.
 
 Then propose a prioritized diagnostics list drawn ONLY from the "confirmatory dx"/"supportive dx" fields given above, deduplicated across differentials, each tagged tier "minimum" (first-line/inexpensive) or "confirmatory" (definitive), and tagged with the exact diseaseId(s) (from the list above) it helps confirm or rule out — this is what groups diagnostics under the right category in the flowchart, so it must be accurate, not a guess.
 
 Respond with ONLY a JSON object of exactly this shape:
-{"rationales":[{"diseaseId":"DIS-EXAMPLE","rationale":"..."}],"historyQuestions":["..."],"diagnostics":[{"label":"...","tier":"minimum","diseaseIds":["DIS-EXAMPLE"]}]}`;
+{"rationales":[{"diseaseId":"DIS-EXAMPLE","rationale":"..."}],"historyQuestions":[{"question":"...","yes":["DIS-EXAMPLE"],"no":[]}],"diagnostics":[{"label":"...","tier":"minimum","diseaseIds":["DIS-EXAMPLE"]}]}`;
 }
 
 export const synthesizeCase = action({
@@ -259,7 +277,18 @@ export const synthesizeCase = action({
       .filter((r): r is { diseaseId: string; rationale: string } =>
         !!r && typeof r === "object" && validIds.has((r as Record<string, unknown>).diseaseId as string),
       )
-      .map((r) => ({ diseaseId: r.diseaseId, rationale: clampStr(r.rationale, 300) }));
+      .map((r) => ({ diseaseId: r.diseaseId, rationale: clampStr(r.rationale, 120) }));
+
+    const historyQuestions = (Array.isArray(raw.historyQuestions) ? raw.historyQuestions : [])
+      .filter((q): q is Record<string, unknown> => !!q && typeof q === "object")
+      .map((q) => {
+        const yes = clampArr(q.yes, MAX_CANDIDATES).filter((id) => validIds.has(id));
+        const yesSet = new Set(yes);
+        const no = clampArr(q.no, MAX_CANDIDATES).filter((id) => validIds.has(id) && !yesSet.has(id));
+        return { question: clampStr(q.question, 200), yes: [...yesSet], no: [...new Set(no)] };
+      })
+      .filter((q) => q.question.length > 0 && q.yes.length + q.no.length > 0)
+      .slice(0, 6);
 
     const diagnostics = (Array.isArray(raw.diagnostics) ? raw.diagnostics : [])
       .filter((d): d is Record<string, unknown> => !!d && typeof d === "object")
@@ -273,7 +302,7 @@ export const synthesizeCase = action({
 
     return {
       rationales,
-      historyQuestions: clampArr(raw.historyQuestions, 6).map((q) => clampStr(q, 200)),
+      historyQuestions,
       diagnostics,
     };
   },

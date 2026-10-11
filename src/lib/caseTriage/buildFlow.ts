@@ -5,10 +5,13 @@
 // more flowchart in this app, not a bespoke widget:
 //
 //   entry (case summary)
-//     → suggested history, each question as a step + a YES/NO fork
+//     → suggested history, each question as a step + a YES/NO fork whose
+//       legs list the differentials that answer makes more likely; questions
+//       spanning the most aetiology categories come first (general → specific)
 //     → one branch arm per aetiology category present in the ranked
 //       differentials (most-likely category first), each arm holding its
-//       differentials as linked endpoint tiles (rationale in the sublabel)
+//       differentials as linked endpoint tiles (key discriminator in the
+//       sublabel)
 //       followed by that category's own suggested-diagnostics panel
 //     → disclaimer
 //
@@ -24,9 +27,9 @@
 // renders as the text it is. Disease names/ids come from `db.ts` (authored,
 // trusted) and are never escaped — same as every other caller of these blocks.
 
-import type { Block, Tone } from '../signs/flowTypes'
+import type { Block, ForkLeg, Tone } from '../signs/flowTypes'
 import type { DiseaseResult } from '../search/diseaseSearch'
-import type { CaseSynthesis } from '../../../convex/caseAnalysis'
+import type { CaseSynthesis, HistoryQuestion } from '../../../convex/caseAnalysis'
 
 function escapeHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -68,10 +71,32 @@ function diagnosticsHtml(items: DiagnosticItem[]): string {
 
 export function buildCaseFlow(top: DiseaseResult[], synthesis: CaseSynthesis): Block[] {
   const rationaleById = new Map(synthesis.rationales.map(r => [r.diseaseId, r.rationale]))
+  const byId = new Map(top.map(t => [String(t.disease.id), t]))
 
-  const historyBlocks: Block[] = synthesis.historyQuestions.flatMap((q): Block[] => [
-    { kind: 'node', variant: 'sub-step', text: escapeHtml(q) },
-    { kind: 'fork', legs: [{ label: 'YES' }, { label: 'NO' }] },
+  // A question that splits whole aetiology categories (fever → infectious) is
+  // more general than one that moves a single disease, so it goes first. Stable
+  // sort: the model's own general → specific order breaks ties.
+  const questions: HistoryQuestion[] = synthesis.historyQuestions
+    .map(q => (typeof q === 'string' ? { question: q, yes: [], no: [] } : q))
+  const breadth = (q: HistoryQuestion) =>
+    new Set([...q.yes, ...q.no].map(id => byId.get(id)?.category).filter(Boolean)).size
+  const ordered = questions
+    .map((q, i) => ({ q, i, b: breadth(q) }))
+    .sort((a, b) => b.b - a.b || a.i - b.i)
+    .map(x => x.q)
+
+  const leg = (label: string, ids: string[]): ForkLeg => {
+    const names = ids.map(id => byId.get(id)).filter(t => !!t).map(t => String(t!.disease.name))
+    return names.length > 0
+      ? { label, tone: 'neutral', sub: 'More likely:', subItems: names }
+      : { label, tone: 'neutral', sub: "Doesn't narrow the list" }
+  }
+  const historyBlocks: Block[] = ordered.flatMap((q): Block[] => [
+    { kind: 'node', variant: 'sub-step', text: escapeHtml(q.question) },
+    {
+      kind: 'fork',
+      legs: q.yes.length + q.no.length > 0 ? [leg('YES', q.yes), leg('NO', q.no)] : [{ label: 'YES' }, { label: 'NO' }],
+    },
   ])
 
   if (top.length === 0) {
@@ -110,7 +135,8 @@ export function buildCaseFlow(top: DiseaseResult[], synthesis: CaseSynthesis): B
           const rationale = rationaleById.get(String(d.disease.id))
           return {
             label: String(d.disease.name),
-            sublabel: rationale ? escapeHtml(rationale) : undefined,
+            // Endpoint sublabels render as plain React text, not HTML — no escaping.
+            sublabel: rationale || undefined,
             tone,
             link: { to: 'disease' as const, id: String(d.disease.id) },
           }

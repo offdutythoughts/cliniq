@@ -18,8 +18,12 @@
 //      rendered by the exact same spine/connector engine (`BlockList`) every
 //      authored sign flow uses, so this reads as one more flowchart in the
 //      app rather than a bespoke results widget.
+//
+// The screen unmounts when the reader opens a differential, so the last result
+// (and scroll position) is kept in `lastResult` + sessionStorage and restored
+// on mount — going back lands on the same flowchart, not an empty form.
 
-import { useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useAction } from 'convex/react'
 import { ConvexError } from 'convex/values'
 import { api } from '../../../convex/_generated/api'
@@ -56,6 +60,27 @@ function caseTriageErrorMessage(e: unknown): string {
   return 'Something went wrong analyzing this case.'
 }
 
+type SavedResult = { caseText: string; flow: Block[] | null; caseSummary: string; scrollTop: number }
+
+const STORAGE_KEY = 'cliniq.caseTriage.last'
+// In-memory copy first: sessionStorage can throw or be empty (private mode,
+// blocked storage), and in-app back navigation never needs to touch it.
+let lastResult: SavedResult | null = null
+
+function loadSaved(): SavedResult | null {
+  if (lastResult) return lastResult
+  try {
+    const raw = sessionStorage.getItem(STORAGE_KEY)
+    if (raw) lastResult = JSON.parse(raw) as SavedResult
+  } catch { /* storage unavailable or corrupt — start empty */ }
+  return lastResult
+}
+
+function save(r: SavedResult) {
+  lastResult = r
+  try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(r)) } catch { /* in-memory copy still serves back-nav */ }
+}
+
 const TEXTAREA_STYLE = s(
   'width:100%;box-sizing:border-box;min-height:140px;resize:vertical;padding:10px 12px;'
   + 'border-radius:10px;border:1px solid var(--border);background:var(--navy3);'
@@ -73,11 +98,30 @@ export function CaseTriageScreen() {
   const extractSignals = useAction(api.caseAnalysis.extractSignals)
   const synthesizeCase = useAction(api.caseAnalysis.synthesizeCase)
 
-  const [caseText, setCaseText] = useState('')
-  const [stage, setStage] = useState<Stage>('idle')
+  const [saved] = useState(loadSaved)
+  const [caseText, setCaseText] = useState(saved?.caseText ?? '')
+  const [stage, setStage] = useState<Stage>(saved?.flow ? 'done' : 'idle')
   const [error, setError] = useState<string | null>(null)
-  const [flow, setFlow] = useState<Block[] | null>(null)
-  const [caseSummary, setCaseSummary] = useState('')
+  const [flow, setFlow] = useState<Block[] | null>(saved?.flow ?? null)
+  const [caseSummary, setCaseSummary] = useState(saved?.caseSummary ?? '')
+  const rootRef = useRef<HTMLDivElement>(null)
+
+  // Persist on every change; capture the scroll position on unmount (i.e. when
+  // a differential is opened) so back-nav returns to the same spot.
+  useEffect(() => {
+    save({ caseText, flow, caseSummary, scrollTop: lastResult?.scrollTop ?? 0 })
+  }, [caseText, flow, caseSummary])
+  // Restore in a plain effect: it runs after AppShell's layout-effect reset to
+  // the top. Capture in a LAYOUT cleanup: on navigation that runs before the
+  // reset, so it still sees where the reader was.
+  useEffect(() => {
+    const scroller = rootRef.current?.closest('.screen')
+    if (scroller && saved?.flow && saved.scrollTop) scroller.scrollTop = saved.scrollTop
+  }, [saved])
+  useLayoutEffect(() => {
+    const scroller = rootRef.current?.closest('.screen')
+    return () => { if (lastResult) save({ ...lastResult, scrollTop: scroller?.scrollTop ?? 0 }) }
+  }, [])
 
   const busy = stage === 'extracting' || stage === 'synthesizing'
 
@@ -87,6 +131,7 @@ export function CaseTriageScreen() {
     setStage('extracting')
     setError(null)
     setFlow(null)
+    setCaseSummary('')
     try {
       const signals = await extractSignals({ caseText: text })
       const inputs: SearchInputs = {
@@ -129,7 +174,7 @@ export function CaseTriageScreen() {
   }
 
   return (
-    <div style={s('padding-bottom:24px;')}>
+    <div ref={rootRef} style={s('padding-bottom:24px;')}>
       <header style={s('margin-bottom:14px;')}>
         <h1 style={s('font-size:18px;font-weight:700;color:var(--white);margin:0 0 4px;')}>Case Triage</h1>
         <p style={s('font-size:12px;color:var(--gray2);line-height:1.5;margin:0;')}>
