@@ -83,10 +83,10 @@ function save(r: SavedResult) {
 const TEXTAREA_STYLE = s(
   'width:100%;box-sizing:border-box;min-height:140px;resize:vertical;padding:10px 12px;'
   + 'border-radius:10px;border:1px solid var(--border);background:var(--navy3);'
-  + 'color:var(--white);font-size:13px;line-height:1.5;font-family:inherit;outline:none;',
+  + 'color:var(--white);font-size:var(--fs-subhead);line-height:1.5;font-family:inherit;outline:none;',
 )
 const BUTTON_STYLE = (disabled: boolean) => s(
-  `margin-top:10px;padding:9px 16px;border-radius:9px;border:none;font-size:12px;font-weight:700;`
+  `margin-top:10px;padding:9px 16px;border-radius:9px;border:none;font-size:var(--fs-subhead);font-weight:700;`
   + `cursor:${disabled ? 'default' : 'pointer'};opacity:${disabled ? 0.5 : 1};`
   + `background:var(--teal);color:var(--navy);`,
 )
@@ -175,8 +175,8 @@ export function CaseTriageScreen() {
   return (
     <div ref={rootRef} style={s('padding-bottom:24px;')}>
       <header style={s('margin-bottom:14px;')}>
-        <h1 style={s('font-size:18px;font-weight:700;color:var(--white);margin:0 0 4px;')}>Case Triage</h1>
-        <p style={s('font-size:12px;color:var(--gray2);line-height:1.5;margin:0;')}>
+        <h1 style={s('font-size:var(--fs-title);font-weight:700;color:var(--white);margin:0 0 4px;')}>Case Triage</h1>
+        <p style={s('font-size:var(--fs-subhead);color:var(--gray2);line-height:1.5;margin:0;')}>
           Describe the patient and presentation in your own words. The same differential-matching engine as Mix &amp; Match ranks real disease pages against it, then lays out a workup chart: the history, exam, minimum-database and confirmatory findings that separate each differential.
         </p>
       </header>
@@ -193,7 +193,7 @@ export function CaseTriageScreen() {
       </button>
 
       {error && (
-        <div style={s('margin-top:12px;padding:10px 12px;border-radius:9px;background:rgba(var(--tone-danger),0.12);border:1px solid rgba(var(--tone-danger),0.4);color:var(--tone-danger-fg);font-size:12px;line-height:1.5;')}>
+        <div style={s('margin-top:12px;padding:10px 12px;border-radius:9px;background:rgba(var(--tone-danger),0.12);border:1px solid rgba(var(--tone-danger),0.4);color:var(--tone-danger-fg);font-size:var(--fs-subhead);line-height:1.5;')}>
           {error}
         </div>
       )}
@@ -201,12 +201,12 @@ export function CaseTriageScreen() {
       {flow && (
         <div style={s('margin-top:18px;')}>
           {caseSummary && (
-            <div style={s('margin-bottom:12px;padding:9px 12px;border-radius:9px;background:var(--card);border:1px solid var(--border);color:var(--gray2);font-size:11.5px;line-height:1.5;')}>
+            <div style={s('margin-bottom:12px;padding:9px 12px;border-radius:9px;background:var(--card);border:1px solid var(--border);color:var(--gray2);font-size:var(--fs-body);line-height:1.5;')}>
               <span style={s('font-weight:700;color:var(--gray);')}>Parsed as: </span>{caseSummary}
             </div>
           )}
           {flow.rows.length === 0 ? (
-            <div style={s('padding:10px 12px;border-radius:9px;background:rgba(var(--tone-info),0.12);border:1px solid rgba(var(--tone-info),0.4);color:var(--tone-info-fg);font-size:12px;line-height:1.5;')}>
+            <div style={s('padding:10px 12px;border-radius:9px;background:rgba(var(--tone-info),0.12);border:1px solid rgba(var(--tone-info),0.4);color:var(--tone-info-fg);font-size:var(--fs-subhead);line-height:1.5;')}>
               <strong>No matching differentials found.</strong> Try adding more clinical detail — species, breed, age, and specific signs all sharpen the match.
             </div>
           ) : (

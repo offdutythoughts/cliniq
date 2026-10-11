@@ -59,7 +59,7 @@ export function CaseLaneChart({ chart, onNav }: { chart: LaneChart; onNav: Nav }
           <div key={label} style={{ gridColumn: `${i + 1}`, gridRow: '1', ...s(`padding:0 ${PAD - 4}px;z-index:2;`) }}>
             <div
               style={s(
-                'background:var(--gray2);color:var(--navy);font-size:10.5px;font-weight:800;letter-spacing:.03em;'
+                'background:var(--gray2);color:var(--navy);font-size:var(--fs-chip);font-weight:800;letter-spacing:.03em;'
                 + 'text-align:center;padding:7px 14px;line-height:1.2;'
                 + (i < COLS - 1
                   ? 'clip-path:polygon(0 0,calc(100% - 9px) 0,100% 50%,calc(100% - 9px) 100%,0 100%,9px 50%);'
@@ -92,7 +92,7 @@ export function CaseLaneChart({ chart, onNav }: { chart: LaneChart; onNav: Nav }
           >
             <div
               style={s(
-                `${box(finding.rgb)}color:${finding.color};width:100%;padding:7px 8px;font-size:11px;font-weight:600;`
+                `${box(finding.rgb)}color:${finding.color};width:100%;padding:7px 8px;font-size:var(--fs-box);font-weight:600;`
                 + 'line-height:1.35;text-align:center;display:flex;align-items:center;justify-content:center;overflow-wrap:break-word;hyphens:auto;',
               )}
             >
@@ -113,8 +113,8 @@ export function CaseLaneChart({ chart, onNav }: { chart: LaneChart; onNav: Nav }
                   `${box(h.rgb)}border-width:2px;color:${h.color};width:100%;padding:7px 9px;text-align:left;cursor:pointer;font-family:inherit;`,
                 )}
               >
-                <div style={s('font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;opacity:.75;')}>{row.category}</div>
-                <div style={s('font-size:12px;font-weight:700;line-height:1.3;margin-top:1px;')}>{row.name} ›</div>
+                <div style={s('font-size:var(--fs-chip-sub);font-weight:700;letter-spacing:.05em;text-transform:uppercase;opacity:.75;')}>{row.category}</div>
+                <div style={s('font-size:var(--fs-subhead);font-weight:700;line-height:1.3;margin-top:1px;')}>{row.name} ›</div>
               </button>
             </div>
           )
