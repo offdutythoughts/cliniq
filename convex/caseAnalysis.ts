@@ -197,6 +197,12 @@ export type SynthesisCandidate = {
  *  makes MORE likely — what lets each fork leg narrow the differential list. */
 export type HistoryQuestion = { question: string; yes: string[]; no: string[] };
 
+/** One row of the swimlane chart: the finding at each workup stage that points
+ *  to this differential and away from the others ("" = that stage doesn't
+ *  separate it). Rows sharing a finding use identical wording so the chart can
+ *  merge them into one box. */
+export type LaneRow = { diseaseId: string; history: string; exam: string; minDb: string; confirm: string };
+
 export type CaseSynthesis = {
   /** `rationale` is the differential's key DISCRIMINATOR against the other
    *  candidates (e.g. "petechiae/ecchymoses"), not a restatement of the
@@ -205,6 +211,8 @@ export type CaseSynthesis = {
   /** Plain strings come from a backend deployed before HistoryQuestion. */
   historyQuestions: (HistoryQuestion | string)[];
   diagnostics: { label: string; tier: "minimum" | "confirmatory"; diseaseIds: string[] }[];
+  /** Absent from backends deployed before the swimlane chart. */
+  lanes?: LaneRow[];
 };
 
 function synthesisPrompt(caseText: string, candidates: SynthesisCandidate[]): string {
@@ -234,8 +242,15 @@ HISTORY QUESTIONS. Then propose 3-6 YES/NO history questions that narrow THESE d
 
 Then propose a prioritized diagnostics list drawn ONLY from the "confirmatory dx"/"supportive dx" fields given above, deduplicated across differentials, each tagged tier "minimum" (first-line/inexpensive) or "confirmatory" (definitive), and tagged with the exact diseaseId(s) (from the list above) it helps confirm or rule out — this is what groups diagnostics under the right category in the flowchart, so it must be accurate, not a guess.
 
+LANES. Finally, for EACH differential, lay out the workup the way a swimlane diagnostic algorithm does (history → physical exam → minimum database → confirmatory test → diagnosis). For each stage give the ONE finding (max 8 words) at that stage that points to this differential and away from the others in the list, or "" if that stage doesn't separate it:
+- "history": a short question, e.g. "Rodenticide access?", "Unvaccinated; littermates affected?", "Travel to endemic region?".
+- "exam": a physical exam finding, e.g. "Petechiae, ecchymoses?", "Fever?".
+- "minDb": a CBC/biochemistry/urinalysis/fecal finding, e.g. "Prolonged PT", "Leukopenia/neutropenia", "Azotaemia, isosthenuria".
+- "confirm": the definitive test, drawn ONLY from the "confirmatory dx"/"supportive dx" fields given.
+When the same finding points to several differentials (e.g. fever for every infectious cause), write it with IDENTICAL wording on each of them — the chart merges identical adjacent findings into one box. Never use a sign every candidate shares.
+
 Respond with ONLY a JSON object of exactly this shape:
-{"rationales":[{"diseaseId":"DIS-EXAMPLE","rationale":"..."}],"historyQuestions":[{"question":"...","yes":["DIS-EXAMPLE"],"no":[]}],"diagnostics":[{"label":"...","tier":"minimum","diseaseIds":["DIS-EXAMPLE"]}]}`;
+{"lanes":[{"diseaseId":"DIS-EXAMPLE","history":"...","exam":"...","minDb":"...","confirm":"..."}],"rationales":[{"diseaseId":"DIS-EXAMPLE","rationale":"..."}],"historyQuestions":[{"question":"...","yes":["DIS-EXAMPLE"],"no":[]}],"diagnostics":[{"label":"...","tier":"minimum","diseaseIds":["DIS-EXAMPLE"]}]}`;
 }
 
 export const synthesizeCase = action({
@@ -267,7 +282,7 @@ export const synthesizeCase = action({
       matchedTerms: clampArr(c.matchedTerms, 10),
     }));
     if (candidates.length === 0) {
-      return { rationales: [], historyQuestions: [], diagnostics: [] };
+      return { rationales: [], historyQuestions: [], diagnostics: [], lanes: [] };
     }
 
     const raw = (await callGroq(synthesisPrompt(caseText, candidates))) as Record<string, unknown>;
@@ -300,9 +315,29 @@ export const synthesizeCase = action({
       .filter((d) => d.label.length > 0 && d.diseaseIds.length > 0)
       .slice(0, 16);
 
+    const seen = new Set<string>();
+    const lanes = (Array.isArray(raw.lanes) ? raw.lanes : [])
+      .filter((r): r is Record<string, unknown> => !!r && typeof r === "object")
+      .filter((r) => {
+        const id = r.diseaseId as string;
+        if (!validIds.has(id) || seen.has(id)) return false;
+        seen.add(id);
+        return true;
+      })
+      .map((r) => ({
+        diseaseId: r.diseaseId as string,
+        history: clampStr(r.history, 100),
+        exam: clampStr(r.exam, 100),
+        minDb: clampStr(r.minDb, 100),
+        confirm: clampStr(r.confirm, 100),
+      }));
+
     return {
+      lanes,
       rationales,
-      historyQuestions,
+      // Plain strings: frontends built before HistoryQuestion call string
+      // methods on each entry, and prod's frontend ships separately.
+      historyQuestions: historyQuestions.map((q) => q.question),
       diagnostics,
     };
   },

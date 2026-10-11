@@ -12,12 +12,10 @@
 //      rows' own authored fields → a rationale per match, discriminating
 //      history questions, and a diagnostics list grounded in and tagged back
 //      to those rows.
-//   4. buildCaseFlow assembles a `Block[]` — history Y/N questions, then one
-//      branch arm per aetiology category present in the results, each arm
-//      holding its differentials and that category's own diagnostics —
-//      rendered by the exact same spine/connector engine (`BlockList`) every
-//      authored sign flow uses, so this reads as one more flowchart in the
-//      app rather than a bespoke results widget.
+//   4. buildCaseLanes lays the result out as a swimlane workup chart —
+//      History → Physical exam → Minimum database → Confirmatory test →
+//      Differential, one row per differential grouped by category, each lane
+//      holding only the finding that separates it — rendered by CaseLaneChart.
 //
 // The screen unmounts when the reader opens a differential, so the last result
 // (and scroll position) is kept in `lastResult` + sessionStorage and restored
@@ -28,10 +26,9 @@ import { useAction } from 'convex/react'
 import { ConvexError } from 'convex/values'
 import { api } from '../../../convex/_generated/api'
 import { searchDiseases, topDifferentials, type SearchInputs } from '../../lib/search/diseaseSearch'
-import { buildCaseFlow } from '../../lib/caseTriage/buildFlow'
-import type { Block } from '../../lib/signs/flowTypes'
+import { buildCaseLanes, type LaneChart } from '../../lib/caseTriage/buildLanes'
 import { useNav } from '../nav/NavContext'
-import { BlockList } from './FlowPageView'
+import { CaseLaneChart } from './CaseLaneChart'
 import { DISCLAIMER } from './sharedBlocks'
 import { type Nav } from './flowHelpers'
 import { styleStringToObject as s } from './style'
@@ -60,9 +57,11 @@ function caseTriageErrorMessage(e: unknown): string {
   return 'Something went wrong analyzing this case.'
 }
 
-type SavedResult = { caseText: string; flow: Block[] | null; caseSummary: string; scrollTop: number }
+type SavedResult = { caseText: string; flow: LaneChart | null; caseSummary: string; scrollTop: number }
 
-const STORAGE_KEY = 'cliniq.caseTriage.last'
+// Bump the suffix whenever LaneChart's shape changes, so a stale saved result
+// is dropped instead of rendered against the new component.
+const STORAGE_KEY = 'cliniq.caseTriage.lanes.v1'
 // In-memory copy first: sessionStorage can throw or be empty (private mode,
 // blocked storage), and in-app back navigation never needs to touch it.
 let lastResult: SavedResult | null = null
@@ -102,7 +101,7 @@ export function CaseTriageScreen() {
   const [caseText, setCaseText] = useState(saved?.caseText ?? '')
   const [stage, setStage] = useState<Stage>(saved?.flow ? 'done' : 'idle')
   const [error, setError] = useState<string | null>(null)
-  const [flow, setFlow] = useState<Block[] | null>(saved?.flow ?? null)
+  const [flow, setFlow] = useState<LaneChart | null>(saved?.flow ?? null)
   const [caseSummary, setCaseSummary] = useState(saved?.caseSummary ?? '')
   const rootRef = useRef<HTMLDivElement>(null)
 
@@ -148,7 +147,7 @@ export function CaseTriageScreen() {
       setCaseSummary(signals.caseSummary)
 
       if (top.length === 0) {
-        setFlow(buildCaseFlow([], { rationales: [], historyQuestions: [], diagnostics: [] }))
+        setFlow(buildCaseLanes([], { rationales: [], historyQuestions: [], diagnostics: [] }))
         setStage('done')
         return
       }
@@ -165,7 +164,7 @@ export function CaseTriageScreen() {
         score: t.score,
       }))
       const synthesis = await synthesizeCase({ caseText: text, candidates })
-      setFlow(buildCaseFlow(top, synthesis))
+      setFlow(buildCaseLanes(top, synthesis))
       setStage('done')
     } catch (e) {
       setError(caseTriageErrorMessage(e))
@@ -178,7 +177,7 @@ export function CaseTriageScreen() {
       <header style={s('margin-bottom:14px;')}>
         <h1 style={s('font-size:18px;font-weight:700;color:var(--white);margin:0 0 4px;')}>Case Triage</h1>
         <p style={s('font-size:12px;color:var(--gray2);line-height:1.5;margin:0;')}>
-          Describe the patient and presentation in your own words. The same differential-matching engine as Mix &amp; Match ranks real disease pages against it, then the model explains the ranking and lays out a flowchart of history, differentials by category, and diagnostics.
+          Describe the patient and presentation in your own words. The same differential-matching engine as Mix &amp; Match ranks real disease pages against it, then lays out a workup chart: the history, exam, minimum-database and confirmatory findings that separate each differential.
         </p>
       </header>
 
@@ -206,8 +205,16 @@ export function CaseTriageScreen() {
               <span style={s('font-weight:700;color:var(--gray);')}>Parsed as: </span>{caseSummary}
             </div>
           )}
-          <div className="flow-wrap"><BlockList blocks={flow.filter(b => b.kind !== 'disclaimer')} onNav={onNav} /></div>
-          {flow.some(b => b.kind === 'disclaimer') && DISCLAIMER}
+          {flow.rows.length === 0 ? (
+            <div style={s('padding:10px 12px;border-radius:9px;background:rgba(var(--tone-info),0.12);border:1px solid rgba(var(--tone-info),0.4);color:var(--tone-info-fg);font-size:12px;line-height:1.5;')}>
+              <strong>No matching differentials found.</strong> Try adding more clinical detail — species, breed, age, and specific signs all sharpen the match.
+            </div>
+          ) : (
+            <>
+              <CaseLaneChart chart={flow} onNav={onNav} />
+              {DISCLAIMER}
+            </>
+          )}
         </div>
       )}
     </div>
