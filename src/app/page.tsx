@@ -1,11 +1,12 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { SiteFooter } from '../components/site/SiteFooter'
 import { AppSequence } from '../components/site/AppSequence'
 import { SiteHeader } from '../components/site/SiteHeader'
 
-export const metadata: Metadata = {
+const MARKETING_METADATA: Metadata = {
   title: 'Vetic — Clinical support tool for veterinarians',
   description:
     'Vetic gives veterinarians sign-led clinical flowcharts, diagnostic approaches, disease pages and protocols for dogs and cats — so the decision at the consult table is an informed one.',
@@ -15,6 +16,22 @@ export const metadata: Metadata = {
       'Sign-led flowcharts, diagnostic approaches, disease pages and protocols, built for the consult room.',
     type: 'website',
   },
+}
+
+const BETA_METADATA: Metadata = {
+  title: 'Vetic — Welcome to the beta',
+  description: 'Vetic is opening up to a small beta group of veterinarians. Sign in to get started.',
+  openGraph: {
+    title: 'Vetic — Welcome to the beta',
+    description: 'Vetic is opening up to a small beta group of veterinarians. Sign in to get started.',
+    type: 'website',
+  },
+}
+
+// Which variant of the homepage renders is picked by MARKETING_HOME_VARIANT,
+// not by branch — see the long comment above HomePage for why.
+export function generateMetadata(): Metadata {
+  return process.env.MARKETING_HOME_VARIANT === 'beta' ? BETA_METADATA : MARKETING_METADATA
 }
 
 const CAPABILITIES = [
@@ -94,19 +111,27 @@ const STEPS = [
 // `VERCEL_ENV === 'production'`, which fails the wrong way — if that variable
 // were ever absent the marketing page would be served.
 //
-// Production therefore needs no configuration at all; it is the default.
-// SERVE_MARKETING_HOME=true must be set wherever the marketing page IS wanted:
-// the Preview environment in Vercel, and .env.local for `next dev`.
+// SERVE_MARKETING_HOME=true must be set wherever a homepage is wanted at all:
+// the Preview environment and the Production environment in Vercel, and
+// .env.local for `next dev`.
 //
-// Server-side variable — do not rename it to the NEXT_PUBLIC_ form, which would
-// inline the value into the client bundle and leak the switch to the browser.
+// Once a homepage is on, MARKETING_HOME_VARIANT picks WHICH one: 'beta' renders
+// the short beta-welcome page, anything else renders the full marketing page.
+// Production is currently set to 'beta'; Preview has no variant set, so main
+// keeps showing the full marketing page.
 //
-// This replaces b00defb, where production carried its own copy of this file.
-// That made every promotion touching the homepage a merge conflict (e675b78 was
-// the first) with a wrong resolution putting marketing back in front of
-// customers. The switch now lives in one file on main.
+// Both variables are server-side — do not rename either to the NEXT_PUBLIC_
+// form, which would inline the value into the client bundle and leak the
+// switch to the browser.
+//
+// This file stays identical on every branch on purpose. An earlier version
+// (b00defb) gave production its own copy of this file, and every promotion
+// that touched the homepage became a merge conflict (e675b78 was the first),
+// with a wrong resolution putting marketing back in front of customers. Pick
+// the variant with an env var, never by diverging the file between branches.
 export default function HomePage() {
   if (process.env.SERVE_MARKETING_HOME !== 'true') redirect('/app')
+  if (process.env.MARKETING_HOME_VARIANT === 'beta') return <BetaHome />
 
   return (
     <div className="site-page">
@@ -385,6 +410,42 @@ export default function HomePage() {
       </main>
 
       <SiteFooter />
+    </div>
+  )
+}
+
+/* ── Beta variant ─────────────────────────────────────────────────────────── */
+
+function BetaHome() {
+  return (
+    <div className="site-page flex min-h-dvh flex-col">
+      <main className="flex flex-1 flex-col items-center justify-center px-5 py-16 text-center sm:px-8">
+        <Image
+          src="/vetic-mark.png"
+          alt=""
+          width={44}
+          height={44}
+          priority
+          className="h-11 w-auto"
+        />
+
+        <p className="v-eyebrow-plain mt-6">Private beta</p>
+        <h1 className="v-display mt-4 max-w-xl text-[36px] text-balance sm:text-[46px]">
+          Welcome to the beta!
+        </h1>
+        <p className="mt-5 max-w-md text-[16px] leading-[1.6] text-[var(--v-slate)]">
+          Really glad to have you on board and thank you for participating. Your feedback is
+          invaluable to us as we shape a tool that is most useful to you.
+        </p>
+
+        <Link href="/login" className="v-btn v-btn-primary mt-8">
+          Sign in
+        </Link>
+      </main>
+
+      <footer className="px-5 py-8 text-center text-[12px] text-[var(--v-slate)] sm:px-8">
+        © {new Date().getFullYear()} Vetic.
+      </footer>
     </div>
   )
 }
