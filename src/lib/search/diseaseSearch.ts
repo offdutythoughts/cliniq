@@ -598,6 +598,63 @@ export function topDifferentials(groups: SearchCategory[], n = 5): DiseaseResult
     .slice(0, n)
 }
 
+/**
+ * Like `topDifferentials`, but reserves part of the list for breadth across
+ * aetiology categories instead of a pure global top-N by score.
+ *
+ * A pure score cutoff lets one dominant mechanism (e.g. several structural GI
+ * causes of haematemesis, all scoring high on the same specific signs) fill
+ * every slot and crowd out a real but less-specific-scoring differential from
+ * another category — a toxic, infectious or parasitic cause that fits the
+ * history just as legitimately but only matches on commoner, lower-weighted
+ * terms. Three passes:
+ *
+ *   1. The top `guaranteedTop` candidates by pure score, regardless of
+ *      category — the best-evidenced differentials are never bumped by the
+ *      breadth pass, so a well-supported common cause can't be pushed out by
+ *      a weakly-matched rare one.
+ *   2. One further candidate (its own best-scoring, not yet picked) from
+ *      every OTHER category that has any match at all, strongest category
+ *      first — "expand to the less likely differentials" instead of only the
+ *      single most obvious reading of the case.
+ *   3. Any slots still unfilled, by pure score among what's left.
+ *
+ * The final list is re-sorted by score (so `buildCaseLanes`, which derives
+ * category display order from each category's best-ranked member, still
+ * shows the likeliest category first); diversity changes WHICH candidates are
+ * included, not their display order.
+ */
+export function diverseDifferentials(groups: SearchCategory[], n = 8, guaranteedTop = Math.ceil(n / 2)): DiseaseResult[] {
+  const byScore = (a: DiseaseResult, b: DiseaseResult) =>
+    b.score - a.score || (a.disease.name as string).localeCompare(b.disease.name as string)
+  const all = groups.flatMap(g => g.items).sort(byScore)
+
+  const picked: DiseaseResult[] = []
+  const pickedIds = new Set<string>()
+  const take = (item: DiseaseResult) => { picked.push(item); pickedIds.add(item.disease.id as string) }
+
+  for (const item of all) {
+    if (picked.length >= Math.min(guaranteedTop, n)) break
+    take(item)
+  }
+
+  const representedCats = new Set(picked.map(p => p.category))
+  for (const g of [...groups].sort((a, b) => (b.items[0]?.score ?? 0) - (a.items[0]?.score ?? 0))) {
+    if (picked.length >= n) break
+    if (representedCats.has(g.name)) continue
+    const next = g.items.find(it => !pickedIds.has(it.disease.id))
+    if (next) { take(next); representedCats.add(g.name) }
+  }
+
+  for (const item of all) {
+    if (picked.length >= n) break
+    if (pickedIds.has(item.disease.id as string)) continue
+    take(item)
+  }
+
+  return picked.sort(byScore)
+}
+
 export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
   const { species, breedQuery, ageCategory, sex, neuter, signKeywords, diagKeywords } = inputs
 

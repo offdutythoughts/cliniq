@@ -39,8 +39,13 @@ const SYSTEM_PROMPT =
 
 // Bounds on what we'll send, independent of the model's own output limits —
 // these cap OUR request size (and therefore cost/latency), not the model's.
+// Keep in sync with CaseTriageScreen.tsx's own MAX_CANDIDATES — that one picks
+// how many of searchDiseases()'s results actually get sent here (now reserving
+// part of the list for breadth across categories via diverseDifferentials(),
+// not just a pure top-N), this one is just the hard cap on what the request
+// will accept.
 const MAX_CASE_TEXT = 4000;
-const MAX_CANDIDATES = 8;
+const MAX_CANDIDATES = 10;
 const MAX_FIELD = 600;
 
 // 503 ("service unavailable") is the one failure mode worth a same-request
@@ -143,11 +148,12 @@ Extract:
 - ageCategory: one of "neonate", "young", "middleaged", "geriatric" — omit the key entirely if not stated.
 - sex: one of "male", "female" — omit the key entirely if not stated.
 - neuter: one of "intact", "neutered" — omit the key entirely if not stated.
-- signKeywords: short, canonical clinical sign terms (e.g. "vomiting", "weight loss", "PU/PD") — one concept per entry, prefer standard clinical terminology over the owner's exact phrasing. Only signs actually present in the notes.
+- signKeywords: short, canonical clinical sign terms (e.g. "vomiting", "weight loss", "PU/PD") — one concept per entry, prefer standard clinical terminology over the owner's exact phrasing. Include every sign actually present, not just the ones driving the acute complaint — a chronic, stable or "well controlled" condition (e.g. a cough that is managed on medication) is still a real finding and can still point to a relevant differential, so keep it.
+- Also fold into signKeywords/diagKeywords any epidemiological or risk-factor fact the notes state or directly imply (never invented): vaccination/deworming/parasite-prevention status ("unvaccinated", "no heartworm prevention", "no flea/tick prevention" — "not up to date with prophylactics" implies ALL of these unless the notes specify otherwise), travel or residence history relevant to endemic disease ("endemic region", "travel history"), toxin/rodenticide/foreign-body access ("rodenticide access", "toxin exposure"), and population/contact history (unvaccinated littermates, shelter/kennel/dog-park contact). Phrase each as the short generic clinical term a vet would write on a differential list (as in the examples above), not a restatement of the owner's sentence — that is what lets the matching engine connect it to the relevant disease pages.
 - diagKeywords: diagnostic/lab findings already reported in the notes (e.g. "elevated ALP", "anemia"). Empty array if none were mentioned.
-- caseSummary: one plain sentence paraphrasing the case.
+- caseSummary: one plain sentence paraphrasing the case's acute presenting complaint.
 
-Do not invent anything not present in the text.
+Do not invent anything not present in or directly implied by the text.
 
 Respond with ONLY a JSON object of exactly this shape (omit ageCategory/sex/neuter keys if unknown, don't include them as null):
 {"species":"dog","breedQuery":"Cavalier King Charles Spaniel","ageCategory":"geriatric","sex":"male","neuter":"neutered","signKeywords":["exercise intolerance","cough"],"diagKeywords":[],"caseSummary":"..."}`;
@@ -233,7 +239,9 @@ ${caseText}
 Candidate differentials (already ranked most → least likely):
 ${rows}
 
-DISCRIMINATORS. For EACH differential above (by its exact diseaseId), give its single key DISCRIMINATOR: the one clinical sign, exam finding or lab finding (max 8 words) that separates it from the OTHER differentials in this list — e.g. "petechiae/ecchymoses; prolonged PT" for anticoagulant rodenticide toxicosis among GI causes of haematochezia. Never restate a sign the case already shows or that the other differentials share (hematochezia, lethargy, inappetence when every candidate has them) — that separates nothing. Ground it in the "signs"/"confirmatory dx"/"supportive dx" fields given; never invent a fact. No sentence, no "matches the case" — just the feature.
+This list was deliberately chosen for breadth as well as likelihood: alongside the highest-scoring reading of the case it includes a plausible candidate from other aetiology categories (toxic, infectious, parasitic, metabolic…) even where that candidate matched on commoner, less specific signs. Treat every diseaseId given as equally worth working up — do not write any differential's discriminator, question or diagnostics as an afterthought because it scored lower or because another candidate's organ system seems the obvious reading.
+
+DISCRIMINATORS. For EACH differential above (by its exact diseaseId), give its single key DISCRIMINATOR: the one clinical sign, exam finding, lab finding, OR epidemiological/history risk factor (max 8 words) that separates it from the OTHER differentials in this list — e.g. "petechiae/ecchymoses; prolonged PT" for anticoagulant rodenticide toxicosis among GI causes of haematochezia, or "unvaccinated; endemic-region travel" for an infectious/parasitic candidate (heartworm, leptospirosis, parvovirus…) sitting among otherwise structural or metabolic differentials — for those, the history/exposure fact IS the discriminator, because the clinical signs alone overlap the others. Never restate a sign the case already shows or that the other differentials share (hematochezia, lethargy, inappetence when every candidate has them) — that separates nothing. Ground it in the "signs"/"confirmatory dx"/"supportive dx" fields given, or in a risk factor actually stated in the case notes; never invent a fact. No sentence, no "matches the case" — just the feature.
 
 HISTORY QUESTIONS. Then propose 3-6 YES/NO history questions that narrow THESE differentials. For each, list the diseaseIds a YES makes more likely ("yes") and the diseaseIds a NO makes more likely ("no"); every question must move at least one differential, and a diseaseId never appears on both sides.
 - Order them from MOST GENERAL to most specific. The first question should be the broadest split — systemic/concurrent signs that separate whole aetiology categories (e.g. fever → infectious; vomiting → GI involvement; watery vs bloody diarrhoea) — before exposure-specific questions about one disease.

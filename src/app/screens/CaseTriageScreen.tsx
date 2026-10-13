@@ -25,7 +25,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { useAction } from 'convex/react'
 import { ConvexError } from 'convex/values'
 import { api } from '../../../convex/_generated/api'
-import { searchDiseases, topDifferentials, type SearchInputs } from '../../lib/search/diseaseSearch'
+import { searchDiseases, diverseDifferentials, type SearchInputs } from '../../lib/search/diseaseSearch'
 import { buildCaseLanes, type LaneChart } from '../../lib/caseTriage/buildLanes'
 import { useNav } from '../nav/NavContext'
 import { CaseLaneChart } from './CaseLaneChart'
@@ -33,7 +33,12 @@ import { DISCLAIMER } from './sharedBlocks'
 import { type Nav } from './flowHelpers'
 import { styleStringToObject as s } from './style'
 
-const MAX_CANDIDATES = 8
+// Keep in sync with convex/caseAnalysis.ts's own MAX_CANDIDATES (that one caps
+// the request/model side; this one decides how many rows the chart actually
+// shows — diverseDifferentials() reserves roughly half these slots for the
+// strongest-scoring candidates and the rest for breadth across aetiology
+// categories, so a higher cap buys breadth, not just a longer top-N).
+const MAX_CANDIDATES = 10
 
 type Stage = 'idle' | 'extracting' | 'synthesizing' | 'done' | 'error'
 
@@ -143,7 +148,7 @@ export function CaseTriageScreen() {
         diagKeywords: signals.diagKeywords,
       }
       const categories = searchDiseases(inputs)
-      const top = topDifferentials(categories, MAX_CANDIDATES)
+      const top = diverseDifferentials(categories, MAX_CANDIDATES)
       setCaseSummary(signals.caseSummary)
 
       if (top.length === 0) {
