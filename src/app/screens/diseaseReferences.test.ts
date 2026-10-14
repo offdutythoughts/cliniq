@@ -1389,6 +1389,19 @@ describe('citation pass 2026-10-14 — collision cases', () => {
       ['Clark 2022', 'clark-f7-autopsy'],
       ['Tóth 2026', 'toth-nac-sr'],
       ['Cerda-Gonzalez 2021', 'ecvn-dyskinesia'],
+      // 'Green' must not swallow 'Greenhalgh' (it did until /^Green\b/).
+      ['Green 2011', 'green-lactate'],
+      ['Greenhalgh 2010', 'greenhalgh-cpss-survival'],
+      ['Wilson 2016', 'wilson-tieback-ap'],
+      ['Wilson 2018', 'wilson-histoplasmosis'],
+      ['Paterson 2018', 'paterson-baer'],
+      ['Paterson 2024', 'paterson-srma'],
+      // '/^Li\b/' and '/^Lo\b/' guard the longer surnames beginning with them.
+      ['Lidbury 2015', 'lidbury-he-precipitants'],
+      ['Liptak 2004', 'liptak-massive-hcc'],
+      ['Littlejohn 2023', 'littlejohn-reln'],
+      ['London 1996', 'london-ear-canal'],
+      ['NASPHV 2016', 'nasphv-rabies-2016'],
     ]
     for (const [marker, id] of cases) expect(parseSources(marker).map(s => s.id), marker).toEqual([id])
   })
