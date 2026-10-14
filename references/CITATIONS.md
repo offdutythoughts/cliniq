@@ -6338,3 +6338,58 @@ Reading the statements found several places where the page said something else:
 - **Cerda-Gonzalez 2021 on DIS-NEU-IHTS** — the statement is terminology-only and says
   nothing specific about head tremor, so it was used on DIS-NEU-IGTS only, where it does
   classify the syndrome.
+
+## Toxicology batch (2026-10-14)
+
+**106 → 96.** Every textbook-only `DIS-TOX-*` / `DIS-TOXIC-*` page now cites a paper. Discovery
+via the Consensus connector; each record then checked in PubMed and Crossref (or Europe PMC
+where the paper has no DOI — the older JAVMA and all Can Vet J items), and the abstract read.
+VETgirl remains the dose authority (CLAUDE.md); none of these papers was used to change a dose.
+
+> Tóth ZT, Tarpataki NK, Nemes-Terényi M, Jerzsele Á, Kerek Á. From antidote to multimodal adjunct: a systematic review of N-acetylcysteine in dogs and cats. Front Vet Sci. 2026;13:1959626. doi:10.3389/fvets.2026.1959626
+
+> Klainbart S, Grabernik M, Kelmer E, et al. Clinical manifestations, laboratory findings, treatment and outcome of acute organophosphate or carbamate intoxication in 102 dogs: a retrospective study. Vet J. 2019;251:105349. doi:10.1016/j.tvjl.2019.105349
+
+> Klainbart S, Grabarnik M, Kelmer E, et al. Clinical manifestations, laboratory findings, treatment and outcome of acute organophosphate or carbamate intoxication in 39 cats. Vet Rec. 2022;191(1):e1633. doi:10.1002/vetr.1633
+
+> Connally HE, Thrall MA, Hamar DW. Safety and efficacy of high-dose fomepizole compared with ethanol as therapy for ethylene glycol intoxication in cats. J Vet Emerg Crit Care (San Antonio). 2010;20(2):191-206. doi:10.1111/j.1476-4431.2009.00492.x
+
+> Sauder T, Ricard M, Loewen J, Cowan V. A retrospective case series of companion animals hospitalized for ethylene glycol poisoning at a Canadian veterinary teaching hospital. Can Vet J. 2026;67(5):553-562
+
+> Bates NS, Sutton NM, Campbell A. Suspected metaldehyde slug bait poisoning in dogs: a retrospective analysis of cases reported to the Veterinary Poisons Information Service. Vet Rec. 2012;171(13):324. doi:10.1136/vr.100734
+
+> Weingart C, Hartmann A, Kohn B. Chocolate ingestion in dogs: 156 events (2015-2019). J Small Anim Pract. 2021;62(11):979-983. doi:10.1111/jsap.13329
+
+> Ramsey DT, Casteel SW, Faggella AM, Chastain CB, Nunn JW, Schaeffer DJ. Use of orally administered succimer (meso-2,3-dimercaptosuccinic acid) for treatment of lead poisoning in dogs. J Am Vet Med Assoc. 1996;208(3):371-375
+
+> Genovese DW, Gwaltney-Brant SM, Slater MR. Methylphenidate toxicosis in dogs: 128 cases (2001-2008). J Am Vet Med Assoc. 2010;237(12):1438-1443. doi:10.2460/javma.237.12.1438
+
+> Dorman DC, Coddington KA, Richardson RC. 5-Fluorouracil toxicosis in the dog. J Vet Intern Med. 1990;4(5):254-257. doi:10.1111/j.1939-1676.1990.tb03118.x
+
+> Friedenberg SG, Brooks AC, Monnig AA, Cooper ES. Successful treatment of a dog with massive 5-fluorouracil toxicosis. J Vet Emerg Crit Care (San Antonio). 2013;23(6):643-647. doi:10.1111/vec.12116
+
+> Cowan VE, Blakley BR. A retrospective study of canine strychnine poisonings from 1998 to 2013 in Western Canada. Can Vet J. 2015;56(6):587-590
+
+> Geisen V, Hartmann K, Dörfelt R. Case series: Heinz body formation in 13 multimorbid dogs following metamizole administration. Front Vet Sci. 2023;10:1183876. doi:10.3389/fvets.2023.1183876
+
+> Ireland EM, Sharp CR, Leister EM, Boyd S. Case report: suspected propofol associated Heinz body anemia in five mechanically ventilated dogs: a historical case series. Front Vet Sci. 2025;12:1500464. doi:10.3389/fvets.2025.1500464
+
+Notes:
+
+- **Klainbart** spells the second author *Grabernik* (2019) and *Grabarnik* (2022); both registries
+  agree on each, so each string keeps its own record's spelling. Year-keyed.
+- **Ramsey** is now year-keyed: Ramsey DT 1996 (succimer) is a different author from Ramsey DS
+  2008 (maropitant), which the bare prefix had been routing to.
+- **Small samples stated inline** (Rule 2): Connally (13 cats, experimental), Ramsey (13 dogs),
+  Sauder (21 animals), Geisen (13), Ireland (5), Friedenberg (one dog — written as "single dogs
+  have since survived", never as a general claim).
+- **Corrections from reading the papers**:
+  - DIS-TOX-METALD said delayed hepatic failure was "the classic" late death. In 772 dogs only
+    4.6% developed hepatic changes, so the page now says it is uncommon.
+  - DIS-TOX-STRYCH said "young scavenging dogs most often". The 93-dog series found no age
+    effect and over-representation of large breeds.
+  - DIS-TOX-5FU's "approaches 100% above ~40 mg/kg" is now qualified as pre-dating modern
+    intensive care.
+- **Selection bias flagged on the page**: the strychnine mortality (60.2%) comes from
+  laboratory-confirmed cases, many confirmed post mortem. The metaldehyde and methylphenidate
+  series are poison-centre telephone follow-ups.
