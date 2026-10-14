@@ -211,6 +211,15 @@ const SYNONYM_GROUPS: string[][] = [
   // ── Respiratory signs ─────────────────────────────────────────────────────
   ['difficulty breathing', 'dyspnea', 'dyspnoea', 'respiratory distress', 'laboured breathing', 'labored breathing', 'shortness of breath', 'breathlessness', 'open mouth breathing'],
   ['coughing', 'cough', 'chronic cough', 'productive cough'],
+  // Separate from the group above: "dry"/"unproductive" is a clinically
+  // meaningful qualifier (airway irritation, cardiac/mediastinal compression,
+  // early parasitic disease vs. an exudative/infectious productive cough), so
+  // extracting it as its own keyword must still find pages phrased either way.
+  // Terms drawn from how disease_page entries actually phrase it (DIS-RESP-
+  // TRACOLL's "goose-honk cough", DIS-RESP-CIRD's "harsh/honking cough",
+  // DIS-RESP-BRONCHITIS's "often dry/harsh") — "hacking"/"non-productive"
+  // alone matched none of the corpus and were silently inert.
+  ['dry cough', 'non-productive cough', 'nonproductive cough', 'unproductive cough', 'harsh cough', 'honking cough', 'goose-honk cough', 'goose honk cough'],
   ['noisy breathing', 'stertor', 'stridor', 'snoring', 'stertor/stridor'],
   ['nasal discharge', 'runny nose', 'rhinorrhea', 'rhinorrhoea', 'nasal drip'],
   ['sneezing', 'reverse sneeze', 'reverse sneezing'],
