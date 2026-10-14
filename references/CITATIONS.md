@@ -6580,3 +6580,40 @@ Notes:
   clear better" line were on the page uncited. They are now attributed to Novacco and Dowers.
 - **Resolver**: `Wilson` is year-keyed (D 2016 tieback / AG 2018 histoplasmosis). `NASPHV` is a
   new organisation marker.
+
+## Hepatobiliary batch (2026-10-14)
+
+**73 → 67.** All six textbook-only `DIS-HEP-*` pages now cite papers.
+
+> Greenhalgh SN, Dunning MD, McKinley TJ, et al. Comparison of survival after surgical or medical treatment in dogs with a congenital portosystemic shunt. J Am Vet Med Assoc. 2010;236(11):1215-1220. doi:10.2460/javma.236.11.1215
+
+> Wallace ML, Grimes JA, Edwards L, et al. Dogs ≥ five years of age at the time of congenital extrahepatic portosystemic shunt diagnosis have better long-term outcomes with surgical attenuation than with medical management alone. J Am Vet Med Assoc. 2022;260(7):758-764. doi:10.2460/javma.21.09.0417
+
+> Lidbury JA, Ivanek R, Suchodolski JS, Steiner JM. Putative precipitating factors for hepatic encephalopathy in dogs: 118 cases (1991-2014). J Am Vet Med Assoc. 2015;247(2):176-183. doi:10.2460/javma.247.2.176
+
+> Lester C, Cooper J, Peters RM, Webster CR. Retrospective evaluation of acute liver failure in dogs (1995-2012): 49 cases. J Vet Emerg Crit Care (San Antonio). 2016;26(4):559-567. doi:10.1111/vec.12482
+
+> Sepesy LM, Center SA, Randolph JF, Warner KL, Erb HN. Vacuolar hepatopathy in dogs: 336 cases (1993-2005). J Am Vet Med Assoc. 2006;229(2):246-252. doi:10.2460/javma.229.2.246
+
+> Cortright CC, Center SA, Randolph JF, et al. Clinical features of progressive vacuolar hepatopathy in Scottish Terriers with and without hepatocellular carcinoma: 114 cases (1980-2013). J Am Vet Med Assoc. 2014;245(7):797-808. doi:10.2460/javma.245.7.797
+
+> Kirpensteijn J, Fingland RB, Ulrich T, Sikkema DA, Allen SW. Cholelithiasis in dogs: 29 cases (1980-1990). J Am Vet Med Assoc. 1993;202(7):1137-1142. doi:10.2460/javma.1993.202.07.1137
+
+> Liptak JM, Dernell WS, Monnet E, et al. Massive hepatocellular carcinoma in dogs: 48 cases (1992-2002). J Am Vet Med Assoc. 2004;225(8):1225-1230. doi:10.2460/javma.2004.225.1225
+
+> Lapsley JM, Wavreille V, Barry S, et al. Risk factors and outcome in dogs with recurrent massive hepatocellular carcinoma: a Veterinary Society of Surgical Oncology case-control study. Vet Comp Oncol. 2022;20(3):697-709. doi:10.1111/vco.12824
+
+Notes:
+
+- **A resolver bug caught in passing.** `/^Green/` (the GDV-lactate paper) would have swallowed
+  `Greenhalgh`, printing a GDV reference on the portosystemic-shunt page. The integrity lint
+  could not see it, because `Greenhalgh` was not yet registered. The script that registers new
+  sources refused the clash, and the branch is now `/^Green\b/`. The regression test asserts both.
+- **Qualified rather than contradicted**:
+  - DIS-HEP-HE lists the human HE precipitants (GI bleed, alkalosis, hypokalaemia, infection).
+    In 118 dogs none was significantly associated with clinical HE, and the page now says they
+    are extrapolated.
+  - DIS-HEP-VACUOLAR framed VH as steroid-driven, but 45% of 336 dogs had no glucocorticoid
+    exposure.
+  - DIS-HEP-NEO's conservative-management MST (270 d) rests on only 6 dogs, and the page says so.
+- **Attributed**: the massive-HCC lobectomy figures were Ettinger-only. They are Liptak 2004.

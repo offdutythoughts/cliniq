@@ -246,6 +246,24 @@ const NASPHV_RABIES_2016 =
   'Brown CM, Slavinski S, Ettestad P, Sidwa TJ, Sorhage FE; National Association of State Public Health Veterinarians; Compendium of Animal Rabies Prevention and Control Committee. Compendium of animal rabies prevention and control, 2016. J Am Vet Med Assoc. 2016;248(5):505-517. doi:10.2460/javma.248.5.505'
 const HANZLICEK_HISTO_CULTURE =
   'Hanzlicek AS, KuKanich KS, Cook AK, et al. Clinical utility of fungal culture and antifungal susceptibility in cats and dogs with histoplasmosis. J Vet Intern Med. 2023;37(3):998-1006. doi:10.1111/jvim.16725'
+const WALLACE_EHPSS_OLDER =
+  'Wallace ML, Grimes JA, Edwards L, et al. Dogs ≥ five years of age at the time of congenital extrahepatic portosystemic shunt diagnosis have better long-term outcomes with surgical attenuation than with medical management alone. J Am Vet Med Assoc. 2022;260(7):758-764. doi:10.2460/javma.21.09.0417'
+const GREENHALGH_CPSS =
+  'Greenhalgh SN, Dunning MD, McKinley TJ, et al. Comparison of survival after surgical or medical treatment in dogs with a congenital portosystemic shunt. J Am Vet Med Assoc. 2010;236(11):1215-1220. doi:10.2460/javma.236.11.1215'
+const LIDBURY_HE_PRECIP =
+  'Lidbury JA, Ivanek R, Suchodolski JS, Steiner JM. Putative precipitating factors for hepatic encephalopathy in dogs: 118 cases (1991-2014). J Am Vet Med Assoc. 2015;247(2):176-183. doi:10.2460/javma.247.2.176'
+const LESTER_ALF =
+  'Lester C, Cooper J, Peters RM, Webster CR. Retrospective evaluation of acute liver failure in dogs (1995-2012): 49 cases. J Vet Emerg Crit Care (San Antonio). 2016;26(4):559-567. doi:10.1111/vec.12482'
+const SEPESY_VH =
+  'Sepesy LM, Center SA, Randolph JF, Warner KL, Erb HN. Vacuolar hepatopathy in dogs: 336 cases (1993-2005). J Am Vet Med Assoc. 2006;229(2):246-252. doi:10.2460/javma.229.2.246'
+const CORTRIGHT_SCOTTIE_VH =
+  'Cortright CC, Center SA, Randolph JF, et al. Clinical features of progressive vacuolar hepatopathy in Scottish Terriers with and without hepatocellular carcinoma: 114 cases (1980-2013). J Am Vet Med Assoc. 2014;245(7):797-808. doi:10.2460/javma.245.7.797'
+const KIRPENSTEIJN_CHOLELITH =
+  'Kirpensteijn J, Fingland RB, Ulrich T, Sikkema DA, Allen SW. Cholelithiasis in dogs: 29 cases (1980-1990). J Am Vet Med Assoc. 1993;202(7):1137-1142. doi:10.2460/javma.1993.202.07.1137'
+const LAPSLEY_RECURRENT_HCC =
+  'Lapsley JM, Wavreille V, Barry S, et al. Risk factors and outcome in dogs with recurrent massive hepatocellular carcinoma: a Veterinary Society of Surgical Oncology case-control study. Vet Comp Oncol. 2022;20(3):697-709. doi:10.1111/vco.12824'
+const LIPTAK_MASSIVE_HCC =
+  'Liptak JM, Dernell WS, Monnet E, et al. Massive hepatocellular carcinoma in dogs: 48 cases (1992-2002). J Am Vet Med Assoc. 2004;225(8):1225-1230. doi:10.2460/javma.2004.225.1225'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -1682,7 +1700,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -2483,6 +2501,15 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Werner/.test(part)) { out.push({ id: 'werner-amoxclav-diarrhoea', text: WERNER_AMOXCLAV }); continue }
     if (/^NASPHV/.test(part)) { out.push({ id: 'nasphv-rabies-2016', text: NASPHV_RABIES_2016 }); continue }
     if (/^Hanzlicek/.test(part)) { out.push({ id: 'hanzlicek-histo-culture', text: HANZLICEK_HISTO_CULTURE }); continue }
+    if (/^Wallace/.test(part)) { out.push({ id: 'wallace-ehpss-older', text: WALLACE_EHPSS_OLDER }); continue }
+    if (/^Greenhalgh/.test(part)) { out.push({ id: 'greenhalgh-cpss-survival', text: GREENHALGH_CPSS }); continue }
+    if (/^Lidbury/.test(part)) { out.push({ id: 'lidbury-he-precipitants', text: LIDBURY_HE_PRECIP }); continue }
+    if (/^Lester/.test(part)) { out.push({ id: 'lester-alf-49', text: LESTER_ALF }); continue }
+    if (/^Sepesy/.test(part)) { out.push({ id: 'sepesy-vh-336', text: SEPESY_VH }); continue }
+    if (/^Cortright/.test(part)) { out.push({ id: 'cortright-scottie-vh', text: CORTRIGHT_SCOTTIE_VH }); continue }
+    if (/^Kirpensteijn/.test(part)) { out.push({ id: 'kirpensteijn-cholelithiasis', text: KIRPENSTEIJN_CHOLELITH }); continue }
+    if (/^Lapsley/.test(part)) { out.push({ id: 'lapsley-recurrent-hcc', text: LAPSLEY_RECURRENT_HCC }); continue }
+    if (/^Liptak/.test(part)) { out.push({ id: 'liptak-massive-hcc', text: LIPTAK_MASSIVE_HCC }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
@@ -2713,7 +2740,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     // ── Disease pages 11-15 ──
     if (/^de Papp/.test(part)) { out.push({ id: 'de-papp-lactate', text: DE_PAPP_LACTATE }); continue }
     if (/^Zacher/.test(part)) { out.push({ id: 'zacher-lactate', text: ZACHER_LACTATE }); continue }
-    if (/^Green/.test(part)) { out.push({ id: 'green-lactate', text: GREEN_LACTATE }); continue }
+    if (/^Green\b/.test(part)) { out.push({ id: 'green-lactate', text: GREEN_LACTATE }); continue }
     if (/^Ward/.test(part)) {
       const hit = WARD_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
       if (hit) out.push(hit)
