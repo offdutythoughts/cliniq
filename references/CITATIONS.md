@@ -141,6 +141,17 @@ identical author lists, volume/issue and page ranges for all fourteen.
 Note the surname: the first author is **Luis Fuentes V** — `Luis Fuentes` is the
 family name, not a given name followed by `Fuentes`. Both registries agree.
 
+> Reinero C, Visser LC, Kellihan HB, et al. ACVIM consensus statement guidelines for the diagnosis, classification, treatment, and monitoring of pulmonary hypertension in dogs. J Vet Intern Med. 2020;34(2):549-573. doi:10.1111/jvim.15725
+
+PubMed (PMID 32065428, PMC7097566) and Crossref agree on title, 10-author list,
+volume/issue/pages; Crossref gives print date 2020-03. Cited on `DIS-RESP-PHTN`
+as `(Reinero 2020)`, keyed on the author because `ACVIM 2020` is already the
+feline-cardiomyopathy statement. **Dogs only** — the statement does not cover
+cats. Checked against the full text (2026-10-14): the page's echo-probability
+summary had misplaced rows from Table 2 and was corrected to match it. The
+sildenafil/tadalafil dose ranges on that page are not in the statement's body
+text and stay cited to Ettinger Ch 218.
+
 **Haematology / immune-mediated**
 
 > Garden OA, Kidd L, Mexas AM, et al. ACVIM consensus statement on the diagnosis of immune-mediated hemolytic anemia in dogs and cats. J Vet Intern Med. 2019;33(2):313-334. doi:10.1111/jvim.15441
