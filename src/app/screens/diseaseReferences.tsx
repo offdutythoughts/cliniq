@@ -300,6 +300,16 @@ const KRISTIANSEN_OHE =
   'Kristiansen VM, Peña L, Díez Córdova L, et al. Effect of ovariohysterectomy at the time of tumor removal in dogs with mammary carcinomas: a randomized controlled trial. J Vet Intern Med. 2016;30(1):230-241. doi:10.1111/jvim.13812'
 const WITHERS_PHO =
   'Withers SS, Johnson EG, Culp WTN, et al. Paraneoplastic hypertrophic osteopathy in 30 dogs. Vet Comp Oncol. 2015;13(3):157-165. doi:10.1111/vco.12026'
+const WILLIAMS_IATRO_HYPOT =
+  'Williams TL, Elliott J, Syme HM. Association of iatrogenic hypothyroidism with azotemia and reduced survival time in cats treated for hyperthyroidism. J Vet Intern Med. 2010;24(5):1086-1092. doi:10.1111/j.1939-1676.2010.0566.x'
+const LATIFI_THYROID_CA =
+  'Latifi M, Skinner OT, Spoldi E, et al. Outcome and postoperative complications in 73 dogs with thyroid carcinoma with gross vascular invasion managed with thyroidectomy. Vet Comp Oncol. 2021;19(4):685-696. doi:10.1111/vco.12739'
+const TROTMAN_HHS =
+  'Trotman TK, Drobatz KJ, Hess RS. Retrospective evaluation of hyperosmolar hyperglycemia in 66 dogs (1993-2008). J Vet Emerg Crit Care (San Antonio). 2013;23(5):557-564. doi:10.1111/vec.12100'
+const OUTERBRIDGE_SND =
+  'Outerbridge CA, Marks SL, Rogers QR. Plasma amino acid concentrations in 36 dogs with histologically confirmed superficial necrolytic dermatitis. Vet Dermatol. 2002;13(4):177-186. doi:10.1046/j.1365-3164.2002.00295.x'
+const NYBROE_FANCONI =
+  'Nybroe S, Bjørnvad CR, Hansen CFH, Andersen TSL, Kieler IN. Outcome of acquired Fanconi syndrome associated with ingestion of jerky treats in 30 dogs. Animals (Basel). 2022;12(22):3192. doi:10.3390/ani12223192'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -309,6 +319,8 @@ const IRIS_GN_DX =
   'Littman MP, Daminet S, Grauer GF, Lees GE, van Dongen AM. Consensus recommendations for the diagnostic investigation of dogs with suspected glomerular disease. J Vet Intern Med. 2013;27(suppl 1):S19-S26. doi:10.1111/jvim.12223'
 const IRIS_GN_NOBIOPSY =
   'Pressler B, Vaden S, Gerber B, Langston C, Polzin D. Consensus guidelines for immunosuppressive treatment of dogs with glomerular disease absent a pathologic diagnosis. J Vet Intern Med. 2013;27(suppl 1):S55-S59. doi:10.1111/jvim.12222'
+const SEGEV_RENAL_AMYLOID =
+  'Segev G, Cowgill LD, Jessen S, Berkowitz A, Mohr CF, Aroch I. Renal amyloidosis in dogs: a retrospective study of 91 cases with comparison of the disease between Shar-Pei and non-Shar-Pei dogs. J Vet Intern Med. 2012;26(2):259-268. doi:10.1111/j.1939-1676.2011.00878.x'
 const IRIS_GN_PATHOLOGY =
   'Segev G, Cowgill LD, Heiene R, Labato MA, Polzin DJ. Consensus recommendations for immunosuppressive treatment of dogs with glomerular disease based on established pathology. J Vet Intern Med. 2013;27(suppl 1):S44-S54. doi:10.1111/jvim.12228'
 
@@ -654,6 +666,8 @@ const SABATTINI_IBD_LSA =
   'Sabattini S, Bottero E, Turba ME, Vicchi F, Bo S, Bettini G. Differentiating feline inflammatory bowel disease from alimentary lymphoma in duodenal endoscopic biopsies. J Small Anim Pract. 2016;57(8):396-401. doi:10.1111/jsap.12494'
 const DANIAUX_MUSCULARIS =
   'Daniaux LA, Laurenson MP, Marks SL, et al. Ultrasonographic thickening of the muscularis propria in feline small intestinal small cell T-cell lymphoma and inflammatory bowel disease. J Feline Med Surg. 2014;16(2):89-98. doi:10.1177/1098612x13498596'
+const RUSSELL_HYPOPTH =
+  'Russell NJ, Bond KA, Robertson ID, Parry BW, Irwin PJ. Primary hypoparathyroidism in dogs: a retrospective study of 17 cases. Aust Vet J. 2006;84(8):285-290. doi:10.1111/j.1751-0813.2006.00015.x'
 const RUSSELL_LOWGRADE_FREQ =
   'Russell KJ, Beatty JA, Dhand N, et al. Feline low-grade alimentary lymphoma: how common is it? J Feline Med Surg. 2012;14(12):910-912. doi:10.1177/1098612x12454861'
 
@@ -1740,7 +1754,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -1987,6 +2001,14 @@ const ELLIOTT_BY_YEAR: Record<string, { id: string; text: string }> = {
 const CRAIG_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2002': { id: 'craig-synovial', text: CRAIG_SYNOVIAL },
   '2009': { id: 'craig-fgesf', text: CRAIG_FGESF },
+}
+const RUSSELL_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2012': { id: 'russell-lowgrade-freq', text: RUSSELL_LOWGRADE_FREQ },
+  '2006': { id: 'russell-hypopth-dogs', text: RUSSELL_HYPOPTH },
+}
+const SEGEV_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2013': { id: 'iris-gn-pathology', text: IRIS_GN_PATHOLOGY },
+  '2012': { id: 'segev-renal-amyloid', text: SEGEV_RENAL_AMYLOID },
 }
 const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
@@ -2577,6 +2599,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Broome/.test(part)) { out.push({ id: 'broome-sublingual-thyroid', text: BROOME_SUBLINGUAL }); continue }
     if (/^Kristiansen/.test(part)) { out.push({ id: 'kristiansen-ohe-mammary', text: KRISTIANSEN_OHE }); continue }
     if (/^Withers/.test(part)) { out.push({ id: 'withers-paraneoplastic-ho', text: WITHERS_PHO }); continue }
+    if (/^Williams/.test(part)) { out.push({ id: 'williams-iatrogenic-hypothyroid', text: WILLIAMS_IATRO_HYPOT }); continue }
+    if (/^Latifi/.test(part)) { out.push({ id: 'latifi-thyroid-ca-vascular', text: LATIFI_THYROID_CA }); continue }
+    if (/^Trotman/.test(part)) { out.push({ id: 'trotman-hhs-dogs', text: TROTMAN_HHS }); continue }
+    if (/^Outerbridge/.test(part)) { out.push({ id: 'outerbridge-snd-aa', text: OUTERBRIDGE_SND }); continue }
+    if (/^Nybroe/.test(part)) { out.push({ id: 'nybroe-jerky-fanconi', text: NYBROE_FANCONI }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
@@ -2584,7 +2611,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Cerda-Gonzalez/.test(part)) { out.push({ id: 'ecvn-dyskinesia', text: ECVN_DYSKINESIA }); continue }
     if (/^Kendall/.test(part)) { out.push({ id: 'acvim-incontinence', text: ACVIM_INCONTINENCE }); continue }
     if (/^Pressler/.test(part)) { out.push({ id: 'iris-gn-nobiopsy', text: IRIS_GN_NOBIOPSY }); continue }
-    if (/^Segev/.test(part)) { out.push({ id: 'iris-gn-pathology', text: IRIS_GN_PATHOLOGY }); continue }
+    if (/^Segev/.test(part)) {
+      const hit = SEGEV_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Weese/.test(part)) { out.push({ id: 'weese-iscaid-urinary', text: WEESE_ISCAID_URINARY }); continue }
     if (/^Kiupel/.test(part)) { out.push({ id: 'kiupel-mct-2tier', text: KIUPEL_MCT_2TIER }); continue }
     if (/^Nagamori/.test(part)) {
@@ -2870,7 +2901,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Kiselow/.test(part)) { out.push({ id: 'kiselow-lowgrade', text: KISELOW_LOWGRADE }); continue }
     if (/^Sabattini/.test(part)) { out.push({ id: 'sabattini-ibd-lsa', text: SABATTINI_IBD_LSA }); continue }
     if (/^Daniaux/.test(part)) { out.push({ id: 'daniaux-muscularis', text: DANIAUX_MUSCULARIS }); continue }
-    if (/^Russell/.test(part)) { out.push({ id: 'russell-lowgrade-freq', text: RUSSELL_LOWGRADE_FREQ }); continue }
+    if (/^Russell/.test(part)) {
+      const hit = RUSSELL_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Behrend/.test(part)) { out.push({ id: 'behrend-hac-diagnosis', text: BEHREND_HAC_DIAGNOSIS }); continue }
     if (/^Arenas/.test(part)) {
       const hit = ARENAS_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
