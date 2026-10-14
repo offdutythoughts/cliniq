@@ -61,6 +61,9 @@ export interface DiseaseResult {
   matchedSignTerms: string[]
   matchedDiagTerms: string[]
   category: string
+  /** Why this page is unlikely for the patient's sex/neuter status, when it
+   *  is possible only in an unusual circumstance (see SEX_ORGAN_RULES). */
+  signalmentNote?: string
 }
 
 // ── Age keywords (permissive — absent age = match) ────────────────────────────
@@ -84,25 +87,71 @@ const NO_PRED = /^no\s+(strong\s+)?breed\s+pred|^no\s+breed\s+specific|^any\s+br
 
 function countNamedBreeds(breedField: string): number {
   if (NO_PRED.test(breedField.trim())) return 0
-  // Split on commas, semicolons, slashes, em-dashes used as separators
-  const parts = breedField.split(/[,;\/]|(?:\s+and\s+)|\s+—\s+/)
+  // Split on commas, semicolons, slashes, em-dashes used as separators, after
+  // dropping parenthesised citations — "Australia/NZ (Ettinger Ch 284)" used to
+  // count "NZ (Ettinger Ch 284)" as a breed, and "(Ettinger Ch 313/331)" "331)".
+  const parts = breedField
+    .replace(/\([^)]*\b(Ch|\d{4})\b[^)]*\)/g, '')
+    .split(/[,;\/]|(?:\s+and\s+)|\s+—\s+/)
   // Filter out generic phrases
   const generic = /large|giant|small|medium|brachycephalic|any|all\s+breed|no\s+pred|chondrodystrophic|sighthound|overrepresented|predisposed|most|highest|common/i
   return parts.filter(p => p.trim().length > 2 && !generic.test(p)).length
+}
+
+// ── Breed groups ──────────────────────────────────────────────────────────────
+// Many breed fields name a GROUP rather than a breed — "Miniature Schnauzers,
+// Poodles, German Shepherd Dogs, Terriers" on hypoparathyroidism — and a plain
+// substring test gives "Airedale Terrier" no credit from "Terriers".
+//
+// A group counts only where it stands BARE in the field: at the start of a list
+// item, or after "other"/"several"/"the". "Jack Russell terriers" and "Labrador
+// and Golden Retrievers" are specific breeds in the plural and must not hand
+// every terrier or retriever the credit. Each group then says which queries
+// belong to it — usually the group word itself, plus the colloquial members a
+// clinician actually types ("Westie", "Lab", "Greyhound").
+//
+// A group match is worth half a named-breed match: the predisposition is real
+// but spread across the group, so it says less about this one breed.
+
+const BREED_GROUPS: { field: string; query: RegExp }[] = [
+  { field: 'terriers?',    query: /\bterriers?\b|\b(westie|yorkie|staff(y|ie)|jrt)\b/ },
+  { field: 'retrievers?',  query: /\bretrievers?\b|\blabrador\b|\blab\b/ },
+  { field: 'spaniels?',    query: /\bspaniels?\b|\bckcs\b|\bcavalier\b/ },
+  { field: 'setters?',     query: /\bsetters?\b/ },
+  { field: 'pointers?',    query: /\bpointers?\b/ },
+  { field: 'collies?',     query: /\bcollies?\b/ },
+  { field: 'schnauzers?',  query: /\bschnauzers?\b/ },
+  { field: 'poodles?',     query: /\bpoodles?\b/ },
+  { field: 'bulldogs?',    query: /\bbulldogs?\b|\bfrenchie\b/ },
+  { field: 'sheepdogs?',   query: /\bsheepdogs?\b|\bsheltie\b/ },
+  { field: 'shepherds?',   query: /\bshepherds?\b|\bgsd\b/ },
+  { field: 'hounds',       query: /hounds?\b|\bbeagle\b/ },
+  { field: 'sighthounds?', query: /\b(greyhound|whippet|saluki|borzoi|deerhound|wolfhound|afghan|sloughi|galgo|lurcher|azawakh)\b/ },
+]
+
+const bareGroupRx = (group: string) =>
+  new RegExp(`(^|[,;|(:/]\\s*|\\b(other|several|the)\\s+)${group}\\b`, 'i')
+const BARE_GROUP_RX = BREED_GROUPS.map(g => ({ bare: bareGroupRx(g.field), query: g.query }))
+
+function matchesBreedGroup(field: string, q: string): boolean {
+  return BARE_GROUP_RX.some(g => g.query.test(q) && g.bare.test(field))
 }
 
 function breedScore(breedField: string | undefined, query: string): number {
   if (!breedField || !query.trim()) return 0
   const q = query.trim().toLowerCase()
   const field = breedField.toLowerCase()
-  if (!field.includes(q)) return 0
+  const named = field.includes(q)
+  if (!named && !matchesBreedGroup(field, q)) return 0
 
   const n = countNamedBreeds(breedField)
-  if (n === 0) return 0
-  if (n <= 2) return 4   // high specificity — e.g. Maine Coon for HCM
-  if (n <= 4) return 2
-  if (n <= 7) return 1
-  return 0               // 8+ named breeds → not meaningfully predictive
+  let s: number
+  if (n === 0) s = 0
+  else if (n <= 2) s = 4   // high specificity — e.g. Maine Coon for HCM
+  else if (n <= 4) s = 2
+  else if (n <= 7) s = 1
+  else s = 0               // 8+ named breeds → not meaningfully predictive
+  return named ? s : Math.ceil(s / 2)
 }
 
 // ── Category normalisation (mirrors engine.ts) ───────────────────────────────
@@ -474,6 +523,72 @@ const NEUTER_KEYWORDS: Record<NeuterFilter, RegExp> = {
   neutered: /neuter|spay|castrat|desex/i,
 }
 
+// ── Sex-organ plausibility ────────────────────────────────────────────────────
+// Sex and neuter status above are only a bonus, so on their own they never stop
+// a page the patient cannot have: prostatitis used to rank for a spayed bitch.
+// This table is the hard filter, keyed by page id because the `sex` field is
+// prose ("Entire (intact) male dogs; extremely rare in cats") and parsing it for
+// an exclusion would be one rewording away from silently failing open.
+//
+// Two strengths, matching how certain the biology is:
+//   `requires` — the organ only exists in that sex. Hard exclude otherwise.
+//   a note     — possible but needs an unusual circumstance. The page stays on
+//                the list (evidence still decides inclusion), its ranking score
+//                is cut by NOTE_FACTOR, and the note says why, so the clinician
+//                sees a stump pyometra candidate as exactly that.
+//
+// Calls deliberately NOT made:
+//   • Mammary tumours are not excluded for males — male dogs and cats have
+//     mammary tissue and do get them, rarely.
+//   • Prostatitis and prostatic carcinoma are not touched by castration — the
+//     prostate is atrophied, not removed, and carcinoma is MORE common in
+//     castrated dogs (Ettinger Ch 314).
+//   • Pyometra in a spayed female is a note, not an exclusion: stump pyometra
+//     needs an ovarian remnant, and the page describes the entire-female form.
+//
+// No page exists yet for testicular, ovarian or uterine neoplasia, eclampsia or
+// dystocia. When one is added it must be classified here — the guard test in
+// diseaseSearch.test.ts fails on any reproductive-organ page missing from this
+// table (or from its NO_SEX_RULE allowlist).
+export interface SexOrganRule {
+  /** The organ exists only in this sex — any other recorded sex is excluded. */
+  requires?: SexFilter
+  /** The patient is neutered: possible only in an unusual circumstance. */
+  neuteredNote?: string
+  /** The patient is male: possible but rare. */
+  maleNote?: string
+}
+
+export const SEX_ORGAN_RULES: Record<string, SexOrganRule> = {
+  'DIS-REPRO-PYO': {
+    requires: 'female',
+    neuteredNote: 'Spayed — only as stump pyometra, which needs an ovarian remnant',
+  },
+  'DIS-URO-PROSTATITIS': { requires: 'male' },
+  'DIS-URO-PROST-NEO': { requires: 'male' },
+  'DIS-URO-BPH': {
+    requires: 'male',
+    neuteredNote: 'Castrated — BPH is androgen-dependent and regresses within 7–14 d of castration',
+  },
+  'DIS-NEO-MGT': { maleNote: 'Male — mammary tumours occur but are rare' },
+}
+
+/** Ranking multiplier for a page that carries a signalment note. */
+const NOTE_FACTOR = 0.25
+
+/**
+ * `null` when the page is impossible for this signalment; otherwise the
+ * caveat (if any) that applies. Unknown sex or neuter status never excludes.
+ */
+function sexPlausibility(id: string, sex?: SexFilter, neuter?: NeuterFilter): { note?: string } | null {
+  const rule = SEX_ORGAN_RULES[id]
+  if (!rule) return {}
+  if (rule.requires && sex && sex !== rule.requires) return null
+  if (neuter === 'neutered' && rule.neuteredNote) return { note: rule.neuteredNote }
+  if (sex === 'male' && rule.maleNote) return { note: rule.maleNote }
+  return {}
+}
+
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export interface SearchCategory {
@@ -751,6 +866,7 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
 
   for (const d of DB.disease_page) {
     if (!coversSpecies(d, species)) continue // hard exclude
+    if (!sexPlausibility(d.id as string, sex, neuter)) continue // hard exclude
 
     const signHits = keywordHits(fieldText(d, ...SIGN_FIELDS), signKeywords)
     const diagHits = keywordHits(fieldText(d, ...DIAG_FIELDS), diagKeywords)
@@ -869,7 +985,8 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
 
     // ── Species prevalence (ranking only) ──
     const prev = prevalenceFactor(d.id as string, species)
-    const score = round1(evidence * prev)
+    const signalmentNote = sexPlausibility(d.id as string, sex, neuter)?.note
+    const score = round1(evidence * prev * (signalmentNote ? NOTE_FACTOR : 1))
 
     const rawCat = (d['cat'] as string | undefined) ?? inferCat(d)
     results.push({
@@ -889,6 +1006,7 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
       matchedSignTerms,
       matchedDiagTerms,
       category: normCat(rawCat),
+      ...(signalmentNote && { signalmentNote }),
     })
   }
 

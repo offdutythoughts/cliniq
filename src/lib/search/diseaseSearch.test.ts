@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { searchDiseases, topDifferentials, suggestSignTerms, type SearchInputs } from './diseaseSearch'
+import { searchDiseases, topDifferentials, suggestSignTerms, SEX_ORGAN_RULES, type SearchInputs } from './diseaseSearch'
 import { PREVALENCE, prevalenceFactor } from './prevalence'
 import { DB } from '../../data/db'
 
@@ -343,5 +343,108 @@ describe('problem-list tiers', () => {
     const plain = ranked(FELINE_DM).map(r => [r.disease.id, r.score])
     const empty = ranked({ ...FELINE_DM, termTiers: {} }).map(r => [r.disease.id, r.score])
     expect(empty).toEqual(plain)
+  })
+})
+
+describe('sex-organ plausibility', () => {
+  /** A history every sex-organ page matches on its own terms. */
+  const REPRO: Partial<SearchInputs> = {
+    species: 'dog',
+    signKeywords: ['stranguria', 'haematuria', 'lethargy', 'vomiting', 'pu/pd', 'mammary masses', 'vulvar discharge'],
+  }
+  const ids = (over: Partial<SearchInputs>) => ranked({ ...REPRO, ...over }).map(r => r.disease.id)
+  const find = (id: string, over: Partial<SearchInputs>) =>
+    ranked({ ...REPRO, ...over }).find(r => r.disease.id === id)
+
+  it('the reference history reaches every page in the table when sex is unknown', () => {
+    // Otherwise the exclusion tests below would pass vacuously.
+    for (const id of Object.keys(SEX_ORGAN_RULES)) expect(ids({})).toContain(id)
+  })
+
+  it('excludes prostatic disease for a female — the Case Triage report', () => {
+    for (const over of [{ sex: 'female' as const }, { sex: 'female' as const, neuter: 'neutered' as const }]) {
+      const got = ids(over)
+      expect(got).not.toContain('DIS-URO-PROSTATITIS')
+      expect(got).not.toContain('DIS-URO-PROST-NEO')
+      expect(got).not.toContain('DIS-URO-BPH')
+    }
+  })
+
+  it('excludes pyometra for a male', () => {
+    expect(ids({ sex: 'male' })).not.toContain('DIS-REPRO-PYO')
+    expect(ids({ sex: 'male', neuter: 'neutered' })).not.toContain('DIS-REPRO-PYO')
+  })
+
+  it('keeps pyometra for a spayed female only as stump pyometra, demoted', () => {
+    const intact = find('DIS-REPRO-PYO', { sex: 'female', neuter: 'intact' })!
+    const spayed = find('DIS-REPRO-PYO', { sex: 'female', neuter: 'neutered' })!
+    expect(intact.signalmentNote).toBeUndefined()
+    expect(spayed.signalmentNote).toMatch(/stump pyometra/i)
+    expect(spayed.score).toBeLessThan(intact.score / 2)
+  })
+
+  it('flags BPH but not prostatitis or carcinoma in a castrated male', () => {
+    const over = { sex: 'male' as const, neuter: 'neutered' as const }
+    expect(find('DIS-URO-BPH', over)?.signalmentNote).toMatch(/androgen/i)
+    expect(find('DIS-URO-PROSTATITIS', over)?.signalmentNote).toBeUndefined()
+    expect(find('DIS-URO-PROST-NEO', over)?.signalmentNote).toBeUndefined()
+  })
+
+  it('keeps mammary tumours for a male, with a rarity note', () => {
+    expect(find('DIS-NEO-MGT', { sex: 'male' })?.signalmentNote).toMatch(/rare/i)
+    expect(find('DIS-NEO-MGT', { sex: 'female' })?.signalmentNote).toBeUndefined()
+  })
+
+  it('never excludes when only neuter status is known', () => {
+    const got = ids({ neuter: 'neutered' })
+    for (const id of Object.keys(SEX_ORGAN_RULES)) expect(got).toContain(id)
+  })
+
+  it('classifies every reproductive-organ page', () => {
+    // A new testicular / ovarian / eclampsia page must be added to
+    // SEX_ORGAN_RULES (or consciously listed here) or it ranks for any sex.
+    const ORGAN = /prostat|testic|testis|scrot|sertoli|seminoma|leydig|cryptorch|orchit|epididym|penile|prepuc|pyometr|uter(ine|us)|ovar|mammar|eclamp|vagin|vulv|metritis|dystoc|pregnan|mastitis|puerper/i
+    // Pages that mention an organ but are not organ disease.
+    const NO_SEX_RULE = new Set<string>([])
+    const unclassified = DB.disease_page
+      .filter(d => ORGAN.test(`${d.id} ${d.name}`))
+      .map(d => d.id as string)
+      .filter(id => !(id in SEX_ORGAN_RULES) && !NO_SEX_RULE.has(id))
+    expect(unclassified).toEqual([])
+  })
+
+  it('every table id is a real page', () => {
+    const all = new Set(DB.disease_page.map(d => d.id))
+    for (const id of Object.keys(SEX_ORGAN_RULES)) expect(all.has(id)).toBe(true)
+  })
+})
+
+describe('breed groups', () => {
+  const breedOf = (id: string, breedQuery: string) =>
+    ranked({ species: 'dog', breedQuery }).find(r => r.disease.id === id)?.breakdown.breed ?? 0
+
+  it('credits an Airedale from a bare "terriers" entry', () => {
+    // Field: "Small-breed dogs (Poodle, terriers, Cocker Spaniel)|Often overweight"
+    expect(breedOf('DIS-RESP-BRONCHITIS', 'Airedale Terrier')).toBeGreaterThan(0)
+  })
+
+  it('gives a group match less than a named-breed match', () => {
+    expect(breedOf('DIS-RESP-BRONCHITIS', 'Airedale Terrier'))
+      .toBeLessThan(breedOf('DIS-RESP-BRONCHITIS', 'Cocker Spaniel'))
+  })
+
+  it('does not treat a plural specific breed as a group', () => {
+    // "Labrador and Golden Retrievers" names two breeds, not every retriever.
+    expect(breedOf('DIS-INFECT-LYME', 'Golden Retriever')).toBeGreaterThan(0)
+    expect(breedOf('DIS-INFECT-LYME', 'Flat-Coated Retriever')).toBe(0)
+  })
+
+  it('maps colloquial members onto their group', () => {
+    // DM canine field: "Miniature Schnauzer, Poodle, Samoyed, Terriers"
+    expect(breedOf('DIS-ENDO-DM', 'Westie')).toBeGreaterThan(0)
+  })
+
+  it('leaves an unrelated breed at zero', () => {
+    expect(breedOf('DIS-ENDO-HYPOPTH', 'Labrador Retriever')).toBe(0)
   })
 })
