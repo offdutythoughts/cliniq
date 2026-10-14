@@ -6697,3 +6697,39 @@ Notes:
 - **DIS-NEO-ETC** is about heart-base tumours. Broome 2014 is about the sublingual site and is
   used only as a contrast, with the site named explicitly on the page.
 - **Resolver**: `Elliott` (2000/2018) and `Craig` (2002/2009) are now year-keyed.
+
+## Endocrine and renal batch (2026-10-14)
+
+**48 → 41.** All five textbook-only `DIS-ENDO-*` pages and both `DIS-REN-*` pages now cite papers.
+
+> Russell NJ, Bond KA, Robertson ID, Parry BW, Irwin PJ. Primary hypoparathyroidism in dogs: a retrospective study of 17 cases. Aust Vet J. 2006;84(8):285-290. doi:10.1111/j.1751-0813.2006.00015.x
+
+> Williams TL, Elliott J, Syme HM. Association of iatrogenic hypothyroidism with azotemia and reduced survival time in cats treated for hyperthyroidism. J Vet Intern Med. 2010;24(5):1086-1092. doi:10.1111/j.1939-1676.2010.0566.x
+
+> Latifi M, Skinner OT, Spoldi E, et al. Outcome and postoperative complications in 73 dogs with thyroid carcinoma with gross vascular invasion managed with thyroidectomy. Vet Comp Oncol. 2021;19(4):685-696. doi:10.1111/vco.12739
+
+> Trotman TK, Drobatz KJ, Hess RS. Retrospective evaluation of hyperosmolar hyperglycemia in 66 dogs (1993-2008). J Vet Emerg Crit Care (San Antonio). 2013;23(5):557-564. doi:10.1111/vec.12100
+
+> Outerbridge CA, Marks SL, Rogers QR. Plasma amino acid concentrations in 36 dogs with histologically confirmed superficial necrolytic dermatitis. Vet Dermatol. 2002;13(4):177-186. doi:10.1046/j.1365-3164.2002.00295.x
+
+> Nybroe S, Bjørnvad CR, Hansen CFH, Andersen TSL, Kieler IN. Outcome of acquired Fanconi syndrome associated with ingestion of jerky treats in 30 dogs. Animals (Basel). 2022;12(22):3192. doi:10.3390/ani12223192
+
+> Segev G, Cowgill LD, Jessen S, Berkowitz A, Mohr CF, Aroch I. Renal amyloidosis in dogs: a retrospective study of 91 cases with comparison of the disease between Shar-Pei and non-Shar-Pei dogs. J Vet Intern Med. 2012;26(2):259-268. doi:10.1111/j.1939-1676.2011.00878.x
+
+Notes:
+
+- **DIS-ENDO-HYPOTHY-CAT misstated a comparison.** It said hypothyroid azotaemic cats survived
+  456 days "vs 905 days in euthyroid azotaemic cats". Williams 2010 compared hypothyroid cats that
+  *became* azotaemic (456 d) with hypothyroid cats that *stayed non-azotaemic* (905 d). The
+  euthyroid group appears only in the azotaemia-incidence comparison (14/47 vs 16/28 hypothyroid).
+  The page now carries both findings correctly.
+- **DIS-ENDO-GASTRINOMA** treated low plasma amino acids as a glucagonoma marker that separates it
+  from liver disease. In 36 dogs with superficial necrolytic dermatitis (mostly hepatocutaneous
+  syndrome), hypoaminoacidaemia was universal, and the page now says it does not discriminate.
+- **DIS-REN-RTA** had "Not specified in source" for prognosis. It now carries the jerky-Fanconi
+  recovery data.
+- **Gastrinoma itself** has no canine or feline series beyond case reports. The paper on that
+  page supports the glucagonoma/SND half only, so the gastrinoma claims remain Ettinger-only.
+- **Resolver**: `Russell` (2006/2012) and `Segev` (2012/2013) are now year-keyed, via a new helper
+  that converts a single-paper branch in place. All the year-key splits from this pass are in
+  the regression test.

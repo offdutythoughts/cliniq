@@ -1402,6 +1402,16 @@ describe('citation pass 2026-10-14 — collision cases', () => {
       ['Littlejohn 2023', 'littlejohn-reln'],
       ['London 1996', 'london-ear-canal'],
       ['NASPHV 2016', 'nasphv-rabies-2016'],
+      ['Segev 2012', 'segev-renal-amyloid'],
+      ['Segev 2013', 'iris-gn-pathology'],
+      ['Russell 2006', 'russell-hypopth-dogs'],
+      ['Russell 2012', 'russell-lowgrade-freq'],
+      ['Elliott 2000', 'elliott-renal-diet'],
+      ['Elliott 2018', 'elliott-hphs-lomustine'],
+      ['Craig 2002', 'craig-synovial'],
+      ['Craig 2009', 'craig-fgesf'],
+      ['O’Neill 2021 anal sac', 'oneill-anal-sac'],
+      ['O’Neill 2021', 'oneill-kcs'],
     ]
     for (const [marker, id] of cases) expect(parseSources(marker).map(s => s.id), marker).toEqual([id])
   })
