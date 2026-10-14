@@ -6273,3 +6273,68 @@ The ratchet caught it. Two habits worth keeping: put each page's edits in their
 own script invocation so one miss cannot swallow another page's work, and treat a
 ratchet that reads *above* the baseline just after lowering it as evidence the
 edit did not apply, rather than as a count to adjust.
+
+## Consensus-statement gap audit (2026-10-14)
+
+**110 → 106.** Triggered by DIS-RESP-PHTN, which named the ACVIM 2020 statement in its
+text but cited only Ettinger. A PubMed query for every JVIM title containing "consensus
+statement / guidelines / recommendations" returned 57 records; the small-animal ones were
+checked against the resolver by DOI. Each paper below was verified in PubMed and
+Crossref (all agreed), and its full text (PMC) or, for the IRIS 2013 set, abstract was
+read before any claim was attached.
+
+> Littman MP, Daminet S, Grauer GF, Lees GE, van Dongen AM. Consensus recommendations for the diagnostic investigation of dogs with suspected glomerular disease. J Vet Intern Med. 2013;27(suppl 1):S19-S26. doi:10.1111/jvim.12223
+
+> Pressler B, Vaden S, Gerber B, Langston C, Polzin D. Consensus guidelines for immunosuppressive treatment of dogs with glomerular disease absent a pathologic diagnosis. J Vet Intern Med. 2013;27(suppl 1):S55-S59. doi:10.1111/jvim.12222
+
+> Segev G, Cowgill LD, Heiene R, Labato MA, Polzin DJ. Consensus recommendations for immunosuppressive treatment of dogs with glomerular disease based on established pathology. J Vet Intern Med. 2013;27(suppl 1):S44-S54. doi:10.1111/jvim.12228
+
+> Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975
+
+> Webster CRL, Center SA, Cullen JM, et al. ACVIM consensus statement on the diagnosis and treatment of chronic hepatitis in dogs. J Vet Intern Med. 2019;33(3):1173-1200. doi:10.1111/jvim.15467
+
+> Forman MA, Steiner JM, Armstrong PJ, et al. ACVIM consensus statement on pancreatitis in cats. J Vet Intern Med. 2021;35(2):703-723. doi:10.1111/jvim.16053
+
+> Podell M, Volk HA, Berendt M, et al. 2015 ACVIM small animal consensus statement on seizure management in dogs. J Vet Intern Med. 2016;30(2):477-490. doi:10.1111/jvim.13841
+
+> Heilmann RM, Jergens AE, Kathrani A, et al. ACVIM-endorsed statement: consensus statement and systematic review on guidelines for the diagnosis and treatment of chronic inflammatory enteropathy in dogs. J Vet Intern Med. 2026;40(1):aalaf017. doi:10.1093/jvimsj/aalaf017
+
+> Cerda-Gonzalez S, Packer RA, Garosi L, et al. International veterinary canine dyskinesia task force ECVN consensus statement: terminology and classification. J Vet Intern Med. 2021;35(3):1218-1230. doi:10.1111/jvim.16108
+
+Resolver: `Littman` is now year-keyed (2013 IRIS GN diagnosis, 2018 Lyme). Brown 2013 (IRIS
+standard therapy) was not added — `Brown` is taken and the page's standard-therapy content
+is already carried by Ettinger. Heilmann 2026 is article-numbered (`aalaf017`): JVIM moved
+to Oxford Academic in 2026 and the DOI prefix changed to `10.1093/jvimsj`.
+
+### Content corrected against the source, not just cited
+
+Reading the statements found several places where the page said something else:
+
+- **DIS-RESP-PHTN** — echo-probability tiers misplaced (see the Reinero entry above).
+- **DIS-HEP-CHRONHEP** — trientine was 10–15 mg/kg q12h; Webster gives **5–7.5 mg/kg q12h**
+  and does not recommend it. Zinc was "zinc acetate 5–10 mg/kg q12h"; Webster doses
+  **8–10 mg/kg/day of elemental zinc** with plasma-zinc targets. Prednisolone, vitamin E and
+  ursodiol doses aligned to Webster's tables; the "copper-stain grade ≥3/5" chelation
+  criterion was not in the statement and was replaced by its 600–1000 µg/g grey zone.
+- **DIS-GI-IBD** — the page sequenced diet → antibiotics → immunosuppression. The 2026
+  guideline does **not** recommend empirical antibiotics and reserves them for dogs that
+  failed every other option; it also requires ≥3 diet trials of ≥2 weeks before endoscopy.
+  Same stewardship line added to DIS-GI-ARD, the 3-trial rule to DIS-GI-DRD.
+- **DIS-REN-GN** — Ettinger's immunosuppressive regimens differ from the IRIS ones; the
+  page now gives IRIS's (mycophenolate ± prednisolone; mycophenolate or chlorambucil ±
+  alternate-day azathioprine) and keeps Ettinger's cyclophosphamide attributed to Ettinger.
+- **DIS-URO-USMI** — "PPA + oestrogen anecdotally superior" became the statement's actual
+  position: one study found no synergy; some clinicians use the combination to lower doses.
+- **DIS-GI-PANCAT** — "glucocorticoids may benefit" now reflects the panel split on dose,
+  the absence of evidence in acute disease, and the antibiotic restriction.
+
+### Considered and not added
+
+- **Neer 2002 (ehrlichiosis)** — 24 years old; both ehrlichiosis pages already cite newer
+  Mylonakis work, which wins under Rule 1(c).
+- **Littman 2006 Lyme, Sykes 2011 leptospirosis** — superseded by the 2018 and 2023 updates,
+  both already cited.
+- **Weese 2015 antimicrobial use, Smith 2018 cytotoxic safety** — no matching disease page.
+- **Cerda-Gonzalez 2021 on DIS-NEU-IHTS** — the statement is terminology-only and says
+  nothing specific about head tremor, so it was used on DIS-NEU-IGTS only, where it does
+  classify the syndrome.
