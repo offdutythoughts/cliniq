@@ -117,6 +117,10 @@ const ACVIM_SE =
   'Charalambous M, Muñana K, Patterson EE, Platt SR, Volk HA. ACVIM consensus statement on the management of status epilepticus and cluster seizures in dogs and cats. J Vet Intern Med. 2024;38(1):19-40. doi:10.1111/jvim.16928'
 const ACVIM_FCE =
   'Marsilio S, Freiche V, Johnson E, et al. ACVIM consensus statement guidelines on diagnosing and distinguishing low-grade neoplastic from inflammatory lymphocytic chronic enteropathies in cats. J Vet Intern Med. 2023;37(3):794-816. doi:10.1111/jvim.16690'
+// Pulmonary hypertension. Keyed on the AUTHOR: "ACVIM 2020" is already the
+// feline-cardiomyopathy statement in ACVIM_BY_YEAR. Dogs only.
+const ACVIM_PH =
+  'Reinero C, Visser LC, Kellihan HB, et al. ACVIM consensus statement guidelines for the diagnosis, classification, treatment, and monitoring of pulmonary hypertension in dogs. J Vet Intern Med. 2020;34(2):549-573. doi:10.1111/jvim.15725'
 
 // Feline eosinophilic keratitis. A single case report, so it carries the weight
 // of one animal — but it is the source for the comparative non-response and
@@ -1536,7 +1540,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -2039,6 +2043,7 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^LeVine/.test(part)) { out.push({ id: part.includes('treatment') ? 'acvim-itp-tx' : 'acvim-itp-dx', text: part.includes('treatment') ? ACVIM_ITP_TX : ACVIM_ITP_DX }); continue }
     if (/^Charalambous/.test(part)) { out.push({ id: 'acvim-se', text: ACVIM_SE }); continue }
     if (/^Marsilio/.test(part)) { out.push({ id: 'acvim-fce', text: ACVIM_FCE }); continue }
+    if (/^Reinero/.test(part)) { out.push({ id: 'acvim-ph', text: ACVIM_PH }); continue }
     if (/^Chirayath/.test(part)) { out.push({ id: 'chirayath-iatrogenic', text: CHIRAYATH_IATROGENIC }); continue }
     if (/^Romaneck/.test(part)) { out.push({ id: 'romaneck-ek', text: ROMANECK_EK }); continue }
     if (/^Farias/.test(part)) {
