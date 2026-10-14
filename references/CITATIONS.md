@@ -6617,3 +6617,44 @@ Notes:
     exposure.
   - DIS-HEP-NEO's conservative-management MST (270 d) rests on only 6 dogs, and the page says so.
 - **Attributed**: the massive-HCC lobectomy figures were Ettinger-only. They are Liptak 2004.
+
+## GI batch (2026-10-14)
+
+**67 → 56.** All eleven textbook-only `DIS-GI-*` pages now cite papers.
+
+> Grellet A, Makhlouf SE, Desquilbet L, et al. Efficacy of guar gum-based ronidazole capsules as a treatment for Tritrichomonas foetus infection in cats. J Feline Med Surg. 2017;19(2):177-184. doi:10.1177/1098612X15621353
+
+> Pazzi P, Kavkovsky A, Shipov A, Segev G, Dvir E. Spirocerca lupi induced oesophageal neoplasia: predictors of surgical outcome. Vet Parasitol. 2018;250:71-77. doi:10.1016/j.vetpar.2017.11.013
+
+> Soderman L, Harkin KR. Gastric Physaloptera infection in 27 dogs (1997-2019). J Am Anim Hosp Assoc. 2021;57(1):8-14. doi:10.5326/JAAHA-MS-7046
+
+> O’Neill DG, Hendricks A, Phillips JA, Brodbelt DC, Church DB, Loeffler A. Non-neoplastic anal sac disorders in UK dogs: epidemiology and management aspects of a research-neglected syndrome. Vet Rec. 2021;189(2):e203. doi:10.1002/vetr.203
+
+> Bae JY, Kim JI, Kim JY, et al. Sialocele and its association with hypercortisolism and long-term glucocorticoid treatment in dogs: retrospective case-control study. Animals (Basel). 2023;14(1):120. doi:10.3390/ani14010120
+
+> Cecchi R, Wills SJ, Dean R, Pearson GR. Demonstration of Ollulanus tricuspis in the stomach of domestic cats by biopsy. J Comp Pathol. 2006;134(4):374-377. doi:10.1016/j.jcpa.2006.02.003
+
+> Faucher MR, Biourge V, German AJ, Freiche V. Comparison of clinical, endoscopic, and histologic features between dogs with chronic gastritis with and without lymphofollicular hyperplasia. J Am Vet Med Assoc. 2020;256(8):906-913. doi:10.2460/javma.256.8.906
+
+> Méric T, Issard J, Maufras T, et al. Recurrence and survival in dogs with excised colorectal polyps: a retrospective study of 58 cases. J Vet Intern Med. 2023;37(6):2375-2384. doi:10.1111/jvim.16876
+
+> Nucci DJ, Liptak JM, Selmic LE, et al. Complications and outcomes following rectal pull-through surgery in dogs with rectal masses: 74 cases (2000-2013). J Am Vet Med Assoc. 2014;245(6):684-695. doi:10.2460/javma.245.6.684
+
+> Abrams B, Wavreille VA, Husbands BD, et al. Perioperative complications and outcome after surgery for treatment of gastric carcinoma in dogs: a Veterinary Society of Surgical Oncology retrospective study of 40 cases (2004-2018). Vet Surg. 2019;48(6):923-932. doi:10.1111/vsu.13239
+
+> Grossman RM, Sumner JP, Lopez DJ, et al. Evaluation of outcomes following subtotal colectomy for the treatment of idiopathic megacolon in cats. J Am Vet Med Assoc. 2021;259(11):1292-1299. doi:10.2460/javma.20.07.0418
+
+Notes:
+
+- **DIS-GI-ANALSAC listed the Labrador as over-represented.** In 104,212 UK primary-care dogs
+  Labradors had **reduced** odds of anal sac disorders, and the page now says so. Cited as
+  `(O’Neill 2021 anal sac)` — the third O’Neill 2021 paper, routed on its qualifier like
+  `periodontal`.
+- **DIS-GI-ADENO** called adjuvant chemotherapy of "variable/limited benefit". In 40 dogs it was
+  associated with longer survival (HR 0.4). The page keeps the older view and adds the newer
+  finding; it is retrospective and not randomised.
+- **DIS-GI-MEGA** carried an unquantified "subtotal colectomy highly effective". It is replaced
+  with the 151-cat numbers (32% recurrence, 14% treatment- or disease-related death) and the
+  ileocolic-junction finding.
+- **Bae 2023** is online-only (Animals); both registries give an issued date of 2023-12-28,
+  although the issue is dated January 2024. 2023 is used.

@@ -264,6 +264,28 @@ const LAPSLEY_RECURRENT_HCC =
   'Lapsley JM, Wavreille V, Barry S, et al. Risk factors and outcome in dogs with recurrent massive hepatocellular carcinoma: a Veterinary Society of Surgical Oncology case-control study. Vet Comp Oncol. 2022;20(3):697-709. doi:10.1111/vco.12824'
 const LIPTAK_MASSIVE_HCC =
   'Liptak JM, Dernell WS, Monnet E, et al. Massive hepatocellular carcinoma in dogs: 48 cases (1992-2002). J Am Vet Med Assoc. 2004;225(8):1225-1230. doi:10.2460/javma.2004.225.1225'
+const GRELLET_RONIDAZOLE =
+  'Grellet A, Makhlouf SE, Desquilbet L, et al. Efficacy of guar gum-based ronidazole capsules as a treatment for Tritrichomonas foetus infection in cats. J Feline Med Surg. 2017;19(2):177-184. doi:10.1177/1098612X15621353'
+const PAZZI_SPIROCERCA =
+  'Pazzi P, Kavkovsky A, Shipov A, Segev G, Dvir E. Spirocerca lupi induced oesophageal neoplasia: predictors of surgical outcome. Vet Parasitol. 2018;250:71-77. doi:10.1016/j.vetpar.2017.11.013'
+const SODERMAN_PHYSALOPTERA =
+  'Soderman L, Harkin KR. Gastric Physaloptera infection in 27 dogs (1997-2019). J Am Anim Hosp Assoc. 2021;57(1):8-14. doi:10.5326/JAAHA-MS-7046'
+const ONEILL_ANAL_SAC =
+  'O’Neill DG, Hendricks A, Phillips JA, Brodbelt DC, Church DB, Loeffler A. Non-neoplastic anal sac disorders in UK dogs: epidemiology and management aspects of a research-neglected syndrome. Vet Rec. 2021;189(2):e203. doi:10.1002/vetr.203'
+const BAE_SIALOCELE =
+  'Bae JY, Kim JI, Kim JY, et al. Sialocele and its association with hypercortisolism and long-term glucocorticoid treatment in dogs: retrospective case-control study. Animals (Basel). 2023;14(1):120. doi:10.3390/ani14010120'
+const CECCHI_OLLULANUS =
+  'Cecchi R, Wills SJ, Dean R, Pearson GR. Demonstration of Ollulanus tricuspis in the stomach of domestic cats by biopsy. J Comp Pathol. 2006;134(4):374-377. doi:10.1016/j.jcpa.2006.02.003'
+const FAUCHER_GASTRITIS_LFH =
+  'Faucher MR, Biourge V, German AJ, Freiche V. Comparison of clinical, endoscopic, and histologic features between dogs with chronic gastritis with and without lymphofollicular hyperplasia. J Am Vet Med Assoc. 2020;256(8):906-913. doi:10.2460/javma.256.8.906'
+const MERIC_POLYPS =
+  'Méric T, Issard J, Maufras T, et al. Recurrence and survival in dogs with excised colorectal polyps: a retrospective study of 58 cases. J Vet Intern Med. 2023;37(6):2375-2384. doi:10.1111/jvim.16876'
+const NUCCI_RPT =
+  'Nucci DJ, Liptak JM, Selmic LE, et al. Complications and outcomes following rectal pull-through surgery in dogs with rectal masses: 74 cases (2000-2013). J Am Vet Med Assoc. 2014;245(6):684-695. doi:10.2460/javma.245.6.684'
+const ABRAMS_GASTRIC_CA =
+  'Abrams B, Wavreille VA, Husbands BD, et al. Perioperative complications and outcome after surgery for treatment of gastric carcinoma in dogs: a Veterinary Society of Surgical Oncology retrospective study of 40 cases (2004-2018). Vet Surg. 2019;48(6):923-932. doi:10.1111/vsu.13239'
+const GROSSMAN_STC =
+  'Grossman RM, Sumner JP, Lopez DJ, et al. Evaluation of outcomes following subtotal colectomy for the treatment of idiopathic megacolon in cats. J Am Vet Med Assoc. 2021;259(11):1292-1299. doi:10.2460/javma.20.07.0418'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -1700,7 +1722,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -2510,6 +2532,16 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Kirpensteijn/.test(part)) { out.push({ id: 'kirpensteijn-cholelithiasis', text: KIRPENSTEIJN_CHOLELITH }); continue }
     if (/^Lapsley/.test(part)) { out.push({ id: 'lapsley-recurrent-hcc', text: LAPSLEY_RECURRENT_HCC }); continue }
     if (/^Liptak/.test(part)) { out.push({ id: 'liptak-massive-hcc', text: LIPTAK_MASSIVE_HCC }); continue }
+    if (/^Grellet/.test(part)) { out.push({ id: 'grellet-ronidazole', text: GRELLET_RONIDAZOLE }); continue }
+    if (/^Pazzi/.test(part)) { out.push({ id: 'pazzi-spirocerca-sarcoma', text: PAZZI_SPIROCERCA }); continue }
+    if (/^Soderman/.test(part)) { out.push({ id: 'soderman-physaloptera', text: SODERMAN_PHYSALOPTERA }); continue }
+    if (/^Bae/.test(part)) { out.push({ id: 'bae-sialocele-hac', text: BAE_SIALOCELE }); continue }
+    if (/^Cecchi/.test(part)) { out.push({ id: 'cecchi-ollulanus', text: CECCHI_OLLULANUS }); continue }
+    if (/^Faucher/.test(part)) { out.push({ id: 'faucher-gastritis-lfh', text: FAUCHER_GASTRITIS_LFH }); continue }
+    if (/^Méric/.test(part)) { out.push({ id: 'meric-colorectal-polyps', text: MERIC_POLYPS }); continue }
+    if (/^Nucci/.test(part)) { out.push({ id: 'nucci-rectal-pullthrough', text: NUCCI_RPT }); continue }
+    if (/^Abrams/.test(part)) { out.push({ id: 'abrams-gastric-carcinoma', text: ABRAMS_GASTRIC_CA }); continue }
+    if (/^Grossman/.test(part)) { out.push({ id: 'grossman-subtotal-colectomy', text: GROSSMAN_STC }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
@@ -2758,6 +2790,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
       // And two 2021 papers — KCS and periodontal disease — so 2021 needs a
       // qualifier too. The map keeps KCS; periodontal says so in the marker.
       if (part.includes('periodont')) { out.push({ id: 'oneill-periodontal', text: ONEILL_PERIODONTAL }); continue }
+      // A third 2021 paper — non-neoplastic anal sac disorders.
+      if (part.includes('anal sac')) { out.push({ id: 'oneill-anal-sac', text: ONEILL_ANAL_SAC }); continue }
       const hit = ONEILL_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
       if (hit) out.push(hit)
       continue
