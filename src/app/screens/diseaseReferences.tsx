@@ -196,6 +196,32 @@ const GERBER_VLDLR =
   'Gerber M, Fischer A, Jagannathan V, et al. A deletion in the VLDLR gene in Eurasier dogs with cerebellar hypoplasia resembling a Dandy-Walker-like malformation (DWLM). PLoS One. 2015;10(2):e0108917. doi:10.1371/journal.pone.0108917'
 const LITTLEJOHN_RELN =
   'Littlejohn MD, Sneddon N, Dittmer K, et al. A frameshift-deletion mutation in Reelin causes cerebellar hypoplasia in White Swiss Shepherd dogs. Anim Genet. 2023;54(5):632-636. doi:10.1111/age.13336'
+const MILLS_TRISEDTA_PHMB =
+  'Mills PC, Ahlstrom L, Wilson WJ. Ototoxicity and tolerance assessment of a TrisEDTA and polyhexamethylene biguanide ear flush formulation in dogs. J Vet Pharmacol Ther. 2005;28(4):391-397. doi:10.1111/j.1365-2885.2005.00672.x'
+const BACON_FELINE_TECA =
+  'Bacon NJ, Gilbert RL, Bostock DE, White RAS. Total ear canal ablation in the cat: indications, morbidity and long-term survival. J Small Anim Pract. 2003;44(10):430-434. doi:10.1111/j.1748-5827.2003.tb00101.x'
+const MCGRATH_AURAL_SCC =
+  'McGrath AM, Chen CL, Abrams B, et al. Clinical presentation and outcome in cats with aural squamous cell carcinoma: a review of 25 cases (2010-2021). J Feline Med Surg. 2022;24(10):e420-e432. doi:10.1177/1098612X221119144'
+const PIEPER_CO2_CERUMINOUS =
+  'Pieper JB, Noxon JO, Berger DJ. Retrospective evaluation of ceruminous gland tumors confined to the external ear canal of dogs and cats treated with biopsy and CO2 laser ablation. J Vet Intern Med. 2023;37(6):2385-2390. doi:10.1111/jvim.16873'
+const LONDON_EAR_CANAL =
+  'London CA, Dubilzeig RR, Vail DM, et al. Evaluation of dogs and cats with tumors of the ear canal: 145 cases (1978-1992). J Am Vet Med Assoc. 1996;208(9):1413-1418. doi:10.2460/javma.1996.208.09.1413'
+const THAMES_CEREBELLAR_RATIO =
+  'Thames RA, Robertson ID, Flegel T, et al. Development of a morphometric magnetic resonance image parameter suitable for distinguishing between normal dogs and dogs with cerebellar atrophy. Vet Radiol Ultrasound. 2010;51(3):246-253. doi:10.1111/j.1740-8261.2009.01655.x'
+const GIRON_FELINE_CCD =
+  'Giron C, Hélie P, Parent J, Boutin M, St-Jean G. Clinical, imaging and histopathological characterization of a series of three cats with cerebellar cortical degeneration. BMC Vet Res. 2024;20(1):263. doi:10.1186/s12917-024-04127-3'
+const GUEVAR_PTPRQ =
+  'Guevar J, Olby NJ, Meurs KM, Yost O, Friedenberg SG. Deafness and vestibular dysfunction in a Doberman Pinscher puppy associated with a mutation in the PTPRQ gene. J Vet Intern Med. 2018;32(2):665-669. doi:10.1111/jvim.15060'
+const ORLANDI_PVD =
+  'Orlandi R, Gutierrez-Quintana R, Carletti B, et al. Clinical signs, MRI findings and outcome in dogs with peripheral vestibular disease: a retrospective study. BMC Vet Res. 2020;16(1):159. doi:10.1186/s12917-020-02366-8'
+const BIEL_VPS_CONGENITAL =
+  'Biel M, Kramer M, Forterre F, et al. Outcome of ventriculoperitoneal shunt implantation for treatment of congenital internal hydrocephalus in dogs and cats: 36 cases (2001-2009). J Am Vet Med Assoc. 2013;242(7):948-958. doi:10.2460/javma.242.7.948'
+const NADON_PLP =
+  'Nadon NL, Duncan ID, Hudson LD. A point mutation in the proteolipid protein gene of the shaking pup interrupts oligodendrocyte development. Development. 1990;110(2):529-537. doi:10.1242/dev.110.2.529'
+const PEMBERTON_FNIP2 =
+  'Pemberton TJ, Choi S, Mayer JA, et al. A mutation in the canine gene encoding folliculin-interacting protein 2 (FNIP2) associated with a unique disruption in spinal cord myelination. Glia. 2014;62(1):39-51. doi:10.1002/glia.22582'
+const QUITT_GSD_HLD =
+  'Quitt PR, Brühschwein A, Matiasek K, et al. A hypomyelinating leukodystrophy in German Shepherd dogs. J Vet Intern Med. 2021;35(3):1455-1465. doi:10.1111/jvim.16085'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -865,6 +891,8 @@ const LOW_IVDE_ML =
 // SRMA. Paterson is 124 dogs and carries the relapse rate. Gunther is 12 dogs
 // on cytarabine for relapse — a small series in which EVERY dog had an adverse
 // event, so the page states both halves of that.
+const PATERSON_BAER =
+  'Paterson S. Brainstem auditory evoked responses in 37 dogs with otitis media before and after topical therapy. J Small Anim Pract. 2018;59(1):10-15. doi:10.1111/jsap.12711'
 const PATERSON_SRMA =
   'Paterson R, Brady S. Signalment, clinical characteristics and outcomes of an Australian population of dogs with steroid responsive meningitis-arteritis (SRMA) — 124 cases (2013-2023). Aust Vet J. 2024;102(12):630-632. doi:10.1111/avj.13371'
 const GUNTHER_SRMA_CYTARABINE =
@@ -1628,7 +1656,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -1855,6 +1883,11 @@ const RAMSEY_BY_YEAR: Record<string, { id: string; text: string }> = {
 const LIATIS_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2023': { id: 'liatis-head-tremor', text: LIATIS_HEAD_TREMOR },
   '2025': { id: 'liatis-generalized-tremor', text: LIATIS_GEN_TREMOR },
+}
+/** Paterson: S 2018 (BAER after topical otic therapy) and R 2024 (SRMA) — different authors. */
+const PATERSON_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2018': { id: 'paterson-baer', text: PATERSON_BAER },
+  '2024': { id: 'paterson-srma', text: PATERSON_SRMA },
 }
 const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
@@ -2390,6 +2423,19 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^van Renen/.test(part)) { out.push({ id: 'vanrenen-feline-imp', text: VANRENEN_FELINE_IMP }); continue }
     if (/^Gerber/.test(part)) { out.push({ id: 'gerber-vldlr', text: GERBER_VLDLR }); continue }
     if (/^Littlejohn/.test(part)) { out.push({ id: 'littlejohn-reln', text: LITTLEJOHN_RELN }); continue }
+    if (/^Mills/.test(part)) { out.push({ id: 'mills-trisedta-phmb', text: MILLS_TRISEDTA_PHMB }); continue }
+    if (/^Bacon/.test(part)) { out.push({ id: 'bacon-feline-teca', text: BACON_FELINE_TECA }); continue }
+    if (/^McGrath/.test(part)) { out.push({ id: 'mcgrath-aural-scc', text: MCGRATH_AURAL_SCC }); continue }
+    if (/^Pieper/.test(part)) { out.push({ id: 'pieper-co2-ceruminous', text: PIEPER_CO2_CERUMINOUS }); continue }
+    if (/^London/.test(part)) { out.push({ id: 'london-ear-canal', text: LONDON_EAR_CANAL }); continue }
+    if (/^Thames/.test(part)) { out.push({ id: 'thames-cerebellar-ratio', text: THAMES_CEREBELLAR_RATIO }); continue }
+    if (/^Giron/.test(part)) { out.push({ id: 'giron-feline-ccd', text: GIRON_FELINE_CCD }); continue }
+    if (/^Guevar/.test(part)) { out.push({ id: 'guevar-ptprq', text: GUEVAR_PTPRQ }); continue }
+    if (/^Orlandi/.test(part)) { out.push({ id: 'orlandi-peripheral-vestibular', text: ORLANDI_PVD }); continue }
+    if (/^Biel/.test(part)) { out.push({ id: 'biel-vps-congenital', text: BIEL_VPS_CONGENITAL }); continue }
+    if (/^Nadon/.test(part)) { out.push({ id: 'nadon-plp-shaking-pup', text: NADON_PLP }); continue }
+    if (/^Pemberton/.test(part)) { out.push({ id: 'pemberton-fnip2', text: PEMBERTON_FNIP2 }); continue }
+    if (/^Quitt/.test(part)) { out.push({ id: 'quitt-gsd-hypomyelination', text: QUITT_GSD_HLD }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
@@ -2554,7 +2600,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Monforte Monteiro/.test(part)) { out.push({ id: 'monforte-monteiro-csf', text: MONFORTE_MONTEIRO_CSF }); continue }
     if (/^Congiusta/.test(part)) { out.push({ id: 'congiusta-oclacitinib-mmm', text: CONGIUSTA_OCLACITINIB_MMM }); continue }
     if (/^Low/.test(part)) { out.push({ id: 'low-ivde-ml', text: LOW_IVDE_ML }); continue }
-    if (/^Paterson/.test(part)) { out.push({ id: 'paterson-srma', text: PATERSON_SRMA }); continue }
+    if (/^Paterson/.test(part)) {
+      const hit = PATERSON_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Günther/.test(part)) { out.push({ id: 'gunther-srma-cytarabine', text: GUNTHER_SRMA_CYTARABINE }); continue }
     if (/^Stanton/.test(part)) { out.push({ id: 'stanton-cribriform', text: STANTON_CRIBRIFORM }); continue }
     if (/^Sones/.test(part)) { out.push({ id: 'sones-nasal-sarcoma', text: SONES_NASAL_SARCOMA }); continue }

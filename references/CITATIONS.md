@@ -6473,3 +6473,59 @@ Notes:
   `Littlejohn` is safe because the existing branch is `/^Li\b/`.
 - A regression test (`citation pass 2026-10-14 — collision cases`) asserts every collision
   above.
+
+## Neurology batch 2 (2026-10-14)
+
+**87 → 81.** Every textbook-only `DIS-NEU-*` page now cites a paper.
+
+> Paterson S. Brainstem auditory evoked responses in 37 dogs with otitis media before and after topical therapy. J Small Anim Pract. 2018;59(1):10-15. doi:10.1111/jsap.12711
+
+> Mills PC, Ahlstrom L, Wilson WJ. Ototoxicity and tolerance assessment of a TrisEDTA and polyhexamethylene biguanide ear flush formulation in dogs. J Vet Pharmacol Ther. 2005;28(4):391-397. doi:10.1111/j.1365-2885.2005.00672.x
+
+> London CA, Dubilzeig RR, Vail DM, et al. Evaluation of dogs and cats with tumors of the ear canal: 145 cases (1978-1992). J Am Vet Med Assoc. 1996;208(9):1413-1418. doi:10.2460/javma.1996.208.09.1413
+
+> Bacon NJ, Gilbert RL, Bostock DE, White RAS. Total ear canal ablation in the cat: indications, morbidity and long-term survival. J Small Anim Pract. 2003;44(10):430-434. doi:10.1111/j.1748-5827.2003.tb00101.x
+
+> McGrath AM, Chen CL, Abrams B, et al. Clinical presentation and outcome in cats with aural squamous cell carcinoma: a review of 25 cases (2010-2021). J Feline Med Surg. 2022;24(10):e420-e432. doi:10.1177/1098612X221119144
+
+> Pieper JB, Noxon JO, Berger DJ. Retrospective evaluation of ceruminous gland tumors confined to the external ear canal of dogs and cats treated with biopsy and CO2 laser ablation. J Vet Intern Med. 2023;37(6):2385-2390. doi:10.1111/jvim.16873
+
+> Thames RA, Robertson ID, Flegel T, et al. Development of a morphometric magnetic resonance image parameter suitable for distinguishing between normal dogs and dogs with cerebellar atrophy. Vet Radiol Ultrasound. 2010;51(3):246-253. doi:10.1111/j.1740-8261.2009.01655.x
+
+> Giron C, Hélie P, Parent J, Boutin M, St-Jean G. Clinical, imaging and histopathological characterization of a series of three cats with cerebellar cortical degeneration. BMC Vet Res. 2024;20(1):263. doi:10.1186/s12917-024-04127-3
+
+> Guevar J, Olby NJ, Meurs KM, Yost O, Friedenberg SG. Deafness and vestibular dysfunction in a Doberman Pinscher puppy associated with a mutation in the PTPRQ gene. J Vet Intern Med. 2018;32(2):665-669. doi:10.1111/jvim.15060
+
+> Orlandi R, Gutierrez-Quintana R, Carletti B, et al. Clinical signs, MRI findings and outcome in dogs with peripheral vestibular disease: a retrospective study. BMC Vet Res. 2020;16(1):159. doi:10.1186/s12917-020-02366-8
+
+> Biel M, Kramer M, Forterre F, et al. Outcome of ventriculoperitoneal shunt implantation for treatment of congenital internal hydrocephalus in dogs and cats: 36 cases (2001-2009). J Am Vet Med Assoc. 2013;242(7):948-958. doi:10.2460/javma.242.7.948
+
+> Nadon NL, Duncan ID, Hudson LD. A point mutation in the proteolipid protein gene of the shaking pup interrupts oligodendrocyte development. Development. 1990;110(2):529-537. doi:10.1242/dev.110.2.529
+
+> Pemberton TJ, Choi S, Mayer JA, et al. A mutation in the canine gene encoding folliculin-interacting protein 2 (FNIP2) associated with a unique disruption in spinal cord myelination. Glia. 2014;62(1):39-51. doi:10.1002/glia.22582
+
+> Quitt PR, Brühschwein A, Matiasek K, et al. A hypomyelinating leukodystrophy in German Shepherd dogs. J Vet Intern Med. 2021;35(3):1455-1465. doi:10.1111/jvim.16085
+
+Notes:
+
+- **Attribution corrections against the discovery tool.** Consensus listed the 1990 shaking-pup
+  PLP paper under Duncan; PubMed and Crossref give **Nadon NL** first. It listed Paterson's
+  BAER study as 2017; the print year is **2018**.
+- **Thames 2010**: Crossref's record carries no author list; authors are from PubMed and Europe
+  PMC, which agree. The abstract states the 89% brainstem:cerebellum cut-off without its
+  direction. The page says "above", which follows because atrophy can only raise that ratio.
+- **Paterson 2018** used a 0.15% chlorhexidine middle-ear flush. A letter in the same journal
+  (Strain 2017, not cited because it is a letter) disputes chlorhexidine's safety there. The page
+  states that the study is not evidence of chlorhexidine safety.
+- **Corrections**:
+  - DIS-NEU-CONGVEST said the Dobermann PTPRQ mutation was "confirmed". It was identified in
+    one puppy (1.5% carriers among 202 unaffected), and the page now says so.
+  - DIS-NEU-BRAINMAL repeated the RELN→lissencephaly claim already removed from
+    DIS-NEU-CEREHYPO. It is moved to cerebellar hypoplasia.
+  - DIS-NEU-HYPOMYEL now notes that the German Shepherd form leaves residual ataxia and can
+    bring later epilepsy.
+  - DIS-NEU-OTIC-NEO's uncited London 1996 and McGrath 2022 figures are attributed. The 168- vs
+    85-day SCC difference is now marked as non-significant.
+- **Resolver**: `Paterson` is year-keyed (S 2018 / R 2024). `London` sits safely beside `/^Lo\b/`.
+  The integrity lint caught "(White Swiss Shepherd)" resolving to an author named White; it was
+  reworded.
