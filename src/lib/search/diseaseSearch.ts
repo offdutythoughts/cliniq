@@ -24,6 +24,17 @@ export interface SearchInputs {
   neuter?: NeuterFilter
   signKeywords: string[]   // e.g. ['vomiting', 'weight loss', 'PU/PD']
   diagKeywords: string[]   // e.g. ['elevated ALP', 'thrombocytopenia', 'hypoechoic liver']
+  /** Problem-list tiers over the keywords above (Case Triage's problem list).
+   *  `key` terms weigh more, `secondary` terms far less (and cannot put a page
+   *  on the list alone), anything else is a supporting finding at normal
+   *  weight. Each `patterns` entry is a set of keywords read as one problem:
+   *  its terms count as key, and a page matching all of them scores a bonus.
+   *  Absent ⇒ every keyword weighs the same, as in Mix & Match. */
+  termTiers?: {
+    key?: string[]
+    secondary?: string[]
+    patterns?: string[][]
+  }
 }
 
 export interface DiseaseResult {
@@ -40,6 +51,12 @@ export interface DiseaseResult {
     sex: number
     signs: number
     diag: number
+    /** Bonus for matching every component of a problem-list pattern. */
+    pattern: number
+    /** Share of the key problems this page explains, 0–1 (1 when there is no
+     *  problem list). `signs`, `diag` and `pattern` are scaled by
+     *  1 − KEY_COVERAGE_PENALTY × (1 − keyCoverage) before they count. */
+    keyCoverage: number
   }
   matchedSignTerms: string[]
   matchedDiagTerms: string[]
@@ -590,6 +607,25 @@ export function suggestSignTerms(
 /** Smallest weight any matched term can carry — see the IDF note in searchDiseases. */
 const IDF_FLOOR = 0.5
 
+// ── Problem-list tiers (see SearchInputs.termTiers) ──
+// Multipliers on a term's IDF weight. A key problem is what the diagnosis has
+// to explain; a secondary finding is most likely a consequence of one (CK
+// after seizures), so it says little about the cause and must not outvote the
+// problems — on the motivating case, a mild CK and a 6.1 mmol/L glucose ranked
+// rhabdomyolysis and diabetes above the hypocalcaemia + hyperphosphataemia
+// that pointed at hypoparathyroidism.
+const KEY_WEIGHT = 2
+const SECONDARY_WEIGHT = 0.25
+/** A page matching every component of a pattern earns this share of those
+ *  components' weight again — the combination is the clue, not each part. */
+const PATTERN_BONUS = 0.5
+/** Share of a page's keyword score lost when it explains NONE of the key
+ *  problems; scales linearly to nothing lost when it explains them all. Two
+ *  pages can match the same lab pattern (rhabdomyolysis and
+ *  hypoparathyroidism both list hypocalcaemia + hyperphosphataemia) — the
+ *  one that also explains the stiff gait is the better diagnosis. */
+const KEY_COVERAGE_PENALTY = 0.5
+
 const round1 = (n: number) => Math.round(n * 10) / 10
 
 /**
@@ -735,8 +771,20 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
   // zero or negative) worth a token amount rather than silently free.
   const N = candidates.length
   const idf = (df: number) => Math.max(IDF_FLOOR, Math.log(N / (1 + df)))
+  // Problem-list tiers: a pattern's components count as key problems.
+  const tierKey = (t: string) => t.trim().toLowerCase()
+  const patterns = (inputs.termTiers?.patterns ?? [])
+    .map(p => [...new Set(p.map(tierKey))])
+    .filter(p => p.length >= 2)
+  const keyTerms = new Set([...(inputs.termTiers?.key ?? []).map(tierKey), ...patterns.flat()])
+  const secondaryTerms = new Set((inputs.termTiers?.secondary ?? []).map(tierKey).filter(t => !keyTerms.has(t)))
+  const patternTerms = new Set(patterns.flat())
+  const keyProblemCount = [...keyTerms].filter(t => !patternTerms.has(t)).length + patterns.length
+  const tierWeight = (t: string) =>
+    keyTerms.has(tierKey(t)) ? KEY_WEIGHT : secondaryTerms.has(tierKey(t)) ? SECONDARY_WEIGHT : 1
+
   const weigh = (terms: string[], df: Map<string, number>) =>
-    terms.reduce((sum, t) => sum + idf(df.get(t) ?? 0), 0)
+    terms.reduce((sum, t) => sum + idf(df.get(t) ?? 0) * tierWeight(t), 0)
 
   const results: DiseaseResult[] = []
 
@@ -775,8 +823,36 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
     const matchedDiagTerms = diagHits
     const diagScore = weigh(matchedDiagTerms, diagDf)
 
+    // ── Pattern bonus: every component of a pattern matched on this page ──
+    // A component may sit in either keyword list; it is weighed by whichever
+    // list(s) it hit in, exactly as above.
+    const contribution = new Map<string, number>()
+    const addContribution = (terms: string[], df: Map<string, number>) => {
+      for (const t of terms) {
+        const k = tierKey(t)
+        contribution.set(k, (contribution.get(k) ?? 0) + idf(df.get(t) ?? 0) * tierWeight(t))
+      }
+    }
+    addContribution(matchedSignTerms, signDf)
+    addContribution(matchedDiagTerms, diagDf)
+    let patternScore = 0
+    for (const p of patterns) {
+      if (p.every(t => contribution.has(t))) {
+        patternScore += PATTERN_BONUS * p.reduce((sum, t) => sum + contribution.get(t)!, 0)
+      }
+    }
+
+    // ── Key-problem coverage: how much of the problem list this page explains ──
+    // Each pattern is one problem (partly explained by a partial match); every
+    // other key term is one problem.
+    const coverage = keyProblemCount === 0 ? 1
+      : ([...keyTerms].filter(t => !patternTerms.has(t) && contribution.has(t)).length
+        + patterns.reduce((sum, p) => sum + p.filter(t => contribution.has(t)).length / p.length, 0))
+        / keyProblemCount
+    const coverageFactor = 1 - KEY_COVERAGE_PENALTY * (1 - coverage)
+
     // How well the history fits, before prevalence is considered at all.
-    const evidence = bScore + aScore + sxScore + signScore + diagScore
+    const evidence = bScore + aScore + sxScore + (signScore + diagScore + patternScore) * coverageFactor
 
     // Must have at least one keyword hit if keywords were provided,
     // or at least some signalment match if only signalment provided.
@@ -786,6 +862,10 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
     // rare disease that fits the history is always still on it.
     if (hasKeywords && matchedSignTerms.length === 0 && matchedDiagTerms.length === 0) continue
     if (!hasKeywords && evidence === 0) continue
+    // A secondary finding is explained by a key problem, so on its own it
+    // nominates nothing — CK after seizures must not list every myopathy.
+    if (secondaryTerms.size > 0
+      && [...matchedSignTerms, ...matchedDiagTerms].every(t => secondaryTerms.has(tierKey(t)))) continue
 
     // ── Species prevalence (ranking only) ──
     const prev = prevalenceFactor(d.id as string, species)
@@ -803,6 +883,8 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
         sex: sxScore,
         signs: round1(signScore),
         diag: round1(diagScore),
+        pattern: round1(patternScore),
+        keyCoverage: Math.round(coverage * 100) / 100,
       },
       matchedSignTerms,
       matchedDiagTerms,

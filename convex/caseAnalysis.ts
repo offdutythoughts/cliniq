@@ -6,7 +6,9 @@
 //
 //   extractSignals   free-text case notes → the structured SearchInputs shape
 //                     searchDiseases() already expects (species/breed/age/sex/
-//                     sign & diagnostic keywords).
+//                     sign & diagnostic keywords), plus a problem list sorting
+//                     those keywords into key / supporting / secondary
+//                     findings and lab patterns, which the search weights.
 //   synthesizeCase    the case text + the top-N disease rows the deterministic
 //                     engine actually matched → the one feature that sets
 //                     each match apart from the others, a short list of
@@ -44,8 +46,9 @@ const SYSTEM_PROMPT =
 // part of the list for breadth across categories via diverseDifferentials(),
 // not just a pure top-N), this one is just the hard cap on what the request
 // will accept.
-const MAX_CASE_TEXT = 4000;
-const MAX_CANDIDATES = 10;
+// Leaves room for the abbreviation key CaseTriageScreen appends to the notes.
+const MAX_CASE_TEXT = 6000;
+const MAX_CANDIDATES = 12;
 const MAX_FIELD = 600;
 
 // 503 ("service unavailable") is the one failure mode worth a same-request
@@ -132,7 +135,35 @@ export type ExtractedSignals = {
   signKeywords: string[];
   diagKeywords: string[];
   caseSummary: string;
+  /** Abbreviations in the notes the model couldn't confidently read — the
+   *  screen asks the author for their full form. Absent from older backends. */
+  unknownAbbreviations?: string[];
+  /** The case's problem list. Absent from older backends — the search then
+   *  weights every keyword alike. */
+  problemList?: ProblemList;
 };
+
+/** How a clinician ranks the extracted findings before thinking of causes.
+ *  Every term here is one of the extracted sign/diag keywords, verbatim; any
+ *  keyword in neither `key` nor `secondary` is a supporting finding. */
+export type ProblemList = {
+  /** The problems the diagnosis has to explain: the presenting complaints and
+   *  any specific, clearly abnormal finding. */
+  key: string[];
+  /** Findings most likely a CONSEQUENCE of a key problem or a nonspecific
+   *  stress change (CK after seizures, stress leukogram, stress
+   *  hyperglycaemia) — `explainedBy` says which. */
+  secondary: { term: string; explainedBy: string }[];
+  /** Findings that mean more together than apart (hypocalcaemia with
+   *  hyperphosphataemia). `terms` are keywords; a page matching all of them
+   *  scores a bonus. */
+  patterns: { name: string; terms: string[] }[];
+};
+
+// Shared by both prompts: how to read the key CaseTriageScreen appends from
+// its glossary (src/lib/caseTriage/vetAbbreviations.ts) and the author's own
+// full forms.
+const ABBREVIATION_RULES = `ABBREVIATIONS. The notes are written in veterinary shorthand. If they end with an "[Abbreviation key]" section, that key is not part of the case — it says what each abbreviation in the notes means. Read every abbreviation by it. Where an entry lists several senses joined by OR, choose the one the surrounding context supports (e.g. "FS" beside a signalment is female spayed, beside an eye exam it is fluorescein stain). An entry marked "(per the author)" is the author's own definition and always wins. Never treat an abbreviation you cannot read as a clinical finding — a guessed expansion becomes a false keyword.`;
 
 function extractPrompt(caseText: string): string {
   return `You are extracting structured search parameters from free-text veterinary case notes, for a deterministic differential-diagnosis search engine. You are NOT diagnosing the case — only extracting what is already stated.
@@ -155,10 +186,52 @@ Extract:
 - diagKeywords: diagnostic/lab findings already reported in the notes (e.g. "elevated ALP", "anemia"). Empty array if none were mentioned.
 - caseSummary: one plain sentence paraphrasing the case's acute presenting complaint.
 
+- unknownAbbreviations: every abbreviation or acronym in the notes (outside the abbreviation key) that the key does not define AND that you cannot read with confidence as standard veterinary shorthand — exactly as written. Empty array if none. Leave such abbreviations out of signKeywords/diagKeywords rather than guessing.
+
+- problemList: sort the keywords you extracted the way a clinician writes a problem list before thinking of causes. Every term below must be copied EXACTLY from signKeywords or diagKeywords; a keyword you put in neither "key" nor "secondary" counts as a supporting finding.
+  - key: the problems the diagnosis has to explain — the presenting complaints, plus any lab or exam finding that is clearly abnormal AND specific (it narrows the causes to a short list). Weigh magnitude: a value just outside the reference range is rarely key.
+  - secondary: findings most likely a CONSEQUENCE of a key problem, or a nonspecific stress change, rather than a clue to its cause — e.g. a mildly elevated CK after seizures or tremors, a stress leukogram, mild hyperglycaemia in a stressed or seizuring dog, a mild ALT rise after seizures. For each give "explainedBy": the key problem (or "stress") that accounts for it. Only list a finding here when that explanation is the likeliest reading; when unsure, leave it as supporting.
+  - patterns: findings that mean more together than apart, which a clinician reads as one problem — e.g. hypocalcaemia with hyperphosphataemia, hyponatraemia with hyperkalaemia, azotaemia with isosthenuria, regenerative anaemia with spherocytosis. "name" is the pattern as a clinician would say it; "terms" are its two or more component keywords. Only patterns whose every component is actually in the case.
+
+${ABBREVIATION_RULES}
+
 Do not invent anything not present in or directly implied by the text.
 
 Respond with ONLY a JSON object of exactly this shape (omit ageCategory/sex/neuter keys if unknown, don't include them as null):
-{"species":"dog","breedQuery":"Cavalier King Charles Spaniel","ageCategory":"geriatric","sex":"male","neuter":"neutered","signKeywords":["exercise intolerance","cough"],"diagKeywords":[],"caseSummary":"..."}`;
+{"species":"dog","breedQuery":"Cavalier King Charles Spaniel","ageCategory":"geriatric","sex":"male","neuter":"neutered","signKeywords":["exercise intolerance","cough"],"diagKeywords":[],"caseSummary":"...","unknownAbbreviations":[],"problemList":{"key":["exercise intolerance","cough"],"secondary":[],"patterns":[]}}`;
+}
+
+/** Keeps only problem-list terms that are extracted keywords (case-insensitive),
+ *  rewritten to the keyword's own spelling, so the search can look them up. A
+ *  term in `key` wins over the same term in `secondary`. */
+function cleanProblemList(raw: unknown, keywords: string[]): ProblemList {
+  const byLower = new Map(keywords.map((k) => [k.trim().toLowerCase(), k]));
+  const known = (t: unknown) => (typeof t === "string" ? byLower.get(t.trim().toLowerCase()) : undefined);
+  const p = raw && typeof raw === "object" ? (raw as Record<string, unknown>) : {};
+
+  const key = [...new Set((Array.isArray(p.key) ? p.key : []).map(known).filter((t): t is string => !!t))];
+  const keySet = new Set(key);
+
+  const seen = new Set<string>();
+  const secondary = (Array.isArray(p.secondary) ? p.secondary : [])
+    .filter((s): s is Record<string, unknown> => !!s && typeof s === "object")
+    .map((s) => ({ term: known(s.term), explainedBy: clampStr(s.explainedBy, 80) }))
+    .filter((s): s is { term: string; explainedBy: string } => {
+      if (!s.term || keySet.has(s.term) || seen.has(s.term)) return false;
+      seen.add(s.term);
+      return true;
+    });
+
+  const patterns = (Array.isArray(p.patterns) ? p.patterns : [])
+    .filter((x): x is Record<string, unknown> => !!x && typeof x === "object")
+    .map((x) => ({
+      name: clampStr(x.name, 80),
+      terms: [...new Set(clampArr(x.terms, 6).map(known).filter((t): t is string => !!t))],
+    }))
+    .filter((x) => x.name.length > 0 && x.terms.length >= 2)
+    .slice(0, 6);
+
+  return { key, secondary, patterns };
 }
 
 export const extractSignals = action({
@@ -175,15 +248,19 @@ export const extractSignals = action({
     const sex = SEX_VALUES.includes(raw.sex as never) ? (raw.sex as ExtractedSignals["sex"]) : undefined;
     const neuter = NEUTER_VALUES.includes(raw.neuter as never) ? (raw.neuter as ExtractedSignals["neuter"]) : undefined;
 
+    const signKeywords = clampArr(raw.signKeywords);
+    const diagKeywords = clampArr(raw.diagKeywords);
     return {
       species,
       breedQuery: clampStr(raw.breedQuery, 80),
       ageCategory,
       sex,
       neuter,
-      signKeywords: clampArr(raw.signKeywords),
-      diagKeywords: clampArr(raw.diagKeywords),
+      signKeywords,
+      diagKeywords,
       caseSummary: clampStr(raw.caseSummary, 300),
+      unknownAbbreviations: clampArr(raw.unknownAbbreviations, 20).map((a) => a.slice(0, 24)),
+      problemList: cleanProblemList(raw.problemList, [...signKeywords, ...diagKeywords]),
     };
   },
 });
@@ -237,6 +314,8 @@ Case notes:
 """
 ${caseText}
 """
+
+${ABBREVIATION_RULES}
 
 Candidate differentials (already ranked most → least likely):
 ${rows}

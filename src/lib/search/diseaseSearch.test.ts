@@ -277,3 +277,71 @@ describe('ranking floor', () => {
     }
   })
 })
+
+describe('problem-list tiers', () => {
+  /** The motivating case: a 7-year-old FN Airedale with cluster seizures, a
+   *  stiff hindlimb gait and lethargy; iCa 1.0, phosphate 1.8, plus the
+   *  incidental lab noise every sick, seizuring dog carries. */
+  const AIREDALE: Partial<SearchInputs> = {
+    species: 'dog', breedQuery: 'Airedale Terrier', ageCategory: 'middleaged', sex: 'female', neuter: 'neutered',
+    signKeywords: ['seizures', 'stiff gait', 'lethargy'],
+    diagKeywords: ['stress leukogram', 'elevated ALT', 'elevated AST', 'elevated GGT', 'hypochloremia',
+      'hypocalcemia', 'hyperphosphatemia', 'hyperglycemia', 'elevated CK'],
+  }
+  const AIREDALE_TIERS: SearchInputs['termTiers'] = {
+    key: ['seizures', 'stiff gait', 'lethargy'],
+    secondary: ['stress leukogram', 'hyperglycemia', 'elevated CK', 'elevated ALT', 'elevated AST'],
+    patterns: [['hypocalcemia', 'hyperphosphatemia']],
+  }
+
+  it('flat weighting lets the lab noise outrank the explanation', () => {
+    expect(rankOf('DIS-ENDO-HYPOPTH', AIREDALE)).toBeGreaterThan(1)
+  })
+
+  it('puts hypoparathyroidism first once the findings are tiered', () => {
+    expect(rankOf('DIS-ENDO-HYPOPTH', { ...AIREDALE, termTiers: AIREDALE_TIERS })).toBe(1)
+  })
+
+  it('demotes what the secondary findings were propping up', () => {
+    // Burns matched only lethargy plus two secondary findings (ALT, CK);
+    // diabetes only lethargy plus stress hyperglycaemia.
+    const tiered = { ...AIREDALE, termTiers: AIREDALE_TIERS }
+    for (const id of ['DIS-ENV-BURN', 'DIS-ENDO-DM']) {
+      const after = rankOf(id, tiered)
+      expect(after === 0 || after > rankOf(id, AIREDALE)).toBe(true)
+    }
+  })
+
+  it('ranks the page explaining every key problem above one sharing only the lab pattern', () => {
+    // Rhabdomyolysis lists hypocalcaemia + hyperphosphataemia too, but not the stiff gait.
+    const tiered = ranked({ ...AIREDALE, termTiers: AIREDALE_TIERS })
+    const hypopth = tiered.find(r => r.disease.id === 'DIS-ENDO-HYPOPTH')!
+    const rhab = tiered.find(r => r.disease.id === 'DIS-MUSC-RHAB')!
+    expect(hypopth.breakdown.keyCoverage).toBe(1)
+    expect(rhab.breakdown.keyCoverage).toBeLessThan(1)
+  })
+
+  it('does not list a page whose only hits are secondary findings', () => {
+    const tiered = ranked({ ...AIREDALE, termTiers: AIREDALE_TIERS })
+    const secondary = new Set(AIREDALE_TIERS!.secondary!.map(t => t.toLowerCase()))
+    for (const r of tiered) {
+      const hits = [...r.matchedSignTerms, ...r.matchedDiagTerms].map(t => t.toLowerCase())
+      expect(hits.some(t => !secondary.has(t))).toBe(true)
+    }
+  })
+
+  it('pays the pattern bonus only when every component matches', () => {
+    const tiered = ranked({ ...AIREDALE, termTiers: AIREDALE_TIERS })
+    for (const r of tiered) {
+      const hits = new Set([...r.matchedSignTerms, ...r.matchedDiagTerms])
+      const both = hits.has('hypocalcemia') && hits.has('hyperphosphatemia')
+      expect(r.breakdown.pattern > 0).toBe(both)
+    }
+  })
+
+  it('changes nothing when no tiers are given', () => {
+    const plain = ranked(FELINE_DM).map(r => [r.disease.id, r.score])
+    const empty = ranked({ ...FELINE_DM, termTiers: {} }).map(r => [r.disease.id, r.score])
+    expect(empty).toEqual(plain)
+  })
+})
