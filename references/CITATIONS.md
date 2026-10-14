@@ -6529,3 +6529,54 @@ Notes:
 - **Resolver**: `Paterson` is year-keyed (S 2018 / R 2024). `London` sits safely beside `/^Lo\b/`.
   The integrity lint caught "(White Swiss Shepherd)" resolving to an author named White; it was
   reworded.
+
+## Infectious disease batch (2026-10-14)
+
+**81 → 73.** All eight textbook-only `DIS-INFECT-*` pages now cite papers. The Consensus
+connector ran down to 3 searches for the month partway through, so discovery moved to PubMed
+and Europe PMC (sorted by citation count). Every record was verified in two registries and its
+abstract (or, for the rabies compendium, the full text) read.
+
+> Mira F, Puleio R, Schirò G, et al. Study on the canine adenovirus type 1 (CAdV-1) infection in domestic dogs in southern Italy. Pathogens. 2022;11(11):1254. doi:10.3390/pathogens11111254
+
+> Kordick DL, Papich MG, Breitschwerdt EB. Efficacy of enrofloxacin or doxycycline for treatment of Bartonella henselae or Bartonella clarridgeiae infection in cats. Antimicrob Agents Chemother. 1997;41(11):2448-2455. doi:10.1128/AAC.41.11.2448
+
+> Chirek A, Silaghi C, Pfister K, Kohn B. Granulocytic anaplasmosis in 63 dogs: clinical signs, laboratory results, therapy and course of disease. J Small Anim Pract. 2018;59(2):112-120. doi:10.1111/jsap.12787
+
+> Granick JL, Armstrong PJ, Bender JB. Anaplasma phagocytophilum infection in dogs: 34 cases (2000-2007). J Am Vet Med Assoc. 2009;234(12):1559-1565. doi:10.2460/javma.234.12.1559
+
+> Tasker S, Hofmann-Lehmann R, Belák S, et al. Haemoplasmosis in cats: European guidelines from the ABCD on prevention and management. J Feline Med Surg. 2018;20(3):256-261. doi:10.1177/1098612X18758594
+
+> Novacco M, Sugiarto S, Willi B, et al. Consecutive antibiotic treatment with doxycycline and marbofloxacin clears bacteremia in Mycoplasma haemofelis-infected cats. Vet Microbiol. 2018;217:112-120. doi:10.1016/j.vetmic.2018.03.006
+
+> Dowers KL, Tasker S, Radecki SV, Lappin MR. Use of pradofloxacin to treat experimentally induced Mycoplasma hemofelis infection in cats. Am J Vet Res. 2009;70(1):105-111. doi:10.2460/ajvr.70.1.105
+
+> De Massis F, D'Aurelio N, Toro M, et al. Brucella canis outbreak management towards rehoming strategies: the Italian experience. PLoS One. 2026;21(6):e0351742. doi:10.1371/journal.pone.0351742
+
+> Werner M, Suchodolski JS, Straubinger RK, et al. Effect of amoxicillin-clavulanic acid on clinical scores, intestinal microbiome, and amoxicillin-resistant Escherichia coli in dogs with uncomplicated acute diarrhea. J Vet Intern Med. 2020;34(3):1166-1176. doi:10.1111/jvim.15775
+
+> Reisinger A, Stübing H, Suchodolski JS, Pilla R, Unterer S, Busch K. Comparing treatment effects on dogs with acute hemorrhagic diarrhea syndrome: fecal microbiota transplantation, symptomatic therapy, or antibiotic treatment. J Am Vet Med Assoc. 2024;262(12):1657-1665. doi:10.2460/javma.24.03.0153
+
+> Brown CM, Slavinski S, Ettestad P, Sidwa TJ, Sorhage FE; National Association of State Public Health Veterinarians; Compendium of Animal Rabies Prevention and Control Committee. Compendium of animal rabies prevention and control, 2016. J Am Vet Med Assoc. 2016;248(5):505-517. doi:10.2460/javma.248.5.505
+
+> Wilson AG, KuKanich KS, Hanzlicek AS, Payton ME. Clinical signs, treatment, and prognostic factors for dogs with histoplasmosis. J Am Vet Med Assoc. 2018;252(2):201-209. doi:10.2460/javma.252.2.201
+
+> Hanzlicek AS, KuKanich KS, Cook AK, et al. Clinical utility of fungal culture and antifungal susceptibility in cats and dogs with histoplasmosis. J Vet Intern Med. 2023;37(3):998-1006. doi:10.1111/jvim.16725
+
+Notes:
+
+- **DIS-INFECT-RABIES carried an outdated rule.** The page said an unvaccinated exposed animal
+  whose owner refuses euthanasia is "quarantined 6 months". The 2016 Compendium reduced that to
+  **4 months for dogs and cats** (6 for ferrets), with vaccine at entry ideally within 96 h of
+  exposure. The page also now carries the rule not to vaccinate a biting animal during its 10-day
+  observation. Cited as `(NASPHV 2016)`. The Crossref deposit has two blank group-author
+  entries; the AMA string follows the printed byline.
+- **Chirek 2018**: Consensus listed it under Silaghi; PubMed and Crossref give Chirek A first.
+- **Kordick 1997**: the treated groups sum to 22 cats (11 cleared). The page uses that
+  denominator, not the 23 "evaluable" cats.
+- **Novacco 2018**: 15 chronically infected cats in all (5 cleared on doxycycline alone, 10 after
+  the switch), not just the 5-cat main experiment.
+- **Attributions**: the haemoplasma doxycycline → marbofloxacin protocol and the "pradofloxacin may
+  clear better" line were on the page uncited. They are now attributed to Novacco and Dowers.
+- **Resolver**: `Wilson` is year-keyed (D 2016 tieback / AG 2018 histoplasmosis). `NASPHV` is a
+  new organisation marker.

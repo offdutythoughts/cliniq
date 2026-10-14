@@ -222,6 +222,30 @@ const PEMBERTON_FNIP2 =
   'Pemberton TJ, Choi S, Mayer JA, et al. A mutation in the canine gene encoding folliculin-interacting protein 2 (FNIP2) associated with a unique disruption in spinal cord myelination. Glia. 2014;62(1):39-51. doi:10.1002/glia.22582'
 const QUITT_GSD_HLD =
   'Quitt PR, Brühschwein A, Matiasek K, et al. A hypomyelinating leukodystrophy in German Shepherd dogs. J Vet Intern Med. 2021;35(3):1455-1465. doi:10.1111/jvim.16085'
+const MIRA_CADV1 =
+  'Mira F, Puleio R, Schirò G, et al. Study on the canine adenovirus type 1 (CAdV-1) infection in domestic dogs in southern Italy. Pathogens. 2022;11(11):1254. doi:10.3390/pathogens11111254'
+const KORDICK_BARTONELLA =
+  'Kordick DL, Papich MG, Breitschwerdt EB. Efficacy of enrofloxacin or doxycycline for treatment of Bartonella henselae or Bartonella clarridgeiae infection in cats. Antimicrob Agents Chemother. 1997;41(11):2448-2455. doi:10.1128/AAC.41.11.2448'
+const CHIREK_CGA =
+  'Chirek A, Silaghi C, Pfister K, Kohn B. Granulocytic anaplasmosis in 63 dogs: clinical signs, laboratory results, therapy and course of disease. J Small Anim Pract. 2018;59(2):112-120. doi:10.1111/jsap.12787'
+const GRANICK_ANAPLASMA =
+  'Granick JL, Armstrong PJ, Bender JB. Anaplasma phagocytophilum infection in dogs: 34 cases (2000-2007). J Am Vet Med Assoc. 2009;234(12):1559-1565. doi:10.2460/javma.234.12.1559'
+const TASKER_ABCD_HAEMOPLASMA =
+  'Tasker S, Hofmann-Lehmann R, Belák S, et al. Haemoplasmosis in cats: European guidelines from the ABCD on prevention and management. J Feline Med Surg. 2018;20(3):256-261. doi:10.1177/1098612X18758594'
+const NOVACCO_MHF_CLEARANCE =
+  'Novacco M, Sugiarto S, Willi B, et al. Consecutive antibiotic treatment with doxycycline and marbofloxacin clears bacteremia in Mycoplasma haemofelis-infected cats. Vet Microbiol. 2018;217:112-120. doi:10.1016/j.vetmic.2018.03.006'
+const DOWERS_PRADO_MHF =
+  'Dowers KL, Tasker S, Radecki SV, Lappin MR. Use of pradofloxacin to treat experimentally induced Mycoplasma hemofelis infection in cats. Am J Vet Res. 2009;70(1):105-111. doi:10.2460/ajvr.70.1.105'
+const DEMASSIS_BCANIS_REHOMING =
+  'De Massis F, D’Aurelio N, Toro M, et al. Brucella canis outbreak management towards rehoming strategies: the Italian experience. PLoS One. 2026;21(6):e0351742. doi:10.1371/journal.pone.0351742'
+const REISINGER_AHDS =
+  'Reisinger A, Stübing H, Suchodolski JS, Pilla R, Unterer S, Busch K. Comparing treatment effects on dogs with acute hemorrhagic diarrhea syndrome: fecal microbiota transplantation, symptomatic therapy, or antibiotic treatment. J Am Vet Med Assoc. 2024;262(12):1657-1665. doi:10.2460/javma.24.03.0153'
+const WERNER_AMOXCLAV =
+  'Werner M, Suchodolski JS, Straubinger RK, et al. Effect of amoxicillin-clavulanic acid on clinical scores, intestinal microbiome, and amoxicillin-resistant Escherichia coli in dogs with uncomplicated acute diarrhea. J Vet Intern Med. 2020;34(3):1166-1176. doi:10.1111/jvim.15775'
+const NASPHV_RABIES_2016 =
+  'Brown CM, Slavinski S, Ettestad P, Sidwa TJ, Sorhage FE; National Association of State Public Health Veterinarians; Compendium of Animal Rabies Prevention and Control Committee. Compendium of animal rabies prevention and control, 2016. J Am Vet Med Assoc. 2016;248(5):505-517. doi:10.2460/javma.248.5.505'
+const HANZLICEK_HISTO_CULTURE =
+  'Hanzlicek AS, KuKanich KS, Cook AK, et al. Clinical utility of fungal culture and antifungal susceptibility in cats and dogs with histoplasmosis. J Vet Intern Med. 2023;37(3):998-1006. doi:10.1111/jvim.16725'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -330,6 +354,8 @@ const TOBIAS_DOXAPRAM =
   'Tobias KM, Jackson AM, Harvey RC. Effects of doxapram HCl on laryngeal function of normal dogs and dogs with naturally occurring laryngeal paralysis. Vet Anaesth Analg. 2004;31(4):258-263. doi:10.1111/j.1467-2995.2004.00168.x'
 const MILLER_DOXAPRAM =
   'Miller CJ, McKiernan BC, Pace J, Fettman MJ. The effects of doxapram hydrochloride (dopram-V) on laryngeal function in healthy dogs. J Vet Intern Med. 2002;16(5):524-528. doi:10.1111/j.1939-1676.2002.tb02381.x'
+const WILSON_HISTOPLASMOSIS =
+  'Wilson AG, KuKanich KS, Hanzlicek AS, Payton ME. Clinical signs, treatment, and prognostic factors for dogs with histoplasmosis. J Am Vet Med Assoc. 2018;252(2):201-209. doi:10.2460/javma.252.2.201'
 const WILSON_TIEBACK_AP =
   'Wilson D, Monnet E. Risk factors for the development of aspiration pneumonia after unilateral arytenoid lateralization in dogs with laryngeal paralysis: 232 cases (1987-2012). J Am Vet Med Assoc. 2016;248(2):188-194. doi:10.2460/javma.248.2.188'
 const MACPHAIL_LP =
@@ -1656,7 +1682,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -1888,6 +1914,11 @@ const LIATIS_BY_YEAR: Record<string, { id: string; text: string }> = {
 const PATERSON_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'paterson-baer', text: PATERSON_BAER },
   '2024': { id: 'paterson-srma', text: PATERSON_SRMA },
+}
+/** Wilson: D 2016 (tieback aspiration pneumonia) and AG 2018 (canine histoplasmosis). */
+const WILSON_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2016': { id: 'wilson-tieback-ap', text: WILSON_TIEBACK_AP },
+  '2018': { id: 'wilson-histoplasmosis', text: WILSON_HISTOPLASMOSIS },
 }
 const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
@@ -2231,7 +2262,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Stanley/.test(part)) { out.push({ id: 'stanley-golpp', text: STANLEY_GOLPP }); continue }
     if (/^Tobias/.test(part)) { out.push({ id: 'tobias-doxapram', text: TOBIAS_DOXAPRAM }); continue }
     if (/^Miller/.test(part)) { out.push({ id: 'miller-doxapram', text: MILLER_DOXAPRAM }); continue }
-    if (/^Wilson/.test(part)) { out.push({ id: 'wilson-tieback-ap', text: WILSON_TIEBACK_AP }); continue }
+    if (/^Wilson/.test(part)) {
+      const hit = WILSON_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^MacPhail/.test(part)) { out.push({ id: 'macphail-lp', text: MACPHAIL_LP }); continue }
     if (/^Jeffery/.test(part)) { out.push({ id: 'jeffery-lp', text: JEFFERY_LP }); continue }
     if (/^Anderson/.test(part)) {
@@ -2436,6 +2471,18 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Nadon/.test(part)) { out.push({ id: 'nadon-plp-shaking-pup', text: NADON_PLP }); continue }
     if (/^Pemberton/.test(part)) { out.push({ id: 'pemberton-fnip2', text: PEMBERTON_FNIP2 }); continue }
     if (/^Quitt/.test(part)) { out.push({ id: 'quitt-gsd-hypomyelination', text: QUITT_GSD_HLD }); continue }
+    if (/^Mira/.test(part)) { out.push({ id: 'mira-cadv1-italy', text: MIRA_CADV1 }); continue }
+    if (/^Kordick/.test(part)) { out.push({ id: 'kordick-bartonella-cats', text: KORDICK_BARTONELLA }); continue }
+    if (/^Chirek/.test(part)) { out.push({ id: 'chirek-cga-63', text: CHIREK_CGA }); continue }
+    if (/^Granick/.test(part)) { out.push({ id: 'granick-anaplasma-34', text: GRANICK_ANAPLASMA }); continue }
+    if (/^Tasker/.test(part)) { out.push({ id: 'tasker-abcd-haemoplasma', text: TASKER_ABCD_HAEMOPLASMA }); continue }
+    if (/^Novacco/.test(part)) { out.push({ id: 'novacco-mhf-clearance', text: NOVACCO_MHF_CLEARANCE }); continue }
+    if (/^Dowers/.test(part)) { out.push({ id: 'dowers-pradofloxacin-mhf', text: DOWERS_PRADO_MHF }); continue }
+    if (/^De Massis/.test(part)) { out.push({ id: 'demassis-bcanis-rehoming', text: DEMASSIS_BCANIS_REHOMING }); continue }
+    if (/^Reisinger/.test(part)) { out.push({ id: 'reisinger-ahds-fmt', text: REISINGER_AHDS }); continue }
+    if (/^Werner/.test(part)) { out.push({ id: 'werner-amoxclav-diarrhoea', text: WERNER_AMOXCLAV }); continue }
+    if (/^NASPHV/.test(part)) { out.push({ id: 'nasphv-rabies-2016', text: NASPHV_RABIES_2016 }); continue }
+    if (/^Hanzlicek/.test(part)) { out.push({ id: 'hanzlicek-histo-culture', text: HANZLICEK_HISTO_CULTURE }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
