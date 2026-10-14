@@ -121,6 +121,28 @@ const ACVIM_FCE =
 // feline-cardiomyopathy statement in ACVIM_BY_YEAR. Dogs only.
 const ACVIM_PH =
   'Reinero C, Visser LC, Kellihan HB, et al. ACVIM consensus statement guidelines for the diagnosis, classification, treatment, and monitoring of pulmonary hypertension in dogs. J Vet Intern Med. 2020;34(2):549-573. doi:10.1111/jvim.15725'
+const ACVIM_CHRONIC_HEPATITIS =
+  'Webster CRL, Center SA, Cullen JM, et al. ACVIM consensus statement on the diagnosis and treatment of chronic hepatitis in dogs. J Vet Intern Med. 2019;33(3):1173-1200. doi:10.1111/jvim.15467'
+const ACVIM_FELINE_PANCREATITIS =
+  'Forman MA, Steiner JM, Armstrong PJ, et al. ACVIM consensus statement on pancreatitis in cats. J Vet Intern Med. 2021;35(2):703-723. doi:10.1111/jvim.16053'
+const ACVIM_SEIZURE_MGMT =
+  'Podell M, Volk HA, Berendt M, et al. 2015 ACVIM small animal consensus statement on seizure management in dogs. J Vet Intern Med. 2016;30(2):477-490. doi:10.1111/jvim.13841'
+// Article-numbered (Oxford Academic took over JVIM in 2026); no page range.
+const ACVIM_CANINE_CIE =
+  'Heilmann RM, Jergens AE, Kathrani A, et al. ACVIM-endorsed statement: consensus statement and systematic review on guidelines for the diagnosis and treatment of chronic inflammatory enteropathy in dogs. J Vet Intern Med. 2026;40(1):aalaf017. doi:10.1093/jvimsj/aalaf017'
+const ECVN_DYSKINESIA =
+  'Cerda-Gonzalez S, Packer RA, Garosi L, et al. International veterinary canine dyskinesia task force ECVN consensus statement: terminology and classification. J Vet Intern Med. 2021;35(3):1218-1230. doi:10.1111/jvim.16108'
+// Urinary incontinence — dogs only.
+const ACVIM_INCONTINENCE =
+  'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
+// IRIS Canine GN Study Group consensus (JVIM 2013 supplement). Dogs only.
+// Littman is year-keyed: 2018 is the Lyme statement.
+const IRIS_GN_DX =
+  'Littman MP, Daminet S, Grauer GF, Lees GE, van Dongen AM. Consensus recommendations for the diagnostic investigation of dogs with suspected glomerular disease. J Vet Intern Med. 2013;27(suppl 1):S19-S26. doi:10.1111/jvim.12223'
+const IRIS_GN_NOBIOPSY =
+  'Pressler B, Vaden S, Gerber B, Langston C, Polzin D. Consensus guidelines for immunosuppressive treatment of dogs with glomerular disease absent a pathologic diagnosis. J Vet Intern Med. 2013;27(suppl 1):S55-S59. doi:10.1111/jvim.12222'
+const IRIS_GN_PATHOLOGY =
+  'Segev G, Cowgill LD, Heiene R, Labato MA, Polzin DJ. Consensus recommendations for immunosuppressive treatment of dogs with glomerular disease based on established pathology. J Vet Intern Med. 2013;27(suppl 1):S44-S54. doi:10.1111/jvim.12228'
 
 // Feline eosinophilic keratitis. A single case report, so it carries the weight
 // of one animal — but it is the source for the comparative non-response and
@@ -1540,7 +1562,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -1748,6 +1770,12 @@ const MEURS_BY_YEAR: Record<string, { id: string; text: string }> = {
  *  trial and the 2018 canine CKD survival study. Both are keyed on the year
  *  for exactly the reason ACVIM is: a bare prefix match would silently print
  *  the wrong paper on a page nobody thought to write a test for. */
+/** Littman leads both the 2018 ACVIM Lyme update and the 2013 IRIS
+ *  glomerular-disease diagnostic consensus. */
+const LITTMAN_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2013': { id: 'iris-gn-dx', text: IRIS_GN_DX },
+  '2018': { id: 'littman-acvim-lyme', text: LITTMAN_ACVIM_LYME },
+}
 const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
   '2021': { id: 'cridge-neostigmine', text: CRIDGE_NEOSTIGMINE },
@@ -2235,7 +2263,19 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Lockhart/.test(part)) { out.push({ id: 'lockhart-horners-imaging', text: LOCKHART_HORNERS_IMAGING }); continue }
     if (/^Toresson/.test(part)) { out.push({ id: 'toresson-oral-cobalamin', text: TORESSON_ORAL_COBALAMIN }); continue }
     if (/^Epstein/.test(part)) { out.push({ id: 'epstein-ddimer-pe', text: EPSTEIN_DDIMER_PE }); continue }
-    if (/^Littman/.test(part)) { out.push({ id: 'littman-acvim-lyme', text: LITTMAN_ACVIM_LYME }); continue }
+    if (/^Littman/.test(part)) {
+      const hit = LITTMAN_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
+    if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
+    if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
+    if (/^Heilmann/.test(part)) { out.push({ id: 'acvim-canine-cie', text: ACVIM_CANINE_CIE }); continue }
+    if (/^Cerda-Gonzalez/.test(part)) { out.push({ id: 'ecvn-dyskinesia', text: ECVN_DYSKINESIA }); continue }
+    if (/^Kendall/.test(part)) { out.push({ id: 'acvim-incontinence', text: ACVIM_INCONTINENCE }); continue }
+    if (/^Pressler/.test(part)) { out.push({ id: 'iris-gn-nobiopsy', text: IRIS_GN_NOBIOPSY }); continue }
+    if (/^Segev/.test(part)) { out.push({ id: 'iris-gn-pathology', text: IRIS_GN_PATHOLOGY }); continue }
     if (/^Weese/.test(part)) { out.push({ id: 'weese-iscaid-urinary', text: WEESE_ISCAID_URINARY }); continue }
     if (/^Kiupel/.test(part)) { out.push({ id: 'kiupel-mct-2tier', text: KIUPEL_MCT_2TIER }); continue }
     if (/^Nagamori/.test(part)) {
