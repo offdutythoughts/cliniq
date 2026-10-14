@@ -132,6 +132,34 @@ const ACVIM_CANINE_CIE =
   'Heilmann RM, Jergens AE, Kathrani A, et al. ACVIM-endorsed statement: consensus statement and systematic review on guidelines for the diagnosis and treatment of chronic inflammatory enteropathy in dogs. J Vet Intern Med. 2026;40(1):aalaf017. doi:10.1093/jvimsj/aalaf017'
 const ECVN_DYSKINESIA =
   'Cerda-Gonzalez S, Packer RA, Garosi L, et al. International veterinary canine dyskinesia task force ECVN consensus statement: terminology and classification. J Vet Intern Med. 2021;35(3):1218-1230. doi:10.1111/jvim.16108'
+const TOTH_NAC_SR =
+  'Tóth ZT, Tarpataki NK, Nemes-Terényi M, Jerzsele Á, Kerek Á. From antidote to multimodal adjunct: a systematic review of N-acetylcysteine in dogs and cats. Front Vet Sci. 2026;13:1959626. doi:10.3389/fvets.2026.1959626'
+const BATES_METALDEHYDE =
+  'Bates NS, Sutton NM, Campbell A. Suspected metaldehyde slug bait poisoning in dogs: a retrospective analysis of cases reported to the Veterinary Poisons Information Service. Vet Rec. 2012;171(13):324. doi:10.1136/vr.100734'
+const CONNALLY_FOMEPIZOLE_CATS =
+  'Connally HE, Thrall MA, Hamar DW. Safety and efficacy of high-dose fomepizole compared with ethanol as therapy for ethylene glycol intoxication in cats. J Vet Emerg Crit Care (San Antonio). 2010;20(2):191-206. doi:10.1111/j.1476-4431.2009.00492.x'
+const SAUDER_EG_SERIES =
+  'Sauder T, Ricard M, Loewen J, Cowan V. A retrospective case series of companion animals hospitalized for ethylene glycol poisoning at a Canadian veterinary teaching hospital. Can Vet J. 2026;67(5):553-562'
+const KLAINBART_OP_DOGS =
+  'Klainbart S, Grabernik M, Kelmer E, et al. Clinical manifestations, laboratory findings, treatment and outcome of acute organophosphate or carbamate intoxication in 102 dogs: a retrospective study. Vet J. 2019;251:105349. doi:10.1016/j.tvjl.2019.105349'
+const KLAINBART_OP_CATS =
+  'Klainbart S, Grabarnik M, Kelmer E, et al. Clinical manifestations, laboratory findings, treatment and outcome of acute organophosphate or carbamate intoxication in 39 cats. Vet Rec. 2022;191(1):e1633. doi:10.1002/vetr.1633'
+const WEINGART_CHOCOLATE =
+  'Weingart C, Hartmann A, Kohn B. Chocolate ingestion in dogs: 156 events (2015-2019). J Small Anim Pract. 2021;62(11):979-983. doi:10.1111/jsap.13329'
+const RAMSEY_SUCCIMER =
+  'Ramsey DT, Casteel SW, Faggella AM, Chastain CB, Nunn JW, Schaeffer DJ. Use of orally administered succimer (meso-2,3-dimercaptosuccinic acid) for treatment of lead poisoning in dogs. J Am Vet Med Assoc. 1996;208(3):371-375'
+const GENOVESE_MPH =
+  'Genovese DW, Gwaltney-Brant SM, Slater MR. Methylphenidate toxicosis in dogs: 128 cases (2001-2008). J Am Vet Med Assoc. 2010;237(12):1438-1443. doi:10.2460/javma.237.12.1438'
+const DORMAN_5FU =
+  'Dorman DC, Coddington KA, Richardson RC. 5-Fluorouracil toxicosis in the dog. J Vet Intern Med. 1990;4(5):254-257. doi:10.1111/j.1939-1676.1990.tb03118.x'
+const FRIEDENBERG_5FU =
+  'Friedenberg SG, Brooks AC, Monnig AA, Cooper ES. Successful treatment of a dog with massive 5-fluorouracil toxicosis. J Vet Emerg Crit Care (San Antonio). 2013;23(6):643-647. doi:10.1111/vec.12116'
+const COWAN_STRYCHNINE =
+  'Cowan VE, Blakley BR. A retrospective study of canine strychnine poisonings from 1998 to 2013 in Western Canada. Can Vet J. 2015;56(6):587-590'
+const GEISEN_METAMIZOLE_HB =
+  'Geisen V, Hartmann K, Dörfelt R. Case series: Heinz body formation in 13 multimorbid dogs following metamizole administration. Front Vet Sci. 2023;10:1183876. doi:10.3389/fvets.2023.1183876'
+const IRELAND_PROPOFOL_HB =
+  'Ireland EM, Sharp CR, Leister EM, Boyd S. Case report: suspected propofol associated Heinz body anemia in five mechanically ventilated dogs: a historical case series. Front Vet Sci. 2025;12:1500464. doi:10.3389/fvets.2025.1500464'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -1562,7 +1590,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -1775,6 +1803,16 @@ const MEURS_BY_YEAR: Record<string, { id: string; text: string }> = {
 const LITTMAN_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2013': { id: 'iris-gn-dx', text: IRIS_GN_DX },
   '2018': { id: 'littman-acvim-lyme', text: LITTMAN_ACVIM_LYME },
+}
+/** Klainbart: the 2019 dog and 2022 cat organophosphate series. */
+const KLAINBART_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2019': { id: 'klainbart-op-dogs', text: KLAINBART_OP_DOGS },
+  '2022': { id: 'klainbart-op-cats', text: KLAINBART_OP_CATS },
+}
+/** Ramsey: 2008 maropitant (Ramsey DS) and 1996 succimer (Ramsey DT) — different authors. */
+const RAMSEY_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '1996': { id: 'ramsey-succimer', text: RAMSEY_SUCCIMER },
+  '2008': { id: 'ramsey-maropitant', text: RAMSEY_MAROPITANT },
 }
 const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
@@ -2143,7 +2181,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
       if (hit) out.push(hit)
       continue
     }
-    if (/^Ramsey/.test(part)) { out.push({ id: 'ramsey-maropitant', text: RAMSEY_MAROPITANT }); continue }
+    if (/^Ramsey/.test(part)) {
+      const hit = RAMSEY_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Shmalberg/.test(part)) { out.push({ id: 'shmalberg-metronidazole', text: SHMALBERG_METRONIDAZOLE }); continue }
     if (/^Rudinsky/.test(part)) {
       const hit = RUDINSKY_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
@@ -2268,6 +2310,22 @@ export function parseSources(inner: string): { id: string; text: string }[] {
       if (hit) out.push(hit)
       continue
     }
+    if (/^Tóth/.test(part)) { out.push({ id: 'toth-nac-sr', text: TOTH_NAC_SR }); continue }
+    if (/^Bates/.test(part)) { out.push({ id: 'bates-metaldehyde-vpis', text: BATES_METALDEHYDE }); continue }
+    if (/^Connally/.test(part)) { out.push({ id: 'connally-fomepizole-cats', text: CONNALLY_FOMEPIZOLE_CATS }); continue }
+    if (/^Sauder/.test(part)) { out.push({ id: 'sauder-eg-series', text: SAUDER_EG_SERIES }); continue }
+    if (/^Klainbart/.test(part)) {
+      const hit = KLAINBART_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^Weingart/.test(part)) { out.push({ id: 'weingart-chocolate', text: WEINGART_CHOCOLATE }); continue }
+    if (/^Genovese/.test(part)) { out.push({ id: 'genovese-methylphenidate', text: GENOVESE_MPH }); continue }
+    if (/^Dorman/.test(part)) { out.push({ id: 'dorman-5fu', text: DORMAN_5FU }); continue }
+    if (/^Friedenberg/.test(part)) { out.push({ id: 'friedenberg-5fu', text: FRIEDENBERG_5FU }); continue }
+    if (/^Cowan/.test(part)) { out.push({ id: 'cowan-strychnine', text: COWAN_STRYCHNINE }); continue }
+    if (/^Geisen/.test(part)) { out.push({ id: 'geisen-metamizole-hb', text: GEISEN_METAMIZOLE_HB }); continue }
+    if (/^Ireland/.test(part)) { out.push({ id: 'ireland-propofol-hb', text: IRELAND_PROPOFOL_HB }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
