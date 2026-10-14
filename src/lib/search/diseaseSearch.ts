@@ -616,24 +616,38 @@ export function topDifferentials(groups: SearchCategory[], n = 5): DiseaseResult
  * every slot and crowd out a real but less-specific-scoring differential from
  * another category — a toxic, infectious or parasitic cause that fits the
  * history just as legitimately but only matches on commoner, lower-weighted
- * terms. Three passes:
+ * terms. Four passes:
  *
  *   1. The top `guaranteedTop` candidates by pure score, regardless of
  *      category — the best-evidenced differentials are never bumped by the
  *      breadth pass, so a well-supported common cause can't be pushed out by
  *      a weakly-matched rare one.
- *   2. One further candidate (its own best-scoring, not yet picked) from
+ *   2. A "near-tie companion" for each category a step 1 pick already
+ *      landed in: its own next-best, not-yet-picked item, but ONLY if that
+ *      item scores within `closeRatio` of the category's best picked score
+ *      (one companion per category). Two genuinely close-scoring but
+ *      clinically distinct differentials sharing a broad category — e.g. two
+ *      different rodenticide classes both filed under "Toxic," each needing
+ *      its own confirmatory test — are co-equal evidence, not a winner and a
+ *      loser, and the single-seat-per-category rule below would otherwise
+ *      silently drop whichever one scored a fraction lower.
+ *   3. One further candidate (its own best-scoring, not yet picked) from
  *      every OTHER category that has any match at all, strongest category
  *      first — "expand to the less likely differentials" instead of only the
  *      single most obvious reading of the case.
- *   3. Any slots still unfilled, by pure score among what's left.
+ *   4. Any slots still unfilled, by pure score among what's left.
  *
  * The final list is re-sorted by score (so `buildCaseLanes`, which derives
  * category display order from each category's best-ranked member, still
  * shows the likeliest category first); diversity changes WHICH candidates are
  * included, not their display order.
  */
-export function diverseDifferentials(groups: SearchCategory[], n = 8, guaranteedTop = Math.ceil(n / 2)): DiseaseResult[] {
+export function diverseDifferentials(
+  groups: SearchCategory[],
+  n = 8,
+  guaranteedTop = Math.ceil(n / 2),
+  closeRatio = 0.8,
+): DiseaseResult[] {
   const byScore = (a: DiseaseResult, b: DiseaseResult) =>
     b.score - a.score || (a.disease.name as string).localeCompare(b.disease.name as string)
   const all = groups.flatMap(g => g.items).sort(byScore)
@@ -645,6 +659,22 @@ export function diverseDifferentials(groups: SearchCategory[], n = 8, guaranteed
   for (const item of all) {
     if (picked.length >= Math.min(guaranteedTop, n)) break
     take(item)
+  }
+
+  // Near-tie companions: evaluated against step 1's picks only (not chained
+  // through companions already added this pass), then added strongest-first
+  // so a tight scramble for the last slot still favours the closest ties.
+  const companions = groups
+    .map(g => {
+      const bestPicked = picked.find(p => p.category === g.name)
+      if (!bestPicked) return null
+      return g.items.find(it => !pickedIds.has(it.disease.id) && it.score >= bestPicked.score * closeRatio) ?? null
+    })
+    .filter((c): c is DiseaseResult => c !== null)
+    .sort(byScore)
+  for (const c of companions) {
+    if (picked.length >= n) break
+    take(c)
   }
 
   const representedCats = new Set(picked.map(p => p.category))
