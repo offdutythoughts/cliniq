@@ -1365,3 +1365,31 @@ describe('reference block', () => {
     expect(seg?.raw?.trim()).toBe('(AAHA/AAFP)')
   })
 })
+
+describe('citation pass 2026-10-14 — collision cases', () => {
+  it('routes each new marker to its own paper', () => {
+    const cases: [string, string][] = [
+      ['Reinero 2020', 'acvim-ph'],
+      ['ACVIM 2020', 'acvim-feline-cm'],
+      ['Littman 2013', 'iris-gn-dx'],
+      ['Littman 2018', 'littman-acvim-lyme'],
+      ['Ramsey 1996', 'ramsey-succimer'],
+      ['Ramsey 2008', 'ramsey-maropitant'],
+      ['Klainbart 2019', 'klainbart-op-dogs'],
+      ['Klainbart 2022', 'klainbart-op-cats'],
+      ['Liatis 2023', 'liatis-head-tremor'],
+      ['Liatis 2025', 'liatis-generalized-tremor'],
+      ['Li 2021', 'li-aqp2'],
+      ['Mayhew 2002', 'mayhew-trigeminal'],
+      // Same surname AND year as the pyothorax paper — routed on initials.
+      ['Johnson MD 2023', 'johnson-dysautonomia'],
+      ['Johnson 2023', 'johnson-pyothorax'],
+      // 'Clark' must not swallow 'Clarke'.
+      ['Clarke 2020', 'clarke-dysautonomia'],
+      ['Clark 2022', 'clark-f7-autopsy'],
+      ['Tóth 2026', 'toth-nac-sr'],
+      ['Cerda-Gonzalez 2021', 'ecvn-dyskinesia'],
+    ]
+    for (const [marker, id] of cases) expect(parseSources(marker).map(s => s.id), marker).toEqual([id])
+  })
+})

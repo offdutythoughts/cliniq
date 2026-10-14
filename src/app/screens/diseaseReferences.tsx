@@ -160,6 +160,42 @@ const GEISEN_METAMIZOLE_HB =
   'Geisen V, Hartmann K, Dörfelt R. Case series: Heinz body formation in 13 multimorbid dogs following metamizole administration. Front Vet Sci. 2023;10:1183876. doi:10.3389/fvets.2023.1183876'
 const IRELAND_PROPOFOL_HB =
   'Ireland EM, Sharp CR, Leister EM, Boyd S. Case report: suspected propofol associated Heinz body anemia in five mechanically ventilated dogs: a historical case series. Front Vet Sci. 2025;12:1500464. doi:10.3389/fvets.2025.1500464'
+const CHANG_THIAMINE_CATS =
+  'Chang YP, Chiu PY, Lin CT, Liu IH, Liu CH. Outbreak of thiamine deficiency in cats associated with the feeding of defective dry food. J Feline Med Surg. 2017;19(4):336-343. doi:10.1177/1098612X15625353'
+const STOKES_PLEXUS_MPNST =
+  'Stokes R, Wustefeld-Janssens BG, Hinson W, et al. Surgical and oncologic outcomes in dogs with malignant peripheral nerve sheath tumours arising from the brachial or lumbosacral plexus. Vet Comp Oncol. 2023;21(4):739-747. doi:10.1111/vco.12938'
+const BRUCE_SPINAL_FRACTURE =
+  'Bruce CW, Brisson BA, Gyselinck K. Spinal fracture and luxation in dogs and cats: a retrospective evaluation of 95 cases. Vet Comp Orthop Traumatol. 2008;21(3):280-284. doi:10.1055/s-0037-1618862'
+const BALI_VERTEBRAL_FRACTURE =
+  'Bali MS, Lang J, Jaggy A, Spreng D, Doherr MG, Forterre F. Comparative study of vertebral fractures and luxations in dogs and cats. Vet Comp Orthop Traumatol. 2009;22(1):47-53. doi:10.3415/VCOT-08-02-0018'
+const SHELL_IHTS =
+  'Shell LG, Berezowski J, Rishniw M, Nibblett BM, Kelly P. Clinical and breed characteristics of idiopathic head tremor syndrome in 291 dogs: a retrospective study. Vet Med Int. 2015;2015:165463. doi:10.1155/2015/165463'
+const SCHNEIDER_IMEPITOIN_IHTS =
+  'Schneider N, Potschka H, Reese S, Wielaender F, Fischer A. Imepitoin for treatment of idiopathic head tremor syndrome in dogs: a randomized, blinded, placebo-controlled study. J Vet Intern Med. 2020;34(6):2571-2581. doi:10.1111/jvim.15955'
+const PHILLIPPS_IGTS =
+  'Phillipps S, DeDecker S, Gutierrez-Quintana R, Alcoverro E, Gomes SA, Goncalves R. Idiopathic generalised tremor syndrome in dogs. Vet Rec. 2022;191(9):e1734. doi:10.1002/vetr.1734'
+const LIATIS_HEAD_TREMOR =
+  'Liatis T, Bhatti SFM, Dyrka M, et al. Idiopathic and structural episodic nonintentional head tremor in dogs: 100 cases (2004-2022). J Vet Intern Med. 2023;37(6):2301-2309. doi:10.1111/jvim.16880'
+const LIATIS_GEN_TREMOR =
+  'Liatis T, Bhatti SFM, De Decker S. Generalized tremors in dogs: 198 cases (2003-2023). J Vet Intern Med. 2025;39(3):e70062. doi:10.1111/jvim.70062'
+const MUSSO_TRIGEMINAL =
+  'Musso C, Le Boedec K, Gomes E, Cauzinille L. Diagnostic values of clinical and magnetic resonance findings in presumptive trigeminal neuropathy: 49 dogs. J Am Anim Hosp Assoc. 2020;56(2):106-113. doi:10.5326/JAAHA-MS-6997'
+const JOHNSON_DYSAUTONOMIA =
+  'Johnson MD, Rankin AJ, Meekins JM. Diminished pupillary light reflexes, elevated third eyelids, and decreased tear production are commonly associated with canine dysautonomia. J Am Vet Med Assoc. 2023;261(11):1-6. doi:10.2460/javma.23.03.0134'
+const CLARKE_DYSAUTONOMIA =
+  'Clarke KE, Sorrell S, Breheny C, et al. Dysautonomia in 53 cats and dogs: retrospective review of clinical data and outcome. Vet Rec. 2020;187(12):e118. doi:10.1136/vr.105258'
+const KARPOZILOU_VENTROFLEXION =
+  'Karpozilou A, De Stefani A, Liatis T. Cervical ventroflexion in cats: 86 cases (2003-2024). J Feline Med Surg. 2025;27(7):1098612X251348328. doi:10.1177/1098612X251348328'
+const SIEBERG_ORAL_K =
+  'Sieberg LG, Quimby JM. Retrospective study of the efficacy of oral potassium supplementation in cats with kidney disease. J Feline Med Surg. 2020;22(6):539-543. doi:10.1177/1098612X19862084'
+const VANCAENEGEM_FELINE_IMP =
+  'Van Caenegem N, Arti L, Troupel T, et al. Immune-mediated polyneuropathy in cats: clinical description, electrodiagnostic assessment, and treatment. J Vet Intern Med. 2023;37(3):1088-1099. doi:10.1111/jvim.16701'
+const VANRENEN_FELINE_IMP =
+  'van Renen J, Fischer A, Kolb N, et al. Clinical course and diagnostic findings of biopsy controlled presumed immune-mediated polyneuropathy in 70 European cats. Front Vet Sci. 2022;9:875657. doi:10.3389/fvets.2022.875657'
+const GERBER_VLDLR =
+  'Gerber M, Fischer A, Jagannathan V, et al. A deletion in the VLDLR gene in Eurasier dogs with cerebellar hypoplasia resembling a Dandy-Walker-like malformation (DWLM). PLoS One. 2015;10(2):e0108917. doi:10.1371/journal.pone.0108917'
+const LITTLEJOHN_RELN =
+  'Littlejohn MD, Sneddon N, Dittmer K, et al. A frameshift-deletion mutation in Reelin causes cerebellar hypoplasia in White Swiss Shepherd dogs. Anim Genet. 2023;54(5):632-636. doi:10.1111/age.13336'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -468,6 +504,8 @@ const PHILLIPS_FELINE_HH =
   'Phillips H, Corrie J, Engel DM, et al. Clinical findings, diagnostic test results, and treatment outcome in cats with hiatal hernia: 31 cases (1995-2018). J Vet Intern Med. 2019;33(5):1970-1976. doi:10.1111/jvim.15583'
 const REEVE_BRACHY_HH =
   'Reeve EJ, Sutton D, Friend EJ, Warren-Smith CMR. Documenting the prevalence of hiatal hernia and oesophageal abnormalities in brachycephalic dogs using fluoroscopy. J Small Anim Pract. 2017;58(12):703-708. doi:10.1111/jsap.12734'
+const MAYHEW_TRIGEMINAL =
+  'Mayhew PD, Bush WW, Glass EN. Trigeminal neuropathy in dogs: a retrospective study of 29 cases (1991-2000). J Am Anim Hosp Assoc. 2002;38(3):262-270. doi:10.5326/0380262'
 const MAYHEW_LAPAROSCOPIC =
   'Mayhew PD, Balsa IM, Marks SL, et al. Clinical and videofluoroscopic outcomes of laparoscopic treatment for sliding hiatal hernia and associated gastroesophageal reflux in brachycephalic dogs. Vet Surg. 2021;50(suppl 1):O67-O77. doi:10.1111/vsu.13622'
 const MAYHEW_BOAS_SURGERY =
@@ -1590,7 +1628,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -1814,6 +1852,10 @@ const RAMSEY_BY_YEAR: Record<string, { id: string; text: string }> = {
   '1996': { id: 'ramsey-succimer', text: RAMSEY_SUCCIMER },
   '2008': { id: 'ramsey-maropitant', text: RAMSEY_MAROPITANT },
 }
+const LIATIS_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2023': { id: 'liatis-head-tremor', text: LIATIS_HEAD_TREMOR },
+  '2025': { id: 'liatis-generalized-tremor', text: LIATIS_GEN_TREMOR },
+}
 const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
   '2021': { id: 'cridge-neostigmine', text: CRIDGE_NEOSTIGMINE },
@@ -1872,6 +1914,7 @@ const GLICKMAN_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2000': { id: 'glickman-nondietary', text: GLICKMAN_NONDIETARY },
 }
 const MAYHEW_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2002': { id: 'mayhew-trigeminal', text: MAYHEW_TRIGEMINAL },
   '2021': { id: 'mayhew-laparoscopic', text: MAYHEW_LAPAROSCOPIC },
   // Crossref print 2023-02; the epub was 2022-10-23. Print year per Rule 6.
   '2023': { id: 'mayhew-boas-surgery', text: MAYHEW_BOAS_SURGERY },
@@ -2176,6 +2219,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Rooney/.test(part)) { out.push({ id: 'rooney-pyothorax', text: ROONEY_PYOTHORAX }); continue }
     if (/^Boothe/.test(part)) { out.push({ id: 'boothe-pyothorax', text: BOOTHE_PYOTHORAX }); continue }
     if (/^Eiras/.test(part)) { out.push({ id: 'eiras-diaz-ct', text: EIRAS_DIAZ_CT }); continue }
+    // Johnson MD 2023 (dysautonomia) shares the year with Johnson LR 2023 (pyothorax), so it routes on the initials.
+    if (/^Johnson MD\b/.test(part)) { out.push({ id: 'johnson-dysautonomia', text: JOHNSON_DYSAUTONOMIA }); continue }
     if (/^Johnson/.test(part)) {
       const hit = JOHNSON_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
       if (hit) out.push(hit)
@@ -2326,6 +2371,25 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Cowan/.test(part)) { out.push({ id: 'cowan-strychnine', text: COWAN_STRYCHNINE }); continue }
     if (/^Geisen/.test(part)) { out.push({ id: 'geisen-metamizole-hb', text: GEISEN_METAMIZOLE_HB }); continue }
     if (/^Ireland/.test(part)) { out.push({ id: 'ireland-propofol-hb', text: IRELAND_PROPOFOL_HB }); continue }
+    if (/^Chang/.test(part)) { out.push({ id: 'chang-thiamine-cats', text: CHANG_THIAMINE_CATS }); continue }
+    if (/^Stokes/.test(part)) { out.push({ id: 'stokes-plexus-mpnst', text: STOKES_PLEXUS_MPNST }); continue }
+    if (/^Bruce/.test(part)) { out.push({ id: 'bruce-spinal-fracture', text: BRUCE_SPINAL_FRACTURE }); continue }
+    if (/^Bali/.test(part)) { out.push({ id: 'bali-vertebral-fracture', text: BALI_VERTEBRAL_FRACTURE }); continue }
+    if (/^Shell/.test(part)) { out.push({ id: 'shell-ihts', text: SHELL_IHTS }); continue }
+    if (/^Schneider/.test(part)) { out.push({ id: 'schneider-imepitoin-ihts', text: SCHNEIDER_IMEPITOIN_IHTS }); continue }
+    if (/^Phillipps/.test(part)) { out.push({ id: 'phillipps-igts', text: PHILLIPPS_IGTS }); continue }
+    if (/^Liatis/.test(part)) {
+      const hit = LIATIS_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
+    if (/^Musso/.test(part)) { out.push({ id: 'musso-trigeminal', text: MUSSO_TRIGEMINAL }); continue }
+    if (/^Karpozilou/.test(part)) { out.push({ id: 'karpozilou-ventroflexion', text: KARPOZILOU_VENTROFLEXION }); continue }
+    if (/^Sieberg/.test(part)) { out.push({ id: 'sieberg-oral-potassium', text: SIEBERG_ORAL_K }); continue }
+    if (/^Van Caenegem/.test(part)) { out.push({ id: 'vancaenegem-feline-imp', text: VANCAENEGEM_FELINE_IMP }); continue }
+    if (/^van Renen/.test(part)) { out.push({ id: 'vanrenen-feline-imp', text: VANRENEN_FELINE_IMP }); continue }
+    if (/^Gerber/.test(part)) { out.push({ id: 'gerber-vldlr', text: GERBER_VLDLR }); continue }
+    if (/^Littlejohn/.test(part)) { out.push({ id: 'littlejohn-reln', text: LITTLEJOHN_RELN }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
@@ -2644,7 +2708,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     }
     if (/^Estrin/.test(part)) { out.push({ id: 'estrin-feline-dic', text: ESTRIN_FELINE_DIC }); continue }
     if (/^Callan/.test(part)) { out.push({ id: 'callan-f7-mutation', text: CALLAN_F7_MUTATION }); continue }
-    if (/^Clark/.test(part)) { out.push({ id: 'clark-f7-autopsy', text: CLARK_F7_AUTOPSY }); continue }
+    if (/^Clarke\b/.test(part)) { out.push({ id: 'clarke-dysautonomia', text: CLARKE_DYSAUTONOMIA }); continue }
+    if (/^Clark\b/.test(part)) { out.push({ id: 'clark-f7-autopsy', text: CLARK_F7_AUTOPSY }); continue }
     if (/^Gookin/.test(part)) { out.push({ id: 'gookin-feline-fx', text: GOOKIN_FELINE_FX }); continue }
     // ── Disease pages 26-30 ──
     if (/^Garden/.test(part)) { out.push({ id: 'garden-imha-dx', text: GARDEN_IMHA_DX }); continue }

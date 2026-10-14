@@ -6393,3 +6393,83 @@ Notes:
 - **Selection bias flagged on the page**: the strychnine mortality (60.2%) comes from
   laboratory-confirmed cases, many confirmed post mortem. The metaldehyde and methylphenidate
   series are poison-centre telephone follow-ups.
+
+## Neurology batch (2026-10-14)
+
+**96 → 87.** Discovery via the Consensus connector; each record verified in PubMed and Crossref
+(Europe PMC as tiebreaker where they disagreed) and the abstract read before use.
+
+> Chang YP, Chiu PY, Lin CT, Liu IH, Liu CH. Outbreak of thiamine deficiency in cats associated with the feeding of defective dry food. J Feline Med Surg. 2017;19(4):336-343. doi:10.1177/1098612X15625353
+
+> Stokes R, Wustefeld-Janssens BG, Hinson W, et al. Surgical and oncologic outcomes in dogs with malignant peripheral nerve sheath tumours arising from the brachial or lumbosacral plexus. Vet Comp Oncol. 2023;21(4):739-747. doi:10.1111/vco.12938
+
+> Bruce CW, Brisson BA, Gyselinck K. Spinal fracture and luxation in dogs and cats: a retrospective evaluation of 95 cases. Vet Comp Orthop Traumatol. 2008;21(3):280-284. doi:10.1055/s-0037-1618862
+
+> Bali MS, Lang J, Jaggy A, Spreng D, Doherr MG, Forterre F. Comparative study of vertebral fractures and luxations in dogs and cats. Vet Comp Orthop Traumatol. 2009;22(1):47-53. doi:10.3415/VCOT-08-02-0018
+
+> Shell LG, Berezowski J, Rishniw M, Nibblett BM, Kelly P. Clinical and breed characteristics of idiopathic head tremor syndrome in 291 dogs: a retrospective study. Vet Med Int. 2015;2015:165463. doi:10.1155/2015/165463
+
+> Liatis T, Bhatti SFM, Dyrka M, et al. Idiopathic and structural episodic nonintentional head tremor in dogs: 100 cases (2004-2022). J Vet Intern Med. 2023;37(6):2301-2309. doi:10.1111/jvim.16880
+
+> Liatis T, Bhatti SFM, De Decker S. Generalized tremors in dogs: 198 cases (2003-2023). J Vet Intern Med. 2025;39(3):e70062. doi:10.1111/jvim.70062
+
+> Schneider N, Potschka H, Reese S, Wielaender F, Fischer A. Imepitoin for treatment of idiopathic head tremor syndrome in dogs: a randomized, blinded, placebo-controlled study. J Vet Intern Med. 2020;34(6):2571-2581. doi:10.1111/jvim.15955
+
+> Phillipps S, DeDecker S, Gutierrez-Quintana R, Alcoverro E, Gomes SA, Goncalves R. Idiopathic generalised tremor syndrome in dogs. Vet Rec. 2022;191(9):e1734. doi:10.1002/vetr.1734
+
+> Mayhew PD, Bush WW, Glass EN. Trigeminal neuropathy in dogs: a retrospective study of 29 cases (1991-2000). J Am Anim Hosp Assoc. 2002;38(3):262-270. doi:10.5326/0380262
+
+> Musso C, Le Boedec K, Gomes E, Cauzinille L. Diagnostic values of clinical and magnetic resonance findings in presumptive trigeminal neuropathy: 49 dogs. J Am Anim Hosp Assoc. 2020;56(2):106-113. doi:10.5326/JAAHA-MS-6997
+
+> Johnson MD, Rankin AJ, Meekins JM. Diminished pupillary light reflexes, elevated third eyelids, and decreased tear production are commonly associated with canine dysautonomia. J Am Vet Med Assoc. 2023;261(11):1-6. doi:10.2460/javma.23.03.0134
+
+> Clarke KE, Sorrell S, Breheny C, et al. Dysautonomia in 53 cats and dogs: retrospective review of clinical data and outcome. Vet Rec. 2020;187(12):e118. doi:10.1136/vr.105258
+
+> Karpozilou A, De Stefani A, Liatis T. Cervical ventroflexion in cats: 86 cases (2003-2024). J Feline Med Surg. 2025;27(7):1098612X251348328. doi:10.1177/1098612X251348328
+
+> Sieberg LG, Quimby JM. Retrospective study of the efficacy of oral potassium supplementation in cats with kidney disease. J Feline Med Surg. 2020;22(6):539-543. doi:10.1177/1098612X19862084
+
+> Van Caenegem N, Arti L, Troupel T, et al. Immune-mediated polyneuropathy in cats: clinical description, electrodiagnostic assessment, and treatment. J Vet Intern Med. 2023;37(3):1088-1099. doi:10.1111/jvim.16701
+
+> van Renen J, Fischer A, Kolb N, et al. Clinical course and diagnostic findings of biopsy controlled presumed immune-mediated polyneuropathy in 70 European cats. Front Vet Sci. 2022;9:875657. doi:10.3389/fvets.2022.875657
+
+> Littlejohn MD, Sneddon N, Dittmer K, et al. A frameshift-deletion mutation in Reelin causes cerebellar hypoplasia in White Swiss Shepherd dogs. Anim Genet. 2023;54(5):632-636. doi:10.1111/age.13336
+
+> Gerber M, Fischer A, Jagannathan V, et al. A deletion in the VLDLR gene in Eurasier dogs with cerebellar hypoplasia resembling a Dandy-Walker-like malformation (DWLM). PLoS One. 2015;10(2):e0108917. doi:10.1371/journal.pone.0108917
+
+### Registry disagreements
+
+- **Bruce 2008 and Bali 2009 (VCOT)**: Crossref's deposits put the true first author LAST and
+  tag every other author `sequence: first`. PubMed and Europe PMC agree on Bruce CW and Bali MS
+  as first authors; their order is used, with Crossref's DOIs. Bali's print year is **2009**
+  (Consensus showed 2008).
+- **van Renen 2022**: Consensus listed it under Fischer A; PubMed and Crossref both give van
+  Renen J as first author.
+
+### Content corrected against the papers
+
+- **DIS-NEU-IGTS** said "No predisposition" for sex. In 75 MRI-confirmed dogs, 68% were female
+  (Phillipps 2022), and female sex separated IGTS from intoxication in 198 tremoring dogs
+  (Liatis 2025).
+- **DIS-NEU-IHTS** presented the syndrome as benign once the MRI is normal. Liatis 2023 found
+  29 of 100 episodic head-tremor dogs had a structural cause, most often a pituitary mass. The
+  page now says not to assume it is idiopathic, and adds the negative imepitoin RCT.
+- **DIS-NEU-PNST** gave plexus MST as "~6 months after surgery". Stokes 2023 (30 dogs) found
+  570 days, and margin status did not predict outcome. Both statements are now on the page.
+- **DIS-NEU-CEREHYPO** said the White Swiss Shepherd RELN variant causes "combined cerebellar
+  hypoplasia + lissencephaly". The source paper (2 puppies, one family) reports cerebellar
+  hypoplasia only, so the lissencephaly claim was **removed**, not cited.
+- **DIS-NEU-THIAMINE** carried an uncited "one study: seizure-free at 24 months" line. It is
+  Chang 2017 and is now attributed.
+- **DIS-NEU-POLYNEURO** recommended immunosuppression unqualified. In 55 cats, outcome was
+  similar untreated, so the page now says so for the feline immune-mediated form.
+
+### Resolver changes
+
+- Year-keyed: `Liatis` (2023/2025). `Mayhew` gained 2002.
+- `Johnson MD 2023` routes on its initials, because `Johnson 2023` is already the pyothorax
+  paper (Johnson LR).
+- `/^Clark/` tightened to `/^Clark\b/` so it cannot swallow `Clarke`. `Li` vs `Liatis` /
+  `Littlejohn` is safe because the existing branch is `/^Li\b/`.
+- A regression test (`citation pass 2026-10-14 — collision cases`) asserts every collision
+  above.
