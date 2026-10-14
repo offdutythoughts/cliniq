@@ -6658,3 +6658,42 @@ Notes:
   ileocolic-junction finding.
 - **Bae 2023** is online-only (Animals); both registries give an issued date of 2023-12-28,
   although the issue is dated January 2024. 2023 is used.
+
+## Oncology batch (2026-10-14)
+
+**56 → 48.** All eight textbook-only `DIS-NEO-*` pages now cite papers.
+
+> Riggs J, Adams VJ, Hermer JV, Dobson JM, Murphy S, Ladlow JF. Outcomes following surgical excision or surgical excision combined with adjunctive, hypofractionated radiotherapy in dogs with oral squamous cell carcinoma or fibrosarcoma. J Am Vet Med Assoc. 2018;253(1):73-83. doi:10.2460/javma.253.1.73
+
+> Ehrhart N, Ehrhart EJ, Willis J, et al. Analysis of factors affecting survival in dogs with aortic body tumors. Vet Surg. 2002;31(1):44-48. doi:10.1053/jvet.2002.29989
+
+> Hildebrandt IM, Skinner OT, Mickelson MA, et al. Surgery and postoperative definitive radiotherapy for management of canine soft tissue sarcoma: a multi-institutional retrospective study of 272 dogs (2010-2020). J Am Vet Med Assoc. 2025;263(3):1-12. doi:10.2460/javma.24.06.0363
+
+> Cannon C, Borgatti A, Henson M, Husbands B. Evaluation of a combination chemotherapy protocol including lomustine and doxorubicin in canine histiocytic sarcoma. J Small Anim Pract. 2015;56(7):425-429. doi:10.1111/jsap.12354
+
+> Elliott J. Lomustine chemotherapy for the treatment of presumptive haemophagocytic histiocytic sarcoma in Flat-coated Retrievers. Aust Vet J. 2018;96(12):502-507. doi:10.1111/avj.12767
+
+> Kristiansen VM, Peña L, Díez Córdova L, et al. Effect of ovariohysterectomy at the time of tumor removal in dogs with mammary carcinomas: a randomized controlled trial. J Vet Intern Med. 2016;30(1):230-241. doi:10.1111/jvim.13812
+
+> Withers SS, Johnson EG, Culp WTN, et al. Paraneoplastic hypertrophic osteopathy in 30 dogs. Vet Comp Oncol. 2015;13(3):157-165. doi:10.1111/vco.12026
+
+> Craig LE, Julian ME, Ferracone JD. The diagnosis and prognosis of synovial tumors in dogs: 35 cases. Vet Pathol. 2002;39(1):66-73. doi:10.1354/vp.39-1-66
+
+> Broome MR, Peterson ME, Walker JR. Clinical features and treatment outcomes of 41 dogs with sublingual ectopic thyroid neoplasia. J Vet Intern Med. 2014;28(5):1560-1568. doi:10.1111/jvim.12406
+
+Notes:
+
+- **DIS-NEO-SJOINT gave synovial cell sarcoma a median survival of 6–12 months.** Once confirmed
+  by immunohistochemistry (35 dogs), mean survival was 31.8 months with 25% metastasis. Most
+  "synovial" tumours (51%) were in fact histiocytic sarcoma, which carried 5.3 months and 91%
+  metastasis. The page keeps the older figure and adds the IHC-stratified one.
+- **DIS-NEO-HSARC recommended lomustine for the haemophagocytic form.** Elliott 2018 (10
+  Flat-coated Retrievers) found no discernible benefit and a 24-day median survival. That is
+  small and single-breed, so it is hedged rather than used to reverse the recommendation.
+- **DIS-NEO-MGT listed "concurrent OHE" without qualification.** In the 60-dog RCT it did not
+  reduce relapse or death overall; the benefit was confined to grade 2 tumours or raised
+  oestradiol (subgroup analysis).
+- **Chemodectoma**: the uncited "730 vs 42 days" pericardectomy figure is Ehrhart 2002 (24 dogs).
+- **DIS-NEO-ETC** is about heart-base tumours. Broome 2014 is about the sublingual site and is
+  used only as a contrast, with the site named explicitly on the page.
+- **Resolver**: `Elliott` (2000/2018) and `Craig` (2002/2009) are now year-keyed.

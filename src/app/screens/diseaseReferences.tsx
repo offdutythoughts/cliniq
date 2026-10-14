@@ -286,6 +286,20 @@ const ABRAMS_GASTRIC_CA =
   'Abrams B, Wavreille VA, Husbands BD, et al. Perioperative complications and outcome after surgery for treatment of gastric carcinoma in dogs: a Veterinary Society of Surgical Oncology retrospective study of 40 cases (2004-2018). Vet Surg. 2019;48(6):923-932. doi:10.1111/vsu.13239'
 const GROSSMAN_STC =
   'Grossman RM, Sumner JP, Lopez DJ, et al. Evaluation of outcomes following subtotal colectomy for the treatment of idiopathic megacolon in cats. J Am Vet Med Assoc. 2021;259(11):1292-1299. doi:10.2460/javma.20.07.0418'
+const RIGGS_ORAL_SCC =
+  'Riggs J, Adams VJ, Hermer JV, Dobson JM, Murphy S, Ladlow JF. Outcomes following surgical excision or surgical excision combined with adjunctive, hypofractionated radiotherapy in dogs with oral squamous cell carcinoma or fibrosarcoma. J Am Vet Med Assoc. 2018;253(1):73-83. doi:10.2460/javma.253.1.73'
+const EHRHART_AORTIC_BODY =
+  'Ehrhart N, Ehrhart EJ, Willis J, et al. Analysis of factors affecting survival in dogs with aortic body tumors. Vet Surg. 2002;31(1):44-48. doi:10.1053/jvet.2002.29989'
+const HILDEBRANDT_STS =
+  'Hildebrandt IM, Skinner OT, Mickelson MA, et al. Surgery and postoperative definitive radiotherapy for management of canine soft tissue sarcoma: a multi-institutional retrospective study of 272 dogs (2010-2020). J Am Vet Med Assoc. 2025;263(3):1-12. doi:10.2460/javma.24.06.0363'
+const CANNON_HS =
+  'Cannon C, Borgatti A, Henson M, Husbands B. Evaluation of a combination chemotherapy protocol including lomustine and doxorubicin in canine histiocytic sarcoma. J Small Anim Pract. 2015;56(7):425-429. doi:10.1111/jsap.12354'
+const BROOME_SUBLINGUAL =
+  'Broome MR, Peterson ME, Walker JR. Clinical features and treatment outcomes of 41 dogs with sublingual ectopic thyroid neoplasia. J Vet Intern Med. 2014;28(5):1560-1568. doi:10.1111/jvim.12406'
+const KRISTIANSEN_OHE =
+  'Kristiansen VM, Peña L, Díez Córdova L, et al. Effect of ovariohysterectomy at the time of tumor removal in dogs with mammary carcinomas: a randomized controlled trial. J Vet Intern Med. 2016;30(1):230-241. doi:10.1111/jvim.13812'
+const WITHERS_PHO =
+  'Withers SS, Johnson EG, Culp WTN, et al. Paraneoplastic hypertrophic osteopathy in 30 dogs. Vet Comp Oncol. 2015;13(3):157-165. doi:10.1111/vco.12026'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -499,6 +513,8 @@ const KING_PROGNOSTIC =
   'King JN, Tasker S, Gunn-Moore DA, Strehlau G. Prognostic factors in cats with chronic kidney disease. J Vet Intern Med. 2007;21(5):906-916. doi:10.1111/j.1939-1676.2007.tb03042.x'
 const CHAKRABARTI_PROGRESSION =
   'Chakrabarti S, Syme HM, Elliott J. Clinicopathological variables predicting progression of azotemia in cats with chronic kidney disease. J Vet Intern Med. 2012;26(2):275-281. doi:10.1111/j.1939-1676.2011.00874.x'
+const ELLIOTT_HPHS_LOMUSTINE =
+  'Elliott J. Lomustine chemotherapy for the treatment of presumptive haemophagocytic histiocytic sarcoma in Flat-coated Retrievers. Aust Vet J. 2018;96(12):502-507. doi:10.1111/avj.12767'
 const ELLIOTT_RENAL_DIET =
   'Elliott J, Rawlings JM, Markwell PJ, Barber PJ. Survival of cats with naturally occurring chronic renal failure: effect of dietary management. J Small Anim Pract. 2000;41(6):235-242. doi:10.1111/j.1748-5827.2000.tb03932.x'
 const QUIMBY_MIRTAZAPINE =
@@ -622,6 +638,8 @@ const BELLENGER_PYLORIC =
 
 // Feline GI eosinophilic sclerosing fibroplasia. Craig is the paper that named
 // the entity; Linton is the case series every figure on the page comes from.
+const CRAIG_SYNOVIAL =
+  'Craig LE, Julian ME, Ferracone JD. The diagnosis and prognosis of synovial tumors in dogs: 35 cases. Vet Pathol. 2002;39(1):66-73. doi:10.1354/vp.39-1-66'
 const CRAIG_FGESF =
   'Craig LE, Hardam EE, Hertzke DM, Flatland B, Rohrbach BW, Moore RR. Feline gastrointestinal eosinophilic sclerosing fibroplasia. Vet Pathol. 2009;46(1):63-70. doi:10.1354/vp.46-1-63'
 const LINTON_FGESF =
@@ -1722,7 +1740,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -1959,6 +1977,16 @@ const PATERSON_BY_YEAR: Record<string, { id: string; text: string }> = {
 const WILSON_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2016': { id: 'wilson-tieback-ap', text: WILSON_TIEBACK_AP },
   '2018': { id: 'wilson-histoplasmosis', text: WILSON_HISTOPLASMOSIS },
+}
+/** Elliott: J 2000 (feline renal diet) and J 2018 (haemophagocytic HS lomustine) — different first authors. */
+const ELLIOTT_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2000': { id: 'elliott-renal-diet', text: ELLIOTT_RENAL_DIET },
+  '2018': { id: 'elliott-hphs-lomustine', text: ELLIOTT_HPHS_LOMUSTINE },
+}
+/** Craig LE: 2002 (canine synovial tumours) and 2009 (FGESF). */
+const CRAIG_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2002': { id: 'craig-synovial', text: CRAIG_SYNOVIAL },
+  '2009': { id: 'craig-fgesf', text: CRAIG_FGESF },
 }
 const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
@@ -2542,6 +2570,13 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Nucci/.test(part)) { out.push({ id: 'nucci-rectal-pullthrough', text: NUCCI_RPT }); continue }
     if (/^Abrams/.test(part)) { out.push({ id: 'abrams-gastric-carcinoma', text: ABRAMS_GASTRIC_CA }); continue }
     if (/^Grossman/.test(part)) { out.push({ id: 'grossman-subtotal-colectomy', text: GROSSMAN_STC }); continue }
+    if (/^Riggs/.test(part)) { out.push({ id: 'riggs-oral-scc-rt', text: RIGGS_ORAL_SCC }); continue }
+    if (/^Ehrhart/.test(part)) { out.push({ id: 'ehrhart-aortic-body', text: EHRHART_AORTIC_BODY }); continue }
+    if (/^Hildebrandt/.test(part)) { out.push({ id: 'hildebrandt-sts-drt', text: HILDEBRANDT_STS }); continue }
+    if (/^Cannon/.test(part)) { out.push({ id: 'cannon-hs-ccnu-dox', text: CANNON_HS }); continue }
+    if (/^Broome/.test(part)) { out.push({ id: 'broome-sublingual-thyroid', text: BROOME_SUBLINGUAL }); continue }
+    if (/^Kristiansen/.test(part)) { out.push({ id: 'kristiansen-ohe-mammary', text: KRISTIANSEN_OHE }); continue }
+    if (/^Withers/.test(part)) { out.push({ id: 'withers-paraneoplastic-ho', text: WITHERS_PHO }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
@@ -2750,7 +2785,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Syme/.test(part)) { out.push({ id: 'syme-proteinuria', text: SYME_PROTEINURIA }); continue }
     if (/^King/.test(part)) { out.push({ id: 'king-prognostic', text: KING_PROGNOSTIC }); continue }
     if (/^Chakrabarti/.test(part)) { out.push({ id: 'chakrabarti-progression', text: CHAKRABARTI_PROGRESSION }); continue }
-    if (/^Elliott/.test(part)) { out.push({ id: 'elliott-renal-diet', text: ELLIOTT_RENAL_DIET }); continue }
+    if (/^Elliott/.test(part)) {
+      const hit = ELLIOTT_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Quimby/.test(part)) { out.push({ id: 'quimby-mirtazapine', text: QUIMBY_MIRTAZAPINE }); continue }
     if (/^Spencer/.test(part)) { out.push({ id: 'spencer-omeprazole', text: SPENCER_OMEPRAZOLE }); continue }
     if (/^Mortier/.test(part)) { out.push({ id: 'mortier-proteinuria', text: MORTIER_PROTEINURIA }); continue }
@@ -2822,7 +2861,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Watkins/.test(part)) { out.push({ id: 'watkins-hh-gastropexy', text: WATKINS_HH_GASTROPEXY }); continue }
     if (/^Bellenger/.test(part)) { out.push({ id: 'bellenger-pyloric', text: BELLENGER_PYLORIC }); continue }
     // ── Disease pages 16-20 ──
-    if (/^Craig/.test(part)) { out.push({ id: 'craig-fgesf', text: CRAIG_FGESF }); continue }
+    if (/^Craig/.test(part)) {
+      const hit = CRAIG_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Linton/.test(part)) { out.push({ id: 'linton-fgesf', text: LINTON_FGESF }); continue }
     if (/^Kiselow/.test(part)) { out.push({ id: 'kiselow-lowgrade', text: KISELOW_LOWGRADE }); continue }
     if (/^Sabattini/.test(part)) { out.push({ id: 'sabattini-ibd-lsa', text: SABATTINI_IBD_LSA }); continue }
