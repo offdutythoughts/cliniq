@@ -311,7 +311,6 @@ const ID_CATEGORY_OVERRIDES: Record<string, string> = {
   'DIS-BD-VITK': 'Metabolic', // nutritional/biliary vitamin K deficiency
   'DIS-BD-DIC': 'Vascular',
   'DIS-BD-CRGV': 'Vascular', // Alabama Rot — vascular endothelial injury
-  'DIS-BD-VASCLH': 'Vascular',
   'DIS-BD-HYPERCOAG': 'Vascular', // would otherwise false-match the Endocrine /HYPER/ rule below
   'DIS-BD-PV': 'Neoplastic', // polycythaemia vera is a myeloproliferative neoplasm
 }

@@ -7080,3 +7080,18 @@ Resolver changes:
 - **DIS-BD-VASCLH.** Still not cited. The entity itself can't be found in the literature (see
   the immune-mediated batch notes), so citing generic vasculitis papers would make an
   unverified syndrome look established. This needs an owner decision.
+
+### DIS-BD-VASCLH folded into DIS-BD-VASC (2026-10-15)
+
+On the owner's decision, the "Lhasa Apso Vasculopathy Syndrome" page and its lesion row
+(`LES-BD-VS-LH`) were removed, along with its chip in the bleeding sign flow and its
+search-category entry. The vasculitis page keeps:
+
+- "Lhasa Apso vasculopathy" as a synonym, so searches still land somewhere.
+- A breed bullet stating that no published description of the syndrome was found.
+- The page's one sourced claim (Ettinger Ch 181): about 75% of canine vasculitis, and 50% of
+  cutaneous vasculitis, has a concurrent causative problem.
+
+The page's unsourced treatment specifics (pentoxifylline needing 30–90 days, the 8–12-week
+failure window) were not carried over. **Pages without a peer-reviewed paper: 2 → 1** — only
+`DIS-BD-FII` remains, because no literature exists for it.
