@@ -334,6 +334,12 @@ const CASTEJON_MANDIBLE =
   'Castejón-González AC, Stefanovski D, Reiter AM. Etiology and patterns of mandibular fractures in cats. Front Vet Sci. 2025;12:1613902. doi:10.3389/fvets.2025.1613902'
 const WANG_ORBITAL_ABSCESS =
   'Wang AL, Ledbetter EC, Kern TJ. Orbital abscess bacterial isolates and in vitro antimicrobial susceptibility patterns in dogs and cats. Vet Ophthalmol. 2009;12(2):91-96. doi:10.1111/j.1463-5224.2008.00687.x'
+const JOHNSON_EOSINOPHILIC_LUNG =
+  'Johnson LR, Johnson EG, Hulsebosch SE, Dear JD, Vernau W. Eosinophilic bronchitis, eosinophilic granuloma, and eosinophilic bronchopneumopathy in 75 dogs (2006-2016). J Vet Intern Med. 2019;33(5):2217-2226. doi:10.1111/jvim.15605'
+const LEGALLET_DH =
+  'Legallet C, Thieman Mankin K, Selmic LE. Prognostic indicators for perioperative survival after diaphragmatic herniorrhaphy in cats and dogs: 96 cases (2001-2013). BMC Vet Res. 2017;13(1):16. doi:10.1186/s12917-016-0926-y'
+const THIERRY_CIPF =
+  'Thierry F, Handel I, Hammond G, King LG, Corcoran BM, Schwarz T. Further characterization of computed tomographic and clinical features for staging and prognosis of idiopathic pulmonary fibrosis in West Highland white terriers. Vet Radiol Ultrasound. 2017;58(4):381-388. doi:10.1111/vru.12491'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -1579,6 +1585,8 @@ const SPARKES_ISFM_DIABETES =
   'Sparkes AH, Cannon M, Church D, et al. ISFM consensus guidelines on the practical management of diabetes mellitus in cats. J Feline Med Surg. 2015;17(3):235-250. doi:10.1177/1098612X15571880'
 const PAGANI_GBM_MORTALITY =
   'Pagani G, Ferraris EI, Montinaro V, et al. Short-term outcomes and mortality predictors in 41 dogs undergoing cholecystectomy for gallbladder mucocele: a single referral centre study. BMC Vet Res. 2026;22:214. doi:10.1186/s12917-026-05648-9'
+const JAFFEY_CYB5R =
+  'Jaffey JA, Reading NS, Abdulmalik O, et al. Clinical, metabolic, and molecular genetic characterization of hereditary methemoglobinemia caused by cytochrome b5 reductase deficiency in 30 dogs. Sci Rep. 2020;10(1):21399. doi:10.1038/s41598-020-78391-2'
 const JAFFEY_COCCI_REMISSION =
   'Jaffey JA, Hanzlicek AS, Rayhel LH, Hostnik ET, Irwin C, Chittick L. A treatment monitoring protocol to determine clinical remission in dogs with pulmonary coccidioidomycosis. J Vet Intern Med. 2026;40(1). doi:10.1093/jvimsj/aalaf064'
 const BERLIN_FLUCONAZOLE_LIVER =
@@ -1780,7 +1788,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Wang', 'Castejón-González', 'Kilduff-Taylor', 'Doran', 'Girard', 'Niżański', 'Bennett', 'Sorenmo', 'Bascuñán', 'Buchanan', 'Zacuto', 'Leib', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Thierry', 'Legallet', 'Wang', 'Castejón-González', 'Kilduff-Taylor', 'Doran', 'Girard', 'Niżański', 'Bennett', 'Sorenmo', 'Bascuñán', 'Buchanan', 'Zacuto', 'Leib', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -2040,6 +2048,10 @@ const GARCIA_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2026': { id: 'garcia-ocular-pathology', text: GARCIA_OCULAR_PATHOLOGY },
   '2017': { id: 'garcia-feline-ger', text: GARCIA_FELINE_GER },
 }
+const JAFFEY_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2026': { id: 'jaffey-cocci-remission', text: JAFFEY_COCCI_REMISSION },
+  '2020': { id: 'jaffey-cyb5r-dogs', text: JAFFEY_CYB5R },
+}
 const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
   '2021': { id: 'cridge-neostigmine', text: CRIDGE_NEOSTIGMINE },
@@ -2129,6 +2141,7 @@ const MOORE_BY_YEAR: Record<string, { id: string; text: string }> = {
 /** Two LR Johnson papers a decade apart — the pyothorax series and the
  *  bronchiectasis one. Keyed on the year for the same reason as Moore. */
 const JOHNSON_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2019': { id: 'johnson-eosinophilic-lung', text: JOHNSON_EOSINOPHILIC_LUNG },
   '2016': { id: 'johnson-bronchiectasis', text: JOHNSON_BRONCHIECTASIS },
   '2023': { id: 'johnson-pyothorax', text: JOHNSON_PYOTHORAX },
 }
@@ -2646,6 +2659,8 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Kilduff-Taylor/.test(part)) { out.push({ id: 'kilduff-stick-endoscopy', text: KILDUFF_STICK }); continue }
     if (/^Castejón-González/.test(part)) { out.push({ id: 'castejon-feline-mandible', text: CASTEJON_MANDIBLE }); continue }
     if (/^Wang/.test(part)) { out.push({ id: 'wang-orbital-abscess', text: WANG_ORBITAL_ABSCESS }); continue }
+    if (/^Legallet/.test(part)) { out.push({ id: 'legallet-dh-96', text: LEGALLET_DH }); continue }
+    if (/^Thierry/.test(part)) { out.push({ id: 'thierry-cipf-ct', text: THIERRY_CIPF }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
@@ -2667,7 +2682,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     }
     if (/^Markert/.test(part)) { out.push({ id: 'markert-ile-cohort', text: MARKERT_ILE_COHORT }); continue }
     if (/^Little/.test(part)) { out.push({ id: 'little-aafp-retrovirus', text: LITTLE_AAFP_RETROVIRUS }); continue }
-    if (/^Jaffey/.test(part)) { out.push({ id: 'jaffey-cocci-remission', text: JAFFEY_COCCI_REMISSION }); continue }
+    if (/^Jaffey/.test(part)) {
+      const hit = JAFFEY_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Sparkes/.test(part)) { out.push({ id: 'sparkes-isfm-diabetes', text: SPARKES_ISFM_DIABETES }); continue }
     if (/^Rivas/.test(part)) { out.push({ id: 'rivas-fcgs-msc', text: RIVAS_FCGS_MSC }); continue }
     if (/^Watson/.test(part)) { out.push({ id: 'watson-feline-cholangitis', text: WATSON_FELINE_CHOLANGITIS }); continue }
