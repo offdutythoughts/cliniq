@@ -473,7 +473,6 @@ const bleedingVasc: FlowPage = {
               items: [
                 { label: 'CRGV / Alabama rot', tone: 'danger', link: { to: 'disease', id: 'DIS-BD-CRGV' } },
                 { label: 'Cutaneous vasculitis', tone: 'violet', link: { to: 'disease', id: 'DIS-BD-VASC' } },
-                { label: 'Lhasa Apso vasculopathy', tone: 'neutral', link: { to: 'disease', id: 'DIS-BD-VASCLH' } },
               ],
             },
           ],
