@@ -83,19 +83,117 @@ const AGE_KEYWORDS: Record<AgeCategory, RegExp> = {
 // "No breed predisposition" / "all breeds susceptible" → zero score.
 // "any breed" as a trailing qualifier (e.g. "Maine Coon, Ragdoll — any breed") does NOT
 // disqualify the field — specific breeds are still named before it.
-const NO_PRED = /^no\s+(strong\s+)?breed\s+pred|^no\s+breed\s+specific|^any\s+breed|^all\s+breeds/i
+const NO_PRED = /^no\s+(strong\s+|specific\s+)?breed\b|^no\s+breed\s+specific|^any\s+breed|^all\s+breeds/i
 
-function countNamedBreeds(breedField: string): number {
-  if (NO_PRED.test(breedField.trim())) return 0
-  // Split on commas, semicolons, slashes, em-dashes used as separators, after
-  // dropping parenthesised citations — "Australia/NZ (Ettinger Ch 284)" used to
-  // count "NZ (Ettinger Ch 284)" as a breed, and "(Ettinger Ch 313/331)" "331)".
-  const parts = breedField
-    .replace(/\([^)]*\b(Ch|\d{4})\b[^)]*\)/g, '')
-    .split(/[,;\/]|(?:\s+and\s+)|\s+—\s+/)
-  // Filter out generic phrases
-  const generic = /large|giant|small|medium|brachycephalic|any|all\s+breed|no\s+pred|chondrodystrophic|sighthound|overrepresented|predisposed|most|highest|common/i
-  return parts.filter(p => p.trim().length > 2 && !generic.test(p)).length
+// The field is `|`-separated lines, and the references work keeps appending
+// cited evidence sentences to it — "In 17 Australian dogs, St Bernard (3),
+// Chihuahua, German Shepherd and Jack Russell (2 each) were the commonest
+// breeds… (Russell 2006)". Counted as a list, one such sentence pushed
+// hypoparathyroidism past 8 "breeds" and zeroed even the Miniature Schnauzer.
+// So the count reads the field the way a clinician does: the breed LIST lines,
+// not the headers or the evidence appended beneath them.
+
+// An author-year citation — "(Russell 2006)", "(Meurs 2005; Mary 2010)".
+// Textbook chapters "(Ettinger Ch 284)" carry no year and tag breed lists.
+const AUTHOR_YEAR = /\([^()]*[A-Za-z][^()]*\b(19|20)\d{2}[a-z]?\b[^()]*\)/
+// Any citation parenthetical, textbook or paper — dropped before counting.
+const CITATION = /\([^)]*\b(Ch|\d{4})\b[^)]*\)/g
+// List separators: , ; : · and the em/en dash that introduces a gloss
+// ("Labrador Retriever — most commonly affected"), plus sentence breaks.
+const ITEM_SPLIT = /[,;:·]|\s+(?:and|&)\s+|\s+[—–]\s+|\.\s+/
+// A list item ends where its predicate starts: "Siamese cats predisposed to
+// high-grade" names Siamese, "English Cocker Spaniel at higher risk" names a
+// breed. Dropping the whole item, as the old generic filter did, lost both.
+const PREDICATE = /(?:^|\s+)(?:over-?represented|under-?represented|predispos\w*|reported|reportedly|affected|suffer|prone|occurs?|found|but|at\s+(?:\w+\s+)?risk|may|might|possibly|probably|appears?|is|are|was|were|has|have|had|can|carry|carries|show|shows|in|for|with|\w{4,}ly|—|–)\b.*$/i
+// Words that describe a population or label a form rather than name a breed.
+const GENERIC_WORDS = /\b(large|giant|small|medium|toy|brachycephalic\w*|dolichocephalic\w*|mesaticephalic\w*|chondrodystrophic|non|sighthounds?|any|all|no|none|most|highest|common\w*|other|many|various|numerous|several|older|old|aged|age|median|middle|more|less|young|juvenile|adult|females?|males?|entire|spayed|neutered|intact|outdoor|indoor|free-roaming|working|hunting|sporting|pure-?bred|pedigree|cattery|crossbreds?|crosses|mixed|obese|overweight|breeds?|rare|uncommon|severe|also|otherwise|often|deep-chested|active|unvaccinated|immunocompromised|kittens|puppies|animals|dogs?|cats?|canine|feline|congenital|acquired|primary|secondary|familial|hereditary|inherited|idiopathic|disease|forms?|syndrome|variants?|mutation|dystrophy|paralysis|torsion|atresia|ectropion|eversion|neoplasia|lymphoma|myeloma|plasmoma|erosive|visceral|cutaneous|tumou?rs?|cases?|series|risk|registrations|described|frequent|status|as\s+per|cause|clusters|siblings|irised|blue|merle|coat)\b/gi
+// A parenthesis that is itself a list of names, or that follows a group word,
+// names breeds — "Japanese breeds (Akita, Shiba Inu…)", "Small/toy breeds
+// overrepresented (Miniature Schnauzer, Yorkshire Terrier, Maltese)". Any
+// other parenthesis is a gloss: "Shetland Sheepdog (mucocele)", "boxer
+// (boxer: dysfunctional prothrombin, not true deficiency)".
+const LIST_PAREN = /\(((?:(?:e\.g\.|esp\.|i\.e\.|incl\.)\s*)?[A-Z][^(),]*(?:,\s*[A-Z][^(),]*)+)\)|\b(breeds?|dogs|cats|types?)\s*\(((?:(?:e\.g\.|esp\.|i\.e\.|incl\.)\s*)?[A-Z][^()]*)\)/g
+// Most fields capitalise breed names, so a lower-case item in a capitalised
+// list is commentary — "kennel/cattery settings". A few fields are written
+// lower-case throughout ("English cocker spaniel, otterhound, and boxer");
+// there a lower-case item is a breed. A line is read that way when it has 3+
+// lower-case items, or gives itself away with a breed noun left in lower case.
+const LOWER_CASE_LIST = 3
+const LOWER_CASE_BREED = /\p{Lu}\p{L}*\s+(?:\p{Ll}+\s+)*(spaniel|terrier|retriever|shepherd|setter|pointer|poodle|collie|hound|sheepdog|bulldog|schnauzer|husk(y|ies)|mastiff|pinscher|ridgeback|malamute|vizsla|shorthair|longhair)s?\b/u
+
+const words = (s: string) => s.trim().split(/\s+/).filter(Boolean).length
+
+/** A cited finding or a prose sentence, rather than a list of breeds. A
+ *  cited line whose head is just a breed — "Ragdoll — MyBPC3-R820W mutation
+ *  (Meurs 2007)" — is a glossed list item and stays. */
+function isEvidenceLine(line: string): boolean {
+  const unglossed = line.replace(/\([^()]*\)/g, '')
+  if (AUTHOR_YEAR.test(line) && words(unglossed.split(/\s+[—–]\s+/)[0]) > 4) return true
+  return unglossed.split(/[,;·]/).some(clause => words(clause) > 10)
+}
+
+function namedBreedsInLine(line: string): string[] {
+  const listed = line
+    .replace(/\bSt\.\s+/g, 'St ')   // "St. Bernard" is not a sentence break
+    .replace(CITATION, '')
+    .replace(/^(also\s+)?(reported|described|seen)\s+in\s+(the\s+)?/i, '')
+    .replace(LIST_PAREN, (_, list, group, inner) => list ? `, ${list},` : `${group}, ${inner},`)
+    .replace(/\([^()]*\)/g, '')
+    // "Labrador Retriever — most commonly affected": a lower-case gloss after
+    // a dash is commentary. "Small breeds — Miniature Poodle, Shih Tzu…" is not.
+    .replace(/\s+[—–]\s+\p{Ll}.*$/u, '')
+    // "Gastric (dogs): Belgian Shepherd…", "Multiple myeloma: no breed
+    // predisposition" — a label is not a breed, unless it is one word glossed
+    // in lower case: "Greyhounds: severe juvenile periodontitis".
+    .replace(/([^:.,;·]{1,40}):([^.]*)/g, (_, label: string, rest: string) =>
+      words(label) === 1 && !/\p{Lu}/u.test(rest) ? `${label},${rest}` : `,${rest}`)
+  const items = listed
+    .split(ITEM_SPLIT)
+    .map(item => item
+      .replace(/^\s*(e\.g\.|eg|i\.e\.|incl\.|including|esp\.|especially|the)\s+/i, '')
+      .replace(PREDICATE, '')
+      // "English Bulldog 10.8", "American Cocker Spaniel 69%" — a breed and
+      // its figure. A digit inside a word ("A31P Maine Coons") stays, and
+      // marks a variant name rather than a breed below.
+      .replace(/(^|\s)[~<>≥≤]?\d.*$/, '')
+      // Generic words qualify a breed rather than disqualify the item: "toy
+      // Poodle" and "Old English Sheepdog" name breeds, "Small breeds" does not.
+      .replace(GENERIC_WORDS, ' ')
+      .replace(/^[^\p{L}]+|[^\p{L}]+$/gu, '')
+      .trim())
+    .filter(item => /\p{L}{3}/u.test(item))
+  const lowerCase = items.filter(item => !/\p{Lu}/u.test(item))
+  const lowerCaseList = lowerCase.length >= LOWER_CASE_LIST || LOWER_CASE_BREED.test(listed)
+  return (lowerCaseList ? items : items.filter(item => !lowerCase.includes(item)))
+    .flatMap(item => item.split('/'))
+    .map(item => item.replace(/^[^\p{L}]+|[^\p{L}]+$/gu, '').replace(/\s+/g, ' '))
+    .filter(item => /\p{L}{3}/u.test(item) && words(item) <= 4 && !/\d/.test(item))
+}
+
+const contentLines = (breedField: string) =>
+  breedField.split('|').map(l => l.trim()).filter(l => l && !l.startsWith('#'))
+
+/** The breeds a clinician would read off a `breed` field's list lines, in
+ *  order. The first line is the page's own statement and always counts, cited
+ *  or not ("Maine Coon — MyBPC3-A31P mutation… (Meurs 2005)"); evidence lines
+ *  appended after it support the list rather than add to it. */
+export function namedBreeds(breedField: string): string[] {
+  if (NO_PRED.test(breedField.trim())) return []
+  const breeds = contentLines(breedField)
+    .filter((l, i) => i === 0 || !isEvidenceLine(l))
+    .flatMap(namedBreedsInLine)
+  // "Irish Wolfhound" listed under two forms is still one breed.
+  return breeds.filter((b, i) => breeds.findIndex(o => o.toLowerCase() === b.toLowerCase()) === i)
+}
+
+export function countNamedBreeds(breedField: string): number {
+  const n = namedBreeds(breedField).length
+  if (n || NO_PRED.test(breedField.trim())) return n
+  // The list names no breed, so whatever breed the field does name is in a
+  // cited finding — discospondylitis: "Large-breed purebred dogs predisposed",
+  // then French and English Bulldogs at 3.4× and 4.3× (Grapes 2024). Each
+  // finding counts as one breed; prose is too irregular to parse further.
+  return contentLines(breedField).slice(1).filter(isEvidenceLine).length
 }
 
 // ── Breed groups ──────────────────────────────────────────────────────────────
@@ -151,7 +249,7 @@ function breedScore(breedField: string | undefined, query: string): number {
   else if (n <= 4) s = 2
   else if (n <= 7) s = 1
   else s = 0               // 8+ named breeds → not meaningfully predictive
-  return named ? s : Math.ceil(s / 2)
+  return named ? s : s / 2
 }
 
 // ── Category normalisation (mirrors engine.ts) ───────────────────────────────
@@ -385,6 +483,12 @@ const SYNONYM_GROUPS: string[][] = [
   ['joint swelling', 'arthritis', 'swollen joints', 'painful joints'],
   ['muscle wasting', 'atrophy', 'muscle loss', 'muscle atrophy'],
   ['stiff', 'stiffness', 'reluctant to move', 'difficulty rising', 'trouble getting up'],
+  // How case notes phrase an abnormal stiff gait — none of these but the first
+  // reached the pages that say "stiff gait" (hypoparathyroidism's tetany among
+  // them). Kept apart from bare "stiff" above, which also hits "muscle
+  // stiffness" and would credit every myopathy with explaining the gait.
+  ['stiff gait', 'stiff hindlimb gait', 'stiff hind limb gait', 'stilted gait', 'stiff hindlimbs',
+    'hindlimb stiffness', 'hindlimb gait abnormality', 'hind limb gait abnormality'],
 
   // ── Ophthalmic signs ─────────────────────────────────────────────────────
   ['red eye', 'conjunctivitis', 'conjunctival hyperemia', 'bloodshot eye', 'inflamed eye'],

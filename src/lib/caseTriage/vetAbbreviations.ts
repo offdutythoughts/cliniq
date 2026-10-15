@@ -583,6 +583,57 @@ export function scanAbbreviations(text: string): AbbreviationScan {
   return { known: [...known.values()], unknown: [...unknown.values()] }
 }
 
+/** One edit (a letter dropped, added or swapped for another, or two adjacent
+ *  letters transposed) turns `a` into `b`. */
+function oneEditApart(a: string, b: string): boolean {
+  if (a === b || Math.abs(a.length - b.length) > 1) return false
+  if (a.length === b.length) {
+    const diff = [...a].flatMap((c, i) => (c === b[i] ? [] : [i]))
+    return diff.length === 1
+      || (diff.length === 2 && diff[1] === diff[0] + 1 && a[diff[0]] === b[diff[1]] && a[diff[1]] === b[diff[0]])
+  }
+  const [short, long] = a.length < b.length ? [a, b] : [b, a]
+  for (let i = 0; i < long.length; i++) {
+    if (long.slice(0, i) + long.slice(i + 1) === short) return true
+  }
+  return false
+}
+
+// Ranked by how often the slip happens: a dropped letter ("AT" for "AST"),
+// then a transposition, a wrong letter, an extra letter.
+const editRank = (typed: string, cand: string) =>
+  cand.length > typed.length ? 0
+    : cand.length < typed.length ? 3
+      : [...typed].filter((c, i) => c !== cand[i]).length === 2 ? 1 : 2
+
+/** Glossary abbreviations one typo away from an unrecognised one — offered as
+ *  "did you mean…?" fixes. Ordered by likelihood of the slip, glossary order
+ *  breaking ties; at most `max`. */
+export function suggestAbbreviations(unknown: string, max = 3): FoundAbbreviation[] {
+  const typed = norm(unknown)
+  if (typed.length < 2) return []
+  const out: { abbr: string; senses: string[]; rank: number; order: number }[] = []
+  let order = 0
+  for (const [key, hits] of INDEX) {
+    order++
+    if (key.length < 2 || !/^[A-Z0-9]+$/.test(key) || !oneEditApart(typed, key)) continue
+    out.push({ abbr: key, senses: [...new Set(hits.flatMap(h => h.entry.senses))], rank: editRank(typed, key), order })
+  }
+  return out
+    .sort((a, b) => a.rank - b.rank || a.order - b.order)
+    .slice(0, max)
+    .map(({ abbr, senses }) => ({ abbr, senses }))
+}
+
+/** Character ranges of every whole-token occurrence of `tokens` in `text`, in
+ *  order — for highlighting the unrecognised ones where they sit. */
+export function abbreviationRanges(text: string, tokens: string[]): [number, number][] {
+  if (!tokens.length) return []
+  const esc = tokens.map(t => t.replace(/[.*+?^${}()|[\]\\/]/g, '\\$&')).sort((a, b) => b.length - a.length)
+  const re = new RegExp(`(?<![A-Za-z0-9])(?:${esc.join('|')})(?![A-Za-z0-9])`, 'g')
+  return [...text.matchAll(re)].map(m => [m.index ?? 0, (m.index ?? 0) + m[0].length])
+}
+
 /** Normalised key for a user-supplied expansion, so "b.i.d." and "BID" share one. */
 export const abbreviationKey = norm
 

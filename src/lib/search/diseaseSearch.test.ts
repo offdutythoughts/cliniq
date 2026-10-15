@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { searchDiseases, topDifferentials, suggestSignTerms, SEX_ORGAN_RULES, type SearchInputs } from './diseaseSearch'
+import { searchDiseases, topDifferentials, suggestSignTerms, SEX_ORGAN_RULES, namedBreeds, countNamedBreeds, type SearchInputs } from './diseaseSearch'
 import { PREVALENCE, prevalenceFactor } from './prevalence'
 import { DB } from '../../data/db'
 
@@ -339,6 +339,20 @@ describe('problem-list tiers', () => {
     }
   })
 
+  it('reads the gait however the notes phrase it', () => {
+    // Live extractions wrote the gait three ways; only "stiff gait" used to
+    // reach the hypoparathyroidism page, and it fell to 2nd behind rhabdomyolysis.
+    for (const gait of ['stiff gait', 'hindlimb gait abnormality', 'stiff hindlimb gait']) {
+      const swap = (ts: string[]) => ts.map(t => (t === 'stiff gait' ? gait : t))
+      const over = {
+        ...AIREDALE,
+        signKeywords: swap(AIREDALE.signKeywords!),
+        termTiers: { ...AIREDALE_TIERS, key: swap(AIREDALE_TIERS!.key!) },
+      }
+      expect(rankOf('DIS-ENDO-HYPOPTH', over)).toBe(1)
+    }
+  })
+
   it('changes nothing when no tiers are given', () => {
     const plain = ranked(FELINE_DM).map(r => [r.disease.id, r.score])
     const empty = ranked({ ...FELINE_DM, termTiers: {} }).map(r => [r.disease.id, r.score])
@@ -446,5 +460,65 @@ describe('breed groups', () => {
 
   it('leaves an unrelated breed at zero', () => {
     expect(breedOf('DIS-ENDO-HYPOPTH', 'Labrador Retriever')).toBe(0)
+  })
+})
+
+describe('breed specificity count', () => {
+  const breedOf = (id: string, breedQuery: string) =>
+    ranked({ species: 'dog', breedQuery }).find(r => r.disease.id === id)?.breakdown.breed ?? 0
+
+  it('does not count a cited evidence sentence as a list of breeds', () => {
+    // The Russell 2006 sentence on hypoparathyroidism names five more breeds
+    // and pushed the count past 8, zeroing even the Miniature Schnauzer.
+    expect(namedBreeds(
+      'Miniature Schnauzers, Poodles|In 17 Australian dogs, St Bernard (3), Chihuahua, German Shepherd and ' +
+      'Jack Russell (2 each) were the commonest breeds, and signs had been present a median of 13 days (Russell 2006)',
+    )).toEqual(['Miniature Schnauzers', 'Poodles'])
+  })
+
+  it('gives both a named breed and a group member credit on hypoparathyroidism, named first', () => {
+    const schnauzer = breedOf('DIS-ENDO-HYPOPTH', 'Miniature Schnauzer')
+    const airedale = breedOf('DIS-ENDO-HYPOPTH', 'Airedale Terrier')
+    expect(airedale).toBeGreaterThan(0)
+    expect(schnauzer).toBeGreaterThan(airedale)
+  })
+
+  it('reads `|` as a line break and skips #headers', () => {
+    expect(namedBreeds('#Canine|Boxer|#Feline|Siamese')).toEqual(['Boxer', 'Siamese'])
+    expect(namedBreeds('Chow Chow · Shar Pei · Rottweiler')).toEqual(['Chow Chow', 'Shar Pei', 'Rottweiler'])
+  })
+
+  it('keeps a breed whose line also carries a generic qualifier', () => {
+    // The whole `|` line used to be one part, discarded for "overrepresented".
+    expect(namedBreeds(
+      'English Cocker Spaniel at higher risk (DLA-DQB1 association)|Older female dogs possibly overrepresented (Ettinger Ch 313/331)',
+    )).toEqual(['English Cocker Spaniel'])
+    expect(breedOf('DIS-NEO-AGASACA', 'English Cocker Spaniel')).toBeGreaterThan(0)
+    expect(namedBreeds('Siamese cats predisposed to high-grade')).toEqual(['Siamese'])
+    expect(namedBreeds('Small/toy breeds overrepresented (Miniature Schnauzer, Yorkshire Terrier, Maltese).'))
+      .toEqual(['Miniature Schnauzer', 'Yorkshire Terrier', 'Maltese'])
+  })
+
+  it('keeps a cited line that is a glossed list item', () => {
+    expect(namedBreeds('Maine Coon — MyBPC3-A31P mutation (Meurs 2005)|Ragdoll — MyBPC3-R820W mutation (Meurs 2007)'))
+      .toEqual(['Maine Coon', 'Ragdoll'])
+  })
+
+  it('drops glosses and labels but keeps a breed used as a label', () => {
+    expect(namedBreeds('Shetland Sheepdog (mucocele), Cocker Spaniel — early onset, strong polygenic inheritance'))
+      .toEqual(['Shetland Sheepdog', 'Cocker Spaniel'])
+    expect(namedBreeds('Gastric (dogs): Belgian Shepherd, Rough Collie')).toEqual(['Belgian Shepherd', 'Rough Collie'])
+    expect(namedBreeds('Greyhounds: severe juvenile periodontitis')).toEqual(['Greyhounds'])
+  })
+
+  it('counts no breeds in a field that names none', () => {
+    expect(countNamedBreeds('No specific breed given in source.')).toBe(0)
+    expect(countNamedBreeds('Small and medium breeds overrepresented — coins clear the pylorus less readily.')).toBe(0)
+  })
+
+  it('falls back to cited findings when the list itself names no breed', () => {
+    // Discospondylitis: "Large-breed purebred dogs predisposed", then French
+    // and English Bulldogs at 3.4× and 4.3× in Grapes 2024.
+    expect(breedOf('DIS-DISCO', 'French Bulldog')).toBeGreaterThan(0)
   })
 })

@@ -201,12 +201,31 @@ Respond with ONLY a JSON object of exactly this shape (omit ageCategory/sex/neut
 {"species":"dog","breedQuery":"Cavalier King Charles Spaniel","ageCategory":"geriatric","sex":"male","neuter":"neutered","signKeywords":["exercise intolerance","cough"],"diagKeywords":[],"caseSummary":"...","unknownAbbreviations":[],"problemList":{"key":["exercise intolerance","cough"],"secondary":[],"patterns":[]}}`;
 }
 
-/** Keeps only problem-list terms that are extracted keywords (case-insensitive),
+/** Matching key for a problem-list term against the extracted keywords. The
+ *  model does not always copy a keyword verbatim — "seizures" for "seizure",
+ *  "hypocalcaemia" for "hypocalcemia", "hypocalcemia (1.0 mmol/L)" — and a term
+ *  that fails to match is dropped, so enough misses silently turn the search
+ *  back into flat weighting. Folds case, separators, a trailing value in
+ *  brackets, UK/US -ae-/-oe- spelling and a plural -s on each word. */
+function termKey(s: string): string {
+  return s
+    .toLowerCase()
+    .replace(/\([^)]*\)/g, " ")
+    .replace(/ae/g, "e")
+    .replace(/oe/g, "e")
+    .replace(/[\s\-/,]+/g, " ")
+    .trim()
+    .split(" ")
+    .map((w) => (w.length > 3 ? w.replace(/s$/, "") : w))
+    .join(" ");
+}
+
+/** Keeps only problem-list terms that are extracted keywords (see termKey),
  *  rewritten to the keyword's own spelling, so the search can look them up. A
  *  term in `key` wins over the same term in `secondary`. */
-function cleanProblemList(raw: unknown, keywords: string[]): ProblemList {
-  const byLower = new Map(keywords.map((k) => [k.trim().toLowerCase(), k]));
-  const known = (t: unknown) => (typeof t === "string" ? byLower.get(t.trim().toLowerCase()) : undefined);
+export function cleanProblemList(raw: unknown, keywords: string[]): ProblemList {
+  const byKey = new Map(keywords.map((k) => [termKey(k), k]));
+  const known = (t: unknown) => (typeof t === "string" ? byKey.get(termKey(t)) : undefined);
   const p = raw && typeof raw === "object" ? (raw as Record<string, unknown>) : {};
 
   const key = [...new Set((Array.isArray(p.key) ? p.key : []).map(known).filter((t): t is string => !!t))];
