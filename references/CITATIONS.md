@@ -6791,3 +6791,26 @@ Notes:
 - **DIS-DENT-JAWFX**: the feline series covered fractures at or caudal to the canine and
   excluded the symphysis. The page says so, because symphyseal separation is the feline lesion
   it emphasises.
+
+## Respiratory batch (2026-10-15)
+
+**32 → 28.** All four textbook-only `DIS-RESP-*` pages now cite papers.
+
+> Johnson LR, Johnson EG, Hulsebosch SE, Dear JD, Vernau W. Eosinophilic bronchitis, eosinophilic granuloma, and eosinophilic bronchopneumopathy in 75 dogs (2006-2016). J Vet Intern Med. 2019;33(5):2217-2226. doi:10.1111/jvim.15605
+
+> Legallet C, Thieman Mankin K, Selmic LE. Prognostic indicators for perioperative survival after diaphragmatic herniorrhaphy in cats and dogs: 96 cases (2001-2013). BMC Vet Res. 2017;13(1):16. doi:10.1186/s12917-016-0926-y
+
+> Thierry F, Handel I, Hammond G, King LG, Corcoran BM, Schwarz T. Further characterization of computed tomographic and clinical features for staging and prognosis of idiopathic pulmonary fibrosis in West Highland white terriers. Vet Radiol Ultrasound. 2017;58(4):381-388. doi:10.1111/vru.12491
+
+> Jaffey JA, Reading NS, Abdulmalik O, et al. Clinical, metabolic, and molecular genetic characterization of hereditary methemoglobinemia caused by cytochrome b5 reductase deficiency in 30 dogs. Sci Rep. 2020;10(1):21399. doi:10.1038/s41598-020-78391-2
+
+Notes:
+
+- **DIS-RESP-METHAEM** named the Cavalier King Charles Spaniel as *the* hereditary CYB5R breed. In
+  30 genotyped dogs, the recurrent variants were in Pomeranians and other small breeds and in pit
+  bull terriers. The Cavalier stays on the page as a reported breed, not the headline one.
+- **DIS-RESP-IPF**: primary literature on canine idiopathic pulmonary fibrosis is small. Thierry
+  is 21 affected dogs and the page states the number. The most-cited papers are reviews, which
+  were not used.
+- **Resolver**: `Johnson` gained 2019 (Johnson LR, eosinophilic lung disease). `Jaffey` is
+  year-keyed (2020 CYB5R / 2026 coccidioidomycosis).
