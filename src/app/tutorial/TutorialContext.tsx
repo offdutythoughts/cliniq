@@ -12,7 +12,8 @@ interface TutorialCtx {
 
 const Ctx = createContext<TutorialCtx | null>(null)
 
-export const TUTORIAL_STEPS = 6
+// Must equal STEPS.length in TutorialOverlay.tsx.
+export const TUTORIAL_STEPS = 8
 
 export function TutorialProvider({ children }: { children: React.ReactNode }) {
   const [step, setStep] = useState(-1)
