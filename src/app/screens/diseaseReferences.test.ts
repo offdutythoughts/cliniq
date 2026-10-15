@@ -1412,6 +1412,15 @@ describe('citation pass 2026-10-14 — collision cases', () => {
       ['Craig 2009', 'craig-fgesf'],
       ['O’Neill 2021 anal sac', 'oneill-anal-sac'],
       ['O’Neill 2021', 'oneill-kcs'],
+      ['Miller 2002', 'miller-doxapram'],
+      ['Miller 2012', 'miller-apl-dogs'],
+      ['Jaffey 2020', 'jaffey-cyb5r-dogs'],
+      ['Jaffey 2026', 'jaffey-cocci-remission'],
+      ['Garcia 2017', 'garcia-feline-ger'],
+      ['Garcia 2026', 'garcia-ocular-pathology'],
+      ['Johnson 2019', 'johnson-eosinophilic-lung'],
+      ['Phillips 2022', 'phillips-septic-arthritis'],
+      ['Gomez 2004', 'gomez-pf-outcome'],
     ]
     for (const [marker, id] of cases) expect(parseSources(marker).map(s => s.id), marker).toEqual([id])
   })

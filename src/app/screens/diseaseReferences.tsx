@@ -352,6 +352,18 @@ const BOUDREAUX_OTTERHOUND =
   'Boudreaux MK, Catalfamo JL. Molecular and genetic basis for thrombasthenic thrombopathia in otterhounds. Am J Vet Res. 2001;62(11):1797-1804. doi:10.2460/ajvr.2001.62.1797'
 const DARCY_FELINE_PE =
   'Darcy H, Simpson K, Gajanayake I, et al. Feline primary erythrocytosis: a multicentre case series of 18 cats. J Feline Med Surg. 2018;20(12):1192-1198. doi:10.1177/1098612X17750333'
+const PHILLIPS_SEPTIC_ARTHRITIS =
+  'Phillips TF, Bleyaert HF. Retrospective evaluation of 103 cases of septic arthritis in dogs. Vet Rec. 2022;190(5):e938. doi:10.1002/vetr.938'
+const SCHICK_2THIRDS =
+  'Schick AR, Grimes JA. Evaluation of the validity of the double two-thirds rule for diagnosing hemangiosarcoma in dogs with nontraumatic hemoperitoneum due to a ruptured splenic mass: a systematic review. J Am Vet Med Assoc. 2022;261(1):69-73. doi:10.2460/javma.22.08.0389'
+const BOMASSI_VSD =
+  'Bomassi E, Misbach C, Tissier R, et al. Signalment, clinical features, echocardiographic findings, and outcome of dogs and cats with ventricular septal defects: 109 cases (1992-2013). J Am Vet Med Assoc. 2015;247(2):166-175. doi:10.2460/javma.247.2.166'
+const CHETBOUL_TOF =
+  'Chetboul V, Pitsch I, Tissier R, et al. Epidemiological, clinical, and echocardiographic features and survival times of dogs and cats with tetralogy of Fallot: 31 cases (2003-2014). J Am Vet Med Assoc. 2016;249(8):909-917. doi:10.2460/javma.249.8.909'
+const ENOMOTO_YOUNG_OA =
+  'Enomoto M, de Castro N, Hash J, et al. Prevalence of radiographic appendicular osteoarthritis and associated clinical signs in young dogs. Sci Rep. 2024;14(1):2827. doi:10.1038/s41598-024-52324-9'
+const WUCHERER_CCL =
+  'Wucherer KL, Conzemius MG, Evans R, Wilke VL. Short-term and long-term outcomes for overweight dogs with cranial cruciate ligament rupture treated surgically or nonsurgically. J Am Vet Med Assoc. 2013;242(10):1364-1372. doi:10.2460/javma.242.10.1364'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -1802,7 +1814,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Darcy', 'Boudreaux', 'Gomez', 'Kijas', 'Mueller', 'Smee', 'Thierry', 'Legallet', 'Wang', 'Castejón-González', 'Kilduff-Taylor', 'Doran', 'Girard', 'Niżański', 'Bennett', 'Sorenmo', 'Bascuñán', 'Buchanan', 'Zacuto', 'Leib', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Wucherer', 'Enomoto', 'Chetboul', 'Bomassi', 'Schick', 'Darcy', 'Boudreaux', 'Gomez', 'Kijas', 'Mueller', 'Smee', 'Thierry', 'Legallet', 'Wang', 'Castejón-González', 'Kilduff-Taylor', 'Doran', 'Girard', 'Niżański', 'Bennett', 'Sorenmo', 'Bascuñán', 'Buchanan', 'Zacuto', 'Leib', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -2224,6 +2236,7 @@ const NAGAMORI_BY_YEAR: Record<string, { id: string; text: string }> = {
 }
 
 const PHILLIPS_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2022': { id: 'phillips-septic-arthritis', text: PHILLIPS_SEPTIC_ARTHRITIS },
   '2019': { id: 'phillips-feline-hh', text: PHILLIPS_FELINE_HH },
   '2025': { id: 'phillips-exercise-annpe', text: PHILLIPS_EXERCISE_ANNPE },
 }
@@ -2689,6 +2702,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Gomez/.test(part)) { out.push({ id: 'gomez-pf-outcome', text: GOMEZ_PF_OUTCOME }); continue }
     if (/^Boudreaux/.test(part)) { out.push({ id: 'boudreaux-otterhound-gt', text: BOUDREAUX_OTTERHOUND }); continue }
     if (/^Darcy/.test(part)) { out.push({ id: 'darcy-feline-pe', text: DARCY_FELINE_PE }); continue }
+    if (/^Schick/.test(part)) { out.push({ id: 'schick-double-two-thirds', text: SCHICK_2THIRDS }); continue }
+    if (/^Bomassi/.test(part)) { out.push({ id: 'bomassi-vsd-109', text: BOMASSI_VSD }); continue }
+    if (/^Chetboul/.test(part)) { out.push({ id: 'chetboul-tof-31', text: CHETBOUL_TOF }); continue }
+    if (/^Enomoto/.test(part)) { out.push({ id: 'enomoto-young-oa', text: ENOMOTO_YOUNG_OA }); continue }
+    if (/^Wucherer/.test(part)) { out.push({ id: 'wucherer-ccl-rct', text: WUCHERER_CCL }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }

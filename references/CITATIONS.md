@@ -6850,3 +6850,42 @@ Notes:
   syndrome that may not exist would make it look *more* established, so nothing was added. The
   owner should decide whether the page describes a real entity.
 - **Resolver**: `Miller` is year-keyed (CJ 2002 doxapram / AG 2012 antiphospholipid).
+
+## Final in-scope batch: spleen, cardiac, musculoskeletal (2026-10-15)
+
+**22 → 16.**
+
+> Schick AR, Grimes JA. Evaluation of the validity of the double two-thirds rule for diagnosing hemangiosarcoma in dogs with nontraumatic hemoperitoneum due to a ruptured splenic mass: a systematic review. J Am Vet Med Assoc. 2022;261(1):69-73. doi:10.2460/javma.22.08.0389
+
+> Bomassi E, Misbach C, Tissier R, et al. Signalment, clinical features, echocardiographic findings, and outcome of dogs and cats with ventricular septal defects: 109 cases (1992-2013). J Am Vet Med Assoc. 2015;247(2):166-175. doi:10.2460/javma.247.2.166
+
+> Chetboul V, Pitsch I, Tissier R, et al. Epidemiological, clinical, and echocardiographic features and survival times of dogs and cats with tetralogy of Fallot: 31 cases (2003-2014). J Am Vet Med Assoc. 2016;249(8):909-917. doi:10.2460/javma.249.8.909
+
+> Phillips TF, Bleyaert HF. Retrospective evaluation of 103 cases of septic arthritis in dogs. Vet Rec. 2022;190(5):e938. doi:10.1002/vetr.938
+
+> Enomoto M, de Castro N, Hash J, et al. Prevalence of radiographic appendicular osteoarthritis and associated clinical signs in young dogs. Sci Rep. 2024;14(1):2827. doi:10.1038/s41598-024-52324-9
+
+> Wucherer KL, Conzemius MG, Evans R, Wilke VL. Short-term and long-term outcomes for overweight dogs with cranial cruciate ligament rupture treated surgically or nonsurgically. J Am Vet Med Assoc. 2013;242(10):1364-1372. doi:10.2460/javma.242.10.1364
+
+Notes:
+
+- **DIS-SPLEEN**: Schick 2022 is a systematic review (1,150 dogs) of the "double two-thirds rule"
+  the page leads with. Once a splenic mass has bled, malignancy is ~73% and HSA ~87% of those —
+  higher than the rule implies. The page keeps the rule and adds the refinement.
+- **DIS-CARD-TOF**: the counter-intuitive murmur finding (a quieter murmur means shorter survival,
+  3.4 vs 16.4 months) is now on the page.
+- **Resolver**: `Phillips` gained 2022 (Phillips TF, septic arthritis). The regression test now
+  covers every year-key split made in this pass.
+
+### Where the pass ends
+
+16 pages still cite no peer-reviewed paper:
+
+- **7 DIS-BD pages out of scope** by the owner's decision of 2026-10-06 (FII, HEMB, HEMC, FXII,
+  ICT, TCS, VASC).
+- **7 pages searched without success in earlier passes** (DIS-URO-BL-TRAUMA,
+  DIS-URO-RENAL-TRAUMA, DIS-URO-URETH-TRAUMA, DIS-INFECT-TOXO, DIS-ENV-BURN, DIS-NASAL-FB,
+  DIS-MET-HYPOGLY).
+- **DIS-DENT-ORONASAL**: searched in this pass; only case reports exist.
+- **DIS-BD-VASCLH**: deliberately not cited — the syndrome itself could not be found in the
+  literature (see the immune-mediated batch notes).
