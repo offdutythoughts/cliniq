@@ -483,6 +483,12 @@ const SYNONYM_GROUPS: string[][] = [
   ['joint swelling', 'arthritis', 'swollen joints', 'painful joints'],
   ['muscle wasting', 'atrophy', 'muscle loss', 'muscle atrophy'],
   ['stiff', 'stiffness', 'reluctant to move', 'difficulty rising', 'trouble getting up'],
+  // How case notes phrase an abnormal stiff gait — none of these but the first
+  // reached the pages that say "stiff gait" (hypoparathyroidism's tetany among
+  // them). Kept apart from bare "stiff" above, which also hits "muscle
+  // stiffness" and would credit every myopathy with explaining the gait.
+  ['stiff gait', 'stiff hindlimb gait', 'stiff hind limb gait', 'stilted gait', 'stiff hindlimbs',
+    'hindlimb stiffness', 'hindlimb gait abnormality', 'hind limb gait abnormality'],
 
   // ── Ophthalmic signs ─────────────────────────────────────────────────────
   ['red eye', 'conjunctivitis', 'conjunctival hyperemia', 'bloodshot eye', 'inflamed eye'],

@@ -339,6 +339,20 @@ describe('problem-list tiers', () => {
     }
   })
 
+  it('reads the gait however the notes phrase it', () => {
+    // Live extractions wrote the gait three ways; only "stiff gait" used to
+    // reach the hypoparathyroidism page, and it fell to 2nd behind rhabdomyolysis.
+    for (const gait of ['stiff gait', 'hindlimb gait abnormality', 'stiff hindlimb gait']) {
+      const swap = (ts: string[]) => ts.map(t => (t === 'stiff gait' ? gait : t))
+      const over = {
+        ...AIREDALE,
+        signKeywords: swap(AIREDALE.signKeywords!),
+        termTiers: { ...AIREDALE_TIERS, key: swap(AIREDALE_TIERS!.key!) },
+      }
+      expect(rankOf('DIS-ENDO-HYPOPTH', over)).toBe(1)
+    }
+  })
+
   it('changes nothing when no tiers are given', () => {
     const plain = ranked(FELINE_DM).map(r => [r.disease.id, r.score])
     const empty = ranked({ ...FELINE_DM, termTiers: {} }).map(r => [r.disease.id, r.score])
