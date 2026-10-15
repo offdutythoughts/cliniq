@@ -24,6 +24,17 @@ export interface SearchInputs {
   neuter?: NeuterFilter
   signKeywords: string[]   // e.g. ['vomiting', 'weight loss', 'PU/PD']
   diagKeywords: string[]   // e.g. ['elevated ALP', 'thrombocytopenia', 'hypoechoic liver']
+  /** Problem-list tiers over the keywords above (Case Triage's problem list).
+   *  `key` terms weigh more, `secondary` terms far less (and cannot put a page
+   *  on the list alone), anything else is a supporting finding at normal
+   *  weight. Each `patterns` entry is a set of keywords read as one problem:
+   *  its terms count as key, and a page matching all of them scores a bonus.
+   *  Absent ⇒ every keyword weighs the same, as in Mix & Match. */
+  termTiers?: {
+    key?: string[]
+    secondary?: string[]
+    patterns?: string[][]
+  }
 }
 
 export interface DiseaseResult {
@@ -40,10 +51,19 @@ export interface DiseaseResult {
     sex: number
     signs: number
     diag: number
+    /** Bonus for matching every component of a problem-list pattern. */
+    pattern: number
+    /** Share of the key problems this page explains, 0–1 (1 when there is no
+     *  problem list). `signs`, `diag` and `pattern` are scaled by
+     *  1 − KEY_COVERAGE_PENALTY × (1 − keyCoverage) before they count. */
+    keyCoverage: number
   }
   matchedSignTerms: string[]
   matchedDiagTerms: string[]
   category: string
+  /** Why this page is unlikely for the patient's sex/neuter status, when it
+   *  is possible only in an unusual circumstance (see SEX_ORGAN_RULES). */
+  signalmentNote?: string
 }
 
 // ── Age keywords (permissive — absent age = match) ────────────────────────────
@@ -67,25 +87,71 @@ const NO_PRED = /^no\s+(strong\s+)?breed\s+pred|^no\s+breed\s+specific|^any\s+br
 
 function countNamedBreeds(breedField: string): number {
   if (NO_PRED.test(breedField.trim())) return 0
-  // Split on commas, semicolons, slashes, em-dashes used as separators
-  const parts = breedField.split(/[,;\/]|(?:\s+and\s+)|\s+—\s+/)
+  // Split on commas, semicolons, slashes, em-dashes used as separators, after
+  // dropping parenthesised citations — "Australia/NZ (Ettinger Ch 284)" used to
+  // count "NZ (Ettinger Ch 284)" as a breed, and "(Ettinger Ch 313/331)" "331)".
+  const parts = breedField
+    .replace(/\([^)]*\b(Ch|\d{4})\b[^)]*\)/g, '')
+    .split(/[,;\/]|(?:\s+and\s+)|\s+—\s+/)
   // Filter out generic phrases
   const generic = /large|giant|small|medium|brachycephalic|any|all\s+breed|no\s+pred|chondrodystrophic|sighthound|overrepresented|predisposed|most|highest|common/i
   return parts.filter(p => p.trim().length > 2 && !generic.test(p)).length
+}
+
+// ── Breed groups ──────────────────────────────────────────────────────────────
+// Many breed fields name a GROUP rather than a breed — "Miniature Schnauzers,
+// Poodles, German Shepherd Dogs, Terriers" on hypoparathyroidism — and a plain
+// substring test gives "Airedale Terrier" no credit from "Terriers".
+//
+// A group counts only where it stands BARE in the field: at the start of a list
+// item, or after "other"/"several"/"the". "Jack Russell terriers" and "Labrador
+// and Golden Retrievers" are specific breeds in the plural and must not hand
+// every terrier or retriever the credit. Each group then says which queries
+// belong to it — usually the group word itself, plus the colloquial members a
+// clinician actually types ("Westie", "Lab", "Greyhound").
+//
+// A group match is worth half a named-breed match: the predisposition is real
+// but spread across the group, so it says less about this one breed.
+
+const BREED_GROUPS: { field: string; query: RegExp }[] = [
+  { field: 'terriers?',    query: /\bterriers?\b|\b(westie|yorkie|staff(y|ie)|jrt)\b/ },
+  { field: 'retrievers?',  query: /\bretrievers?\b|\blabrador\b|\blab\b/ },
+  { field: 'spaniels?',    query: /\bspaniels?\b|\bckcs\b|\bcavalier\b/ },
+  { field: 'setters?',     query: /\bsetters?\b/ },
+  { field: 'pointers?',    query: /\bpointers?\b/ },
+  { field: 'collies?',     query: /\bcollies?\b/ },
+  { field: 'schnauzers?',  query: /\bschnauzers?\b/ },
+  { field: 'poodles?',     query: /\bpoodles?\b/ },
+  { field: 'bulldogs?',    query: /\bbulldogs?\b|\bfrenchie\b/ },
+  { field: 'sheepdogs?',   query: /\bsheepdogs?\b|\bsheltie\b/ },
+  { field: 'shepherds?',   query: /\bshepherds?\b|\bgsd\b/ },
+  { field: 'hounds',       query: /hounds?\b|\bbeagle\b/ },
+  { field: 'sighthounds?', query: /\b(greyhound|whippet|saluki|borzoi|deerhound|wolfhound|afghan|sloughi|galgo|lurcher|azawakh)\b/ },
+]
+
+const bareGroupRx = (group: string) =>
+  new RegExp(`(^|[,;|(:/]\\s*|\\b(other|several|the)\\s+)${group}\\b`, 'i')
+const BARE_GROUP_RX = BREED_GROUPS.map(g => ({ bare: bareGroupRx(g.field), query: g.query }))
+
+function matchesBreedGroup(field: string, q: string): boolean {
+  return BARE_GROUP_RX.some(g => g.query.test(q) && g.bare.test(field))
 }
 
 function breedScore(breedField: string | undefined, query: string): number {
   if (!breedField || !query.trim()) return 0
   const q = query.trim().toLowerCase()
   const field = breedField.toLowerCase()
-  if (!field.includes(q)) return 0
+  const named = field.includes(q)
+  if (!named && !matchesBreedGroup(field, q)) return 0
 
   const n = countNamedBreeds(breedField)
-  if (n === 0) return 0
-  if (n <= 2) return 4   // high specificity — e.g. Maine Coon for HCM
-  if (n <= 4) return 2
-  if (n <= 7) return 1
-  return 0               // 8+ named breeds → not meaningfully predictive
+  let s: number
+  if (n === 0) s = 0
+  else if (n <= 2) s = 4   // high specificity — e.g. Maine Coon for HCM
+  else if (n <= 4) s = 2
+  else if (n <= 7) s = 1
+  else s = 0               // 8+ named breeds → not meaningfully predictive
+  return named ? s : Math.ceil(s / 2)
 }
 
 // ── Category normalisation (mirrors engine.ts) ───────────────────────────────
@@ -211,6 +277,15 @@ const SYNONYM_GROUPS: string[][] = [
   // ── Respiratory signs ─────────────────────────────────────────────────────
   ['difficulty breathing', 'dyspnea', 'dyspnoea', 'respiratory distress', 'laboured breathing', 'labored breathing', 'shortness of breath', 'breathlessness', 'open mouth breathing'],
   ['coughing', 'cough', 'chronic cough', 'productive cough'],
+  // Separate from the group above: "dry"/"unproductive" is a clinically
+  // meaningful qualifier (airway irritation, cardiac/mediastinal compression,
+  // early parasitic disease vs. an exudative/infectious productive cough), so
+  // extracting it as its own keyword must still find pages phrased either way.
+  // Terms drawn from how disease_page entries actually phrase it (DIS-RESP-
+  // TRACOLL's "goose-honk cough", DIS-RESP-CIRD's "harsh/honking cough",
+  // DIS-RESP-BRONCHITIS's "often dry/harsh") — "hacking"/"non-productive"
+  // alone matched none of the corpus and were silently inert.
+  ['dry cough', 'non-productive cough', 'nonproductive cough', 'unproductive cough', 'harsh cough', 'honking cough', 'goose-honk cough', 'goose honk cough'],
   ['noisy breathing', 'stertor', 'stridor', 'snoring', 'stertor/stridor'],
   ['nasal discharge', 'runny nose', 'rhinorrhea', 'rhinorrhoea', 'nasal drip'],
   ['sneezing', 'reverse sneeze', 'reverse sneezing'],
@@ -448,6 +523,72 @@ const NEUTER_KEYWORDS: Record<NeuterFilter, RegExp> = {
   neutered: /neuter|spay|castrat|desex/i,
 }
 
+// ── Sex-organ plausibility ────────────────────────────────────────────────────
+// Sex and neuter status above are only a bonus, so on their own they never stop
+// a page the patient cannot have: prostatitis used to rank for a spayed bitch.
+// This table is the hard filter, keyed by page id because the `sex` field is
+// prose ("Entire (intact) male dogs; extremely rare in cats") and parsing it for
+// an exclusion would be one rewording away from silently failing open.
+//
+// Two strengths, matching how certain the biology is:
+//   `requires` — the organ only exists in that sex. Hard exclude otherwise.
+//   a note     — possible but needs an unusual circumstance. The page stays on
+//                the list (evidence still decides inclusion), its ranking score
+//                is cut by NOTE_FACTOR, and the note says why, so the clinician
+//                sees a stump pyometra candidate as exactly that.
+//
+// Calls deliberately NOT made:
+//   • Mammary tumours are not excluded for males — male dogs and cats have
+//     mammary tissue and do get them, rarely.
+//   • Prostatitis and prostatic carcinoma are not touched by castration — the
+//     prostate is atrophied, not removed, and carcinoma is MORE common in
+//     castrated dogs (Ettinger Ch 314).
+//   • Pyometra in a spayed female is a note, not an exclusion: stump pyometra
+//     needs an ovarian remnant, and the page describes the entire-female form.
+//
+// No page exists yet for testicular, ovarian or uterine neoplasia, eclampsia or
+// dystocia. When one is added it must be classified here — the guard test in
+// diseaseSearch.test.ts fails on any reproductive-organ page missing from this
+// table (or from its NO_SEX_RULE allowlist).
+export interface SexOrganRule {
+  /** The organ exists only in this sex — any other recorded sex is excluded. */
+  requires?: SexFilter
+  /** The patient is neutered: possible only in an unusual circumstance. */
+  neuteredNote?: string
+  /** The patient is male: possible but rare. */
+  maleNote?: string
+}
+
+export const SEX_ORGAN_RULES: Record<string, SexOrganRule> = {
+  'DIS-REPRO-PYO': {
+    requires: 'female',
+    neuteredNote: 'Spayed — only as stump pyometra, which needs an ovarian remnant',
+  },
+  'DIS-URO-PROSTATITIS': { requires: 'male' },
+  'DIS-URO-PROST-NEO': { requires: 'male' },
+  'DIS-URO-BPH': {
+    requires: 'male',
+    neuteredNote: 'Castrated — BPH is androgen-dependent and regresses within 7–14 d of castration',
+  },
+  'DIS-NEO-MGT': { maleNote: 'Male — mammary tumours occur but are rare' },
+}
+
+/** Ranking multiplier for a page that carries a signalment note. */
+const NOTE_FACTOR = 0.25
+
+/**
+ * `null` when the page is impossible for this signalment; otherwise the
+ * caveat (if any) that applies. Unknown sex or neuter status never excludes.
+ */
+function sexPlausibility(id: string, sex?: SexFilter, neuter?: NeuterFilter): { note?: string } | null {
+  const rule = SEX_ORGAN_RULES[id]
+  if (!rule) return {}
+  if (rule.requires && sex && sex !== rule.requires) return null
+  if (neuter === 'neutered' && rule.neuteredNote) return { note: rule.neuteredNote }
+  if (sex === 'male' && rule.maleNote) return { note: rule.maleNote }
+  return {}
+}
+
 // ── Public API ────────────────────────────────────────────────────────────────
 
 export interface SearchCategory {
@@ -581,6 +722,25 @@ export function suggestSignTerms(
 /** Smallest weight any matched term can carry — see the IDF note in searchDiseases. */
 const IDF_FLOOR = 0.5
 
+// ── Problem-list tiers (see SearchInputs.termTiers) ──
+// Multipliers on a term's IDF weight. A key problem is what the diagnosis has
+// to explain; a secondary finding is most likely a consequence of one (CK
+// after seizures), so it says little about the cause and must not outvote the
+// problems — on the motivating case, a mild CK and a 6.1 mmol/L glucose ranked
+// rhabdomyolysis and diabetes above the hypocalcaemia + hyperphosphataemia
+// that pointed at hypoparathyroidism.
+const KEY_WEIGHT = 2
+const SECONDARY_WEIGHT = 0.25
+/** A page matching every component of a pattern earns this share of those
+ *  components' weight again — the combination is the clue, not each part. */
+const PATTERN_BONUS = 0.5
+/** Share of a page's keyword score lost when it explains NONE of the key
+ *  problems; scales linearly to nothing lost when it explains them all. Two
+ *  pages can match the same lab pattern (rhabdomyolysis and
+ *  hypoparathyroidism both list hypocalcaemia + hyperphosphataemia) — the
+ *  one that also explains the stiff gait is the better diagnosis. */
+const KEY_COVERAGE_PENALTY = 0.5
+
 const round1 = (n: number) => Math.round(n * 10) / 10
 
 /**
@@ -596,6 +756,93 @@ export function topDifferentials(groups: SearchCategory[], n = 5): DiseaseResult
     .flatMap(g => g.items)
     .sort((a, b) => b.score - a.score || (a.disease.name as string).localeCompare(b.disease.name as string))
     .slice(0, n)
+}
+
+/**
+ * Like `topDifferentials`, but reserves part of the list for breadth across
+ * aetiology categories instead of a pure global top-N by score.
+ *
+ * A pure score cutoff lets one dominant mechanism (e.g. several structural GI
+ * causes of haematemesis, all scoring high on the same specific signs) fill
+ * every slot and crowd out a real but less-specific-scoring differential from
+ * another category — a toxic, infectious or parasitic cause that fits the
+ * history just as legitimately but only matches on commoner, lower-weighted
+ * terms. Four passes:
+ *
+ *   1. The top `guaranteedTop` candidates by pure score, regardless of
+ *      category — the best-evidenced differentials are never bumped by the
+ *      breadth pass, so a well-supported common cause can't be pushed out by
+ *      a weakly-matched rare one.
+ *   2. A "near-tie companion" for each category a step 1 pick already
+ *      landed in: its own next-best, not-yet-picked item, but ONLY if that
+ *      item scores within `closeRatio` of the category's best picked score
+ *      (one companion per category). Two genuinely close-scoring but
+ *      clinically distinct differentials sharing a broad category — e.g. two
+ *      different rodenticide classes both filed under "Toxic," each needing
+ *      its own confirmatory test — are co-equal evidence, not a winner and a
+ *      loser, and the single-seat-per-category rule below would otherwise
+ *      silently drop whichever one scored a fraction lower.
+ *   3. One further candidate (its own best-scoring, not yet picked) from
+ *      every OTHER category that has any match at all, strongest category
+ *      first — "expand to the less likely differentials" instead of only the
+ *      single most obvious reading of the case.
+ *   4. Any slots still unfilled, by pure score among what's left.
+ *
+ * The final list is re-sorted by score (so `buildCaseLanes`, which derives
+ * category display order from each category's best-ranked member, still
+ * shows the likeliest category first); diversity changes WHICH candidates are
+ * included, not their display order.
+ */
+export function diverseDifferentials(
+  groups: SearchCategory[],
+  n = 8,
+  guaranteedTop = Math.ceil(n / 2),
+  closeRatio = 0.8,
+): DiseaseResult[] {
+  const byScore = (a: DiseaseResult, b: DiseaseResult) =>
+    b.score - a.score || (a.disease.name as string).localeCompare(b.disease.name as string)
+  const all = groups.flatMap(g => g.items).sort(byScore)
+
+  const picked: DiseaseResult[] = []
+  const pickedIds = new Set<string>()
+  const take = (item: DiseaseResult) => { picked.push(item); pickedIds.add(item.disease.id as string) }
+
+  for (const item of all) {
+    if (picked.length >= Math.min(guaranteedTop, n)) break
+    take(item)
+  }
+
+  // Near-tie companions: evaluated against step 1's picks only (not chained
+  // through companions already added this pass), then added strongest-first
+  // so a tight scramble for the last slot still favours the closest ties.
+  const companions = groups
+    .map(g => {
+      const bestPicked = picked.find(p => p.category === g.name)
+      if (!bestPicked) return null
+      return g.items.find(it => !pickedIds.has(it.disease.id) && it.score >= bestPicked.score * closeRatio) ?? null
+    })
+    .filter((c): c is DiseaseResult => c !== null)
+    .sort(byScore)
+  for (const c of companions) {
+    if (picked.length >= n) break
+    take(c)
+  }
+
+  const representedCats = new Set(picked.map(p => p.category))
+  for (const g of [...groups].sort((a, b) => (b.items[0]?.score ?? 0) - (a.items[0]?.score ?? 0))) {
+    if (picked.length >= n) break
+    if (representedCats.has(g.name)) continue
+    const next = g.items.find(it => !pickedIds.has(it.disease.id))
+    if (next) { take(next); representedCats.add(g.name) }
+  }
+
+  for (const item of all) {
+    if (picked.length >= n) break
+    if (pickedIds.has(item.disease.id as string)) continue
+    take(item)
+  }
+
+  return picked.sort(byScore)
 }
 
 export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
@@ -619,6 +866,7 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
 
   for (const d of DB.disease_page) {
     if (!coversSpecies(d, species)) continue // hard exclude
+    if (!sexPlausibility(d.id as string, sex, neuter)) continue // hard exclude
 
     const signHits = keywordHits(fieldText(d, ...SIGN_FIELDS), signKeywords)
     const diagHits = keywordHits(fieldText(d, ...DIAG_FIELDS), diagKeywords)
@@ -639,8 +887,20 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
   // zero or negative) worth a token amount rather than silently free.
   const N = candidates.length
   const idf = (df: number) => Math.max(IDF_FLOOR, Math.log(N / (1 + df)))
+  // Problem-list tiers: a pattern's components count as key problems.
+  const tierKey = (t: string) => t.trim().toLowerCase()
+  const patterns = (inputs.termTiers?.patterns ?? [])
+    .map(p => [...new Set(p.map(tierKey))])
+    .filter(p => p.length >= 2)
+  const keyTerms = new Set([...(inputs.termTiers?.key ?? []).map(tierKey), ...patterns.flat()])
+  const secondaryTerms = new Set((inputs.termTiers?.secondary ?? []).map(tierKey).filter(t => !keyTerms.has(t)))
+  const patternTerms = new Set(patterns.flat())
+  const keyProblemCount = [...keyTerms].filter(t => !patternTerms.has(t)).length + patterns.length
+  const tierWeight = (t: string) =>
+    keyTerms.has(tierKey(t)) ? KEY_WEIGHT : secondaryTerms.has(tierKey(t)) ? SECONDARY_WEIGHT : 1
+
   const weigh = (terms: string[], df: Map<string, number>) =>
-    terms.reduce((sum, t) => sum + idf(df.get(t) ?? 0), 0)
+    terms.reduce((sum, t) => sum + idf(df.get(t) ?? 0) * tierWeight(t), 0)
 
   const results: DiseaseResult[] = []
 
@@ -679,8 +939,36 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
     const matchedDiagTerms = diagHits
     const diagScore = weigh(matchedDiagTerms, diagDf)
 
+    // ── Pattern bonus: every component of a pattern matched on this page ──
+    // A component may sit in either keyword list; it is weighed by whichever
+    // list(s) it hit in, exactly as above.
+    const contribution = new Map<string, number>()
+    const addContribution = (terms: string[], df: Map<string, number>) => {
+      for (const t of terms) {
+        const k = tierKey(t)
+        contribution.set(k, (contribution.get(k) ?? 0) + idf(df.get(t) ?? 0) * tierWeight(t))
+      }
+    }
+    addContribution(matchedSignTerms, signDf)
+    addContribution(matchedDiagTerms, diagDf)
+    let patternScore = 0
+    for (const p of patterns) {
+      if (p.every(t => contribution.has(t))) {
+        patternScore += PATTERN_BONUS * p.reduce((sum, t) => sum + contribution.get(t)!, 0)
+      }
+    }
+
+    // ── Key-problem coverage: how much of the problem list this page explains ──
+    // Each pattern is one problem (partly explained by a partial match); every
+    // other key term is one problem.
+    const coverage = keyProblemCount === 0 ? 1
+      : ([...keyTerms].filter(t => !patternTerms.has(t) && contribution.has(t)).length
+        + patterns.reduce((sum, p) => sum + p.filter(t => contribution.has(t)).length / p.length, 0))
+        / keyProblemCount
+    const coverageFactor = 1 - KEY_COVERAGE_PENALTY * (1 - coverage)
+
     // How well the history fits, before prevalence is considered at all.
-    const evidence = bScore + aScore + sxScore + signScore + diagScore
+    const evidence = bScore + aScore + sxScore + (signScore + diagScore + patternScore) * coverageFactor
 
     // Must have at least one keyword hit if keywords were provided,
     // or at least some signalment match if only signalment provided.
@@ -690,10 +978,15 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
     // rare disease that fits the history is always still on it.
     if (hasKeywords && matchedSignTerms.length === 0 && matchedDiagTerms.length === 0) continue
     if (!hasKeywords && evidence === 0) continue
+    // A secondary finding is explained by a key problem, so on its own it
+    // nominates nothing — CK after seizures must not list every myopathy.
+    if (secondaryTerms.size > 0
+      && [...matchedSignTerms, ...matchedDiagTerms].every(t => secondaryTerms.has(tierKey(t)))) continue
 
     // ── Species prevalence (ranking only) ──
     const prev = prevalenceFactor(d.id as string, species)
-    const score = round1(evidence * prev)
+    const signalmentNote = sexPlausibility(d.id as string, sex, neuter)?.note
+    const score = round1(evidence * prev * (signalmentNote ? NOTE_FACTOR : 1))
 
     const rawCat = (d['cat'] as string | undefined) ?? inferCat(d)
     results.push({
@@ -707,10 +1000,13 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
         sex: sxScore,
         signs: round1(signScore),
         diag: round1(diagScore),
+        pattern: round1(patternScore),
+        keyCoverage: Math.round(coverage * 100) / 100,
       },
       matchedSignTerms,
       matchedDiagTerms,
       category: normCat(rawCat),
+      ...(signalmentNote && { signalmentNote }),
     })
   }
 

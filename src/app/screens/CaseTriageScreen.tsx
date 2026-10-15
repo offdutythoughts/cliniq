@@ -17,23 +17,39 @@
 //      Differential, one row per differential grouped by category, each lane
 //      holding only the finding that separates it — rendered by CaseLaneChart.
 //
+// Abbreviations: the notes are scanned live against a vet-abbreviation
+// glossary (src/lib/caseTriage/vetAbbreviations.ts). Every abbreviation found
+// is sent with all its senses as a key appended to the notes; any the glossary
+// doesn't know — or the model reports it couldn't read — get a note under the
+// textarea asking the reader to write the full form, which then joins the key.
+//
 // The screen unmounts when the reader opens a differential, so the last result
 // (and scroll position) is kept in `lastResult` + sessionStorage and restored
 // on mount — going back lands on the same flowchart, not an empty form.
 
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useAction } from 'convex/react'
 import { ConvexError } from 'convex/values'
 import { api } from '../../../convex/_generated/api'
-import { searchDiseases, topDifferentials, type SearchInputs } from '../../lib/search/diseaseSearch'
+import type { ProblemList } from '../../../convex/caseAnalysis'
+import { searchDiseases, diverseDifferentials, type SearchInputs } from '../../lib/search/diseaseSearch'
 import { buildCaseLanes, type LaneChart } from '../../lib/caseTriage/buildLanes'
+import { abbreviationKey, abbreviationKeyBlock, scanAbbreviations } from '../../lib/caseTriage/vetAbbreviations'
 import { useNav } from '../nav/NavContext'
 import { CaseLaneChart } from './CaseLaneChart'
 import { DISCLAIMER } from './sharedBlocks'
 import { type Nav } from './flowHelpers'
 import { styleStringToObject as s } from './style'
 
-const MAX_CANDIDATES = 8
+// Keep in sync with convex/caseAnalysis.ts's own MAX_CANDIDATES (that one caps
+// the request/model side; this one decides how many rows the chart actually
+// shows — diverseDifferentials() reserves roughly half these slots for the
+// strongest-scoring candidates and the rest for breadth across aetiology
+// categories (plus near-tie companions within an already-represented
+// category), so a higher cap buys breadth and depth, not just a longer
+// top-N. 12 (not 10) gives the near-tie mechanism room without starving the
+// single-category breadth pass of its own slots.
+const MAX_CANDIDATES = 12
 
 type Stage = 'idle' | 'extracting' | 'synthesizing' | 'done' | 'error'
 
@@ -57,7 +73,16 @@ function caseTriageErrorMessage(e: unknown): string {
   return 'Something went wrong analyzing this case.'
 }
 
-type SavedResult = { caseText: string; flow: LaneChart | null; caseSummary: string; scrollTop: number }
+type SavedResult = {
+  caseText: string; flow: LaneChart | null; caseSummary: string; scrollTop: number
+  /** Abbreviations the model said it couldn't read on the last run. */
+  modelUnknowns?: string[]
+  /** The abbreviation key the last run was sent with — differs from the
+   *  current one once the reader fills in a full form, which prompts a re-run. */
+  lastKey?: string
+  /** The problem list the last run's search was weighted by. */
+  problemList?: ProblemList | null
+}
 
 // Bump the suffix whenever LaneChart's shape changes, so a stale saved result
 // is dropped instead of rendered against the new component.
@@ -75,6 +100,20 @@ function loadSaved(): SavedResult | null {
   return lastResult
 }
 
+// The reader's own full forms, remembered across cases on this device — a
+// clinic's in-house shorthand recurs. Per-viewer convenience only.
+const EXPANSIONS_KEY = 'cliniq.caseTriage.abbrev.v1'
+function loadExpansions(): Record<string, string> {
+  try {
+    const raw = localStorage.getItem(EXPANSIONS_KEY)
+    if (raw) return JSON.parse(raw) as Record<string, string>
+  } catch { /* storage unavailable or corrupt */ }
+  return {}
+}
+function saveExpansions(e: Record<string, string>) {
+  try { localStorage.setItem(EXPANSIONS_KEY, JSON.stringify(e)) } catch { /* not remembered, still used this session */ }
+}
+
 function save(r: SavedResult) {
   lastResult = r
   try { sessionStorage.setItem(STORAGE_KEY, JSON.stringify(r)) } catch { /* in-memory copy still serves back-nav */ }
@@ -90,6 +129,14 @@ const BUTTON_STYLE = (disabled: boolean) => s(
   + `cursor:${disabled ? 'default' : 'pointer'};opacity:${disabled ? 0.5 : 1};`
   + `background:var(--teal);color:var(--navy);`,
 )
+const ABBR_NOTE_STYLE = s(
+  'margin-top:10px;padding:10px 12px;border-radius:9px;background:rgba(var(--amber-rgb),var(--panel-bg-a));'
+  + 'border:1px solid rgba(var(--amber-rgb),var(--panel-bd-a));color:var(--amber-text);font-size:var(--fs-body);line-height:1.5;',
+)
+const ABBR_INPUT_STYLE = s(
+  'flex:1;min-width:0;padding:5px 8px;border-radius:7px;border:1px solid var(--border);background:var(--navy3);'
+  + 'color:var(--white);font-size:var(--fs-body);font-family:inherit;outline:none;',
+)
 
 export function CaseTriageScreen() {
   const router = useNav()
@@ -103,13 +150,43 @@ export function CaseTriageScreen() {
   const [error, setError] = useState<string | null>(null)
   const [flow, setFlow] = useState<LaneChart | null>(saved?.flow ?? null)
   const [caseSummary, setCaseSummary] = useState(saved?.caseSummary ?? '')
+  const [modelUnknowns, setModelUnknowns] = useState<string[]>(saved?.modelUnknowns ?? [])
+  const [lastKey, setLastKey] = useState(saved?.lastKey ?? '')
+  const [problemList, setProblemList] = useState<ProblemList | null>(saved?.problemList ?? null)
+  const [expansions, setExpansions] = useState<Record<string, string>>(loadExpansions)
   const rootRef = useRef<HTMLDivElement>(null)
 
   // Persist on every change; capture the scroll position on unmount (i.e. when
   // a differential is opened) so back-nav returns to the same spot.
   useEffect(() => {
-    save({ caseText, flow, caseSummary, scrollTop: lastResult?.scrollTop ?? 0 })
-  }, [caseText, flow, caseSummary])
+    save({ caseText, flow, caseSummary, modelUnknowns, lastKey, problemList, scrollTop: lastResult?.scrollTop ?? 0 })
+  }, [caseText, flow, caseSummary, modelUnknowns, lastKey, problemList])
+
+  // Glossary scan, plus whatever the model couldn't read last run (while it's
+  // still in the notes and the glossary still doesn't know it).
+  const scan = useMemo(() => {
+    const base = scanAbbreviations(caseText)
+    const seen = new Set([...base.known.map(k => abbreviationKey(k.abbr)), ...base.unknown.map(abbreviationKey)])
+    const extra = modelUnknowns.filter(a => {
+      const k = abbreviationKey(a)
+      if (seen.has(k) || !caseText.includes(a)) return false
+      seen.add(k)
+      return true
+    })
+    return { known: base.known, unknown: [...base.unknown, ...extra] }
+  }, [caseText, modelUnknowns])
+  const keyBlock = abbreviationKeyBlock(scan, expansions)
+  const keyChanged = flow !== null && keyBlock !== lastKey
+
+  function setExpansion(abbr: string, full: string) {
+    setExpansions(prev => {
+      const next = { ...prev }
+      if (full.trim()) next[abbreviationKey(abbr)] = full
+      else delete next[abbreviationKey(abbr)]
+      saveExpansions(next)
+      return next
+    })
+  }
   // Restore in a plain effect: it runs after AppShell's layout-effect reset to
   // the top. Capture in a LAYOUT cleanup: on navigation that runs before the
   // reset, so it still sees where the reader was.
@@ -125,12 +202,14 @@ export function CaseTriageScreen() {
   const busy = stage === 'extracting' || stage === 'synthesizing'
 
   async function analyze() {
-    const text = caseText.trim()
-    if (!text || busy) return
+    if (!caseText.trim() || busy) return
+    const text = caseText.trim() + keyBlock
+    setLastKey(keyBlock)
     setStage('extracting')
     setError(null)
     setFlow(null)
     setCaseSummary('')
+    setProblemList(null)
     try {
       const signals = await extractSignals({ caseText: text })
       const inputs: SearchInputs = {
@@ -141,10 +220,17 @@ export function CaseTriageScreen() {
         neuter: signals.neuter,
         signKeywords: signals.signKeywords,
         diagKeywords: signals.diagKeywords,
+        termTiers: signals.problemList && {
+          key: signals.problemList.key,
+          secondary: signals.problemList.secondary.map(x => x.term),
+          patterns: signals.problemList.patterns.map(p => p.terms),
+        },
       }
       const categories = searchDiseases(inputs)
-      const top = topDifferentials(categories, MAX_CANDIDATES)
+      const top = diverseDifferentials(categories, MAX_CANDIDATES)
       setCaseSummary(signals.caseSummary)
+      setModelUnknowns(signals.unknownAbbreviations ?? [])
+      setProblemList(signals.problemList ?? null)
 
       if (top.length === 0) {
         setFlow(buildCaseLanes([], { rationales: [], historyQuestions: [], diagnostics: [] }))
@@ -189,8 +275,41 @@ export function CaseTriageScreen() {
         disabled={busy}
       />
       <button type="button" style={BUTTON_STYLE(busy || !caseText.trim())} onClick={analyze} disabled={busy || !caseText.trim()}>
-        {busy ? STAGE_LABEL[stage] : 'Analyze case'}
+        {busy ? STAGE_LABEL[stage] : keyChanged ? 'Re-analyze case' : 'Analyze case'}
       </button>
+
+      {scan.unknown.length > 0 && (
+        <div style={ABBR_NOTE_STYLE}>
+          <div style={s('font-weight:700;margin-bottom:6px;')}>
+            Unrecognised abbreviation{scan.unknown.length > 1 ? 's' : ''} — write the full form so the case is read correctly:
+          </div>
+          {scan.unknown.map(a => (
+            <label key={a} style={s('display:flex;align-items:center;gap:8px;margin-top:4px;')}>
+              <code style={s('min-width:56px;font-weight:700;')}>{a}</code>
+              <input
+                style={ABBR_INPUT_STYLE}
+                placeholder="Full form"
+                value={expansions[abbreviationKey(a)] ?? ''}
+                onChange={e => setExpansion(a, e.target.value)}
+              />
+            </label>
+          ))}
+          <div style={s('margin-top:6px;color:var(--gray2);')}>
+            Left blank, it&apos;s ignored rather than guessed.{keyChanged ? ' Re-analyze to use your full forms.' : ''}
+          </div>
+        </div>
+      )}
+
+      {scan.known.length > 0 && (
+        <details style={s('margin-top:8px;font-size:var(--fs-body);color:var(--gray2);line-height:1.5;')}>
+          <summary style={s('cursor:pointer;')}>Abbreviations read as ({scan.known.length})</summary>
+          <ul style={s('margin:4px 0 0;padding-left:18px;')}>
+            {scan.known.map(k => (
+              <li key={k.abbr}><strong style={s('color:var(--gray);')}>{k.abbr}</strong> — {k.senses.join(' / ')}</li>
+            ))}
+          </ul>
+        </details>
+      )}
 
       {error && (
         <div style={s('margin-top:12px;padding:10px 12px;border-radius:9px;background:rgba(var(--tone-danger),0.12);border:1px solid rgba(var(--tone-danger),0.4);color:var(--tone-danger-fg);font-size:var(--fs-subhead);line-height:1.5;')}>
@@ -205,6 +324,7 @@ export function CaseTriageScreen() {
               <span style={s('font-weight:700;color:var(--gray);')}>Parsed as: </span>{caseSummary}
             </div>
           )}
+          {problemList && <ProblemListPanel list={problemList} />}
           {flow.rows.length === 0 ? (
             <div style={s('padding:10px 12px;border-radius:9px;background:rgba(var(--tone-info),0.12);border:1px solid rgba(var(--tone-info),0.4);color:var(--tone-info-fg);font-size:var(--fs-subhead);line-height:1.5;')}>
               <strong>No matching differentials found.</strong> Try adding more clinical detail — species, breed, age, and specific signs all sharpen the match.
@@ -215,6 +335,34 @@ export function CaseTriageScreen() {
               {DISCLAIMER}
             </>
           )}
+        </div>
+      )}
+    </div>
+  )
+}
+
+const PANEL_STYLE = s(
+  'margin-bottom:12px;padding:9px 12px;border-radius:9px;background:var(--card);border:1px solid var(--border);'
+  + 'color:var(--gray2);font-size:var(--fs-body);line-height:1.5;',
+)
+
+/** What the search was weighted by — shown so the reader can see (and
+ *  disagree with) which findings were read as the problems and which as
+ *  consequences of them. Supporting findings aren't listed: they are simply
+ *  everything else that was extracted. */
+function ProblemListPanel({ list }: { list: ProblemList }) {
+  if (list.key.length + list.patterns.length + list.secondary.length === 0) return null
+  const label = (t: string) => <span style={s('font-weight:700;color:var(--gray);')}>{t}: </span>
+  return (
+    <div style={PANEL_STYLE}>
+      {list.key.length > 0 && <div>{label('Key problems')}{list.key.join(' · ')}</div>}
+      {list.patterns.length > 0 && (
+        <div>{label('Patterns')}{list.patterns.map(p => `${p.name} (${p.terms.join(' + ')})`).join(' · ')}</div>
+      )}
+      {list.secondary.length > 0 && (
+        <div>
+          {label('Likely secondary, weighted down')}
+          {list.secondary.map(x => (x.explainedBy ? `${x.term} (← ${x.explainedBy})` : x.term)).join(' · ')}
         </div>
       )}
     </div>
