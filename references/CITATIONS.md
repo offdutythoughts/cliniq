@@ -6765,3 +6765,29 @@ Notes:
 - **DIS-URO-PROST-NEO**'s "NSAIDs significantly prolong survival" now carries its basis:
   retrospective, 6.9 vs 0.7 months.
 - **Resolver**: `Garcia` is year-keyed (2017 feline GER / 2026 ocular pathology).
+
+## Dental and oral batch (2026-10-15)
+
+**36 → 32.** Four of the five textbook-only `DIS-DENT-*` pages now cite papers.
+
+> Girard N, Servet E, Biourge V, Hennet P. Feline tooth resorption in a colony of 109 cats. J Vet Dent. 2008;25(3):166-174. doi:10.1177/089875640802500302
+
+> Doran IP, Wright CA, Moore AH. Acute oropharyngeal and esophageal stick injury in forty-one dogs. Vet Surg. 2008;37(8):781-785. doi:10.1111/j.1532-950X.2008.00448.x
+
+> Kilduff-Taylor A, Baines SJ. Endoscopic treatment of acute oropharyngeal stick injuries in dogs: 46 cases (2010-2020). J Small Anim Pract. 2023;64(10):635-641. doi:10.1111/jsap.13642
+
+> Castejón-González AC, Stefanovski D, Reiter AM. Etiology and patterns of mandibular fractures in cats. Front Vet Sci. 2025;12:1613902. doi:10.3389/fvets.2025.1613902
+
+> Wang AL, Ledbetter EC, Kern TJ. Orbital abscess bacterial isolates and in vitro antimicrobial susceptibility patterns in dogs and cats. Vet Ophthalmol. 2009;12(2):91-96. doi:10.1111/j.1463-5224.2008.00687.x
+
+Notes:
+
+- **DIS-DENT-TR said "No breed predisposition reported".** Girard 2008 found 70% prevalence in
+  pure-bred cats vs 38% in mixed-breed cats, and the breed field now says so.
+- **DIS-DENT-ORONASAL — searched, nothing usable.** PubMed and Europe PMC searches for oronasal
+  fistula (title; and with maxillary canine/extraction/periodontal terms) returned only single
+  case reports and one experimental model. Like the earlier failures, it needs hand-chasing of
+  textbook-cited primary sources.
+- **DIS-DENT-JAWFX**: the feline series covered fractures at or caudal to the canine and
+  excluded the symphysis. The page says so, because symphyseal separation is the feline lesion
+  it emphasises.
