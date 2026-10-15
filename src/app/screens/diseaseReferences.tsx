@@ -330,6 +330,8 @@ const DORAN_STICK =
   'Doran IP, Wright CA, Moore AH. Acute oropharyngeal and esophageal stick injury in forty-one dogs. Vet Surg. 2008;37(8):781-785. doi:10.1111/j.1532-950X.2008.00448.x'
 const KILDUFF_STICK =
   'Kilduff-Taylor A, Baines SJ. Endoscopic treatment of acute oropharyngeal stick injuries in dogs: 46 cases (2010-2020). J Small Anim Pract. 2023;64(10):635-641. doi:10.1111/jsap.13642'
+const CASTEJON_CLEFT_PALATE =
+  'Castejón-González AC, Reiter AM. Surgical treatment for cleft palate in dogs yields excellent outcomes despite high rates of oronasal fistula formation: a narrative review. J Am Vet Med Assoc. 2023;261(S2):S34-S43. doi:10.2460/javma.23.06.0330'
 const CASTEJON_MANDIBLE =
   'Castejón-González AC, Stefanovski D, Reiter AM. Etiology and patterns of mandibular fractures in cats. Front Vet Sci. 2025;12:1613902. doi:10.3389/fvets.2025.1613902'
 const WANG_ORBITAL_ABSCESS =
@@ -390,6 +392,38 @@ const NICHOLS_VASCULITIS =
   'Nichols PR, Morris DO, Beale KM. A retrospective study of canine and feline cutaneous vasculitis. Vet Dermatol. 2001;12(5):255-264. doi:10.1046/j.0959-4493.2001.00268.x'
 const COLOMBO_ETUD =
   'Colombo S, Cornegliani L, Vercelli A, Fondati A. Ear tip ulcerative dermatitis treated with oclacitinib in 25 dogs: a retrospective case series. Vet Dermatol. 2021;32(4):363-e100. doi:10.1111/vde.12992'
+const GRIMES_UROABDOMEN =
+  'Grimes JA, Fletcher JM, Schmiedt CW. Outcomes in dogs with uroabdomen: 43 cases (2006-2015). J Am Vet Med Assoc. 2018;252(1):92-97. doi:10.2460/javma.252.1.92'
+const AUMANN_UROPERITONEUM_CATS =
+  'Aumann M, Worth LT, Drobatz KJ. Uroperitoneum in cats: 26 cases (1986-1995). J Am Anim Hosp Assoc. 1998;34(4):315-324. doi:10.5326/15473317-34-4-315'
+const PAES_UROPERITONEUM =
+  'Paes PRO, Alonso FH, Chaves NG, Andrade AM, Ceregatti MG, Horta RS. Laboratory diagnosis of canine uroperitoneum based on cellular and biochemical characteristics of serum and abdominal fluid. Vet Clin Pathol. 2022;51(1):107-111. doi:10.1111/vcp.13046'
+const GODART_LUT_RUPTURE =
+  'Godart B, Bonnel G, Bedu AS, Frippiat T, Leperlier DR. Lower urinary tract rupture in cats and dogs following severe blunt trauma. N Z Vet J. 2025;73(1):60-66. doi:10.1080/00480169.2024.2398020'
+const TOH_CONSERVATIVE_RUPTURE =
+  'Toh CSL, Rossanese M, Cook SD. Successful conservative management of urinary tract rupture in dogs and cats: 52 cases (2003-2024). J Small Anim Pract. 2025;66(10):732-738. doi:10.1111/jsap.13882'
+const CORGOZINHO_URETHRAL_TRAUMA =
+  'Corgozinho KB, de Souza HJ, Pereira AN, et al. Catheter-induced urethral trauma in cats with urethral obstruction. J Feline Med Surg. 2007;9(6):481-486. doi:10.1016/j.jfms.2007.09.002'
+const ESPENICA_NASAL_FB =
+  'Espenica SA, Pascual M, Shing H, Valls Sanchez F. Clinical, imaging and rhinoscopy findings of dogs and cats with nasal foreign bodies presenting to a UK referral hospital: 71 cases (2010-2022). J Small Anim Pract. 2025;66(2):100-109. doi:10.1111/jsap.13790'
+const DIAS_NASAL_FB =
+  'Dias MJ, Mouro S, Englar RE, Leal RO. Nasal foreign bodies identified by rhinoscopy in dogs: 42 cases. J Small Anim Pract. 2020;61(12):752-756. doi:10.1111/jsap.13220'
+const HAGLEY_ER_GLUCOSE =
+  'Hagley SP, Hopper K, Epstein SE. Etiology and prognosis for dogs with abnormal blood glucose concentrations evaluated in an emergency room. J Vet Emerg Crit Care (San Antonio). 2020;30(5):567-573. doi:10.1111/vec.12996'
+const DUHADWAY_XYLITOL =
+  'DuHadway MR, Sharp CR, Meyers KE, Koenigshof AM. Retrospective evaluation of xylitol ingestion in dogs: 192 cases (2007-2012). J Vet Emerg Crit Care (San Antonio). 2015;25(5):646-654. doi:10.1111/vec.12350'
+const FISHER_NEOSPORA =
+  'Fisher C, Seferidis N, Zilli J, Roberts T, Harcourt-Brown T. Insights into the clinical presentation, diagnostics and outcome in dogs presenting with neurological signs secondary to infection with Neospora caninum: 41 cases (2014-2023). J Small Anim Pract. 2024;65(7):582-588. doi:10.1111/jsap.13702'
+const DUBEY_TOXO_CATS =
+  'Dubey JP, Carpenter JL. Histologically confirmed clinical toxoplasmosis in cats: 100 cases (1952-1990). J Am Vet Med Assoc. 1993;203(11):1556-1566. doi:10.2460/javma.1993.203.11.1556'
+const VAUGHN_BURNS =
+  'Vaughn L, Beckel N, Walters P. Severe burn injury, burn shock, and smoke inhalation injury in small animals. Part 2: diagnosis, therapy, complications, and prognosis. J Vet Emerg Crit Care (San Antonio). 2012;22(2):187-200. doi:10.1111/j.1476-4431.2012.00728.x'
+const QUIST_HOSE_SCALD =
+  'Quist EM, Tanabe M, Mansell JE, Edwards JL. A case series of thermal scald injuries in dogs exposed to hot water from garden hoses (garden hose scalding syndrome). Vet Dermatol. 2012;23(2):162-166. doi:10.1111/j.1365-3164.2011.01015.x'
+const OGAWA_ONF_FLUORESCEIN =
+  'Ogawa M, Yamaki S, Yamashita M, et al. Detection of oronasal fistula using a fluorescent water passing test. J Vet Dent. 2025;42(4):255-260. doi:10.1177/08987564241292661'
+const LORRAIN_ONF_CARTILAGE =
+  'Lorrain RP, Legendre LF. Oronasal fistula repair using auricular cartilage. J Vet Dent. 2012;29(3):172-175. doi:10.1177/089875641202900306'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -1048,6 +1082,8 @@ const RIFFE_AP_ANTIBIOTICS =
 // Tracheal collapse. Weisse is 75 dogs and 119 stents, the largest endoluminal
 // stenting series, and is the source of both the survival figure and the
 // complication rate an owner has to be warned about. De Lorenzi is 12 dogs.
+const WEISSE_URETER_RUPTURE =
+  'Weisse C, Aronson LR, Drobatz K. Traumatic rupture of the ureter: 10 cases. J Am Anim Hosp Assoc. 2002;38(2):188-192. doi:10.5326/0380188'
 const WEISSE_TRACHEAL_STENT =
   'Weisse C, Berent A, Violette N, McDougall R, Lamb K. Short-, intermediate-, and long-term results for endoluminal stent placement in dogs with tracheal collapse. J Am Vet Med Assoc. 2019;254(3):380-392. doi:10.2460/javma.254.3.380'
 const DE_LORENZI_SILICONE_STENT =
@@ -1815,6 +1851,8 @@ const TREEKHUNRUNGRUANG_CRYPTO_CALAS =
   'Treekhunrungruang S, Yurayart C, Thitiyanaporn C, Jaroensong T. Clinicopathological features, treatment outcome, and the cryptococcal antigen latex agglutination system titer in feline cryptococcosis treated with amphotericin B and fluconazole. Vet Sci. 2025;12(12):1211. doi:10.3390/vetsci12121211'
 const TEH_CRYPTO_POSTZONE =
   'Teh A, Pritchard E, Donahoe SL, Malik R, Krockenberger M. A case of disseminated cryptococcosis with abdominal involvement due to Cryptococcus neoformans species complex in a Ragdoll cat and false-negative cryptococcal antigen lateral flow tests due to the postzone phenomenon. Aust Vet J. 2024;102(6):306-312. doi:10.1111/avj.13329'
+const KENNEDY_NEOSPORA_ADULT =
+  'Kennedy A, White JD, Child G. Neosporosis in 21 adult dogs, 2010-2023. J Vet Intern Med. 2024;38(6):3079-3086. doi:10.1111/jvim.17219'
 const KENNEDY_FELINE_HST_PREVALENCE =
   'Kennedy A, White J, Lam A, Kenny P. Hypersomatotropism in diabetic cats in Australia. J Feline Med Surg. 2025;27(11):1098612X251379726. doi:10.1177/1098612X251379726'
 const SHELTON_HYPOPHYSECTOMY_QOL =
@@ -1842,7 +1880,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Colombo', 'Nichols', 'Howard', 'Woolcock', 'Neel', 'Bouzouraa', 'Sainz', 'Maruyama', 'Knowler', 'Kuder', 'Goree', 'Mauser', 'Brooks', 'Wucherer', 'Enomoto', 'Chetboul', 'Bomassi', 'Schick', 'Darcy', 'Boudreaux', 'Gomez', 'Kijas', 'Mueller', 'Smee', 'Thierry', 'Legallet', 'Wang', 'Castejón-González', 'Kilduff-Taylor', 'Doran', 'Girard', 'Niżański', 'Bennett', 'Sorenmo', 'Bascuñán', 'Buchanan', 'Zacuto', 'Leib', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Lorrain', 'Ogawa', 'Quist', 'Vaughn', 'Dubey', 'Fisher', 'DuHadway', 'Hagley', 'Dias', 'Espenica', 'Corgozinho', 'Toh', 'Godart', 'Paes', 'Aumann', 'Grimes', 'Colombo', 'Nichols', 'Howard', 'Woolcock', 'Neel', 'Bouzouraa', 'Sainz', 'Maruyama', 'Knowler', 'Kuder', 'Goree', 'Mauser', 'Brooks', 'Wucherer', 'Enomoto', 'Chetboul', 'Bomassi', 'Schick', 'Darcy', 'Boudreaux', 'Gomez', 'Kijas', 'Mueller', 'Smee', 'Thierry', 'Legallet', 'Wang', 'Castejón-González', 'Kilduff-Taylor', 'Doran', 'Girard', 'Niżański', 'Bennett', 'Sorenmo', 'Bascuñán', 'Buchanan', 'Zacuto', 'Leib', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -2113,6 +2151,18 @@ const MILLER_BY_YEAR: Record<string, { id: string; text: string }> = {
 const LEVY_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2026': { id: 'levy-tbics', text: LEVY_TBICS },
   '2019': { id: 'levy-ischaemic-dermatopathy', text: LEVY_ISCHAEMIC_DERMATOPATHY },
+}
+const WEISSE_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2019': { id: 'weisse-tracheal-stent', text: WEISSE_TRACHEAL_STENT },
+  '2002': { id: 'weisse-ureter-rupture', text: WEISSE_URETER_RUPTURE },
+}
+const KENNEDY_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2025': { id: 'kennedy-feline-hst-prevalence', text: KENNEDY_FELINE_HST_PREVALENCE },
+  '2024': { id: 'kennedy-neospora-adult', text: KENNEDY_NEOSPORA_ADULT },
+}
+const CASTEJON_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2025': { id: 'castejon-feline-mandible', text: CASTEJON_MANDIBLE },
+  '2023': { id: 'castejon-cleft-palate', text: CASTEJON_CLEFT_PALATE },
 }
 const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
@@ -2611,7 +2661,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Gualtieri/.test(part)) { out.push({ id: 'gualtieri-oral-sbrt', text: GUALTIERI_ORAL_SBRT }); continue }
     if (/^Treekhunrungruang/.test(part)) { out.push({ id: 'treekhunrungruang-crypto-calas', text: TREEKHUNRUNGRUANG_CRYPTO_CALAS }); continue }
     if (/^Teh\b/.test(part)) { out.push({ id: 'teh-crypto-postzone', text: TEH_CRYPTO_POSTZONE }); continue }
-    if (/^Kennedy/.test(part)) { out.push({ id: 'kennedy-feline-hst-prevalence', text: KENNEDY_FELINE_HST_PREVALENCE }); continue }
+    if (/^Kennedy/.test(part)) {
+      const hit = KENNEDY_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Engdahl/.test(part)) { out.push({ id: 'engdahl-patellar-epi', text: ENGDAHL_PATELLAR_EPI }); continue }
     if (/^Son\b/.test(part)) { out.push({ id: 'son-ckcs-patellar', text: SON_CKCS_PATELLAR }); continue }
     if (/^Jones/.test(part)) {
@@ -2728,7 +2782,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Girard/.test(part)) { out.push({ id: 'girard-tr-109', text: GIRARD_TR }); continue }
     if (/^Doran/.test(part)) { out.push({ id: 'doran-stick-injury', text: DORAN_STICK }); continue }
     if (/^Kilduff-Taylor/.test(part)) { out.push({ id: 'kilduff-stick-endoscopy', text: KILDUFF_STICK }); continue }
-    if (/^Castejón-González/.test(part)) { out.push({ id: 'castejon-feline-mandible', text: CASTEJON_MANDIBLE }); continue }
+    if (/^Castejón-González/.test(part)) {
+      const hit = CASTEJON_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Wang/.test(part)) { out.push({ id: 'wang-orbital-abscess', text: WANG_ORBITAL_ABSCESS }); continue }
     if (/^Legallet/.test(part)) { out.push({ id: 'legallet-dh-96', text: LEGALLET_DH }); continue }
     if (/^Thierry/.test(part)) { out.push({ id: 'thierry-cipf-ct', text: THIERRY_CIPF }); continue }
@@ -2756,6 +2814,22 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Howard/.test(part)) { out.push({ id: 'howard-thrombocytosis-cats', text: HOWARD_THROMBOCYTOSIS_CATS }); continue }
     if (/^Nichols/.test(part)) { out.push({ id: 'nichols-vasculitis', text: NICHOLS_VASCULITIS }); continue }
     if (/^Colombo/.test(part)) { out.push({ id: 'colombo-etud', text: COLOMBO_ETUD }); continue }
+    if (/^Grimes/.test(part)) { out.push({ id: 'grimes-uroabdomen', text: GRIMES_UROABDOMEN }); continue }
+    if (/^Aumann/.test(part)) { out.push({ id: 'aumann-uroperitoneum-cats', text: AUMANN_UROPERITONEUM_CATS }); continue }
+    if (/^Paes/.test(part)) { out.push({ id: 'paes-uroperitoneum', text: PAES_UROPERITONEUM }); continue }
+    if (/^Godart/.test(part)) { out.push({ id: 'godart-lut-rupture', text: GODART_LUT_RUPTURE }); continue }
+    if (/^Toh/.test(part)) { out.push({ id: 'toh-conservative-rupture', text: TOH_CONSERVATIVE_RUPTURE }); continue }
+    if (/^Corgozinho/.test(part)) { out.push({ id: 'corgozinho-urethral-trauma', text: CORGOZINHO_URETHRAL_TRAUMA }); continue }
+    if (/^Espenica/.test(part)) { out.push({ id: 'espenica-nasal-fb', text: ESPENICA_NASAL_FB }); continue }
+    if (/^Dias/.test(part)) { out.push({ id: 'dias-nasal-fb', text: DIAS_NASAL_FB }); continue }
+    if (/^Hagley/.test(part)) { out.push({ id: 'hagley-er-glucose', text: HAGLEY_ER_GLUCOSE }); continue }
+    if (/^DuHadway/.test(part)) { out.push({ id: 'duhadway-xylitol', text: DUHADWAY_XYLITOL }); continue }
+    if (/^Fisher/.test(part)) { out.push({ id: 'fisher-neospora', text: FISHER_NEOSPORA }); continue }
+    if (/^Dubey/.test(part)) { out.push({ id: 'dubey-toxo-cats', text: DUBEY_TOXO_CATS }); continue }
+    if (/^Vaughn/.test(part)) { out.push({ id: 'vaughn-burns', text: VAUGHN_BURNS }); continue }
+    if (/^Quist/.test(part)) { out.push({ id: 'quist-hose-scald', text: QUIST_HOSE_SCALD }); continue }
+    if (/^Ogawa/.test(part)) { out.push({ id: 'ogawa-onf-fluorescein', text: OGAWA_ONF_FLUORESCEIN }); continue }
+    if (/^Lorrain/.test(part)) { out.push({ id: 'lorrain-onf-cartilage', text: LORRAIN_ONF_CARTILAGE }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
@@ -2844,7 +2918,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Michelotti/.test(part)) { out.push({ id: 'michelotti-tsp', text: MICHELOTTI_TSP }); continue }
     if (/^Kogan/.test(part)) { out.push({ id: 'kogan-aspiration', text: KOGAN_ASPIRATION }); continue }
     if (/^Riffe/.test(part)) { out.push({ id: 'riffe-ap-antibiotics', text: RIFFE_AP_ANTIBIOTICS }); continue }
-    if (/^Weisse/.test(part)) { out.push({ id: 'weisse-tracheal-stent', text: WEISSE_TRACHEAL_STENT }); continue }
+    if (/^Weisse/.test(part)) {
+      const hit = WEISSE_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^De Lorenzi/.test(part)) { out.push({ id: 'de-lorenzi-silicone-stent', text: DE_LORENZI_SILICONE_STENT }); continue }
     if (/^Gareis/.test(part)) { out.push({ id: 'gareis-flad-radiographs', text: GAREIS_FLAD_RADIOGRAPHS }); continue }
     if (/^Gamracy/.test(part)) { out.push({ id: 'gamracy-bronchomalacia', text: GAMRACY_BRONCHOMALACIA }); continue }

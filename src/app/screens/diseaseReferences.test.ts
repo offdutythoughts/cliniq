@@ -664,6 +664,14 @@ describe('parseSources', () => {
   it('keeps prefix-colliding surnames apart', () => {
     const cases: [string, string][] = [
       ['Ku 2023', 'ku-rta-ndi'],
+      ['Weisse 2002', 'weisse-ureter-rupture'],
+      ['Weisse 2019', 'weisse-tracheal-stent'],
+      ['Kennedy 2024', 'kennedy-neospora-adult'],
+      ['Kennedy 2025', 'kennedy-feline-hst-prevalence'],
+      ['Castejón-González 2023', 'castejon-cleft-palate'],
+      ['Castejón-González 2025', 'castejon-feline-mandible'],
+      ['Lorrain 2012', 'lorrain-onf-cartilage'],
+      ['Lo 2022', 'lo-dual-therapy'],
       ['Kubo 2023', 'kubo-shiba-pacg'],
       ['Anders 2011', 'anders-vbo-baer'],
       ['Anderson 2000', 'anderson-polyps'],
@@ -1425,6 +1433,14 @@ describe('citation pass 2026-10-14 — collision cases', () => {
       ['Levy 2026', 'levy-tbics'],
       ['Kuder 2022', 'kuder-fxi-mainecoon'],
       ['Ku 2023', 'ku-rta-ndi'],
+      ['Weisse 2002', 'weisse-ureter-rupture'],
+      ['Weisse 2019', 'weisse-tracheal-stent'],
+      ['Kennedy 2024', 'kennedy-neospora-adult'],
+      ['Kennedy 2025', 'kennedy-feline-hst-prevalence'],
+      ['Castejón-González 2023', 'castejon-cleft-palate'],
+      ['Castejón-González 2025', 'castejon-feline-mandible'],
+      ['Lorrain 2012', 'lorrain-onf-cartilage'],
+      ['Lo 2022', 'lo-dual-therapy'],
     ]
     for (const [marker, id] of cases) expect(parseSources(marker).map(s => s.id), marker).toEqual([id])
   })
