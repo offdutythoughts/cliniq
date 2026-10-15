@@ -32,7 +32,7 @@ import { useAction } from 'convex/react'
 import { ConvexError } from 'convex/values'
 import { api } from '../../../convex/_generated/api'
 import type { ProblemList } from '../../../convex/caseAnalysis'
-import { searchDiseases, diverseDifferentials, type SearchInputs } from '../../lib/search/diseaseSearch'
+import { searchDiseases, diverseDifferentials, coreDifferentials, type SearchInputs } from '../../lib/search/diseaseSearch'
 import { buildCaseLanes, type LaneChart } from '../../lib/caseTriage/buildLanes'
 import {
   abbreviationKey, abbreviationKeyBlock, abbreviationRanges, scanAbbreviations, suggestAbbreviations,
@@ -257,7 +257,13 @@ export function CaseTriageScreen() {
         },
       }
       const categories = searchDiseases(inputs)
-      const top = diverseDifferentials(categories, MAX_CANDIDATES)
+      const top = diverseDifferentials(
+        categories, MAX_CANDIDATES, undefined, undefined,
+        coreDifferentials([
+          ...(signals.problemList?.key ?? []),
+          ...(signals.problemList?.patterns.flatMap(p => p.terms) ?? []),
+        ]),
+      )
       setCaseSummary(signals.caseSummary)
       setModelUnknowns(signals.unknownAbbreviations ?? [])
       setProblemList(signals.problemList ?? null)
