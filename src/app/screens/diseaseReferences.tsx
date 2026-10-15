@@ -340,6 +340,18 @@ const LEGALLET_DH =
   'Legallet C, Thieman Mankin K, Selmic LE. Prognostic indicators for perioperative survival after diaphragmatic herniorrhaphy in cats and dogs: 96 cases (2001-2013). BMC Vet Res. 2017;13(1):16. doi:10.1186/s12917-016-0926-y'
 const THIERRY_CIPF =
   'Thierry F, Handel I, Hammond G, King LG, Corcoran BM, Schwarz T. Further characterization of computed tomographic and clinical features for staging and prognosis of idiopathic pulmonary fibrosis in West Highland white terriers. Vet Radiol Ultrasound. 2017;58(4):381-388. doi:10.1111/vru.12491'
+const SMEE_ANA =
+  'Smee NM, Harkin KR, Wilkerson MJ. Measurement of serum antinuclear antibody titer in dogs with and without systemic lupus erythematosus: 120 cases (1997-2005). J Am Vet Med Assoc. 2007;230(8):1180-1183. doi:10.2460/javma.230.8.1180'
+const MUELLER_PF =
+  'Mueller RS, Krebs I, Power HT, Fieseler KV. Pemphigus foliaceus in 91 dogs. J Am Anim Hosp Assoc. 2006;42(3):189-196. doi:10.5326/0420189'
+const KIJAS_CLAD =
+  'Kijas JM, Bauer TR, Gäfvert S, et al. A missense mutation in the beta-2 integrin gene (ITGB2) causes canine leukocyte adhesion deficiency. Genomics. 1999;61(1):101-107. doi:10.1006/geno.1999.5948'
+const GOMEZ_PF_OUTCOME =
+  'Gomez SM, Morris DO, Rosenbaum MR, Goldschmidt MH. Outcome and complications associated with treatment of pemphigus foliaceus in dogs: 43 cases (1994-2000). J Am Vet Med Assoc. 2004;224(8):1312-1316. doi:10.2460/javma.2004.224.1312'
+const BOUDREAUX_OTTERHOUND =
+  'Boudreaux MK, Catalfamo JL. Molecular and genetic basis for thrombasthenic thrombopathia in otterhounds. Am J Vet Res. 2001;62(11):1797-1804. doi:10.2460/ajvr.2001.62.1797'
+const DARCY_FELINE_PE =
+  'Darcy H, Simpson K, Gajanayake I, et al. Feline primary erythrocytosis: a multicentre case series of 18 cats. J Feline Med Surg. 2018;20(12):1192-1198. doi:10.1177/1098612X17750333'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -448,6 +460,8 @@ const STANLEY_GOLPP =
   'Stanley BJ, Hauptman JG, Fritz MC, Rosenstein DS, Kinns J. Esophageal dysfunction in dogs with idiopathic laryngeal paralysis: a controlled cohort study. Vet Surg. 2010;39(2):139-149. doi:10.1111/j.1532-950x.2009.00626.x'
 const TOBIAS_DOXAPRAM =
   'Tobias KM, Jackson AM, Harvey RC. Effects of doxapram HCl on laryngeal function of normal dogs and dogs with naturally occurring laryngeal paralysis. Vet Anaesth Analg. 2004;31(4):258-263. doi:10.1111/j.1467-2995.2004.00168.x'
+const MILLER_APL =
+  'Miller AG, Dow S, Long L, Olver CS. Antiphospholipid antibodies in dogs with immune mediated hemolytic anemia, spontaneous thrombosis, and hyperadrenocorticism. J Vet Intern Med. 2012;26(3):614-623. doi:10.1111/j.1939-1676.2012.00922.x'
 const MILLER_DOXAPRAM =
   'Miller CJ, McKiernan BC, Pace J, Fettman MJ. The effects of doxapram hydrochloride (dopram-V) on laryngeal function in healthy dogs. J Vet Intern Med. 2002;16(5):524-528. doi:10.1111/j.1939-1676.2002.tb02381.x'
 const WILSON_HISTOPLASMOSIS =
@@ -1788,7 +1802,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Thierry', 'Legallet', 'Wang', 'Castejón-González', 'Kilduff-Taylor', 'Doran', 'Girard', 'Niżański', 'Bennett', 'Sorenmo', 'Bascuñán', 'Buchanan', 'Zacuto', 'Leib', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Darcy', 'Boudreaux', 'Gomez', 'Kijas', 'Mueller', 'Smee', 'Thierry', 'Legallet', 'Wang', 'Castejón-González', 'Kilduff-Taylor', 'Doran', 'Girard', 'Niżański', 'Bennett', 'Sorenmo', 'Bascuñán', 'Buchanan', 'Zacuto', 'Leib', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -2051,6 +2065,10 @@ const GARCIA_BY_YEAR: Record<string, { id: string; text: string }> = {
 const JAFFEY_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2026': { id: 'jaffey-cocci-remission', text: JAFFEY_COCCI_REMISSION },
   '2020': { id: 'jaffey-cyb5r-dogs', text: JAFFEY_CYB5R },
+}
+const MILLER_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2002': { id: 'miller-doxapram', text: MILLER_DOXAPRAM },
+  '2012': { id: 'miller-apl-dogs', text: MILLER_APL },
 }
 const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
@@ -2394,7 +2412,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Lo\b/.test(part)) { out.push({ id: 'lo-dual-therapy', text: LO_DUAL_THERAPY }); continue }
     if (/^Stanley/.test(part)) { out.push({ id: 'stanley-golpp', text: STANLEY_GOLPP }); continue }
     if (/^Tobias/.test(part)) { out.push({ id: 'tobias-doxapram', text: TOBIAS_DOXAPRAM }); continue }
-    if (/^Miller/.test(part)) { out.push({ id: 'miller-doxapram', text: MILLER_DOXAPRAM }); continue }
+    if (/^Miller/.test(part)) {
+      const hit = MILLER_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Wilson/.test(part)) {
       const hit = WILSON_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
       if (hit) out.push(hit)
@@ -2661,6 +2683,12 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Wang/.test(part)) { out.push({ id: 'wang-orbital-abscess', text: WANG_ORBITAL_ABSCESS }); continue }
     if (/^Legallet/.test(part)) { out.push({ id: 'legallet-dh-96', text: LEGALLET_DH }); continue }
     if (/^Thierry/.test(part)) { out.push({ id: 'thierry-cipf-ct', text: THIERRY_CIPF }); continue }
+    if (/^Smee/.test(part)) { out.push({ id: 'smee-ana-sle', text: SMEE_ANA }); continue }
+    if (/^Mueller/.test(part)) { out.push({ id: 'mueller-pf-91', text: MUELLER_PF }); continue }
+    if (/^Kijas/.test(part)) { out.push({ id: 'kijas-clad', text: KIJAS_CLAD }); continue }
+    if (/^Gomez/.test(part)) { out.push({ id: 'gomez-pf-outcome', text: GOMEZ_PF_OUTCOME }); continue }
+    if (/^Boudreaux/.test(part)) { out.push({ id: 'boudreaux-otterhound-gt', text: BOUDREAUX_OTTERHOUND }); continue }
+    if (/^Darcy/.test(part)) { out.push({ id: 'darcy-feline-pe', text: DARCY_FELINE_PE }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
