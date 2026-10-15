@@ -181,6 +181,7 @@ Extract:
 - neuter: one of "intact", "neutered" — omit the key entirely if not stated.
 - signKeywords: short, canonical clinical sign terms (e.g. "vomiting", "weight loss", "PU/PD") — one concept per entry, prefer standard clinical terminology over the owner's exact phrasing. Include every sign actually present, not just the ones driving the acute complaint — a chronic, stable or "well controlled" condition (e.g. a cough that is managed on medication) is still a real finding and can still point to a relevant differential, so keep it.
 - Also fold into signKeywords/diagKeywords any epidemiological or risk-factor fact the notes state or directly imply (never invented): vaccination/deworming/parasite-prevention status ("unvaccinated", "no heartworm prevention", "no flea/tick prevention" — "not up to date with prophylactics" implies ALL of these unless the notes specify otherwise), travel or residence history relevant to endemic disease ("endemic region", "travel history"), toxin/rodenticide/foreign-body access ("rodenticide access", "toxin exposure"), and population/contact history (unvaccinated littermates, shelter/kennel/dog-park contact). Phrase each as the short generic clinical term a vet would write on a differential list (as in the examples above), not a restatement of the owner's sentence — that is what lets the matching engine connect it to the relevant disease pages.
+- Keep the sign the notes describe; never swap it for a neighbouring one. Weakness, ataxia, lameness, paresis and stiffness are DIFFERENT signs with different differentials: a "stiff", "stilted" or "rigid" gait is "stiff gait" (add "stiff hindlimb gait" too if the notes name the limbs), never "weakness" or "gait abnormality". Prefer the plain term a disease page would use: "seizures" (not "convulsive episodes"), "lethargy", "stiff gait".
 - When a sign's QUALITY is stated, not just its presence (a cough described as dry/non-productive vs. productive; diarrhoea as watery vs. bloody; pain as acute vs. chronic), extract BOTH the generic term AND the qualified term as separate signKeywords (e.g. a dry cough → ["cough", "dry cough"]) — the qualifier picks out a clinically different, narrower set of differentials than the generic sign alone, and dropping it to just the generic term loses that distinction.
 - Pattern-recognize a bleeding diathesis: if the notes report TWO OR MORE of hematochezia/melena, hematemesis, epistaxis, petechiae/ecchymoses, hemoptysis, or hematuria occurring together, add "coagulopathy" as an additional signKeyword alongside the individual signs — a vet seeing that combination would reflexively consider a clotting disorder (and order a coagulation panel) even before any single sign points there, and the matching engine only surfaces that family of differentials (and the coagulation panel their own confirmatory tests call for) when "coagulopathy" is actually present as a keyword.
 - diagKeywords: diagnostic/lab findings already reported in the notes (e.g. "elevated ALP", "anemia"). Empty array if none were mentioned.
@@ -250,7 +251,56 @@ export function cleanProblemList(raw: unknown, keywords: string[]): ProblemList 
     .filter((x) => x.name.length > 0 && x.terms.length >= 2)
     .slice(0, 6);
 
-  return { key, secondary, patterns };
+  return applySecondaryRules({ key, secondary, patterns }, keywords);
+}
+
+// ── Deterministic secondary findings ──
+// The model marks these secondary on some runs and not others, and the
+// ranking swings with it: on the reference case (FN Airedale, seizures,
+// hypocalcaemia + hyperphosphataemia, CK 590) one live run left CK at full
+// weight and rhabdomyolysis outranked hypoparathyroidism. Each rule is a
+// finding that is almost always a consequence rather than a clue in the
+// context given, so it is demoted whatever the model said — unless the model
+// made it part of a pattern, which is a deliberate reading worth keeping.
+const SEIZURE_LIKE = /seizur|convuls|status epilepticus|tremor|fasciculat|tetan|muscle spasm|cramp/i;
+const DIABETIC_CONTEXT = /glucosuri|glycosuri|ketonuri|ketonemi|ketonaemi|ketoacid|fructosamine|polyuri|polydips|pu\s*\/?\s*pd/i;
+const SECONDARY_RULES: { finding: RegExp; explainedBy: (kws: string[]) => string | null }[] = [
+  // Seizures and tremor raise CK by themselves.
+  {
+    finding: /\b(ck|cpk|creatine kinase|creatinine kinase)\b/i,
+    explainedBy: (kws) => kws.find((k) => SEIZURE_LIKE.test(k)) ?? null,
+  },
+  // A stress leukogram is a stress leukogram.
+  { finding: /stress leuk/i, explainedBy: () => "stress" },
+  // Hyperglycaemia without glucosuria, ketones or PU/PD is read as stress.
+  {
+    finding: /hyperglyc|high (blood )?glucose|glucose (high|elevated)|elevated glucose/i,
+    explainedBy: (kws) => (kws.some((k) => DIABETIC_CONTEXT.test(k)) ? null : "stress"),
+  },
+];
+
+export function applySecondaryRules(list: ProblemList, keywords: string[]): ProblemList {
+  const inPattern = new Set(list.patterns.flatMap((p) => p.terms));
+  const demoted = new Map<string, string>();
+  for (const kw of keywords) {
+    if (inPattern.has(kw)) continue;
+    for (const rule of SECONDARY_RULES) {
+      if (!rule.finding.test(kw)) continue;
+      const why = rule.explainedBy(keywords);
+      if (why) demoted.set(kw, why);
+      break;
+    }
+  }
+  if (demoted.size === 0) return list;
+  const already = new Set(list.secondary.map((s) => s.term));
+  return {
+    key: list.key.filter((t) => !demoted.has(t)),
+    secondary: [
+      ...list.secondary,
+      ...[...demoted].filter(([t]) => !already.has(t)).map(([term, explainedBy]) => ({ term, explainedBy })),
+    ],
+    patterns: list.patterns,
+  };
 }
 
 export const extractSignals = action({

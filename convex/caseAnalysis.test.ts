@@ -25,3 +25,41 @@ describe('cleanProblemList', () => {
     expect(p.patterns).toEqual([])
   })
 })
+
+describe('applySecondaryRules', () => {
+  const kws = ['seizures', 'stiff gait', 'hypocalcemia', 'hyperphosphatemia', 'elevated CK', 'stress leukogram', 'hyperglycemia']
+
+  it('demotes CK after seizures, a stress leukogram and lone hyperglycaemia whatever the model said', () => {
+    // The live run that lost the case: no secondary findings at all.
+    const p = cleanProblemList({ key: kws, secondary: [], patterns: [{ name: 'p', terms: ['hypocalcemia', 'hyperphosphatemia'] }] }, kws)
+    expect(p.key).toEqual(['seizures', 'stiff gait', 'hypocalcemia', 'hyperphosphatemia'])
+    expect(p.secondary).toEqual([
+      { term: 'elevated CK', explainedBy: 'seizures' },
+      { term: 'stress leukogram', explainedBy: 'stress' },
+      { term: 'hyperglycemia', explainedBy: 'stress' },
+    ])
+  })
+
+  it('keeps the model\'s own explanation when it already marked one secondary', () => {
+    const p = cleanProblemList({ key: [], secondary: [{ term: 'elevated CK', explainedBy: 'tetany' }], patterns: [] }, kws)
+    expect(p.secondary.find(s => s.term === 'elevated CK')).toEqual({ term: 'elevated CK', explainedBy: 'tetany' })
+  })
+
+  it('leaves CK alone without seizures or tremor', () => {
+    const k = ['muscle pain', 'elevated CK', 'pigmenturia']
+    expect(cleanProblemList({ key: k, secondary: [], patterns: [] }, k).key).toContain('elevated CK')
+  })
+
+  it('leaves hyperglycaemia alone alongside glucosuria or PU/PD', () => {
+    for (const ctx of ['glucosuria', 'PU/PD', 'polyuria']) {
+      const k = ['hyperglycemia', ctx]
+      expect(cleanProblemList({ key: k, secondary: [], patterns: [] }, k).key).toContain('hyperglycemia')
+    }
+  })
+
+  it('never demotes a term the model put in a pattern', () => {
+    const k = ['seizures', 'elevated CK', 'myoglobinuria']
+    const p = cleanProblemList({ key: k, secondary: [], patterns: [{ name: 'rhabdo', terms: ['elevated CK', 'myoglobinuria'] }] }, k)
+    expect(p.secondary).toEqual([])
+  })
+})
