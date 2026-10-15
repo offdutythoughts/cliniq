@@ -843,6 +843,11 @@ const PATTERN_BONUS = 0.5
  *  hypoparathyroidism both list hypocalcaemia + hyperphosphataemia) — the
  *  one that also explains the stiff gait is the better diagnosis. */
 const KEY_COVERAGE_PENALTY = 0.5
+/** A key term matching more than this share of pages is nonspecific — real
+ *  as a problem, but too common to put a page on the list by itself. Over the
+ *  dog pages: lethargy and weakness ~35% (nonspecific); vomiting 27%,
+ *  seizures 18%, diarrhoea 14% (specific enough). */
+const NONSPECIFIC_SHARE = 0.3
 
 const round1 = (n: number) => Math.round(n * 10) / 10
 
@@ -891,16 +896,42 @@ export function topDifferentials(groups: SearchCategory[], n = 5): DiseaseResult
  *      single most obvious reading of the case.
  *   4. Any slots still unfilled, by pure score among what's left.
  *
+ * `mustInclude` (disease ids, e.g. from coreDifferentials) is taken right
+ * after step 1, for each id the search actually returned.
+ *
  * The final list is re-sorted by score (so `buildCaseLanes`, which derives
  * category display order from each category's best-ranked member, still
  * shows the likeliest category first); diversity changes WHICH candidates are
  * included, not their display order.
  */
+// ── Core differentials per presenting problem ──
+// The differentials a clinician lists for a problem whatever else the case
+// shows. Keyword scoring cannot produce these: a page matching "seizures"
+// alone ties with dozens of others, so idiopathic epilepsy, brain tumour and
+// MUO never won a chart slot on the Airedale case even though every seizure
+// workup rules them in or out. Seizures follow the seizure flowchart's own
+// split (LES-SZ-*): idiopathic, structural (MUO the commonest cause, then
+// neoplasia), reactive.
+const CORE_DIFFERENTIALS: { sign: string; ids: string[] }[] = [
+  { sign: 'seizures', ids: ['DIS-NEU-REACTSZ', 'DIS-WK-EPILEPSY', 'DIS-NEU-MUE', 'DIS-NEU-BRAINTUM'] },
+]
+
+/** Disease ids that belong on the list for these key problems — a key term
+ *  counts when it is, or is a synonym of, a core sign. */
+export function coreDifferentials(keyTerms: string[]): string[] {
+  const ids: string[] = []
+  for (const { sign, ids: core } of CORE_DIFFERENTIALS) {
+    if (keyTerms.some(t => expandKeyword(t).includes(sign))) ids.push(...core.filter(id => !ids.includes(id)))
+  }
+  return ids
+}
+
 export function diverseDifferentials(
   groups: SearchCategory[],
   n = 8,
   guaranteedTop = Math.ceil(n / 2),
   closeRatio = 0.8,
+  mustInclude: string[] = [],
 ): DiseaseResult[] {
   const byScore = (a: DiseaseResult, b: DiseaseResult) =>
     b.score - a.score || (a.disease.name as string).localeCompare(b.disease.name as string)
@@ -913,6 +944,15 @@ export function diverseDifferentials(
   for (const item of all) {
     if (picked.length >= Math.min(guaranteedTop, n)) break
     take(item)
+  }
+
+  // Core differentials for the case's key problems (see coreDifferentials),
+  // where the search matched them at all — a match it scored too low for any
+  // other pass to reach.
+  for (const id of mustInclude) {
+    if (picked.length >= n) break
+    const item = all.find(it => it.disease.id === id)
+    if (item && !pickedIds.has(id)) take(item)
   }
 
   // Near-tie companions: evaluated against step 1's picks only (not chained
@@ -999,6 +1039,16 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
   const secondaryTerms = new Set((inputs.termTiers?.secondary ?? []).map(tierKey).filter(t => !keyTerms.has(t)))
   const patternTerms = new Set(patterns.flat())
   const keyProblemCount = [...keyTerms].filter(t => !patternTerms.has(t)).length + patterns.length
+  // Key terms specific enough to nominate a page. Document frequency is per
+  // keyword spelling, so look the term up in whichever list it was given in.
+  const keywordByTier = new Map([...signKeywords, ...diagKeywords].map(k => [tierKey(k), k]))
+  const share = (t: string) => {
+    const k = keywordByTier.get(t) ?? t
+    return Math.max(signDf.get(k) ?? 0, diagDf.get(k) ?? 0) / Math.max(1, N)
+  }
+  const specificKeyTerms = new Set(
+    [...keyTerms].filter(t => patternTerms.has(t) || share(t) <= NONSPECIFIC_SHARE),
+  )
   const tierWeight = (t: string) =>
     keyTerms.has(tierKey(t)) ? KEY_WEIGHT : secondaryTerms.has(tierKey(t)) ? SECONDARY_WEIGHT : 1
 
@@ -1085,6 +1135,14 @@ export function searchDiseases(inputs: SearchInputs): SearchCategory[] {
     // nominates nothing — CK after seizures must not list every myopathy.
     if (secondaryTerms.size > 0
       && [...matchedSignTerms, ...matchedDiagTerms].every(t => secondaryTerms.has(tierKey(t)))) continue
+    // A page explaining none of the key problems is not a differential for
+    // them, however well the signalment fits — diabetes on the Airedale case
+    // matched only lethargy (supporting) and stress hyperglycaemia
+    // (secondary), and ranked 3rd on sex/age/breed points alone.
+    if (keyProblemCount > 0 && coverage === 0) continue
+    // ...nor one that explains only the nonspecific ones (lethargy), when the
+    // case has a specific problem to explain.
+    if (specificKeyTerms.size > 0 && ![...specificKeyTerms].some(t => contribution.has(t))) continue
 
     // ── Species prevalence (ranking only) ──
     const prev = prevalenceFactor(d.id as string, species)

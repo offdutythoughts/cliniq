@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { searchDiseases, topDifferentials, suggestSignTerms, SEX_ORGAN_RULES, namedBreeds, countNamedBreeds, type SearchInputs } from './diseaseSearch'
+import { searchDiseases, topDifferentials, suggestSignTerms, diverseDifferentials, coreDifferentials, SEX_ORGAN_RULES, namedBreeds, countNamedBreeds, type SearchInputs } from './diseaseSearch'
 import { PREVALENCE, prevalenceFactor } from './prevalence'
 import { DB } from '../../data/db'
 
@@ -351,6 +351,32 @@ describe('problem-list tiers', () => {
       }
       expect(rankOf('DIS-ENDO-HYPOPTH', over)).toBe(1)
     }
+  })
+
+  it('drops diabetes when its only hits are lethargy and stress hyperglycaemia', () => {
+    // Lethargy is a key problem here but matches ~35% of pages; stress
+    // hyperglycaemia is secondary. Diabetes used to rank 3rd on signalment.
+    expect(rankOf('DIS-ENDO-DM', AIREDALE)).toBeGreaterThan(0)
+    expect(rankOf('DIS-ENDO-DM', { ...AIREDALE, termTiers: AIREDALE_TIERS })).toBe(0)
+  })
+
+  it('keeps every page when all the key problems are nonspecific', () => {
+    const over = { species: 'dog' as const, signKeywords: ['lethargy'], termTiers: { key: ['lethargy'] } }
+    expect(ranked(over).length).toBe(ranked({ species: 'dog', signKeywords: ['lethargy'] }).length)
+  })
+
+  it('puts the core seizure differentials on the chart', () => {
+    const core = coreDifferentials(AIREDALE_TIERS!.key!)
+    expect(core).toEqual(['DIS-NEU-REACTSZ', 'DIS-WK-EPILEPSY', 'DIS-NEU-MUE', 'DIS-NEU-BRAINTUM'])
+    const chart = diverseDifferentials(search({ ...AIREDALE, termTiers: AIREDALE_TIERS }), 12, undefined, undefined, core)
+      .map(r => r.disease.id)
+    for (const id of core) expect(chart).toContain(id)
+    expect(chart[0]).toBe('DIS-ENDO-HYPOPTH')
+  })
+
+  it('reads a core sign through its synonyms, and only for that sign', () => {
+    expect(coreDifferentials(['convulsions'])).toContain('DIS-WK-EPILEPSY')
+    expect(coreDifferentials(['vomiting', 'lethargy'])).toEqual([])
   })
 
   it('changes nothing when no tiers are given', () => {
