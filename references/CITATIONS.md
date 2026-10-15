@@ -6733,3 +6733,35 @@ Notes:
 - **Resolver**: `Russell` (2006/2012) and `Segev` (2012/2013) are now year-keyed, via a new helper
   that converts a single-paper branch in place. All the year-key splits from this pass are in
   the regression test.
+
+## Oesophagus and prostate batch (2026-10-15)
+
+**41 → 36.**
+
+> Leib MS, Dinnel H, Ward DL, Reimer ME, Towell TL, Monroe WE. Endoscopic balloon dilation of benign esophageal strictures in dogs and cats. J Vet Intern Med. 2001;15(6):547-552. doi:10.1111/j.1939-1676.2001.tb01589.x
+
+> Zacuto AC, Marks SL, Osborn J, et al. The influence of esomeprazole and cisapride on gastroesophageal reflux during anesthesia in dogs. J Vet Intern Med. 2012;26(3):518-525. doi:10.1111/j.1939-1676.2012.00929.x
+
+> Garcia RS, Belafsky PC, Della Maggiore A, et al. Prevalence of gastroesophageal reflux in cats during anesthesia and effect of omeprazole on gastric pH. J Vet Intern Med. 2017;31(3):734-742. doi:10.1111/jvim.14704
+
+> Buchanan JW. Tracheal signs and associated vascular anomalies in dogs with persistent right aortic arch. J Vet Intern Med. 2004;18(4):510-514. doi:10.1111/j.1939-1676.2004.tb02576.x
+
+> Bascuñán A, Regier PJ, Case JB, et al. Vascular ring anomalies in cats: 20 cases (2000-2018). Vet Surg. 2020;49(2):265-273. doi:10.1111/vsu.13327
+
+> Niżański W, Ochota M, Fontaine C, Pasikowska J. Comparison of clinical effectiveness of deslorelin acetate and osaterone acetate in dogs with benign prostatic hyperplasia. Animals (Basel). 2020;10(10):1936. doi:10.3390/ani10101936
+
+> Sorenmo KU, Goldschmidt MH, Shofer FS, Goldkamp C, Ferracone J. Evaluation of cyclooxygenase-1 and cyclooxygenase-2 expression and the effect of cyclooxygenase inhibitors in canine prostatic carcinoma. Vet Comp Oncol. 2004;2(1):13-23. doi:10.1111/j.1476-5810.2004.00035.x
+
+> Bennett TC, Matz BM, Henderson RA, et al. Total prostatectomy as a treatment for prostatic carcinoma in 25 dogs. Vet Surg. 2018;47(3):367-377. doi:10.1111/vsu.12768
+
+Notes:
+
+- **Pre-2007 JVIM DOIs.** PubMed gives Leib 2001 and Buchanan 2004 SICI-style DOIs
+  (`10.1892/0891-6640(…)<…>…`). Crossref holds these papers under their Wiley DOIs
+  (`10.1111/j.1939-1676.2001.tb01589.x`, `…2004.tb02576.x`), which resolve; those are used.
+- **DIS-OES-ITIS** recommends a pre-anaesthetic PPI. In the 61-dog RCT, esomeprazole raised pH but
+  did not reduce reflux frequency; only adding cisapride did. The page now says a PPI changes
+  the refluxate, not whether reflux happens.
+- **DIS-URO-PROST-NEO**'s "NSAIDs significantly prolong survival" now carries its basis:
+  retrospective, 6.9 vs 0.7 months.
+- **Resolver**: `Garcia` is year-keyed (2017 feline GER / 2026 ocular pathology).

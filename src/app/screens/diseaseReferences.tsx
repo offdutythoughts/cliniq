@@ -310,6 +310,20 @@ const OUTERBRIDGE_SND =
   'Outerbridge CA, Marks SL, Rogers QR. Plasma amino acid concentrations in 36 dogs with histologically confirmed superficial necrolytic dermatitis. Vet Dermatol. 2002;13(4):177-186. doi:10.1046/j.1365-3164.2002.00295.x'
 const NYBROE_FANCONI =
   'Nybroe S, Bjørnvad CR, Hansen CFH, Andersen TSL, Kieler IN. Outcome of acquired Fanconi syndrome associated with ingestion of jerky treats in 30 dogs. Animals (Basel). 2022;12(22):3192. doi:10.3390/ani12223192'
+const LEIB_BALLOON =
+  'Leib MS, Dinnel H, Ward DL, Reimer ME, Towell TL, Monroe WE. Endoscopic balloon dilation of benign esophageal strictures in dogs and cats. J Vet Intern Med. 2001;15(6):547-552. doi:10.1111/j.1939-1676.2001.tb01589.x'
+const ZACUTO_GER =
+  'Zacuto AC, Marks SL, Osborn J, et al. The influence of esomeprazole and cisapride on gastroesophageal reflux during anesthesia in dogs. J Vet Intern Med. 2012;26(3):518-525. doi:10.1111/j.1939-1676.2012.00929.x'
+const BUCHANAN_PRAA =
+  'Buchanan JW. Tracheal signs and associated vascular anomalies in dogs with persistent right aortic arch. J Vet Intern Med. 2004;18(4):510-514. doi:10.1111/j.1939-1676.2004.tb02576.x'
+const BASCUNAN_VRA =
+  'Bascuñán A, Regier PJ, Case JB, et al. Vascular ring anomalies in cats: 20 cases (2000-2018). Vet Surg. 2020;49(2):265-273. doi:10.1111/vsu.13327'
+const SORENMO_PROSTATE_COX =
+  'Sorenmo KU, Goldschmidt MH, Shofer FS, Goldkamp C, Ferracone J. Evaluation of cyclooxygenase-1 and cyclooxygenase-2 expression and the effect of cyclooxygenase inhibitors in canine prostatic carcinoma. Vet Comp Oncol. 2004;2(1):13-23. doi:10.1111/j.1476-5810.2004.00035.x'
+const BENNETT_PROSTATECTOMY =
+  'Bennett TC, Matz BM, Henderson RA, et al. Total prostatectomy as a treatment for prostatic carcinoma in 25 dogs. Vet Surg. 2018;47(3):367-377. doi:10.1111/vsu.12768'
+const NIZANSKI_BPH =
+  'Niżański W, Ochota M, Fontaine C, Pasikowska J. Comparison of clinical effectiveness of deslorelin acetate and osaterone acetate in dogs with benign prostatic hyperplasia. Animals (Basel). 2020;10(10):1936. doi:10.3390/ani10101936'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -1294,6 +1308,8 @@ const KIM_MEIBOMIAN =
   'Kim G, Kang S, Seo J, Seo K. Association of eyelid margin thickness and meibography in dogs with meibomian gland dysfunction. Vet Ophthalmol. 2025;28(5):847-854. doi:10.1111/vop.13326'
 const SYPNIEWSKA_NODULAR_CONJ =
   'Sypniewska A, Ziolkowska N. Nodular conjunctivitis as a novel ocular manifestation of canine sterile granuloma/pyogranuloma syndrome. BMC Vet Res. 2026;22(1):96. doi:10.1186/s12917-026-05289-y'
+const GARCIA_FELINE_GER =
+  'Garcia RS, Belafsky PC, Della Maggiore A, et al. Prevalence of gastroesophageal reflux in cats during anesthesia and effect of omeprazole on gastric pH. J Vet Intern Med. 2017;31(3):734-742. doi:10.1111/jvim.14704'
 const GARCIA_OCULAR_PATHOLOGY =
   'Garcia JM, Rogerio GDS, Rossatto-Junior CA, et al. Epidemiology of ocular pathology in domestic animals: insights from a 20-year retrospective study. Front Vet Sci. 2026;12:1717392. doi:10.3389/fvets.2025.1717392'
 
@@ -1754,7 +1770,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Niżański', 'Bennett', 'Sorenmo', 'Bascuñán', 'Buchanan', 'Zacuto', 'Leib', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -2009,6 +2025,10 @@ const RUSSELL_BY_YEAR: Record<string, { id: string; text: string }> = {
 const SEGEV_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2013': { id: 'iris-gn-pathology', text: IRIS_GN_PATHOLOGY },
   '2012': { id: 'segev-renal-amyloid', text: SEGEV_RENAL_AMYLOID },
+}
+const GARCIA_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2026': { id: 'garcia-ocular-pathology', text: GARCIA_OCULAR_PATHOLOGY },
+  '2017': { id: 'garcia-feline-ger', text: GARCIA_FELINE_GER },
 }
 const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
@@ -2604,6 +2624,13 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Trotman/.test(part)) { out.push({ id: 'trotman-hhs-dogs', text: TROTMAN_HHS }); continue }
     if (/^Outerbridge/.test(part)) { out.push({ id: 'outerbridge-snd-aa', text: OUTERBRIDGE_SND }); continue }
     if (/^Nybroe/.test(part)) { out.push({ id: 'nybroe-jerky-fanconi', text: NYBROE_FANCONI }); continue }
+    if (/^Leib/.test(part)) { out.push({ id: 'leib-balloon-stricture', text: LEIB_BALLOON }); continue }
+    if (/^Zacuto/.test(part)) { out.push({ id: 'zacuto-esomeprazole-ger', text: ZACUTO_GER }); continue }
+    if (/^Buchanan/.test(part)) { out.push({ id: 'buchanan-praa-trachea', text: BUCHANAN_PRAA }); continue }
+    if (/^Bascuñán/.test(part)) { out.push({ id: 'bascunan-feline-vra', text: BASCUNAN_VRA }); continue }
+    if (/^Sorenmo/.test(part)) { out.push({ id: 'sorenmo-prostate-cox', text: SORENMO_PROSTATE_COX }); continue }
+    if (/^Bennett/.test(part)) { out.push({ id: 'bennett-total-prostatectomy', text: BENNETT_PROSTATECTOMY }); continue }
+    if (/^Niżański/.test(part)) { out.push({ id: 'nizanski-bph-da-oa', text: NIZANSKI_BPH }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
@@ -2760,7 +2787,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
       continue
     }
     if (/^Sypniewska/.test(part)) { out.push({ id: 'sypniewska-nodular-conj', text: SYPNIEWSKA_NODULAR_CONJ }); continue }
-    if (/^Garcia/.test(part)) { out.push({ id: 'garcia-ocular-pathology', text: GARCIA_OCULAR_PATHOLOGY }); continue }
+    if (/^Garcia/.test(part)) {
+      const hit = GARCIA_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Chmiel/.test(part)) { out.push({ id: 'chmiel-grooming-injury', text: CHMIEL_GROOMING_INJURY }); continue }
     if (/^Diehl/.test(part)) { out.push({ id: 'diehl-breed-screening', text: DIEHL_BREED_SCREENING }); continue }
     if (/^Beckwith-Cohen/.test(part)) { out.push({ id: 'beckwith-cohen-fundus', text: BECKWITH_COHEN_FUNDUS }); continue }
