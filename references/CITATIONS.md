@@ -6814,3 +6814,39 @@ Notes:
   were not used.
 - **Resolver**: `Johnson` gained 2019 (Johnson LR, eosinophilic lung disease). `Jaffey` is
   year-keyed (2020 CYB5R / 2026 coccidioidomycosis).
+
+## Immune-mediated and blood-disorder batch (2026-10-15)
+
+**28 → 22.**
+
+> Smee NM, Harkin KR, Wilkerson MJ. Measurement of serum antinuclear antibody titer in dogs with and without systemic lupus erythematosus: 120 cases (1997-2005). J Am Vet Med Assoc. 2007;230(8):1180-1183. doi:10.2460/javma.230.8.1180
+
+> Mueller RS, Krebs I, Power HT, Fieseler KV. Pemphigus foliaceus in 91 dogs. J Am Anim Hosp Assoc. 2006;42(3):189-196. doi:10.5326/0420189
+
+> Gomez SM, Morris DO, Rosenbaum MR, Goldschmidt MH. Outcome and complications associated with treatment of pemphigus foliaceus in dogs: 43 cases (1994-2000). J Am Vet Med Assoc. 2004;224(8):1312-1316. doi:10.2460/javma.2004.224.1312
+
+> Kijas JM, Bauer TR, Gäfvert S, et al. A missense mutation in the beta-2 integrin gene (ITGB2) causes canine leukocyte adhesion deficiency. Genomics. 1999;61(1):101-107. doi:10.1006/geno.1999.5948
+
+> Miller AG, Dow S, Long L, Olver CS. Antiphospholipid antibodies in dogs with immune mediated hemolytic anemia, spontaneous thrombosis, and hyperadrenocorticism. J Vet Intern Med. 2012;26(3):614-623. doi:10.1111/j.1939-1676.2012.00922.x
+
+> Darcy H, Simpson K, Gajanayake I, et al. Feline primary erythrocytosis: a multicentre case series of 18 cats. J Feline Med Surg. 2018;20(12):1192-1198. doi:10.1177/1098612X17750333
+
+> Boudreaux MK, Catalfamo JL. Molecular and genetic basis for thrombasthenic thrombopathia in otterhounds. Am J Vet Res. 2001;62(11):1797-1804. doi:10.2460/ajvr.2001.62.1797
+
+Notes:
+
+- **DIS-BD-TPATH is in scope.** It is uncited but is *not* one of the seven DIS-BD pages placed
+  out of scope on 2026-10-06 (FII, HEMB, HEMC, FXII, ICT, TCS, VASC). It now cites the Otterhound
+  Glanzmann variant paper for the genetic-test claim.
+- **DIS-BD-APS** describes a prothrombotic mechanism taken from human medicine. In the one
+  prospective canine cohort, antiphospholipid antibodies were not associated with thrombosis and
+  no dog had a lupus anticoagulant. The page now says the link is unproven in dogs.
+- **`Gomez` vs `Gómez`.** The existing marker is accented (Gómez AP 2023, corneal sequestrum). The
+  new unaccented `Gomez` (Gomez SM 2004, pemphigus) is a separate prefix, not a collision.
+- **DIS-BD-VASCLH — not cited, flagged for review.** "Lhasa Apso vasculopathy syndrome" could not
+  be found as an entity in PubMed or Europe PMC under any phrasing tried. The breed's only hits
+  were PRA, lissencephaly and renal dysplasia, and the Ettinger clinical notes do not mention it.
+  The page's only source is Ettinger Ch 181, a general vasculitis chapter. Attaching a paper to a
+  syndrome that may not exist would make it look *more* established, so nothing was added. The
+  owner should decide whether the page describes a real entity.
+- **Resolver**: `Miller` is year-keyed (CJ 2002 doxapram / AG 2012 antiphospholipid).
