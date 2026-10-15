@@ -1,8 +1,9 @@
 'use client'
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState, useCallback, type ReactNode } from 'react'
 import { useTutorial, TUTORIAL_STEPS } from '../app/tutorial/TutorialContext'
 import { useNav } from '../app/nav/NavContext'
 import { styleStringToObject as s } from '../app/screens/style'
+import { MaterialIcon, type MaterialIconName } from './MaterialIcon'
 
 interface StepDef {
   selector: string | null   // null = centered card (no spotlight)
@@ -10,13 +11,45 @@ interface StepDef {
   body: string
   navTab?: number           // switch to this tab before showing
   tipPos: 'above' | 'below' | 'center'
+  demo?: ReactNode          // shown between the body and the buttons
 }
+
+// The mark-up tools only appear over a live text selection, so there is nothing
+// on screen to spotlight. Instead the step shows a sample line marked with the
+// real `data-annot*` attributes — globals.css draws them exactly as it draws a
+// reader's own marks, in either theme — beside a replica of the toolbar.
+const DEMO_TOOLS: { icon: MaterialIconName; label: string; swatch?: string }[] = [
+  { icon: 'format_ink_highlighter', label: 'Highlight', swatch: 'var(--annot-hl-yellow)' },
+  { icon: 'format_underlined', label: 'Underline', swatch: 'var(--annot-ul-red)' },
+  { icon: 'format_strikethrough', label: 'Strike' },
+]
+
+const AnnotateDemo = (
+  <div aria-hidden="true" style={s('margin-bottom:16px;padding:12px;border-radius:12px;background:var(--navy);border:1px solid var(--border2);')}>
+    <div style={s('font-size:13px;color:var(--white);line-height:1.6;margin-bottom:12px;')}>
+      Ionised Ca high with <span data-annot="highlight" data-annot-hl="yellow">PTH low</span> — check PTHrP for{' '}
+      <span data-annot="underline" data-annot-ul="red">hypercalcaemia of malignancy</span>;{' '}
+      <span data-annot="strike">primary hyperparathyroidism</span> unlikely.
+    </div>
+    <div style={s('display:flex;justify-content:center;gap:8px;')}>
+      {DEMO_TOOLS.map(t => (
+        <div key={t.label} style={s('display:flex;flex-direction:column;align-items:center;gap:4px;')}>
+          <div style={s('width:40px;height:40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border-radius:8px;border:1px solid var(--border2);background:var(--navy2);color:var(--white);')}>
+            <MaterialIcon name={t.icon} size={18} />
+            {t.swatch && <span style={{ width: 16, height: 3, borderRadius: 2, background: t.swatch }} />}
+          </div>
+          <div style={s('font-size:10px;color:var(--gray2);')}>{t.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+)
 
 const STEPS: StepDef[] = [
   {
     selector: null,
     title: "Let's take a quick tour",
-    body: "We'll walk you through the 5 key features of Vetic. Tap Next to begin, or Skip to dismiss.",
+    body: "We'll walk you through the key features of Vetic, including the newest ones. Tap Next to begin, or Skip to dismiss.",
     tipPos: 'center',
   },
   {
@@ -40,9 +73,23 @@ const STEPS: StepDef[] = [
     tipPos: 'below',
   },
   {
+    selector: null,
+    title: 'New: mark up the text',
+    body: 'Select any text on a page to highlight it (5 colours), underline it (3 colours) or strike it through. Tap a mark later to recolour or remove it. Marks stay with that page, and sync to your account when you are signed in.',
+    tipPos: 'center',
+    demo: AnnotateDemo,
+  },
+  {
     selector: '[data-tutorial="notes-btn"]',
     title: 'Per-page notes',
-    body: 'The Notes button opens a scratchpad tied to the current page. Notes are saved locally and persist across sessions.',
+    body: 'The Notes button opens a scratchpad tied to the current page. Notes work offline, sync to your account when you are signed in, and the picker lets you jump between pages you have notes on.',
+    tipPos: 'below',
+  },
+  {
+    selector: '[data-tutorial="case-triage"]',
+    title: 'New: case triage',
+    body: 'Mix & Match ranks differentials from the signalment and signs you enter. Or tap here to paste case notes in plain English — common vet abbreviations are read, and any it does not recognise are flagged with a suggested fix.',
+    navTab: 3,
     tipPos: 'below',
   },
   {
@@ -52,6 +99,12 @@ const STEPS: StepDef[] = [
     tipPos: 'above',
   },
 ]
+
+// The context owns the step count (next/back clamp to it); the two must agree
+// or the tour ends early or walks off the end of this list.
+if (STEPS.length !== TUTORIAL_STEPS) {
+  console.error(`TutorialOverlay: ${STEPS.length} steps but TUTORIAL_STEPS is ${TUTORIAL_STEPS}`)
+}
 
 interface Rect { top: number; left: number; width: number; height: number }
 
@@ -192,6 +245,7 @@ export function TutorialOverlay() {
 
         <div style={s('font-size:15px;font-weight:700;color:var(--white);margin-bottom:6px;')}>{def.title}</div>
         <div style={s('font-size:13px;color:var(--gray);line-height:1.55;margin-bottom:16px;')}>{def.body}</div>
+        {def.demo}
 
         <div style={s('display:flex;align-items:center;justify-content:space-between;gap:10px;')}>
           <button
