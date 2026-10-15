@@ -1076,6 +1076,8 @@ a month" and "~one third relapse". Scott is cited as a **differential warning**:
 picture of phenobarbital-induced cytopenia can be indistinguishable from immune-mediated
 neutropenia, so the drug history matters before treating.
 
+> **Superseded 2026-10-15:** both pages are now cited. See "Coagulopathy and DIS-BD batch (2026-10-15)".
+
 ⚠️ **`DIS-BD-HEMB` and `DIS-BD-HEMC` have no references and are deliberately left that way.**
 Their breed-specific variant claims are precise — German wirehaired pointer 1.5-kb intron 5
 insertion, Lhasa apso nt 772-777 deletion, Rhodesian ridgeback c.731G>A, Kerry blue terrier
@@ -4819,6 +4821,11 @@ DIS-EYE-KCS (O'Neill 2021 KCS still at reference 2). Note the markers use the
 
 ## Scope decision — the DIS-BD pages stay uncited (owner's call, 2026-10-06)
 
+> **Superseded 2026-10-15 by vetic:** "bring them in scope and cite them — medical findings
+> such as these will constantly need to be updated as new research papers will be released".
+> Six of the seven are now cited. See "Coagulopathy and DIS-BD batch (2026-10-15)". The text
+> below is kept as the record of the earlier decision.
+
 The seven uncited DIS-BD pages are **out of scope for the citation pass** and are
 not to be revisited by lowering the evidence bar. This is a decision by vetic,
 recorded here so it is not re-opened.
@@ -6889,3 +6896,91 @@ Notes:
 - **DIS-DENT-ORONASAL**: searched in this pass; only case reports exist.
 - **DIS-BD-VASCLH**: deliberately not cited — the syndrome itself could not be found in the
   literature (see the immune-mediated batch notes).
+
+## Coagulopathy and DIS-BD batch (2026-10-15)
+
+**16 → 10.** This reverses the 2026-10-06 scope decision at the owner's request: these pages
+need to track new research like every other page. The worry that ruling raised — that
+variant papers describe one family — is handled under Rule 2: each variant line states
+what the paper actually studied (a pedigree, a colony, a single cat).
+
+> Brooks MB, Gu W, Barnas JL, Ray J, Ray K. A Line 1 insertion in the Factor IX gene segregates with mild hemophilia B in dogs. Mamm Genome. 2003;14(11):788-795. doi:10.1007/s00335-003-2290-z
+
+> Mauser AE, Whitlark J, Whitney KM, Lothrop CD. A deletion mutation causes hemophilia B in Lhasa Apso dogs. Blood. 1996;88(9):3451-3455. doi:10.1182/blood.V88.9.3451.bloodjournal8893451
+
+> Goree M, Catalfamo JL, Aber S, Boudreaux MK. Characterization of the mutations causing hemophilia B in 2 domestic cats. J Vet Intern Med. 2005;19(2):200-204. doi:10.1111/j.1939-1676.2005.tb02682.x
+
+> Kuder H, Dickeson SK, Brooks MB, et al. A common missense variant causing factor XI deficiency and increased bleeding tendency in Maine Coon cats. Genes (Basel). 2022;13(5):792. doi:10.3390/genes13050792
+
+> Knowler C, Giger U, Dodds WJ, Brooks M. Factor XI deficiency in Kerry Blue Terriers. J Am Vet Med Assoc. 1994;205(11):1557-1561. doi:10.2460/javma.1994.205.11.1557
+
+> Maruyama H, Brooks MB, Stablein A, Frye A. Factor XII deficiency is common in domestic cats and associated with two high frequency F12 mutations. Gene. 2019;706:6-12. doi:10.1016/j.gene.2019.04.053
+
+> Sainz Á, Roura X, Miró G, et al. Guideline for veterinary practitioners on canine ehrlichiosis and anaplasmosis in Europe. Parasit Vectors. 2015;8:75. doi:10.1186/s13071-015-0649-0
+
+> Bouzouraa T, René-Martellet M, Chêne J, et al. Clinical and laboratory features of canine Anaplasma platys infection in 32 naturally infected dogs in the Mediterranean basin. Ticks Tick Borne Dis. 2016;7(6):1256-1264. doi:10.1016/j.ttbdis.2016.07.004
+
+> Neel JA, Snyder L, Grindem CB. Thrombocytosis: a retrospective study of 165 dogs. Vet Clin Pathol. 2012;41(2):216-222. doi:10.1111/j.1939-165X.2012.00416.x
+
+> Woolcock AD, Keenan A, Cheung C, Christian JA, Moore GE. Thrombocytosis in 715 dogs (2011-2015). J Vet Intern Med. 2017;31(6):1691-1699. doi:10.1111/jvim.14831
+
+> Howard LA, Woolcock AD, Christian JA, Moore GE. Thrombocytosis in 158 cats (2011-2018). J Feline Med Surg. 2023;25(7):1098612X231185680. doi:10.1177/1098612X231185680
+
+> Nichols PR, Morris DO, Beale KM. A retrospective study of canine and feline cutaneous vasculitis. Vet Dermatol. 2001;12(5):255-264. doi:10.1046/j.0959-4493.2001.00268.x
+
+> Colombo S, Cornegliani L, Vercelli A, Fondati A. Ear tip ulcerative dermatitis treated with oclacitinib in 25 dogs: a retrospective case series. Vet Dermatol. 2021;32(4):363-e100. doi:10.1111/vde.12992
+
+> Levy BJ, Linder KE, Olivry T. The role of oclacitinib in the management of ischaemic dermatopathy in four dogs. Vet Dermatol. 2019;30(3):201-e63. doi:10.1111/vde.12743
+
+All 14 were verified in PubMed and Crossref. Knowler, Mauser and Goree have no DOI in PubMed;
+their DOIs come from Crossref bibliographic search, and title, volume and pages match.
+
+Corrections made against the sources:
+
+- **DIS-BD-ICT, prognosis.** The page said "generally good". In 32 PCR-confirmed
+  Mediterranean dogs, 1-month mortality was 23.9% and only 38.1% improved (Bouzouraa 2016).
+  The page now says outcome depends on region.
+- **DIS-BD-ICT, doxycycline course.** Changed from 8–28 days to the guideline's 8–10 days,
+  with 4 weeks when *E. canis* is also present (Sainz 2015).
+- **DIS-BD-ICT, co-infection.** The page said co-infection worsens disease. Bouzouraa found
+  no clinical difference between 15 single-infected and 13 co-infected dogs, so that claim
+  was removed.
+- **DIS-BD-ICT, removed.** The uncited "21% smear vs 55% PCR" figures. The guideline says
+  only that smear sensitivity is low.
+- **DIS-BD-FXII, removed.** The uncited "2× haemophilia A, 4× haemophilia B" incidence ratio
+  and "normal lifespan". Replaced with Maruyama's finding: none of 26 FXII-deficient cats
+  bled abnormally.
+- **DIS-BD-HEMC, removed.** "A Maine Coon litter lost 4 males after castration" could not be
+  sourced; Kuder 2022 doesn't contain it. Replaced with Kuder's finding that one of 8 bleeding
+  Maine Coons haemorrhaged massively after spaying.
+- **DIS-BD-HEMC, Maine Coon variant.** V516M is Maine Coon-only (absent from 100 cats of other
+  breeds), so it is no longer attributed to DSH cats as well.
+- **DIS-BD-HEMC, Kerry blue variant.** The SINE insertion is in exon 15 (Kuder 2022). The
+  "90 bp" length was unsourced and was dropped.
+- **DIS-BD-HEMC, inheritance.** Knowler 1994 (11 dogs) found mild bleeding in heterozygotes as
+  well as homozygotes. The page now says so beside its autosomal-recessive framing.
+- **DIS-BD-HEMB, feline variant 2.** Restated as Goree's exon 8 Arg338 CGA>TGA nonsense. The
+  page's "c.1150C>T" may be the same change in coding-sequence numbering, but that is unverified.
+- **DIS-BD-TCS, reactive share.** ">95% reactive" is now "every case in a 165-dog series"
+  (Neel 2012). The "6–8%" thromboembolism figure is now 13 of 165 (7.9%).
+- **DIS-BD-TCS, count severity.** Neel 2012 (165 dogs) found marked counts more often with
+  neoplasia. The larger, newer Woolcock 2017 (715 dogs) and Howard 2023 (158 cats) found
+  severity did not predict the diagnosis. The newer studies are taken as the finding and the
+  page names the disagreement (Rule 1c).
+- **DIS-BD-TCS, other fixes.** Removed the self-link in the differentials list. The single-case
+  busulfan and melphalan reports are now marked as single cases.
+- **DIS-BD-VASC, pentoxifylline.** "First-line for ischaemic dermatopathy" (Rule 2b) is replaced
+  by Nichols 2001's response data. Most neutrophilic cases did not respond to pentoxifylline.
+- **DIS-BD-VASC, oclacitinib.** Now carries numbers: 22 of 25 dogs (Colombo 2021) and 4 dogs
+  (Levy 2019).
+
+Resolver changes:
+
+- `Levy` became year-keyed: 2019 is ischaemic dermatopathy and 2026 is TBICS.
+- `Kuder` sits beside the `\b`-guarded `Ku`.
+- The test pins HEMB to 3 references and HEMC to 2, and covers both collisions.
+
+**Still uncited: `DIS-BD-FII`.** PubMed and Europe PMC hold no paper on inherited canine
+factor II deficiency. The only canine hypoprothrombinaemia paper is acquired, from
+sulfaquinoxaline (Neer 1992), and doesn't cover the page.
+
