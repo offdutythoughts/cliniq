@@ -5480,6 +5480,8 @@ failure secondary to primary hyperaldosteronism in a cat. J Vet Cardiol.
 
 ### Declined — DIS-URO-BL-TRAUMA and the uroabdomen pages stay uncited
 
+> **Superseded 2026-10-15:** all three urinary-trauma pages are now cited. See "Last uncited pages (2026-10-15)".
+
 Searched `uroperitoneum[Title]`, `uroabdomen[Title]` and a targeted query for a
 validation study of the **peritoneal-fluid-to-blood potassium and creatinine
 ratios** — the diagnostic criterion these pages rest on. The last returned
@@ -6984,3 +6986,97 @@ Resolver changes:
 factor II deficiency. The only canine hypoprothrombinaemia paper is acquired, from
 sulfaquinoxaline (Neer 1992), and doesn't cover the page.
 
+## Last uncited pages (2026-10-15)
+
+**10 → 2.** These pages were earlier declined with one or two narrow queries each, mostly
+through the Consensus connector. Re-searched in PubMed and Europe PMC.
+
+> Grimes JA, Fletcher JM, Schmiedt CW. Outcomes in dogs with uroabdomen: 43 cases (2006-2015). J Am Vet Med Assoc. 2018;252(1):92-97. doi:10.2460/javma.252.1.92
+
+> Aumann M, Worth LT, Drobatz KJ. Uroperitoneum in cats: 26 cases (1986-1995). J Am Anim Hosp Assoc. 1998;34(4):315-324. doi:10.5326/15473317-34-4-315
+
+> Paes PRO, Alonso FH, Chaves NG, Andrade AM, Ceregatti MG, Horta RS. Laboratory diagnosis of canine uroperitoneum based on cellular and biochemical characteristics of serum and abdominal fluid. Vet Clin Pathol. 2022;51(1):107-111. doi:10.1111/vcp.13046
+
+> Godart B, Bonnel G, Bedu AS, Frippiat T, Leperlier DR. Lower urinary tract rupture in cats and dogs following severe blunt trauma. N Z Vet J. 2025;73(1):60-66. doi:10.1080/00480169.2024.2398020
+
+> Toh CSL, Rossanese M, Cook SD. Successful conservative management of urinary tract rupture in dogs and cats: 52 cases (2003-2024). J Small Anim Pract. 2025;66(10):732-738. doi:10.1111/jsap.13882
+
+> Corgozinho KB, de Souza HJ, Pereira AN, et al. Catheter-induced urethral trauma in cats with urethral obstruction. J Feline Med Surg. 2007;9(6):481-486. doi:10.1016/j.jfms.2007.09.002
+
+> Weisse C, Aronson LR, Drobatz K. Traumatic rupture of the ureter: 10 cases. J Am Anim Hosp Assoc. 2002;38(2):188-192. doi:10.5326/0380188
+
+> Espenica SA, Pascual M, Shing H, Valls Sanchez F. Clinical, imaging and rhinoscopy findings of dogs and cats with nasal foreign bodies presenting to a UK referral hospital: 71 cases (2010-2022). J Small Anim Pract. 2025;66(2):100-109. doi:10.1111/jsap.13790
+
+> Dias MJ, Mouro S, Englar RE, Leal RO. Nasal foreign bodies identified by rhinoscopy in dogs: 42 cases. J Small Anim Pract. 2020;61(12):752-756. doi:10.1111/jsap.13220
+
+> Hagley SP, Hopper K, Epstein SE. Etiology and prognosis for dogs with abnormal blood glucose concentrations evaluated in an emergency room. J Vet Emerg Crit Care (San Antonio). 2020;30(5):567-573. doi:10.1111/vec.12996
+
+> DuHadway MR, Sharp CR, Meyers KE, Koenigshof AM. Retrospective evaluation of xylitol ingestion in dogs: 192 cases (2007-2012). J Vet Emerg Crit Care (San Antonio). 2015;25(5):646-654. doi:10.1111/vec.12350
+
+> Fisher C, Seferidis N, Zilli J, Roberts T, Harcourt-Brown T. Insights into the clinical presentation, diagnostics and outcome in dogs presenting with neurological signs secondary to infection with Neospora caninum: 41 cases (2014-2023). J Small Anim Pract. 2024;65(7):582-588. doi:10.1111/jsap.13702
+
+> Kennedy A, White JD, Child G. Neosporosis in 21 adult dogs, 2010-2023. J Vet Intern Med. 2024;38(6):3079-3086. doi:10.1111/jvim.17219
+
+> Dubey JP, Carpenter JL. Histologically confirmed clinical toxoplasmosis in cats: 100 cases (1952-1990). J Am Vet Med Assoc. 1993;203(11):1556-1566. doi:10.2460/javma.1993.203.11.1556
+
+> Vaughn L, Beckel N, Walters P. Severe burn injury, burn shock, and smoke inhalation injury in small animals. Part 2: diagnosis, therapy, complications, and prognosis. J Vet Emerg Crit Care (San Antonio). 2012;22(2):187-200. doi:10.1111/j.1476-4431.2012.00728.x
+
+> Quist EM, Tanabe M, Mansell JE, Edwards JL. A case series of thermal scald injuries in dogs exposed to hot water from garden hoses (garden hose scalding syndrome). Vet Dermatol. 2012;23(2):162-166. doi:10.1111/j.1365-3164.2011.01015.x
+
+> Castejón-González AC, Reiter AM. Surgical treatment for cleft palate in dogs yields excellent outcomes despite high rates of oronasal fistula formation: a narrative review. J Am Vet Med Assoc. 2023;261(S2):S34-S43. doi:10.2460/javma.23.06.0330
+
+> Ogawa M, Yamaki S, Yamashita M, et al. Detection of oronasal fistula using a fluorescent water passing test. J Vet Dent. 2025;42(4):255-260. doi:10.1177/08987564241292661
+
+> Lorrain RP, Legendre LF. Oronasal fistula repair using auricular cartilage. J Vet Dent. 2012;29(3):172-175. doi:10.1177/089875641202900306
+
+All 19 were verified in PubMed and Crossref. Dubey 1993 has no DOI in PubMed; its DOI comes
+from Crossref, with title, volume and pages matching.
+
+Corrections made against the sources:
+
+- **Uroperitoneum cut-offs (DIS-URO-BL-TRAUMA, DIS-URO-RENAL-TRAUMA).**
+  - **Cats:** the pages gave "K⁺ ratio >1.9 in cats, 100% sensitive and specific". 1.9:1 is
+    Aumann 1998's *mean* ratio in 26 cats, not a validated cut-off. The pages now say so.
+  - **Dogs:** the canine ">2× creatinine, 86%/100%" and "K⁺ >1.4, 100%/100%" figures
+    presumably come from Schmiedt 2001 (JVECC 11:275, doi:10.1111/j.1476-4431.2001.tb00066.x).
+    It is in Crossref only, with no abstract in any registry and a publisher page behind a
+    bot check. It went uncited (Rule 3), and its sensitivity and specificity figures were
+    removed.
+  - **Replacement:** Paes 2022 (180 effusions, 30 uroperitoneum) leads instead, with
+    creatinine ≥2.1 mg/dL and ratio ≥1.25 at 99% accuracy. It is newer and larger (Rule 1c).
+- **Voiding doesn't exclude rupture.** Godart 2025 (4 of 8) and Aumann 1998 now say so on the
+  bladder and urethra pages.
+- **DIS-URO-URETH-TRAUMA.** Removed the unsourced "stricture ~30%". Replaced with Toh 2025:
+  narrowing in 11 of 25 conservatively managed tears.
+- **DIS-URO-RENAL-TRAUMA.** Fixed a differential that linked the page to itself, labelled
+  "Haemoperitoneum from other cause".
+- **DIS-INFECT-TOXO, prognosis.** "Good prognosis if treated early" for adult neosporosis was
+  replaced. Kennedy 2024: 8 of 21 dogs fully recovered and 57% were alive at 1 year. Fisher
+  2024: 5.6% of 41 fully recovered, and 27.8% relapsed.
+- **DIS-INFECT-TOXO, other fixes.**
+  - "CK often >5,000" became a median of 3,369 U/L.
+  - The pearl's "young dog" became "any age".
+- **DIS-ENV-BURN.**
+  - Removed "50–70% mortality above 30% TBSA". Vaughn 2012 states the prognosis in dogs and
+    cats is unknown, and that published figures are extrapolated from human data.
+  - Garden-hose scalding was added.
+- **DIS-NASAL-FB.** Added that CT showed the foreign body itself in only 14 of 40 cases, and
+  that cats present later than dogs.
+- **DIS-MET-HYPOGLY.** The "Toxin (xylitol)" differential linked to the allium page. It is now
+  plain text, since no xylitol page exists. Added emergency prevalence and mortality, and the
+  xylitol series.
+- **DIS-DENT-ORONASAL.** Cited cleft-palate repair as a cause (a narrative review), the
+  fluorescein test (25 dogs) and auricular cartilage repair (5 dogs). Sample sizes are inline.
+
+Resolver changes:
+
+- `Weisse`, `Kennedy` and `Castejón-González` became year-keyed.
+- `Lorrain` sits beside the `\b`-guarded `Lo`.
+
+### What is still without a paper
+
+- **DIS-BD-FII.** No paper on inherited canine factor II deficiency exists in PubMed or
+  Europe PMC. The open-access review Dodds 2022 doesn't cover it either.
+- **DIS-BD-VASCLH.** Still not cited. The entity itself can't be found in the literature (see
+  the immune-mediated batch notes), so citing generic vasculitis papers would make an
+  unverified syndrome look established. This needs an owner decision.
