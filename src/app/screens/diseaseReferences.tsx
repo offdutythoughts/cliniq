@@ -324,6 +324,16 @@ const BENNETT_PROSTATECTOMY =
   'Bennett TC, Matz BM, Henderson RA, et al. Total prostatectomy as a treatment for prostatic carcinoma in 25 dogs. Vet Surg. 2018;47(3):367-377. doi:10.1111/vsu.12768'
 const NIZANSKI_BPH =
   'Niżański W, Ochota M, Fontaine C, Pasikowska J. Comparison of clinical effectiveness of deslorelin acetate and osaterone acetate in dogs with benign prostatic hyperplasia. Animals (Basel). 2020;10(10):1936. doi:10.3390/ani10101936'
+const GIRARD_TR =
+  'Girard N, Servet E, Biourge V, Hennet P. Feline tooth resorption in a colony of 109 cats. J Vet Dent. 2008;25(3):166-174. doi:10.1177/089875640802500302'
+const DORAN_STICK =
+  'Doran IP, Wright CA, Moore AH. Acute oropharyngeal and esophageal stick injury in forty-one dogs. Vet Surg. 2008;37(8):781-785. doi:10.1111/j.1532-950X.2008.00448.x'
+const KILDUFF_STICK =
+  'Kilduff-Taylor A, Baines SJ. Endoscopic treatment of acute oropharyngeal stick injuries in dogs: 46 cases (2010-2020). J Small Anim Pract. 2023;64(10):635-641. doi:10.1111/jsap.13642'
+const CASTEJON_MANDIBLE =
+  'Castejón-González AC, Stefanovski D, Reiter AM. Etiology and patterns of mandibular fractures in cats. Front Vet Sci. 2025;12:1613902. doi:10.3389/fvets.2025.1613902'
+const WANG_ORBITAL_ABSCESS =
+  'Wang AL, Ledbetter EC, Kern TJ. Orbital abscess bacterial isolates and in vitro antimicrobial susceptibility patterns in dogs and cats. Vet Ophthalmol. 2009;12(2):91-96. doi:10.1111/j.1463-5224.2008.00687.x'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -1770,7 +1780,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Niżański', 'Bennett', 'Sorenmo', 'Bascuñán', 'Buchanan', 'Zacuto', 'Leib', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Wang', 'Castejón-González', 'Kilduff-Taylor', 'Doran', 'Girard', 'Niżański', 'Bennett', 'Sorenmo', 'Bascuñán', 'Buchanan', 'Zacuto', 'Leib', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -2631,6 +2641,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Sorenmo/.test(part)) { out.push({ id: 'sorenmo-prostate-cox', text: SORENMO_PROSTATE_COX }); continue }
     if (/^Bennett/.test(part)) { out.push({ id: 'bennett-total-prostatectomy', text: BENNETT_PROSTATECTOMY }); continue }
     if (/^Niżański/.test(part)) { out.push({ id: 'nizanski-bph-da-oa', text: NIZANSKI_BPH }); continue }
+    if (/^Girard/.test(part)) { out.push({ id: 'girard-tr-109', text: GIRARD_TR }); continue }
+    if (/^Doran/.test(part)) { out.push({ id: 'doran-stick-injury', text: DORAN_STICK }); continue }
+    if (/^Kilduff-Taylor/.test(part)) { out.push({ id: 'kilduff-stick-endoscopy', text: KILDUFF_STICK }); continue }
+    if (/^Castejón-González/.test(part)) { out.push({ id: 'castejon-feline-mandible', text: CASTEJON_MANDIBLE }); continue }
+    if (/^Wang/.test(part)) { out.push({ id: 'wang-orbital-abscess', text: WANG_ORBITAL_ABSCESS }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
