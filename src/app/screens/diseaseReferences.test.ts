@@ -867,13 +867,13 @@ describe('reference block', () => {
       ['DIS-BD-DIC', 4, ['scoring system for diagnosis of canine disseminated', 'Thromboelastographic', 'coagulation in cats']],
       ['DIS-BD-FX', 1, ['Factor X deficiency in a cat']],
       ['DIS-BD-FVII', 2, ['missense mutation responsible for factor VII', 'unexplained bleeding on autopsy']],
-      // Pages 26-30. DIS-BD-HEMB and DIS-BD-HEMC are deliberately at zero, for
-      // the same reason DIS-BD-FII is: nothing citable was found for their
-      // breed-specific F9/F11 variants, and the pages were left uncited rather
-      // than propped up on a haemophilia A paper that does not cover them.
+      // Pages 26-30. DIS-BD-HEMB and DIS-BD-HEMC were at zero until the
+      // 2026-10-15 pass found the variant papers themselves (F9 in German
+      // wirehaired pointers, Lhasa apsos and cats; F11 in Maine Coons and
+      // Kerry blues) — never a haemophilia A paper standing in for them.
       ['DIS-BD-HEMA', 4, ['Clinical outcome after diagnosis of hemophilia A', 'clonal expansions', 'paraspinal hyperesthesia']],
-      ['DIS-BD-HEMB', 0, []],
-      ['DIS-BD-HEMC', 0, []],
+      ['DIS-BD-HEMB', 3, ['Line 1 insertion in the Factor IX', 'hemophilia B in Lhasa Apso', 'hemophilia B in 2 domestic cats']],
+      ['DIS-BD-HEMC', 2, ['factor XI deficiency and increased bleeding tendency in Maine Coon', 'Factor XI deficiency in Kerry Blue']],
       ['DIS-BD-IMHA', 3, ['diagnosis of immune-mediated hemolytic anemia', 'treatment of immune-mediated hemolytic anemia']],
       ['DIS-IMNP', 2, ['immune-mediated neutropenia in 35 dogs', 'treated with phenobarbital']],
       // Evans syndrome, then the tick-borne and spirochaetal pages. Both
@@ -1421,6 +1421,10 @@ describe('citation pass 2026-10-14 — collision cases', () => {
       ['Johnson 2019', 'johnson-eosinophilic-lung'],
       ['Phillips 2022', 'phillips-septic-arthritis'],
       ['Gomez 2004', 'gomez-pf-outcome'],
+      ['Levy 2019', 'levy-ischaemic-dermatopathy'],
+      ['Levy 2026', 'levy-tbics'],
+      ['Kuder 2022', 'kuder-fxi-mainecoon'],
+      ['Ku 2023', 'ku-rta-ndi'],
     ]
     for (const [marker, id] of cases) expect(parseSources(marker).map(s => s.id), marker).toEqual([id])
   })

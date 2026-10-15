@@ -364,6 +364,32 @@ const ENOMOTO_YOUNG_OA =
   'Enomoto M, de Castro N, Hash J, et al. Prevalence of radiographic appendicular osteoarthritis and associated clinical signs in young dogs. Sci Rep. 2024;14(1):2827. doi:10.1038/s41598-024-52324-9'
 const WUCHERER_CCL =
   'Wucherer KL, Conzemius MG, Evans R, Wilke VL. Short-term and long-term outcomes for overweight dogs with cranial cruciate ligament rupture treated surgically or nonsurgically. J Am Vet Med Assoc. 2013;242(10):1364-1372. doi:10.2460/javma.242.10.1364'
+const BROOKS_HEMB_GWP =
+  'Brooks MB, Gu W, Barnas JL, Ray J, Ray K. A Line 1 insertion in the Factor IX gene segregates with mild hemophilia B in dogs. Mamm Genome. 2003;14(11):788-795. doi:10.1007/s00335-003-2290-z'
+const MAUSER_HEMB_LHASA =
+  'Mauser AE, Whitlark J, Whitney KM, Lothrop CD. A deletion mutation causes hemophilia B in Lhasa Apso dogs. Blood. 1996;88(9):3451-3455. doi:10.1182/blood.V88.9.3451.bloodjournal8893451'
+const GOREE_HEMB_CATS =
+  'Goree M, Catalfamo JL, Aber S, Boudreaux MK. Characterization of the mutations causing hemophilia B in 2 domestic cats. J Vet Intern Med. 2005;19(2):200-204. doi:10.1111/j.1939-1676.2005.tb02682.x'
+const KUDER_FXI_MAINECOON =
+  'Kuder H, Dickeson SK, Brooks MB, et al. A common missense variant causing factor XI deficiency and increased bleeding tendency in Maine Coon cats. Genes (Basel). 2022;13(5):792. doi:10.3390/genes13050792'
+const KNOWLER_FXI_KBT =
+  'Knowler C, Giger U, Dodds WJ, Brooks M. Factor XI deficiency in Kerry Blue Terriers. J Am Vet Med Assoc. 1994;205(11):1557-1561. doi:10.2460/javma.1994.205.11.1557'
+const MARUYAMA_FXII_CATS =
+  'Maruyama H, Brooks MB, Stablein A, Frye A. Factor XII deficiency is common in domestic cats and associated with two high frequency F12 mutations. Gene. 2019;706:6-12. doi:10.1016/j.gene.2019.04.053'
+const SAINZ_EHRLICHIA_GUIDELINE =
+  'Sainz Á, Roura X, Miró G, et al. Guideline for veterinary practitioners on canine ehrlichiosis and anaplasmosis in Europe. Parasit Vectors. 2015;8:75. doi:10.1186/s13071-015-0649-0'
+const BOUZOURAA_PLATYS =
+  'Bouzouraa T, René-Martellet M, Chêne J, et al. Clinical and laboratory features of canine Anaplasma platys infection in 32 naturally infected dogs in the Mediterranean basin. Ticks Tick Borne Dis. 2016;7(6):1256-1264. doi:10.1016/j.ttbdis.2016.07.004'
+const NEEL_THROMBOCYTOSIS =
+  'Neel JA, Snyder L, Grindem CB. Thrombocytosis: a retrospective study of 165 dogs. Vet Clin Pathol. 2012;41(2):216-222. doi:10.1111/j.1939-165X.2012.00416.x'
+const WOOLCOCK_THROMBOCYTOSIS =
+  'Woolcock AD, Keenan A, Cheung C, Christian JA, Moore GE. Thrombocytosis in 715 dogs (2011-2015). J Vet Intern Med. 2017;31(6):1691-1699. doi:10.1111/jvim.14831'
+const HOWARD_THROMBOCYTOSIS_CATS =
+  'Howard LA, Woolcock AD, Christian JA, Moore GE. Thrombocytosis in 158 cats (2011-2018). J Feline Med Surg. 2023;25(7):1098612X231185680. doi:10.1177/1098612X231185680'
+const NICHOLS_VASCULITIS =
+  'Nichols PR, Morris DO, Beale KM. A retrospective study of canine and feline cutaneous vasculitis. Vet Dermatol. 2001;12(5):255-264. doi:10.1046/j.0959-4493.2001.00268.x'
+const COLOMBO_ETUD =
+  'Colombo S, Cornegliani L, Vercelli A, Fondati A. Ear tip ulcerative dermatitis treated with oclacitinib in 25 dogs: a retrospective case series. Vet Dermatol. 2021;32(4):363-e100. doi:10.1111/vde.12992'
 // Urinary incontinence — dogs only.
 const ACVIM_INCONTINENCE =
   'Kendall A, Byron JK, Westropp JL, et al. ACVIM consensus statement on diagnosis and management of urinary incontinence in dogs. J Vet Intern Med. 2024;38(2):878-903. doi:10.1111/jvim.16975'
@@ -1429,6 +1455,8 @@ const PHILLIPS_EXERCISE_ANNPE =
   'Phillips K, Freeman P. Exercise restriction does not change outcome in dogs after diagnosis of acute non-compressive nucleus pulposus extrusion, fibrocartilaginous embolism, or hydrated nucleus pulposus extrusion. J Vet Intern Med. 2025;39(4):e70135. doi:10.1111/jvim.70135'
 const TOGAWA_DPN_OUTCOME =
   'Togawa G, Lewis MJ, Devathasan D. Outcome in paraplegic dogs with or without pain perception due to thoracolumbar fibrocartilaginous embolic myelopathy or acute non-compressive nucleus pulposus extrusion. Front Vet Sci. 2024;11:1406843. doi:10.3389/fvets.2024.1406843'
+const LEVY_ISCHAEMIC_DERMATOPATHY =
+  'Levy BJ, Linder KE, Olivry T. The role of oclacitinib in the management of ischaemic dermatopathy in four dogs. Vet Dermatol. 2019;30(3):201-e63. doi:10.1111/vde.12743'
 const LEVY_TBICS =
   'Levy A, Rapoport K, Klainbart S, Yagil-Kelmer E, Shamir MH, Chai O. Traumatic brain injury clinical score (TBICS) predicts survival outcomes in dogs and cats with acute traumatic brain injury. Am J Vet Res. 2026;87(7). doi:10.2460/ajvr.26.02.0039'
 // Crossref gives the print year as 2022 (32(1):75-82); PubMed shows the 2021
@@ -1814,7 +1842,7 @@ const SOURCE_NAMES = [
   'Shelton', 'Forgash', 'Cridge', 'Dewey', 'Quintavalla',
   'Cook', 'Boland', 'Valentin', 'Keith', 'Neiger', 'Miceli', 'Daley', 'Moore',
   'Duesberg', 'Meij', 'Benchekroun', 'Hardy', 'Yayoshi', 'Muschner', 'Lien',
-  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Wucherer', 'Enomoto', 'Chetboul', 'Bomassi', 'Schick', 'Darcy', 'Boudreaux', 'Gomez', 'Kijas', 'Mueller', 'Smee', 'Thierry', 'Legallet', 'Wang', 'Castejón-González', 'Kilduff-Taylor', 'Doran', 'Girard', 'Niżański', 'Bennett', 'Sorenmo', 'Bascuñán', 'Buchanan', 'Zacuto', 'Leib', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
+  'Chirayath', 'LeVine', 'Charalambous', 'Marsilio', 'Reinero', 'Pressler', 'Segev', 'Kendall', 'Webster', 'Forman', 'Podell', 'Heilmann', 'Cerda-Gonzalez', 'Colombo', 'Nichols', 'Howard', 'Woolcock', 'Neel', 'Bouzouraa', 'Sainz', 'Maruyama', 'Knowler', 'Kuder', 'Goree', 'Mauser', 'Brooks', 'Wucherer', 'Enomoto', 'Chetboul', 'Bomassi', 'Schick', 'Darcy', 'Boudreaux', 'Gomez', 'Kijas', 'Mueller', 'Smee', 'Thierry', 'Legallet', 'Wang', 'Castejón-González', 'Kilduff-Taylor', 'Doran', 'Girard', 'Niżański', 'Bennett', 'Sorenmo', 'Bascuñán', 'Buchanan', 'Zacuto', 'Leib', 'Nybroe', 'Outerbridge', 'Trotman', 'Latifi', 'Williams', 'Withers', 'Kristiansen', 'Broome', 'Cannon', 'Hildebrandt', 'Ehrhart', 'Riggs', 'Grossman', 'Abrams', 'Nucci', 'Méric', 'Faucher', 'Cecchi', 'Bae', 'Soderman', 'Pazzi', 'Grellet', 'Liptak', 'Lapsley', 'Kirpensteijn', 'Cortright', 'Sepesy', 'Lester', 'Lidbury', 'Greenhalgh', 'Wallace', 'Hanzlicek', 'NASPHV', 'Werner', 'Reisinger', 'De Massis', 'Dowers', 'Novacco', 'Tasker', 'Granick', 'Chirek', 'Kordick', 'Mira', 'Quitt', 'Pemberton', 'Nadon', 'Biel', 'Orlandi', 'Guevar', 'Giron', 'Thames', 'London', 'Pieper', 'McGrath', 'Bacon', 'Mills', 'Littlejohn', 'Gerber', 'van Renen', 'Van Caenegem', 'Sieberg', 'Karpozilou', 'Clarke', 'Musso', 'Liatis', 'Phillipps', 'Schneider', 'Shell', 'Bali', 'Bruce', 'Stokes', 'Chang', 'Ireland', 'Geisen', 'Cowan', 'Friedenberg', 'Dorman', 'Genovese', 'Weingart', 'Klainbart', 'Sauder', 'Connally', 'Bates', 'Tóth', 'VETgirl', 'Lemmons', 'Gupta',
   'Romaneck',
   'Farias',
   'Gould',
@@ -2081,6 +2109,10 @@ const JAFFEY_BY_YEAR: Record<string, { id: string; text: string }> = {
 const MILLER_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2002': { id: 'miller-doxapram', text: MILLER_DOXAPRAM },
   '2012': { id: 'miller-apl-dogs', text: MILLER_APL },
+}
+const LEVY_BY_YEAR: Record<string, { id: string; text: string }> = {
+  '2026': { id: 'levy-tbics', text: LEVY_TBICS },
+  '2019': { id: 'levy-ischaemic-dermatopathy', text: LEVY_ISCHAEMIC_DERMATOPATHY },
 }
 const CRIDGE_BY_YEAR: Record<string, { id: string; text: string }> = {
   '2018': { id: 'cridge-cpl-assays', text: CRIDGE_CPL_ASSAYS },
@@ -2513,7 +2545,11 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Gonçalves/.test(part)) { out.push({ id: 'goncalves-muo-mri', text: GONCALVES_MUO_MRI }); continue }
     if (/^Dussaux/.test(part)) { out.push({ id: 'dussaux-feline-tetanus', text: DUSSAUX_FELINE_TETANUS }); continue }
     if (/^Togawa/.test(part)) { out.push({ id: 'togawa-dpn-outcome', text: TOGAWA_DPN_OUTCOME }); continue }
-    if (/^Levy/.test(part)) { out.push({ id: 'levy-tbics', text: LEVY_TBICS }); continue }
+    if (/^Levy/.test(part)) {
+      const hit = LEVY_BY_YEAR[part.match(/\b(?:19|20)\d{2}\b/)?.[0] ?? '']
+      if (hit) out.push(hit)
+      continue
+    }
     if (/^Cameron/.test(part)) { out.push({ id: 'cameron-tbi-poc', text: CAMERON_TBI_POC }); continue }
     if (/^Sharma\b/.test(part)) { out.push({ id: 'sharma-head-trauma', text: SHARMA_HEAD_TRAUMA }); continue }
     if (/^Sharman\b/.test(part)) { out.push({ id: 'sharman-helicobacter-detect', text: SHARMAN_HELICOBACTER_DETECT }); continue }
@@ -2707,6 +2743,19 @@ export function parseSources(inner: string): { id: string; text: string }[] {
     if (/^Chetboul/.test(part)) { out.push({ id: 'chetboul-tof-31', text: CHETBOUL_TOF }); continue }
     if (/^Enomoto/.test(part)) { out.push({ id: 'enomoto-young-oa', text: ENOMOTO_YOUNG_OA }); continue }
     if (/^Wucherer/.test(part)) { out.push({ id: 'wucherer-ccl-rct', text: WUCHERER_CCL }); continue }
+    if (/^Brooks/.test(part)) { out.push({ id: 'brooks-hemb-gwp', text: BROOKS_HEMB_GWP }); continue }
+    if (/^Mauser/.test(part)) { out.push({ id: 'mauser-hemb-lhasa', text: MAUSER_HEMB_LHASA }); continue }
+    if (/^Goree/.test(part)) { out.push({ id: 'goree-hemb-cats', text: GOREE_HEMB_CATS }); continue }
+    if (/^Kuder/.test(part)) { out.push({ id: 'kuder-fxi-mainecoon', text: KUDER_FXI_MAINECOON }); continue }
+    if (/^Knowler/.test(part)) { out.push({ id: 'knowler-fxi-kbt', text: KNOWLER_FXI_KBT }); continue }
+    if (/^Maruyama/.test(part)) { out.push({ id: 'maruyama-fxii-cats', text: MARUYAMA_FXII_CATS }); continue }
+    if (/^Sainz/.test(part)) { out.push({ id: 'sainz-ehrlichia-guideline', text: SAINZ_EHRLICHIA_GUIDELINE }); continue }
+    if (/^Bouzouraa/.test(part)) { out.push({ id: 'bouzouraa-platys', text: BOUZOURAA_PLATYS }); continue }
+    if (/^Neel/.test(part)) { out.push({ id: 'neel-thrombocytosis', text: NEEL_THROMBOCYTOSIS }); continue }
+    if (/^Woolcock/.test(part)) { out.push({ id: 'woolcock-thrombocytosis', text: WOOLCOCK_THROMBOCYTOSIS }); continue }
+    if (/^Howard/.test(part)) { out.push({ id: 'howard-thrombocytosis-cats', text: HOWARD_THROMBOCYTOSIS_CATS }); continue }
+    if (/^Nichols/.test(part)) { out.push({ id: 'nichols-vasculitis', text: NICHOLS_VASCULITIS }); continue }
+    if (/^Colombo/.test(part)) { out.push({ id: 'colombo-etud', text: COLOMBO_ETUD }); continue }
     if (/^Webster/.test(part)) { out.push({ id: 'acvim-chronic-hepatitis', text: ACVIM_CHRONIC_HEPATITIS }); continue }
     if (/^Forman/.test(part)) { out.push({ id: 'acvim-feline-pancreatitis', text: ACVIM_FELINE_PANCREATITIS }); continue }
     if (/^Podell/.test(part)) { out.push({ id: 'acvim-seizure-mgmt', text: ACVIM_SEIZURE_MGMT }); continue }
