@@ -18,10 +18,10 @@ import { encodeView } from './viewUrl'
  *  these two must stay the same length. Lived in src/types/index.ts until that
  *  file was deleted — it held one live type and eight dead duplicates of the
  *  db.ts row interfaces. */
-export type Tab = 0 | 1 | 2 | 3 | 4 | 5
+export type Tab = 0 | 1 | 2 | 3 | 4 | 5 | 6
 
 export type View =
-  | { kind: 'tab'; tab: Tab }                                                    // navTo(0..5)
+  | { kind: 'tab'; tab: Tab }                                                    // navTo(0..6)
   | { kind: 'flow'; flowId: string }                                             // renderFlowId
   | { kind: 'dx'; sign: string; tab: string }                                    // renderDxId (tab: history|exam|dx|extras)
   // `sp` pins which species the page opens on — set when the link that got here
@@ -99,7 +99,15 @@ export const TABS = [
   { icon: '🔀', label: 'Mix & Match' },
   { icon: '⚡', label: 'Protocols' },
   { icon: '⚙️', label: 'Settings' },
+  // Appended, not inserted: a tab's index is its identity — the notes key is
+  // `tab-<index>` and analytics log `tab_index` — so inserting at 3 would move
+  // every later tab's saved notes onto the wrong tab. TAB_ORDER places it.
+  { icon: '🧪', label: 'Interpretation' },
 ] as const
+
+/** Left-to-right order of the bottom-nav tabs, as TABS indices. Interpretation
+ *  (6) sits between Disease and Mix & Match without renumbering anything. */
+export const TAB_ORDER: readonly Tab[] = [0, 1, 2, 6, 3, 4, 5]
 
 const TAB_NAMES = TABS.map(t => t.label)
 
@@ -193,7 +201,7 @@ const locNames = (() => {
 })()
 
 export function viewFromNoteKey(key: string): View | null {
-  const tabMatch = key.match(/^tab-([0-5])$/)
+  const tabMatch = key.match(/^tab-([0-6])$/)
   if (tabMatch) return { kind: 'tab', tab: Number(tabMatch[1]) as Tab }
   const sep = key.indexOf(':')
   if (sep < 0) return null

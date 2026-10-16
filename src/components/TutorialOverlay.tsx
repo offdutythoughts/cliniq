@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, useCallback, type ReactNode } from 'react'
 import { useTutorial, TUTORIAL_STEPS } from '../app/tutorial/TutorialContext'
 import { useNav } from '../app/nav/NavContext'
+import type { Tab } from '../app/nav/view'
 import { styleStringToObject as s } from '../app/screens/style'
 import { MaterialIcon, type MaterialIconName } from './MaterialIcon'
 
@@ -58,7 +59,7 @@ const STEPS: StepDef[] = [
   {
     selector: '[data-tutorial="bottom-nav"]',
     title: 'Navigate between sections',
-    body: 'These 6 tabs take you to Clinical signs, Diagnostic approaches, Diseases, Mix & Match, Protocols, and Settings.',
+    body: 'These 7 tabs take you to Clinical signs, Diagnostic approaches, Diseases, Interpretation, Mix & Match, Protocols, and Settings.',
     tipPos: 'above',
   },
   {
@@ -151,7 +152,7 @@ export function TutorialOverlay() {
     const prevNeedsNav = prevStep >= 0 && STEPS[prevStep]?.navTab !== undefined
 
     if (needsNavChange || prevNeedsNav) {
-      if (needsNavChange) nav.navTo(def.navTab as 0|1|2|3|4|5)
+      if (needsNavChange) nav.navTo(def.navTab as Tab)
       // Wait for the tab switch + render
       const id = setTimeout(() => measure(def.selector), 200)
       return () => clearTimeout(id)

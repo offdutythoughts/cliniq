@@ -45,7 +45,7 @@ const locNames = (() => {
 
 /** URL slug per tab, in Tab-index order. Stable strings, not the display labels
  *  — "Mix & Match" is not something to put in a path. */
-const TAB_SLUGS = ['clinical', 'diagnostic', 'disease', 'mixmatch', 'protocols', 'settings'] as const
+const TAB_SLUGS = ['clinical', 'diagnostic', 'disease', 'mixmatch', 'protocols', 'settings', 'interpretation'] as const
 
 export interface ViewUrl {
   /** Identity. `/app/<path>` — also the React key. Never empty. */
