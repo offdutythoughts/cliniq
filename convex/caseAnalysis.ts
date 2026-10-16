@@ -223,13 +223,17 @@ function termKey(s: string): string {
 
 /** Keeps only problem-list terms that are extracted keywords (see termKey),
  *  rewritten to the keyword's own spelling, so the search can look them up. A
- *  term in `key` wins over the same term in `secondary`. */
-export function cleanProblemList(raw: unknown, keywords: string[]): ProblemList {
+ *  term in `key` wins over the same term in `secondary`. With no usable key
+ *  problems, the presenting signs (`signKeywords`) stand in: an empty key list
+ *  switches off the search's key-problem filters, and a run that came back
+ *  that way listed diabetes on lethargy and a borderline glucose alone. */
+export function cleanProblemList(raw: unknown, keywords: string[], signKeywords: string[] = []): ProblemList {
   const byKey = new Map(keywords.map((k) => [termKey(k), k]));
   const known = (t: unknown) => (typeof t === "string" ? byKey.get(termKey(t)) : undefined);
   const p = raw && typeof raw === "object" ? (raw as Record<string, unknown>) : {};
 
-  const key = [...new Set((Array.isArray(p.key) ? p.key : []).map(known).filter((t): t is string => !!t))];
+  let key = [...new Set((Array.isArray(p.key) ? p.key : []).map(known).filter((t): t is string => !!t))];
+  if (key.length === 0) key = [...new Set(signKeywords)];
   const keySet = new Set(key);
 
   const seen = new Set<string>();
@@ -333,7 +337,7 @@ export const extractSignals = action({
       diagKeywords,
       caseSummary: clampStr(raw.caseSummary, 300),
       unknownAbbreviations: clampArr(raw.unknownAbbreviations, 20).map((a) => a.slice(0, 24)),
-      problemList: cleanProblemList(raw.problemList, [...signKeywords, ...diagKeywords]),
+      problemList: cleanProblemList(raw.problemList, [...signKeywords, ...diagKeywords], signKeywords),
     };
   },
 });

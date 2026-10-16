@@ -8,10 +8,12 @@
 //
 // A lane cell holds only the finding that points to THAT differential and away
 // from the others — a sign every candidate shares separates nothing, so it
-// never appears. Rows are grouped by aetiology category (most-likely category
-// first, same order the engine ranked them). Identical findings in adjacent
-// rows of one lane merge into a single box spanning those rows, so a shared
-// clue (fever → every infectious cause) reads as one fork, not repeated text.
+// never appears. Rows run in the engine's rank order, most likely first — not
+// grouped by category: grouping put a whole category above the runner-up, so
+// a weak member of the top category (diabetes beside hypoparathyroidism) read
+// as the top differential. Identical findings in adjacent rows of one lane
+// merge into a single box spanning those rows, so a shared clue (fever → two
+// neighbouring infectious causes) reads as one fork, not repeated text.
 //
 // All text renders as plain React text — model output never reaches an HTML
 // sink here, so nothing needs escaping. Disease names/ids come from `db.ts`.
@@ -58,7 +60,8 @@ export type LaneKey = (typeof LANES)[number]['key']
 export type LaneCell = { text: string; row: number; span: number }
 
 export type LaneChart = {
-  rows: { id: string; name: string; category: string; tone: Tone }[]
+  /** Most likely first; `rank` is 1-based. */
+  rows: { id: string; name: string; category: string; tone: Tone; rank: number }[]
   /** Per lane, its boxes in row order. Rows with no finding have no box. */
   cells: Record<LaneKey, LaneCell[]>
   /** Per row, the first lane (0-based) that holds a finding for it — where its
@@ -69,14 +72,7 @@ export type LaneChart = {
 const norm = (s: string) => s.trim().toLowerCase().replace(/[?.\s]+$/, '')
 
 export function buildCaseLanes(top: DiseaseResult[], synthesis: CaseSynthesis): LaneChart {
-  // Category groups, each in order of its best-ranked member.
-  const order: string[] = []
-  const byCategory = new Map<string, DiseaseResult[]>()
-  for (const t of top) {
-    if (!byCategory.has(t.category)) { byCategory.set(t.category, []); order.push(t.category) }
-    byCategory.get(t.category)!.push(t)
-  }
-  const ranked = order.flatMap(c => byCategory.get(c)!)
+  const ranked = [...top].sort((a, b) => b.score - a.score)
 
   // A backend deployed before `lanes` existed still sends confirmatory
   // diagnostics tagged by diseaseId — enough to fill the last lane.
@@ -84,7 +80,8 @@ export function buildCaseLanes(top: DiseaseResult[], synthesis: CaseSynthesis): 
   const legacyConfirm = (id: string) =>
     synthesis.diagnostics.filter(d => d.tier === 'confirmatory' && d.diseaseIds.includes(id)).map(d => d.label)[0] ?? ''
 
-  const rows = ranked.map(t => ({
+  const rows = ranked.map((t, i) => ({
+    rank: i + 1,
     id: String(t.disease.id),
     name: String(t.disease.name),
     category: t.category,
@@ -104,8 +101,8 @@ export function buildCaseLanes(top: DiseaseResult[], synthesis: CaseSynthesis): 
       const t = text(r, key)
       if (!t) continue
       const prev = out[out.length - 1]
-      // Merge only within a category group: a box straddling two categories
-      // would blur the grouping the rows exist to show.
+      // Merge only between neighbours of one category: the same words for two
+      // different aetiologies usually mean different things to check.
       if (prev && prev.row + prev.span === r && norm(prev.text) === norm(t)
         && rows[prev.row].category === rows[r].category) prev.span++
       else out.push({ text: t, row: r, span: 1 })

@@ -63,7 +63,7 @@ export function CaseLaneChart({ chart, onNav }: { chart: LaneChart; onNav: Nav }
         ))}
 
         {/* header row — chevrons, reading direction left → right */}
-        {[...LANES.map(l => l.label), 'Differential'].map((label, i) => (
+        {[...LANES.map(l => l.label), 'Differential · most likely first'].map((label, i) => (
           <div key={label} style={{ gridColumn: `${i + 1}`, gridRow: '1', ...s(`min-width:0;padding:0 ${PAD - 4}px;z-index:2;`) }}>
             <div
               style={s(
@@ -121,7 +121,7 @@ export function CaseLaneChart({ chart, onNav }: { chart: LaneChart; onNav: Nav }
                   `${box(h.rgb)}border-width:2px;color:${h.color};width:100%;min-width:0;padding:7px 9px;text-align:left;cursor:pointer;font-family:inherit;overflow-wrap:break-word;`,
                 )}
               >
-                <div style={s('font-size:var(--fs-chip-sub);font-weight:700;letter-spacing:.05em;text-transform:uppercase;opacity:.75;overflow-wrap:break-word;')}>{row.category}</div>
+                <div style={s('font-size:var(--fs-chip-sub);font-weight:700;letter-spacing:.05em;text-transform:uppercase;opacity:.75;overflow-wrap:break-word;')}>{row.rank} · {row.category}</div>
                 <div style={s('font-size:var(--fs-subhead);font-weight:700;line-height:1.3;margin-top:1px;overflow-wrap:break-word;')}>{row.name} ›</div>
               </button>
             </div>
