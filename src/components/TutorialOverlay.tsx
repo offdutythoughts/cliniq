@@ -45,6 +45,9 @@ const AnnotateDemo = (
   </div>
 )
 
+const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
+const FEEDBACK_SELECTOR = '[data-tutorial="feedback-btn"]'
+
 const STEPS: StepDef[] = [
   {
     selector: null,
@@ -85,6 +88,13 @@ const STEPS: StepDef[] = [
     body: 'The Notes button opens a scratchpad tied to the current page. Notes work offline, sync to your account when you are signed in, and the picker lets you jump between pages you have notes on.',
     tipPos: 'below',
   },
+  // Convex builds only: the feedback button exists only for signed-in readers.
+  ...(hasConvex ? [{
+    selector: FEEDBACK_SELECTOR,
+    title: 'New: tell us what is wrong',
+    body: 'The 💬 Feedback button is how you report a problem on the page you are on — a wrong dose, a missing differential, a broken link. The page is attached for you; select some text first and it is quoted too. Drag the button anywhere if it is in the way.',
+    tipPos: 'above' as const,
+  }] : []),
   {
     selector: '[data-tutorial="case-triage"]',
     title: 'New: case triage',
@@ -99,6 +109,10 @@ const STEPS: StepDef[] = [
     tipPos: 'above',
   },
 ]
+
+/** The tour step that explains the feedback button (-1 when there is none);
+ *  reaching it retires the button's one-off tip. */
+export const FEEDBACK_TOUR_STEP = STEPS.findIndex(st => st.selector === FEEDBACK_SELECTOR)
 
 // The context owns the step count (next/back clamp to it); the two must agree
 // or the tour ends early or walks off the end of this list.

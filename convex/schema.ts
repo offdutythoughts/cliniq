@@ -88,6 +88,45 @@ export default defineSchema({
   })
     .index("by_user_and_page", ["userId", "pageKey"])
     .index("by_user_and_client", ["userId", "clientId"]),
+  // One row per piece of beta feedback, sent from the 💬 button in the app's
+  // top bar (src/components/FeedbackSheet.tsx). `pageKey` is the same key notes
+  // and annotations use, so a report can be grouped by page and opened straight
+  // from the inbox at /feedback. The reporter's email and the page title are
+  // snapshotted at send time: the inbox must stay readable after an account is
+  // deleted or a page is renamed.
+  feedback: defineTable({
+    userId: v.id("users"),
+    userEmail: v.optional(v.string()),
+    pageKey: v.string(),
+    pageTitle: v.string(),
+    /** Where the reporter was, e.g. "/app/disease/DIS-REN-CKD?sp=cat". */
+    path: v.string(),
+    category: v.union(
+      v.literal("wrong"),
+      v.literal("missing"),
+      v.literal("bug"),
+      v.literal("idea"),
+    ),
+    message: v.string(),
+    /** Text the reporter had selected on the page when they opened the sheet. */
+    quote: v.optional(v.string()),
+    species: v.optional(v.string()),
+    viewport: v.optional(v.string()),
+    userAgent: v.optional(v.string()),
+    /** Git SHA of the build that was on screen, when Vercel exposes one. */
+    appVersion: v.optional(v.string()),
+    status: v.union(
+      v.literal("new"),
+      v.literal("triaged"),
+      v.literal("fixed"),
+      v.literal("wontfix"),
+    ),
+    /** Triage note from whoever handled it — what was changed, or why not. */
+    resolution: v.optional(v.string()),
+    updatedAt: v.number(),
+  })
+    .index("by_status", ["status"])
+    .index("by_user", ["userId"]),
   // One row per user once they've seen the onboarding welcome/tour. Server-side
   // (rather than localStorage) so the "new user only" popup stays dismissed
   // across re-logins and devices — mobile Safari evicts localStorage, which made
@@ -96,6 +135,15 @@ export default defineSchema({
     userId: v.id("users"),
     seenAt: v.number(),
   }).index("by_user", ["userId"]),
+  // One row per (user, hint) once a one-off coachmark has been dismissed — e.g.
+  // the "this 💬 is for feedback" callout. Server-side for the same reason as
+  // `onboarding`: mobile Safari evicts localStorage, and a hint that keeps
+  // coming back is worse than none.
+  hints: defineTable({
+    userId: v.id("users"),
+    hint: v.literal("feedbackButton"),
+    seenAt: v.number(),
+  }).index("by_user_and_hint", ["userId", "hint"]),
   // One row per user: the entitlement that unlocks the clinical app. A verified
   // account with no active row here can sign in but only sees the paywall.
   // Stripe is not wired up yet — the `stripe*` fields are the seams a checkout

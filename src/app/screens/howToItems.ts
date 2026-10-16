@@ -1,4 +1,13 @@
+// The feedback button only exists for signed-in readers of a Convex build, so
+// the standalone build does not describe a button it never shows.
+const FEEDBACK_ITEM = {
+  icon: '💬',
+  title: 'The 💬 Feedback button is for reporting problems',
+  body: 'Spotted a wrong dose, a missing differential or a broken page? Tap the floating 💬 Feedback button to tell us — the page you are on is attached automatically, and any text you select first is quoted. Drag the button anywhere on screen if it is in the way.',
+}
+
 export const HOW_TO_ITEMS: { icon: string; title: string; body: string }[] = [
+  ...(process.env.NEXT_PUBLIC_CONVEX_URL ? [FEEDBACK_ITEM] : []),
   {
     icon: '🔗',
     title: 'Underlined words are links',

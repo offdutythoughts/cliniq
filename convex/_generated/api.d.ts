@@ -14,6 +14,8 @@ import type * as auth from "../auth.js";
 import type * as caseAnalysis from "../caseAnalysis.js";
 import type * as emailVerification from "../emailVerification.js";
 import type * as emails from "../emails.js";
+import type * as feedback from "../feedback.js";
+import type * as feedbackFormat from "../feedbackFormat.js";
 import type * as http from "../http.js";
 import type * as notes from "../notes.js";
 import type * as onboarding from "../onboarding.js";
@@ -35,6 +37,8 @@ declare const fullApi: ApiFromModules<{
   caseAnalysis: typeof caseAnalysis;
   emailVerification: typeof emailVerification;
   emails: typeof emails;
+  feedback: typeof feedback;
+  feedbackFormat: typeof feedbackFormat;
   http: typeof http;
   notes: typeof notes;
   onboarding: typeof onboarding;
