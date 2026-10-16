@@ -62,6 +62,14 @@ describe('applySecondaryRules', () => {
     }
   })
 
+  it('falls back to the presenting signs when the model gives no key problems', () => {
+    const k = ['seizures', 'lethargy', 'elevated blood glucose']
+    const p = cleanProblemList({ key: [], secondary: [], patterns: [] }, k, ['seizures', 'lethargy'])
+    expect(p.key).toEqual(['seizures', 'lethargy'])
+    expect(p.secondary.map(x => x.term)).toEqual(['elevated blood glucose'])
+    expect(cleanProblemList(undefined, k, ['seizures']).key).toEqual(['seizures'])
+  })
+
   it('leaves hyperglycaemia alone alongside glucosuria or PU/PD', () => {
     for (const ctx of ['glucosuria', 'PU/PD', 'polyuria']) {
       const k = ['hyperglycemia', ctx]

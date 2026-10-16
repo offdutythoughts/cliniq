@@ -14,7 +14,7 @@
 //      to those rows.
 //   4. buildCaseLanes lays the result out as a swimlane workup chart —
 //      History → Physical exam → Minimum database → Confirmatory test →
-//      Differential, one row per differential grouped by category, each lane
+//      Differential, one row per differential in rank order, each lane
 //      holding only the finding that separates it — rendered by CaseLaneChart.
 //
 // Abbreviations: the notes are scanned live against a vet-abbreviation
@@ -34,6 +34,7 @@ import { api } from '../../../convex/_generated/api'
 import type { ProblemList } from '../../../convex/caseAnalysis'
 import { searchDiseases, diverseDifferentials, coreDifferentials, type SearchInputs } from '../../lib/search/diseaseSearch'
 import { buildCaseLanes, type LaneChart } from '../../lib/caseTriage/buildLanes'
+import { signLinks } from '../../lib/caseTriage/signLinks'
 import {
   abbreviationKey, abbreviationKeyBlock, abbreviationRanges, scanAbbreviations, suggestAbbreviations,
 } from '../../lib/caseTriage/vetAbbreviations'
@@ -84,11 +85,16 @@ type SavedResult = {
   lastKey?: string
   /** The problem list the last run's search was weighted by. */
   problemList?: ProblemList | null
+  /** The presenting problems that are clinical signs — each gets a link to
+   *  its sign flowchart where one exists. */
+  signProblems?: string[]
 }
 
 // Bump the suffix whenever LaneChart's shape changes, so a stale saved result
-// is dropped instead of rendered against the new component.
-const STORAGE_KEY = 'cliniq.caseTriage.lanes.v1'
+// is dropped instead of rendered against the new component. v2: rows ranked,
+// not grouped by category — a v1 chart restored on mount still showed
+// diabetes above hypoparathyroidism after the ranking had been fixed.
+const STORAGE_KEY = 'cliniq.caseTriage.lanes.v2'
 // In-memory copy first: sessionStorage can throw or be empty (private mode,
 // blocked storage), and in-app back navigation never needs to touch it.
 let lastResult: SavedResult | null = null
@@ -174,14 +180,15 @@ export function CaseTriageScreen() {
   const [modelUnknowns, setModelUnknowns] = useState<string[]>(saved?.modelUnknowns ?? [])
   const [lastKey, setLastKey] = useState(saved?.lastKey ?? '')
   const [problemList, setProblemList] = useState<ProblemList | null>(saved?.problemList ?? null)
+  const [signProblems, setSignProblems] = useState<string[]>(saved?.signProblems ?? [])
   const [expansions, setExpansions] = useState<Record<string, string>>(loadExpansions)
   const rootRef = useRef<HTMLDivElement>(null)
 
   // Persist on every change; capture the scroll position on unmount (i.e. when
   // a differential is opened) so back-nav returns to the same spot.
   useEffect(() => {
-    save({ caseText, flow, caseSummary, modelUnknowns, lastKey, problemList, scrollTop: lastResult?.scrollTop ?? 0 })
-  }, [caseText, flow, caseSummary, modelUnknowns, lastKey, problemList])
+    save({ caseText, flow, caseSummary, modelUnknowns, lastKey, problemList, signProblems, scrollTop: lastResult?.scrollTop ?? 0 })
+  }, [caseText, flow, caseSummary, modelUnknowns, lastKey, problemList, signProblems])
 
   // Glossary scan, plus whatever the model couldn't read last run (while it's
   // still in the notes and the glossary still doesn't know it).
@@ -240,6 +247,7 @@ export function CaseTriageScreen() {
     setFlow(null)
     setCaseSummary('')
     setProblemList(null)
+    setSignProblems([])
     try {
       const signals = await extractSignals({ caseText: text })
       const inputs: SearchInputs = {
@@ -267,6 +275,11 @@ export function CaseTriageScreen() {
       setCaseSummary(signals.caseSummary)
       setModelUnknowns(signals.unknownAbbreviations ?? [])
       setProblemList(signals.problemList ?? null)
+      // The key problems that are signs (lab findings have no flowchart);
+      // every sign when the model gave no key problems.
+      const signs = new Set(signals.signKeywords)
+      const keySigns = (signals.problemList?.key ?? []).filter(t => signs.has(t))
+      setSignProblems(keySigns.length > 0 ? keySigns : signals.signKeywords)
 
       if (top.length === 0) {
         setFlow(buildCaseLanes([], { rationales: [], historyQuestions: [], diagnostics: [] }))
@@ -383,6 +396,7 @@ export function CaseTriageScreen() {
               <span style={s('font-weight:700;color:var(--gray);')}>Parsed as: </span>{caseSummary}
             </div>
           )}
+          {signProblems.length > 0 && <SignFlowRow terms={signProblems} onNav={onNav} />}
           {problemList && <ProblemListPanel list={problemList} />}
           {flow.rows.length === 0 ? (
             <div style={s('padding:10px 12px;border-radius:9px;background:rgba(var(--tone-info),0.12);border:1px solid rgba(var(--tone-info),0.4);color:var(--tone-info-fg);font-size:var(--fs-subhead);line-height:1.5;')}>
@@ -476,6 +490,42 @@ function ProblemListPanel({ list }: { list: ProblemList }) {
           {list.secondary.map(x => (x.explainedBy ? `${x.term} (← ${x.explainedBy})` : x.term)).join(' · ')}
         </div>
       )}
+    </div>
+  )
+}
+
+const SIGN_CHIP = 'display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:999px;'
+  + 'font-size:var(--fs-body);font-family:inherit;line-height:1.3;'
+
+/** One chip per presenting problem: a link into its clinical-sign flowchart,
+ *  or a muted chip saying none exists yet (see signLinks for why matching is
+ *  strict). */
+function SignFlowRow({ terms, onNav }: { terms: string[]; onNav: Nav }) {
+  const links = signLinks(terms)
+  return (
+    <div style={PANEL_STYLE}>
+      <div style={s('font-weight:700;color:var(--gray);margin-bottom:6px;')}>Work up by clinical sign</div>
+      <div style={s('display:flex;flex-wrap:wrap;gap:6px;')}>
+        {links.map(l => l.flowId ? (
+          <button
+            key={l.term}
+            type="button"
+            onClick={() => onNav({ kind: 'flow', flowId: l.flowId! })}
+            title={`Open the ${l.title} flowchart`}
+            style={s(SIGN_CHIP + 'cursor:pointer;font-weight:700;color:var(--tone-teal-fg);'
+              + 'background:rgba(var(--tone-teal),var(--tile-bg-a));border:1px solid rgba(var(--tone-teal),var(--tile-bd-a));')}
+          >
+            {l.term} ›
+          </button>
+        ) : (
+          <span
+            key={l.term}
+            style={s(SIGN_CHIP + 'color:var(--gray2);border:1px dashed var(--border);')}
+          >
+            {l.term} <span style={s('font-size:var(--fs-chip-sub);opacity:.8;')}>· no flowchart yet</span>
+          </span>
+        ))}
+      </div>
     </div>
   )
 }
