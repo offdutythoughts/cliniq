@@ -42,10 +42,11 @@ export interface InterpGroup {
 
 const ETT = (ch: string) => `Ettinger 9th edn, Ch ${ch}`
 const SHARKEY = (ch: string) => `Sharkey & Radin 2010, Ch ${ch}`
-// Systematic review of CBC-only interpretation, 2015–Jan 2026 literature. Read
-// from the PubMed abstract only (paywalled, no PMC copy) — nothing below is
-// attributed to it beyond what that abstract states.
-const BISIAUX = 'Bisiaux et al., Vet J 2026 (systematic review)'
+// Systematic review (PRISMA 2020, 49 studies, 2015–Jan 2026) of CBC-only
+// interpretation; open access, CC BY. Table 2 → the pattern card, Table 1 →
+// the ratio card. Two of its authors develop the VetPAT Vis-NIR analyser — the
+// review discloses this, and the point-of-care pearl says so.
+const BISIAUX = 'Bisiaux et al., Vet J 2026 (systematic review, 49 studies)'
 
 // ── Physical findings ───────────────────────────────────────────────────────
 
@@ -270,6 +271,61 @@ export const PHYSICAL: InterpGroup[] = [
 
 export const BLOODWORK: InterpGroup[] = [
   {
+    title: 'CBC — reading the pattern',
+    icon: '🧩',
+    entries: [
+      {
+        id: 'cbc-patterns',
+        title: 'CBC pattern → differentials',
+        sub: 'A pattern tells you the TYPE of disturbance — history and exam narrow it to a disease',
+        sections: [
+          { heading: 'Non-regenerative anaemia', items: [
+            'With thrombocytopenia ± leukopenia — canine ehrlichiosis',
+            'With monocytosis — canine leishmaniosis',
+            'Feline leishmaniosis, feline histoplasmosis',
+            'Macrocytic — FIV / FeLV (progressive)',
+            'With neutrophilia + PU/PD, hypertension — feline CKD',
+            'With circulating blasts + organomegaly — canine AML',
+            'Microcytic hypochromic — canine portosystemic shunt',
+          ] },
+          { heading: 'Regenerative anaemia', items: [
+            'With macroplatelets, thrombocytopenia — canine babesiosis',
+            'With GI signs, footpad dermatitis — canine ancylostomiasis (hookworm)',
+            'With leukocytosis, monocytosis, thrombocytopenia — feline haemoplasmosis',
+          ] },
+          { heading: 'Inflammatory leukogram (neutrophilia ± left shift, monocytosis, mild non-regenerative anaemia)', items: [
+            'Canine pyometra',
+            'Chronic inflammatory enteropathy',
+            'Canine mammary tumour (± microcytic hypochromic anaemia)',
+            'Canine multicentric lymphoma (± eosinopenia)',
+            'Canine oropharyngeal tumours',
+            'Canine ovarian tumour (± pancytopenia)',
+            'Feline pancreatitis (± haemoconcentration)',
+            'FIP (± lymphopenia)',
+            'Feline mammary carcinoma',
+            'Feline ATE (± lymphopenia, thrombocytopenia)',
+          ] },
+          { heading: 'Stress leukogram (neutrophilia, lymphopenia, eosinopenia, monocytosis)', items: [
+            'Canine hyperadrenocorticism (± thrombocytosis, erythrocytosis)',
+            'Canine MMVD (± thrombocytosis)',
+          ] },
+          { heading: 'Leukopenia (multilineage)', items: [
+            'Canine parvovirus — with thrombocytopenia, anaemia',
+            'Feline panleukopenia',
+          ] },
+          { heading: 'Isolated thrombocytopenia', items: ['Canine ITP (± anaemia from bleeding)'] },
+        ],
+        pearls: [
+          'The same pattern is shared by very different diseases — the review found few distinct patterns across 49 studies',
+          'Feline evidence is thin (14 of 49 studies) — do not extrapolate canine patterns to cats',
+          'Abnormal morphology, atypical cells or a count that does not fit the patient → read the smear',
+        ],
+        related: ['DIS-BD-EHRL', 'DIS-INFECT-LEISHM', 'DIS-INFECT-FELV', 'DIS-SEC-CKD', 'DIS-NEO-LEUK', 'DIS-HEP-PSS', 'DIS-BD-BABS', 'DIS-INFECT-HMYCO', 'DIS-REPRO-PYO', 'DIS-GI-IBD', 'DIS-NEO-LSA', 'DIS-GI-PANCAT', 'DIS-INFECT-FIP', 'DIS-CARD-ATE', 'DIS-PUPD-HAC', 'DIS-CARD-MVD', 'DIS-GI-PARVO', 'DIS-GI-FPV', 'DIS-BD-TCP'],
+        src: BISIAUX,
+      },
+    ],
+  },
+  {
     title: 'CBC — red cells',
     icon: '🩸',
     entries: [
@@ -315,13 +371,12 @@ export const BLOODWORK: InterpGroup[] = [
         title: 'Leukogram patterns',
         sub: 'Read the whole differential, not one line',
         sections: [
-          { heading: 'Stress (glucocorticoid)', items: ['Mature neutrophilia', 'Lymphopenia', 'Eosinopenia', '± Monocytosis (dog)', 'Causes — illness, pain, HAC, steroid therapy'] },
+          { heading: 'Stress (glucocorticoid)', items: ['Mature neutrophilia', 'Lymphopenia', 'Eosinopenia', '± Monocytosis (dog)', 'Cats: lymphopenia is the most consistent change · monocytosis often absent, even with sustained steroid exposure', 'Causes — illness, pain, HAC, steroid therapy'] },
           { heading: 'Excitement (catecholamine)', items: ['Mild mature neutrophilia + lymphocytosis', 'Mostly young cats · transient (minutes)', 'Should not exceed 2× the upper RI or show a left shift'] },
           { heading: 'Inflammatory', items: ['Neutrophilia with left shift (bands)', 'Toxic change — Döhle bodies, basophilic foamy cytoplasm', 'Degenerative left shift (bands > mature, or neutropenia + bands) = overwhelming demand, worse prognosis'] },
         ],
         pearls: [
           'A normal lymphocyte count in a very sick animal should make you think of hypoadrenocorticism',
-          'Inflammatory and stress leukograms, regenerative / non-regenerative anaemia, leukopenic and thrombocytopenic patterns are the recurring CBC signatures in a 2026 systematic review of CBC-only interpretation',
         ],
         related: ['DIS-SEC-HYPO'],
         src: `${ETT('58')} · ${BISIAUX}`,
@@ -329,16 +384,28 @@ export const BLOODWORK: InterpGroup[] = [
       {
         id: 'cbc-ratios',
         title: 'CBC-derived ratios (NLR, PLR, SII)',
-        sub: 'Non-specific markers of systemic inflammatory burden — not diagnostic',
+        sub: 'Sensitive but non-specific markers of systemic inflammation or stress — not diagnostic',
         sections: [
-          { heading: 'Indices studied', items: ['NLR — neutrophil : lymphocyte', 'MLR — monocyte : lymphocyte', 'PNR / PLR — platelet : neutrophil, platelet : lymphocyte', 'SII — systemic immune-inflammation index (platelets × neutrophils ÷ lymphocytes)'] },
-          { heading: 'Where the evidence sits', items: ['Pyometra', 'Parvovirus enteritis', 'Pancreatitis', 'Parasitism', 'Cardiac disease', 'Endocrinopathies'] },
-          { heading: 'Limits', items: ['Evidence comes mostly from small studies in dogs', 'Clinical validity for diagnosing any one disease is not established', 'They inherit every error in the differential and platelet counts they are built from'] },
+          { heading: 'Indices', items: ['NLR — neutrophil : lymphocyte', 'MLR — monocyte : lymphocyte', 'PNR / PLR — platelet : neutrophil, platelet : lymphocyte', 'SII — systemic immune-inflammation index (platelets × neutrophils ÷ lymphocytes)'] },
+          { heading: 'What raises them besides disease', items: ['Endogenous or exogenous glucocorticoids', 'Catecholamines from handling and restraint', 'Recent surgery, pregnancy, old age', 'Neoplasia, endocrinopathy'] },
+          { heading: 'Reported cut-offs — one study each, cut-off derived from its own data, NOT validated', items: [
+            'Canine pyometra — NLR >5.85 (AUC 0.96 · Se 85 / Sp 100%) · MLR >0.41 (AUC 0.93) — vs healthy dogs',
+            'Canine parvovirus — RDW >12.4% (AUC 0.93 · Se 86 / Sp 93%) · PLR >175 (AUC 0.88) — vs healthy dogs',
+            'Canine ovarian tumour — PLR ≥168.2 (AUC 0.93 · Se 90 / Sp 95.5%) — vs healthy dogs',
+            'Canine MMVD — NLR >3.73 (AUC 0.83 · Se 61 / Sp 93%) — vs healthy dogs',
+            'Canine HAC — NLR >4.23 (AUC 0.70 · Se 67 / Sp 66%) — vs dogs with non-adrenal illness',
+            'Feline pancreatitis (rule-out screen) — WBC ≥18, bands ≥0.27, eosinophils ≤0.3 × 10⁹/L (AUC 0.83 · Se 92 / Sp 58%) — vs lethargic, anorectic cats',
+            'Feline ATE — NLR >2.51 (AUC 1.00) in 25 affected vs 10 healthy cats · large-platelet count ≤74 × 10⁹/L (AUC 0.84) vs HCM cats without ATE',
+          ] },
         ],
         pearls: [
-          'Use a ratio to describe how inflamed the patient is, then interpret the full leukogram — never to name a disease',
-          'Point-of-care Vis-NIR haematology: early studies agree with reference analysers for red-cell values and total WBC, but NOT for the differential or platelet count, so ratios cannot yet be taken from it',
+          'A raised NLR or SII says the patient is inflamed or stressed — not why',
+          'Cut-offs are analyser- and population-specific: all 10 qualifying studies were at high risk of bias, and 7 of 10 compared sick animals with healthy ones, which overstates discrimination',
+          'MLR is the least robust — monocyte counts carry a 4× larger allowable analytical error than neutrophils or lymphocytes',
+          'Use a ratio to track a response you already suspect, not to choose between differentials',
+          'Point-of-care Vis-NIR haematology (developer-group studies): agrees for red-cell values and total WBC, NOT yet for the differential or platelets — so no ratios from it',
         ],
+        related: ['DIS-REPRO-PYO', 'DIS-GI-PARVO', 'DIS-CARD-MVD', 'DIS-PUPD-HAC', 'DIS-GI-PANCAT', 'DIS-CARD-ATE'],
         src: BISIAUX,
       },
       {
