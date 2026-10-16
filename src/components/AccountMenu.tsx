@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { api } from '../../convex/_generated/api'
 import { track } from '../lib/analytics'
+import SilentBoundary from '../app/SilentBoundary'
 
 const hasConvex = Boolean(process.env.NEXT_PUBLIC_CONVEX_URL)
 
@@ -71,6 +72,11 @@ function SignedInMenu() {
           >
             Account &amp; passkeys
           </Link>
+          {/* Isolated: a backend that predates convex/feedback.ts would make
+              this query throw, and the menu must not take the app down. */}
+          <SilentBoundary>
+            <FeedbackInboxLink onClick={() => setOpen(false)} />
+          </SilentBoundary>
           <button
             role="menuitem"
             onClick={async () => {
@@ -88,6 +94,17 @@ function SignedInMenu() {
         </div>
       )}
     </div>
+  )
+}
+
+/** Shown only to the emails in FEEDBACK_ADMINS (see convex/feedback.ts). */
+function FeedbackInboxLink({ onClick }: { onClick: () => void }) {
+  const canReview = useQuery(api.feedback.canReview)
+  if (!canReview) return null
+  return (
+    <Link role="menuitem" href="/feedback" onClick={onClick} style={{ ...menuItemStyle, textDecoration: 'none' }}>
+      Feedback inbox
+    </Link>
   )
 }
 

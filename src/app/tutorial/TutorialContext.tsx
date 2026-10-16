@@ -12,8 +12,9 @@ interface TutorialCtx {
 
 const Ctx = createContext<TutorialCtx | null>(null)
 
-// Must equal STEPS.length in TutorialOverlay.tsx.
-export const TUTORIAL_STEPS = 8
+// Must equal STEPS.length in TutorialOverlay.tsx — which adds the feedback
+// button step only when there is a Convex backend for it to send to.
+export const TUTORIAL_STEPS = process.env.NEXT_PUBLIC_CONVEX_URL ? 9 : 8
 
 export function TutorialProvider({ children }: { children: React.ReactNode }) {
   const [step, setStep] = useState(-1)

@@ -3,6 +3,9 @@ import React, { useState, useEffect, useLayoutEffect, useMemo, useRef, useCallba
 import Topbar from '../../components/Topbar'
 import BottomNav from '../../components/BottomNav'
 import NotesPanel from '../../components/NotesPanel'
+import FeedbackSheet, { type FeedbackContext } from '../../components/FeedbackSheet'
+import FeedbackFab from '../../components/FeedbackFab'
+import { Authenticated } from 'convex/react'
 import AnnotationToolbar from '../../components/AnnotationToolbar'
 import { useNotes } from '../../hooks/useNotes'
 import { useNotesLocal } from '../../hooks/useNotesLocal'
@@ -69,6 +72,7 @@ function PageBase({
 }) {
   const nav = useNav()
   const [notesOpen, setNotesOpen] = useState(false)
+  const [feedback, setFeedback] = useState<FeedbackContext | null>(null)
   const screenRef = useRef<HTMLDivElement>(null)
 
   const meta = screenMeta(nav.view)
@@ -118,6 +122,22 @@ function PageBase({
       return !v
     })
   }, [])
+
+  // Beta feedback is filed against the page on screen, with whatever text the
+  // reader had selected inside it — the fastest way to say "this line".
+  const handleOpenFeedback = useCallback((sel: Selection | null) => {
+    const inPage = sel && sel.rangeCount > 0 && screenRef.current?.contains(sel.anchorNode)
+    const quote = inPage ? sel.toString().trim().replace(/\s+/g, ' ').slice(0, 600) : ''
+    track('feedback_opened', { pageKey: meta.noteKey, hasQuote: Boolean(quote) })
+    setNotesOpen(false)
+    setFeedback({
+      pageKey: meta.noteKey,
+      pageLabel: noteKeyLabel(meta.noteKey, meta.noteTitle),
+      quote,
+      species: nav.view.kind === 'disease' ? nav.view.sp : undefined,
+    })
+  }, [meta.noteKey, meta.noteTitle, nav.view])
+  const handleCloseFeedback = useCallback(() => setFeedback(null), [])
 
   // Dropdown options: every annotated page, labelled "Diagnostic · Abnormal
   // Pupil". The stored title is the fallback for keys whose page is gone.
@@ -178,6 +198,19 @@ function PageBase({
         onClear={notes.onClear}
         onExport={notes.onExport}
       />
+
+      {/* Convex-only: a report is a row in the `feedback` table, so there is
+          nowhere to send one without a backend and a signed-in reader. The
+          button runs Convex queries for its one-off tip, so it is isolated
+          the same way the welcome sheet is. */}
+      {hasConvex && (
+        <Authenticated>
+          <SilentBoundary>
+            <FeedbackFab onOpen={handleOpenFeedback} />
+          </SilentBoundary>
+          <FeedbackSheet context={feedback} onClose={handleCloseFeedback} />
+        </Authenticated>
+      )}
 
       {/* Floats over the selection, so it sits outside the scrolling screen. */}
       <AnnotationToolbar
