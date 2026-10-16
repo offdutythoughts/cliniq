@@ -273,8 +273,12 @@ const SECONDARY_RULES: { finding: RegExp; explainedBy: (kws: string[]) => string
   // A stress leukogram is a stress leukogram.
   { finding: /stress leuk/i, explainedBy: () => "stress" },
   // Hyperglycaemia without glucosuria, ketones or PU/PD is read as stress.
+  // Any raised-glucose wording: live runs on the Airedale case wrote
+  // "elevated blood glucose", "increased glucose" and "glucose 6.1 mmol/L",
+  // each slipped past a narrower pattern, stayed key and put diabetes on the
+  // chart. Low glucose is a real key finding and never matches.
   {
-    finding: /hyperglyc|high (blood )?glucose|glucose (high|elevated)|elevated glucose/i,
+    finding: /hyperglyc|^(?!.*\b(hypo|low|decreased?|reduced)\b).*\b(glucose|bg|blood sugar)\b/i,
     explainedBy: (kws) => (kws.some((k) => DIABETIC_CONTEXT.test(k)) ? null : "stress"),
   },
 ];

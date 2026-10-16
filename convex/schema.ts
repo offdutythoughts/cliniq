@@ -135,6 +135,12 @@ export default defineSchema({
     userId: v.id("users"),
     seenAt: v.number(),
   }).index("by_user", ["userId"]),
+  // Who can open the feedback inbox at /feedback — lowercased emails, set from
+  // the CLI with `feedback:setAdmins` (see convex/feedback.ts for why this is a
+  // table rather than an env var).
+  feedbackAdmins: defineTable({
+    email: v.string(),
+  }).index("by_email", ["email"]),
   // One row per (user, hint) once a one-off coachmark has been dismissed — e.g.
   // the "this 💬 is for feedback" callout. Server-side for the same reason as
   // `onboarding`: mobile Safari evicts localStorage, and a hint that keeps
