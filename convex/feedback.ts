@@ -1,6 +1,7 @@
 import { getAuthUserId } from "@convex-dev/auth/server";
 import { ConvexError, v } from "convex/values";
 import {
+  internalMutation,
   internalQuery,
   mutation,
   query,
@@ -10,11 +11,17 @@ import type { Doc } from "./_generated/dataModel";
 import { toMarkdown } from "./feedbackFormat";
 
 // Beta feedback: readers report what is wrong on the page they are looking at,
-// and the people listed in FEEDBACK_ADMINS triage it at /feedback.
+// and the people in the `feedbackAdmins` table triage it at /feedback.
 //
-// Who can read the inbox is an env var, not a column on `users`, so granting or
-// revoking it is `npx convex env set FEEDBACK_ADMINS "a@x.com,b@y.com"` — no
-// migration and nothing a client can write to.
+// The admin list is a table, set from the CLI with the internal `setAdmins`
+// below — nothing a client can write to:
+//
+//   npx convex run --prod feedback:setAdmins '{"emails":["a@x.com","b@y.com"]}'
+//
+// It was an env var (FEEDBACK_ADMINS) at first. That does not work for a
+// reactive query: Convex re-runs a query only when data it read changes, and an
+// env var is not data, so a reader already signed in kept the cached "not an
+// admin" answer after being added. A table read is tracked like any other.
 
 const category = v.union(
   v.literal("wrong"),
@@ -40,23 +47,36 @@ const RATE_MAX = 20;
 // below it; past it, this becomes a paginated query.
 const INBOX_CAP = 500;
 
-function adminEmails(): Set<string> {
-  return new Set(
-    (process.env.FEEDBACK_ADMINS ?? "")
-      .split(",")
-      .map((e) => e.trim().toLowerCase())
-      .filter(Boolean),
-  );
-}
-
 async function currentAdmin(ctx: QueryCtx) {
   const userId = await getAuthUserId(ctx);
   if (!userId) return null;
   const user = await ctx.db.get(userId);
-  const email = user?.email?.toLowerCase();
-  if (!email || !adminEmails().has(email)) return null;
-  return user;
+  const email = user?.email?.trim().toLowerCase();
+  if (!email) return null;
+  const row = await ctx.db
+    .query("feedbackAdmins")
+    .withIndex("by_email", (q) => q.eq("email", email))
+    .unique();
+  return row ? user : null;
 }
+
+/** Replace the inbox admin list. CLI only (see the top of this file). */
+export const setAdmins = internalMutation({
+  args: { emails: v.array(v.string()) },
+  handler: async (ctx, args) => {
+    const wanted = new Set(
+      args.emails.map((e) => e.trim().toLowerCase()).filter(Boolean),
+    );
+    for (const row of await ctx.db.query("feedbackAdmins").take(200)) {
+      if (wanted.has(row.email)) wanted.delete(row.email);
+      else await ctx.db.delete(row._id);
+    }
+    for (const email of wanted) {
+      await ctx.db.insert("feedbackAdmins", { email });
+    }
+    return (await ctx.db.query("feedbackAdmins").take(200)).map((r) => r.email);
+  },
+});
 
 const clip = (s: string | undefined, max: number) =>
   s === undefined ? undefined : s.trim().slice(0, max) || undefined;

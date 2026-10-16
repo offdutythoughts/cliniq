@@ -97,7 +97,7 @@ function SignedInMenu() {
   )
 }
 
-/** Shown only to the emails in FEEDBACK_ADMINS (see convex/feedback.ts). */
+/** Shown only to the emails in the `feedbackAdmins` table (see convex/feedback.ts). */
 function FeedbackInboxLink({ onClick }: { onClick: () => void }) {
   const canReview = useQuery(api.feedback.canReview)
   if (!canReview) return null

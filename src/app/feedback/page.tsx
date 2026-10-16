@@ -15,7 +15,7 @@ import {
 /**
  * The beta-feedback inbox. Reports are grouped by the page they were filed on,
  * busiest page first, so a triager fixes a page's whole backlog in one visit.
- * Readable only by the emails in the Convex env var FEEDBACK_ADMINS; everyone
+ * Readable only by the emails in the `feedbackAdmins` table; everyone
  * else gets a "not available" note (the middleware already requires sign-in).
  */
 export default function FeedbackPage() {
@@ -77,8 +77,8 @@ function Inbox() {
 
         {rows === null ? (
           <p className="mt-6 text-[13px] text-(--color-muted)">
-            The inbox is only available to the feedback team. Ask an admin to add your email to
-            <code className="mx-1">FEEDBACK_ADMINS</code>on the Convex deployment.
+            The inbox is only available to the feedback team. Ask an admin to add your email
+            with <code>feedback:setAdmins</code> on the Convex deployment.
           </p>
         ) : (
           <>

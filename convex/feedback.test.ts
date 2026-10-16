@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 import { convexTest } from "convex-test";
-import { afterEach, beforeEach, describe, expect, test } from "vitest";
+import { describe, expect, test } from "vitest";
 import { api, internal } from "./_generated/api";
 import type { Id } from "./_generated/dataModel";
 import schema from "./schema";
@@ -10,6 +10,10 @@ const modules = import.meta.glob("./**/*.ts");
 async function seedUser(t: ReturnType<typeof convexTest>, email: string) {
   return await t.run(async (ctx) => ctx.db.insert("users", { email }));
 }
+
+/** Every test's admin list; the mixed case checks that emails are normalised. */
+const seedAdmins = (t: ReturnType<typeof convexTest>) =>
+  t.mutation(internal.feedback.setAdmins, { emails: [" Admin@Vetic.app", "other@x.com"] });
 
 /** convex-auth derives the user id from the identity subject's first segment. */
 const asUser = (t: ReturnType<typeof convexTest>, userId: Id<"users">) =>
@@ -25,15 +29,21 @@ const report = (over: Partial<{ pageKey: string; message: string; quote: string 
 });
 
 describe("feedback", () => {
-  beforeEach(() => {
-    process.env.FEEDBACK_ADMINS = "Admin@Vetic.app, other@x.com";
+  test("an admin added while signed in is let in without re-signing", async () => {
+    const t = convexTest(schema, modules);
+    const later = await seedUser(t, "late@vetic.app");
+    expect(await asUser(t, later).query(api.feedback.canReview, {})).toBe(false);
+    await t.mutation(internal.feedback.setAdmins, { emails: ["late@vetic.app"] });
+    expect(await asUser(t, later).query(api.feedback.canReview, {})).toBe(true);
+    // Replacing the list removes whoever is not on it.
+    await t.mutation(internal.feedback.setAdmins, { emails: [] });
+    expect(await asUser(t, later).query(api.feedback.canReview, {})).toBe(false);
   });
-  afterEach(() => {
-    delete process.env.FEEDBACK_ADMINS;
-  });
+
 
   test("a signed-in reader files a report; only an admin can read it", async () => {
     const t = convexTest(schema, modules);
+    await seedAdmins(t);
     const reader = await seedUser(t, "vet@clinic.com");
     const admin = await seedUser(t, "admin@vetic.app");
 
@@ -51,6 +61,7 @@ describe("feedback", () => {
 
   test("signed-out and empty reports are refused", async () => {
     const t = convexTest(schema, modules);
+    await seedAdmins(t);
     const reader = await seedUser(t, "vet@clinic.com");
     await expect(t.mutation(api.feedback.submit, report())).rejects.toThrow(/Sign in/);
     await expect(
@@ -60,6 +71,7 @@ describe("feedback", () => {
 
   test("triage moves a report between statuses; readers cannot", async () => {
     const t = convexTest(schema, modules);
+    await seedAdmins(t);
     const reader = await seedUser(t, "vet@clinic.com");
     const admin = await seedUser(t, "admin@vetic.app");
     await asUser(t, reader).mutation(api.feedback.submit, report());
@@ -83,6 +95,7 @@ describe("feedback", () => {
 
   test("digest groups open reports by page, busiest first", async () => {
     const t = convexTest(schema, modules);
+    await seedAdmins(t);
     const reader = await seedUser(t, "vet@clinic.com");
     const me = asUser(t, reader);
     await me.mutation(api.feedback.submit, report({ pageKey: "proto:PROT-CPR", message: "one" }));
@@ -97,6 +110,7 @@ describe("feedback", () => {
 
   test("a runaway client is rate-limited", async () => {
     const t = convexTest(schema, modules);
+    await seedAdmins(t);
     const reader = await seedUser(t, "vet@clinic.com");
     for (let i = 0; i < 20; i++) {
       await asUser(t, reader).mutation(api.feedback.submit, report({ message: `n${i}` }));
