@@ -50,6 +50,18 @@ describe('applySecondaryRules', () => {
     expect(cleanProblemList({ key: k, secondary: [], patterns: [] }, k).key).toContain('elevated CK')
   })
 
+  it('demotes every raised-glucose wording, but never low glucose', () => {
+    for (const g of ['elevated blood glucose', 'increased glucose', 'raised glucose', 'glucose 6.1 mmol/L',
+      'high-normal glucose', 'elevated BG', 'hyperglycaemia']) {
+      const k = ['seizures', g]
+      expect(cleanProblemList({ key: k, secondary: [], patterns: [] }, k).key).toEqual(['seizures'])
+    }
+    for (const g of ['hypoglycemia', 'low glucose', 'low blood glucose', 'decreased glucose', 'glucosuria']) {
+      const k = ['seizures', g]
+      expect(cleanProblemList({ key: k, secondary: [], patterns: [] }, k).key).toContain(g)
+    }
+  })
+
   it('leaves hyperglycaemia alone alongside glucosuria or PU/PD', () => {
     for (const ctx of ['glucosuria', 'PU/PD', 'polyuria']) {
       const k = ['hyperglycemia', ctx]
