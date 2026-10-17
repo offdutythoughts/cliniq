@@ -105,6 +105,39 @@ lines carry printed page numbers. See `ettinger9-index.md` for the lookup. The i
 **`ettinger9.pdf` is still gone and is still not being replaced** (decision, 2026-08-10).
 The full-text `.md` supersedes the need for it.
 
+### Manual of Veterinary Clinical Chemistry (no repo file — `~/Documents/Vetic/…A Case Study Approach.md`)
+
+> Sharkey LC, Radin MJ. *Manual of Veterinary Clinical Chemistry: A Case Study Approach*. Teton NewMedia; 2010.
+
+Checked against the title and copyright pages of the md conversion: authors Leslie C. Sharkey
+and M. Judith Radin; "© 2010 by Teton NewMedia" (the page misspells it "Tenton"); distributed
+by CRC Press / Taylor & Francis; eBook ISBN 978-1-4822-4119-8. Chemistry only — no CBC
+chapters. Source for the biochemistry half of the Interpretation tab
+(`src/lib/interpretation`), cited there as "Sharkey & Radin 2010, Ch N".
+
+### CBC interpretation systematic review (journal source)
+
+> Bisiaux T, da Costa JM, Martins RC, Barroso TG. Complete blood count interpretation in dogs and cats and its analytical compatibility with Vis-NIR point-of-care hematology: a systematic literature review with narrative synthesis. *Vet J*. 2026;320:106914. doi:10.1016/j.tvjl.2026.106914
+
+Verified 2026-10-16 in **PubMed (PMID 42830157)** and **Crossref** (looked up by PII
+S1090023326003710). They agree on title, authors, journal, volume and article number. Crossref
+gives the print issue as December 2026. PubMed carries an online date of 2026-10-04. Same year,
+so there is no print-vs-online conflict. Systematic review (PRISMA 2020) of literature from
+2015 to January 2026.
+
+**Full text read 2026-10-16** (open access, CC BY 4.0 — user-supplied md conversion of the
+published PDF). Feeds `src/lib/interpretation`: Table 2 → the "CBC pattern → differentials"
+card, Table 1 → the cut-offs on the "CBC-derived ratios" card, §4.1 → the feline
+stress-leukogram note. Points to keep when quoting it:
+
+- Every Table 1 cut-off is single-study and in-sample (all 10 studies at high QUADAS-3 risk of
+  bias in the index-test domain). Seven of the 10 used healthy controls. The app states the comparator on
+  each line, and the feline ATE NLR result carries its n (25 vs 10).
+- Table 2's clinical-sign and differential columns come from guidelines the authors consulted,
+  not from the systematic search.
+- Authors Martins and Barroso develop the VetPAT Vis-NIR analyser. The review discloses this, and
+  the app labels the point-of-care finding as developer-group evidence.
+
 ### Feline eosinophilic keratitis (journal source)
 
 > Romaneck AK, Sebbag L. Case report: clinical remission in a cat with severe bilateral eosinophilic keratitis receiving combined immunosuppressive therapy (triamcinolone acetonide and tacrolimus). Front Vet Sci. 2021;8:580396. doi:10.3389/fvets.2021.580396

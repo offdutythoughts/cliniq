@@ -101,7 +101,17 @@ export const paleGumsDx: DxApproach = {
       }, '⚡'),
       { kind: 'note', html: `The Diagnostics tab branches on PCV.` },
     ],
-    after: [{ kind: 'disclaimer' }],
+    after: [
+      {
+        kind: 'pearls',
+        gap: 10,
+        html: `<strong>⚠️ Reading pallor (Ettinger Ch 25):</strong><br>
+  • Anaemia usually becomes visible as pallor only below a haematocrit of ~25%.<br>
+  • Pallor confined to the hind end = regional hypoperfusion — aortic thromboembolism, or a right-to-left (reversed) PDA with a pink cranial body.<br>
+  • Severe tachy- or bradycardia alone can cause pallor with a normal PCV.`,
+      },
+      { kind: 'disclaimer' },
+    ],
   },
 
   dx: {

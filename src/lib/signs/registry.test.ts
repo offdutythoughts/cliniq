@@ -4,8 +4,8 @@ import { FLOWS } from './flows'
 import { DX } from './dx'
 
 describe('SIGNS registry', () => {
-  it('lists all 36 clinical signs', () => {
-    expect(SIGNS).toHaveLength(36)
+  it('lists all 41 clinical signs', () => {
+    expect(SIGNS).toHaveLength(41)
   })
 
   it('every entry has non-empty id, icon, title, sub', () => {

@@ -10,6 +10,7 @@ import type { DiseaseRow, ProtocolRow } from '../../data/db'
 import { DB } from '../../data/db'
 import { FLOW_SIGNS, DX_HOME_CARDS } from '../../lib/signs/registry'
 import { MixMatchScreen } from './MixMatchScreen'
+import { InterpretationScreen } from './InterpretationScreen'
 import { useNav } from '../nav/NavContext'
 import { useSearch } from '../search/SearchContext'
 import { styleStringToObject as s } from './style'
@@ -331,5 +332,6 @@ export function TabHome({ tab }: { tab: Tab }) {
     case 3: return <MixMatchScreen />
     case 4: return <ProtoList />
     case 5: return <SettingsHome />
+    case 6: return <InterpretationScreen />
   }
 }

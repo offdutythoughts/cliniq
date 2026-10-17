@@ -1,0 +1,19 @@
+/* Interpretation tab — see InterpretationScreen.tsx. Type sizes come from the
+   --fs-* roles and tints from the --tile/--panel alpha tokens (globals.css). */
+
+.ip-note{font-size:var(--fs-label);color:var(--gray2);line-height:1.5;margin:0 0 16px;}
+
+.ip-group{margin-bottom:14px;}
+
+.ip-lead{font-size:var(--fs-body);color:var(--gray);line-height:var(--lh-body);margin:-4px 0 12px;}
+
+.ip-thr{margin:0;border:1px solid rgba(var(--tone-info),var(--panel-bd-a));background:rgba(var(--tone-info),var(--panel-bg-a));border-radius:8px;overflow:hidden;}
+.ip-thr-row{display:flex;gap:10px;padding:6px 10px;font-size:var(--fs-box);line-height:1.4;}
+.ip-thr-row + .ip-thr-row{border-top:1px solid rgba(var(--tone-info),var(--panel-bd-a));}
+.ip-thr-row dt{flex:0 0 38%;font-weight:600;color:var(--tone-info-fg);}
+.ip-thr-row dd{flex:1;margin:0;color:var(--white);}
+
+.ip-src{margin-top:10px;font-size:var(--fs-label);color:var(--gray2);font-style:italic;}
+
+.ip-sources{margin:6px 0 12px;}
+.ip-sources p{font-size:var(--fs-label);color:var(--gray2);line-height:1.5;margin:0 0 4px;}

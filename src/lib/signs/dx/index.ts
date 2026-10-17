@@ -41,6 +41,11 @@ import { pollakiuriaDx } from './pollakiuria'
 import { syncopeDx } from './syncope'
 import { heartMurmurDx } from './heartMurmur'
 import { feverDx } from './fever'
+import { hypotensionDx } from './hypotension'
+import { hypertensionDx } from './hypertension'
+import { bradycardiaDx } from './bradycardia'
+import { tachycardiaDx } from './tachycardia'
+import { hypothermiaDx } from './hypothermia'
 import { dysphagiaDx } from './dysphagia'
 import { melenaDx } from './melena'
 import { constipationDx } from './constipation'
@@ -66,7 +71,7 @@ import { tremorsDx } from './tremors'
  *  approach here answers to no sign. */
 const APPROACHES: DxApproach[] = [
   anorexiaDx, weightLossDx, polyphagiaDx, cyanosisDx, tremorsDx, pollakiuriaDx,
-  syncopeDx, heartMurmurDx, feverDx, dysphagiaDx, melenaDx, constipationDx,
+  syncopeDx, heartMurmurDx, feverDx, hypotensionDx, hypertensionDx, bradycardiaDx, tachycardiaDx, hypothermiaDx, dysphagiaDx, melenaDx, constipationDx,
   oedemaDx, swollenJointsDx, epistaxisDx, wetEyeDx, haematuriaDx, redEyeDx,
   blindEyeDx, abnormalPupilDx, bleedingDx, seizuresDx, coughingDx,
   encephalopathyDx, sneezingDx, paleGumsDx, vestibularDx, dyspnoeaDx,

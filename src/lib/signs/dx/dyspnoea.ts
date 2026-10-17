@@ -240,7 +240,17 @@ export const dyspnoeaDx: DxApproach = {
         ],
       },
     ],
-    after: [{ kind: 'disclaimer' }],
+    after: [
+      {
+        kind: 'pearls',
+        gap: 10,
+        html: `<strong>⚠️ Rate vs distress (Ettinger Ch 37):</strong><br>
+  • Normal resting rate in dogs and cats is &lt;30 breaths/min · consistently &gt;35/min at rest is abnormal.<br>
+  • Panting (dog) is rapid, shallow, open-mouth breathing WITHOUT distress — heat, pain, anxiety.<br>
+  • Tachypnoea without a respiratory cause: pain, hyperthermia, metabolic acidosis, anaemia, shock.`,
+      },
+      { kind: 'disclaimer' },
+    ],
   },
 
   dx: {

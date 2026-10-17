@@ -26,6 +26,11 @@ import { pollakiuriaFlows } from './pollakiuria'
 import { syncopeFlows } from './syncope'
 import { heartMurmurFlows } from './heartMurmur'
 import { feverFlows } from './fever'
+import { hypotensionFlow } from './hypotension'
+import { hypertensionFlow } from './hypertension'
+import { bradycardiaFlow } from './bradycardia'
+import { tachycardiaFlow } from './tachycardia'
+import { hypothermiaFlow } from './hypothermia'
 import { dysphagiaFlows } from './dysphagia'
 import { melenaFlows } from './melena'
 import { constipationFlows } from './constipation'
@@ -50,7 +55,7 @@ export const FLOWS: Record<string, FlowPage> = Object.fromEntries(
     ...seizuresFlows, ...myelopathyFlows, ...vestibularFlows, ...ataxiaFlows, ...bleedingFlows,
     // Phase 3
     ...pollakiuriaFlows,
-    ...syncopeFlows, ...heartMurmurFlows, ...feverFlows, ...dysphagiaFlows,
+    ...syncopeFlows, ...heartMurmurFlows, ...feverFlows, hypotensionFlow, hypertensionFlow, bradycardiaFlow, tachycardiaFlow, hypothermiaFlow, ...dysphagiaFlows,
     ...melenaFlows, ...constipationFlows, ...oedemaFlows, ...swollenJointsFlows,
     ...anorexiaFlows, ...weightLossFlows, ...polyphagiaFlows, ...cyanosisFlows, ...tremorsFlows,
     // Shared reference hubs

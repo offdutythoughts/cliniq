@@ -13,6 +13,7 @@ import { LesionLocView } from './LesionLocView'
 import { SubTypeDetailView } from './SubTypeDetailView'
 import { DiffDetailView } from './DiffDetailView'
 import { CaseTriageScreen } from './CaseTriageScreen'
+import { InterpDetailView } from './InterpDetailView'
 import { TabHome } from './TabHome'
 
 export function Screen({ view }: { view: View }): ReactNode {
@@ -26,6 +27,7 @@ export function Screen({ view }: { view: View }): ReactNode {
     case 'subTypeDetail': return <SubTypeDetailView id={view.id} />
     case 'diff': return <DiffDetailView id={view.id} />
     case 'caseTriage': return <CaseTriageScreen />
+    case 'interp': return <InterpDetailView id={view.id} />
     default: {
       // Exhaustive: every View kind has a component.
       const _exhaustive: never = view

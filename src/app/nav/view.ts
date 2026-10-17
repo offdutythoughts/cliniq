@@ -12,16 +12,17 @@ import type { Species } from '../../lib/species'
 import { FLOWS } from '../../lib/signs/flows'
 import { DX } from '../../lib/signs/dx'
 import { DB } from '../../data/db'
+import { INTERP_BY_ID } from '../../lib/interpretation'
 import { encodeView } from './viewUrl'
 
 /** Which bottom-nav tab is selected. The tab set is defined by TAB_NAMES below;
  *  these two must stay the same length. Lived in src/types/index.ts until that
  *  file was deleted — it held one live type and eight dead duplicates of the
  *  db.ts row interfaces. */
-export type Tab = 0 | 1 | 2 | 3 | 4 | 5
+export type Tab = 0 | 1 | 2 | 3 | 4 | 5 | 6
 
 export type View =
-  | { kind: 'tab'; tab: Tab }                                                    // navTo(0..5)
+  | { kind: 'tab'; tab: Tab }                                                    // navTo(0..6)
   | { kind: 'flow'; flowId: string }                                             // renderFlowId
   | { kind: 'dx'; sign: string; tab: string }                                    // renderDxId (tab: history|exam|dx|extras)
   // `sp` pins which species the page opens on — set when the link that got here
@@ -33,6 +34,7 @@ export type View =
   | { kind: 'subTypeDetail'; id: string }                                        // renderSubTypeDetail
   | { kind: 'diff'; id: string }                                                 // renderDiffDetail
   | { kind: 'caseTriage' }                                                       // CaseTriageScreen
+  | { kind: 'interp'; id: string }                                               // InterpDetailView (bloodwork finding)
 
 export type ViewKind = View['kind']
 
@@ -99,7 +101,15 @@ export const TABS = [
   { icon: '🔀', label: 'Mix & Match' },
   { icon: '⚡', label: 'Protocols' },
   { icon: '⚙️', label: 'Settings' },
+  // Appended, not inserted: a tab's index is its identity — the notes key is
+  // `tab-<index>` and analytics log `tab_index` — so inserting at 3 would move
+  // every later tab's saved notes onto the wrong tab. TAB_ORDER places it.
+  { icon: '🧪', label: 'Interpretation' },
 ] as const
+
+/** Left-to-right order of the bottom-nav tabs, as TABS indices. Interpretation
+ *  (6) sits between Disease and Mix & Match without renumbering anything. */
+export const TAB_ORDER: readonly Tab[] = [0, 1, 2, 6, 3, 4, 5]
 
 const TAB_NAMES = TABS.map(t => t.label)
 
@@ -163,6 +173,10 @@ export function screenMeta(v: View): ScreenMeta {
       const name = diffById.get(v.id)?.name ?? ''
       return { topbarTitle: trunc(name, 30), noteKey: `diff:${v.id}`, noteTitle: name }
     }
+    case 'interp': {
+      const title = INTERP_BY_ID.get(v.id)?.title ?? ''
+      return { topbarTitle: '', noteKey: `interp:${v.id}`, noteTitle: title }
+    }
     case 'caseTriage':
       // Ephemeral, per-session result — nothing to persist a note against.
       return { topbarTitle: 'Case Triage', noteKey: 'caseTriage', noteTitle: 'Case Triage' }
@@ -193,7 +207,7 @@ const locNames = (() => {
 })()
 
 export function viewFromNoteKey(key: string): View | null {
-  const tabMatch = key.match(/^tab-([0-5])$/)
+  const tabMatch = key.match(/^tab-([0-6])$/)
   if (tabMatch) return { kind: 'tab', tab: Number(tabMatch[1]) as Tab }
   const sep = key.indexOf(':')
   if (sep < 0) return null
@@ -205,6 +219,7 @@ export function viewFromNoteKey(key: string): View | null {
     case 'proto': return protocolById.has(id) ? { kind: 'protocol', id } : null
     case 'lesion': return lesionById.has(id) ? { kind: 'subTypeDetail', id } : null
     case 'diff': return diffById.has(id) ? { kind: 'diff', id } : null
+    case 'interp': return INTERP_BY_ID.has(id) ? { kind: 'interp', id } : null
     case 'loc': {
       const name = locNames.get(id)
       return name ? { kind: 'lesionLoc', loc: id, name } : null
@@ -224,6 +239,7 @@ const KIND_SECTION: Record<Exclude<ViewKind, 'tab'>, string> = {
   subTypeDetail: 'Lesions',
   diff: 'Differentials',
   caseTriage: 'Mix & Match',
+  interp: 'Interpretation',
 }
 
 export function sectionName(v: View): string {

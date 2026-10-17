@@ -35,6 +35,7 @@ import { SPECIES, type Species } from '../../lib/species'
 import { DB } from '../../data/db'
 import { FLOWS } from '../../lib/signs/flows'
 import { DX } from '../../lib/signs/dx'
+import { INTERP_BY_ID } from '../../lib/interpretation'
 
 /** Location code → display name, for rehydrating a lesionLoc view from its id. */
 const locNames = (() => {
@@ -45,7 +46,7 @@ const locNames = (() => {
 
 /** URL slug per tab, in Tab-index order. Stable strings, not the display labels
  *  — "Mix & Match" is not something to put in a path. */
-const TAB_SLUGS = ['clinical', 'diagnostic', 'disease', 'mixmatch', 'protocols', 'settings'] as const
+const TAB_SLUGS = ['clinical', 'diagnostic', 'disease', 'mixmatch', 'protocols', 'settings', 'interpretation'] as const
 
 export interface ViewUrl {
   /** Identity. `/app/<path>` — also the React key. Never empty. */
@@ -124,6 +125,11 @@ const CODECS: { [K in ViewKind]: Codec<K> } = {
     slug: 'diff',
     to: v => ({ path: `diff/${v.id}` }),
     from: ([id]) => (id && DB.differentials.some(d => d.id === id) ? { kind: 'diff', id } : null),
+  },
+  interp: {
+    slug: 'interp',
+    to: v => ({ path: `interp/${v.id}` }),
+    from: ([id]) => (id && INTERP_BY_ID.has(id) ? { kind: 'interp', id } : null),
   },
   caseTriage: {
     slug: 'case-triage',

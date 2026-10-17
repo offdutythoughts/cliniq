@@ -38,6 +38,12 @@ const CANON_SET = new Set<string>(CANON)
 // Keyed `pageId::label`. Adding a row here is a deliberate statement that the
 // column is not a lesion category — not a way to keep a misspelt one.
 const PAGE_SPECIFIC = new Set<string>([
+  // Vital-sign flows split by MECHANISM (shock type, vagal vs conduction), not lesion category.
+  'hypotension::Hypovolaemic', 'hypotension::Distributive', 'hypotension::Cardiogenic', 'hypotension::Obstructive',
+  'hypertension::Renal', 'hypertension::Miscellaneous',
+  'bradycardia::Vagal', 'bradycardia::Cardiac conduction', 'bradycardia::Physiological',
+  'tachycardia::Compensatory', 'tachycardia::Cardiac', 'tachycardia::Physiological',
+  'hypothermia::Environmental', 'hypothermia::Shock / sepsis',
   'anisocoria-mydriasis::Afferent', 'anisocoria-mydriasis::Iris / Ocular',
   'anisocoria-horners::Sympathetic', 'anisocoria-horners::Uveal', 'anisocoria-horners::Structural',
   'haematuria-pseudo::Haemoglobinuria', 'haematuria-pseudo::Myoglobinuria', 'haematuria-pseudo::Pigmenturia',
