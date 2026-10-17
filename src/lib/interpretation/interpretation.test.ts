@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { PHYSICAL, BLOODWORK } from '.'
+import { BLOODWORK } from '.'
 import { DB } from '../../data/db'
 import { TABS, TAB_ORDER } from '../../app/nav/view'
 
-const entries = [...PHYSICAL, ...BLOODWORK].flatMap(g => g.entries)
+const entries = BLOODWORK.flatMap(g => g.entries)
 
 describe('interpretation content', () => {
   it('links only to disease pages that exist', () => {
@@ -15,6 +15,14 @@ describe('interpretation content', () => {
   it('has unique entry ids (they key the cards)', () => {
     const ids = entries.map(e => e.id)
     expect(new Set(ids).size).toBe(ids.length)
+  })
+
+  it('no entry text breaks pipe-markup (a | or leading - would split or nest bullets)', () => {
+    const bad = entries.flatMap(e => [
+      ...e.etiology.flatMap(s => [s.heading, ...s.items]),
+      ...(e.path ?? []), ...(e.dx ?? []), ...(e.tx1 ?? []), ...(e.tx2 ?? []), ...(e.monitor ?? []), ...(e.pearls ?? []),
+    ].filter(t => t.includes('|') || /^\s*[-#]/.test(t)).map(t => `${e.id}: ${t}`))
+    expect(bad).toEqual([])
   })
 
   it('every entry carries a source', () => {

@@ -12,6 +12,7 @@ import type { Species } from '../../lib/species'
 import { FLOWS } from '../../lib/signs/flows'
 import { DX } from '../../lib/signs/dx'
 import { DB } from '../../data/db'
+import { INTERP_BY_ID } from '../../lib/interpretation'
 import { encodeView } from './viewUrl'
 
 /** Which bottom-nav tab is selected. The tab set is defined by TAB_NAMES below;
@@ -33,6 +34,7 @@ export type View =
   | { kind: 'subTypeDetail'; id: string }                                        // renderSubTypeDetail
   | { kind: 'diff'; id: string }                                                 // renderDiffDetail
   | { kind: 'caseTriage' }                                                       // CaseTriageScreen
+  | { kind: 'interp'; id: string }                                               // InterpDetailView (bloodwork finding)
 
 export type ViewKind = View['kind']
 
@@ -171,6 +173,10 @@ export function screenMeta(v: View): ScreenMeta {
       const name = diffById.get(v.id)?.name ?? ''
       return { topbarTitle: trunc(name, 30), noteKey: `diff:${v.id}`, noteTitle: name }
     }
+    case 'interp': {
+      const title = INTERP_BY_ID.get(v.id)?.title ?? ''
+      return { topbarTitle: '', noteKey: `interp:${v.id}`, noteTitle: title }
+    }
     case 'caseTriage':
       // Ephemeral, per-session result — nothing to persist a note against.
       return { topbarTitle: 'Case Triage', noteKey: 'caseTriage', noteTitle: 'Case Triage' }
@@ -213,6 +219,7 @@ export function viewFromNoteKey(key: string): View | null {
     case 'proto': return protocolById.has(id) ? { kind: 'protocol', id } : null
     case 'lesion': return lesionById.has(id) ? { kind: 'subTypeDetail', id } : null
     case 'diff': return diffById.has(id) ? { kind: 'diff', id } : null
+    case 'interp': return INTERP_BY_ID.has(id) ? { kind: 'interp', id } : null
     case 'loc': {
       const name = locNames.get(id)
       return name ? { kind: 'lesionLoc', loc: id, name } : null
@@ -232,6 +239,7 @@ const KIND_SECTION: Record<Exclude<ViewKind, 'tab'>, string> = {
   subTypeDetail: 'Lesions',
   diff: 'Differentials',
   caseTriage: 'Mix & Match',
+  interp: 'Interpretation',
 }
 
 export function sectionName(v: View): string {
