@@ -1,6 +1,7 @@
 // ── Interpretation tab content ──────────────────────────────────────────────
 // Bloodwork interpretation: one page per abnormal finding, in the same section
-// order as a disease page. CBC (Ettinger Ch 57–59 + Bisiaux 2026) and serum
+// order as a disease page. eClinPath (Cornell) is the primary haematology and
+// chemistry reference. CBC (eClinPath, Ettinger Ch 57–59, Bisiaux 2026) and serum
 // biochemistry (Sharkey & Radin, *Manual of Veterinary Clinical Chemistry*,
 // Ch 2–7, plus Ettinger Ch 28/66–69 where the manual is thin). Physical-exam
 // findings (BP, heart rate, temperature…) live in the Clinical / Diagnostic tabs
@@ -54,6 +55,10 @@ const SHARKEY = (ch: string) => `Sharkey & Radin 2010, Ch ${ch}`
 // the ratio card. Two of its authors develop the VetPAT Vis-NIR analyser — the
 // review discloses this, and the point-of-care pearl says so.
 const BISIAUX = 'Bisiaux et al., Vet J 2026 (systematic review, 49 studies)'
+// eClinPath (Cornell University) — the primary haematology / chemistry reference
+// from 2026-10-18. Paraphrased, never copied (CC licence: educational, not for
+// monetary gain); page-level citations in references/CITATIONS.md.
+const ECP = (page: string) => `eClinPath (Cornell): ${page}`
 
 // ── Bloodwork ───────────────────────────────────────────────────────────────
 
@@ -116,78 +121,6 @@ export const BLOODWORK: InterpGroup[] = [
         related: ['DIS-BD-EHRL', 'DIS-INFECT-LEISHM', 'DIS-INFECT-FELV', 'DIS-SEC-CKD', 'DIS-NEO-LEUK', 'DIS-HEP-PSS', 'DIS-BD-BABS', 'DIS-INFECT-HMYCO', 'DIS-REPRO-PYO', 'DIS-GI-IBD', 'DIS-NEO-LSA', 'DIS-GI-PANCAT', 'DIS-INFECT-FIP', 'DIS-CARD-ATE', 'DIS-PUPD-HAC', 'DIS-CARD-MVD', 'DIS-GI-PARVO', 'DIS-GI-FPV', 'DIS-BD-TCP'],
         src: BISIAUX,
       },
-    ],
-  },
-  {
-    title: 'CBC — red cells',
-    icon: '🩸',
-    entries: [
-      {
-        id: 'anaemia',
-        title: 'Anaemia',
-        sub: 'PCV / HCT / Hb below the RI — first decide: regenerative or not?',
-        etiology: [
-          { heading: 'Regenerative — haemorrhage', items: ['Low total protein (albumin + globulin)', 'External chronic loss → iron deficiency (microcytic hypochromic)'] },
-          { heading: 'Regenerative — haemolysis', items: ['Normal / high protein, ↑ bilirubin', 'IMHA — spherocytes, autoagglutination', 'Oxidant — Heinz bodies, eccentrocytes (onion, zinc, paracetamol in cats)', 'Infectious — Babesia, Mycoplasma haemofelis (cat)', 'Fragmentation — schistocytes (DIC, vasculitis, HSA)', 'Intravascular → haemoglobinaemia + haemoglobinuria'] },
-          { heading: 'Non-regenerative', items: ['Normocytic normochromic, mild — inflammation, CKD, endocrine (hypothyroid, hypoadrenocorticism), neoplasia', 'Normocytic, severe — precursor-targeted IMHA, FeLV, leukaemia, marrow aplasia', 'Microcytic hypochromic — iron deficiency, portosystemic shunt', 'Macrocytic — FeLV (cat), poodle macrocytosis'] },
-        ],
-        path: [
-          'Blood loss or destruction (regenerative) vs reduced production (non-regenerative)',
-          'The marrow needs 3–5 days to respond — earlier, any anaemia looks non-regenerative',
-        ],
-        dx: [
-          'How acute? Under 3–5 days = pre-regenerative',
-          'Regenerative? Absolute reticulocyte count above the RI (± marked polychromasia)',
-          'Smear — spherocytes, agglutination, Heinz bodies, schistocytes, parasites',
-          'Total protein — low with haemorrhage, normal / high with haemolysis',
-          'Then targeted tests: saline agglutination / Coombs, vector-borne PCR, imaging for bleeding, marrow aspirate if non-regenerative and unexplained',
-        ],
-        tx1: [
-          'Transfuse for clinical signs (tachycardia, weakness) or roughly PCV <20% (dog) / <15% (cat)',
-          'Blood-type every cat before any transfusion',
-          'Treat the cause — stop the bleeding, immunosuppress IMHA, treat infection',
-        ],
-        monitor: [
-          'PCV / TS daily while unstable',
-          'Reticulocyte count to confirm a regenerative response',
-        ],
-        pearls: [
-          'Greyhounds run high — an HCT of 45% can be anaemia in this breed',
-          'Pancytopenia or unexplained severe non-regenerative anaemia → bone marrow aspirate',
-        ],
-        related: ['DIS-BD-IMHA', 'DIS-BD-NRA', 'DIS-BD-BABS', 'DIS-INFECT-HMYCO'],
-        src: ETT('57'),
-      },
-      {
-        id: 'erythrocytosis',
-        title: 'Erythrocytosis (↑ PCV)',
-        sub: 'PCV / HCT above the RI',
-        etiology: [
-          { heading: 'Relative', items: ['Dehydration — total protein also high', 'Splenic contraction (excitement) — transient'] },
-          { heading: 'Absolute — appropriate (hypoxic)', items: ['Right-to-left shunt (reverse PDA, tetralogy)', 'Chronic respiratory disease', 'High altitude'] },
-          { heading: 'Absolute — inappropriate', items: ['Renal tumour or other renal disease (EPO)', 'Other paraneoplastic EPO'] },
-          { heading: 'Primary', items: ['Polycythaemia vera — diagnosis of exclusion'] },
-        ],
-        dx: [
-          'Repeat once rehydrated — relative erythrocytosis resolves',
-          'SpO₂ / arterial blood gas for hypoxaemia',
-          'Echocardiography (bubble study) for right-to-left shunt',
-          'Renal ultrasound ± EPO concentration',
-        ],
-        tx1: [
-          'Phlebotomy for hyperviscosity signs — with crystalloid replacement',
-          'Treat the hypoxic or renal cause',
-        ],
-        pearls: ['Rule out dehydration → check PaO₂ / SpO₂ → image kidneys → then consider PV'],
-        related: ['DIS-BD-PV'],
-        src: ETT('57'),
-      },
-    ],
-  },
-  {
-    title: 'CBC — white cells',
-    icon: '🦠',
-    entries: [
       {
         id: 'leukogram-patterns',
         title: 'Leukogram patterns',
@@ -234,30 +167,355 @@ export const BLOODWORK: InterpGroup[] = [
         related: ['DIS-REPRO-PYO', 'DIS-GI-PARVO', 'DIS-CARD-MVD', 'DIS-PUPD-HAC', 'DIS-GI-PANCAT', 'DIS-CARD-ATE'],
         src: BISIAUX,
       },
+    ],
+  },
+  {
+    title: 'Red blood cells',
+    icon: '🩸',
+    entries: [
+      {
+        id: 'anaemia',
+        title: 'Anaemia',
+        sub: 'PCV / HCT / Hb below the RI — first decide: regenerative or not?',
+        etiology: [
+          { heading: 'Regenerative — haemorrhage', items: ['Low total protein (albumin + globulin)', 'External chronic loss → iron deficiency (microcytic hypochromic)'] },
+          { heading: 'Regenerative — haemolysis', items: ['Normal / high protein, ↑ bilirubin', 'IMHA — spherocytes, agglutination, ghost cells', 'Oxidant — Heinz bodies, eccentrocytes (onion, zinc, paracetamol in cats)', 'Infectious — Babesia, Mycoplasma haemofelis (cat)', 'Fragmentation — schistocytes, acanthocytes, keratocytes (DIC, vasculitis, HSA)', 'Intravascular → haemoglobinaemia + haemoglobinuria'] },
+          { heading: 'Non-regenerative', items: ['Normocytic normochromic, mild — inflammation, CKD, endocrine (hypothyroid, hypoadrenocorticism), neoplasia', 'Normocytic, severe — precursor-targeted IMHA, FeLV, leukaemia, marrow aplasia', 'Microcytic hypochromic — iron deficiency, portosystemic shunt', 'Macrocytic — FeLV (cat), poodle macrocytosis'] },
+        ],
+        path: [
+          'Blood loss or destruction (regenerative) vs reduced production (non-regenerative)',
+          'The marrow needs 3–5 days to respond — earlier, any anaemia looks non-regenerative',
+        ],
+        dx: [
+          'How acute? Under 3–5 days = pre-regenerative',
+          'Regenerative? Absolute reticulocyte count above the RI (± marked polychromasia)',
+          'Absolute reticulocytes (10³/µL) = reticulocyte % × RBC count (10⁶/µL) × 10 (eClinPath)',
+          'Corrected reticulocyte % = retic % × (patient HCT ÷ normal HCT; 45 dog, 35 cat) · regenerative if >1% (dog) or >0.4% (cat) (eClinPath)',
+          'Cats: count AGGREGATE reticulocytes only — punctate forms persist up to 3 weeks and reflect an older response',
+          'Smear — spherocytes, agglutination, Heinz bodies, schistocytes, parasites',
+          'Total protein — low with haemorrhage, normal / high with haemolysis',
+          'Then targeted tests: saline agglutination / Coombs, vector-borne PCR, imaging for bleeding, marrow aspirate if non-regenerative and unexplained',
+        ],
+        tx1: [
+          'Transfuse for clinical signs (tachycardia, weakness) or roughly PCV <20% (dog) / <15% (cat)',
+          'Blood-type every cat before any transfusion',
+          'Treat the cause — stop the bleeding, immunosuppress IMHA, treat infection',
+        ],
+        monitor: [
+          'PCV / TS daily while unstable',
+          'Reticulocyte count to confirm a regenerative response',
+        ],
+        pearls: [
+          'nRBC, Howell-Jolly bodies and basophilic stippling do NOT prove regeneration on their own — reticulocytes / polychromasia do (eClinPath)',
+          'Greyhounds run high — an HCT of 45% can be anaemia in this breed',
+          'Pancytopenia or unexplained severe non-regenerative anaemia → bone marrow aspirate',
+        ],
+        related: ['DIS-BD-IMHA', 'DIS-BD-NRA', 'DIS-BD-BABS', 'DIS-INFECT-HMYCO'],
+        src: `${ETT('57')} · ${ECP('Regeneration')}`,
+      },
+      {
+        id: 'erythrocytosis',
+        title: 'Erythrocytosis (↑ PCV)',
+        sub: 'PCV / HCT above the RI',
+        etiology: [
+          { heading: 'Relative', items: ['Dehydration — total protein also high', 'Splenic contraction (excitement) — transient'] },
+          { heading: 'Absolute — appropriate (hypoxic)', items: ['Right-to-left shunt (reverse PDA, tetralogy)', 'Chronic respiratory disease', 'High altitude'] },
+          { heading: 'Absolute — inappropriate', items: ['Renal tumour or other renal disease (EPO)', 'Other paraneoplastic EPO'] },
+          { heading: 'Primary', items: ['Polycythaemia vera — diagnosis of exclusion'] },
+        ],
+        dx: [
+          'Repeat once rehydrated — relative erythrocytosis resolves',
+          'SpO₂ / arterial blood gas for hypoxaemia',
+          'Echocardiography (bubble study) for right-to-left shunt',
+          'Renal ultrasound ± EPO concentration',
+        ],
+        tx1: [
+          'Phlebotomy for hyperviscosity signs — with crystalloid replacement',
+          'Treat the hypoxic or renal cause',
+        ],
+        pearls: ['Rule out dehydration → check PaO₂ / SpO₂ → image kidneys → then consider PV'],
+        related: ['DIS-BD-PV'],
+        src: ETT('57'),
+      },
+      {
+        id: 'polychromasia',
+        title: 'Polychromasia / reticulocytes',
+        sub: 'Blue-purple immature RBC — the smear sign of a regenerative marrow',
+        etiology: [
+          { heading: 'Regenerative anaemia', items: ['Haemorrhage', 'Haemolysis — immune, oxidant, infectious, fragmentation'] },
+          { heading: 'Normal', items: ['Low numbers in healthy dogs and cats'] },
+        ],
+        path: [
+          'Polychromatophils are aggregate reticulocytes — RNA-rich young RBC that stain purple on Wright’s stain',
+          'Every polychromatophil is a reticulocyte, but punctate reticulocytes look normochromic, so the smear underestimates the count',
+        ],
+        dx: [
+          'Grade mild / moderate / marked, then confirm with an absolute reticulocyte count',
+          'Polychromasia with a falling PCV → haemorrhage or haemolysis — check total protein and the smear',
+        ],
+        pearls: [
+          'Dogs mount the strongest response · cats release aggregate reticulocytes only in moderate–severe anaemia',
+          'Cat macrocytes without polychromasia can be leftover punctate reticulocytes from a response in the last 3 weeks',
+        ],
+        related: ['DIS-BD-IMHA'],
+        src: ECP('Regeneration; RBC colour changes'),
+      },
+      {
+        id: 'spherocytes',
+        title: 'Spherocytes',
+        sub: 'Small, dense RBC with no central pallor — membrane bitten off by macrophages',
+        etiology: [
+          { heading: 'Disease', items: ['Immune-mediated haemolytic anaemia — primary, or secondary to infection or drugs', 'Fragmentation (low numbers)', 'Haemophagocytic syndrome, histiocytic sarcoma', 'Snake envenomation'] },
+          { heading: 'Artefact', items: ['Stored (transfused) RBC', 'Feathered edge of the smear — read in the monolayer'] },
+        ],
+        path: ['Macrophages remove antibody-coated membrane (trogocytosis), leaving a smaller sphere'],
+        dx: ['Saline agglutination test', 'Coombs test if no agglutination', 'Look for an underlying trigger — vector-borne disease, drugs, neoplasia'],
+        pearls: [
+          'Only reliably recognised in dogs — cat RBC have no central pallor',
+          'Many spherocytes + regenerative anaemia in a dog = IMHA until proven otherwise',
+        ],
+        related: ['DIS-BD-IMHA', 'DIS-NEO-HSARC'],
+        src: ECP('RBC morphology quick guide'),
+      },
+      {
+        id: 'agglutination',
+        title: 'Agglutination (vs rouleaux)',
+        sub: '3-D grape-like RBC clumps that persist after saline dilution',
+        etiology: [
+          { heading: 'Agglutination', items: ['Immune-mediated haemolytic anaemia (antibody bridging RBC)', 'Artefact — EDTA-dependent antibodies'] },
+          { heading: 'Rouleaux (stacked coins)', items: ['Normal in horses and cats', 'Inflammation — high fibrinogen, polyclonal gammopathy', 'Myeloma, B-cell lymphoma — monoclonal gammopathy'] },
+        ],
+        dx: [
+          'Saline test: 1 drop blood + 4–10 drops saline — rouleaux disperses, agglutination persists',
+          'Persistent agglutination is diagnostic of an immune-mediated process — no Coombs needed',
+          'Rouleaux → total protein, globulins, protein electrophoresis',
+        ],
+        related: ['DIS-BD-IMHA'],
+        src: ECP('RBC morphology quick guide'),
+      },
+      {
+        id: 'heinz-bodies',
+        title: 'Heinz bodies',
+        sub: 'Refractile nubs of precipitated haemoglobin — oxidant injury',
+        etiology: [
+          { heading: 'Toxins', items: ['Onion / garlic (Allium)', 'Zinc (coins, nuts, ointments)', 'Naphthalene (mothballs)', 'Skunk musk'] },
+          { heading: 'Drugs', items: ['Paracetamol (cats)', 'Propofol', 'Vitamin K1', 'Benzocaine'] },
+          { heading: 'Cats — endogenous', items: ['Diabetes mellitus (ketotic)', 'Hyperthyroidism', 'Lymphoma'] },
+        ],
+        path: [
+          'Oxidised haemoglobin precipitates and binds the membrane → rigid cells removed by the spleen or lysed in vessels',
+          'Iron oxidation can also cause methaemoglobinaemia (brown blood)',
+        ],
+        dx: [
+          'New methylene blue stain shows small Heinz bodies far better than Wright’s',
+          'Look for eccentrocytes and ghost cells alongside',
+          'Toxin and drug history · zinc level · radiograph for metallic foreign body',
+        ],
+        tx1: ['Remove the oxidant (decontaminate, remove the zinc foreign body)', 'Transfuse if severe', 'Paracetamol: N-acetylcysteine — see the toxicosis page'],
+        pearls: [
+          'Low numbers of small Heinz bodies are normal in cats — feline haemoglobin is very oxidation-prone',
+          'Many Heinz bodies in a non-anaemic cat point to diabetes, hyperthyroidism or lymphoma',
+        ],
+        related: ['DIS-TOX-ALLIUM', 'DIS-TOX-APAP', 'DIS-TOX-ZN'],
+        src: ECP('RBC inclusions; quick guide'),
+      },
+      {
+        id: 'eccentrocytes',
+        title: 'Eccentrocytes',
+        sub: 'Haemoglobin pushed to one side, a clear crescent on the other — oxidant injury',
+        etiology: [
+          { heading: 'Oxidants', items: ['Onion / garlic', 'Zinc', 'Paracetamol (cats)', 'Vitamin K1, propofol', 'Naphthalene, skunk musk'] },
+        ],
+        path: ['Oxidant cross-linking fuses opposing membranes; a ruptured eccentrocyte leaves a pyknocyte'],
+        dx: ['Same work-up as Heinz bodies — they usually travel together', 'Pyknocytes alongside favour oxidant damage over spherocytes'],
+        related: ['DIS-TOX-ALLIUM', 'DIS-TOX-ZN', 'DIS-TOX-APAP'],
+        src: ECP('RBC morphology quick guide'),
+      },
+      {
+        id: 'ghost-cells',
+        title: 'Ghost cells',
+        sub: 'Empty RBC membranes — haemoglobin has leaked out',
+        etiology: [
+          { heading: 'Intravascular haemolysis', items: ['IMHA (dog)', 'Babesia', 'Zinc toxicosis', 'Severe hypophosphataemia (DKA, refeeding)', 'Acute transfusion reaction', 'Clostridial toxins'] },
+          { heading: 'Artefact', items: ['Traumatic collection, freezing, old sample, rough smear'] },
+        ],
+        dx: [
+          'Check plasma (pink = haemoglobinaemia) and urine (haemoglobinuria)',
+          'Fresh, gently collected repeat sample to exclude artefact',
+          'Phosphate · zinc · Babesia PCR · agglutination / Coombs',
+        ],
+        pearls: ['Ghost cells + pink plasma + haemoglobinuria = intravascular haemolysis — treat as an emergency'],
+        related: ['DIS-BD-IMHA', 'DIS-BD-BABS', 'DIS-TOX-ZN'],
+        src: ECP('RBC morphology quick guide'),
+      },
+      {
+        id: 'schistocytes',
+        title: 'Schistocytes (fragments)',
+        sub: 'Small irregular RBC fragments — sheared in the circulation',
+        etiology: [
+          { heading: 'Abnormal vessels / fibrin', items: ['DIC', 'Haemangiosarcoma', 'Vasculitis', 'Heartworm (caval syndrome)'] },
+          { heading: 'Other', items: ['Iron deficiency (fragile RBC)', 'Portosystemic shunt', 'Liver disease'] },
+        ],
+        dx: ['PT / aPTT, D-dimers, platelets — DIC', 'Abdominal ultrasound and echocardiography — haemangiosarcoma', 'Iron panel if microcytic / hypochromic'],
+        pearls: ['Schistocytes + acanthocytes + thrombocytopenia in an older large-breed dog → look for haemangiosarcoma'],
+        related: ['DIS-BD-DIC', 'DIS-NEO-HSA', 'DIS-HEP-PSS'],
+        src: ECP('RBC morphology quick guide'),
+      },
+      {
+        id: 'acanthocytes',
+        title: 'Acanthocytes',
+        sub: 'Irregular, unevenly spiculated "spur" cells',
+        etiology: [
+          { heading: 'Dog', items: ['Haemangiosarcoma and other cancers', 'Liver disease', 'DIC, vasculitis', 'Iron deficiency'] },
+          { heading: 'Cat', items: ['Liver disease'] },
+        ],
+        path: ['Altered membrane lipid (liver disease) or fragmentation injury'],
+        dx: ['Distinguish from echinocytes (evenly spaced spikes, often artefact)', 'Liver panel, abdominal imaging, coagulation'],
+        related: ['DIS-NEO-HSA', 'DIS-BD-DIC'],
+        src: ECP('RBC morphology quick guide'),
+      },
+      {
+        id: 'keratocytes',
+        title: 'Keratocytes',
+        sub: '"Bite", "helmet" or "blister" cells',
+        etiology: [
+          { heading: 'Fragmentation', items: ['Same causes as schistocytes and acanthocytes — DIC, HSA, vasculitis, iron deficiency'] },
+          { heading: 'Oxidant', items: ['Same causes as eccentrocytes — onion, zinc, paracetamol'] },
+        ],
+        pearls: ['Low numbers can be seen in healthy cats'],
+        related: ['DIS-BD-DIC', 'DIS-NEO-HSA'],
+        src: ECP('RBC morphology quick guide'),
+      },
+      {
+        id: 'echinocytes',
+        title: 'Echinocytes (crenation)',
+        sub: 'Evenly spaced short spikes — usually artefact',
+        etiology: [
+          { heading: 'Artefact (most common)', items: ['Old blood, slow-drying smear, excess EDTA (underfilled tube)'] },
+          { heading: 'Disease', items: ['Snake envenomation (rattlesnake, viper)', 'Electrolyte depletion', 'Glomerulonephritis', 'Pyruvate kinase deficiency', 'Burns, bee stings'] },
+        ],
+        dx: ['Repeat on a fresh, correctly filled sample', 'If present in fresh blood with a bite history → envenomation'],
+        src: ECP('RBC morphology quick guide'),
+      },
+      {
+        id: 'target-cells',
+        title: 'Target cells (codocytes)',
+        sub: 'Bull’s-eye RBC — extra membrane relative to haemoglobin (dogs)',
+        etiology: [
+          { heading: 'Causes', items: ['Regenerative anaemia (polychromatophils spread thin)', 'Iron deficiency (thin hypochromic cells)', 'Liver disease, dyslipidaemia (membrane lipid change)'] },
+        ],
+        pearls: ['Only recognised in dogs, which have central pallor — low numbers are of little significance'],
+        src: ECP('RBC morphology quick guide'),
+      },
+      {
+        id: 'hypochromasia',
+        title: 'Hypochromasia (iron deficiency)',
+        sub: 'Pale RBC with a thin haemoglobin rim — advanced iron deficiency',
+        etiology: [
+          { heading: 'Iron deficiency', items: ['Chronic external blood loss — GI ulcer or tumour, NSAIDs / steroids, heavy flea or hookworm burden', 'Nutritional (young animals)'] },
+          { heading: 'Impaired haem synthesis', items: ['Chronic lead poisoning', 'Copper deficiency'] },
+        ],
+        path: ['Not enough iron to make haemoglobin → small, pale cells (microcytic hypochromic); smear changes precede a low MCHC'],
+        dx: ['Serum iron, TIBC, ferritin', 'Faecal occult blood · GI imaging / endoscopy · flea and parasite check', 'Look for schistocytes and thrombocytosis, common in iron deficiency'],
+        tx1: ['Find and stop the blood loss', 'Iron supplementation'],
+        pearls: ['Distinguish from torocytes — a "punched-out" smear artefact with a sharp edge and normal rim', 'Portosystemic shunts cause microcytosis WITHOUT true iron deficiency'],
+        related: ['DIS-GI-ULC', 'DIS-HEP-PSS'],
+        src: ECP('RBC colour changes'),
+      },
+      {
+        id: 'macrocytes',
+        title: 'Macrocytes / high MCV',
+        sub: 'Bigger-than-normal RBC',
+        etiology: [
+          { heading: 'Regeneration', items: ['Young RBC (punctate reticulocytes)'] },
+          { heading: 'Breed', items: ['Toy and miniature Poodles (non-anaemic)'] },
+          { heading: 'Disease', items: ['FeLV (cat) — macrocytic non-regenerative anaemia', 'Myelodysplasia', 'B12 / folate deficiency', 'Hyperthyroidism (cat)'] },
+          { heading: 'Artefact', items: ['Old blood (swelling)', 'Hypernatraemia, hyperglycaemia on some analysers'] },
+        ],
+        dx: ['Polychromasia present? → regeneration · absent → FeLV test, B12, marrow'],
+        related: ['DIS-INFECT-FELV'],
+        src: ECP('RBC morphology quick guide; size changes'),
+      },
+      {
+        id: 'howell-jolly',
+        title: 'Howell-Jolly bodies',
+        sub: 'Single round dark-blue nuclear remnant in an RBC',
+        etiology: [
+          { heading: 'Causes', items: ['Regenerative anaemia', 'Splenectomy or reduced splenic function', 'Corticosteroids', 'Normal in low numbers in cats and horses', 'Poodle macrocytosis, myelodysplasia'] },
+        ],
+        pearls: ['Do not mistake for a haemoparasite — Mycoplasma sits on the surface, often in chains or rings'],
+        related: ['DIS-SPLEEN'],
+        src: ECP('RBC inclusions'),
+      },
+      {
+        id: 'basophilic-stippling',
+        title: 'Basophilic stippling',
+        sub: 'Fine blue dots of RNA throughout the RBC',
+        etiology: [
+          { heading: 'Causes', items: ['Regenerative anaemia (more in ruminants, occasionally dogs and cats)', 'Lead poisoning — even without anaemia'] },
+        ],
+        dx: ['Stippling + many nRBC in a non-anaemic dog → blood lead'],
+        pearls: ['Distinguish from siderocytes (fewer, focal grey-blue iron granules; Prussian blue positive)'],
+        related: ['DIS-TOX-LEAD'],
+        src: ECP('RBC inclusions'),
+      },
+      {
+        id: 'nrbc',
+        title: 'Nucleated RBC (nRBC)',
+        sub: 'Immature RBC with a nucleus — not a reliable regeneration marker on their own',
+        etiology: [
+          { heading: 'With regeneration', items: ['Strongly regenerative anaemia (dogs, cats)'] },
+          { heading: 'Inappropriate (no reticulocytosis)', items: ['Lead poisoning', 'Splenic disease or splenectomy, haemangiosarcoma', 'Marrow injury or hypoxia — sepsis, heatstroke', 'Leukaemia, myelodysplasia'] },
+        ],
+        dx: ['Correct the WBC: analysers count nRBC as leukocytes', 'nRBC without polychromasia → think lead, spleen, marrow'],
+        pearls: ['Heatstroke: nRBC ≥18/100 WBC predicted death with 91% sensitivity, 88% specificity (Ettinger Ch 130)'],
+        related: ['DIS-TOX-LEAD', 'DIS-ENV-HEAT', 'DIS-NEO-HSA'],
+        src: `${ECP('Nucleated RBC')} · ${ETT('130')}`,
+      },
+    ],
+  },
+  {
+    title: 'White blood cells',
+    icon: '🦠',
+    entries: [
       {
         id: 'neutrophilia',
         title: 'Neutrophilia',
-        sub: 'Neutrophils above the RI · severe >35 × 10⁹/L',
+        sub: 'Mature (segmented) neutrophils above the RI — absolute count, not %',
+        thresholds: [
+          ['Dog (above RI)', 'mild <20 · moderate 20–40 · marked >40 × 10⁹/L'],
+          ['Cat (above RI)', 'mild <25 · moderate 25–40 · marked >40 × 10⁹/L'],
+        ],
         etiology: [
-          { heading: 'Physiological', items: ['Glucocorticoid (stress, HAC, steroids)', 'Catecholamine (fear, exercise)'] },
-          { heading: 'Inflammatory', items: ['Infection — bacterial, fungal, protozoal', 'Necrosis — haemolysis, ischaemia, burns, neoplasia', 'Sterile — pancreatitis, FIP, immune-mediated disease (IMHA, IMPA)'] },
-          { heading: 'Severe (>50 × 10⁹/L)', items: ['Infection — 34–58% of cases (pyometra, abscess, pyothorax, Hepatozoon, Babesia)', 'Immune-mediated — 11–32% (IMHA)', 'Neoplasia — 14–23% (incl. paraneoplastic, leukaemia)', 'Tissue necrosis — 10–18%'] },
+          { heading: 'Redistribution (marginating → circulating)', items: ['Catecholamine — fear, excitement (cats up to 2–3× because their marginating pool is larger)', 'Corticosteroid — stress, HAC, steroid therapy'] },
+          { heading: 'Increased marrow release / production', items: ['Inflammation — infectious or not (trauma, surgery, burns, necrosis)', 'Immune-mediated disease — IMHA, IMPA', 'Paraneoplastic (G-CSF) — lymphoma, other tumours'] },
+          { heading: 'Rare', items: ['Leukocyte adhesion deficiency — very high counts, recurrent infections', 'Chronic myeloid leukaemia'] },
+        ],
+        path: [
+          'Neutrophils circulate only 5–15 h · the marrow storage pool is released within hours, increased production takes 3–5 days',
+          'Physiological shifts roughly double the count (2–3× in cats) but never produce a left shift or toxic change',
         ],
         dx: [
-          'Left shift or toxic change → look for a septic focus (imaging, effusion, urine culture)',
-          'Mature neutrophilia with lymphopenia and eosinopenia → stress — interpret with the patient',
-          'Very high counts (>50 × 10⁹/L) → pyometra, abscess, IMHA, neoplasia',
+          'Left shift or toxic change → inflammation — search for a focus (imaging, effusion, urine culture)',
+          'Mature neutrophilia + lymphopenia + eosinopenia → stress — interpret with the patient',
+          '>40 × 10⁹/L → marrow hyperplasia likely · pyometra, abscess, IMHA, neoplasia',
         ],
-        src: ETT('58'),
+        pearls: [
+          'High-dose chronic steroids can give a mild left shift (0.3–0.4 × 10⁹/L bands) WITHOUT toxic change (eClinPath)',
+          'Hypersegmented neutrophils = prolonged circulation (steroids, chronic inflammation)',
+        ],
+        related: ['DIS-REPRO-PYO', 'DIS-BD-IMHA'],
+        src: `${ECP('Individual WBC')} · ${ETT('58')}`,
       },
       {
         id: 'neutropenia',
         title: 'Neutropenia',
         sub: 'Mild 1.5–3 · moderate 0.5–1.5 · severe <0.5 × 10⁹/L',
         etiology: [
-          { heading: 'Consumption', items: ['Overwhelming inflammation — sepsis, peritonitis, parvovirus enteritis', 'Immune-mediated destruction'] },
-          { heading: 'Reduced production', items: ['Infection — parvovirus (dog), FeLV / FIV, panleukopenia (cat), Ehrlichia', 'Drugs — chemotherapy, chloramphenicol, azathioprine, phenobarbital, methimazole, sulfonamides', 'Oestrogen toxicosis', 'Marrow disease — myelophthisis, leukaemia, myelofibrosis'] },
-          { heading: 'Other', items: ['Cyclic haematopoiesis (grey Collie)', 'Chronic idiopathic neutropenia (cat) — mild, healthy, retrovirus-negative'] },
+          { heading: 'Consumption — the commonest cause', items: ['Overwhelming inflammation — sepsis, peritonitis, pyometra, parvovirus enteritis', 'Usually with a degenerative left shift and toxic change'] },
+          { heading: 'Destruction', items: ['Immune-mediated neutropenia (alone or with SLE)', 'Parvovirus, panleukopenia', 'Drugs, haemophagocytic / histiocytic disease'] },
+          { heading: 'Reduced production', items: ['FeLV / FIV, Ehrlichia canis', 'Drugs — chemotherapy, anti-epileptics, methimazole, chloramphenicol, oestrogen', 'Marrow disease — leukaemia, myelophthisis, aplasia, myelofibrosis'] },
+          { heading: 'Other', items: ['Endotoxaemia — transient margination for 1–3 h', 'Cyclic haematopoiesis (grey Collies)', 'B12 malabsorption (Border Collie, Giant Schnauzer, Beagle)', 'Idiopathic (cat) — healthy, retrovirus-negative', 'Breed-low counts — Belgian Tervuren, some Australian Shepherds'] },
         ],
         dx: [
           'Repeat with a smear — confirm and look for left shift / toxic change',
@@ -270,33 +528,102 @@ export const BLOODWORK: InterpGroup[] = [
           'Stop marrow-suppressive drugs',
           'Treat the cause (parvovirus supportive care, immunosuppression for immune-mediated neutropenia)',
         ],
-        monitor: [
-          'Neutrophil count and temperature daily while <1.0 × 10⁹/L',
+        monitor: ['Neutrophil count and temperature daily while <1.0 × 10⁹/L'],
+        pearls: [
+          'Neutropenia with toxic change and bands = consumption, not marrow failure',
+          'Every cat with unexplained neutropenia gets an FeLV / FIV test (eClinPath)',
         ],
-        pearls: ['<0.5 × 10⁹/L carries a real risk of sepsis — treat a febrile patient as an emergency'],
-        related: ['DIS-IMNP'],
-        src: ETT('58'),
+        related: ['DIS-IMNP', 'DIS-GI-PARVO', 'DIS-GI-FPV', 'DIS-INFECT-FELV'],
+        src: `${ECP('Individual WBC')} · ${ETT('58')}`,
       },
       {
-        id: 'other-leukocytes',
-        title: 'Lymphocytes, eosinophils, monocytes',
-        sub: 'The other lines of the differential',
+        id: 'left-shift',
+        title: 'Left shift & toxic change',
+        sub: 'Immature (band) neutrophils and maturation defects — the signature of inflammatory demand',
         etiology: [
-          { heading: 'Lymphocytosis', items: ['Excitement (cat)', 'Chronic antigenic stimulation — ehrlichiosis, Babesia, fungal', 'Hypoadrenocorticism', 'Recent vaccination', 'Lymphoma (leukaemic) / lymphoid leukaemia'] },
-          { heading: 'Lymphopenia', items: ['Stress / steroids / HAC', 'Lymph loss — chylothorax, PLE / lymphangiectasia', 'Acute viral infection, endotoxaemia', 'Immunosuppressive drugs'] },
-          { heading: 'Eosinophilia', items: ['Parasites — fleas, heartworm, lungworm, GI', 'Hypersensitivity — atopy, feline asthma', 'Eosinophilic diseases (gastroenteritis, bronchopneumopathy, panosteitis)', 'Paraneoplastic — mast cell tumour, lymphoma', 'Hypoadrenocorticism', 'Hypereosinophilic syndrome (cat)'] },
-          { heading: 'Monocytosis', items: ['Inflammation (acute or chronic), necrosis', 'Glucocorticoid (dog)', 'Immune-mediated neutropenia', 'Monocytic leukaemia'] },
+          { heading: 'Left shift', items: ['Inflammation — the commonest cause', 'Leukaemia, marrow recovery (usually not toxic)', 'Paraneoplastic G-CSF', 'Pelger-Huët anomaly — hyposegmented but normal, no toxic change'] },
+          { heading: 'Toxic change (in order of appearance)', items: ['Döhle bodies — earliest; but normal in small numbers in cats and an artefact of stored blood', 'Cytoplasmic basophilia', 'Foamy cytoplasmic vacuolation', 'Nuclear immaturity — lighter chromatin', 'Toxic granulation — rare in dogs and cats'] },
+        ],
+        path: [
+          'Toxic change is NOT a toxin effect — it is accelerated maturation under intense cytokine drive',
+          'Degenerative left shift: bands outnumber segmented neutrophils, usually with a normal or low count = demand outstripping supply',
         ],
         dx: [
-          'Eosinophilia → faecal exam, heartworm test, flea control trial, skin and airway cytology',
-          'Lymphocytosis with atypical cells or persistent >2–3× RI → flow cytometry / clonality (PARR)',
+          'Make the smear immediately — Döhle bodies and band-like cells appear in EDTA blood within 4–8 h (eClinPath)',
+          'Degenerative left shift → urgent search for sepsis (effusion, pyometra, peritonitis, pneumonia)',
         ],
-        src: ETT('58'),
+        pearls: [
+          'Severe left shift with NO toxic change → Pelger-Huët, leukaemia, or misidentification',
+          'Marked toxic change with no left shift → check for dysplasia or artefact',
+          'The more severe the toxic change, the more intense the inflammatory stimulus',
+        ],
+        related: ['DIS-SHOCK-SEPTIC', 'DIS-GI-SEPTPERIT', 'DIS-REPRO-PYO'],
+        src: ECP('Left shift; toxic change'),
+      },
+      {
+        id: 'lymphocytes',
+        title: 'Lymphocytosis / lymphopenia',
+        sub: 'Changes mostly reflect redistribution, not production',
+        thresholds: [
+          ['Lymphocytosis — dog', 'mild <10 · moderate 10–30 · marked >30 × 10⁹/L'],
+          ['Lymphocytosis — cat', 'mild <10 · moderate 10–40 · marked >40 × 10⁹/L'],
+        ],
+        etiology: [
+          { heading: 'Lymphocytosis', items: ['Physiological (adrenaline) — young healthy cats especially', 'Youth (<6 months)', 'Hypoadrenocorticism (dog) — up to 30 × 10⁹/L, often with eosinophilia', 'Ehrlichia canis — granular lymphocytes', 'Thymoma', 'Chronic lymphocytic leukaemia — older animal, persistent or rising'] },
+          { heading: 'Lymphopenia', items: ['Stress / corticosteroids — the commonest cause', 'Acute infection, endotoxaemia', 'Lymph loss — chylothorax, lymphangiectasia / PLE', 'Viral lymphocytolysis, immunodeficiency'] },
+        ],
+        dx: [
+          'Persistent or rising lymphocytosis in an older animal → flow cytometry ± clonality (PARR)',
+          'Lymphopenia without stress → look for chyle loss (effusion, low albumin + cholesterol)',
+        ],
+        pearls: ['A sick dog WITHOUT lymphopenia (mid- to high-normal lymphocytes) → think hypoadrenocorticism (eClinPath)'],
+        related: ['DIS-SEC-HYPO', 'DIS-BD-EHRL', 'DIS-NEO-LEUK', 'DIS-RESP-CHYLO', 'DIS-GI-PLE'],
+        src: ECP('Individual WBC'),
+      },
+      {
+        id: 'monocytes',
+        title: 'Monocytosis',
+        sub: 'No marrow storage pool — increases reflect production or redistribution',
+        etiology: [
+          { heading: 'Common', items: ['Stress / corticosteroids — especially dogs', 'Inflammation — acute or chronic, infectious or not'] },
+          { heading: 'Uncommon', items: ['Recovery from marrow injury (after chemotherapy) — can be marked and mimic leukaemia', 'Paraneoplastic (e.g. lymphoma)', 'Immune-mediated neutropenia', 'Monocytic / myelomonocytic leukaemia'] },
+        ],
+        pearls: ['Monocytopenia has no clinical significance — the RI often reaches zero', 'Bands vs monocytes is a common misread on toxic smears'],
+        related: ['DIS-NEO-LEUK'],
+        src: ECP('Individual WBC'),
+      },
+      {
+        id: 'eosinophils',
+        title: 'Eosinophilia',
+        sub: 'Absolute eosinophil count above the RI',
+        etiology: [
+          { heading: 'Common', items: ['Hypersensitivity — flea allergy, atopy, feline asthma', 'Parasites with a tissue phase — heartworm, lungworm, hookworm, ectoparasites'] },
+          { heading: 'Paraneoplastic', items: ['Mast cell tumour', 'T-cell lymphoma', 'Squamous cell carcinoma'] },
+          { heading: 'Other', items: ['Hypoadrenocorticism', 'Eosinophilic diseases — gastroenteritis, bronchopneumopathy, panosteitis', 'Hypereosinophilic syndrome (Rottweilers, cats)', 'Eosinophilic leukaemia — rare'] },
+        ],
+        dx: ['Flea control trial · faecal flotation and Baermann · heartworm antigen', 'Skin, airway or GI cytology / biopsy', 'Fine-needle aspirate any skin mass (mast cell tumour)'],
+        pearls: [
+          'Eosinopenia = stress / steroids, or acute bacterial sepsis — RI often reaches zero, so hard to document',
+          'Most haemoparasites do NOT cause eosinophilia',
+        ],
+        related: ['DIS-NEO-MCT', 'DIS-RESP-ASTHMA', 'DIS-RESP-LUNGWORM', 'DIS-SEC-HYPO'],
+        src: ECP('Individual WBC'),
+      },
+      {
+        id: 'basophils',
+        title: 'Basophilia',
+        sub: 'Rare — usually travels with eosinophilia',
+        etiology: [
+          { heading: 'Causes', items: ['Hypersensitivity', 'Heartworm and other parasites', 'Mast cell tumour', 'Essential thrombocythaemia, other myeloproliferative disease'] },
+        ],
+        pearls: ['Basopenia is not a relevant finding — healthy animals have almost none'],
+        related: ['DIS-NEO-MCT'],
+        src: `${ECP('Individual WBC')} · ${ETT('58')}`,
       },
     ],
   },
   {
-    title: 'CBC — platelets',
+    title: 'Platelets',
     icon: '🧫',
     entries: [
       {
@@ -309,14 +636,11 @@ export const BLOODWORK: InterpGroup[] = [
           ['Smear estimate', 'mean platelets / oil field (10 fields) × 15 × 10⁹/L'],
         ],
         etiology: [
-          { heading: 'Pseudo', items: ['Clumping (especially cats) — check the feathered edge', 'CKCS and other breeds — inherited macrothrombocytopenia, no bleeding'] },
+          { heading: 'Pseudo', items: ['Clumping (especially cats) — falsely low count AND falsely high MPV', 'CKCS and other breeds — inherited macrothrombocytopenia, no bleeding'] },
           { heading: 'Destruction', items: ['Primary ITP', 'Secondary immune — infection, neoplasia, drugs, vaccination'] },
           { heading: 'Consumption / sequestration', items: ['DIC', 'Vasculitis', 'Splenic disease — HSA, lymphoma, torsion', 'Severe haemorrhage'] },
           { heading: 'Reduced production', items: ['Infection — Ehrlichia, Anaplasma, FeLV / FIV, parvovirus', 'Drugs — chemotherapy, oestrogens, sulfonamides, methimazole', 'Marrow infiltration — leukaemia, lymphoma, myeloma'] },
           { heading: 'Dilutional', items: ['Massive transfusion (>1 blood volume / 24 h)'] },
-        ],
-        path: [
-          'Destruction, consumption, sequestration, reduced production — or a pseudo-count from clumping',
         ],
         dx: [
           'Smear estimate and feathered edge for clumps before anything else',
@@ -330,15 +654,11 @@ export const BLOODWORK: InterpGroup[] = [
           'Primary ITP: immunosuppression is the cornerstone',
           'Add doxycycline while vector-borne screening is pending, depending on geography',
         ],
-        tx2: [
-          'Platelet transfusion only for life-threatening bleeding (CNS, lung) or surgery — transfused platelets are destroyed rapidly in ITP',
-        ],
-        monitor: [
-          'Platelet count every 1–3 days until rising',
-        ],
+        tx2: ['Platelet transfusion only for life-threatening bleeding (CNS, lung) or surgery — transfused platelets are destroyed rapidly in ITP'],
+        monitor: ['Platelet count every 1–3 days until rising'],
         pearls: ['Petechiae / mucosal bleeding with a normal count → platelet function or vWD (BMBT)'],
-        related: ['DIS-BD-TCP', 'DIS-BD-EHRL', 'DIS-BD-ICT', 'DIS-BD-TPATH'],
-        src: ETT('29, 59'),
+        related: ['DIS-BD-TCP', 'DIS-BD-IMTP', 'DIS-BD-EHRL', 'DIS-BD-ICT', 'DIS-BD-TPATH', 'DIS-BD-VWD'],
+        src: `${ETT('29, 59')} · ${ECP('Platelet changes')}`,
       },
       {
         id: 'thrombocytosis',
@@ -348,10 +668,7 @@ export const BLOODWORK: InterpGroup[] = [
           { heading: 'Reactive (common)', items: ['Iron deficiency / chronic blood loss', 'Inflammation, infection', 'Neoplasia', 'Tissue necrosis', 'Steroids / HAC · post-splenectomy'] },
           { heading: 'Primary', items: ['Essential thrombocythaemia — rare, usually >900 × 10⁹/L'] },
         ],
-        dx: [
-          'Look for iron deficiency (microcytosis, low iron) and chronic blood loss',
-          'Repeat after the inflammatory process resolves',
-        ],
+        dx: ['Look for iron deficiency (microcytosis, low iron) and chronic blood loss', 'Repeat after the inflammatory process resolves'],
         related: ['DIS-BD-TCS'],
         src: ETT('59'),
       },
@@ -361,6 +678,59 @@ export const BLOODWORK: InterpGroup[] = [
     title: 'Biochemistry — liver',
     icon: '🟤',
     entries: [
+      {
+        id: 'liver-patterns',
+        title: 'Liver enzyme patterns',
+        sub: 'Read ALT, ALP, GGT and bilirubin TOGETHER — the combination points to the process',
+        thresholds: [
+          ['ALT degree', 'mild 2–3× · moderate 4–5× · marked >10× upper RI'],
+          ['ALP in young animals', '2–10× adult values (bone ALP) · adult range by ~15 months'],
+          ['ALP half-life', 'dog ~3 days (liver and steroid isoforms) · cat ~6 h — so any feline rise matters'],
+        ],
+        etiology: [
+          { heading: '↑ ALP, ALT normal (dog) — think STEROID INDUCTION first', items: [
+            'Exogenous corticosteroids — a single depot methylprednisolone dose can keep ALP up for ~3 weeks',
+            'Hyperadrenocorticism — moderate to marked (up to 100×), mostly the steroid-induced isoform',
+            'Chronic stress from any illness — endogenous cortisol, usually ≤2–3×',
+            'Then: bone (young dog, osteosarcoma, hyperparathyroidism) · phenobarbital · Husky benign familial hyperphosphatasaemia · early or localised cholestasis · hepatic neoplasia (ALP can be the only enzyme up) · mammary tumours (mild)',
+          ] },
+          { heading: '↑ ALT ≫ ALP — primary hepatocellular injury', items: [
+            'Chronic hepatitis — ALT rises first (≈7.5× vs ALP 5.5×); an unexplained ALT rise lasting >2 months is an early marker',
+            'Toxins, drugs, hypoxia / hypotension, infection',
+          ] },
+          { heading: '↑ ALP, GGT, bilirubin ≫ ALT — primary cholestasis', items: [
+            'Extrahepatic bile duct obstruction — very high ALP, often before jaundice',
+            'Gallbladder mucocele, pancreatitis, cholangitis, neoplasia',
+            'Retained bile acids then injure hepatocytes → secondary ALT rise',
+          ] },
+          { heading: '↑ AST > ALT with ↑ CK — muscle, not liver', items: ['Myopathy, trauma, feline ATE', 'Haemolysed sample (cat ALT, AST)'] },
+          { heading: 'Cat patterns', items: [
+            '↑ ALP, normal GGT, ↑ bilirubin, often ↑ ALT = hepatic lipidosis (ALP rises first, GGT last)',
+            '↑ GGT > ALP = cholangitis, pancreatitis, biliary disease',
+            'Mild ↑ ALT, AST, ALP with normal GGT and bilirubin = hyperthyroidism',
+          ] },
+          { heading: 'Normal or low enzymes, abnormal function', items: ['End-stage / cirrhotic liver', 'Portosystemic shunt — ↓ urea, cholesterol, albumin, glucose · ↑ bile acids'] },
+        ],
+        path: [
+          'ALT, AST = leakage enzymes (cell damage) · ALP, GGT = induction enzymes (cholestasis, steroids, anticonvulsants)',
+          'Dogs alone have a steroid-induced ALP isoform (C-ALP) — it takes up to ~10 days to appear',
+        ],
+        dx: [
+          'Isolated ↑ ALP in a dog → full drug history (every steroid formulation, phenobarbital), then signs of HAC',
+          'HAC suspected → ACTH stimulation or low-dose dexamethasone suppression test — C-ALP isoform is sensitive but NOT specific (any chronic illness raises it)',
+          'Persistent unexplained ↑ ALT → bile acids, ultrasound, then biopsy (copper, chronic hepatitis)',
+          'Cholestatic pattern → ultrasound for obstruction or mucocele, cPL / fPL',
+          '↑ AST with ↑ CK → muscle source; repeat on a non-haemolysed sample',
+        ],
+        pearls: [
+          'The bigger fold-rise tells you the primary process: leakage ≫ induction = hepatocellular; induction ≫ leakage = cholestasis (eClinPath)',
+          'A few dogs with HAC have ↑ GGT with NORMAL ALP — it falls with treatment (eClinPath)',
+          'Dogs given phenobarbital: ↑ ALP / ALT may be induction OR real hepatotoxicity — check bile acids',
+          'Enzymes below the RI are not significant',
+        ],
+        related: ['DIS-PUPD-HAC', 'DIS-HEP-CHRONHEP', 'DIS-HEP-LIPIDOSIS', 'DIS-HEP-CHOLANGITIS', 'DIS-ENDO-HYPERTHY', 'DIS-HEP-PSS'],
+        src: ECP('ALP; ALT; GGT; chemistry quick guide'),
+      },
       {
         id: 'liver-enzymes',
         title: 'Liver enzymes (ALT, AST, ALP, GGT)',
@@ -391,6 +761,7 @@ export const BLOODWORK: InterpGroup[] = [
           'Recheck enzymes in 2–4 weeks · a fall can mean recovery OR loss of hepatocytes',
         ],
         pearls: [
+          '↑ ALP with normal ALT in a dog → steroid induction first (exogenous or HAC) — see Liver enzyme patterns',
           'Cat ALP has a short half-life and little induction — any increase is significant',
           'Feline hepatic lipidosis: marked ↑ ALP with normal GGT',
           'End-stage / cirrhotic livers can have normal enzymes — use bile acids',
@@ -398,7 +769,7 @@ export const BLOODWORK: InterpGroup[] = [
           'Check coagulation before biopsy',
         ],
         related: ['DIS-HEP-CHRONHEP', 'DIS-HEP-CHOLANGITIS', 'DIS-HEP-LIPIDOSIS', 'DIS-HEP-PSS', 'DIS-PUPD-HAC'],
-        src: `${SHARKEY('2')} · ${ETT('28')}`,
+        src: `${SHARKEY('2')} · ${ETT('28')} · ${ECP('ALP; ALT; GGT')}`,
       },
       {
         id: 'bilirubin',
@@ -422,6 +793,27 @@ export const BLOODWORK: InterpGroup[] = [
     ],
   },
   {
+    title: 'Biochemistry — muscle',
+    icon: '💪',
+    entries: [
+      {
+        id: 'ck',
+        title: 'Creatine kinase (CK) & AST',
+        sub: 'Muscle leakage enzymes — CK rises and falls fast, AST lingers',
+        etiology: [
+          { heading: 'Artefact / iatrogenic', items: ['Haemolysis', 'Muscle hit during venepuncture', 'IM injections (especially irritant drugs), recent surgery'] },
+          { heading: 'Physiological', items: ['Puppies', 'Anorexia in cats', 'Exercise'] },
+          { heading: 'Myopathy', items: ['Trauma, prolonged recumbency, seizures', 'Feline aortic thromboembolism', 'Inflammatory myopathy (polymyositis)', 'Inherited muscular dystrophy', 'Hypokalaemic myopathy (cats)', 'Malignant hyperthermia'] },
+        ],
+        path: ['CK is cytosolic and short-lived — a high CK means ongoing or recent damage · AST stays up longer, so ↑ AST with falling CK = damage that has stopped'],
+        dx: ['Compare with ALT / AST: in muscle disease AST > ALT, and CK is high', 'Repeat on a clean, non-haemolysed sample if the patient looks well', 'Potassium (cats) · neuro exam · EMG / muscle biopsy for persistent elevation'],
+        pearls: ['Mild ↑ CK in an anorexic cat is common and often not muscle disease'],
+        related: ['DIS-CARD-ATE', 'DIS-NEU-HYPOKMYO'],
+        src: ECP('Chemistry quick guide — CK, AST'),
+      },
+    ],
+  },
+  {
     title: 'Biochemistry — kidney',
     icon: '🫘',
     entries: [
@@ -440,7 +832,8 @@ export const BLOODWORK: InterpGroup[] = [
           { heading: 'Post-renal', items: ['Urethral / bilateral ureteral obstruction', 'Uroabdomen', 'Partial obstruction can still pass small volumes'] },
           { heading: 'Urea alone ↑', items: ['High-protein meal', 'GI haemorrhage', 'Catabolism, fever, steroids'] },
           { heading: 'Urea ↓', items: ['Liver failure / PSS', 'Low-protein diet', 'Polyuria (diuresis)'] },
-          { heading: 'Creatinine ↓ / unreliable', items: ['Low muscle mass — creatinine underestimates loss of function in thin patients'] },
+          { heading: 'Creatinine ↓ / unreliable', items: ['Low muscle mass — creatinine underestimates loss of function in thin patients', 'Portosystemic shunt — low urea AND low creatinine'] },
+          { heading: 'Creatinine ↑ without kidney disease', items: ['Greyhounds and heavily muscled dogs', 'Jaffe method interference (ketones, glucose, cephalosporins)'] },
         ],
         path: [
           'Urea and creatinine rise when GFR falls — before renal, renal, or after the kidney',
@@ -469,7 +862,7 @@ export const BLOODWORK: InterpGroup[] = [
           'Stage stable CKD with IRIS (creatinine + SDMA, then UPC and BP)',
         ],
         related: ['DIS-SEC-AKI', 'DIS-SEC-CKD', 'DIS-URO-URETHRAL-OBS', 'DIS-SEC-HYPO'],
-        src: `${SHARKEY('5')} · ${ETT('66')}`,
+        src: `${SHARKEY('5')} · ${ETT('66')} · ${ECP('chemistry quick guide')}`,
       },
     ],
   },
@@ -742,6 +1135,7 @@ export const INTERP_BY_ID = new Map(BLOODWORK.flatMap(g => g.entries).map(e => [
 
 /** Full AMA strings for the sources footer — copied from references/CITATIONS.md. */
 export const INTERP_SOURCES = [
+  'eClinPath. Cornell University. Accessed October 18, 2026. https://eclinpath.com — page-level citations in references/CITATIONS.md',
   'Côté E, Ettinger SJ, Feldman EC, eds. Ettinger\'s Textbook of Veterinary Internal Medicine. 9th ed. Elsevier; 2024.',
   'Sharkey LC, Radin MJ. Manual of Veterinary Clinical Chemistry: A Case Study Approach. Teton NewMedia; 2010.',
   'Bisiaux T, da Costa JM, Martins RC, Barroso TG. Complete blood count interpretation in dogs and cats and its analytical compatibility with Vis-NIR point-of-care hematology: a systematic literature review with narrative synthesis. Vet J. 2026;320:106914. doi:10.1016/j.tvjl.2026.106914',
