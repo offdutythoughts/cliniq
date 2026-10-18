@@ -138,6 +138,39 @@ stress-leukogram note. Points to keep when quoting it:
 - Authors Martins and Barroso develop the VetPAT Vis-NIR analyser. The review discloses this, and
   the app labels the point-of-care finding as developer-group evidence.
 
+### eClinPath (website — Cornell University)
+
+Primary haematology / chemistry reference for the Interpretation tab from 2026-10-18. The site
+asks to be cited as "eClinPath.com, Cornell University, url of the relevant page and date
+accessed" (its About-us page). AMA web-page form used here — page title. *eClinPath*. Cornell
+University. Updated date. Accessed date. URL:
+
+> Individual WBC. *eClinPath*. Cornell University. Updated November 6, 2025. Accessed October 18, 2026. https://eclinpath.com/hematology/leukogram-changes/leukocytes/
+
+Pages used (all accessed October 18, 2026; "updated" = the page's own `dateModified`):
+
+| Page | Updated | URL |
+|---|---|---|
+| Individual WBC | 2025-11-06 | https://eclinpath.com/hematology/leukogram-changes/leukocytes/ |
+| Left shift | 2016-10-27 | https://eclinpath.com/hematology/morphologic-features/white-blood-cells/left-shift/ |
+| Toxic change | 2021-09-26 | https://eclinpath.com/hematology/morphologic-features/white-blood-cells/toxic-change/ |
+| Regeneration | 2026-01-05 | https://eclinpath.com/hematology/anemia/assessment-regeneration/ |
+| RBC quick guide | 2021-01-30 | https://eclinpath.com/hematology/morphologic-features/red-blood-cells/quick-guide/ |
+| RBC colour changes | 2022-01-12 | https://eclinpath.com/hematology/morphologic-features/red-blood-cells/color/ |
+| RBC inclusions | 2025-09-24 | https://eclinpath.com/hematology/morphologic-features/red-blood-cells/rbc-inclusions/ |
+| RBC size changes | 2014-07-10 | https://eclinpath.com/hematology/morphologic-features/red-blood-cells/size-changes/ |
+| Nucleated RBC | 2025-01-23 | https://eclinpath.com/hematology/morphologic-features/red-blood-cells/nucleated-rbcs/ |
+| Platelet changes | 2014-06-25 | https://eclinpath.com/hematology/morphologic-features/platelets/platelet-changes/ |
+| ALP | 2025-07-30 | https://eclinpath.com/chemistry/liver/cholestasis/alkaline-phosphatase/ |
+| ALT | 2025-07-30 | https://eclinpath.com/chemistry/liver/liver-injury/alanine-aminotransferase/ |
+| GGT | 2026-06-10 | https://eclinpath.com/chemistry/liver/cholestasis/gamma-glutamyl-transferase/ |
+| Chemistry quick guide | 2026-03-15 | https://eclinpath.com/chemistry/chemistry-quick-guide/ |
+
+**Licence — read before reusing.** All content (text and images) is copyrighted to Cornell
+University under a Creative Commons licence permitting educational use but **not use for
+monetary gain**. ClinIQ therefore paraphrases facts with a citation, never copies text, and uses
+no eClinPath images. If ClinIQ is sold or put behind a paywall, re-check eClinPath's terms of use.
+
 ### Feline eosinophilic keratitis (journal source)
 
 > Romaneck AK, Sebbag L. Case report: clinical remission in a cat with severe bilateral eosinophilic keratitis receiving combined immunosuppressive therapy (triamcinolone acetonide and tacrolimus). Front Vet Sci. 2021;8:580396. doi:10.3389/fvets.2021.580396
