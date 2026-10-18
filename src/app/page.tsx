@@ -439,7 +439,7 @@ function BetaHome() {
         </p>
 
         <Link href="/login" className="v-btn v-btn-primary mt-8">
-          Sign in
+          Join the community
         </Link>
       </main>
 
