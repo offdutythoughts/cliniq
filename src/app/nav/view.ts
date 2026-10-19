@@ -174,8 +174,9 @@ export function screenMeta(v: View): ScreenMeta {
       return { topbarTitle: trunc(name, 30), noteKey: `diff:${v.id}`, noteTitle: name }
     }
     case 'interp': {
-      const title = INTERP_BY_ID.get(v.id)?.title ?? ''
-      return { topbarTitle: '', noteKey: `interp:${v.id}`, noteTitle: title }
+      // One note per cell-type page, whichever finding tab is showing.
+      const page = INTERP_BY_ID.get(v.id)?.page
+      return { topbarTitle: '', noteKey: `interp:${page?.id ?? v.id}`, noteTitle: page?.title ?? '' }
     }
     case 'caseTriage':
       // Ephemeral, per-session result — nothing to persist a note against.
