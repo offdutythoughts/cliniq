@@ -13,6 +13,13 @@
 // Reference intervals are analyser-specific: thresholds here are the textbook's
 // and every card says "below/above the RI" rather than inventing one.
 
+export interface InterpTable {
+  headers: string[]
+  rows: string[][]
+  /** Unit / footnote under the table. */
+  note?: string
+}
+
 export interface InterpSection {
   heading: string
   items: string[]
@@ -26,8 +33,9 @@ export interface InterpEntry {
   title: string
   /** One line under the title — the definition or the threshold. */
   sub: string
-  /** Label → value rows, shown as a "Definition & Thresholds" card. */
-  thresholds?: [string, string][]
+  /** Shown as a table in the "Definition & Thresholds" card — severity
+   *  grades as columns where the finding is graded. */
+  thresholds?: InterpTable
   /** Causes, grouped by mechanism — rendered as `#Header` groups. */
   etiology: InterpSection[]
   path?: string[]
@@ -512,10 +520,11 @@ export const BLOODWORK: InterpGroup[] = [
             id: 'neutrophilia',
             title: 'Neutrophilia',
             sub: 'Mature (segmented) neutrophils above the RI — absolute count, not %',
-            thresholds: [
-              ['Dog (above RI)', 'mild <20 · moderate 20–40 · marked >40 × 10⁹/L'],
-              ['Cat (above RI)', 'mild <25 · moderate 25–40 · marked >40 × 10⁹/L'],
-            ],
+            thresholds: {
+              headers: ['Species', 'Mild', 'Moderate', 'Marked'],
+              rows: [['Dog', '<20', '20–40', '>40'], ['Cat', '<25', '25–40', '>40']],
+              note: 'Neutrophils × 10⁹/L, above the RI',
+            },
             etiology: [
               { heading: 'Redistribution (marginating → circulating)', items: ['Catecholamine — fear, excitement (cats up to 2–3× because their marginating pool is larger)', 'Corticosteroid — stress, HAC, steroid therapy'] },
               { heading: 'Increased marrow release / production', items: ['Inflammation — infectious or not (trauma, surgery, burns, necrosis)', 'Immune-mediated disease — IMHA, IMPA', 'Paraneoplastic (G-CSF) — lymphoma, other tumours'] },
@@ -540,7 +549,12 @@ export const BLOODWORK: InterpGroup[] = [
           {
             id: 'neutropenia',
             title: 'Neutropenia',
-            sub: 'Mild 1.5–3 · moderate 0.5–1.5 · severe <0.5 × 10⁹/L',
+            sub: 'Neutrophils below the RI — absolute count, not %',
+            thresholds: {
+              headers: ['', 'Mild', 'Moderate', 'Severe'],
+              rows: [['Neutrophils', '1.5–3', '0.5–1.5', '<0.5']],
+              note: '× 10⁹/L',
+            },
             etiology: [
               { heading: 'Consumption — the commonest cause', items: ['Overwhelming inflammation — sepsis, peritonitis, pyometra, parvovirus enteritis', 'Usually with a degenerative left shift and toxic change'] },
               { heading: 'Destruction', items: ['Immune-mediated neutropenia (alone or with SLE)', 'Parvovirus, panleukopenia', 'Drugs, haemophagocytic / histiocytic disease'] },
@@ -601,10 +615,11 @@ export const BLOODWORK: InterpGroup[] = [
             id: 'lymphocytosis',
             title: 'Lymphocytosis',
             sub: 'Absolute lymphocyte count above the RI',
-            thresholds: [
-              ['Dog', 'mild <10 · moderate 10–30 · marked >30 × 10⁹/L'],
-              ['Cat', 'mild <10 · moderate 10–40 · marked >40 × 10⁹/L'],
-            ],
+            thresholds: {
+              headers: ['Species', 'Mild', 'Moderate', 'Marked'],
+              rows: [['Dog', '<10', '10–30', '>30'], ['Cat', '<10', '10–40', '>40']],
+              note: 'Lymphocytes × 10⁹/L',
+            },
             etiology: [
               { heading: 'Causes', items: ['Physiological (adrenaline) — young healthy cats especially', 'Youth (<6 months)', 'Hypoadrenocorticism (dog) — up to 30 × 10⁹/L, often with eosinophilia', 'Ehrlichia canis — granular lymphocytes', 'Thymoma', 'Chronic lymphocytic leukaemia — older animal, persistent or rising'] },
             ],
@@ -702,11 +717,14 @@ export const BLOODWORK: InterpGroup[] = [
             id: 'thrombocytopenia',
             title: 'Thrombocytopenia',
             sub: 'Platelets below the RI — always confirm on a smear',
-            thresholds: [
-              ['Spontaneous bleeding', 'rarely from thrombocytopenia alone above 30 × 10⁹/L'],
-              ['Primary ITP', 'usually <50 × 10⁹/L, often <20'],
-              ['Smear estimate', 'mean platelets / oil field (10 fields) × 15 × 10⁹/L'],
-            ],
+            thresholds: {
+              headers: ['Finding', 'Platelets (× 10⁹/L)'],
+              rows: [
+                ['Spontaneous bleeding', 'Rare from thrombocytopenia alone above 30'],
+                ['Primary ITP', 'Usually <50, often <20'],
+                ['Smear estimate', 'Mean platelets per oil field (10 fields) × 15'],
+              ],
+            },
             etiology: [
               { heading: 'Pseudo', items: ['Clumping (especially cats) — falsely low count AND falsely high MPV', 'CKCS and other breeds — inherited macrothrombocytopenia, no bleeding'] },
               { heading: 'Destruction', items: ['Primary ITP', 'Secondary immune — infection, neoplasia, drugs, vaccination'] },
@@ -756,11 +774,18 @@ export const BLOODWORK: InterpGroup[] = [
         id: 'liver-patterns',
         title: 'Liver enzyme patterns',
         sub: 'Read ALT, ALP, GGT and bilirubin TOGETHER — the combination points to the process',
-        thresholds: [
-          ['ALT degree', 'mild 2–3× · moderate 4–5× · marked >10× upper RI'],
-          ['ALP in young animals', '2–10× adult values (bone ALP) · adult range by ~15 months'],
-          ['ALP half-life', 'dog ~3 days (liver and steroid isoforms) · cat ~6 h — so any feline rise matters'],
-        ],
+        thresholds: {
+          headers: ['Finding', 'Value'],
+          rows: [
+            ['ALT rise — mild', '2–3× upper RI'],
+            ['ALT rise — moderate', '4–5× upper RI'],
+            ['ALT rise — marked', '>10× upper RI'],
+            ['ALP in young animals', '2–10× adult values (bone ALP)'],
+            ['ALP reaches adult range', '~15 months'],
+            ['ALP half-life — dog', '~3 days (liver and steroid isoforms)'],
+            ['ALP half-life — cat', '~6 h — so any feline rise matters'],
+          ],
+        },
         etiology: [
           { heading: '↑ ALP, ALT normal (dog) — think STEROID INDUCTION first', items: [
             'Exogenous corticosteroids — a single depot methylprednisolone dose can keep ALP up for ~3 weeks',
@@ -1035,11 +1060,14 @@ export const BLOODWORK: InterpGroup[] = [
         id: 'azotaemia',
         title: 'Azotaemia (↑ urea / creatinine)',
         sub: 'Interpret only alongside a pre-treatment urine specific gravity',
-        thresholds: [
-          ['Pre-renal', 'USG dog >1.030 · cat >1.035'],
-          ['Renal', 'USG dog 1.007–1.030 · cat 1.007–1.035'],
-          ['Isosthenuria', '1.008–1.012'],
-        ],
+        thresholds: {
+          headers: ['Azotaemia', 'USG — dog', 'USG — cat'],
+          rows: [
+            ['Pre-renal', '>1.030', '>1.035'],
+            ['Renal', '1.007–1.030', '1.007–1.035'],
+            ['Isosthenuria', '1.008–1.012', '1.008–1.012'],
+          ],
+        },
         etiology: [
           { heading: 'Pre-renal', items: ['Dehydration, hypovolaemia, haemorrhage', 'Low cardiac output, shock, sepsis', 'Hypoadrenocorticism (USG can be low — Na loss washes out the medulla)'] },
           { heading: 'Renal', items: ['AKI — toxins (ethylene glycol, lilies in cats, NSAIDs), leptospirosis, pyelonephritis, ischaemia', 'CKD'] },
@@ -1222,11 +1250,17 @@ export const BLOODWORK: InterpGroup[] = [
         id: 'potassium',
         title: 'Potassium',
         sub: 'RI ≈ 4.0–5.5 mmol/L — serum K is a poor index of body stores',
-        thresholds: [
-          ['Hypokalaemia', 'mild 3.0–4.0 · moderate 2.5–3.0 · severe <2.5 mmol/L'],
-          ['Signs (hypo)', 'cats <3.5 · dogs <2.5 mmol/L'],
-          ['Hyperkalaemia signs', 'usually >7.5–8.0 mmol/L'],
-        ],
+        thresholds: {
+          headers: ['Finding', 'K⁺ (mmol/L)'],
+          rows: [
+            ['Hypokalaemia — mild', '3.0–4.0'],
+            ['Hypokalaemia — moderate', '2.5–3.0'],
+            ['Hypokalaemia — severe', '<2.5'],
+            ['Hypokalaemia signs — cat', '<3.5'],
+            ['Hypokalaemia signs — dog', '<2.5'],
+            ['Hyperkalaemia signs', 'Usually >7.5–8.0'],
+          ],
+        },
         etiology: [
           { heading: 'Hyperkalaemia', items: ['↓ Excretion — urethral obstruction, uroabdomen, oliguric AKI, hypoadrenocorticism', 'Shift — acidosis (inorganic), DKA, tissue necrosis / tumour lysis, reperfusion', 'Iatrogenic — K-containing fluids, ACE inhibitors, spironolactone, trilostane, NSAIDs', 'GI — trichuriasis, salmonellosis (pseudo-Addison)', 'Pseudo — haemolysis in Akita / Shiba, marked thrombocytosis or leukocytosis, EDTA contamination'] },
           { heading: 'Hypokalaemia', items: ['Loss — vomiting, diarrhoea, CKD (cats), post-obstructive diuresis, loop diuretics, hyperaldosteronism', 'Reduced intake — anorexia, K-poor fluids', 'Shift — insulin + glucose (DKA treatment), alkalaemia, β-agonists', 'Burmese hypokalaemic periodic paralysis', 'Hypomagnesaemia makes it refractory'] },
