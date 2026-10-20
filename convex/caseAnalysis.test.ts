@@ -21,7 +21,9 @@ describe('cleanProblemList', () => {
   })
 
   it('drops a pattern left with fewer than two known components', () => {
-    const p = cleanProblemList({ key: [], secondary: [], patterns: [{ name: 'x', terms: ['hypocalcemia', 'azotemia'] }] }, keywords)
+    // Without hyperphosphatemia, so the deterministic Ca/P pattern can't re-add one.
+    const kws = keywords.filter(k => k !== 'hyperphosphatemia')
+    const p = cleanProblemList({ key: [], secondary: [], patterns: [{ name: 'x', terms: ['hypocalcemia', 'azotemia'] }] }, kws)
     expect(p.patterns).toEqual([])
   })
 })

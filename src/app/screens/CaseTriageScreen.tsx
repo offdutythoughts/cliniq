@@ -31,10 +31,15 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { useAction } from 'convex/react'
 import { ConvexError } from 'convex/values'
 import { api } from '../../../convex/_generated/api'
-import type { ProblemList } from '../../../convex/caseAnalysis'
-import { searchDiseases, diverseDifferentials, coreDifferentials, type SearchInputs } from '../../lib/search/diseaseSearch'
+import type { ExtractedSignals } from '../../../convex/caseAnalysis'
+// The pure module, not caseAnalysis.ts: a value import from an action file
+// pulls Convex functions into the browser bundle.
+import { INTERPRETATION_HEADING, type ProblemList } from '../../../convex/problemList'
+import type { LabReading } from '../../../convex/labValues'
+import { rankCase } from '../../lib/caseTriage/rankCase'
 import { buildCaseLanes, type LaneChart } from '../../lib/caseTriage/buildLanes'
 import { signLinks } from '../../lib/caseTriage/signLinks'
+import { moveTerm, NEXT_TIER, removePattern, sameList, tierOf, type Tier } from '../../lib/caseTriage/problemListEdit'
 import {
   abbreviationKey, abbreviationKeyBlock, abbreviationRanges, scanAbbreviations, suggestAbbreviations,
 } from '../../lib/caseTriage/vetAbbreviations'
@@ -43,16 +48,6 @@ import { CaseLaneChart } from './CaseLaneChart'
 import { DISCLAIMER } from './sharedBlocks'
 import { type Nav } from './flowHelpers'
 import { styleStringToObject as s } from './style'
-
-// Keep in sync with convex/caseAnalysis.ts's own MAX_CANDIDATES (that one caps
-// the request/model side; this one decides how many rows the chart actually
-// shows — diverseDifferentials() reserves roughly half these slots for the
-// strongest-scoring candidates and the rest for breadth across aetiology
-// categories (plus near-tie companions within an already-represented
-// category), so a higher cap buys breadth and depth, not just a longer
-// top-N. 12 (not 10) gives the near-tie mechanism room without starving the
-// single-category breadth pass of its own slots.
-const MAX_CANDIDATES = 12
 
 type Stage = 'idle' | 'extracting' | 'synthesizing' | 'done' | 'error'
 
@@ -88,6 +83,15 @@ type SavedResult = {
   /** The presenting problems that are clinical signs — each gets a link to
    *  its sign flowchart where one exists. */
   signProblems?: string[]
+  /** The optional "Blood interpretation" box, and the one the last run used. */
+  interp?: string
+  lastInterp?: string
+  /** What the last extraction returned — kept so an edited problem list can
+   *  be re-ranked without reading the notes again. */
+  signals?: ExtractedSignals | null
+  /** The problem list as the model and the rules first sorted it, before any
+   *  edit by the reader. */
+  modelProblemList?: ProblemList | null
 }
 
 // Bump the suffix whenever LaneChart's shape changes, so a stale saved result
@@ -181,30 +185,41 @@ export function CaseTriageScreen() {
   const [lastKey, setLastKey] = useState(saved?.lastKey ?? '')
   const [problemList, setProblemList] = useState<ProblemList | null>(saved?.problemList ?? null)
   const [signProblems, setSignProblems] = useState<string[]>(saved?.signProblems ?? [])
+  const [interp, setInterp] = useState(saved?.interp ?? '')
+  const [lastInterp, setLastInterp] = useState(saved?.lastInterp ?? '')
+  const [signals, setSignals] = useState<ExtractedSignals | null>(saved?.signals ?? null)
+  const [modelProblemList, setModelProblemList] = useState<ProblemList | null>(saved?.modelProblemList ?? null)
+  /** The list the chart on screen was ranked by — differs from `problemList`
+   *  once the reader edits it, which offers a re-rank. */
+  const [rankedList, setRankedList] = useState<ProblemList | null>(saved?.problemList ?? null)
   const [expansions, setExpansions] = useState<Record<string, string>>(loadExpansions)
   const rootRef = useRef<HTMLDivElement>(null)
 
   // Persist on every change; capture the scroll position on unmount (i.e. when
   // a differential is opened) so back-nav returns to the same spot.
   useEffect(() => {
-    save({ caseText, flow, caseSummary, modelUnknowns, lastKey, problemList, signProblems, scrollTop: lastResult?.scrollTop ?? 0 })
-  }, [caseText, flow, caseSummary, modelUnknowns, lastKey, problemList, signProblems])
+    save({
+      caseText, flow, caseSummary, modelUnknowns, lastKey, problemList: rankedList, signProblems,
+      interp, lastInterp, signals, modelProblemList, scrollTop: lastResult?.scrollTop ?? 0,
+    })
+  }, [caseText, flow, caseSummary, modelUnknowns, lastKey, rankedList, signProblems, interp, lastInterp, signals, modelProblemList])
 
   // Glossary scan, plus whatever the model couldn't read last run (while it's
   // still in the notes and the glossary still doesn't know it).
   const scan = useMemo(() => {
-    const base = scanAbbreviations(caseText)
+    const base = scanAbbreviations(caseText + '\n' + interp)
     const seen = new Set([...base.known.map(k => abbreviationKey(k.abbr)), ...base.unknown.map(abbreviationKey)])
     const extra = modelUnknowns.filter(a => {
       const k = abbreviationKey(a)
-      if (seen.has(k) || !caseText.includes(a)) return false
+      if (seen.has(k) || !(caseText.includes(a) || interp.includes(a))) return false
       seen.add(k)
       return true
     })
     return { known: base.known, unknown: [...base.unknown, ...extra] }
-  }, [caseText, modelUnknowns])
+  }, [caseText, interp, modelUnknowns])
   const keyBlock = abbreviationKeyBlock(scan, expansions)
-  const keyChanged = flow !== null && keyBlock !== lastKey
+  const keyChanged = flow !== null && (keyBlock !== lastKey || interp.trim() !== lastInterp)
+  const listEdited = flow !== null && problemList !== null && !sameList(problemList, rankedList)
 
   /** A suggested correction: swap every whole-token occurrence in the notes. */
   function replaceAbbreviation(from: string, to: string) {
@@ -238,69 +253,80 @@ export function CaseTriageScreen() {
 
   const busy = stage === 'extracting' || stage === 'synthesizing'
 
+  /** The notes as the model reads them: the case, the reader's
+   *  interpretation of the bloods as a labelled section, then the
+   *  abbreviation key. */
+  const fullText = () =>
+    caseText.trim() + (interp.trim() ? `\n\n${INTERPRETATION_HEADING}\n${interp.trim()}` : '') + keyBlock
+
   async function analyze() {
     if (!caseText.trim() || busy) return
-    const text = caseText.trim() + keyBlock
     setLastKey(keyBlock)
+    setLastInterp(interp.trim())
     setStage('extracting')
     setError(null)
     setFlow(null)
     setCaseSummary('')
     setProblemList(null)
+    setRankedList(null)
+    setModelProblemList(null)
+    setSignals(null)
     setSignProblems([])
     try {
-      const signals = await extractSignals({ caseText: text })
-      const inputs: SearchInputs = {
-        species: signals.species,
-        breedQuery: signals.breedQuery,
-        ageCategory: signals.ageCategory,
-        sex: signals.sex,
-        neuter: signals.neuter,
-        signKeywords: signals.signKeywords,
-        diagKeywords: signals.diagKeywords,
-        termTiers: signals.problemList && {
-          key: signals.problemList.key,
-          secondary: signals.problemList.secondary.map(x => x.term),
-          patterns: signals.problemList.patterns.map(p => p.terms),
-        },
-      }
-      const categories = searchDiseases(inputs)
-      const top = diverseDifferentials(
-        categories, MAX_CANDIDATES, undefined, undefined,
-        coreDifferentials([
-          ...(signals.problemList?.key ?? []),
-          ...(signals.problemList?.patterns.flatMap(p => p.terms) ?? []),
-        ]),
-      )
-      setCaseSummary(signals.caseSummary)
-      setModelUnknowns(signals.unknownAbbreviations ?? [])
-      setProblemList(signals.problemList ?? null)
-      // The key problems that are signs (lab findings have no flowchart);
-      // every sign when the model gave no key problems.
-      const signs = new Set(signals.signKeywords)
-      const keySigns = (signals.problemList?.key ?? []).filter(t => signs.has(t))
-      setSignProblems(keySigns.length > 0 ? keySigns : signals.signKeywords)
+      const extracted = await extractSignals({ caseText: fullText() })
+      setSignals(extracted)
+      setCaseSummary(extracted.caseSummary)
+      setModelUnknowns(extracted.unknownAbbreviations ?? [])
+      setModelProblemList(extracted.problemList ?? null)
+      await rank(extracted, extracted.problemList ?? null)
+    } catch (e) {
+      setError(caseTriageErrorMessage(e))
+      setStage('error')
+    }
+  }
 
-      if (top.length === 0) {
-        setFlow(buildCaseLanes([], { rationales: [], historyQuestions: [], diagnostics: [] }))
-        setStage('done')
-        return
-      }
+  /** Search + synthesis for one problem list. Re-ranking an edited list runs
+   *  only this: the notes are not read again, so the reader's edit is the only
+   *  thing that changes. */
+  async function rank(extracted: ExtractedSignals, list: ProblemList | null) {
+    setProblemList(list)
+    const top = rankCase(extracted, list)
+    // The key problems that are signs (lab findings have no flowchart);
+    // every sign when there are no key problems.
+    const signs = new Set(extracted.signKeywords)
+    const keySigns = (list?.key ?? []).filter(t => signs.has(t))
+    setSignProblems(keySigns.length > 0 ? keySigns : extracted.signKeywords)
 
-      setStage('synthesizing')
-      const candidates = top.map(t => ({
-        diseaseId: String(t.disease.id),
-        name: String(t.disease.name),
-        category: t.category,
-        signs: String(t.disease.signs ?? ''),
-        conf: String(t.disease.conf ?? ''),
-        supp: String(t.disease.supp ?? ''),
-        matchedTerms: [...t.matchedSignTerms, ...t.matchedDiagTerms],
-        score: t.score,
-      }))
-      const synthesis = await synthesizeCase({ caseText: text, candidates })
-      setFlow(buildCaseLanes(top, synthesis))
+    if (top.length === 0) {
+      setFlow(buildCaseLanes([], { rationales: [], historyQuestions: [], diagnostics: [] }))
+      setRankedList(list)
       setStage('done')
+      return
+    }
+
+    setStage('synthesizing')
+    const candidates = top.map(t => ({
+      diseaseId: String(t.disease.id),
+      name: String(t.disease.name),
+      category: t.category,
+      signs: String(t.disease.signs ?? ''),
+      conf: String(t.disease.conf ?? ''),
+      supp: String(t.disease.supp ?? ''),
+      matchedTerms: [...t.matchedSignTerms, ...t.matchedDiagTerms],
+      score: t.score,
+    }))
+    const synthesis = await synthesizeCase({ caseText: fullText(), candidates })
+    setFlow(buildCaseLanes(top, synthesis))
+    setRankedList(list)
+    setStage('done')
+  }
+
+  async function rerank() {
+    if (!signals || !problemList || busy) return
+    setError(null)
+    setStage('synthesizing')
+    try {
+      await rank(signals, problemList)
     } catch (e) {
       setError(caseTriageErrorMessage(e))
       setStage('error')
@@ -323,6 +349,18 @@ export function CaseTriageScreen() {
         disabled={busy}
         marks={scan.unknown}
       />
+      <label style={s('display:block;margin-top:10px;')}>
+        <span style={s('display:block;font-size:var(--fs-body);font-weight:700;color:var(--gray);margin-bottom:4px;')}>
+          Blood interpretation <span style={s('font-weight:400;color:var(--gray2);')}>· optional — your reading wins over the model&apos;s</span>
+        </span>
+        <textarea
+          style={{ ...TEXTAREA_STYLE, minHeight: 64 }}
+          placeholder="e.g. Mild hyperglycaemia, likely stress. ALT/AST mild — CK suggests muscle origin. Hypocalcaemia with hyperphosphataemia is the main finding."
+          value={interp}
+          onChange={e => setInterp(e.target.value)}
+          disabled={busy}
+        />
+      </label>
       <button type="button" style={BUTTON_STYLE(busy || !caseText.trim())} onClick={analyze} disabled={busy || !caseText.trim()}>
         {busy ? STAGE_LABEL[stage] : keyChanged ? 'Re-analyze case' : 'Analyze case'}
       </button>
@@ -397,7 +435,18 @@ export function CaseTriageScreen() {
             </div>
           )}
           {signProblems.length > 0 && <SignFlowRow terms={signProblems} onNav={onNav} />}
-          {problemList && <ProblemListPanel list={problemList} />}
+          {problemList && signals && (
+            <ProblemListPanel
+              list={problemList}
+              keywords={[...new Set([...signals.signKeywords, ...signals.diagKeywords])]}
+              labs={signals.labs ?? []}
+              onChange={setProblemList}
+              onReset={modelProblemList && !sameList(problemList, modelProblemList) ? () => setProblemList(modelProblemList) : undefined}
+              onRerank={listEdited ? rerank : undefined}
+              busy={busy}
+            />
+          )}
+          {problemList && !signals && <ProblemListPanel list={problemList} keywords={[]} labs={[]} busy={busy} />}
           {flow.rows.length === 0 ? (
             <div style={s('padding:10px 12px;border-radius:9px;background:rgba(var(--tone-info),0.12);border:1px solid rgba(var(--tone-info),0.4);color:var(--tone-info-fg);font-size:var(--fs-subhead);line-height:1.5;')}>
               <strong>No matching differentials found.</strong> Try adding more clinical detail — species, breed, age, and specific signs all sharpen the match.
@@ -471,23 +520,122 @@ function HighlightedTextarea({ value, onChange, marks, placeholder, disabled }: 
   )
 }
 
-/** What the search was weighted by — shown so the reader can see (and
- *  disagree with) which findings were read as the problems and which as
- *  consequences of them. Supporting findings aren't listed: they are simply
- *  everything else that was extracted. */
-function ProblemListPanel({ list }: { list: ProblemList }) {
-  if (list.key.length + list.patterns.length + list.secondary.length === 0) return null
+const TIER_LABEL: Record<Tier, string> = {
+  key: 'Key problems',
+  supporting: 'Supporting',
+  secondary: 'Likely secondary, weighted down',
+}
+const TIER_CHIP: Record<Tier, string> = {
+  key: 'font-weight:700;color:var(--tone-teal-fg);background:rgba(var(--tone-teal),var(--tile-bg-a));'
+    + 'border:1px solid rgba(var(--tone-teal),var(--tile-bd-a));',
+  supporting: 'color:var(--gray);background:transparent;border:1px solid var(--border);',
+  secondary: 'color:var(--gray2);background:transparent;border:1px dashed var(--border);',
+}
+
+/** What the search was weighted by, as the reader can correct it. Each
+ *  extracted finding sits in one tier; a tap moves it on (key → supporting →
+ *  secondary), and "Re-rank" runs the search again on the edited list without
+ *  re-reading the notes. Without the extraction (a result saved by an older
+ *  build) the list is shown read-only. */
+function ProblemListPanel({ list, keywords, labs, onChange, onReset, onRerank, busy }: {
+  list: ProblemList
+  keywords: string[]
+  labs: LabReading[]
+  onChange?: (l: ProblemList) => void
+  onReset?: () => void
+  onRerank?: () => void
+  busy: boolean
+}) {
+  const editable = !!onChange && keywords.length > 0
+  const all = editable ? keywords : [...list.key, ...list.secondary.map(x => x.term)]
+  const byTier = (t: Tier) => all.filter(k => tierOf(list, k) === t)
+  const why = new Map(list.secondary.map(x => [x.term, x.explainedBy]))
+  if (all.length === 0) return null
   const label = (t: string) => <span style={s('font-weight:700;color:var(--gray);')}>{t}: </span>
+
   return (
     <div style={PANEL_STYLE}>
-      {list.key.length > 0 && <div>{label('Key problems')}{list.key.join(' · ')}</div>}
-      {list.patterns.length > 0 && (
-        <div>{label('Patterns')}{list.patterns.map(p => `${p.name} (${p.terms.join(' + ')})`).join(' · ')}</div>
+      <div style={s('font-weight:700;color:var(--gray);')}>Problem list — what the ranking is weighted by</div>
+      {editable && (
+        <div style={s('margin-top:2px;')}>Tap a finding to move it: key → supporting → secondary.</div>
       )}
-      {list.secondary.length > 0 && (
-        <div>
-          {label('Likely secondary, weighted down')}
-          {list.secondary.map(x => (x.explainedBy ? `${x.term} (← ${x.explainedBy})` : x.term)).join(' · ')}
+      {(['key', 'supporting', 'secondary'] as const).map(tier => {
+        const terms = byTier(tier)
+        if (terms.length === 0 && !editable) return null
+        return (
+          <div key={tier} style={s('margin-top:8px;')}>
+            <div style={s('font-size:var(--fs-chip-sub);font-weight:700;letter-spacing:.05em;text-transform:uppercase;opacity:.8;margin-bottom:4px;')}>
+              {TIER_LABEL[tier]}
+            </div>
+            <div style={s('display:flex;flex-wrap:wrap;gap:6px;')}>
+              {terms.length === 0 && <span style={s('opacity:.7;')}>none</span>}
+              {terms.map(t => {
+                const text = <>{t}{why.get(t) && <span style={s('font-weight:400;opacity:.85;')}> ← {why.get(t)}</span>}</>
+                return editable ? (
+                  <button
+                    key={t}
+                    type="button"
+                    disabled={busy}
+                    onClick={() => onChange!(moveTerm(list, t, NEXT_TIER[tier]))}
+                    aria-label={`${t}: ${TIER_LABEL[tier]}. Move to ${TIER_LABEL[NEXT_TIER[tier]]}`}
+                    style={s(SIGN_CHIP + TIER_CHIP[tier] + 'cursor:pointer;')}
+                  >
+                    {text}
+                  </button>
+                ) : (
+                  <span key={t} style={s(SIGN_CHIP + TIER_CHIP[tier])}>{text}</span>
+                )
+              })}
+            </div>
+          </div>
+        )
+      })}
+      {list.patterns.length > 0 && (
+        <div style={s('margin-top:8px;')}>
+          {label('Patterns')}
+          {list.patterns.map((p, i) => (
+            <span key={p.name}>
+              {i > 0 && ' · '}
+              {p.name} ({p.terms.join(' + ')})
+              {editable && (
+                <button
+                  type="button"
+                  disabled={busy}
+                  onClick={() => onChange!(removePattern(list, p.name))}
+                  aria-label={`Remove the pattern ${p.name}`}
+                  style={s('margin-left:4px;padding:0 5px;border:none;background:transparent;color:inherit;cursor:pointer;font-family:inherit;font-size:var(--fs-body);')}
+                >
+                  ×
+                </button>
+              )}
+            </span>
+          ))}
+        </div>
+      )}
+      {labs.length > 0 && (
+        <div style={s('margin-top:8px;')}>
+          {label('Read from the notes')}
+          {labs.map(l => `${l.analyte} ${l.value} mmol/L — ${l.note}`).join(' · ')}
+        </div>
+      )}
+      {(onRerank || onReset) && (
+        <div style={s('display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:4px;')}>
+          {onRerank && (
+            <button type="button" style={BUTTON_STYLE(busy)} onClick={onRerank} disabled={busy}>
+              {busy ? STAGE_LABEL.synthesizing : 'Re-rank with your changes'}
+            </button>
+          )}
+          {onReset && (
+            <button
+              type="button"
+              onClick={onReset}
+              disabled={busy}
+              style={s('margin-top:10px;padding:9px 12px;border-radius:9px;border:1px solid var(--border);background:transparent;'
+                + 'color:var(--gray);font-size:var(--fs-subhead);font-family:inherit;cursor:pointer;')}
+            >
+              Undo my changes
+            </button>
+          )}
         </div>
       )}
     </div>

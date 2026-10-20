@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest'
-import { BLOODWORK } from '.'
+import { BLOODWORK, INTERP_ENTRIES, INTERP_GROUPS } from '.'
 import { DB } from '../../data/db'
 import { TABS, TAB_ORDER } from '../../app/nav/view'
 
-const entries = BLOODWORK.flatMap(g => g.entries)
+const entries = INTERP_ENTRIES
 
 describe('interpretation content', () => {
   it('links only to disease pages that exist', () => {
@@ -12,9 +12,21 @@ describe('interpretation content', () => {
     expect(dead).toEqual([])
   })
 
-  it('has unique entry ids (they key the cards)', () => {
-    const ids = entries.map(e => e.id)
+  it('has unique page and finding ids (they key the cards and the URL)', () => {
+    // A one-finding page shares its finding's id; a multi-finding page must not.
+    const ids = [
+      ...entries.map(e => e.id),
+      ...BLOODWORK.flatMap(g => g.entries).filter(x => 'parts' in x).map(x => x.id),
+    ]
     expect(new Set(ids).size).toBe(ids.length)
+  })
+
+  it('white cells and platelets get one page per cell type, findings inside', () => {
+    const cbc = INTERP_GROUPS.filter(g => ['White blood cells', 'Platelets'].includes(g.title))
+    const byPage = Object.fromEntries(cbc.flatMap(g => g.pages).map(p => [p.id, p.parts.map(e => e.id)]))
+    expect(byPage.neutrophils).toEqual(['neutrophilia', 'neutropenia', 'left-shift'])
+    expect(byPage.lymphocytes).toEqual(['lymphocytosis', 'lymphopenia'])
+    expect(byPage.platelets).toEqual(['thrombocytopenia', 'thrombocytosis'])
   })
 
   it('no entry text breaks pipe-markup (a | or leading - would split or nest bullets)', () => {

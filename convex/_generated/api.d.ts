@@ -17,10 +17,12 @@ import type * as emails from "../emails.js";
 import type * as feedback from "../feedback.js";
 import type * as feedbackFormat from "../feedbackFormat.js";
 import type * as http from "../http.js";
+import type * as labValues from "../labValues.js";
 import type * as notes from "../notes.js";
 import type * as onboarding from "../onboarding.js";
 import type * as passkeys from "../passkeys.js";
 import type * as passwordReset from "../passwordReset.js";
+import type * as problemList from "../problemList.js";
 import type * as subscriptions from "../subscriptions.js";
 import type * as users from "../users.js";
 
@@ -40,10 +42,12 @@ declare const fullApi: ApiFromModules<{
   feedback: typeof feedback;
   feedbackFormat: typeof feedbackFormat;
   http: typeof http;
+  labValues: typeof labValues;
   notes: typeof notes;
   onboarding: typeof onboarding;
   passkeys: typeof passkeys;
   passwordReset: typeof passwordReset;
+  problemList: typeof problemList;
   subscriptions: typeof subscriptions;
   users: typeof users;
 }>;

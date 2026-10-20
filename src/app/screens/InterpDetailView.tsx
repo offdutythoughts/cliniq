@@ -1,5 +1,7 @@
 'use client'
-// One bloodwork finding, laid out as a disease page: title, a thresholds card,
+// One cell type (or analyte) per page, its findings as tabs — the Dx pages'
+// `.dx-tabs` strip, switched in place with router.replace. Each finding is laid
+// out as a disease page: lead line, a thresholds card,
 // then the SAME ClinicalSections stack disease pages use (Etiology →
 // Pathophysiology → Diagnostic Investigation → Treatment → Monitoring → pearls),
 // related disease pages, and sources. Content: src/lib/interpretation.
@@ -10,6 +12,7 @@ import { ClinicalSections } from './diseaseSections'
 import { buildDiseaseCitations, CitationContext } from './diseaseReferences'
 import { References } from './referencesBlock'
 import { NotFound } from './NotFound'
+import { useNav } from '../nav/NavContext'
 import { PAGE_TITLE } from './styles'
 import './InterpretationScreen.css'
 
@@ -17,8 +20,10 @@ import './InterpretationScreen.css'
 const pipe = (items?: string[]) => (items ?? []).join('|')
 
 export function InterpDetailView({ id }: { id: string }) {
-  const e = INTERP_BY_ID.get(id)
-  if (!e) return <NotFound what="Interpretation page" />
+  const router = useNav()
+  const hit = INTERP_BY_ID.get(id)
+  if (!hit) return <NotFound what="Interpretation page" />
+  const { page, part: e } = hit
 
   const etiology = e.etiology.map(s => `#${s.heading}|${s.items.join('|')}`).join('|')
   const content = {
@@ -37,7 +42,22 @@ export function InterpDetailView({ id }: { id: string }) {
 
   return (
     <CitationContext.Provider value={numberOf}>
-      <div style={PAGE_TITLE}>{e.title}</div>
+      <div style={PAGE_TITLE}>{page.title}</div>
+      {page.parts.length > 1 && (
+        <div className="dx-tabs">
+          {page.parts.map(p => (
+            <button
+              key={p.id}
+              type="button"
+              className="dx-tab"
+              aria-current={p.id === e.id ? 'page' : undefined}
+              onClick={() => router.replace({ kind: 'interp', id: p.id })}
+            >
+              {p.title}
+            </button>
+          ))}
+        </div>
+      )}
       <p className="ip-lead">{e.sub}</p>
 
       {e.thresholds && (

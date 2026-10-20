@@ -33,6 +33,12 @@
 import { getAuthUserId } from "@convex-dev/auth/server";
 import { ConvexError, v } from "convex/values";
 import { action } from "./_generated/server";
+import { readLabs, withLabKeywords, type LabReading } from "./labValues";
+import { cleanProblemList, INTERPRETATION_HEADING, type ProblemList } from "./problemList";
+
+// The problem-list logic lives in problemList.ts (pure, loadable outside
+// Convex); re-exported so existing imports keep working.
+export { applySecondaryRules, cleanProblemList, INTERPRETATION_HEADING, type ProblemList } from "./problemList";
 
 const MODEL = "openai/gpt-oss-120b";
 const ENDPOINT = "https://api.groq.com/openai/v1/chat/completions";
@@ -141,29 +147,18 @@ export type ExtractedSignals = {
   /** The case's problem list. Absent from older backends — the search then
    *  weights every keyword alike. */
   problemList?: ProblemList;
-};
-
-/** How a clinician ranks the extracted findings before thinking of causes.
- *  Every term here is one of the extracted sign/diag keywords, verbatim; any
- *  keyword in neither `key` nor `secondary` is a supporting finding. */
-export type ProblemList = {
-  /** The problems the diagnosis has to explain: the presenting complaints and
-   *  any specific, clearly abnormal finding. */
-  key: string[];
-  /** Findings most likely a CONSEQUENCE of a key problem or a nonspecific
-   *  stress change (CK after seizures, stress leukogram, stress
-   *  hyperglycaemia) — `explainedBy` says which. */
-  secondary: { term: string; explainedBy: string }[];
-  /** Findings that mean more together than apart (hypocalcaemia with
-   *  hyperphosphataemia). `terms` are keywords; a page matching all of them
-   *  scores a bonus. */
-  patterns: { name: string; terms: string[] }[];
+  /** Lab values read from the notes themselves and graded (labValues.ts) —
+   *  shown so the reader sees which number the tiering used. Absent from
+   *  older backends. */
+  labs?: LabReading[];
 };
 
 // Shared by both prompts: how to read the key CaseTriageScreen appends from
 // its glossary (src/lib/caseTriage/vetAbbreviations.ts) and the author's own
 // full forms.
 const ABBREVIATION_RULES = `ABBREVIATIONS. The notes are written in veterinary shorthand. If they end with an "[Abbreviation key]" section, that key is not part of the case — it says what each abbreviation in the notes means. Read every abbreviation by it. Where an entry lists several senses joined by OR, choose the one the surrounding context supports (e.g. "FS" beside a signalment is female spayed, beside an eye exam it is fluorescein stain). An entry marked "(per the author)" is the author's own definition and always wins. Never treat an abbreviation you cannot read as a clinical finding — a guessed expansion becomes a false keyword.`;
+
+const INTERPRETATION_RULES = `CLINICIAN'S INTERPRETATION. If the notes contain a "${INTERPRETATION_HEADING}" section, it is the attending clinician's own reading of the results, and it overrides yours when you sort the problem list. A finding they call mild, borderline, stress-related, artefactual, expected, insignificant or explained by another problem goes in "secondary" (with "explainedBy" taken from what they wrote), never "key". A finding they call the main, significant or most important abnormality goes in "key". Extract keywords from that section exactly as from the rest of the notes, but never let it add a finding the results do not contain.`;
 
 function extractPrompt(caseText: string): string {
   return `You are extracting structured search parameters from free-text veterinary case notes, for a deterministic differential-diagnosis search engine. You are NOT diagnosing the case — only extracting what is already stated.
@@ -194,121 +189,14 @@ Extract:
   - secondary: findings most likely a CONSEQUENCE of a key problem, or a nonspecific stress change, rather than a clue to its cause — e.g. a mildly elevated CK after seizures or tremors, a stress leukogram, mild hyperglycaemia in a stressed or seizuring dog, a mild ALT rise after seizures. For each give "explainedBy": the key problem (or "stress") that accounts for it. Only list a finding here when that explanation is the likeliest reading; when unsure, leave it as supporting.
   - patterns: findings that mean more together than apart, which a clinician reads as one problem — e.g. hypocalcaemia with hyperphosphataemia, hyponatraemia with hyperkalaemia, azotaemia with isosthenuria, regenerative anaemia with spherocytosis. "name" is the pattern as a clinician would say it; "terms" are its two or more component keywords. Only patterns whose every component is actually in the case.
 
+${INTERPRETATION_RULES}
+
 ${ABBREVIATION_RULES}
 
 Do not invent anything not present in or directly implied by the text.
 
 Respond with ONLY a JSON object of exactly this shape (omit ageCategory/sex/neuter keys if unknown, don't include them as null):
 {"species":"dog","breedQuery":"Cavalier King Charles Spaniel","ageCategory":"geriatric","sex":"male","neuter":"neutered","signKeywords":["exercise intolerance","cough"],"diagKeywords":[],"caseSummary":"...","unknownAbbreviations":[],"problemList":{"key":["exercise intolerance","cough"],"secondary":[],"patterns":[]}}`;
-}
-
-/** Matching key for a problem-list term against the extracted keywords. The
- *  model does not always copy a keyword verbatim — "seizures" for "seizure",
- *  "hypocalcaemia" for "hypocalcemia", "hypocalcemia (1.0 mmol/L)" — and a term
- *  that fails to match is dropped, so enough misses silently turn the search
- *  back into flat weighting. Folds case, separators, a trailing value in
- *  brackets, UK/US -ae-/-oe- spelling and a plural -s on each word. */
-function termKey(s: string): string {
-  return s
-    .toLowerCase()
-    .replace(/\([^)]*\)/g, " ")
-    .replace(/ae/g, "e")
-    .replace(/oe/g, "e")
-    .replace(/[\s\-/,]+/g, " ")
-    .trim()
-    .split(" ")
-    .map((w) => (w.length > 3 ? w.replace(/s$/, "") : w))
-    .join(" ");
-}
-
-/** Keeps only problem-list terms that are extracted keywords (see termKey),
- *  rewritten to the keyword's own spelling, so the search can look them up. A
- *  term in `key` wins over the same term in `secondary`. With no usable key
- *  problems, the presenting signs (`signKeywords`) stand in: an empty key list
- *  switches off the search's key-problem filters, and a run that came back
- *  that way listed diabetes on lethargy and a borderline glucose alone. */
-export function cleanProblemList(raw: unknown, keywords: string[], signKeywords: string[] = []): ProblemList {
-  const byKey = new Map(keywords.map((k) => [termKey(k), k]));
-  const known = (t: unknown) => (typeof t === "string" ? byKey.get(termKey(t)) : undefined);
-  const p = raw && typeof raw === "object" ? (raw as Record<string, unknown>) : {};
-
-  let key = [...new Set((Array.isArray(p.key) ? p.key : []).map(known).filter((t): t is string => !!t))];
-  if (key.length === 0) key = [...new Set(signKeywords)];
-  const keySet = new Set(key);
-
-  const seen = new Set<string>();
-  const secondary = (Array.isArray(p.secondary) ? p.secondary : [])
-    .filter((s): s is Record<string, unknown> => !!s && typeof s === "object")
-    .map((s) => ({ term: known(s.term), explainedBy: clampStr(s.explainedBy, 80) }))
-    .filter((s): s is { term: string; explainedBy: string } => {
-      if (!s.term || keySet.has(s.term) || seen.has(s.term)) return false;
-      seen.add(s.term);
-      return true;
-    });
-
-  const patterns = (Array.isArray(p.patterns) ? p.patterns : [])
-    .filter((x): x is Record<string, unknown> => !!x && typeof x === "object")
-    .map((x) => ({
-      name: clampStr(x.name, 80),
-      terms: [...new Set(clampArr(x.terms, 6).map(known).filter((t): t is string => !!t))],
-    }))
-    .filter((x) => x.name.length > 0 && x.terms.length >= 2)
-    .slice(0, 6);
-
-  return applySecondaryRules({ key, secondary, patterns }, keywords);
-}
-
-// ── Deterministic secondary findings ──
-// The model marks these secondary on some runs and not others, and the
-// ranking swings with it: on the reference case (FN Airedale, seizures,
-// hypocalcaemia + hyperphosphataemia, CK 590) one live run left CK at full
-// weight and rhabdomyolysis outranked hypoparathyroidism. Each rule is a
-// finding that is almost always a consequence rather than a clue in the
-// context given, so it is demoted whatever the model said — unless the model
-// made it part of a pattern, which is a deliberate reading worth keeping.
-const SEIZURE_LIKE = /seizur|convuls|status epilepticus|tremor|fasciculat|tetan|muscle spasm|cramp/i;
-const DIABETIC_CONTEXT = /glucosuri|glycosuri|ketonuri|ketonemi|ketonaemi|ketoacid|fructosamine|polyuri|polydips|pu\s*\/?\s*pd/i;
-const SECONDARY_RULES: { finding: RegExp; explainedBy: (kws: string[]) => string | null }[] = [
-  // Seizures and tremor raise CK by themselves.
-  {
-    finding: /\b(ck|cpk|creatine kinase|creatinine kinase)\b/i,
-    explainedBy: (kws) => kws.find((k) => SEIZURE_LIKE.test(k)) ?? null,
-  },
-  // A stress leukogram is a stress leukogram.
-  { finding: /stress leuk/i, explainedBy: () => "stress" },
-  // Hyperglycaemia without glucosuria, ketones or PU/PD is read as stress.
-  // Any raised-glucose wording: live runs on the Airedale case wrote
-  // "elevated blood glucose", "increased glucose" and "glucose 6.1 mmol/L",
-  // each slipped past a narrower pattern, stayed key and put diabetes on the
-  // chart. Low glucose is a real key finding and never matches.
-  {
-    finding: /hyperglyc|^(?!.*\b(hypo|low|decreased?|reduced)\b).*\b(glucose|bg|blood sugar)\b/i,
-    explainedBy: (kws) => (kws.some((k) => DIABETIC_CONTEXT.test(k)) ? null : "stress"),
-  },
-];
-
-export function applySecondaryRules(list: ProblemList, keywords: string[]): ProblemList {
-  const inPattern = new Set(list.patterns.flatMap((p) => p.terms));
-  const demoted = new Map<string, string>();
-  for (const kw of keywords) {
-    if (inPattern.has(kw)) continue;
-    for (const rule of SECONDARY_RULES) {
-      if (!rule.finding.test(kw)) continue;
-      const why = rule.explainedBy(keywords);
-      if (why) demoted.set(kw, why);
-      break;
-    }
-  }
-  if (demoted.size === 0) return list;
-  const already = new Set(list.secondary.map((s) => s.term));
-  return {
-    key: list.key.filter((t) => !demoted.has(t)),
-    secondary: [
-      ...list.secondary,
-      ...[...demoted].filter(([t]) => !already.has(t)).map(([term, explainedBy]) => ({ term, explainedBy })),
-    ],
-    patterns: list.patterns,
-  };
 }
 
 export const extractSignals = action({
@@ -326,7 +214,8 @@ export const extractSignals = action({
     const neuter = NEUTER_VALUES.includes(raw.neuter as never) ? (raw.neuter as ExtractedSignals["neuter"]) : undefined;
 
     const signKeywords = clampArr(raw.signKeywords);
-    const diagKeywords = clampArr(raw.diagKeywords);
+    const labs = readLabs(caseText, species);
+    const diagKeywords = withLabKeywords(clampArr(raw.diagKeywords), signKeywords, labs);
     return {
       species,
       breedQuery: clampStr(raw.breedQuery, 80),
@@ -337,7 +226,8 @@ export const extractSignals = action({
       diagKeywords,
       caseSummary: clampStr(raw.caseSummary, 300),
       unknownAbbreviations: clampArr(raw.unknownAbbreviations, 20).map((a) => a.slice(0, 24)),
-      problemList: cleanProblemList(raw.problemList, [...signKeywords, ...diagKeywords], signKeywords),
+      problemList: cleanProblemList(raw.problemList, [...signKeywords, ...diagKeywords], signKeywords, labs),
+      labs,
     };
   },
 });
