@@ -62,11 +62,19 @@ export function InterpDetailView({ id }: { id: string }) {
 
       {e.thresholds && (
         <Card title="Definition & Thresholds">
-          <dl className="ip-thr">
-            {e.thresholds.map(([k, v]) => (
-              <div key={k} className="ip-thr-row"><dt>{k}</dt><dd>{v}</dd></div>
-            ))}
-          </dl>
+          <div className="ip-thr">
+            <table>
+              <thead>
+                <tr>{e.thresholds.headers.map(h => <th key={h} scope="col">{h}</th>)}</tr>
+              </thead>
+              <tbody>
+                {e.thresholds.rows.map(r => (
+                  <tr key={r.join()}>{r.map((c, i) => <td key={i}>{c}</td>)}</tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          {e.thresholds.note && <p className="ip-thr-note">{e.thresholds.note}</p>}
         </Card>
       )}
 
