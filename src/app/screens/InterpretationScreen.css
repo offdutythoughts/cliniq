@@ -16,6 +16,8 @@
 .ip-thr td:first-child{font-weight:600;}
 .ip-thr-note{margin:6px 0 0;font-size:var(--fs-label);color:var(--gray2);}
 
+.ip-after{margin-top:14px;}
+
 .ip-src{margin-top:10px;font-size:var(--fs-label);color:var(--gray2);font-style:italic;}
 
 .ip-sources{margin:6px 0 12px;}

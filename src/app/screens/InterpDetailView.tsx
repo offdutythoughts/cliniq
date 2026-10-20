@@ -80,19 +80,23 @@ export function InterpDetailView({ id }: { id: string }) {
 
       <ClinicalSections content={content} />
 
-      {e.related && e.related.length > 0 && (
-        <Card title="Related Disease Pages">
-          <Bul text={e.related.map(r => `@${r}`).join('|')} />
-        </Card>
-      )}
+      {/* The pearls box ends the stack with no bottom margin (a disease page
+          stops there); this restores the gap before the cards that follow. */}
+      <div className="ip-after">
+        {e.related && e.related.length > 0 && (
+          <Card title="Related Disease Pages">
+            <Bul text={e.related.map(r => `@${r}`).join('|')} />
+          </Card>
+        )}
 
-      <References entries={entries} />
-      <Card title="Sources">
-        <p className="ip-src">{e.src}</p>
-        <div className="ip-sources">
-          {INTERP_SOURCES.map(s => <p key={s}>{s}</p>)}
-        </div>
-      </Card>
+        <References entries={entries} />
+        <Card title="Sources">
+          <p className="ip-src">{e.src}</p>
+          <div className="ip-sources">
+            {INTERP_SOURCES.map(s => <p key={s}>{s}</p>)}
+          </div>
+        </Card>
+      </div>
       <div className="disclaimer">For qualified veterinary professionals only.</div>
     </CitationContext.Provider>
   )
