@@ -50,6 +50,8 @@ function LoginForm() {
   const router = useRouter()
   const passkeyOptions = useAction(api.passkeys.authenticationOptions)
   const [flow, setFlow] = useState<Flow>('signIn')
+  const [name, setName] = useState('')
+  const [university, setUniversity] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -134,7 +136,12 @@ function LoginForm() {
     // "vet@x.com" reach the same account instead of creating two.
     const normalised = email.trim().toLowerCase()
     try {
-      const result = await signIn('password', { email: normalised, password, flow })
+      const result = await signIn(
+        'password',
+        flow === 'signUp'
+          ? { email: normalised, password, flow, name: name.trim(), university: university.trim() }
+          : { email: normalised, password, flow },
+      )
       if (result.signingIn) {
         track('login_succeeded', { flow })
         // A brand-new account detours via /welcome to be offered a passkey.
@@ -219,10 +226,50 @@ function LoginForm() {
     <AuthShell
       title={isSignIn ? 'Sign in to Vetic' : 'Create your Vetic account'}
       subtitle={
-        isSignIn ? 'Welcome back.' : 'Email and password, then one click in your inbox to confirm.'
+        isSignIn
+          ? 'Welcome back.'
+          : 'A few details, then one click in your inbox to confirm.'
       }
     >
       <form onSubmit={submit} className="flex flex-col gap-4">
+        {!isSignIn && (
+          <>
+            <div className="flex flex-col gap-1.5">
+              <label className={labelClass} htmlFor="name">
+                Full name
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                maxLength={120}
+                autoComplete="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className={fieldClass}
+              />
+            </div>
+
+            <div className="flex flex-col gap-1.5">
+              <label className={labelClass} htmlFor="university">
+                University
+              </label>
+              <input
+                id="university"
+                name="university"
+                type="text"
+                required
+                maxLength={160}
+                autoComplete="organization"
+                value={university}
+                onChange={(e) => setUniversity(e.target.value)}
+                className={fieldClass}
+              />
+            </div>
+          </>
+        )}
+
         <div className="flex flex-col gap-1.5">
           <label className={labelClass} htmlFor="email">
             Email
@@ -338,6 +385,9 @@ function friendlyAuthError(err: unknown, flow: Flow): string {
   // which hid the one fact that tells the user what to do next.
   if (/already exists/i.test(message)) {
     return 'That email already has an account. Sign in instead, or reset your password.'
+  }
+  if (/Missing (name|university)/i.test(message)) {
+    return 'Please fill in your name and university.'
   }
   if (/Invalid password/i.test(message)) {
     return 'Password must be at least 8 characters.'

@@ -46,8 +46,17 @@ export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
     Password({
       // Emails are case-insensitive in practice — normalise so "Vet@x.com" and
       // "vet@x.com" are the same account rather than two.
-      profile(params) {
-        return { email: String(params.email ?? "").trim().toLowerCase() };
+      //
+      // Name and university are asked for on sign-up only; profile() runs on
+      // every flow but Convex Auth writes it to the user row only on signUp.
+      profile(params): { email: string; name?: string; university?: string } {
+        const email = String(params.email ?? "").trim().toLowerCase();
+        if (params.flow !== "signUp") return { email };
+        const name = String(params.name ?? "").trim().slice(0, 120);
+        const university = String(params.university ?? "").trim().slice(0, 160);
+        if (!name) throw new Error("Missing name");
+        if (!university) throw new Error("Missing university");
+        return { email, name, university };
       },
       verify: EmailVerificationLink,
       reset: PasswordResetLink,

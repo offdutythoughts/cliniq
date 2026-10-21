@@ -14,6 +14,8 @@ import { References } from './referencesBlock'
 import { NotFound } from './NotFound'
 import { useNav } from '../nav/NavContext'
 import { PAGE_TITLE } from './styles'
+import { GridTable } from './gridTable'
+import type { Nav } from './flowHelpers'
 import './InterpretationScreen.css'
 
 /** Pipe-markup — the format every ClinicalSections field already speaks. */
@@ -21,6 +23,7 @@ const pipe = (items?: string[]) => (items ?? []).join('|')
 
 export function InterpDetailView({ id }: { id: string }) {
   const router = useNav()
+  const onNav: Nav = v => router.navigate(v)
   const hit = INTERP_BY_ID.get(id)
   if (!hit) return <NotFound what="Interpretation page" />
   const { page, part: e } = hit
@@ -62,18 +65,14 @@ export function InterpDetailView({ id }: { id: string }) {
 
       {e.thresholds && (
         <Card title="Definition & Thresholds">
-          <div className="ip-thr">
-            <table>
-              <thead>
-                <tr>{e.thresholds.headers.map(h => <th key={h} scope="col">{h}</th>)}</tr>
-              </thead>
-              <tbody>
-                {e.thresholds.rows.map(r => (
-                  <tr key={r.join()}>{r.map((c, i) => <td key={i}>{c}</td>)}</tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+          <GridTable
+            cols={e.thresholds.headers.map((_, i) => (i === 0 ? '0.8fr' : '1fr')).join(' ')}
+            fontSize="var(--fs-body)"
+            dividers
+            headers={e.thresholds.headers}
+            rows={e.thresholds.rows.map(r => r.map((c, i) => (i === 0 ? `<strong>${c}</strong>` : c)))}
+            onNav={onNav}
+          />
           {e.thresholds.note && <p className="ip-thr-note">{e.thresholds.note}</p>}
         </Card>
       )}

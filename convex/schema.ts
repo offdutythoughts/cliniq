@@ -4,6 +4,22 @@ import { v } from "convex/values";
 
 export default defineSchema({
   ...authTables,
+  // Convex Auth's own users table plus what sign-up asks for: `name` (already
+  // in the stock table) and `university`. Both are set once, at sign-up, by the
+  // Password provider's profile() in ./auth.ts; rows from before that and
+  // passkey-only accounts have neither.
+  users: defineTable({
+    name: v.optional(v.string()),
+    image: v.optional(v.string()),
+    email: v.optional(v.string()),
+    emailVerificationTime: v.optional(v.number()),
+    phone: v.optional(v.string()),
+    phoneVerificationTime: v.optional(v.number()),
+    isAnonymous: v.optional(v.boolean()),
+    university: v.optional(v.string()),
+  })
+    .index("email", ["email"])
+    .index("phone", ["phone"]),
   // One row per registered passkey (see convex/passkeys.ts). A passkey is a
   // public key the authenticator — Face ID, Touch ID, Windows Hello, a security
   // key — signs challenges with; nothing secret is stored here, so a leak of
