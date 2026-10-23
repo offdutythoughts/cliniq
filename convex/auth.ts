@@ -1,5 +1,6 @@
 import { Password } from "@convex-dev/auth/providers/Password";
 import { convexAuth } from "@convex-dev/auth/server";
+import { internal } from "./_generated/api";
 import { EmailVerificationLink } from "./emailVerification";
 import { Passkey } from "./passkeys";
 import { PasswordResetLink } from "./passwordReset";
@@ -63,4 +64,11 @@ export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
     }),
     Passkey,
   ],
+  callbacks: {
+    // Mirror the account into the Google Sheet (see ./userSheet.ts). Fires on
+    // sign-up and on email verification; scheduled so it can never fail either.
+    async afterUserCreatedOrUpdated(ctx, { userId }) {
+      await ctx.scheduler.runAfter(0, internal.userSheet.syncUser, { userId });
+    },
+  },
 });
