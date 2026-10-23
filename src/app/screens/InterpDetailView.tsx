@@ -7,7 +7,7 @@
 // related disease pages, and sources. Content: src/lib/interpretation.
 
 import { INTERP_BY_ID, INTERP_SOURCES } from '../../lib/interpretation'
-import { Bul, Card } from './markup'
+import { Bul, Card, Linkify } from './markup'
 import { ClinicalSections } from './diseaseSections'
 import { buildDiseaseCitations, CitationContext } from './diseaseReferences'
 import { References } from './referencesBlock'
@@ -18,8 +18,22 @@ import { GridTable } from './gridTable'
 import type { Nav } from './flowHelpers'
 import './InterpretationScreen.css'
 
+/** eClinPath-style skim line: a short lead term before " — ", ": ", " → " or " = "
+ *  is bolded, so the eye can run down the left edge of a section. Long or
+ *  already-emphasised leads are left alone. */
+const LEAD = /^([^—→:=*_]{2,48}?)(:| —| →| =) /
+export function emphasiseLead(item: string): string {
+  if (item.includes('**')) return item
+  const m = LEAD.exec(item)
+  if (!m || m[1].trim().split(/\s+/).length > 6) return item
+  const lead = m[1].trim()
+  return m[2] === ':'
+    ? `**${lead}:** ${item.slice(m[0].length)}`
+    : `**${lead}**${m[2]} ${item.slice(m[0].length)}`
+}
+
 /** Pipe-markup — the format every ClinicalSections field already speaks. */
-const pipe = (items?: string[]) => (items ?? []).join('|')
+const pipe = (items?: string[]) => (items ?? []).map(emphasiseLead).join('|')
 
 export function InterpDetailView({ id }: { id: string }) {
   const router = useNav()
@@ -28,7 +42,7 @@ export function InterpDetailView({ id }: { id: string }) {
   if (!hit) return <NotFound what="Interpretation page" />
   const { page, part: e } = hit
 
-  const etiology = e.etiology.map(s => `#${s.heading}|${s.items.join('|')}`).join('|')
+  const etiology = e.etiology.map(s => `#${s.heading}|${pipe(s.items)}`).join('|')
   const content = {
     etiology,
     path: pipe(e.path),
@@ -61,7 +75,7 @@ export function InterpDetailView({ id }: { id: string }) {
           ))}
         </div>
       )}
-      <p className="ip-lead">{e.sub}</p>
+      <p className="ip-lead"><Linkify text={e.sub} /></p>
 
       {e.thresholds && (
         <Card title="Definition & Thresholds">

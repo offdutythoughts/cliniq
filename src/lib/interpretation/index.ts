@@ -9,6 +9,8 @@
 // formulary before use.
 //
 // Plain text only — no authored HTML, so nothing here goes through RichText.
+// Inline `**bold**` / `_italic_` is allowed; InterpDetailView already bolds each
+// bullet's lead term (before " — ", ": " or " → "), so author items lead-first.
 // `related` holds DIS-/PROT- ids; interpretation.test.ts fails on a dead one.
 // Reference intervals are analyser-specific: thresholds here are the textbook's
 // and every card says "below/above the RI" rather than inventing one.
@@ -519,7 +521,7 @@ export const BLOODWORK: InterpGroup[] = [
           {
             id: 'neutrophilia',
             title: 'Neutrophilia',
-            sub: 'Mature (segmented) neutrophils above the RI — absolute count, not %',
+            sub: 'Mature (**segmented**) neutrophils above the RI — absolute count, **not** %',
             thresholds: {
               headers: ['Species', 'Mild', 'Moderate', 'Marked'],
               rows: [['Dog', '<20', '20–40', '>40'], ['Cat', '<25', '25–40', '>40']],
@@ -549,7 +551,7 @@ export const BLOODWORK: InterpGroup[] = [
           {
             id: 'neutropenia',
             title: 'Neutropenia',
-            sub: 'Neutrophils below the RI — absolute count, not %',
+            sub: 'Neutrophils below the RI — absolute count, **not** %',
             thresholds: {
               headers: ['', 'Mild', 'Moderate', 'Severe'],
               rows: [['Neutrophils', '1.5–3', '0.5–1.5', '<0.5']],
