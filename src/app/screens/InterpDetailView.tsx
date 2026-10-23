@@ -47,7 +47,7 @@ export function InterpDetailView({ id }: { id: string }) {
     <CitationContext.Provider value={numberOf}>
       <div style={PAGE_TITLE}>{page.title}</div>
       {page.parts.length > 1 && (
-        <div className="dx-tabs">
+        <div className="dx-tabs wrap">
           {page.parts.map(p => (
             <button
               key={p.id}
