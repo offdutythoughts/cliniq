@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { api } from '../../../convex/_generated/api'
+import { COUNTRIES, ROLES, isPhoneNumber, type RoleId } from '../../../convex/signupProfile'
 import {
   AuthShell,
   ErrorNote,
@@ -50,10 +51,9 @@ function LoginForm() {
   const router = useRouter()
   const passkeyOptions = useAction(api.passkeys.authenticationOptions)
   const [flow, setFlow] = useState<Flow>('signIn')
-  const [name, setName] = useState('')
-  const [university, setUniversity] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [profile, setProfile] = useState<ProfileFields>(EMPTY_PROFILE)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   // Set once the account exists but the address is unconfirmed — the whole form
@@ -135,13 +135,27 @@ function LoginForm() {
     // Emails are case-insensitive in practice; fold them so "Vet@x.com" and
     // "vet@x.com" reach the same account instead of creating two.
     const normalised = email.trim().toLowerCase()
+    const phoneNumber = profile.phoneNumber.trim()
+    if (flow === 'signUp' && phoneNumber && !isPhoneNumber(phoneNumber)) {
+      setError(PHONE_ERROR)
+      setSubmitting(false)
+      return
+    }
     try {
-      const result = await signIn(
-        'password',
-        flow === 'signUp'
-          ? { email: normalised, password, flow, name: name.trim(), university: university.trim() }
-          : { email: normalised, password, flow },
-      )
+      const result = await signIn('password', {
+        email: normalised,
+        password,
+        flow,
+        // Sign-up only; the server checks these again (convex/signupProfile.ts).
+        // A university typed before switching away from "Vet student" is dropped.
+        ...(flow === 'signUp'
+          ? {
+              ...profile,
+              university: profile.role === 'student' ? profile.university : '',
+              phoneNumber,
+            }
+          : {}),
+      })
       if (result.signingIn) {
         track('login_succeeded', { flow })
         // A brand-new account detours via /welcome to be offered a passkey.
@@ -226,49 +240,11 @@ function LoginForm() {
     <AuthShell
       title={isSignIn ? 'Sign in to Vetic' : 'Create your Vetic account'}
       subtitle={
-        isSignIn
-          ? 'Welcome back.'
-          : 'A few details, then one click in your inbox to confirm.'
+        isSignIn ? 'Welcome back.' : 'A few details, then one click in your inbox to confirm.'
       }
     >
       <form onSubmit={submit} className="flex flex-col gap-4">
-        {!isSignIn && (
-          <>
-            <div className="flex flex-col gap-1.5">
-              <label className={labelClass} htmlFor="name">
-                Full name
-              </label>
-              <input
-                id="name"
-                name="name"
-                type="text"
-                required
-                maxLength={120}
-                autoComplete="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className={fieldClass}
-              />
-            </div>
-
-            <div className="flex flex-col gap-1.5">
-              <label className={labelClass} htmlFor="university">
-                University
-              </label>
-              <input
-                id="university"
-                name="university"
-                type="text"
-                required
-                maxLength={160}
-                autoComplete="organization"
-                value={university}
-                onChange={(e) => setUniversity(e.target.value)}
-                className={fieldClass}
-              />
-            </div>
-          </>
-        )}
+        {!isSignIn && <ProfileInputs value={profile} onChange={setProfile} />}
 
         <div className="flex flex-col gap-1.5">
           <label className={labelClass} htmlFor="email">
@@ -363,6 +339,144 @@ function LoginForm() {
   )
 }
 
+type ProfileFields = {
+  name: string
+  role: RoleId | ''
+  university: string
+  country: string
+  phoneNumber: string
+}
+
+const EMPTY_PROFILE: ProfileFields = {
+  name: '',
+  role: '',
+  university: '',
+  country: '',
+  phoneNumber: '',
+}
+
+const PHONE_ERROR = 'That phone number doesn’t look right — digits, spaces and a leading + only.'
+
+/** The sign-up-only fields above email: name, role, university (vet students
+ *  only), country, and an optional phone number. */
+function ProfileInputs({
+  value,
+  onChange,
+}: {
+  value: ProfileFields
+  onChange: (next: ProfileFields) => void
+}) {
+  const set =
+    (key: keyof ProfileFields) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+      onChange({ ...value, [key]: e.target.value })
+
+  return (
+    <>
+      <div className="flex flex-col gap-1.5">
+        <label className={labelClass} htmlFor="name">
+          Full name
+        </label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          required
+          maxLength={200}
+          autoComplete="name"
+          value={value.name}
+          onChange={set('name')}
+          className={fieldClass}
+        />
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label className={labelClass} htmlFor="role">
+          I am a
+        </label>
+        <select
+          id="role"
+          name="role"
+          required
+          value={value.role}
+          onChange={set('role')}
+          className={fieldClass}
+        >
+          <option value="" disabled>
+            Choose one…
+          </option>
+          {ROLES.map((r) => (
+            <option key={r.id} value={r.id}>
+              {r.label}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      {value.role === 'student' && (
+        <div className="flex flex-col gap-1.5">
+          <label className={labelClass} htmlFor="university">
+            University
+          </label>
+          <input
+            id="university"
+            name="university"
+            type="text"
+            required
+            maxLength={200}
+            autoComplete="organization"
+            placeholder="e.g. Royal Veterinary College"
+            value={value.university}
+            onChange={set('university')}
+            className={fieldClass}
+          />
+        </div>
+      )}
+
+      <div className="flex flex-col gap-1.5">
+        <label className={labelClass} htmlFor="country">
+          Country
+        </label>
+        <select
+          id="country"
+          name="country"
+          required
+          autoComplete="country-name"
+          value={value.country}
+          onChange={set('country')}
+          className={fieldClass}
+        >
+          <option value="" disabled>
+            Choose a country…
+          </option>
+          {COUNTRIES.map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="flex flex-col gap-1.5">
+        <label className={labelClass} htmlFor="phoneNumber">
+          Phone number <span className="font-normal text-[var(--v-slate)]">(optional)</span>
+        </label>
+        <input
+          id="phoneNumber"
+          name="phoneNumber"
+          type="tel"
+          maxLength={30}
+          autoComplete="tel"
+          placeholder="+44 7700 900123"
+          value={value.phoneNumber}
+          onChange={set('phoneNumber')}
+          className={fieldClass}
+        />
+      </div>
+    </>
+  )
+}
+
 /**
  * Turn a server error into something the user can act on.
  *
@@ -386,14 +500,17 @@ function friendlyAuthError(err: unknown, flow: Flow): string {
   if (/already exists/i.test(message)) {
     return 'That email already has an account. Sign in instead, or reset your password.'
   }
-  if (/Missing (name|university)/i.test(message)) {
-    return 'Please fill in your name and university.'
-  }
   if (/Invalid password/i.test(message)) {
     return 'Password must be at least 8 characters.'
   }
   if (/InvalidAccountId|InvalidSecret|Invalid credentials/i.test(message)) {
     return flow === 'signIn' ? 'Invalid email or password.' : 'That email is already in use.'
+  }
+  if (/Missing (name|role|university|country)/i.test(message)) {
+    return 'Please fill in your name, role, country and — for vet students — university.'
+  }
+  if (/Invalid phone number/i.test(message)) {
+    return PHONE_ERROR
   }
   if (/SITE_URL|Resend|send the email/i.test(message)) {
     return 'We couldn’t send the confirmation email. Please try again in a moment.'

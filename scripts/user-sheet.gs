@@ -10,7 +10,10 @@
 // row instead of adding another.
 
 const SECRET = "PASTE_USER_SHEET_SECRET_HERE";
-const HEADERS = ["Signed up", "Name", "Email", "University", "Email verified", "Plan", "User ID"];
+const HEADERS = [
+  "Signed up", "Name", "Email", "Role", "University", "Country", "Phone",
+  "Email verified", "Plan", "User ID",
+];
 
 function doPost(e) {
   const body = JSON.parse(e.postData.contents);
@@ -34,7 +37,11 @@ function doPost(e) {
         new Date(r.createdAt),
         r.name,
         r.email,
+        r.role,
         r.university,
+        r.country,
+        // A leading "+" would be parsed as a formula; keep phone numbers as text.
+        r.phoneNumber ? "'" + r.phoneNumber : "",
         r.emailVerified ? "Yes" : "No",
         r.plan,
         r.userId,

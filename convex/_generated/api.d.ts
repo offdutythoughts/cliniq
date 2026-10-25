@@ -23,6 +23,7 @@ import type * as onboarding from "../onboarding.js";
 import type * as passkeys from "../passkeys.js";
 import type * as passwordReset from "../passwordReset.js";
 import type * as problemList from "../problemList.js";
+import type * as signupProfile from "../signupProfile.js";
 import type * as subscriptions from "../subscriptions.js";
 import type * as userSheet from "../userSheet.js";
 import type * as users from "../users.js";
@@ -49,6 +50,7 @@ declare const fullApi: ApiFromModules<{
   passkeys: typeof passkeys;
   passwordReset: typeof passwordReset;
   problemList: typeof problemList;
+  signupProfile: typeof signupProfile;
   subscriptions: typeof subscriptions;
   userSheet: typeof userSheet;
   users: typeof users;

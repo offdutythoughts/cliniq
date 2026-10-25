@@ -6,6 +6,7 @@ import {
   internalQuery,
   type QueryCtx,
 } from "./_generated/server";
+import { roleLabel } from "./signupProfile";
 
 // ── Mirroring accounts into a Google Sheet ───────────────────────────────────
 //
@@ -32,7 +33,10 @@ type Row = {
   createdAt: number;
   name: string;
   email: string;
+  role: string;
   university: string;
+  country: string;
+  phoneNumber: string;
   emailVerified: boolean;
   plan: string;
 };
@@ -47,7 +51,10 @@ async function toRow(ctx: QueryCtx, user: Doc<"users">): Promise<Row> {
     createdAt: user._creationTime,
     name: user.name ?? "",
     email: user.email ?? "",
+    role: roleLabel(user.role),
     university: user.university ?? "",
+    country: user.country ?? "",
+    phoneNumber: user.phoneNumber ?? "",
     emailVerified: user.emailVerificationTime !== undefined,
     plan: sub ? `${sub.plan} (${sub.status})` : "",
   };
