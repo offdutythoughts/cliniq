@@ -59,9 +59,32 @@ const MAX_FIELD = 600;
 
 // 503 ("service unavailable") is the one failure mode worth a same-request
 // retry — a couple of short backoffs cover a transient blip without masking a
-// real problem (a bad key, a rate limit) behind a retry loop, since those come
-// back as 4xx and are never retried here.
+// real problem (a bad key) behind a retry loop, since those come back as 4xx
+// and are never retried here — except a short 429, below.
 const RETRY_DELAYS_MS = [800, 2000];
+
+// 429 is the exception to "never retry a 4xx": the free tier's tokens-per-
+// minute window is shared by extractSignals + synthesizeCase, so the second
+// call of one "Analyze" click routinely lands a few seconds short of room.
+// Groq says exactly how long to wait (retry-after header, or "try again in
+// 7.5s" in the body) — one retry is worth it when that wait is short; a longer
+// one means a real quota wall, which goes back to the user instead.
+const MAX_RATE_LIMIT_WAIT_MS = 15_000;
+
+function rateLimitWaitMs(res: Response, body: string): number | undefined {
+  const header = Number(res.headers.get("retry-after"));
+  if (Number.isFinite(header) && header > 0) return header * 1000;
+  // Body form: "try again in 7.507s" or "try again in 1m2.5s".
+  const m = body.match(/try again in (?:(\d+)m)?([\d.]+)s/i);
+  if (m) return (Number(m[1] ?? 0) * 60 + Number(m[2])) * 1000;
+  return undefined;
+}
+
+function rateLimitMessage(waitMs: number | undefined): string {
+  const when =
+    waitMs === undefined ? "in a minute" : `in about ${Math.max(1, Math.ceil(waitMs / 1000))} seconds`;
+  return `The Case Triage model is busy (free-tier rate limit reached). Please try again ${when}.`;
+}
 
 async function callGroq(prompt: string): Promise<unknown> {
   const apiKey = process.env.GROQ_API_KEY;
@@ -73,6 +96,7 @@ async function callGroq(prompt: string): Promise<unknown> {
 
   let res: Response;
   let lastBody = "";
+  let rateLimitRetried = false;
   for (let attempt = 0; ; attempt++) {
     res = await fetch(ENDPOINT, {
       method: "POST",
@@ -97,9 +121,24 @@ async function callGroq(prompt: string): Promise<unknown> {
         temperature: 0.2,
       }),
     });
+    if (res.status === 429 && !rateLimitRetried) {
+      lastBody = await res.text().catch(() => "");
+      const wait = rateLimitWaitMs(res, lastBody);
+      if (wait === undefined || wait > MAX_RATE_LIMIT_WAIT_MS) {
+        throw new ConvexError(rateLimitMessage(wait));
+      }
+      rateLimitRetried = true;
+      // A little slack past Groq's figure so the window has actually rolled.
+      await new Promise((r) => setTimeout(r, wait + 500));
+      continue;
+    }
     if (res.ok || res.status !== 503 || attempt >= RETRY_DELAYS_MS.length) break;
     lastBody = await res.text().catch(() => "");
     await new Promise((r) => setTimeout(r, RETRY_DELAYS_MS[attempt]));
+  }
+  if (res.status === 429) {
+    const body = (await res.text().catch(() => "")) || lastBody;
+    throw new ConvexError(rateLimitMessage(rateLimitWaitMs(res, body)));
   }
   if (!res.ok) {
     const body = (await res.text().catch(() => "")) || lastBody;
