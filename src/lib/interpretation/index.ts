@@ -9,6 +9,8 @@
 // formulary before use.
 //
 // Plain text only — no authored HTML, so nothing here goes through RichText.
+// Inline `**bold**` / `_italic_` is allowed; InterpDetailView already bolds each
+// bullet's lead term (before " — ", ": " or " → "), so author items lead-first.
 // `related` holds DIS-/PROT- ids; interpretation.test.ts fails on a dead one.
 // Reference intervals are analyser-specific: thresholds here are the textbook's
 // and every card says "below/above the RI" rather than inventing one.
@@ -519,7 +521,7 @@ export const BLOODWORK: InterpGroup[] = [
           {
             id: 'neutrophilia',
             title: 'Neutrophilia',
-            sub: 'Mature (segmented) neutrophils above the RI — absolute count, not %',
+            sub: 'Mature (**segmented**) neutrophils above the RI — absolute count, **not** %',
             thresholds: {
               headers: ['Species', 'Mild', 'Moderate', 'Marked'],
               rows: [['Dog', '<20', '20–40', '>40'], ['Cat', '<25', '25–40', '>40']],
@@ -549,7 +551,7 @@ export const BLOODWORK: InterpGroup[] = [
           {
             id: 'neutropenia',
             title: 'Neutropenia',
-            sub: 'Neutrophils below the RI — absolute count, not %',
+            sub: 'Neutrophils below the RI — absolute count, **not** %',
             thresholds: {
               headers: ['', 'Mild', 'Moderate', 'Severe'],
               rows: [['Neutrophils', '1.5–3', '0.5–1.5', '<0.5']],
@@ -841,12 +843,22 @@ export const BLOODWORK: InterpGroup[] = [
             'Dilute urine (PU/PD) · proteinuria · urinary tract infection',
             'Stress leukogram — neutrophilia, lymphopenia, eosinopenia, monocytosis · ± thrombocytosis, erythrocytosis',
           ] },
-          { heading: 'Hypoadrenocorticism (dog)', items: [
-            '↓ Na, ↓ Cl, ↑ K — Na:K ≤24 makes it likely, but the classic electrolytes are ABSENT in some dogs (glucocorticoid-only deficiency)',
+          { heading: 'Hypoadrenocorticism — typical (dog)', items: [
+            'Glucocorticoid AND mineralocorticoid deficiency',
+            '↓ Na, ↓ Cl, ↑ K — Na:K ≤24 makes it likely',
             'Azotaemia with inappropriately dilute urine — renal sodium loss washes out the medulla, so it mimics renal failure',
             'NO stress leukogram in a sick dog — lymphocytes and eosinophils normal or high',
             'Hypoglycaemia · hypercalcaemia (about one in three) · hypocholesterolaemia and hypoalbuminaemia',
             'GI bleeding — melena, anaemia, hypoproteinaemia',
+          ] },
+          { heading: 'Hypoadrenocorticism — atypical / eunatraemic, eukalaemic (dog)', items: [
+            'Glucocorticoid deficiency with NORMAL Na and K — the Na:K screen misses it',
+            'Chronic, waxing-waning GI signs, weight loss, lethargy',
+            'NO stress leukogram in a sick dog — the main CBC clue',
+            'Hypoalbuminaemia and hypocholesterolaemia — can mimic protein-losing enteropathy',
+            'Hypoglycaemia · anaemia',
+            'Some progress to typical disease, others keep normal electrolytes for years — recheck Na and K',
+            'Secondary (pituitary) hypoadrenocorticism also has normal electrolytes — RAAS intact',
           ] },
           { heading: 'Hypothyroidism (dog)', items: ['Fasting hypercholesterolaemia (>75% of cases)', 'Mild normocytic, normochromic non-regenerative anaemia', '± ↑ ALP, triglycerides'] },
           { heading: 'Hyperthyroidism (cat)', items: ['Mild ↑ ALT, AST, ALP with NORMAL bilirubin and GGT', 'Mild hyperglycaemia, lymphopenia', '↑ Phosphate', 'Creatinine may be falsely low — the high GFR masks CKD until the cat is euthyroid'] },
@@ -857,6 +869,7 @@ export const BLOODWORK: InterpGroup[] = [
           'LDDST: sensitivity 85–100% but specificity only 44–73% — test only dogs with consistent clinical signs; non-adrenal illness and new or unstable diabetes cause false positives',
           'ACTH stimulation screens only (no pituitary vs adrenal separation) — use it when iatrogenic Cushing’s is suspected',
           'Hypoadrenocorticism: basal cortisol >2 µg/dL (>55 nmol/L) makes it unlikely · confirm with an ACTH stimulation test',
+          'Atypical: normal Na:K does NOT rule it out — screen with basal cortisol, confirm with ACTH stimulation · endogenous ACTH high = primary, low = secondary (pituitary)',
           'Hypothyroidism: total T4 + TSH (± free T4) after non-thyroidal illness has settled',
           'Hyperthyroidism: total T4 · recheck creatinine and USG after treatment',
           'Diabetes: fructosamine separates persistent hyperglycaemia from stress (especially cats)',
@@ -877,28 +890,81 @@ export const BLOODWORK: InterpGroup[] = [
           { heading: 'Azotaemia + concentrated urine (dog >1.030, cat >1.035)', items: ['Pre-renal — dehydration, hypovolaemia, poor cardiac output'] },
           { heading: 'Azotaemia + isosthenuria', items: [
             'Renal azotaemia — usually',
-            'BUT dilute urine without renal failure: hypoadrenocorticism, hypercalcaemia, pyometra (bacterial toxins), diabetes insipidus, medullary washout, liver failure, osmotic diuresis',
+            'BUT dilute urine without renal failure: hypoadrenocorticism, hypercalcaemia, hypokalaemia, pyometra (bacterial toxins), pyelonephritis, diabetes insipidus, medullary washout, liver failure, osmotic diuresis',
+            'Recent fluids, diuretics or glucocorticoids also dilute the urine',
             'Hyposthenuria (<1.008) means the tubules are still working',
           ] },
-          { heading: 'Azotaemia + hyperkalaemia', items: ['Urethral obstruction', 'Uroabdomen', 'Oliguric / anuric AKI', 'Hypoadrenocorticism'] },
+          { heading: 'Renal azotaemia — acute causes (AKI)', items: [
+            'Leptospirosis — any dog with AKI, vaccinated or not',
+            'Pyelonephritis',
+            'Ethylene glycol',
+            'Lilies (cat)',
+            'Grapes / raisins (dog)',
+            'Drugs — NSAIDs, aminoglycosides, amphotericin B',
+            'Vitamin D — cholecalciferol rodenticide, calcipotriol cream',
+            'Snake envenomation (viper)',
+            'Ischaemia — hypotension, anaesthesia, sepsis, DIC, heatstroke',
+            'Pigment nephropathy — haemoglobinuria (IMHA, babesiosis), myoglobinuria (rhabdomyolysis, heatstroke)',
+            'Hypercalcaemia',
+            'Bilateral ureteral obstruction — cats with ureteroliths (big kidney / little kidney)',
+          ] },
+          { heading: 'Renal azotaemia — chronic causes (CKD)', items: [
+            'Chronic interstitial nephritis — most older cats',
+            'Glomerulonephritis — Ehrlichia, Leishmania, Dirofilaria, Lyme, pyometra, neoplasia',
+            'Amyloidosis — Shar-Pei, Abyssinian',
+            'Polycystic kidney disease — Persian and related cats',
+            'Renal lymphoma, FIP — cats with large kidneys',
+            'Familial / juvenile nephropathy — young dog with small kidneys',
+            'End stage of any unresolved AKI',
+          ] },
+          { heading: 'Leptospirosis fingerprint', items: [
+            'AKI — polyuric or oliguric',
+            '+ ↑ ALT / ALP / bilirubin — kidney AND liver together is the classic combination',
+            'Thrombocytopenia',
+            'Glucosuria with normal blood glucose (proximal tubular damage)',
+            'Neutrophilia ± left shift',
+            'Hypokalaemia (polyuric) or hyperkalaemia (oliguric)',
+            '± Tachypnoea, haemoptysis — pulmonary haemorrhage syndrome',
+          ] },
+          { heading: 'Azotaemia + hyperkalaemia', items: [
+            'Urethral obstruction',
+            'Bilateral ureteral obstruction (cat)',
+            'Uroabdomen',
+            'Oliguric / anuric AKI',
+            'Hypoadrenocorticism',
+            'Cell breakdown — rhabdomyolysis, tumour lysis, reperfusion after aortic thromboembolism (cat)',
+            'Drugs — ACE inhibitors, spironolactone',
+          ] },
           { heading: 'Uroabdomen fingerprint', items: ['Azotaemia, hyperkalaemia, hyponatraemia, hypochloraemia, hyperphosphataemia, ↑ anion gap', 'Abdominal fluid creatinine ≥2× serum · fluid:blood K⁺ >1.4 (dog) or >1.9 (cat)'] },
           { heading: 'Ethylene glycol fingerprint', items: ['Azotaemia + hypocalcaemia + hyperphosphataemia', 'High anion-gap metabolic acidosis · isosthenuria', '± calcium oxalate crystalluria (not always seen)'] },
+          { heading: 'Vitamin D toxicosis fingerprint', items: ['Hyperphosphataemia first — ~12 h before calcium rises', 'Then ↑ ionised calcium + azotaemia', 'Ca × P >60–70 mg/dL → soft-tissue mineralisation', 'PTH suppressed, 25(OH)D high'] },
+          { heading: 'Glucosuria with normal blood glucose', items: ['Leptospirosis', 'Toxic tubular injury — ethylene glycol, aminoglycosides', 'Fanconi syndrome — Basenji, jerky treats', 'Primary renal glucosuria'] },
+          { heading: 'Proteinuria (UPC >0.5 dog, >0.4 cat) with inactive sediment', items: ['Glomerulonephritis — vector-borne infection, chronic inflammation, neoplasia', 'Amyloidosis', 'Systemic hypertension', 'Hyperadrenocorticism / glucocorticoids', 'CKD'] },
           { heading: 'Urea and creatinine disagree', items: ['↑ Urea, normal creatinine — upper GI bleeding, high-protein meal, catabolism, steroids', '↓ Urea AND ↓ creatinine — portosystemic shunt / liver failure, PU/PD, low muscle mass', '↑ Creatinine, normal urea — Greyhound or heavily muscled dog'] },
         ],
         dx: [
           'Take the USG BEFORE fluids — afterwards it cannot classify the azotaemia',
+          'Every AKI: toxin history — lilies, grapes / raisins, NSAIDs, ethylene glycol, vitamin D, rodenticides',
+          'AKI in a dog → leptospirosis PCR (blood + urine) AND MAT before antibiotics · repeat MAT 1–2 weeks later for a ≥4-fold rise',
+          'Ultrasound: kidney size and shape, pyelectasia, ureteral dilation, free fluid',
+          'Urine culture in every azotaemic patient — pyelonephritis hides behind an inactive sediment',
           'Hyperkalaemia + azotaemia → palpate the bladder, AFAST for free fluid, ECG',
           'Free abdominal fluid → fluid creatinine and K⁺ vs serum',
           'Dilute urine + azotaemia in a dog with ↓ Na:K or no stress leukogram → ACTH stimulation test',
           'Hypercalcaemia + azotaemia → correct calcium, then repeat renal values — the azotaemia may be partly reversible',
+          'Hyperphosphataemia out of proportion to azotaemia ± hypercalcaemia → 25(OH)D, PTH',
+          'Persistent proteinuria → UPC on an inactive sediment, blood pressure, vector-borne serology',
         ],
         pearls: [
           '~75% of nephrons are lost before azotaemia appears',
           'Azotaemia magnitude does not tell acute from chronic',
           'A hyperthyroid cat’s creatinine overestimates kidney function — reassess once euthyroid',
+          'Leptospirosis is zoonotic — barrier-nurse every unexplained AKI (gloves, gown, eye protection) until it is ruled out',
+          'Vaccination does not rule out leptospirosis — cross-protection between serovars is limited',
+          'A negative early MAT does not rule it out — antibodies may not have formed yet',
         ],
-        related: ['DIS-SEC-AKI', 'DIS-SEC-CKD', 'DIS-URO-URETHRAL-OBS', 'DIS-SEC-HYPO', 'DIS-ENDO-HCALC', 'DIS-REPRO-PYO'],
-        src: `${SHARKEY('5, 6, 7')} · ${ETT('62, 287')}`,
+        related: ['DIS-SEC-AKI', 'DIS-SEC-CKD', 'DIS-INFECT-LEPTO', 'DIS-URO-PYELO', 'DIS-TOX-EG', 'DIS-TOX-CHOLE', 'DIS-URO-URETHRAL-OBS', 'DIS-URO-URETER-OBS', 'DIS-SEC-HYPO', 'DIS-ENDO-HCALC', 'DIS-REPRO-PYO', 'DIS-REN-GN', 'DIS-REN-AMYLOID'],
+        src: `${SHARKEY('5, 6, 7')} · ${ETT('62, 287')} · Sykes et al., JVIM 2023 (ACVIM leptospirosis consensus) · IRIS 2023 staging`,
       },
       {
         id: 'electrolyte-patterns',

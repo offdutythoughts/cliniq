@@ -4,10 +4,13 @@ import { v } from "convex/values";
 
 export default defineSchema({
   ...authTables,
-  // Convex Auth's own users table plus what sign-up asks for: `name` (already
-  // in the stock table) and `university`. Both are set once, at sign-up, by the
-  // Password provider's profile() in ./auth.ts; rows from before that and
-  // passkey-only accounts have neither.
+  // Convex Auth's own users table plus what sign-up asks for (see
+  // ./signupProfile.ts): `name` (already in the stock table), `role`,
+  // `university` (vet students only), `country` and an optional `phoneNumber`.
+  // All are set once, at sign-up, by the Password provider's profile() in
+  // ./auth.ts; older rows and passkey-only accounts may lack any of them.
+  // `phoneNumber` is deliberately not the stock `phone`, which Convex Auth
+  // treats as a sign-in identifier.
   users: defineTable({
     name: v.optional(v.string()),
     image: v.optional(v.string()),
@@ -16,7 +19,12 @@ export default defineSchema({
     phone: v.optional(v.string()),
     phoneVerificationTime: v.optional(v.number()),
     isAnonymous: v.optional(v.boolean()),
+    role: v.optional(
+      v.union(v.literal("vet"), v.literal("student"), v.literal("nurse")),
+    ),
     university: v.optional(v.string()),
+    country: v.optional(v.string()),
+    phoneNumber: v.optional(v.string()),
   })
     .index("email", ["email"])
     .index("phone", ["phone"]),

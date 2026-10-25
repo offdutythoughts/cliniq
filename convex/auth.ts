@@ -1,8 +1,10 @@
 import { Password } from "@convex-dev/auth/providers/Password";
 import { convexAuth } from "@convex-dev/auth/server";
+import { internal } from "./_generated/api";
 import { EmailVerificationLink } from "./emailVerification";
 import { Passkey } from "./passkeys";
 import { PasswordResetLink } from "./passwordReset";
+import { parseSignupProfile } from "./signupProfile";
 
 // Two ways into an account:
 //
@@ -47,20 +49,27 @@ export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
       // Emails are case-insensitive in practice — normalise so "Vet@x.com" and
       // "vet@x.com" are the same account rather than two.
       //
-      // Name and university are asked for on sign-up only; profile() runs on
-      // every flow but Convex Auth writes it to the user row only on signUp.
-      profile(params): { email: string; name?: string; university?: string } {
+      // The rest of the sign-up details (./signupProfile.ts: name, role,
+      // university for vet students, country, optional phone) are asked for on
+      // sign-up only; profile() runs on every flow but Convex Auth writes it to
+      // the user row only on signUp.
+      profile(params) {
         const email = String(params.email ?? "").trim().toLowerCase();
         if (params.flow !== "signUp") return { email };
-        const name = String(params.name ?? "").trim().slice(0, 120);
-        const university = String(params.university ?? "").trim().slice(0, 160);
-        if (!name) throw new Error("Missing name");
-        if (!university) throw new Error("Missing university");
-        return { email, name, university };
+        const parsed = parseSignupProfile(params);
+        if (!parsed.ok) throw new Error(parsed.error);
+        return { email, ...parsed.profile };
       },
       verify: EmailVerificationLink,
       reset: PasswordResetLink,
     }),
     Passkey,
   ],
+  callbacks: {
+    // Mirror the account into the Google Sheet (see ./userSheet.ts). Fires on
+    // sign-up and on email verification; scheduled so it can never fail either.
+    async afterUserCreatedOrUpdated(ctx, { userId }) {
+      await ctx.scheduler.runAfter(0, internal.userSheet.syncUser, { userId });
+    },
+  },
 });

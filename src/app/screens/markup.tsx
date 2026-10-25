@@ -73,8 +73,30 @@ export function NavCard({ icon, title, sub, onClick, style }: {
   )
 }
 
-/** @TOKEN(:label) → clickable span(s) and "(Ettinger Ch N)" citations → numbered markers, interleaved with plain text. */
+/** Inline emphasis: `**bold**` and `_italic_` (underscores only at word edges,
+ *  so snake_case never trips it). A single `*` stays literal — authored DB text
+ *  uses it as a footnote mark. */
+const EMPH = /(\*\*[^*]+\*\*|(?<![\w])_[^_]+_(?![\w]))/
+
+/** @TOKEN(:label) → clickable span(s), "(Ettinger Ch N)" citations → numbered
+ *  markers, and `**bold**` / `_italic_` runs, interleaved with plain text. */
 export function Linkify({ text }: { text: string }) {
+  if (EMPH.test(text)) {
+    return (
+      <span>
+        {text.split(EMPH).map((run, i) => {
+          if (i % 2 === 0) return run ? <LinkRuns key={i} text={run} /> : null
+          return run.startsWith('**')
+            ? <strong key={i}><LinkRuns text={run.slice(2, -2)} /></strong>
+            : <em key={i}><LinkRuns text={run.slice(1, -1)} /></em>
+        })}
+      </span>
+    )
+  }
+  return <LinkRuns text={text} />
+}
+
+function LinkRuns({ text }: { text: string }) {
   // Whole-string @token shortcut (its label may contain characters outside the
   // inline regex class) — only when there's no citation to interleave.
   if (text.startsWith('@') && !hasCitation(text)) {

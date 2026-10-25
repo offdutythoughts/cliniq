@@ -982,6 +982,13 @@ details.ref-fold[open] > summary::after{content:" ▾";}
 }
 .dx-tab:hover{opacity:.8;}
 .dx-tab[aria-current="page"]{background:var(--teal);opacity:1;}
+/* Interpretation pages can carry 15+ parts: equal-width tabs on one row clip
+   every label, so these size to their text and wrap onto extra rows. Unselected
+   tabs use tinted fill + teal text (not faded white) so they stay legible. */
+.dx-tabs.wrap .dx-tab{flex:0 1 auto;padding:6px 11px;font-size:11px;
+  background:rgba(var(--tone-teal),0.12);color:var(--tone-teal-fg);opacity:1;}
+.dx-tabs.wrap .dx-tab:hover{background:rgba(var(--tone-teal),0.22);}
+.dx-tabs.wrap .dx-tab[aria-current="page"]{background:var(--teal);color:var(--on-teal);}
 .dx-check{border-radius:10px;padding:10px 14px;font-size:12px;text-align:left;width:100%;line-height:1.6;background:var(--card);border:1px solid var(--border);color:var(--gray);}
 .dx-check strong{color:var(--white);}
 .dx-branch{border-radius:10px;padding:10px 14px;font-size:12px;font-weight:600;text-align:center;width:100%;line-height:1.4;background:var(--blue);color:var(--on-info);border:none;}
