@@ -203,6 +203,19 @@ export const BLOODWORK: InterpGroup[] = [
             id: 'anaemia',
             title: 'Anaemia',
             sub: 'PCV / HCT / Hb below the RI — first decide: regenerative or not?',
+            thresholds: {
+              headers: ['Finding', 'Haemorrhage', 'Haemolysis', 'Non-regenerative'],
+              rows: [
+                ['Reticulocytes', '↑ from day 3–5 · moderate', '↑ from day 3–5 · often marked', 'Not ↑ after 5 days'],
+                ['Total protein', '↓ (external) · may be normal with internal bleeding', 'Normal / ↑', 'Normal (↑ globulin if inflammatory)'],
+                ['Plasma colour', 'Clear', 'Icteric · pink if intravascular', 'Clear'],
+                ['Bilirubin', 'Normal', '↑', 'Normal'],
+                ['Smear', 'Polychromasia · chronic external → microcytic hypochromic', 'Spherocytes, agglutination, Heinz bodies, schistocytes, ghost cells, parasites', 'Normocytic normochromic · check for other cytopenias'],
+                ['Urine', '± haematuria', 'Bilirubinuria · haemoglobinuria if intravascular', 'Unremarkable'],
+                ['Look for', 'Melaena, effusion, trauma, coagulopathy, parasites', 'Splenomegaly, toxin / drug, vector exposure', 'CKD, inflammation, endocrine, FeLV, marrow disease'],
+              ],
+              note: 'PCV / TS are unreliable in peracute haemorrhage — splenic contraction holds PCV up for hours. Haemolysis regenerates harder because iron stays in the body.',
+            },
             etiology: [
               { heading: 'Regenerative — haemorrhage', items: ['Low total protein (albumin + globulin)', 'External chronic loss → iron deficiency (microcytic hypochromic)'] },
               { heading: 'Regenerative — haemolysis', items: ['Normal / high protein, ↑ bilirubin', 'IMHA — spherocytes, agglutination, ghost cells', 'Oxidant — Heinz bodies, eccentrocytes (onion, zinc, paracetamol in cats)', 'Infectious — Babesia, Mycoplasma haemofelis (cat)', 'Fragmentation — schistocytes, acanthocytes, keratocytes (DIC, vasculitis, HSA)', 'Intravascular → haemoglobinaemia + haemoglobinuria'] },
