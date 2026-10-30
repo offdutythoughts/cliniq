@@ -59,7 +59,9 @@ export function InterpDetailView({ id }: { id: string }) {
 
   return (
     <CitationContext.Provider value={numberOf}>
-      <div style={PAGE_TITLE}>{page.title}</div>
+      {/* No tabs on a single-part page, so name the finding itself
+          ("Basophilia"), not the cell line ("Basophils"). */}
+      <div style={PAGE_TITLE}>{page.parts.length > 1 ? page.title : e.title}</div>
       {page.parts.length > 1 && (
         <div className="dx-tabs wrap">
           {page.parts.map(p => (
