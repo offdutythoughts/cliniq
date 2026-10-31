@@ -38,6 +38,8 @@ export interface InterpEntry {
   /** Shown as a table in the "Definition & Thresholds" card — severity
    *  grades as columns where the finding is graded. */
   thresholds?: InterpTable
+  /** Card title for `thresholds`; defaults to "Definition & Thresholds". */
+  thresholdsTitle?: string
   /** Causes, grouped by mechanism — rendered as `#Header` groups. */
   etiology: InterpSection[]
   path?: string[]
@@ -92,43 +94,34 @@ export const BLOODWORK: InterpGroup[] = [
         id: 'cbc-patterns',
         title: 'CBC pattern → differentials',
         sub: 'A pattern tells you the TYPE of disturbance — history and exam narrow it to a disease',
-        etiology: [
-          { heading: 'Non-regenerative anaemia', items: [
-            'With thrombocytopenia ± leukopenia — canine ehrlichiosis',
-            'With monocytosis — canine leishmaniosis',
-            'Feline leishmaniosis, feline histoplasmosis',
-            'Macrocytic — FIV / FeLV (progressive)',
-            'With neutrophilia + PU/PD, hypertension — feline CKD',
-            'With circulating blasts + organomegaly — canine AML',
-            'Microcytic hypochromic — canine portosystemic shunt',
-          ] },
-          { heading: 'Regenerative anaemia', items: [
-            'With macroplatelets, thrombocytopenia — canine babesiosis',
-            'With GI signs, footpad dermatitis — canine ancylostomiasis (hookworm)',
-            'With leukocytosis, monocytosis, thrombocytopenia — feline haemoplasmosis',
-          ] },
-          { heading: 'Inflammatory leukogram (neutrophilia ± left shift, monocytosis, mild non-regenerative anaemia)', items: [
-            'Canine pyometra',
-            'Chronic inflammatory enteropathy',
-            'Canine mammary tumour (± microcytic hypochromic anaemia)',
-            'Canine multicentric lymphoma (± eosinopenia)',
-            'Canine oropharyngeal tumours',
-            'Canine ovarian tumour (± pancytopenia)',
-            'Feline pancreatitis (± haemoconcentration)',
-            'FIP (± lymphopenia)',
-            'Feline mammary carcinoma',
-            'Feline ATE (± lymphopenia, thrombocytopenia)',
-          ] },
-          { heading: 'Stress leukogram (neutrophilia, lymphopenia, eosinopenia, monocytosis)', items: [
-            'Canine hyperadrenocorticism (± thrombocytosis, erythrocytosis)',
-            'Canine MMVD (± thrombocytosis)',
-          ] },
-          { heading: 'Leukopenia (multilineage)', items: [
-            'Canine parvovirus — with thrombocytopenia, anaemia',
-            'Feline panleukopenia',
-          ] },
-          { heading: 'Isolated thrombocytopenia', items: ['Canine ITP (± anaemia from bleeding)'] },
-        ],
+        thresholdsTitle: 'Pattern → differentials',
+        // One line per differential (\n-separated); first-column lines after
+        // the first are the pattern's defining findings.
+        thresholds: {
+          headers: ['Pattern', 'Dog', 'Cat'],
+          rows: [
+            ['Non-regenerative anaemia',
+              'Ehrlichiosis — with thrombocytopenia ± leukopenia\nLeishmaniosis — with monocytosis\nAML — with circulating blasts, organomegaly\nPortosystemic shunt — microcytic hypochromic',
+              'Leishmaniosis\nHistoplasmosis\nFIV / FeLV (progressive) — macrocytic\nCKD — with neutrophilia, PU/PD, hypertension'],
+            ['Regenerative anaemia',
+              'Babesiosis — with macroplatelets, thrombocytopenia\nHookworm — with GI signs, footpad dermatitis',
+              'Haemoplasmosis — with leukocytosis, monocytosis, thrombocytopenia'],
+            ['Inflammatory leukogram\nNeutrophilia ± left shift, monocytosis, mild non-regenerative anaemia',
+              'Pyometra\nMammary tumour — ± microcytic hypochromic anaemia\nMulticentric lymphoma — ± eosinopenia\nOropharyngeal tumours\nOvarian tumour — ± pancytopenia',
+              'Pancreatitis — ± haemoconcentration\nFIP — ± lymphopenia\nMammary carcinoma\nATE — ± lymphopenia, thrombocytopenia'],
+            ['Stress leukogram\nNeutrophilia, lymphopenia, eosinopenia, monocytosis',
+              'Hyperadrenocorticism — ± thrombocytosis, erythrocytosis\nMMVD — ± thrombocytosis',
+              '—'],
+            ['Multilineage leukopenia',
+              'Parvovirus — with thrombocytopenia, anaemia',
+              'Panleukopenia'],
+            ['Isolated thrombocytopenia',
+              'ITP — ± anaemia from bleeding',
+              '—'],
+          ],
+          note: 'Chronic inflammatory enteropathy also gives an inflammatory leukogram (species not split in the review). — = no qualifying feline study.',
+        },
+        etiology: [],
         dx: [
           'Classify the pattern first: anaemia (regenerative?), leukogram (inflammatory, stress, leukopenic), platelets',
           'Narrow with signalment, history and exam — the pattern alone rarely names the disease',

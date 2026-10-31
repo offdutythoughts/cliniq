@@ -15,6 +15,7 @@ import { NotFound } from './NotFound'
 import { useNav } from '../nav/NavContext'
 import { PAGE_TITLE } from './styles'
 import { GridTable } from './gridTable'
+import { bullets } from '../../lib/signs/dx/shared/dxHelpers'
 import type { Nav } from './flowHelpers'
 import './InterpretationScreen.css'
 
@@ -32,6 +33,20 @@ export function emphasiseLead(item: string): string {
     : `**${lead}**${m[2]} ${item.slice(m[0].length)}`
 }
 
+/** A table cell may hold several \n-separated lines: in the first column the
+ *  first line is the label and the rest a muted qualifier; elsewhere each line
+ *  is a bullet with its lead term bolded. In a table with no multi-line cell,
+ *  cells render as before. */
+const md = (s: string) => s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+function tableCell(c: string, col: number, listy: boolean): string {
+  const [head, ...rest] = c.split('\n')
+  if (col === 0) {
+    const sub = rest.length ? `<div style="font-weight:400;opacity:.75;margin-top:2px;">${rest.join('<br>')}</div>` : ''
+    return `<strong>${head}</strong>${sub}`
+  }
+  return listy && c !== '—' ? bullets([head, ...rest].map(l => md(emphasiseLead(l)))) : c
+}
+
 /** Pipe-markup — the format every ClinicalSections field already speaks. */
 const pipe = (items?: string[]) => (items ?? []).map(emphasiseLead).join('|')
 
@@ -42,6 +57,7 @@ export function InterpDetailView({ id }: { id: string }) {
   if (!hit) return <NotFound what="Interpretation page" />
   const { page, part: e } = hit
 
+  const listy = !!e.thresholds?.rows.some(r => r.some(c => c.includes('\n')))
   const etiology = e.etiology.map(s => `#${s.heading}|${pipe(s.items)}`).join('|')
   const content = {
     etiology,
@@ -80,13 +96,13 @@ export function InterpDetailView({ id }: { id: string }) {
       <p className="ip-lead"><Linkify text={e.sub} /></p>
 
       {e.thresholds && (
-        <Card title="Definition & Thresholds">
+        <Card title={e.thresholdsTitle ?? 'Definition & Thresholds'}>
           <GridTable
             cols={e.thresholds.headers.map((_, i) => (i === 0 ? '0.8fr' : '1fr')).join(' ')}
             fontSize="var(--fs-body)"
             dividers
             headers={e.thresholds.headers}
-            rows={e.thresholds.rows.map(r => r.map((c, i) => (i === 0 ? `<strong>${c}</strong>` : c)))}
+            rows={e.thresholds.rows.map(r => r.map((c, i) => tableCell(c, i, listy)))}
             onNav={onNav}
           />
           {e.thresholds.note && <p className="ip-thr-note">{e.thresholds.note}</p>}
